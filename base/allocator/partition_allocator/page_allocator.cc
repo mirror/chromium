@@ -17,7 +17,17 @@
 #include <mach/mach.h>
 #endif
 
-#if defined(OS_POSIX)
+#if defined(OS_FUCHSIA)
+
+#include <magenta/process.h>
+#include <magenta/syscalls.h>
+
+#include <list>
+
+static const bool kHintIsAdvisory = false;
+static std::atomic<int32_t> s_allocPageErrorCode{MX_OK};
+
+#elif defined(OS_POSIX)
 
 #include <errno.h>
 #include <sys/mman.h>
@@ -44,9 +54,122 @@ static std::atomic<int32_t> s_allocPageErrorCode{ERROR_SUCCESS};
 
 #else
 #error Unknown OS
-#endif  // defined(OS_POSIX)
+#endif  // defined(OS_FUCHSIA)
 
 namespace base {
+
+#if defined(OS_FUCHSIA)
+
+namespace {
+
+// Represents the memory for an allocation we carved out, and the location in
+// which is was originally mapped (base_address, length). Owns the lifetime of
+// the mx_handle_t vmo passed to the constructor.
+class VmoMapping {
+ public:
+  VmoMapping(mx_handle_t vmo, uintptr_t address, size_t length)
+      : vmo_(vmo), base_address_(address), length_(length) {}
+  ~VmoMapping() {
+    fprintf(stderr, "closing handle for %lx, vmo=%x\n", base_address_, vmo_);
+    mx_handle_close(vmo_);
+  }
+
+  mx_handle_t vmo() { return vmo_; }
+  uintptr_t base_address() { return base_address_; }
+  size_t length() { return length_; }
+
+  bool AddressInMapping(uintptr_t addr) const {
+    return addr >= base_address_ && addr < base_address_ + length_;
+  }
+
+ private:
+  mx_handle_t vmo_;
+  uintptr_t base_address_;
+  size_t length_;
+
+  DISALLOW_COPY_AND_ASSIGN(VmoMapping);
+};
+
+std::list<VmoMapping>& VmoMappings() {
+  static auto* vmo_mappings = new std::list<VmoMapping>();
+  return *vmo_mappings;
+}
+
+uintptr_t VmarRootBase() {
+  static uintptr_t root_base = []() {
+    mx_info_vmar_t vmar_info;
+    mx_status_t status =
+        mx_object_get_info(mx_vmar_root_self(), MX_INFO_VMAR, &vmar_info,
+                           sizeof(vmar_info), nullptr, nullptr);
+    CHECK(status == MX_OK);
+    return vmar_info.base;
+  }();
+  return root_base;
+}
+
+void* SystemAllocPagesFuchsiaImpl(
+    void* hint,
+    size_t length,
+    PageAccessibilityConfiguration page_accessibility,
+    std::atomic<int32_t>* error) {
+  mx_status_t status;
+
+  LOG(ERROR) << "sysalloc hint=" << hint << ", length=" << length;
+
+  mx_handle_t vmo;
+  status = mx_vmo_create(length, 0, &vmo);
+  if (status != MX_OK) {
+    LOG(ERROR) << "mx_vmo_create failed, status=" << status;
+    *error = status;
+    return nullptr;
+  }
+
+  uintptr_t address;
+  uint32_t flags = MX_VM_FLAG_PERM_READ | MX_VM_FLAG_PERM_WRITE;
+  if (hint)
+    flags |= MX_VM_FLAG_SPECIFIC;
+  size_t vmar_offset = reinterpret_cast<uintptr_t>(hint) - VmarRootBase();
+  status = mx_vmar_map(mx_vmar_root_self(), vmar_offset, vmo, 0, length, flags,
+                       &address);
+  if (status != MX_OK) {
+    LOG(ERROR) << "mx_vmar_map failed, status=" << status;
+    *error = status;
+    return nullptr;
+  }
+
+  CHECK(hint == 0 || reinterpret_cast<void*>(address) == hint);
+
+  if (page_accessibility != PageAccessible)
+    SetSystemPagesInaccessible(reinterpret_cast<void*>(address), length);
+
+  fprintf(stderr, "Adding vmo=%x at %lx, length=%zu\n", vmo, address, length);
+  VmoMappings().emplace_back(vmo, address, length);
+
+  return reinterpret_cast<void*>(address);
+}
+
+std::list<VmoMapping>::iterator VmoFromAddress(void* address) {
+  fprintf(stderr, "Looking for %p\n", address);
+  uintptr_t addr_as_uint = reinterpret_cast<uintptr_t>(address);
+  for (std::list<VmoMapping>::iterator it(VmoMappings().begin());
+       it != VmoMappings().end(); ++it) {
+    fprintf(stderr, "  considering vmo=%x, base=%lx, length=%zu\n", it->vmo(),
+            it->base_address(), it->length());
+    if (it->AddressInMapping(addr_as_uint)) {
+      fprintf(stderr, "   ->found at vmo=%x, base=%lx\n", it->vmo(),
+              it->base_address());
+      return it;
+    }
+  }
+
+  fprintf(stderr, "Didn't find vmo for %p\n", address);
+  NOTREACHED();
+  return VmoMappings().end();
+}
+
+}  // namespace
+
+#endif  // OS_FUCHSIA
 
 // This internal function wraps the OS-specific page allocation call:
 // |VirtualAlloc| on Windows, and |mmap| on POSIX.
@@ -64,6 +187,9 @@ static void* SystemAllocPages(
   ret = VirtualAlloc(hint, length, MEM_RESERVE | MEM_COMMIT, access_flag);
   if (!ret)
     s_allocPageErrorCode = GetLastError();
+#elif defined(OS_FUCHSIA)
+  ret = SystemAllocPagesFuchsiaImpl(hint, length, page_accessibility,
+                                    &s_allocPageErrorCode);
 #else
 
 #if defined(OS_MACOSX)
@@ -102,7 +228,8 @@ static void* TrimMapping(void* base,
   DCHECK(post_slack < base_length);
   void* ret = base;
 
-#if defined(OS_POSIX)  // On POSIX we can resize the allocation run.
+#if defined(OS_POSIX) && !defined(OS_FUCHSIA)
+  // On POSIX we can resize the allocation run.
   (void)page_accessibility;
   if (pre_slack) {
     int res = munmap(base, pre_slack);
@@ -197,7 +324,13 @@ void FreePages(void* address, size_t length) {
   DCHECK(!(reinterpret_cast<uintptr_t>(address) &
            kPageAllocationGranularityOffsetMask));
   DCHECK(!(length & kPageAllocationGranularityOffsetMask));
-#if defined(OS_POSIX)
+#if defined(OS_FUCHSIA)
+  LOG(ERROR) << "freeing vmo for address=" << address << ", length=" << length;
+  auto mapping = VmoFromAddress(address);
+  mx_vmar_unmap(mx_vmar_root_self(), reinterpret_cast<uintptr_t>(address),
+                length);
+  VmoMappings().erase(mapping);
+#elif defined(OS_POSIX)
   int ret = munmap(address, length);
   CHECK(!ret);
 #else
@@ -208,7 +341,12 @@ void FreePages(void* address, size_t length) {
 
 void SetSystemPagesInaccessible(void* address, size_t length) {
   DCHECK(!(length & kSystemPageOffsetMask));
-#if defined(OS_POSIX)
+#if defined(OS_FUCHSIA)
+  LOG(ERROR) << "setting inaccessible " << address << ", length=" << length;
+  mx_status_t status = mx_vmar_unmap(
+      mx_vmar_root_self(), reinterpret_cast<uintptr_t>(address), length);
+  CHECK(status == MX_OK);
+#elif defined(OS_POSIX)
   int ret = mprotect(address, length, PROT_NONE);
   CHECK(!ret);
 #else
@@ -219,7 +357,29 @@ void SetSystemPagesInaccessible(void* address, size_t length) {
 
 bool SetSystemPagesAccessible(void* address, size_t length) {
   DCHECK(!(length & kSystemPageOffsetMask));
-#if defined(OS_POSIX)
+#if defined(OS_FUCHSIA)
+  LOG(ERROR) << "setting accessible " << address << ", length=" << length;
+  auto mapping = VmoFromAddress(address);
+
+  uintptr_t offset_into_root =
+      reinterpret_cast<uintptr_t>(address) - VmarRootBase();
+  uintptr_t offset_into_vmo =
+      reinterpret_cast<uintptr_t>(address) - mapping->base_address();
+
+  uintptr_t result_address;
+  fprintf(stderr, "mapping into root at absolute %lx\n",
+          offset_into_root + VmarRootBase());
+  mx_status_t status = mx_vmar_map(
+      mx_vmar_root_self(), offset_into_root, mapping->vmo(), offset_into_vmo,
+      length,
+      MX_VM_FLAG_PERM_READ | MX_VM_FLAG_PERM_WRITE | MX_VM_FLAG_SPECIFIC,
+      &result_address);
+  if (status != MX_OK) {
+    LOG(ERROR) << "mx_vmar_map failed, status=" << status;
+  }
+  fprintf(stderr, "address=%p, result_address=%lx\n", address, result_address);
+  return status == MX_OK && reinterpret_cast<void*>(result_address) == address;
+#elif defined(OS_POSIX)
   return !mprotect(address, length, PROT_READ | PROT_WRITE);
 #else
   return !!VirtualAlloc(address, length, MEM_COMMIT, PAGE_READWRITE);
@@ -228,7 +388,18 @@ bool SetSystemPagesAccessible(void* address, size_t length) {
 
 void DecommitSystemPages(void* address, size_t length) {
   DCHECK(!(length & kSystemPageOffsetMask));
-#if defined(OS_POSIX)
+#if defined(OS_FUCHSIA)
+  auto mapping = VmoFromAddress(address);
+  uint64_t offset =
+      reinterpret_cast<uintptr_t>(address) - mapping->base_address();
+  mx_status_t status = mx_vmo_op_range(mapping->vmo(), MX_VMO_OP_DECOMMIT,
+                                       offset, length, nullptr, 0);
+  if (status != MX_OK) {
+    LOG(ERROR) << "mx_vmo_op_range MX_VMO_OP_DECOMMIT failed, status="
+               << status;
+  }
+  CHECK(status == MX_OK);
+#elif defined(OS_POSIX)
 #if defined(OS_MACOSX)
   // On macOS, MADV_FREE_REUSABLE has comparable behavior to MADV_FREE, but also
   // marks the pages with the reusable bit, which allows both Activity Monitor
@@ -251,7 +422,13 @@ void DecommitSystemPages(void* address, size_t length) {
 
 void RecommitSystemPages(void* address, size_t length) {
   DCHECK(!(length & kSystemPageOffsetMask));
-#if defined(OS_POSIX)
+#if defined(OS_FUCHSIA)
+  auto mapping = VmoFromAddress(address);
+  uint64_t offset =
+      reinterpret_cast<uintptr_t>(address) - mapping->base_address();
+  CHECK(mx_vmo_op_range(mapping->vmo(), MX_VMO_OP_COMMIT, offset, length,
+                        nullptr, 0) == MX_OK);
+#elif defined(OS_POSIX)
   (void)address;
 #else
   CHECK(SetSystemPagesAccessible(address, length));
@@ -260,7 +437,9 @@ void RecommitSystemPages(void* address, size_t length) {
 
 void DiscardSystemPages(void* address, size_t length) {
   DCHECK(!(length & kSystemPageOffsetMask));
-#if defined(OS_POSIX)
+#if defined(OS_FUCHSIA)
+// No-op.
+#elif defined(OS_POSIX)
   // On POSIX, the implementation detail is that discard and decommit are the
   // same, and lead to pages that are returned to the system immediately and
   // get replaced with zeroed pages when touched. So we just call

@@ -1080,6 +1080,7 @@ TEST_F(PartitionAllocTest, PartialPages) {
 
 // Test correct handling if our mapping collides with another.
 TEST_F(PartitionAllocTest, MappingCollision) {
+  LOG(ERROR) << "a0";
   // The -2 is because the first and last partition pages in a super page are
   // guard pages.
   size_t numPartitionPagesNeeded = kNumPartitionPagesPerSuperPage - 2;
@@ -1088,51 +1089,63 @@ TEST_F(PartitionAllocTest, MappingCollision) {
   std::unique_ptr<PartitionPage* []> secondSuperPagePages =
       WrapArrayUnique(new PartitionPage*[numPartitionPagesNeeded]);
 
+  LOG(ERROR) << "a1";
   size_t i;
   for (i = 0; i < numPartitionPagesNeeded; ++i)
     firstSuperPagePages[i] = GetFullPage(kTestAllocSize);
 
+  LOG(ERROR) << "a2";
   char* pageBase =
       reinterpret_cast<char*>(PartitionPageToPointer(firstSuperPagePages[0]));
   EXPECT_EQ(kPartitionPageSize,
             reinterpret_cast<uintptr_t>(pageBase) & kSuperPageOffsetMask);
+  LOG(ERROR) << "a3";
   pageBase -= kPartitionPageSize;
   // Map a single system page either side of the mapping for our allocations,
   // with the goal of tripping up alignment of the next mapping.
   void* map1 = AllocPages(pageBase - kPageAllocationGranularity,
                           kPageAllocationGranularity,
                           kPageAllocationGranularity, PageInaccessible);
+  LOG(ERROR) << "a4";
   EXPECT_TRUE(map1);
   void* map2 = AllocPages(pageBase + kSuperPageSize, kPageAllocationGranularity,
                           kPageAllocationGranularity, PageInaccessible);
+  LOG(ERROR) << "a5";
   EXPECT_TRUE(map2);
 
   for (i = 0; i < numPartitionPagesNeeded; ++i)
     secondSuperPagePages[i] = GetFullPage(kTestAllocSize);
+  LOG(ERROR) << "a6";
 
   FreePages(map1, kPageAllocationGranularity);
   FreePages(map2, kPageAllocationGranularity);
+  LOG(ERROR) << "a7";
 
   pageBase =
       reinterpret_cast<char*>(PartitionPageToPointer(secondSuperPagePages[0]));
   EXPECT_EQ(kPartitionPageSize,
             reinterpret_cast<uintptr_t>(pageBase) & kSuperPageOffsetMask);
   pageBase -= kPartitionPageSize;
+  LOG(ERROR) << "a8";
   // Map a single system page either side of the mapping for our allocations,
   // with the goal of tripping up alignment of the next mapping.
   map1 = AllocPages(pageBase - kPageAllocationGranularity,
                     kPageAllocationGranularity, kPageAllocationGranularity,
                     PageAccessible);
+  LOG(ERROR) << "a9";
   EXPECT_TRUE(map1);
   map2 = AllocPages(pageBase + kSuperPageSize, kPageAllocationGranularity,
                     kPageAllocationGranularity, PageAccessible);
+  LOG(ERROR) << "a10";
   EXPECT_TRUE(map2);
   SetSystemPagesInaccessible(map1, kPageAllocationGranularity);
   SetSystemPagesInaccessible(map2, kPageAllocationGranularity);
+  LOG(ERROR) << "a11";
 
   PartitionPage* pageInThirdSuperPage = GetFullPage(kTestAllocSize);
   FreePages(map1, kPageAllocationGranularity);
   FreePages(map2, kPageAllocationGranularity);
+  LOG(ERROR) << "a12";
 
   EXPECT_EQ(0u, reinterpret_cast<uintptr_t>(
                     PartitionPageToPointer(pageInThirdSuperPage)) &
@@ -1152,11 +1165,13 @@ TEST_F(PartitionAllocTest, MappingCollision) {
                 PartitionPageToPointer(pageInThirdSuperPage)) &
                 kSuperPageBaseMask);
 
+  LOG(ERROR) << "a13";
   FreeFullPage(pageInThirdSuperPage);
   for (i = 0; i < numPartitionPagesNeeded; ++i) {
     FreeFullPage(firstSuperPagePages[i]);
     FreeFullPage(secondSuperPagePages[i]);
   }
+  LOG(ERROR) << "a14";
 }
 
 // Tests that pages in the free page cache do get freed as appropriate.
