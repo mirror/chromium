@@ -88,6 +88,23 @@
     },
     {
       "key": {
+        "uuid": "59781363_5b87f821",
+        "filename": "chrome/browser/chromeos/fileapi/recent_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-07-28T05:31:26Z",
+      "side": 1,
+      "message": "How about posting a delayed task to clear the cache after 60s to avoid keeping memory which would never be used anyway?",
+      "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8b1f1c8d_17a31ca8",
         "filename": "chrome/browser/chromeos/fileapi/recent_model.cc",
         "patchSetId": 4
@@ -180,6 +197,29 @@
     },
     {
       "key": {
+        "uuid": "267af922_5217be1c",
+        "filename": "chrome/browser/chromeos/fileapi/recent_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-07-28T05:31:26Z",
+      "side": 1,
+      "message": "Do we ever remove any keys from the map? If not, should we?",
+      "range": {
+        "startLine": 235,
+        "startChar": 25,
+        "endLine": 235,
+        "endChar": 33
+      },
+      "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c15eb200_c090909e",
         "filename": "chrome/browser/chromeos/fileapi/recent_model.h",
         "patchSetId": 4
@@ -196,6 +236,29 @@
         "startChar": 23,
         "endLine": 48,
         "endChar": 24
+      },
+      "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0efcf588_0b7357b0",
+        "filename": "chrome/browser/chromeos/fileapi/recent_model.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002249
+      },
+      "writtenOn": "2017-07-28T05:31:26Z",
+      "side": 1,
+      "message": "Do we need cache per each identity? IIUC the cache will be pretty much the same (some entries may be refreshed more often or less though).",
+      "range": {
+        "startLine": 68,
+        "startChar": 11,
+        "endLine": 68,
+        "endChar": 19
       },
       "revId": "ade7db2d2be57087efd10092cd546ecd5595e20d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
