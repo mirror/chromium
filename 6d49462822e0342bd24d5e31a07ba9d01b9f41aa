@@ -16,6 +16,24 @@
       "revId": "6d49462822e0342bd24d5e31a07ba9d01b9f41aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d305d99_309235d5",
+        "filename": "base/sys_info_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-07-29T02:33:51Z",
+      "side": 1,
+      "message": "Possibly, doesn\u0027t look like it at the moment. (This is a NOTREACHED rather than a NOTIMPLEMENTED so we should know relatively clearly if that comes up.)",
+      "parentUuid": "60f2a04f_64252dbf",
+      "revId": "6d49462822e0342bd24d5e31a07ba9d01b9f41aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
