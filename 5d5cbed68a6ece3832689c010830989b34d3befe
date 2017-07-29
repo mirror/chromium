@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cda804d5_0edb348e",
+        "filename": "tools/clang/traffic_annotation_extractor/tests/test.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-29T03:00:29Z",
+      "side": 1,
+      "message": "Is it possible to adapt test_tool.py to handle this use case? The default is to always apply edits, but I think it shouldn\u0027t be too hard to make it configurable.",
+      "revId": "5d5cbed68a6ece3832689c010830989b34d3befe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea19067e_d1d23545",
+        "filename": "tools/clang/traffic_annotation_extractor/tests/tests.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-29T03:00:29Z",
+      "side": 1,
+      "message": "Nit: remove commented-out code.",
+      "revId": "5d5cbed68a6ece3832689c010830989b34d3befe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
