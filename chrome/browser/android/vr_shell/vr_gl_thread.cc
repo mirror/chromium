@@ -153,6 +153,11 @@ void VrGLThread::OnExitVrPromptResult(vr::UiUnsupportedMode reason,
                             reason, choice));
 }
 
+void VrGLThread::OpenNewTab(bool incognito) {
+  main_thread_task_runner_->PostTask(
+      FROM_HERE, base::Bind(&VrShell::OpenNewTab, weak_vr_shell_, incognito));
+}
+
 void VrGLThread::SetFullscreen(bool enabled) {
   WaitUntilThreadStarted();
   task_runner()->PostTask(FROM_HERE,
@@ -264,6 +269,22 @@ void VrGLThread::SetExitVrPromptEnabled(bool enabled,
   task_runner()->PostTask(
       FROM_HERE, base::Bind(&vr::UiSceneManager::SetExitVrPromptEnabled,
                             weak_scene_manager_, enabled, reason));
+}
+
+void VrGLThread::AddOrUpdateTab(bool incognito,
+                                int id,
+                                const base::string16& title) {
+  WaitUntilThreadStarted();
+  task_runner()->PostTask(
+      FROM_HERE, base::Bind(&vr::UiSceneManager::AddOrUpdateTab,
+                            weak_scene_manager_, incognito, id, title));
+}
+
+void VrGLThread::RemoveTab(bool incognito, int id) {
+  WaitUntilThreadStarted();
+  task_runner()->PostTask(
+      FROM_HERE, base::Bind(&vr::UiSceneManager::RemoveTab, weak_scene_manager_,
+                            incognito, id));
 }
 
 void VrGLThread::CleanUp() {

@@ -8,6 +8,7 @@
 #include <set>
 
 #include "base/time/time.h"
+#include "cc/animation/timing_function.h"
 
 namespace vr {
 
@@ -15,8 +16,10 @@ struct Transition {
   Transition();
   ~Transition();
 
+  // TODO(vollick): would be nice to have a delay.
   base::TimeDelta duration;
   std::set<int> target_properties;
+  cc::CubicBezierTimingFunction::EaseType ease_type;
 };
 
 }  // namespace vr

@@ -10,6 +10,7 @@
 
 #include "base/macros.h"
 #include "cc/animation/animation.h"
+#include "cc/animation/timing_function.h"
 #include "chrome/browser/vr/transition.h"
 #include "third_party/skia/include/core/SkColor.h"
 
@@ -57,6 +58,7 @@ class AnimationPlayer final {
   // transition object will cause subsequent calls the corresponding
   // TransitionXXXTo functions to induce transition animations.
   const Transition& transition() const { return transition_; }
+  Transition& transition() { return transition_; }
   void set_transition(const Transition& transition) {
     transition_ = transition;
   }
@@ -85,10 +87,12 @@ class AnimationPlayer final {
                            bool target);
 
   bool IsAnimatingProperty(int property) const;
+  cc::Animation* GetRunningAnimationForProperty(int target_property) const;
 
  private:
   void StartAnimations(base::TimeTicks monotonic_time);
-  cc::Animation* GetRunningAnimationForProperty(int target_property) const;
+  std::unique_ptr<cc::CubicBezierTimingFunction>
+  CreateTransitionTimingFunction() const;
 
   cc::AnimationTarget* target_ = nullptr;
   Animations animations_;
