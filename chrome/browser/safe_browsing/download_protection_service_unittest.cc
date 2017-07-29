@@ -36,6 +36,7 @@
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/safe_browsing/binary_feature_extractor.h"
 #include "chrome/common/safe_browsing/file_type_policies_test_util.h"
+#include "chrome/test/base/testing_browser_process.h"
 #include "chrome/test/base/testing_profile.h"
 #include "components/history/core/browser/history_service.h"
 #include "components/prefs/pref_service.h"
@@ -103,7 +104,7 @@ class MockSafeBrowsingDatabaseManager : public TestSafeBrowsingDatabaseManager {
 class FakeSafeBrowsingService : public SafeBrowsingService,
                                 public ServicesDelegate::ServicesCreator {
  public:
-  FakeSafeBrowsingService() {
+  FakeSafeBrowsingService() : download_report_count_(0) {
     services_delegate_ = ServicesDelegate::CreateForTest(this, this);
   }
 
@@ -112,6 +113,12 @@ class FakeSafeBrowsingService : public SafeBrowsingService,
   MockSafeBrowsingDatabaseManager* mock_database_manager() {
     return mock_database_manager_;
   }
+
+  void SendSerializedDownloadReport(const std::string& unused_report) override {
+    download_report_count_++;
+  }
+
+  int download_report_count() { return download_report_count_; }
 
  protected:
   ~FakeSafeBrowsingService() override {}
@@ -146,6 +153,7 @@ class FakeSafeBrowsingService : public SafeBrowsingService,
   }
 
   MockSafeBrowsingDatabaseManager* mock_database_manager_;
+  int download_report_count_;
 
   DISALLOW_COPY_AND_ASSIGN(FakeSafeBrowsingService);
 };
@@ -2467,6 +2475,49 @@ TEST_F(DownloadProtectionServiceTest, PPAPIDownloadRequest_Payload) {
   EXPECT_EQ(".txt", request.alternate_extensions(0));
   EXPECT_EQ(".abc", request.alternate_extensions(1));
   EXPECT_EQ(".sdF", request.alternate_extensions(2));
+}
+
+TEST_F(DownloadProtectionServiceTest,
+       VerifyMaybeSendDangerousDownloadExecutionReport) {
+  TestingBrowserProcess::GetGlobal()->SetSafeBrowsingService(
+      sb_service_.get());
+  NiceMockDownloadItem item;
+  PrepareBasicDownloadItem(&item,
+                           std::vector<std::string>(),   // empty url_chain
+                           "http://www.google.com/",     // referrer
+                           FILE_PATH_LITERAL("a.tmp"),   // tmp_path
+                           FILE_PATH_LITERAL("a.exe"));  // final_path
+  ASSERT_EQ(0, sb_service_->download_report_count());
+
+  // No report sent if download item without token field.
+  DownloadProtectionService::MaybeSendDangerousDownloadExecutionReport(&item,
+                                                                       false);
+  EXPECT_EQ(0, sb_service_->download_report_count());
+
+  // No report sent if user is in incognito mode.
+  DownloadProtectionService::SetDownloadPingToken(&item, "token");
+  EXPECT_CALL(item, GetBrowserContext())
+      .WillRepeatedly(Return(profile_->GetOffTheRecordProfile()));
+  DownloadProtectionService::MaybeSendDangerousDownloadExecutionReport(&item,
+                                                                       false);
+  EXPECT_EQ(0, sb_service_->download_report_count());
+
+  // No report sent if user is not in extended reporting group.
+  EXPECT_CALL(item, GetBrowserContext()).WillRepeatedly(Return(profile_.get()));
+  SetExtendedReportingPreference(false);
+  DownloadProtectionService::MaybeSendDangerousDownloadExecutionReport(&item,
+                                                                       false);
+  EXPECT_EQ(0, sb_service_->download_report_count());
+
+  // Report successfully sent if user opted-in extended reporting, not in
+  // incognito, and download item has a token stored.
+  SetExtendedReportingPreference(true);
+  DownloadProtectionService::MaybeSendDangerousDownloadExecutionReport(&item,
+                                                                       false);
+  EXPECT_EQ(1, sb_service_->download_report_count());
+  DownloadProtectionService::MaybeSendDangerousDownloadExecutionReport(&item,
+                                                                       true);
+  EXPECT_EQ(2, sb_service_->download_report_count());
 }
 
 TEST_F(DownloadProtectionServiceTest,
