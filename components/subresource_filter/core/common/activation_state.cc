@@ -25,6 +25,7 @@ std::unique_ptr<base::trace_event::TracedValue> ActivationState::ToTracedValue()
                     generic_blocking_rules_disabled);
   value->SetBoolean("measure_performance", measure_performance);
   value->SetBoolean("enable_logging", enable_logging);
+  value->SetBoolean("enable_strong_popup_blocker", enable_strong_popup_blocker);
   return value;
 }
 

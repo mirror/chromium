@@ -88,6 +88,9 @@ void ContentSubresourceFilterDriverFactory::NotifyPageActivationComputed(
       !activation_options_.should_suppress_notifications &&
       base::FeatureList::IsEnabled(
           kSafeBrowsingSubresourceFilterExperimentalUI);
+  state.enable_strong_popup_blocker =
+      state.activation_level == ActivationLevel::ENABLED &&
+      activation_options_.should_strengthen_popup_blocker;
 
   SubresourceFilterObserverManager::FromWebContents(web_contents())
       ->NotifyPageActivationComputed(navigation_handle, activation_decision_,

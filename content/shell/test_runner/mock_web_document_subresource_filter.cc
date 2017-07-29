@@ -50,4 +50,8 @@ bool MockWebDocumentSubresourceFilter::ShouldLogToConsole() {
   return true;
 }
 
+bool MockWebDocumentSubresourceFilter::AllowNavigationToBlankTarget() {
+  return true;
+}
+
 }  // namespace test_runner

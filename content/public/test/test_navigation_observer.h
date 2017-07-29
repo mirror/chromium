@@ -35,8 +35,9 @@ class TestNavigationObserver {
   virtual ~TestNavigationObserver();
 
   // Runs a nested run loop and blocks until the expected number of
-  // navigations are complete.
-  void Wait();
+  // navigations are complete. Returns the last WebContents that finished
+  // navigating.
+  WebContents* Wait();
 
   // Start/stop watching newly created WebContents.
   void StartWatchingNewWebContents();
@@ -88,6 +89,9 @@ class TestNavigationObserver {
 
   // The net error code of the last navigation.
   net::Error last_net_error_code_;
+
+  // The last WebContents that finished loading.
+  WebContents* last_completed_web_contents_;
 
   // The MessageLoopRunner used to spin the message loop.
   scoped_refptr<MessageLoopRunner> message_loop_runner_;

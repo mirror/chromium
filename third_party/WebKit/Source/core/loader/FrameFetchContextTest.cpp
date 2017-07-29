@@ -113,6 +113,8 @@ class FixedPolicySubresourceFilter : public WebDocumentSubresourceFilter {
 
   bool ShouldLogToConsole() override { return false; }
 
+  bool AllowNavigationToBlankTarget() { return true; }
+
  private:
   const LoadPolicy policy_;
   int* filtered_load_counter_;

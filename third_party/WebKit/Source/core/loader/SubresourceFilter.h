@@ -33,6 +33,7 @@ class CORE_EXPORT SubresourceFilter final
                  WebURLRequest::RequestContext,
                  SecurityViolationReportingPolicy);
   bool AllowWebSocketConnection(const KURL&);
+  bool AllowNavigationsToBlankTarget();
 
   DECLARE_VIRTUAL_TRACE();
 

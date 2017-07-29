@@ -134,6 +134,10 @@ bool WebDocumentSubresourceFilterImpl::ShouldLogToConsole() {
   return activation_state().enable_logging;
 }
 
+bool WebDocumentSubresourceFilterImpl::AllowNavigationToBlankTarget() {
+  return !activation_state().enable_strong_popup_blocker;
+}
+
 WebLoadPolicy WebDocumentSubresourceFilterImpl::getLoadPolicyImpl(
     const blink::WebURL& url,
     proto::ElementType element_type) {
