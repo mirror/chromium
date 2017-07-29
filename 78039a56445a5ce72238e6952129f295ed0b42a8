@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6f1e8038_40a625d0",
+        "filename": "third_party/WebKit/Source/platform/wtf/Assertions.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1232329
+      },
+      "writtenOn": "2017-07-29T11:41:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebe3cc41_3d8646ee",
+      "revId": "78039a56445a5ce72238e6952129f295ed0b42a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "408936e6_df83d12f",
         "filename": "third_party/WebKit/Source/platform/wtf/Assertions.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "78039a56445a5ce72238e6952129f295ed0b42a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0faa8e1_ddcaab37",
+        "filename": "third_party/WebKit/Source/platform/wtf/Assertions.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1232329
+      },
+      "writtenOn": "2017-07-29T11:41:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "408936e6_df83d12f",
+      "revId": "78039a56445a5ce72238e6952129f295ed0b42a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "36df9a65_05c2af92",
+        "filename": "third_party/WebKit/Source/platform/wtf/Assertions.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1232329
+      },
+      "writtenOn": "2017-07-29T11:41:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40265d1b_1228edf7",
+      "revId": "78039a56445a5ce72238e6952129f295ed0b42a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ebc06a7_510f3b43",
         "filename": "third_party/WebKit/Source/platform/wtf/Assertions.h",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2017-07-24T00:51:27Z",
       "side": 1,
       "message": "Remove this line.",
+      "revId": "78039a56445a5ce72238e6952129f295ed0b42a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e952bb8_e53f5778",
+        "filename": "third_party/WebKit/Source/platform/wtf/Assertions.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1232329
+      },
+      "writtenOn": "2017-07-29T11:41:02Z",
+      "side": 1,
+      "message": "When I remove this line, it caused some build breaks because other files which include Assertion.h have been using it.",
+      "parentUuid": "5ebc06a7_510f3b43",
       "revId": "78039a56445a5ce72238e6952129f295ed0b42a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "b7207f2f_4b1d4d18",
+        "filename": "third_party/WebKit/Source/platform/wtf/Assertions.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1232329
+      },
+      "writtenOn": "2017-07-29T11:41:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28b5a708_99b9f1bf",
+      "revId": "78039a56445a5ce72238e6952129f295ed0b42a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8cc01194_c3c29e73",
         "filename": "third_party/WebKit/Source/platform/wtf/AssertionsTest.cpp",
         "patchSetId": 2
@@ -101,6 +191,24 @@
       "revId": "78039a56445a5ce72238e6952129f295ed0b42a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa22cb28_d2938ac3",
+        "filename": "third_party/WebKit/Source/platform/wtf/AssertionsTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1232329
+      },
+      "writtenOn": "2017-07-29T11:41:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8cc01194_c3c29e73",
+      "revId": "78039a56445a5ce72238e6952129f295ed0b42a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -192,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "8857ce0c_593fcddf",
+        "filename": "third_party/WebKit/Source/platform/wtf/ScopedLogger.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1232329
+      },
+      "writtenOn": "2017-07-29T11:41:02Z",
+      "side": 1,
+      "message": "According to Steve\u0027s comments, I keep to use the Chromium copyright.",
+      "parentUuid": "11f4a2ff_ed67ed56",
+      "revId": "78039a56445a5ce72238e6952129f295ed0b42a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8925cb32_7cf325da",
         "filename": "third_party/WebKit/Source/platform/wtf/ScopedLogger.h",
         "patchSetId": 2
@@ -206,6 +332,24 @@
       "revId": "78039a56445a5ce72238e6952129f295ed0b42a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "362ca138_a493605f",
+        "filename": "third_party/WebKit/Source/platform/wtf/ScopedLogger.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1232329
+      },
+      "writtenOn": "2017-07-29T11:41:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8925cb32_7cf325da",
+      "revId": "78039a56445a5ce72238e6952129f295ed0b42a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
