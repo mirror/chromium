@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1efcb3c1_c5c216db",
+        "filename": "content/shell/browser/layout_test/layout_test_devtools_bindings.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-29T00:17:10Z",
+      "side": 1,
+      "message": "test_file_url",
+      "range": {
+        "startLine": 109,
+        "startChar": 14,
+        "endLine": 109,
+        "endChar": 17
+      },
+      "revId": "3bc4e5b26fe16ffd1678e5f250975a212b3f4884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaf44a52_c2a3f9f8",
+        "filename": "content/shell/browser/layout_test/layout_test_devtools_bindings.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-29T00:17:10Z",
+      "side": 1,
+      "message": "replace(\u0027/devtools/....\u0027, \u0027/devtools/resources/inspected-page.html\u0027)",
+      "revId": "3bc4e5b26fe16ffd1678e5f250975a212b3f4884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e016a930_efa1a377",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-links-in-errors-with-trace.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-29T00:17:10Z",
+      "side": 1,
+      "message": "Let\u0027s only have showPanel.",
+      "revId": "3bc4e5b26fe16ffd1678e5f250975a212b3f4884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91ea6ecd_4a1e821f",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-links-in-errors-with-trace.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-29T00:17:10Z",
+      "side": 1,
+      "message": "- addScriptTag\n- let\u0027s make path to be resolved relative to this test file.",
+      "revId": "3bc4e5b26fe16ffd1678e5f250975a212b3f4884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8692d233_a07df798",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/resources/inspected-page.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-29T00:17:10Z",
+      "side": 1,
+      "message": "\u003cbody\u003e\u003c/body\u003e",
+      "revId": "3bc4e5b26fe16ffd1678e5f250975a212b3f4884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
