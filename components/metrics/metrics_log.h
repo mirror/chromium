@@ -184,8 +184,6 @@ class MetricsLog {
   // The time when the current log was created.
   const base::TimeTicks creation_time_;
 
-  PrefService* local_state_;
-
   DISALLOW_COPY_AND_ASSIGN(MetricsLog);
 };
 

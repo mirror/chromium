@@ -238,8 +238,7 @@ bool TodayMetricsLogger::CreateNewLog() {
       session_id, app_group::APP_GROUP_TODAY_EXTENSION);
   log_.reset(new TodayMetricsLog(base::SysNSStringToUTF8(client_id), session_id,
                                  metrics::MetricsLog::ONGOING_LOG,
-                                 metrics_service_client_.get(),
-                                 pref_service_.get()));
+                                 metrics_service_client_.get()));
 
   log_->RecordEnvironment(
       std::vector<std::unique_ptr<metrics::MetricsProvider>>(),
@@ -249,25 +248,12 @@ bool TodayMetricsLogger::CreateNewLog() {
 }
 
 TodayMetricsLogger::TodayMetricsLogger()
-    : pref_registry_(new PrefRegistrySimple()),
-      thread_pool_(
+    : thread_pool_(
           new base::SequencedWorkerPool(2,
                                         "LoggerPool",
                                         base::TaskPriority::BACKGROUND)),
       metrics_service_client_(new TodayMetricsServiceClient()),
       histogram_snapshot_manager_(this) {
-  metrics::MetricsLog::RegisterPrefs(pref_registry_.get());
-
-  NSString* url = [[NSSearchPathForDirectoriesInDomains(
-      NSLibraryDirectory, NSUserDomainMask, YES) objectAtIndex:0]
-      stringByAppendingPathComponent:@"Application Support/localstate"];
-  base::FilePath path(base::SysNSStringToUTF8(url));
-  sequenced_task_runner_ =
-      JsonPrefStore::GetTaskRunnerForFile(path, thread_pool_.get());
-  PrefServiceFactory factory;
-  factory.set_extension_prefs(value_map_prefs_.get());
-  factory.SetUserPrefsFile(path, sequenced_task_runner_.get());
-  pref_service_ = factory.Create(pref_registry_.get());
   base::StatisticsRecorder::Initialize();
 }
 

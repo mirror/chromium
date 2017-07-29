@@ -54,8 +54,7 @@ class TestMetricsLog : public MetricsLog {
                  LogType log_type,
                  MetricsServiceClient* client,
                  TestingPrefServiceSimple* prefs)
-      : MetricsLog(client_id, session_id, log_type, client, prefs),
-        prefs_(prefs) {
+      : MetricsLog(client_id, session_id, log_type, client), prefs_(prefs) {
     InitPrefs();
   }
 
