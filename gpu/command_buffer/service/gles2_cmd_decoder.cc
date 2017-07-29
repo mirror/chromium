@@ -15714,7 +15714,11 @@ void GLES2DecoderImpl::FinishAsyncSwapBuffers(gfx::SwapResult result) {
 }
 
 void GLES2DecoderImpl::FinishSwapBuffers(gfx::SwapResult result) {
-  if (result == gfx::SwapResult::SWAP_FAILED) {
+  static int num_swaps = 0;
+
+  ++num_swaps;
+
+  if (result == gfx::SwapResult::SWAP_FAILED || num_swaps == 200) {
     LOG(ERROR) << "Context lost because SwapBuffers failed.";
     if (!CheckResetStatus()) {
       MarkContextLost(error::kUnknown);
