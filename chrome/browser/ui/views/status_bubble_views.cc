@@ -41,6 +41,7 @@
 #include "url/gurl.h"
 
 #if defined(USE_ASH)
+#include "ash/shell.h"            // nogncheck
 #include "ash/wm/window_state.h"  // nogncheck
 #endif
 
@@ -668,9 +669,12 @@ void StatusBubbleViews::Init() {
     popup_->SetOpacity(0.f);
     popup_->SetContentsView(view_);
 #if defined(OS_CHROMEOS)
-    if (!service_manager::ServiceManagerIsRemote()) {
+    if (ash::Shell::HasInstance()) {
       ash::wm::GetWindowState(popup_->GetNativeWindow())
           ->set_ignored_by_shelf(true);
+    } else {
+      // TODO: need mash implementation.
+      NOTIMPLEMENTED();
     }
 #endif
     RepositionPopup();
