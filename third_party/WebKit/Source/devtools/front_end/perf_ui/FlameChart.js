@@ -766,7 +766,9 @@ PerfUI.FlameChart = class extends UI.VBox {
     this._drawFlowEvents(context, width, height);
     this._drawMarkers();
     var headerHeight = this._rulerEnabled ? PerfUI.FlameChart.HeaderHeight : 0;
-    PerfUI.TimelineGrid.drawCanvasGrid(context, this._calculator, 3, headerHeight);
+    var dividersData = PerfUI.TimelineGrid.calculateDividerOffsets(this._calculator);
+    PerfUI.TimelineGrid.drawCanvasGrid(context, dividersData);
+    PerfUI.TimelineGrid.drawCanvasHeaders(context, dividersData, this._calculator, 3, headerHeight);
 
     this._updateElementPosition(this._highlightElement, this._highlightedEntryIndex);
     this._updateElementPosition(this._selectedElement, this._selectedEntryIndex);
