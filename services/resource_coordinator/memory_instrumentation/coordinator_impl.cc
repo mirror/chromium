@@ -428,6 +428,7 @@ void CoordinatorImpl::FinalizeGlobalMemoryDumpIfAllManagersReplied() {
     pmd->process_type = response.second.process_type;
     pmd->chrome_dump = std::move(response.second.dump_ptr->chrome_dump);
     pmd->os_dump = CreatePublicOSDump(*os_dumps[pid]);
+    pmd->pid = pid;
   }
 
   mojom::GlobalMemoryDumpPtr global_dump(mojom::GlobalMemoryDump::New());
