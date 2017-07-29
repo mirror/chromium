@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c002f725_f71a0d91",
+        "filename": "third_party/WebKit/Source/core/paint/BlockPainter.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-07-29T00:38:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "68a2e43f_cd095ac7",
+      "revId": "fdda50089aa705888dff0823211b78ed44016948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0fe16ab_e5124391",
         "filename": "third_party/WebKit/Source/core/paint/PaintControllerPaintTest.cpp",
         "patchSetId": 15
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-28T01:34:11Z",
       "side": 1,
       "message": "I thought we concluded before that the background would paint before negative z-index children?",
+      "revId": "fdda50089aa705888dff0823211b78ed44016948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d141accf_c8be4cf6",
+        "filename": "third_party/WebKit/Source/core/paint/PaintControllerPaintTest.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-07-29T00:38:35Z",
+      "side": 1,
+      "message": "This test was incorrectly named.\n\nThe background should paint before negative z-index children if the container is a stacking context, and after negative z-index children if the container is not a stacking context.\n\nI\u0027ve added two tests that should make this more clear:\nStackingScrollHitTestOrder (negative z-index after background)\nand\nNonStackingScrollHitTestOrder (negative z-index before background)\n\nhttp://jsbin.com/cuhuju if you\u0027d like to play with an example.\n\nI\u0027ve also added a test (NonStackingScrollHitTestOrderWithoutBackground) where the background is transparent so the container actually doesn\u0027t produce any drawings, only the scroll hit test in the correct order.",
+      "parentUuid": "e0fe16ab_e5124391",
       "revId": "fdda50089aa705888dff0823211b78ed44016948",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "006dd185_18884468",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PaintArtifactCompositor.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-07-29T00:38:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e4f60752_966ecbb7",
+      "revId": "fdda50089aa705888dff0823211b78ed44016948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9bf5a1aa_6e27c98e",
         "filename": "third_party/WebKit/Source/platform/graphics/paint/PropertyTreeState.h",
         "patchSetId": 15
@@ -81,6 +135,24 @@
       "writtenOn": "2017-07-28T01:34:11Z",
       "side": 1,
       "message": "This seems weird. Why not just put a unique id on the scroll node?",
+      "revId": "fdda50089aa705888dff0823211b78ed44016948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51171feb_506b87b6",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PropertyTreeState.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-07-29T00:38:35Z",
+      "side": 1,
+      "message": "Yeah this is weird. Your approach is a good idea. Done.",
+      "parentUuid": "9bf5a1aa_6e27c98e",
       "revId": "fdda50089aa705888dff0823211b78ed44016948",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "21009155_8791c85d",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/ScrollHitTestDisplayItem.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-07-29T00:38:35Z",
+      "side": 1,
+      "message": "Checked what this is for (firstpaint, etc) and I think it\u0027s fair to say this does not draw content. I\u0027ve removed this override so we return false.",
+      "parentUuid": "3350e908_ac4e52ff",
+      "revId": "fdda50089aa705888dff0823211b78ed44016948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62f6aff6_16ac16f2",
         "filename": "third_party/WebKit/Source/platform/graphics/paint/ScrollHitTestDisplayItem.h",
         "patchSetId": 15
@@ -118,6 +208,24 @@
       "revId": "fdda50089aa705888dff0823211b78ed44016948",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a86457f_48ed072c",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/ScrollHitTestDisplayItem.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-07-29T00:38:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62f6aff6_16ac16f2",
+      "revId": "fdda50089aa705888dff0823211b78ed44016948",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
