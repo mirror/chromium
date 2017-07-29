@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a274a3d2_08a5238a",
+        "filename": "ash/highlighter/highlighter_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-29T19:10:49Z",
+      "side": 1,
+      "message": "nit: static_cast\u003cint\u003e() and should we do (kPenTipWidth + 1) / 2 to make sure we don\u0027t round down?",
+      "range": {
+        "startLine": 31,
+        "startChar": 43,
+        "endLine": 31,
+        "endChar": 66
+      },
+      "revId": "d18ea5ac648ed89818a093ed30f8771c314513db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fd24671_6efd8cf3",
+        "filename": "ash/highlighter/highlighter_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-29T19:10:49Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 32,
+        "startChar": 43,
+        "endLine": 32,
+        "endChar": 67
+      },
+      "revId": "d18ea5ac648ed89818a093ed30f8771c314513db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
