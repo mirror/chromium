@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "604554ed_78240306",
+        "filename": "ui/webui/resources/chromeos/bluetooth_dialog.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-29T01:01:18Z",
+      "side": 1,
+      "message": "unused?",
+      "range": {
+        "startLine": 168,
+        "startChar": 2,
+        "endLine": 168,
+        "endChar": 15
+      },
+      "revId": "823be51c6fc3e5f1292670afdb0916ed6c6393d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4691951_87f73188",
+        "filename": "ui/webui/resources/chromeos/bluetooth_dialog.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-29T01:01:18Z",
+      "side": 1,
+      "message": "Rebase error? dpapad@ changed {}.bind(this) functions to arrow functions.",
+      "range": {
+        "startLine": 386,
+        "startChar": 54,
+        "endLine": 386,
+        "endChar": 62
+      },
+      "revId": "823be51c6fc3e5f1292670afdb0916ed6c6393d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
