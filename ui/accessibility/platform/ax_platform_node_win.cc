@@ -200,16 +200,16 @@ STDMETHODIMP AXPlatformNodeRelationWin::get_relationType(BSTR* relation_type) {
   return S_OK;
 }
 
-STDMETHODIMP AXPlatformNodeRelationWin::get_nTargets(long* n_targets) {
+STDMETHODIMP AXPlatformNodeRelationWin::get_nTargets(LONG* n_targets) {
   if (!n_targets)
     return E_INVALIDARG;
 
   if (!owner_->delegate_)
     return E_FAIL;
 
-  *n_targets = static_cast<long>(target_ids_.size());
+  *n_targets = static_cast<LONG>(target_ids_.size());
 
-  for (long i = *n_targets - 1; i >= 0; --i) {
+  for (LONG i = *n_targets - 1; i >= 0; --i) {
     AXPlatformNodeWin* result = static_cast<AXPlatformNodeWin*>(
         owner_->delegate_->GetFromNodeID(target_ids_[i]));
     if (!result || !result->delegate_) {
@@ -220,7 +220,7 @@ STDMETHODIMP AXPlatformNodeRelationWin::get_nTargets(long* n_targets) {
   return S_OK;
 }
 
-STDMETHODIMP AXPlatformNodeRelationWin::get_target(long target_index,
+STDMETHODIMP AXPlatformNodeRelationWin::get_target(LONG target_index,
                                                    IUnknown** target) {
   if (!target)
     return E_INVALIDARG;
@@ -229,7 +229,7 @@ STDMETHODIMP AXPlatformNodeRelationWin::get_target(long target_index,
     return E_FAIL;
 
   if (target_index < 0 ||
-      target_index >= static_cast<long>(target_ids_.size())) {
+      target_index >= static_cast<LONG>(target_ids_.size())) {
     return E_INVALIDARG;
   }
 
@@ -243,16 +243,16 @@ STDMETHODIMP AXPlatformNodeRelationWin::get_target(long target_index,
   return S_OK;
 }
 
-STDMETHODIMP AXPlatformNodeRelationWin::get_targets(long max_targets,
+STDMETHODIMP AXPlatformNodeRelationWin::get_targets(LONG max_targets,
                                                     IUnknown** targets,
-                                                    long* n_targets) {
+                                                    LONG* n_targets) {
   if (!targets || !n_targets)
     return E_INVALIDARG;
 
   if (!owner_->delegate_)
     return E_FAIL;
 
-  long count = static_cast<long>(target_ids_.size());
+  LONG count = static_cast<LONG>(target_ids_.size());
   if (count > max_targets)
     count = max_targets;
 
@@ -260,7 +260,7 @@ STDMETHODIMP AXPlatformNodeRelationWin::get_targets(long max_targets,
   if (count == 0)
     return S_FALSE;
 
-  for (long i = 0; i < count; ++i) {
+  for (LONG i = 0; i < count; ++i) {
     HRESULT result = get_target(i, &targets[i]);
     if (result != S_OK)
       return result;
@@ -1063,7 +1063,7 @@ STDMETHODIMP AXPlatformNodeWin::get_accSelection(VARIANT* selected) {
   if (GetData().role != ui::AX_ROLE_LIST_BOX)
     return E_NOTIMPL;
 
-  unsigned long selected_count = 0;
+  LONG selected_count = 0;
   for (auto i = 0; i < delegate_->GetChildCount(); ++i) {
     AXPlatformNodeWin* node = static_cast<AXPlatformNodeWin*>(
         FromNativeViewAccessible(delegate_->ChildAtIndex(i)));
@@ -1095,7 +1095,7 @@ STDMETHODIMP AXPlatformNodeWin::get_accSelection(VARIANT* selected) {
   base::win::EnumVariant* enum_variant =
       new base::win::EnumVariant(selected_count);
   enum_variant->AddRef();
-  unsigned long index = 0;
+  LONG index = 0;
   for (auto i = 0; i < delegate_->GetChildCount(); ++i) {
     AXPlatformNodeWin* node = static_cast<AXPlatformNodeWin*>(
         FromNativeViewAccessible(delegate_->ChildAtIndex(i)));
@@ -1186,11 +1186,10 @@ STDMETHODIMP AXPlatformNodeWin::get_windowHandle(HWND* window_handle) {
   return *window_handle ? S_OK : S_FALSE;
 }
 
-STDMETHODIMP AXPlatformNodeWin::get_relationTargetsOfType(
-    BSTR type_bstr,
-    long max_targets,
-    IUnknown ***targets,
-    long *n_targets) {
+STDMETHODIMP AXPlatformNodeWin::get_relationTargetsOfType(BSTR type_bstr,
+                                                          LONG max_targets,
+                                                          IUnknown*** targets,
+                                                          LONG* n_targets) {
   COM_OBJECT_VALIDATE_2_ARGS(targets, n_targets);
 
   *n_targets = 0;
@@ -1212,7 +1211,7 @@ STDMETHODIMP AXPlatformNodeWin::get_relationTargetsOfType(
       alert_targets.push_back(target);
   }
 
-  long count = static_cast<long>(alert_targets.size());
+  LONG count = static_cast<LONG>(alert_targets.size());
   if (count == 0)
     return S_FALSE;
 
@@ -1227,7 +1226,7 @@ STDMETHODIMP AXPlatformNodeWin::get_relationTargetsOfType(
   // Allocate COM memory for the result array and populate it.
   *targets = static_cast<IUnknown**>(
       CoTaskMemAlloc(count * sizeof(IUnknown*)));
-  for (long i = 0; i < count; ++i) {
+  for (LONG i = 0; i < count; ++i) {
     (*targets)[i] = static_cast<IAccessible*>(alert_targets[i]);
     (*targets)[i]->AddRef();
   }
@@ -1271,7 +1270,7 @@ STDMETHODIMP AXPlatformNodeWin::get_relation(LONG relation_index,
                                              IAccessibleRelation** relation) {
   COM_OBJECT_VALIDATE_1_ARG(relation);
   if (relation_index < 0 ||
-      relation_index >= static_cast<long>(relations_.size())) {
+      relation_index >= static_cast<LONG>(relations_.size())) {
     return E_INVALIDARG;
   }
 
@@ -1284,12 +1283,12 @@ STDMETHODIMP AXPlatformNodeWin::get_relations(LONG max_relations,
                                               IAccessibleRelation** relations,
                                               LONG* n_relations) {
   COM_OBJECT_VALIDATE_2_ARGS(relations, n_relations);
-  long count = static_cast<long>(relations_.size());
+  LONG count = static_cast<LONG>(relations_.size());
   *n_relations = count;
   if (count == 0)
     return S_FALSE;
 
-  for (long i = 0; i < count; ++i) {
+  for (LONG i = 0; i < count; ++i) {
     relations_[i]->AddRef();
     relations[i] = relations_[i];
   }
@@ -1357,7 +1356,7 @@ STDMETHODIMP AXPlatformNodeWin::get_locale(IA2Locale* locale) {
 }
 
 STDMETHODIMP AXPlatformNodeWin::get_accessibleWithCaret(IUnknown** accessible,
-                                                        long* caret_offset) {
+                                                        LONG* caret_offset) {
   return E_NOTIMPL;
 }
 
@@ -1365,8 +1364,8 @@ STDMETHODIMP AXPlatformNodeWin::get_accessibleWithCaret(IUnknown** accessible,
 // IAccessibleTable methods.
 //
 
-STDMETHODIMP AXPlatformNodeWin::get_accessibleAt(long row,
-                                                 long column,
+STDMETHODIMP AXPlatformNodeWin::get_accessibleAt(LONG row,
+                                                 LONG column,
                                                  IUnknown** accessible) {
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_ACCESSIBLE_AT);
   if (!accessible)
@@ -1396,9 +1395,9 @@ STDMETHODIMP AXPlatformNodeWin::get_caption(IUnknown** accessible) {
   return S_FALSE;
 }
 
-STDMETHODIMP AXPlatformNodeWin::get_childIndex(long row,
-                                               long column,
-                                               long* cell_index) {
+STDMETHODIMP AXPlatformNodeWin::get_childIndex(LONG row,
+                                               LONG column,
+                                               LONG* cell_index) {
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_CHILD_INDEX);
   if (!cell_index)
     return E_INVALIDARG;
@@ -1414,7 +1413,7 @@ STDMETHODIMP AXPlatformNodeWin::get_childIndex(long row,
   return E_INVALIDARG;
 }
 
-STDMETHODIMP AXPlatformNodeWin::get_columnDescription(long column,
+STDMETHODIMP AXPlatformNodeWin::get_columnDescription(LONG column,
                                                       BSTR* description) {
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_COLUMN_DESCRIPTION);
   if (!description)
@@ -1451,9 +1450,9 @@ STDMETHODIMP AXPlatformNodeWin::get_columnDescription(long column,
   return S_FALSE;
 }
 
-STDMETHODIMP AXPlatformNodeWin::get_columnExtentAt(long row,
-                                                   long column,
-                                                   long* n_columns_spanned) {
+STDMETHODIMP AXPlatformNodeWin::get_columnExtentAt(LONG row,
+                                                   LONG column,
+                                                   LONG* n_columns_spanned) {
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_COLUMN_EXTENT_AT);
   if (!n_columns_spanned)
     return E_INVALIDARG;
@@ -1469,14 +1468,14 @@ STDMETHODIMP AXPlatformNodeWin::get_columnExtentAt(long row,
 
 STDMETHODIMP AXPlatformNodeWin::get_columnHeader(
     IAccessibleTable** accessible_table,
-    long* starting_row_index) {
+    LONG* starting_row_index) {
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_COLUMN_HEADER);
   // TODO(dmazzoni): implement
   return E_NOTIMPL;
 }
 
-STDMETHODIMP AXPlatformNodeWin::get_columnIndex(long cell_index,
-                                                long* column_index) {
+STDMETHODIMP AXPlatformNodeWin::get_columnIndex(LONG cell_index,
+                                                LONG* column_index) {
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_COLUMN_INDEX);
   if (!column_index)
     return E_INVALIDARG;
@@ -1488,7 +1487,7 @@ STDMETHODIMP AXPlatformNodeWin::get_columnIndex(long cell_index,
   return S_OK;
 }
 
-STDMETHODIMP AXPlatformNodeWin::get_nColumns(long* column_count) {
+STDMETHODIMP AXPlatformNodeWin::get_nColumns(LONG* column_count) {
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_N_COLUMNS);
   if (!column_count)
     return E_INVALIDARG;
@@ -1497,7 +1496,7 @@ STDMETHODIMP AXPlatformNodeWin::get_nColumns(long* column_count) {
   return S_OK;
 }
 
-STDMETHODIMP AXPlatformNodeWin::get_nRows(long* row_count) {
+STDMETHODIMP AXPlatformNodeWin::get_nRows(LONG* row_count) {
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_N_ROWS);
   if (!row_count)
     return E_INVALIDARG;
@@ -1506,7 +1505,7 @@ STDMETHODIMP AXPlatformNodeWin::get_nRows(long* row_count) {
   return S_OK;
 }
 
-STDMETHODIMP AXPlatformNodeWin::get_nSelectedChildren(long* cell_count) {
+STDMETHODIMP AXPlatformNodeWin::get_nSelectedChildren(LONG* cell_count) {
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_N_SELECTED_CHILDREN);
   if (!cell_count)
     return E_INVALIDARG;
@@ -1517,7 +1516,7 @@ STDMETHODIMP AXPlatformNodeWin::get_nSelectedChildren(long* cell_count) {
   if (columns <= 0 || rows <= 0)
     return S_FALSE;
 
-  long result = 0;
+  LONG result = 0;
   for (int r = 0; r < rows; ++r) {
     for (int c = 0; c < columns; ++c) {
       AXPlatformNodeBase* cell = GetTableCell(r, c);
@@ -1529,7 +1528,7 @@ STDMETHODIMP AXPlatformNodeWin::get_nSelectedChildren(long* cell_count) {
   return S_OK;
 }
 
-STDMETHODIMP AXPlatformNodeWin::get_nSelectedColumns(long* column_count) {
+STDMETHODIMP AXPlatformNodeWin::get_nSelectedColumns(LONG* column_count) {
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_N_SELECTED_COLUMNS);
   if (!column_count)
     return E_INVALIDARG;
@@ -1541,7 +1540,7 @@ STDMETHODIMP AXPlatformNodeWin::get_nSelectedColumns(long* column_count) {
     return S_FALSE;
 
   // If every cell in a column is selected, then that column is selected.
-  long result = 0;
+  LONG result = 0;
   for (int c = 0; c < columns; ++c) {
     bool selected = true;
     for (int r = 0; r < rows && selected == true; ++r) {
@@ -1557,7 +1556,7 @@ STDMETHODIMP AXPlatformNodeWin::get_nSelectedColumns(long* column_count) {
   return S_OK;
 }
 
-STDMETHODIMP AXPlatformNodeWin::get_nSelectedRows(long* row_count) {
+STDMETHODIMP AXPlatformNodeWin::get_nSelectedRows(LONG* row_count) {
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_N_SELECTED_ROWS);
   if (!row_count)
     return E_INVALIDARG;
@@ -1569,7 +1568,7 @@ STDMETHODIMP AXPlatformNodeWin::get_nSelectedRows(long* row_count) {
     return S_FALSE;
 
   // If every cell in a row is selected, then that row is selected.
-  long result = 0;
+  LONG result = 0;
   for (int r = 0; r < rows; ++r) {
     bool selected = true;
     for (int c = 0; c < columns && selected == true; ++c) {
@@ -1585,7 +1584,7 @@ STDMETHODIMP AXPlatformNodeWin::get_nSelectedRows(long* row_count) {
   return S_OK;
 }
 
-STDMETHODIMP AXPlatformNodeWin::get_rowDescription(long row,
+STDMETHODIMP AXPlatformNodeWin::get_rowDescription(LONG row,
                                                    BSTR* description) {
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_ROW_DESCRIPTION);
   if (!description)
@@ -1620,9 +1619,9 @@ STDMETHODIMP AXPlatformNodeWin::get_rowDescription(long row,
   return S_FALSE;
 }
 
-STDMETHODIMP AXPlatformNodeWin::get_rowExtentAt(long row,
-                                                long column,
-                                                long* n_rows_spanned) {
+STDMETHODIMP AXPlatformNodeWin::get_rowExtentAt(LONG row,
+                                                LONG column,
+                                                LONG* n_rows_spanned) {
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_ROW_EXTENT_AT);
   if (!n_rows_spanned)
     return E_INVALIDARG;
@@ -1637,13 +1636,13 @@ STDMETHODIMP AXPlatformNodeWin::get_rowExtentAt(long row,
 
 STDMETHODIMP AXPlatformNodeWin::get_rowHeader(
     IAccessibleTable** accessible_table,
-    long* starting_column_index) {
+    LONG* starting_column_index) {
   WIN_ACCESSIBILITY_API_HISTOGRAM(UMA_API_GET_ROW_HEADER);
   // TODO(dmazzoni): implement
   return E_NOTIMPL;
 }
 
-STDMETHODIMP AXPlatformNodeWin::get_rowIndex(long cell_index, long* row_index) {
+STDMETHODIMP AXPlatformNodeWin::get_rowIndex(LONG cell_index, LONG* row_index) {
   if (!row_index)
     return E_INVALIDARG;
 
@@ -1655,9 +1654,9 @@ STDMETHODIMP AXPlatformNodeWin::get_rowIndex(long cell_index, long* row_index) {
   return S_OK;
 }
 
-STDMETHODIMP AXPlatformNodeWin::get_selectedChildren(long max_children,
-                                                     long** children,
-                                                     long* n_children) {
+STDMETHODIMP AXPlatformNodeWin::get_selectedChildren(LONG max_children,
+                                                     LONG** children,
+                                                     LONG* n_children) {
   if (!children || !n_children || max_children <= 0)
     return E_INVALIDARG;
 
@@ -1666,7 +1665,7 @@ STDMETHODIMP AXPlatformNodeWin::get_selectedChildren(long max_children,
   if (columns <= 0 || rows <= 0)
     return S_FALSE;
 
-  std::vector<long> results;
+  std::vector<LONG> results;
   for (int r = 0; r < rows; ++r) {
     for (int c = 0; c < columns; ++c) {
       AXPlatformNodeBase* cell = GetTableCell(r, c);
@@ -1680,9 +1679,9 @@ STDMETHODIMP AXPlatformNodeWin::get_selectedChildren(long max_children,
                                     n_children);
 }
 
-STDMETHODIMP AXPlatformNodeWin::get_selectedColumns(long max_columns,
-                                                    long** columns,
-                                                    long* n_columns) {
+STDMETHODIMP AXPlatformNodeWin::get_selectedColumns(LONG max_columns,
+                                                    LONG** columns,
+                                                    LONG* n_columns) {
   if (!columns || !n_columns || max_columns <= 0)
     return E_INVALIDARG;
 
@@ -1691,7 +1690,7 @@ STDMETHODIMP AXPlatformNodeWin::get_selectedColumns(long max_columns,
   if (column_count <= 0 || row_count <= 0)
     return S_FALSE;
 
-  std::vector<long> results;
+  std::vector<LONG> results;
   for (int c = 0; c < column_count; ++c) {
     bool selected = true;
     for (int r = 0; r < row_count && selected == true; ++r) {
@@ -1706,9 +1705,9 @@ STDMETHODIMP AXPlatformNodeWin::get_selectedColumns(long max_columns,
   return AllocateComArrayFromVector(results, max_columns, columns, n_columns);
 }
 
-STDMETHODIMP AXPlatformNodeWin::get_selectedRows(long max_rows,
-                                                 long** rows,
-                                                 long* n_rows) {
+STDMETHODIMP AXPlatformNodeWin::get_selectedRows(LONG max_rows,
+                                                 LONG** rows,
+                                                 LONG* n_rows) {
   if (!rows || !n_rows || max_rows <= 0)
     return E_INVALIDARG;
 
@@ -1717,7 +1716,7 @@ STDMETHODIMP AXPlatformNodeWin::get_selectedRows(long max_rows,
   if (column_count <= 0 || row_count <= 0)
     return S_FALSE;
 
-  std::vector<long> results;
+  std::vector<LONG> results;
   for (int r = 0; r < row_count; ++r) {
     bool selected = true;
     for (int c = 0; c < column_count && selected == true; ++c) {
@@ -1741,7 +1740,7 @@ STDMETHODIMP AXPlatformNodeWin::get_summary(IUnknown** accessible) {
   return S_FALSE;
 }
 
-STDMETHODIMP AXPlatformNodeWin::get_isColumnSelected(long column,
+STDMETHODIMP AXPlatformNodeWin::get_isColumnSelected(LONG column,
                                                      boolean* is_selected) {
   if (!is_selected)
     return E_INVALIDARG;
@@ -1762,7 +1761,7 @@ STDMETHODIMP AXPlatformNodeWin::get_isColumnSelected(long column,
   return S_OK;
 }
 
-STDMETHODIMP AXPlatformNodeWin::get_isRowSelected(long row,
+STDMETHODIMP AXPlatformNodeWin::get_isRowSelected(LONG row,
                                                   boolean* is_selected) {
   if (!is_selected)
     return E_INVALIDARG;
@@ -1783,8 +1782,8 @@ STDMETHODIMP AXPlatformNodeWin::get_isRowSelected(long row,
   return S_OK;
 }
 
-STDMETHODIMP AXPlatformNodeWin::get_isSelected(long row,
-                                               long column,
+STDMETHODIMP AXPlatformNodeWin::get_isSelected(LONG row,
+                                               LONG column,
                                                boolean* is_selected) {
   if (!is_selected)
     return E_INVALIDARG;
@@ -1804,11 +1803,11 @@ STDMETHODIMP AXPlatformNodeWin::get_isSelected(long row,
 }
 
 STDMETHODIMP AXPlatformNodeWin::get_rowColumnExtentsAtIndex(
-    long index,
-    long* row,
-    long* column,
-    long* row_extents,
-    long* column_extents,
+    LONG index,
+    LONG* row,
+    LONG* column,
+    LONG* row_extents,
+    LONG* column_extents,
     boolean* is_selected) {
   if (!row || !column || !row_extents || !column_extents || !is_selected)
     return E_INVALIDARG;
@@ -1826,19 +1825,19 @@ STDMETHODIMP AXPlatformNodeWin::get_rowColumnExtentsAtIndex(
   return S_OK;
 }
 
-STDMETHODIMP AXPlatformNodeWin::selectRow(long row) {
+STDMETHODIMP AXPlatformNodeWin::selectRow(LONG row) {
   return E_NOTIMPL;
 }
 
-STDMETHODIMP AXPlatformNodeWin::selectColumn(long column) {
+STDMETHODIMP AXPlatformNodeWin::selectColumn(LONG column) {
   return E_NOTIMPL;
 }
 
-STDMETHODIMP AXPlatformNodeWin::unselectRow(long row) {
+STDMETHODIMP AXPlatformNodeWin::unselectRow(LONG row) {
   return E_NOTIMPL;
 }
 
-STDMETHODIMP AXPlatformNodeWin::unselectColumn(long column) {
+STDMETHODIMP AXPlatformNodeWin::unselectColumn(LONG column) {
   return E_NOTIMPL;
 }
 
@@ -1851,8 +1850,8 @@ AXPlatformNodeWin::get_modelChange(IA2TableModelChange* model_change) {
 // IAccessibleTable2 methods.
 //
 
-STDMETHODIMP AXPlatformNodeWin::get_cellAt(long row,
-                                           long column,
+STDMETHODIMP AXPlatformNodeWin::get_cellAt(LONG row,
+                                           LONG column,
                                            IUnknown** cell) {
   if (!cell)
     return E_INVALIDARG;
@@ -1870,12 +1869,12 @@ STDMETHODIMP AXPlatformNodeWin::get_cellAt(long row,
   return E_INVALIDARG;
 }
 
-STDMETHODIMP AXPlatformNodeWin::get_nSelectedCells(long* cell_count) {
+STDMETHODIMP AXPlatformNodeWin::get_nSelectedCells(LONG* cell_count) {
   return get_nSelectedChildren(cell_count);
 }
 
 STDMETHODIMP AXPlatformNodeWin::get_selectedCells(IUnknown*** cells,
-                                                  long* n_selected_cells) {
+                                                  LONG* n_selected_cells) {
   if (!cells || !n_selected_cells)
     return E_INVALIDARG;
 
@@ -1884,8 +1883,8 @@ STDMETHODIMP AXPlatformNodeWin::get_selectedCells(IUnknown*** cells,
   return S_OK;
 }
 
-STDMETHODIMP AXPlatformNodeWin::get_selectedColumns(long** columns,
-                                                    long* n_columns) {
+STDMETHODIMP AXPlatformNodeWin::get_selectedColumns(LONG** columns,
+                                                    LONG* n_columns) {
   if (!columns || !n_columns)
     return E_INVALIDARG;
 
@@ -1894,7 +1893,7 @@ STDMETHODIMP AXPlatformNodeWin::get_selectedColumns(long** columns,
   return S_OK;
 }
 
-STDMETHODIMP AXPlatformNodeWin::get_selectedRows(long** rows, long* n_rows) {
+STDMETHODIMP AXPlatformNodeWin::get_selectedRows(LONG** rows, LONG* n_rows) {
   if (!rows || !n_rows)
     return E_INVALIDARG;
 
@@ -1907,7 +1906,7 @@ STDMETHODIMP AXPlatformNodeWin::get_selectedRows(long** rows, long* n_rows) {
 // IAccessibleTableCell methods.
 //
 
-STDMETHODIMP AXPlatformNodeWin::get_columnExtent(long* n_columns_spanned) {
+STDMETHODIMP AXPlatformNodeWin::get_columnExtent(LONG* n_columns_spanned) {
   if (!n_columns_spanned)
     return E_INVALIDARG;
 
@@ -1917,7 +1916,7 @@ STDMETHODIMP AXPlatformNodeWin::get_columnExtent(long* n_columns_spanned) {
 
 STDMETHODIMP AXPlatformNodeWin::get_columnHeaderCells(
     IUnknown*** cell_accessibles,
-    long* n_column_header_cells) {
+    LONG* n_column_header_cells) {
   if (!cell_accessibles || !n_column_header_cells)
     return E_INVALIDARG;
 
@@ -1956,7 +1955,7 @@ STDMETHODIMP AXPlatformNodeWin::get_columnHeaderCells(
   return S_OK;
 }
 
-STDMETHODIMP AXPlatformNodeWin::get_columnIndex(long* column_index) {
+STDMETHODIMP AXPlatformNodeWin::get_columnIndex(LONG* column_index) {
   if (!column_index)
     return E_INVALIDARG;
 
@@ -1964,7 +1963,7 @@ STDMETHODIMP AXPlatformNodeWin::get_columnIndex(long* column_index) {
   return S_OK;
 }
 
-STDMETHODIMP AXPlatformNodeWin::get_rowExtent(long* n_rows_spanned) {
+STDMETHODIMP AXPlatformNodeWin::get_rowExtent(LONG* n_rows_spanned) {
   if (!n_rows_spanned)
     return E_INVALIDARG;
 
@@ -1973,7 +1972,7 @@ STDMETHODIMP AXPlatformNodeWin::get_rowExtent(long* n_rows_spanned) {
 }
 
 STDMETHODIMP AXPlatformNodeWin::get_rowHeaderCells(IUnknown*** cell_accessibles,
-                                                   long* n_row_header_cells) {
+                                                   LONG* n_row_header_cells) {
   if (!cell_accessibles || !n_row_header_cells)
     return E_INVALIDARG;
 
@@ -2012,7 +2011,7 @@ STDMETHODIMP AXPlatformNodeWin::get_rowHeaderCells(IUnknown*** cell_accessibles,
   return S_OK;
 }
 
-STDMETHODIMP AXPlatformNodeWin::get_rowIndex(long* row_index) {
+STDMETHODIMP AXPlatformNodeWin::get_rowIndex(LONG* row_index) {
   if (!row_index)
     return E_INVALIDARG;
 
@@ -2028,10 +2027,10 @@ STDMETHODIMP AXPlatformNodeWin::get_isSelected(boolean* is_selected) {
   return S_OK;
 }
 
-STDMETHODIMP AXPlatformNodeWin::get_rowColumnExtents(long* row_index,
-                                                     long* column_index,
-                                                     long* row_extents,
-                                                     long* column_extents,
+STDMETHODIMP AXPlatformNodeWin::get_rowColumnExtents(LONG* row_index,
+                                                     LONG* column_index,
+                                                     LONG* row_extents,
+                                                     LONG* column_extents,
                                                      boolean* is_selected) {
   if (!row_index || !column_index || !row_extents || !column_extents ||
       !is_selected) {
@@ -3344,7 +3343,7 @@ int AXPlatformNodeWin::MSAAState() {
     default:
       // READONLY state is complex on windows.  We set STATE_SYSTEM_READONLY
       // on *some* document structure roles such as paragraph, heading or list
-      // even if the node data isn't marked as read only, as long as the
+      // even if the node data isn't marked as read only, as LONG as the
       // node is not editable.
       if (!data.HasState(AX_STATE_RICHLY_EDITABLE) &&
           ShouldNodeHaveReadonlyStateByDefault(data))
@@ -3522,19 +3521,19 @@ bool AXPlatformNodeWin::IsInTreeGrid() {
 }
 
 HRESULT AXPlatformNodeWin::AllocateComArrayFromVector(
-    std::vector<long>& results,
-    long max,
-    long** selected,
-    long* n_selected) {
+    std::vector<LONG>& results,
+    LONG max,
+    LONG** selected,
+    LONG* n_selected) {
   DCHECK_GT(max, 0);
   DCHECK(selected);
   DCHECK(n_selected);
 
-  auto count = std::min((long)results.size(), max);
+  auto count = std::min((LONG)results.size(), max);
   *n_selected = count;
-  *selected = static_cast<long*>(CoTaskMemAlloc(sizeof(long) * count));
+  *selected = static_cast<LONG*>(CoTaskMemAlloc(sizeof(LONG) * count));
 
-  for (long i = 0; i < count; i++)
+  for (LONG i = 0; i < count; i++)
     (*selected)[i] = results[i];
   return S_OK;
 }
