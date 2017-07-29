@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60f2a04f_64252dbf",
+        "filename": "base/sys_info_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-29T00:49:31Z",
+      "side": 1,
+      "message": "I wonder if some system will do `while avail men \u003c 60 MB free_stuff()`...",
+      "revId": "6d49462822e0342bd24d5e31a07ba9d01b9f41aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
