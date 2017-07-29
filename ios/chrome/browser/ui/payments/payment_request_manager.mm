@@ -129,6 +129,9 @@ struct PendingPaymentResponse {
   // Storage for data to return in the payment response, until we're ready to
   // send an actual PaymentResponse.
   PendingPaymentResponse _pendingPaymentResponse;
+
+  // Boolean to track if payment methods are still being fetched.
+  BOOL _fetchingPaymentMethods;
 }
 
 // YES if Payment Request is enabled on the active web state.
@@ -236,6 +239,8 @@ struct PendingPaymentResponse {
     _paymentRequestCache =
         payments::IOSPaymentRequestCacheFactory::GetForBrowserState(
             browserState->GetOriginalChromeBrowserState());
+
+    _fetchingPaymentMethods = YES;
   }
   return self;
 }
@@ -483,6 +488,7 @@ struct PendingPaymentResponse {
   [_paymentRequestCoordinator setPageTitle:pageTitle];
   [_paymentRequestCoordinator setPageHost:pageHost];
   [_paymentRequestCoordinator setConnectionSecure:connectionSecure];
+  [_paymentRequestCoordinator setPending:_fetchingPaymentMethods];
   [_paymentRequestCoordinator setDelegate:self];
 
   [_paymentRequestCoordinator start];
@@ -726,6 +732,12 @@ requestFullCreditCard:(const autofill::CreditCard&)creditCard
   // TODO(crbug.com/748556): Implement this function to use a native app's
   // universal link to open it from Chrome with several arguments supplied
   // from the Payment Request object.
+}
+
+- (void)onPaymentMethodsReady {
+  _fetchingPaymentMethods = NO;
+  if (_paymentRequestCoordinator)
+    [_paymentRequestCoordinator setPending:NO];
 }
 
 #pragma mark - PaymentRequestCoordinatorDelegate methods
