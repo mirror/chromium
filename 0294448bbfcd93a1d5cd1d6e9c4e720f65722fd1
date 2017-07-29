@@ -87,6 +87,24 @@
       "revId": "0294448bbfcd93a1d5cd1d6e9c4e720f65722fd1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "310ce9bf_2f85d810",
+        "filename": "third_party/WebKit/Source/core/dom/Text.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1212729
+      },
+      "writtenOn": "2017-07-29T20:43:28Z",
+      "side": 1,
+      "message": "Not sure what you mean, note that this checks that we at least have a non-whitespace sibling (due to the previous_in_flow-\u003eIsText() check). Can you maybe provide a test-case of what you\u0027re thinking about?\n\nActually, I guess that previous_in_flow check is not totally correct in cases like:\n\n\u003c!doctype html\u003e\n\u003cdiv style\u003d\"display: flex; white-space: pre;\"\u003e A B \u003c/div\u003e\n\u003cdiv id\u003d\"target\" style\u003d\"display: flex; white-space: pre;\"\u003e\u003c/div\u003e\n\u003cscript\u003e\n  target.appendChild(document.createTextNode(\" \"));\n  target.appendChild(document.createTextNode(\"A\"));\n  target.appendChild(document.createTextNode(\" \"));\n  target.appendChild(document.createTextNode(\"B\"));\n  target.appendChild(document.createTextNode(\" \"));\n\u003c/script\u003e\n\nWhere we\u0027re supposed to still preserve the leftmost whitespace child... Not sure of a good way of avoiding all the anonymous items and keep correctness at the same time without having some knowledge about the whole text run, actually...\n\nIn any case, even though this patch still leaves that edge case, the rest of the behaviour changes this patch introduces should be straight correctness improvements, so I think I\u0027d prefer to land this with a note / bug filed / TODO (and perhaps a mail to style-dev / layout-dev), rather than figuring out what the correct architectural fix is, because I fear I won\u0027t have time to fix it near-term at least.\n\nFWIW, what Gecko does to preserve correctness in these edge cases is constructing an intermediate data-structure with all the layout children, and preprocessing it, called the FrameConstructionItemList[1].\n\nThat being said, Gecko has a less incremental layout tree building, so they always rebuild all the children (except maybe for display: contents? I\u0027d have to check more carefully).\n\nNot sure how something like that would fit in Blink\u0027s model, but probably needs a fair amount of discussion in layout-dev / style-dev, and I\u0027d really prefer not to block this patch on that discussion :)\n\n[1]: http://searchfox.org/mozilla-central/rev/09c065976fd4f18d4ad764d7cb4bbc684bf56714/layout/base/nsCSSFrameConstructor.h#865",
+      "parentUuid": "ef8f59b4_9d514012",
+      "revId": "0294448bbfcd93a1d5cd1d6e9c4e720f65722fd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
