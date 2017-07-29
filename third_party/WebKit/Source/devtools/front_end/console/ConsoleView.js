@@ -465,41 +465,81 @@ Console.ConsoleView = class extends UI.VBox {
    * @param {!Console.ConsoleViewMessage} viewMessage
    */
   _appendMessageToEnd(viewMessage) {
-    var ignoreTextFilter = this._currentGroup.showAllChildren();
-    if (!this._filter.shouldBeVisible(viewMessage, ignoreTextFilter)) {
+    var lastGroup = this._currentGroup;
+    this._currentGroup = this._nextGroup(viewMessage);
+    if (viewMessage.consoleMessage().type === ConsoleModel.ConsoleMessage.MessageType.EndGroup)
+      return;
+    if (!this._filter.shouldBeVisible(viewMessage, this._currentGroup.showAllChildren())) {
       this._hiddenByFilterCount++;
       return;
     }
 
-    if (this._tryToCollapseMessages(viewMessage, this._visibleViewMessages.peekLast()))
-      return;
+    // Add ancestor titles before checking for repeats, since it affects the last visible message.
+    this._appendParentGroupTitleMessages(lastGroup);
 
     var lastMessage = this._visibleViewMessages.peekLast();
-    if (viewMessage.consoleMessage().type === ConsoleModel.ConsoleMessage.MessageType.EndGroup) {
-      if (lastMessage && !this._currentGroup.messagesHidden())
-        lastMessage.incrementCloseGroupDecorationCount();
-      this._currentGroup = this._currentGroup.parentGroup() || this._currentGroup;
+    if (this._tryToCollapseMessages(viewMessage, lastMessage))
       return;
-    }
+
     if (!this._currentGroup.messagesHidden()) {
       var originatingMessage = viewMessage.consoleMessage().originatingMessage();
       if (lastMessage && originatingMessage && lastMessage.consoleMessage() === originatingMessage)
         lastMessage.toMessageElement().classList.add('console-adjacent-user-command-result');
-
       this._visibleViewMessages.push(viewMessage);
       this._searchMessage(this._visibleViewMessages.length - 1);
-    }
 
-    if (viewMessage.consoleMessage().isGroupStartMessage()) {
-      var showAllChildren = ignoreTextFilter || this._filter.matchesTextOrRegex(viewMessage);
-      this._currentGroup = new Console.ConsoleGroup(this._currentGroup, viewMessage, showAllChildren);
+      if (viewMessage.consoleMessage().isGroupStartMessage())
+        this._currentGroup.setTitleVisible();
     }
-
     this._messageAppendedForTests();
+  }
+
+  /**
+   * @param {!Console.ConsoleViewMessage} viewMessage
+   * @return {!Console.ConsoleGroup}
+   */
+  _nextGroup(viewMessage) {
+    var lastMessage = this._visibleViewMessages.peekLast();
+    if (viewMessage.consoleMessage().type === ConsoleModel.ConsoleMessage.MessageType.EndGroup) {
+      if (lastMessage && !this._currentGroup.messagesHidden())
+        lastMessage.incrementCloseGroupDecorationCount();
+      return this._currentGroup.parentGroup() || this._currentGroup;
+    }
+    if (viewMessage.consoleMessage().isGroupStartMessage()) {
+      var showAllChildren = this._currentGroup.showAllChildren() || this._filter.matchesTextOrRegex(viewMessage);
+      return new Console.ConsoleGroup(this._currentGroup, viewMessage, showAllChildren);
+    }
+    return this._currentGroup;
   }
 
   _messageAppendedForTests() {
     // This method is sniffed in tests.
+  }
+
+  /**
+   * @param {!Console.ConsoleGroup} parent
+   */
+  _appendParentGroupTitleMessages(parent) {
+    var ancestors = [];
+    var ancestor = parent;
+    while (ancestor && ancestor.titleMessage()) {
+      // Do not include items under a collapsed group.
+      if (ancestor.messagesHidden())
+        ancestors = [];
+      if (ancestor.isTitleVisible())
+        break;
+      ancestors.push(ancestor);
+      ancestor = ancestor.parentGroup();
+    }
+
+    // Append ancestors from highest to lowest.
+    for (var i = ancestors.length - 1; i >= 0; i--) {
+      ancestor = ancestors[i];
+      ancestor.setTitleVisible();
+      this._visibleViewMessages.push(ancestor.titleMessage());
+      this._searchMessage(this._visibleViewMessages.length - 1);
+      this._hiddenByFilterCount--;
+    }
   }
 
   /**
@@ -1157,9 +1197,6 @@ Console.ConsoleViewFilter = class {
         viewMessage.consoleMessage().source === ConsoleModel.ConsoleMessage.MessageSource.Network)
       return false;
 
-    if (viewMessage.consoleMessage().isGroupMessage())
-      return true;
-
     if (message.type === ConsoleModel.ConsoleMessage.MessageType.Result ||
         message.type === ConsoleModel.ConsoleMessage.MessageType.Command)
       return true;
@@ -1298,6 +1335,8 @@ Console.ConsoleGroup = class {
     this._messagesHidden =
         groupMessage && groupMessage.collapsed() || this._parentGroup && this._parentGroup.messagesHidden();
     this._showAllChildren = showAllChildren;
+    this._titleMessage = groupMessage;
+    this._isTitleVisible = !groupMessage;
   }
 
   /**
@@ -1305,6 +1344,24 @@ Console.ConsoleGroup = class {
    */
   static createTopGroup() {
     return new Console.ConsoleGroup(null, null, false);
+  }
+
+  /**
+   * @return {?Console.ConsoleViewMessage}
+   */
+  titleMessage() {
+    return this._titleMessage;
+  }
+
+  /**
+   * @return {boolean}
+   */
+  isTitleVisible() {
+    return this._isTitleVisible;
+  }
+
+  setTitleVisible() {
+    this._isTitleVisible = true;
   }
 
   /**
