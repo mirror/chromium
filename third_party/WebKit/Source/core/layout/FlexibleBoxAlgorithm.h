@@ -103,6 +103,8 @@ class FlexItem {
 
   bool HasAutoMarginsInCrossAxis() const;
 
+  void UpdateAutoMarginsInMainAxis(LayoutUnit auto_margin_offset);
+
   FlexLayoutAlgorithm* algorithm;
   LayoutBox* box;
   const LayoutUnit flex_base_content_size;
@@ -163,6 +165,14 @@ class FlexLine {
   // remaining_free_space unchanged.
   LayoutUnit ApplyMainAxisAutoMarginAdjustment();
 
+  // Computes & sets desired_position on the FlexItems on this line.
+  // Before calling this function, the items need to be laid out with
+  // flexed_content_size set as the override main axis size, and
+  // cross_axis_size needs to be set correctly on each flex item (to the size
+  // the item has without stretching).
+  void ComputeLineItemsPosition(LayoutUnit main_axis_offset,
+                                LayoutUnit& cross_axis_offset);
+
   FlexLayoutAlgorithm* algorithm;
   Vector<FlexItem> line_items;
   const LayoutUnit container_logical_width;
@@ -221,6 +231,15 @@ class FlexLayoutAlgorithm {
   static StyleContentAlignmentData ResolvedAlignContent(const ComputedStyle&);
   static ItemPosition AlignmentForChild(const ComputedStyle& flexbox_style,
                                         const ComputedStyle& child_style);
+
+  static LayoutUnit InitialContentPositionOffset(
+      LayoutUnit available_free_space,
+      const StyleContentAlignmentData&,
+      unsigned number_of_items);
+  static LayoutUnit ContentDistributionSpaceBetweenChildren(
+      LayoutUnit available_free_space,
+      const StyleContentAlignmentData&,
+      unsigned number_of_items);
 
  private:
   bool IsMultiline() const { return style_->FlexWrap() != EFlexWrap::kNowrap; }
