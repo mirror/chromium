@@ -54,12 +54,9 @@ class VrShellDelegate;
 class VrWebContentsObserver;
 
 enum UiAction {
-  HISTORY_BACK = 0,
   HISTORY_FORWARD,
   RELOAD,
   SHOW_TAB,
-  OPEN_NEW_TAB,
-  EXIT_PRESENT,
 };
 
 class VrMetricsHelper;
@@ -184,6 +181,7 @@ class VrShell : public device::GvrDelegate,
   void OnUnsupportedMode(vr::UiUnsupportedMode mode);
   void OnExitVrPromptResult(vr::UiUnsupportedMode reason,
                             vr::ExitVrPromptChoice choice);
+  void OpenNewTab(bool incognito);
 
   void ProcessContentGesture(std::unique_ptr<blink::WebInputEvent> event);
 

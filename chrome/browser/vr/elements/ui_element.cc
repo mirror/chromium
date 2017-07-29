@@ -7,6 +7,7 @@
 #include <limits>
 
 #include "base/logging.h"
+#include "base/stl_util.h"
 #include "base/time/time.h"
 #include "cc/base/math_util.h"
 #include "chrome/browser/vr/elements/ui_element_transform_operations.h"
@@ -107,11 +108,14 @@ void UiElement::SetTransformOperations(
       last_frame_time_, TargetProperty::TRANSFORM, transform_operations_,
       ui_element_transform_operations.operations());
 }
-
 void UiElement::SetLayoutOffset(float x, float y) {
+  SetLayoutOffset(x, y, 0);
+}
+
+void UiElement::SetLayoutOffset(float x, float y, float z) {
   cc::TransformOperations operations = layout_offset_;
   cc::TransformOperation& op = operations.at(0);
-  op.translate = {x, y, 0};
+  op.translate = {x, y, z};
   op.Bake();
   animation_player_.TransitionTransformOperationsTo(
       last_frame_time_, TargetProperty::LAYOUT_OFFSET, transform_operations_,
@@ -171,6 +175,12 @@ void UiElement::OnSetMode() {}
 void UiElement::AddChild(UiElement* child) {
   child->parent_ = this;
   children_.push_back(child);
+}
+
+void UiElement::RemoveChild(UiElement* to_remove) {
+  to_remove->parent_ = nullptr;
+  base::EraseIf(children_,
+                [to_remove](UiElement* child) { return to_remove == child; });
 }
 
 gfx::Point3F UiElement::GetCenter() const {
