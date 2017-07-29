@@ -15,7 +15,6 @@
 
 namespace service_manager {
 class ServiceContextRefFactory;
-class ServiceContextRef;
 }  // service_manager
 
 namespace resource_coordinator {
@@ -38,10 +37,9 @@ class CoordinationUnitProviderImpl : public mojom::CoordinationUnitProvider {
       const CoordinationUnitID& id) override;
 
  private:
-  service_manager::ServiceContextRefFactory* service_ref_factory_;
-  std::unique_ptr<service_manager::ServiceContextRef> service_ref_;
-  CoordinationUnitManager* coordination_unit_manager_;
   mojo::BindingSet<mojom::CoordinationUnitProvider> bindings_;
+  service_manager::ServiceContextRefFactory* service_ref_factory_;
+  CoordinationUnitManager* coordination_unit_manager_;
 
   DISALLOW_COPY_AND_ASSIGN(CoordinationUnitProviderImpl);
 };
