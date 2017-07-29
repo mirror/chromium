@@ -155,6 +155,7 @@
 #include "components/metrics/metrics_rotation_scheduler.h"
 #include "components/metrics/metrics_service_client.h"
 #include "components/metrics/metrics_state_manager.h"
+#include "components/metrics/persistent_system_profile.h"
 #include "components/metrics/stability_metrics_provider.h"
 #include "components/metrics/url_constants.h"
 #include "components/prefs/pref_registry_simple.h"
@@ -318,6 +319,12 @@ void MetricsService::EnableRecording() {
 
   state_manager_->ForceClientIdCreation();
   client_->SetMetricsClientId(state_manager_->client_id());
+
+  SystemProfileProto system_profile;
+  RecordCoreSystemProfile(client_, &system_profile);
+  GlobalPersistentSystemProfile::GetInstance()->SetSystemProfile(
+      system_profile, /*complete=*/false);
+
   if (!log_manager_.current_log())
     OpenNewLog();
 
@@ -847,9 +854,11 @@ std::unique_ptr<MetricsLog> MetricsService::CreateLog(
 
 void MetricsService::RecordCurrentEnvironment(MetricsLog* log) {
   DCHECK(client_);
-  std::string serialized_environment = log->RecordEnvironment(
+  std::string serialized_proto = log->RecordEnvironment(
       metrics_providers_, GetInstallDate(), GetMetricsReportingEnabledDate());
-  client_->OnEnvironmentUpdate(&serialized_environment);
+  GlobalPersistentSystemProfile::GetInstance()->SetSystemProfile(
+      serialized_proto, /*complete=*/true);
+  client_->OnEnvironmentUpdate(&serialized_proto);
 }
 
 void MetricsService::RecordCurrentHistograms() {

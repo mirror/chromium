@@ -26,7 +26,6 @@
 #include "components/metrics/metrics_pref_names.h"
 #include "components/metrics/metrics_provider.h"
 #include "components/metrics/metrics_service_client.h"
-#include "components/metrics/persistent_system_profile.h"
 #include "components/metrics/proto/histogram_event.pb.h"
 #include "components/metrics/proto/system_profile.pb.h"
 #include "components/metrics/proto/user_action_event.pb.h"
@@ -108,10 +107,6 @@ MetricsLog::MetricsLog(const std::string& client_id,
 
   SystemProfileProto* system_profile = uma_proto()->mutable_system_profile();
   RecordCoreSystemProfile(client_, system_profile);
-  if (log_type_ == ONGOING_LOG) {
-    GlobalPersistentSystemProfile::GetInstance()->SetSystemProfile(
-        *system_profile, /*complete=*/false);
-  }
 }
 
 MetricsLog::~MetricsLog() {
@@ -307,11 +302,6 @@ std::string MetricsLog::RecordEnvironment(
   EnvironmentRecorder recorder(local_state_);
   std::string serialized_proto =
       recorder.SerializeAndRecordEnvironmentToPrefs(*system_profile);
-
-  if (log_type_ == ONGOING_LOG) {
-    GlobalPersistentSystemProfile::GetInstance()->SetSystemProfile(
-        serialized_proto, /*complete=*/true);
-  }
 
   return serialized_proto;
 }
