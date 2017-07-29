@@ -138,26 +138,6 @@ enum AccessibilityRole {
   kNumRoles
 };
 
-enum AccessibilityState {
-  kAXBusyState,
-  kAXExpandedState,
-  kAXFocusableState,
-  kAXFocusedState,
-  kAXHaspopupState,
-  kAXHoveredState,
-  kAXInvisibleState,
-  kAXLinkedState,
-  kAXMultilineState,
-  kAXMultiselectableState,
-  kAXOffscreenState,
-  kAXProtectedState,
-  kAXRequiredState,
-  kAXSelectableState,
-  kAXSelectedState,
-  kAXVerticalState,
-  kAXVisitedState
-};
-
 enum AccessibilityOrientation {
   kAccessibilityOrientationUndefined = 0,
   kAccessibilityOrientationVertical,
