@@ -189,6 +189,24 @@
     },
     {
       "key": {
+        "uuid": "5e14dcf1_500f827c",
+        "filename": "third_party/mach_override/chromium.patch",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-07-29T00:17:04Z",
+      "side": 1,
+      "message": "\u003e This is good point, although I don\u0027t believe that the function is thread safe at all. E.g. if one calls mach_override_ptr with the same parameters from two different threads, the results are fully unpredictable. Anything between silent success and crash later (due to instruction patching messed up) is possible.\n\nSure, but I think it’s thread-safe if you call it to override two completely distinct functions from different threads simultaneously.",
+      "parentUuid": "072c7ff1_9fc5f548",
+      "revId": "b475b97ad7aded2a8c45106d25743492885406ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "94602811_74b7c13d",
         "filename": "third_party/mach_override/chromium.patch",
         "patchSetId": 5
