@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4861ee7d_c733f739",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1111839
+      },
+      "writtenOn": "2017-07-29T02:58:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6bcc42ec_c6823e30",
+      "range": {
+        "startLine": 12,
+        "startChar": 39,
+        "endLine": 12,
+        "endChar": 0
+      },
+      "revId": "c5a4efe605b14129c033a9c7b6c5943eff3d793a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29e63666_3c403aa2",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-25T01:17:28Z",
       "side": 1,
       "message": "I think it is better and less confusing to disable bluetooth state toggling (gray out in UI or something similar) why we waiting for Android to change the state.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 58
+      },
+      "revId": "c5a4efe605b14129c033a9c7b6c5943eff3d793a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2175d13a_dac87d96",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1111839
+      },
+      "writtenOn": "2017-07-29T02:58:11Z",
+      "side": 1,
+      "message": "We do not want to bring the delay from Android to Chrome. This is definitely not a good user experience.",
+      "parentUuid": "29e63666_3c403aa2",
       "range": {
         "startLine": 13,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3629801a_ec16c882",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1111839
+      },
+      "writtenOn": "2017-07-29T02:58:11Z",
+      "side": 1,
+      "message": "As discussed offline, moving the adapter observer from arc_setting_service to arc_bluetooth_bridge give us sufficient information to decide the intent to be sent to Android. If the lifecycle of the observer is bonded with arc bluetooth instance, the arc_bluetooth_bridge won\u0027t be notified on the enable event. As a result no enable intent will be sent to Android. By this change, arc_bluetooth_bridge will be able to watch the powered state change all the time. However, extra check is needed to avoid sending callbacks while the arc bluetooth instance is not present.",
+      "parentUuid": "07d4a1d8_8531deac",
+      "range": {
+        "startLine": 22,
+        "startChar": 3,
+        "endLine": 23,
+        "endChar": 64
+      },
+      "revId": "c5a4efe605b14129c033a9c7b6c5943eff3d793a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b2fcd2ac_6b2a6060",
         "filename": "components/arc/bluetooth/arc_bluetooth_bridge.cc",
         "patchSetId": 1
@@ -85,6 +157,24 @@
       "revId": "c5a4efe605b14129c033a9c7b6c5943eff3d793a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac6ce065_df17069f",
+        "filename": "components/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1111839
+      },
+      "writtenOn": "2017-07-29T02:58:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2fcd2ac_6b2a6060",
+      "revId": "c5a4efe605b14129c033a9c7b6c5943eff3d793a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "8d4a4d39_5f08f776",
+        "filename": "components/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 692,
+      "author": {
+        "id": 1111839
+      },
+      "writtenOn": "2017-07-29T02:58:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9bf5c154_c2d1451d",
+      "range": {
+        "startLine": 692,
+        "startChar": 38,
+        "endLine": 692,
+        "endChar": 74
+      },
+      "revId": "c5a4efe605b14129c033a9c7b6c5943eff3d793a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59ef8e77_688d0b46",
         "filename": "components/arc/bluetooth/arc_bluetooth_bridge.cc",
         "patchSetId": 1
@@ -131,6 +245,30 @@
       "revId": "c5a4efe605b14129c033a9c7b6c5943eff3d793a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a0fa5b7_53b1e9ee",
+        "filename": "components/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1966,
+      "author": {
+        "id": 1111839
+      },
+      "writtenOn": "2017-07-29T02:58:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59ef8e77_688d0b46",
+      "range": {
+        "startLine": 1965,
+        "startChar": 2,
+        "endLine": 1966,
+        "endChar": 48
+      },
+      "revId": "c5a4efe605b14129c033a9c7b6c5943eff3d793a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -177,6 +315,30 @@
       "revId": "c5a4efe605b14129c033a9c7b6c5943eff3d793a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8298387d_fc47c5bd",
+        "filename": "components/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1981,
+      "author": {
+        "id": 1111839
+      },
+      "writtenOn": "2017-07-29T02:58:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5568312f_74533206",
+      "range": {
+        "startLine": 1981,
+        "startChar": 0,
+        "endLine": 1981,
+        "endChar": 47
+      },
+      "revId": "c5a4efe605b14129c033a9c7b6c5943eff3d793a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
