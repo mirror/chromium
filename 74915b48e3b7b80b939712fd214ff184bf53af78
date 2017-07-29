@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b8b651d_3ad50fb0",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 5
+      },
+      "lineNbr": 2243,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-29T00:45:55Z",
+      "side": 1,
+      "message": "WDYT of explaining what this area is about, rather than saying \"No usage data\". Dunno, but maybe something like, \"This is where disk and battery usage will be shown, once it\u0027s available\" or something. Brainstorming, this can be ignored.",
+      "revId": "74915b48e3b7b80b939712fd214ff184bf53af78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1625bd64_756752f1",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-29T00:45:55Z",
+      "side": 1,
+      "message": "Just to point it out, since I made a comment about loadTimeData on another of your CLs: this is an example of loadTimeData is not for i18n, so it can stay loadTimeData. But loadTimeData for i18n stuff should change to either $i18n* or I18nBehavior.*",
+      "revId": "74915b48e3b7b80b939712fd214ff184bf53af78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5be551df_a28cc91a",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-29T00:45:55Z",
+      "side": 1,
+      "message": "Please add @return {string}",
+      "revId": "74915b48e3b7b80b939712fd214ff184bf53af78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9335b950_607bf978",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-29T00:45:55Z",
+      "side": 1,
+      "message": "@return",
+      "revId": "74915b48e3b7b80b939712fd214ff184bf53af78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
