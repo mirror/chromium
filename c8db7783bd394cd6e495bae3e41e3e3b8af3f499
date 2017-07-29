@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a2dedd99_9c8687f0",
+        "filename": "chrome/browser/chromeos/bluetooth/bluetooth_adapter_client.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-07-29T03:47:34Z",
+      "side": 1,
+      "message": "I suggest calling this BluetoothManager and move all bluetooth power logic here.\n\nIf I understand the bluetooth power control flow correctly, there are 4 possible control states:\n\n1) Chrome is started to display OOBE (basically, no device owner exist).\n2) Chrome is started to display signin screen.\n3) Chrome is restarted inside active user session.\n4) User has signed in.\n\nThe first two are probably the same, and the second two are also probably the same (i.e. the difference may be handled in the same method).\n\nI think, that Chrome startup status should be received from ChromeSessionManager::Initialize(), where we decide on the startup mode.\n\nchromeos::Preferences may update this object status directly when user preference is initialized or changed.\n\nYou also probably want to subscribe to Local State changes to apply signin screen updates.\n\nAm I missing something?",
+      "revId": "c8db7783bd394cd6e495bae3e41e3e3b8af3f499",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
