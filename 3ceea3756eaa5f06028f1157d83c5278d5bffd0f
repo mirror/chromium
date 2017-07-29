@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a0474faf_e32314c4",
+        "filename": "chrome/installer/zucchini/main_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-29T05:21:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c39be8fd_f7509c8b",
+      "range": {
+        "startLine": 55,
+        "startChar": 33,
+        "endLine": 55,
+        "endChar": 34
+      },
+      "revId": "3ceea3756eaa5f06028f1157d83c5278d5bffd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "829c15aa_53869ed1",
         "filename": "chrome/installer/zucchini/zucchini_commands.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-28T19:51:31Z",
       "side": 1,
       "message": "this name seems like a misnomer. when i think of a buffered reader/writer, i imagine something that reads/writes in chunks in a buffer. that\u0027s not what this does.\n\nare zucchini reads typically single-pass full-file scans (as is the case for the crc)?\n\nhow much address space will these mappings typically require?",
+      "range": {
+        "startLine": 23,
+        "startChar": 6,
+        "endLine": 23,
+        "endChar": 14
+      },
+      "revId": "3ceea3756eaa5f06028f1157d83c5278d5bffd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e720d322_38c1b77c",
+        "filename": "chrome/installer/zucchini/zucchini_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-29T05:21:47Z",
+      "side": 1,
+      "message": "Renamed to MappedFileReader.\n\nZucchini currently requires random access. For patch generation, suffix array certainly needs that. For patch application, file writing can be streamable, but that would increase complexity a lot, and is not currently a goal.\n\nPeak address space would be \"old\" + \"patch\" + \"new\". For chrome.7z, likely 500 MB at worse. Note that this behavior is similar to Courgette.",
+      "parentUuid": "829c15aa_53869ed1",
       "range": {
         "startLine": 23,
         "startChar": 6,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "bccaae90_6654c5e7",
+        "filename": "chrome/installer/zucchini/zucchini_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-29T05:21:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20894869_b2a79ab7",
+      "revId": "3ceea3756eaa5f06028f1157d83c5278d5bffd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52e52dcc_db83c264",
         "filename": "chrome/installer/zucchini/zucchini_commands.cc",
         "patchSetId": 1
@@ -85,6 +151,30 @@
       "revId": "3ceea3756eaa5f06028f1157d83c5278d5bffd0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4feaf45c_f0191b1d",
+        "filename": "chrome/installer/zucchini/zucchini_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-29T05:21:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52e52dcc_db83c264",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 17
+      },
+      "revId": "3ceea3756eaa5f06028f1157d83c5278d5bffd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "2c6c6efa_7af80ef3",
+        "filename": "chrome/installer/zucchini/zucchini_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-29T05:21:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed2b17cb_728a6d71",
+      "range": {
+        "startLine": 33,
+        "startChar": 36,
+        "endLine": 33,
+        "endChar": 37
+      },
+      "revId": "3ceea3756eaa5f06028f1157d83c5278d5bffd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5bc69fb4_7fb3964c",
         "filename": "chrome/installer/zucchini/zucchini_commands.cc",
         "patchSetId": 1
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "f7665bad_a5f26045",
+        "filename": "chrome/installer/zucchini/zucchini_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-29T05:21:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5bc69fb4_7fb3964c",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 0
+      },
+      "revId": "3ceea3756eaa5f06028f1157d83c5278d5bffd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd7f4e53_ab7ff86b",
         "filename": "chrome/installer/zucchini/zucchini_commands.cc",
         "patchSetId": 1
@@ -151,6 +289,24 @@
     },
     {
       "key": {
+        "uuid": "6fdb31ea_01d9bdad",
+        "filename": "chrome/installer/zucchini/zucchini_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-29T05:21:47Z",
+      "side": 1,
+      "message": "Done (so signed vs. unsigned, rather than against int32_t, which also makes sense).",
+      "parentUuid": "bd7f4e53_ab7ff86b",
+      "revId": "3ceea3756eaa5f06028f1157d83c5278d5bffd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0616c074_dbe84b5c",
         "filename": "chrome/installer/zucchini/zucchini_commands.cc",
         "patchSetId": 1
@@ -165,6 +321,24 @@
       "revId": "3ceea3756eaa5f06028f1157d83c5278d5bffd0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4d3dfdc_49b9fd6f",
+        "filename": "chrome/installer/zucchini/zucchini_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-29T05:21:47Z",
+      "side": 1,
+      "message": "Done, but base::MemoryMappedFile::Region is a struct without constructor, so we need to use initializer list.",
+      "parentUuid": "0616c074_dbe84b5c",
+      "revId": "3ceea3756eaa5f06028f1157d83c5278d5bffd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -191,6 +365,30 @@
     },
     {
       "key": {
+        "uuid": "57cdad37_e985c93e",
+        "filename": "chrome/installer/zucchini/zucchini_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-29T05:21:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31fea9d6_302a4689",
+      "range": {
+        "startLine": 49,
+        "startChar": 12,
+        "endLine": 49,
+        "endChar": 19
+      },
+      "revId": "3ceea3756eaa5f06028f1157d83c5278d5bffd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "813b7aae_0bffbccd",
         "filename": "chrome/installer/zucchini/zucchini_commands.cc",
         "patchSetId": 1
@@ -205,6 +403,24 @@
       "revId": "3ceea3756eaa5f06028f1157d83c5278d5bffd0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b530a48f_95661c72",
+        "filename": "chrome/installer/zucchini/zucchini_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-29T05:21:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "813b7aae_0bffbccd",
+      "revId": "3ceea3756eaa5f06028f1157d83c5278d5bffd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -231,6 +447,30 @@
     },
     {
       "key": {
+        "uuid": "362a76af_a5f14d64",
+        "filename": "chrome/installer/zucchini/zucchini_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-29T05:21:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77df755f_6cb7a49c",
+      "range": {
+        "startLine": 61,
+        "startChar": 2,
+        "endLine": 61,
+        "endChar": 0
+      },
+      "revId": "3ceea3756eaa5f06028f1157d83c5278d5bffd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "961dbc15_675d92b3",
         "filename": "chrome/installer/zucchini/zucchini_commands.cc",
         "patchSetId": 1
@@ -242,6 +482,30 @@
       "writtenOn": "2017-07-28T19:51:31Z",
       "side": 1,
       "message": "RunZucchiniCommand takes cerr as an in param. why should it not use cerr directly if individual commands use cout/cerr directly? i propose either making everything in the .exe use cout/cerr directly, or passing cout+cerr into the runner for use by it and all commands.",
+      "range": {
+        "startLine": 88,
+        "startChar": 7,
+        "endLine": 88,
+        "endChar": 11
+      },
+      "revId": "3ceea3756eaa5f06028f1157d83c5278d5bffd0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbf60f45_2bc75777",
+        "filename": "chrome/installer/zucchini/zucchini_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-29T05:21:47Z",
+      "side": 1,
+      "message": "Done; injecting std::out and std::err all the way from main().\n\nAlso adding MainParams to reduce visual noise.",
+      "parentUuid": "961dbc15_675d92b3",
       "range": {
         "startLine": 88,
         "startChar": 7,
