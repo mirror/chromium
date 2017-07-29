@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a68ad03e_af84649c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-07-29T00:46:42Z",
+      "side": 1,
+      "message": "Shouldn\u0027t be any real changes to the buffering size logic; it just ensures that we carry over the fix for massive bluetooth audio buffers to the new passthrough path. I\u0027ll add a comment to this affect in any case.",
+      "parentUuid": "d4d47f84_582bdfd5",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 6
+      },
+      "revId": "d0016be5a6a1da4e67c23bebb78615642c2a750a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ee955b5_cb4b1223",
         "filename": "content/renderer/media/audio_renderer_mixer_manager.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-28T23:45:11Z",
       "side": 1,
       "message": "This comment is confusing. I think it needs an \"or\" after the first comma. But also the placement (at a glance anyway) reads like it applies to just the \"if\", when parts of it describe the \"else\". I\u0027d split it up or ad some space between l32 and l33",
+      "range": {
+        "startLine": 29,
+        "startChar": 25,
+        "endLine": 29,
+        "endChar": 27
+      },
+      "revId": "d0016be5a6a1da4e67c23bebb78615642c2a750a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3db5ca4_caec1eb5",
+        "filename": "content/renderer/media/audio_renderer_mixer_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-07-29T00:46:42Z",
+      "side": 1,
+      "message": "Deleted this all in favor of comments inside each conditional block; which feels much clearer.",
+      "parentUuid": "5ee955b5_cb4b1223",
       "range": {
         "startLine": 29,
         "startChar": 25,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "63bef3fa_3bf41e52",
+        "filename": "content/renderer/media/audio_renderer_mixer_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-07-29T00:46:42Z",
+      "side": 1,
+      "message": "Yup latest patch set fixed this.",
+      "parentUuid": "6ec7a43b_abcc0afc",
+      "range": {
+        "startLine": 35,
+        "startChar": 38,
+        "endLine": 35,
+        "endChar": 55
+      },
+      "revId": "d0016be5a6a1da4e67c23bebb78615642c2a750a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "94d0944e_77d4d889",
         "filename": "media/base/audio_latency.cc",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "d0016be5a6a1da4e67c23bebb78615642c2a750a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b91b6054_0791400c",
+        "filename": "media/base/audio_latency.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-07-29T00:46:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94d0944e_77d4d889",
+      "range": {
+        "startLine": 48,
+        "startChar": 33,
+        "endLine": 48,
+        "endChar": 41
+      },
+      "revId": "d0016be5a6a1da4e67c23bebb78615642c2a750a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "b83b3357_c7a77d1f",
+        "filename": "media/renderers/audio_renderer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-07-29T00:46:42Z",
+      "side": 1,
+      "message": "Added a comment. It\u0027s a balance of power efficiency and responsiveness to pause events. I.e. how long after a user hits pause will they hear audio?\n\nI\u0027ve bumped it to 20ms here since it\u0027s not actually a change from what\u0027s configured for the algorithm and output device today and more accurately reflects what we expect to happen during calls to GetHighLatencyBufferSize().\n\nIt\u0027s not a real change because if we\u0027re not resampling the value is ignored by the AudioRendererMixer since they disable FIFO and it\u0027s still less than AudioRendererAlgorithm::kStartingCapacityInMs. If we are resampling internally it\u0027s just a hint to GetHighLatencyBufferSize() which will calculate some equivalent or greater value.",
+      "parentUuid": "4a5a5d30_37810376",
+      "range": {
+        "startLine": 397,
+        "startChar": 13,
+        "endLine": 397,
+        "endChar": 17
+      },
+      "revId": "d0016be5a6a1da4e67c23bebb78615642c2a750a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "283b2f53_4740e619",
         "filename": "media/renderers/audio_renderer_impl.cc",
         "patchSetId": 1
@@ -128,6 +248,30 @@
       "writtenOn": "2017-07-28T23:45:11Z",
       "side": 1,
       "message": "I had to look at the diff to understand this sentence. The meaning of \"where\" is easily assigned to both *not* resampling and *when* resampling.",
+      "range": {
+        "startLine": 400,
+        "startChar": 35,
+        "endLine": 400,
+        "endChar": 40
+      },
+      "revId": "d0016be5a6a1da4e67c23bebb78615642c2a750a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d1f9595_abb82916",
+        "filename": "media/renderers/audio_renderer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-07-29T00:46:42Z",
+      "side": 1,
+      "message": "Cleaned up the comment here and deleted that clause since it\u0027s not necessary.",
+      "parentUuid": "283b2f53_4740e619",
       "range": {
         "startLine": 400,
         "startChar": 35,

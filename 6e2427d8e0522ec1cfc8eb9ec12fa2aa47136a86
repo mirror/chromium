@@ -22,6 +22,30 @@
       "revId": "6e2427d8e0522ec1cfc8eb9ec12fa2aa47136a86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3bd0822_cf86e52c",
+        "filename": "media/renderers/audio_renderer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-07-29T00:46:42Z",
+      "side": 0,
+      "message": "This is just used as a hint to the calculation done by GetHighLatencyBufferSize().",
+      "parentUuid": "5407d3c2_0b11bb69",
+      "range": {
+        "startLine": 425,
+        "startChar": 6,
+        "endLine": 425,
+        "endChar": 27
+      },
+      "revId": "6e2427d8e0522ec1cfc8eb9ec12fa2aa47136a86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
