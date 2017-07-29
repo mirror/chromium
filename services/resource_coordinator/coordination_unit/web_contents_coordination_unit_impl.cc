@@ -4,6 +4,8 @@
 
 #include "services/resource_coordinator/coordination_unit/web_contents_coordination_unit_impl.h"
 
+#include "services/resource_coordinator/coordination_unit/frame_coordination_unit_impl.h"
+
 namespace resource_coordinator {
 
 WebContentsCoordinationUnitImpl::WebContentsCoordinationUnitImpl(
@@ -65,13 +67,49 @@ double WebContentsCoordinationUnitImpl::CalculateCPUUsage() {
   return cpu_usage;
 }
 
+double
+WebContentsCoordinationUnitImpl::CalculateExpectedTaskQueueingDuration() {
+  // We calculate the EQT for the process of the main frame only because we care
+  // the smoothness of the main frame the most. The computation is simple and
+  // fast because it does not need to traverse the whole graph for all processes
+  // associated to the tab.
+  for (auto* cu :
+       GetAssociatedCoordinationUnitsOfType(CoordinationUnitType::kFrame)) {
+    FrameCoordinationUnitImpl* frame_cu =
+        static_cast<FrameCoordinationUnitImpl*>(cu);
+    if (frame_cu->IsMainFrame()) {
+      auto associated_processes = cu->GetAssociatedCoordinationUnitsOfType(
+          CoordinationUnitType::kProcess);
+
+      DCHECK_EQ(1u, associated_processes.size());
+
+      CoordinationUnitImpl* process_cu = *associated_processes.begin();
+      base::Value process_eqt_value = process_cu->GetProperty(
+          mojom::PropertyType::kExpectedTaskQueueingDuration);
+      // Return here because there is at most one frame per tab.
+      return process_eqt_value.is_double() ? process_eqt_value.GetDouble()
+                                           : 0.0;
+    }
+  }
+
+  // One tab should have one main frame.
+  NOTREACHED();
+  return 0.0;
+}
+
 void WebContentsCoordinationUnitImpl::RecalculateProperty(
     const mojom::PropertyType property_type) {
-  if (property_type == mojom::PropertyType::kCPUUsage) {
-    double cpu_usage = CalculateCPUUsage();
-
-    SetProperty(mojom::PropertyType::kCPUUsage,
-                base::MakeUnique<base::Value>(cpu_usage));
+  switch (property_type) {
+    case mojom::PropertyType::kCPUUsage:
+      SetProperty(mojom::PropertyType::kCPUUsage,
+                  base::MakeUnique<base::Value>(CalculateCPUUsage()));
+      break;
+    case mojom::PropertyType::kExpectedTaskQueueingDuration:
+      SetProperty(property_type, base::MakeUnique<base::Value>(
+                                     CalculateExpectedTaskQueueingDuration()));
+      break;
+    default:
+      break;
   }
 }
 

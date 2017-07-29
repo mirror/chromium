@@ -26,6 +26,7 @@ class WebContentsCoordinationUnitImpl : public CoordinationUnitImpl {
 
  private:
   double CalculateCPUUsage();
+  double CalculateExpectedTaskQueueingDuration();
 
   DISALLOW_COPY_AND_ASSIGN(WebContentsCoordinationUnitImpl);
 };

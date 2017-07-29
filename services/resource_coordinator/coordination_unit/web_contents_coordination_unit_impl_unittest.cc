@@ -71,4 +71,51 @@ TEST_F(WebContentsCoordinationUnitImplTest,
             cu_graph.other_tab->GetProperty(mojom::PropertyType::kCPUUsage));
 }
 
+TEST_F(WebContentsCoordinationUnitImplTest,
+       CalculateTabEQTForSingleTabInSingleProcess) {
+  MockSingleTabInSingleProcessCoordinationUnitGraph cu_graph;
+
+  cu_graph.process->SetProperty(
+      mojom::PropertyType::kExpectedTaskQueueingDuration,
+      base::MakeUnique<base::Value>(1.0));
+
+  EXPECT_EQ(base::Value(1.0),
+            cu_graph.tab->GetProperty(
+                mojom::PropertyType::kExpectedTaskQueueingDuration));
+}
+
+TEST_F(WebContentsCoordinationUnitImplTest,
+       CalculateTabEQTForMultipleTabsInSingleProcess) {
+  MockMultipleTabsInSingleProcessCoordinationUnitGraph cu_graph;
+
+  cu_graph.process->SetProperty(
+      mojom::PropertyType::kExpectedTaskQueueingDuration,
+      base::MakeUnique<base::Value>(1.0));
+
+  EXPECT_EQ(base::Value(1.0),
+            cu_graph.tab->GetProperty(
+                mojom::PropertyType::kExpectedTaskQueueingDuration));
+  EXPECT_EQ(base::Value(1.0),
+            cu_graph.other_tab->GetProperty(
+                mojom::PropertyType::kExpectedTaskQueueingDuration));
+}
+
+TEST_F(WebContentsCoordinationUnitImplTest,
+       CalculateTabEQTForSingleTabWithMultipleProcesses) {
+  MockSingleTabWithMultipleProcessesCoordinationUnitGraph cu_graph;
+
+  cu_graph.process->SetProperty(
+      mojom::PropertyType::kExpectedTaskQueueingDuration,
+      base::MakeUnique<base::Value>(1.0));
+  cu_graph.other_process->SetProperty(
+      mojom::PropertyType::kExpectedTaskQueueingDuration,
+      base::MakeUnique<base::Value>(10.0));
+
+  // The |other_process| is not for the main frame so its EQT values does not
+  // propagate to the tab.
+  EXPECT_EQ(base::Value(1.0),
+            cu_graph.tab->GetProperty(
+                mojom::PropertyType::kExpectedTaskQueueingDuration));
+}
+
 }  // namespace resource_coordinator
