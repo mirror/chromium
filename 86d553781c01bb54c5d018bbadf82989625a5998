@@ -16,6 +16,24 @@
       "revId": "86d553781c01bb54c5d018bbadf82989625a5998",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bd33cbb_e948680f",
+        "filename": "build/cipd/android/android.ensure",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-07-29T00:59:32Z",
+      "side": 1,
+      "message": "Yeah, idk a way to set the version in the yaml for CIPD. Will investigate. But i have just been setting it after the fact with \"cipd set-tag\"",
+      "parentUuid": "ee6dff67_2b00f2ee",
+      "revId": "86d553781c01bb54c5d018bbadf82989625a5998",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
