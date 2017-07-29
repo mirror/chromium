@@ -185,14 +185,10 @@ static bool IsManualRedirectFetchRequest(const ResourceRequest& request) {
 }
 
 bool ResourceLoader::WillFollowRedirect(
-    const WebURL& new_url,
-    const WebURL& new_first_party_for_cookies,
-    const WebString& new_referrer,
-    WebReferrerPolicy new_referrer_policy,
-    const WebString& new_method,
-    const WebURLResponse& passed_redirect_response,
+    const WebURLRedirectInfo& redirect_info,
+    const WebURLResponse& web_redirect_response,
     bool& report_raw_headers) {
-  DCHECK(!passed_redirect_response.IsNull());
+  DCHECK(!web_redirect_response.IsNull());
 
   if (is_cache_aware_loading_activated_) {
     // Fail as cache miss if cached response is a redirect.
@@ -201,31 +197,7 @@ bool ResourceLoader::WillFollowRedirect(
     return false;
   }
 
-  const ResourceRequest& last_request = resource_->LastResourceRequest();
-  ResourceRequest new_request(new_url);
-  new_request.SetFirstPartyForCookies(new_first_party_for_cookies);
-  new_request.SetDownloadToFile(last_request.DownloadToFile());
-  new_request.SetUseStreamOnResponse(last_request.UseStreamOnResponse());
-  new_request.SetRequestContext(last_request.GetRequestContext());
-  new_request.SetFrameType(last_request.GetFrameType());
-  new_request.SetServiceWorkerMode(
-      passed_redirect_response.WasFetchedViaServiceWorker()
-          ? WebURLRequest::ServiceWorkerMode::kAll
-          : WebURLRequest::ServiceWorkerMode::kNone);
-  new_request.SetShouldResetAppCache(last_request.ShouldResetAppCache());
-  new_request.SetFetchRequestMode(last_request.GetFetchRequestMode());
-  new_request.SetFetchCredentialsMode(last_request.GetFetchCredentialsMode());
-  new_request.SetKeepalive(last_request.GetKeepalive());
-  String referrer =
-      new_referrer.IsEmpty() ? Referrer::NoReferrer() : String(new_referrer);
-  new_request.SetHTTPReferrer(
-      Referrer(referrer, static_cast<ReferrerPolicy>(new_referrer_policy)));
-  new_request.SetPriority(last_request.Priority());
-  new_request.SetHTTPMethod(new_method);
-  if (new_request.HttpMethod() == last_request.HttpMethod())
-    new_request.SetHTTPBody(last_request.HttpBody());
-  new_request.SetCheckForBrowserSideNavigation(
-      last_request.CheckForBrowserSideNavigation());
+  const KURL& new_url = redirect_info.new_url();
 
   Resource::Type resource_type = resource_->GetType();
 
@@ -239,13 +211,38 @@ bool ResourceLoader::WillFollowRedirect(
   WebURLRequest::FetchCredentialsMode fetch_credentials_mode =
       initial_request.GetFetchCredentialsMode();
 
+  const ResourceRequest& last_request = resource_->LastResourceRequest();
+  ResourceRequest new_request(new_url);
+  new_request.SetFirstPartyForCookies(redirect_info.first_party_for_cookies());
+  new_request.SetDownloadToFile(last_request.DownloadToFile());
+  new_request.SetUseStreamOnResponse(last_request.UseStreamOnResponse());
+  new_request.SetRequestContext(request_context);
+  new_request.SetFrameType(frame_type);
+  new_request.SetServiceWorkerMode(
+      web_redirect_response.WasFetchedViaServiceWorker()
+          ? WebURLRequest::ServiceWorkerMode::kAll
+          : WebURLRequest::ServiceWorkerMode::kNone);
+  new_request.SetShouldResetAppCache(last_request.ShouldResetAppCache());
+  new_request.SetFetchRequestMode(fetch_request_mode);
+  new_request.SetFetchCredentialsMode(fetch_credentials_mode);
+  new_request.SetKeepalive(last_request.GetKeepalive());
+  new_request.SetHTTPReferrer(Referrer(
+      new_referrer.IsEmpty() ? Referrer::NoReferrer()
+                             : String(redirect_info.new_referrer()),
+      static_cast<ReferrerPolicy>(redirect_info.new_referrer_policy())));
+  new_request.SetPriority(last_request.Priority());
+  new_request.SetHTTPMethod(redirect_info.new_method());
+  if (new_request.HttpMethod() == last_request.HttpMethod())
+    new_request.SetHTTPBody(last_request.HttpBody());
+  new_request.SetCheckForBrowserSideNavigation(
+      last_request.CheckForBrowserSideNavigation());
+  new_request.SetRedirectStatus(
+      ResourceRequest::RedirectStatus::kFollowedRedirect);
+
   const ResourceLoaderOptions& options = resource_->Options();
 
   const ResourceResponse& redirect_response(
-      passed_redirect_response.ToResourceResponse());
-
-  new_request.SetRedirectStatus(
-      ResourceRequest::RedirectStatus::kFollowedRedirect);
+      web_redirect_response.ToResourceResponse());
 
   if (!IsManualRedirectFetchRequest(initial_request)) {
     bool unused_preload = resource_->IsUnusedPreload();
@@ -339,7 +336,7 @@ bool ResourceLoader::WillFollowRedirect(
   // First-party cookie logic moved from DocumentLoader in Blink to
   // net::URLRequest in the browser. Assert that Blink didn't try to change it
   // to something else.
-  DCHECK(KURL(new_first_party_for_cookies) ==
+  DCHECK(KURL(redirect_info.new_first_party_for_cookies()) ==
          new_request.FirstPartyForCookies());
 
   // The following parameters never change during the lifetime of a request.
