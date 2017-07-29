@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d2ad45db_7645ac5e",
+        "filename": "content/browser/dom_storage/dom_storage_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-07-29T01:23:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0896c403_0aeeea18",
+      "revId": "daa613fdc5671552d7b7d5ba9726c73bfbab1761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14fe6f63_135092f9",
         "filename": "content/browser/dom_storage/dom_storage_host.cc",
         "patchSetId": 5
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "36f761d0_cdcf321a",
+        "filename": "content/browser/dom_storage/dom_storage_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-07-29T01:23:35Z",
+      "side": 1,
+      "message": "yeah that seems like the only way to tell if the old_value is correct. because of the race condition you mentioned below. Since I haven\u0027t updated DOMStorageArea yet, I will leave this value unused for now and use it in future CLs.",
+      "parentUuid": "14fe6f63_135092f9",
+      "range": {
+        "startLine": 106,
+        "startChar": 25,
+        "endLine": 106,
+        "endChar": 34
+      },
+      "revId": "daa613fdc5671552d7b7d5ba9726c73bfbab1761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a82e1e27_fe9736e4",
         "filename": "content/browser/dom_storage/dom_storage_host.cc",
         "patchSetId": 5
@@ -56,6 +98,24 @@
       "revId": "daa613fdc5671552d7b7d5ba9726c73bfbab1761",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "289c7711_e8365279",
+        "filename": "content/browser/dom_storage/dom_storage_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-07-29T01:23:35Z",
+      "side": 1,
+      "message": "um :( this means that we can never really set back to keys_only mode is at some point of time 2 renderers opened the database. Okay I will update the code for that.",
+      "parentUuid": "a82e1e27_fe9736e4",
+      "revId": "daa613fdc5671552d7b7d5ba9726c73bfbab1761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -79,6 +139,30 @@
       "revId": "daa613fdc5671552d7b7d5ba9726c73bfbab1761",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "161d852c_7773fcfa",
+        "filename": "content/browser/dom_storage/dom_storage_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-07-29T01:23:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d35764af_dba458eb",
+      "range": {
+        "startLine": 126,
+        "startChar": 17,
+        "endLine": 126,
+        "endChar": 26
+      },
+      "revId": "daa613fdc5671552d7b7d5ba9726c73bfbab1761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
