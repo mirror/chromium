@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "7557d308_2f23a84e",
+        "filename": "chrome/browser/chromeos/preferences.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-07-29T06:59:17Z",
+      "side": 1,
+      "message": "I moved the policy for the name setting to device policy. This doesn\u0027t change the local state decision for the preference, right?",
+      "parentUuid": "12360c8a_861ccd21",
+      "revId": "65028f3f777077841fe5c2ab6f8f688c3503bde0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b29edfa_c712108a",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 2
