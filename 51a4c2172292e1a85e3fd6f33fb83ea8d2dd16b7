@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d7f06bb_a8b1e957",
+        "filename": "chrome/browser/resources/md_extensions/item.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-29T00:51:37Z",
+      "side": 0,
+      "message": "Is there an |enabled| attribute? Or was this code just toggling an non existing attribute?",
+      "revId": "51a4c2172292e1a85e3fd6f33fb83ea8d2dd16b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
