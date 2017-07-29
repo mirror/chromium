@@ -20,6 +20,7 @@
 #include "content/public/test/browser_test_utils.h"
 #include "ui/views/controls/link.h"
 #include "ui/views/controls/styled_label.h"
+#include "url/gurl.h"
 
 namespace payments {
 
@@ -360,10 +361,10 @@ IN_PROC_BROWSER_TEST_F(PaymentRequestPaymentMethodIdentifierTest, Url_Valid) {
   std::vector<PaymentRequest*> requests =
       GetPaymentRequests(GetActiveWebContents());
   EXPECT_EQ(1u, requests.size());
-  std::vector<std::string> url_payment_method_identifiers =
+  std::vector<GURL> url_payment_method_identifiers =
       requests[0]->spec()->url_payment_method_identifiers();
   EXPECT_EQ(1u, url_payment_method_identifiers.size());
-  EXPECT_EQ("https://bobpay.xyz", url_payment_method_identifiers[0]);
+  EXPECT_EQ(GURL("https://bobpay.xyz"), url_payment_method_identifiers[0]);
 }
 
 // Specifiying multiple different types of payment method identifiers still
@@ -386,7 +387,7 @@ IN_PROC_BROWSER_TEST_F(PaymentRequestPaymentMethodIdentifierTest,
       GetPaymentRequests(GetActiveWebContents());
   EXPECT_EQ(1u, requests.size());
 
-  std::vector<std::string> supported_card_networks =
+  std::vector<GURL> supported_card_networks =
       requests[0]->spec()->supported_card_networks();
   EXPECT_EQ(3u, supported_card_networks.size());
   EXPECT_EQ("mastercard", supported_card_networks[0]);
@@ -396,8 +397,8 @@ IN_PROC_BROWSER_TEST_F(PaymentRequestPaymentMethodIdentifierTest,
   std::vector<std::string> url_payment_method_identifiers =
       requests[0]->spec()->url_payment_method_identifiers();
   EXPECT_EQ(2u, url_payment_method_identifiers.size());
-  EXPECT_EQ("https://bobpay.xyz", url_payment_method_identifiers[0]);
-  EXPECT_EQ("https://alicepay.com", url_payment_method_identifiers[1]);
+  EXPECT_EQ(GURL("https://bobpay.xyz"), url_payment_method_identifiers[0]);
+  EXPECT_EQ(GURL("https://alicepay.com"), url_payment_method_identifiers[1]);
 }
 
 // Test harness integrating with DialogBrowserTest to present the dialog in an
