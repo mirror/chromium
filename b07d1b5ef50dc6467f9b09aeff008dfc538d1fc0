@@ -16,6 +16,75 @@
       "revId": "b07d1b5ef50dc6467f9b09aeff008dfc538d1fc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a86a15f5_3add5866",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-29T00:35:46Z",
+      "side": 1,
+      "message": "It looks like there are about nine strings, if I\u0027m counting correctly. That is a bit much to put into parameters (ten args total).\n\nIt can be reduced to one set of strings by using a property to control the hidden$\u003d, such as hidden$\u003d[[hidePermissionSource_]] that is set inside of permissionSourceString_().\n\nI admit I\u0027m not excited about ten parameters to a function. Though I would prefer to use $i18n if possible.\n\npermissionSourceString_(site.source, \u0027$i18nPolymer{theStringToShowFooBlah}\u0027, \n    \u0027$i18n{theStringToShowBarThing}\u0027, ...)\n\nJust brainstorming, but how bad would a series of divs be\n\n\u003cdiv hidden$\u003d\"[[hideFooBlah_]]\"\u003e$i18n{theStringToShowFooBlah}\u003c/div\u003e\n\u003cdiv hidden$\u003d\"[[hideBarThing_]]\"\u003e$i18n{theStringToShowBarThing}\u003c/div\u003e\n...\n\nA third option is I18nBehavior.",
+      "parentUuid": "95a2d265_ae2bd989",
+      "revId": "b07d1b5ef50dc6467f9b09aeff008dfc538d1fc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9df52952_e7cf59c0",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-29T00:35:46Z",
+      "side": 1,
+      "message": "It seems more common to leave out the \u0027else\u0027 in the case that the prior \u0027if\u0027 ended in a return;\nIt\u0027s not a big deal, but it makes me wonder if the \u0027return\u0027 on line 61 is intentional or a whoops.",
+      "revId": "b07d1b5ef50dc6467f9b09aeff008dfc538d1fc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "574a7502_d545f1aa",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-29T00:35:46Z",
+      "side": 1,
+      "message": "Is there another case that disables this? If this is the only place this changes, could this logic be moved up to line 77 so that the value doesn\u0027t flip back and forth (which is not an issue in c++, but in JS something may be reacting to each value change).\n\nMaybe:\n\n// Users are able to override embargo, so leave enabled if so.\nif (site.source !\u003d settings.SiteSettingSource.EMBARGO)\n  this.$.permission.disabled \u003d true;\n\nOr:\n\n// Users are able to override embargo, so leave enabled in that case.\nthis.$.permission.disabled \u003d (site.source !\u003d settings.SiteSettingSource.EMBARGO);",
+      "revId": "b07d1b5ef50dc6467f9b09aeff008dfc538d1fc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "951569d1_4beddf64",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-29T00:35:46Z",
+      "side": 1,
+      "message": "If using $i18n in the html isn\u0027t working out, please use I18nBehavior and the .i18n() function on that behavior (it will do the loadTimeData for you and helps clarify what is using i18n and what is using loadTimeData for config info).",
+      "revId": "b07d1b5ef50dc6467f9b09aeff008dfc538d1fc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
