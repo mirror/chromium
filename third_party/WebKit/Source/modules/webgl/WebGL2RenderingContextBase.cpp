@@ -6,7 +6,9 @@
 
 #include <memory>
 #include "bindings/modules/v8/WebGLAny.h"
+#include "core/frame/RemoteFrame.h"
 #include "core/html/HTMLCanvasElement.h"
+#include "core/html/HTMLIFrameElement.h"
 #include "core/html/HTMLImageElement.h"
 #include "core/html/HTMLVideoElement.h"
 #include "core/html/ImageData.h"
@@ -1515,7 +1517,39 @@ void WebGL2RenderingContextBase::texSubImage2D(
       format, type, xoffset, yoffset, 0, video,
       GetTextureSourceSubRectangle(width, height), 1, 0, exception_state);
 }
-
+  
+void WebGL2RenderingContextBase::texSubImage2D(
+    ExecutionContext* execution_context,
+    GLenum target,
+    GLint level,
+    GLint xoffset,
+    GLint yoffset,
+    GLsizei width,
+    GLsizei height,
+    GLenum format,
+    GLenum type,
+    HTMLIFrameElement* iframe,
+    GLint iframe_x0,
+    GLint iframe_y0,
+    ExceptionState& exception_state) {
+  if (isContextLost())
+    return;
+  fprintf(stderr, "texSubImage2D(IFrame): BEGIN\n");
+  DCHECK(iframe);
+  Frame* frame = iframe->ContentFrame();
+  DCHECK(frame);
+  if (frame->IsRemoteFrame()) {
+    RemoteFrame* remote_frame = reinterpret_cast<RemoteFrame*>(frame);
+    DCHECK(remote_frame);
+    fprintf(stderr, "texSubImage2D(IFrame): %d\n", (int)remote_frame->surface_id_hash());
+  } else if (frame->IsLocalFrame()) {
+    fprintf(stderr, "texSubImage2D(IFrame): LOCAL FRAME\n");
+  } else {
+    fprintf(stderr, "texSubImage2D(IFrame): NOT READY\n");
+  }
+  fprintf(stderr, "texSubImage2D(IFrame): END\n");
+}
+  
 void WebGL2RenderingContextBase::texSubImage2D(
     GLenum target,
     GLint level,

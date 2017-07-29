@@ -24,6 +24,8 @@ class CORE_EXPORT RemoteFrame final : public Frame {
 
   ~RemoteFrame() override;
 
+  size_t surface_id_hash() const;
+
   // Frame overrides:
   DECLARE_VIRTUAL_TRACE();
   void Navigate(Document& origin_document,
