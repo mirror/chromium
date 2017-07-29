@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "240f41d8_65b5d8b3",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 11
+      },
+      "lineNbr": 5451,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-29T02:31:10Z",
+      "side": 1,
+      "message": "So, did you verify that use_titlecase is actually supposed to govern button text (and not just e.g. menu items)?",
+      "revId": "6d4145cbb5d52f2f0b584ecd0c684ece7fd090a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
