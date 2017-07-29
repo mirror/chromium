@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e09727db_dcd07e2c",
+        "filename": "content/renderer/media/gpu/gpu_video_accelerator_factories_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-29T04:46:34Z",
+      "side": 1,
+      "message": "Hmm I think if the GPU process was dead for some reason, the\nprovider would not be bound. Of course in that case, the VEA\nwould not be created and we shoudn\u0027t be here. In any case,\nCreateVideoEncodeAccelerator() would fail too, so let\u0027s change\nit to DCHECK.\n(And there should be no race in binding and using |vea_provider_|\nsince BindVideoEncodeAcceleratorProviderOnTaskRunner() happens\non |task_runner_|).",
+      "parentUuid": "4907d1bf_74ac1ae0",
+      "range": {
+        "startLine": 170,
+        "startChar": 6,
+        "endLine": 170,
+        "endChar": 29
+      },
+      "revId": "44d57436005280ee7c65c96523990d73180d1833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "784d40da_68642ded",
         "filename": "media/mojo/services/mojo_video_encode_accelerator_provider.h",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "44d57436005280ee7c65c96523990d73180d1833",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc5bcc78_ff097cc2",
+        "filename": "media/mojo/services/mojo_video_encode_accelerator_provider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-07-29T04:46:34Z",
+      "side": 1,
+      "message": "It has to be public to be accessed from Create\u0027s StrongBinding.",
+      "parentUuid": "784d40da_68642ded",
+      "range": {
+        "startLine": 34,
+        "startChar": 2,
+        "endLine": 34,
+        "endChar": 36
+      },
+      "revId": "44d57436005280ee7c65c96523990d73180d1833",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
