@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4b237fdd_965f1474",
+        "filename": "chrome/test/data/webui/extensions/extension_pack_dialog_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-07-29T01:23:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eda1b5db_9afb05ac",
+      "revId": "ba717986722e9cf755eb1b14b91b2899e3996eb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "336e9fd0_5eb7dd93",
         "filename": "chrome/test/data/webui/extensions/extension_pack_dialog_test.js",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "ba717986722e9cf755eb1b14b91b2899e3996eb1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44551a9f_9605db1b",
+        "filename": "chrome/test/data/webui/extensions/extension_pack_dialog_test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-07-29T01:23:50Z",
+      "side": 1,
+      "message": "Agreed regarding TestBrowserProxy. We can address that after we switch delegate to browserProxy.",
+      "parentUuid": "336e9fd0_5eb7dd93",
+      "revId": "ba717986722e9cf755eb1b14b91b2899e3996eb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
