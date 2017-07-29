@@ -208,6 +208,15 @@ std::unique_ptr<web::WebState> CreateWebState(
 
   // Make sure the observers do clean after themselves.
   DCHECK([_observers empty]);
+
+  // Close all tabs. Do this in an @autoreleasepool as WebStateList observers
+  // will be notified (they are unregistered later). As some of them may be
+  // implemented in Objective-C and unregister themselves in their -dealloc
+  // method, ensure they -autorelease introduced by ARC are processed before
+  // the WebStateList destructor is called.
+  @autoreleasepool {
+    [self closeAllTabs];
+  }
 }
 
 #pragma mark - Public methods
@@ -642,15 +651,6 @@ std::unique_ptr<web::WebState> CreateWebState(
 
   // Clear weak pointer to WebStateListMetricsObserver before destroying it.
   _webStateListMetricsObserver = nullptr;
-
-  // Close all tabs. Do this in an @autoreleasepool as WebStateList observers
-  // will be notified (they are unregistered later). As some of them may be
-  // implemented in Objective-C and unregister themselves in their -dealloc
-  // method, ensure they -autorelease introduced by ARC are processed before
-  // the WebStateList destructor is called.
-  @autoreleasepool {
-    [self closeAllTabs];
-  }
 
   // Unregister all observers after closing all the tabs as some of them are
   // required to properly clean up the Tabs.

@@ -995,6 +995,7 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
 
 - (void)dealloc {
   DCHECK(_isShutdown) << "-shutdown must be called before dealloc.";
+  [_model closeAllTabs];
 }
 
 #pragma mark - Accessibility
@@ -2248,7 +2249,6 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   if (_voiceSearchController)
     _voiceSearchController->SetDelegate(nil);
   [_rateThisAppDialog setDelegate:nil];
-  [_model closeAllTabs];
 }
 
 #pragma mark - SnapshotOverlayProvider methods
