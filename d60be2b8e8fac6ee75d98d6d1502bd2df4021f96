@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d817bea9_4b90190d",
+        "filename": "chrome/browser/ui/views/harmony/harmony_typography_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-07-29T00:48:07Z",
+      "side": 1,
+      "message": "I was confused by this because the test clearly is asserting 20pt line heights, but I measured the resulting line height on the http auth dialog and it was 21pt before I changed these constants. I debugged it and it turns out in unit_tests we don\u0027t initialize the full font subsystem. The fallback gives a different result, so I\u0027ve added a block that initializes the subsystem for this suite and everything is good.",
+      "parentUuid": "8248adbc_20f735fd",
+      "revId": "d60be2b8e8fac6ee75d98d6d1502bd2df4021f96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "392ac550_7917898a",
         "filename": "ui/views/controls/table/table_view.cc",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "d60be2b8e8fac6ee75d98d6d1502bd2df4021f96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbc000c4_f32502b2",
+        "filename": "ui/views/controls/table/table_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-07-29T00:48:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "392ac550_7917898a",
+      "revId": "d60be2b8e8fac6ee75d98d6d1502bd2df4021f96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "78e0a8e3_6329da77",
+        "filename": "ui/views/controls/table/table_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-07-29T00:48:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf30bf8f_ce08876a",
+      "revId": "d60be2b8e8fac6ee75d98d6d1502bd2df4021f96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d9f0654_fdb7f3ac",
         "filename": "ui/views/controls/table/table_view.cc",
         "patchSetId": 9
@@ -67,6 +121,24 @@
       "revId": "d60be2b8e8fac6ee75d98d6d1502bd2df4021f96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ce0ff4f_f0b16803",
+        "filename": "ui/views/controls/table/table_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-07-29T00:48:07Z",
+      "side": 1,
+      "message": "I think it works. It\u0027s not literally a Label in this case, but it is text related to the icon. Maybe it\u0027s a bit of a stretch, but I\u0027m loath to add one-off metrics when I can avoid it.\n\nI tested the few table-using dialogs I knew of and they look okay with 10pt of space. 16pt is a bit too much with the grouper bullet, but we\u0027re removing those. Anyway, Alan okayed the result when I sent him a screenshot.",
+      "parentUuid": "8d9f0654_fdb7f3ac",
+      "revId": "d60be2b8e8fac6ee75d98d6d1502bd2df4021f96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "85dbf910_14aeb8f7",
+        "filename": "ui/views/controls/table/table_view.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-07-29T00:48:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2dc66ad7_205368d9",
+      "revId": "d60be2b8e8fac6ee75d98d6d1502bd2df4021f96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44953f1e_718d2827",
         "filename": "ui/views/layout/layout_provider.cc",
         "patchSetId": 9
@@ -101,6 +191,24 @@
       "revId": "d60be2b8e8fac6ee75d98d6d1502bd2df4021f96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14667460_3976a072",
+        "filename": "ui/views/layout/layout_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-07-29T00:48:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44953f1e_718d2827",
+      "revId": "d60be2b8e8fac6ee75d98d6d1502bd2df4021f96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
