@@ -16,6 +16,24 @@
       "revId": "3b83010857783b096de6fe3223ebdea8daa69b6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acd95ed2_699afc58",
+        "filename": "ash/login/ui/login_constants.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-07-29T01:13:17Z",
+      "side": 1,
+      "message": "Since UX confirmed that they are all different, other blur sigmas can be placed in files such as shelf_constants.h. The value is changed to 30.0f after confirmation from UX.",
+      "parentUuid": "be679d5c_826a5774",
+      "revId": "3b83010857783b096de6fe3223ebdea8daa69b6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
