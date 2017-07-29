@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40eef402_5e80e4fd",
+        "filename": "ash/highlighter/highlighter_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-29T19:21:16Z",
+      "side": 1,
+      "message": "fyi, we should avoid duplication of this too as part of crbug.com/750235",
+      "revId": "3b45499d31f8fba85f0c0edf9560a6eca0a87689",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9683151_224aa1fd",
+        "filename": "ash/highlighter/highlighter_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-29T19:21:16Z",
+      "side": 1,
+      "message": "can we do this without having to make a copy of all points like GetTrace does?",
+      "range": {
+        "startLine": 119,
+        "startChar": 15,
+        "endLine": 119,
+        "endChar": 32
+      },
+      "revId": "3b45499d31f8fba85f0c0edf9560a6eca0a87689",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e30d09eb_6574b205",
+        "filename": "ash/highlighter/highlighter_controller.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-29T19:21:16Z",
+      "side": 1,
+      "message": "nit: highlighter",
+      "range": {
+        "startLine": 60,
+        "startChar": 55,
+        "endLine": 60,
+        "endChar": 68
+      },
+      "revId": "3b45499d31f8fba85f0c0edf9560a6eca0a87689",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d58ed6d6_ed815168",
+        "filename": "ash/highlighter/highlighter_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-29T19:21:16Z",
+      "side": 1,
+      "message": "commented on this code already in the other patch. does this CL need a rebase?",
+      "revId": "3b45499d31f8fba85f0c0edf9560a6eca0a87689",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
