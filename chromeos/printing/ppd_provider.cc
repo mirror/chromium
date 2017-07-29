@@ -399,6 +399,20 @@ class PpdProviderImpl : public PpdProvider, public net::URLFetcherDelegate {
                                 weak_factory_.GetWeakPtr(), reference, cb));
   }
 
+  void ReverseLookup(const std::string& effective_make_and_model,
+                     const ReverseLookupCallback& cb) override {
+    if (effective_make_and_model.empty()) {
+      LOG(WARNING) << "Cannot resolve an empty make and model";
+      PostReverseLookupFailure(PpdProvider::NOT_FOUND, cb);
+      return;
+    }
+
+    ResolveManufacturers(base::Bind(&PpdProviderImpl::ReverseLookupManufacturer,
+                                    base::Unretained(this),
+                                    effective_make_and_model, cb));
+    return;
+  }
+
   // Common handler that gets called whenever a fetch completes.  Note this
   // is used both for |fetcher_| fetches (i.e. http[s]) and file-based fetches;
   // |source| may be null in the latter case.
@@ -972,6 +986,79 @@ class PpdProviderImpl : public PpdProvider, public net::URLFetcherDelegate {
            return a.first < b.first;
          });
     return ret;
+  }
+
+  void PostReverseLookupFailure(CallbackResultCode result,
+                                const ReverseLookupCallback& cb) {
+    base::SequencedTaskRunnerHandle::Get()->PostTask(
+        FROM_HERE, base::Bind(cb, result, std::string(), std::string()));
+  }
+
+  // Iterates through all |manufacturers| starting with |index| to see if any
+  // contain |effective_make_and_model|.  Upon finding
+  // |effective_make_and_model|, calls |cb|.  If |effective_make_and_model| is
+  // not found, |cb| is called with NOT_FOUND.
+  void SearchEntries(const std::string& effective_make_and_model,
+                     const ReverseLookupCallback& cb,
+                     size_t index,
+                     const std::vector<std::string>& manufacturers,
+                     CallbackResultCode printers_result,
+                     const ResolvedPrintersList& printer_list) {
+    if (printers_result == PpdProvider::SUCCESS) {
+      auto found =
+          std::find_if(printer_list.begin(), printer_list.end(),
+                       [effective_make_and_model](
+                           const std::pair<std::string, Printer::PpdReference>&
+                               printer_listing) {
+                         return effective_make_and_model ==
+                                printer_listing.second.effective_make_and_model;
+                       });
+      if (found != printer_list.end()) {
+        // We found it.  Done now!
+        base::SequencedTaskRunnerHandle::Get()->PostTask(
+            FROM_HERE, base::Bind(cb, PpdProvider::SUCCESS,
+                                  manufacturers[index], found->first));
+        return;
+      }
+    }
+
+    size_t next_index = index + 1;
+    if (next_index >= manufacturers.size()) {
+      // All manufacturers have been checked.  It's not here.
+      PostReverseLookupFailure(NOT_FOUND, cb);
+      return;
+    }
+
+    // Keep looking.
+    ResolvePrinters(
+        manufacturers[next_index],
+        base::Bind(&PpdProviderImpl::SearchEntries, base::Unretained(this),
+                   effective_make_and_model, cb, next_index, manufacturers));
+  }
+
+  void ReverseLookupManufacturer(
+      const std::string& effective_make_and_model,
+      const ReverseLookupCallback& cb,
+      CallbackResultCode manufacturer_result,
+      const std::vector<std::string>& manufacturers) {
+    DCHECK(!effective_make_and_model.empty());
+
+    if (manufacturer_result != PpdProvider::SUCCESS) {
+      PostReverseLookupFailure(manufacturer_result, cb);
+      return;
+    }
+
+    if (manufacturers.empty()) {
+      PostReverseLookupFailure(PpdProvider::NOT_FOUND, cb);
+      return;
+    }
+
+    int start_index = 0;
+
+    ResolvePrinters(
+        manufacturers[start_index],
+        base::Bind(&PpdProviderImpl::SearchEntries, base::Unretained(this),
+                   effective_make_and_model, cb, start_index, manufacturers));
   }
 
   // Map from (localized) manufacturer name to metadata for that manufacturer.
