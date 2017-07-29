@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9dad9d8_4583e2ce",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-29T01:44:30Z",
+      "side": 1,
+      "message": "Nit: No else after return; see https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#Code-formatting",
+      "revId": "0a24cd78e68d7dfb6199e0dbe2a34bb932a3134b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90c15f44_678411b4",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-29T01:44:30Z",
+      "side": 1,
+      "message": "Nit: Use #if here, since this can be checked by the preprocessor, and doing so will minimize binary size impact.",
+      "revId": "0a24cd78e68d7dfb6199e0dbe2a34bb932a3134b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8403698a_5e508675",
+        "filename": "ui/base/win/shell.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-29T01:44:30Z",
+      "side": 1,
+      "message": "This doesn\u0027t work; if DCHECK is off, |property_count| is uninitialized.  You need to save the return value in a temp and then DCHECK(SUCCEEDED()) on the temp.",
+      "revId": "0a24cd78e68d7dfb6199e0dbe2a34bb932a3134b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbc81f03_d555d8fd",
+        "filename": "ui/base/win/shell.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-29T01:44:30Z",
+      "side": 1,
+      "message": "Nit: Why conditionalize this block?  There\u0027s no code outside the DCHECKs.",
+      "revId": "0a24cd78e68d7dfb6199e0dbe2a34bb932a3134b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
