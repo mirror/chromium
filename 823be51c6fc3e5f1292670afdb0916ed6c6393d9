@@ -2,6 +2,74 @@
   "comments": [
     {
       "key": {
+        "uuid": "ccb6ff67_3c18072b",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 5
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-29T01:06:32Z",
+      "side": 1,
+      "message": "I\u0027m not used to seeing IDS_ entries without desc\u003d\"\". Is this intentional or an oversight?",
+      "revId": "823be51c6fc3e5f1292670afdb0916ed6c6393d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e63abc2b_ed5fcf43",
+        "filename": "ui/webui/resources/chromeos/README.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-29T01:06:32Z",
+      "side": 1,
+      "message": "WDYT of a similar todo in the html file?",
+      "revId": "823be51c6fc3e5f1292670afdb0916ed6c6393d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6af188db_c40d55ce",
+        "filename": "ui/webui/resources/chromeos/bluetooth_dialog.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-29T01:06:32Z",
+      "side": 1,
+      "message": "Can this be $i18n{close} ?\nSimilar for others in this file.",
+      "revId": "823be51c6fc3e5f1292670afdb0916ed6c6393d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71e71fb0_c23e9351",
+        "filename": "ui/webui/resources/chromeos/bluetooth_dialog.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-07-29T01:06:32Z",
+      "side": 1,
+      "message": "@private",
+      "revId": "823be51c6fc3e5f1292670afdb0916ed6c6393d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "604554ed_78240306",
         "filename": "ui/webui/resources/chromeos/bluetooth_dialog.js",
         "patchSetId": 5
