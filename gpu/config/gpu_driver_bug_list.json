@@ -1,6 +1,6 @@
 {
   "name": "gpu driver bug list",
-  "version": "10.21",
+  "version": "10.22",
   "entries": [
     {
       "id": 1,
@@ -2567,6 +2567,21 @@
       "device_id": ["0x1626", "0x162B", "0x1622"],
       "features": [
         "clear_to_zero_or_one_broken"
+      ]
+    },
+    {
+      "id": 237,
+      "description": "eglSwapBuffers intermittently fails on Android when app goes to background",
+      "cr_bugs": [744678],
+      "os": {
+        "type": "android",
+        "version": {
+          "op": "<",
+          "value": "9.0"
+        }
+      },
+      "features": [
+        "dont_disable_webgl_for_compositor_context_lost"
       ]
     }
   ],
