@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "db447c7e_f8702886",
+        "filename": "components/feature_engagement/internal/android/java/src/org/chromium/components/feature_engagement/internal/TrackerImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-29T01:37:50Z",
+      "side": 1,
+      "message": "Yeah, I wasn\u0027t sure. Ended up not doing initially. But hey, it\u0027s Friday! Let\u0027s do this!",
+      "parentUuid": "014dea7d_4feffff8",
+      "range": {
+        "startLine": 83,
+        "startChar": 19,
+        "endLine": 83,
+        "endChar": 22
+      },
+      "revId": "ca78788b9371f44ebf5bc2d277efe0ce66c81d1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "963a1495_dd3a14c1",
         "filename": "components/feature_engagement/internal/android/tracker_impl_android.cc",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-28T20:25:41Z",
       "side": 1,
       "message": "Do you still need this?",
+      "range": {
+        "startLine": 115,
+        "startChar": 9,
+        "endLine": 115,
+        "endChar": 25
+      },
+      "revId": "ca78788b9371f44ebf5bc2d277efe0ce66c81d1b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ee55fa3_9cdf22d5",
+        "filename": "components/feature_engagement/internal/android/tracker_impl_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-07-29T01:37:50Z",
+      "side": 1,
+      "message": "Yeah, sadly. :-(\n\nIt\u0027s not required for enums of course, and making it extend int still required me to static_cast\u003cint\u003e it.\n\nI think the benefits of using enum class outweighs the pain of using this single static_cast (and for the debug log statements in the prod code) though, so I\u0027ll keep it as enum class for now.",
+      "parentUuid": "963a1495_dd3a14c1",
       "range": {
         "startLine": 115,
         "startChar": 9,
