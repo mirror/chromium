@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d97efa74_80f7ffd5",
+        "filename": "third_party/WebKit/Source/core/editing/spellcheck/HotModeSpellCheckRequester.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-07-29T23:20:06Z",
+      "side": 1,
+      "message": "The use of EndingVisibleSelection() is dangerous.\n\nI\u0027ll wait until SelectionForUndoStep is introduced in:\n\nhttps://chromium-review.googlesource.com/c/588874/",
+      "range": {
+        "startLine": 50,
+        "startChar": 22,
+        "endLine": 50,
+        "endChar": 44
+      },
+      "revId": "2f3c451473536fd5bc3c61eef51d15abf64a830d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
