@@ -144,11 +144,7 @@ class TestWebURLLoaderClient : public blink::WebURLLoaderClient {
   ~TestWebURLLoaderClient() override {}
 
   // blink::WebURLLoaderClient implementation:
-  bool WillFollowRedirect(const blink::WebURL& new_url,
-                          const blink::WebURL& new_first_party_for_cookies,
-                          const blink::WebString& new_referrer,
-                          blink::WebReferrerPolicy new_referrer_policy,
-                          const blink::WebString& new_method,
+  bool WillFollowRedirect(const WebRedirectInfo& redirect_info,
                           const blink::WebURLResponse& passed_redirect_response,
                           bool& report_raw_headers) override {
     EXPECT_TRUE(loader_);
