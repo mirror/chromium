@@ -341,23 +341,25 @@ void FirstLetterPseudoElement::AttachFirstLetterTextLayoutObjects() {
 }
 
 void FirstLetterPseudoElement::DidRecalcStyle() {
-  if (!GetLayoutObject())
+  LayoutObject* layout_object = this->GetLayoutObject();
+  if (!layout_object)
     return;
+
+  DCHECK(remaining_text_layout_object_);
+  ComputedStyle* pseudo_style =
+      StyleForFirstLetter(remaining_text_layout_object_->Parent());
+  layout_object->SetStyle(pseudo_style);
 
   // The layoutObjects inside pseudo elements are anonymous so they don't get
   // notified of recalcStyle and must have
   // the style propagated downward manually similar to
   // LayoutObject::propagateStyleToAnonymousChildren.
-  LayoutObject* layout_object = this->GetLayoutObject();
   for (LayoutObject* child = layout_object->NextInPreOrder(layout_object);
        child; child = child->NextInPreOrder(layout_object)) {
     // We need to re-calculate the correct style for the first letter element
     // and then apply that to the container and the text fragment inside.
-    if (child->Style()->StyleType() == kPseudoIdFirstLetter &&
-        remaining_text_layout_object_) {
-      if (ComputedStyle* pseudo_style =
-              StyleForFirstLetter(remaining_text_layout_object_->Parent()))
-        child->SetPseudoStyle(pseudo_style);
+    if (child->Style()->StyleType() == kPseudoIdFirstLetter) {
+      child->SetPseudoStyle(pseudo_style);
       continue;
     }
 
