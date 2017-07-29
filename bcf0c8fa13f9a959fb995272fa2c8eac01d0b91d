@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c387f629_8e5d2771",
+        "filename": "ui/base/webui/web_ui_util.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-29T00:09:32Z",
+      "side": 1,
+      "message": "Was done this way to be consistent with ParseScaleFactor. I\u0027d rather not leave them inconsistent but I can change both if you prefer?",
+      "parentUuid": "0995a656_ad1c559c",
+      "revId": "bcf0c8fa13f9a959fb995272fa2c8eac01d0b91d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "907dc22f_28a7d2e3",
         "filename": "ui/base/webui/web_ui_util.h",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "2133b4a0_70050736",
+        "filename": "ui/base/webui/web_ui_util.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-29T00:09:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "907dc22f_28a7d2e3",
+      "revId": "bcf0c8fa13f9a959fb995272fa2c8eac01d0b91d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d80805ae_2b3abaab",
         "filename": "ui/base/webui/web_ui_util_unittest.cc",
         "patchSetId": 5
@@ -50,6 +86,24 @@
       "revId": "bcf0c8fa13f9a959fb995272fa2c8eac01d0b91d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63f08140_101a0481",
+        "filename": "ui/base/webui/web_ui_util_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-29T00:09:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d80805ae_2b3abaab",
+      "revId": "bcf0c8fa13f9a959fb995272fa2c8eac01d0b91d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
