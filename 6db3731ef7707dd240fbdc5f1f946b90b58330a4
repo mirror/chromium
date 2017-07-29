@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac049ef3_d422eac4",
+        "filename": "net/cert/internal/parse_certificate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 781,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-07-29T00:06:53Z",
+      "side": 1,
+      "message": "helper funcs should go in the anon namespace",
+      "revId": "6db3731ef7707dd240fbdc5f1f946b90b58330a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "922ca9b6_64ba40f7",
+        "filename": "net/cert/internal/parse_certificate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 812,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-07-29T00:06:53Z",
+      "side": 1,
+      "message": "the comment about why this isn\u0027t handled got lost",
+      "range": {
+        "startLine": 812,
+        "startChar": 6,
+        "endLine": 812,
+        "endChar": 21
+      },
+      "revId": "6db3731ef7707dd240fbdc5f1f946b90b58330a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6c97310_7abd801f",
+        "filename": "net/cert/internal/parse_certificate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 816,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-07-29T00:06:53Z",
+      "side": 1,
+      "message": "Seems confusing that DistributionPointName parsing get stuck in between parsing the reasons and cRLIssuer from DistributionPoint. Move to the end or split into another helper?",
+      "range": {
+        "startLine": 816,
+        "startChar": 5,
+        "endLine": 816,
+        "endChar": 26
+      },
+      "revId": "6db3731ef7707dd240fbdc5f1f946b90b58330a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
