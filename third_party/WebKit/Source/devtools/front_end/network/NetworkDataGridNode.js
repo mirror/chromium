@@ -127,6 +127,7 @@ Network.NetworkNode = class extends DataGrid.SortableDataGridNode {
    * @param {boolean} isStriped
    */
   setStriped(isStriped) {
+    // TODO(allada) Move stripe logic to css.
     super.setStriped(isStriped);
     this._updateBackgroundColor();
   }
@@ -777,8 +778,7 @@ Network.NetworkRequestNode = class extends Network.NetworkNode {
       case 'time':
         this._renderTimeCell(cell);
         break;
-      case 'timeline':
-        this._setTextAndTitle(cell, '');
+      case 'waterfall':
         break;
       default:
         this._setTextAndTitle(cell, this._request.responseHeaderValue(columnId) || '');

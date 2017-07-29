@@ -6,28 +6,20 @@ Network.NetworkWaterfallColumn = class extends UI.VBox {
    * @param {!Network.NetworkTimeCalculator} calculator
    */
   constructor(calculator) {
-    // TODO(allada) Make this a shadowDOM when the NetworkWaterfallColumn gets moved into NetworkLogViewColumns.
     super(false);
     this.registerRequiredCSS('network/networkWaterfallColumn.css');
 
     this._canvas = this.contentElement.createChild('canvas');
     this._canvas.tabIndex = 1;
     this.setDefaultFocusedElement(this._canvas);
-    this._canvasPosition = this._canvas.getBoundingClientRect();
 
     /** @const */
     this._leftPadding = 5;
     /** @const */
     this._fontSize = 10;
 
-    this._rightPadding = 0;
-    this._scrollTop = 0;
-
-    this._headerHeight = 0;
     this._calculator = calculator;
 
-    // this._rawRowHeight captures model height (41 or 21px),
-    // this._rowHeight is computed height of the row in CSS pixels, can be 20.8 for zoomed-in content.
     this._rawRowHeight = 0;
     this._rowHeight = 0;
 
@@ -36,24 +28,16 @@ Network.NetworkWaterfallColumn = class extends UI.VBox {
     this._startTime = this._calculator.minimumBoundary();
     this._endTime = this._calculator.maximumBoundary();
 
-    this._popoverHelper = new UI.PopoverHelper(this.element, this._getPopoverRequest.bind(this));
-    this._popoverHelper.setHasPadding(true);
-    this._popoverHelper.setTimeout(300, 300);
-
     /** @type {!Array<!Network.NetworkNode>} */
     this._nodes = [];
 
-    /** @type {?Network.NetworkNode} */
-    this._hoveredNode = null;
-
+    /** @type {?PerfUI.TimelineGrid.DividersData} */
+    this._dividersData = null;
     /** @type {!Map<string, !Array<number>>} */
     this._eventDividers = new Map();
 
     /** @type {(number|undefined)} */
     this._updateRequestID;
-
-    this.element.addEventListener('mousemove', this._onMouseMove.bind(this), true);
-    this.element.addEventListener('mouseleave', event => this._setHoveredNode(null, false), true);
 
     this._styleForTimeRangeName = Network.NetworkWaterfallColumn._buildRequestTimeRangeStyle();
 
@@ -160,36 +144,16 @@ Network.NetworkWaterfallColumn = class extends UI.VBox {
   }
 
   /**
-   * @override
-   */
-  willHide() {
-    this._popoverHelper.hidePopover();
-  }
-
-  /**
-   * @override
-   */
-  wasShown() {
-    this.update();
-  }
-
-  /**
-   * @param {!Event} event
-   */
-  _onMouseMove(event) {
-    this._setHoveredNode(this.getNodeFromPoint(event.offsetX, event.offsetY), event.shiftKey);
-  }
-
-  /**
-   * @param {!Event} event
+   * @param {!SDK.NetworkRequest} request
+   * @param {number} mouseOffsetX
+   * @param {number} mouseOffsetY
    * @return {?UI.PopoverRequest}
    */
-  _getPopoverRequest(event) {
-    if (!this._hoveredNode)
+  getPopoverRequest(request, mouseOffsetX, mouseOffsetY) {
+    var index = this._nodes.findIndex(node => node.request() === request);
+    if (index === -1)
       return null;
-    var request = this._hoveredNode.request();
-    if (!request)
-      return null;
+    var offsetTop = this._rowHeight * index;
     var useTimingBars = !Common.moduleSetting('networkColorCodeResourceTypes').get() && !this._calculator.startAtZero;
     if (useTimingBars) {
       var range = Network.RequestTimingView.calculateRequestTimeRanges(request, 0)
@@ -208,19 +172,18 @@ Network.NetworkWaterfallColumn = class extends UI.VBox {
       end = end - halfWidth + 25;
     }
 
-    if (event.clientX < this._canvasPosition.left + start || event.clientX > this._canvasPosition.left + end)
+    if (mouseOffsetX < start || mouseOffsetX > end)
       return null;
 
-    var rowIndex = this._nodes.findIndex(node => node.hovered());
     var barHeight = this._getBarHeight(range.name);
-    var y = this._headerHeight + (this._rowHeight * rowIndex - this._scrollTop) + ((this._rowHeight - barHeight) / 2);
+    var barTop = (this._rowHeight - barHeight) / 2;
 
-    if (event.clientY < this._canvasPosition.top + y || event.clientY > this._canvasPosition.top + y + barHeight)
+    if (mouseOffsetY < barTop || mouseOffsetY > barTop + barHeight)
       return null;
 
     var anchorBox = this.element.boxInWindow();
     anchorBox.x += start;
-    anchorBox.y += y;
+    anchorBox.y += offsetTop + barTop;
     anchorBox.width = end - start;
     anchorBox.height = barHeight;
 
@@ -236,18 +199,6 @@ Network.NetworkWaterfallColumn = class extends UI.VBox {
   }
 
   /**
-   * @param {?Network.NetworkNode} node
-   * @param {boolean} highlightInitiatorChain
-   */
-  _setHoveredNode(node, highlightInitiatorChain) {
-    if (this._hoveredNode)
-      this._hoveredNode.setHovered(false, false);
-    this._hoveredNode = node;
-    if (this._hoveredNode)
-      this._hoveredNode.setHovered(true, highlightInitiatorChain);
-  }
-
-  /**
    * @param {number} height
    */
   setRowHeight(height) {
@@ -260,63 +211,44 @@ Network.NetworkWaterfallColumn = class extends UI.VBox {
   }
 
   /**
-   * @param {number} height
-   */
-  setHeaderHeight(height) {
-    this._headerHeight = height;
-  }
-
-  /**
-   * @param {number} padding
-   */
-  setRightPadding(padding) {
-    this._rightPadding = padding;
-    this._calculateCanvasSize();
-  }
-
-  /**
    * @param {!Network.NetworkTimeCalculator} calculator
    */
   setCalculator(calculator) {
     this._calculator = calculator;
   }
 
-  /**
-   * @param {number} x
-   * @param {number} y
-   * @return {?Network.NetworkNode}
-   */
-  getNodeFromPoint(x, y) {
-    return this._nodes[Math.floor((this._scrollTop + y - this._headerHeight) / this._rowHeight)];
-  }
-
   scheduleDraw() {
     if (this._updateRequestID)
       return;
-    this._updateRequestID = this.element.window().requestAnimationFrame(() => this.update());
+    this._updateRequestID = this.element.window().requestAnimationFrame(() => this._innerUpdate());
   }
 
   /**
-   * @param {number=} scrollTop
-   * @param {!Map<string, !Array<number>>=} eventDividers
-   * @param {!Array<!Network.NetworkNode>=} nodes
+   * @param {!PerfUI.TimelineGrid.DividersData} dividersData
    */
-  update(scrollTop, eventDividers, nodes) {
-    if (scrollTop !== undefined && this._scrollTop !== scrollTop) {
-      this._popoverHelper.hidePopover();
-      this._scrollTop = scrollTop;
-    }
-    if (nodes) {
+  setDividersData(dividersData) {
+    this._dividersData = dividersData;
+  }
+  /**
+   * @param {!Array<!Network.NetworkNode>=} nodes
+   * @param {!Map<string, !Array<number>>=} eventDividers
+   */
+  update(nodes, eventDividers) {
+    if (nodes)
       this._nodes = nodes;
-      this._calculateCanvasSize();
-    }
+
     if (eventDividers !== undefined)
       this._eventDividers = eventDividers;
+    this._innerUpdate();
+  }
+
+  _innerUpdate() {
+    if (!this.isShowing())
+      return;
     if (this._updateRequestID) {
       this.element.window().cancelAnimationFrame(this._updateRequestID);
       delete this._updateRequestID;
     }
-
     this._startTime = this._calculator.minimumBoundary();
     this._endTime = this._calculator.maximumBoundary();
     this._resetCanvas();
@@ -344,10 +276,9 @@ Network.NetworkWaterfallColumn = class extends UI.VBox {
   }
 
   _calculateCanvasSize() {
-    this._offsetWidth = this.contentElement.offsetWidth - this._rightPadding;
+    this._offsetWidth = this.contentElement.offsetWidth;
     this._offsetHeight = this.contentElement.offsetHeight;
     this._calculator.setDisplayWidth(this._offsetWidth);
-    this._canvasPosition = this._canvas.getBoundingClientRect();
   }
 
   /**
@@ -369,24 +300,20 @@ Network.NetworkWaterfallColumn = class extends UI.VBox {
     var context = this._canvas.getContext('2d');
     context.save();
     context.scale(window.devicePixelRatio, window.devicePixelRatio);
-    context.translate(0, this._headerHeight);
     context.rect(0, 0, this._offsetWidth, this._offsetHeight);
     context.clip();
-    var firstRequestIndex = Math.floor(this._scrollTop / this._rowHeight);
-    var lastRequestIndex = Math.min(nodes.length, firstRequestIndex + Math.ceil(this._offsetHeight / this._rowHeight));
-    for (var i = firstRequestIndex; i < lastRequestIndex; i++) {
+    for (var i = 0; i < nodes.length; i++) {
       var rowOffset = this._rowHeight * i;
       var node = nodes[i];
-      this._decorateRow(context, node, rowOffset - this._scrollTop);
       var drawNodes = [];
       if (node.hasChildren() && !node.expanded)
         drawNodes = /** @type {!Array<!Network.NetworkNode>} */ (node.flatChildren());
       drawNodes.push(node);
       for (var drawNode of drawNodes) {
         if (useTimingBars)
-          this._buildTimingBarLayers(drawNode, rowOffset - this._scrollTop);
+          this._buildTimingBarLayers(drawNode, rowOffset);
         else
-          this._buildSimplifiedBarLayers(context, drawNode, rowOffset - this._scrollTop);
+          this._buildSimplifiedBarLayers(context, drawNode, rowOffset);
       }
     }
     this._drawLayers(context);
@@ -400,13 +327,8 @@ Network.NetworkWaterfallColumn = class extends UI.VBox {
     this._drawEventDividers(context);
     context.restore();
 
-    const freeZoneAtLeft = 75;
-    const freeZoneAtRight = 18;
-    var dividersData = PerfUI.TimelineGrid.calculateDividerOffsets(this._calculator);
-    PerfUI.TimelineGrid.drawCanvasGrid(context, dividersData);
-    PerfUI.TimelineGrid.drawCanvasHeaders(
-        context, dividersData, this._calculator, this._fontSize, this._headerHeight, freeZoneAtLeft);
-    context.clearRect(this._offsetWidth - freeZoneAtRight, 0, freeZoneAtRight, this._headerHeight);
+    if (this._dividersData)
+      PerfUI.TimelineGrid.drawCanvasGrid(context, this._dividersData);
     this._didDrawForTest();
   }
 
@@ -589,20 +511,6 @@ Network.NetworkWaterfallColumn = class extends UI.VBox {
       var end = this._timeToPosition(range.end);
       path.rect(start, middleBarY, end - start, height - lineWidth);
     }
-  }
-
-  /**
-   * @param {!CanvasRenderingContext2D} context
-   * @param {!Network.NetworkNode} node
-   * @param {number} y
-   */
-  _decorateRow(context, node, y) {
-    context.save();
-    context.beginPath();
-    context.fillStyle = node.backgroundColor();
-    context.rect(0, y, this._offsetWidth, this._rowHeight);
-    context.fill();
-    context.restore();
   }
 };
 
