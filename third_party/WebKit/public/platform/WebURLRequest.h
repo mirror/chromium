@@ -288,11 +288,6 @@ class WebURLRequest {
 
   // True if the requestor wants to receive the response body as a stream.
   BLINK_PLATFORM_EXPORT bool UseStreamOnResponse() const;
-  BLINK_PLATFORM_EXPORT void SetUseStreamOnResponse(bool);
-
-  // True if the request can work after the fetch group is terminated.
-  BLINK_PLATFORM_EXPORT bool GetKeepalive() const;
-  BLINK_PLATFORM_EXPORT void SetKeepalive(bool);
 
   // The service worker mode indicating which service workers should get events
   // for this request.
@@ -301,7 +296,6 @@ class WebURLRequest {
 
   // True if corresponding AppCache group should be resetted.
   BLINK_PLATFORM_EXPORT bool ShouldResetAppCache() const;
-  BLINK_PLATFORM_EXPORT void SetShouldResetAppCache(bool);
 
   // The request mode which will be passed to the ServiceWorker.
   BLINK_PLATFORM_EXPORT FetchRequestMode GetFetchRequestMode() const;

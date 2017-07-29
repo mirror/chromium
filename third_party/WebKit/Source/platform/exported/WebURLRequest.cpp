@@ -299,18 +299,6 @@ bool WebURLRequest::UseStreamOnResponse() const {
   return resource_request_->UseStreamOnResponse();
 }
 
-void WebURLRequest::SetUseStreamOnResponse(bool use_stream_on_response) {
-  resource_request_->SetUseStreamOnResponse(use_stream_on_response);
-}
-
-bool WebURLRequest::GetKeepalive() const {
-  return resource_request_->GetKeepalive();
-}
-
-void WebURLRequest::SetKeepalive(bool keepalive) {
-  resource_request_->SetKeepalive(keepalive);
-}
-
 WebURLRequest::ServiceWorkerMode WebURLRequest::GetServiceWorkerMode() const {
   return resource_request_->GetServiceWorkerMode();
 }
@@ -322,10 +310,6 @@ void WebURLRequest::SetServiceWorkerMode(
 
 bool WebURLRequest::ShouldResetAppCache() const {
   return resource_request_->ShouldResetAppCache();
-}
-
-void WebURLRequest::SetShouldResetAppCache(bool set_should_reset_app_cache) {
-  resource_request_->SetShouldResetAppCache(set_should_reset_app_cache);
 }
 
 WebURLRequest::FetchRequestMode WebURLRequest::GetFetchRequestMode() const {
