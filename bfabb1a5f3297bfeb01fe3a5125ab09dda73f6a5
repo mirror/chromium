@@ -22,6 +22,30 @@
       "revId": "bfabb1a5f3297bfeb01fe3a5125ab09dda73f6a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40b3fa68_def56339",
+        "filename": "content/public/browser/ssl_status.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-07-29T03:07:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "93550b9b_e61ea1d9",
+      "range": {
+        "startLine": 106,
+        "startChar": 7,
+        "endLine": 106,
+        "endChar": 17
+      },
+      "revId": "bfabb1a5f3297bfeb01fe3a5125ab09dda73f6a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
