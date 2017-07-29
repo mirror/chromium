@@ -11,6 +11,7 @@
 
 #include "base/lazy_instance.h"
 #include "base/logging.h"
+#include "base/memory/ptr_util.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
@@ -52,6 +53,9 @@ const char kObfuscationPrefix[][4] = {
 
 // Everything in Cache may be leaked on shutdown.
 struct Cache {
+  Cache();
+  ~Cache();
+
   // For password_v10, null means uninitialised.
   std::unique_ptr<std::string> password_v10_cache;
   // For password_v11, null means no backend.
@@ -63,6 +67,12 @@ struct Cache {
   // thread safe.
   base::Lock lock;
 };
+
+Cache::Cache()
+    : is_password_v11_cached(false),
+      config(base::MakeUnique<os_crypt::Config>()) {}
+
+Cache::~Cache() {}
 
 base::LazyInstance<Cache>::Leaky g_cache = LAZY_INSTANCE_INITIALIZER;
 
