@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d634400_e8424b3b",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-29T01:36:57Z",
+      "side": 1,
+      "message": "Nit: You can avoid putting this in the initializer list by using {} instead of \u003d to init it at the declaration point.  (I\u0027m a fan of \"if initing some things at their declaration, then init them all there\".)",
+      "revId": "08b7fb98b36ec62c69785f8ce4f3ea3387d96283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90e36b09_4b10fa96",
+        "filename": "chrome/browser/ui/views/frame/browser_non_client_frame_view_ash_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-29T01:36:57Z",
+      "side": 1,
+      "message": "Const methods should not return non-const pointers; change one of the other.  See https://www.chromium.org/developers/coding-style/cpp-dos-and-donts#TOC-Use-const-correctly .",
+      "revId": "08b7fb98b36ec62c69785f8ce4f3ea3387d96283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ca0132c_dec58fb4",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-29T01:36:57Z",
+      "side": 1,
+      "message": "Nit: I might just say \"See SetDisableRevealerDelayForTesting().\"",
+      "revId": "08b7fb98b36ec62c69785f8ce4f3ea3387d96283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3e7743e_e5c842d9",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1878,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-29T01:36:57Z",
+      "side": 1,
+      "message": "Nit: On reflection, calling these kDefaultDelay and kZeroDelay might be clearer.",
+      "revId": "08b7fb98b36ec62c69785f8ce4f3ea3387d96283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a1dbde1_56f5b968",
+        "filename": "chrome/browser/ui/views/frame/browser_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-07-29T01:36:57Z",
+      "side": 1,
+      "message": "Nit: I had a hard time parsing this due to word order/choice.  Maybe something like this would be clearer?:\n\nAfter calling RevealTabStripIfNeeded(), there is normally a delay before the tabstrip is hidden.  Tests can use this function to disable that delay (and hide immediately).",
+      "revId": "08b7fb98b36ec62c69785f8ce4f3ea3387d96283",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
