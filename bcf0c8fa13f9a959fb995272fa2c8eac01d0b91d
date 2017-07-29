@@ -148,6 +148,30 @@
     },
     {
       "key": {
+        "uuid": "61dd663d_9326e571",
+        "filename": "ui/webui/resources/cr_elements/chromeos/cr_picture/cr_picture_list.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-29T00:29:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80c51c29_430bc01d",
+      "range": {
+        "startLine": 231,
+        "startChar": 12,
+        "endLine": 231,
+        "endChar": 19
+      },
+      "revId": "bcf0c8fa13f9a959fb995272fa2c8eac01d0b91d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "553f18ff_797ad806",
         "filename": "ui/webui/resources/cr_elements/chromeos/cr_picture/cr_picture_list.js",
         "patchSetId": 5
@@ -159,6 +183,30 @@
       "writtenOn": "2017-07-28T23:37:03Z",
       "side": 1,
       "message": "ditto",
+      "range": {
+        "startLine": 246,
+        "startChar": 12,
+        "endLine": 246,
+        "endChar": 19
+      },
+      "revId": "bcf0c8fa13f9a959fb995272fa2c8eac01d0b91d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f72a3237_e0ea021f",
+        "filename": "ui/webui/resources/cr_elements/chromeos/cr_picture/cr_picture_list.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-29T00:29:58Z",
+      "side": 1,
+      "message": "Done. Updated cr_picture_pane too for consistency.",
+      "parentUuid": "553f18ff_797ad806",
       "range": {
         "startLine": 246,
         "startChar": 12,
