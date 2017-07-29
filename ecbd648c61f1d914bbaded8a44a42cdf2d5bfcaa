@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9eacb923_2ce8ca78",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 2251,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-07-29T00:02:38Z",
+      "side": 1,
+      "message": "Is the intention to determine memory savings? If so, couldn\u0027t we use the actual GPU memory of composited scrolling layers? I\u0027m worried now that this is not a very accurate estimate since we will paint a larger region than the visible content rect on scrollers. We could also consider a finch experiment where we actually don\u0027t composite scrollers at various sizes with the size parameterized and measure the resulting changes in metrics (similar to the small scroller flag you have up for review)",
+      "revId": "ecbd648c61f1d914bbaded8a44a42cdf2d5bfcaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
