@@ -94,6 +94,30 @@
       "revId": "ae0258e2195c919e16bc0c29f1304fe0279d68ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b1871c7_f3036ed5",
+        "filename": "base/value_conversions.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-07-29T00:05:21Z",
+      "side": 1,
+      "message": "I tried to add one, and tried to make HexStringToBytes and the new one sharing some common code (old one calls the new function). But I end up with resizing the output vector twice in the bad case. Still thinking a new way to handle these two.",
+      "parentUuid": "8cb38e6f_a732e987",
+      "range": {
+        "startLine": 79,
+        "startChar": 2,
+        "endLine": 79,
+        "endChar": 38
+      },
+      "revId": "ae0258e2195c919e16bc0c29f1304fe0279d68ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
