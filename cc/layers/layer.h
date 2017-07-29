@@ -78,6 +78,8 @@ class CC_EXPORT Layer : public base::RefCounted<Layer> {
 
   int id() const { return inputs_.layer_id; }
 
+  virtual size_t surface_id_hash() const;
+
   Layer* RootLayer();
   Layer* parent() { return parent_; }
   const Layer* parent() const { return parent_; }

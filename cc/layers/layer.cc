@@ -118,6 +118,10 @@ Layer::~Layer() {
   }
 }
 
+size_t Layer::surface_id_hash() const {
+  return 0;
+}
+
 void Layer::SetLayerTreeHost(LayerTreeHost* host) {
   if (layer_tree_host_ == host)
     return;
