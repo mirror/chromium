@@ -123,6 +123,13 @@ class VIZ_SERVICE_EXPORT FrameSinkManagerImpl
 
   void OnClientConnectionLost(const FrameSinkId& frame_sink_id);
 
+  void OnSharedMemoryHandlesReceived(
+      const FrameSinkId& frame_sink_id,
+      mojo::ScopedSharedBufferHandle read_handle,
+      uint32_t read_size,
+      mojo::ScopedSharedBufferHandle write_handle,
+      uint32_t write_size);
+
   // It is necessary to pass |frame_sink_id| by value because the id
   // is owned by the GpuCompositorFrameSink in the map. When the sink is
   // removed from the map, |frame_sink_id| would also be destroyed if it were a

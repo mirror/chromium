@@ -561,6 +561,8 @@ WindowTree* WindowServer::GetCurrentDragLoopInitiator() {
 }
 
 void WindowServer::OnDisplayReady(Display* display, bool is_first) {
+  display_hit_test_query_[display->root_window()->frame_sink_id()] =
+      base::MakeUnique<viz::HitTestQuery>();
   if (is_first)
     delegate_->OnFirstDisplayReady();
   gpu_host_->OnAcceleratedWidgetAvailable(
@@ -568,6 +570,9 @@ void WindowServer::OnDisplayReady(Display* display, bool is_first) {
 }
 
 void WindowServer::OnDisplayDestroyed(Display* display) {
+  DCHECK(
+      display_hit_test_query_.count(display->root_window()->frame_sink_id()));
+  display_hit_test_query_.erase(display->root_window()->frame_sink_id());
   if (gpu_host_) {
     gpu_host_->OnAcceleratedWidgetDestroyed(
         display->platform_display()->GetAcceleratedWidget());
@@ -910,6 +915,20 @@ void WindowServer::OnSurfaceCreated(const viz::SurfaceInfo& surface_info) {
 void WindowServer::OnClientConnectionClosed(
     const viz::FrameSinkId& frame_sink_id) {
   // TODO(kylechar): Notify observers
+}
+
+void WindowServer::OnSharedMemoryHandlesReceived(
+    const viz::FrameSinkId& frame_sink_id,
+    mojo::ScopedSharedBufferHandle read_handle,
+    uint32_t read_size,
+    mojo::ScopedSharedBufferHandle write_handle,
+    uint32_t write_size) {
+  if (!display_hit_test_query_.count(frame_sink_id)) {
+    // TODO(riajiang): Report security fault. http://crbug.com/746470
+    return;
+  }
+  display_hit_test_query_[frame_sink_id]->OnSharedMemoryHandlesReceived(
+      std::move(read_handle), read_size, std::move(write_handle), write_size);
 }
 
 void WindowServer::OnActiveUserIdChanged(const UserId& previously_active_id,
