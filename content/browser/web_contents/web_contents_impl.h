@@ -13,6 +13,7 @@
 #include <set>
 #include <string>
 
+#include "base/cancelable_callback.h"
 #include "base/compiler_specific.h"
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
@@ -1038,10 +1039,11 @@ class CONTENT_EXPORT WebContentsImpl
                           const std::vector<SkBitmap>& images,
                           const std::vector<gfx::Size>& original_image_sizes);
 
-  // Callback function when showing JavaScript dialogs.  Takes in a routing ID
+  // Callback function when showing JavaScript dialogs. Takes in a routing ID
   // pair to identify the RenderFrameHost that opened the dialog, because it's
   // possible for the RenderFrameHost to be deleted by the time this is called.
-  void OnDialogClosed(int render_process_id,
+  void OnDialogClosed(int sequence_number,
+                      int render_process_id,
                       int render_frame_id,
                       IPC::Message* reply_msg,
                       bool dialog_was_suppressed,
@@ -1658,6 +1660,7 @@ class CONTENT_EXPORT WebContentsImpl
   int currently_playing_video_count_ = 0;
   VideoSizeMap cached_video_sizes_;
 
+  int dialog_sequence_number_ = 0;
   bool has_persistent_video_ = false;
 
   base::WeakPtrFactory<WebContentsImpl> loading_weak_factory_;

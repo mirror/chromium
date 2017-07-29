@@ -21,6 +21,8 @@
 #include "content/public/browser/notification_observer.h"
 #include "content/public/browser/notification_registrar.h"
 #include "content/public/browser/readback_types.h"
+#include "content/public/common/javascript_dialog_type.h"
+#include "url/gurl.h"
 
 class SkBitmap;
 
@@ -51,6 +53,7 @@ class PageHandler : public DevToolsDomainHandler,
   explicit PageHandler(EmulationHandler* handler);
   ~PageHandler() override;
 
+  static std::vector<PageHandler*> ForWebContents(WebContentsImpl* contents);
   static std::vector<PageHandler*> ForAgentHost(DevToolsAgentHostImpl* host);
 
   void Wire(UberDispatcher* dispatcher) override;
@@ -61,6 +64,18 @@ class PageHandler : public DevToolsDomainHandler,
   void DidAttachInterstitialPage();
   void DidDetachInterstitialPage();
   bool screencast_enabled() const { return enabled_ && screencast_enabled_; }
+  using JavaScriptDialogCallback =
+      base::Callback<void(bool, const base::string16&)>;
+  void RunJavaScriptDialog(int sequence_number,
+                           const GURL& url,
+                           const base::string16& message,
+                           const base::string16& default_prompt,
+                           JavaScriptDialogType dialog_type,
+                           const JavaScriptDialogCallback& callback);
+  void RunBeforeUnloadConfirm(int sequence_number,
+                              const GURL& url,
+                              const JavaScriptDialogCallback& callback);
+  void JavaScriptDialogClosed(int sequence_number, bool success);
 
   Response Enable() override;
   Response Disable() override;
@@ -107,6 +122,7 @@ class PageHandler : public DevToolsDomainHandler,
   Response ScreencastFrameAck(int session_id) override;
 
   Response HandleJavaScriptDialog(bool accept,
+                                  Maybe<std::string> dialog_id,
                                   Maybe<std::string> prompt_text) override;
 
   Response RequestAppBanner() override;
@@ -172,6 +188,7 @@ class PageHandler : public DevToolsDomainHandler,
   EmulationHandler* emulation_handler_;
   std::unique_ptr<Page::Frontend> frontend_;
   NotificationRegistrar registrar_;
+  std::map<std::string, JavaScriptDialogCallback> pending_dialogs_;
   base::WeakPtrFactory<PageHandler> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(PageHandler);

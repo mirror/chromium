@@ -17,6 +17,7 @@
 #include "base/memory/ref_counted_memory.h"
 #include "base/single_thread_task_runner.h"
 #include "base/strings/string16.h"
+#include "base/strings/string_number_conversions.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -46,7 +47,6 @@
 #include "ui/gfx/image/image.h"
 #include "ui/gfx/image/image_util.h"
 #include "ui/snapshot/snapshot.h"
-#include "url/gurl.h"
 
 namespace content {
 namespace protocol {
@@ -92,6 +92,18 @@ std::string EncodeSkBitmap(const SkBitmap& image,
   return EncodeImage(gfx::Image::CreateFrom1xBitmap(image), format, quality);
 }
 
+String DialogTypeToProtocol(JavaScriptDialogType dialog_type) {
+  switch (dialog_type) {
+    case JAVASCRIPT_DIALOG_TYPE_ALERT:
+      return protocol::Page::DialogTypeEnum::Alert;
+    case JAVASCRIPT_DIALOG_TYPE_CONFIRM:
+      return protocol::Page::DialogTypeEnum::Confirm;
+    case JAVASCRIPT_DIALOG_TYPE_PROMPT:
+      return protocol::Page::DialogTypeEnum::Prompt;
+  }
+  return protocol::Page::DialogTypeEnum::Alert;
+}
+
 }  // namespace
 
 PageHandler::PageHandler(EmulationHandler* emulation_handler)
@@ -116,6 +128,15 @@ PageHandler::PageHandler(EmulationHandler* emulation_handler)
 }
 
 PageHandler::~PageHandler() {
+}
+
+// static
+std::vector<PageHandler*> PageHandler::ForWebContents(
+    WebContentsImpl* contents) {
+  if (!DevToolsAgentHost::HasFor(contents))
+    return std::vector<PageHandler*>();
+  return PageHandler::ForAgentHost(static_cast<DevToolsAgentHostImpl*>(
+      DevToolsAgentHost::GetOrCreateFor(contents).get()));
 }
 
 // static
@@ -201,6 +222,48 @@ void PageHandler::DidDetachInterstitialPage() {
   frontend_->InterstitialHidden();
 }
 
+void PageHandler::RunJavaScriptDialog(
+    int sequence_number,
+    const GURL& url,
+    const base::string16& message,
+    const base::string16& default_prompt,
+    JavaScriptDialogType dialog_type,
+    const JavaScriptDialogCallback& callback) {
+  if (!enabled_)
+    return;
+  std::string dialog_id = base::IntToString(sequence_number);
+  pending_dialogs_[dialog_id] = callback;
+  std::string type = Page::DialogTypeEnum::Alert;
+  if (dialog_type == JAVASCRIPT_DIALOG_TYPE_CONFIRM)
+    type = Page::DialogTypeEnum::Confirm;
+  if (dialog_type == JAVASCRIPT_DIALOG_TYPE_PROMPT)
+    type = Page::DialogTypeEnum::Prompt;
+  frontend_->JavascriptDialogOpening(dialog_id, url.spec(),
+                                     base::UTF16ToUTF8(message), type,
+                                     base::UTF16ToUTF8(default_prompt));
+}
+
+void PageHandler::RunBeforeUnloadConfirm(
+    int sequence_number,
+    const GURL& url,
+    const JavaScriptDialogCallback& callback) {
+  if (!enabled_)
+    return;
+  std::string dialog_id = base::IntToString(sequence_number);
+  pending_dialogs_[dialog_id] = callback;
+  frontend_->JavascriptDialogOpening(dialog_id, url.spec(), std::string(),
+                                     Page::DialogTypeEnum::Beforeunload,
+                                     std::string());
+}
+
+void PageHandler::JavaScriptDialogClosed(int sequence_number, bool success) {
+  if (!enabled_)
+    return;
+  std::string dialog_id = base::IntToString(sequence_number);
+  pending_dialogs_.erase(dialog_id);
+  frontend_->JavascriptDialogClosed(dialog_id, success);
+}
+
 Response PageHandler::Enable() {
   enabled_ = true;
   if (GetWebContents() && GetWebContents()->ShowingInterstitialPage())
@@ -212,6 +275,9 @@ Response PageHandler::Disable() {
   enabled_ = false;
   screencast_enabled_ = false;
   SetControlNavigations(false);
+  for (const auto& it : pending_dialogs_)
+    it.second.Run(false, base::string16());
+  pending_dialogs_.clear();
   return Response::FallThrough();
 }
 
@@ -514,24 +580,37 @@ Response PageHandler::ScreencastFrameAck(int session_id) {
 }
 
 Response PageHandler::HandleJavaScriptDialog(bool accept,
+                                             Maybe<std::string> dialog_id,
                                              Maybe<std::string> prompt_text) {
-  base::string16 prompt_override;
-  if (prompt_text.isJust())
-    prompt_override = base::UTF8ToUTF16(prompt_text.fromJust());
-
   WebContentsImpl* web_contents = GetWebContents();
   if (!web_contents)
     return Response::InternalError();
 
-  JavaScriptDialogManager* manager =
-      web_contents->GetDelegate()->GetJavaScriptDialogManager(web_contents);
-  if (manager && manager->HandleJavaScriptDialog(
-          web_contents, accept,
-          prompt_text.isJust() ? &prompt_override : nullptr)) {
-    return Response::OK();
+  base::string16 prompt_override;
+  if (prompt_text.isJust())
+    prompt_override = base::UTF8ToUTF16(prompt_text.fromJust());
+
+  if (dialog_id.isJust()) {
+    auto it = pending_dialogs_.find(dialog_id.fromJust());
+    if (it == pending_dialogs_.end())
+      return Response::InternalError();
+    it->second.Run(accept, prompt_override);
+  } else {
+    std::map<std::string, JavaScriptDialogCallback> copy = pending_dialogs_;
+    for (auto it : copy)
+      it.second.Run(accept, prompt_override);
   }
 
-  return Response::Error("Could not handle JavaScript dialog");
+  // Clean up the dialog UI if any.
+  JavaScriptDialogManager* manager =
+      web_contents->GetDelegate()->GetJavaScriptDialogManager(web_contents);
+  if (manager) {
+    manager->HandleJavaScriptDialog(
+        web_contents, accept,
+        prompt_text.isJust() ? &prompt_override : nullptr);
+  }
+
+  return Response::OK();
 }
 
 Response PageHandler::RequestAppBanner() {
