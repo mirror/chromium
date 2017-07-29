@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "f49f5f7e_b5e44e40",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1226039
+      },
+      "writtenOn": "2017-07-29T00:48:13Z",
+      "side": 1,
+      "message": "I originally thought the intention of the wait was to make sure the native library has enough time to load. If we post the delay after the native library loads, there\u0027s a chance the service might be killed in the meantime. What do you think?",
+      "parentUuid": "398e71aa_8de5230c",
+      "range": {
+        "startLine": 168,
+        "startChar": 8,
+        "endLine": 168,
+        "endChar": 29
+      },
+      "revId": "6a8c3f757a44939b61429e70a19807cc0bdbc45a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "635bd6ff_33ccb01b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/DownloadBroadcastManager.java",
         "patchSetId": 9
