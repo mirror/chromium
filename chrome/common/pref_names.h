@@ -333,6 +333,8 @@ extern const char kPinUnlockWeakPinsAllowed[];
 extern const char kEnableQuickUnlockFingerprint[];
 extern const char kInstantTetheringAllowed[];
 extern const char kInstantTetheringEnabled[];
+extern const char kBluetoothAdapterEnabled[];
+extern const char kSystemBluetoothAdapterEnabled[];
 #endif  // defined(OS_CHROMEOS)
 extern const char kShowHomeButton[];
 extern const char kSpeechRecognitionFilterProfanities[];

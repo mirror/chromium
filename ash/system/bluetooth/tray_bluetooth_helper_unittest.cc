@@ -17,6 +17,21 @@ using bluez::FakeBluetoothAdapterClient;
 namespace ash {
 namespace {
 
+class TestBluetoothAdapterClient : public ash::mojom::BluetoothAdapterClient {
+ public:
+  explicit TestBluetoothAdapterClient(
+      ash::mojom::BluetoothAdapterClientRequest request)
+      : binding_(this, std::move(request)) {}
+
+  void OnAdapterPowerSet(bool enabled) override { adapter_state_ = enabled; }
+
+  bool GetAdapterState() { return adapter_state_; }
+
+ private:
+  mojo::Binding<ash::mojom::BluetoothAdapterClient> binding_;
+  bool adapter_state_ = false;
+};
+
 using TrayBluetoothHelperTest = AshTestBase;
 
 // Tests basic functionality like turning Bluetooth on and off.
@@ -29,11 +44,16 @@ TEST_F(TrayBluetoothHelperTest, Basics) {
   adapter_client->SetSimulationIntervalMs(0);
 
   TrayBluetoothHelper helper;
+  ash::mojom::BluetoothAdapterClientPtr client_ptr;
+  TestBluetoothAdapterClient client(mojo::MakeRequest(&client_ptr));
+  helper.SetClient(std::move(client_ptr));
+
   helper.Initialize();
   RunAllPendingInMessageLoop();
   EXPECT_TRUE(helper.GetBluetoothAvailable());
   EXPECT_FALSE(helper.GetBluetoothEnabled());
   EXPECT_FALSE(helper.HasBluetoothDiscoverySession());
+  EXPECT_FALSE(client.GetAdapterState());
 
   BluetoothDeviceList devices = helper.GetAvailableBluetoothDevices();
   // The devices are fake in tests, so don't assume any particular number.
@@ -43,6 +63,7 @@ TEST_F(TrayBluetoothHelperTest, Basics) {
   helper.ToggleBluetoothEnabled();
   RunAllPendingInMessageLoop();
   EXPECT_TRUE(helper.GetBluetoothEnabled());
+  EXPECT_TRUE(client.GetAdapterState());
 
   helper.StartBluetoothDiscovering();
   RunAllPendingInMessageLoop();
@@ -56,6 +77,7 @@ TEST_F(TrayBluetoothHelperTest, Basics) {
   helper.ToggleBluetoothEnabled();
   RunAllPendingInMessageLoop();
   EXPECT_FALSE(helper.GetBluetoothEnabled());
+  EXPECT_FALSE(client.GetAdapterState());
 }
 
 }  // namespace

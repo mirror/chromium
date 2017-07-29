@@ -14,6 +14,7 @@
 #include "chrome/browser/memory/memory_kills_monitor.h"
 #include "chromeos/system/version_loader.h"
 
+class BluetoothAdapterClient;
 class NightLightClient;
 
 namespace lock_screen_apps {
@@ -114,6 +115,8 @@ class ChromeBrowserMainPartsChromeos : public ChromeBrowserMainPartsLinux {
       lock_screen_apps_state_controller_;
 
   std::unique_ptr<NightLightClient> night_light_client_;
+
+  std::unique_ptr<BluetoothAdapterClient> bluetooth_adapter_client_;
 
   DISALLOW_COPY_AND_ASSIGN(ChromeBrowserMainPartsChromeos);
 };

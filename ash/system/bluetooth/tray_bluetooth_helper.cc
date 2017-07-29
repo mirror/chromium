@@ -39,7 +39,8 @@ BluetoothDeviceInfo::BluetoothDeviceInfo(const BluetoothDeviceInfo& other) =
 
 BluetoothDeviceInfo::~BluetoothDeviceInfo() {}
 
-TrayBluetoothHelper::TrayBluetoothHelper() : weak_ptr_factory_(this) {}
+TrayBluetoothHelper::TrayBluetoothHelper()
+    : binding_(this), weak_ptr_factory_(this) {}
 
 TrayBluetoothHelper::~TrayBluetoothHelper() {
   if (adapter_)
@@ -120,6 +121,7 @@ void TrayBluetoothHelper::ConnectToBluetoothDevice(const std::string& address) {
 }
 
 void TrayBluetoothHelper::ToggleBluetoothEnabled() {
+  bluetooth_adapter_client_->OnAdapterPowerSet(!adapter_->IsPowered());
   adapter_->SetPowered(!adapter_->IsPowered(), base::Bind(&base::DoNothing),
                        base::Bind(&base::DoNothing));
 }
@@ -134,6 +136,11 @@ bool TrayBluetoothHelper::GetBluetoothEnabled() {
 
 bool TrayBluetoothHelper::HasBluetoothDiscoverySession() {
   return discovery_session_ && discovery_session_->IsActive();
+}
+
+void TrayBluetoothHelper::BindRequest(
+    mojom::BluetoothAdapterControllerRequest request) {
+  binding_.Bind(std::move(request));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -182,6 +189,13 @@ void TrayBluetoothHelper::OnStartDiscoverySession(
   VLOG(1) << "Claiming new Bluetooth device discovery session.";
   discovery_session_ = std::move(discovery_session);
   GetSystemTrayNotifier()->NotifyBluetoothDiscoveringChanged();
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// mojom::BluetoothAdapterController:
+
+void TrayBluetoothHelper::SetClient(mojom::BluetoothAdapterClientPtr client) {
+  bluetooth_adapter_client_ = std::move(client);
 }
 
 }  // namespace ash
