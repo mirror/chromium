@@ -23,7 +23,9 @@ std::unique_ptr<service_manager::Service> ResourceCoordinatorService::Create() {
 ResourceCoordinatorService::ResourceCoordinatorService()
     : weak_factory_(this) {}
 
-ResourceCoordinatorService::~ResourceCoordinatorService() = default;
+ResourceCoordinatorService::~ResourceCoordinatorService() {
+  ref_factory_.reset();
+}
 
 void ResourceCoordinatorService::OnStart() {
   ref_factory_.reset(new service_manager::ServiceContextRefFactory(
@@ -33,6 +35,10 @@ void ResourceCoordinatorService::OnStart() {
   registry_.AddInterface(base::Bind(ServiceCallbacksImpl::Create,
                                     base::Unretained(ref_factory_.get()),
                                     base::Unretained(this)));
+
+  registry_.AddInterface(
+      base::Bind(&CoordinationUnitIntrospectorImpl::BindToInterface,
+                 base::Unretained(&introspector_)));
 
   // Register new |CoordinationUnitGraphObserver| implementations here.
   auto tab_signal_generator_impl = base::MakeUnique<TabSignalGeneratorImpl>();
