@@ -49,6 +49,7 @@ import org.chromium.net.NetworkChangeNotifier;
 import org.chromium.ui.base.PageTransition;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -87,6 +88,10 @@ public class WebappActivity extends SingleTabActivity {
 
     private Runnable mSetImmersiveRunnable;
 
+    // We load WebappInfo from sWebappInfoMap to mWebappInfo, and use mWebappInfo after that.
+    private static final HashMap<String, WebappInfo> sWebappInfoMap =
+            new HashMap<String, WebappInfo>();
+
     /**
      * Construct all the variables that shouldn't change.  We do it here both to clarify when the
      * objects are created and to ensure that they exist throughout the parallelized initialization
@@ -107,7 +112,9 @@ public class WebappActivity extends SingleTabActivity {
         if (intent == null) return;
         super.onNewIntent(intent);
 
-        WebappInfo newWebappInfo = createWebappInfo(intent);
+        WebappInfo newWebappInfo = retrieveWebappInfoFromCache(WebappInfo.getIdFromIntent(intent));
+        if (newWebappInfo == null) newWebappInfo = createWebappInfo(intent);
+
         if (newWebappInfo == null) {
             Log.e(TAG, "Failed to parse new Intent: " + intent);
             ApiCompatibilityUtils.finishAndRemoveTask(this);
@@ -143,12 +150,30 @@ public class WebappActivity extends SingleTabActivity {
 
     @Override
     public void preInflationStartup() {
-        WebappInfo info = createWebappInfo(getIntent());
+        Intent intent = getIntent();
+        WebappInfo info = retrieveWebappInfoFromCache(WebappInfo.getIdFromIntent(intent));
+        // When WebappActivity is killed by the Android OS, and an entry stays in "Android Recents"
+        // (The user does not swipe it away), when WebappActivity is relaunched it is relaunched
+        // with the intent stored in WebappActivity#getIntent() at the time that the WebappActivity
+        // was killed. WebappActivity may be relaunched from: (A) An intent from
+        // WebappLauncherActivity
+        //(e.g. as a result of a notification or a deep link) Android drops the intent from
+        // WebappLauncherActivity in favor of WebappActivity#getIntent() at the time that the
+        // WebappActivity was killed. (B) The user selecting the WebappActivity in recents  In case
+        // (A) we want to use the intent sent to WebappLauncherActivity and ignore
+        // WebappActivity#getSavedInstanceState(). In case (B) we want to restore to saved tab
+        // state.
+        boolean gotIntentFromWebappLauncherActivity = false;
+        if (info == null) {
+            info = createWebappInfo(intent);
+        } else {
+            gotIntentFromWebappLauncherActivity = true;
+        }
+        mWebappInfo = info;
 
-        String id = "";
-        if (info != null) {
-            mWebappInfo = info;
-            id = info.id();
+        if (info.shouldForceNavigation() && gotIntentFromWebappLauncherActivity) {
+            // Don't restore to previous page, navigate use current intent.
+            resetSavedInstanceState();
         }
 
         // Initialize the WebappRegistry and warm up the shared preferences for this web app. No-ops
@@ -157,7 +182,7 @@ public class WebappActivity extends SingleTabActivity {
         StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskReads();
         try {
             WebappRegistry.getInstance();
-            WebappRegistry.warmUpSharedPrefsForId(id);
+            WebappRegistry.warmUpSharedPrefsForId(info.id());
         } finally {
             StrictMode.setThreadPolicy(oldPolicy);
         }
@@ -361,6 +386,14 @@ public class WebappActivity extends SingleTabActivity {
      */
     public String getWebappScope() {
         return mWebappInfo.scopeUri().toString();
+    }
+
+    public static void addWebappInfoToCache(String id, WebappInfo info) {
+        sWebappInfoMap.put(id, info);
+    }
+
+    public static WebappInfo retrieveWebappInfoFromCache(String id) {
+        return sWebappInfoMap.remove(id);
     }
 
     private void initializeWebappData() {

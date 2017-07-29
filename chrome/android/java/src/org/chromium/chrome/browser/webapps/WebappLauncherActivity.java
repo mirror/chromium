@@ -88,6 +88,11 @@ public class WebappLauncherActivity extends Activity {
             if (validWebApk && (webappSource == ShortcutSource.UNKNOWN)) {
                 source = getWebApkSource(webappInfo);
             }
+            // Add all information needed to launch WebappActivity without {@link
+            // WebappActivity#sWebappInfoMap} to launch intent. When the Android OS has killed a
+            // WebappActivity and the user selects the WebappActivity from "Android Recents" the
+            // WebappActivity is launched without going through WebappLauncherActivity first.
+            WebappActivity.addWebappInfoToCache(webappInfo.id(), webappInfo);
             LaunchMetrics.recordHomeScreenLaunchIntoStandaloneActivity(webappUrl, source);
             Intent launchIntent = createWebappLaunchIntent(webappInfo, webappSource, validWebApk);
             startActivity(launchIntent);
