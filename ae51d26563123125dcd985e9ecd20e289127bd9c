@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e4d12ed4_65348b7f",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1223109
+      },
+      "writtenOn": "2017-07-29T00:36:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aaae785e_33a2c234",
+      "range": {
+        "startLine": 21,
+        "startChar": 9,
+        "endLine": 21,
+        "endChar": 66
+      },
+      "revId": "ae51d26563123125dcd985e9ecd20e289127bd9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dbe1ba18_cd9acb0a",
         "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "ae51d26563123125dcd985e9ecd20e289127bd9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edb617d6_12bf0105",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1223109
+      },
+      "writtenOn": "2017-07-29T00:36:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbe1ba18_cd9acb0a",
+      "range": {
+        "startLine": 32,
+        "startChar": 21,
+        "endLine": 32,
+        "endChar": 37
+      },
+      "revId": "ae51d26563123125dcd985e9ecd20e289127bd9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d731e0a6_99b27bb9",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1223109
+      },
+      "writtenOn": "2017-07-29T00:36:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43ca6e5f_71832ee6",
+      "range": {
+        "startLine": 35,
+        "startChar": 54,
+        "endLine": 35,
+        "endChar": 76
+      },
+      "revId": "ae51d26563123125dcd985e9ecd20e289127bd9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40b3c107_1ca1bedf",
         "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
         "patchSetId": 10
@@ -82,6 +154,30 @@
       "writtenOn": "2017-07-28T22:46:33Z",
       "side": 1,
       "message": "Each store can have a different last_updated_time.. We should show that too.\nLet\u0027s do that as a separate CL.",
+      "range": {
+        "startLine": 39,
+        "startChar": 6,
+        "endLine": 39,
+        "endChar": 36
+      },
+      "revId": "ae51d26563123125dcd985e9ecd20e289127bd9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "830f3714_f55c60c0",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1223109
+      },
+      "writtenOn": "2017-07-29T00:36:47Z",
+      "side": 1,
+      "message": "Yes time for each store and the database checks will be in a different cl.",
+      "parentUuid": "40b3c107_1ca1bedf",
       "range": {
         "startLine": 39,
         "startChar": 6,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "2385f6a7_7f873234",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1223109
+      },
+      "writtenOn": "2017-07-29T00:36:47Z",
+      "side": 1,
+      "message": "The store info needs to be before AddDatabaseInfo, since it\u0027s called from AddDatabaseInfo",
+      "parentUuid": "6b65c681_3970ace8",
+      "range": {
+        "startLine": 46,
+        "startChar": 5,
+        "endLine": 46,
+        "endChar": 20
+      },
+      "revId": "ae51d26563123125dcd985e9ecd20e289127bd9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b07d8d24_4d6fd97c",
         "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
         "patchSetId": 10
@@ -128,6 +248,30 @@
       "writtenOn": "2017-07-28T22:46:33Z",
       "side": 1,
       "message": "Why do we need to \u0026\u0026 network_status_code() ?",
+      "range": {
+        "startLine": 64,
+        "startChar": 18,
+        "endLine": 64,
+        "endChar": 39
+      },
+      "revId": "ae51d26563123125dcd985e9ecd20e289127bd9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66100ffd_f8567b6c",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1223109
+      },
+      "writtenOn": "2017-07-29T00:36:47Z",
+      "side": 1,
+      "message": "at the moment the default value is 0, hence not showing the network status code, and time if no request for update yet.",
+      "parentUuid": "b07d8d24_4d6fd97c",
       "range": {
         "startLine": 64,
         "startChar": 18,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "5c8438d1_a4a33e70",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1223109
+      },
+      "writtenOn": "2017-07-29T00:36:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e21a711f_befce323",
+      "range": {
+        "startLine": 72,
+        "startChar": 6,
+        "endLine": 72,
+        "endChar": 41
+      },
+      "revId": "ae51d26563123125dcd985e9ecd20e289127bd9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22e5c3eb_7029c569",
         "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
         "patchSetId": 10
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "735d014b_720824d6",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1223109
+      },
+      "writtenOn": "2017-07-29T00:36:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22e5c3eb_7029c569",
+      "range": {
+        "startLine": 84,
+        "startChar": 6,
+        "endLine": 84,
+        "endChar": 15
+      },
+      "revId": "ae51d26563123125dcd985e9ecd20e289127bd9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "838da024_5a20e4bb",
         "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
         "patchSetId": 10
@@ -200,6 +392,24 @@
       "revId": "ae51d26563123125dcd985e9ecd20e289127bd9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "987353cc_641aba72",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1223109
+      },
+      "writtenOn": "2017-07-29T00:36:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "838da024_5a20e4bb",
+      "revId": "ae51d26563123125dcd985e9ecd20e289127bd9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -226,6 +436,30 @@
     },
     {
       "key": {
+        "uuid": "6da903d4_b419a994",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1223109
+      },
+      "writtenOn": "2017-07-29T00:36:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3dca5e0_43f366c9",
+      "range": {
+        "startLine": 137,
+        "startChar": 2,
+        "endLine": 137,
+        "endChar": 67
+      },
+      "revId": "ae51d26563123125dcd985e9ecd20e289127bd9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ba49b46_adca4d8e",
         "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
         "patchSetId": 10
@@ -249,6 +483,30 @@
     },
     {
       "key": {
+        "uuid": "bd79d494_463905b6",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1223109
+      },
+      "writtenOn": "2017-07-29T00:36:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ba49b46_adca4d8e",
+      "range": {
+        "startLine": 138,
+        "startChar": 2,
+        "endLine": 138,
+        "endChar": 50
+      },
+      "revId": "ae51d26563123125dcd985e9ecd20e289127bd9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b54f1f7_4c19adb9",
         "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
         "patchSetId": 10
@@ -269,6 +527,30 @@
       "revId": "ae51d26563123125dcd985e9ecd20e289127bd9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fd5de14_3185dd4f",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1223109
+      },
+      "writtenOn": "2017-07-29T00:36:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b54f1f7_4c19adb9",
+      "range": {
+        "startLine": 150,
+        "startChar": 21,
+        "endLine": 150,
+        "endChar": 42
+      },
+      "revId": "ae51d26563123125dcd985e9ecd20e289127bd9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
