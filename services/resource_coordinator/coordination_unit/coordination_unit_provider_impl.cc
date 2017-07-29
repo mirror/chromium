@@ -10,7 +10,6 @@
 #include "base/macros.h"
 #include "services/resource_coordinator/coordination_unit/coordination_unit_graph_observer.h"
 #include "services/resource_coordinator/coordination_unit/coordination_unit_impl.h"
-#include "services/service_manager/public/cpp/service_context_ref.h"
 
 namespace resource_coordinator {
 
@@ -20,7 +19,6 @@ CoordinationUnitProviderImpl::CoordinationUnitProviderImpl(
     : service_ref_factory_(service_ref_factory),
       coordination_unit_manager_(coordination_unit_manager) {
   DCHECK(service_ref_factory);
-  service_ref_ = service_ref_factory->CreateRef();
 }
 
 CoordinationUnitProviderImpl::~CoordinationUnitProviderImpl() = default;
