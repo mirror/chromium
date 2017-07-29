@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "dca57df6_770ae7f6",
+        "filename": "third_party/WebKit/Source/core/editing/Editor.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 914,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-07-29T23:18:37Z",
+      "side": 1,
+      "message": "Then this function can be replaced by a SelectionForUndoStep::AsValidSelectionFor() call.",
+      "revId": "8ee0b3cb4b4dff382d6185b2352e320d0a47e2e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "92f0218e_4f5b9f2d",
         "filename": "third_party/WebKit/Source/core/editing/commands/CompositeEditCommand.h",
         "patchSetId": 11
@@ -19,6 +36,23 @@
         "endLine": 65,
         "endChar": 20
       },
+      "revId": "8ee0b3cb4b4dff382d6185b2352e320d0a47e2e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a206727_a0eea3b4",
+        "filename": "third_party/WebKit/Source/core/editing/commands/SelectionForUndoStep.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-07-29T23:18:37Z",
+      "side": 1,
+      "message": "Can we add another (shorthand) function?\n\nSelectionInDOMTree AsValidSelectionFor(const Document\u0026 document) const {\n  return IsValidFor(document) ? AsSelection() : SelectionInDOMTree();\n}",
       "revId": "8ee0b3cb4b4dff382d6185b2352e320d0a47e2e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
