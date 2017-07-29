@@ -21,6 +21,8 @@ class CC_EXPORT SurfaceLayer : public Layer {
   static scoped_refptr<SurfaceLayer> Create(
       scoped_refptr<viz::SurfaceReferenceFactory> ref_factory);
 
+  size_t surface_id_hash() const override;
+
   void SetPrimarySurfaceInfo(const viz::SurfaceInfo& surface_info);
   void SetFallbackSurfaceInfo(const viz::SurfaceInfo& surface_info);
 
