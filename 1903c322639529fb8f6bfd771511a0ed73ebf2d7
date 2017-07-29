@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f35041f6_b5435d43",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2810,
+      "author": {
+        "id": 1118546
+      },
+      "writtenOn": "2017-07-29T00:43:52Z",
+      "side": 1,
+      "message": "PointerDetails is also needed in TouchEvent, I separated the functions into two.",
+      "parentUuid": "e7a78799_33e438a1",
+      "range": {
+        "startLine": 2810,
+        "startChar": 6,
+        "endLine": 2810,
+        "endChar": 21
+      },
+      "revId": "1903c322639529fb8f6bfd771511a0ed73ebf2d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea74dc9d_89b10454",
         "filename": "ui/views/win/hwnd_message_handler.cc",
         "patchSetId": 7
@@ -48,6 +72,54 @@
     },
     {
       "key": {
+        "uuid": "83f47f58_6c23f555",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2831,
+      "author": {
+        "id": 1118546
+      },
+      "writtenOn": "2017-07-29T00:43:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea74dc9d_89b10454",
+      "range": {
+        "startLine": 2831,
+        "startChar": 16,
+        "endLine": 2831,
+        "endChar": 33
+      },
+      "revId": "1903c322639529fb8f6bfd771511a0ed73ebf2d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "54f6fa8e_fb1bba0a",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2831,
+      "author": {
+        "id": 1118546
+      },
+      "writtenOn": "2017-07-29T00:43:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea74dc9d_89b10454",
+      "range": {
+        "startLine": 2831,
+        "startChar": 16,
+        "endLine": 2831,
+        "endChar": 33
+      },
+      "revId": "1903c322639529fb8f6bfd771511a0ed73ebf2d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19f14b22_1af25ef2",
         "filename": "ui/views/win/hwnd_message_handler.cc",
         "patchSetId": 7
@@ -59,6 +131,30 @@
       "writtenOn": "2017-07-26T22:25:14Z",
       "side": 1,
       "message": "The second \u0027flag\u0027 parameter is the changed flags. The code you have here assumes the down state and the changed state are the same. Are you sure that is valid? For example, isn\u0027t it possible to get a WM_POINTERDOWN for FIRSTBUTTON followed by a WM_POINTERDOWN for SECONDBUTTON?",
+      "range": {
+        "startLine": 2868,
+        "startChar": 69,
+        "endLine": 2868,
+        "endChar": 73
+      },
+      "revId": "1903c322639529fb8f6bfd771511a0ed73ebf2d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6efff403_fb63f856",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2868,
+      "author": {
+        "id": 1118546
+      },
+      "writtenOn": "2017-07-29T00:43:52Z",
+      "side": 1,
+      "message": "You are right, I should have two flags,",
+      "parentUuid": "19f14b22_1af25ef2",
       "range": {
         "startLine": 2868,
         "startChar": 69,
@@ -91,6 +187,30 @@
       "revId": "1903c322639529fb8f6bfd771511a0ed73ebf2d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1005470d_ed00884a",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2913,
+      "author": {
+        "id": 1118546
+      },
+      "writtenOn": "2017-07-29T00:43:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba204b96_e324c03b",
+      "range": {
+        "startLine": 2913,
+        "startChar": 17,
+        "endLine": 2913,
+        "endChar": 21
+      },
+      "revId": "1903c322639529fb8f6bfd771511a0ed73ebf2d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -152,6 +272,30 @@
     },
     {
       "key": {
+        "uuid": "a3eba504_21f91ca5",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2915,
+      "author": {
+        "id": 1118546
+      },
+      "writtenOn": "2017-07-29T00:43:52Z",
+      "side": 1,
+      "message": "Pen can hover on a page without pressing any button or on the tablet, like mouse. Touch moves happen after fingers press the screen. I know it is kind of awkward to send both touch and mouse events, but it is a temporary solution, we will use PointerEvent in the future.",
+      "parentUuid": "708bc069_8bb433a8",
+      "range": {
+        "startLine": 2915,
+        "startChar": 64,
+        "endLine": 2915,
+        "endChar": 66
+      },
+      "revId": "1903c322639529fb8f6bfd771511a0ed73ebf2d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fdf1088c_96ec3fd2",
         "filename": "ui/views/win/hwnd_message_handler.cc",
         "patchSetId": 7
@@ -163,6 +307,30 @@
       "writtenOn": "2017-07-26T22:25:14Z",
       "side": 1,
       "message": "Why is the angle between 0-180 and not 360?",
+      "range": {
+        "startLine": 2921,
+        "startChar": 6,
+        "endLine": 2921,
+        "endChar": 20
+      },
+      "revId": "1903c322639529fb8f6bfd771511a0ed73ebf2d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46c758b6_ea611e44",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2921,
+      "author": {
+        "id": 1118546
+      },
+      "writtenOn": "2017-07-29T00:43:52Z",
+      "side": 1,
+      "message": "https://codesearch.chromium.org/chromium/src/ui/events/event.h?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d724\nRight now, the rotation_angle in ui::TouchEvent is defined in the range of [0, 180).",
+      "parentUuid": "fdf1088c_96ec3fd2",
       "range": {
         "startLine": 2921,
         "startChar": 6,
