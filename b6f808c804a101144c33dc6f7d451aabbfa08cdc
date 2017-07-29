@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ffe774f_4f18c77b",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObjectCacheImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-29T05:37:52Z",
+      "side": 1,
+      "message": "Did you test this in debug mode? I suspect that this\ncheck is no longer valid - I agree it should be safe to\npost these notifications synchronously now, but it\u0027s no\nlonger true that we can assume layout is clean.\n\nI think we should just delete this whole #if block.",
+      "revId": "b6f808c804a101144c33dc6f7d451aabbfa08cdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
