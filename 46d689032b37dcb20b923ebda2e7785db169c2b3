@@ -187,6 +187,30 @@
       "revId": "46d689032b37dcb20b923ebda2e7785db169c2b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0a2283a_b17ea86d",
+        "filename": "chrome/test/mini_installer/test_installer.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1109829
+      },
+      "writtenOn": "2017-07-29T12:50:28Z",
+      "side": 1,
+      "message": "Yep, that\u0027s what I meant. Changing env through \"setenv\" will not affect the current process\u0027 idea of what tempdir is. This might be fine (since the installer will be launched as a subprocess), but I just wanted to make sure that this was WAI.",
+      "parentUuid": "045ded92_c0057908",
+      "range": {
+        "startLine": 359,
+        "startChar": 2,
+        "endLine": 359,
+        "endChar": 11
+      },
+      "revId": "46d689032b37dcb20b923ebda2e7785db169c2b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

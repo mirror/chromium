@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df08c633_91015c2d",
+        "filename": "chrome/test/mini_installer/test_installer.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1109829
+      },
+      "writtenOn": "2017-07-29T12:50:28Z",
+      "side": 1,
+      "message": "nit: spelling",
+      "range": {
+        "startLine": 347,
+        "startChar": 56,
+        "endLine": 347,
+        "endChar": 67
+      },
+      "revId": "868a0b25ba7ae76bee01b57419684b6d9759733e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59e60e04_de96c158",
+        "filename": "chrome/test/mini_installer/test_installer.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1109829
+      },
+      "writtenOn": "2017-07-29T12:50:28Z",
+      "side": 1,
+      "message": "Is this actually correct? I always assumed \"os.environ\" was just default-applied to new processes when they were created and similarly queried internally. Could be wrong, doesn\u0027t really matter I suppose.",
+      "range": {
+        "startLine": 347,
+        "startChar": 4,
+        "endLine": 347,
+        "endChar": 73
+      },
+      "revId": "868a0b25ba7ae76bee01b57419684b6d9759733e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8ca0aca_e23ab139",
+        "filename": "chrome/test/mini_installer/test_installer.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1109829
+      },
+      "writtenOn": "2017-07-29T12:50:28Z",
+      "side": 1,
+      "message": "(Seems like overkill TBH. As far as I can tell, the only time something would want to modify env in such a way would be explicitly to stop this process from reacting to it, in which case you should probably follow suit. Plus the installer is your process, so you have full control over it. It seems odd to second-guess yourself.).",
+      "range": {
+        "startLine": 348,
+        "startChar": 4,
+        "endLine": 349,
+        "endChar": 53
+      },
+      "revId": "868a0b25ba7ae76bee01b57419684b6d9759733e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11b5b053_3c2651ef",
+        "filename": "chrome/test/mini_installer/test_installer.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1109829
+      },
+      "writtenOn": "2017-07-29T12:50:28Z",
+      "side": 1,
+      "message": "WDYT about just always setting \"old_tmp\", and then always restoring it. That\u0027d save you from having to track \"tmp_set\" and simplify a few blocks.",
+      "range": {
+        "startLine": 357,
+        "startChar": 10,
+        "endLine": 359,
+        "endChar": 24
+      },
+      "revId": "868a0b25ba7ae76bee01b57419684b6d9759733e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee558cbc_c4c93225",
+        "filename": "chrome/test/mini_installer/test_installer.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1109829
+      },
+      "writtenOn": "2017-07-29T12:50:28Z",
+      "side": 1,
+      "message": "Consider using \"tempfile.mkdtemp(dir\u003ddrive+os.sep, suffix\u003d\u0027test_installer\u0027)\". This will create a new tempdir for each invocation, meaning that if there are any errors in cleanup, one installation\u0027s files won\u0027t bleed into the other. With that suffix, if there is a leak and someone is trying to figure out why, it will point to \"test_installer\".\n\nAlso, creating a file under root may encounter permissions issues. Resolving this satisfactorily could get a bit messy, as you essentially need code that says, \"for a given drive, find a folder that the current user can write to.\" I don\u0027t think this is actually 100% possible!\n\nPerhaps the logic should become:\n1) Check if current TMP is on \"drive\".\n2) If not, iterate through a few places, such as [LOCALAPPDATA, USERPROFILE, HOMEDRIVE\\HOMEPATH, etc.)\n2a) For each option that exists, try/catch a mkdir. If it succeeds, then great! Otherwise, ignore the failure and continue.\n3) If no paths could be found, raise an exception noting that \"TMP\" must be on the same drive as Program Files.\n\ndef TempDirBases(drive):\n  yield win32api.GetTempPath()\n  yield os.environ.get(\u0027LOCALAPPDATA\u0027)\n  yield os.environ.get(\u0027USERPROFILE\u0027)\n  home_drive, home_path \u003d os.environ.get(\u0027HOMEDRIVE\u0027), os.environ.get(\u0027HOMEPATH\u0027)\n  if home_drive and home_path:\n    yield os.path.join(home_drive, home_path)\n  yield os.environ.get(\u0027SYSTEMROOT\u0027)\n  yield drive\n\n# Then, write a function that *always* creates a new directory using \"mkdtemp\". This\n# ensures that this installer\u0027s tempdir will not contain junk from other runs and\n# also asserts that you can write to it. Because you always create a directory, you\n# can always delete it, too.\ndef MakeTempDirOn(drive):\n  for base in TempDirBases(drive):\n    if not (base and os.path.splitdrive(base)[0] \u003d\u003d drive and os.path.isdir(base)):\n      continue\n    try:\n      tmp \u003d tempfile.mkdirtemp(dir\u003dbase, suffix\u003d\u0027TestInstaller\u0027)\n    except Exception:\n      pass\n    return tmp\n  raise ValueError(\u0027Could not find tempdir on same drive as %s; please set TMP\u0027 % (drive,))\n\n# Then...\n@contextlib.contextmanager\ndef ConfigureTempOnDrive(drive):\n  orig_tmp \u003d os.environ.get(\u0027TMP\u0027)\n  tmp \u003d os.environ[\u0027TMP\u0027] \u003d MakeTempDirOn(drive)\n  try:\n    yield\n  finally:\n    try:\n      shutil.rmtree(tmp)\n    except Exception as e:\n      print \u003e\u003eos.stderr, \u0027Failed to clean up tempdir at %q: %s\u0027 % (tmp, e)\n    os.environ[\u0027TMP\u0027] \u003d orig_tmp\n\nJust a thought. I\u0027m at an airport, so I had a few minutes to hack something together :)",
+      "range": {
+        "startLine": 363,
+        "startChar": 6,
+        "endLine": 366,
+        "endChar": 26
+      },
+      "revId": "868a0b25ba7ae76bee01b57419684b6d9759733e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7ec834d_13a6c422",
+        "filename": "chrome/test/mini_installer/test_installer.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1109829
+      },
+      "writtenOn": "2017-07-29T12:50:28Z",
+      "side": 1,
+      "message": "Just a note: in infrastructure, we\u0027ve observed some flakes recursively deleting directories. Apparently Windows can occasionally index/use/scan (even though we\u0027ve generally disabled it) files, and so deletion fails. It\u0027s recommended to surround this with try/catch at minimum.",
+      "range": {
+        "startLine": 381,
+        "startChar": 6,
+        "endLine": 381,
+        "endChar": 32
+      },
+      "revId": "868a0b25ba7ae76bee01b57419684b6d9759733e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b6c3ec4_500a87d1",
+        "filename": "chrome/test/mini_installer/test_installer.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1109829
+      },
+      "writtenOn": "2017-07-29T12:50:28Z",
+      "side": 1,
+      "message": "Cool!",
+      "revId": "868a0b25ba7ae76bee01b57419684b6d9759733e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
