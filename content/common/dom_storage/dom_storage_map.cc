@@ -5,20 +5,20 @@
 #include "content/common/dom_storage/dom_storage_map.h"
 
 #include "base/logging.h"
+#include "base/strings/string_number_conversions.h"
 
 namespace content {
 
 namespace {
 
-size_t size_of_item(const base::string16& key, const size_t value) {
-  return key.length() * sizeof(base::char16) + value;
-}
-
 size_t size_of_item(const base::string16& key,
-                    const base::NullableString16& value) {
-  return value.is_null()
-             ? 0
-             : (key.length() + value.string().length()) * sizeof(base::char16);
+                    const base::string16& value,
+                    bool has_only_keys) {
+  if (!has_only_keys)
+    return (key.length() + value.length()) * sizeof(base::char16);
+  size_t value_size;
+  base::StringToSizeT(value, &value_size);
+  return key.length() * sizeof(base::char16) + value_size;
 }
 
 }  // namespace
@@ -29,69 +29,56 @@ DOMStorageMap::DOMStorageMap(size_t quota)
 }
 
 DOMStorageMap::DOMStorageMap(size_t quota, bool has_only_keys)
-    : bytes_used_(0), quota_(quota), has_only_keys_(has_only_keys) {
-  ResetKeyIterator();
-}
+    : bytes_used_(0), quota_(quota), has_only_keys_(has_only_keys) {}
 
 DOMStorageMap::~DOMStorageMap() {}
 
 unsigned DOMStorageMap::Length() const {
-  return has_only_keys_ ? keys_only_.size() : keys_values_.size();
+  return values_.size();
 }
 
 base::NullableString16 DOMStorageMap::Key(unsigned index) {
-  if (index >= Length())
+  if (index >= values_.size())
     return base::NullableString16();
   while (last_key_index_ != index) {
     if (last_key_index_ > index) {
-      if (has_only_keys_)
-        --keys_only_iterator_;
-      else
-        --keys_values_iterator_;
+      --key_iterator_;
       --last_key_index_;
     } else {
-      if (has_only_keys_)
-        ++keys_only_iterator_;
-      else
-        ++keys_values_iterator_;
+      ++key_iterator_;
       ++last_key_index_;
     }
   }
-  return base::NullableString16(has_only_keys_ ? keys_only_iterator_->first
-                                               : keys_values_iterator_->first,
-                                false);
+  return base::NullableString16(key_iterator_->first, false);
+}
+
+bool DOMStorageMap::SetItem(const base::string16& key,
+                            const base::string16& value) {
+  base::NullableString16 old_value;
+  return SetItemInternal(key, value, &old_value);
 }
 
 bool DOMStorageMap::SetItem(
     const base::string16& key, const base::string16& value,
     base::NullableString16* old_value) {
-  if (has_only_keys_) {
-    size_t unused;
-    size_t new_value = value.length() * sizeof(base::char16);
-    return SetItemInternal<KeysMapInternal>(&keys_only_, key, new_value,
-                                            &unused);
-  } else {
-    base::NullableString16 new_value(value, false);
-    *old_value = base::NullableString16();
-    return SetItemInternal<DOMStorageValuesMap>(&keys_values_, key, new_value,
-                                                old_value);
-  }
+  DCHECK(!has_only_keys_);
+  return SetItemInternal(key, value, old_value);
 }
 
-template <typename MapType>
-bool DOMStorageMap::SetItemInternal(MapType* map_type,
-                                    const base::string16& key,
-                                    typename MapType::mapped_type value,
-                                    typename MapType::mapped_type* old_value) {
-  typename MapType::const_iterator found = map_type->find(key);
-  size_t old_item_size = 0;
-  if (found == map_type->end()) {
-    old_item_size = 0;
-  } else {
+bool DOMStorageMap::SetItemInternal(const base::string16& key,
+                                    const base::string16& value,
+                                    base::NullableString16* old_value) {
+  DOMStorageValuesMap::const_iterator found = values_.find(key);
+  if (found == values_.end())
+    *old_value = base::NullableString16();
+  else
     *old_value = found->second;
-    old_item_size = size_of_item(key, *old_value);
-  }
-  size_t new_item_size = size_of_item(key, value);
+
+  size_t old_item_size =
+      old_value->is_null()
+          ? 0
+          : size_of_item(key, old_value->string(), has_only_keys_);
+  size_t new_item_size = size_of_item(key, value, false);
   size_t new_bytes_used = bytes_used_ - old_item_size + new_item_size;
 
   // Only check quota if the size is increasing, this allows
@@ -99,101 +86,90 @@ bool DOMStorageMap::SetItemInternal(MapType* map_type,
   if (new_item_size > old_item_size && new_bytes_used > quota_)
     return false;
 
-  (*map_type)[key] = value;
+  base::NullableString16 new_value;
+  if (has_only_keys_)
+    new_value = base::NullableString16(
+        base::SizeTToString16(value.length() * sizeof(base::char16)), false);
+  else
+    new_value = base::NullableString16(value, false);
+  values_[key] = new_value;
   ResetKeyIterator();
   bytes_used_ = new_bytes_used;
   return true;
 }
 
+bool DOMStorageMap::RemoveItem(const base::string16& key) {
+  base::string16 old_value;
+  return RemoveItemInternal(key, &old_value);
+}
+
 bool DOMStorageMap::RemoveItem(
     const base::string16& key,
     base::string16* old_value) {
-  if (has_only_keys_) {
-    size_t unused;
-    return RemoveItemInternal<KeysMapInternal>(&keys_only_, key, &unused);
-  } else {
-    base::NullableString16 nullable_old;
-    bool success = RemoveItemInternal<DOMStorageValuesMap>(&keys_values_, key,
-                                                           &nullable_old);
-    if (success)
-      *old_value = nullable_old.string();
-    return success;
-  }
+  DCHECK(!has_only_keys_);
+  return RemoveItemInternal(key, old_value);
 }
 
-template <typename MapType>
-bool DOMStorageMap::RemoveItemInternal(
-    MapType* map_type,
-    const base::string16& key,
-    typename MapType::mapped_type* old_value) {
-  typename MapType::iterator found = map_type->find(key);
-  if (found == map_type->end())
+bool DOMStorageMap::RemoveItemInternal(const base::string16& key,
+                                       base::string16* old_value) {
+  DOMStorageValuesMap::iterator found = values_.find(key);
+  if (found == values_.end())
     return false;
-  *old_value = found->second;
-  map_type->erase(found);
+  *old_value = found->second.string();
+  values_.erase(found);
   ResetKeyIterator();
-  bytes_used_ -= size_of_item(key, *old_value);
+  bytes_used_ -= size_of_item(key, *old_value, has_only_keys_);
   return true;
 }
 
 base::NullableString16 DOMStorageMap::GetItem(const base::string16& key) const {
   DCHECK(!has_only_keys_);
-  DOMStorageValuesMap::const_iterator found = keys_values_.find(key);
-  if (found == keys_values_.end())
+  DOMStorageValuesMap::const_iterator found = values_.find(key);
+  if (found == values_.end())
     return base::NullableString16();
   return found->second;
 }
 
-void DOMStorageMap::ExtractValues(DOMStorageValuesMap* map) const {
-  DCHECK(!has_only_keys_);
-  *map = keys_values_;
-}
-
-void DOMStorageMap::SwapValues(DOMStorageValuesMap* values) {
-  DCHECK(!has_only_keys_);
-  keys_values_.swap(*values);
-  bytes_used_ = CountBytes(keys_values_);
-  ResetKeyIterator();
-}
-
-void DOMStorageMap::TakeKeysFrom(const DOMStorageValuesMap* values) {
+void DOMStorageMap::TakeValuesFrom(DOMStorageValuesMap* values) {
   // Note: A pre-existing file may be over the quota budget.
-  DCHECK(has_only_keys_);
-  keys_only_.clear();
-  // TODO(ssid): This could be optimized if the storage read the only the
-  // keys.
-  for (const auto& item : *values) {
-    keys_only_[item.first] =
-        item.second.string().length() * sizeof(base::char16);
+  if (has_only_keys_) {
+    values_.clear();
+    // TODO(ssid): This could be optimized if the storage read the only the
+    // keys.
+    for (const auto& item : *values) {
+      values_[item.first] = base::NullableString16(
+          base::SizeTToString16(item.second.string().length() *
+                                sizeof(base::char16)),
+          false);
+    }
+  } else {
+    values_.swap(*values);
   }
-  bytes_used_ = CountBytes(*values);
+  bytes_used_ = CountBytes(values_, has_only_keys_);
   ResetKeyIterator();
 }
 
 DOMStorageMap* DOMStorageMap::DeepCopy() const {
   DOMStorageMap* copy = new DOMStorageMap(quota_, has_only_keys_);
-  copy->keys_values_ = keys_values_;
-  copy->keys_only_ = keys_only_;
+  copy->values_ = values_;
   copy->bytes_used_ = bytes_used_;
   copy->ResetKeyIterator();
   return copy;
 }
 
 void DOMStorageMap::ResetKeyIterator() {
-  keys_only_iterator_ = keys_only_.begin();
-  keys_values_iterator_ = keys_values_.begin();
+  key_iterator_ = values_.begin();
   last_key_index_ = 0;
 }
 
-// static
-template <typename MapType>
-size_t DOMStorageMap::CountBytes(const MapType& values) {
+size_t DOMStorageMap::CountBytes(const DOMStorageValuesMap& values,
+                                 bool has_only_keys) {
   if (values.empty())
     return 0;
 
   size_t count = 0;
   for (const auto& pair : values)
-    count += size_of_item(pair.first, pair.second);
+    count += size_of_item(pair.first, pair.second.string(), has_only_keys);
   return count;
 }
 

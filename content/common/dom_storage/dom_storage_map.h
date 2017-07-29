@@ -24,37 +24,30 @@ namespace content {
 class CONTENT_EXPORT DOMStorageMap
     : public base::RefCountedThreadSafe<DOMStorageMap> {
  public:
-  DOMStorageMap(size_t quota, bool only_keys);
-  explicit DOMStorageMap(size_t quota);
+  explicit DOMStorageMap(size_t quota, bool only_keys);
+  DOMStorageMap(size_t quota);
 
   unsigned Length() const;
   base::NullableString16 Key(unsigned index);
 
-  // Sets and removes items from the storage. |old_value| is only valid if
-  // caching is enabled.
+  // Modifiers when |only_keys| is true:
+  bool SetItem(const base::string16& key, const base::string16& value);
+  bool RemoveItem(const base::string16& key);
+
+  // Modifiers when |only_keys| is false:
   bool SetItem(const base::string16& key, const base::string16& value,
                base::NullableString16* old_value);
   bool RemoveItem(const base::string16& key, base::string16* old_value);
-
-  // Retruns value for the given |key|. Use only when |has_only_keys| is false.
   base::NullableString16 GetItem(const base::string16& key) const;
-
-  // Writes a copy of the current set of map_ to the |map|. Use only when
-  // |has_only_keys| is false.
-  void ExtractValues(DOMStorageValuesMap* map) const;
-
-  // Swaps the values from |map| to |keys_values_| in this instances,
+  // Takes the values from |map| to |values_| in this instances.
   // Note: to grandfather in pre-existing files that are overbudget,
-  // this method does not do quota checking. Use only when |has_only_keys| is
-  // false.
-  void SwapValues(DOMStorageValuesMap* map);
-
-  // Stores the keys and sizes of values from |map| to |keys_only_|. Use only
-  // when |has_only_keys| is true. This method does not do quota checking.
-  void TakeKeysFrom(const DOMStorageValuesMap* map);
+  // this method does not do quota checking.
+  void TakeValuesFrom(DOMStorageValuesMap* map);
+  // Writes a copy of the current set of values_ to the |map|.
+  void ExtractValues(DOMStorageValuesMap* map) const { *map = values_; }
 
   // Creates a new instance of DOMStorageMap containing
-  // a deep copy of the map.
+  // a deep copy of values_.
   DOMStorageMap* DeepCopy() const;
 
   size_t bytes_used() const { return bytes_used_; }
@@ -62,36 +55,25 @@ class CONTENT_EXPORT DOMStorageMap
   void set_quota(size_t quota) { quota_ = quota; }
   bool has_only_keys() const { return has_only_keys_; }
 
-  template <typename MapType>
-  static size_t CountBytes(const MapType& values);
+  static size_t CountBytes(const DOMStorageValuesMap& values,
+                           bool has_only_keys);
 
  private:
   friend class base::RefCountedThreadSafe<DOMStorageMap>;
   FRIEND_TEST_ALL_PREFIXES(DOMStorageMapParamTest, EnforcesQuota);
-
-  using KeysMapInternal = std::map<base::string16, size_t>;
-
   ~DOMStorageMap();
 
-  template <typename MapType>
-  bool SetItemInternal(MapType* map_type,
-                       const base::string16& key,
-                       typename MapType::mapped_type value,
-                       typename MapType::mapped_type* old_value);
-  template <typename MapType>
-  bool RemoveItemInternal(MapType* map_type,
-                          const base::string16& key,
-                          typename MapType::mapped_type* old_value);
+  bool SetItemInternal(const base::string16& key,
+                       const base::string16& value,
+                       base::NullableString16* old_value);
+  bool RemoveItemInternal(const base::string16& key, base::string16* old_value);
 
   void ResetKeyIterator();
 
-  // Used when |has_only_keys_| is false.
-  DOMStorageValuesMap keys_values_;
-  // Used when |has_only_keys_| is true.
-  KeysMapInternal keys_only_;
+  size_t SizeofItem(const base::string16& key, const base::string16& value);
 
-  DOMStorageValuesMap::const_iterator keys_values_iterator_;
-  KeysMapInternal::const_iterator keys_only_iterator_;
+  DOMStorageValuesMap values_;
+  DOMStorageValuesMap::const_iterator key_iterator_;
   unsigned last_key_index_;
   size_t bytes_used_;
   size_t quota_;
