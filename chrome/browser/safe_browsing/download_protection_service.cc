@@ -1906,6 +1906,33 @@ std::string DownloadProtectionService::GetDownloadPingToken(
     return std::string();
 }
 
+void DownloadProtectionService::MaybeSendDangerousDownloadExecutionReport(
+    const content::DownloadItem* item,
+    bool show_download_in_folder) {
+  std::string token = GetDownloadPingToken(item);
+  content::BrowserContext* browser_context = item->GetBrowserContext();
+  Profile* profile = Profile::FromBrowserContext(browser_context);
+  if (!token.empty() &&  // Only dangerous downloads have token stored.
+      !browser_context->IsOffTheRecord() && profile &&
+      IsExtendedReportingEnabled(*profile->GetPrefs())) {
+    safe_browsing::SafeBrowsingService* sb_service =
+        g_browser_process->safe_browsing_service();
+    // Compiles the uncommon download warning report.
+    safe_browsing::ClientSafeBrowsingReportRequest report;
+    report.set_type(safe_browsing::ClientSafeBrowsingReportRequest::
+                        DANGEROUS_DOWNLOAD_EXECUTION);
+    report.set_token(token);
+    report.set_show_download_in_folder(show_download_in_folder);
+    std::string serialized_report;
+    if (report.SerializeToString(&serialized_report)) {
+      sb_service->SendSerializedDownloadReport(serialized_report);
+    } else {
+      DCHECK(false)
+          << "Unable to serialize the uncommon download warning report.";
+    }
+  }
+}
+
 namespace {
 // Escapes a certificate attribute so that it can be used in a whitelist
 // entry.  Currently, we only escape slashes, since they are used as a
