@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "92d316aa_3b6b64db",
+        "filename": "chrome/browser/resources/chromeos/login/oobe_welcome.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-29T04:33:24Z",
+      "side": 1,
+      "message": "ok, that\u0027s fine. It\u0027s not as bad as I thought because handleAccelerator actually does very little for these cases.",
+      "parentUuid": "4c402d2a_7f4477c0",
+      "revId": "fcb1d9fd027b69f393ba94d2f5643f676acfff9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed40416a_9e0dfb5d",
         "filename": "chrome/browser/resources/chromeos/login/oobe_welcome_dialog.js",
         "patchSetId": 2

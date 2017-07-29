@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb20fad7_f84bf1a3",
+        "filename": "chrome/browser/resources/chromeos/login/oobe_welcome_dialog.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-29T04:33:24Z",
+      "side": 1,
+      "message": "/**\n * Use JSDoc (/** ... */) comments instead of // comments for\n * closure compiler, for functions and variables/members.\n * I realize this isn\u0027t actually type checked, but it would\n * make it easier to do so in the future and it\u0027s consistent\n * with other Polymer elements.\n *\n * @private {number|null}\n */\n\nor\n\n/** @private */\n\netc",
+      "revId": "efcdd1a44b0ccc9049012a3bfadb68d7a6c1559b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
