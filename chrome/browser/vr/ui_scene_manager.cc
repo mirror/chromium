@@ -6,7 +6,7 @@
 
 #include "base/callback.h"
 #include "base/memory/ptr_util.h"
-#include "cc/base/math_util.h"
+#include "base/numerics/math_util.h"
 #include "chrome/browser/vr/elements/button.h"
 #include "chrome/browser/vr/elements/close_button_texture.h"
 #include "chrome/browser/vr/elements/content_element.h"
@@ -768,7 +768,7 @@ void UiSceneManager::ConfigureExclusiveScreenToast() {
     UiElementTransformOperations operations;
     operations.SetTranslate(0, kWebVrToastDistance * sin(kWebVrAngleRadians),
                             -kWebVrToastDistance * cos(kWebVrAngleRadians));
-    operations.SetRotate(1, 0, 0, cc::MathUtil::Rad2Deg(kWebVrAngleRadians));
+    operations.SetRotate(1, 0, 0, base::RadToDeg(kWebVrAngleRadians));
     operations.SetScale(kWebVrToastDistance, kWebVrToastDistance, 1);
     exclusive_screen_toast_->SetTransformOperations(operations);
     exclusive_screen_toast_->set_lock_to_fov(true);

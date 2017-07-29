@@ -6,6 +6,7 @@
 
 #include <algorithm>
 
+#include "base/numerics/math_util.h"
 #include "base/stl_util.h"
 #include "cc/animation/animation_delegate.h"
 #include "cc/animation/animation_events.h"
