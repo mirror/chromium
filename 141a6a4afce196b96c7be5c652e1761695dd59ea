@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bee1233d_7a1461b2",
+        "filename": "content/common/dom_storage/dom_storage_map.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-07-29T00:53:33Z",
+      "side": 1,
+      "message": "sorry! fixed.",
+      "parentUuid": "c40dea93_2ecb6413",
+      "range": {
+        "startLine": 28,
+        "startChar": 2,
+        "endLine": 28,
+        "endChar": 15
+      },
+      "revId": "141a6a4afce196b96c7be5c652e1761695dd59ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66b9a320_63c78237",
         "filename": "content/common/dom_storage/dom_storage_map.h",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "141a6a4afce196b96c7be5c652e1761695dd59ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc030106_c9e2dfcf",
+        "filename": "content/common/dom_storage/dom_storage_map.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-07-29T00:53:33Z",
+      "side": 1,
+      "message": "Actually the underlying code is still shared. i only used this for DCHECKs. Yes, this would help share code better in tests and the clients.",
+      "parentUuid": "66b9a320_63c78237",
+      "revId": "141a6a4afce196b96c7be5c652e1761695dd59ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "3afd27f2_ba0a370e",
+        "filename": "content/common/dom_storage/dom_storage_map.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-07-29T00:53:33Z",
+      "side": 1,
+      "message": "I actually wanted to do this differently here. This would come in as an issue later so just fixed it here.\n\nSo, the Area::ExtractValues() needs to return the whole map after InitialImportIfNeeded(). So, I need a function here that takes const map rather than a SwapValues, since the map will be used by ExtractValues after swapping. This is to avoid reading the database again. I think it is good to keep these methods separate here.\nHappy to accept suggestions considering this issue.",
+      "parentUuid": "618b2a01_eb5a3198",
+      "range": {
+        "startLine": 45,
+        "startChar": 7,
+        "endLine": 45,
+        "endChar": 21
+      },
+      "revId": "141a6a4afce196b96c7be5c652e1761695dd59ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b484027d_971f4740",
         "filename": "content/common/dom_storage/dom_storage_map.h",
         "patchSetId": 3
@@ -79,6 +145,24 @@
       "revId": "141a6a4afce196b96c7be5c652e1761695dd59ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e53df046_514c2362",
+        "filename": "content/common/dom_storage/dom_storage_map.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-07-29T00:53:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b484027d_971f4740",
+      "revId": "141a6a4afce196b96c7be5c652e1761695dd59ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
