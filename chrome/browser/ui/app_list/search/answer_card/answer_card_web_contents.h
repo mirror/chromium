@@ -21,9 +21,11 @@ class WebView;
 namespace app_list {
 
 // Web source of contents for AnswerCardSearchProvider.
-class AnswerCardWebContents : public AnswerCardContents,
-                              public content::WebContentsDelegate,
-                              public content::WebContentsObserver {
+class AnswerCardWebContents
+    : public AnswerCardContents,
+      public content::WebContentsDelegate,
+      public content::WebContentsObserver,
+      public content::RenderWidgetHost::InputEventObserver {
  public:
   explicit AnswerCardWebContents(Profile* profile);
   ~AnswerCardWebContents() override;
@@ -50,6 +52,9 @@ class AnswerCardWebContents : public AnswerCardContents,
   void RenderViewDeleted(content::RenderViewHost* host) override;
   void RenderViewHostChanged(content::RenderViewHost* old_host,
                              content::RenderViewHost* new_host) override;
+
+  // content::RenderWidgetHost::InputEventObserver overrides:
+  void OnInputEvent(const blink::WebInputEvent&) override;
 
  private:
   bool HandleMouseEvent(const blink::WebMouseEvent& event);

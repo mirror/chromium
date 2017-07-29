@@ -12,6 +12,7 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/renderer_preferences.h"
 #include "third_party/WebKit/public/platform/WebMouseEvent.h"
+#include "ui/events/blink/blink_event_util.h"
 #include "ui/views/controls/webview/web_contents_set_background_color.h"
 #include "ui/views/controls/webview/webview.h"
 #include "ui/views/widget/widget.h"
@@ -176,15 +177,48 @@ bool AnswerCardWebContents::HandleMouseEvent(
   return false;
 }
 
+void AnswerCardWebContents::OnInputEvent(
+    const blink::WebInputEvent& web_event) {
+  // WebView doesn't receive input events. We need to translate RenderWidgetHost
+  // web input events into input events and send them to WebView's parent to
+  // enable opening the result on click or tap.
+  views::View* const parent = web_view_->parent();
+  if (!parent)
+    return;
+
+  switch (web_event.GetType()) {
+    case blink::WebInputEvent::kMouseUp:
+      if (web_event.GetModifiers() & blink::WebInputEvent::kLeftButtonDown) {
+        ui::MouseEvent event(
+            ui::ET_MOUSE_RELEASED, gfx::Point(), gfx::Point(),
+            base::TimeTicks(),
+            ui::WebEventModifiersToEventFlags(web_event.GetModifiers()), 0);
+        parent->OnEvent(&event);
+      }
+      break;
+    case blink::WebInputEvent::kGestureTap: {
+      const ui::GestureEventDetails details(ui::ET_GESTURE_TAP, 0, 0);
+      ui::GestureEvent event(
+          0, 0, ui::WebEventModifiersToEventFlags(web_event.GetModifiers()),
+          base::TimeTicks(), details);
+      parent->OnEvent(&event);
+    } break;
+    default:
+      break;
+  }
+}
+
 void AnswerCardWebContents::AttachToHost(content::RenderWidgetHost* host) {
   host_ = host;
   host->AddMouseEventCallback(mouse_event_callback_);
+  host->AddInputEventObserver(this);
 }
 
 void AnswerCardWebContents::DetachFromHost() {
   if (!host_)
     return;
 
+  host_->RemoveInputEventObserver(this);
   host_->RemoveMouseEventCallback(mouse_event_callback_);
   host_ = nullptr;
 }
