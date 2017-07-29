@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "93cb9ce9_befeab5c",
+        "filename": "chrome/browser/feature_engagement_tracker/features/feature_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-29T00:57:03Z",
+      "side": 1,
+      "message": "Line 23 isn\u0027t copied in line 38. Do we need two constructors? Why are they different?",
+      "revId": "b3d6a2f3f38799d64773253beb0ad5a03c2dd51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f1d12ed2_43833eed",
         "filename": "chrome/browser/feature_engagement_tracker/features/feature_tracker.h",
         "patchSetId": 3
@@ -36,6 +53,23 @@
         "endLine": 21,
         "endChar": 20
       },
+      "revId": "b3d6a2f3f38799d64773253beb0ad5a03c2dd51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f21ecd72_e53c57eb",
+        "filename": "chrome/browser/feature_engagement_tracker/features/feature_tracker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-29T00:57:03Z",
+      "side": 1,
+      "message": "why do we need 2 different constructors with different implementations?",
       "revId": "b3d6a2f3f38799d64773253beb0ad5a03c2dd51b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +138,23 @@
       "writtenOn": "2017-07-28T19:40:15Z",
       "side": 1,
       "message": "I\u0027m not sure if you want to do it in this CL or a different one, but this should probably be rebased on top of https://chromium-review.googlesource.com/c/590501/ when that lands.",
+      "revId": "b3d6a2f3f38799d64773253beb0ad5a03c2dd51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b1b1e12_82ffb362",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab/new_tab_tracker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-07-29T00:57:03Z",
+      "side": 1,
+      "message": "Once this refactor has landed, I think you intend on having both NewTabTracker and BookmarkTracker inherit from FeatureTracker. Won\u0027t both of then be observers of the session, and thus we\u0027re still going to double-count time?",
       "revId": "b3d6a2f3f38799d64773253beb0ad5a03c2dd51b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
