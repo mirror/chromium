@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "a2aa6272_3c2e900d",
+        "filename": "third_party/WebKit/Source/platform/wtf/Assertions.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-30T23:30:14Z",
+      "side": 1,
+      "message": "This line should be removed because this header doesn\u0027t use WTF_MAKE_NONCOPYABLE. Let\u0027s remove this by another CL.",
+      "parentUuid": "6e952bb8_e53f5778",
+      "revId": "78039a56445a5ce72238e6952129f295ed0b42a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "28b5a708_99b9f1bf",
         "filename": "third_party/WebKit/Source/platform/wtf/Assertions.h",
         "patchSetId": 2
