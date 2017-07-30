@@ -10,10 +10,11 @@
 class CSSParserLocalContext;
 namespace blink {
 
-const CSSValue* CSSPropertyAPIColumnRuleWidth::parseSingleValue(
+const CSSValue* CSSPropertyAPIColumnRuleWidth::ParseSingleValue(
+    CSSPropertyID,
     CSSParserTokenRange& range,
     const CSSParserContext& context,
-    const CSSParserLocalContext&) {
+    const CSSParserLocalContext&) const {
   return CSSPropertyParserHelpers::ConsumeLineWidth(
       range, context.Mode(), CSSPropertyParserHelpers::UnitlessQuirk::kForbid);
 }

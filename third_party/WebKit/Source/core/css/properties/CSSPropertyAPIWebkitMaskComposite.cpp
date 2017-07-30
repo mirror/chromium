@@ -8,10 +8,11 @@
 
 namespace blink {
 
-const CSSValue* CSSPropertyAPIWebkitMaskComposite::parseSingleValue(
+const CSSValue* CSSPropertyAPIWebkitMaskComposite::ParseSingleValue(
+    CSSPropertyID,
     CSSParserTokenRange& range,
     const CSSParserContext&,
-    const CSSParserLocalContext&) {
+    const CSSParserLocalContext&) const {
   return CSSPropertyParserHelpers::ConsumeCommaSeparatedList(
       CSSPropertyBackgroundUtils::ConsumeBackgroundComposite, range);
 }

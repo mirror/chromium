@@ -34,7 +34,6 @@ namespace blink {
 
 class CSSProperty;
 class CSSValue;
-class StylePropertyShorthand;
 
 // Inputs: PropertyID, isImportant bool, CSSParserTokenRange.
 // Outputs: Vector of CSSProperties
@@ -69,9 +68,6 @@ class CSSPropertyParser {
 
   bool InQuirksMode() const { return IsQuirksModeBehavior(context_->Mode()); }
 
-  bool ParseViewportDescriptor(CSSPropertyID prop_id, bool important);
-  bool ParseFontFaceDescriptor(CSSPropertyID);
-
   void AddParsedProperty(CSSPropertyID resolved_property,
                          CSSPropertyID current_shorthand,
                          const CSSValue&,
@@ -80,18 +76,6 @@ class CSSPropertyParser {
   void AddExpandedPropertyForValue(CSSPropertyID prop_id,
                                    const CSSValue&,
                                    bool);
-
-  bool ConsumeBorder(bool important);
-
-  bool ParseShorthand(CSSPropertyID, bool important);
-
-  bool ConsumeBackgroundShorthand(const StylePropertyShorthand&,
-                                  bool important);
-
-  bool ConsumeGridTemplateRowsAndAreasAndColumns(CSSPropertyID, bool important);
-  bool ConsumeGridTemplateShorthand(CSSPropertyID, bool important);
-  bool ConsumeGridShorthand(bool important);
-
  private:
   // Inputs:
   CSSParserTokenRange range_;
