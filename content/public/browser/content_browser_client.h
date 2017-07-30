@@ -832,9 +832,17 @@ class CONTENT_EXPORT ContentBrowserClient {
   CreateURLLoaderThrottles(const base::Callback<WebContents*()>& wc_getter);
 
   // Creates the main NetworkContext for a BrowserContext's StoragePartition.
-  // Only called when the network service is enabled. If |in_memory| is true,
-  // |relative_partition_path| is still a path that uniquely identifies the
-  // storage partition, though nothing should be written to it.
+  // If the network service is enabled, it must return a NetworkContext using
+  // the network service. It the network service is disabled, it may return a
+  // NetworkContext, but the StoragePartition will create one around the
+  // URLRequestContext if it returns nullptr instead.
+  //
+  // Called before the corresonding BrowserContext::CreateRequestContext method
+  // is called.
+  //
+  // If |in_memory| is true, |relative_partition_path| is still a path that
+  // uniquely identifies the storage partition, though nothing should be written
+  // to it.
   virtual mojom::NetworkContextPtr CreateNetworkContext(
       BrowserContext* context,
       bool in_memory,
