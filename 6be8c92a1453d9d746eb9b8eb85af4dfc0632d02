@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8e7e2502_8e2c824c",
+        "filename": "content/common/cookie.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-07-30T02:38:58Z",
+      "side": 1,
+      "message": "Done.  (Sorry about this--I had a request out to the spec author for a reference that only resolved today.)",
+      "parentUuid": "edd281d4_731039d2",
+      "revId": "6be8c92a1453d9d746eb9b8eb85af4dfc0632d02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59996523_aa172c42",
         "filename": "content/common/cookie.mojom",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "6be8c92a1453d9d746eb9b8eb85af4dfc0632d02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "793f73be_aa1471a1",
+        "filename": "content/common/cookie.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-07-30T02:38:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59996523_aa172c42",
+      "revId": "6be8c92a1453d9d746eb9b8eb85af4dfc0632d02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6394487e_1ea42e7c",
+        "filename": "content/common/cookie.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-07-30T02:38:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5354b36a_c0689ad2",
+      "revId": "6be8c92a1453d9d746eb9b8eb85af4dfc0632d02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0a3c9dc_e7c652b7",
         "filename": "content/common/cookie.mojom",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2017-07-28T19:21:31Z",
       "side": 1,
       "message": "Is it just related to how the methods should be ordered in this interface? Please consider resolving this TODO before landing.",
+      "revId": "6be8c92a1453d9d746eb9b8eb85af4dfc0632d02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd125cec_4c7d3120",
+        "filename": "content/common/cookie.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-07-30T02:38:58Z",
+      "side": 1,
+      "message": "So the question was whether or not I wanted to make part of the interface specification the order in which cookies would be returned.  I think I\u0027m going to not worry about it for now, and change the interface in the future if it turns out that production consumers need some reliability about the sort order for arrays of cookies returned.  So I\u0027ll remove the TODO, but feel free to comment if you\u0027d like me to specify a sort order.",
+      "parentUuid": "b0a3c9dc_e7c652b7",
       "revId": "6be8c92a1453d9d746eb9b8eb85af4dfc0632d02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "11f0c573_5e2205e1",
+        "filename": "content/common/cookie.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-07-30T02:38:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d9fffa8_5598dfd9",
+      "revId": "6be8c92a1453d9d746eb9b8eb85af4dfc0632d02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c715df89_674149bf",
         "filename": "content/common/cookie.mojom",
         "patchSetId": 2
@@ -98,6 +188,24 @@
       "writtenOn": "2017-07-28T19:21:31Z",
       "side": 1,
       "message": "Please add comment about why the method returns an interface request in the callback, instead of passing an interface pointer in the call. (IIRC, we have talked about this and there is a reason. But it may not be obvious to the readers.)",
+      "revId": "6be8c92a1453d9d746eb9b8eb85af4dfc0632d02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "173bd541_2cc1da47",
+        "filename": "content/common/cookie.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-07-30T02:38:58Z",
+      "side": 1,
+      "message": "Chuckle.  \"Tug on a string.\"  There are a couple of different issues this brings up.\n\n* First of all, my apologies--you called this out in the first CL, and I thought I had taken care of it, and I obviously hadn\u0027t.  Will do.\n\n* However, the issue I was originally concerned about was the caller knowing the point in their own timeline after which they could count on seeing cookie notifications.  I.e. We didn\u0027t want a situation where they confirmed a particular cookie existed, the cookie was destroyed by some other entity, and then they registered for notifications around cookie destruction, missing the fact the cookie was destroyed.  That just requires a callback, it doesn\u0027t actually require returning a request instead of sending a pointer.  I had returned a request because I had somehow gotten it into my head that it was more idiomatic mojo to pass around requests than pointers, and I\u0027d be happy to switch to sending a pointer instead of returning a request if you\u0027d prefer.\n\n* But on further thought, I\u0027ve realized that the argument in the paragraph above doesn\u0027t actually hold water.  If we have a pure async fire-and-forget interface here (that sends a pointer rather than retrieves a request), and the caller does a getter of some sort on the same interface after requesting notifications, they can rely on the getter providing information about the cookie store strictly after the notification was installed because of in-order delivery of messages on the same mojo pipe.  \n\nGiven all the above, I think the right answer is to make the interface pure async (no callback), sending a CookieChangeNotificationPtr, and to document the pattern the caller may want to use to make sure they don\u0027t miss notifications.  That\u0027s what I\u0027ll do.  But I\u0027m happy to do something different if that\u0027s not the most idiomatic I can make the interface.",
+      "parentUuid": "c715df89_674149bf",
       "revId": "6be8c92a1453d9d746eb9b8eb85af4dfc0632d02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "e3f72ac3_dbd31ce5",
+        "filename": "content/common/cookie_service_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-07-30T02:38:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4330a05_366385f6",
+      "revId": "6be8c92a1453d9d746eb9b8eb85af4dfc0632d02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15c03af7_66c44f54",
         "filename": "content/common/cookie_service_impl.h",
         "patchSetId": 2
@@ -132,6 +258,24 @@
       "writtenOn": "2017-07-28T19:21:31Z",
       "side": 1,
       "message": "nit: please remove \"pointer\" (because this is an \"interface request\", the opposite side of a pipe is called \"interface pointer\" and has no thing to do with this method).",
+      "revId": "6be8c92a1453d9d746eb9b8eb85af4dfc0632d02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ccbc4430_f3ef23e3",
+        "filename": "content/common/cookie_service_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-07-30T02:38:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15c03af7_66c44f54",
       "revId": "6be8c92a1453d9d746eb9b8eb85af4dfc0632d02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "0ea227a5_2d71afe4",
+        "filename": "content/common/cookie_service_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-07-30T02:38:58Z",
+      "side": 1,
+      "message": "Good point; thanks.  Done.",
+      "parentUuid": "fcfe6802_6b9d3e72",
+      "revId": "6be8c92a1453d9d746eb9b8eb85af4dfc0632d02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "173aba77_484da91d",
         "filename": "content/common/cookie_service_impl_unittest.cc",
         "patchSetId": 2
@@ -169,6 +331,24 @@
       "revId": "6be8c92a1453d9d746eb9b8eb85af4dfc0632d02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e462425a_3da520c1",
+        "filename": "content/common/cookie_service_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 887,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-07-30T02:38:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "173aba77_484da91d",
+      "revId": "6be8c92a1453d9d746eb9b8eb85af4dfc0632d02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "299f161b_b49bb8ea",
+        "filename": "content/common/cookie_traits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-07-30T02:38:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25522270_b04c09e1",
+      "revId": "6be8c92a1453d9d746eb9b8eb85af4dfc0632d02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11d1d678_9092e67d",
         "filename": "content/common/cookie_traits.h",
         "patchSetId": 2
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "03b1af82_d6827a2f",
+        "filename": "content/common/cookie_traits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-07-30T02:38:58Z",
+      "side": 1,
+      "message": "Good point--I think that was historical.  Done.",
+      "parentUuid": "11d1d678_9092e67d",
+      "revId": "6be8c92a1453d9d746eb9b8eb85af4dfc0632d02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1901f570_843a1726",
         "filename": "content/common/cookie_traits.h",
         "patchSetId": 2
@@ -220,6 +436,24 @@
       "revId": "6be8c92a1453d9d746eb9b8eb85af4dfc0632d02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ca43df9_b310333c",
+        "filename": "content/common/cookie_traits.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-07-30T02:38:58Z",
+      "side": 1,
+      "message": "Good point.  Done.",
+      "parentUuid": "1901f570_843a1726",
+      "revId": "6be8c92a1453d9d746eb9b8eb85af4dfc0632d02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
