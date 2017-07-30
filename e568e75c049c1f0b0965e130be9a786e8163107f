@@ -296,6 +296,30 @@
     },
     {
       "key": {
+        "uuid": "37038a96_6ff5475d",
+        "filename": "services/device/public/interfaces/serial.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-07-30T12:41:36Z",
+      "side": 1,
+      "message": "Understood and Thanks! Done.",
+      "parentUuid": "56fcea9a_56d17361",
+      "range": {
+        "startLine": 10,
+        "startChar": 2,
+        "endLine": 10,
+        "endChar": 12
+      },
+      "revId": "e568e75c049c1f0b0965e130be9a786e8163107f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ca5defd_d65d8ea9",
         "filename": "services/device/serial/BUILD.gn",
         "patchSetId": 11
