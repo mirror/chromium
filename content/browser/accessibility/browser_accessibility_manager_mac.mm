@@ -252,14 +252,19 @@ void BrowserAccessibilityManagerMac::NotifyAccessibilityEvent(
     case ui::AX_EVENT_VALUE_CHANGED:
       mac_notification = NSAccessibilityValueChangedNotification;
       if (base::mac::IsAtLeastOS10_11() && text_edits_.size()) {
-        // It seems that we don't need to distinguish between deleted and
-        // inserted text for now.
         base::string16 deleted_text;
         base::string16 inserted_text;
         int32_t id = node->GetId();
         const auto iterator = text_edits_.find(id);
-        if (iterator != text_edits_.end())
-          inserted_text = iterator->second;
+        if (iterator != text_edits_.end()) {
+          TextEdit text_edit = iterator->second;
+          if (text_edit.IsDeleted) {
+            deleted_text = text_edit.Text;
+          } else {
+            inserted_text = text_edit.Text;
+          }
+        }
+
         NSDictionary* user_info = GetUserInfoForValueChangedNotification(
             native_node, deleted_text, inserted_text);
 
@@ -382,55 +387,6 @@ void BrowserAccessibilityManagerMac::OnTreeDataChanged(
   }
 }
 
-void BrowserAccessibilityManagerMac::OnNodeDataWillChange(
-    ui::AXTree* tree,
-    const ui::AXNodeData& old_node_data,
-    const ui::AXNodeData& new_node_data) {
-  BrowserAccessibilityManager::OnNodeDataWillChange(tree, old_node_data,
-                                                    new_node_data);
-
-  // Starting from OS X 10.11, if the user has edited some text we need to
-  // dispatch the actual text that changed on the value changed notification.
-  // We run this code on all OS X versions to get the highest test coverage.
-  base::string16 old_text, new_text;
-  ui::AXRole role = new_node_data.role;
-  if (role == ui::AX_ROLE_COMBO_BOX || role == ui::AX_ROLE_SEARCH_BOX ||
-      role == ui::AX_ROLE_TEXT_FIELD) {
-    old_text = old_node_data.GetString16Attribute(ui::AX_ATTR_VALUE);
-    new_text = new_node_data.GetString16Attribute(ui::AX_ATTR_VALUE);
-  } else if (new_node_data.HasState(ui::AX_STATE_EDITABLE)) {
-    old_text = old_node_data.GetString16Attribute(ui::AX_ATTR_NAME);
-    new_text = new_node_data.GetString16Attribute(ui::AX_ATTR_NAME);
-  }
-
-  if ((old_text.empty() && new_text.empty()) ||
-      old_text.length() == new_text.length()) {
-    return;
-  }
-
-  if (old_text.length() < new_text.length()) {
-    // Insertion.
-    size_t i = 0;
-    while (i < old_text.length() && i < new_text.length() &&
-           old_text[i] == new_text[i]) {
-      ++i;
-    }
-    size_t length = (new_text.length() - i) - (old_text.length() - i);
-    base::string16 inserted_text = new_text.substr(i, length);
-    text_edits_[new_node_data.id] = inserted_text;
-  } else {
-    // Deletion.
-    size_t i = 0;
-    while (i < old_text.length() && i < new_text.length() &&
-           old_text[i] == new_text[i]) {
-      ++i;
-    }
-    size_t length = (old_text.length() - i) - (new_text.length() - i);
-    base::string16 deleted_text = old_text.substr(i, length);
-    text_edits_[new_node_data.id] = deleted_text;
-  }
-}
-
 void BrowserAccessibilityManagerMac::OnStateChanged(ui::AXTree* tree,
                                                     ui::AXNode* node,
                                                     ui::AXState state,
@@ -528,6 +484,15 @@ void BrowserAccessibilityManagerMac::OnAtomicUpdateFinished(
   BrowserAccessibilityManager::OnAtomicUpdateFinished(tree, root_changed,
                                                       changes);
   for (const auto& change : changes) {
+    BrowserAccessibility* obj = GetFromAXNode(change.node);
+    if (obj && obj->IsNative() &&
+        obj->GetBoolAttribute(ui::AX_ATTR_EDITABLE_ROOT)) {
+      const TextEdit text_edit =
+          [ToBrowserAccessibilityCocoa(obj) ComputeTextEdit];
+      if (!text_edit.Text.empty())
+        text_edits_[change.node->id()] = text_edit;
+    }
+
     if ((change.type == NODE_CREATED || change.type == SUBTREE_CREATED) &&
         change.node->data().HasStringAttribute(ui::AX_ATTR_LIVE_STATUS)) {
       if (change.node->data().role == ui::AX_ROLE_ALERT)
@@ -597,14 +562,15 @@ BrowserAccessibilityManagerMac::GetUserInfoForValueChangedNotification(
   NSMutableArray* changes = [[[NSMutableArray alloc] init] autorelease];
   if (!deleted_text.empty()) {
     [changes addObject:@{
-      NSAccessibilityTextEditType : @(AXTextEditTypeUnknown),
+      NSAccessibilityTextEditType : @(AXTextEditTypeDelete),
       NSAccessibilityTextChangeValueLength : @(deleted_text.length()),
       NSAccessibilityTextChangeValue : base::SysUTF16ToNSString(deleted_text)
     }];
   }
   if (!inserted_text.empty()) {
+    // TODO(nektar): |AXTextEditTypeTyping| works for typing but not pasting.
     [changes addObject:@{
-      NSAccessibilityTextEditType : @(AXTextEditTypeUnknown),
+      NSAccessibilityTextEditType : @(AXTextEditTypeTyping),
       NSAccessibilityTextChangeValueLength : @(inserted_text.length()),
       NSAccessibilityTextChangeValue : base::SysUTF16ToNSString(inserted_text)
     }];

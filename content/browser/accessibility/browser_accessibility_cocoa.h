@@ -8,6 +8,7 @@
 #import <Cocoa/Cocoa.h>
 
 #import "base/mac/scoped_nsobject.h"
+#include "base/strings/string16.h"
 #include "content/browser/accessibility/browser_accessibility.h"
 #include "content/browser/accessibility/browser_accessibility_manager.h"
 
@@ -19,6 +20,8 @@
  @private
   content::BrowserAccessibility* browserAccessibility_;
   base::scoped_nsobject<NSMutableArray> children_;
+  // Stores the previous value of an edit field.
+  base::string16 oldValue_;
 }
 
 // This creates a cocoa browser accessibility object around
@@ -47,6 +50,9 @@
 
 // Get the BrowserAccessibility that this object wraps.
 - (content::BrowserAccessibility*)browserAccessibility;
+
+// Computes the text that was added or deleted in a text field after an edit.
+- (TextEdit)ComputeTextEdit;
 
 // Determines if this object is alive, i.e. it hasn't been detached.
 - (BOOL)instanceActive;
