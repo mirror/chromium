@@ -425,6 +425,17 @@ namespace networking.onc {
     DOMString? ProviderName;
   };
 
+  dictionary ARCVPNProperties {
+    // Set to "true" to tunnel Chrome traffic, or "false" to let Chrome
+    // bypass the VPN.
+    DOMString TunnelChrome;
+  };
+
+  dictionary ManagedARCVPNProperties {
+    // See $(ref:ARCVPNProperties.TunnelChrome).
+    ManagedDOMString TunnelChrome;
+  };
+
   // Network type dictionary types.
 
   [noinline_doc] dictionary CellularProperties {

@@ -496,6 +496,14 @@ namespace networkingPrivate {
     DOMString? ProviderName;
   };
 
+  dictionary ARCVPNProperties {
+    DOMString TunnelChrome;
+  };
+
+  dictionary ManagedARCVPNProperties {
+    ManagedDOMString TunnelChrome;
+  };
+
   // Network type dictionary types.
 
   dictionary CellularProperties {
@@ -604,6 +612,7 @@ namespace networkingPrivate {
     L2TPProperties? L2TP;
     OpenVPNProperties? OpenVPN;
     ThirdPartyVPNProperties? ThirdPartyVPN;
+    ARCVPNProperties? ARCVPN;
     DOMString? Type;
   };
 
@@ -614,6 +623,7 @@ namespace networkingPrivate {
     ManagedL2TPProperties? L2TP;
     ManagedOpenVPNProperties? OpenVPN;
     ManagedThirdPartyVPNProperties? ThirdPartyVPN;
+    ManagedARCVPNProperties? ARCVPN;
     ManagedDOMString Type;
   };
 
