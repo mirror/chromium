@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16c43f2f_fa09c397",
+        "filename": "third_party/WebKit/Source/platform/wtf/Assertions.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-30T23:28:07Z",
+      "side": 0,
+      "message": "Didn\u0027t you have a PRESUBMIT warning?  build/build_config.h is necessary for OS_* macros.",
+      "revId": "491f4e44b695f5a58dd3939ece104c8283ed79fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff0b9d04_4cf563d7",
+        "filename": "third_party/WebKit/Source/platform/wtf/Assertions.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-30T23:28:07Z",
+      "side": 0,
+      "message": "I was wrong.  stdarg.h should be included because va_list is used in this file.",
+      "revId": "491f4e44b695f5a58dd3939ece104c8283ed79fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
