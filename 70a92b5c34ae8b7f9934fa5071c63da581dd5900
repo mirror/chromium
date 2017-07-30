@@ -356,6 +356,24 @@
     },
     {
       "key": {
+        "uuid": "5c27176c_24ea7f05",
+        "filename": "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-07-30T13:55:58Z",
+      "side": 1,
+      "message": "I\u0027ve tracked down what happened here. I should reference http://crbug.com/38458\n\nIn this thread, https://bugs.chromium.org/p/chromium/issues/detail?id\u003d38458#c76 said \n\u003e When blocking popups entirely, we\u0027ll need to remember the requested\nwindow features so we can restore the popups if the user choses to do\nso.\n\nSo I think we needn\u0027t send IPC when we don\u0027t create popup as it was requested. which means we needn\u0027t send IPC when |disposition| isn\u0027t CURRENT_TAB. Then we have a case when |disposition| is NEW_POPUP, NEW_FOREGROUNDTAB. But logically this won\u0027t happen for now as disposition is generated from keyboard modifiers. But I must admit that this is quite fragile. That case might be prevented.\n\nif (disposition \u003d\u003d CURRENT_TAB) {\n  // We will open blocked contents as it was requested by the renderer.\n  // Cached |popup-\u003eparams.disposition| will be used and it\u0027s likely to be\n  // either NEW_POPUP and NEW_FOREGROUND_TAB. \n  // As we deferred its request, we will restore it\u0027s window features here by sending this IPC message. \n  \n  Open blocked popup and send IPC...\n} else {\n  // We will ignore the requested features and open \n  // it in an alternative disposition. So we don\u0027t have to send IPC.\n  // Note that NEW_POPUP and NEW_FOREGROUND_TAB are not allowed as alternative disposition since they\u0027re one of the original dispositions.\n  DCHECK(disposition !\u003d NEW_POPUP)\n  DCHECK(disposition !\u003d NEW_FOREGROUND_TAB)\n  popup-\u003eparams.disposition \u003d disposition;\n  Open blocke popup...\n}",
+      "parentUuid": "d357fc44_b08ff63b",
+      "revId": "70a92b5c34ae8b7f9934fa5071c63da581dd5900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d7abd767_18011564",
         "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
         "patchSetId": 7
