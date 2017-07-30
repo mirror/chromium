@@ -297,6 +297,12 @@ namespace networking.onc {
     DOMString? IPAddress;
     // Array of addresses used for name servers.
     DOMString[]? NameServers;
+    // Array of strings to append to names for resolution.
+    DOMString[]? SearchDomains;
+    // IP blocks that should be handled by this network.
+    DOMString[]? IncludedRoutes;
+    // IP blocks that should not be handled by this network.
+    DOMString[]? ExcludedRoutes;
     // The routing prefix.
     long? RoutingPrefix;
     // The IP configuration type. Can be <code>IPv4</code> or <code>IPv6</code>.
@@ -312,6 +318,12 @@ namespace networking.onc {
     ManagedDOMString? IPAddress;
     // See $(ref:IPConfigProperties.NameServers).
     ManagedDOMStringList? NameServers;
+    // See $(ref:IPConfigProperties.SearchDomains).
+    ManagedDOMStringList? SearchDomains;
+    // See $(ref:IPConfigProperties.IncludedRoutes).
+    ManagedDOMStringList? IncludedRoutes;
+    // See $(ref:IPConfigProperties.ExcludedRoutes).
+    ManagedDOMStringList? ExcludedRoutes;
     // See $(ref:IPConfigProperties.RoutingPrefix).
     ManagedLong? RoutingPrefix;
     // See $(ref:IPConfigProperties.Type).

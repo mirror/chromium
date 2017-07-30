@@ -278,6 +278,9 @@ namespace networkingPrivate {
     DOMString? Gateway;
     DOMString? IPAddress;
     DOMString[]? NameServers;
+    DOMString[]? SearchDomains;
+    DOMString[]? IncludedRoutes;
+    DOMString[]? ExcludedRoutes;
     long? RoutingPrefix;
     DOMString? Type;
     DOMString? WebProxyAutoDiscoveryUrl;
@@ -287,6 +290,9 @@ namespace networkingPrivate {
     ManagedDOMString? Gateway;
     ManagedDOMString? IPAddress;
     ManagedDOMStringList? NameServers;
+    ManagedDOMStringList? SearchDomains;
+    ManagedDOMStringList? IncludedRoutes;
+    ManagedDOMStringList? ExcludedRoutes;
     ManagedLong? RoutingPrefix;
     ManagedDOMString? Type;
     ManagedDOMString? WebProxyAutoDiscoveryUrl;
