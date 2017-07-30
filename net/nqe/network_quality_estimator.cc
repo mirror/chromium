@@ -1233,6 +1233,17 @@ NetworkQualityEstimator::GetRecentEffectiveConnectionTypeUsingMetrics(
   if (!GetRecentTransportRTT(start_time, transport_rtt))
     *transport_rtt = nqe::internal::InvalidRTT();
 
+  if (*http_rtt != nqe::internal::InvalidRTT() &&
+      *transport_rtt != nqe::internal::InvalidRTT()) {
+    // If HTTP RTT is less than |transport_rtt_multiplier_http_rtt_computation|
+    // times transport RTT, then set HTTP RTT as
+    // |transport_rtt_multiplier_http_rtt_computation| times the transport RTT.
+    *http_rtt =
+        std::max(*http_rtt,
+                 *transport_rtt *
+                     params_->transport_rtt_multiplier_http_rtt_computation());
+  }
+
   if (!GetRecentDownlinkThroughputKbps(start_time, downstream_throughput_kbps))
     *downstream_throughput_kbps = nqe::internal::kInvalidThroughput;
 
