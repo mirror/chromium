@@ -11,7 +11,7 @@
 #include "base/run_loop.h"
 #include "base/test/scoped_task_environment.h"
 #include "base/threading/thread_task_runner_handle.h"
-#include "content/network/network_context.h"
+#include "content/network/network_context_impl.h"
 #include "content/network/url_loader_impl.h"
 #include "content/public/common/appcache_info.h"
 #include "content/public/common/content_paths.h"
@@ -124,7 +124,7 @@ class URLLoaderImplTest : public testing::Test {
   URLLoaderImplTest()
       : scoped_task_environment_(
             base::test::ScopedTaskEnvironment::MainThreadType::IO),
-        context_(NetworkContext::CreateForTesting()) {}
+        context_(NetworkContextImpl::CreateForTesting()) {}
   ~URLLoaderImplTest() override {}
 
   void SetUp() override {
@@ -192,7 +192,7 @@ class URLLoaderImplTest : public testing::Test {
   }
 
   net::EmbeddedTestServer* test_server() { return &test_server_; }
-  NetworkContext* context() { return context_.get(); }
+  NetworkContextImpl* context() { return context_.get(); }
   TestURLLoaderClient* client() { return &client_; }
   void DestroyContext() { context_.reset(); }
 
@@ -239,7 +239,7 @@ class URLLoaderImplTest : public testing::Test {
  private:
   base::test::ScopedTaskEnvironment scoped_task_environment_;
   net::EmbeddedTestServer test_server_;
-  std::unique_ptr<NetworkContext> context_;
+  std::unique_ptr<NetworkContextImpl> context_;
   bool sniff_ = false;
   bool send_ssl_ = false;
   // Used to ensure that methods are called either before or after a request is
@@ -288,7 +288,7 @@ TEST_F(URLLoaderImplTest, DestroyContextWithLiveRequest) {
       CreateResourceRequest("GET", RESOURCE_TYPE_MAIN_FRAME, url);
 
   mojom::URLLoaderPtr loader;
-  // The loader is implicitly owned by the client and the NetworkContext, so
+  // The loader is implicitly owned by the client and the NetworkContextImpl, so
   // don't hold on to a pointer to it.
   base::WeakPtr<URLLoaderImpl> loader_impl =
       (new URLLoaderImpl(context(), mojo::MakeRequest(&loader), 0, request,
