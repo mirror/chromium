@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "739d088b_317c1777",
+        "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_web_contents.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-07-30T02:45:09Z",
+      "side": 1,
+      "message": "Passing only few events to view look bit hacky.\nIf we pass kMouseUp event we also need to pass kMouseDown (kMouseMove) events to have the right sequence of events.\n\nCan we use AnswerCardContents to pass request to do specific action instead of generating some input events to an abstract view? This would be safer.\n\nWe already passing some data to AnswerCardContents at L171 for example.",
+      "range": {
+        "startLine": 189,
+        "startChar": 0,
+        "endLine": 189,
+        "endChar": 32
+      },
+      "revId": "04f3cc8487a5f221ede89810111db4be4335119f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
