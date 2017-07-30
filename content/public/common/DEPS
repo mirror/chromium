@@ -3,4 +3,7 @@ specific_include_rules = {
     "+content/common",
     "+components/mime_util",
   ],
+  "cookie_service.cc": [
+    "+content/network/cookie_service_impl.h",
+  ],
 }
