@@ -405,6 +405,14 @@ bool NetworkState::IsPrivate() const {
          profile_path_ != NetworkProfileHandler::GetSharedProfilePath();
 }
 
+bool NetworkState::IsInteractive() const {
+  if (type() == shill::kTypeVPN &&
+      vpn_provider_type() == shill::kProviderArcVpn) {
+    return false;
+  }
+  return true;
+}
+
 std::string NetworkState::GetHexSsid() const {
   return base::HexEncode(raw_ssid().data(), raw_ssid().size());
 }
