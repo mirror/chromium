@@ -224,6 +224,7 @@ bool SendKeyEvent(const std::string type,
                   std::string key_name,
                   int modifiers,
                   aura::WindowTreeHost* host) {
+  CHECK(false);
   ui::EventType event_type = ui::ET_UNKNOWN;
   if (type == kKeyDown)
     event_type = ui::ET_KEY_PRESSED;
@@ -243,6 +244,9 @@ bool SendKeyEvent(const std::string type,
         return false;
 
       ui::TextInputClient* tic = input_method->GetTextInputClient();
+      // When a11y keyboard is in sticky mode and there is no text input client
+      if (!tic)
+        return false;
 
       SendProcessKeyEvent(ui::ET_KEY_PRESSED, host);
 
