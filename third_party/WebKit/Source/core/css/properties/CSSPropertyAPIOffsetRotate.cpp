@@ -8,10 +8,11 @@
 
 namespace blink {
 
-const CSSValue* CSSPropertyAPIOffsetRotate::parseSingleValue(
+const CSSValue* CSSPropertyAPIOffsetRotate::ParseSingleValue(
+    CSSPropertyID,
     CSSParserTokenRange& range,
     const CSSParserContext& context,
-    const CSSParserLocalContext&) {
+    const CSSParserLocalContext&) const {
   return CSSPropertyOffsetRotateUtils::ConsumeOffsetRotate(range, context);
 }
 

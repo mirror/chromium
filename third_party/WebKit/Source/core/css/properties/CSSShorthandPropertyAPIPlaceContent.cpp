@@ -12,12 +12,13 @@
 
 namespace blink {
 
-bool CSSShorthandPropertyAPIPlaceContent::parseShorthand(
+bool CSSShorthandPropertyAPIPlaceContent::ParseShorthand(
+    CSSPropertyID,
     bool important,
     CSSParserTokenRange& range,
     const CSSParserContext&,
     bool,
-    HeapVector<CSSProperty, 256>& properties) {
+    HeapVector<CSSProperty, 256>& properties) const {
   DCHECK(RuntimeEnabledFeatures::CSSGridLayoutEnabled());
   DCHECK_EQ(shorthandForProperty(CSSPropertyPlaceContent).length(), 2u);
 
