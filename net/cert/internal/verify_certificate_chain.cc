@@ -182,6 +182,32 @@ void VerifyExtendedKeyUsage(const ParsedCertificate& cert,
           return;
       }
 
+      for (const auto& key_purpose_oid : cert.extended_key_usage()) {
+        if (key_purpose_oid == NetscapeServerGatedCrypto()) {
+          errors->AddWarning(cert_errors::kEkuLacksServerAuthButHasGatedCrypto);
+
+          // nsSGC is a deprecated mechanism, and not part of RFC 5280's
+          // profile. Some unexpired certificate chains still rely on it though
+          // (there are intermediates valid until 2020 that use it). To limit
+          // this compatbility allowance, only accept it for certificates that
+          // use a deprecated signature algorithm digest (SHA1 or weaker). See
+          // crbug.com/733403 for details.
+          switch (cert.signature_algorithm().digest()) {
+            case DigestAlgorithm::Md2:
+            case DigestAlgorithm::Md4:
+            case DigestAlgorithm::Md5:
+            case DigestAlgorithm::Sha1:
+              // Early return for success.
+              return;
+            case DigestAlgorithm::Sha256:
+            case DigestAlgorithm::Sha384:
+            case DigestAlgorithm::Sha512:
+              // Break for failure.
+              break;
+          }
+        }
+      }
+
       errors->AddError(cert_errors::kEkuLacksServerAuth);
       break;
     }
