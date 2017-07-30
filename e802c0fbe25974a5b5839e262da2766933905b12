@@ -22,6 +22,30 @@
       "revId": "e802c0fbe25974a5b5839e262da2766933905b12",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6f3247c_dd09b55e",
+        "filename": "content/public/common/cookie_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-07-30T19:59:10Z",
+      "side": 1,
+      "message": "Ah, thanks.  Done.",
+      "parentUuid": "4dbc9a44_973d1d00",
+      "range": {
+        "startLine": 12,
+        "startChar": 38,
+        "endLine": 12,
+        "endChar": 57
+      },
+      "revId": "e802c0fbe25974a5b5839e262da2766933905b12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
