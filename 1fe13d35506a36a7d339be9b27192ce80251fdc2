@@ -325,6 +325,24 @@
     },
     {
       "key": {
+        "uuid": "09fc5e02_9323d8b9",
+        "filename": "components/ui_devtools/protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-07-30T00:13:03Z",
+      "side": 1,
+      "message": "Thanks Terry, let discuss this later. UIDevToolsDOMAgent::UpdateHighlight(const std::pair\u003caura::Window*, gfx::Rect\u003e\u0026 window_and_bounds, SkColor background) needs to refer to aura::Window which Overlay agent doesn\u0027t really need to know about (designed similar to CSS agent).",
+      "parentUuid": "f53689a5_d7976332",
+      "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ba7fe045_d4b36e9f",
         "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
         "patchSetId": 2
@@ -431,6 +449,24 @@
     },
     {
       "key": {
+        "uuid": "1084e745_e61f669f",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-07-30T00:13:03Z",
+      "side": 1,
+      "message": "My impression is Sadrul wants 1 same method call here and move other 3 functions to different files. By the way, I tried several times to make 1 single function as you mentioned but couldn\u0027t get the function to compile. I think we still need 3.",
+      "parentUuid": "f5fbdcb3_15eff2e3",
+      "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b317aff9_92547b06",
         "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
         "patchSetId": 2
@@ -519,6 +555,24 @@
     },
     {
       "key": {
+        "uuid": "e510f3a0_7f491256",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-07-30T00:13:03Z",
+      "side": 1,
+      "message": "window-\u003eGetEventHandlerForPoint(p) returns a closest window to the pointer so even though this window doesn\u0027t contain the point, it still return this closest window and the result wont be correct (crashed at some points also). We still need this to Contains check here.",
+      "parentUuid": "5d09ab79_467df1f6",
+      "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a1665753_ba56ed82",
         "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
         "patchSetId": 2
@@ -584,6 +638,24 @@
       "side": 1,
       "message": "Thanks, the code structure in PS9 looks great.",
       "parentUuid": "5d5121a9_aea26031",
+      "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2a1a6cdc_498a1850",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-07-30T00:13:03Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "a49cc300_af9535ee",
       "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -802,6 +874,24 @@
     },
     {
       "key": {
+        "uuid": "8338d36b_d28ec6e6",
+        "filename": "components/ui_devtools/views/ui_devtools_overlay_agent.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-07-30T00:13:03Z",
+      "side": 1,
+      "message": "Correct Terry! This is because we don\u0027t receive return values after the calls to frontend() methods here.",
+      "parentUuid": "9df20ba9_7edff86c",
+      "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "712d0a47_22a44b03",
         "filename": "components/ui_devtools/views/ui_devtools_overlay_agent.cc",
         "patchSetId": 2
@@ -852,6 +942,24 @@
       "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd1960dd_83fbce54",
+        "filename": "components/ui_devtools/views/ui_devtools_overlay_agent.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-07-30T00:13:03Z",
+      "side": 1,
+      "message": "Done, thanks! I added a comment \"Make sure the element tree has been populated before processing mouse events.\"",
+      "parentUuid": "e15cf166_25db9a02",
+      "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

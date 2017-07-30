@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "61676351_858b1761",
+        "filename": "components/ui_devtools/protocol.json",
+        "patchSetId": 9
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-07-30T00:13:03Z",
+      "side": 1,
+      "message": "We still need enable() and disable() here to override UiDevToolsBaseAgent\u003cui_devtools::protocol::Overlay::Metainfo\u003e",
+      "parentUuid": "4a3bfdb7_e7a149ac",
+      "revId": "788f66d5b5ac20f086fe19468cd1845ab09e3cff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1f257e9_c4b854be",
         "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "788f66d5b5ac20f086fe19468cd1845ab09e3cff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30aa7aa7_5d86aa8f",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-07-30T00:13:03Z",
+      "side": 1,
+      "message": "Done. Thanks for the name suggestions.",
+      "parentUuid": "a1f257e9_c4b854be",
+      "revId": "788f66d5b5ac20f086fe19468cd1845ab09e3cff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1b20f7e2_f56943a4",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-07-30T00:13:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "870a0b99_a355d53d",
+      "revId": "788f66d5b5ac20f086fe19468cd1845ab09e3cff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62e225fd_37a85eb0",
         "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
         "patchSetId": 9
@@ -67,6 +121,24 @@
       "revId": "788f66d5b5ac20f086fe19468cd1845ab09e3cff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e522a83_19b6e41e",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-07-30T00:13:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62e225fd_37a85eb0",
+      "revId": "788f66d5b5ac20f086fe19468cd1845ab09e3cff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "bd3f1ccb_29c0a5b8",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-07-30T00:13:03Z",
+      "side": 1,
+      "message": "Done, thanks!",
+      "parentUuid": "a6c0c660_28a8eb15",
+      "revId": "788f66d5b5ac20f086fe19468cd1845ab09e3cff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b4c3c5e_d0f7d8c7",
         "filename": "components/ui_devtools/views/ui_devtools_unittest.cc",
         "patchSetId": 9
@@ -101,6 +191,24 @@
       "revId": "788f66d5b5ac20f086fe19468cd1845ab09e3cff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b0ff7c7_9de71236",
+        "filename": "components/ui_devtools/views/ui_devtools_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-07-30T00:13:03Z",
+      "side": 1,
+      "message": "Done, thanks!",
+      "parentUuid": "2b4c3c5e_d0f7d8c7",
+      "revId": "788f66d5b5ac20f086fe19468cd1845ab09e3cff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
