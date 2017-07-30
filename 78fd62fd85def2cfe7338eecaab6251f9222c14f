@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "8d83799e_84618606",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-07-30T21:39:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "836ee7af_a98742f4",
+      "revId": "78fd62fd85def2cfe7338eecaab6251f9222c14f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9f19b4c_a5e3efd5",
         "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
         "patchSetId": 2
