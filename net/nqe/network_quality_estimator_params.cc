@@ -403,9 +403,15 @@ NetworkQualityEstimatorParams::NetworkQualityEstimatorParams(
       persistent_cache_reading_enabled_(
           GetPersistentCacheReadingEnabled(params_)),
       min_socket_watcher_notification_interval_(
-          GetMinSocketWatcherNotificationInterval(params_)) {
+          GetMinSocketWatcherNotificationInterval(params_)),
+      transport_rtt_multiplier_http_rtt_computation_(
+          GetDoubleValueForVariationParamWithDefaultValue(
+              params_,
+              "transport_rtt_multiplier_http_rtt_computation",
+              0.0)) {
   DCHECK_LE(0.0, correlation_uma_logging_probability_);
   DCHECK_GE(1.0, correlation_uma_logging_probability_);
+  DCHECK_LE(0.0, transport_rtt_multiplier_http_rtt_computation_);
 
   const auto algorithm_it = params_.find("effective_connection_type_algorithm");
   effective_connection_type_algorithm_ =

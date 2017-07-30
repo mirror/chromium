@@ -1777,6 +1777,85 @@ TEST(NetworkQualityEstimatorTest, MAYBE_TestEffectiveConnectionTypeObserver) {
   EXPECT_EQ(0U, observer_3.effective_connection_types().size());
 }
 
+// Tests that the transport RTT is used for computing the HTTP RTT.
+TEST(NetworkQualityEstimatorTest, TestTransportRttUsedForHttpRttComputation) {
+  const struct {
+    base::TimeDelta http_rtt;
+    base::TimeDelta transport_rtt;
+    std::string transport_rtt_multiplier_http_rtt_computation;
+    base::TimeDelta expected_http_rtt;
+    EffectiveConnectionType expected_type;
+  } tests[] = {
+      {
+          base::TimeDelta::FromMilliseconds(100),
+          base::TimeDelta::FromMilliseconds(200), "",
+          base::TimeDelta::FromMilliseconds(100), EFFECTIVE_CONNECTION_TYPE_4G,
+      },
+      {
+          base::TimeDelta::FromMilliseconds(100),
+          base::TimeDelta::FromMilliseconds(200), "1.0",
+          base::TimeDelta::FromMilliseconds(200), EFFECTIVE_CONNECTION_TYPE_4G,
+      },
+      {
+          base::TimeDelta::FromMilliseconds(100),
+          base::TimeDelta::FromMilliseconds(200), "1.5",
+          base::TimeDelta::FromMilliseconds(300), EFFECTIVE_CONNECTION_TYPE_3G,
+      },
+      {
+          base::TimeDelta::FromMilliseconds(100),
+          base::TimeDelta::FromMilliseconds(200), "2.0",
+          base::TimeDelta::FromMilliseconds(400), EFFECTIVE_CONNECTION_TYPE_3G,
+      },
+      {
+          base::TimeDelta::FromMilliseconds(100),
+          base::TimeDelta::FromMilliseconds(200), "10.0",
+          base::TimeDelta::FromMilliseconds(2000), EFFECTIVE_CONNECTION_TYPE_2G,
+      },
+      {
+          base::TimeDelta::FromMilliseconds(100),
+          base::TimeDelta::FromMilliseconds(200), "foobar",
+          base::TimeDelta::FromMilliseconds(100), EFFECTIVE_CONNECTION_TYPE_4G,
+      },
+      {
+          base::TimeDelta::FromMilliseconds(200),
+          base::TimeDelta::FromMilliseconds(100), "",
+          base::TimeDelta::FromMilliseconds(200), EFFECTIVE_CONNECTION_TYPE_4G,
+      },
+      {
+          base::TimeDelta::FromMilliseconds(200),
+          base::TimeDelta::FromMilliseconds(100), "10.0",
+          base::TimeDelta::FromMilliseconds(1000), EFFECTIVE_CONNECTION_TYPE_3G,
+      },
+  };
+
+  for (const auto& test : tests) {
+    std::map<std::string, std::string> variation_params;
+    variation_params["transport_rtt_multiplier_http_rtt_computation"] =
+        test.transport_rtt_multiplier_http_rtt_computation;
+    TestNetworkQualityEstimator estimator(variation_params);
+
+    TestDelegate test_delegate;
+    TestURLRequestContext context(true);
+    context.set_network_quality_estimator(&estimator);
+    context.Init();
+
+    estimator.set_start_time_null_http_rtt(test.http_rtt);
+    estimator.set_start_time_null_transport_rtt(test.transport_rtt);
+
+    std::unique_ptr<URLRequest> request2(
+        context.CreateRequest(estimator.GetEchoURL(), DEFAULT_PRIORITY,
+                              &test_delegate, TRAFFIC_ANNOTATION_FOR_TESTS));
+    request2->SetLoadFlags(request2->load_flags() | LOAD_MAIN_FRAME_DEPRECATED);
+    request2->Start();
+    base::RunLoop().Run();
+    //  EXPECT_EQ(1U, observer.effective_connection_types().size());
+    EXPECT_EQ(test.expected_http_rtt, estimator.GetHttpRTT());
+    EXPECT_EQ(test.transport_rtt, estimator.GetTransportRTT());
+    EXPECT_EQ(test.expected_type, estimator.GetEffectiveConnectionType())
+        << test.transport_rtt_multiplier_http_rtt_computation;
+  }
+}
+
 // Tests that the network quality is computed at the specified interval, and
 // that the network quality observers are notified of any change.
 TEST(NetworkQualityEstimatorTest, TestRTTAndThroughputEstimatesObserver) {
