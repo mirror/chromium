@@ -346,6 +346,8 @@ void NetworkQualityEstimator::NotifyStartTransaction(
   if (!RequestSchemeIsHTTPOrHTTPS(request))
     return;
 
+  MaybeComputeEffectiveConnectionType();
+
   // Update |estimated_quality_at_last_main_frame_| if this is a main frame
   // request.
   // TODO(tbansal): Refactor this to a separate method.
@@ -353,7 +355,6 @@ void NetworkQualityEstimator::NotifyStartTransaction(
     base::TimeTicks now = tick_clock_->NowTicks();
     last_main_frame_request_ = now;
 
-    MaybeComputeEffectiveConnectionType();
     effective_connection_type_at_last_main_frame_ = effective_connection_type_;
     estimated_quality_at_last_main_frame_ = network_quality_;
 
@@ -377,6 +378,9 @@ void NetworkQualityEstimator::NotifyStartTransaction(
                      weak_ptr_factory_.GetWeakPtr(), measuring_delay),
           measuring_delay);
     }
+    MaybeQueryExternalEstimateProvider();
+    ComputeEffectiveConnectionType();
+    RecordMetricsOnMainFrameRequest();
   }
   throughput_analyzer_->NotifyStartTransaction(request);
 }
@@ -390,12 +394,7 @@ void NetworkQualityEstimator::NotifyHeadersReceived(const URLRequest& request) {
       !RequestProvidesRTTObservation(request)) {
     return;
   }
-
-  if (request.load_flags() & LOAD_MAIN_FRAME_DEPRECATED) {
-    ComputeEffectiveConnectionType();
-    RecordMetricsOnMainFrameRequest();
-    MaybeQueryExternalEstimateProvider();
-  }
+  MaybeComputeEffectiveConnectionType();
 
   LoadTimingInfo load_timing_info;
   request.GetLoadTimingInfo(&load_timing_info);
