@@ -12,14 +12,35 @@ HitTestQuery::HitTestQuery() = default;
 
 HitTestQuery::~HitTestQuery() = default;
 
+void HitTestQuery::OnSharedMemoryHandlesReceived(
+    mojo::ScopedSharedBufferHandle read_handle,
+    uint32_t read_size,
+    mojo::ScopedSharedBufferHandle write_handle,
+    uint32_t write_size) {
+  if (!read_handle.is_valid() && !write_handle.is_valid()) {
+    SwapHandles();
+    return;
+  }
+
+  active_handle_ = std::move(read_handle);
+  active_handle_size_ = read_size;
+  active_mapping_ = active_handle_->Map(active_handle_size_ *
+                                        sizeof(AggregatedHitTestRegion));
+  idle_handle_ = std::move(write_handle);
+  idle_handle_size_ = write_size;
+  idle_mapping_ =
+      idle_handle_->Map(idle_handle_size_ * sizeof(AggregatedHitTestRegion));
+}
+
 Target HitTestQuery::FindTargetForLocation(
     const gfx::Point& location_in_root) const {
   Target target;
-  if (!aggregated_hit_test_region_list_size_)
+  if (!active_handle_size_)
     return target;
 
-  FindTargetInRegionForLocation(location_in_root,
-                                aggregated_hit_test_region_list_, &target);
+  FindTargetInRegionForLocation(
+      location_in_root,
+      static_cast<AggregatedHitTestRegion*>(active_mapping_.get()), &target);
   return target;
 }
 
@@ -34,8 +55,8 @@ bool HitTestQuery::FindTargetInRegionForLocation(
 
   if (region->child_count < 0 ||
       region->child_count >
-          (aggregated_hit_test_region_list_ +
-           aggregated_hit_test_region_list_size_ - region - 1)) {
+          (static_cast<AggregatedHitTestRegion*>(active_mapping_.get()) +
+           active_handle_size_ - region - 1)) {
     return false;
   }
   AggregatedHitTestRegion* child_region = region + 1;
@@ -63,6 +84,12 @@ bool HitTestQuery::FindTargetInRegionForLocation(
     return true;
   }
   return false;
+}
+
+void HitTestQuery::SwapHandles() {
+  std::swap(active_handle_, idle_handle_);
+  std::swap(active_handle_size_, idle_handle_size_);
+  std::swap(active_mapping_, idle_mapping_);
 }
 
 }  // namespace viz

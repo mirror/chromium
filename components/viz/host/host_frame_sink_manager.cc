@@ -174,6 +174,15 @@ void HostFrameSinkManager::OnClientConnectionClosed(
   // TODO(kylechar): Notify observers.
 }
 
+void HostFrameSinkManager::OnSharedMemoryHandlesReceived(
+    const FrameSinkId& frame_sink_id,
+    mojo::ScopedSharedBufferHandle read_handle,
+    uint32_t read_size,
+    mojo::ScopedSharedBufferHandle write_handle,
+    uint32_t write_size) {
+  // TODO(riajiang): Refactor content to use the hit test component.
+}
+
 HostFrameSinkManager::FrameSinkData::FrameSinkData() = default;
 
 HostFrameSinkManager::FrameSinkData::FrameSinkData(FrameSinkData&& other) =

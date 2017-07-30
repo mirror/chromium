@@ -131,6 +131,12 @@ class VIZ_HOST_EXPORT HostFrameSinkManager
   // mojom::FrameSinkManagerClient:
   void OnSurfaceCreated(const SurfaceInfo& surface_info) override;
   void OnClientConnectionClosed(const FrameSinkId& frame_sink_id) override;
+  void OnSharedMemoryHandlesReceived(
+      const FrameSinkId& frame_sink_id,
+      mojo::ScopedSharedBufferHandle read_handle,
+      uint32_t read_size,
+      mojo::ScopedSharedBufferHandle write_handle,
+      uint32_t write_size) override;
 
   // This will point to |frame_sink_manager_ptr_| if using Mojo or
   // |frame_sink_manager_impl_| if directly connected. Use this to make function
