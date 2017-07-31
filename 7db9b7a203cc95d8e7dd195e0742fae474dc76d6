@@ -249,6 +249,29 @@
     },
     {
       "key": {
+        "uuid": "d9188fdd_d159b905",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-07-31T21:46:25Z",
+      "side": 1,
+      "message": "Please move this line and the next to the member initializer list.",
+      "range": {
+        "startLine": 61,
+        "startChar": 78,
+        "endLine": 61,
+        "endChar": 0
+      },
+      "revId": "7db9b7a203cc95d8e7dd195e0742fae474dc76d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0e48810c_877567bb",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_win.cc",
         "patchSetId": 3
@@ -260,6 +283,29 @@
       "writtenOn": "2017-07-31T20:06:56Z",
       "side": 1,
       "message": "This should only be done is prompt_pending_ is true, right?",
+      "range": {
+        "startLine": 148,
+        "startChar": 38,
+        "endLine": 148,
+        "endChar": 0
+      },
+      "revId": "7db9b7a203cc95d8e7dd195e0742fae474dc76d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc8ec462_1c4f0c1b",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-07-31T21:46:25Z",
+      "side": 1,
+      "message": "This should probably be moved to OnInteractionDone() where it is called only if prompt_pending_ is true.",
       "range": {
         "startLine": 148,
         "startChar": 38,
@@ -295,6 +341,52 @@
     },
     {
       "key": {
+        "uuid": "f558a7b3_2e022a74",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-07-31T21:46:25Z",
+      "side": 1,
+      "message": "Both these checks should be DCHECKs (since you should never be able to get to OnBrowserSetLastActive() if prompt_pending_ is true and you should be able to rely on |browser| to never be null).",
+      "range": {
+        "startLine": 188,
+        "startChar": 35,
+        "endLine": 188,
+        "endChar": 0
+      },
+      "revId": "7db9b7a203cc95d8e7dd195e0742fae474dc76d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53f811e3_1c00ba75",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-07-31T21:46:25Z",
+      "side": 1,
+      "message": "Could you add \"DCHECK(!browser_);\" just before this line?",
+      "range": {
+        "startLine": 189,
+        "startChar": 23,
+        "endLine": 189,
+        "endChar": 0
+      },
+      "revId": "7db9b7a203cc95d8e7dd195e0742fae474dc76d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8f7abd74_77dd4ae2",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_win.cc",
         "patchSetId": 3
@@ -310,6 +402,29 @@
         "startLine": 204,
         "startChar": 31,
         "endLine": 204,
+        "endChar": 0
+      },
+      "revId": "7db9b7a203cc95d8e7dd195e0742fae474dc76d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cfb28ea_1e7e00a1",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-07-31T21:46:25Z",
+      "side": 1,
+      "message": "Please move this to the .cc file.",
+      "range": {
+        "startLine": 32,
+        "startChar": 76,
+        "endLine": 32,
         "endChar": 0
       },
       "revId": "7db9b7a203cc95d8e7dd195e0742fae474dc76d6",
