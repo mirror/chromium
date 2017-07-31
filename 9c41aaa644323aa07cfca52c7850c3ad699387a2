@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "c9055e9e_a9bcd721",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 933,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-07-31T12:11:12Z",
+      "side": 1,
+      "message": "After offline discussion, it was decided to remove |is_gaia_reauthentication_page_|",
+      "parentUuid": "e7692887_4b0e2faf",
+      "range": {
+        "startLine": 933,
+        "startChar": 8,
+        "endLine": 933,
+        "endChar": 25
+      },
+      "revId": "9c41aaa644323aa07cfca52c7850c3ad699387a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1df53466_58cf4fa2",
         "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
         "patchSetId": 3

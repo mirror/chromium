@@ -118,6 +118,30 @@
       "revId": "c5338c14b84e84eb3c0801281d5b69bb20f487b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d304f788_d1526aad",
+        "filename": "chrome/renderer/autofill/password_autofill_agent_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3043,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-07-31T12:11:12Z",
+      "side": 1,
+      "message": "Added",
+      "parentUuid": "8d994958_447398da",
+      "range": {
+        "startLine": 3043,
+        "startChar": 15,
+        "endLine": 3043,
+        "endChar": 41
+      },
+      "revId": "c5338c14b84e84eb3c0801281d5b69bb20f487b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
