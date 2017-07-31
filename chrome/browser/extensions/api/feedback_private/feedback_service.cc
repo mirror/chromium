@@ -10,8 +10,8 @@
 #include "base/memory/weak_ptr.h"
 #include "base/strings/string_number_conversions.h"
 #include "chrome/browser/feedback/system_logs/chrome_system_logs_fetcher.h"
-#include "chrome/browser/profiles/profile.h"
 #include "chrome/common/chrome_content_client.h"
+#include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
 #include "extensions/browser/blob_reader.h"
 #include "extensions/browser/extensions_browser_client.h"
@@ -28,10 +28,9 @@ FeedbackService::FeedbackService() {
 FeedbackService::~FeedbackService() {
 }
 
-void FeedbackService::SendFeedback(
-    Profile* profile,
-    scoped_refptr<FeedbackData> feedback_data,
-    const SendFeedbackCallback& callback) {
+void FeedbackService::SendFeedback(content::BrowserContext* browser_context,
+                                   scoped_refptr<FeedbackData> feedback_data,
+                                   const SendFeedbackCallback& callback) {
   feedback_data->set_locale(
       ExtensionsBrowserClient::Get()->GetApplicationLocale());
   feedback_data->set_user_agent(GetUserAgent());
@@ -39,7 +38,7 @@ void FeedbackService::SendFeedback(
   if (!feedback_data->attached_file_uuid().empty()) {
     // Self-deleting object.
     BlobReader* attached_file_reader =
-        new BlobReader(profile, feedback_data->attached_file_uuid(),
+        new BlobReader(browser_context, feedback_data->attached_file_uuid(),
                        base::Bind(&FeedbackService::AttachedFileCallback,
                                   AsWeakPtr(), feedback_data, callback));
     attached_file_reader->Start();
@@ -48,7 +47,7 @@ void FeedbackService::SendFeedback(
   if (!feedback_data->screenshot_uuid().empty()) {
     // Self-deleting object.
     BlobReader* screenshot_reader =
-        new BlobReader(profile, feedback_data->screenshot_uuid(),
+        new BlobReader(browser_context, feedback_data->screenshot_uuid(),
                        base::Bind(&FeedbackService::ScreenshotCallback,
                                   AsWeakPtr(), feedback_data, callback));
     screenshot_reader->Start();
