@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3465c683_247de452",
+        "filename": "third_party/WebKit/Source/platform/mojo/Time.typemap",
+        "patchSetId": 12
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1108704
+      },
+      "writtenOn": "2017-07-31T17:20:01Z",
+      "side": 1,
+      "message": "WTF::TimeTicks wraps base::TimeTicks but is used widely in Blink. (From https://chromium-review.googlesource.com/c/522893/)",
+      "revId": "52bee8413b28d9de95f63addf5ea293e56796f1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
