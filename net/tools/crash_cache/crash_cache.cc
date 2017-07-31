@@ -139,8 +139,8 @@ bool CreateCache(const base::FilePath& path,
                  disk_cache::Backend** cache,
                  net::TestCompletionCallback* cb) {
   int size = 1024 * 1024;
-  disk_cache::BackendImpl* backend =
-      new disk_cache::BackendImpl(path, thread->task_runner().get(), NULL);
+  disk_cache::BackendImpl* backend = new disk_cache::BackendImpl(
+      path, nullptr, thread->task_runner().get(), nullptr);
   backend->SetMaxSize(size);
   backend->SetType(net::DISK_CACHE);
   backend->SetFlags(disk_cache::kNoRandom);
