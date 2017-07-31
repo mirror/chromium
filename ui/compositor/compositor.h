@@ -192,7 +192,8 @@ class COMPOSITOR_EXPORT Compositor
              ui::ContextFactoryPrivate* context_factory_private,
              scoped_refptr<base::SingleThreadTaskRunner> task_runner,
              bool enable_surface_synchronization,
-             bool external_begin_frames_enabled = false);
+             bool external_begin_frames_enabled = false,
+             bool enable_pixel_canvas);
   ~Compositor() override;
 
   ui::ContextFactory* context_factory() { return context_factory_; }
@@ -400,6 +401,9 @@ class COMPOSITOR_EXPORT Compositor
     allow_locks_to_extend_timeout_ = allowed;
   }
 
+  // If true, all paint commands are recorded at pixel size instead of DIP.
+  bool is_pixel_canvas() const { return is_pixel_canvas_; }
+
  private:
   friend class base::RefCounted<Compositor>;
 
@@ -464,6 +468,8 @@ class COMPOSITOR_EXPORT Compositor
   base::TimeTicks scheduled_timeout_;
   // If true, the |scheduled_timeout_| might be recalculated and extended.
   bool allow_locks_to_extend_timeout_;
+  // If true, all paint commands are recorded at pixel size instead of DIP.
+  const bool is_pixel_canvas_;
 
   base::WeakPtrFactory<Compositor> weak_ptr_factory_;
   base::WeakPtrFactory<Compositor> lock_timeout_weak_ptr_factory_;
