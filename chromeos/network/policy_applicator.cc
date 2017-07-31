@@ -232,7 +232,6 @@ void PolicyApplicator::GetEntryCallback(
   } else if (was_managed) {
     VLOG(1) << "Removing configuration previously managed by policy "
             << old_guid << ", because the policy was removed.";
-
     // Remove the entry, because the network was managed but isn't anymore.
     // Note: An alternative might be to preserve the user settings, but it's
     // unclear which values originating the policy should be removed.
@@ -318,7 +317,6 @@ void PolicyApplicator::ApplyRemainingPolicies() {
        it != remaining_policies_.end(); ++it) {
     const base::DictionaryValue* network_policy = GetByGUID(all_policies_, *it);
     DCHECK(network_policy);
-
     VLOG(1) << "Creating new configuration managed by policy " << *it
             << " in profile " << profile_.ToDebugString() << ".";
 
