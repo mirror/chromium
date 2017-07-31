@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "05d00330_abc44c92",
+        "filename": "components/omnibox/browser/omnibox_field_trial.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 562,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-31T21:48:04Z",
+      "side": 1,
+      "message": "That suggestion isn\u0027t notably better to me.  Nonetheless, I made the change.",
+      "parentUuid": "7605bc66_1541fb60",
+      "revId": "c4b9db9ceaafab403c9c27b5c7dd004679a4a945",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d2990a5_d4bd0f3c",
         "filename": "components/omnibox/browser/omnibox_field_trial.h",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "c4b9db9ceaafab403c9c27b5c7dd004679a4a945",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b510ec76_e8df2565",
+        "filename": "components/omnibox/browser/omnibox_field_trial.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-31T21:48:04Z",
+      "side": 1,
+      "message": "I did not experiment with this value directly.  I did tune it by hand on several examples reported by using.  The biggest issue with selecting this value is that having a higher value increases the possible range of scores, and much of the motivation for this particular change was to compress the range of scores (by increasing the scores of previously low-scoring URL matches).  All that said, it\u0027s all anecdotal.  I\u0027ll put on my possible Q4 OKRs list to experiment with this value.",
+      "parentUuid": "3d2990a5_d4bd0f3c",
+      "revId": "c4b9db9ceaafab403c9c27b5c7dd004679a4a945",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "831f77a8_e9a179ce",
+        "filename": "components/omnibox/browser/omnibox_field_trial.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-31T21:48:04Z",
+      "side": 1,
+      "message": "No, the code doesn\u0027t do linear interpolation.  Given the shortness of the lists that we would use, I decided (minor) additional complexity wasn\u0027t worth the time to think about.",
+      "parentUuid": "22efe487_29b749d0",
+      "revId": "c4b9db9ceaafab403c9c27b5c7dd004679a4a945",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9613eca8_d1b996b3",
         "filename": "components/omnibox/browser/scored_history_match.cc",
         "patchSetId": 7
@@ -64,6 +118,24 @@
       "writtenOn": "2017-07-28T07:35:50Z",
       "side": 1,
       "message": "Wait, isn\u0027t \"yesterday\" an 0.9 recency score (see \"a visit every day\" case below)?",
+      "revId": "c4b9db9ceaafab403c9c27b5c7dd004679a4a945",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e42b9423_c47644b5",
+        "filename": "components/omnibox/browser/scored_history_match.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 682,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-31T21:48:04Z",
+      "side": 1,
+      "message": "Yes.  Fixed.",
+      "parentUuid": "9613eca8_d1b996b3",
       "revId": "c4b9db9ceaafab403c9c27b5c7dd004679a4a945",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "904969de_9d4007cb",
+        "filename": "components/omnibox/browser/scored_history_match.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-31T21:48:04Z",
+      "side": 1,
+      "message": "\u003e Nit: Saying something like \"10+ visits, once every three days, ...\" seems clearer than saying \"a visit\" but putting \"10+\" in the next line.  (Multiple places).\nAgreed.  Done all.\n\n\u003e That said, this still leaves it unclear whether we cap at 10, or we just used 10 as the sample here;\nI think this is solved by how I moved the comment.\n\n\u003e and it also is unclear whether the recency score for each visit is calculated relative to \"now\" or to \"the next more recent visit\".  (These comments suggest the latter, but my instinct says we want more like the former.)\nI think this is also clarified by how I moved the comment.\n\n\u003e \n\u003e All this suggests to me maybe trying to nail all these details down in a comment here is the wrong approach.  I\u0027d prefer to mostly document them where the subcomponent scores are computed, then just refer to those comments here.\n\nThat makes sense.  Reading over this comment, although it\u0027s in the section for GetFinalRelevancyScore(), it\u0027s almost entirely about frequency scores.  (The comment assumes that topicality score is 1.0 and specificity score is 1.0.)  Thus, I moved the comment to the frequency score section, joining it with the existing comment therein.\n\nI then revised this section with brief summaries and where to look for more details.",
+      "parentUuid": "756aa641_6a73a39e",
+      "revId": "c4b9db9ceaafab403c9c27b5c7dd004679a4a945",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0549900_9b64335b",
         "filename": "components/omnibox/browser/scored_history_match.cc",
         "patchSetId": 7
@@ -101,6 +191,24 @@
       "revId": "c4b9db9ceaafab403c9c27b5c7dd004679a4a945",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36b4fcb2_4ca24232",
+        "filename": "components/omnibox/browser/scored_history_match.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 734,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-31T21:48:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0549900_9b64335b",
+      "revId": "c4b9db9ceaafab403c9c27b5c7dd004679a4a945",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
