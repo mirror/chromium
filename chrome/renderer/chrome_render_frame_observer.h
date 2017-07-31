@@ -36,6 +36,8 @@ class ChromeRenderFrameObserver
   explicit ChromeRenderFrameObserver(content::RenderFrame* render_frame);
   ~ChromeRenderFrameObserver() override;
 
+  service_manager::BinderRegistry* registry() { return &registry_; }
+
  private:
   enum TextCaptureType { PRELIMINARY_CAPTURE, FINAL_CAPTURE };
 
