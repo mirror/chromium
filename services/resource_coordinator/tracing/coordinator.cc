@@ -13,6 +13,7 @@
 #include "base/bind_helpers.h"
 #include "base/callback_forward.h"
 #include "base/callback_helpers.h"
+#include "base/guid.h"
 #include "base/json/json_writer.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/string_split.h"
@@ -20,20 +21,25 @@
 #include "base/task_scheduler/post_task.h"
 #include "base/task_scheduler/task_traits.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "base/time/time.h"
 #include "base/trace_event/trace_config.h"
+#include "base/trace_event/trace_event.h"
 #include "mojo/common/data_pipe_utils.h"
 #include "services/resource_coordinator/public/interfaces/tracing/tracing.mojom.h"
 #include "services/resource_coordinator/public/interfaces/tracing/tracing_constants.mojom.h"
 #include "services/resource_coordinator/tracing/agent_registry.h"
 #include "services/resource_coordinator/tracing/recorder.h"
+#include "services/service_manager/public/cpp/bind_source_info.h"
 
 namespace {
 
 const char kMetadataTraceLabel[] = "metadata";
 
-const char kStartTracingClosureName[] = "StartTracingClosure";
-const char kRequestBufferUsageClosureName[] = "RequestBufferUsageClosure";
 const char kGetCategoriesClosureName[] = "GetCategoriesClosure";
+const char kRequestBufferUsageClosureName[] = "RequestBufferUsageClosure";
+const char kRequestClockSyncMarkerClosureName[] =
+    "RequestClockSyncMarkerClosure";
+const char kStartTracingClosureName[] = "StartTracingClosure";
 
 tracing::Coordinator* g_coordinator = nullptr;
 
@@ -64,7 +70,9 @@ Coordinator::~Coordinator() {
   g_coordinator = nullptr;
 }
 
-void Coordinator::BindCoordinatorRequest(mojom::CoordinatorRequest request) {
+void Coordinator::BindCoordinatorRequest(
+    mojom::CoordinatorRequest request,
+    const service_manager::BindSourceInfo& source_info) {
   binding_.Bind(std::move(request));
 }
 
@@ -92,14 +100,16 @@ void Coordinator::SendStartTracingToAgent(
   agent_entry->AddDisconnectClosure(
       &kStartTracingClosureName,
       base::BindOnce(&Coordinator::OnTracingStarted, base::Unretained(this),
-                     base::Unretained(agent_entry)));
+                     base::Unretained(agent_entry), false));
   agent_entry->agent()->StartTracing(
-      config_, base::BindRepeating(&Coordinator::OnTracingStarted,
-                                   base::Unretained(this),
-                                   base::Unretained(agent_entry)));
+      config_, base::TimeTicks::Now(),
+      base::BindRepeating(&Coordinator::OnTracingStarted,
+                          base::Unretained(this),
+                          base::Unretained(agent_entry)));
 }
 
-void Coordinator::OnTracingStarted(AgentRegistry::AgentEntry* agent_entry) {
+void Coordinator::OnTracingStarted(AgentRegistry::AgentEntry* agent_entry,
+                                   bool success) {
   bool removed =
       agent_entry->RemoveDisconnectClosure(&kStartTracingClosureName);
   DCHECK(removed);
@@ -110,13 +120,26 @@ void Coordinator::OnTracingStarted(AgentRegistry::AgentEntry* agent_entry) {
   }
 }
 
-void Coordinator::StopAndFlush(mojo::ScopedDataPipeProducerHandle stream) {
-  DCHECK(is_tracing_);
+void Coordinator::StopAndFlush(mojo::ScopedDataPipeProducerHandle stream,
+                               const StopAndFlushCallback& callback) {
+  StopAndFlushAgent(std::move(stream), "", callback);
+}
+
+void Coordinator::StopAndFlushAgent(mojo::ScopedDataPipeProducerHandle stream,
+                                    const std::string& agent_label,
+                                    const StopAndFlushCallback& callback) {
+  if (!is_tracing_) {
+    stream.reset();
+    callback.Run(base::MakeUnique<base::DictionaryValue>());
+    return;
+  }
   DCHECK(!stream_.is_valid());
   DCHECK(stream.is_valid());
 
   // Do not send |StartTracing| to agents that connect from now on.
   agent_registry_->RemoveAgentInitializationCallback();
+  agent_label_ = agent_label;
+  stop_and_flush_callback_ = callback;
   stream_ = std::move(stream);
   StopAndFlushInternal();
 }
@@ -134,7 +157,51 @@ void Coordinator::StopAndFlushInternal() {
     return;
   }
 
-  stream_header_written_ = false;
+  agent_registry_->ForAllAgents([this](AgentRegistry::AgentEntry* agent_entry) {
+    if (!agent_entry->supports_explicit_clock_sync())
+      return;
+    const std::string sync_id = base::GenerateGUID();
+    agent_entry->AddDisconnectClosure(
+        &kRequestClockSyncMarkerClosureName,
+        base::BindOnce(&Coordinator::OnRequestClockSyncMarkerResponse,
+                       base::Unretained(this), base::Unretained(agent_entry),
+                       sync_id, base::TimeTicks(), base::TimeTicks()));
+    agent_entry->agent()->RequestClockSyncMarker(
+        sync_id,
+        base::BindRepeating(&Coordinator::OnRequestClockSyncMarkerResponse,
+                            base::Unretained(this),
+                            base::Unretained(agent_entry), sync_id));
+  });
+  if (!agent_registry_->HasDisconnectClosure(
+          &kRequestClockSyncMarkerClosureName)) {
+    StopAndFlushAfterClockSync();
+  }
+}
+
+void Coordinator::OnRequestClockSyncMarkerResponse(
+    AgentRegistry::AgentEntry* agent_entry,
+    const std::string& sync_id,
+    base::TimeTicks issue_ts,
+    base::TimeTicks issue_end_ts) {
+  bool removed =
+      agent_entry->RemoveDisconnectClosure(&kRequestClockSyncMarkerClosureName);
+  DCHECK(removed);
+
+  // TODO(charliea): Change this function so that it can accept a boolean
+  // success indicator instead of having to rely on sentinel issue_ts and
+  // issue_end_ts values to signal failure.
+  if (!(issue_ts == base::TimeTicks() || issue_end_ts == base::TimeTicks()))
+    TRACE_EVENT_CLOCK_SYNC_ISSUER(sync_id, issue_ts, issue_end_ts);
+
+  if (!agent_registry_->HasDisconnectClosure(
+          &kRequestClockSyncMarkerClosureName)) {
+    StopAndFlushAfterClockSync();
+  }
+}
+
+void Coordinator::StopAndFlushAfterClockSync() {
+  metadata_.reset(new base::DictionaryValue());
+  stream_is_empty_ = true;
   streaming_label_.clear();
 
   agent_registry_->ForAllAgents([this](AgentRegistry::AgentEntry* agent_entry) {
@@ -189,8 +256,10 @@ void Coordinator::OnRecorderDataChange(const std::string& label) {
       // No recorder has any data for us, right now.
       if (all_finished) {
         StreamMetadata();
-        if (stream_header_written_)
+        if (!stream_is_empty_ && agent_label_.empty()) {
           mojo::common::BlockingCopyFromString("}", stream_);
+          stream_is_empty_ = false;
+        }
         // Recorder connections should be closed on their binding thread.
         task_runner_->PostTask(
             FROM_HERE,
@@ -209,49 +278,55 @@ bool Coordinator::StreamEventsForCurrentLabel() {
     waiting_for_agents |= recorder->is_recording();
     if (recorder->data().empty())
       continue;
-    if (json_field_name_written_) {
-      if (data_is_array)
-        mojo::common::BlockingCopyFromString(",", stream_);
-    } else {
-      std::string prefix = stream_header_written_ ? ",\"" : "{\"";
+    std::string prefix;
+    if (!json_field_name_written_ && agent_label_.empty()) {
+      prefix = stream_is_empty_ ? "{\"" : ",\"";
       prefix += streaming_label_ + "\":" + (data_is_array ? "[" : "\"");
-      mojo::common::BlockingCopyFromString(prefix, stream_);
       json_field_name_written_ = true;
-      stream_header_written_ = true;
+    } else if (data_is_array && !stream_is_empty_) {
+      prefix = ",";
     }
-    mojo::common::BlockingCopyFromString(recorder->data(), stream_);
+    if (agent_label_.empty() || streaming_label_ == agent_label_) {
+      mojo::common::BlockingCopyFromString(prefix + recorder->data(), stream_);
+      stream_is_empty_ = false;
+    }
     recorder->clear_data();
   }
   if (!waiting_for_agents) {
-    if (json_field_name_written_)
+    if (json_field_name_written_) {
       mojo::common::BlockingCopyFromString(data_is_array ? "]" : "\"", stream_);
+      stream_is_empty_ = false;
+    }
   }
   return waiting_for_agents;
 }
 
 void Coordinator::StreamMetadata() {
   DCHECK(background_task_runner_->RunsTasksInCurrentSequence());
+  if (!agent_label_.empty())
+    return;
 
-  base::DictionaryValue metadata;
   for (const auto& key_value : recorders_) {
     for (const auto& recorder : key_value.second) {
-      metadata.MergeDictionary(&(recorder->metadata()));
+      metadata_->MergeDictionary(&(recorder->metadata()));
     }
   }
 
   std::string metadataJSON;
-  if (!metadata.empty() && base::JSONWriter::Write(metadata, &metadataJSON)) {
-    std::string prefix = stream_header_written_ ? ",\"" : "{\"";
+  if (!metadata_->empty() &&
+      base::JSONWriter::Write(*metadata_, &metadataJSON)) {
+    std::string prefix = stream_is_empty_ ? "{\"" : ",\"";
     mojo::common::BlockingCopyFromString(
         prefix + std::string(kMetadataTraceLabel) + "\":" + metadataJSON,
         stream_);
-    stream_header_written_ = true;
+    stream_is_empty_ = false;
   }
 }
 
 void Coordinator::OnFlushDone() {
   recorders_.clear();
   stream_.reset();
+  stop_and_flush_callback_.Run(std::move(metadata_));
   is_tracing_ = false;
 }
 
