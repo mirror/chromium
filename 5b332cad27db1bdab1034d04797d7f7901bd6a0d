@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f2cd6db7_84707bda",
+        "filename": "chrome/browser/resources/md_extensions/item_util.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-07-31T20:43:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "775dab51_16657bed",
+      "revId": "5b332cad27db1bdab1034d04797d7f7901bd6a0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "292b2b5f_66a9a1c7",
         "filename": "chrome/test/data/webui/extensions/cr_extensions_browsertest.js",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-31T20:15:56Z",
       "side": 1,
       "message": "Nit: We\u0027ve advised against using registerTests() at https://groups.google.com/a/google.com/d/msg/chrome-settings/YXFGH6MAfmw/qbpagu7ZBwAJ. Perhaps we can clean that up in a follow up.",
+      "revId": "5b332cad27db1bdab1034d04797d7f7901bd6a0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "089864cd_a543a7cb",
+        "filename": "chrome/test/data/webui/extensions/cr_extensions_browsertest.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-07-31T20:43:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "292b2b5f_66a9a1c7",
       "revId": "5b332cad27db1bdab1034d04797d7f7901bd6a0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
