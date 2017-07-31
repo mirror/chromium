@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbe5ef8e_77c06d2b",
+        "filename": "cc/animation/animation.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-31T22:29:35Z",
+      "side": 1,
+      "message": "nit: %s and s_runStateNames[static_cast\u003cint\u003e(run_state_)]?",
+      "range": {
+        "startLine": 275,
+        "startChar": 40,
+        "endLine": 275,
+        "endChar": 68
+      },
+      "revId": "3219537cd7d2289e867587744c8d8aef03b50cdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fce17f0_71b5250d",
+        "filename": "ui/compositor/layer_animation_element.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 712,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-31T22:29:35Z",
+      "side": 1,
+      "message": "nit: I\u0027d prefer no default case if all the enum values are handled. That way the compiler will complain if a new enum value is added without it being handled here.",
+      "range": {
+        "startLine": 712,
+        "startChar": 8,
+        "endLine": 712,
+        "endChar": 16
+      },
+      "revId": "3219537cd7d2289e867587744c8d8aef03b50cdc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
