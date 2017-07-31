@@ -14,6 +14,7 @@
 #include "ui/aura/client/window_parenting_client.h"
 #include "ui/aura/window_tree_host.h"
 #include "ui/display/display.h"
+#include "ui/events/event_constants.h"
 #include "ui/events/test/event_generator.h"
 #include "ui/views/background.h"
 #include "ui/views/test/views_test_base.h"
@@ -146,7 +147,6 @@ ui::Layer* GetHighlightingLayer(aura::Window* highlight_window) {
     if (layer->name() == "HighlightingLayer")
       return layer;
   }
-  NOTREACHED();
   return nullptr;
 }
 
@@ -168,10 +168,14 @@ std::unique_ptr<Overlay::HighlightConfig> CreateHighlightConfig(
       .build();
 }
 
-void ExpectHighlighted(aura::Window* highlight_window) {
+void CheckHighlighting(aura::Window* highlight_window, bool expect_highlight) {
   ui::Layer* highlighting_layer = GetHighlightingLayer(highlight_window);
-  EXPECT_TRUE(highlighting_layer->visible());
-  EXPECT_EQ(kBackgroundColor, highlighting_layer->GetTargetColor());
+  if (expect_highlight) {
+    EXPECT_EQ(kBackgroundColor, highlighting_layer->GetTargetColor());
+    EXPECT_TRUE(highlighting_layer->visible());
+  } else {
+    EXPECT_FALSE(highlighting_layer->visible());
+  }
 }
 
 }  // namespace
@@ -368,6 +372,37 @@ TEST_F(UIDevToolsTest, EnterAndExitInspectMode) {
 
   overlay_agent()->setInspectMode(
       "none", protocol::Maybe<protocol::Overlay::HighlightConfig>());
+}
+
+// Test that user can enter, click on a targeted UI element and cleanly
+// exit inspect mode.
+TEST_F(UIDevToolsTest, EnterAndPressEscExitInspectMode) {
+  std::unique_ptr<views::Widget> widget(
+      CreateTestWidget(gfx::Rect(1, 1, 1, 1)));
+  std::unique_ptr<ui_devtools::protocol::DOM::Node> root;
+  dom_agent()->getDocument(&root);
+  overlay_agent()->setInspectMode(
+      "searchForNode", protocol::Maybe<protocol::Overlay::HighlightConfig>());
+
+  EXPECT_FALSE(GetHighlightingLayer(GetPrimaryRootWindow()));
+
+  ui::test::EventGenerator generator(widget->GetNativeWindow());
+  gfx::Point p(1, 1);
+  generator.MoveMouseBy(p.x(), p.y());
+  generator.PressKey(ui::KeyboardCode::VKEY_ESCAPE, ui::EventFlags::EF_NONE);
+
+  // Upon exiting inspect mode, the element is highlighted after mouse click.
+  CheckHighlighting(GetPrimaryRootWindow(), true);
+
+  dom_agent()->hideHighlight();
+
+  CheckHighlighting(GetPrimaryRootWindow(), false);
+
+  generator.MoveMouseBy(p.x(), p.y());
+  generator.PressKey(ui::KeyboardCode::VKEY_ESCAPE, ui::EventFlags::EF_NONE);
+
+  // Not in inspect mode so the elemet is not highlighted after mouse click.
+  CheckHighlighting(GetPrimaryRootWindow(), false);
 }
 
 TEST_F(UIDevToolsTest, GetDocumentWithWindowWidgetView) {
@@ -718,7 +753,7 @@ TEST_F(UIDevToolsTest, WindowWidgetViewHighlight) {
   DOM::Node* root_view_node = widget_node->getChildren(nullptr)->get(0);
 
   HighlightNode(window_node->getNodeId());
-  ExpectHighlighted(GetPrimaryRootWindow());
+  CheckHighlighting(GetPrimaryRootWindow(), true);
   ui_devtools::UIElement* element =
       dom_agent()->GetElementFromNodeId(window_node->getNodeId());
   ASSERT_EQ(ui_devtools::UIElementType::WINDOW, element->type());
@@ -729,7 +764,7 @@ TEST_F(UIDevToolsTest, WindowWidgetViewHighlight) {
   HideHighlight(0);
 
   HighlightNode(widget_node->getNodeId());
-  ExpectHighlighted(GetPrimaryRootWindow());
+  CheckHighlighting(GetPrimaryRootWindow(), true);
 
   element = dom_agent()->GetElementFromNodeId(widget_node->getNodeId());
   ASSERT_EQ(ui_devtools::UIElementType::WIDGET, element->type());
@@ -740,7 +775,7 @@ TEST_F(UIDevToolsTest, WindowWidgetViewHighlight) {
   HideHighlight(0);
 
   HighlightNode(root_view_node->getNodeId());
-  ExpectHighlighted(GetPrimaryRootWindow());
+  CheckHighlighting(GetPrimaryRootWindow(), true);
 
   element = dom_agent()->GetElementFromNodeId(root_view_node->getNodeId());
   ASSERT_EQ(ui_devtools::UIElementType::VIEW, element->type());
