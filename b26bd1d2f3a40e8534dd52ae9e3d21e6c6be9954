@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52690b84_a0844a62",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-07-31T17:47:18Z",
+      "side": 1,
+      "message": "BUILDFLAG(...)",
+      "range": {
+        "startLine": 491,
+        "startChar": 20,
+        "endLine": 491,
+        "endChar": 31
+      },
+      "revId": "b26bd1d2f3a40e8534dd52ae9e3d21e6c6be9954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "082a6f68_55e47634",
+        "filename": "media/cdm/aes_decryptor_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-07-31T17:47:18Z",
+      "side": 1,
+      "message": "here\u0027s an alternate idea:\n\n} else if (... \u003d\u003d CdmAdaptor) {\n#if\n... do stuff ...\n#else\n// fail with helpful message\n#endif\n}\n\nif the build flags don\u0027t support the test that\u0027s run, this might provide a very clear error.",
+      "revId": "b26bd1d2f3a40e8534dd52ae9e3d21e6c6be9954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ee81f44_96a4a1fc",
+        "filename": "media/cdm/aes_decryptor_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-07-31T17:47:18Z",
+      "side": 1,
+      "message": "since this is used \u003e1, perhaps make a constant out of it.",
+      "revId": "b26bd1d2f3a40e8534dd52ae9e3d21e6c6be9954",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
