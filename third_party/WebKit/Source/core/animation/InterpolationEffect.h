@@ -35,7 +35,7 @@ class CORE_EXPORT InterpolationEffect {
                                Vector<RefPtr<Interpolation>>&) const;
 
   void AddInterpolation(PassRefPtr<Interpolation> interpolation,
-                        PassRefPtr<TimingFunction> easing,
+                        RefPtr<TimingFunction> easing,
                         double start,
                         double end,
                         double apply_from,
