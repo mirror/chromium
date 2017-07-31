@@ -49,6 +49,10 @@ void NinePatchLayerImpl::SetLayout(const gfx::Rect& aperture,
   NoteLayerPropertyChanged();
 }
 
+bool NinePatchLayerImpl::IsLayerOpaque() const {
+  return layer_tree_impl()->IsUIResourceOpaque(ui_resource_id_);
+}
+
 void NinePatchLayerImpl::AppendQuads(
     RenderPass* render_pass,
     AppendQuadsData* append_quads_data) {

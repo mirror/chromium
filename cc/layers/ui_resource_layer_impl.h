@@ -42,6 +42,7 @@ class CC_EXPORT UIResourceLayerImpl : public LayerImpl {
   void SetVertexOpacity(const float vertex_opacity[4]);
 
   std::unique_ptr<LayerImpl> CreateLayerImpl(LayerTreeImpl* tree_impl) override;
+  bool IsLayerOpaque() const override;
   void PushPropertiesTo(LayerImpl* layer) override;
 
   bool WillDraw(DrawMode draw_mode,
