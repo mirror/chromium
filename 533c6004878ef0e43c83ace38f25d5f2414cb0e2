@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9a95a6b_8b0222c9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappRegistry.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-31T19:47:07Z",
+      "side": 1,
+      "message": "Nit: please explicitly document that this skips any storage objects associated with WebAPKs.",
+      "range": {
+        "startLine": 149,
+        "startChar": 7,
+        "endLine": 149,
+        "endChar": 11
+      },
+      "revId": "533c6004878ef0e43c83ace38f25d5f2414cb0e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
