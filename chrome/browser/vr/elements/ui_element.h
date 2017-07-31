@@ -235,11 +235,11 @@ class UiElement : public cc::AnimationTarget {
   void SetMode(ColorScheme::Mode mode);
   ColorScheme::Mode mode() const { return mode_; }
 
-  const gfx::Transform& screen_space_transform() const {
-    return screen_space_transform_;
+  const gfx::Transform& world_space_transform() const {
+    return world_space_transform_;
   }
-  void set_screen_space_transform(const gfx::Transform& transform) {
-    screen_space_transform_ = transform;
+  void set_world_space_transform(const gfx::Transform& transform) {
+    world_space_transform_ = transform;
   }
 
   // Transformations are applied relative to the parent element, rather than
@@ -371,7 +371,7 @@ class UiElement : public cc::AnimationTarget {
 
   // This is the combined, local to screen transform. It includes
   // |inheritable_transform_|, |transform_|, and anchoring adjustments.
-  gfx::Transform screen_space_transform_;
+  gfx::Transform world_space_transform_;
 
   ColorScheme::Mode mode_ = ColorScheme::kModeNormal;
 
