@@ -197,7 +197,8 @@ AutomationPredicate.object = function(node) {
   // Editable nodes are within a text-like field and don't make sense when
   // performing object navigation. Users should use line, word, or character
   // navigation. Only navigate to the top level node.
-  if (node.parent && node.parent.state.editable)
+  if (node.parent && node.parent.state.editable &&
+      !node.parent.state[State.RICHLY_EDITABLE])
     return false;
 
   // Descend into large nodes.

@@ -96,12 +96,7 @@ AXObjectCache* AXObjectCacheImpl::Create(Document& document) {
 }
 
 AXObjectCacheImpl::AXObjectCacheImpl(Document& document)
-    : document_(document),
-      modification_count_(0),
-      notification_post_timer_(
-          TaskRunnerHelper::Get(TaskType::kUnspecedTimer, &document),
-          this,
-          &AXObjectCacheImpl::NotificationPostTimerFired) {}
+    : document_(document), modification_count_(0) {}
 
 AXObjectCacheImpl::~AXObjectCacheImpl() {
 #if DCHECK_IS_ON()
@@ -110,8 +105,6 @@ AXObjectCacheImpl::~AXObjectCacheImpl() {
 }
 
 void AXObjectCacheImpl::Dispose() {
-  notification_post_timer_.Stop();
-
   for (auto& entry : objects_) {
     AXObject* obj = entry.value;
     obj->Detach();
@@ -629,41 +622,6 @@ void AXObjectCacheImpl::ChildrenChanged(AXObject* obj) {
   obj->ChildrenChanged();
 }
 
-void AXObjectCacheImpl::NotificationPostTimerFired(TimerBase*) {
-  notification_post_timer_.Stop();
-
-  unsigned i = 0, count = notifications_to_post_.size();
-  for (i = 0; i < count; ++i) {
-    AXObject* obj = notifications_to_post_[i].first;
-
-    if (!obj->AxObjectID())
-      continue;
-
-    if (obj->IsDetached())
-      continue;
-
-#if DCHECK_IS_ON()
-    // Make sure none of the layout views are in the process of being layed out.
-    // Notifications should only be sent after the layoutObject has finished
-    if (obj->IsAXLayoutObject()) {
-      AXLayoutObject* layout_obj = ToAXLayoutObject(obj);
-      LayoutObject* layout_object = layout_obj->GetLayoutObject();
-      if (layout_object && layout_object->View())
-        DCHECK(!layout_object->View()->GetLayoutState());
-    }
-#endif
-
-    AXNotification notification = notifications_to_post_[i].second;
-    PostPlatformNotification(obj, notification);
-
-    if (notification == kAXChildrenChanged && obj->ParentObjectIfExists() &&
-        obj->LastKnownIsIgnoredValue() != obj->AccessibilityIsIgnored())
-      ChildrenChanged(obj->ParentObject());
-  }
-
-  notifications_to_post_.clear();
-}
-
 void AXObjectCacheImpl::PostNotification(LayoutObject* layout_object,
                                          AXNotification notification) {
   if (!layout_object)
@@ -684,9 +642,17 @@ void AXObjectCacheImpl::PostNotification(AXObject* object,
     return;
 
   modification_count_++;
-  notifications_to_post_.push_back(std::make_pair(object, notification));
-  if (!notification_post_timer_.IsActive())
-    notification_post_timer_.StartOneShot(0, BLINK_FROM_HERE);
+  if (!object->AxObjectID())
+    return;
+
+  if (object->IsDetached())
+    return;
+
+  PostPlatformNotification(object, notification);
+
+  if (notification == kAXChildrenChanged && object->ParentObjectIfExists() &&
+      object->LastKnownIsIgnoredValue() != object->AccessibilityIsIgnored())
+    ChildrenChanged(object->ParentObject());
 }
 
 bool AXObjectCacheImpl::IsAriaOwned(const AXObject* child) const {
@@ -1292,7 +1258,6 @@ DEFINE_TRACE(AXObjectCacheImpl) {
   visitor->Trace(node_object_mapping_);
 
   visitor->Trace(objects_);
-  visitor->Trace(notifications_to_post_);
 
   AXObjectCache::Trace(visitor);
 }
