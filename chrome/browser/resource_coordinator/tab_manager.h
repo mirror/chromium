@@ -405,6 +405,7 @@ class TabManager : public TabStripModelObserver,
 
   void OnSessionRestoreStartedLoadingTabs();
   void OnSessionRestoreFinishedLoadingTabs();
+  void OnWillRestoreTab(content::WebContents* web_contents);
 
   // Returns true if TabManager can start loading next tab.
   bool CanLoadNextTab() const;
