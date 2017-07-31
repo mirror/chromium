@@ -22,6 +22,30 @@
       "revId": "4dd055a051cec1a66e881a792903d262d92d03fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d45b768b_af38b3ef",
+        "filename": "content/browser/loader/async_resource_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-31T14:33:28Z",
+      "side": 1,
+      "message": "I think we\u0027re fine removing it.  The only place that sets was_ignored_by_handler fails requests with net::ERR_ABORTED.  Of course, there could still be cancel races, but if something was cancelled with another error before something sets was_ignored_by_handler, I\u0027m not sure we care, anyways.",
+      "parentUuid": "a5b05845_f0d1a5a9",
+      "range": {
+        "startLine": 374,
+        "startChar": 10,
+        "endLine": 374,
+        "endChar": 32
+      },
+      "revId": "4dd055a051cec1a66e881a792903d262d92d03fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
