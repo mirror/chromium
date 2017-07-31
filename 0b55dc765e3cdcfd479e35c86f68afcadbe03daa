@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0a2d6641_dea29338",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-31T16:13:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1a1aa2e_f07def5a",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 51
+      },
+      "revId": "0b55dc765e3cdcfd479e35c86f68afcadbe03daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "93a35347_07b1516e",
         "filename": "components/ntp_snippets/contextual_suggestions_source_unittest.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "0b55dc765e3cdcfd479e35c86f68afcadbe03daa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1840ee1_bc9b640b",
+        "filename": "components/ntp_snippets/contextual_suggestions_source_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-31T16:13:33Z",
+      "side": 1,
+      "message": "Ok, I assigned http://crbug.com/750651 to me.",
+      "parentUuid": "93a35347_07b1516e",
+      "range": {
+        "startLine": 5,
+        "startChar": 34,
+        "endLine": 5,
+        "endChar": 65
+      },
+      "revId": "0b55dc765e3cdcfd479e35c86f68afcadbe03daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "6ae6ba67_ce9f774d",
+        "filename": "components/ntp_snippets/contextual_suggestions_source_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-31T16:13:33Z",
+      "side": 1,
+      "message": "Thanks, replaced by cached_image_fetcher.h, which for some reason this one transitively provided.",
+      "parentUuid": "afb3c942_1a59be9e",
+      "range": {
+        "startLine": 24,
+        "startChar": 41,
+        "endLine": 24,
+        "endChar": 73
+      },
+      "revId": "0b55dc765e3cdcfd479e35c86f68afcadbe03daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a7392e8_c05f05b7",
         "filename": "components/ntp_snippets/contextual_suggestions_source_unittest.cc",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "0b55dc765e3cdcfd479e35c86f68afcadbe03daa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5ab8851_3e10e0d7",
+        "filename": "components/ntp_snippets/contextual_suggestions_source_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-31T16:13:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a7392e8_c05f05b7",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 1
+      },
+      "revId": "0b55dc765e3cdcfd479e35c86f68afcadbe03daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "77ea5629_95467022",
+        "filename": "components/ntp_snippets/contextual_suggestions_source_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-31T16:13:33Z",
+      "side": 1,
+      "message": "Thanks for pointing out, done.",
+      "parentUuid": "03da6123_91e78742",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 66,
+        "endChar": 1
+      },
+      "revId": "0b55dc765e3cdcfd479e35c86f68afcadbe03daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb65e5ab_510b9c5d",
         "filename": "components/ntp_snippets/contextual_suggestions_source_unittest.cc",
         "patchSetId": 1
@@ -137,6 +257,30 @@
       "revId": "0b55dc765e3cdcfd479e35c86f68afcadbe03daa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e47c4b5_e14eb046",
+        "filename": "components/ntp_snippets/contextual_suggestions_source_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-31T16:13:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb65e5ab_510b9c5d",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 53
+      },
+      "revId": "0b55dc765e3cdcfd479e35c86f68afcadbe03daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "25cd27da_3dee125a",
+        "filename": "components/ntp_snippets/contextual_suggestions_source_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-31T16:13:33Z",
+      "side": 1,
+      "message": "Thanks, done.",
+      "parentUuid": "74c2c7cf_ffcfd9c8",
+      "range": {
+        "startLine": 83,
+        "startChar": 6,
+        "endLine": 83,
+        "endChar": 44
+      },
+      "revId": "0b55dc765e3cdcfd479e35c86f68afcadbe03daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19e74f37_06350b98",
         "filename": "components/ntp_snippets/contextual_suggestions_source_unittest.cc",
         "patchSetId": 1
@@ -183,6 +351,30 @@
       "revId": "0b55dc765e3cdcfd479e35c86f68afcadbe03daa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a680931a_bdf4ed6c",
+        "filename": "components/ntp_snippets/contextual_suggestions_source_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-31T16:13:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19e74f37_06350b98",
+      "range": {
+        "startLine": 93,
+        "startChar": 2,
+        "endLine": 93,
+        "endChar": 19
+      },
+      "revId": "0b55dc765e3cdcfd479e35c86f68afcadbe03daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
