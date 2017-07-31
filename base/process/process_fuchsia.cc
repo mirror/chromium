@@ -129,17 +129,19 @@ void Process::Close() {
 bool Process::Terminate(int exit_code, bool wait) const {
   // exit_code isn't supportable.
   mx_status_t status = mx_task_kill(process_);
+  // TODO(scottmg): Put these LOG/CHECK back to DLOG/DCHECK after
+  // https://crbug.com/750756 is diagnosed.
   if (status == MX_OK && wait) {
     mx_signals_t signals;
     status = mx_object_wait_one(process_, MX_TASK_TERMINATED,
                                 mx_deadline_after(MX_SEC(60)), &signals);
     if (status != MX_OK) {
-      DLOG(ERROR) << "Error waiting for process exit: " << status;
+      LOG(ERROR) << "Error waiting for process exit: " << status;
     } else {
-      DCHECK(signals & MX_TASK_TERMINATED);
+      CHECK(signals & MX_TASK_TERMINATED);
     }
   } else if (status != MX_OK) {
-    DLOG(ERROR) << "Unable to terminate process: " << status;
+    LOG(ERROR) << "Unable to terminate process: " << status;
   }
 
   return status >= 0;
