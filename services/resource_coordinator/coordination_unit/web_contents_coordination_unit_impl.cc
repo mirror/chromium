@@ -4,6 +4,8 @@
 
 #include "services/resource_coordinator/coordination_unit/web_contents_coordination_unit_impl.h"
 
+#include "services/resource_coordinator/coordination_unit/frame_coordination_unit_impl.h"
+
 namespace resource_coordinator {
 
 WebContentsCoordinationUnitImpl::WebContentsCoordinationUnitImpl(
@@ -65,14 +67,57 @@ double WebContentsCoordinationUnitImpl::CalculateCPUUsage() {
   return cpu_usage;
 }
 
+double
+WebContentsCoordinationUnitImpl::CalculateExpectedTaskQueueingDuration() {
+  // Calculate the EQT for the process of the main frame only because
+  // the smoothness of the main frame may affect the users the most.
+  FrameCoordinationUnitImpl* main_frame_cu = GetMainFrameCoordinationUnit();
+  if (!main_frame_cu)
+    return 0.0;
+
+  auto associated_processes =
+      main_frame_cu->GetAssociatedCoordinationUnitsOfType(
+          CoordinationUnitType::kProcess);
+
+  // A frame should belong to one and only one tab.
+  DCHECK_EQ(1u, associated_processes.size());
+
+  base::Value process_eqt_value =
+      (*associated_processes.begin())
+          ->GetProperty(mojom::PropertyType::kExpectedTaskQueueingDuration);
+  return process_eqt_value.is_double() ? process_eqt_value.GetDouble() : 0.0;
+}
+
 void WebContentsCoordinationUnitImpl::RecalculateProperty(
     const mojom::PropertyType property_type) {
-  if (property_type == mojom::PropertyType::kCPUUsage) {
-    double cpu_usage = CalculateCPUUsage();
-
-    SetProperty(mojom::PropertyType::kCPUUsage,
-                base::MakeUnique<base::Value>(cpu_usage));
+  switch (property_type) {
+    case mojom::PropertyType::kCPUUsage: {
+      SetProperty(mojom::PropertyType::kCPUUsage,
+                  base::MakeUnique<base::Value>(CalculateCPUUsage()));
+      break;
+    }
+    case mojom::PropertyType::kExpectedTaskQueueingDuration: {
+      double new_eqt = CalculateExpectedTaskQueueingDuration();
+      if (new_eqt > 0.0)
+        SetProperty(property_type, base::MakeUnique<base::Value>(new_eqt));
+      break;
+    }
+    default:
+      break;
   }
+}
+
+FrameCoordinationUnitImpl*
+WebContentsCoordinationUnitImpl::GetMainFrameCoordinationUnit() {
+  for (auto* cu :
+       GetAssociatedCoordinationUnitsOfType(CoordinationUnitType::kFrame)) {
+    FrameCoordinationUnitImpl* frame_cu =
+        static_cast<FrameCoordinationUnitImpl*>(cu);
+    if (frame_cu->IsMainFrame())
+      return frame_cu;
+  }
+
+  return nullptr;
 }
 
 }  // namespace resource_coordinator
