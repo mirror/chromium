@@ -60,6 +60,24 @@
     },
     {
       "key": {
+        "uuid": "3de11cc5_bc93a15c",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorPageAgent.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-31T13:12:04Z",
+      "side": 1,
+      "message": "There are various types of resources and this CL changes the memory cache policy for only RawResources. As written in the issue description, the majority of the RawResources (xhr / fetch / preload) are already not cacheable and this CL doesn\u0027t change the situation drastically.\n\nBut InspectorPageAgent assumes that resources loaded from InspectorResourceContentLoader should be available via Inspector::PageAgent::CachedResource. This change is needed to keep the assumption.\n\nFor InspectorNetworkAgent, I think it\u0027s covered by ResourceData fallback.",
+      "parentUuid": "10d9d855_ee145d0f",
+      "revId": "4c93850c06baedd7b4608dbc1d22073f050e9fcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8c787219_466074cf",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
         "patchSetId": 7
@@ -74,6 +92,24 @@
       "revId": "4c93850c06baedd7b4608dbc1d22073f050e9fcd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b74337e2_69240fad",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-31T13:12:04Z",
+      "side": 1,
+      "message": "Ok, I changed the comment.",
+      "parentUuid": "8c787219_466074cf",
+      "revId": "4c93850c06baedd7b4608dbc1d22073f050e9fcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
