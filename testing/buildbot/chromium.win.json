@@ -48,7 +48,8 @@
           "can_use_on_swarming_builders": true,
           "shards": 10
         },
-        "test": "browser_tests"
+        "test": "browser_tests",
+        "upload_to_flake_predictor": true
       },
       {
         "swarming": {
