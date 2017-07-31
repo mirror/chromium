@@ -284,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "363d71f0_c41c8639",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-31T17:06:32Z",
+      "side": 1,
+      "message": "OK, fair point. I think the caller should not need to worry about the default value because that\u0027s an implementation detail of the code populating the proto.\n\nThe right thing to do is to not set the zero value at all in the proto.\nThe caller should only be check if it got a network_status_code.",
+      "parentUuid": "66100ffd_f8567b6c",
+      "range": {
+        "startLine": 64,
+        "startChar": 18,
+        "endLine": 64,
+        "endChar": 39
+      },
+      "revId": "ae51d26563123125dcd985e9ecd20e289127bd9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e21a711f_befce323",
         "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
         "patchSetId": 10
