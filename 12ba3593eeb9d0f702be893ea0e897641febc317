@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d870ad56_54d95a6e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/Tile.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-07-31T16:52:29Z",
+      "side": 1,
+      "message": "nit: should you rebase and use real data? Or did you mean something like \"Use real data once it is provided from C++\"?",
+      "range": {
+        "startLine": 52,
+        "startChar": 59,
+        "endLine": 52,
+        "endChar": 62
+      },
+      "revId": "12ba3593eeb9d0f702be893ea0e897641febc317",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0953fd7_e3637b79",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-07-31T16:52:29Z",
+      "side": 1,
+      "message": "Should we document here that the returned list may contain ~duplicate data, and what the constraints on that are?",
+      "range": {
+        "startLine": 342,
+        "startChar": 40,
+        "endLine": 342,
+        "endChar": 46
+      },
+      "revId": "12ba3593eeb9d0f702be893ea0e897641febc317",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e49b3d3d_1e67d83b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileRenderer.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-07-31T16:52:29Z",
+      "side": 1,
+      "message": "s/provides/provided/",
+      "range": {
+        "startLine": 31,
+        "startChar": 51,
+        "endLine": 31,
+        "endChar": 59
+      },
+      "revId": "12ba3593eeb9d0f702be893ea0e897641febc317",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
