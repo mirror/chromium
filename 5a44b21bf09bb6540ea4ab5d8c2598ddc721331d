@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c93101c1_caa91af7",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-07-31T19:39:45Z",
+      "side": 1,
+      "message": "Can this be:\n\ncast_media_sink_service_impl_.reset(new CastMediaSinkServiceImpl(...))",
+      "revId": "5a44b21bf09bb6540ea4ab5d8c2598ddc721331d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c35d56f_256b1e22",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-07-31T19:39:45Z",
+      "side": 1,
+      "message": "Do the callbacks need to be bound with WeakPtrs or can they be base::Unretained(cast_media_sink_service_impl_.get()) ?",
+      "range": {
+        "startLine": 136,
+        "startChar": 66,
+        "endLine": 136,
+        "endChar": 0
+      },
+      "revId": "5a44b21bf09bb6540ea4ab5d8c2598ddc721331d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b035908f_39d7f006",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-07-31T19:39:45Z",
+      "side": 1,
+      "message": "nit: add empty line above",
+      "revId": "5a44b21bf09bb6540ea4ab5d8c2598ddc721331d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93804627_38f211c7",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-07-31T19:39:45Z",
+      "side": 1,
+      "message": "It seems a SequenceChecker would suffice here: https://cs.chromium.org/chromium/src/base/sequence_checker.h",
+      "revId": "5a44b21bf09bb6540ea4ab5d8c2598ddc721331d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f80a99d_71f34401",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-07-31T19:39:45Z",
+      "side": 1,
+      "message": "1u",
+      "revId": "5a44b21bf09bb6540ea4ab5d8c2598ddc721331d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

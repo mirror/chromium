@@ -194,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "01287e03_64ca9a2a",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-07-31T19:39:45Z",
+      "side": 1,
+      "message": "I don\u0027t think this check belongs here. If we opened a cast channel successfully then we have a cast MediaSink for all intents and purposes, at least for the time being. The Cast MRP implementation detects IP address changes, and aborts the old cast channel (attempt) in that case, but that happens before it tries to open a cast channel.\n\nThe Cast MRP implementation also does not remove sinks on mDNS event, which makes it more resilient to temporary mDNS glitches. Perhaps this will make more sense when this is changed to only remove sinks on channel error.",
+      "parentUuid": "8a82ec5b_69ee6986",
+      "revId": "40cdc81197b833e76d1327ca48de4496e04ac314",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e8a70099_5d8daf96",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
         "patchSetId": 4
