@@ -235,6 +235,7 @@ class PDFEngine {
   virtual void RotateCounterclockwise() = 0;
   virtual std::string GetSelectedText() = 0;
   virtual bool CanCut() = 0;
+  virtual void DeleteSelectedText() = 0;
   virtual std::string GetLinkAtPosition(const pp::Point& point) = 0;
   // Checks the permissions associated with this document.
   virtual bool HasPermission(DocumentPermission permission) const = 0;

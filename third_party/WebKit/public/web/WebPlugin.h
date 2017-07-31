@@ -160,6 +160,7 @@ class WebPlugin {
   virtual WebString SelectionAsMarkup() const { return WebString(); }
 
   virtual bool CanCut() const { return false; }
+  virtual void DeleteSelectedText() {}
 
   virtual bool ExecuteEditCommand(const WebString& name) { return false; }
   virtual bool ExecuteEditCommand(const WebString& name,

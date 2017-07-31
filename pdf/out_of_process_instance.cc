@@ -261,10 +261,20 @@ PP_Bool CanCut(PP_Instance instance) {
   return PP_FromBool(obj_instance->CanCut());
 }
 
+void DeleteSelectedText(PP_Instance instance) {
+  void* object = pp::Instance::GetPerInstanceObject(instance, kPPPPdfInterface);
+  if (!object)
+    return;
+
+  OutOfProcessInstance* obj_instance =
+      static_cast<OutOfProcessInstance*>(object);
+  obj_instance->DeleteSelectedText();
+}
+
 const PPP_Pdf ppp_private = {
     &GetLinkAtPosition,   &Transform,        &GetPrintPresetOptionsFromDocument,
     &EnableAccessibility, &SetCaretPosition, &MoveRangeSelectionExtent,
-    &SetSelectionBounds,  &CanCut,
+    &SetSelectionBounds,  &CanCut,           &DeleteSelectedText,
 };
 
 int ExtractPrintPreviewPageIndex(base::StringPiece src_url) {
@@ -938,6 +948,10 @@ pp::Var OutOfProcessInstance::GetLinkAtPosition(const pp::Point& point) {
 
 bool OutOfProcessInstance::CanCut() {
   return engine_->CanCut();
+}
+
+void OutOfProcessInstance::DeleteSelectedText() {
+  engine_->DeleteSelectedText();
 }
 
 uint32_t OutOfProcessInstance::QuerySupportedPrintOutputFormats() {
