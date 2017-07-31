@@ -22,6 +22,30 @@
       "revId": "cb291b4012e2e961ccfa513cce3fa38bb042e5ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43f56b7c_47b20db0",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-31T09:39:27Z",
+      "side": 1,
+      "message": "Fortunately not.\nComputeEndXX(start_of_word) \u003d end_of_word\n(this line).\n\nThe bug is\nComputeStart(end_of_word) \u003d start of *next* word\n\nI think this is caused by bad API design of StartOfWord() and EndOfWord().\nBoth function should return \n- StartOfWord(start_of_word) \u003d\u003d start_of_word\n- EndfWord(end_of_word) \u003d\u003d end_of_word\n\nThen callers decide behavior when position is boundary.\nFor example:\n\nCtrl+Right:\n\nPosition ComputeCtrlRight() {\n  const auto\u0026 new_pos \u003d EndOfWord(cur_pos);\n  if (new_pos !\u003d cur_pos)\n    return new_pos;\n  // |cur_pos| is at end of word\n  return NextWord(cur_pos);\n}\n\nbool IsEndOfWord(pos) { return  EndOfWord(pos) \u003d\u003d pos; }\n\netc.",
+      "parentUuid": "8bc729e4_864ed01c",
+      "range": {
+        "startLine": 213,
+        "startChar": 14,
+        "endLine": 213,
+        "endChar": 45
+      },
+      "revId": "cb291b4012e2e961ccfa513cce3fa38bb042e5ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
