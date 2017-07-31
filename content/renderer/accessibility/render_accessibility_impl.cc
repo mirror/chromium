@@ -380,6 +380,9 @@ void RenderAccessibilityImpl::SendPendingAccessibilityEvents() {
   // If there's a layout complete message, we need to send location changes.
   bool had_layout_complete_messages = false;
 
+  // The changes to the accessibility tree will be captured here.
+  AXContentTreeUpdate update;
+
   // Loop over each event and generate an updated event message.
   for (size_t i = 0; i < src_events.size(); ++i) {
     AccessibilityHostMsg_EventParams& event = src_events[i];
@@ -408,35 +411,36 @@ void RenderAccessibilityImpl::SendPendingAccessibilityEvents() {
     event_msg.event_type = event.event_type;
     event_msg.id = event.id;
     event_msg.event_from = event.event_from;
-    if (!serializer_.SerializeChanges(obj, &event_msg.update)) {
+    if (!serializer_.SerializeChanges(obj, &update)) {
       VLOG(1) << "Failed to serialize one accessibility event.";
       continue;
     }
 
-    if (plugin_tree_source_)
-      AddPluginTreeToUpdate(&event_msg.update);
-
     event_msgs.push_back(event_msg);
 
-    // For each node in the update, set the location in our map from
-    // ids to locations.
-    for (size_t i = 0; i < event_msg.update.nodes.size(); ++i) {
-      ui::AXNodeData& src = event_msg.update.nodes[i];
-      ui::AXRelativeBounds& dst = locations_[event_msg.update.nodes[i].id];
-      dst.offset_container_id = src.offset_container_id;
-      dst.bounds = src.location;
-      dst.transform.reset(nullptr);
-      if (src.transform)
-        dst.transform.reset(new gfx::Transform(*src.transform));
-    }
-
     VLOG(1) << "Accessibility event: " << ui::ToString(event.event_type)
-            << " on node id " << event_msg.id
-            << "\n" << event_msg.update.ToString();
+            << " on node id " << event_msg.id;
   }
 
-  Send(new AccessibilityHostMsg_Events(routing_id(), event_msgs, reset_token_,
-                                       ack_token_));
+  if (plugin_tree_source_)
+    AddPluginTreeToUpdate(&update);
+
+  VLOG(1) << "Accessibility update:\n" << update.ToString();
+
+  // For each node in the update, set the location in our map from
+  // ids to locations.
+  for (size_t i = 0; i < update.nodes.size(); ++i) {
+    ui::AXNodeData& src = update.nodes[i];
+    ui::AXRelativeBounds& dst = locations_[update.nodes[i].id];
+    dst.offset_container_id = src.offset_container_id;
+    dst.bounds = src.location;
+    dst.transform.reset(nullptr);
+    if (src.transform)
+      dst.transform.reset(new gfx::Transform(*src.transform));
+  }
+
+  Send(new AccessibilityHostMsg_Events(routing_id(), update, event_msgs,
+                                       reset_token_, ack_token_));
   reset_token_ = 0;
 
   if (had_layout_complete_messages)
