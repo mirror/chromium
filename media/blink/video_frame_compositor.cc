@@ -6,10 +6,12 @@
 
 #include "base/bind.h"
 #include "base/callback_helpers.h"
+#include "base/feature_list.h"
 #include "base/message_loop/message_loop.h"
 #include "base/time/default_tick_clock.h"
 #include "base/trace_event/auto_open_close_event.h"
 #include "base/trace_event/trace_event.h"
+#include "media/base/media_switches.h"
 #include "media/base/video_frame.h"
 
 namespace media {
@@ -19,8 +21,8 @@ namespace media {
 const int kBackgroundRenderingTimeoutMs = 250;
 
 VideoFrameCompositor::VideoFrameCompositor(
-    const scoped_refptr<base::SingleThreadTaskRunner>& compositor_task_runner)
-    : compositor_task_runner_(compositor_task_runner),
+    const scoped_refptr<base::SingleThreadTaskRunner>& task_runner)
+    : task_runner_(task_runner),
       tick_clock_(new base::DefaultTickClock()),
       background_rendering_enabled_(true),
       background_rendering_timer_(
@@ -37,12 +39,14 @@ VideoFrameCompositor::VideoFrameCompositor(
       new_background_frame_(false),
       // Assume 60Hz before the first UpdateCurrentFrame() call.
       last_interval_(base::TimeDelta::FromSecondsD(1.0 / 60)),
-      callback_(nullptr) {
-  background_rendering_timer_.SetTaskRunner(compositor_task_runner_);
+      callback_(nullptr),
+      surface_layer_for_video_enabled_(
+          base::FeatureList::IsEnabled(media::kUseSurfaceLayerForVideo)) {
+  background_rendering_timer_.SetTaskRunner(task_runner_);
 }
 
 VideoFrameCompositor::~VideoFrameCompositor() {
-  DCHECK(compositor_task_runner_->BelongsToCurrentThread());
+  DCHECK(task_runner_->BelongsToCurrentThread());
   DCHECK(!callback_);
   DCHECK(!rendering_);
   if (client_)
@@ -50,7 +54,7 @@ VideoFrameCompositor::~VideoFrameCompositor() {
 }
 
 void VideoFrameCompositor::OnRendererStateUpdate(bool new_state) {
-  DCHECK(compositor_task_runner_->BelongsToCurrentThread());
+  DCHECK(task_runner_->BelongsToCurrentThread());
   DCHECK_NE(rendering_, new_state);
   rendering_ = new_state;
 
@@ -88,7 +92,7 @@ void VideoFrameCompositor::OnRendererStateUpdate(bool new_state) {
 
 void VideoFrameCompositor::SetVideoFrameProviderClient(
     cc::VideoFrameProvider::Client* client) {
-  DCHECK(compositor_task_runner_->BelongsToCurrentThread());
+  DCHECK(task_runner_->BelongsToCurrentThread());
   if (client_)
     client_->StopUsingProvider();
   client_ = client;
@@ -99,23 +103,23 @@ void VideoFrameCompositor::SetVideoFrameProviderClient(
 }
 
 scoped_refptr<VideoFrame> VideoFrameCompositor::GetCurrentFrame() {
-  DCHECK(compositor_task_runner_->BelongsToCurrentThread());
+  DCHECK(task_runner_->BelongsToCurrentThread());
   return current_frame_;
 }
 
 void VideoFrameCompositor::PutCurrentFrame() {
-  DCHECK(compositor_task_runner_->BelongsToCurrentThread());
+  DCHECK(task_runner_->BelongsToCurrentThread());
   rendered_last_frame_ = true;
 }
 
 bool VideoFrameCompositor::UpdateCurrentFrame(base::TimeTicks deadline_min,
                                               base::TimeTicks deadline_max) {
-  DCHECK(compositor_task_runner_->BelongsToCurrentThread());
+  DCHECK(task_runner_->BelongsToCurrentThread());
   return CallRender(deadline_min, deadline_max, false);
 }
 
 bool VideoFrameCompositor::HasCurrentFrame() {
-  DCHECK(compositor_task_runner_->BelongsToCurrentThread());
+  DCHECK(task_runner_->BelongsToCurrentThread());
   return static_cast<bool>(current_frame_);
 }
 
@@ -125,7 +129,7 @@ void VideoFrameCompositor::Start(RenderCallback* callback) {
   base::AutoLock lock(callback_lock_);
   DCHECK(!callback_);
   callback_ = callback;
-  compositor_task_runner_->PostTask(
+  task_runner_->PostTask(
       FROM_HERE, base::Bind(&VideoFrameCompositor::OnRendererStateUpdate,
                             base::Unretained(this), true));
 }
@@ -137,7 +141,7 @@ void VideoFrameCompositor::Stop() {
   base::AutoLock lock(callback_lock_);
   DCHECK(callback_);
   callback_ = nullptr;
-  compositor_task_runner_->PostTask(
+  task_runner_->PostTask(
       FROM_HERE, base::Bind(&VideoFrameCompositor::OnRendererStateUpdate,
                             base::Unretained(this), false));
 }
@@ -145,8 +149,8 @@ void VideoFrameCompositor::Stop() {
 void VideoFrameCompositor::PaintSingleFrame(
     const scoped_refptr<VideoFrame>& frame,
     bool repaint_duplicate_frame) {
-  if (!compositor_task_runner_->BelongsToCurrentThread()) {
-    compositor_task_runner_->PostTask(
+  if (!task_runner_->BelongsToCurrentThread()) {
+    task_runner_->PostTask(
         FROM_HERE,
         base::Bind(&VideoFrameCompositor::PaintSingleFrame,
                    base::Unretained(this), frame, repaint_duplicate_frame));
@@ -159,7 +163,7 @@ void VideoFrameCompositor::PaintSingleFrame(
 
 scoped_refptr<VideoFrame>
 VideoFrameCompositor::GetCurrentFrameAndUpdateIfStale() {
-  DCHECK(compositor_task_runner_->BelongsToCurrentThread());
+  DCHECK(task_runner_->BelongsToCurrentThread());
   if (client_ || !rendering_ || !is_background_rendering_)
     return current_frame_;
 
@@ -192,14 +196,14 @@ base::TimeDelta VideoFrameCompositor::GetCurrentFrameTimestamp() const {
 
 void VideoFrameCompositor::SetOnNewProcessedFrameCallback(
     const OnNewProcessedFrameCB& cb) {
-  DCHECK(compositor_task_runner_->BelongsToCurrentThread());
+  DCHECK(task_runner_->BelongsToCurrentThread());
   new_processed_frame_cb_ = cb;
 }
 
 bool VideoFrameCompositor::ProcessNewFrame(
     const scoped_refptr<VideoFrame>& frame,
     bool repaint_duplicate_frame) {
-  DCHECK(compositor_task_runner_->BelongsToCurrentThread());
+  DCHECK(task_runner_->BelongsToCurrentThread());
 
   if (frame && current_frame_ && !repaint_duplicate_frame &&
       frame->unique_id() == current_frame_->unique_id()) {
@@ -219,7 +223,7 @@ bool VideoFrameCompositor::ProcessNewFrame(
 }
 
 void VideoFrameCompositor::BackgroundRender() {
-  DCHECK(compositor_task_runner_->BelongsToCurrentThread());
+  DCHECK(task_runner_->BelongsToCurrentThread());
   const base::TimeTicks now = tick_clock_->NowTicks();
   last_background_render_ = now;
   bool new_frame = CallRender(now, now + last_interval_, true);
@@ -230,9 +234,9 @@ void VideoFrameCompositor::BackgroundRender() {
 bool VideoFrameCompositor::CallRender(base::TimeTicks deadline_min,
                                       base::TimeTicks deadline_max,
                                       bool background_rendering) {
-  DCHECK(compositor_task_runner_->BelongsToCurrentThread());
-
+  DCHECK(task_runner_->BelongsToCurrentThread());
   base::AutoLock lock(callback_lock_);
+
   if (!callback_) {
     // Even if we no longer have a callback, return true if we have a frame
     // which |client_| hasn't seen before.
