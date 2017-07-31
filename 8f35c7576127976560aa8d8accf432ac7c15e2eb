@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76598e00_4bd74f95",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-31T11:18:08Z",
+      "side": 1,
+      "message": "Sorry, probably I\u0027m missing something. What does this mean?\nIIUC, will URLLoader{Factory} be set up by a new EventDispatcher::DispatchFetchEvent() which takes mojom::URLLoaderFactoryRequest as the parameter?\nIf it\u0027s correct, I think SWVersionProxy is actually a proxy of SWEventDispatcher, so SWEventDispatcherProxy or SWEvent(Dispatcher)Router seems better. WDYT?",
+      "range": {
+        "startLine": 10,
+        "startChar": 2,
+        "endLine": 11,
+        "endChar": 35
+      },
+      "revId": "8f35c7576127976560aa8d8accf432ac7c15e2eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4be92229_71e31f6e",
+        "filename": "content/child/service_worker/service_worker_network_provider.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-31T11:18:08Z",
+      "side": 1,
+      "message": "What do you think about adding ServiceWorkerProviderContext::CreateForController(...) and ServiceWorkerProviderContext::CreateForControllee(...) which have different params?",
+      "range": {
+        "startLine": 228,
+        "startChar": 13,
+        "endLine": 228,
+        "endChar": 45
+      },
+      "revId": "8f35c7576127976560aa8d8accf432ac7c15e2eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
