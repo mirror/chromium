@@ -4,9 +4,13 @@
 
 #include "ash/login/ui/login_user_view.h"
 
+#include "ash/login/ui/login_constants.h"
+#include "ash/login/ui/user_switch_flip_animation.h"
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/system/user/rounded_image_view.h"
 #include "base/strings/utf_string_conversions.h"
+#include "ui/compositor/layer_animation_sequence.h"
+#include "ui/compositor/layer_animator.h"
 #include "ui/gfx/paint_vector_icon.h"
 #include "ui/views/controls/image_view.h"
 #include "ui/views/controls/label.h"
@@ -180,8 +184,10 @@ int LoginUserView::WidthForLayoutStyle(LoginDisplayStyle style) {
   return 0;
 }
 
-LoginUserView::LoginUserView(LoginDisplayStyle style, bool show_dropdown)
-    : display_style_(style) {
+LoginUserView::LoginUserView(LoginDisplayStyle style,
+                             bool show_dropdown,
+                             const OnTap& on_tap)
+    : views::CustomButton(this), on_tap_(on_tap), display_style_(style) {
   // show_dropdown can only be true when the user view is rendering in large
   // mode.
   DCHECK(!show_dropdown || style == LoginDisplayStyle::kLarge);
@@ -209,9 +215,65 @@ LoginUserView::LoginUserView(LoginDisplayStyle style, bool show_dropdown)
 
 LoginUserView::~LoginUserView() = default;
 
-void LoginUserView::UpdateForUser(const mojom::UserInfoPtr& user) {
-  user_image_->UpdateForUser(user);
-  user_label_->UpdateForUser(user);
+void LoginUserView::UpdateForUser(const mojom::UserInfoPtr& user,
+                                  bool animate) {
+  current_user_ = user->Clone();
+
+  if (animate) {
+    // Layer rendering is needed for animation.
+    if (!user_image_->layer()) {
+      user_image_->SetPaintToLayer();
+      user_image_->layer()->SetFillsBoundsOpaquely(false);
+    }
+    if (!layer()) {
+      SetPaintToLayer();
+      layer()->SetFillsBoundsOpaquely(false);
+    }
+
+    // Stop any existing animation.
+    user_image_->layer()->GetAnimator()->StopAnimating();
+    layer()->GetAnimator()->StopAnimating();
+
+    // Create the image flip animation.
+    auto image_transition = base::MakeUnique<UserSwitchFlipAnimation>(
+        user_image_->width(), 0 /*start_degrees*/, 90 /*midpoint_degrees*/,
+        180 /*end_degrees*/,
+        base::TimeDelta::FromMilliseconds(kChangeUserAnimationDurationMs),
+        gfx::Tween::Type::EASE_OUT,
+        base::BindOnce(&LoginUserView::UpdateCurrentUserState,
+                       base::Unretained(this)));
+    auto* image_sequence =
+        new ui::LayerAnimationSequence(std::move(image_transition));
+    user_image_->layer()->GetAnimator()->ScheduleAnimation(image_sequence);
+
+    // Create opacity fade animation, which applies to the entire element.
+    auto make_opacity_element = [](float target_opacity) {
+      auto element = ui::LayerAnimationElement::CreateOpacityElement(
+          target_opacity, base::TimeDelta::FromMilliseconds(
+                              kChangeUserAnimationDurationMs / 2.0f));
+      element->set_tween_type(gfx::Tween::Type::EASE_OUT);
+      return element;
+    };
+    auto* label_sequence = new ui::LayerAnimationSequence();
+    label_sequence->AddElement(make_opacity_element(0 /*target_opacity*/));
+    label_sequence->AddElement(make_opacity_element(1 /*target_opacity*/));
+    layer()->GetAnimator()->ScheduleAnimation(label_sequence);
+  }
+
+  // No animation - update current user now.
+  else {
+    UpdateCurrentUserState();
+  }
+}
+
+void LoginUserView::ButtonPressed(Button* sender, const ui::Event& event) {
+  on_tap_.Run();
+}
+
+void LoginUserView::UpdateCurrentUserState() {
+  user_image_->UpdateForUser(current_user_);
+  user_label_->UpdateForUser(current_user_);
+  Layout();
 }
 
 void LoginUserView::SetLargeLayout() {
