@@ -201,6 +201,10 @@ bool Layer::IsPropertyChangeAllowed() const {
   return !layer_tree_host_->in_paint_layer_contents();
 }
 
+int Layer::RequestFallbackLayerIdForSurfaceLayer() {
+  return g_next_layer_id.GetNext() + 1;
+}
+
 sk_sp<SkPicture> Layer::GetPicture() const {
   return nullptr;
 }

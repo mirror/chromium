@@ -56,6 +56,7 @@ bool StructTraits<cc::mojom::RenderPassDataView,
       if (!quad_data_view.ReadSqs(last_sqs))
         return false;
     }
+
     quad->shared_quad_state = last_sqs;
     if (!quad->shared_quad_state)
       return false;

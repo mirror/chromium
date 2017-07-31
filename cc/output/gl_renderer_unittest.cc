@@ -1820,11 +1820,13 @@ TEST_F(GLRendererTest, DontOverlayWithCopyRequests) {
 
   TextureDrawQuad* overlay_quad =
       root_pass->CreateAndAppendDrawQuad<TextureDrawQuad>();
-  overlay_quad->SetNew(
-      root_pass->CreateAndAppendSharedQuadState(), gfx::Rect(viewport_size),
-      gfx::Rect(viewport_size), gfx::Rect(viewport_size), resource_id,
-      premultiplied_alpha, gfx::PointF(0, 0), gfx::PointF(1, 1),
-      SK_ColorTRANSPARENT, vertex_opacity, flipped, nearest_neighbor, false);
+  SharedQuadState* sqs = root_pass->CreateAndAppendSharedQuadState();
+  sqs->stable_id = root_pass->shared_quad_state_list.size();
+  overlay_quad->SetNew(sqs, gfx::Rect(viewport_size), gfx::Rect(viewport_size),
+                       gfx::Rect(viewport_size), resource_id,
+                       premultiplied_alpha, gfx::PointF(0, 0),
+                       gfx::PointF(1, 1), SK_ColorTRANSPARENT, vertex_opacity,
+                       flipped, nearest_neighbor, false);
 
   // DirectRenderer::DrawFrame calls into OverlayProcessor::ProcessForOverlays.
   // Attempt will be called for each strategy in OverlayProcessor. We have
@@ -1845,11 +1847,13 @@ TEST_F(GLRendererTest, DontOverlayWithCopyRequests) {
   root_pass->has_transparent_background = false;
 
   overlay_quad = root_pass->CreateAndAppendDrawQuad<TextureDrawQuad>();
-  overlay_quad->SetNew(
-      root_pass->CreateAndAppendSharedQuadState(), gfx::Rect(viewport_size),
-      gfx::Rect(viewport_size), gfx::Rect(viewport_size), resource_id,
-      premultiplied_alpha, gfx::PointF(0, 0), gfx::PointF(1, 1),
-      SK_ColorTRANSPARENT, vertex_opacity, flipped, nearest_neighbor, false);
+  SharedQuadState* sqs2 = root_pass->CreateAndAppendSharedQuadState();
+  sqs2->stable_id = root_pass->shared_quad_state_list.size();
+  overlay_quad->SetNew(sqs2, gfx::Rect(viewport_size), gfx::Rect(viewport_size),
+                       gfx::Rect(viewport_size), resource_id,
+                       premultiplied_alpha, gfx::PointF(0, 0),
+                       gfx::PointF(1, 1), SK_ColorTRANSPARENT, vertex_opacity,
+                       flipped, nearest_neighbor, false);
   EXPECT_CALL(*validator, AllowCALayerOverlays())
       .Times(1)
       .WillOnce(::testing::Return(false));
@@ -1867,11 +1871,13 @@ TEST_F(GLRendererTest, DontOverlayWithCopyRequests) {
   root_pass->has_transparent_background = false;
 
   overlay_quad = root_pass->CreateAndAppendDrawQuad<TextureDrawQuad>();
-  overlay_quad->SetNew(
-      root_pass->CreateAndAppendSharedQuadState(), gfx::Rect(viewport_size),
-      gfx::Rect(viewport_size), gfx::Rect(viewport_size), resource_id,
-      premultiplied_alpha, gfx::PointF(0, 0), gfx::PointF(1, 1),
-      SK_ColorTRANSPARENT, vertex_opacity, flipped, nearest_neighbor, false);
+  SharedQuadState* sqs3 = root_pass->CreateAndAppendSharedQuadState();
+  sqs3->stable_id = root_pass->shared_quad_state_list.size();
+  overlay_quad->SetNew(sqs3, gfx::Rect(viewport_size), gfx::Rect(viewport_size),
+                       gfx::Rect(viewport_size), resource_id,
+                       premultiplied_alpha, gfx::PointF(0, 0),
+                       gfx::PointF(1, 1), SK_ColorTRANSPARENT, vertex_opacity,
+                       flipped, nearest_neighbor, false);
   EXPECT_CALL(*validator, AllowCALayerOverlays())
       .Times(1)
       .WillOnce(::testing::Return(true));
@@ -1985,7 +1991,8 @@ TEST_F(GLRendererTest, OverlaySyncTokensAreProcessed) {
   TextureDrawQuad* overlay_quad =
       root_pass->CreateAndAppendDrawQuad<TextureDrawQuad>();
   SharedQuadState* shared_state = root_pass->CreateAndAppendSharedQuadState();
-  shared_state->SetAll(gfx::Transform(), gfx::Rect(viewport_size),
+  uint64_t stable_id = root_pass->shared_quad_state_list.size();
+  shared_state->SetAll(stable_id, gfx::Transform(), gfx::Rect(viewport_size),
                        gfx::Rect(viewport_size), gfx::Rect(viewport_size),
                        false, 1, SkBlendMode::kSrcOver, 0);
   overlay_quad->SetNew(shared_state, gfx::Rect(viewport_size),
@@ -2187,8 +2194,9 @@ TEST_F(GLRendererTest, DCLayerOverlaySwitch) {
       gfx::RectF tex_coord_rect(0, 0, 1, 1);
       SharedQuadState* shared_state =
           root_pass->CreateAndAppendSharedQuadState();
-      shared_state->SetAll(gfx::Transform(), rect, rect, rect, false, 1,
-                           SkBlendMode::kSrcOver, 0);
+      uint64_t stable_id = root_pass->shared_quad_state_list.size();
+      shared_state->SetAll(stable_id, gfx::Transform(), rect, rect, rect, false,
+                           1, SkBlendMode::kSrcOver, 0);
       YUVVideoDrawQuad* quad =
           root_pass->CreateAndAppendDrawQuad<YUVVideoDrawQuad>();
       quad->SetNew(shared_state, rect, rect, rect, tex_coord_rect,

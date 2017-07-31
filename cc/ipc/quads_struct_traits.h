@@ -459,6 +459,10 @@ struct StructTraits<cc::mojom::DrawQuadDataView, DrawQuadWithSharedQuadState> {
     return {input.shared_quad_state};
   }
 
+  static uint64_t stable_id(const DrawQuadWithSharedQuadState& input) {
+    return input.quad->stable_id;
+  }
+
   static const cc::DrawQuad& draw_quad_state(
       const DrawQuadWithSharedQuadState& input) {
     return *input.quad;

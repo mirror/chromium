@@ -1,4 +1,3 @@
-
 // Copyright 2014 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
@@ -233,7 +232,8 @@ class SurfaceAggregatorTest : public testing::Test {
     SkBlendMode blend_mode = SkBlendMode::kSrcOver;
 
     auto* shared_quad_state = pass->CreateAndAppendSharedQuadState();
-    shared_quad_state->SetAll(layer_to_target_transform,
+    uint64_t stable_id = pass->shared_quad_state_list.size();
+    shared_quad_state->SetAll(stable_id, layer_to_target_transform,
                               gfx::Rect(layer_bounds), visible_layer_rect,
                               clip_rect, is_clipped, opacity, blend_mode, 0);
 
@@ -261,7 +261,8 @@ class SurfaceAggregatorTest : public testing::Test {
                                 cc::RenderPassId render_pass_id) {
     gfx::Rect output_rect = gfx::Rect(0, 0, 5, 5);
     auto* shared_state = pass->CreateAndAppendSharedQuadState();
-    shared_state->SetAll(gfx::Transform(), output_rect, output_rect,
+    uint64_t stable_id = pass->shared_quad_state_list.size();
+    shared_state->SetAll(stable_id, gfx::Transform(), output_rect, output_rect,
                          output_rect, false, 1, SkBlendMode::kSrcOver, 0);
     auto* quad = pass->CreateAndAppendDrawQuad<cc::RenderPassDrawQuad>();
     quad->SetNew(shared_state, output_rect, output_rect, render_pass_id, 0,
@@ -1216,8 +1217,10 @@ void AddSolidColorQuadWithBlendMode(const gfx::Size& size,
 
   bool force_anti_aliasing_off = false;
   auto* sqs = pass->CreateAndAppendSharedQuadState();
-  sqs->SetAll(layer_to_target_transform, layer_rect, visible_layer_rect,
-              clip_rect, is_clipped, opacity, blend_mode, 0);
+  uint64_t stable_id = pass->shared_quad_state_list.size();
+  sqs->SetAll(stable_id, layer_to_target_transform, layer_rect,
+              visible_layer_rect, clip_rect, is_clipped, opacity, blend_mode,
+              0);
 
   auto* color_quad = pass->CreateAndAppendDrawQuad<cc::SolidColorDrawQuad>();
   color_quad->SetNew(pass->shared_quad_state_list.back(), visible_layer_rect,
@@ -1356,10 +1359,11 @@ TEST_F(SurfaceAggregatorValidSurfaceTest, AggregateSharedQuadStateProperties) {
 
   ASSERT_EQ(7u, aggregated_quad_list.size());
 
-  for (auto iter = aggregated_quad_list.cbegin();
-       iter != aggregated_quad_list.cend(); ++iter) {
-    EXPECT_EQ(blend_modes[iter.index()], iter->shared_quad_state->blend_mode)
-        << iter.index();
+  const SharedQuadStateList& aggregated_sqs_list =
+      aggregated_pass_list[0]->shared_quad_state_list;
+  for (auto iter = aggregated_sqs_list.cbegin();
+       iter != aggregated_sqs_list.cend(); ++iter) {
+    EXPECT_EQ(blend_modes[iter.index()], iter->blend_mode) << iter.index();
   }
 
   grandchild_support->EvictCurrentSurface();
@@ -1528,10 +1532,10 @@ TEST_F(SurfaceAggregatorValidSurfaceTest, AggregateMultiplePassWithTransform) {
   expected_root_pass_quad_transforms[1].Scale(2, 3);
   expected_root_pass_quad_transforms[1].Translate(8, 0);
 
-  for (auto iter = aggregated_pass_list[1]->quad_list.cbegin();
-       iter != aggregated_pass_list[1]->quad_list.cend(); ++iter) {
+  for (auto iter = aggregated_pass_list[1]->shared_quad_state_list.cbegin();
+       iter != aggregated_pass_list[1]->shared_quad_state_list.cend(); ++iter) {
     EXPECT_EQ(expected_root_pass_quad_transforms[iter.index()].ToString(),
-              iter->shared_quad_state->quad_to_target_transform.ToString())
+              iter->quad_to_target_transform.ToString())
         << iter.index();
   }
 
@@ -2107,6 +2111,7 @@ void SubmitCompositorFrameWithResources(cc::ResourceId* resource_ids,
   pass->SetNew(1, gfx::Rect(0, 0, 20, 20), gfx::Rect(), gfx::Transform());
   auto* sqs = pass->CreateAndAppendSharedQuadState();
   sqs->opacity = 1.f;
+  sqs->stable_id = pass->shared_quad_state_list.size();
   if (child_id.is_valid()) {
     auto* surface_quad = pass->CreateAndAppendDrawQuad<cc::SurfaceDrawQuad>();
     surface_quad->SetNew(sqs, gfx::Rect(0, 0, 1, 1), gfx::Rect(0, 0, 1, 1),
@@ -2378,6 +2383,7 @@ TEST_F(SurfaceAggregatorWithResourcesTest, SecureOutputTexture) {
     pass->SetNew(1, gfx::Rect(0, 0, 20, 20), gfx::Rect(), gfx::Transform());
     auto* sqs = pass->CreateAndAppendSharedQuadState();
     sqs->opacity = 1.f;
+    sqs->stable_id = pass->shared_quad_state_list.size();
     auto* surface_quad = pass->CreateAndAppendDrawQuad<cc::SurfaceDrawQuad>();
 
     surface_quad->SetNew(sqs, gfx::Rect(0, 0, 1, 1), gfx::Rect(0, 0, 1, 1),

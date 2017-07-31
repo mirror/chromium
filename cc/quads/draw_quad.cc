@@ -25,8 +25,10 @@
 namespace cc {
 
 DrawQuad::DrawQuad()
-    : material(INVALID), needs_blending(false), shared_quad_state(0) {
-}
+    : material(INVALID),
+      needs_blending(false),
+      stable_id(0),
+      shared_quad_state(0) {}
 
 DrawQuad::DrawQuad(const DrawQuad& other) = default;
 
@@ -48,9 +50,11 @@ void DrawQuad::SetAll(const SharedQuadState* shared_quad_state,
   this->opaque_rect = opaque_rect;
   this->visible_rect = visible_rect;
   this->needs_blending = needs_blending;
+  this->stable_id = shared_quad_state->stable_id;
   this->shared_quad_state = shared_quad_state;
 
   DCHECK(shared_quad_state);
+  DCHECK_NE(stable_id, 0u);
   DCHECK(material != INVALID);
 }
 

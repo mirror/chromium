@@ -365,6 +365,8 @@ void SurfaceAggregator::AddColorConversionPass() {
   shared_quad_state->quad_layer_rect = output_rect;
   shared_quad_state->visible_quad_layer_rect = output_rect;
   shared_quad_state->opacity = 1.f;
+  // TODO(weiliangc): Reserve valid stable id for color conversion.
+  shared_quad_state->stable_id = 1;
 
   auto* quad =
       color_conversion_pass->CreateAndAppendDrawQuad<cc::RenderPassDrawQuad>();

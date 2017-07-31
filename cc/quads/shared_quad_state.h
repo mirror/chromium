@@ -31,7 +31,8 @@ class CC_EXPORT SharedQuadState {
   SharedQuadState(const SharedQuadState& other);
   ~SharedQuadState();
 
-  void SetAll(const gfx::Transform& quad_to_target_transform,
+  void SetAll(uint64_t stable_id,
+              const gfx::Transform& quad_to_target_transform,
               const gfx::Rect& layer_rect,
               const gfx::Rect& visible_layer_rect,
               const gfx::Rect& clip_rect,
@@ -41,6 +42,10 @@ class CC_EXPORT SharedQuadState {
               int sorting_context_id);
   void AsValueInto(base::trace_event::TracedValue* dict) const;
 
+  // This is a stable id used to identify which layer this shared quad state
+  // comes from. It is right now a layer id, and in the future of SPv2 an
+  // element id.
+  uint64_t stable_id;
   // Transforms quad rects into the target content space.
   gfx::Transform quad_to_target_transform;
   // The rect of the quads' originating layer in the space of the quad rects.

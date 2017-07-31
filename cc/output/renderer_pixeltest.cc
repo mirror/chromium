@@ -71,9 +71,10 @@ SharedQuadState* CreateTestSharedQuadState(
   const SkBlendMode blend_mode = SkBlendMode::kSrcOver;
   int sorting_context_id = 0;
   SharedQuadState* shared_state = render_pass->CreateAndAppendSharedQuadState();
-  shared_state->SetAll(quad_to_target_transform, layer_rect, visible_layer_rect,
-                       clip_rect, is_clipped, opacity, blend_mode,
-                       sorting_context_id);
+  uint64_t stable_id = render_pass->shared_quad_state_list.size();
+  shared_state->SetAll(stable_id, quad_to_target_transform, layer_rect,
+                       visible_layer_rect, clip_rect, is_clipped, opacity,
+                       blend_mode, sorting_context_id);
   return shared_state;
 }
 
@@ -89,9 +90,10 @@ SharedQuadState* CreateTestSharedQuadStateClipped(
   const SkBlendMode blend_mode = SkBlendMode::kSrcOver;
   int sorting_context_id = 0;
   SharedQuadState* shared_state = render_pass->CreateAndAppendSharedQuadState();
-  shared_state->SetAll(quad_to_target_transform, layer_rect, visible_layer_rect,
-                       clip_rect, is_clipped, opacity, blend_mode,
-                       sorting_context_id);
+  uint64_t stable_id = render_pass->shared_quad_state_list.size();
+  shared_state->SetAll(stable_id, quad_to_target_transform, layer_rect,
+                       visible_layer_rect, clip_rect, is_clipped, opacity,
+                       blend_mode, sorting_context_id);
   return shared_state;
 }
 

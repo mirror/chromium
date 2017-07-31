@@ -69,9 +69,12 @@ class CC_EXPORT DrawQuad {
   // opaque area.
   bool needs_blending;
 
+  // This is the stable id identifying shared quad state.
+  uint64_t stable_id;
+
   // Stores state common to a large bundle of quads; kept separate for memory
-  // efficiency. There is special treatment to reconstruct these pointers
-  // during serialization.
+  // efficiency. This is not transported, and there is special treatment to
+  // reconstruct these pointers during deserialization.
   const SharedQuadState* shared_quad_state;
 
   bool IsDebugQuad() const { return material == DEBUG_BORDER; }

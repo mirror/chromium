@@ -224,7 +224,8 @@ TEST_F(StructTraitsTest, CompositorFrame) {
   const SkBlendMode sqs_blend_mode = SkBlendMode::kSrcOver;
   const int sqs_sorting_context_id = 1337;
   SharedQuadState* sqs = render_pass->CreateAndAppendSharedQuadState();
-  sqs->SetAll(sqs_quad_to_target_transform, sqs_layer_rect,
+  const uint64_t stable_id = render_pass->shared_quad_state_list.size();
+  sqs->SetAll(stable_id, sqs_quad_to_target_transform, sqs_layer_rect,
               sqs_visible_layer_rect, sqs_clip_rect, sqs_is_clipped,
               sqs_opacity, sqs_blend_mode, sqs_sorting_context_id);
 
@@ -655,6 +656,7 @@ TEST_F(StructTraitsTest, QuadListBasic) {
   render_pass->SetNew(1, gfx::Rect(), gfx::Rect(), gfx::Transform());
 
   SharedQuadState* sqs = render_pass->CreateAndAppendSharedQuadState();
+  sqs->stable_id = render_pass->shared_quad_state_list.size();
 
   const gfx::Rect rect1(1234, 4321, 1357, 7531);
   const SkColor color1 = SK_ColorRED;
@@ -835,14 +837,18 @@ TEST_F(StructTraitsTest, RenderPass) {
                 has_transparent_background);
 
   SharedQuadState* shared_state_1 = input->CreateAndAppendSharedQuadState();
+  uint64_t stable_id = input->shared_quad_state_list.size();
   shared_state_1->SetAll(
+      stable_id,
       gfx::Transform(16.1f, 15.3f, 14.3f, 13.7f, 12.2f, 11.4f, 10.4f, 9.8f,
                      8.1f, 7.3f, 6.3f, 5.7f, 4.8f, 3.4f, 2.4f, 1.2f),
       gfx::Rect(1, 2), gfx::Rect(1337, 5679, 9101112, 131415),
       gfx::Rect(1357, 2468, 121314, 1337), true, 2, SkBlendMode::kSrcOver, 1);
 
   SharedQuadState* shared_state_2 = input->CreateAndAppendSharedQuadState();
+  stable_id = input->shared_quad_state_list.size();
   shared_state_2->SetAll(
+      stable_id,
       gfx::Transform(1.1f, 2.3f, 3.3f, 4.7f, 5.2f, 6.4f, 7.4f, 8.8f, 9.1f,
                      10.3f, 11.3f, 12.7f, 13.8f, 14.4f, 15.4f, 16.2f),
       gfx::Rect(1337, 1234), gfx::Rect(1234, 5678, 9101112, 13141516),
@@ -1049,9 +1055,10 @@ TEST_F(StructTraitsTest, SharedQuadState) {
   const SkBlendMode blend_mode = SkBlendMode::kSrcOver;
   const int sorting_context_id = 1337;
   SharedQuadState input_sqs;
-  input_sqs.SetAll(quad_to_target_transform, layer_rect, visible_layer_rect,
-                   clip_rect, is_clipped, opacity, blend_mode,
-                   sorting_context_id);
+  uint64_t stable_id = 1;
+  input_sqs.SetAll(stable_id, quad_to_target_transform, layer_rect,
+                   visible_layer_rect, clip_rect, is_clipped, opacity,
+                   blend_mode, sorting_context_id);
   mojom::TraitsTestServicePtr proxy = GetTraitsTestProxy();
   SharedQuadState output_sqs;
   proxy->EchoSharedQuadState(input_sqs, &output_sqs);
@@ -1195,6 +1202,7 @@ TEST_F(StructTraitsTest, YUVDrawQuad) {
   const bool require_overlay = true;
 
   SharedQuadState* sqs = render_pass->CreateAndAppendSharedQuadState();
+  sqs->stable_id = render_pass->shared_quad_state_list.size();
   YUVVideoDrawQuad* quad =
       render_pass->CreateAndAppendDrawQuad<YUVVideoDrawQuad>();
   quad->SetAll(sqs, rect, opaque_rect, visible_rect, needs_blending,

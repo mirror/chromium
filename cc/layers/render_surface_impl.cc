@@ -375,7 +375,7 @@ void RenderSurfaceImpl::AppendQuads(DrawMode draw_mode,
   SharedQuadState* shared_quad_state =
       render_pass->CreateAndAppendSharedQuadState();
   shared_quad_state->SetAll(
-      draw_transform(), content_rect(), content_rect(),
+      id(), draw_transform(), content_rect(), content_rect(),
       draw_properties_.clip_rect, draw_properties_.is_clipped,
       draw_properties_.draw_opacity, BlendMode(), sorting_context_id);
 

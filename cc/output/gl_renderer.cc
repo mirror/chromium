@@ -2011,9 +2011,8 @@ void GLRenderer::DrawContentQuadNoAA(const ContentDrawQuadBase* quad,
       quad->rect.height() / quad->tex_coord_rect.height();
 
   bool scaled = (tex_to_geom_scale_x != 1.f || tex_to_geom_scale_y != 1.f);
-  GLenum filter = (scaled ||
-                   !quad->shared_quad_state->quad_to_target_transform
-                        .IsIdentityOrIntegerTranslation()) &&
+  GLenum filter = (scaled || !quad->shared_quad_state->quad_to_target_transform
+                                  .IsIdentityOrIntegerTranslation()) &&
                           !quad->nearest_neighbor
                       ? GL_LINEAR
                       : GL_NEAREST;

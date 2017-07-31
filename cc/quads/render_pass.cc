@@ -46,6 +46,19 @@ QuadList::QuadList(size_t default_size_to_reserve)
                               LargestDrawQuadSize(),
                               default_size_to_reserve) {}
 
+void QuadList::ReplaceExistingElementWithSolidColor(Iterator at) {
+  gfx::Rect rect = at->rect;
+  gfx::Rect opaque_rect = at->opaque_rect;
+  gfx::Rect visible_rect = at->visible_rect;
+  bool needs_blending = at->needs_blending;
+  const SharedQuadState* shared_quad_state = at->shared_quad_state;
+
+  SolidColorDrawQuad* replacement =
+      QuadList::ReplaceExistingElement<SolidColorDrawQuad>(at);
+  replacement->SetAll(shared_quad_state, rect, opaque_rect, visible_rect,
+                      needs_blending, SK_ColorTRANSPARENT, true);
+}
+
 std::unique_ptr<RenderPass> RenderPass::Create() {
   return base::WrapUnique(new RenderPass());
 }
@@ -118,11 +131,12 @@ std::unique_ptr<RenderPass> RenderPass::DeepCopy() const {
   SharedQuadStateList::Iterator copy_sqs_iter =
       copy_pass->shared_quad_state_list.begin();
   for (auto* quad : quad_list) {
-    while (quad->shared_quad_state != *sqs_iter) {
+    while (quad->stable_id != sqs_iter->stable_id) {
       ++sqs_iter;
       ++copy_sqs_iter;
       DCHECK(sqs_iter != shared_quad_state_list.end());
     }
+    DCHECK(quad->stable_id == sqs_iter->stable_id);
     DCHECK(quad->shared_quad_state == *sqs_iter);
 
     SharedQuadState* copy_shared_quad_state = *copy_sqs_iter;
@@ -234,7 +248,9 @@ RenderPassDrawQuad* RenderPass::CopyFromAndAppendRenderPassDrawQuad(
     RenderPassId render_pass_id) {
   RenderPassDrawQuad* copy_quad =
       CopyFromAndAppendTypedDrawQuad<RenderPassDrawQuad>(quad);
+  copy_quad->stable_id = shared_quad_state->stable_id;
   copy_quad->shared_quad_state = shared_quad_state;
+  // TODO(weiliangc): SetAll for SQS.
   copy_quad->render_pass_id = render_pass_id;
   return copy_quad;
 }
@@ -273,7 +289,9 @@ DrawQuad* RenderPass::CopyFromAndAppendDrawQuad(
       LOG(FATAL) << "Invalid DrawQuad material " << quad->material;
       break;
   }
+  quad_list.back()->stable_id = shared_quad_state->stable_id;
   quad_list.back()->shared_quad_state = shared_quad_state;
+  // TODO(weiliangc): SetAll for SQS.
   return quad_list.back();
 }
 

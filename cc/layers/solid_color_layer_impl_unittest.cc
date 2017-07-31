@@ -105,9 +105,10 @@ TEST(SolidColorLayerImplTest, VerifyCorrectOpacityInQuad) {
       render_pass.get(), &data);
 
   ASSERT_EQ(render_pass->quad_list.size(), 1U);
-  EXPECT_EQ(opacity,
-            SolidColorDrawQuad::MaterialCast(render_pass->quad_list.front())
-                ->shared_quad_state->opacity);
+  ASSERT_EQ(render_pass->shared_quad_state_list.size(), 1U);
+  ASSERT_EQ(render_pass->quad_list.front()->stable_id,
+            render_pass->shared_quad_state_list.front()->stable_id);
+  EXPECT_EQ(opacity, render_pass->shared_quad_state_list.front()->opacity);
 }
 
 TEST(SolidColorLayerImplTest, VerifyEliminateTransparentAlpha) {

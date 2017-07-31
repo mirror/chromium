@@ -43,10 +43,11 @@ TEST(DrawQuadTest, CopySharedQuadState) {
   float opacity = 0.25f;
   SkBlendMode blend_mode = SkBlendMode::kMultiply;
   int sorting_context_id = 65536;
+  uint64_t stable_id = 1;
 
   std::unique_ptr<SharedQuadState> state(new SharedQuadState);
-  state->SetAll(quad_transform, layer_rect, visible_layer_rect, clip_rect,
-                is_clipped, opacity, blend_mode, sorting_context_id);
+  state->SetAll(stable_id, quad_transform, layer_rect, visible_layer_rect,
+                clip_rect, is_clipped, opacity, blend_mode, sorting_context_id);
 
   std::unique_ptr<SharedQuadState> copy(new SharedQuadState(*state));
   EXPECT_EQ(quad_transform, copy->quad_to_target_transform);
@@ -68,8 +69,9 @@ SharedQuadState* CreateSharedQuadState(RenderPass* render_pass) {
   SkBlendMode blend_mode = SkBlendMode::kSrcOver;
 
   SharedQuadState* state = render_pass->CreateAndAppendSharedQuadState();
-  state->SetAll(quad_transform, layer_rect, visible_layer_rect, clip_rect,
-                is_clipped, opacity, blend_mode, sorting_context_id);
+  uint64_t stable_id = render_pass->shared_quad_state_list.size();
+  state->SetAll(stable_id, quad_transform, layer_rect, visible_layer_rect,
+                clip_rect, is_clipped, opacity, blend_mode, sorting_context_id);
   return state;
 }
 
@@ -81,6 +83,7 @@ void CompareDrawQuad(DrawQuad* quad,
   EXPECT_EQ(quad->visible_rect, copy->visible_rect);
   EXPECT_EQ(quad->opaque_rect, copy->opaque_rect);
   EXPECT_EQ(quad->needs_blending, copy->needs_blending);
+  EXPECT_EQ(quad->stable_id, copy->stable_id);
   EXPECT_EQ(copy_shared_state, copy->shared_quad_state);
 }
 

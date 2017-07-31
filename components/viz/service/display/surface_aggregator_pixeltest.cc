@@ -62,8 +62,9 @@ cc::SharedQuadState* CreateAndAppendTestSharedQuadState(
   float opacity = 1.f;
   const SkBlendMode blend_mode = SkBlendMode::kSrcOver;
   auto* shared_state = render_pass->CreateAndAppendSharedQuadState();
-  shared_state->SetAll(transform, layer_rect, visible_layer_rect, clip_rect,
-                       is_clipped, opacity, blend_mode, 0);
+  uint64_t stable_id = render_pass->shared_quad_state_list.size();
+  shared_state->SetAll(stable_id, transform, layer_rect, visible_layer_rect,
+                       clip_rect, is_clipped, opacity, blend_mode, 0);
   return shared_state;
 }
 

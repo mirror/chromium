@@ -3662,7 +3662,7 @@ TEST_F(LayerTreeHostImplTest, ActivationDependenciesInMetadata) {
 
   for (size_t i = 0; i < primary_surfaces.size(); ++i) {
     std::unique_ptr<SurfaceLayerImpl> child =
-        SurfaceLayerImpl::Create(host_impl_->active_tree(), i + 6);
+        SurfaceLayerImpl::Create(host_impl_->active_tree(), i * 2 + 1 + 6);
     child->SetPosition(gfx::PointF(25.f * i, 0.f));
     child->SetBounds(gfx::Size(1, 1));
     child->SetDrawsContent(true);
@@ -3672,6 +3672,7 @@ TEST_F(LayerTreeHostImplTest, ActivationDependenciesInMetadata) {
     child->SetFallbackSurfaceInfo(
         viz::SurfaceInfo(fallback_surfaces[i], 1.f /* device_scale_factor */,
                          gfx::Size(10, 10) /* size_in_pixels */));
+    child->SetFallbackLayerId(i * 2 + 2 + 6);
     root->test_properties()->AddChild(std::move(child));
   }
 
@@ -8535,12 +8536,14 @@ TEST_F(LayerTreeHostImplTest, FarAwayQuadsDontNeedAA) {
   ASSERT_EQ(1u, frame.render_passes.size());
   ASSERT_LE(1u, frame.render_passes[0]->quad_list.size());
   const DrawQuad* quad = frame.render_passes[0]->quad_list.front();
+  const SharedQuadState* sqs =
+      frame.render_passes[0]->shared_quad_state_list.front();
+  ASSERT_EQ(quad->stable_id, sqs->stable_id);
 
   bool clipped = false, force_aa = false;
   gfx::QuadF device_layer_quad = MathUtil::MapQuad(
-      quad->shared_quad_state->quad_to_target_transform,
-      gfx::QuadF(gfx::RectF(quad->shared_quad_state->visible_quad_layer_rect)),
-      &clipped);
+      sqs->quad_to_target_transform,
+      gfx::QuadF(gfx::RectF(sqs->visible_quad_layer_rect)), &clipped);
   EXPECT_FALSE(clipped);
   bool antialiased =
       GLRendererWithSetupQuadForAntialiasing::ShouldAntialiasQuad(

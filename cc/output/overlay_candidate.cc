@@ -196,12 +196,13 @@ OverlayCandidate::~OverlayCandidate() {}
 bool OverlayCandidate::FromDrawQuad(ResourceProvider* resource_provider,
                                     const DrawQuad* quad,
                                     OverlayCandidate* candidate) {
+  const SharedQuadState* shared_quad_state = quad->shared_quad_state;
   // We don't support an opacity value different than one for an overlay plane.
-  if (quad->shared_quad_state->opacity != 1.f)
+  if (shared_quad_state->opacity != 1.f)
     return false;
   // We support only kSrc (no blending) and kSrcOver (blending with premul).
-  if (!(quad->shared_quad_state->blend_mode == SkBlendMode::kSrc ||
-        quad->shared_quad_state->blend_mode == SkBlendMode::kSrcOver))
+  if (!(shared_quad_state->blend_mode == SkBlendMode::kSrc ||
+        shared_quad_state->blend_mode == SkBlendMode::kSrcOver))
     return false;
 
   switch (quad->material) {

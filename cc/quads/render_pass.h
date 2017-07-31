@@ -49,6 +49,8 @@ class CC_EXPORT QuadList : public ListContainer<DrawQuad> {
   inline BackToFrontIterator BackToFrontEnd() { return rend(); }
   inline ConstBackToFrontIterator BackToFrontBegin() const { return rbegin(); }
   inline ConstBackToFrontIterator BackToFrontEnd() const { return rend(); }
+
+  void ReplaceExistingElementWithSolidColor(Iterator at);
 };
 
 typedef ListContainer<SharedQuadState> SharedQuadStateList;

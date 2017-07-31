@@ -57,6 +57,7 @@ class CC_EXPORT SurfaceLayer : public Layer {
 
   viz::SurfaceInfo primary_surface_info_;
   viz::SurfaceInfo fallback_surface_info_;
+  int fallback_layer_id_;
   base::Closure fallback_reference_returner_;
 
   scoped_refptr<viz::SurfaceReferenceFactory> ref_factory_;

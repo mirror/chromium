@@ -467,6 +467,8 @@ class CC_EXPORT Layer : public base::RefCounted<Layer> {
 
   bool IsPropertyChangeAllowed() const;
 
+  int RequestFallbackLayerIdForSurfaceLayer();
+
   // When true, the layer is about to perform an update. Any commit requests
   // will be handled implicitly after the update completes.
   bool ignore_set_needs_commit_;
