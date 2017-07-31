@@ -55,4 +55,8 @@ showFontLonghands("caption italic");
 showFontLonghands("icon 12px");
 showFontLonghands("icon 12px serif");
 showFontLonghands("menu italic 12px");
+
+// Make sure invalid values do not lead to an infinite loop.
+showFontLonghands("normal normal invalidkeyword");
+showFontLonghands("invalidkeyword");
 </script>

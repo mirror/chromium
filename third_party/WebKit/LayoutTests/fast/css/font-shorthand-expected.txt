@@ -216,4 +216,8 @@ Longhands for font: icon 12px serif
 
 Longhands for font: menu italic 12px
 
+Longhands for font: normal normal invalidkeyword
+
+Longhands for font: invalidkeyword
+
 
