@@ -61,9 +61,11 @@ void AppWebMessagePort::PostMessage(
     const base::android::JavaParamRef<jobject>& jcaller,
     const base::android::JavaParamRef<jstring>& jmessage,
     const base::android::JavaParamRef<jobjectArray>& jports) {
-  port_.PostMessage(
-      EncodeStringMessage(base::android::ConvertJavaStringToUTF16(jmessage)),
-      UnwrapJavaArray(env, jports));
+  std::vector<uint8_t> encoded_message =
+      EncodeStringMessage(base::android::ConvertJavaStringToUTF16(jmessage));
+  port_.PostMessage(base::StringPiece(reinterpret_cast<const char*>(
+                        encoded_message.data(), encoded_message.size())),
+                    UnwrapJavaArray(env, jports));
 }
 
 jboolean AppWebMessagePort::DispatchNextMessage(
@@ -78,7 +80,7 @@ jboolean AppWebMessagePort::DispatchNextMessage(
           env, org_chromium_content_browser_AppWebMessagePort_clazz(env),
           "<init>", "()V");
 
-  base::string16 encoded_message;
+  std::vector<uint8_t> encoded_message;
   std::vector<MessagePort> ports;
   if (!port_.GetMessage(&encoded_message, &ports))
     return false;
