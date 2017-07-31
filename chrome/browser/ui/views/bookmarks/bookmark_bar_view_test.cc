@@ -41,6 +41,7 @@
 #include "components/bookmarks/test/bookmark_test_helpers.h"
 #include "components/constrained_window/constrained_window_views.h"
 #include "components/prefs/pref_service.h"
+#include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/page_navigator.h"
 #include "content/public/test/test_browser_thread.h"
@@ -70,6 +71,25 @@ using content::PageNavigator;
 using content::WebContents;
 
 namespace {
+
+class TestChromeContentBrowserClient : public ChromeContentBrowserClient {
+ public:
+  TestChromeContentBrowserClient() {}
+  ~TestChromeContentBrowserClient() override {}
+
+  // ChromeContentBrowserClient::CreateNetworkContext does not work with a
+  // TestProfile.
+  content::mojom::NetworkContextPtr CreateNetworkContext(
+      content::BrowserContext* context,
+      bool in_memory,
+      const base::FilePath& relative_partition_path) override {
+    return ContentBrowserClient::CreateNetworkContext(context, in_memory,
+                                                      relative_partition_path);
+  }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(TestChromeContentBrowserClient);
+};
 
 // Waits for a views::Widget dialog to show up.
 class DialogWaiter : public aura::EnvObserver,
@@ -285,7 +305,7 @@ class BookmarkBarViewEventTestBase : public ViewEventTestBase {
 
     content_client_.reset(new ChromeContentClient);
     content::SetContentClient(content_client_.get());
-    browser_content_client_.reset(new ChromeContentBrowserClient());
+    browser_content_client_.reset(new TestChromeContentBrowserClient());
     content::SetBrowserClientForTesting(browser_content_client_.get());
 
     views::MenuController::TurnOffMenuSelectionHoldForTest();
