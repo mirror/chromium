@@ -140,6 +140,30 @@
     },
     {
       "key": {
+        "uuid": "8584474f_9439a1e2",
+        "filename": "components/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2036,
+      "author": {
+        "id": 1104794
+      },
+      "writtenOn": "2017-07-31T21:33:21Z",
+      "side": 1,
+      "message": "Actually it should be\n\nif (last_change \u003d\u003d current_change) return;",
+      "parentUuid": "463c3e77_2372f058",
+      "range": {
+        "startLine": 2020,
+        "startChar": 0,
+        "endLine": 2036,
+        "endChar": 59
+      },
+      "revId": "a3c1b5de626da72efbbc94ade0d92537ef8b1347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c7cf6a83_e7928cfa",
         "filename": "components/arc/bluetooth/arc_bluetooth_bridge.h",
         "patchSetId": 9
