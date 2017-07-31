@@ -17,8 +17,8 @@ RelativeOrientationEulerAnglesFusionAlgorithmUsingAccelerometer::
     ~RelativeOrientationEulerAnglesFusionAlgorithmUsingAccelerometer() =
         default;
 
-void RelativeOrientationEulerAnglesFusionAlgorithmUsingAccelerometer::
-    GetFusedData(const std::vector<SensorReading>& readings,
+bool RelativeOrientationEulerAnglesFusionAlgorithmUsingAccelerometer::
+    GetFusedData(mojom::SensorType which_sensor_changed,
                  SensorReading* fused_reading) {
   // Transform the accelerometer values to W3C draft angles.
   //
@@ -40,11 +40,14 @@ void RelativeOrientationEulerAnglesFusionAlgorithmUsingAccelerometer::
   // This is necessary in order to provide enough information to solve
   // the equations.
   //
-  DCHECK(readings.size() == 1);
+  DCHECK(readings_.size() == 1);
 
-  double acceleration_x = readings[0].values[0].value();
-  double acceleration_y = readings[0].values[1].value();
-  double acceleration_z = readings[0].values[2].value();
+  if (!UpdateReadings())
+    return false;
+
+  double acceleration_x = readings_[0].values[0].value();
+  double acceleration_y = readings_[0].values[1].value();
+  double acceleration_z = readings_[0].values[2].value();
 
   double alpha = 0.0;
   double beta = std::atan2(-acceleration_y, acceleration_z);
@@ -54,6 +57,8 @@ void RelativeOrientationEulerAnglesFusionAlgorithmUsingAccelerometer::
   fused_reading->values[1].value() = gamma;
   fused_reading->values[2].value() = alpha;
   fused_reading->values[3].value() = 0.0;
+
+  return true;
 }
 
 }  // namespace device
