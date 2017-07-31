@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ef61af5_c80f2a63",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-07-31T21:52:59Z",
+      "side": 1,
+      "message": "Please be more specific in the comment, \"the AppCacheUpdateJob\u0027s URLFetcher\".",
+      "revId": "f0ae2e410c1270d49cfa9005bb73b2ee19464f45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f91a8ad6_2ed6ebf6",
+        "filename": "content/browser/appcache/appcache_update_url_fetcher.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-07-31T21:52:59Z",
+      "side": 1,
+      "message": "naming nits\n\nThis is probably an overly generic class name for this appcache specific class. Would it make sense to either declare this as an inner class, since this class has no application outside of the context of a update job? Similarly would it make sense to more tightly scope the \u0027request\u0027 classes? They could still be broken out into different files AppCacheUpdateJob_URLRequest.\n\nAppCacheUpdateJob::URLFetcher\n\nAppCacheUpdateJob::URLRequestBase\nAppCacheUpdateJob::URLRequest // net lib impl\nAppCacheUpdaetJob::URLLoaderRequest  // net service impl\n\nEventually we\u0027ll have only one class of AppCacheUpdateJob::URLRequest.\n\nThere\u0027s are a bunch of top level classes and i\u0027m worried about cluttering that set of classes with these very \u0027job\u0027 specific kind of classes. Maybe an appcache_impl namespace?\n\nwdyt?",
+      "revId": "f0ae2e410c1270d49cfa9005bb73b2ee19464f45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
