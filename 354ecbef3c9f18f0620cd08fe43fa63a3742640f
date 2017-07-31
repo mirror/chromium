@@ -22,6 +22,30 @@
       "revId": "354ecbef3c9f18f0620cd08fe43fa63a3742640f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d03e2ef_13751c35",
+        "filename": "chrome/browser/browser_resources.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-31T22:33:12Z",
+      "side": 1,
+      "message": "Otherwise it complains that it cannot find the generated \nchrome/browser/engagement/site_engagement_details.mojom.js\n\nI noticed that omnibox page also has this attribute. Please let me know if I could solve it in a different way. Thanks!",
+      "parentUuid": "f3abe10a_904e3d02",
+      "range": {
+        "startLine": 463,
+        "startChar": 115,
+        "endLine": 463,
+        "endChar": 141
+      },
+      "revId": "354ecbef3c9f18f0620cd08fe43fa63a3742640f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
