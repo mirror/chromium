@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "731d2f31_e28a35e0",
+        "filename": "ios/chrome/browser/ui/settings/passwords_settings_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1250,
+      "author": {
+        "id": 1116004
+      },
+      "writtenOn": "2017-07-31T14:13:07Z",
+      "side": 1,
+      "message": "are we sure this is sufficient given some of our older/slower devices in the labs?",
+      "range": {
+        "startLine": 1250,
+        "startChar": 21,
+        "endLine": 1250,
+        "endChar": 32
+      },
+      "revId": "a8621fef1a0318ccd7e8c456f99b84f8cc6011bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23ff2db1_da48908e",
+        "filename": "ios/chrome/browser/ui/settings/passwords_settings_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1265,
+      "author": {
+        "id": 1116004
+      },
+      "writtenOn": "2017-07-31T14:13:07Z",
+      "side": 1,
+      "message": "I\u0027m concerned that this test won\u0027t be very effective for this reason. Let\u0027s say there is a regression in the table code or data source that causes the scrolling to be slow enough to start timing out (and appear flaky). The kneejerk reaction will be to increase the timeout because \"scrolling is slow\" and the actual regression never gets fixed.\n\nHow can we make this better?",
+      "revId": "a8621fef1a0318ccd7e8c456f99b84f8cc6011bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
