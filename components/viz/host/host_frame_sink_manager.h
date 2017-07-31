@@ -15,7 +15,7 @@
 #include "base/observer_list.h"
 #include "base/optional.h"
 #include "components/viz/common/surfaces/frame_sink_id.h"
-#include "components/viz/host/frame_sink_observer.h"
+#include "components/viz/host/host_frame_sink_client.h"
 #include "components/viz/host/viz_host_export.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_support_manager.h"
 #include "mojo/public/cpp/bindings/binding.h"
@@ -57,8 +57,9 @@ class VIZ_HOST_EXPORT HostFrameSinkManager
       scoped_refptr<base::SingleThreadTaskRunner> task_runner,
       mojom::FrameSinkManagerPtr ptr);
 
-  void AddObserver(FrameSinkObserver* observer);
-  void RemoveObserver(FrameSinkObserver* observer);
+  void RegisterFrameSinkId(const FrameSinkId& frame_sink_id,
+                           HostFrameSinkClient* client);
+  void InvalidateFrameSinkId(const FrameSinkId& frame_sink_id);
 
   // Creates a connection between client to viz, using |request| and |client|,
   // that allows the client to submit CompositorFrames. When no longer needed,
@@ -107,6 +108,9 @@ class VIZ_HOST_EXPORT HostFrameSinkManager
       return !HasCompositorFrameSinkData() && !parent.has_value();
     }
 
+    // The client to be notified of changes to this FrameSink.
+    HostFrameSinkClient* client = nullptr;
+
     // If the frame sink is a root that corresponds to a Display.
     bool is_root = false;
 
@@ -151,9 +155,6 @@ class VIZ_HOST_EXPORT HostFrameSinkManager
 
   // Per CompositorFrameSink data.
   base::flat_map<FrameSinkId, FrameSinkData> frame_sink_data_map_;
-
-  // Local observers to that receive OnSurfaceCreated() messages from IPC.
-  base::ObserverList<FrameSinkObserver> observers_;
 
   base::WeakPtrFactory<HostFrameSinkManager> weak_ptr_factory_;
 

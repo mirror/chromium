@@ -31,7 +31,7 @@ OffscreenCanvasSurfaceImpl::OffscreenCanvasSurfaceImpl(
   binding_.set_connection_error_handler(
       base::Bind(&OffscreenCanvasSurfaceImpl::OnSurfaceConnectionClosed,
                  base::Unretained(this)));
-  host_frame_sink_manager_->AddObserver(this);
+  host_frame_sink_manager_->RegisterFrameSinkId(frame_sink_id_, this);
 }
 
 OffscreenCanvasSurfaceImpl::~OffscreenCanvasSurfaceImpl() {
@@ -40,7 +40,7 @@ OffscreenCanvasSurfaceImpl::~OffscreenCanvasSurfaceImpl() {
         parent_frame_sink_id_, frame_sink_id_);
     host_frame_sink_manager_->DestroyCompositorFrameSink(frame_sink_id_);
   }
-  host_frame_sink_manager_->RemoveObserver(this);
+  host_frame_sink_manager_->InvalidateFrameSinkId(frame_sink_id_);
 }
 
 void OffscreenCanvasSurfaceImpl::CreateCompositorFrameSink(
@@ -61,8 +61,7 @@ void OffscreenCanvasSurfaceImpl::CreateCompositorFrameSink(
 
 void OffscreenCanvasSurfaceImpl::OnSurfaceCreated(
     const viz::SurfaceInfo& surface_info) {
-  if (surface_info.id().frame_sink_id() != frame_sink_id_)
-    return;
+  DCHECK_EQ(surface_info.id().frame_sink_id(), frame_sink_id_);
 
   local_surface_id_ = surface_info.id().local_surface_id();
   if (client_)
