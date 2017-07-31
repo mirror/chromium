@@ -5,6 +5,8 @@
 #include "ui/message_center/notification.h"
 
 #include "base/logging.h"
+#include "ui/gfx/image/image_skia.h"
+#include "ui/gfx/image/image_skia_operations.h"
 #include "ui/message_center/notification_delegate.h"
 #include "ui/message_center/notification_types.h"
 
@@ -13,6 +15,15 @@ namespace message_center {
 namespace {
 
 unsigned g_next_serial_number_ = 0;
+
+const gfx::ImageSkia CreateSolidColorImage(int width,
+                                           int height,
+                                           SkColor color) {
+  SkBitmap bitmap;
+  bitmap.allocN32Pixels(width, height);
+  bitmap.eraseColor(color);
+  return gfx::ImageSkia::CreateFrom1xBitmap(bitmap);
+}
 
 }  // namespace
 
@@ -160,6 +171,18 @@ void Notification::SetSystemPriority() {
 bool Notification::UseOriginAsContextMessage() const {
   return optional_fields_.context_message.empty() && origin_url_.is_valid() &&
          origin_url_.SchemeIsHTTPOrHTTPS();
+}
+
+const gfx::Image Notification::GetMaskedSmallIcon(SkColor color) const {
+  if (!small_image_vector().is_empty())
+    return gfx::Image(gfx::CreateVectorIcon(small_image_vector(), color));
+
+  if (small_image().IsEmpty())
+    return small_image();
+
+  gfx::ImageSkia img = small_image().AsImageSkia();
+  return gfx::Image(gfx::ImageSkiaOperations::CreateMaskedImage(
+      CreateSolidColorImage(img.width(), img.height(), color), img));
 }
 
 // static

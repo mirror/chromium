@@ -15,7 +15,10 @@
 #include "base/time/time.h"
 #include "base/values.h"
 #include "mojo/public/cpp/bindings/struct_traits.h"  // nogncheck
+#include "third_party/skia/include/core/SkColor.h"
 #include "ui/gfx/image/image.h"
+#include "ui/gfx/paint_vector_icon.h"
+#include "ui/gfx/vector_icon_types.h"
 #include "ui/message_center/message_center_export.h"
 #include "ui/message_center/notification_delegate.h"
 #include "ui/message_center/notification_types.h"
@@ -96,6 +99,10 @@ class MESSAGE_CENTER_EXPORT RichNotificationData {
   // Small badge to display on the notification to illustrate the source of the
   // notification. Optional.
   gfx::Image small_image;
+
+  // Same as small_image, but used by GetMaskedSmallIcon. If not available,
+  // small_image will be used. Optional.
+  gfx::VectorIcon small_image_vector = gfx::kNoneIcon;
 
   // Items to display on the notification. Only applicable for notifications
   // that have type NOTIFICATION_TYPE_MULTIPLE.
@@ -295,6 +302,19 @@ class MESSAGE_CENTER_EXPORT Notification {
   void set_small_image(const gfx::Image& image) {
     optional_fields_.small_image = image;
   }
+
+  const gfx::VectorIcon& small_image_vector() const {
+    return optional_fields_.small_image_vector;
+  }
+  void set_small_image_vector(const gfx::VectorIcon& image) {
+    optional_fields_.small_image_vector = image;
+  }
+
+  // Change the color of small_image to the given one.
+  // If gfx::Image represents a vector image, it changes the vector fill color.
+  // Otherwise, it uses alpha channel of the rasterized image to mask the image
+  // by the given color.
+  const gfx::Image GetMaskedSmallIcon(SkColor color) const;
 
   // Buttons, with icons fetched asynchronously.
   const std::vector<ButtonInfo>& buttons() const {
