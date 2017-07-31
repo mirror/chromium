@@ -14,6 +14,7 @@ var ROOT_PATH = '../../../../../';
 GEN_INCLUDE([
   ROOT_PATH + 'chrome/test/data/webui/polymer_browser_test_base.js',
   ROOT_PATH + 'third_party/axe-core/axe.js',
+  ROOT_PATH + 'chrome/test/data/webui/settings/accessibility_audit_rules.js',
 ]);
 
 /**
@@ -74,9 +75,9 @@ SettingsAccessibilityTest.prototype = {
 
   // Include files that define the mocha tests.
   extraLibraries: PolymerTest.getLibraries(ROOT_PATH).concat([
-      'ensure_lazy_loaded.js',
-      'passwords_and_autofill_fake_data.js',
-      'passwords_a11y_test.js'
+    'ensure_lazy_loaded.js',
+    'passwords_and_autofill_fake_data.js',
+    'passwords_a11y_test.js'
   ]),
 
   // TODO(hcarmona): Remove once ADT is not longer in the testing infrastructure
@@ -88,10 +89,21 @@ SettingsAccessibilityTest.prototype = {
   },
 };
 
-// TODO(quacht): Enable in separate CL.
-// Test disabled since it doesn't work on all platforms.
-// TEST_F('SettingsAccessibilityTest', 'All', function() {
-//   mocha.run();
-// });
+// Define a unit test for every audit rule.
+AccessibilityAudit.ruleIds.forEach(function(ruleId) {
+  // TODO(quacht): Enable the audit rules failed in a separate CL after
+  // resolving the violation or after adding the violation exception framework.
+  var rulesToSkip =
+      ['aria-valid-attr', 'color-contrast', 'region', 'skip-link'];
+  if (rulesToSkip.indexOf(ruleId) == -1) {
+    // Replace hyphens, which break the build, with underscores in the test
+    // name.
+    var ruleName = ruleId.replace(new RegExp('-', 'g'), '_');
+    TEST_F('SettingsAccessibilityTest', 'MANAGE_PASSWORDS_' + ruleName,
+        function() {
+          mocha.grep('MANAGE_PASSWORDS_' + ruleId).run();
+        });
+  }
+})
 
 GEN('#endif  // defined(NDEBUG)');

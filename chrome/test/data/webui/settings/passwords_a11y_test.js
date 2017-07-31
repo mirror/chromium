@@ -4,73 +4,68 @@
 
 /** @fileoverview Suite of accessibility tests for the passwords page. */
 
-suite('SettingsPasswordsAccessibility', function() {
-  var passwordsSection = null;
-  var passwordManager = null;
+/** @type {AccessibilityAuditConfig} **/
 
-  /** @type {AccessibilityAuditConfig} **/
-  var auditOptions = {
-    'rules': {
-      // Enable 'color-contrast' when failure is resolved.
-      // http://crbug.com/748608
-      'color-contrast': { enabled: false },
-      // Enable when aXe-core supports exclusion of elements located in the
-      // shadow DOM and the advanced toggle button can be excluded.
-      // http://crbug.com/748632
-      'aria-valid-attr': { enabled: false }
-    }
-  };
+// Define a mocha suite for every route-rule combination.
+for (let ruleId of AccessibilityAudit.ruleIds) {
+  suite('MANAGE_PASSWORDS_' + ruleId, function() {
+    var passwordsSection = null;
+    var passwordManager = null;
 
-  setup(function() {
-    return new Promise(function(resolve) {
-      // Reset to a blank page.
-      PolymerTest.clearBody();
+    var auditOptions = {runOnly: {type: 'rule', values: [ruleId]}};
 
-      // Set the URL to be that of specific route to load upon injecting
-      // settings-ui. Simply calling settings.navigateTo(route) prevents
-      // use of mock APIs for fake data.
-      window.history.pushState(
-          'object or string', 'Test', settings.routes.MANAGE_PASSWORDS.path);
+    setup(function() {
+      return new Promise(function(resolve) {
+        // Reset to a blank page.
+        PolymerTest.clearBody();
 
-      PasswordManagerImpl.instance_ = new TestPasswordManager();
-      passwordManager = PasswordManagerImpl.instance_;
+        // Set the URL to be that of specific route to load upon injecting
+        // settings-ui. Simply calling settings.navigateTo(route) prevents
+        // use of mock APIs for fake data.
+        window.history.pushState(
+            'object or string', 'Test', settings.routes.MANAGE_PASSWORDS.path);
 
-      var settingsUi = document.createElement('settings-ui');
+        PasswordManagerImpl.instance_ = new TestPasswordManager();
+        passwordManager = PasswordManagerImpl.instance_;
 
-      // The settings section will expand to load the MANAGE_PASSWORDS route
-      // (based on the URL set above) once the settings-ui element is attached
-      settingsUi.addEventListener('settings-section-expanded', function () {
-        // Passwords section should be loaded before setup is complete.
-        passwordsSection = document.querySelector('* /deep/ passwords-section');
-        assertTrue(!!passwordsSection);
+        var settingsUi = document.createElement('settings-ui');
 
-        assertEquals(passwordManager, passwordsSection.passwordManager_);
+        // The settings section will expand to load the MANAGE_PASSWORDS route
+        // (based on the URL set above) once the settings-ui element is attached
+        settingsUi.addEventListener('settings-section-expanded', function() {
+          // Passwords section should be loaded before setup is complete.
+          passwordsSection =
+              document.querySelector('* /deep/ passwords-section');
+          assertTrue(!!passwordsSection);
 
-        resolve();
+          assertEquals(passwordManager, passwordsSection.passwordManager_);
+
+          resolve();
+        });
+
+        document.body.appendChild(settingsUi);
       });
+    });
 
-      document.body.appendChild(settingsUi);
+    test('Accessible with 0 passwords', function() {
+      assertEquals(0, passwordsSection.savedPasswords.length);
+      return SettingsAccessibilityTest.runAudit(auditOptions);
+    });
+
+    test('Accessible with 100 passwords', function() {
+      var fakePasswords = [];
+      for (var i = 0; i < 100; i++) {
+        fakePasswords.push(FakeDataMaker.passwordEntry());
+      }
+
+      // Set list of passwords.
+      passwordManager.lastCallback.addSavedPasswordListChangedListener(
+          fakePasswords);
+      Polymer.dom.flush();
+
+      assertEquals(100, passwordsSection.savedPasswords.length);
+
+      return SettingsAccessibilityTest.runAudit(auditOptions);
     });
   });
-
-  test('Accessible with 0 passwords', function() {
-    assertEquals(0, passwordsSection.savedPasswords.length);
-    return SettingsAccessibilityTest.runAudit(auditOptions);
-  });
-
-  test('Accessible with 100 passwords', function() {
-    var fakePasswords = [];
-    for (var i = 0; i < 100; i++) {
-      fakePasswords.push(FakeDataMaker.passwordEntry());
-    }
-
-    // Set list of passwords.
-    passwordManager.lastCallback.addSavedPasswordListChangedListener(
-        fakePasswords);
-    Polymer.dom.flush();
-
-    assertEquals(100, passwordsSection.savedPasswords.length);
-
-    return SettingsAccessibilityTest.runAudit(auditOptions);
-  });
-});
+};
