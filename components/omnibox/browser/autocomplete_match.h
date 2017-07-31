@@ -215,7 +215,12 @@ struct AutocompleteMatch {
   //
   // This function returns flags that may destructively format the URL, and
   // therefore should never be used for the |fill_into_edit| field.
-  static url_formatter::FormatUrlTypes GetFormatTypes(bool trim_scheme);
+  //
+  // |can_trim_subdomain| and |can_trim_after_host| indicate that these
+  // components may be trimmed, but don't guarantee that they will be trimmed.
+  static url_formatter::FormatUrlTypes GetFormatTypes(bool trim_scheme,
+                                                      bool can_trim_subdomain,
+                                                      bool can_trim_after_host);
 
   // Computes the stripped destination URL (via GURLToStrippedGURL()) and
   // stores the result in |stripped_destination_url|.  |input| is used for the
