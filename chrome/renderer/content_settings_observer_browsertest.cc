@@ -25,7 +25,8 @@ namespace {
 
 class MockContentSettingsObserver : public ContentSettingsObserver {
  public:
-  explicit MockContentSettingsObserver(content::RenderFrame* render_frame);
+  MockContentSettingsObserver(content::RenderFrame* render_frame,
+                              service_manager::BinderRegistry* registry);
 
   virtual bool Send(IPC::Message* message);
 
@@ -39,11 +40,11 @@ class MockContentSettingsObserver : public ContentSettingsObserver {
 };
 
 MockContentSettingsObserver::MockContentSettingsObserver(
-    content::RenderFrame* render_frame)
-    : ContentSettingsObserver(render_frame, NULL, false),
+    content::RenderFrame* render_frame,
+    service_manager::BinderRegistry* registry)
+    : ContentSettingsObserver(render_frame, NULL, false, registry),
       image_url_("http://www.foo.com/image.jpg"),
-      image_origin_("http://www.foo.com") {
-}
+      image_origin_("http://www.foo.com") {}
 
 bool MockContentSettingsObserver::Send(IPC::Message* message) {
   IPC_BEGIN_MESSAGE_MAP(MockContentSettingsObserver, *message)
@@ -60,7 +61,8 @@ bool MockContentSettingsObserver::Send(IPC::Message* message) {
 }  // namespace
 
 TEST_F(ChromeRenderViewTest, DidBlockContentType) {
-  MockContentSettingsObserver observer(view_->GetMainRenderFrame());
+  MockContentSettingsObserver observer(view_->GetMainRenderFrame(),
+                                       registry_.get());
   EXPECT_CALL(observer, OnContentBlocked(CONTENT_SETTINGS_TYPE_COOKIES,
                                          base::string16()));
   observer.DidBlockContentType(CONTENT_SETTINGS_TYPE_COOKIES);
