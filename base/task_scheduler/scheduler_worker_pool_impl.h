@@ -180,6 +180,22 @@ class BASE_EXPORT SchedulerWorkerPoolImpl : public SchedulerWorkerPool {
   // it is considered blocked by the SchedulerWorkerPoolImpl.
   TimeDelta BlockedThreshold() const;
 
+  // Returns the number of unsuspended idle workers in the pool. This must be
+  // called under the protection of |lock_|.
+  size_t NumberOfUnsuspendedIdleWorkers();
+
+  // Posts a task to |delayed_task_manager_| to periodically check and adjust
+  // worker capacity until there are idle unsuspended workers in the pool. This
+  // should be called under the protection of |lock_| as it needs to access
+  // |polling_worker_capacity_|.
+  void PostAdjustWorkerCapacityPollingTask();
+
+  // Returns approximately how often the |delayed_task_manager_| monitors
+  // for blocked workers.
+  static TimeDelta BlockedWorkersPollPeriod() {
+    return TimeDelta::FromMilliseconds(30);
+  }
+
   const std::string name_;
   const ThreadPriority priority_hint_;
 
@@ -193,10 +209,11 @@ class BASE_EXPORT SchedulerWorkerPoolImpl : public SchedulerWorkerPool {
   SchedulerBackwardCompatibility backward_compatibility_;
 
   // Synchronizes accesses to |workers_|, |worker_capacity_|,
-  // |idle_workers_stack_|, |idle_workers_stack_cv_for_testing_|, and
-  // |num_wake_ups_before_start_|. Has |shared_priority_queue_|'s lock as
-  // its predecessor so that a worker can be pushed to |idle_workers_stack_|
-  // within the scope of a Transaction (more details in GetWork()).
+  // |idle_workers_stack_|, |idle_workers_stack_cv_for_testing_|,
+  // |num_wake_ups_before_start_|, and polling_worker_capacity_.
+  // Has |shared_priority_queue_|'s lock as its predecessor so that a worker can
+  // be pushed to |idle_workers_stack_| within the scope of a Transaction (more
+  // details in GetWork()).
   mutable SchedulerLock lock_;
 
   // All workers owned by this worker pool.
@@ -222,6 +239,10 @@ class BASE_EXPORT SchedulerWorkerPoolImpl : public SchedulerWorkerPool {
   // Number of wake ups that occurred before Start(). Never modified after
   // Start() (i.e. can be read without synchronization after Start()).
   int num_wake_ups_before_start_ = 0;
+
+  // Indicates whether we are currently polling for necessary adjustments to
+  // |worker_capacity_|.
+  bool polling_worker_capacity_ = false;
 
   AtomicFlag maximum_blocked_threshold_;
 

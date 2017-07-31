@@ -13,6 +13,7 @@
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/lazy_instance.h"
+#include "base/location.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram.h"
 #include "base/sequence_token.h"
@@ -682,6 +683,14 @@ void SchedulerWorkerPoolImpl::WakeUpOneWorker() {
   // responsiveness.
   if (idle_workers_stack_.IsEmpty() && workers_.size() < worker_capacity_)
     idle_workers_stack_.Push(TryAddWorker().get());
+
+  // It is important this is done only after the DelayedTaskManager has started
+  // because otherwise, AddDelayedTask() may need to acquire a lock while we're
+  // already holding a different lock.
+  if (idle_workers_stack_.IsEmpty() && !polling_worker_capacity_ &&
+      delayed_task_manager_->HasStarted()) {
+    PostAdjustWorkerCapacityPollingTask();
+  }
 }
 
 void SchedulerWorkerPoolImpl::AddToIdleWorkersStack(
@@ -778,6 +787,53 @@ TimeDelta SchedulerWorkerPoolImpl::BlockedThreshold() const {
   if (maximum_blocked_threshold_.IsSet())
     return TimeDelta::Max();
   return TimeDelta::FromMilliseconds(10);
+}
+
+size_t SchedulerWorkerPoolImpl::NumberOfUnsuspendedIdleWorkers() {
+  lock_.AssertAcquired();
+
+  // If we're under-capacity, |workers_.size()| - |worker_capacity_| can be
+  // negative, but there'd actually be 0 suspended workers. This value indicates
+  // the number of workers that should be suspended.
+  int num_suspended = std::max<int>(0, workers_.size() - worker_capacity_);
+
+  // |num_suspended| indicates the number of workers that should be suspended.
+  // If the number of idle workers is fewer than that, all the idle workers are
+  // suspended (and there are 0 unsuspended workers), but the difference below
+  // could be negative.
+  return std::max<int>(0, idle_workers_stack_.Size() - num_suspended);
+}
+
+void SchedulerWorkerPoolImpl::PostAdjustWorkerCapacityPollingTask() {
+  lock_.AssertAcquired();
+
+  polling_worker_capacity_ = true;
+
+  std::unique_ptr<Task> task = MakeUnique<Task>(
+      FROM_HERE,
+      BindOnce(
+          [](SchedulerWorkerPoolImpl* worker_pool) {
+            worker_pool->AdjustWorkerCapacity();
+          },
+          Unretained(this)),
+      TaskTraits(WithBaseSyncPrimitives()), BlockedWorkersPollPeriod());
+
+  delayed_task_manager_->AddDelayedTask(
+      std::move(task),
+      BindOnce(
+          [](SchedulerWorkerPoolImpl* worker_pool, std::unique_ptr<Task> task) {
+            std::move(task->task).Run();
+
+            AutoSchedulerLock auto_lock(worker_pool->lock_);
+            DCHECK(worker_pool->polling_worker_capacity_);
+
+            if (worker_pool->NumberOfUnsuspendedIdleWorkers() == 0)
+              worker_pool->PostAdjustWorkerCapacityPollingTask();
+            else
+              worker_pool->polling_worker_capacity_ = false;
+
+          },
+          Unretained(this)));
 }
 
 }  // namespace internal
