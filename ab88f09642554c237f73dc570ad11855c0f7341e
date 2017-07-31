@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "178e04d2_5fa08699",
+        "filename": "chrome/browser/task_manager/sampling/task_group_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-31T23:00:45Z",
+      "side": 1,
+      "message": "nit: End sentences in comments with a period.  (Might as well fix line 492 and the few tests above that while we\u0027re at it.)",
+      "revId": "ab88f09642554c237f73dc570ad11855c0f7341e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
