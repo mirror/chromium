@@ -406,6 +406,29 @@ class DownloadProtectionService::CheckClientDownloadRequest
       is_incognito_ = item_->GetBrowserContext()->IsOffTheRecord();
     }
 
+    base::WeakPtr<CheckClientDownloadRequest> weak_pointer =
+        weakptr_factory_.GetWeakPtr();
+    const GURL url(url_chain_.back());
+
+    // If whitelist check passes, PostFinishTask() will be called to avoid
+    // analyzing file. Otherwise, AnalyzeFile() will be called to continue with
+    // analysis.
+    auto task_runner = BrowserThread::GetTaskRunnerForThread(BrowserThread::IO);
+    cancelable_task_tracker_.PostTask(
+        task_runner.get(), FROM_HERE,
+        base::BindOnce(&CheckClientDownloadRequest::CheckUrlAgainstWhitelist,
+                       weak_pointer, &url, database_manager_));
+  }
+
+  void AnalyzeFile(bool skipped_url_whitelist) {
+    // Returns if DownloadItem is destroyed during whitelist check.
+    if (item_ == nullptr) {
+      PostFinishTask(UNKNOWN, REASON_REQUEST_CANCELED);
+      return;
+    }
+
+    skipped_url_whitelist_ = skipped_url_whitelist;
+
     DownloadCheckResultReason reason = REASON_MAX;
     if (!IsSupportedDownload(
         *item_, item_->GetTargetFilePath(), &reason, &type_)) {
@@ -523,6 +546,7 @@ class DownloadProtectionService::CheckClientDownloadRequest
   // unless a pending request is about to call FinishRequest.
   void Cancel() {
     DCHECK_CURRENTLY_ON(BrowserThread::UI);
+    cancelable_task_tracker_.TryCancelAll();
     if (fetcher_.get()) {
       // The DownloadProtectionService is going to release its reference, so we
       // might be destroyed before the URLFetcher completes.  Cancel the
@@ -676,13 +700,19 @@ class DownloadProtectionService::CheckClientDownloadRequest
 
   void OnFileFeatureExtractionDone() {
     // This can run in any thread, since it just posts more messages.
+    if (item_ == nullptr) {
+      PostFinishTask(UNKNOWN, REASON_REQUEST_CANCELED);
+      return;
+    }
 
     // TODO(noelutz): DownloadInfo should also contain the IP address of
     // every URL in the redirect chain.  We also should check whether the
     // download URL is hosted on the internal network.
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
-        base::BindOnce(&CheckClientDownloadRequest::CheckWhitelists, this));
+        base::BindOnce(
+            &CheckClientDownloadRequest::CheckCertificateChainAgainstWhitelist,
+            this));
 
     // We wait until after the file checks finish to start the timeout, as
     // windows can cause permissions errors if the timeout fired while we were
@@ -750,6 +780,10 @@ class DownloadProtectionService::CheckClientDownloadRequest
   void OnZipAnalysisFinished(const ArchiveAnalyzerResults& results) {
     DCHECK_CURRENTLY_ON(BrowserThread::UI);
     DCHECK_EQ(ClientDownloadRequest::ZIPPED_EXECUTABLE, type_);
+    if (item_ == nullptr) {
+      PostFinishTask(UNKNOWN, REASON_REQUEST_CANCELED);
+      return;
+    }
     if (!service_)
       return;
 
@@ -838,6 +872,10 @@ class DownloadProtectionService::CheckClientDownloadRequest
   void OnDmgAnalysisFinished(const ArchiveAnalyzerResults& results) {
     DCHECK_CURRENTLY_ON(BrowserThread::UI);
     DCHECK_EQ(ClientDownloadRequest::MAC_EXECUTABLE, type_);
+    if (item_ == nullptr) {
+      PostFinishTask(UNKNOWN, REASON_REQUEST_CANCELED);
+      return;
+    }
     if (!service_)
       return;
 
@@ -897,28 +935,12 @@ class DownloadProtectionService::CheckClientDownloadRequest
            base::RandDouble() < service_->whitelist_sample_rate();
   }
 
-  void CheckWhitelists() {
+  void CheckCertificateChainAgainstWhitelist() {
     DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
     if (!database_manager_.get()) {
       PostFinishTask(UNKNOWN, REASON_SB_DISABLED);
       return;
-    }
-
-    const GURL& url = url_chain_.back();
-    // TODO(asanka): This may acquire a lock on the SB DB on the IO thread.
-    if (url.is_valid() && database_manager_->MatchDownloadWhitelistUrl(url)) {
-      DVLOG(2) << url << " is on the download whitelist.";
-      RecordCountOfWhitelistedDownload(URL_WHITELIST);
-      if (ShouldSampleWhitelistedDownload()) {
-        skipped_url_whitelist_ = true;
-      } else {
-        // TODO(grt): Continue processing without uploading so that
-        // ClientDownloadRequest callbacks can be run even for this type of safe
-        // download.
-        PostFinishTask(SAFE, REASON_WHITELISTED_URL);
-        return;
-      }
     }
 
     if (!skipped_url_whitelist_ && signature_info_.trusted()) {
@@ -952,6 +974,47 @@ class DownloadProtectionService::CheckClientDownloadRequest
     BrowserThread::PostTask(
         BrowserThread::UI, FROM_HERE,
         base::BindOnce(&CheckClientDownloadRequest::GetTabRedirects, this));
+  }
+
+  static void CheckUrlAgainstWhitelist(
+      base::WeakPtr<CheckClientDownloadRequest> request,
+      const GURL* url,
+      scoped_refptr<SafeBrowsingDatabaseManager> database_manager) {
+    DCHECK_CURRENTLY_ON(BrowserThread::IO);
+
+    bool skipped_url_whitelist = false;
+
+    if (!database_manager.get()) {
+      if (request)
+        request->PostFinishTask(UNKNOWN, REASON_SB_DISABLED);
+      return;
+    }
+
+    // const GURL& url = url_chain_.back();
+    // TODO(asanka): This may acquire a lock on the SB DB on the IO thread.
+    if (url->is_valid() && database_manager->MatchDownloadWhitelistUrl(*url)) {
+      DVLOG(2) << url << " is on the download whitelist.";
+      RecordCountOfWhitelistedDownload(URL_WHITELIST);
+      if (request && request->ShouldSampleWhitelistedDownload()) {
+        skipped_url_whitelist = true;
+      } else {
+        // TODO(grt): Continue processing without uploading so that
+        // ClientDownloadRequest callbacks can be run even for this type of safe
+        // download.
+        if (request)
+          request->PostFinishTask(SAFE, REASON_WHITELISTED_URL);
+        return;
+      }
+    }
+
+    // Posts task to continue with analysis.
+    auto task_runner = BrowserThread::GetTaskRunnerForThread(BrowserThread::UI);
+    if (request) {
+      request->cancelable_task_tracker_.PostTask(
+          task_runner.get(), FROM_HERE,
+          base::BindOnce(&CheckClientDownloadRequest::AnalyzeFile, request,
+                         skipped_url_whitelist));
+    }
   }
 
   void GetTabRedirects() {
@@ -1330,6 +1393,7 @@ class DownloadProtectionService::CheckClientDownloadRequest
   bool skipped_certificate_whitelist_;
   bool is_extended_reporting_;
   bool is_incognito_;
+  base::CancelableTaskTracker cancelable_task_tracker_;
   base::WeakPtrFactory<CheckClientDownloadRequest> weakptr_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(CheckClientDownloadRequest);
