@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "897d8c2d_731e7f75",
+        "filename": "gpu/ipc/host/shader_disk_cache_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-31T15:02:04Z",
+      "side": 0,
+      "message": "Was this required? If you want the main thread to be of TYPE_IO, ScopedTaskEnvironment has a param for that.",
+      "revId": "0301db54bc58b9d5968de88a939574b40c6e82a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
