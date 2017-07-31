@@ -15,11 +15,11 @@ struct EnumTraits<skia::mojom::BlurTileMode, SkBlurImageFilter::TileMode> {
   static skia::mojom::BlurTileMode ToMojom(
       SkBlurImageFilter::TileMode tile_mode) {
     switch (tile_mode) {
-      case SkBlurImageFilter::kClamp_TileMode:
+      case SkBlurImageFilter::TileMode::kClamp:
         return skia::mojom::BlurTileMode::CLAMP;
-      case SkBlurImageFilter::kRepeat_TileMode:
+      case SkBlurImageFilter::TileMode::kRepeat:
         return skia::mojom::BlurTileMode::REPEAT;
-      case SkBlurImageFilter::kClampToBlack_TileMode:
+      case SkBlurImageFilter::TileMode::kClampToBlack:
         return skia::mojom::BlurTileMode::CLAMP_TO_BLACK;
     }
     NOTREACHED();
@@ -30,15 +30,16 @@ struct EnumTraits<skia::mojom::BlurTileMode, SkBlurImageFilter::TileMode> {
                         SkBlurImageFilter::TileMode* out) {
     switch (input) {
       case skia::mojom::BlurTileMode::CLAMP:
-        *out = SkBlurImageFilter::kClamp_TileMode;
+        *out = SkBlurImageFilter::TileMode::kClamp;
         return true;
       case skia::mojom::BlurTileMode::REPEAT:
-        *out = SkBlurImageFilter::kRepeat_TileMode;
+        *out = SkBlurImageFilter::TileMode::kRepeat;
         return true;
       case skia::mojom::BlurTileMode::CLAMP_TO_BLACK:
-        *out = SkBlurImageFilter::kClampToBlack_TileMode;
+        *out = SkBlurImageFilter::TileMode::kClampToBlack;
         return true;
     }
+    *out = SkBlurImageFilter::TileMode::kClamp;
     return false;
   }
 };
