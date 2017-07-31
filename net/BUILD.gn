@@ -634,6 +634,8 @@ component("net") {
       "cookies/cookie_util.h",
       "cookies/parsed_cookie.cc",
       "cookies/parsed_cookie.h",
+      "disk_cache/backend_cleanup_tracker.cc",
+      "disk_cache/backend_cleanup_tracker.h",
       "disk_cache/blockfile/addr.cc",
       "disk_cache/blockfile/addr.h",
       "disk_cache/blockfile/backend_impl.cc",

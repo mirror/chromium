@@ -23,6 +23,7 @@
 #include "base/trace_event/memory_usage_estimator.h"
 #include "net/base/io_buffer.h"
 #include "net/base/net_errors.h"
+#include "net/disk_cache/backend_cleanup_tracker.h"
 #include "net/disk_cache/net_log_parameters.h"
 #include "net/disk_cache/simple/simple_backend_impl.h"
 #include "net/disk_cache/simple/simple_histogram_macros.h"
@@ -164,11 +165,13 @@ SimpleEntryImpl::ActiveEntryProxy::~ActiveEntryProxy() {}
 
 SimpleEntryImpl::SimpleEntryImpl(net::CacheType cache_type,
                                  const FilePath& path,
+                                 BackendCleanupTracker* cleanup_tracker,
                                  const uint64_t entry_hash,
                                  OperationsMode operations_mode,
                                  SimpleBackendImpl* backend,
                                  net::NetLog* net_log)
-    : backend_(backend->AsWeakPtr()),
+    : cleanup_tracker_(cleanup_tracker),
+      backend_(backend->AsWeakPtr()),
       cache_type_(cache_type),
       worker_pool_(backend->worker_pool()),
       path_(path),
