@@ -175,12 +175,14 @@ void PerformanceMonitor::Did(const probe::ExecuteScript& probe) {
 }
 
 void PerformanceMonitor::Will(const probe::CallFunction& probe) {
+  probe.CaptureStartTime();
   WillExecuteScript(probe.context);
   if (user_callback_)
     probe.CaptureStartTime();
 }
 
 void PerformanceMonitor::Did(const probe::CallFunction& probe) {
+  probe.Duration();
   DidExecuteScript();
   if (!enabled_ || !user_callback_)
     return;
