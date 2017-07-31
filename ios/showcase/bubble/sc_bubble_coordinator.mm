@@ -42,16 +42,17 @@
                                20.0f, 20.0f, 20.0f)];
   elementView.backgroundColor = [UIColor grayColor];
   [containerView addSubview:elementView];
+  CGPoint anchorPoint = bubble_util::AnchorPoint(elementView.frame, direction);
   // Maximum width of the bubble such that it stays within |containerView|.
   CGFloat maxBubbleWidth = bubble_util::MaxWidth(
-      elementView.frame, alignment, containerView.frame.size.width);
+      anchorPoint, alignment, containerView.frame.size.width);
   CGSize maxSize =
       CGSizeMake(maxBubbleWidth, containerView.frame.size.height -
                                      CGRectGetMaxY(elementView.frame));
   CGSize bubbleSize = [self.bubbleViewController.view sizeThatFits:maxSize];
   CGRect bubbleFrame =
-      bubble_util::BubbleFrame(elementView.frame, bubbleSize, direction,
-                               alignment, containerView.frame.size.width);
+      bubble_util::BubbleFrame(anchorPoint, bubbleSize, direction, alignment,
+                               containerView.frame.size.width);
 
   [self addBubbleViewControllerWithFrame:bubbleFrame];
   [self.baseViewController pushViewController:self.containerViewController

@@ -23,12 +23,12 @@ CGPoint AnchorPoint(CGRect targetFrame, BubbleArrowDirection arrowDirection) {
   return anchorPoint;
 }
 
-CGFloat LeadingDistance(CGRect targetFrame,
+CGFloat LeadingDistance(CGPoint anchorPoint,
                         BubbleAlignment alignment,
                         CGFloat bubbleWidth) {
   // Find |leadingOffset|, the distance from the bubble's leading edge to the
   // anchor point. This depends on alignment and bubble width.
-  CGFloat anchorX = CGRectGetMidX(targetFrame);
+  CGFloat anchorX = anchorPoint.x;
   CGFloat leadingOffset;
   switch (alignment) {
     case BubbleAlignmentLeading:
@@ -47,10 +47,9 @@ CGFloat LeadingDistance(CGRect targetFrame,
   return anchorX - leadingOffset;
 }
 
-CGFloat OriginY(CGRect targetFrame,
+CGFloat OriginY(CGPoint anchorPoint,
                 BubbleArrowDirection arrowDirection,
                 CGFloat bubbleHeight) {
-  CGPoint anchorPoint = AnchorPoint(targetFrame, arrowDirection);
   CGFloat originY;
   if (arrowDirection == BubbleArrowDirectionUp) {
     originY = anchorPoint.y;
@@ -61,10 +60,10 @@ CGFloat OriginY(CGRect targetFrame,
   return originY;
 }
 
-CGFloat MaxWidth(CGRect targetFrame,
+CGFloat MaxWidth(CGPoint anchorPoint,
                  BubbleAlignment alignment,
                  CGFloat boundingWidth) {
-  CGFloat anchorX = CGRectGetMidX(targetFrame);
+  CGFloat anchorX = anchorPoint.x;
   CGFloat maxWidth;
   switch (alignment) {
     case BubbleAlignmentLeading:
@@ -101,14 +100,14 @@ CGFloat MaxWidth(CGRect targetFrame,
   return maxWidth;
 }
 
-CGRect BubbleFrame(CGRect targetFrame,
+CGRect BubbleFrame(CGPoint anchorPoint,
                    CGSize size,
                    BubbleArrowDirection direction,
                    BubbleAlignment alignment,
                    CGFloat boundingWidth) {
   CGFloat leading =
-      bubble_util::LeadingDistance(targetFrame, alignment, size.width);
-  CGFloat originY = bubble_util::OriginY(targetFrame, direction, size.height);
+      bubble_util::LeadingDistance(anchorPoint, alignment, size.width);
+  CGFloat originY = bubble_util::OriginY(anchorPoint, direction, size.height);
   // Use a |LayoutRect| to ensure that the bubble is mirrored in RTL contexts.
   CGRect bubbleFrame = LayoutRectGetRect(
       LayoutRectMake(leading, boundingWidth, originY, size.width, size.height));

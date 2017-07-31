@@ -39,15 +39,19 @@ class BubbleUtilTest : public PlatformTest {
 
 // Test |OriginY| when the bubble points up at the target element.
 TEST_F(BubbleUtilTest, OriginUpArrow) {
-  CGFloat originY = bubble_util::OriginY(
-      centerAlignedTarget_, BubbleArrowDirectionUp, bubbleSize_.height);
+  CGPoint anchorPoint =
+      bubble_util::AnchorPoint(centerAlignedTarget_, BubbleArrowDirectionUp);
+  CGFloat originY = bubble_util::OriginY(anchorPoint, BubbleArrowDirectionUp,
+                                         bubbleSize_.height);
   EXPECT_EQ(300.0f, originY);
 }
 
 // Test |OriginY| when the bubble points down at the target element.
 TEST_F(BubbleUtilTest, OriginDownArrow) {
-  CGFloat originY = bubble_util::OriginY(
-      centerAlignedTarget_, BubbleArrowDirectionDown, bubbleSize_.height);
+  CGPoint anchorPoint =
+      bubble_util::AnchorPoint(centerAlignedTarget_, BubbleArrowDirectionDown);
+  CGFloat originY = bubble_util::OriginY(anchorPoint, BubbleArrowDirectionDown,
+                                         bubbleSize_.height);
   EXPECT_EQ(100.0f, originY);
 }
 
@@ -55,22 +59,28 @@ TEST_F(BubbleUtilTest, OriginDownArrow) {
 // Positioning the bubble |LeadingDistance| from the leading edge of its
 // superview should align the bubble's arrow with the target element.
 TEST_F(BubbleUtilTest, LeadingDistanceLeadingAlignment) {
+  CGPoint anchorPoint =
+      bubble_util::AnchorPoint(leftAlignedTarget_, BubbleArrowDirectionDown);
   CGFloat leading = bubble_util::LeadingDistance(
-      leftAlignedTarget_, BubbleAlignmentLeading, bubbleSize_.width);
+      anchorPoint, BubbleAlignmentLeading, bubbleSize_.width);
   EXPECT_EQ(70.0f - kTestBubbleAlignmentOffset, leading);
 }
 
 // Test the |LeadingDistance| method when the bubble is center aligned.
 TEST_F(BubbleUtilTest, LeadingDistanceCenterAlignment) {
+  CGPoint anchorPoint =
+      bubble_util::AnchorPoint(centerAlignedTarget_, BubbleArrowDirectionDown);
   CGFloat leading = bubble_util::LeadingDistance(
-      centerAlignedTarget_, BubbleAlignmentCenter, bubbleSize_.width);
+      anchorPoint, BubbleAlignmentCenter, bubbleSize_.width);
   EXPECT_EQ(150.0f, leading);
 }
 
 // Test the |LeadingDistance| method when the bubble is trailing aligned.
 TEST_F(BubbleUtilTest, LeadingDistanceTrailingAlignment) {
+  CGPoint anchorPoint =
+      bubble_util::AnchorPoint(rightAlignedTarget_, BubbleArrowDirectionDown);
   CGFloat leading = bubble_util::LeadingDistance(
-      rightAlignedTarget_, BubbleAlignmentTrailing, bubbleSize_.width);
+      anchorPoint, BubbleAlignmentTrailing, bubbleSize_.width);
   EXPECT_EQ(150.0f + kTestBubbleAlignmentOffset, leading);
 }
 
@@ -79,8 +89,10 @@ TEST_F(BubbleUtilTest, LeadingDistanceTrailingAlignment) {
 TEST_F(BubbleUtilTest, MaxWidthLeadingWithTargetOnLeft) {
   // Ensure that the language is LTR by setting the locale to English.
   base::i18n::SetICUDefaultLocale("en");
+  CGPoint anchorPoint =
+      bubble_util::AnchorPoint(leftAlignedTarget_, BubbleArrowDirectionDown);
   CGFloat leftAlignedWidth = bubble_util::MaxWidth(
-      leftAlignedTarget_, BubbleAlignmentLeading, containerWidth_);
+      anchorPoint, BubbleAlignmentLeading, containerWidth_);
   EXPECT_EQ(430.0f + kTestBubbleAlignmentOffset, leftAlignedWidth);
 }
 
@@ -89,8 +101,10 @@ TEST_F(BubbleUtilTest, MaxWidthLeadingWithTargetOnLeft) {
 TEST_F(BubbleUtilTest, MaxWidthLeadingWithTargetOnCenter) {
   // Ensure that the language is LTR by setting the locale to English.
   base::i18n::SetICUDefaultLocale("en");
+  CGPoint anchorPoint =
+      bubble_util::AnchorPoint(centerAlignedTarget_, BubbleArrowDirectionDown);
   CGFloat centerAlignedWidth = bubble_util::MaxWidth(
-      centerAlignedTarget_, BubbleAlignmentLeading, containerWidth_);
+      anchorPoint, BubbleAlignmentLeading, containerWidth_);
   EXPECT_EQ(200.0f + kTestBubbleAlignmentOffset, centerAlignedWidth);
 }
 
@@ -99,8 +113,10 @@ TEST_F(BubbleUtilTest, MaxWidthLeadingWithTargetOnCenter) {
 TEST_F(BubbleUtilTest, MaxWidthLeadingWithTargetOnRight) {
   // Ensure that the language is LTR by setting the locale to English.
   base::i18n::SetICUDefaultLocale("en");
+  CGPoint anchorPoint =
+      bubble_util::AnchorPoint(rightAlignedTarget_, BubbleArrowDirectionDown);
   CGFloat rightAlignedWidth = bubble_util::MaxWidth(
-      rightAlignedTarget_, BubbleAlignmentLeading, containerWidth_);
+      anchorPoint, BubbleAlignmentLeading, containerWidth_);
   EXPECT_EQ(50.0f + kTestBubbleAlignmentOffset, rightAlignedWidth);
 }
 
@@ -109,8 +125,10 @@ TEST_F(BubbleUtilTest, MaxWidthLeadingWithTargetOnRight) {
 TEST_F(BubbleUtilTest, MaxWidthCenterWithTargetOnLeft) {
   // Ensure that the language is LTR by setting the locale to English.
   base::i18n::SetICUDefaultLocale("en");
+  CGPoint anchorPoint =
+      bubble_util::AnchorPoint(leftAlignedTarget_, BubbleArrowDirectionDown);
   CGFloat leftAlignedWidth = bubble_util::MaxWidth(
-      leftAlignedTarget_, BubbleAlignmentCenter, containerWidth_);
+      anchorPoint, BubbleAlignmentCenter, containerWidth_);
   EXPECT_EQ(140.0f, leftAlignedWidth);
 }
 
@@ -119,8 +137,10 @@ TEST_F(BubbleUtilTest, MaxWidthCenterWithTargetOnLeft) {
 TEST_F(BubbleUtilTest, MaxWidthCenterWithTargetOnCenter) {
   // Ensure that the language is LTR by setting the locale to English.
   base::i18n::SetICUDefaultLocale("en");
+  CGPoint anchorPoint =
+      bubble_util::AnchorPoint(centerAlignedTarget_, BubbleArrowDirectionDown);
   CGFloat centerAlignedWidth = bubble_util::MaxWidth(
-      centerAlignedTarget_, BubbleAlignmentCenter, containerWidth_);
+      anchorPoint, BubbleAlignmentCenter, containerWidth_);
   EXPECT_EQ(400.0f, centerAlignedWidth);
 }
 
@@ -129,8 +149,10 @@ TEST_F(BubbleUtilTest, MaxWidthCenterWithTargetOnCenter) {
 TEST_F(BubbleUtilTest, MaxWidthCenterWithTargetOnRight) {
   // Ensure that the language is LTR by setting the locale to English.
   base::i18n::SetICUDefaultLocale("en");
+  CGPoint anchorPoint =
+      bubble_util::AnchorPoint(rightAlignedTarget_, BubbleArrowDirectionDown);
   CGFloat rightAlignedWidth = bubble_util::MaxWidth(
-      rightAlignedTarget_, BubbleAlignmentCenter, containerWidth_);
+      anchorPoint, BubbleAlignmentCenter, containerWidth_);
   EXPECT_EQ(100.0f, rightAlignedWidth);
 }
 
@@ -139,8 +161,10 @@ TEST_F(BubbleUtilTest, MaxWidthCenterWithTargetOnRight) {
 TEST_F(BubbleUtilTest, MaxWidthTrailingWithTargetOnLeft) {
   // Ensure that the language is LTR by setting the locale to English.
   base::i18n::SetICUDefaultLocale("en");
+  CGPoint anchorPoint =
+      bubble_util::AnchorPoint(leftAlignedTarget_, BubbleArrowDirectionDown);
   CGFloat leftAlignedWidth = bubble_util::MaxWidth(
-      leftAlignedTarget_, BubbleAlignmentTrailing, containerWidth_);
+      anchorPoint, BubbleAlignmentTrailing, containerWidth_);
   EXPECT_EQ(70.0f + kTestBubbleAlignmentOffset, leftAlignedWidth);
 }
 
@@ -149,8 +173,10 @@ TEST_F(BubbleUtilTest, MaxWidthTrailingWithTargetOnLeft) {
 TEST_F(BubbleUtilTest, MaxWidthTrailingWithTargetOnCenter) {
   // Ensure that the language is LTR by setting the locale to English.
   base::i18n::SetICUDefaultLocale("en");
+  CGPoint anchorPoint =
+      bubble_util::AnchorPoint(centerAlignedTarget_, BubbleArrowDirectionDown);
   CGFloat centerAlignedWidth = bubble_util::MaxWidth(
-      centerAlignedTarget_, BubbleAlignmentTrailing, containerWidth_);
+      anchorPoint, BubbleAlignmentTrailing, containerWidth_);
   EXPECT_EQ(300.0f + kTestBubbleAlignmentOffset, centerAlignedWidth);
 }
 
@@ -159,8 +185,10 @@ TEST_F(BubbleUtilTest, MaxWidthTrailingWithTargetOnCenter) {
 TEST_F(BubbleUtilTest, MaxWidthTrailingWithTargetOnRight) {
   // Ensure that the language is LTR by setting the locale to English.
   base::i18n::SetICUDefaultLocale("en");
+  CGPoint anchorPoint =
+      bubble_util::AnchorPoint(rightAlignedTarget_, BubbleArrowDirectionDown);
   CGFloat rightAlignedWidth = bubble_util::MaxWidth(
-      rightAlignedTarget_, BubbleAlignmentTrailing, containerWidth_);
+      anchorPoint, BubbleAlignmentTrailing, containerWidth_);
   EXPECT_EQ(450.0f + kTestBubbleAlignmentOffset, rightAlignedWidth);
 }
 
@@ -169,8 +197,10 @@ TEST_F(BubbleUtilTest, MaxWidthTrailingWithTargetOnRight) {
 TEST_F(BubbleUtilTest, MaxWidthLeadingWithTargetOnLeftRTL) {
   // Ensure that the language is RTL by setting the locale to Hebrew.
   base::i18n::SetICUDefaultLocale("he");
+  CGPoint anchorPoint =
+      bubble_util::AnchorPoint(leftAlignedTarget_, BubbleArrowDirectionDown);
   CGFloat leftAlignedWidthRTL = bubble_util::MaxWidth(
-      leftAlignedTarget_, BubbleAlignmentLeading, containerWidth_);
+      anchorPoint, BubbleAlignmentLeading, containerWidth_);
   EXPECT_EQ(70.0f + kTestBubbleAlignmentOffset, leftAlignedWidthRTL);
 }
 
@@ -179,8 +209,10 @@ TEST_F(BubbleUtilTest, MaxWidthLeadingWithTargetOnLeftRTL) {
 TEST_F(BubbleUtilTest, MaxWidthLeadingWithTargetOnCenterRTL) {
   // Ensure that the language is RTL by setting the locale to Hebrew.
   base::i18n::SetICUDefaultLocale("he");
+  CGPoint anchorPoint =
+      bubble_util::AnchorPoint(centerAlignedTarget_, BubbleArrowDirectionDown);
   CGFloat centerAlignedWidthRTL = bubble_util::MaxWidth(
-      centerAlignedTarget_, BubbleAlignmentLeading, containerWidth_);
+      anchorPoint, BubbleAlignmentLeading, containerWidth_);
   EXPECT_EQ(300.0f + kTestBubbleAlignmentOffset, centerAlignedWidthRTL);
 }
 
@@ -189,8 +221,10 @@ TEST_F(BubbleUtilTest, MaxWidthLeadingWithTargetOnCenterRTL) {
 TEST_F(BubbleUtilTest, MaxWidthLeadingWithTargetOnRightRTL) {
   // Ensure that the language is RTL by setting the locale to Hebrew.
   base::i18n::SetICUDefaultLocale("he");
+  CGPoint anchorPoint =
+      bubble_util::AnchorPoint(rightAlignedTarget_, BubbleArrowDirectionDown);
   CGFloat rightAlignedWidthRTL = bubble_util::MaxWidth(
-      rightAlignedTarget_, BubbleAlignmentLeading, containerWidth_);
+      anchorPoint, BubbleAlignmentLeading, containerWidth_);
   EXPECT_EQ(450.0f + kTestBubbleAlignmentOffset, rightAlignedWidthRTL);
 }
 
@@ -199,8 +233,10 @@ TEST_F(BubbleUtilTest, MaxWidthLeadingWithTargetOnRightRTL) {
 TEST_F(BubbleUtilTest, MaxWidthCenterWithTargetOnLeftRTL) {
   // Ensure that the language is RTL by setting the locale to Hebrew.
   base::i18n::SetICUDefaultLocale("he");
+  CGPoint anchorPoint =
+      bubble_util::AnchorPoint(leftAlignedTarget_, BubbleArrowDirectionDown);
   CGFloat leftAlignedWidthRTL = bubble_util::MaxWidth(
-      leftAlignedTarget_, BubbleAlignmentCenter, containerWidth_);
+      anchorPoint, BubbleAlignmentCenter, containerWidth_);
   EXPECT_EQ(140.0f, leftAlignedWidthRTL);
 }
 
@@ -209,8 +245,10 @@ TEST_F(BubbleUtilTest, MaxWidthCenterWithTargetOnLeftRTL) {
 TEST_F(BubbleUtilTest, MaxWidthCenterWithTargetOnCenterRTL) {
   // Ensure that the language is RTL by setting the locale to Hebrew.
   base::i18n::SetICUDefaultLocale("he");
+  CGPoint anchorPoint =
+      bubble_util::AnchorPoint(centerAlignedTarget_, BubbleArrowDirectionDown);
   CGFloat centerAlignedWidthRTL = bubble_util::MaxWidth(
-      centerAlignedTarget_, BubbleAlignmentCenter, containerWidth_);
+      anchorPoint, BubbleAlignmentCenter, containerWidth_);
   EXPECT_EQ(400.0f, centerAlignedWidthRTL);
 }
 
@@ -219,8 +257,10 @@ TEST_F(BubbleUtilTest, MaxWidthCenterWithTargetOnCenterRTL) {
 TEST_F(BubbleUtilTest, MaxWidthCenterWithTargetOnRightRTL) {
   // Ensure that the language is RTL by setting the locale to Hebrew.
   base::i18n::SetICUDefaultLocale("he");
+  CGPoint anchorPoint =
+      bubble_util::AnchorPoint(rightAlignedTarget_, BubbleArrowDirectionDown);
   CGFloat rightAlignedWidthRTL = bubble_util::MaxWidth(
-      rightAlignedTarget_, BubbleAlignmentCenter, containerWidth_);
+      anchorPoint, BubbleAlignmentCenter, containerWidth_);
   EXPECT_EQ(100.0f, rightAlignedWidthRTL);
 }
 
@@ -229,8 +269,10 @@ TEST_F(BubbleUtilTest, MaxWidthCenterWithTargetOnRightRTL) {
 TEST_F(BubbleUtilTest, MaxWidthTrailingWithTargetOnLeftRTL) {
   // Ensure that the language is RTL by setting the locale to Hebrew.
   base::i18n::SetICUDefaultLocale("he");
+  CGPoint anchorPoint =
+      bubble_util::AnchorPoint(leftAlignedTarget_, BubbleArrowDirectionDown);
   CGFloat leftAlignedWidthRTL = bubble_util::MaxWidth(
-      leftAlignedTarget_, BubbleAlignmentTrailing, containerWidth_);
+      anchorPoint, BubbleAlignmentTrailing, containerWidth_);
   EXPECT_EQ(430.0f + kTestBubbleAlignmentOffset, leftAlignedWidthRTL);
 }
 
@@ -239,8 +281,10 @@ TEST_F(BubbleUtilTest, MaxWidthTrailingWithTargetOnLeftRTL) {
 TEST_F(BubbleUtilTest, MaxWidthTrailingWithTargetOnCenterRTL) {
   // Ensure that the language is RTL by setting the locale to Hebrew.
   base::i18n::SetICUDefaultLocale("he");
+  CGPoint anchorPoint =
+      bubble_util::AnchorPoint(centerAlignedTarget_, BubbleArrowDirectionDown);
   CGFloat centerAlignedWidthRTL = bubble_util::MaxWidth(
-      centerAlignedTarget_, BubbleAlignmentTrailing, containerWidth_);
+      anchorPoint, BubbleAlignmentTrailing, containerWidth_);
   EXPECT_EQ(200.0f + kTestBubbleAlignmentOffset, centerAlignedWidthRTL);
 }
 
@@ -249,7 +293,9 @@ TEST_F(BubbleUtilTest, MaxWidthTrailingWithTargetOnCenterRTL) {
 TEST_F(BubbleUtilTest, MaxWidthTrailingWithTargetOnRightRTL) {
   // Ensure that the language is RTL by setting the locale to Hebrew.
   base::i18n::SetICUDefaultLocale("he");
+  CGPoint anchorPoint =
+      bubble_util::AnchorPoint(rightAlignedTarget_, BubbleArrowDirectionDown);
   CGFloat rightAlignedWidthRTL = bubble_util::MaxWidth(
-      rightAlignedTarget_, BubbleAlignmentTrailing, containerWidth_);
+      anchorPoint, BubbleAlignmentTrailing, containerWidth_);
   EXPECT_EQ(50.0f + kTestBubbleAlignmentOffset, rightAlignedWidthRTL);
 }
