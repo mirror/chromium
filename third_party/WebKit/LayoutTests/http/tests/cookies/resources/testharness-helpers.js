@@ -12,8 +12,8 @@ var LAX_DOM = "lax_from_dom";
 var NORMAL_DOM = "normal_from_dom";
 
 // Clear the three well-known cookies.
-function clearKnownCookies() {
+function clearKnownCookies(opt_afterPath) {
+    var s = opt_afterPath || '';
     var cookies = [ STRICT_DOM, LAX_DOM, NORMAL_DOM ];
-    cookies.forEach(c => { document.cookie = c + "=0; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/"; });
+    cookies.forEach(c => { document.cookie = c + "=0; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/" + s; });
 }
-
