@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34c0b8a7_5762f669",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 884,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-07-31T13:28:13Z",
+      "side": 1,
+      "message": "maybeConsiderUsingCamelCaseForVariableNamesInAnObjectiveCMethod?",
+      "range": {
+        "startLine": 884,
+        "startChar": 13,
+        "endLine": 884,
+        "endChar": 42
+      },
+      "revId": "5590479493d5a7c736cf2876563a3f2e02dfecec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
