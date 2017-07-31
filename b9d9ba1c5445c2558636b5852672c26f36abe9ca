@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c070ec6d_d9744a4c",
+        "filename": "third_party/WebKit/Source/modules/webaudio/OfflineAudioContext.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-07-31T18:14:49Z",
+      "side": 1,
+      "message": "Why auto?",
+      "range": {
+        "startLine": 205,
+        "startChar": 2,
+        "endLine": 205,
+        "endChar": 6
+      },
+      "revId": "b9d9ba1c5445c2558636b5852672c26f36abe9ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbdc7e78_7fc08cab",
+        "filename": "third_party/WebKit/Source/modules/webaudio/OfflineAudioDestinationNode.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-07-31T18:14:49Z",
+      "side": 1,
+      "message": "I think we can add a comment about why we need to pass AudioBuffer*.",
+      "range": {
+        "startLine": 82,
+        "startChar": 2,
+        "endLine": 82,
+        "endChar": 65
+      },
+      "revId": "b9d9ba1c5445c2558636b5852672c26f36abe9ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
