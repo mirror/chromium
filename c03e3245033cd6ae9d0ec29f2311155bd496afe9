@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dcd2ff94_339c748f",
+        "filename": "tools/grit/grit/format/android_xml.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-31T18:52:10Z",
+      "side": 1,
+      "message": "nit: I like if regex have a\n\n# Matches e.g. \"{HELLO, plural, HOW ARE YOU DOING}\", while caputring \"HOW ARE YOU DOING\" in \u003citems\u003e",
+      "range": {
+        "startLine": 89,
+        "startChar": 2,
+        "endLine": 89,
+        "endChar": 34
+      },
+      "revId": "c03e3245033cd6ae9d0ec29f2311155bd496afe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6da8e6f7_22aec563",
+        "filename": "tools/grit/grit/format/android_xml.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-31T18:52:10Z",
+      "side": 1,
+      "message": "and then this one could say\n\n# Matches e.g. \"foo{sadf}\", which is matched against PLURALS_PATTERN\u003citems\u003e repeatedly.",
+      "range": {
+        "startLine": 91,
+        "startChar": 9,
+        "endLine": 91,
+        "endChar": 18
+      },
+      "revId": "c03e3245033cd6ae9d0ec29f2311155bd496afe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
