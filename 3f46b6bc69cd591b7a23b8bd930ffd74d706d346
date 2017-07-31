@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57979b4f_14feb34f",
+        "filename": "content/browser/payments/payment_app_provider_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-31T18:12:15Z",
+      "side": 1,
+      "message": "Using statements should be at the top of the file.",
+      "revId": "3f46b6bc69cd591b7a23b8bd930ffd74d706d346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7b2f0ff_7eaa7b63",
+        "filename": "content/browser/payments/payment_app_provider_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-31T18:12:15Z",
+      "side": 1,
+      "message": "Here and elsewhere: instead of creating a OnceCallback and then converting it into a repeating callback, let\u0027s use the Repeating callback, if that\u0027s what FindReadyRegistrationForIdOnly requires. Eventually it would be nice to use OnceCallback everywhere, however.",
+      "revId": "3f46b6bc69cd591b7a23b8bd930ffd74d706d346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
