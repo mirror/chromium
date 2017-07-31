@@ -4,12 +4,13 @@
 
 #include "extensions/browser/app_window/app_window_client.h"
 
+#include "base/logging.h"
 
 namespace extensions {
 
 namespace {
 
-AppWindowClient* g_client = NULL;
+AppWindowClient* g_client = nullptr;
 
 }  // namespace
 
@@ -18,9 +19,15 @@ AppWindowClient* AppWindowClient::Get() {
 }
 
 void AppWindowClient::Set(AppWindowClient* client) {
-  // This can happen in unit tests, where the utility thread runs in-process.
-  if (g_client)
+  // In unit tests where multiple BrowserProcesses may be created, this may be
+  // called repeatedly with the same instance.
+  if (g_client && client) {
+    // Tests that set unique AppWindowClients should unset them afterwards.
+    DCHECK_EQ(g_client, client)
+        << "AppWindowClient::Set called with different non-null pointers twice "
+        << "in a row. A previous test may have set this without clearing it.";
     return;
+  }
 
   g_client = client;
 }
