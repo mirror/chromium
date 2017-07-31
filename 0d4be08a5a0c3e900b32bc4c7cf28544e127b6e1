@@ -151,6 +151,24 @@
       "revId": "0d4be08a5a0c3e900b32bc4c7cf28544e127b6e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "af983d8e_a755b53f",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2793,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-31T15:08:29Z",
+      "side": 1,
+      "message": "One can, but we can\u0027t keep migration code around forever. 2 or 3 versions seems reasonable to me. (Here, nothing particularly bad would happen in that case anyway - the persisted suggestions would be out of order until the next refresh - meh.)",
+      "parentUuid": "4363efc3_6778f559",
+      "revId": "0d4be08a5a0c3e900b32bc4c7cf28544e127b6e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
