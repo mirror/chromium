@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "bd49603e_334be305",
+        "filename": "cc/input/input_handler.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-31T18:26:29Z",
+      "side": 1,
+      "message": "nit: call this `must_bubble_if_needed`, or even `bubble_if_needed`.\n\nAlso, why \"if_needed\"? If we set this then we will always try to bubble, right? (regardless whether the bubbling is consumed up the chain). Similarly, in RWHVCH::GestureEventAck you have CONSUMED_MIGHT_NEED_BUBBLING, that feels like it should be CONSUMED_SHOULD_BUBBLE.",
+      "range": {
+        "startLine": 101,
+        "startChar": 9,
+        "endLine": 101,
+        "endChar": 35
+      },
+      "revId": "f06eaf999498d957ddedb18437cf93b4e39e41bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b1735b8_94e85e56",
+        "filename": "cc/layers/viewport.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-31T18:26:29Z",
+      "side": 1,
+      "message": "I think a better name would be \"CanScroll\". The viewport can still consume delta via overscroll/browser controls. We\u0027re only checking scrollability here.",
+      "range": {
+        "startLine": 75,
+        "startChar": 15,
+        "endLine": 75,
+        "endChar": 30
+      },
+      "revId": "f06eaf999498d957ddedb18437cf93b4e39e41bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "980e2790_6d2811f2",
         "filename": "cc/layers/viewport.h",
         "patchSetId": 9
@@ -35,6 +81,52 @@
         "startChar": 35,
         "endLine": 616,
         "endChar": 46
+      },
+      "revId": "f06eaf999498d957ddedb18437cf93b4e39e41bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cded343_55395ed6",
+        "filename": "content/common/input/input_event_ack_state.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-31T18:26:29Z",
+      "side": 1,
+      "message": "Same here, remove \"MIGHT_NEED\". CONSUMED_SHOULD_BUBBLE is clearer.",
+      "range": {
+        "startLine": 15,
+        "startChar": 2,
+        "endLine": 15,
+        "endChar": 52
+      },
+      "revId": "f06eaf999498d957ddedb18437cf93b4e39e41bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99879a31_6e660acc",
+        "filename": "ui/events/blink/input_handler_proxy.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-31T18:26:29Z",
+      "side": 1,
+      "message": "Please add a comment describing the behavior here. i.e. The compositor did handle the event (so we don\u0027t want to forward it to the Blink thread, as DID_NOT_HANDLE does) but didn\u0027t consume the scroll so it should continue to bubble to the parent.",
+      "range": {
+        "startLine": 73,
+        "startChar": 4,
+        "endLine": 73,
+        "endChar": 36
       },
       "revId": "f06eaf999498d957ddedb18437cf93b4e39e41bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
