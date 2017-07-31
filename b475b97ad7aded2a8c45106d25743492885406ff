@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "5b8a086d_9f1c6fa9",
+        "filename": "chrome/common/mac/cfbundle_blocker_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-07-31T14:05:24Z",
+      "side": 1,
+      "message": "\u003e Indeed, but I thought that in Chromium we put the expected/constant value first and this is why I implemented it this way. Fixed in the latest patch.\n\nThat was only for {EXPECT,ASSERT}_EQ. Gtest used to want (expected, actual) and its “expectation failed” messages would be confusing if you didn’t follow this order. Nearly two years ago, it was updated to be agnostic. It took Chromium a while to catch up, but we finally got a modern gtest a few months ago, and now you’re free to use whatever order feels more natural in Chromium code too.",
+      "parentUuid": "0fad663f_c74f80eb",
+      "revId": "b475b97ad7aded2a8c45106d25743492885406ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8a4db13_58382e96",
         "filename": "third_party/mach_override/README.chromium",
         "patchSetId": 5
