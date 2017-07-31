@@ -6,6 +6,7 @@
 #define COMPONENTS_OFFLINE_PAGES_CORE_OFFLINE_PAGE_MODEL_QUERY_H_
 
 #include <set>
+#include <tuple>
 #include <vector>
 
 #include "base/memory/ptr_util.h"
@@ -38,7 +39,8 @@ class OfflinePageModelQuery {
   std::pair<bool, std::set<std::string>> GetRestrictedToNamespaces() const;
   std::pair<Requirement, std::set<int64_t>> GetRestrictedToOfflineIds() const;
   std::pair<Requirement, std::set<ClientId>> GetRestrictedToClientIds() const;
-  std::pair<Requirement, std::set<GURL>> GetRestrictedToUrls() const;
+  std::tuple<Requirement, std::set<GURL>, URLSearchMode, bool>
+  GetRestrictedToUrls() const;
 
   // This is the workhorse function that is used by the in-memory offline page
   // model, given a page it will find out whether that page matches the query.
@@ -51,7 +53,7 @@ class OfflinePageModelQuery {
 
   std::pair<Requirement, std::set<int64_t>> offline_ids_;
   std::pair<Requirement, std::set<ClientId>> client_ids_;
-  std::pair<Requirement, std::set<GURL>> urls_;
+  std::tuple<Requirement, std::set<GURL>, URLSearchMode, bool> urls_;
 
   DISALLOW_COPY_AND_ASSIGN(OfflinePageModelQuery);
 };
@@ -82,8 +84,13 @@ class OfflinePageModelQueryBuilder {
 
   // Sets the URLs that are valid for this request.  If called multiple times,
   // overwrites previous URL restrictions.
+  // |search_mode| is used to control if the URL will be matched with final
+  // URL only or both final URL and original URL.
+  // If |defrag| is true, final urls will be matched without fragment.
   OfflinePageModelQueryBuilder& SetUrls(Requirement requirement,
-                                        const std::vector<GURL>& urls);
+                                        const std::vector<GURL>& urls,
+                                        URLSearchMode search_mode,
+                                        bool defrag);
 
   // Only include pages whose namespaces satisfy
   // ClientPolicyController::IsRemovedOnCacheReset(|namespace|) ==
@@ -131,7 +138,7 @@ class OfflinePageModelQueryBuilder {
 
   std::pair<Requirement, std::vector<int64_t>> offline_ids_;
   std::pair<Requirement, std::vector<ClientId>> client_ids_;
-  std::pair<Requirement, std::vector<GURL>> urls_;
+  std::tuple<Requirement, std::vector<GURL>, URLSearchMode, bool> urls_;
 
   Requirement removed_on_cache_reset_ = Requirement::UNSET;
   Requirement supported_by_download_ = Requirement::UNSET;

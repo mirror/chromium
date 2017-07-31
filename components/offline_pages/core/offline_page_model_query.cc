@@ -5,11 +5,37 @@
 #include "components/offline_pages/core/offline_page_model_query.h"
 
 #include <algorithm>
+#include <tuple>
 #include <unordered_set>
 
 #include "base/memory/ptr_util.h"
 
 namespace offline_pages {
+
+namespace {
+
+int CountMatchingUrls(const GURL& url_pattern,
+                      const std::set<GURL>& urls,
+                      bool defrag) {
+  int count = 0;
+
+  // If |defrag| is true, all urls will be compared after fragments stripped.
+  // Otherwise just do exact matching.
+  if (defrag) {
+    for (const auto& url : urls) {
+      GURL::Replacements remove_params;
+      remove_params.ClearRef();
+      GURL url_without_fragment = url.ReplaceComponents(remove_params);
+      if (url_without_fragment == url_pattern.ReplaceComponents(remove_params))
+        count++;
+    }
+  } else {
+    count = urls.count(url_pattern);
+  }
+  return count;
+}
+
+}  // namespace
 
 using Requirement = OfflinePageModelQuery::Requirement;
 
@@ -35,8 +61,10 @@ OfflinePageModelQueryBuilder& OfflinePageModelQueryBuilder::SetClientIds(
 
 OfflinePageModelQueryBuilder& OfflinePageModelQueryBuilder::SetUrls(
     Requirement requirement,
-    const std::vector<GURL>& urls) {
-  urls_ = std::make_pair(requirement, urls);
+    const std::vector<GURL>& urls,
+    URLSearchMode search_mode,
+    bool defrag) {
+  urls_ = std::make_tuple(requirement, urls, search_mode, defrag);
   return *this;
 }
 
@@ -80,9 +108,12 @@ std::unique_ptr<OfflinePageModelQuery> OfflinePageModelQueryBuilder::Build(
 
   auto query = base::MakeUnique<OfflinePageModelQuery>();
 
-  query->urls_ = std::make_pair(
-      urls_.first, std::set<GURL>(urls_.second.begin(), urls_.second.end()));
-  urls_ = std::make_pair(Requirement::UNSET, std::vector<GURL>());
+  query->urls_ = std::make_tuple(
+      std::get<0>(urls_),
+      std::set<GURL>(std::get<1>(urls_).begin(), std::get<1>(urls_).end()),
+      std::get<2>(urls_), std::get<3>(urls_));
+  urls_ = std::make_tuple(Requirement::UNSET, std::vector<GURL>(),
+                          URLSearchMode::SEARCH_BY_FINAL_URL_ONLY, false);
   query->offline_ids_ = std::make_pair(
       offline_ids_.first, std::set<int64_t>(offline_ids_.second.begin(),
                                             offline_ids_.second.end()));
@@ -176,11 +207,11 @@ OfflinePageModelQuery::GetRestrictedToClientIds() const {
   return client_ids_;
 }
 
-std::pair<Requirement, std::set<GURL>>
+std::tuple<Requirement, std::set<GURL>, URLSearchMode, bool>
 OfflinePageModelQuery::GetRestrictedToUrls() const {
-  if (urls_.first == Requirement::UNSET)
-    return std::make_pair(Requirement::UNSET, std::set<GURL>());
-
+  if (std::get<0>(urls_) == Requirement::UNSET)
+    return std::make_tuple(Requirement::UNSET, std::set<GURL>(),
+                           URLSearchMode::SEARCH_BY_FINAL_URL_ONLY, false);
   return urls_;
 }
 
@@ -198,17 +229,24 @@ bool OfflinePageModelQuery::Matches(const OfflinePageItem& item) const {
       break;
   }
 
-  switch (urls_.first) {
-    case Requirement::UNSET:
-      break;
-    case Requirement::INCLUDE_MATCHING:
-      if (urls_.second.count(item.url) == 0)
+  Requirement url_requirement = std::get<0>(urls_);
+  const std::set<GURL> url_set = std::get<1>(urls_);
+  URLSearchMode search_mode = std::get<2>(urls_);
+  bool defrag = std::get<3>(urls_);
+  if (url_requirement != Requirement::UNSET) {
+    int count = CountMatchingUrls(item.url, url_set, defrag);
+    if (search_mode == URLSearchMode::SEARCH_BY_FINAL_URL_ONLY) {
+      if ((url_requirement == Requirement::INCLUDE_MATCHING && count == 0) ||
+          (url_requirement == Requirement::EXCLUDE_MATCHING && count > 0)) {
         return false;
-      break;
-    case Requirement::EXCLUDE_MATCHING:
-      if (urls_.second.count(item.url) > 0)
+      }
+    } else {
+      if ((url_requirement == Requirement::INCLUDE_MATCHING && count == 0 &&
+           url_set.count(item.original_url) == 0) ||
+          (url_requirement == Requirement::EXCLUDE_MATCHING &&
+           (count > 0 || url_set.count(item.original_url) > 0)))
         return false;
-      break;
+    }
   }
 
   const ClientId& client_id = item.client_id;
