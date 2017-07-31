@@ -67,8 +67,7 @@ class SpotlightManagerTest : public testing::Test {
   SpotlightManagerTest() {
     model_ = bookmarks::TestBookmarkClient::CreateModel();
     large_icon_service_.reset(new favicon::LargeIconService(
-        &mock_favicon_service_, base::ThreadTaskRunnerHandle::Get(),
-        /*image_fetcher=*/nullptr));
+        &mock_favicon_service_, /*image_fetcher=*/nullptr));
     bookmarksSpotlightManager_ = [[BookmarksSpotlightManager alloc]
         initWithLargeIconService:large_icon_service_.get()
                    bookmarkModel:model_.get()];

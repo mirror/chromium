@@ -62,8 +62,7 @@ class ReadingListCollectionViewControllerTest : public testing::Test {
     reading_list_model_.reset(new ReadingListModelImpl(
         nullptr, nullptr, base::MakeUnique<base::DefaultClock>()));
     large_icon_service_.reset(new favicon::LargeIconService(
-        &mock_favicon_service_, base::ThreadTaskRunnerHandle::Get(),
-        /*image_fetcher=*/nullptr));
+        &mock_favicon_service_, /*image_fetcher=*/nullptr));
     mediator_ =
         [[ReadingListMediator alloc] initWithModel:reading_list_model_.get()
                                   largeIconService:large_icon_service_.get()];

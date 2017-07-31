@@ -58,8 +58,7 @@ class ReadingListMediatorTest : public PlatformTest {
     model_->SetReadStatus(GURL("http://chromium.org/read2"), true);
 
     large_icon_service_.reset(new favicon::LargeIconService(
-        &mock_favicon_service_, base::ThreadTaskRunnerHandle::Get(),
-        /*image_fetcher=*/nullptr));
+        &mock_favicon_service_, /*image_fetcher=*/nullptr));
 
     mediator_ =
         [[ReadingListMediator alloc] initWithModel:model_.get()

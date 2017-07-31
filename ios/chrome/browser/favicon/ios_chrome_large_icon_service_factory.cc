@@ -45,13 +45,9 @@ IOSChromeLargeIconServiceFactory::BuildServiceInstanceFor(
     web::BrowserState* context) const {
   ios::ChromeBrowserState* browser_state =
       ios::ChromeBrowserState::FromBrowserState(context);
-  base::SequencedWorkerPool* sequenced_worker_pool =
-      web::WebThread::GetBlockingPool();
-
   return base::MakeUnique<favicon::LargeIconService>(
       ios::FaviconServiceFactory::GetForBrowserState(
           browser_state, ServiceAccessType::EXPLICIT_ACCESS),
-      sequenced_worker_pool,
       base::MakeUnique<image_fetcher::ImageFetcherImpl>(
           image_fetcher::CreateIOSImageDecoder(),
           browser_state->GetRequestContext()));
