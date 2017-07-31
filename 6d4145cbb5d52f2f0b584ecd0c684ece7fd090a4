@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2b8e1bb8_5e95ba59",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 11
+      },
+      "lineNbr": 5451,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-07-31T23:17:03Z",
+      "side": 1,
+      "message": "Yeah, it\u0027s used for other buttons (e.g. IDS_TASK_MANAGER_KILL).",
+      "parentUuid": "240f41d8_65b5d8b3",
+      "revId": "6d4145cbb5d52f2f0b584ecd0c684ece7fd090a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be7636c9_9879f808",
         "filename": "chrome/browser/ui/views/harmony/layout_provider_unittest.cc",
         "patchSetId": 11
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "87a48d96_1c7eb43b",
+        "filename": "chrome/browser/ui/views/harmony/layout_provider_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-07-31T23:17:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be7636c9_9879f808",
+      "revId": "6d4145cbb5d52f2f0b584ecd0c684ece7fd090a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e19820f_0a629f91",
         "filename": "chrome/browser/ui/views/harmony/layout_provider_unittest.cc",
         "patchSetId": 11
@@ -50,6 +86,24 @@
       "revId": "6d4145cbb5d52f2f0b584ecd0c684ece7fd090a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9db5ce76_f7c91f72",
+        "filename": "chrome/browser/ui/views/harmony/layout_provider_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-07-31T23:17:03Z",
+      "side": 1,
+      "message": "I fixed the one failure in the OS_WIN block below, otherwise I left this test alone.",
+      "parentUuid": "7e19820f_0a629f91",
+      "revId": "6d4145cbb5d52f2f0b584ecd0c684ece7fd090a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "42fad1ed_e74482c4",
+        "filename": "chrome/browser/ui/views/harmony/layout_provider_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-07-31T23:17:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aff1a3e6_106c878e",
+      "range": {
+        "startLine": 176,
+        "startChar": 12,
+        "endLine": 176,
+        "endChar": 14
+      },
+      "revId": "6d4145cbb5d52f2f0b584ecd0c684ece7fd090a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe236d33_0b7724ce",
         "filename": "chrome/browser/ui/views/harmony/layout_provider_unittest.cc",
         "patchSetId": 11
@@ -90,6 +168,24 @@
       "revId": "6d4145cbb5d52f2f0b584ecd0c684ece7fd090a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa15a920_044b3757",
+        "filename": "chrome/browser/ui/views/harmony/layout_provider_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-07-31T23:17:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe236d33_0b7724ce",
+      "revId": "6d4145cbb5d52f2f0b584ecd0c684ece7fd090a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "17997d03_7759d2e1",
+        "filename": "chrome/browser/ui/views/harmony/layout_provider_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-07-31T23:17:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34f6b1e3_dde17304",
+      "revId": "6d4145cbb5d52f2f0b584ecd0c684ece7fd090a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84f98b75_93236e23",
         "filename": "chrome/browser/ui/views/harmony/layout_provider_unittest.cc",
         "patchSetId": 11
@@ -124,6 +238,24 @@
       "revId": "6d4145cbb5d52f2f0b584ecd0c684ece7fd090a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e20c1138_fbb1fea7",
+        "filename": "chrome/browser/ui/views/harmony/layout_provider_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-07-31T23:17:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84f98b75_93236e23",
+      "revId": "6d4145cbb5d52f2f0b584ecd0c684ece7fd090a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -144,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "e0f6fb31_0f929c46",
+        "filename": "chrome/browser/ui/views/harmony/layout_provider_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-07-31T23:17:03Z",
+      "side": 1,
+      "message": "I was under the impression that being forced to fallback to GDI was the tiny minority case, but if there are bots set up that way then I must be wrong. So I changed harmony_layout_provider to do the right thing in both cases. What do you think, is this too complicated?",
+      "parentUuid": "83817985_324848c2",
+      "revId": "6d4145cbb5d52f2f0b584ecd0c684ece7fd090a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79b8db02_b222dbf3",
         "filename": "ui/views/layout/layout_provider.cc",
         "patchSetId": 11
@@ -158,6 +308,24 @@
       "revId": "6d4145cbb5d52f2f0b584ecd0c684ece7fd090a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "084e77f3_8723f4b2",
+        "filename": "ui/views/layout/layout_provider.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-07-31T23:17:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "79b8db02_b222dbf3",
+      "revId": "6d4145cbb5d52f2f0b584ecd0c684ece7fd090a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
