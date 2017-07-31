@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66a61de5_c5bec704",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_operation_runner.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-31T05:16:29Z",
+      "side": 1,
+      "message": "Btw, I don\u0027t really remember the reason for this: can we update the comment on this field in a followup CL to explain when/why we would need to defer operations?",
+      "range": {
+        "startLine": 234,
+        "startChar": 6,
+        "endLine": 234,
+        "endChar": 19
+      },
+      "revId": "e54a5a46504ddabe52b7da046c1b4ac75a8dabc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e6ae7f9_ecb5a910",
+        "filename": "chrome/browser/chromeos/fileapi/recent_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-31T05:16:29Z",
+      "side": 1,
+      "message": "Please use:\nreturn std::tie(a-\u003esource_type(), ...) \u003c std::tie(b-\u003esource_type(), ...);",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 61
+      },
+      "revId": "e54a5a46504ddabe52b7da046c1b4ac75a8dabc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6ac4014_acb6d130",
+        "filename": "chrome/browser/chromeos/fileapi/recent_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-31T05:16:29Z",
+      "side": 1,
+      "message": "Ditto: please use std::tie().",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 31
+      },
+      "revId": "e54a5a46504ddabe52b7da046c1b4ac75a8dabc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60c2b11e_fb1559a4",
+        "filename": "chrome/browser/chromeos/fileapi/recent_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-31T05:16:29Z",
+      "side": 1,
+      "message": "What are these paths relative to? Are they for display only?\n\n(I\u0027m assuming some of these come from less trusted sources, such as ARC++: is it possible to have a path traversal attack exposed via this?)",
+      "range": {
+        "startLine": 155,
+        "startChar": 4,
+        "endLine": 155,
+        "endChar": 56
+      },
+      "revId": "e54a5a46504ddabe52b7da046c1b4ac75a8dabc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53546249_6d29724f",
+        "filename": "chrome/browser/chromeos/fileapi/recent_model.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-31T05:16:29Z",
+      "side": 1,
+      "message": "This is redundant: base/time/time.h defines this.",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 16
+      },
+      "revId": "e54a5a46504ddabe52b7da046c1b4ac75a8dabc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96ddc497_596d2ad9",
+        "filename": "components/arc/common/file_system.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-31T05:16:29Z",
+      "side": 1,
+      "message": "What\u0027s a real file system?",
+      "range": {
+        "startLine": 31,
+        "startChar": 27,
+        "endLine": 31,
+        "endChar": 43
+      },
+      "revId": "e54a5a46504ddabe52b7da046c1b4ac75a8dabc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa255e1d_75dd3ab0",
+        "filename": "components/arc/common/file_system.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-31T05:16:29Z",
+      "side": 1,
+      "message": "I\u0027m not sure what authority and root_id are: I assume they\u0027re Android-specific concepts?\n\n(Not sure, but maybe it\u0027d be reasonable to link to some sort of Android docs for what this mirrors? *shrug*)",
+      "range": {
+        "startLine": 120,
+        "startChar": 38,
+        "endLine": 120,
+        "endChar": 70
+      },
+      "revId": "e54a5a46504ddabe52b7da046c1b4ac75a8dabc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
