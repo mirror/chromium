@@ -16,7 +16,6 @@
 #include "components/reading_list/core/reading_list_model.h"
 #include "components/strings/grit/components_strings.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
-#import "ios/chrome/browser/content_suggestions/content_suggestions_alert_commands.h"
 #import "ios/chrome/browser/content_suggestions/content_suggestions_alert_factory.h"
 #import "ios/chrome/browser/content_suggestions/content_suggestions_header_view_controller.h"
 #import "ios/chrome/browser/content_suggestions/content_suggestions_header_view_controller_delegate.h"
@@ -34,6 +33,7 @@
 #import "ios/chrome/browser/ui/commands/generic_chrome_command.h"
 #include "ios/chrome/browser/ui/commands/ios_command_ids.h"
 #import "ios/chrome/browser/ui/commands/open_new_tab_command.h"
+#import "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_gesture_commands.h"
 #import "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_item.h"
 #import "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_most_visited_item.h"
 #import "ios/chrome/browser/ui/content_suggestions/content_suggestions_collection_utils.h"
@@ -65,7 +65,7 @@ const char kNTPHelpURL[] = "https://support.google.com/chrome/?p=new_tab";
 }  // namespace
 
 @interface ContentSuggestionsCoordinator ()<
-    ContentSuggestionsAlertCommands,
+    ContentSuggestionsGestureCommands,
     ContentSuggestionsCommands,
     ContentSuggestionsHeaderViewControllerCommandHandler,
     ContentSuggestionsViewControllerAudience,
@@ -211,14 +211,16 @@ const char kNTPHelpURL[] = "https://support.google.com/chrome/?p=new_tab";
         rendererInitiated:NO];
 }
 
-- (void)displayContextMenuForArticle:(CollectionViewItem*)item
-                             atPoint:(CGPoint)touchLocation
-                         atIndexPath:(NSIndexPath*)indexPath {
+- (void)displayContextMenuForSuggestion:(CollectionViewItem*)item
+                                atPoint:(CGPoint)touchLocation
+                            atIndexPath:(NSIndexPath*)indexPath
+                        readLaterAction:(BOOL)readLaterAction {
   self.alertCoordinator = [ContentSuggestionsAlertFactory
       alertCoordinatorForSuggestionItem:item
                        onViewController:self.suggestionsViewController
                                 atPoint:touchLocation
                             atIndexPath:indexPath
+                        readLaterAction:readLaterAction
                          commandHandler:self];
 
   [self.alertCoordinator start];
@@ -268,7 +270,7 @@ const char kNTPHelpURL[] = "https://support.google.com/chrome/?p=new_tab";
         rendererInitiated:NO];
 }
 
-#pragma mark - ContentSuggestionsAlertCommands
+#pragma mark - ContentSuggestionsGestureCommands
 
 - (void)openNewTabWithSuggestionsItem:(CollectionViewItem*)item
                             incognito:(BOOL)incognito {
@@ -293,10 +295,16 @@ const char kNTPHelpURL[] = "https://support.google.com/chrome/?p=new_tab";
   ContentSuggestionsItem* suggestionsItem =
       base::mac::ObjCCastStrict<ContentSuggestionsItem>(item);
 
+  NSIndexPath* itemIndexPath = indexPath;
+  if (!itemIndexPath) {
+    itemIndexPath = [self.suggestionsViewController.collectionViewModel
+        indexPathForItem:suggestionsItem];
+  }
+
   // TODO(crbug.com/691979): Add metrics.
   [self.contentSuggestionsMediator
       dismissSuggestion:suggestionsItem.suggestionIdentifier];
-  [self.suggestionsViewController dismissEntryAtIndexPath:indexPath];
+  [self.suggestionsViewController dismissEntryAtIndexPath:itemIndexPath];
 }
 
 - (void)openNewTabWithMostVisitedItem:(CollectionViewItem*)item
@@ -306,6 +314,16 @@ const char kNTPHelpURL[] = "https://support.google.com/chrome/?p=new_tab";
       base::mac::ObjCCastStrict<ContentSuggestionsMostVisitedItem>(item);
   [self logMostVisitedOpening:mostVisitedItem atIndex:index];
   [self openNewTabWithURL:mostVisitedItem.URL incognito:incognito];
+}
+
+- (void)openNewTabWithMostVisitedItem:(CollectionViewItem*)item
+                            incognito:(BOOL)incognito {
+  ContentSuggestionsMostVisitedItem* mostVisitedItem =
+      base::mac::ObjCCastStrict<ContentSuggestionsMostVisitedItem>(item);
+  NSInteger index = [self.suggestionsViewController.collectionViewModel
+                        indexPathForItem:mostVisitedItem]
+                        .item;
+  [self openNewTabWithMostVisitedItem:item incognito:incognito atIndex:index];
 }
 
 - (void)removeMostVisited:(CollectionViewItem*)item {
