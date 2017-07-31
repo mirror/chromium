@@ -403,8 +403,9 @@ public class ChromeLauncherActivity extends Activity
         maybePrefetchDnsInBackground();
 
         Intent newIntent = new Intent(getIntent());
-        String className = MultiWindowUtils.getInstance().getTabbedActivityForIntent(
-                newIntent, this).getName();
+        String className = MultiWindowUtils.getInstance()
+                                   .getTabbedActivityForIntent(newIntent, this)
+                                   .getName();
         newIntent.setClassName(getApplicationContext().getPackageName(), className);
         newIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {

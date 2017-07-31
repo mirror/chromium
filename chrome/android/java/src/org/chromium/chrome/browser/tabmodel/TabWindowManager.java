@@ -227,7 +227,8 @@ public class TabWindowManager implements ActivityStateListener {
             // ChromeTabbedActivity. Tabs should only be merged during a cold start of
             // ChromeTabbedActivity and not other instances (e.g. ChromeTabbedActivity2).
             boolean mergeTabs = FeatureUtilities.isTabModelMergingEnabled()
-                    && activity.getClass().equals(ChromeTabbedActivity.class)
+                    && ChromeTabbedActivity.isPrimaryTabbedModeClassName(
+                               activity.getClass().getName())
                     && getInstance().getNumberOfAssignedTabModelSelectors() == 0;
             TabPersistencePolicy persistencePolicy = new TabbedModeTabPersistencePolicy(
                     selectorIndex, mergeTabs);
