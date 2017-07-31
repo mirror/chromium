@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a090fb8f_933849ee",
+        "filename": "components/viz/service/frame_sinks/surface_synchronization_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1714,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-31T18:30:03Z",
+      "side": 1,
+      "message": "Verify that it has a PendingFrame?",
+      "revId": "2860b247ef6cea52a611d503a3d17de963bf1305",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3680b394_8c893968",
+        "filename": "components/viz/service/frame_sinks/surface_synchronization_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1723,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-31T18:30:03Z",
+      "side": 1,
+      "message": "Verify they have pending frames?",
+      "revId": "2860b247ef6cea52a611d503a3d17de963bf1305",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4974b840_8f80b00d",
+        "filename": "components/viz/service/frame_sinks/surface_synchronization_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1732,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-31T18:30:03Z",
+      "side": 1,
+      "message": "Verify they have pending frames?",
+      "revId": "2860b247ef6cea52a611d503a3d17de963bf1305",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90027534_375a61f1",
+        "filename": "components/viz/service/frame_sinks/surface_synchronization_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1741,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-31T18:30:03Z",
+      "side": 1,
+      "message": "Verify they don\u0027t have pending frames?",
+      "revId": "2860b247ef6cea52a611d503a3d17de963bf1305",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b65b72ae_0b02e255",
+        "filename": "components/viz/service/surfaces/surface_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-31T18:30:03Z",
+      "side": 1,
+      "message": "Maybe add a comment that if CreateSurface creates a Surface then it\u0027ll attach a temporary reference to it?",
+      "revId": "2860b247ef6cea52a611d503a3d17de963bf1305",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "767ff58d_3e485833",
+        "filename": "components/viz/service/surfaces/surface_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-31T18:30:03Z",
+      "side": 1,
+      "message": "Note to myself(fsamuel): I should rename this to: OnFirstSurfaceActivation.. .I\u0027ll do this in a separate CL.",
+      "revId": "2860b247ef6cea52a611d503a3d17de963bf1305",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
