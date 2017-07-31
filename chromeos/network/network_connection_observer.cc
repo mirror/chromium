@@ -25,6 +25,9 @@ void NetworkConnectionObserver::DisconnectRequested(
     const std::string& service_path) {
 }
 
+void NetworkConnectionObserver::ConfigureNonInteractiveNetwork(
+    const std::string& service_path) {}
+
 NetworkConnectionObserver::~NetworkConnectionObserver() {
 }
 
