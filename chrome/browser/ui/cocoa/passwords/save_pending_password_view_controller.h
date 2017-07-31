@@ -21,6 +21,7 @@
 
 - (NSView*)createPasswordView;
 - (NSArray*)createButtonsAndAddThemToView:(NSView*)view;
+- (void)onSwitchEditMode:(id)sender;
 @end
 
 @interface SavePendingPasswordViewController (Testing)
