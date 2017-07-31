@@ -366,6 +366,24 @@
     },
     {
       "key": {
+        "uuid": "0b81f8ac_6e766dd6",
+        "filename": "ash/login/ui/login_auth_user_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-31T21:06:58Z",
+      "side": 1,
+      "message": "Done, it looks like focus was broken in the previous implementation so I\u0027ll do a separate CL fixing it up.",
+      "parentUuid": "0b26e480_9e5a60ae",
+      "revId": "0350ad8b9ca478bcf74c2adf4f7039871ae943b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d9c81ce_bab76473",
         "filename": "ash/login/ui/login_auth_user_view.cc",
         "patchSetId": 4
@@ -553,6 +571,24 @@
       "side": 1,
       "message": "Do you mean it new animation doesn\u0027t start immediately?",
       "parentUuid": "0ebb8e84_10e2ddbc",
+      "revId": "0350ad8b9ca478bcf74c2adf4f7039871ae943b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80b8cbd3_07df5bbf",
+        "filename": "ash/login/ui/login_user_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-07-31T21:06:58Z",
+      "side": 1,
+      "message": "Yep, it seems that animation strategy does not affect explicit animations (ie, to get the animations to start immediately I need to call StartAnimation() instead of ScheduleAnimation() on line 247).",
+      "parentUuid": "4d9106f0_87a081cc",
       "revId": "0350ad8b9ca478bcf74c2adf4f7039871ae943b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
