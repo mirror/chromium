@@ -4,6 +4,7 @@
 
 #include "ui/gl/gl_surface_egl.h"
 
+#include <dlfcn.h>
 #include <stddef.h>
 #include <stdint.h>
 
@@ -864,6 +865,27 @@ bool NativeViewGLSurfaceEGL::Initialize(GLSurfaceFormat format) {
     Destroy();
     return false;
   }
+
+#if defined(OS_ANDROID)
+  typedef int (*ANativeWindowSetBufferCount)(ANativeWindow * window,
+                                             size_t bufferCount);
+  void* libandroid = dlopen("libandroid.so", RTLD_NOW);
+  if (libandroid == nullptr) {
+    TRACE_EVENT0("gpu", "Couldn't open libandroid.so");
+  } else {
+    TRACE_EVENT0("gpu", "ANativeWindow_setBufferCount(2)");
+    auto setBufferCount = reinterpret_cast<ANativeWindowSetBufferCount>(
+        dlsym(libandroid, "ANativeWindow_setBufferCount"));
+    if (setBufferCount == nullptr) {
+      TRACE_EVENT0("gpu", "ANativeWindow_setBufferCount not found.");
+    } else {
+      int err = setBufferCount(window_, 2);
+      if (err != 0) {
+        TRACE_EVENT1("gpu", "ANativeWindow_setBufferCount failed", "err", err);
+      }
+    }
+  }
+#endif
 
   if (g_driver_egl.ext.b_EGL_NV_post_sub_buffer) {
     EGLint surfaceVal;
