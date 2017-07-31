@@ -57,8 +57,9 @@ class VIZ_HOST_EXPORT HostFrameSinkManager
       scoped_refptr<base::SingleThreadTaskRunner> task_runner,
       mojom::FrameSinkManagerPtr ptr);
 
-  void AddObserver(FrameSinkObserver* observer);
-  void RemoveObserver(FrameSinkObserver* observer);
+  void RegisterFrameSinkId(const FrameSinkId& frame_sink_id,
+                           FrameSinkObserver* observer);
+  void InvalidateFrameSinkId(const FrameSinkId& frame_sink_id);
 
   // Creates a connection between client to viz, using |request| and |client|,
   // that allows the client to submit CompositorFrames. When no longer needed,
@@ -106,6 +107,9 @@ class VIZ_HOST_EXPORT HostFrameSinkManager
     bool IsEmpty() const {
       return !HasCompositorFrameSinkData() && !parent.has_value();
     }
+
+    // The observer to be notified of changes to this FrameSink.
+    FrameSinkObserver* observer = nullptr;
 
     // If the frame sink is a root that corresponds to a Display.
     bool is_root = false;
