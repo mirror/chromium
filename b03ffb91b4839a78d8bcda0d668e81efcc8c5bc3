@@ -352,6 +352,30 @@
       "revId": "b03ffb91b4839a78d8bcda0d668e81efcc8c5bc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8133263a_e49dafdc",
+        "filename": "url/gurl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-07-31T03:05:41Z",
+      "side": 1,
+      "message": "So, I looked at the Resolve() code and it appears that non-standard URLs will return a valid GURL, if the base GURL has a scheme, authority, and path. So, our new function also returns a valid GURL for these URLs, which includes non-standard URLs. I changed the code to no longer check of IsStandard() and clarified in the comment. Let me know if it\u0027s not clear enough.",
+      "parentUuid": "981fa32a_307ec95f",
+      "range": {
+        "startLine": 380,
+        "startChar": 21,
+        "endLine": 380,
+        "endChar": 33
+      },
+      "revId": "b03ffb91b4839a78d8bcda0d668e81efcc8c5bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
