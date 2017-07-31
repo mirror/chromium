@@ -26,20 +26,36 @@ TEST(MailtoHandlerTest, TestRewriteGood) {
   result =
       [handler rewriteMailtoURL:GURL("mailto:user@domain.com?subject=hello")];
   EXPECT_NSEQ(@"mailtohandler:/co?to=user@domain.com&subject=hello", result);
+}
+
+TEST(MailtoHandlerTest, TestRewriteUnrecognizedParams) {
+  MailtoHandler* handler = [[MailtoHandler alloc] init];
   // Tests mailto URL with unrecognized query parameters.
-  result = [handler
+  NSString* result = [handler
       rewriteMailtoURL:
           GURL("mailto:someone@there.com?garbage=in&garbageOut&subject=trash")];
   EXPECT_NSEQ(@"mailtohandler:/co?to=someone@there.com&subject=trash", result);
 }
 
-TEST(MailtoHandlerTest, TestRewriteBad) {
+TEST(MailtoHandlerTest, TestRewriteBodyWithURL) {
+  MailtoHandler* handler = [[MailtoHandler alloc] init];
+  // Tests mailto URL with a body that includes a = sign.
+  NSString* result = [handler
+      rewriteMailtoURL:GURL("mailto:user@domain.com?body=http://foo.bar?x=y")];
+  EXPECT_NSEQ(@"mailtohandler:/co?to=user@domain.com&body=http://foo.bar?x=y",
+              result);
+}
+
+TEST(MailtoHandlerTest, TestRewriteWithMixedCase) {
+  MailtoHandler* handler = [[MailtoHandler alloc] init];
+  // Tests mailto URL with parameters that are mixed upper/lower cases.
+  NSString* result =
+      [handler rewriteMailtoURL:GURL("mailto:?Subject=Blah&BODY=stuff")];
+  EXPECT_NSEQ(@"mailtohandler:/co?subject=Blah&body=stuff", result);
+}
+
+TEST(MailtoHandlerTest, TestRewriteNotMailto) {
   MailtoHandler* handler = [[MailtoHandler alloc] init];
   NSString* result = [handler rewriteMailtoURL:GURL("http://www.google.com")];
   EXPECT_FALSE(result);
-  result = [handler
-      rewriteMailtoURL:
-          GURL("mailto:user@domain.com?foo=bar&cc=someone@somewhere.com")];
-  EXPECT_NSEQ(@"mailtohandler:/co?to=user@domain.com&cc=someone@somewhere.com",
-              result);
 }
