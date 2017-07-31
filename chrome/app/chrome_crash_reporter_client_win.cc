@@ -14,6 +14,7 @@
 #include <iterator>
 #include <memory>
 #include <string>
+#include <vector>
 
 #include "base/command_line.h"
 #include "base/debug/crash_logging.h"
@@ -245,8 +246,14 @@ void ChromeCrashReporterClient::InitializeCrashReportingForProcess() {
   if (process_type != install_static::kCrashpadHandler &&
       process_type != install_static::kFallbackHandler) {
     crash_reporter::SetCrashReporterClient(instance);
+
+    std::wstring user_data_dir;
+    if (process_type.empty())
+      install_static::GetUserDataDirectory(&user_data_dir, nullptr);
+
     crash_reporter::InitializeCrashpadWithEmbeddedHandler(
-        process_type.empty(), install_static::UTF16ToUTF8(process_type));
+        process_type.empty(), install_static::UTF16ToUTF8(process_type),
+        install_static::UTF16ToUTF8(user_data_dir));
   }
 }
 #endif  // NACL_WIN64
@@ -354,12 +361,13 @@ bool ChromeCrashReporterClient::GetCrashDumpLocation(
     return true;
 
   *crash_dir = install_static::GetCrashDumpLocation();
-  return true;
+  return !crash_dir->empty();
 }
 
 bool ChromeCrashReporterClient::GetCrashMetricsLocation(
     base::string16* metrics_dir) {
-  return install_static::GetUserDataDirectory(metrics_dir, nullptr);
+  install_static::GetUserDataDirectory(metrics_dir, nullptr);
+  return !metrics_dir->empty();
 }
 
 // TODO(ananta)
