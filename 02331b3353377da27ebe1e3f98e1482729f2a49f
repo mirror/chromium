@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "834ad494_6bcb6886",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-07-31T19:08:05Z",
+      "side": 1,
+      "message": "Ah, didn\u0027t realize LeakyInstance was deprecated!\n\nGood practice would still at least annotate the object as being deliberately leaked, using the macros in base/debug/leak_annotations.h.",
+      "range": {
+        "startLine": 22,
+        "startChar": 26,
+        "endLine": 22,
+        "endChar": 35
+      },
+      "revId": "02331b3353377da27ebe1e3f98e1482729f2a49f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
