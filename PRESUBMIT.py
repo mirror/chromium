@@ -2040,8 +2040,9 @@ def _CheckForRiskyJsConstLet(input_api, line_number, line):
 
 def _CheckForRiskyJsFeatures(input_api, output_api):
   maybe_ios_js = (r"^(ios|components|ui\/webui\/resources)\/.+\.js$", )
-  file_filter = lambda f: input_api.FilterSourceFile(f, white_list=maybe_ios_js)
-
+  not_ios_js = (r".*chromeos.*", )
+  file_filter = lambda f: input_api.FilterSourceFile(f, white_list=maybe_ios_js,
+                                                     black_list=not_ios_js)
   results = []
   for f in input_api.AffectedFiles(file_filter=file_filter):
     arrow_error_lines = []
