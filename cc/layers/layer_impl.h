@@ -347,6 +347,10 @@ class CC_EXPORT LayerImpl {
 
   void ResetChangeTracking();
 
+  // Check if the layer is opaque, i.e., if the layer is filled with opaque
+  // background color.
+  virtual bool IsLayerOpaque() const;
+
   virtual SimpleEnclosedRegion VisibleOpaqueRegion() const;
 
   virtual void DidBecomeActive() {}

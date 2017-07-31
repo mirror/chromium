@@ -89,6 +89,7 @@ void PaintedScrollbarLayerImpl::AppendQuads(
   bool premultipled_alpha = true;
   bool flipped = false;
   bool nearest_neighbor = false;
+  SetContentsOpaque(false);
   gfx::PointF uv_top_left(0.f, 0.f);
   gfx::PointF uv_bottom_right(1.f, 1.f);
 
