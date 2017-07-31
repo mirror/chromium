@@ -1,0 +1,244 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a16e96e1_ccff97d1",
+        "filename": "content/browser/devtools/protocol/page_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-31T18:04:10Z",
+      "side": 1,
+      "message": "Remove.",
+      "revId": "db719f3be1ff8965dcb2d416feef6545436847dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4c86855_5c64de19",
+        "filename": "content/browser/devtools/protocol/page_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-31T18:04:10Z",
+      "side": 1,
+      "message": "Check for enabled on the callsite.",
+      "revId": "db719f3be1ff8965dcb2d416feef6545436847dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "035c3561_610c7d6b",
+        "filename": "content/browser/devtools/protocol/page_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-31T18:04:10Z",
+      "side": 1,
+      "message": "InvalidParams",
+      "range": {
+        "startLine": 596,
+        "startChar": 23,
+        "endLine": 596,
+        "endChar": 36
+      },
+      "revId": "db719f3be1ff8965dcb2d416feef6545436847dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35482699_542030e8",
+        "filename": "content/browser/devtools/protocol/page_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-31T18:04:10Z",
+      "side": 1,
+      "message": "DidRun...",
+      "range": {
+        "startLine": 69,
+        "startChar": 7,
+        "endLine": 69,
+        "endChar": 26
+      },
+      "revId": "db719f3be1ff8965dcb2d416feef6545436847dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46df9aab_1e1f6ce6",
+        "filename": "content/browser/devtools/protocol/page_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-31T18:04:10Z",
+      "side": 1,
+      "message": "DidClose...",
+      "range": {
+        "startLine": 78,
+        "startChar": 7,
+        "endLine": 78,
+        "endChar": 29
+      },
+      "revId": "db719f3be1ff8965dcb2d416feef6545436847dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef04b1b7_cd06402c",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 4557,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-31T18:04:10Z",
+      "side": 1,
+      "message": "Only set if there is a client.",
+      "range": {
+        "startLine": 4557,
+        "startChar": 2,
+        "endLine": 4557,
+        "endChar": 31
+      },
+      "revId": "db719f3be1ff8965dcb2d416feef6545436847dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b494633_181b7213",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 4561,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-31T18:04:10Z",
+      "side": 1,
+      "message": "{}",
+      "revId": "db719f3be1ff8965dcb2d416feef6545436847dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c6e2d0f_8f404eef",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 4567,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-31T18:04:10Z",
+      "side": 1,
+      "message": "Try to eliminate field.",
+      "range": {
+        "startLine": 4567,
+        "startChar": 4,
+        "endLine": 4567,
+        "endChar": 19
+      },
+      "revId": "db719f3be1ff8965dcb2d416feef6545436847dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d90c628b_37f5d887",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 4618,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-31T18:04:10Z",
+      "side": 1,
+      "message": "frame_url",
+      "range": {
+        "startLine": 4618,
+        "startChar": 7,
+        "endLine": 4618,
+        "endChar": 10
+      },
+      "revId": "db719f3be1ff8965dcb2d416feef6545436847dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "335cdb42_f826499d",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 4619,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-31T18:04:10Z",
+      "side": 1,
+      "message": "{}",
+      "revId": "db719f3be1ff8965dcb2d416feef6545436847dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "918b05c3_0811a4ef",
+        "filename": "content/browser/web_contents/web_contents_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-31T18:04:10Z",
+      "side": 1,
+      "message": "Remove.",
+      "revId": "db719f3be1ff8965dcb2d416feef6545436847dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a29c5a40_18a4ce04",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorPageAgent.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 771,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-31T18:04:10Z",
+      "side": 1,
+      "message": "Let\u0027s remove this.",
+      "revId": "db719f3be1ff8965dcb2d416feef6545436847dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
