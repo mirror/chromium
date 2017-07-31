@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86824e07_3c11eab7",
+        "filename": "ios/chrome/browser/translate/before_translate_infobar_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-31T21:12:56Z",
+      "side": 1,
+      "message": "You want to use something more unique than Done and Cancel.",
+      "range": {
+        "startLine": 305,
+        "startChar": 43,
+        "endLine": 305,
+        "endChar": 47
+      },
+      "revId": "caeb15b4cd6a6a021a24111201de05969f82442d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a538a41b_af33b85c",
+        "filename": "ios/chrome/browser/translate/before_translate_infobar_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-31T21:12:56Z",
+      "side": 1,
+      "message": "Could you please add constants for these to avoid code duplication. see go/unit-test-practices#public-apis",
+      "range": {
+        "startLine": 305,
+        "startChar": 14,
+        "endLine": 305,
+        "endChar": 40
+      },
+      "revId": "caeb15b4cd6a6a021a24111201de05969f82442d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
