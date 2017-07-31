@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "760a06e3_ddc6f28a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-07-31T16:20:02Z",
+      "side": 1,
+      "message": "peak rss is on all versions of linux and android/ other os. Only resetting peak is not supported on old versions.\nIn any case we having the peak rss number on the trace is a good feature. At least I have used it multiple times and also good to see it on slow reports, to get an idea of what happened in the past. It\u0027d be good to get this back soon. Shouldn\u0027t be a lot of work.",
+      "range": {
+        "startLine": 23,
+        "startChar": 2,
+        "endLine": 23,
+        "endChar": 40
+      },
+      "revId": "a4dbaac5950fd4c775f84646e72430e25b6f62a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
