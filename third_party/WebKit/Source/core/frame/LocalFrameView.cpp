@@ -215,7 +215,8 @@ LocalFrameView::LocalFrameView(LocalFrame& frame, IntRect frame_rect)
       allows_layout_invalidation_after_layout_clean_(true),
       forcing_layout_parent_view_(false),
       needs_intersection_observation_(false),
-      main_thread_scrolling_reasons_(0) {
+      main_thread_scrolling_reasons_(0),
+      paint_frame_cnt_(0) {
   Init();
 }
 
@@ -3272,6 +3273,7 @@ void LocalFrameView::PaintTree() {
     frame_view.Lifecycle().AdvanceTo(DocumentLifecycle::kInPaint);
   });
 
+  paint_frame_cnt_++;
   if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     if (GetLayoutView()->Layer()->NeedsRepaint()) {
       paint_controller_->SetupRasterUnderInvalidationChecking();
