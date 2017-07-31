@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc937228_fb5abf0e",
+        "filename": "chrome/browser/vr/elements/ui_element_debug_id.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-31T17:12:26Z",
+      "side": 1,
+      "message": "Nit: as",
+      "range": {
+        "startLine": 13,
+        "startChar": 55,
+        "endLine": 13,
+        "endChar": 57
+      },
+      "revId": "885221386b1f310a23102ec56eb11ef3a26109f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
