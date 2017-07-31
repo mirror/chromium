@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f0c81a0_3b2572da",
+        "filename": "services/ui/ws/test_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-31T20:11:44Z",
+      "side": 1,
+      "message": "TestFrameSinkManager.\n\nAlso, I\u0027d prefer putting this in a separate file.",
+      "revId": "da0b106955db8ff46881999b97b59338799f72c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94a248b0_18b23b13",
+        "filename": "services/ui/ws/test_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-07-31T20:11:44Z",
+      "side": 1,
+      "message": "Place in a separate file?",
+      "revId": "da0b106955db8ff46881999b97b59338799f72c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
