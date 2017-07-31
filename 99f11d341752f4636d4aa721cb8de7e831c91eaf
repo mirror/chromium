@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86055a46_e6073974",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-31T09:49:05Z",
+      "side": 1,
+      "message": "Maybe add a TODO to set-up blob_context_ as well for future tests?",
+      "revId": "99f11d341752f4636d4aa721cb8de7e831c91eaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "137c62a0_1d1066bb",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-31T09:49:05Z",
+      "side": 1,
+      "message": "nit: GetStorageContext() -\u003e GetBlobStorageContext(), or GetBlobContext()",
+      "revId": "99f11d341752f4636d4aa721cb8de7e831c91eaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
