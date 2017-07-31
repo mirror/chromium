@@ -66,8 +66,7 @@ namespace {
 
 const char* const kCommonSwitches[] = {
     "disable-popup-blocking", "enable-automation", "ignore-certificate-errors",
-    "metrics-recording-only",
-};
+    "metrics-recording-only", "disable-blink-features=ScrollTopLeftInterop"};
 
 const char* const kDesktopSwitches[] = {
     "disable-hang-monitor",
