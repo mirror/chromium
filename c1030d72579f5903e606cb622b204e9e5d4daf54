@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3acbbd0_95c3bd81",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 2043,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-31T19:04:07Z",
+      "side": 1,
+      "message": "or just \".*chromeos.*\" ;-)",
+      "range": {
+        "startLine": 2043,
+        "startChar": 18,
+        "endLine": 2043,
+        "endChar": 51
+      },
+      "revId": "c1030d72579f5903e606cb622b204e9e5d4daf54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec5e4814_d0c3a7d6",
+        "filename": "ui/webui/resources/PRESUBMIT.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-31T19:04:07Z",
+      "side": 1,
+      "message": "ditto:\n    if \u0027chromeos\u0027 in local_path:",
+      "range": {
+        "startLine": 34,
+        "startChar": 18,
+        "endLine": 34,
+        "endChar": 28
+      },
+      "revId": "c1030d72579f5903e606cb622b204e9e5d4daf54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
