@@ -535,14 +535,24 @@ class SessionRestoreImpl : public content::NotificationObserver {
       }
 
       int tab_index_offset = 0;
+
+      // Restore the last active tab first.
+      const sessions::SessionTab& tab = *(window.tabs[selected_tab_index]);
+      RestoreTab(tab, browser, created_contents, tab_index_offset,
+                 selected_tab_index, true /*selected tab*/, now, highest_time);
+
       for (int i = 0; i < static_cast<int>(window.tabs.size()); ++i) {
         const sessions::SessionTab& tab = *(window.tabs[i]);
 
+        // Last active tab was restored before the loop.
+        bool is_selected_tab = (i == selected_tab_index);
+        if (is_selected_tab)
+          continue;
+
         // Loads are scheduled for each restored tab unless the tab is going to
         // be selected as ShowBrowser() will load the selected tab.
-        bool is_selected_tab = (i == selected_tab_index);
         RestoreTab(tab, browser, created_contents, tab_index_offset, i,
-                   is_selected_tab, now, highest_time);
+                   false /*selected tab*/, now, highest_time);
       }
     } else {
       // If the browser already has tabs, we want to restore the new ones after
