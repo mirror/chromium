@@ -139,6 +139,24 @@
       "revId": "a02c93917bbdb12ec8a2e1fbbb745de001eeeec6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "33b23a40_11f1abd4",
+        "filename": "ui/webui/resources/chromeos/bluetooth_dialog.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-31T21:15:40Z",
+      "side": 1,
+      "message": "Ok. I am thinking that we are starting to have too many chromeos/ subfolders, see\n\nui/webui/resources/js/chromeos\nui/webui/resources/css/chromeos\nui/webui/resources/html/chromeos\nui/webui/resources/cr_elements/chromeos\n\nWe used to separate things per language, js/css/html, which justified the separate chromeos/ folders. Now we also add a top-level ui/webui/resources/chromeos, which IMO despite your effort to explain in the README.md  the end result is not clear.\n\nWe don\u0027t have to fix this in this CL, but overall I think we should rethink the structure of the chromeos code under ui/webui/resources.",
+      "parentUuid": "689587ba_0c476878",
+      "revId": "a02c93917bbdb12ec8a2e1fbbb745de001eeeec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
