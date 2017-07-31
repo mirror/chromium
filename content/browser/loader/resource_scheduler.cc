@@ -9,7 +9,6 @@
 #include <string>
 #include <utility>
 
-#include "base/feature_list.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/field_trial.h"
@@ -63,6 +62,15 @@ const int kMaxRequestsBeforeYieldingDefault = 5;
 // experiment configuration.
 const base::Feature kMaxDelayableRequestsNetworkOverride{
     "MaxDelayableRequestsNetworkOverride", base::FEATURE_DISABLED_BY_DEFAULT};
+
+// When the effective connection type is detected to be lower than or equal to
+// the parameter provided in the experiment configuration and greater than
+// |EFFECTIVE_CONNECTION_TYPE_OFFLINE|, this feature will reduce the maximum
+// delayable requests allowed in-flight based on the number of non-delayable
+// requests in-flight times a multiplier, which is also specified in the
+// experiment configuration.
+const base::Feature kNonDelayableThrottlesDelayable{
+    "NonDelayableThrottlesDelayable", base::FEATURE_DISABLED_BY_DEFAULT};
 
 enum StartMode {
   START_SYNC,
@@ -721,6 +729,13 @@ class ResourceScheduler::Client {
           net::NetLog::StringCallback(
               "trigger", RequestStartTriggerString(trigger)));
     }
+    // Record the number of delayable requests in-flight when a non-delayable
+    // request starts.
+    if (!RequestAttributesAreSet(request->attributes(), kAttributeDelayable)) {
+      UMA_HISTOGRAM_COUNTS_100(
+          "ResourceScheduler.NumDelayableRequestsInFlightAtStart.NonDelayable",
+          in_flight_delayable_count_);
+    }
     InsertInFlightRequest(request);
     request->Start(start_mode);
   }
@@ -795,8 +810,15 @@ class ResourceScheduler::Client {
       return ShouldStartOrYieldRequest();
 
     // Delayable requests.
-    if (in_flight_delayable_count_ >= max_delayable_requests_)
+    DCHECK_GE(in_flight_requests_.size(), in_flight_delayable_count_);
+    size_t num_non_delayable_requests_weighted =
+        resource_scheduler_->GetCurrentNonDelayableThrottlesDelayableMultiplier(
+            network_quality_estimator_) *
+        (in_flight_requests_.size() - in_flight_delayable_count_);
+    if (in_flight_delayable_count_ + num_non_delayable_requests_weighted >=
+        max_delayable_requests_) {
       return DO_NOT_START_REQUEST_AND_STOP_SEARCHING;
+    }
 
     if (ShouldKeepSearching(host_port_pair)) {
       // There may be other requests for other hosts that may be allowed,
@@ -978,7 +1000,11 @@ ResourceScheduler::ResourceScheduler()
           kMaxRequestsBeforeYieldingDefault)),
       max_requests_for_bdp_ranges_(GetMaxDelayableRequestsExperimentConfig()),
       max_delayable_requests_threshold_(
-          GetMaxDelayableRequestsExperimentMaxECT()) {}
+          GetMaxECTForExperiment(kMaxDelayableRequestsNetworkOverride)),
+      non_delayable_throttles_delayable_multiplier_(
+          GetNonDelayableThrottlesDelayableConfig()),
+      non_delayable_throttles_delayable_threshold_(
+          GetMaxECTForExperiment(kNonDelayableThrottlesDelayable)) {}
 
 ResourceScheduler::~ResourceScheduler() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
@@ -1184,6 +1210,11 @@ void ResourceScheduler::ReprioritizeRequest(net::URLRequest* request,
   ReprioritizeRequest(request, new_priority, current_intra_priority);
 }
 
+net::EffectiveConnectionType
+ResourceScheduler::GetMaxECTForMaxDelayableRequestsNetworkOverrideForTests() {
+  return GetMaxECTForExperiment(kMaxDelayableRequestsNetworkOverride);
+}
+
 ResourceScheduler::ClientId ResourceScheduler::MakeClientId(
     int child_id, int route_id) {
   return (static_cast<ResourceScheduler::ClientId>(child_id) << 32) | route_id;
@@ -1227,24 +1258,31 @@ ResourceScheduler::GetMaxDelayableRequestsExperimentConfig() {
   }
 }
 
-net::EffectiveConnectionType
-ResourceScheduler::GetMaxDelayableRequestsExperimentMaxECT() {
+net::EffectiveConnectionType ResourceScheduler::GetMaxECTForExperiment(
+    const base::Feature& experiment) {
   static const char kMaxEffectiveConnectionType[] =
       "MaxEffectiveConnectionType";
 
-  if (!base::FeatureList::IsEnabled(kMaxDelayableRequestsNetworkOverride))
+  if (!base::FeatureList::IsEnabled(experiment))
     return net::EFFECTIVE_CONNECTION_TYPE_UNKNOWN;
 
   net::EffectiveConnectionType ect;
   if (!net::GetEffectiveConnectionTypeForName(
-          base::GetFieldTrialParamValueByFeature(
-              kMaxDelayableRequestsNetworkOverride,
-              kMaxEffectiveConnectionType),
+          base::GetFieldTrialParamValueByFeature(experiment,
+                                                 kMaxEffectiveConnectionType),
           &ect)) {
     return net::EFFECTIVE_CONNECTION_TYPE_UNKNOWN;
   }
 
   return ect;
+}
+
+double ResourceScheduler::GetNonDelayableThrottlesDelayableConfig() {
+  static const char kNonDelayableThrottlesDelayableParam[] =
+      "NonDelayableThrottlesDelayableParam";
+  return base::GetFieldTrialParamByFeatureAsDouble(
+      kNonDelayableThrottlesDelayable, kNonDelayableThrottlesDelayableParam,
+      0.0);
 }
 
 size_t ResourceScheduler::ComputeMaxDelayableRequestsNetworkOverride(
@@ -1273,6 +1311,18 @@ int ResourceScheduler::GetNumberOfDelayableRequestsForBDP(
       return range.max_requests;
   }
   return kDefaultMaxNumDelayableRequestsPerClient;
+}
+
+double ResourceScheduler::GetCurrentNonDelayableThrottlesDelayableMultiplier(
+    const net::NetworkQualityEstimator* network_quality_estimator) const {
+  if (network_quality_estimator &&
+      network_quality_estimator->GetEffectiveConnectionType() <=
+          non_delayable_throttles_delayable_threshold_ &&
+      network_quality_estimator->GetEffectiveConnectionType() >
+          net::EFFECTIVE_CONNECTION_TYPE_OFFLINE) {
+    return non_delayable_throttles_delayable_multiplier_;
+  }
+  return 0.0;
 }
 
 }  // namespace content
