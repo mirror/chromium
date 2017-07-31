@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "32f3e970_1d6d7e7c",
+        "filename": "base/values.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-31T18:29:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6038a07e_a901fc95",
+      "range": {
+        "startLine": 372,
+        "startChar": 22,
+        "endLine": 372,
+        "endChar": 60
+      },
+      "revId": "968135aae469d7807aa450affc3cbb07344be270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5aa59f6_7a6cf590",
         "filename": "base/values.cc",
         "patchSetId": 5
@@ -248,6 +272,30 @@
     },
     {
       "key": {
+        "uuid": "072ac846_78a0f93d",
+        "filename": "base/values.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-31T18:29:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f43f10b6_688d8ce6",
+      "range": {
+        "startLine": 387,
+        "startChar": 12,
+        "endLine": 387,
+        "endChar": 20
+      },
+      "revId": "968135aae469d7807aa450affc3cbb07344be270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8b8796d_324f5669",
         "filename": "base/values.cc",
         "patchSetId": 5
@@ -295,6 +343,30 @@
     },
     {
       "key": {
+        "uuid": "1f2d1fd7_36e7f210",
+        "filename": "base/values.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-31T18:29:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "69bdf94a_5912e956",
+      "range": {
+        "startLine": 396,
+        "startChar": 2,
+        "endLine": 396,
+        "endChar": 8
+      },
+      "revId": "968135aae469d7807aa450affc3cbb07344be270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61284e58_3f0ea742",
         "filename": "base/values.h",
         "patchSetId": 5
@@ -324,6 +396,24 @@
       "side": 1,
       "message": "That\u0027s possible for end(), but then what do we return on success? That\u0027s still an iterator into another container.",
       "parentUuid": "61284e58_3f0ea742",
+      "revId": "968135aae469d7807aa450affc3cbb07344be270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecab12f4_82bc2cc8",
+        "filename": "base/values.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-31T18:29:34Z",
+      "side": 1,
+      "message": "Oh yeah, you\u0027re right of course, my bad. Returning an iterator won\u0027t work and a pointer is the way to go. Should we then go ahead and also return pointers from |FindKey|? While that breaks some symmetry with std::map there are multiple reasons why it might be preferable:\n\n- The iterator dereferences to std::pair\u003cstd::string, base::Value\u003e due to symmetry with std::map. I\u0027d guess in the vast majority callers are only interested in the |second| member of the pair (ie the value), since they needed the key to do the lookup in the first place and should already have access to it. This means there will be a lot of calls to iter-\u003esecond, which could simply be replaced by *iter.\n\n- We would have consistency between FindPath and FindKey, which is good for callers. Otherwise, depending on the method, callers would need to remember how to dereference it, as it\u0027s either *ptr or iter-\u003esecond. Having a single *ptr is better in my opinion.\n\n- We would be able to drop |DictEnd|, which was kinda weird to begin with.",
+      "parentUuid": "613ac72f_8c240d19",
       "revId": "968135aae469d7807aa450affc3cbb07344be270",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
