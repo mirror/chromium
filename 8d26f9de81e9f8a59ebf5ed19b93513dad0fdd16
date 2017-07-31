@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6e61dda3_7052e871",
+        "filename": "chrome/browser/sessions/session_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1026,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-31T16:10:40Z",
+      "side": 1,
+      "message": "D\u0027OH! Done.",
+      "parentUuid": "7d0cf5b7_927a7077",
+      "revId": "8d26f9de81e9f8a59ebf5ed19b93513dad0fdd16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fed7ac0c_c6dfcb3a",
         "filename": "chrome/browser/sessions/session_service_unittest.cc",
         "patchSetId": 2
