@@ -16916,6 +16916,12 @@ void GLES2DecoderImpl::DoCopyTextureCHROMIUM(
     state_.EnableDisableFramebufferSRGB(enable_framebuffer_srgb);
   }
 
+  if (dest_texture->IsImmutable()) {
+    LOCAL_SET_GL_ERROR(GL_INVALID_OPERATION, kFunctionName,
+                       "texture is immutable");
+    return;
+  }
+
   int source_width = 0;
   int source_height = 0;
   gl::GLImage* image =
@@ -16928,6 +16934,18 @@ void GLES2DecoderImpl::DoCopyTextureCHROMIUM(
       LOCAL_SET_GL_ERROR(GL_INVALID_VALUE, kFunctionName, "invalid image size");
       return;
     }
+
+    // Try using GLImage::CopyTexImage when possible.
+    bool unpack_premultiply_alpha_change =
+        (unpack_premultiply_alpha ^ unpack_unmultiply_alpha) != 0;
+    // TODO(qiankun.miao@intel.com): Support level > 0 for CopyTexImage.
+    if (internal_format == source_internal_format && dest_level == 0 &&
+        !unpack_flip_y && !unpack_premultiply_alpha_change) {
+      glBindTexture(dest_binding_target, dest_texture->service_id());
+      if (image->CopyTexImage(dest_target))
+        return;
+    }
+
   } else {
     if (!source_texture->GetLevelSize(source_target, source_level,
                                       &source_width, &source_height, nullptr)) {
@@ -16942,12 +16960,6 @@ void GLES2DecoderImpl::DoCopyTextureCHROMIUM(
       LOCAL_SET_GL_ERROR(GL_INVALID_VALUE, kFunctionName, "Bad dimensions");
       return;
     }
-  }
-
-  if (dest_texture->IsImmutable()) {
-    LOCAL_SET_GL_ERROR(GL_INVALID_OPERATION, kFunctionName,
-                       "texture is immutable");
-    return;
   }
 
   // Clear the source texture if necessary.
@@ -17001,17 +17013,6 @@ void GLES2DecoderImpl::DoCopyTextureCHROMIUM(
   } else {
     texture_manager()->SetLevelCleared(dest_texture_ref, dest_target,
                                        dest_level, true);
-  }
-
-  // Try using GLImage::CopyTexImage when possible.
-  bool unpack_premultiply_alpha_change =
-      (unpack_premultiply_alpha ^ unpack_unmultiply_alpha) != 0;
-  // TODO(qiankun.miao@intel.com): Support level > 0 for CopyTexImage.
-  if (image && dest_level == 0 && !unpack_flip_y &&
-      !unpack_premultiply_alpha_change) {
-    glBindTexture(dest_binding_target, dest_texture->service_id());
-    if (image->CopyTexImage(dest_target))
-      return;
   }
 
   DoBindOrCopyTexImageIfNeeded(source_texture, source_target, 0);
@@ -17217,8 +17218,8 @@ void GLES2DecoderImpl::DoCopySubTextureCHROMIUM(
   bool unpack_premultiply_alpha_change =
       (unpack_premultiply_alpha ^ unpack_unmultiply_alpha) != 0;
   // TODO(qiankun.miao@intel.com): Support level > 0 for CopyTexSubImage.
-  if (image && dest_level == 0 && !unpack_flip_y &&
-      !unpack_premultiply_alpha_change) {
+  if (image && dest_internal_format == source_internal_format &&
+      dest_level == 0 && !unpack_flip_y && !unpack_premultiply_alpha_change) {
     ScopedTextureBinder binder(&state_, dest_texture->service_id(),
                                dest_binding_target);
     if (image->CopyTexSubImage(dest_target, gfx::Point(xoffset, yoffset),

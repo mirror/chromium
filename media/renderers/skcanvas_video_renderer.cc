@@ -95,9 +95,8 @@ sk_sp<SkImage> NewSkImageFromVideoFrameYUVTextures(
 
   gpu::gles2::GLES2Interface* gl = context_3d.gl;
   DCHECK(gl);
-  gfx::Size ya_tex_size = video_frame->coded_size();
-  gfx::Size uv_tex_size((ya_tex_size.width() + 1) / 2,
-                        (ya_tex_size.height() + 1) / 2);
+  gfx::Rect ya_tex_size = video_frame->visible_rect();
+  gfx::Rect uv_tex_size((ya_tex_size.width()) / 2, (ya_tex_size.height()) / 2);
 
   GrGLTextureInfo source_textures[] = {{0, 0}, {0, 0}, {0, 0}};
   GLint min_mag_filter[][2] = {{0, 0}, {0, 0}, {0, 0}};
@@ -214,7 +213,7 @@ sk_sp<SkImage> NewSkImageFromVideoFrameNative(VideoFrame* video_frame,
   source_texture_info.fID = source_texture;
   source_texture_info.fTarget = GL_TEXTURE_2D;
   GrBackendTexture source_backend_texture(
-      video_frame->coded_size().width(), video_frame->coded_size().height(),
+      video_frame->visible_rect().width(), video_frame->visible_rect().height(),
       kRGBA_8888_GrPixelConfig, source_texture_info);
   return SkImage::MakeFromAdoptedTexture(
       context_3d.gr_context, source_backend_texture, kTopLeft_GrSurfaceOrigin);
@@ -826,21 +825,9 @@ void SkCanvasVideoRenderer::CopyVideoFrameSingleTextureToGLTexture(
   // value down to get the expected result.
   // "flip_y == true" means to reverse the video orientation while
   // "flip_y == false" means to keep the intrinsic orientation.
-
-  // Must reallocate the destination texture and copy only a sub-portion.
-  gfx::Rect dest_rect = video_frame->visible_rect();
-#if DCHECK_IS_ON()
-  // There should always be enough data in the source texture to
-  // cover this copy.
-  DCHECK_LE(dest_rect.width(), video_frame->coded_size().width());
-  DCHECK_LE(dest_rect.height(), video_frame->coded_size().height());
-#endif
-  gl->TexImage2D(target, level, internal_format, dest_rect.width(),
-                 dest_rect.height(), 0, format, type, nullptr);
-  gl->CopySubTextureCHROMIUM(source_texture, 0, target, texture, level, 0, 0,
-                             dest_rect.x(), dest_rect.y(), dest_rect.width(),
-                             dest_rect.height(), flip_y, premultiply_alpha,
-                             false);
+  gl->CopyTextureCHROMIUM(source_texture, 0, target, texture, level,
+                          internal_format, type, flip_y, premultiply_alpha,
+                          false);
 
   gl->DeleteTextures(1, &source_texture);
   gl->Flush();
@@ -898,21 +885,9 @@ bool SkCanvasVideoRenderer::CopyVideoFrameTexturesToGLTexture(
         destination_gl->CreateAndConsumeTextureCHROMIUM(
             mailbox_holder.texture_target, mailbox_holder.mailbox.name);
 
-    // Reallocate destination texture and copy only valid region.
-    gfx::Rect dest_rect = video_frame->visible_rect();
-#if DCHECK_IS_ON()
-    // There should always be enough data in the source texture to
-    // cover this copy.
-    DCHECK_LE(dest_rect.width(), video_frame->coded_size().width());
-    DCHECK_LE(dest_rect.height(), video_frame->coded_size().height());
-#endif
-    destination_gl->TexImage2D(target, level, internal_format,
-                               dest_rect.width(), dest_rect.height(), 0, format,
-                               type, nullptr);
-    destination_gl->CopySubTextureCHROMIUM(
-        intermediate_texture, 0, target, texture, level, 0, 0, dest_rect.x(),
-        dest_rect.y(), dest_rect.width(), dest_rect.height(), flip_y,
-        premultiply_alpha, false);
+    destination_gl->CopyTextureCHROMIUM(intermediate_texture, 0, target,
+                                        texture, level, internal_format, type,
+                                        flip_y, premultiply_alpha, false);
 
     destination_gl->DeleteTextures(1, &intermediate_texture);
 
