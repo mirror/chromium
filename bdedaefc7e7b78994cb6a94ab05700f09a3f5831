@@ -1,0 +1,412 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa0211de_e2987804",
+        "filename": "base/task_scheduler/scheduler_worker.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-31T18:24:00Z",
+      "side": 1,
+      "message": "Remove the |started_| member. In WakeUp() and JoinForTesting(), check if |thread_| is set instead of checking |started_|.",
+      "range": {
+        "startLine": 205,
+        "startChar": 2,
+        "endLine": 205,
+        "endChar": 18
+      },
+      "revId": "bdedaefc7e7b78994cb6a94ab05700f09a3f5831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2981548_e32ef6d7",
+        "filename": "base/task_scheduler/scheduler_worker.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-31T18:24:00Z",
+      "side": 1,
+      "message": "Replace with:\nthread_ \u003d Thread::Create(make_scoped_refptr(this));\nAnd remove the CreateThread() method.\n\nIt isn\u0027t worth it to have a method that is only called once for something than can be written on one line.",
+      "range": {
+        "startLine": 207,
+        "startChar": 2,
+        "endLine": 207,
+        "endChar": 17
+      },
+      "revId": "bdedaefc7e7b78994cb6a94ab05700f09a3f5831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b9b8b03_cfbeb9dc",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-31T18:24:00Z",
+      "side": 1,
+      "message": "This note could be removed. It is superseded by my comment in TryAddWorker().",
+      "range": {
+        "startLine": 235,
+        "startChar": 55,
+        "endLine": 238,
+        "endChar": 49
+      },
+      "revId": "bdedaefc7e7b78994cb6a94ab05700f09a3f5831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27292c72_bac598ed",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-31T18:24:00Z",
+      "side": 1,
+      "message": "I don\u0027t think there\u0027s a good reason to have separate loops. You could have one loop:\n\nfor (int index \u003d 0; index \u003c num_initial_workers; ++index) {\n  scoped_refptr\u003cSchedulerWorker\u003e worker \u003d TryAddWorker();\n\n  // Wake up one worker for each wake up that occurred before Start(). Place\n  // all the other workers on the idle stack.\n  if (static_cast\u003cint\u003e(index) \u003c num_wake_ups_before_start_)\n    workers_[index]-\u003eWakeUp();\n  else\n    idle_workers_stack_.Push(workers_[index].get());\n}",
+      "range": {
+        "startLine": 231,
+        "startChar": 2,
+        "endLine": 249,
+        "endChar": 3
+      },
+      "revId": "bdedaefc7e7b78994cb6a94ab05700f09a3f5831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44328bd7_c4598da0",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-31T18:24:00Z",
+      "side": 1,
+      "message": "Move this just before the \"return nullptr;\" line.",
+      "range": {
+        "startLine": 454,
+        "startChar": 6,
+        "endLine": 454,
+        "endChar": 45
+      },
+      "revId": "bdedaefc7e7b78994cb6a94ab05700f09a3f5831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "074d465b_4d06e0f5",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-31T18:24:00Z",
+      "side": 1,
+      "message": "Add braces:\n\n{\n  AutoSchedulerLock auto_lock(outer_-\u003elock_);\n  outer_-\u003eRemoveFromIdleWorkersStack(worker);\n}\n\nSo it\u0027s clear that the lock is only required for the call to RemoveFromIdleWorkersStack().",
+      "range": {
+        "startLine": 473,
+        "startChar": 2,
+        "endLine": 474,
+        "endChar": 45
+      },
+      "revId": "bdedaefc7e7b78994cb6a94ab05700f09a3f5831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6895a78_b8186f57",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 526,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-31T18:24:00Z",
+      "side": 1,
+      "message": "DCHECK(!ContainsWorker(outer_-\u003eworkers, worker));",
+      "range": {
+        "startLine": 524,
+        "startChar": 4,
+        "endLine": 526,
+        "endChar": 50
+      },
+      "revId": "bdedaefc7e7b78994cb6a94ab05700f09a3f5831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50c021a7_4612fe8c",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-31T18:24:00Z",
+      "side": 1,
+      "message": "Since this method is only used in TryAddWorker(), I would remove it and inline the code in TryAddWorker(). When I read the .h file, I didn\u0027t understand why there were two methods to create a worker. I had to read the .cc file to understand that CreateRegisterAndStartSchedulerWorker() is an implementation detail of TryAddWorker().",
+      "range": {
+        "startLine": 589,
+        "startChar": 25,
+        "endLine": 589,
+        "endChar": 64
+      },
+      "revId": "bdedaefc7e7b78994cb6a94ab05700f09a3f5831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05109b03_f9a0cbe0",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-31T18:24:00Z",
+      "side": 1,
+      "message": "Return a SchedulerWorker* instead of a scoped_refptr\u003cSchedulerWorker\u003e, since it\u0027s what callers need.",
+      "range": {
+        "startLine": 607,
+        "startChar": 0,
+        "endLine": 607,
+        "endChar": 70
+      },
+      "revId": "bdedaefc7e7b78994cb6a94ab05700f09a3f5831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8639d6f7_1fdc16f6",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-31T18:24:00Z",
+      "side": 1,
+      "message": "can be called before this",
+      "range": {
+        "startLine": 101,
+        "startChar": 37,
+        "endLine": 101,
+        "endChar": 50
+      },
+      "revId": "bdedaefc7e7b78994cb6a94ab05700f09a3f5831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55e433e6_18b5c004",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-31T18:24:00Z",
+      "side": 1,
+      "message": "cleanup",
+      "range": {
+        "startLine": 108,
+        "startChar": 26,
+        "endLine": 108,
+        "endChar": 36
+      },
+      "revId": "bdedaefc7e7b78994cb6a94ab05700f09a3f5831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64bbf209_b2b27900",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-31T18:24:00Z",
+      "side": 1,
+      "message": "Move this before worker_pool_-\u003eWaitForAllWorkersIdleForTesting();. We expect all queues to become empty before all workers become idle.",
+      "range": {
+        "startLine": 73,
+        "startChar": 4,
+        "endLine": 73,
+        "endChar": 26
+      },
+      "revId": "bdedaefc7e7b78994cb6a94ab05700f09a3f5831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff14ef04_daa9e4ba",
+        "filename": "base/task_scheduler/scheduler_worker_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-31T18:24:00Z",
+      "side": 1,
+      "message": "Not used.",
+      "range": {
+        "startLine": 385,
+        "startChar": 4,
+        "endLine": 385,
+        "endChar": 62
+      },
+      "revId": "bdedaefc7e7b78994cb6a94ab05700f09a3f5831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9375e0b4_9d68e452",
+        "filename": "base/task_scheduler/scheduler_worker_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-31T18:24:00Z",
+      "side": 1,
+      "message": "Not used.",
+      "range": {
+        "startLine": 387,
+        "startChar": 4,
+        "endLine": 387,
+        "endChar": 61
+      },
+      "revId": "bdedaefc7e7b78994cb6a94ab05700f09a3f5831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9571afa_e1604f2c",
+        "filename": "base/task_scheduler/scheduler_worker_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-31T18:24:00Z",
+      "side": 1,
+      "message": "// Verify that calling SchedulerWorker::Cleanup() from GetWork() causes the SchedulerWorker\u0027s thread to exit.",
+      "revId": "bdedaefc7e7b78994cb6a94ab05700f09a3f5831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbe4313f_c0f1a1b6",
+        "filename": "base/task_scheduler/scheduler_worker_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-31T18:24:00Z",
+      "side": 1,
+      "message": "WorkerCleanupFromGetWork",
+      "range": {
+        "startLine": 519,
+        "startChar": 30,
+        "endLine": 519,
+        "endChar": 43
+      },
+      "revId": "bdedaefc7e7b78994cb6a94ab05700f09a3f5831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3b19e16_e624ff4f",
+        "filename": "base/task_scheduler/scheduler_worker_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 534,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-31T18:24:00Z",
+      "side": 1,
+      "message": "Previously, CanDetach() was a method of SchedulerWorker::Delegate(). A user of SchedulerWorker could expect it to be called. That\u0027s why it was important to test that it was called.\n\nNow, is there a functionality of SchedulerWorker that becomes untested if we remove the call to WaitForCleanupRequest() here?",
+      "range": {
+        "startLine": 534,
+        "startChar": 2,
+        "endLine": 534,
+        "endChar": 36
+      },
+      "revId": "bdedaefc7e7b78994cb6a94ab05700f09a3f5831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f9dd201_812f9c12",
+        "filename": "base/task_scheduler/scheduler_worker_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 535,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-31T18:24:00Z",
+      "side": 1,
+      "message": "Is there a functionality of SchedulerWorker that becomes untested if we remove OnCleanup/WaitForCleanup/cleaned_up_? If no, I would get rid of those.",
+      "range": {
+        "startLine": 535,
+        "startChar": 2,
+        "endLine": 535,
+        "endChar": 29
+      },
+      "revId": "bdedaefc7e7b78994cb6a94ab05700f09a3f5831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
