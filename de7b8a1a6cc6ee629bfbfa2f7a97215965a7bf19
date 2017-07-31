@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a1d7e88_bc8baa40",
+        "filename": "chrome/browser/page_load_metrics/observers/ads_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-07-31T15:06:48Z",
+      "side": 1,
+      "message": "This comment needs to be updated.",
+      "revId": "de7b8a1a6cc6ee629bfbfa2f7a97215965a7bf19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43d72c1b_4aa48a7e",
+        "filename": "chrome/browser/page_load_metrics/observers/ads_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-07-31T15:06:48Z",
+      "side": 1,
+      "message": "This is no longer a general delay class. It now does a specific thing after delaying. If we\u0027re making these changes we need to rename the class and update its comments.",
+      "range": {
+        "startLine": 112,
+        "startChar": 6,
+        "endLine": 112,
+        "endChar": 38
+      },
+      "revId": "de7b8a1a6cc6ee629bfbfa2f7a97215965a7bf19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50e953d8_e3b99e61",
+        "filename": "chrome/browser/page_load_metrics/observers/ads_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-07-31T15:06:48Z",
+      "side": 1,
+      "message": "Is this required before the commit? Else you could use CreateAndNavigateSubFrame.",
+      "range": {
+        "startLine": 740,
+        "startChar": 2,
+        "endLine": 740,
+        "endChar": 14
+      },
+      "revId": "de7b8a1a6cc6ee629bfbfa2f7a97215965a7bf19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
