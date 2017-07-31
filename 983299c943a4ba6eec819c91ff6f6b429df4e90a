@@ -16,6 +16,24 @@
       "revId": "983299c943a4ba6eec819c91ff6f6b429df4e90a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d71a570_03919753",
+        "filename": "content/renderer/renderer_blink_platform_impl.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-07-31T08:29:07Z",
+      "side": 0,
+      "message": "Having incremental CLs sounds good. I created a CL for moving the scaffolding into content/child/loader (I guess we can discuss the final placement in the new CL if necessary.): https://chromium-review.googlesource.com/c/593319/",
+      "parentUuid": "6a21a7ef_6dce6cbb",
+      "revId": "983299c943a4ba6eec819c91ff6f6b429df4e90a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
