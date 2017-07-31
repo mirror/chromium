@@ -1,0 +1,27 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module arc.mojom;
+
+import "mojo/common/string16.mojom";
+
+interface CastReceiverHost {
+};
+
+// Next Method ID: 3
+interface CastReceiverInstance {
+  // Establishes full-duplex communication with the host.
+  Init@0(CastReceiverHost host_ptr);
+
+  // Sets whether the receiver is enabled or not. Enabling the receiver will
+  // start it if needed.
+  SetEnabled@1(bool enabled);
+
+  // Sets the receiver name. If the name is blank, the receiver name will be
+  // set to the device name.
+  SetName@2(mojo.common.mojom.String16 name);
+
+  // Gets the receiver name.
+  GetName@3() => (mojo.common.mojom.String16 name);
+};
