@@ -8,6 +8,7 @@
 #include "platform/testing/weburl_loader_mock_factory_impl.h"
 #include "public/platform/URLConversion.h"
 #include "public/platform/WebData.h"
+#include "public/platform/WebRedirectInfo.h"
 #include "public/platform/WebURLError.h"
 #include "public/platform/WebURLLoaderClient.h"
 
@@ -90,8 +91,9 @@ WebURL WebURLLoaderMock::ServeRedirect(
 
   bool report_raw_headers = false;
   bool follow = client_->WillFollowRedirect(
-      redirect_url, redirect_url, WebString(), kWebReferrerPolicyDefault,
-      request.HttpMethod(), redirect_response, report_raw_headers);
+      WebRedirectInfo(request.HttpMethod(), redirect_url, redirect_url,
+                      WebString(), kWebReferrerPolicyDefault),
+      redirect_response, report_raw_headers);
   // |this| might be deleted in willFollowRedirect().
   if (!self)
     return redirect_url;

@@ -32,6 +32,7 @@
 #include "net/http/http_util.h"
 #include "net/url_request/redirect_info.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/WebKit/public/platform/WebRedirectInfo.h"
 #include "third_party/WebKit/public/platform/WebString.h"
 #include "third_party/WebKit/public/platform/WebURLError.h"
 #include "third_party/WebKit/public/platform/WebURLLoaderClient.h"
@@ -144,11 +145,7 @@ class TestWebURLLoaderClient : public blink::WebURLLoaderClient {
   ~TestWebURLLoaderClient() override {}
 
   // blink::WebURLLoaderClient implementation:
-  bool WillFollowRedirect(const blink::WebURL& new_url,
-                          const blink::WebURL& new_first_party_for_cookies,
-                          const blink::WebString& new_referrer,
-                          blink::WebReferrerPolicy new_referrer_policy,
-                          const blink::WebString& new_method,
+  bool WillFollowRedirect(const blink::WebRedirectInfo& redirect_info,
                           const blink::WebURLResponse& passed_redirect_response,
                           bool& report_raw_headers) override {
     EXPECT_TRUE(loader_);
