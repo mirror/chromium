@@ -1743,9 +1743,6 @@ void AppsGridView::UpdateOpacity(float work_area_bottom, bool is_end_gesture) {
   for (int i = 0; i < view_model_.view_size(); ++i) {
     AppListItemView* item_view = GetItemViewAt(i);
     if (item_view != drag_view_) {
-      Index index = GetIndexOfView(item_view);
-      if (index.page != 0)
-        break;
       gfx::Rect view_bounds = view_model_.ideal_bounds(i);
       views::View::ConvertRectToScreen(this, &view_bounds);
       UpdateOpacityOfItem(item_view, view_bounds.CenterPoint().y());
