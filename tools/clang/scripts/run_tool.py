@@ -262,12 +262,21 @@ def main():
   parser.add_argument(
       '--tool-args', nargs='*',
       help='optional arguments passed to the tool')
+  parser.add_argument(
+      '--tool-path', nargs='?',
+      help='optional path for the tool')
   args = parser.parse_args(argv)
 
   os.environ['PATH'] = '%s%s%s' % (
       os.path.abspath(os.path.join(
           os.path.dirname(__file__),
           '../../../third_party/llvm-build/Release+Asserts/bin')),
+      os.pathsep,
+      os.environ['PATH'])
+
+  if args.tool_path:
+    os.environ['PATH'] = '%s%s%s' % (
+      os.path.abspath(args.tool_path),
       os.pathsep,
       os.environ['PATH'])
 
