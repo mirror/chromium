@@ -7,6 +7,7 @@
 #include "base/i18n/rtl.h"
 #include "base/logging.h"
 #import "ios/chrome/browser/ui/bubble/bubble_view.h"
+#import "ios/chrome/browser/ui/rtl_geometry.h"
 
 namespace bubble_util {
 
@@ -101,6 +102,20 @@ CGFloat MaxWidth(CGRect targetFrame,
       break;
   }
   return maxWidth;
+}
+
+CGRect BubbleFrame(CGRect targetFrame,
+                   CGSize size,
+                   BubbleArrowDirection direction,
+                   BubbleAlignment alignment,
+                   CGFloat boundingWidth) {
+  CGFloat leading =
+      bubble_util::LeadingDistance(targetFrame, alignment, size.width);
+  CGFloat originY = bubble_util::OriginY(targetFrame, direction, size.height);
+  // Use a |LayoutRect| to ensure that the bubble is mirrored in RTL contexts.
+  CGRect bubbleFrame = LayoutRectGetRect(
+      LayoutRectMake(leading, boundingWidth, originY, size.width, size.height));
+  return bubbleFrame;
 }
 
 }  // namespace bubble_util

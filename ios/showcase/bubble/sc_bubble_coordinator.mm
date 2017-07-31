@@ -50,11 +50,8 @@
                                      CGRectGetMaxY(elementView.frame));
   CGSize bubbleSize = [self.bubbleViewController.view sizeThatFits:maxSize];
   CGRect bubbleFrame =
-      [self bubbleFrameWithTargetFrame:elementView.frame
-                            bubbleSize:bubbleSize
-                        arrowDirection:direction
-                             alignment:alignment
-                         boundingWidth:containerView.frame.size.width];
+      bubble_util::BubbleFrame(elementView.frame, bubbleSize, direction,
+                               alignment, containerView.frame.size.width);
 
   [self addBubbleViewControllerWithFrame:bubbleFrame];
   [self.baseViewController pushViewController:self.containerViewController
@@ -73,23 +70,6 @@
   [self.containerViewController.view addSubview:self.bubbleViewController.view];
   [self.bubbleViewController
       didMoveToParentViewController:self.containerViewController];
-}
-
-// Calculate the bubble's frame using bubble_util methods. Depends on the target
-// view, bubble size, arrow direction, alignment, and the width of the
-// containing view.
-- (CGRect)bubbleFrameWithTargetFrame:(CGRect)targetFrame
-                          bubbleSize:(CGSize)size
-                      arrowDirection:(BubbleArrowDirection)direction
-                           alignment:(BubbleAlignment)alignment
-                       boundingWidth:(CGFloat)boundingWidth {
-  CGFloat leading =
-      bubble_util::LeadingDistance(targetFrame, alignment, size.width);
-  CGFloat originY = bubble_util::OriginY(targetFrame, direction, size.height);
-  // Use a |LayoutRect| to ensure that the bubble is mirrored in RTL contexts.
-  CGRect bubbleFrame = LayoutRectGetRect(
-      LayoutRectMake(leading, boundingWidth, originY, size.width, size.height));
-  return bubbleFrame;
 }
 
 @end
