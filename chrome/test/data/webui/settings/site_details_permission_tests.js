@@ -30,7 +30,7 @@ suite('SiteDetailsPermission', function() {
             embeddingOrigin: '',
             origin: 'https://www.example.com',
             setting: settings.ContentSetting.ALLOW,
-            source: 'preference',
+            source: settings.SiteSettingSource.PREFERENCE,
           },
         ]
       }
@@ -80,6 +80,7 @@ suite('SiteDetailsPermission', function() {
     testElement.site = {
       origin: origin,
       embeddingOrigin: '',
+      source: settings.SiteSettingSource.PREFERENCE,
     };
 
     assertFalse(testElement.$.details.hidden);
@@ -114,6 +115,7 @@ suite('SiteDetailsPermission', function() {
       origin: origin,
       embeddingOrigin: '',
       setting: settings.ContentSetting.ALLOW,
+      source: settings.SiteSettingSource.PREFERENCE,
     };
 
     return browserProxy.whenCalled('getDefaultValueForContentType')
@@ -129,7 +131,8 @@ suite('SiteDetailsPermission', function() {
           testElement.site = {
             origin: origin,
             embeddingOrigin: '',
-            setting: settings.ContentSetting.BLOCK
+            setting: settings.ContentSetting.BLOCK,
+            source: settings.SiteSettingSource.PREFERENCE,
           };
           return browserProxy.whenCalled('getDefaultValueForContentType');
         })
@@ -144,7 +147,8 @@ suite('SiteDetailsPermission', function() {
           testElement.site = {
             origin: origin,
             embeddingOrigin: '',
-            setting: settings.ContentSetting.ASK
+            setting: settings.ContentSetting.ASK,
+            source: settings.SiteSettingSource.PREFERENCE,
           };
           return browserProxy.whenCalled('getDefaultValueForContentType');
         })
@@ -155,52 +159,101 @@ suite('SiteDetailsPermission', function() {
         });
   });
 
-  test('default string is correct', function() {
+  test('source string is correct', function() {
     var origin = 'https://www.example.com';
-    browserProxy.setPrefs(prefs)
     testElement.category = settings.ContentSettingsTypes.CAMERA;
-    testElement.label = 'Camera';
-    testElement.site = {
-      origin: origin,
-      embeddingOrigin: '',
+
+    // Strings that should be shown for the permission sources that don't depend
+    // on the ContentSetting value.
+    var permissionSourcesNoSetting = {};
+    permissionSourcesNoSetting[settings.SiteSettingSource.DEFAULT] = '';
+    permissionSourcesNoSetting[settings.SiteSettingSource.PREFERENCE] = '';
+    permissionSourcesNoSetting[settings.SiteSettingSource.EMBARGO] =
+        'Automatically blocked';
+    permissionSourcesNoSetting[settings.SiteSettingSource.INSECURE_ORIGIN] =
+        'Blocked to protect your privacy';
+    permissionSourcesNoSetting[settings.SiteSettingSource.KILL_SWITCH] =
+        'Temporarily blocked to protect your security';
+
+    for (testSource in permissionSourcesNoSetting) {
+      testElement.site = {
+        origin: origin,
+        embeddingOrigin: origin,
+        setting: settings.ContentSetting.BLOCK,
+        source: testSource,
+      };
+      assertEquals(
+          permissionSourcesNoSetting[testSource],
+          testElement.$.permissionItem.innerText.trim());
+      assertEquals(
+          permissionSourcesNoSetting[testSource] != '',
+          testElement.$.permissionItem.classList.contains('two-line'));
+
+      if (testSource != settings.SiteSettingSource.DEFAULT &&
+          testSource != settings.SiteSettingSource.PREFERENCE &&
+          testSource != settings.SiteSettingSource.EMBARGO) {
+        assertTrue(testElement.$.permission.disabled);
+      } else {
+        assertFalse(testElement.$.permission.disabled);
+      }
+    }
+
+    // Permissions that have been set by extensions.
+    var extensionSourceStrings = {};
+    extensionSourceStrings[settings.ContentSetting.ALLOW] =
+        'Allowed by an extension';
+    extensionSourceStrings[settings.ContentSetting.BLOCK] =
+        'Blocked by an extension';
+    extensionSourceStrings[settings.ContentSetting.ASK] =
+        'Setting controlled by an extension';
+
+    for (testSetting in extensionSourceStrings) {
+      testElement.site = {
+        origin: origin,
+        embeddingOrigin: origin,
+        setting: testSetting,
+        source: settings.SiteSettingSource.EXTENSION,
+      };
+      assertEquals(
+          extensionSourceStrings[testSetting],
+          testElement.$.permissionItem.innerText.trim());
+      assertTrue(testElement.$.permissionItem.classList.contains('two-line'));
+      assertTrue(testElement.$.permission.disabled);
     };
 
-    return browserProxy.whenCalled('getDefaultValueForContentType')
-        .then(function() {
-          // The default option will always be the first in the menu.
-          assertEquals(
-              'Allow (default)', testElement.$.permission.options[0].text,
-              'Default setting string should match prefs');
-          browserProxy.resetResolver('getDefaultValueForContentType');
-          prefs.defaults.camera.setting = settings.ContentSetting.BLOCK;
-          browserProxy.setPrefs(prefs);
-          // Trigger a call to siteChanged_() by touching |testElement.site|.
-          testElement.site = {
-            origin: origin,
-            embeddingOrigin: '',
-            setting: settings.ContentSetting.BLOCK
-          };
-          return browserProxy.whenCalled('getDefaultValueForContentType');
-        })
-        .then(function() {
-          assertEquals(
-              'Block (default)', testElement.$.permission.options[0].text,
-              'Default setting string should match prefs');
-          browserProxy.resetResolver('getDefaultValueForContentType');
-          prefs.defaults.camera.setting = settings.ContentSetting.ASK;
-          browserProxy.setPrefs(prefs);
-          // Trigger a call to siteChanged_() by touching |testElement.site|.
-          testElement.site = {
-            origin: origin,
-            embeddingOrigin: '',
-            setting: settings.ContentSetting.ASK
-          };
-          return browserProxy.whenCalled('getDefaultValueForContentType');
-        })
-        .then(function() {
-          assertEquals(
-              'Ask (default)', testElement.$.permission.options[0].text,
-              'Default setting string should match prefs');
-        });
+    // Permissions that have been set by enterprise policy.
+    var policySourceStrings = {};
+    policySourceStrings[settings.ContentSetting.ALLOW] =
+        'Allowed by your administrator';
+    policySourceStrings[settings.ContentSetting.BLOCK] =
+        'Blocked by your administrator';
+    policySourceStrings[settings.ContentSetting.ASK] =
+        'Setting controlled by your administrator';
+
+    for (testSetting in policySourceStrings) {
+      testElement.site = {
+        origin: origin,
+        embeddingOrigin: origin,
+        setting: testSetting,
+        source: settings.SiteSettingSource.POLICY,
+      };
+      assertEquals(
+          policySourceStrings[testSetting],
+          testElement.$.permissionItem.innerText.trim());
+      assertTrue(testElement.$.permissionItem.classList.contains('two-line'));
+      assertTrue(testElement.$.permission.disabled);
+    };
+
+    // Finally, check if changing the source from a non-user-controlled setting
+    // (policy) back to a user-controlled one re-enables the control.
+    testElement.site = {
+      origin: origin,
+      embeddingOrigin: origin,
+      setting: settings.ContentSetting.ASK,
+      source: settings.SiteSettingSource.DEFAULT,
+    };
+    assertEquals('', testElement.$.permissionItem.innerText.trim());
+    assertFalse(testElement.$.permissionItem.classList.contains('two-line'));
+    assertFalse(testElement.$.permission.disabled);
   });
 });
