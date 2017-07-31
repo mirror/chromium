@@ -1,0 +1,326 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8937073d_b862a0c5",
+        "filename": "remoting/host/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-07-31T19:17:12Z",
+      "side": 1,
+      "message": "I think these should live in the win folder since D3D isn\u0027t applicable to other platforms (i.e. we will never have an evaluate_d3d_posix.cc file).  Then they can be renamed to evaluate_d3d.cc and evaluate_d3d.h.",
+      "range": {
+        "startLine": 140,
+        "startChar": 5,
+        "endLine": 140,
+        "endChar": 26
+      },
+      "revId": "f10d382a07a96a29438b38aa5eeb02641c668251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d86a0e69_0d655e02",
+        "filename": "remoting/host/desktop_environment_options.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-07-31T19:17:12Z",
+      "side": 1,
+      "message": "This block needs some commenting I think.  I assume you are not checking the support level returned by this function because it is likely that it is being run in session 0 which means \u0027IsCurrentSessionSupported()\u0027 will return false (and you won\u0027t have any init data).\n\nIf so then there should be a comment on why we aren\u0027t checking to see if D3D is supported or not (The GetD3DCapability returns \u0027true\u0027 if the process doesn\u0027t crash but \u0027true\u0027 doesn\u0027t mean the capturer is supported).",
+      "range": {
+        "startLine": 48,
+        "startChar": 6,
+        "endLine": 48,
+        "endChar": 24
+      },
+      "revId": "f10d382a07a96a29438b38aa5eeb02641c668251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "304ab4f3_11278a5a",
+        "filename": "remoting/host/desktop_environment_options.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-07-31T19:17:12Z",
+      "side": 1,
+      "message": "You could also check for kNoDirectXCapturer in the process output to set the flag.  Its absence doesn\u0027t tell you anything, but its presence means the capturer won\u0027t work AFAICT.",
+      "range": {
+        "startLine": 48,
+        "startChar": 22,
+        "endLine": 48,
+        "endChar": 24
+      },
+      "revId": "f10d382a07a96a29438b38aa5eeb02641c668251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78f54c18_2e525967",
+        "filename": "remoting/host/evaluate_d3d_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-07-31T19:17:12Z",
+      "side": 1,
+      "message": "replace with \u0027each static call to webrtc::ScreenCapturerWinDirectx below\u0027\n\nI\u0027d be more explicit about when the capturer would be created / destroyed.",
+      "range": {
+        "startLine": 29,
+        "startChar": 39,
+        "endLine": 29,
+        "endChar": 52
+      },
+      "revId": "f10d382a07a96a29438b38aa5eeb02641c668251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6c3cdaa_6c5cd1db",
+        "filename": "remoting/host/evaluate_d3d_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-07-31T19:17:12Z",
+      "side": 1,
+      "message": "Any reason not to make this (and other strings) a constexpr string in the file-scoped namespace ?",
+      "range": {
+        "startLine": 34,
+        "startChar": 17,
+        "endLine": 34,
+        "endChar": 35
+      },
+      "revId": "f10d382a07a96a29438b38aa5eeb02641c668251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc19f541_1e10848c",
+        "filename": "remoting/host/evaluate_d3d_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-07-31T19:17:12Z",
+      "side": 1,
+      "message": "Should this be \u0027MinD3DGE10\u0027 since the min_feature_level is GT or EQ to 10.0?",
+      "range": {
+        "startLine": 46,
+        "startChar": 18,
+        "endLine": 46,
+        "endChar": 28
+      },
+      "revId": "f10d382a07a96a29438b38aa5eeb02641c668251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "416e25ea_13a6439e",
+        "filename": "remoting/host/evaluate_d3d_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-07-31T19:17:12Z",
+      "side": 1,
+      "message": "MinD3DGE11 ?  It isn\u0027t a strict greater than check so GE seems more accurate than GT.  Same with the check for D3D 12.0",
+      "range": {
+        "startLine": 49,
+        "startChar": 18,
+        "endLine": 49,
+        "endChar": 28
+      },
+      "revId": "f10d382a07a96a29438b38aa5eeb02641c668251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d67abc2e_663a03c7",
+        "filename": "remoting/host/evaluate_d3d_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-07-31T19:17:12Z",
+      "side": 1,
+      "message": "If I am reading this correctly, the output string for a machine which supports DX 12.0 will look like:\n\"\nMinD3DGT10\nMinD3DGT11\nMinD3DGT12\n\"\n\nWhy not just include the actual minimum (flip the checks above and convert to an if / else if check)?\n\nThis is probably not something to change in this C, but I saw the same pattern for the OS version and it seems odd to include the additional levels.",
+      "range": {
+        "startLine": 51,
+        "startChar": 29,
+        "endLine": 51,
+        "endChar": 31
+      },
+      "revId": "f10d382a07a96a29438b38aa5eeb02641c668251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "915ab033_010d7519",
+        "filename": "remoting/host/evaluate_d3d_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-07-31T19:17:12Z",
+      "side": 1,
+      "message": "I would make this a bit stricter/harsher:\nDo NOT call this method within the host process.  Only call in an isolated child process.",
+      "range": {
+        "startLine": 14,
+        "startChar": 11,
+        "endLine": 15,
+        "endChar": 8
+      },
+      "revId": "f10d382a07a96a29438b38aa5eeb02641c668251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f219e3c9_d2238293",
+        "filename": "remoting/host/evaluate_d3d_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-07-31T19:17:12Z",
+      "side": 1,
+      "message": "separate",
+      "range": {
+        "startLine": 18,
+        "startChar": 51,
+        "endLine": 18,
+        "endChar": 60
+      },
+      "revId": "f10d382a07a96a29438b38aa5eeb02641c668251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce96c4c3_b8dc575b",
+        "filename": "remoting/host/host_attributes.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-07-31T19:17:12Z",
+      "side": 1,
+      "message": "What was the problem you had with stringpiece?  I\u0027m not sure this comment is needed unless we think someone is going to try to change the type later.",
+      "range": {
+        "startLine": 91,
+        "startChar": 2,
+        "endLine": 91,
+        "endChar": 75
+      },
+      "revId": "f10d382a07a96a29438b38aa5eeb02641c668251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d3b07d0_25a3a04f",
+        "filename": "remoting/host/host_attributes.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-07-31T19:17:12Z",
+      "side": 1,
+      "message": "We should add a comment here (possibly even in the header for \u0027GetHostAttributes()\u0027) that this can be a very slow call.  My concern is that someone requesting HostAttributes needs to be aware that this isn\u0027t a cheap call for Windows.",
+      "range": {
+        "startLine": 105,
+        "startChar": 4,
+        "endLine": 105,
+        "endChar": 20
+      },
+      "revId": "f10d382a07a96a29438b38aa5eeb02641c668251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6511680_198bdd3a",
+        "filename": "remoting/host/host_attributes_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-07-31T19:17:12Z",
+      "side": 1,
+      "message": "Should \u0027kNoDirectXCapturer\u0027 be exposed via evaluate_d3d.h?\n\nIf not, then we should add a comment in evaluate_d3d.cc to indicate that this string is used in unit tests w/o compilation guarantees (i.e. must be updated in both places).",
+      "range": {
+        "startLine": 40,
+        "startChar": 27,
+        "endLine": 40,
+        "endChar": 47
+      },
+      "revId": "f10d382a07a96a29438b38aa5eeb02641c668251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c484b16_84322aee",
+        "filename": "remoting/host/switches.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-07-31T19:17:12Z",
+      "side": 1,
+      "message": "nit: check-d3d-support  ?",
+      "range": {
+        "startLine": 31,
+        "startChar": 29,
+        "endLine": 31,
+        "endChar": 32
+      },
+      "revId": "f10d382a07a96a29438b38aa5eeb02641c668251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
