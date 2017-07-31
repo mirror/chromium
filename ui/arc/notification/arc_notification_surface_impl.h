@@ -5,6 +5,8 @@
 #ifndef UI_ARC_NOTIFICATION_ARC_NOTIFICATION_SURFACE_IMPL_H_
 #define UI_ARC_NOTIFICATION_ARC_NOTIFICATION_SURFACE_IMPL_H_
 
+#include <memory>
+
 #include "ui/arc/notification/arc_notification_surface.h"
 
 namespace exo {
@@ -33,6 +35,7 @@ class ArcNotificationSurfaceImpl : public ArcNotificationSurface {
  private:
   exo::NotificationSurface* surface_;
   views::NativeViewHost* native_view_host_ = nullptr;
+  std::unique_ptr<aura::Window> native_view_;
 
   DISALLOW_COPY_AND_ASSIGN(ArcNotificationSurfaceImpl);
 };
