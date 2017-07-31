@@ -259,7 +259,6 @@ DataGrid.DataGrid = class extends Common.Object {
       return;
     this._topFillerRow.style.height = topPx;
     this._bottomFillerRow.style.height = bottomPx;
-    this.dispatchEventToListeners(DataGrid.DataGrid.Events.PaddingChanged);
   }
 
   /**
@@ -731,6 +730,13 @@ DataGrid.DataGrid = class extends Common.Object {
       nodes[i].refresh();
   }
 
+  /**
+   * @return {!Array<!DataGrid.DataGrid.ColumnDescriptor>}
+   */
+  visibleColumns() {
+    return this._visibleColumnsArray;
+  }
+
   get scrollContainer() {
     return this._scrollContainer;
   }
@@ -772,6 +778,7 @@ DataGrid.DataGrid = class extends Common.Object {
         resizer.style.left = left[i] + 'px';
       }
     }
+    this.dispatchEventToListeners(DataGrid.DataGrid.Events.ColumnsResized);
   }
 
   addCreationNode(hasChildren) {
@@ -943,6 +950,9 @@ DataGrid.DataGrid = class extends Common.Object {
       this._sortColumnCell.classList.remove(DataGrid.DataGrid.Order.Ascending, DataGrid.DataGrid.Order.Descending);
     this._sortColumnCell = this._headerTableHeaders[columnId];
     this._sortColumnCell.classList.add(sortOrder);
+    var icon = this._sortColumnCell[DataGrid.DataGrid._sortIconSymbol];
+    icon.setIconType(
+        sortOrder === DataGrid.DataGrid.Order.Ascending ? 'smallicon-triangle-up' : 'smallicon-triangle-down');
   }
 
   /**
@@ -1198,7 +1208,7 @@ DataGrid.DataGrid.Events = {
   DeselectedNode: Symbol('DeselectedNode'),
   OpenedNode: Symbol('OpenedNode'),
   SortingChanged: Symbol('SortingChanged'),
-  PaddingChanged: Symbol('PaddingChanged'),
+  ColumnsResized: Symbol('ColumnsResized')
 };
 
 /** @enum {string} */

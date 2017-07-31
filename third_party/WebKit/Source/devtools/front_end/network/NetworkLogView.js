@@ -624,6 +624,12 @@ Network.NetworkLogView = class extends UI.VBox {
     this._dataGrid.element.addEventListener('mousedown', this._dataGridMouseDown.bind(this), true);
     this._dataGrid.element.addEventListener('mousemove', this._dataGridMouseMove.bind(this), true);
     this._dataGrid.element.addEventListener('mouseleave', () => this._setHoveredNode(null), true);
+    this._dataGrid.element.addEventListener('mousewheel', event => {
+      // TODO(allada) Setup ViewportDataGrid to buffer rows so we do not need to consume event and scheduleRefresh.
+      event.consume(true);
+      this._dataGrid.scrollContainer.scrollTop -= event.wheelDeltaY;
+      this.scheduleRefresh();
+    }, true);
   }
 
   /**
@@ -632,7 +638,9 @@ Network.NetworkLogView = class extends UI.VBox {
   _dataGridMouseMove(event) {
     var node = (this._dataGrid.dataGridNodeFromNode(/** @type {!Node} */ (event.target)));
     var highlightInitiatorChain = event.shiftKey;
+    // TODO(allada) Mouse move should only schedule a refresh if highlight or hovered node changed.
     this._setHoveredNode(node, highlightInitiatorChain);
+    this.scheduleRefresh();
   }
 
   /**
@@ -876,6 +884,7 @@ Network.NetworkLogView = class extends UI.VBox {
     return this._dataGrid.rootNode().flatChildren();
   }
 
+  // TODO(allada) This should not be needed any more when canvas no longer draws stripes.
   stylesChanged() {
     this._columns.scheduleRefresh();
   }
