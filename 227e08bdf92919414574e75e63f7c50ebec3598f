@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "099aafaa_fcdf8ad3",
+        "filename": "components/cryptauth/cryptauth_device_manager.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-07-31T21:43:20Z",
+      "side": 1,
+      "message": "It\u0027s not sufficient to just check if the public keys have changed. There are other fields in the ExternalDeviceInfo proto that may be important. To be through, please check against every field in the proto. Furthermore, please update the tests for CryptAuthDeviceManager.",
+      "range": {
+        "startLine": 455,
+        "startChar": 34,
+        "endLine": 455,
+        "endChar": 69
+      },
+      "revId": "227e08bdf92919414574e75e63f7c50ebec3598f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
