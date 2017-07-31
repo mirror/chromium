@@ -261,6 +261,24 @@
     },
     {
       "key": {
+        "uuid": "3827c220_98b51b42",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-31T08:48:53Z",
+      "side": 1,
+      "message": "Ah, sorry, I\u0027ve missed your comment.\nYes, importScripts() can just fail with a net error like what ResourceLoader is doing. I\u0027ll do it in the importScripts patch (https://crrev.com/c/590633).\n\nAdded a TODO instead.",
+      "parentUuid": "abb76021_6a2cacb5",
+      "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e33ae6d_cc44c49a",
         "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
         "patchSetId": 5
@@ -779,6 +797,24 @@
       "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f15f1ef_a5122a31",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1715,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-07-31T08:48:53Z",
+      "side": 1,
+      "message": "Oops, I also missed this comment, sorry.\n\n\u003e I feel it\u0027s clearer to split it, you don\u0027t need to use Optional and document the param etc etc.\n\nNow I understand why RecordStartWorkerStatus is aggregating |status|, |purpose| and |is_installed|. Split it.\n\n\u003e Also why would is_sender_finished() not be true here? Is that an error case?\n\nI think it\u0027s possible when SWVersion::StopInternal is triggered during script streaming like when the main script causes an error and results in terminating the worker during sending a heavy imported script on the browser.\nHowever, we can record State::kNotFinished in that case. Removed the condition.",
+      "parentUuid": "d2f1ee49_cf57d703",
+      "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
