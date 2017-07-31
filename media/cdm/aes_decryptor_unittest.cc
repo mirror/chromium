@@ -26,16 +26,19 @@
 #include "media/base/decryptor.h"
 #include "media/base/media_switches.h"
 #include "media/base/mock_filters.h"
-#include "media/cdm/api/content_decryption_module.h"
-#include "media/cdm/cdm_adapter.h"
-#include "media/cdm/cdm_file_io.h"
-#include "media/cdm/external_clear_key_test_helper.h"
-#include "media/cdm/simple_cdm_allocator.h"
 #include "media/media_features.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest-param-test.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
+
+#if BUILDFLAG(ENABLE_LIBRARY_CDMS)
+#include "media/cdm/api/content_decryption_module.h"
+#include "media/cdm/cdm_adapter.h"
+#include "media/cdm/cdm_file_io.h"
+#include "media/cdm/external_clear_key_test_helper.h"
+#include "media/cdm/simple_cdm_allocator.h"
+#endif
 
 using ::testing::_;
 using ::testing::AtMost;
@@ -258,7 +261,9 @@ class AesDecryptorTest : public testing::TestWithParam<std::string> {
                            base::Bind(&MockCdmClient::OnSessionExpirationUpdate,
                                       base::Unretained(&cdm_client_))),
           std::string());
-    } else if (GetParam() == "CdmAdapter") {
+    }
+#if BUILDFLAG(ENABLE_LIBRARY_CDMS)
+    if (GetParam() == "CdmAdapter") {
       CdmConfig cdm_config;  // default settings of false are sufficient.
 
       // Enable use of External Clear Key CDM.
@@ -285,11 +290,14 @@ class AesDecryptorTest : public testing::TestWithParam<std::string> {
 
       base::RunLoop().RunUntilIdle();
     }
+#endif
   }
 
   void TearDown() override {
+#if BUILDFLAG(ENABLE_LIBRARY_CDMS)
     if (GetParam() == "CdmAdapter")
       helper_.reset();
+#endif
   }
 
   void OnCdmCreated(const scoped_refptr<ContentDecryptionModule>& cdm,
@@ -468,10 +476,12 @@ class AesDecryptorTest : public testing::TestWithParam<std::string> {
     }
   }
 
+#if BUILDFLAG(ENABLE_LIBRARY_CDMS)
   std::unique_ptr<CdmFileIO> CreateCdmFileIO(cdm::FileIOClient* client) {
     ADD_FAILURE() << "Should never be called";
     return nullptr;
   }
+#endif
 
   StrictMock<MockCdmClient> cdm_client_;
   scoped_refptr<ContentDecryptionModule> cdm_;
@@ -479,11 +489,14 @@ class AesDecryptorTest : public testing::TestWithParam<std::string> {
   Decryptor::DecryptCB decrypt_cb_;
   std::string session_id_;
 
+#if BUILDFLAG(ENABLE_LIBRARY_CDMS)
+  base::test::ScopedFeatureList scoped_feature_list_;
+
   // Helper class to load/unload External Clear Key Library, if necessary.
   std::unique_ptr<ExternalClearKeyTestHelper> helper_;
+#endif
 
   base::test::ScopedTaskEnvironment scoped_task_environment_;
-  base::test::ScopedFeatureList scoped_feature_list_;
 
   // Constants for testing.
   const std::vector<uint8_t> original_data_;
