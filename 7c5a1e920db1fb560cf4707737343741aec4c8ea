@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa19dbd1_d3c55bc8",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSShorthandPropertyAPIFont.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-07-31T14:02:24Z",
+      "side": 1,
+      "message": "I rephrased this condition to detect if there was an invalid or non-parseable stretch keyword here, which previously caused endless loops. This new condition is semantically identical to what was here before now.",
+      "revId": "7c5a1e920db1fb560cf4707737343741aec4c8ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
