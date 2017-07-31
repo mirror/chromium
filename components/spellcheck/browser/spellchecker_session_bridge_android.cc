@@ -42,9 +42,9 @@ bool SpellCheckerSessionBridge::RegisterJNI(JNIEnv* env) {
   return RegisterNativesImpl(env);
 }
 
-void SpellCheckerSessionBridge::RequestTextCheck(int route_id,
-                                                 int identifier,
-                                                 const base::string16& text) {
+void SpellCheckerSessionBridge::RequestTextCheck(
+    const base::string16& text,
+    spellcheck::mojom::SpellCheckHost::RequestTextCheckCallback callback) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   // SpellCheckerSessionBridge#create() will return null if spell checker
   // service is unavailable.
@@ -79,11 +79,11 @@ void SpellCheckerSessionBridge::RequestTextCheck(int route_id,
   // If multiple requests arrive during one active request, only the most
   // recent request will run (the others get overwritten).
   if (active_request_) {
-    pending_request_.reset(new SpellingRequest(route_id, identifier, text));
+    pending_request_.reset(new SpellingRequest(text, std::move(callback)));
     return;
   }
 
-  active_request_.reset(new SpellingRequest(route_id, identifier, text));
+  active_request_.reset(new SpellingRequest(text, std::move(callback)));
 
   JNIEnv* env = base::android::AttachCurrentThread();
   Java_SpellCheckerSessionBridge_requestTextCheck(
@@ -115,14 +115,7 @@ void SpellCheckerSessionBridge::ProcessSpellCheckResults(
                                        lengths[i], suggestions_for_word));
   }
 
-  content::RenderProcessHost* sender =
-      content::RenderProcessHost::FromID(render_process_id_);
-
-  if (sender != nullptr) {
-    sender->Send(new SpellCheckMsg_RespondTextCheck(
-        active_request_->route_id, active_request_->identifier,
-        active_request_->text, results));
-  }
+  std::move(active_request_.callback).Run(results_);
 
   active_request_ = std::move(pending_request_);
   if (active_request_) {
@@ -150,9 +143,8 @@ void SpellCheckerSessionBridge::DisconnectSession() {
 }
 
 SpellCheckerSessionBridge::SpellingRequest::SpellingRequest(
-    int route_id,
-    int identifier,
-    const base::string16& text)
-    : route_id(route_id), identifier(identifier), text(text) {}
+    const base::string16& text,
+    RequestTextCheckCallback callback)
+    : text(text), callback(std::move(callback)) {}
 
 SpellCheckerSessionBridge::SpellingRequest::~SpellingRequest() {}

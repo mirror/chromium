@@ -12,6 +12,7 @@
 #include "base/android/scoped_java_ref.h"
 #include "base/macros.h"
 #include "base/strings/string16.h"
+#include "components/spellcheck/common/spellcheck.mojom.h"
 
 // A class used to interface between the Java class of the same name and the
 // android message filter.  This class receives text to be spellchecked
@@ -23,11 +24,12 @@ class SpellCheckerSessionBridge {
   ~SpellCheckerSessionBridge();
   static bool RegisterJNI(JNIEnv* env);
 
+  using spellcheck::mojom::SpellCheckHost::RequestTextCheckCallback;
+
   // Receives text to be checked from the message filter and sends it to Java
   // to be spellchecked.
-  void RequestTextCheck(int route_id,
-                        int identifier,
-                        const base::string16& text);
+  void RequestTextCheck(const base::string16& text,
+                        RequestTextCheckCallback callback);
 
   // Receives information from Java side about the typos in a given string
   // of text, processes these and sends them to the renderer.
@@ -44,12 +46,14 @@ class SpellCheckerSessionBridge {
 
  private:
   struct SpellingRequest {
-    SpellingRequest(int route_id, int identifier, const base::string16& text);
+    SpellingRequest(const base::string16& text,
+                    RequestTextCheckCallback callback);
     ~SpellingRequest();
 
-    int route_id;
-    int identifier;
     base::string16 text;
+    RequestTextCheckCallback callback;
+
+    DISALLOW_COPY_AND_ASSIGN(SpellingRequest);
   };
 
   int render_process_id_;

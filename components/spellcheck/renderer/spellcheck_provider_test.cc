@@ -71,12 +71,24 @@ void TestingSpellCheckProvider::RequestDictionary() {}
 void TestingSpellCheckProvider::NotifyChecked(const base::string16& word,
                                               bool misspelled) {}
 
+void TestingSpellCheckProvider::ToggleSpellCheck(bool, bool) {}
+
 void TestingSpellCheckProvider::CallSpellingService(
     const base::string16& text,
     CallSpellingServiceCallback callback) {
 #if !BUILDFLAG(USE_BROWSER_SPELLCHECKER)
   OnCallSpellingService(text);
   std::move(callback).Run(true, std::vector<SpellCheckResult>());
+#else
+  NOTREACHED();
+#endif
+}
+
+void TestingSpellCheckProvider::RequestTextCheck(
+    const base::string16& text,
+    RequestTextCheckCallback callback) {
+#if defined(OS_ANDROID)
+// TODO(xiaochengh)
 #else
   NOTREACHED();
 #endif

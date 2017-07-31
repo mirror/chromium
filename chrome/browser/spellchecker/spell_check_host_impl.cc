@@ -16,8 +16,10 @@
 #include "content/public/browser/render_process_host.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 
+#if !defined(OS_ANDROID)
 SpellCheckHostImpl::SpellCheckHostImpl(int render_process_id)
     : render_process_id_(render_process_id) {}
+#endif
 
 SpellCheckHostImpl::~SpellCheckHostImpl() = default;
 
@@ -130,3 +132,17 @@ std::vector<SpellCheckResult> SpellCheckHostImpl::FilterCustomWordResults(
 SpellcheckService* SpellCheckHostImpl::GetSpellcheckService() const {
   return SpellcheckServiceFactory::GetForRenderProcessId(render_process_id_);
 }
+
+#if !defined(OS_ANDROID)
+// Placeholder implementations of Android-only APIs.
+
+// TODO(xiaochengh): Support RequestTextCheck for Mac.
+void SpellCheckHostImpl::RequestTextCheck(const base::string16&,
+                                          RequestTextCheckCallback) {
+  NOTREACHED();
+}
+
+void SpellCheckHostImpl::ToggleSpellCheck(bool, bool) {
+  NOTREACHED();
+}
+#endif
