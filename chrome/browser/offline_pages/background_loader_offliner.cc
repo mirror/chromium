@@ -16,7 +16,9 @@
 #include "chrome/browser/offline_pages/offliner_helper.h"
 #include "chrome/browser/offline_pages/offliner_user_data.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/common/chrome_isolated_world_ids.h"
 #include "components/data_reduction_proxy/core/browser/data_reduction_proxy_data.h"
+#include "components/offline_pages/content/renovations/render_frame_script_injector.h"
 #include "components/offline_pages/core/background/offliner_policy.h"
 #include "components/offline_pages/core/background/save_page_request.h"
 #include "components/offline_pages/core/client_namespace_constants.h"
@@ -115,6 +117,10 @@ BackgroundLoaderOffliner::BackgroundLoaderOffliner(
   if (load_termination_listener_)
     load_termination_listener_->set_offliner(this);
 
+  if (IsOfflinePagesRenovationsEnabled()) {
+    page_renovation_loader_.reset(new PageRenovationLoader);
+  }
+
   for (int i = 0; i < ResourceDataType::RESOURCE_DATA_TYPE_COUNT; ++i) {
     stats_[i].requested = 0;
     stats_[i].completed = 0;
@@ -205,11 +211,22 @@ bool BackgroundLoaderOffliner::LoadAndSave(
   completion_callback_ = completion_callback;
   progress_callback_ = progress_callback;
 
-  // Load page attempt.
-  loader_.get()->LoadPage(request.url());
+  if (IsOfflinePagesRenovationsEnabled()) {
+    // Set up PageRenovator for this offlining instance.
+    auto script_injector = base::MakeUnique<RenderFrameScriptInjector>(
+        loader_->web_contents()->GetMainFrame(),
+        chrome::ISOLATED_WORLD_ID_CHROME_INTERNAL);
+    page_renovator_.reset(new PageRenovator(page_renovation_loader_.get(),
+                                            std::move(script_injector),
+                                            request.url()));
+  }
 
   snapshot_controller_ = SnapshotController::CreateForBackgroundOfflining(
-      base::ThreadTaskRunnerHandle::Get(), this, false);
+      base::ThreadTaskRunnerHandle::Get(), this,
+      IsOfflinePagesRenovationsEnabled());
+
+  // Load page attempt.
+  loader_.get()->LoadPage(request.url());
 
   return true;
 }
@@ -470,8 +487,12 @@ void BackgroundLoaderOffliner::StartSnapshot() {
 }
 
 void BackgroundLoaderOffliner::RunRenovations() {
-  // TODO(collinbaker): run renovations from here.
-  snapshot_controller_->RenovationsCompleted();
+  if (page_renovator_) {
+    base::Closure cb =
+        base::Bind(&BackgroundLoaderOffliner::RenovationsCompleted,
+                   weak_ptr_factory_.GetWeakPtr());
+    page_renovator_->RunRenovations(std::move(cb));
+  }
 }
 
 void BackgroundLoaderOffliner::OnPageSaved(SavePageResult save_result,
@@ -561,6 +582,10 @@ void BackgroundLoaderOffliner::AddLoadingSignal(const char* signal_name) {
   // milliseconds than we can with a 2 bit int, 53 bits vs 32).
   double delay = delay_so_far.InMilliseconds();
   signal_data_.SetDouble(signal_name, delay);
+}
+
+void BackgroundLoaderOffliner::RenovationsCompleted() {
+  snapshot_controller_->RenovationsCompleted();
 }
 
 }  // namespace offline_pages
