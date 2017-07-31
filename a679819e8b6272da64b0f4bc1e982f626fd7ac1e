@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eaf10ee3_ccf8c97e",
+        "filename": "content/public/common/cookie.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-07-31T15:48:36Z",
+      "side": 1,
+      "message": "nit: blank spaces at end",
+      "range": {
+        "startLine": 18,
+        "startChar": 51,
+        "endLine": 18,
+        "endChar": 52
+      },
+      "revId": "a679819e8b6272da64b0f4bc1e982f626fd7ac1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d0017ac_2dfd2c58",
+        "filename": "content/public/common/cookie.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-07-31T15:48:36Z",
+      "side": 1,
+      "message": "nit: we try to avoid \"Service\" in interface names. That should only be used to correspond to foundation services, i.e. directories in src/services. Since we\u0027ll have a network service (src/services/network), but not a cookie service (i.e. no src/services/cookie), i\u0027d just drop the suffix.",
+      "revId": "a679819e8b6272da64b0f4bc1e982f626fd7ac1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "118b2a80_a306c6e0",
+        "filename": "content/public/common/cookie.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-07-31T15:48:36Z",
+      "side": 1,
+      "message": "in general, new interfaces in content/public are added with the first usage. That way it\u0027s easy for reviewers to see what the calling code looks like.\n\nI presume you added this code on its own first because it\u0027s still not hooked up? In that case, can you clarify how you picked which methods go into this interface? i.e. is this replacing existing IPC handlers in content/browser?",
+      "revId": "a679819e8b6272da64b0f4bc1e982f626fd7ac1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37c2d7f7_38d0ccbe",
+        "filename": "content/public/common/cookie_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-07-31T15:48:36Z",
+      "side": 1,
+      "message": "nit: the forward declarations in this file are not necessary since the headers are included",
+      "revId": "a679819e8b6272da64b0f4bc1e982f626fd7ac1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5429857a_f760e709",
+        "filename": "content/public/common/cookie_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-07-31T15:48:36Z",
+      "side": 1,
+      "message": "ditto with Service suffix. \"CreateCookie\" is also ambiguous I realize, so do you have any other alternatives?",
+      "revId": "a679819e8b6272da64b0f4bc1e982f626fd7ac1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
