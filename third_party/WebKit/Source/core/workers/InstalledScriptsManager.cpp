@@ -14,8 +14,10 @@ InstalledScriptsManager::ScriptData::ScriptData(
     const KURL& script_url,
     String source_text,
     std::unique_ptr<Vector<char>> meta_data,
-    std::unique_ptr<CrossThreadHTTPHeaderMapData> header_data)
+    std::unique_ptr<CrossThreadHTTPHeaderMapData> header_data,
+    bool failed)
     : script_url_(script_url),
+      failed_(failed),
       source_text_(std::move(source_text)),
       meta_data_(std::move(meta_data)) {
   headers_.Adopt(std::move(header_data));
