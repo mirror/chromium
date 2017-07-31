@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01822a92_bfb2dc88",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1282,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-31T17:39:45Z",
+      "side": 1,
+      "message": "call it non_delyable_weight?",
+      "range": {
+        "startLine": 1282,
+        "startChar": 7,
+        "endLine": 1282,
+        "endChar": 42
+      },
+      "revId": "150a2f121239cb6aa9323b0e9b98a2db89cd44f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "621490bf_6e23b2b6",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-31T17:39:45Z",
+      "side": 1,
+      "message": "Instead of static function, you can define this in the .cc file in anonymous namespace.",
+      "range": {
+        "startLine": 181,
+        "startChar": 2,
+        "endLine": 181,
+        "endChar": 8
+      },
+      "revId": "150a2f121239cb6aa9323b0e9b98a2db89cd44f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd176fd7_6a5f796d",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-31T17:39:45Z",
+      "side": 1,
+      "message": "s/GetNonDelayableThrottlesDelayableConfig/GetNonDelayableRequestWeight/?\nThe current method name implies that it is returning something from the config. It does not say exactly what it is returning.",
+      "range": {
+        "startLine": 181,
+        "startChar": 16,
+        "endLine": 181,
+        "endChar": 55
+      },
+      "revId": "150a2f121239cb6aa9323b0e9b98a2db89cd44f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb2d5491_3ef02457",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-31T17:39:45Z",
+      "side": 1,
+      "message": "Is it possible to use either \"multiplier\" or \"weight\" everywhere? The comment mentions \"weight\" but the variable name is \"multiplier\" which is slightly confusing.",
+      "range": {
+        "startLine": 228,
+        "startChar": 15,
+        "endLine": 228,
+        "endChar": 60
+      },
+      "revId": "150a2f121239cb6aa9323b0e9b98a2db89cd44f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68046c3f_d3db45e6",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-07-31T17:39:45Z",
+      "side": 1,
+      "message": "I wonder if it is better to create a struct that contains all the experiment params. This way it is easier to see which variables belong to which experiment, and helps in readability as we add more experiments.",
+      "range": {
+        "startLine": 232,
+        "startChar": 13,
+        "endLine": 232,
+        "endChar": 36
+      },
+      "revId": "150a2f121239cb6aa9323b0e9b98a2db89cd44f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
