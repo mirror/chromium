@@ -77,7 +77,9 @@ if (is_win) {
              "\"sources\" must be defined for a windows_manifest target")
       manifests = []
       foreach(i, rebase_path(invoker.sources, root_build_dir)) {
-        manifests += [ "/manifestinput:" + i ]
+        # XXX: Enable once lld no longer depends on mt.exe for embedding
+        # manifests.
+        #manifests += [ "/manifestinput:" + i ]
       }
       ldflags = [
                   "/manifest:embed",
