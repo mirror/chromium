@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0185ed09_860eb834",
+        "filename": "chrome/browser/sessions/session_restore.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-31T18:41:50Z",
+      "side": 1,
+      "message": "RestoreTab an RestoreTabImpl are awkwardly split. They aren\u0027t too long either, how about combining them?",
+      "range": {
+        "startLine": 563,
+        "startChar": 8,
+        "endLine": 563,
+        "endChar": 16
+      },
+      "revId": "e8077d98b769bdb87514e895a0523b172e36a5c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
