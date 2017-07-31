@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4beea706_8f30e5cb",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2781,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-31T14:58:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efd4a088_fcc58fb0",
+      "revId": "0d4be08a5a0c3e900b32bc4c7cf28544e127b6e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19fc1d8b_1188c646",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "0d4be08a5a0c3e900b32bc4c7cf28544e127b6e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "daedf10f_732be839",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2782,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-31T14:58:21Z",
+      "side": 1,
+      "message": "Done.\n\nFair point. I somewhy assumed that observer is not yet notified, but it actually is.",
+      "parentUuid": "19fc1d8b_1188c646",
+      "revId": "0d4be08a5a0c3e900b32bc4c7cf28544e127b6e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -73,6 +109,48 @@
       "revId": "0d4be08a5a0c3e900b32bc4c7cf28544e127b6e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4363efc3_6778f559",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2793,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-31T14:58:21Z",
+      "side": 1,
+      "message": "Done. I\u0027ve added version, but did not add a TODO.\n\nWhy can\u0027t one update directly from n-2 to n?",
+      "parentUuid": "ca48de78_b0f255e3",
+      "revId": "0d4be08a5a0c3e900b32bc4c7cf28544e127b6e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "628bad24_e10e6958",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2793,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-31T14:58:21Z",
+      "side": 1,
+      "message": "As you suggested in FromProto, absent rank in proto will lead to the default value in the suggestion.",
+      "parentUuid": "1c98a99b_25b88e49",
+      "range": {
+        "startLine": 2793,
+        "startChar": 56,
+        "endLine": 2793,
+        "endChar": 0
+      },
+      "revId": "0d4be08a5a0c3e900b32bc4c7cf28544e127b6e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
