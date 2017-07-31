@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1a665be1_7dc197e8",
+        "filename": "chrome/browser/chromeos/arc/cast_receiver/arc_cast_receiver_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-07-31T03:16:00Z",
+      "side": 1,
+      "message": "Sure. Done. Note that I copied this exactly from some other ARC++ service exposing prefs as I was learning about observing pref changes, in case we\u0027re looking for uniformity.",
+      "parentUuid": "af7853a3_9eb4cf76",
+      "range": {
+        "startLine": 53,
+        "startChar": 24,
+        "endLine": 53,
+        "endChar": 58
+      },
+      "revId": "c55798061f51e1a290295961fa32fba7b883d823",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "07c54269_1b5e36d5",
         "filename": "components/arc/common/cast_receiver.mojom",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-31T01:35:29Z",
       "side": 1,
       "message": "nit: @0 is reserved for Init.",
+      "range": {
+        "startLine": 14,
+        "startChar": 20,
+        "endLine": 14,
+        "endChar": 22
+      },
+      "revId": "c55798061f51e1a290295961fa32fba7b883d823",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00bfb9f6_4eb915d2",
+        "filename": "components/arc/common/cast_receiver.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1161144
+      },
+      "writtenOn": "2017-07-31T03:16:00Z",
+      "side": 1,
+      "message": "Do I need an Init() then? I can probably figure out something to do in it :) [no \"in it\" Init pun] Or should I just start at 1 until I do need an Init?\n\nI added an Init@0 for now while we discuss but haven\u0027t added a call to it in OnInstanceReady().\n\nAt some point, I\u0027ll probably want to do an initialization and have the host be notified of some status changes, e.g. OnCastReceiverMissing() [not sure what we would want to do in the UI here, but it might help with logging on the Chrome OS side] or OnCastReceiverReady(), and then define an observer interface for UI in prefs. But that is some ways away. My first release won\u0027t have prefs UI, just policies for kiosk.",
+      "parentUuid": "07c54269_1b5e36d5",
       "range": {
         "startLine": 14,
         "startChar": 20,
