@@ -16,6 +16,24 @@
       "revId": "f23b1b1ef182b3c6e1403468c8984d54d16a2a0f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2c69f45_4619dd52",
+        "filename": "ash/highlighter/highlighter_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-07-31T21:11:22Z",
+      "side": 1,
+      "message": "It is indeed somewhat weird. Added an explanation.",
+      "parentUuid": "04597d91_0f89a4ed",
+      "revId": "f23b1b1ef182b3c6e1403468c8984d54d16a2a0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
