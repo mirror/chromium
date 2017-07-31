@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbdbde15_8c617285",
+        "filename": "third_party/apache-win32/README.chromium",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-07-31T23:37:45Z",
+      "side": 1,
+      "message": "it\u0027s actually chromium-apache-win32 (you have this correct, below).\n\nOne should file a ticket w/ go/bug-a-trooper to get access, not contact c-i-t.\n\nI\u0027ve given qyearsley@ and jeffcarp@ access for now.",
+      "revId": "17dd12fdc56b071cc70c523be5b5cf08590ba58d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cd9003a_8050d940",
+        "filename": "third_party/apache-win32/remove_files_not_needed_for_chromium.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-07-31T23:37:45Z",
+      "side": 1,
+      "message": "nit: s/tabs/spaces ?",
+      "revId": "17dd12fdc56b071cc70c523be5b5cf08590ba58d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
