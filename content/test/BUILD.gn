@@ -926,6 +926,7 @@ test("content_browsertests") {
       "//content/shell/android:content_shell_assets",
       "//content/shell/android:content_shell_jni_headers",
       "//testing/android/native_test:native_test_support",
+      "//ui/android:android",
     ]
     android_manifest =
         "${target_gen_dir}/content_browsertests_manifest/AndroidManifest.xml"
