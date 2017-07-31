@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "553d0369_8ceceb06",
+        "filename": "ui/views/controls/button/md_text_button.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-07-31T13:33:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6a3fb57_ccc92a4b",
+      "range": {
+        "startLine": 257,
+        "startChar": 58,
+        "endLine": 257,
+        "endChar": 66
+      },
+      "revId": "fff382ebf0ca63c9052321063fcdb8d94bf90b32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc50985c_e7b266b3",
         "filename": "ui/views/controls/button/md_text_button.cc",
         "patchSetId": 7
@@ -59,6 +83,24 @@
     },
     {
       "key": {
+        "uuid": "13ba83c1_51ccb597",
+        "filename": "ui/views/controls/button/md_text_button.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-07-31T13:33:12Z",
+      "side": 1,
+      "message": "In my testing, a1a192 @ 0x43 turns into e6e6e2. That is very close to 9e9e9e @ 0x43 which becomes, e6e6e6. Visually, the colors are indistinguishable. I specifically did not say they result in the same exact color value, only that the same alpha will work.",
+      "parentUuid": "c4d32125_9c2dcc36",
+      "revId": "fff382ebf0ca63c9052321063fcdb8d94bf90b32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "91e52021_20a241a9",
         "filename": "ui/views/controls/button/md_text_button.cc",
         "patchSetId": 7
@@ -82,6 +124,30 @@
     },
     {
       "key": {
+        "uuid": "a2165505_596893f6",
+        "filename": "ui/views/controls/button/md_text_button.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-07-31T13:33:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91e52021_20a241a9",
+      "range": {
+        "startLine": 301,
+        "startChar": 43,
+        "endLine": 301,
+        "endChar": 47
+      },
+      "revId": "fff382ebf0ca63c9052321063fcdb8d94bf90b32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c92f327c_32832372",
         "filename": "ui/views/controls/button/md_text_button.cc",
         "patchSetId": 7
@@ -99,6 +165,24 @@
     },
     {
       "key": {
+        "uuid": "e2f5efb0_7b4227e9",
+        "filename": "ui/views/controls/button/md_text_button.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-07-31T13:33:12Z",
+      "side": 1,
+      "message": "The colors are effectively the same (at least visually).\n\nHowever, I do agree it is really a throw-away comment and doesn\u0027t really add anything.",
+      "parentUuid": "c92f327c_32832372",
+      "revId": "fff382ebf0ca63c9052321063fcdb8d94bf90b32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d68912f7_f3666e97",
         "filename": "ui/views/controls/button/md_text_button.cc",
         "patchSetId": 7
@@ -110,6 +194,24 @@
       "writtenOn": "2017-07-27T22:40:35Z",
       "side": 1,
       "message": "In the conference call this week I argued for simply returning the right, hardcoded value in Harmony, and not using alpha-blending with the text color at all.  Is there a reason you chose not to do that?  I think this code is still confusing as a result, especially when the math doesn\u0027t work as noted above.",
+      "revId": "fff382ebf0ca63c9052321063fcdb8d94bf90b32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "065ce237_443d1d37",
+        "filename": "ui/views/controls/button/md_text_button.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-07-31T13:33:12Z",
+      "side": 1,
+      "message": "As I thought about it, wouldn\u0027t that stand out as a regression if the stroke doesn\u0027t follow the text color? Would this not be the case even when Harmony becomes the norm? However, I do seem to remember someone saying that none of the secondary UI is affected by themes... except for the download tray?",
+      "parentUuid": "d68912f7_f3666e97",
       "revId": "fff382ebf0ca63c9052321063fcdb8d94bf90b32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
