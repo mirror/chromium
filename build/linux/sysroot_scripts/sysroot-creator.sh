@@ -281,9 +281,12 @@ HacksAndPatchesAmd64() {
   sed -i -e 's|/lib/x86_64-linux-gnu/||g' ${lscripts}
 
   # Remove the symbol __cxa_thread_atexit_impl from libc6 to remove
-  # the dependency on glibc 2.18.
+  # the dependency on glibc 2.18.  Also update libcstdc++6 which
+  # references that symbol in libc6.
   sed -i 's/__cxa_thread_atexit_impl/__dead_beef_dead_beef___/g' \
       "${INSTALL_ROOT}/lib/x86_64-linux-gnu/libc.so.6"
+  sed -i 's/__cxa_thread_atexit_impl/__dead_beef_dead_beef___/g' \
+      "${INSTALL_ROOT}/usr/lib/x86_64-linux-gnu/libstdc++.so.6"
 
   # This is for chrome's ./build/linux/pkg-config-wrapper
   # which overwrites PKG_CONFIG_LIBDIR internally
@@ -306,9 +309,12 @@ HacksAndPatchesI386() {
   sed -i -e 's|/lib/i386-linux-gnu/||g' ${lscripts}
 
   # Remove the symbol __cxa_thread_atexit_impl from libc6 to remove
-  # the dependency on glibc 2.18.
+  # the dependency on glibc 2.18.  Also update libcstdc++6 which
+  # references that symbol in libc6.
   sed -i 's/__cxa_thread_atexit_impl/__dead_beef_dead_beef___/g' \
       "${INSTALL_ROOT}/lib/i386-linux-gnu/libc.so.6"
+  sed -i 's/__cxa_thread_atexit_impl/__dead_beef_dead_beef___/g' \
+      "${INSTALL_ROOT}/usr/lib/i386-linux-gnu/libstdc++.so.6"
 
   # This is for chrome's ./build/linux/pkg-config-wrapper
   # which overwrites PKG_CONFIG_LIBDIR internally
@@ -331,9 +337,12 @@ HacksAndPatchesARM() {
   sed -i -e 's|/lib/arm-linux-gnueabihf/||g' ${lscripts}
 
   # Remove the symbol __cxa_thread_atexit_impl from libc6 to remove
-  # the dependency on glibc 2.18.
+  # the dependency on glibc 2.18.  Also update libcstdc++6 which
+  # references that symbol in libc6.
   sed -i 's/__cxa_thread_atexit_impl/__dead_beef_dead_beef___/g' \
       "${INSTALL_ROOT}/lib/arm-linux-gnueabihf/libc.so.6"
+  sed -i 's/__cxa_thread_atexit_impl/__dead_beef_dead_beef___/g' \
+      "${INSTALL_ROOT}/usr/lib/arm-linux-gnueabihf/libstdc++.so.6"
 
   # This is for chrome's ./build/linux/pkg-config-wrapper
   # which overwrites PKG_CONFIG_LIBDIR internally
@@ -355,9 +364,12 @@ HacksAndPatchesARM64() {
   sed -i -e 's|/lib/aarch64-linux-gnu/||g' ${lscripts}
 
   # Remove the symbol __cxa_thread_atexit_impl from libc6 to remove
-  # the dependency on glibc 2.18.
+  # the dependency on glibc 2.18.  Also update libcstdc++6 which
+  # references that symbol in libc6.
   sed -i 's/__cxa_thread_atexit_impl/__dead_beef_dead_beef___/g' \
       "${INSTALL_ROOT}/lib/aarch64-linux-gnu/libc.so.6"
+  sed -i 's/__cxa_thread_atexit_impl/__dead_beef_dead_beef___/g' \
+      "${INSTALL_ROOT}/usr/lib/aarch64-linux-gnu/libstdc++.so.6"
 
   # This is for chrome's ./build/linux/pkg-config-wrapper
   # which overwrites PKG_CONFIG_LIBDIR internally
@@ -380,9 +392,12 @@ HacksAndPatchesMips() {
   sed -i -e 's|/lib/mipsel-linux-gnu/||g' ${lscripts}
 
   # Remove the symbol __cxa_thread_atexit_impl from libc6 to remove
-  # the dependency on glibc 2.18.
+  # the dependency on glibc 2.18.  Also update libcstdc++6 which
+  # references that symbol in libc6.
   sed -i 's/__cxa_thread_atexit_impl/__dead_beef_dead_beef___/g' \
       "${INSTALL_ROOT}/lib/mipsel-linux-gnu/libc.so.6"
+  sed -i 's/__cxa_thread_atexit_impl/__dead_beef_dead_beef___/g' \
+      "${INSTALL_ROOT}/usr/lib/mipsel-linux-gnu/libstdc++.so.6"
 
   # This is for chrome's ./build/linux/pkg-config-wrapper
   # which overwrites PKG_CONFIG_LIBDIR internally
