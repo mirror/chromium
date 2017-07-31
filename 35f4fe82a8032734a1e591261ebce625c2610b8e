@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "12cea8aa_00e07515",
+        "filename": "content/browser/compositor/gpu_vsync_begin_frame_source.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1117489
+      },
+      "writtenOn": "2017-07-31T23:42:08Z",
+      "side": 1,
+      "message": "Double tick shouldn\u0027t be possible with GPU Vsync but I guess it wouldn\u0027t hurt to add double tick prevention to OnVsync implementation above. I\u0027ll modify it.",
+      "parentUuid": "434cc9e5_2c3cd164",
+      "revId": "35f4fe82a8032734a1e591261ebce625c2610b8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c347401b_31106485",
         "filename": "content/browser/compositor/gpu_vsync_begin_frame_source.cc",
         "patchSetId": 6
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "5e1fc891_a1162511",
+        "filename": "content/browser/compositor/gpu_vsync_begin_frame_source.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1117489
+      },
+      "writtenOn": "2017-07-31T23:42:08Z",
+      "side": 1,
+      "message": "OK, will do.",
+      "parentUuid": "c347401b_31106485",
+      "revId": "35f4fe82a8032734a1e591261ebce625c2610b8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "07fa0057_2cce2c5b",
         "filename": "content/browser/compositor/gpu_vsync_begin_frame_source.cc",
         "patchSetId": 6
@@ -64,6 +100,24 @@
       "writtenOn": "2017-07-31T23:06:47Z",
       "side": 1,
       "message": "nit: We\u0027re not doing this check when generating new args above.",
+      "revId": "35f4fe82a8032734a1e591261ebce625c2610b8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ebbe995_60162cb2",
+        "filename": "content/browser/compositor/gpu_vsync_begin_frame_source.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1117489
+      },
+      "writtenOn": "2017-07-31T23:42:08Z",
+      "side": 1,
+      "message": "Hmm. I guess it could be possible if a tab is moved between windows on different monitors with different refresh rate. OK. I\u0027ll refactor the code above to not return and then this would cover the new args case above.",
+      "parentUuid": "07fa0057_2cce2c5b",
       "revId": "35f4fe82a8032734a1e591261ebce625c2610b8e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
