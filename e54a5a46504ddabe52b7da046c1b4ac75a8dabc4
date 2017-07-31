@@ -48,6 +48,29 @@
     },
     {
       "key": {
+        "uuid": "79627ef0_e26a5294",
+        "filename": "chrome/browser/chromeos/fileapi/recent_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-31T17:47:41Z",
+      "side": 1,
+      "message": "I don\u0027t think you need to make this operator friend.",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 8
+      },
+      "revId": "e54a5a46504ddabe52b7da046c1b4ac75a8dabc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6ac4014_acb6d130",
         "filename": "chrome/browser/chromeos/fileapi/recent_model.cc",
         "patchSetId": 4
@@ -87,6 +110,29 @@
         "startChar": 4,
         "endLine": 155,
         "endChar": 56
+      },
+      "revId": "e54a5a46504ddabe52b7da046c1b4ac75a8dabc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aad544d8_ac02a8c3",
+        "filename": "chrome/browser/chromeos/fileapi/recent_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-31T17:47:41Z",
+      "side": 1,
+      "message": "style: No brace for one-line body for stmt for consistency?",
+      "range": {
+        "startLine": 243,
+        "startChar": 44,
+        "endLine": 243,
+        "endChar": 0
       },
       "revId": "e54a5a46504ddabe52b7da046c1b4ac75a8dabc4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
