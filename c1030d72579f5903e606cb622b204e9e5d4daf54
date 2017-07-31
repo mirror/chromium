@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d18a3216_788f26d7",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 2043,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-31T19:18:38Z",
+      "side": 1,
+      "message": "Good point. Done.",
+      "parentUuid": "c3acbbd0_95c3bd81",
+      "range": {
+        "startLine": 2043,
+        "startChar": 18,
+        "endLine": 2043,
+        "endChar": 51
+      },
+      "revId": "c1030d72579f5903e606cb622b204e9e5d4daf54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ec5e4814_d0c3a7d6",
         "filename": "ui/webui/resources/PRESUBMIT.py",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "c1030d72579f5903e606cb622b204e9e5d4daf54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "490d9a9f_ce2c52a3",
+        "filename": "ui/webui/resources/PRESUBMIT.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-31T19:18:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec5e4814_d0c3a7d6",
+      "range": {
+        "startLine": 34,
+        "startChar": 18,
+        "endLine": 34,
+        "endChar": 28
+      },
+      "revId": "c1030d72579f5903e606cb622b204e9e5d4daf54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
