@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "54bce22e_3be9c632",
+        "filename": "chrome/browser/ui/ash/session_controller_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-07-31T15:08:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b29776f_a9d8ddfe",
+      "revId": "d9129e521037fe4bdbff39cdafab1e1084979f1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6257e81e_636e9e7d",
         "filename": "chrome/browser/ui/ash/session_controller_client.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-28T22:00:24Z",
       "side": 1,
       "message": "not your fault, but why does this singleton class need all of these static methods?",
+      "revId": "d9129e521037fe4bdbff39cdafab1e1084979f1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8c2e684_f7bbad95",
+        "filename": "chrome/browser/ui/ash/session_controller_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-07-31T15:08:36Z",
+      "side": 1,
+      "message": "It seems these static methods will be removed later (comments in the header file).",
+      "parentUuid": "6257e81e_636e9e7d",
       "revId": "d9129e521037fe4bdbff39cdafab1e1084979f1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "755578b4_8f4369f3",
+        "filename": "chrome/browser/ui/ash/session_controller_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-07-31T15:08:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbf9b616_fb429309",
+      "range": {
+        "startLine": 76,
+        "startChar": 24,
+        "endLine": 76,
+        "endChar": 28
+      },
+      "revId": "d9129e521037fe4bdbff39cdafab1e1084979f1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4bb4c7da_5c0eb953",
         "filename": "chrome/browser/ui/ash/session_controller_client.h",
         "patchSetId": 4
@@ -73,6 +133,24 @@
       "revId": "d9129e521037fe4bdbff39cdafab1e1084979f1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e57dd3f6_e3b5dc55",
+        "filename": "chrome/browser/ui/ash/session_controller_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-07-31T15:08:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4bb4c7da_5c0eb953",
+      "revId": "d9129e521037fe4bdbff39cdafab1e1084979f1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -96,6 +174,30 @@
       "revId": "d9129e521037fe4bdbff39cdafab1e1084979f1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9252466d_d1ab11e5",
+        "filename": "chrome/browser/ui/ash/session_controller_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-07-31T15:08:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1398f782_25c2ed14",
+      "range": {
+        "startLine": 147,
+        "startChar": 2,
+        "endLine": 147,
+        "endChar": 8
+      },
+      "revId": "d9129e521037fe4bdbff39cdafab1e1084979f1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
