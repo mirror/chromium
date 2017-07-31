@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "80b4c2de_598a3742",
+        "filename": "third_party/WebKit/Source/bindings/scripts/idl_definitions.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2017-07-31T15:59:34Z",
+      "side": 1,
+      "message": "Would you be OK with fixing this separately? I tried moving this check to v8_interface.py, but it breaks due to several IDL files are partial Window interface definitions, and interface_dependency_resolver.py doesn\u0027t seem to have any logic to prevent these partial interfaces from resetting has_named_property to False.",
+      "parentUuid": "1a25f37a_2b346e03",
+      "revId": "fec492552a3ca7a50197e331d1cec710196796b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "44484d60_73594969",
         "filename": "third_party/WebKit/Source/core/frame/Window.idl",
         "patchSetId": 1
