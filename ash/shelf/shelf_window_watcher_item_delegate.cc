@@ -39,7 +39,7 @@ ShelfWindowWatcherItemDelegate::ShelfWindowWatcherItemDelegate(
 
 ShelfWindowWatcherItemDelegate::~ShelfWindowWatcherItemDelegate() {}
 
-void ShelfWindowWatcherItemDelegate::ItemSelected(
+void ShelfWindowWatcherItemDelegate::ItemSelectedImpl(
     std::unique_ptr<ui::Event> event,
     int64_t display_id,
     ShelfLaunchSource source,
@@ -67,8 +67,10 @@ void ShelfWindowWatcherItemDelegate::ItemSelected(
   std::move(callback).Run(SHELF_ACTION_WINDOW_ACTIVATED, base::nullopt);
 }
 
-void ShelfWindowWatcherItemDelegate::ExecuteCommand(uint32_t command_id,
-                                                    int32_t event_flags) {}
+void ShelfWindowWatcherItemDelegate::ExecuteCommand(bool from_context_menu,
+                                                    uint32_t command_id,
+                                                    int32_t event_flags,
+                                                    int64_t display_id) {}
 
 void ShelfWindowWatcherItemDelegate::Close() {
   wm::CloseWidgetForWindow(window_);

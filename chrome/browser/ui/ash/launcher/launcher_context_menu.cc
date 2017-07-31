@@ -189,7 +189,7 @@ void LauncherContextMenu::AddShelfOptionsMenu() {
     AddCheckItemWithStringId(MENU_AUTO_HIDE,
                              IDS_ASH_SHELF_CONTEXT_MENU_AUTO_HIDE);
   }
-  if (ash::Shelf::CanChangeShelfAlignment() &&
+  if (//ash::Shelf::CanChangeShelfAlignment() && 
       !session_manager::SessionManager::Get()->IsScreenLocked()) {
     AddSubMenuWithStringId(MENU_ALIGNMENT_MENU,
                            IDS_ASH_SHELF_CONTEXT_MENU_POSITION,

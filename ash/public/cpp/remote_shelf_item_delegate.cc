@@ -17,13 +17,18 @@ void RemoteShelfItemDelegate::ItemSelected(std::unique_ptr<ui::Event> event,
                                            int64_t display_id,
                                            ShelfLaunchSource source,
                                            ItemSelectedCallback callback) {
+  LOG(ERROR) << "MSW RemoteShelfItemDelegate::ItemSelected " << delegate_.is_bound() << " " << event.get() << " " << display_id << " " << source << " " << callback.is_null();
   delegate_->ItemSelected(std::move(event), display_id, source,
                           std::move(callback));
 }
 
-void RemoteShelfItemDelegate::ExecuteCommand(uint32_t command_id,
-                                             int32_t event_flags) {
-  delegate_->ExecuteCommand(command_id, event_flags);
+void RemoteShelfItemDelegate::ExecuteCommand(bool from_context_menu,
+                                             uint32_t command_id,
+                                             int32_t event_flags,
+                                             int64_t display_id) {
+  LOG(ERROR) << "MSW RemoteShelfItemDelegate::ExecuteCommand";
+  delegate_->ExecuteCommand(from_context_menu, command_id, event_flags,
+                            display_id);
 }
 
 void RemoteShelfItemDelegate::Close() {

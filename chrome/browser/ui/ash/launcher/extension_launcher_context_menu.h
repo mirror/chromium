@@ -7,6 +7,8 @@
 
 #include <memory>
 
+#include "ash/public/cpp/shelf_item_delegate.h"
+#include "ash/shelf/shelf_context_menu_model.h"
 #include "base/macros.h"
 #include "chrome/browser/ui/ash/launcher/launcher_context_menu.h"
 #include "extensions/common/constants.h"
@@ -36,6 +38,9 @@ class ExtensionLauncherContextMenu : public LauncherContextMenu {
   bool IsCommandIdChecked(int command_id) const override;
   bool IsCommandIdEnabled(int command_id) const override;
   void ExecuteCommand(int command_id, int event_flags) override;
+
+  // TODO(msw): Move everything to this pattern? 
+  static ash::MenuItemList GetMenuItems(const ash::ShelfItem* item);
 
  private:
   void Init();

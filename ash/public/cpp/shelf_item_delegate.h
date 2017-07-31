@@ -44,8 +44,23 @@ class ASH_PUBLIC_EXPORT ShelfItemDelegate : public mojom::ShelfItemDelegate {
   // Returns items for the application menu; used for convenience and testing.
   virtual MenuItemList GetAppMenuItems(int event_flags);
 
+  // Returns items for the context menu; used for convenience and testing.
+  virtual MenuItemList GetContextMenuItems(int64_t display_id);
+
   // Returns nullptr if class is not AppWindowLauncherItemController.
   virtual AppWindowLauncherItemController* AsAppWindowLauncherItemController();
+
+  // Used to implement item-specific selection behavior (beyond context menus).
+  virtual void ItemSelectedImpl(std::unique_ptr<ui::Event> event,
+                                int64_t display_id,
+                                ShelfLaunchSource source,
+                                ItemSelectedCallback callback);
+
+  // mojom::ShelfItemDelegate:
+  void ItemSelected(std::unique_ptr<ui::Event> event,
+                    int64_t display_id,
+                    ShelfLaunchSource source,
+                    ItemSelectedCallback callback) override;
 
  private:
   // The shelf id; empty if there is no app associated with the item.

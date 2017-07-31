@@ -12,6 +12,7 @@
 
 namespace extensions {
 class AppWindow;
+class ContextMenuMatcher;
 }
 
 // Shelf item delegate for extension app windows.
@@ -30,9 +31,14 @@ class ExtensionAppWindowLauncherItemController
 
   // AppWindowLauncherItemController:
   ash::MenuItemList GetAppMenuItems(int event_flags) override;
-  void ExecuteCommand(uint32_t command_id, int32_t event_flags) override;
+  ash::MenuItemList GetContextMenuItems(int64_t display_id) override;
+  void ExecuteCommand(bool from_context_menu,
+                      uint32_t command_id,
+                      int32_t event_flags,
+                      int64_t display_id) override;
 
  private:
+  std::unique_ptr<extensions::ContextMenuMatcher> extension_context_items_;
   DISALLOW_COPY_AND_ASSIGN(ExtensionAppWindowLauncherItemController);
 };
 
