@@ -518,44 +518,5 @@ TEST_F(ChromeArcUtilTest, IsActiveDirectoryUserForProfile_AD) {
   EXPECT_TRUE(IsActiveDirectoryUserForProfile(profile()));
 }
 
-class ArcMigrationTest : public testing::Test {
- protected:
-  ArcMigrationTest() {
-    auto attributes = base::MakeUnique<FakeInstallAttributesManaged>();
-    attributes_ = attributes.get();
-    policy::BrowserPolicyConnectorChromeOS::SetInstallAttributesForTesting(
-        attributes.release());
-  }
-  ~ArcMigrationTest() override {}
-
-  void SetUp() override { chromeos::DeviceSettingsService::Initialize(); }
-
-  void TearDown() override { chromeos::DeviceSettingsService::Shutdown(); }
-
-  void SetDeviceIsEnterpriseManaged(bool is_managed) {
-    attributes_->SetIsManaged(is_managed);
-  }
-
-  FakeInstallAttributesManaged* attributes_;
-};
-
-TEST_F(ArcMigrationTest, IsMigrationAllowedConsumerOwned) {
-  ResetArcMigrationAllowedForTesting();
-  auto* const command_line = base::CommandLine::ForCurrentProcess();
-  command_line->InitFromArgv({"", "--need-arc-migration-policy-check",
-                              "--arc-availability=officially-supported"});
-  SetDeviceIsEnterpriseManaged(false);
-  EXPECT_TRUE(IsArcMigrationAllowed());
-}
-
-TEST_F(ArcMigrationTest, IsMigrationAllowedNoPolicy) {
-  ResetArcMigrationAllowedForTesting();
-  auto* const command_line = base::CommandLine::ForCurrentProcess();
-  command_line->InitFromArgv({"", "--need-arc-migration-policy-check",
-                              "--arc-availability=officially-supported"});
-  SetDeviceIsEnterpriseManaged(true);
-  EXPECT_FALSE(IsArcMigrationAllowed());
-}
-
 }  // namespace util
 }  // namespace arc
