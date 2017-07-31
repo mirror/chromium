@@ -106,6 +106,11 @@ class FocusForwarderView : public views::View {
   DISALLOW_COPY_AND_ASSIGN(FocusForwarderView);
 };
 
+class FindTextfield : public views::Textfield {
+ public:
+  FindTextfield() { GetRenderText()->set_nice_selection_mode(true); }
+};
+
 }  // namespace
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -113,7 +118,7 @@ class FocusForwarderView : public views::View {
 
 FindBarView::FindBarView(FindBarHost* host)
     : find_bar_host_(host),
-      find_text_(new views::Textfield),
+      find_text_(new FindTextfield),
       match_count_text_(new MatchCountLabel()),
       focus_forwarder_view_(new FocusForwarderView(find_text_)),
       separator_(new views::Separator()),

@@ -816,8 +816,9 @@ int RenderText::GetContentWidth() {
 
 int RenderText::GetBaseline() {
   if (baseline_ == kInvalidBaseline) {
-    baseline_ =
-        DetermineBaselineCenteringText(display_rect().height(), font_list());
+    const int height = display_rect().height();
+    baseline_ = DetermineBaselineCenteringText(height, font_list());
+    outline_ = DetermineOutlineCenteringText(height, baseline_, font_list());
   }
   DCHECK_NE(kInvalidBaseline, baseline_);
   return baseline_;
@@ -894,7 +895,8 @@ Rect RenderText::GetCursorBounds(const SelectionModel& caret,
       width = xspan.length();
     }
   }
-  return Rect(ToViewPoint(Point(x, 0)), Size(width, size.height()));
+  return AdjustRectWithOutline(
+      Rect(ToViewPoint(Point(x, 0)), Size(width, size.height())));
 }
 
 const Rect& RenderText::GetUpdatedCursorBounds() {
@@ -1401,6 +1403,31 @@ int RenderText::DetermineBaselineCenteringText(const int display_height,
   return baseline + std::max(min_shift, std::min(max_shift, baseline_shift));
 }
 
+// static
+int RenderText::DetermineOutlineCenteringText(const int display_height,
+                                              const int centered_baseline,
+                                              const FontList& font_list) {
+  const int font_height = font_list.GetHeight();
+  const int baseline = font_list.GetBaseline();
+  const int cap_height = font_list.GetCapHeight();
+
+  const int above_cap = baseline - cap_height;
+  const int below_base = font_height - baseline;
+
+  const int wanted_outline = above_cap - below_base;
+
+  if (wanted_outline == 0)
+    return 0;
+
+  if (wanted_outline < 0) {
+    const int room_above = centered_baseline - baseline;
+    return -std::min(room_above, -wanted_outline);
+  } else {
+    const int room_below = display_height - centered_baseline - below_base;
+    return std::min(room_below, wanted_outline);
+  }
+}
+
 void RenderText::MoveCursorTo(size_t position, bool select) {
   size_t cursor = std::min(position, text().length());
   if (IsValidCursorIndex(cursor))
@@ -1641,9 +1668,24 @@ void RenderText::UpdateCachedBoundsAndOffset() {
   SetDisplayOffset(display_offset_.x() + delta_x);
 }
 
+Rect RenderText::AdjustRectWithOutline(Rect r) const {
+  DCHECK_NE(kInvalidBaseline, baseline_);  // Already evaluated outline too.
+  if (nice_selection_mode()) {
+    if (outline_ < 0)
+      r.Inset(0, outline_, 0, 0);
+    else if (outline_ > 0)
+      r.Inset(0, 0, 0, -outline_);
+  }
+  return r;
+}
+
 void RenderText::DrawSelection(Canvas* canvas) {
+  if (selection().is_empty())
+    return;
+  GetBaseline();
   for (const Rect& s : GetSubstringBounds(selection()))
-    canvas->FillRect(s, selection_background_focused_color_);
+    canvas->FillRect(AdjustRectWithOutline(s),
+                     selection_background_focused_color_);
 }
 
 size_t RenderText::GetNearestWordStartBoundary(size_t index) const {

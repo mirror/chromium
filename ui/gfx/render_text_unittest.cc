@@ -2477,6 +2477,158 @@ TEST_P(RenderTextTest, CursorBoundsInReplacementMode) {
   EXPECT_EQ(cursor_around_b.right(), cursor_before_c.x());
 }
 
+TEST_P(RenderTextTest, NiceSelectionMode) {
+  RenderText* render_text = GetRenderText();
+
+  const int display_width = 100;
+  const int display_height = 32;
+
+  render_text->SetText(ASCIIToUTF16("abcdefg"));
+  render_text->SetFontList(FontList("Arial, 14px"));
+  SelectionModel sel(1, CURSOR_FORWARD);
+
+  //////////////////////////////////////////////////////////////////////
+  // Default behavior.
+
+  ASSERT_FALSE(render_text->nice_selection_mode());
+  render_text->SetDisplayRect(Rect(display_width, display_height));
+  const int default_baseline = render_text->GetBaseline();
+
+  Rect default_caret = render_text->GetCursorBounds(sel, true);
+  const int default_top_space = default_caret.y();
+  const int default_bottom_space = display_height - default_caret.bottom();
+
+  //////////////////////////////////////////////////////////////////////
+  // Nice behavior.
+
+  render_text->set_nice_selection_mode(true);
+  ASSERT_TRUE(render_text->nice_selection_mode());
+
+  // Touch the render to reevaluate baseline, to be sure it is up-to-date.
+  render_text->SetDisplayRect(Rect(display_width + 1, display_height));
+
+  const int nice_baseline = render_text->GetBaseline();
+  // nice_selection_mode() does not affect the position of baseline.
+  EXPECT_EQ(default_baseline, nice_baseline);
+
+  Rect nice_caret = render_text->GetCursorBounds(sel, true);
+  const int nice_top_space = nice_caret.y();
+  const int nice_bottom_space = display_height - nice_caret.bottom();
+
+  // The caret does not exceed the display rect.
+  EXPECT_LE(0, nice_top_space);
+  EXPECT_LE(0, nice_bottom_space);
+
+  // The caret does not shrink in comparison with default mode.
+  EXPECT_LE(nice_top_space, default_top_space);
+  EXPECT_LE(nice_bottom_space, default_bottom_space);
+}
+
+#if defined(OS_WIN)
+// Ugly font Segoe UI is Windows-specific.
+
+TEST_P(RenderTextTest, NiceSelectionModeWithUglyFont) {
+  RenderText* render_text = GetRenderText();
+
+  const int display_width = 100;
+  const int display_height = 32;
+
+  render_text->SetText(ASCIIToUTF16("abcdefg"));
+  render_text->SetFontList(FontList("Segoe UI, 14px"));  // Ugly font
+  SelectionModel sel(1, CURSOR_FORWARD);
+
+  //////////////////////////////////////////////////////////////////////
+  // Default behavior.
+
+  ASSERT_FALSE(render_text->nice_selection_mode());
+  render_text->SetDisplayRect(Rect(display_width, display_height));
+  const int ugly_baseline = render_text->GetBaseline();
+
+  Rect ugly_caret = render_text->GetCursorBounds(sel, true);
+  const int ugly_top_space = ugly_caret.y();
+  const int ugly_bottom_space = display_height - ugly_caret.bottom();
+
+  // Known issue: asymmetric spaces
+  ASSERT_GE(abs(ugly_bottom_space - ugly_top_space), 3)
+      << " top:" << ugly_top_space << " bottom:" << ugly_bottom_space;
+
+  //////////////////////////////////////////////////////////////////////
+  // Improved behavior.
+
+  render_text->set_nice_selection_mode(true);
+  ASSERT_TRUE(render_text->nice_selection_mode());
+
+  // Touch the render to reevaluate baseline, to be sure it is up-to-date.
+  render_text->SetDisplayRect(Rect(display_width + 1, display_height));
+
+  const int nice_baseline = render_text->GetBaseline();
+  // nice_selection_mode() does not affect the position of baseline.
+  EXPECT_EQ(ugly_baseline, nice_baseline);
+
+  Rect nice_caret = render_text->GetCursorBounds(sel, true);
+  const int nice_top_space = nice_caret.y();
+  const int nice_bottom_space = display_height - nice_caret.bottom();
+
+  EXPECT_LE(0, nice_top_space);
+  EXPECT_LE(0, nice_bottom_space);
+
+  EXPECT_LE(nice_top_space, ugly_top_space);
+  EXPECT_LE(nice_bottom_space, ugly_bottom_space);
+
+  EXPECT_LE(abs(nice_bottom_space - nice_top_space), 1)
+      << " top:" << nice_top_space << " bottom:" << nice_bottom_space;
+}
+
+TEST_P(RenderTextTest, NiceSelectionModeWithUglyFontAndNotEnoughRoom) {
+  RenderText* render_text = GetRenderText();
+
+  const int display_width = 100;
+  const int display_height = 21;
+
+  render_text->SetText(ASCIIToUTF16("abcdefg"));
+  render_text->SetFontList(FontList("Segoe UI, 14px"));  // Ugly font
+  SelectionModel sel(1, CURSOR_FORWARD);
+
+  //////////////////////////////////////////////////////////////////////
+  // Default behavior.
+
+  ASSERT_FALSE(render_text->nice_selection_mode());
+  render_text->SetDisplayRect(Rect(display_width, display_height));
+  const int ugly_baseline = render_text->GetBaseline();
+
+  Rect ugly_caret = render_text->GetCursorBounds(sel, true);
+  const int ugly_top_space = ugly_caret.y();
+  const int ugly_bottom_space = display_height - ugly_caret.bottom();
+
+  // Space is still asymmetric.
+  // Delta is less than in the test above, because of not ideally centered text.
+  EXPECT_EQ(0, ugly_top_space);
+  EXPECT_EQ(2, ugly_bottom_space);
+
+  //////////////////////////////////////////////////////////////////////
+  // Improved behavior.
+
+  render_text->set_nice_selection_mode(true);
+  ASSERT_TRUE(render_text->nice_selection_mode());
+
+  // Touch the render to reevaluate baseline, to be sure it is up-to-date.
+  render_text->SetDisplayRect(Rect(display_width + 1, display_height));
+
+  const int nice_baseline = render_text->GetBaseline();
+  // nice_selection_mode() does not affect the position of baseline.
+  EXPECT_EQ(ugly_baseline, nice_baseline);
+
+  Rect nice_caret = render_text->GetCursorBounds(sel, true);
+  const int nice_top_space = nice_caret.y();
+  const int nice_bottom_space = display_height - nice_caret.bottom();
+
+  // Text will be shown a bit asymmetric, but the most important thing is that
+  // the caret does not exceed the display rect.
+  EXPECT_EQ(0, nice_top_space);
+  EXPECT_EQ(0, nice_bottom_space);
+}
+#endif
+
 TEST_P(RenderTextTest, GetTextOffset) {
   // The default horizontal text offset differs for LTR and RTL, and is only set
   // when the RenderText object is created.  This test will check the default in

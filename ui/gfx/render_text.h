@@ -322,6 +322,12 @@ class GFX_EXPORT RenderText {
     subpixel_rendering_suppressed_ = suppressed;
   }
 
+  // Nice selection mode compensates ugly font metrics, adding outline pixels
+  // to all selection rects and to the caret beam.
+  // See DetermineOutlineCenteringText() and AdjustRectWithOutline().
+  bool nice_selection_mode() const { return nice_selection_mode_; }
+  void set_nice_selection_mode(bool nice) { nice_selection_mode_ = nice; }
+
   const SelectionModel& selection_model() const { return selection_model_; }
 
   const Range& selection() const { return selection_model_.selection(); }
@@ -684,6 +690,14 @@ class GFX_EXPORT RenderText {
   static int DetermineBaselineCenteringText(const int display_height,
                                             const FontList& font_list);
 
+  // Returns a value to add to the ascent or the descent of given font, to make
+  // the selection rectangle as much centered as possible.
+  // Negative value means "move the top up",
+  // positive value means "move the bottom down".
+  static int DetermineOutlineCenteringText(const int display_height,
+                                           const int centered_baseline,
+                                           const FontList& font_list);
+
  private:
   friend class test::RenderTextTestApi;
 
@@ -728,6 +742,9 @@ class GFX_EXPORT RenderText {
   // text cannot be retrieved, e.g. if the text is obscured.
   virtual bool GetDecoratedTextForRange(const Range& range,
                                         DecoratedText* decorated_text) = 0;
+
+  // Adds a top or bottom space, according to |outline_|
+  Rect AdjustRectWithOutline(Rect r) const;
 
   // Logical UTF-16 string data to be drawn.
   base::string16 text_;
@@ -843,6 +860,14 @@ class GFX_EXPORT RenderText {
   // display area and the cap height of the font list so the text is vertically
   // centered.
   int baseline_;
+
+  // Nice selection mode tells to determine and then add outline pixels to all
+  // selection rects and to the caret beam.
+  // It compensates ugly Windows system fonts like SegoeUI with too high ascent.
+  bool nice_selection_mode_ = false;
+
+  // The outline to be added to selections. See DetermineOutlineCenteringText().
+  int outline_ = 0;
 
   // The cached bounds and offset are invalidated by changes to the cursor,
   // selection, font, and other operations that adjust the visible text bounds.
