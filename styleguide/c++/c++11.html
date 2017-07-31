@@ -355,10 +355,6 @@ template &lt;typename T&gt;<br/>void Function(T&amp;&amp; t) { ... }</code></td>
 
 <h2 id="whitelist"><a name="core-whitelist-14"></a>C++14 Allowed Features</h2>
 
-<p>Nothing yet. Suggest something!</p>
-<!--<p>The following features are currently allowed.</p>-->
-
-<!--
 <table id="whitelist_lang_list_14" class="unlined striped">
 <tbody>
 
@@ -370,9 +366,16 @@ template &lt;typename T&gt;<br/>void Function(T&amp;&amp; t) { ... }</code></td>
 <th style='width:240px;'>Notes and Discussion Thread</th>
 </tr>
 
+<tr>
+<td>Generic lambdas</td>
+<td><code>[](const auto&amp; x) { ... }</code></td>
+<td>Allows lambda argument types to be deduced using <code>auto</code> (according to the rules that apply to templates).</td>
+<td><a href="http://en.cppreference.com/w/cpp/language/lambda">lambda expressions</a></td>
+<td></td>
+</tr>
+
 </tbody>
 </table>
--->
 
 <h2 id="whitelist"><a name="library-whitelist"></a>C++11 Allowed Library Features</h2>
 
@@ -902,7 +905,7 @@ than binary literals.</td>
 </tr>
 
 <!--
-XXX: generic lambdas, lambda capture expressions, decltype(auto), auto f(),
+XXX: lambda capture expressions, decltype(auto), auto f(),
 more constexpr, member initializers for aggregates, variable templates
 -->
 
