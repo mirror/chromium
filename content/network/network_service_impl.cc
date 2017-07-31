@@ -9,7 +9,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/values.h"
 #include "build/build_config.h"
-#include "content/network/network_context.h"
+#include "content/network/network_context_impl.h"
 #include "content/public/common/content_switches.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "net/log/file_net_log_observer.h"
@@ -86,9 +86,9 @@ NetworkServiceImpl::CreateNetworkContextWithBuilder(
     content::mojom::NetworkContextParamsPtr params,
     std::unique_ptr<net::URLRequestContextBuilder> builder,
     net::URLRequestContext** url_request_context) {
-  std::unique_ptr<NetworkContext> network_context =
-      base::MakeUnique<NetworkContext>(std::move(request), std::move(params),
-                                       std::move(builder));
+  std::unique_ptr<NetworkContextImpl> network_context =
+      base::MakeUnique<NetworkContextImpl>(
+          std::move(request), std::move(params), std::move(builder));
   *url_request_context = network_context->url_request_context();
   return network_context;
 }
@@ -98,13 +98,13 @@ std::unique_ptr<NetworkServiceImpl> NetworkServiceImpl::CreateForTesting() {
 }
 
 void NetworkServiceImpl::RegisterNetworkContext(
-    NetworkContext* network_context) {
+    NetworkContextImpl* network_context) {
   DCHECK_EQ(0u, network_contexts_.count(network_context));
   network_contexts_.insert(network_context);
 }
 
 void NetworkServiceImpl::DeregisterNetworkContext(
-    NetworkContext* network_context) {
+    NetworkContextImpl* network_context) {
   DCHECK_EQ(1u, network_contexts_.count(network_context));
   network_contexts_.erase(network_context);
 }
@@ -114,7 +114,7 @@ void NetworkServiceImpl::CreateNetworkContext(
     mojom::NetworkContextParamsPtr params) {
   // The NetworkContext will destroy itself on connection error, or when the
   // service is destroyed.
-  new NetworkContext(this, std::move(request), std::move(params));
+  new NetworkContextImpl(this, std::move(request), std::move(params));
 }
 
 void NetworkServiceImpl::OnBindInterface(
