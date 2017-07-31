@@ -22,6 +22,30 @@
       "revId": "3348bced076d8524099e08ce14090f8f463e7822",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e18657f0_12da43dc",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 64993,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-07-31T17:35:07Z",
+      "side": 1,
+      "message": "Good point, although the \"when\" would be something like \"Logged when a report is generated\", which I think is implied by the first sentence. Opting to leave as-is.",
+      "parentUuid": "04e515aa_7b2e9546",
+      "range": {
+        "startLine": 64993,
+        "startChar": 4,
+        "endLine": 64993,
+        "endChar": 13
+      },
+      "revId": "3348bced076d8524099e08ce14090f8f463e7822",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
