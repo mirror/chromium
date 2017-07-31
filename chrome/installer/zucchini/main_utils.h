@@ -29,6 +29,7 @@ class CommandLine;
 // runs it and logs resource usage. Otherwise prints help message to |out|.
 // Returns Zucchini status code for error handling.
 zucchini::status::Code RunZucchiniCommand(const base::CommandLine& command_line,
-                                          std::ostream& out);
+                                          std::ostream& out,
+                                          std::ostream& err);
 
 #endif  // CHROME_INSTALLER_ZUCCHINI_MAIN_UTILS_H_
