@@ -175,6 +175,30 @@
       "revId": "38e02a6e26091fe7302a43c72e32a53e6310f863",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24f761bb_dd0c89b6",
+        "filename": "chromeos/dbus/fake_auth_policy_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-07-31T14:37:37Z",
+      "side": 1,
+      "message": "Removed it",
+      "parentUuid": "8dbe62f5_ec806783",
+      "range": {
+        "startLine": 236,
+        "startChar": 34,
+        "endLine": 236,
+        "endChar": 64
+      },
+      "revId": "38e02a6e26091fe7302a43c72e32a53e6310f863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
