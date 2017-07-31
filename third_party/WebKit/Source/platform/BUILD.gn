@@ -971,6 +971,7 @@ component("platform") {
     "graphics/RecordingImageBufferSurface.h",
     "graphics/ReplayingCanvas.cpp",
     "graphics/ReplayingCanvas.h",
+    "graphics/ScrollCustomization.h",
     "graphics/SkiaTextureHolder.cpp",
     "graphics/SkiaTextureHolder.h",
     "graphics/SquashingDisallowedReasons.cpp",
