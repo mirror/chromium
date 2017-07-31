@@ -130,6 +130,11 @@ MAX_LAUNCH_FAILURES = SHORT_BACKOFF_THRESHOLD + 10
 # Number of seconds to save session output to the log.
 SESSION_OUTPUT_TIME_LIMIT_SECONDS = 30
 
+# This is the file descriptor used to pass messages to the user_session binary
+# during startup. It must be kept in sync with kMessageFd in
+# remoting_user_session.cc.
+USER_SESSION_MESSAGE_FD = 202
+
 # Globals needed by the atexit cleanup() handler.
 g_desktop = None
 g_host_hash = hashlib.md5(socket.gethostname()).hexdigest()
@@ -894,14 +899,21 @@ class ParentProcessLogger(object):
 
   __instance = None
 
-  def __init__(self):
+  def __init__(self, write_fd=None):
     """Constructor. Must be called before forking."""
-    read_pipe, write_pipe = os.pipe()
+    if write_fd is None:
+      read_pipe, write_pipe = os.pipe()
+    else:
+      read_pipe = None
+      write_pipe = write_fd
     # Ensure write_pipe is closed on exec, otherwise it will be kept open by
     # child processes (X, host), preventing the read pipe from EOF'ing.
     old_flags = fcntl.fcntl(write_pipe, fcntl.F_GETFD)
     fcntl.fcntl(write_pipe, fcntl.F_SETFD, old_flags | fcntl.FD_CLOEXEC)
-    self._read_file = os.fdopen(read_pipe, 'r')
+    if read_pipe is not None:
+      self._read_file = os.fdopen(read_pipe, 'r')
+    else:
+      self._read_file = None
     self._write_file = os.fdopen(write_pipe, 'w')
     self._logging_handler = None
     ParentProcessLogger.__instance = self
@@ -913,7 +925,8 @@ class ParentProcessLogger(object):
 
     Must be called by the child process.
     """
-    self._read_file.close()
+    if self._read_file is not None:
+      self._read_file.close()
     self._logging_handler = logging.StreamHandler(self._write_file)
     self._logging_handler.setFormatter(logging.Formatter(fmt='MSG:%(message)s'))
     logging.getLogger().addHandler(self._logging_handler)
@@ -1490,6 +1503,12 @@ Web Store: https://chrome.google.com/remotedesktop"""
   # requested to run in the foreground.
   if not options.foreground:
     daemonize()
+  else:
+    # Log to existing messaging pipe if it exists.
+    try:
+      ParentProcessLogger(USER_SESSION_MESSAGE_FD).start_logging()
+    except EnvironmentError:
+      pass
 
   if host.host_id:
     logging.info("Using host_id: " + host.host_id)
