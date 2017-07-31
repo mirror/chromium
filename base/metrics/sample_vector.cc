@@ -360,7 +360,7 @@ SampleVectorIterator::SampleVectorIterator(
       counts_size_(counts->size()),
       bucket_ranges_(bucket_ranges),
       index_(0) {
-  CHECK_GE(bucket_ranges_->bucket_count(), counts_size_);
+  DCHECK_GE(bucket_ranges_->bucket_count(), counts_size_);
   SkipEmptyBuckets();
 }
 
@@ -372,7 +372,7 @@ SampleVectorIterator::SampleVectorIterator(
       counts_size_(counts_size),
       bucket_ranges_(bucket_ranges),
       index_(0) {
-  CHECK_GE(bucket_ranges_->bucket_count(), counts_size_);
+  DCHECK_GE(bucket_ranges_->bucket_count(), counts_size_);
   SkipEmptyBuckets();
 }
 
