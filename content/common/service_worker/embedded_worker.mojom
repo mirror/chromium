@@ -35,7 +35,8 @@ interface EmbeddedWorkerInstanceClient {
               ServiceWorkerEventDispatcher& dispatcher_request,
               ServiceWorkerInstalledScriptsInfo? installed_scripts_info,
               associated EmbeddedWorkerInstanceHost instance_host,
-              ServiceWorkerProviderInfoForStartWorker provider_info);
+              ServiceWorkerProviderInfoForStartWorker provider_info,
+              ServiceWorkerContentSettingsProxy content_settings_proxy);
   // The response is sent back via EmbeddedWorkerInstanceHost.OnStopped().
   StopWorker();
   ResumeAfterDownload();
@@ -74,4 +75,18 @@ interface EmbeddedWorkerInstanceHost {
                          url.mojom.Url source_url);
   // Indicates that the worker has stopped.
   OnStopped();
+};
+
+// The renderer uses this interface to ask the abowser process about content
+// settings for whether features are allowed to be used by service workers.
+// Each method is called when every relevant web exposed API is called,
+// and the result is returned synchronously because the web exposed
+// APIs are synchronous.
+interface ServiceWorkerContentSettingsProxy {
+  [Sync]
+  AllowIndexedDB(url.mojom.Url url, mojo.common.mojom.String16 name)
+    => (bool result);
+  [Sync]
+  RequestFileSystemAccessSync(url.mojom.Url url)
+    => (bool result);
 };
