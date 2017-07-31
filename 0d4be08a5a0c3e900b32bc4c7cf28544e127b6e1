@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "efd4a088_fcc58fb0",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2781,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-31T14:31:49Z",
+      "side": 1,
+      "message": "EXPECT_THAT",
+      "revId": "0d4be08a5a0c3e900b32bc4c7cf28544e127b6e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19fc1d8b_1188c646",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2782,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-31T14:31:49Z",
+      "side": 1,
+      "message": "Above we use observer().SuggestionsForCategory to check the same thing. Does that not work here?",
+      "revId": "0d4be08a5a0c3e900b32bc4c7cf28544e127b6e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca48de78_b0f255e3",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2793,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-31T14:31:49Z",
+      "side": 1,
+      "message": "nit: Mention *which* version of Chrome, and possibly add a TODO to remove this at version n+2?",
+      "revId": "0d4be08a5a0c3e900b32bc4c7cf28544e127b6e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c98a99b_25b88e49",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2793,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-31T14:31:49Z",
+      "side": 1,
+      "message": "Hm, actually, this doesn\u0027t quite match data from an old version of Chrome: Those old suggestions would have no rank at all. The ones created here have the default rank. Not sure if the difference matters.",
+      "range": {
+        "startLine": 2793,
+        "startChar": 56,
+        "endLine": 2793,
+        "endChar": 0
+      },
+      "revId": "0d4be08a5a0c3e900b32bc4c7cf28544e127b6e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
