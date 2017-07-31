@@ -181,7 +181,7 @@ source_set("browser") {
 # This target generates an "overlay" interface spec, allowing the Cast build to
 # declare specific behavior and requirements for the "content_browser" service.
 # This is accomplished by generating a JSON file, which is packed into
-# cast_shell.pak, and loaded at runtime. This can be used to host addtional
+# cast_shell.pak, and loaded at runtime. This can be used to host additional
 # interfaces in "content_browser".
 #
 # NOTE: Do not add packaged_services here! packaged_services should instead be

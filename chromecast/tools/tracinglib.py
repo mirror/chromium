@@ -125,7 +125,7 @@ class TracingBackend(object):
     """Handle response from remote devtools.
 
     Args:
-      res: Recieved tresponse that should be handled.
+      res: Received tresponse that should be handled.
     """
     method = res.get('method')
     value = res.get('params', {}).get('value')

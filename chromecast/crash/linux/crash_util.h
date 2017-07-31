@@ -26,7 +26,7 @@ class CrashUtil {
   static uint64_t GetCurrentTimeMs();
 
   // Call this to set a callback to be used instead of invoking an executable
-  // in a seperate process. See MinidumpWriter::SetDumpStateCbForTest() for more
+  // in a separate process. See MinidumpWriter::SetDumpStateCbForTest() for more
   // details on this callback's signature.
   static void SetDumpStateCbForTest(
       const base::Callback<int(const std::string&)>& cb);

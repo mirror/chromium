@@ -158,7 +158,7 @@ BufferList H264SegmenterForTest(const uint8_t* data, size_t data_size) {
     if (is_eos)
       break;
 
-    // To get the NALU syncword offset, substract 3 or 4
+    // To get the NALU syncword offset, subtract 3 or 4
     // which corresponds to the possible syncword lengths.
     size_t nalu_offset = nalu.data - data;
     nalu_offset -= 3;

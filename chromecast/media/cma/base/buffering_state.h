@@ -55,7 +55,7 @@ class BufferingState
   // Creates a new buffering state. The initial state is |kLowLevel|.
   // |state_changed_cb| is used to notify about possible state changes.
   // |high_level_buffer_cb| is used to adjust the high buffer threshold
-  // when the underlying buffer is not large enough to accomodate
+  // when the underlying buffer is not large enough to accommodate
   // the current high buffer level.
   BufferingState(const std::string& stream_id,
                  const scoped_refptr<BufferingConfig>& config,

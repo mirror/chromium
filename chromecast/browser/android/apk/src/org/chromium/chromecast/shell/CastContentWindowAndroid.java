@@ -66,7 +66,7 @@ public class CastContentWindowAndroid implements CastWebContentsComponent.OnComp
         // showWebContents. If the stop intent is received after the start intent but before
         // onCreate, the activity won't shutdown.
         // TODO(derekjchow): Add a unittest to check this behaviour. Also consider using
-        // Instrumentation.startActivitySync to guarentee onCreate is run.
+        // Instrumentation.startActivitySync to guarantee onCreate is run.
 
         if (DEBUG) Log.d(TAG, "onNativeDestroyed");
         mComponent.stop(mContext);

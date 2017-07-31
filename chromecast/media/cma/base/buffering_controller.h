@@ -67,7 +67,7 @@ class BufferingController {
   // This condition is triggered when one of the stream reached its maximum
   // capacity. In that case, to avoid possible race condition (the buffering
   // controller waits for more data to come but the buffer is to small to
-  // accomodate additional data), the thresholds in |config_| are adjusted
+  // accommodate additional data), the thresholds in |config_| are adjusted
   // accordingly.
   void UpdateHighLevelThreshold(base::TimeDelta high_level_threshold);
 

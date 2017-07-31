@@ -56,7 +56,7 @@ void SetExperimentIds(const base::ListValue& list) {
 //    Cast Platform Features (ex. chromecast/base/cast_features.h). When
 //    defining your feature, you will need to assign a default value. This is
 //    the value that the feature will hold until overriden by the server or the
-//    command line. Here's an exmaple:
+//    command line. Here's an example:
 //
 //      const base::Feature kSuperSecretSauce{
 //          "enable_super_secret_sauce", base::FEATURE_DISABLED_BY_DEFAULT};

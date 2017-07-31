@@ -29,9 +29,10 @@ class CastWebView : content::WebContentsObserver, content::WebContentsDelegate {
  public:
   class Delegate : public shell::CastContentWindow::Delegate {
    public:
-    // Called when the page has stopped. ie: A 404 occured when loading the page
-    // or if the render process crashes. |error_code| will return a net::Error
-    // describing the failure, or net::OK if the page closed naturally.
+    // Called when the page has stopped. ie: A 404 occurred when loading the
+    // page or if the render process crashes. |error_code| will return a
+    // net::Error describing the failure, or net::OK if the page closed
+    // naturally.
     virtual void OnPageStopped(int error_code) = 0;
 
     // Called during WebContentsDelegate::LoadingStateChanged.

@@ -38,7 +38,7 @@ import org.chromium.ui.base.WindowAndroid;
  * <p>
  * Typically, this class is controlled by CastContentWindowAndroid, which will
  * start a new instance of this activity. If the CastContentWindowAndroid is
- * destroyed, CastWebContentsActivity should finish(). Similarily, if this
+ * destroyed, CastWebContentsActivity should finish(). Similarly, if this
  * activity is destroyed, CastContentWindowAndroid should be notified by intent.
  */
 @JNINamespace("chromecast::shell")

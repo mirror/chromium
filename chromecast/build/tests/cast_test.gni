@@ -430,7 +430,7 @@ template("cast_test_group_list") {
       "pack_run",
     ]
 
-    # Add addtional options if they have been set.
+    # Add additional options if they have been set.
     if (defined(invoker.additional_options)) {
       args += [ "-a" ]
       args += invoker.additional_options

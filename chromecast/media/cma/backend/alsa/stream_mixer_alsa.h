@@ -45,7 +45,7 @@ class PostProcessingPipelineParser;
 //
 // The rendering delay is recalculated after every successful write to the ALSA
 // stack. This delay is passed up to the input sources whenever some new data
-// is sucessfully added to the input queue (which happens whenever the amount
+// is successfully added to the input queue (which happens whenever the amount
 // of data in the queue drops below the maximum limit, if data is pending). Note
 // that the rendering delay is not accurate while the mixer is gathering frames
 // to write, so the rendering delay and the queue size for each input must be

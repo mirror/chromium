@@ -102,7 +102,7 @@ class CHROMECAST_EXPORT RebootShlib {
   static bool IsFdrForNextRebootSupported();
 
   // If IsFdrSupported() returns true, then calling SetFdrForNextReboot()
-  // must result in FDR occuring upon the next reboot (regardless of the
+  // must result in FDR occurring upon the next reboot (regardless of the
   // RebootSource or cause of reboot).
   static void SetFdrForNextReboot();
 
