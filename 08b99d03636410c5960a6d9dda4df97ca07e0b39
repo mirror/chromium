@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "e958b4ba_8e25f766",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-31T16:22:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "42c79d28_be64dd71",
+      "range": {
+        "startLine": 147,
+        "startChar": 33,
+        "endLine": 147,
+        "endChar": 45
+      },
+      "revId": "08b99d03636410c5960a6d9dda4df97ca07e0b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54fe7056_4f6a79ec",
         "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
         "patchSetId": 1
@@ -56,6 +80,24 @@
       "revId": "08b99d03636410c5960a6d9dda4df97ca07e0b39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ab8d31f_a9802f81",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-31T16:22:44Z",
+      "side": 1,
+      "message": "Structure changed. So, that is no longer happening. But you are right. This was a mistake.",
+      "parentUuid": "54fe7056_4f6a79ec",
+      "revId": "08b99d03636410c5960a6d9dda4df97ca07e0b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
