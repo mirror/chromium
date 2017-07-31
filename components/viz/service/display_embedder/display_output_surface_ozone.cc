@@ -24,8 +24,7 @@ DisplayOutputSurfaceOzone::DisplayOutputSurfaceOzone(
     gfx::AcceleratedWidget widget,
     SyntheticBeginFrameSource* synthetic_begin_frame_source,
     gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
-    uint32_t target,
-    uint32_t internalformat)
+    uint32_t target)
     : DisplayOutputSurface(context_provider, synthetic_begin_frame_source),
       gl_helper_(context_provider->ContextGL(),
                  context_provider->ContextSupport()) {
@@ -40,10 +39,10 @@ DisplayOutputSurfaceOzone::DisplayOutputSurfaceOzone(
   // implementation.
   capabilities_.max_frames_pending = 2;
 
-  buffer_queue_.reset(
-      new BufferQueue(context_provider->ContextGL(), target, internalformat,
-                      display::DisplaySnapshot::PrimaryFormat(), &gl_helper_,
-                      gpu_memory_buffer_manager, widget));
+  buffer_queue_.reset(new BufferQueue(context_provider->ContextGL(), target,
+                                      display::DisplaySnapshot::PrimaryFormat(),
+                                      &gl_helper_, gpu_memory_buffer_manager,
+                                      widget));
   buffer_queue_->Initialize();
 }
 

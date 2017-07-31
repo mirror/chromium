@@ -44,7 +44,6 @@ class VIZ_SERVICE_EXPORT BufferQueue {
  public:
   BufferQueue(gpu::gles2::GLES2Interface* gl,
               uint32_t texture_target,
-              uint32_t internal_format,
               gfx::BufferFormat format,
               GLHelper* gl_helper,
               gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager,
