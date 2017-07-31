@@ -34,6 +34,24 @@
       "revId": "a294a7b5fc8191bc6dcaa2cdeaeb70ff8e982272",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d76ca709_ee864539",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/security/dangling-markup/link-prefetch.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-07-31T10:06:59Z",
+      "side": 1,
+      "message": "`error` was called in patchset 2 because a request was generated after insertion, and we killed the request. It wasn\u0027t called after moving the check, because `ShouldLoadLink` is called during attribute processing to determine whether we kick off the loading process at all.\n\nThe patch I just uploaded calls out to `LinkLoadingErrored` (and changes its behavior to async rather than sync, since it\u0027s now called during element insertion).\n\nThe specced behavior (assuming the PR ever lands) is to reject the request inside Fetch, which (should) result in an error event firing on the `\u003clink\u003e` tag, just as any other failed request. I think it probably makes sense to fire the same for DNS Prefetch, etc. but I have no idea where those are specced (and they certainly don\u0027t use Fetch).",
+      "parentUuid": "55ea1f52_39f8949d",
+      "revId": "a294a7b5fc8191bc6dcaa2cdeaeb70ff8e982272",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
