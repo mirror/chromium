@@ -52,6 +52,24 @@
       "revId": "3b17a3227f262fafc4b01a04e7eef04073055064",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10b112a5_62723285",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 35988,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-07-31T18:39:49Z",
+      "side": 1,
+      "message": "Oops, sorry, I did indeed miss your earlier message. Addressed in the other comment I just sent.",
+      "parentUuid": "ecf0e74d_3103600f",
+      "revId": "3b17a3227f262fafc4b01a04e7eef04073055064",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
