@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88ef485a_8375e467",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-31T20:22:26Z",
+      "side": 1,
+      "message": "DCHECK_EQ",
+      "range": {
+        "startLine": 167,
+        "startChar": 6,
+        "endLine": 167,
+        "endChar": 12
+      },
+      "revId": "bd9e39c6b6e8cd9cccc4ad510ce65cbba9347a25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e63943ec_17242a40",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-31T20:22:26Z",
+      "side": 1,
+      "message": "nit: For readability, maybe turn this around and early-return OK.",
+      "range": {
+        "startLine": 371,
+        "startChar": 2,
+        "endLine": 371,
+        "endChar": 28
+      },
+      "revId": "bd9e39c6b6e8cd9cccc4ad510ce65cbba9347a25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb6d6cb2_5416b21d",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-31T20:22:26Z",
+      "side": 1,
+      "message": "nit: Period (also below).",
+      "range": {
+        "startLine": 454,
+        "startChar": 25,
+        "endLine": 454,
+        "endChar": 26
+      },
+      "revId": "bd9e39c6b6e8cd9cccc4ad510ce65cbba9347a25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f52c7dc7_1541178c",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-31T20:22:26Z",
+      "side": 1,
+      "message": "nit: IsOK() might be a better name.",
+      "range": {
+        "startLine": 97,
+        "startChar": 7,
+        "endLine": 97,
+        "endChar": 11
+      },
+      "revId": "bd9e39c6b6e8cd9cccc4ad510ce65cbba9347a25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "424768df_cb9e0b7e",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-31T20:22:26Z",
+      "side": 1,
+      "message": "nit: Capitalize these, since they\u0027re referring to the enum entries that are capitalized.",
+      "range": {
+        "startLine": 160,
+        "startChar": 47,
+        "endLine": 160,
+        "endChar": 80
+      },
+      "revId": "bd9e39c6b6e8cd9cccc4ad510ce65cbba9347a25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ccd08b9_eed05026",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-31T20:22:26Z",
+      "side": 1,
+      "message": "typo: purged",
+      "range": {
+        "startLine": 251,
+        "startChar": 39,
+        "endLine": 251,
+        "endChar": 45
+      },
+      "revId": "bd9e39c6b6e8cd9cccc4ad510ce65cbba9347a25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0370569f_f05acd1b",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-31T20:22:26Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 273,
+        "startChar": 5,
+        "endLine": 273,
+        "endChar": 13
+      },
+      "revId": "bd9e39c6b6e8cd9cccc4ad510ce65cbba9347a25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
