@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fc17e476_67c08c10",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/ChromeMediaRouterDialogController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-07-31T20:02:16Z",
+      "side": 1,
+      "message": "Yes, it\u0027s possible to have the MediaSource.from() return a non-null object and then the routeSelector to be null if the cast app id is not valid. I could change it to check buildRouteSelector() within from() to prevent that.",
+      "parentUuid": "2c926835_feda9e80",
+      "revId": "51cebed559164e932c97e153a72243bfaf249b82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9bf137e3_e577acc1",
         "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlayback.h",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "04937e51_f6a933f8",
+        "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlayback.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-07-31T20:02:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9bf137e3_e577acc1",
+      "revId": "51cebed559164e932c97e153a72243bfaf249b82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0456061b_a62f244d",
         "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlaybackConnectionCallbacks.h",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "51cebed559164e932c97e153a72243bfaf249b82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5972a202_3958af2b",
+        "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlaybackConnectionCallbacks.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-07-31T20:02:16Z",
+      "side": 1,
+      "message": "It\u0027s used by PresentationDispatcher, I have to override it.",
+      "parentUuid": "0456061b_a62f244d",
+      "revId": "51cebed559164e932c97e153a72243bfaf249b82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
