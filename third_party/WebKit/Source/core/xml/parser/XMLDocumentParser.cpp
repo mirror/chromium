@@ -793,14 +793,8 @@ XMLDocumentParser::XMLDocumentParser(DocumentFragment* fragment,
       parsing_fragment_(true) {
   // Add namespaces based on the parent node
   HeapVector<Member<Element>> elem_stack;
-  while (parent_element) {
+  for (; parent_element; parent_element = parent_element->parentElement())
     elem_stack.push_back(parent_element);
-
-    Element* grand_parent_element = parent_element->parentElement();
-    if (!grand_parent_element)
-      break;
-    parent_element = grand_parent_element;
-  }
 
   if (elem_stack.IsEmpty())
     return;
@@ -814,12 +808,11 @@ XMLDocumentParser::XMLDocumentParser(DocumentFragment* fragment,
       else if (attribute.Prefix() == g_xmlns_atom)
         prefix_to_namespace_map_.Set(attribute.LocalName(), attribute.Value());
     }
+    if (element->prefix().IsEmpty())
+      default_namespace_uri_ = element->namespaceURI();
+    else
+      prefix_to_namespace_map_.Set(element->prefix(), element->namespaceURI());
   }
-
-  // If the parent element is not in document tree, there may be no xmlns
-  // attribute; just default to the parent's namespace.
-  if (default_namespace_uri_.IsNull() && !parent_element->isConnected())
-    default_namespace_uri_ = parent_element->namespaceURI();
 }
 
 XMLParserContext::~XMLParserContext() {
