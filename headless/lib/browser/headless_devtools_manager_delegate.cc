@@ -15,6 +15,7 @@
 #include "headless/grit/headless_lib_resources.h"
 #include "headless/lib/browser/headless_browser_context_impl.h"
 #include "headless/lib/browser/headless_browser_impl.h"
+#include "headless/lib/browser/headless_download_manager_delegate.h"
 #include "headless/lib/browser/headless_web_contents_impl.h"
 #include "headless/public/devtools/domains/target.h"
 #include "printing/units.h"
@@ -45,6 +46,10 @@ std::unique_ptr<base::DictionaryValue> CreateSuccessResponse(
   response->SetInteger(kIdParam, command_id);
   response->Set(kResultParam, std::move(result));
   return response;
+}
+
+std::unique_ptr<base::DictionaryValue> CreateSuccessResponse(int command_id) {
+  return CreateSuccessResponse(command_id, nullptr);
 }
 
 std::unique_ptr<base::DictionaryValue> CreateErrorResponse(
@@ -191,6 +196,9 @@ HeadlessDevToolsManagerDelegate::HeadlessDevToolsManagerDelegate(
                  base::Unretained(this));
   command_map_["Browser.setWindowBounds"] =
       base::Bind(&HeadlessDevToolsManagerDelegate::SetWindowBounds,
+                 base::Unretained(this));
+  command_map_["Browser.setDownloadBehavior"] =
+      base::Bind(&HeadlessDevToolsManagerDelegate::SetDownloadBehavior,
                  base::Unretained(this));
 
   async_command_map_["Page.printToPDF"] = base::Bind(
@@ -515,6 +523,34 @@ HeadlessDevToolsManagerDelegate::SetWindowBounds(
   web_contents->set_window_state(window_state);
   web_contents->SetBounds(bounds);
   return CreateSuccessResponse(command_id, nullptr);
+}
+
+std::unique_ptr<base::DictionaryValue>
+HeadlessDevToolsManagerDelegate::SetDownloadBehavior(
+    int command_id,
+    const base::DictionaryValue* params) {
+  std::string behavior;
+  if (!params || !params->GetString("behavior", &behavior))
+    return CreateInvalidParamResponse(command_id, "behavior");
+
+  HeadlessDownloadManagerDelegate::DownloadBehavior download_behaviour =
+      HeadlessDownloadManagerDelegate::DownloadBehavior::DENY;
+
+  if (behavior == "allow") {
+    download_behaviour =
+        HeadlessDownloadManagerDelegate::DownloadBehavior::ALLOW;
+  } else if (behavior == "deny") {
+    download_behaviour =
+        HeadlessDownloadManagerDelegate::DownloadBehavior::DENY;
+  }
+
+  base::FilePath file_path;
+  std::string path;
+  if (params->GetString("downloadPath", &path))
+    browser_->SetDownloadDirectory(file_path.AppendASCII(path));
+
+  browser_->SetDownloadBehavior(download_behaviour);
+  return CreateSuccessResponse(command_id);
 }
 
 }  // namespace headless
