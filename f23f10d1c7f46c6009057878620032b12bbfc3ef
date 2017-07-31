@@ -16,6 +16,24 @@
       "revId": "f23f10d1c7f46c6009057878620032b12bbfc3ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee558406_11d34b11",
+        "filename": "services/service_manager/public/cpp/interface_provider.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-07-31T14:53:26Z",
+      "side": 1,
+      "message": "Hmm, sorry, Gerrit weirdness -- I did not intend to send out any messages. \n\nI finally managed to track down all failing tests, and just wanted to run a try job to verify. I\u0027m doing the changes we discussed as we speak.",
+      "parentUuid": "0a3856b1_b8d45a57",
+      "revId": "f23f10d1c7f46c6009057878620032b12bbfc3ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
