@@ -11,6 +11,7 @@
 #include "base/bind.h"
 #include "base/command_line.h"
 #include "base/feature_list.h"
+#include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
@@ -55,6 +56,8 @@ const char kPopularSitesURLFormat[] =
 const char kPopularSitesDefaultDirectory[] = "chrome/ntp/";
 const char kPopularSitesDefaultCountryCode[] = "DEFAULT";
 const char kPopularSitesDefaultVersion[] = "5";
+const int kSitesExplorationStartVersion = 5;
+const int kSitesExplorationBakedInVersion = 5;
 const int kPopularSitesRedownloadIntervalHours = 24;
 
 const char kPopularSitesLastDownloadPref[] = "popular_sites_last_download";
@@ -109,64 +112,26 @@ std::string GetVariationVersion() {
                                             "version");
 }
 
-PopularSites::Site MakeSampleSite(const std::string& title,
-                                  const std::string& url) {
-  return PopularSites::Site(base::UTF8ToUTF16(title), GURL(url), GURL(), GURL(),
-                            GURL());
+bool IsDictionaryValidSite(const base::DictionaryValue& dict) {
+  base::string16 title;
+  std::string url;
+  return dict.GetString("title", &title) && dict.GetString("url", &url);
 }
 
-std::map<SectionType, PopularSites::SitesVector> GetSectionsSampleData() {
-  return {std::pair<SectionType, PopularSites::SitesVector>(
-              SectionType::SOCIAL,
-              {MakeSampleSite("Facebook", "https://facebook.com"),
-               MakeSampleSite("Instagram", "https://instagram.com"),
-               MakeSampleSite("Pinterest", "https://pinterest.com"),
-               MakeSampleSite("Twitter", "https://twitter.com"),
-               MakeSampleSite("VKontakte", "https://vk.com")}),
-          std::pair<SectionType, PopularSites::SitesVector>(
-              SectionType::ENTERTAINMENT,
-              {MakeSampleSite("YouTube", "https://youtube.com"),
-               MakeSampleSite("HotStar", "https://hotstar.com"),
-               MakeSampleSite("CricBuzz", "https://cricbuzz.com"),
-               MakeSampleSite("Whitty Feed", "https://whittyfeed.com"),
-               MakeSampleSite("Voot", "https://voot.com")}),
-          std::pair<SectionType, PopularSites::SitesVector>(
-              SectionType::NEWS,
-              {MakeSampleSite("Times of India", "https://toi.com"),
-               MakeSampleSite("Jagran", "https://jagran.com"),
-               MakeSampleSite("Daily Thanthi", "https://dailythanthi.com"),
-               MakeSampleSite("Live Hindustan", "https://livehindustan.com"),
-               MakeSampleSite("AajTak", "https://aajtak.com")}),
-          std::pair<SectionType, PopularSites::SitesVector>(
-              SectionType::ECOMMERCE,
-              {MakeSampleSite("Amazon", "https://amazon.com"),
-               MakeSampleSite("FlipKart", "https://flipkart.com"),
-               MakeSampleSite("Snapdeal", "https://snapdeal.com"),
-               MakeSampleSite("OLX", "https://olx.com")}),
-          std::pair<SectionType, PopularSites::SitesVector>(
-              SectionType::TOOLS,
-              {MakeSampleSite("Google Maps", "https://maps.google.com"),
-               MakeSampleSite("TrueCaller", "https://truecaller.com"),
-               MakeSampleSite("PayTm", "https://paytm.com"),
-               MakeSampleSite("Ola", "https://ola.com"),
-               MakeSampleSite("Bookmyshow", "https://bookmyshow.com"),
-               MakeSampleSite("Zomato", "https://zomato.com")}),
-          std::pair<SectionType, PopularSites::SitesVector>(
-              SectionType::TRAVEL,
-              {MakeSampleSite("MakemyTrip", "https://makemytrip.com"),
-               MakeSampleSite("Via", "https://via.com"),
-               MakeSampleSite("Housing", "https://housing.com"),
-               MakeSampleSite("Redbus", "https://redbus.com"),
-               MakeSampleSite("Goibibo", "https://goibibo.com")})};
-}
-
-std::map<SectionType, PopularSites::SitesVector> ParseSections(
-    const base::ListValue& list) {
-  std::map<SectionType, PopularSites::SitesVector> sections;
-  if (base::FeatureList::IsEnabled(kSitesExplorationFeature)) {
-    // TODO(fhorschig): Remove the sample data and actually parse stuff.
-    sections = GetSectionsSampleData();
+// Only one valid site dictionary has to be in the list. Empty lists are not
+// considered valid for a specific version to avoid ambiguity.
+bool IsValidVersion5SitesList(const base::ListValue& list) {
+  PopularSites::SitesVector sites;
+  for (size_t i = 0; i < list.GetSize(); i++) {
+    const base::DictionaryValue* item;
+    if (list.GetDictionary(i, &item) && IsDictionaryValidSite(*item)) {
+      return true;
+    }
   }
+  return false;
+}
+
+PopularSites::SitesVector ParseSiteList(const base::ListValue& list) {
   PopularSites::SitesVector sites;
   for (size_t i = 0; i < list.GetSize(); i++) {
     const base::DictionaryValue* item;
@@ -188,8 +153,70 @@ std::map<SectionType, PopularSites::SitesVector> ParseSections(
     item->GetInteger("default_icon_resource",
                      &sites.back().default_icon_resource);
   }
-  sections[SectionType::PERSONALIZED] = std::move(sites);
-  return sections;
+  return sites;
+}
+
+std::map<SectionType, PopularSites::SitesVector> ParseVersion5(
+    const base::ListValue& list) {
+  return {{SectionType::PERSONALIZED, ParseSiteList(list)}};
+}
+
+// Returns true only if the passed |list| consisted of valid sections.
+bool ParseVersion6OrAbove(
+    const base::ListValue& list,
+    std::map<SectionType, PopularSites::SitesVector>* sections) {
+  for (size_t i = 0; i < list.GetSize(); i++) {
+    const base::DictionaryValue* item;
+    if (!list.GetDictionary(i, &item)) {
+      LOG(WARNING) << "Parsed SitesExploration list contained an invalid "
+                   << "section at position " << i << ".";
+      continue;
+    }
+    int section;
+    if (!item->GetInteger("section", &section) || section < 0 ||
+        section > static_cast<int>(SectionType::LAST)) {
+      LOG(WARNING) << "Parsed SitesExploration list contained a section with "
+                   << "invalid ID (" << section << ")";
+      continue;
+    }
+    const base::ListValue* sites_list;
+    if (!item->GetList("sites", &sites_list)) {
+      continue;
+    }
+    PopularSites::SitesVector sites = ParseSiteList(*sites_list);
+    if (sites.empty()) {
+      continue;
+    }
+    (*sections)[static_cast<SectionType>(section)] = std::move(sites);
+  }
+  if (sections->empty()) {
+    // Valid lists would have contained at least the PERSONALIZED section.
+    return false;
+  }
+  if (!base::FeatureList::IsEnabled(kSitesExplorationFeature)) {
+    // New versions of popular sites that should act like old versions will
+    // mimic having only the personalized list.
+    *sections = {
+        std::make_pair(SectionType::PERSONALIZED,
+                       std::move((*sections)[SectionType::PERSONALIZED]))};
+  }
+  return true;
+}
+
+std::map<SectionType, PopularSites::SitesVector> ParseSites(
+    const base::ListValue& list,
+    int version) {
+  if (version >= kSitesExplorationStartVersion) {
+    std::map<SectionType, PopularSites::SitesVector> sections;
+    if (ParseVersion6OrAbove(list, &sections)) {
+      return sections;
+    }
+    // For version mismatches, a valid list might still be processed.
+    LOG_IF(WARNING, IsValidVersion5SitesList(list))
+        << "Expected to parse a popular sites list of version "
+        << kSitesExplorationStartVersion << " but found an earlier version";
+  }
+  return ParseVersion5(list);
 }
 
 #if defined(GOOGLE_CHROME_BUILD) && (defined(OS_ANDROID) || defined(OS_IOS))
@@ -261,7 +288,8 @@ PopularSitesImpl::PopularSitesImpl(
       download_context_(download_context),
       parse_json_(std::move(parse_json)),
       is_fallback_(false),
-      sections_(ParseSections(*prefs->GetList(kPopularSitesJsonPref))),
+      sections_(ParseSites(*prefs->GetList(kPopularSitesJsonPref),
+                           kSitesExplorationBakedInVersion)),
       weak_ptr_factory_(this) {}
 
 PopularSitesImpl::~PopularSitesImpl() {}
@@ -304,13 +332,13 @@ GURL PopularSitesImpl::GetLastURLFetched() const {
 GURL PopularSitesImpl::GetURLToFetch() {
   const std::string directory = GetDirectoryToFetch();
   const std::string country = GetCountryToFetch();
-  const std::string version = GetVersionToFetch();
+  version_ = GetVersionToFetch();
 
   const GURL override_url =
       GURL(prefs_->GetString(ntp_tiles::prefs::kPopularSitesOverrideURL));
   return override_url.is_valid()
              ? override_url
-             : GetPopularSitesURL(directory, country, version);
+             : GetPopularSitesURL(directory, country, version_);
 }
 
 std::string PopularSitesImpl::GetDirectoryToFetch() {
@@ -457,7 +485,9 @@ void PopularSitesImpl::OnJsonParsed(std::unique_ptr<base::Value> json) {
                    base::Time::Now().ToInternalValue());
   prefs_->SetString(kPopularSitesURLPref, pending_url_.spec());
 
-  sections_ = ParseSections(*list);
+  int version;
+  base::StringToInt(version_, &version);
+  sections_ = ParseSites(*list, version);
   callback_.Run(true);
 }
 
