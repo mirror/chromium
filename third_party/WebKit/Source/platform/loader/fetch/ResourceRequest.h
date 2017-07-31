@@ -367,11 +367,13 @@ class PLATFORM_EXPORT ResourceRequest final {
   int app_cache_host_id_;
   WebURLRequest::PreviewsState previews_state_;
   RefPtr<ExtraData> extra_data_;
+
   WebURLRequest::RequestContext request_context_;
   WebURLRequest::FrameType frame_type_;
   WebURLRequest::FetchRequestMode fetch_request_mode_;
   WebURLRequest::FetchCredentialsMode fetch_credentials_mode_;
   WebURLRequest::FetchRedirectMode fetch_redirect_mode_;
+
   String fetch_integrity_;
   ReferrerPolicy referrer_policy_;
   bool did_set_http_referrer_;
@@ -381,6 +383,7 @@ class PLATFORM_EXPORT ResourceRequest final {
   WebURLRequest::LoadingIPCType loading_ipc_type_;
   bool is_same_document_navigation_;
   InputToLoadPerfMetricReportPolicy input_perf_metric_report_policy_;
+
   RedirectStatus redirect_status_;
 
   mutable CacheControlHeader cache_control_header_cache_;

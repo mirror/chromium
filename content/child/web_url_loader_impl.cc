@@ -57,6 +57,7 @@
 #include "third_party/WebKit/common/mime_util/mime_util.h"
 #include "third_party/WebKit/public/platform/FilePathConversion.h"
 #include "third_party/WebKit/public/platform/WebHTTPLoadInfo.h"
+#include "third_party/WebKit/public/platform/WebRedirectInfo.h"
 #include "third_party/WebKit/public/platform/WebSecurityOrigin.h"
 #include "third_party/WebKit/public/platform/WebSecurityStyle.h"
 #include "third_party/WebKit/public/platform/WebURL.h"
@@ -700,12 +701,16 @@ bool WebURLLoaderImpl::Context::OnReceivedRedirect(
   PopulateURLResponse(url_, info, &response, report_raw_headers_);
 
   url_ = WebURL(redirect_info.new_url);
-  return client_->WillFollowRedirect(
-      url_, redirect_info.new_first_party_for_cookies,
+
+  blink::WebRedirectInfo web_redirect_info(
+      WebString::FromUTF8(redirect_info.new_method), url_,
+      redirect_info.new_first_party_for_cookies,
       WebString::FromUTF8(redirect_info.new_referrer),
-      NetReferrerPolicyToBlinkReferrerPolicy(redirect_info.new_referrer_policy),
-      WebString::FromUTF8(redirect_info.new_method), response,
-      report_raw_headers_);
+      NetReferrerPolicyToBlinkReferrerPolicy(
+          redirect_info.new_referrer_policy));
+
+  return client_->WillFollowRedirect(web_redirect_info, response,
+                                     report_raw_headers_);
 }
 
 void WebURLLoaderImpl::Context::OnReceivedResponse(

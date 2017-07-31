@@ -12,8 +12,6 @@ include_rules = [
     "+cc",
     "-cc/blink",
     "+components/viz/common",
-    "-core",
-    "-modules",
     # TODO(toyoshim): Remove following media/midi direct dependency in public
     # interface once Web MIDI starts calling the Mojo service inside Blink.
     # http://crbug.com/582327
