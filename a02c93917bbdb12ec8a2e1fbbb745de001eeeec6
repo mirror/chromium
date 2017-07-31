@@ -157,6 +157,24 @@
       "revId": "a02c93917bbdb12ec8a2e1fbbb745de001eeeec6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a6cf1613_222824d7",
+        "filename": "ui/webui/resources/chromeos/bluetooth_dialog.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-31T21:53:32Z",
+      "side": 1,
+      "message": "Ugh, I didn\u0027t realize we had chromeos subdirectories under js/css/html. \n\nIt looks like \u0027ui_account_tweaks\u0027 is an early shared component effort, but only appears to currently be shared by options and settings, so I will add an issue to move that into settings and remove those subdirs.",
+      "parentUuid": "33b23a40_11f1abd4",
+      "revId": "a02c93917bbdb12ec8a2e1fbbb745de001eeeec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
