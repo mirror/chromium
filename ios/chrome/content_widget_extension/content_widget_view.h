@@ -7,7 +7,27 @@
 
 #import <UIKit/UIKit.h>
 
+// View for the content widget. Shows 1 (compact)or 2 (expanded) rows of 4 most
+// visited tiles (favicon or fallback + title).
 @interface ContentWidgetView : UIView
+
+// Designated initializer, creates the widget view. |compactHeight| indicates
+// the size to use in compact display. |initiallyCompact| indicates which mode
+// to display on initialization.
+- (instancetype)initWithCompactHeight:(CGFloat)compactHeight
+                     initiallyCompact:(BOOL)compact NS_DESIGNATED_INITIALIZER;
+- (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
+- (instancetype)initWithCoder:(NSCoder*)aDecoder NS_UNAVAILABLE;
+
+// Changes the display mode of the view to compact or expanded.
+- (void)showMode:(BOOL)compact;
+
+// Gets the height of the widget.
+- (CGFloat)widgetHeight;
+
+// Updates the displayed sites.
+- (void)updateSites;
+
 @end
 
 #endif  // IOS_CHROME_CONTENT_WIDGET_EXTENSION_CONTENT_WIDGET_VIEW_H_
