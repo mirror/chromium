@@ -63,7 +63,8 @@ void AppWebMessagePort::PostMessage(
     const base::android::JavaParamRef<jobjectArray>& jports) {
   port_.PostMessage(
       EncodeStringMessage(base::android::ConvertJavaStringToUTF16(jmessage)),
-      UnwrapJavaArray(env, jports));
+      UnwrapJavaArray(env, jports),
+      std::vector<storage::mojom::SerializedBlobPtr>());
 }
 
 jboolean AppWebMessagePort::DispatchNextMessage(
@@ -80,7 +81,8 @@ jboolean AppWebMessagePort::DispatchNextMessage(
 
   base::string16 encoded_message;
   std::vector<MessagePort> ports;
-  if (!port_.GetMessage(&encoded_message, &ports))
+  std::vector<storage::mojom::SerializedBlobPtr> blobs;
+  if (!port_.GetMessage(&encoded_message, &ports, &blobs))
     return false;
 
   base::string16 message;

@@ -5,10 +5,14 @@
 #ifndef WebBlobInfo_h
 #define WebBlobInfo_h
 
+#include <memory>
 #include "WebCommon.h"
 #include "WebString.h"
+#include "mojo/public/cpp/system/message_pipe.h"
 
 namespace blink {
+
+class BlobDataHandle;
 
 class WebBlobInfo {
  public:
@@ -43,6 +47,20 @@ class WebBlobInfo {
         file_path_(file_path),
         file_name_(file_name),
         last_modified_(last_modified) {}
+  BLINK_EXPORT WebBlobInfo(const WebString& uuid,
+                           const WebString& type,
+                           long long size,
+                           mojo::ScopedMessagePipeHandle);
+
+  BLINK_EXPORT ~WebBlobInfo();
+
+  WebBlobInfo(const WebBlobInfo& other) { assign(other); }
+  WebBlobInfo& operator=(const WebBlobInfo& other) {
+    assign(other);
+    return *this;
+  }
+  BLINK_EXPORT void assign(const WebBlobInfo& other);
+
   bool IsFile() const { return is_file_; }
   const WebString& Uuid() const { return uuid_; }
   const WebString& GetType() const { return type_; }
@@ -50,12 +68,19 @@ class WebBlobInfo {
   const WebString& FilePath() const { return file_path_; }
   const WebString& FileName() const { return file_name_; }
   double LastModified() const { return last_modified_; }
+  BLINK_EXPORT mojo::ScopedMessagePipeHandle CloneBlobHandle() const;
+
+#if INSIDE_BLINK
+  BLINK_EXPORT WebBlobInfo(RefPtr<BlobDataHandle>);
+  BLINK_EXPORT RefPtr<BlobDataHandle> GetBlobHandle() const;
+#endif
 
  private:
   bool is_file_;
   WebString uuid_;
   WebString type_;  // MIME type
   long long size_;
+  WebPrivatePtr<BlobDataHandle> blob_handle_;
   WebString file_path_;   // Only for File
   WebString file_name_;   // Only for File
   double last_modified_;  // Only for File

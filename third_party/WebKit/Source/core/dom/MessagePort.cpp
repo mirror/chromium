@@ -84,7 +84,16 @@ void MessagePort::postMessage(ScriptState* script_state,
   WebString message_string = message->ToWireString();
   WebMessagePortChannelArray web_channels =
       ToWebMessagePortChannelArray(std::move(channels));
-  entangled_channel_->PostMessage(message_string, std::move(web_channels));
+  WebVector<WebBlobInfo> blobs;
+  if (RuntimeEnabledFeatures::MojoBlobsEnabled()) {
+    blobs = WebVector<WebBlobInfo>(
+        static_cast<size_t>(message->BlobDataHandles().size()));
+    auto out_it = blobs.begin();
+    for (const auto& it : message->BlobDataHandles())
+      *out_it = it.value;
+  }
+  entangled_channel_->PostMessage(message_string, std::move(web_channels),
+                                  std::move(blobs));
 }
 
 // static
@@ -163,7 +172,8 @@ static bool TryGetMessageFrom(WebMessagePortChannel& web_channel,
                               MessagePortChannelArray& channels) {
   WebString message_string;
   WebMessagePortChannelArray web_channels;
-  if (!web_channel.TryGetMessage(&message_string, web_channels))
+  WebVector<WebBlobInfo> web_blobs;
+  if (!web_channel.TryGetMessage(&message_string, web_channels, web_blobs))
     return false;
 
   if (web_channels.size()) {
@@ -172,6 +182,9 @@ static bool TryGetMessageFrom(WebMessagePortChannel& web_channel,
       channels[i] = std::move(web_channels[i]);
   }
   message = SerializedScriptValue::Create(message_string);
+  for (auto& blob : web_blobs) {
+    message->BlobDataHandles().Set(blob.Uuid(), blob.GetBlobHandle());
+  }
   return true;
 }
 
