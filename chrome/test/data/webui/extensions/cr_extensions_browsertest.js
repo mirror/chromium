@@ -36,6 +36,7 @@ CrExtensionsBrowserTest.prototype = {
 
   /** @override */
   extraLibraries: PolymerTest.getLibraries(ROOT_PATH).concat([
+    ROOT_PATH + 'ui/webui/resources/js/assert.js',
     'extension_test_util.js',
     'extension_detail_view_test.js',
     'extension_code_section_test.js',
@@ -49,7 +50,6 @@ CrExtensionsBrowserTest.prototype = {
     'extension_navigation_helper_test.js',
     'extension_service_test.js',
     'extension_shortcut_input_test.js',
-    'extension_sidebar_test.js',
     'extension_toolbar_test.js',
     'extension_manager_test.js',
     '../mock_controller.js',
@@ -114,9 +114,23 @@ CrExtensionsBrowserTestWithMultipleExtensionTypesInstalled.prototype = {
 ////////////////////////////////////////////////////////////////////////////////
 // Extension Sidebar Tests
 
-TEST_F('CrExtensionsBrowserTest',
+/**
+ * @constructor
+ * @extends {CrExtensionsBrowserTest}
+ */
+function CrExtensionsSidebarTest() {}
+
+CrExtensionsSidebarTest.prototype = {
+  __proto__: CrExtensionsBrowserTest.prototype,
+
+  /** @override */
+  extraLibraries: CrExtensionsBrowserTest.prototype.extraLibraries.concat([
+    'extension_sidebar_test.js',
+  ]),
+};
+
+TEST_F('CrExtensionsSidebarTest',
        'ExtensionSidebarLayoutAndClickHandlersTest', function() {
-  extension_sidebar_tests.registerTests();
   mocha.grep(
       assert(extension_sidebar_tests.TestNames.LayoutAndClickHandlers)).run();
 });
