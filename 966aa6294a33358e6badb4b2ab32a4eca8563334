@@ -46,6 +46,30 @@
       "revId": "966aa6294a33358e6badb4b2ab32a4eca8563334",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "055523f1_5381404d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-31T13:12:52Z",
+      "side": 1,
+      "message": "Yes, it does. As a result of this, we tell the Google server that we prefer 16px icons instead of 32px icons. Not a huge deal as is it is not launched to Stable, yet.\n\nHm, the previous comment (below) then failed to communicate the message :)\n// The bitmap will not be resized to desired size in c++, this only expresses preference.\n\nThe longer version of this is: desiredSizePx (32px) is used to inform the favicon server about the desired size of the icon to be downloaded. The server may still return a different size, the c++ code will then pass this icon (unresized) to java; the icon will get resized to the true size of the UI element here.\n\nIs it clearer now?\n\nCould you please put the 32px constant back (for M62) or should I do it?",
+      "parentUuid": "38cdb5d6_296c09ff",
+      "range": {
+        "startLine": 202,
+        "startChar": 16,
+        "endLine": 202,
+        "endChar": 37
+      },
+      "revId": "966aa6294a33358e6badb4b2ab32a4eca8563334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
