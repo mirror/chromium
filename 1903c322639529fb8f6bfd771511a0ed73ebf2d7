@@ -416,6 +416,30 @@
     },
     {
       "key": {
+        "uuid": "8a1c2afb_3e798c35",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2915,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-31T18:44:56Z",
+      "side": 1,
+      "message": "Won\u0027t that still lead to weirdness in so far as the coordinates sent here are *not* the coordinates of the actual mouse? Sending this event would mean internal tracking of mouse coordinates *thinks* the actual mouse is at coordinates of the pen. For example, we\u0027ll send mouse exit events for where the actual mouse is, and enter events for where the pen is.",
+      "parentUuid": "c482eb86_34c23ca0",
+      "range": {
+        "startLine": 2915,
+        "startChar": 64,
+        "endLine": 2915,
+        "endChar": 66
+      },
+      "revId": "1903c322639529fb8f6bfd771511a0ed73ebf2d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fdf1088c_96ec3fd2",
         "filename": "ui/views/win/hwnd_message_handler.cc",
         "patchSetId": 7
