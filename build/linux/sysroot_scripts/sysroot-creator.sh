@@ -284,6 +284,8 @@ HacksAndPatchesAmd64() {
   # the dependency on glibc 2.18.
   sed -i 's/__cxa_thread_atexit_impl/__dead_beef_dead_beef___/g' \
       "${INSTALL_ROOT}/lib/x86_64-linux-gnu/libc.so.6"
+  sed -i 's/__cxa_thread_atexit_impl/__dead_beef_dead_beef___/g' \
+      "${INSTALL_ROOT}/usr/lib/x86_64-linux-gnu/libstdc++.so.6"
 
   # This is for chrome's ./build/linux/pkg-config-wrapper
   # which overwrites PKG_CONFIG_LIBDIR internally
@@ -309,6 +311,8 @@ HacksAndPatchesI386() {
   # the dependency on glibc 2.18.
   sed -i 's/__cxa_thread_atexit_impl/__dead_beef_dead_beef___/g' \
       "${INSTALL_ROOT}/lib/i386-linux-gnu/libc.so.6"
+  sed -i 's/__cxa_thread_atexit_impl/__dead_beef_dead_beef___/g' \
+      "${INSTALL_ROOT}/usr/lib/i386-linux-gnu/libstdc++.so.6"
 
   # This is for chrome's ./build/linux/pkg-config-wrapper
   # which overwrites PKG_CONFIG_LIBDIR internally
@@ -334,6 +338,8 @@ HacksAndPatchesARM() {
   # the dependency on glibc 2.18.
   sed -i 's/__cxa_thread_atexit_impl/__dead_beef_dead_beef___/g' \
       "${INSTALL_ROOT}/lib/arm-linux-gnueabihf/libc.so.6"
+  sed -i 's/__cxa_thread_atexit_impl/__dead_beef_dead_beef___/g' \
+      "${INSTALL_ROOT}/usr/lib/arm-linux-gnueabihf/libstdc++.so.6"
 
   # This is for chrome's ./build/linux/pkg-config-wrapper
   # which overwrites PKG_CONFIG_LIBDIR internally
@@ -358,6 +364,8 @@ HacksAndPatchesARM64() {
   # the dependency on glibc 2.18.
   sed -i 's/__cxa_thread_atexit_impl/__dead_beef_dead_beef___/g' \
       "${INSTALL_ROOT}/lib/aarch64-linux-gnu/libc.so.6"
+  sed -i 's/__cxa_thread_atexit_impl/__dead_beef_dead_beef___/g' \
+      "${INSTALL_ROOT}/usr/lib/aarch64-linux-gnu/libstdc++.so.6"
 
   # This is for chrome's ./build/linux/pkg-config-wrapper
   # which overwrites PKG_CONFIG_LIBDIR internally
@@ -383,6 +391,8 @@ HacksAndPatchesMips() {
   # the dependency on glibc 2.18.
   sed -i 's/__cxa_thread_atexit_impl/__dead_beef_dead_beef___/g' \
       "${INSTALL_ROOT}/lib/mipsel-linux-gnu/libc.so.6"
+  sed -i 's/__cxa_thread_atexit_impl/__dead_beef_dead_beef___/g' \
+      "${INSTALL_ROOT}/usr/lib/mipsel-linux-gnu/libstdc++.so.6"
 
   # This is for chrome's ./build/linux/pkg-config-wrapper
   # which overwrites PKG_CONFIG_LIBDIR internally
