@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "92aca4a0_05ef3b4c",
+        "filename": "components/ntp_snippets/remote/proto/ntp_snippets.proto",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-31T14:10:52Z",
+      "side": 1,
+      "message": "Done, added a comment and removed default value.\n\n// A rank to preserve the order of suggestions. Lower ranks are shown earlier.\n// The values may be not consecutive. Must be set on the client. May be absent\n// in suggestions created before it was introduced.",
+      "parentUuid": "dcaa71c4_c8f307b7",
+      "revId": "6c1f2d914b0a8e47026a12546eed63c337a0368b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17a7acde_e2e10458",
         "filename": "components/ntp_snippets/remote/remote_suggestion.cc",
         "patchSetId": 5
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "b6fe5b9c_3cc6f60f",
+        "filename": "components/ntp_snippets/remote/remote_suggestion.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-31T14:10:52Z",
+      "side": 1,
+      "message": "Done.\n\nI\u0027ve also kept the default in the constructor, because otherwise it is difficult to trace where the default default value (which is 0, I presume) is coming (e.g. if one forgot to set the rank).",
+      "parentUuid": "17a7acde_e2e10458",
+      "revId": "6c1f2d914b0a8e47026a12546eed63c337a0368b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41b76be6_74d923b4",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
         "patchSetId": 5
@@ -65,6 +101,30 @@
       "writtenOn": "2017-07-31T11:36:23Z",
       "side": 1,
       "message": "can\u0027t we require the database to do that sorting? That seems like leaking abstractions.\n(the whole idea is that the provider shouldn\u0027t care about the order, no matter if it comes from the DB or the remote server).",
+      "range": {
+        "startLine": 603,
+        "startChar": 13,
+        "endLine": 603,
+        "endChar": 14
+      },
+      "revId": "6c1f2d914b0a8e47026a12546eed63c337a0368b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6feb8965_eb08bf9f",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-31T14:10:52Z",
+      "side": 1,
+      "message": "I\u0027ve had a discussion with treib@ and we\u0027ve come to a conclusion that the provider should care about the order.\nReasons:\n1) Currently the database is dumb and is used just for persisting data.\n2) Moving ordering there is inconsistent with (1) and immediately will require moving even more logic there (we won\u0027t be able to have SaveSnippet, so dismissal logic will have to be in the database as well).\n3) Provider has an ordered list of current suggestions, while database stores everything, including images and dismissed suggestions.\n\nAlso I am concerned that this will derail BreakingNews work too much. Even now we have other issues, however, I just hoped to land the pending CLs, since I\u0027ve already started working on them and they seemed to be in a decent shape.",
+      "parentUuid": "41b76be6_74d923b4",
       "range": {
         "startLine": 603,
         "startChar": 13,
@@ -100,6 +160,30 @@
     },
     {
       "key": {
+        "uuid": "b98592fe_d764482a",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 726,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-31T14:10:52Z",
+      "side": 1,
+      "message": "Done (removed).\n\n\u003e Do we do this today?\nImplicitly. Suggestions are shown as it is, but after a restart they are sorted by score.",
+      "parentUuid": "24e8653f_10dcc7f3",
+      "range": {
+        "startLine": 726,
+        "startChar": 11,
+        "endLine": 726,
+        "endChar": 15
+      },
+      "revId": "6c1f2d914b0a8e47026a12546eed63c337a0368b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2cb890d5_2f486181",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
         "patchSetId": 5
@@ -120,6 +204,30 @@
       "revId": "6c1f2d914b0a8e47026a12546eed63c337a0368b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9070df5e_7239463e",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 881,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-31T14:10:52Z",
+      "side": 1,
+      "message": "Please see the reasons above against doing this in the database.",
+      "parentUuid": "2cb890d5_2f486181",
+      "range": {
+        "startLine": 881,
+        "startChar": 36,
+        "endLine": 881,
+        "endChar": 0
+      },
+      "revId": "6c1f2d914b0a8e47026a12546eed63c337a0368b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
