@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c10f229b_f6e12363",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 28376,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-07-31T23:09:26Z",
+      "side": 1,
+      "message": "Could you provide the link to the corresponding C++ code?",
+      "range": {
+        "startLine": 28376,
+        "startChar": 24,
+        "endLine": 28376,
+        "endChar": 33
+      },
+      "revId": "d7a0972bb3c585d362b7b8d119866b73ee92b38d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
