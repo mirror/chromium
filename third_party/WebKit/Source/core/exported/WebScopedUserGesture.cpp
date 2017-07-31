@@ -41,6 +41,7 @@ WebScopedUserGesture::WebScopedUserGesture(const WebUserGestureToken& token) {
     indicator_.reset(new UserGestureIndicator(token));
 }
 
+// Test comment
 WebScopedUserGesture::WebScopedUserGesture(WebLocalFrame* frame) {
   indicator_.reset(new UserGestureIndicator(UserGestureToken::Create(
       frame ? ToWebLocalFrameBase(frame)->GetFrame()->GetDocument() : nullptr,
