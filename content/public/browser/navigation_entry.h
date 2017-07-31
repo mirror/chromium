@@ -25,8 +25,8 @@ class GURL;
 namespace content {
 
 class PageState;
+class SSLStatus;
 struct FaviconStatus;
-struct SSLStatus;
 
 // A NavigationEntry is a data structure that captures all the information
 // required to recreate a browsing state. This includes some opaque binary
