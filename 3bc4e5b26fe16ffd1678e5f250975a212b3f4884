@@ -94,6 +94,24 @@
     },
     {
       "key": {
+        "uuid": "10218355_9a7c4d38",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/console/console-links-in-errors-with-trace.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-31T18:10:38Z",
+      "side": 1,
+      "message": "Don\u0027t you usually move a test with resources? I think it\u0027s a common practice to have relative urls.",
+      "parentUuid": "b7636058_cbed7196",
+      "revId": "3bc4e5b26fe16ffd1678e5f250975a212b3f4884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8692d233_a07df798",
         "filename": "third_party/WebKit/LayoutTests/http/tests/devtools/resources/inspected-page.html",
         "patchSetId": 3
