@@ -16,6 +16,24 @@
       "revId": "6f7741c4222de05cd5f2fbb9f02d34f76e5a3134",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c172bac_afc7a7a1",
+        "filename": "chrome/app/chrome_main.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-07-31T23:54:38Z",
+      "side": 0,
+      "message": "Mostly...will clean it up in a followup CL. This one is already huge.",
+      "parentUuid": "abb684be_ed93b27e",
+      "revId": "6f7741c4222de05cd5f2fbb9f02d34f76e5a3134",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
