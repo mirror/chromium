@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41ebdd79_22f5073a",
+        "filename": "components/arc/common/cast_receiver.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-07-31T08:11:37Z",
+      "side": 1,
+      "message": "Drive-by: What is this for?",
+      "revId": "fcde839e2c209f9b2d02e96e03990924f20d9b6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
