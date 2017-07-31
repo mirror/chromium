@@ -22,10 +22,14 @@ class WebContentsCoordinationUnitImpl : public CoordinationUnitImpl {
   // CoordinationUnitImpl implementation.
   std::set<CoordinationUnitImpl*> GetAssociatedCoordinationUnitsOfType(
       CoordinationUnitType type) override;
-  void RecalculateProperty(const mojom::PropertyType property_type) override;
+  void RecalculateProperty(const mojom::PropertyType property_type,
+                           CoordinationUnitImpl* change_source) override;
 
  private:
   double CalculateCPUUsage();
+  // Return 0.0 as an invalid value.
+  double CalculateExpectedTaskQueueingDuration(
+      CoordinationUnitImpl* change_source);
 
   DISALLOW_COPY_AND_ASSIGN(WebContentsCoordinationUnitImpl);
 };

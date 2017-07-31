@@ -17,14 +17,14 @@ RendererResourceCoordinator* g_renderer_resource_coordinator = nullptr;
 // static
 void RendererResourceCoordinator::Initialize() {
   blink::Platform* platform = Platform::Current();
-  DCHECK(platform);
   g_renderer_resource_coordinator = new RendererResourceCoordinator(
       platform->GetConnector(), platform->GetNavigationServiceName());
 }
 
 // static
 RendererResourceCoordinator& RendererResourceCoordinator::Get() {
-  DCHECK(g_renderer_resource_coordinator);
+  // blink::Platform must be initialized before using this class.
+  DCHECK(blink::Platform::Current());
   return *g_renderer_resource_coordinator;
 }
 

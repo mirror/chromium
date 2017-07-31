@@ -40,6 +40,14 @@ const FrameCoordinationUnitImpl* CoordinationUnitImpl::ToFrameCoordinationUnit(
   return static_cast<const FrameCoordinationUnitImpl*>(coordination_unit);
 }
 
+// static
+const WebContentsCoordinationUnitImpl*
+CoordinationUnitImpl::ToWebContentsCoordinationUnit(
+    const CoordinationUnitImpl* coordination_unit) {
+  DCHECK(coordination_unit->id().type == CoordinationUnitType::kWebContents);
+  return static_cast<const WebContentsCoordinationUnitImpl*>(coordination_unit);
+}
+
 void CoordinationUnitImpl::AssertNoActiveCoordinationUnits() {
   CHECK(g_cu_map().empty());
 }
