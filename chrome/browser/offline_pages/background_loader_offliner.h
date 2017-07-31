@@ -14,6 +14,8 @@
 #include "components/offline_pages/core/background/load_termination_listener.h"
 #include "components/offline_pages/core/background/offliner.h"
 #include "components/offline_pages/core/offline_page_types.h"
+#include "components/offline_pages/core/renovations/page_renovation_loader.h"
+#include "components/offline_pages/core/renovations/page_renovator.h"
 #include "components/offline_pages/core/snapshot_controller.h"
 #include "content/public/browser/web_contents_observer.h"
 
@@ -105,6 +107,9 @@ class BackgroundLoaderOffliner : public Offliner,
   // Called to add a loading signal as we observe it.
   void AddLoadingSignal(const char* signal_name);
 
+  // Called by PageRenovator callback when renovations complete.
+  void RenovationsCompleted();
+
   void DeleteOfflinePageCallback(const SavePageRequest& request,
                                  DeletePageResult result);
 
@@ -131,6 +136,11 @@ class BackgroundLoaderOffliner : public Offliner,
   std::unique_ptr<LoadTerminationListener> load_termination_listener_;
   // Whether we are on a low-end device.
   bool is_low_end_device_;
+
+  // PageRenovationLoader must live longer than the PageRenovator.
+  std::unique_ptr<PageRenovationLoader> page_renovation_loader_;
+  // Per-offliner PageRenovator instance.
+  std::unique_ptr<PageRenovator> page_renovator_;
 
   // Save state.
   SaveState save_state_;
