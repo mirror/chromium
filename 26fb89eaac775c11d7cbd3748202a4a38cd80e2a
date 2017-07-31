@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3e10473_3baf0d01",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 18
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-31T22:10:49Z",
+      "side": 1,
+      "message": "Update the CL description to match the new behavior.",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 45
+      },
+      "revId": "26fb89eaac775c11d7cbd3748202a4a38cd80e2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c19e7baa_5d4b1acd",
+        "filename": "base/task_scheduler/scheduler_worker.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-31T22:10:49Z",
+      "side": 1,
+      "message": "If we make it here, who tells the thread to terminate?\nWe have two options here:\n1) DCHECK that either JoinForTesting() or Cleanup() was called.\n2) Make Cleanup() private and call that here if Join() wasn\u0027t called.\n\nThoughts?",
+      "range": {
+        "startLine": 245,
+        "startChar": 0,
+        "endLine": 246,
+        "endChar": 22
+      },
+      "revId": "26fb89eaac775c11d7cbd3748202a4a38cd80e2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7f90b09_93dfa6cb",
+        "filename": "base/task_scheduler/scheduler_worker.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-31T22:10:49Z",
+      "side": 1,
+      "message": "Let\u0027s tighten this up.\n\nFor all of these, either we should use\nCalled by the thread managed by |worker| [...]\nor\nCalled by |worker|\u0027s thread [...]\n\nI leave the choice to you.",
+      "range": {
+        "startLine": 50,
+        "startChar": 17,
+        "endLine": 50,
+        "endChar": 47
+      },
+      "revId": "26fb89eaac775c11d7cbd3748202a4a38cd80e2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3933e9e5_c9c18e47",
+        "filename": "base/task_scheduler/scheduler_worker.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-31T22:10:49Z",
+      "side": 1,
+      "message": "Move this back to its previous line right after delegate_.",
+      "range": {
+        "startLine": 155,
+        "startChar": 2,
+        "endLine": 155,
+        "endChar": 35
+      },
+      "revId": "26fb89eaac775c11d7cbd3748202a4a38cd80e2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "134d0c93_d4dfa790",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-31T22:10:49Z",
+      "side": 1,
+      "message": "Nit: Do this at the beginning of the block.",
+      "range": {
+        "startLine": 245,
+        "startChar": 6,
+        "endLine": 245,
+        "endChar": 36
+      },
+      "revId": "26fb89eaac775c11d7cbd3748202a4a38cd80e2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4373c019_7c57f714",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-31T22:10:49Z",
+      "side": 1,
+      "message": "worker_capacity_ is a size_t, so isn\u0027t this always true?",
+      "range": {
+        "startLine": 333,
+        "startChar": 9,
+        "endLine": 333,
+        "endChar": 25
+      },
+      "revId": "26fb89eaac775c11d7cbd3748202a4a38cd80e2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b35d195d_8dca0df7",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-31T22:10:49Z",
+      "side": 1,
+      "message": "Change this to \"been cleaned up\".",
+      "range": {
+        "startLine": 486,
+        "startChar": 39,
+        "endLine": 486,
+        "endChar": 47
+      },
+      "revId": "26fb89eaac775c11d7cbd3748202a4a38cd80e2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe2a9d06_b5c0e092",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-31T22:10:49Z",
+      "side": 1,
+      "message": "CheckCleanupThreads",
+      "range": {
+        "startLine": 487,
+        "startChar": 45,
+        "endLine": 487,
+        "endChar": 65
+      },
+      "revId": "26fb89eaac775c11d7cbd3748202a4a38cd80e2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f065ff21_aec37151",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-31T22:10:49Z",
+      "side": 1,
+      "message": "Detach-\u003eCleanup",
+      "range": {
+        "startLine": 604,
+        "startChar": 45,
+        "endLine": 604,
+        "endChar": 75
+      },
+      "revId": "26fb89eaac775c11d7cbd3748202a4a38cd80e2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39d6c7cc_67af18c8",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-31T22:10:49Z",
+      "side": 1,
+      "message": "clean up",
+      "range": {
+        "startLine": 627,
+        "startChar": 5,
+        "endLine": 627,
+        "endChar": 11
+      },
+      "revId": "26fb89eaac775c11d7cbd3748202a4a38cd80e2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc36ced7_c08215a0",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-31T22:10:49Z",
+      "side": 1,
+      "message": "cleanup here and henceforth.",
+      "range": {
+        "startLine": 697,
+        "startChar": 16,
+        "endLine": 697,
+        "endChar": 22
+      },
+      "revId": "26fb89eaac775c11d7cbd3748202a4a38cd80e2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

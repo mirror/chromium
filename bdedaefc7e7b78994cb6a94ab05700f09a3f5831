@@ -96,6 +96,29 @@
     },
     {
       "key": {
+        "uuid": "b4f4d0ab_b5a88b9f",
+        "filename": "base/task_scheduler/scheduler_worker.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-31T22:10:49Z",
+      "side": 1,
+      "message": "I\u0027m now a little confused here. Isn\u0027t it an error to call WakeUp before we\u0027ve started?\n\nWhat was wrong with\nDCHECK(started_ \u0026\u0026 !join_called_for_testing_.IsSet())\nDCHECK(thread_)",
+      "range": {
+        "startLine": 216,
+        "startChar": 2,
+        "endLine": 216,
+        "endChar": 17
+      },
+      "revId": "bdedaefc7e7b78994cb6a94ab05700f09a3f5831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1b9b8b03_cfbeb9dc",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
         "patchSetId": 17

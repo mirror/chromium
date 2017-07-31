@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "49b65aca_40709501",
+        "filename": "base/task_scheduler/scheduler_worker.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-07-31T22:10:49Z",
+      "side": 1,
+      "message": "If Start fails, we should probably remove the worker from workers_.\n\nI think this is what we discussed over hangouts. If so, feel free to re-resolve.",
+      "parentUuid": "e9011ae0_efa87400",
+      "range": {
+        "startLine": 237,
+        "startChar": 0,
+        "endLine": 238,
+        "endChar": 36
+      },
+      "revId": "39128637ef75d9fe11709ca05f9c1f8a314e15fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d1cd57a9_c8d9cc7d",
         "filename": "base/task_scheduler/scheduler_worker.cc",
         "patchSetId": 12
