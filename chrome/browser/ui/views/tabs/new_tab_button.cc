@@ -46,6 +46,7 @@ sk_sp<SkDrawLooper> CreateShadowDrawLooper(SkColor color) {
 NewTabButton::NewTabButton(TabStrip* tab_strip, views::ButtonListener* listener)
     : views::ImageButton(listener),
       tab_strip_(tab_strip),
+      new_tab_promo_(nullptr),
       destroyed_(nullptr),
       new_tab_promo_observer_(this) {
   set_animate_on_state_change(true);
@@ -71,8 +72,8 @@ int NewTabButton::GetTopOffset() {
 
 void NewTabButton::ShowPromo() {
   // Owned by its native widget. Will be destroyed as its widget is destroyed.
-  NewTabPromo* new_tab_promo = NewTabPromo::CreateSelfOwned(GetVisibleBounds());
-  new_tab_promo_observer_.Add(new_tab_promo->GetWidget());
+  new_tab_promo_ = NewTabPromo::GetInstance(GetVisibleBounds());
+  new_tab_promo_observer_.Add(new_tab_promo_->GetWidget());
   NewTabButton::SchedulePaint();
 }
 
