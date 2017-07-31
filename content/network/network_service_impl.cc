@@ -19,7 +19,9 @@
 namespace content {
 
 std::unique_ptr<NetworkService> NetworkService::Create() {
-  return base::MakeUnique<NetworkServiceImpl>(nullptr);
+  std::unique_ptr<NetworkServiceImpl> network_service =
+      base::MakeUnique<NetworkServiceImpl>(nullptr);
+  return std::move(network_service);
 }
 
 class NetworkServiceImpl::MojoNetLog : public net::NetLog {
@@ -87,8 +89,8 @@ NetworkServiceImpl::CreateNetworkContextWithBuilder(
     std::unique_ptr<net::URLRequestContextBuilder> builder,
     net::URLRequestContext** url_request_context) {
   std::unique_ptr<NetworkContext> network_context =
-      base::MakeUnique<NetworkContext>(std::move(request), std::move(params),
-                                       std::move(builder));
+      base::MakeUnique<NetworkContext>(this, std::move(request),
+                                       std::move(params), std::move(builder));
   *url_request_context = network_context->url_request_context();
   return network_context;
 }
@@ -115,6 +117,14 @@ void NetworkServiceImpl::CreateNetworkContext(
   // The NetworkContext will destroy itself on connection error, or when the
   // service is destroyed.
   new NetworkContext(this, std::move(request), std::move(params));
+}
+
+void NetworkServiceImpl::DisableQuic() {
+  quic_disabled_ = true;
+
+  for (auto* network_context : network_contexts_) {
+    network_context->DisableQuic();
+  }
 }
 
 void NetworkServiceImpl::OnBindInterface(

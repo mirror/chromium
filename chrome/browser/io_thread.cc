@@ -305,7 +305,7 @@ IOThread::IOThread(
       extension_event_router_forwarder_(extension_event_router_forwarder),
 #endif
       globals_(nullptr),
-      is_quic_allowed_by_policy_(true),
+      disable_quic_on_init_(false),
       http_09_on_non_default_ports_enabled_(false),
       weak_factory_(this) {
   scoped_refptr<base::SingleThreadTaskRunner> io_thread_proxy =
@@ -381,16 +381,11 @@ IOThread::IOThread(
                                         local_state);
   pac_https_url_stripping_enabled_.MoveToThread(io_thread_proxy);
 
-  const base::Value* value = policy_service->GetPolicies(
-      policy::PolicyNamespace(policy::POLICY_DOMAIN_CHROME,
-      std::string())).GetValue(policy::key::kQuicAllowed);
-  if (value)
-    value->GetAsBoolean(&is_quic_allowed_by_policy_);
-
-  value = policy_service
-              ->GetPolicies(policy::PolicyNamespace(
-                  policy::POLICY_DOMAIN_CHROME, std::string()))
-              .GetValue(policy::key::kHttp09OnNonDefaultPortsEnabled);
+  const base::Value* value =
+      policy_service
+          ->GetPolicies(policy::PolicyNamespace(policy::POLICY_DOMAIN_CHROME,
+                                                std::string()))
+          .GetValue(policy::key::kHttp09OnNonDefaultPortsEnabled);
   if (value)
     value->GetAsBoolean(&http_09_on_non_default_ports_enabled_);
 
@@ -451,6 +446,10 @@ net::URLRequestContextGetter* IOThread::system_url_request_context_getter() {
 void IOThread::Init() {
   TRACE_EVENT0("startup", "IOThread::InitAsync");
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
+
+  globals_->network_service = content::NetworkService::Create();
+  if (disable_quic_on_init_)
+    globals_->network_service->DisableQuic();
 
 #if defined(USE_NSS_CERTS)
   net::SetMessageLoopForNSSHttpIO();
@@ -557,8 +556,7 @@ void IOThread::Init() {
   net::CheckSupportAndMaybeEnableTCPFastOpen(always_enable_tfo_if_supported);
 
   ConfigureParamsFromFieldTrialsAndCommandLine(
-      command_line, is_quic_allowed_by_policy_,
-      http_09_on_non_default_ports_enabled_, &session_params_);
+      command_line, http_09_on_non_default_ports_enabled_, &session_params_);
 
 #if defined(OS_MACOSX)
   // Start observing Keychain events. This needs to be done on the UI thread,
@@ -633,6 +631,11 @@ void IOThread::CleanUp() {
 
   if (net_log_)
     net_log_->ShutDownBeforeTaskScheduler();
+}
+
+void IOThread::DisableQuicOnIOThread() {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  globals_->network_service->DisableQuic();
 }
 
 // static
@@ -726,12 +729,14 @@ const net::HttpNetworkSession::Params& IOThread::NetworkSessionParams() const {
 }
 
 void IOThread::DisableQuic() {
-  session_params_.enable_quic = false;
-
-  if (globals_->system_request_context)
-    globals_->system_request_context->http_transaction_factory()
-        ->GetSession()
-        ->DisableQuic();
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  if (!BrowserThread::PostTask(BrowserThread::IO, FROM_HERE,
+                               base::Bind(&IOThread::DisableQuicOnIOThread,
+                                          base::Unretained(this)))) {
+    // This PostTask only fails during startup, before the IOThread has been
+    // created and Init has been called.
+    disable_quic_on_init_ = true;
+  }
 }
 
 net::SSLConfigService* IOThread::GetSSLConfigService() {
@@ -868,7 +873,6 @@ void IOThread::ConstructSystemRequestContext() {
 
   builder->DisableHttpCache();
 
-  globals_->network_service = content::NetworkService::Create();
   globals_->system_network_context =
       globals_->network_service->CreateNetworkContextWithBuilder(
           std::move(network_context_request_),
@@ -887,7 +891,6 @@ void IOThread::ConstructSystemRequestContext() {
 // static
 void IOThread::ConfigureParamsFromFieldTrialsAndCommandLine(
     const base::CommandLine& command_line,
-    bool is_quic_allowed_by_policy,
     bool http_09_on_non_default_ports_enabled,
     net::HttpNetworkSession::Params* params) {
   std::string quic_user_agent_id = chrome::GetChannelString();
@@ -899,7 +902,8 @@ void IOThread::ConfigureParamsFromFieldTrialsAndCommandLine(
   quic_user_agent_id.append(content::BuildOSCpuInfo());
 
   network_session_configurator::ParseCommandLineAndFieldTrials(
-      command_line, !is_quic_allowed_by_policy, quic_user_agent_id, params);
+      command_line, false /* is_quic_force_disabled */, quic_user_agent_id,
+      params);
 
   if (command_line.HasSwitch(switches::kIgnoreUrlFetcherCertRequests))
     net::URLFetcher::SetIgnoreCertificateRequests(true);
