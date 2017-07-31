@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb231f0e_1df1bc4c",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 678,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-07-31T18:07:56Z",
+      "side": 1,
+      "message": "debugging",
+      "range": {
+        "startLine": 678,
+        "startChar": 26,
+        "endLine": 678,
+        "endChar": 34
+      },
+      "revId": "1422a082a774bf029506878bcccb5058d1a1f464",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
