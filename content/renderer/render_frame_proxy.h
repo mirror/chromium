@@ -147,6 +147,8 @@ class CONTENT_EXPORT RenderFrameProxy
                     blink::WebLocalFrame* source) override;
   void FrameFocused() override;
 
+  void SetRenderingTargetTexture(viz::SurfaceId surface_id, gpu::Mailbox mailbox) override;
+
   // IPC handlers
   void OnDidStartLoading();
 

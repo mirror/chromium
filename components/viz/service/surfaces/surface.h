@@ -167,7 +167,7 @@ class VIZ_SERVICE_EXPORT Surface : public SurfaceDeadlineObserver {
 
   // SurfaceDeadlineObserver implementation:
   void OnDeadline() override;
-
+  
  private:
   struct FrameData {
     FrameData(cc::CompositorFrame&& frame,

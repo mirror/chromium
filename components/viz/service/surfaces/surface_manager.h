@@ -182,6 +182,9 @@ class VIZ_SERVICE_EXPORT SurfaceManager {
     return lifetime_type_ == LifetimeType::REFERENCES;
   }
 
+  void SetRenderingTargetTexture(const viz::SurfaceId& surface_id,
+				 const gpu::Mailbox& mailbox);
+  
  private:
   friend class test::SurfaceSynchronizationTest;
   friend class test::SurfaceReferencesTest;

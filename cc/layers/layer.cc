@@ -118,6 +118,10 @@ Layer::~Layer() {
   }
 }
 
+viz::SurfaceId Layer::surface_id() const {
+  return viz::SurfaceId();
+}
+
 void Layer::SetLayerTreeHost(LayerTreeHost* host) {
   if (layer_tree_host_ == host)
     return;

@@ -1081,6 +1081,11 @@ IPC_MESSAGE_ROUTED4(FrameHostMsg_DidAddMessageToConsole,
                     int32_t,        /* line number */
                     base::string16 /* source id */)
 
+
+IPC_MESSAGE_ROUTED2(FrameHostMsg_SetRenderingTargetTexture,
+                    viz::SurfaceId,
+		    std::vector<int8_t>)
+
 // Sent by the renderer when a child frame is created in the renderer.
 //
 // Each of these messages will have a corresponding FrameHostMsg_Detach message

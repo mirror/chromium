@@ -31,7 +31,7 @@ class VIZ_COMMON_EXPORT LocalSurfaceId {
   constexpr LocalSurfaceId(const LocalSurfaceId& other)
       : local_id_(other.local_id_), nonce_(other.nonce_) {}
 
-  constexpr LocalSurfaceId(uint32_t local_id,
+  LocalSurfaceId(uint32_t local_id,
                            const base::UnguessableToken& nonce)
       : local_id_(local_id), nonce_(nonce) {}
 

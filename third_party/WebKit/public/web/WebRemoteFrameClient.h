@@ -10,6 +10,9 @@
 #include "public/web/WebDOMMessageEvent.h"
 #include "public/web/WebFrame.h"
 
+#include "gpu/command_buffer/common/mailbox.h"
+#include "components/viz/common/surfaces/surface_id.h"
+
 namespace blink {
 enum class ClientRedirectPolicy;
 enum class WebFrameLoadType;
@@ -56,6 +59,8 @@ class WebRemoteFrameClient {
 
   // This frame was focused by another frame.
   virtual void FrameFocused() {}
+
+  virtual void SetRenderingTargetTexture(viz::SurfaceId surface_id, gpu::Mailbox mailbox) {}
 };
 
 }  // namespace blink
