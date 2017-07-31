@@ -36,6 +36,69 @@
     },
     {
       "key": {
+        "uuid": "6e24e228_3927aa13",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-31T12:55:13Z",
+      "side": 1,
+      "message": "ScopedCoMem\u003cOLECHAR\u003e guidString;\nand remove the call to CoTaskMemFree",
+      "revId": "0a24cd78e68d7dfb6199e0dbe2a34bb932a3134b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1f7226c_846cd378",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-31T12:55:13Z",
+      "side": 1,
+      "message": "use DLOG here -- DPLOG adds a message based on the last-error code, which is undefined at this point. consider adding \"\u003c\u003c std::hex \u003c\u003c result\" in some sense if you think the HRESULT is useful.",
+      "range": {
+        "startLine": 74,
+        "startChar": 6,
+        "endLine": 74,
+        "endChar": 11
+      },
+      "revId": "0a24cd78e68d7dfb6199e0dbe2a34bb932a3134b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76567407_fa566776",
+        "filename": "chrome/browser/ui/views/frame/browser_window_property_manager_browsertest_win.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-31T12:55:13Z",
+      "side": 1,
+      "message": "why not simply ProfileManager::CreateCallback()? do you need a non-null callback here for some reason?",
+      "range": {
+        "startLine": 180,
+        "startChar": 21,
+        "endLine": 180,
+        "endChar": 71
+      },
+      "revId": "0a24cd78e68d7dfb6199e0dbe2a34bb932a3134b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8403698a_5e508675",
         "filename": "ui/base/win/shell.cc",
         "patchSetId": 12
