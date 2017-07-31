@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "894b9724_d5629dac",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 5
+      },
+      "lineNbr": 2243,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-31T05:07:22Z",
+      "side": 1,
+      "message": "Sounds like a good idea - I agree \u0027usage\u0027 is kind of ambiguous. I left a comment on the strings document to suggest this and have +CC\u0027d you on it - ping me privately if you can\u0027t find/can\u0027t access it.",
+      "parentUuid": "6b8b651d_3ad50fb0",
+      "revId": "74915b48e3b7b80b939712fd214ff184bf53af78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1625bd64_756752f1",
         "filename": "chrome/browser/resources/settings/site_settings/site_details.js",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "74915b48e3b7b80b939712fd214ff184bf53af78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "056a442c_268b27a7",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-31T05:07:22Z",
+      "side": 1,
+      "message": "Makes sense, thank you for clarifying :)",
+      "parentUuid": "1625bd64_756752f1",
+      "revId": "74915b48e3b7b80b939712fd214ff184bf53af78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d75c7def_211d5b44",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-31T05:07:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5be551df_a28cc91a",
+      "revId": "74915b48e3b7b80b939712fd214ff184bf53af78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9335b950_607bf978",
         "filename": "chrome/browser/resources/settings/site_settings/site_details.js",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "74915b48e3b7b80b939712fd214ff184bf53af78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7ff156c_24f3eb9c",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-31T05:07:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9335b950_607bf978",
+      "revId": "74915b48e3b7b80b939712fd214ff184bf53af78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
