@@ -19,6 +19,41 @@
     },
     {
       "key": {
+        "uuid": "dcaa71c4_c8f307b7",
+        "filename": "components/ntp_snippets/remote/proto/ntp_snippets.proto",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-31T12:21:23Z",
+      "side": 1,
+      "message": "+1 to adding a comment to explain. If we can get away without a default value, that\u0027s good too.",
+      "parentUuid": "f77f5c9f_ba258fbf",
+      "revId": "6c1f2d914b0a8e47026a12546eed63c337a0368b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17a7acde_e2e10458",
+        "filename": "components/ntp_snippets/remote/remote_suggestion.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-31T12:21:23Z",
+      "side": 1,
+      "message": "If we remove the default value in the proto, we can probably put it here? \"if (!has_rank()) ...\"",
+      "revId": "6c1f2d914b0a8e47026a12546eed63c337a0368b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "41b76be6_74d923b4",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
         "patchSetId": 5
