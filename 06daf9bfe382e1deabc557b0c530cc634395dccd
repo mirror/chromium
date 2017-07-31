@@ -22,6 +22,30 @@
       "revId": "06daf9bfe382e1deabc557b0c530cc634395dccd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6a5f904_51f77b49",
+        "filename": "components/os_crypt/os_crypt_linux.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1176174
+      },
+      "writtenOn": "2017-07-31T18:21:37Z",
+      "side": 1,
+      "message": "Makes sense. `gn desc` shows we do not define USE_LIBSECRET, USE_KWALLET, or USE_KEYRING, so if I\u0027m reading os_crypt_linux correctly, it seems that it\u0027s basically equivalent to just os_crypt_posix, since it just falls pack to the v10 password path.\n\nSo I just updated the BUILD.gn to no use os_cyrpt_linux on chromecast. WDYT?",
+      "parentUuid": "c02adc62_3124b74c",
+      "range": {
+        "startLine": 73,
+        "startChar": 6,
+        "endLine": 73,
+        "endChar": 12
+      },
+      "revId": "06daf9bfe382e1deabc557b0c530cc634395dccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
