@@ -25,8 +25,32 @@
 #include "components/user_manager/user_manager.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/notification_source.h"
+#include "ui/aura/window_tree_host.h"
 
 namespace chromeos {
+
+namespace {
+
+// This method computes the scale required to convert window-relative DIP
+// coordinates to the coordinate space of the screenshot taken from that window.
+// The transform returned by WindowTreeHost::GetRootTransform translates points
+// from DIP to physical screen pixels (by taking into account not only the
+// scale but also the rotation and the offset).
+// However, the screenshot bitmap is always oriented the same way as the window
+// from which it was taken, and has zero offset.
+// The code below deduces the scale from the transform by applying it to a pair
+// of points separated by the distance of 1, and measuring the distance between
+// the transformed points.
+float GetScreenshotScale(aura::Window* window) {
+  const gfx::Transform transform = window->GetHost()->GetRootTransform();
+  gfx::Point3F p1(0, 0, 0);
+  gfx::Point3F p2(1, 0, 0);
+  transform.TransformPoint(&p1);
+  transform.TransformPoint(&p2);
+  return (p2 - p1).Length();
+}
+
+}  // namespace
 
 class VoiceInteractionSelectionObserver
     : public ash::HighlighterSelectionObserver {
@@ -36,13 +60,15 @@ class VoiceInteractionSelectionObserver
   ~VoiceInteractionSelectionObserver() override = default;
 
  private:
-  void HandleSelection(const gfx::Rect& rect) override {
+  void HandleSelection(aura::Window* root_window,
+                       const gfx::Rect& rect) override {
     auto* framework =
         arc::ArcVoiceInteractionFrameworkService::GetForBrowserContext(
             profile_);
     if (!framework)
       return;
-    framework->StartSessionFromUserInteraction(rect);
+    framework->StartSessionFromUserInteraction(
+        gfx::ScaleToEnclosingRect(rect, GetScreenshotScale(root_window)));
   }
 
   Profile* const profile_;  // Owned by ProfileManager.
