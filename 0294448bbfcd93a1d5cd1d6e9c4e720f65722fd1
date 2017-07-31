@@ -105,6 +105,24 @@
       "revId": "0294448bbfcd93a1d5cd1d6e9c4e720f65722fd1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d3d44db_fd2187a0",
+        "filename": "third_party/WebKit/Source/core/dom/Text.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-07-31T12:57:10Z",
+      "side": 1,
+      "message": "I was thinking about:\n\n\u003ctable style\u003d\"white-space:pre\"\u003e \u003ctbody\u003e\n\nDoesn\u0027t your change create a LayoutText for the space between table and tbody? Is that necessary?",
+      "parentUuid": "310ce9bf_2f85d810",
+      "revId": "0294448bbfcd93a1d5cd1d6e9c4e720f65722fd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
