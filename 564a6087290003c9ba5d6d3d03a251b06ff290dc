@@ -491,6 +491,24 @@
     },
     {
       "key": {
+        "uuid": "5963436d_528dacbe",
+        "filename": "base/containers/circular_deque.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-31T16:21:19Z",
+      "side": 1,
+      "message": "That\u0027s actually what pre-C++11 did. They split out the two variants because having the default value there forces a temporary to be constructed and then copy constructors to be called. With the no-value version added, no values need be constructed for shrinking, and the items can be default-constructed in the expanding case.",
+      "parentUuid": "45d07308_834b82af",
+      "revId": "564a6087290003c9ba5d6d3d03a251b06ff290dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c27b1ac_ef442725",
         "filename": "base/containers/circular_deque.h",
         "patchSetId": 12
@@ -505,6 +523,24 @@
       "revId": "564a6087290003c9ba5d6d3d03a251b06ff290dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c473cc57_976b1082",
+        "filename": "base/containers/circular_deque.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 767,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-31T16:21:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c27b1ac_ef442725",
+      "revId": "564a6087290003c9ba5d6d3d03a251b06ff290dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
