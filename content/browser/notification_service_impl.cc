@@ -4,6 +4,7 @@
 
 #include "content/browser/notification_service_impl.h"
 
+#include "base/debug/stack_trace.h"
 #include "base/lazy_instance.h"
 #include "base/threading/thread_local.h"
 #include "content/public/browser/notification_observer.h"
@@ -41,6 +42,8 @@ bool NotificationServiceImpl::HasKey(const NotificationSourceMap& map,
 
 NotificationServiceImpl::NotificationServiceImpl() {
   DCHECK(current() == NULL);
+  LOG(ERROR) << "NotificationServiceImpl >>>"
+             << base::debug::StackTrace(20).ToString();
   lazy_tls_ptr.Pointer()->Set(this);
 }
 
