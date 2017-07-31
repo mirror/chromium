@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5128324_5322f106",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-31T20:22:10Z",
+      "side": 1,
+      "message": "nit: I would prefer parens when we have an else.",
+      "range": {
+        "startLine": 195,
+        "startChar": 18,
+        "endLine": 195,
+        "endChar": 0
+      },
+      "revId": "aeed5f7b99543c7a9193e065978b5d2db58d2997",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "944b3118_f64b48a6",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-31T20:22:10Z",
+      "side": 1,
+      "message": "Throughout this file, we should cache GetActiveWebContents() when we call it to avoid unnecessary jni calls (active_tab_-\u003eIsNativePage()), instead of calling it multiple times per function.",
+      "range": {
+        "startLine": 594,
+        "startChar": 6,
+        "endLine": 594,
+        "endChar": 28
+      },
+      "revId": "aeed5f7b99543c7a9193e065978b5d2db58d2997",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
