@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04e515aa_7b2e9546",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 64993,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-07-31T15:13:06Z",
+      "side": 1,
+      "message": "nit: it is usually recommended to add when this metric is logged.",
+      "range": {
+        "startLine": 64993,
+        "startChar": 4,
+        "endLine": 64993,
+        "endChar": 13
+      },
+      "revId": "3348bced076d8524099e08ce14090f8f463e7822",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
