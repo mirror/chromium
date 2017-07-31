@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "bbe443b6_a134dcaa",
+        "filename": "chrome/browser/vr/elements/ui_element_debug_id.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-07-31T18:26:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc937228_fb5abf0e",
+      "range": {
+        "startLine": 13,
+        "startChar": 55,
+        "endLine": 13,
+        "endChar": 57
+      },
+      "revId": "885221386b1f310a23102ec56eb11ef3a26109f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ead49d55_829ddd7a",
         "filename": "chrome/browser/vr/vr_shell_renderer.cc",
         "patchSetId": 5
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "712d8e09_0a065923",
+        "filename": "chrome/browser/vr/vr_shell_renderer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-07-31T18:26:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ead49d55_829ddd7a",
+      "range": {
+        "startLine": 159,
+        "startChar": 45,
+        "endLine": 159,
+        "endChar": 47
+      },
+      "revId": "885221386b1f310a23102ec56eb11ef3a26109f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40434273_0fbe88bf",
         "filename": "chrome/browser/vr/vr_shell_renderer.cc",
         "patchSetId": 5
@@ -82,6 +130,30 @@
       "writtenOn": "2017-07-31T17:32:27Z",
       "side": 1,
       "message": "nit: Do nothing here too if last radius was 0?",
+      "range": {
+        "startLine": 602,
+        "startChar": 34,
+        "endLine": 602,
+        "endChar": 35
+      },
+      "revId": "885221386b1f310a23102ec56eb11ef3a26109f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f44b0c3_a4152d60",
+        "filename": "chrome/browser/vr/vr_shell_renderer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-07-31T18:26:39Z",
+      "side": 1,
+      "message": "Done, and simplified the logic.",
+      "parentUuid": "40434273_0fbe88bf",
       "range": {
         "startLine": 602,
         "startChar": 34,
