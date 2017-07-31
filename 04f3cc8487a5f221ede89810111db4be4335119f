@@ -22,6 +22,30 @@
       "revId": "04f3cc8487a5f221ede89810111db4be4335119f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ce31773_bf73648f",
+        "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_web_contents.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-07-31T22:11:07Z",
+      "side": 1,
+      "message": "When I introduced SetIsMouseInView, xiyuan@ was quite unhappy, as this event gets passed to the UI layer (SearchResultAnswerCardView and co) via SearchResult... We always considered this as a temporary measure, dreaming of a future when WebView would get events and pass to the parent. We planned taking care of this in post-M61 cleanup.\n\nThen I realized that some early approximation of that future is achievable right now, using the just-implemented pattern. I also plan getting rid of SetIsMouseInView in favor of this pattern.\n\nAs for passing also DOWN event, I’d kind-of prefer to not overdoing it. The event goes to a known class SearchResultAnswerCardView, which is CustomButton, and behaves well if it receives only events I send.\n\nWe could send other events, but this seems to be unnecessary work, and, arguably, it could reduce stability (more code \u003d\u003e more bugs).\n\nThat’s my take on this.",
+      "parentUuid": "739d088b_317c1777",
+      "range": {
+        "startLine": 189,
+        "startChar": 0,
+        "endLine": 189,
+        "endChar": 32
+      },
+      "revId": "04f3cc8487a5f221ede89810111db4be4335119f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
