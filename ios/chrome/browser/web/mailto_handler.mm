@@ -55,11 +55,13 @@
   }
   NSString* query = base::SysUTF8ToNSString(gURL.query());
   for (NSString* keyvalue : [query componentsSeparatedByString:@"&"]) {
-    NSArray* pair = [keyvalue componentsSeparatedByString:@"="];
-    if ([pair count] != 2U || ![[self supportedHeaders] containsObject:pair[0]])
+    NSRange foundRange = [keyvalue rangeOfString:@"="];
+    if (foundRange.location == NSNotFound)
       continue;
-    [outParams
-        addObject:[NSString stringWithFormat:@"%@=%@", pair[0], pair[1]]];
+    NSString* key = [keyvalue substringToIndex:foundRange.location];
+    if (![[self supportedHeaders] containsObject:key])
+      continue;
+    [outParams addObject:keyvalue];
   }
   return [NSString stringWithFormat:@"%@%@", [self beginningScheme],
                                     [outParams componentsJoinedByString:@"&"]];
