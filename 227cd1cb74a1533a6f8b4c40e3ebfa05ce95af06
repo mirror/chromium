@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "8ede000c_35bbf12c",
+        "filename": "content/renderer/pepper/pepper_plugin_instance_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1509,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-31T01:13:26Z",
+      "side": 1,
+      "message": "We should have:\nif (!LoadPdfInterface())\n  return\n\n(Here and in CanCut above)",
+      "revId": "227cd1cb74a1533a6f8b4c40e3ebfa05ce95af06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d3d304e3_96702698",
         "filename": "third_party/WebKit/Source/core/exported/WebPluginContainerImpl.cpp",
         "patchSetId": 8
