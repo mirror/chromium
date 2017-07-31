@@ -16,6 +16,24 @@
       "revId": "8ef479b657ae045c81798043f6a5147359447787",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0c14e60_96e32d73",
+        "filename": "ios/web_view/internal/app/application_context.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-31T14:53:21Z",
+      "side": 1,
+      "message": "All that std::move does is tell the compiler that you won\u0027t re-use this value (which allows the compiler to treat it as an r-value). It\u0027s only ever meant for stack variables (heap variables are pointers and moving a pointer is a no-op, what we do move are smart pointer variables which are on the stack).\n\nThis allows the compiler to do some optimizations, i.e., use the FilePath\u0026\u0026 constructor instead of the copy constructor.\n\nIn this case I just realized that JsonPrefStore() takes FilePath by const\u0026 so this is moot.\n\nBut I don\u0027t think it\u0027s incorrect either as it properly states that this method is done with this variable (even though the recipient isn\u0027t designed to take advantage of that yet -- eventually if JsonPrefStore supports receiving a FilePath\u0026\u0026 in its constructor it could avoid a copy by moving it into its member variable instead of copying it).",
+      "parentUuid": "ffc81adb_ccc5d761",
+      "revId": "8ef479b657ae045c81798043f6a5147359447787",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
