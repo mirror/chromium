@@ -86,6 +86,15 @@ class SearchResultAnswerCardView::SearchAnswerContainerView
       view_delegate_->OpenSearchResult(search_result_, false, event.flags());
   }
 
+  bool OnKeyPressed(const ui::KeyEvent& event) override {
+    if (event.key_code() == ui::VKEY_SPACE) {
+      // Shouldn't eat Space; we want Space to go to the search box.
+      return false;
+    }
+
+    return CustomButton::OnKeyPressed(event);
+  }
+
   // SearchResultObserver overrides:
   void OnViewHoverStateChanged() override { UpdateBackgroundColor(); }
 
