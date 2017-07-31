@@ -16,6 +16,24 @@
       "revId": "abd277103d5540d910d1e0024ff3bff2c6f24c1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "665ebc24_f77b417e",
+        "filename": "ui/display/win/screen_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-07-31T22:28:10Z",
+      "side": 1,
+      "message": "Umm, yeah, that\u0027s totally redundant. Removed.\n\nWRT the meaning of the flags\n * kHighDynamicRange will will be \"turn on if HDR is detected\"\n * --force-color-profile\u003dscrgb-linear will \"always force HDR mode\"\n\nAfter this patch, there are only 2 places where we check kHighDynamicRange, namely\n * media::IsColorSpaceSupported, which becomes redundant when we enable\n   kVideoColorManagement unconditionally\n * media::DXVAVideoDecodeAccelerator, which will need some work",
+      "parentUuid": "8b382df5_39266318",
+      "revId": "abd277103d5540d910d1e0024ff3bff2c6f24c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
