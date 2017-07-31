@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a8cfa23_921445e9",
+        "filename": "chrome/browser/extensions/extension_apitest.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-31T16:01:41Z",
+      "side": 1,
+      "message": "This won\u0027t scale, since we have 10 variations of RunExtensionTest() above, and I\u0027d really prefer to not add another 10 here for RunExtensionTestFromExtensionsData().\n\nI think the right-est solution is to move towards having a params struct with some flags, rather than having these different variations, but that\u0027s a pretty big refactor that we don\u0027t have to do here.  In the meantime, though, maybe a simple toggle would be better?  Something like UseRootExtensionsDir()?  Then the change is to just call that method before calling RunExtensionTest(), and the rest automagically works, without needing to eventually add RunComponent, RunIncognito, et al variations.",
+      "revId": "401d1fe7cfac07d81849f31e6380e50531868ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7803ceb6_9d7c4f51",
+        "filename": "chrome/browser/extensions/extension_apitest.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-31T16:01:41Z",
+      "side": 1,
+      "message": "protected members aren\u0027t great, and ideally we\u0027d remove them all.  Let\u0027s at least avoid adding more.",
+      "revId": "401d1fe7cfac07d81849f31e6380e50531868ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fb28055_c90c6fac",
+        "filename": "extensions/test/data/messaging/connect_external/test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-31T16:01:41Z",
+      "side": 1,
+      "message": "Copy paste?",
+      "revId": "401d1fe7cfac07d81849f31e6380e50531868ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
