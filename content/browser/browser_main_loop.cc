@@ -683,7 +683,17 @@ void BrowserMainLoop::PostMainMessageLoopStart() {
 
   // Only use discardable_memory::DiscardableSharedMemoryManager when Chrome is
   // not running in mus+ash.
-  if (!service_manager::ServiceManagerIsRemote()) {
+#if defined(USE_AURA)
+  const bool create_discardable_memory =
+      aura::Env::GetInstance()->mode() == aura::Env::Mode::LOCAL ||
+      base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
+          "mus-config") == "mus";
+#else
+  const bool create_discardable_memory = true;
+#endif
+  LOG(ERROR) << "BrowserMainLoop create discardable memory="
+             << create_discardable_memory;
+  if (create_discardable_memory) {
     discardable_shared_memory_manager_ =
         base::MakeUnique<discardable_memory::DiscardableSharedMemoryManager>();
     // TODO(boliu): kSingleProcess check is a temporary workaround for

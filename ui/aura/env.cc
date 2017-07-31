@@ -158,6 +158,7 @@ Env::Env(Mode mode)
       context_factory_private_(nullptr) {
   DCHECK(lazy_tls_ptr.Pointer()->Get() == NULL);
   lazy_tls_ptr.Pointer()->Set(this);
+  LOG(ERROR) << "Env::Env mode=" << (mode == Mode::MUS ? "MUS" : "LOCAL");
 }
 
 void Env::Init() {

@@ -79,6 +79,10 @@ class Service : public service_manager::Service,
     // Can only be de-referenced on |resource_runner_|.
     base::WeakPtr<ImageCursorsSet> image_cursors_set_weak_ptr = nullptr;
 
+    // If null Service creates a DiscardableSharedMemoryManager.
+    discardable_memory::DiscardableSharedMemoryManager* memory_manager =
+        nullptr;
+
    private:
     DISALLOW_COPY_AND_ASSIGN(InProcessConfig);
   };
@@ -207,8 +211,13 @@ class Service : public service_manager::Service,
   IMERegistrarImpl ime_registrar_;
   IMEDriverBridge ime_driver_;
 
-  std::unique_ptr<discardable_memory::DiscardableSharedMemoryManager>
+  discardable_memory::DiscardableSharedMemoryManager*
       discardable_shared_memory_manager_;
+
+  // non-null if this created the DiscardableSharedMemoryManager. Null when
+  // running in-process.
+  std::unique_ptr<discardable_memory::DiscardableSharedMemoryManager>
+      owned_discardable_shared_memory_manager_;
 
   service_manager::BinderRegistryWithArgs<
       const service_manager::BindSourceInfo&>
@@ -216,6 +225,8 @@ class Service : public service_manager::Service,
 
   // Set to true in StartDisplayInit().
   bool is_gpu_ready_ = false;
+
+  bool in_destructor_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(Service);
 };
