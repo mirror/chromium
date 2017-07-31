@@ -36,7 +36,8 @@ void GpuCompositorFrameSink::SetNeedsBeginFrame(bool needs_begin_frame) {
 
 void GpuCompositorFrameSink::SubmitCompositorFrame(
     const LocalSurfaceId& local_surface_id,
-    cc::CompositorFrame frame) {
+    cc::CompositorFrame frame,
+    mojom::HitTestRegionListPtr hit_test_region_list) {
   if (!support_->SubmitCompositorFrame(local_surface_id, std::move(frame))) {
     compositor_frame_sink_binding_.CloseWithReason(
         1, "Surface invariants violation");
