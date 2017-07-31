@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "e121ce39_6d69eb8f",
+        "filename": "ios/chrome/browser/web/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-07-31T16:03:03Z",
+      "side": 1,
+      "message": "I don\u0027t think this dependency is unnecessary. Don\u0027t we wanna be sure these JS files are compiled in order to conditionally inject them?\nAdding a script as a dependencies doesn\u0027t mean it gets bundled with chrome_bundle, or does it?",
+      "parentUuid": "dad970b8_9386f125",
+      "range": {
+        "startLine": 97,
+        "startChar": 6,
+        "endLine": 97,
+        "endChar": 24
+      },
+      "revId": "fbeb240e7e2f47cb1d511395528c5a5303c1ba66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9be33385_ffd3e0c6",
         "filename": "ios/chrome/browser/web/chrome_web_client.mm",
         "patchSetId": 8
