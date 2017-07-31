@@ -87,6 +87,24 @@
       "revId": "cf7e2f47845d1a162498ad265e2fcfb966fd55e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c9475e6_c69177cd",
+        "filename": "chrome/browser/task_manager/providers/task.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1236409
+      },
+      "writtenOn": "2017-07-31T23:11:31Z",
+      "side": 1,
+      "message": "Added to the comment trying to show why this is an important check. It is posix specific though.",
+      "parentUuid": "e98d0b08_76185653",
+      "revId": "cf7e2f47845d1a162498ad265e2fcfb966fd55e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
