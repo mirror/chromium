@@ -34,6 +34,24 @@
       "revId": "8d4f709acbc6060ba2f5e7bf4117b21f6745e846",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03659cc5_1fa7e38c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1112153
+      },
+      "writtenOn": "2017-07-31T20:58:49Z",
+      "side": 1,
+      "message": "sorry for noise. now I verified ABGR8888 works well on reef. For some reasons, wayland_rects_client fails to create a buffer last wed.. I may screwed up something...",
+      "parentUuid": "94c53b9a_0c237502",
+      "revId": "8d4f709acbc6060ba2f5e7bf4117b21f6745e846",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
