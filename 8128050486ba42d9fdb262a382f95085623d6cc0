@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7b77f98_936fe0a5",
+        "filename": "third_party/WebKit/Tools/Scripts/apache_config/win-httpd.conf",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-31T22:52:38Z",
+      "side": 1,
+      "message": "This module enables a compatibility mode that allows us to avoid changing the Order/Allow commands below.",
+      "revId": "8128050486ba42d9fdb262a382f95085623d6cc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2e04c3fa_ce00a7b8",
+        "filename": "third_party/WebKit/Tools/Scripts/apache_config/win-httpd.conf",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-31T22:52:38Z",
+      "side": 1,
+      "message": "These are required for SSL.",
+      "revId": "8128050486ba42d9fdb262a382f95085623d6cc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2ea9dab3_52d5ca59",
+        "filename": "third_party/apache-win32/README.chromium",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-31T22:52:38Z",
+      "side": 1,
+      "message": "This file has been mostly rewritten, in a more vague style with fewer example commands, since I\u0027m not sure what the situation will be like the next time this is upgraded.",
+      "revId": "8128050486ba42d9fdb262a382f95085623d6cc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62c22693_3217822d",
+        "filename": "third_party/WebKit/Tools/Scripts/apache_config/win-httpd.conf",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-07-31T22:52:38Z",
+      "side": 0,
+      "message": "DefaultType is now deprecated/ignored in Apache 2.4.",
+      "revId": "8385e92c1d5e573d4ec930e566ba1122a5e5e4af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
