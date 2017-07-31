@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "e4581ab7_87b10aa6",
+        "filename": "ios/chrome/browser/ui/settings/passwords_settings_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1240,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-31T22:03:05Z",
+      "side": 1,
+      "message": "How long does this test take to run?\n\nI\u0027m concerned that it\u0027s a stress test, running in a functional suite. Though it is still important to do.\n\nWhat is the failure case of this test? If it\u0027s choking on something due to performance, I imagine it could fail in a few ways, or even pass when it *should* fail?\n\nI\u0027d also be concerned if the EarlGrey actions don\u0027t perfectly correlate to user actions (i.e. maybe EG does better than user actions, masking the problem, or vice versa and we get test failures that don\u0027t map to a product problem).",
+      "revId": "a8621fef1a0318ccd7e8c456f99b84f8cc6011bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "731d2f31_e28a35e0",
         "filename": "ios/chrome/browser/ui/settings/passwords_settings_egtest.mm",
         "patchSetId": 1
