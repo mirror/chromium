@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c871aadd_3e419fe1",
+        "filename": "chrome/installer/zucchini/rel32_finder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-31T20:25:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f00a0a5_b0dd35f1",
+      "range": {
+        "startLine": 12,
+        "startChar": 5,
+        "endLine": 12,
+        "endChar": 55
+      },
+      "revId": "bc3be4a6326a4cd73b4e2aef0a1c9e2294567cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a2bf47d_451182c9",
         "filename": "chrome/installer/zucchini/rel32_finder.cc",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "bc3be4a6326a4cd73b4e2aef0a1c9e2294567cba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f8a0a5e_520a4cb3",
+        "filename": "chrome/installer/zucchini/rel32_finder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-31T20:25:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a2bf47d_451182c9",
+      "revId": "bc3be4a6326a4cd73b4e2aef0a1c9e2294567cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +130,54 @@
     },
     {
       "key": {
+        "uuid": "b27cd6e8_84acb7fa",
+        "filename": "chrome/installer/zucchini/rel32_finder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-31T20:25:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfc1b035_96764f7b",
+      "range": {
+        "startLine": 20,
+        "startChar": 69,
+        "endLine": 20,
+        "endChar": 78
+      },
+      "revId": "bc3be4a6326a4cd73b4e2aef0a1c9e2294567cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6436e1ac_892f6861",
+        "filename": "chrome/installer/zucchini/rel32_finder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-31T20:25:07Z",
+      "side": 1,
+      "message": "I think both pointer and reference is suitable, since abs32 and rel32 turn out to be pointer. This might be unnecessarily confusing though, so I don\u0027t mind having reference everywhere.",
+      "parentUuid": "f62e9ef2_37cdc9c6",
+      "range": {
+        "startLine": 20,
+        "startChar": 49,
+        "endLine": 20,
+        "endChar": 57
+      },
+      "revId": "bc3be4a6326a4cd73b4e2aef0a1c9e2294567cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5f39beeb_508442cc",
         "filename": "chrome/installer/zucchini/rel32_finder.h",
         "patchSetId": 1
@@ -108,6 +198,30 @@
       "revId": "bc3be4a6326a4cd73b4e2aef0a1c9e2294567cba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5af30793_e4603643",
+        "filename": "chrome/installer/zucchini/rel32_finder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-31T20:25:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f39beeb_508442cc",
+      "range": {
+        "startLine": 21,
+        "startChar": 48,
+        "endLine": 21,
+        "endChar": 54
+      },
+      "revId": "bc3be4a6326a4cd73b4e2aef0a1c9e2294567cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "6261d41b_ba29b45b",
+        "filename": "chrome/installer/zucchini/rel32_finder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-31T20:25:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6785eedb_f9704149",
+      "range": {
+        "startLine": 22,
+        "startChar": 47,
+        "endLine": 22,
+        "endChar": 72
+      },
+      "revId": "bc3be4a6326a4cd73b4e2aef0a1c9e2294567cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "133b14e2_29577476",
         "filename": "chrome/installer/zucchini/rel32_finder.h",
         "patchSetId": 1
@@ -154,6 +292,30 @@
       "revId": "bc3be4a6326a4cd73b4e2aef0a1c9e2294567cba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afb5c3a8_3fa24f7c",
+        "filename": "chrome/installer/zucchini/rel32_finder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-31T20:25:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "133b14e2_29577476",
+      "range": {
+        "startLine": 37,
+        "startChar": 34,
+        "endLine": 37,
+        "endChar": 38
+      },
+      "revId": "bc3be4a6326a4cd73b4e2aef0a1c9e2294567cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "a93ed883_d624ef1d",
+        "filename": "chrome/installer/zucchini/rel32_finder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-31T20:25:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45aef77f_508779f0",
+      "range": {
+        "startLine": 38,
+        "startChar": 53,
+        "endLine": 38,
+        "endChar": 58
+      },
+      "revId": "bc3be4a6326a4cd73b4e2aef0a1c9e2294567cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f891ffd5_89c098bb",
         "filename": "chrome/installer/zucchini/rel32_finder.h",
         "patchSetId": 1
@@ -200,6 +386,30 @@
       "revId": "bc3be4a6326a4cd73b4e2aef0a1c9e2294567cba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32118e41_879191c9",
+        "filename": "chrome/installer/zucchini/rel32_finder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-31T20:25:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f891ffd5_89c098bb",
+      "range": {
+        "startLine": 45,
+        "startChar": 40,
+        "endLine": 45,
+        "endChar": 51
+      },
+      "revId": "bc3be4a6326a4cd73b4e2aef0a1c9e2294567cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -226,6 +436,30 @@
     },
     {
       "key": {
+        "uuid": "2533e9f2_4d5c4def",
+        "filename": "chrome/installer/zucchini/rel32_finder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-31T20:25:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a519cf02_55224ae6",
+      "range": {
+        "startLine": 52,
+        "startChar": 3,
+        "endLine": 52,
+        "endChar": 11
+      },
+      "revId": "bc3be4a6326a4cd73b4e2aef0a1c9e2294567cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c115ba25_20a2c246",
         "filename": "chrome/installer/zucchini/rel32_finder.h",
         "patchSetId": 1
@@ -249,6 +483,30 @@
     },
     {
       "key": {
+        "uuid": "28e8e6f1_a77f564e",
+        "filename": "chrome/installer/zucchini/rel32_finder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-31T20:25:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c115ba25_20a2c246",
+      "range": {
+        "startLine": 59,
+        "startChar": 8,
+        "endLine": 59,
+        "endChar": 13
+      },
+      "revId": "bc3be4a6326a4cd73b4e2aef0a1c9e2294567cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd11cf7b_5329fcec",
         "filename": "chrome/installer/zucchini/rel32_finder.h",
         "patchSetId": 1
@@ -260,6 +518,30 @@
       "writtenOn": "2017-07-28T19:51:11Z",
       "side": 1,
       "message": "I think we can eliminate this variable? We can make Scan() take |cursor_| as a parameter without modifying it. But instead of returning rel32_.location + 4, it assumes \"Discard\" and returns the next candidate or |end_| (and |rel32_| is guaranteed to store something).  Then we can replace Discard() with Accept(), which then advances |cursor_| to |rel32_.location + 4|.\n\nAnyway, if this is too much hassle, and things are working fine as is, just add:\n  // TODO(huangs): Refactor so we don\u0027t need this.\nbefore |next_cursor_|.",
+      "range": {
+        "startLine": 109,
+        "startChar": 34,
+        "endLine": 109,
+        "endChar": 46
+      },
+      "revId": "bc3be4a6326a4cd73b4e2aef0a1c9e2294567cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b16d8820_57f35a86",
+        "filename": "chrome/installer/zucchini/rel32_finder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-31T20:25:07Z",
+      "side": 1,
+      "message": "I am open to some refactoring, especially passing cursor_ as parameter instead of modifying it. A few things to keep in mind though:\n- Rel32Finder does not know the width of the reference (and it may vary?), so we still need Scan to return some info about that.\n- The next cursor_ (after Accept) is rel32_.location, but this is not equivalence to cursor_ + 4, so we would still need an extra variable to store either the start of the current reference (and width), or the next search position.\nAn alternative would be to return a ConstBufferView [cursor_, next_cursor_) and stored these, instead of letting the implementation modify cursor_ directly, but I\u0027m not sure whether this is preferable.\nFor now, I switched to Accept() instead of Discard().",
+      "parentUuid": "fd11cf7b_5329fcec",
       "range": {
         "startLine": 109,
         "startChar": 34,
@@ -292,6 +574,30 @@
       "revId": "bc3be4a6326a4cd73b4e2aef0a1c9e2294567cba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0cc130b_bcbde137",
+        "filename": "chrome/installer/zucchini/rel32_finder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-31T20:25:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8bb0e9e4_f01f321f",
+      "range": {
+        "startLine": 121,
+        "startChar": 9,
+        "endLine": 121,
+        "endChar": 34
+      },
+      "revId": "bc3be4a6326a4cd73b4e2aef0a1c9e2294567cba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
