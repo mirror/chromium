@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "66c41bfc_d84606d1",
+        "filename": "extensions/browser/api/networking_private/networking_private_service_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-31T21:54:57Z",
+      "side": 1,
+      "message": "I rather suspect there could be problems without this, so I added a less uncertain comment.\n\nThe revision history can be used to learn more about the code evolution.",
+      "parentUuid": "d55e7af2_20ba159b",
+      "revId": "967f4cebb77ab1b0c429fa74eeb5de9e5bcc09a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a3abd711_4f8d8d3e",
         "filename": "extensions/browser/api/networking_private/networking_private_service_client.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-31T19:48:37Z",
       "side": 1,
       "message": "Code below can just use |g_sequenced_task_runner| directly, I don\u0027t see a reason to also store this in a member?",
+      "revId": "967f4cebb77ab1b0c429fa74eeb5de9e5bcc09a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd76d0c1_b21126a6",
+        "filename": "extensions/browser/api/networking_private/networking_private_service_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-31T21:54:57Z",
+      "side": 1,
+      "message": "It\u0027s a lot of copy/paste churn. Is there any real reason not to cache this?",
+      "parentUuid": "a3abd711_4f8d8d3e",
       "revId": "967f4cebb77ab1b0c429fa74eeb5de9e5bcc09a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
