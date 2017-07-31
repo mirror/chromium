@@ -22,6 +22,30 @@
       "revId": "227e08bdf92919414574e75e63f7c50ebec3598f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b7d474f_e0b6de08",
+        "filename": "components/cryptauth/cryptauth_device_manager.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-07-31T21:51:13Z",
+      "side": 1,
+      "message": "Regan, why was this change made? We should keep the previous logic, unless I\u0027m missing something. IMO, the only parts of this file that should change are moving the observer callbacks to protected functions so we can simulate these Observer callbacks in unit tests.",
+      "parentUuid": "099aafaa_fcdf8ad3",
+      "range": {
+        "startLine": 455,
+        "startChar": 34,
+        "endLine": 455,
+        "endChar": 69
+      },
+      "revId": "227e08bdf92919414574e75e63f7c50ebec3598f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
