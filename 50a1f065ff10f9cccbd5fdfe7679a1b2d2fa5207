@@ -16,6 +16,24 @@
       "revId": "50a1f065ff10f9cccbd5fdfe7679a1b2d2fa5207",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1e82f8e_61a8c8b8",
+        "filename": "content/child/loader/cors_url_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-07-31T09:33:39Z",
+      "side": 1,
+      "message": "you could also reference the crbug from the CL description",
+      "parentUuid": "479e0ada_5d1d2f80",
+      "revId": "50a1f065ff10f9cccbd5fdfe7679a1b2d2fa5207",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
