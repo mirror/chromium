@@ -659,6 +659,7 @@ source_set("blink_headers") {
     "//media/midi:mojo_shared_cpp_sources",
     "//mojo/public/cpp/bindings:bindings",
     "//mojo/public/cpp/system:system",
+    "//storage/public/interfaces:interfaces_blink__generator",
     "//v8:v8_headers",
   ]
 }
@@ -754,6 +755,7 @@ mojom("mojo_bindings") {
     "//device/bluetooth/public/interfaces",
     "//device/screen_orientation/public/interfaces",
     "//mojo/common:common_custom_types",
+    "//storage/public/interfaces",
     "//ui/gfx/geometry/mojo",
     "//url/mojo:url_mojom_gurl",
     "//url/mojo:url_mojom_origin",
