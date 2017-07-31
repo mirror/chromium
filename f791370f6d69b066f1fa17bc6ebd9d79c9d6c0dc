@@ -16,6 +16,24 @@
       "revId": "f791370f6d69b066f1fa17bc6ebd9d79c9d6c0dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12308b8b_8d0e35f9",
+        "filename": "extensions/browser/api/networking_private/networking_private_service_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-31T19:33:22Z",
+      "side": 0,
+      "message": "I wish there was another owner :)\n\nAlas I am not familiar enough with WiFiService to know what would happen if multiple pages running the extension were to call into WiFiService from different threads, so I guess we do need a sequenced task runner here. Ugh. Done.",
+      "parentUuid": "40fcf827_bcc33a20",
+      "revId": "f791370f6d69b066f1fa17bc6ebd9d79c9d6c0dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
