@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "6290ee86_e91f2cfa",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-31T18:38:16Z",
+      "side": 1,
+      "message": "nit: move #if-defs after all the regular includes.",
+      "revId": "6a539b701243227312c4510f28011d52e30d4a2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "007f4098_089f6db0",
         "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
         "patchSetId": 11
@@ -19,6 +36,23 @@
         "endLine": 75,
         "endChar": 52
       },
+      "revId": "6a539b701243227312c4510f28011d52e30d4a2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ebccb44_1aae7e1c",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-07-31T18:38:16Z",
+      "side": 1,
+      "message": "Does this comment still apply?  There seems no return of this function.",
       "revId": "6a539b701243227312c4510f28011d52e30d4a2d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
