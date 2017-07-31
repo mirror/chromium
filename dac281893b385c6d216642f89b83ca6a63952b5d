@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a03f3222_5911752a",
+        "filename": "chrome/browser/page_load_metrics/observers/delay_navigation_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-07-31T15:11:10Z",
+      "side": 1,
+      "message": "update comment",
+      "revId": "dac281893b385c6d216642f89b83ca6a63952b5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
