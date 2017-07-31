@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83a06bac_33d4c2ca",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2017-07-31T20:36:26Z",
+      "side": 1,
+      "message": "Maybe this change will make it clearer?\n\n\"Script \u0027%s\u0027(line: %d, column: %d) took %ldms to compile.\"",
+      "revId": "e34467ceff5ddac0b6d215b69922246358157a5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
