@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e190568b_9d38c123",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-07-31T17:24:36Z",
+      "side": 1,
+      "message": "Mark, FYI _sometimes_ this line is check failing in my non-prod build.\n\nIt took me a while to reproduce it, but I\u0027m quite sure it\u0027s coming from an interleaved call to Stop() while ZeroSuggestProvider runs. The Stop() method sets \"done_ \u003d true;\" and this fails. From what I understand, this CL does not change the core logic of ZeroSuggestProvider, and I _believe_ this interleaving also occurs in prod builds, but this DCHECK is removed by the compiler, hence no crashes in production.\n\nWhat do you want to do? Here are some options:\n\n1) Ignore it. It only crashes if I click the URL like crazy and it still takes me like 2 minutes to actually get it to crash. It is also only in builds that keep DCHECKs.\n\n2) Remove this DCHECK(). This is harmless is prod builds where DCHECKS are removed. The rest of the code already handles it gracefully.\n\n3) Add early returns here: \"if (done_) { ...; return; }\". Some overhead for extra safety. I\u0027m not sure if it\u0027s necessary.",
+      "range": {
+        "startLine": 304,
+        "startChar": 17,
+        "endLine": 304,
+        "endChar": 0
+      },
+      "revId": "edffd6b33d92bb36529020357254f22adf5e7e33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
