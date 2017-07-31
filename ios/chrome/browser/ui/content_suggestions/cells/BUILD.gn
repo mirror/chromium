@@ -29,6 +29,7 @@ source_set("cells_ui") {
     "content_suggestions_cell.mm",
     "content_suggestions_footer_item.h",
     "content_suggestions_footer_item.mm",
+    "content_suggestions_gesture_commands.h",
     "content_suggestions_header_item.h",
     "content_suggestions_header_item.mm",
     "content_suggestions_learn_more_item.h",
