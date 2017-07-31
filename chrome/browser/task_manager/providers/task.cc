@@ -63,6 +63,8 @@ void Task::Activate() {
 }
 
 bool Task::IsKillable() {
+  if (process_id() == base::kNullProcessId)
+    return false;
   return true;
 }
 
