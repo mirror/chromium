@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f25120a5_bc0869c5",
+        "filename": "chrome/common/mac/cfbundle_blocker_unittest.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1139794
+      },
+      "writtenOn": "2017-07-31T18:52:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a8064c6d_5797b938",
+      "revId": "4abdc70b7c9e16c47383bdee2ba124f815dad33e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74184dfb_42afba1d",
         "filename": "third_party/mach_override/mach_override.c",
         "patchSetId": 7
@@ -39,6 +57,30 @@
       "revId": "4abdc70b7c9e16c47383bdee2ba124f815dad33e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1325e32c_e39a30d9",
+        "filename": "third_party/mach_override/mach_override.c",
+        "patchSetId": 7
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1139794
+      },
+      "writtenOn": "2017-07-31T18:52:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74184dfb_42afba1d",
+      "range": {
+        "startLine": 104,
+        "startChar": 6,
+        "endLine": 104,
+        "endChar": 11
+      },
+      "revId": "4abdc70b7c9e16c47383bdee2ba124f815dad33e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
