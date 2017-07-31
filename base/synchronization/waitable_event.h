@@ -194,7 +194,6 @@ class BASE_EXPORT WaitableEvent {
                             size_t count, Waiter* waiter);
 
   bool SignalAll();
-  bool SignalOne();
   void Enqueue(Waiter* waiter);
 
   scoped_refptr<WaitableEventKernel> kernel_;

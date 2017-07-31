@@ -58,15 +58,8 @@ void WaitableEvent::Signal() {
   if (kernel_->signaled_)
     return;
 
-  if (kernel_->manual_reset_) {
-    SignalAll();
-    kernel_->signaled_ = true;
-  } else {
-    // In the case of auto reset, if no waiters were woken, we remain
-    // signaled.
-    if (!SignalOne())
-      kernel_->signaled_ = true;
-  }
+  kernel_->signaled_ = true;
+  SignalAll();
 }
 
 bool WaitableEvent::IsSignaled() {
@@ -392,22 +385,6 @@ bool WaitableEvent::SignalAll() {
 
   kernel_->waiters_.clear();
   return signaled_at_least_one;
-}
-
-// ---------------------------------------------------------------------------
-// Try to wake a single waiter. Return true if one was woken. Called with lock
-// held.
-// ---------------------------------------------------------------------------
-bool WaitableEvent::SignalOne() {
-  for (;;) {
-    if (kernel_->waiters_.empty())
-      return false;
-
-    const bool r = (*kernel_->waiters_.begin())->Fire(this);
-    kernel_->waiters_.pop_front();
-    if (r)
-      return true;
-  }
 }
 
 // -----------------------------------------------------------------------------

@@ -144,9 +144,6 @@ bool WaitableEventWatcher::StartWatching(WaitableEvent* event,
   AutoLock locked(kernel->lock_);
 
   if (kernel->signaled_) {
-    if (!kernel->manual_reset_)
-      kernel->signaled_ = false;
-
     // No hairpinning - we can't call the delegate directly here. We have to
     // post a task to the SequencedTaskRunnerHandle as usual.
     SequencedTaskRunnerHandle::Get()->PostTask(FROM_HERE,

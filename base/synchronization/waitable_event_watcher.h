@@ -51,10 +51,15 @@ class WaitableEvent;
 // worry about OnWaitableEventSignaled being called on a deleted MyClass
 // pointer.
 //
-// BEWARE: With automatically reset WaitableEvents, a signal may be lost if it
-// occurs just before a WaitableEventWatcher is deleted. There is currently no
-// safe way to stop watching an automatic reset WaitableEvent without possibly
-// missing a signal.
+// CAVEATS FOR AUTOMATIC-RESET EVENTS:
+//   - A WaitableEventWatcher does not consume the event signal, meaning
+//     an WaitableEvent::IsSignaled() will still return |true| after
+//     a WaitableEventWatcher callback is invoked.
+//   - A corrolary to the above point: multiple WaitableEventWatchers on the
+//     same WaitableEvent will all be called-back when signaled.
+//   - A signal may be lost if it occurs just before a WaitableEventWatcher
+//     is deleted. There is currently no safe way to stop watching an
+//     automatic reset WaitableEvent without possibly missing a signal.
 //
 // NOTE: you /are/ allowed to delete the WaitableEvent while still waiting on
 // it with a Watcher. But pay attention: if the event was signaled and deleted
