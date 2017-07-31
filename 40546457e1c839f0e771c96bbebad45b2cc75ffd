@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "163464ed_8269a080",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-07-31T13:38:56Z",
+      "side": 1,
+      "message": "Shouldn\u0027t wrap text here, or tools won\u0027t work as expected.",
+      "revId": "40546457e1c839f0e771c96bbebad45b2cc75ffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0605da23_34440ef8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-07-31T13:38:56Z",
+      "side": 1,
+      "message": "Layout tree, not DOM tree.",
+      "revId": "40546457e1c839f0e771c96bbebad45b2cc75ffd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
