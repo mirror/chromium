@@ -166,7 +166,7 @@ v8::Local<v8::Value> ToV8(const IDBAny* impl,
   return v8::Undefined(isolate);
 }
 
-static const size_t kMaximumDepth = 2000;
+static const size_t kMaximumDepth = 1000;
 
 static IDBKey* CreateIDBKeyFromValue(v8::Isolate* isolate,
                                      v8::Local<v8::Value> value,
