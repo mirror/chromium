@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3751b2d8_157aafbc",
+        "filename": "ios/chrome/browser/web/resources/credential_manager.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-31T14:57:16Z",
+      "side": 1,
+      "message": "Is |let| supported on iOS9?",
+      "range": {
+        "startLine": 35,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 28
+      },
+      "revId": "8221e91df07fff4e54d2d1c7f0a8ff6b902bcb40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
