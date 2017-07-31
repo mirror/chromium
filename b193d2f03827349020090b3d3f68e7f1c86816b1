@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66c96317_0e0bc4ad",
+        "filename": "content/public/browser/ssl_status.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-07-31T17:32:33Z",
+      "side": 1,
+      "message": "Do you also need to init |sct_statuses|? (Also below)",
+      "revId": "b193d2f03827349020090b3d3f68e7f1c86816b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "194a7819_980f2730",
+        "filename": "content/public/browser/ssl_status.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-07-31T17:32:33Z",
+      "side": 1,
+      "message": "Just to confirm: the two SSLStatuses should still be considered equal if their user_data_ is different?",
+      "revId": "b193d2f03827349020090b3d3f68e7f1c86816b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
