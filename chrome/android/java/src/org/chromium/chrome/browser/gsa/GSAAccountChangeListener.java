@@ -67,6 +67,7 @@ public class GSAAccountChangeListener {
     /** @return the instance of GSAAccountChangeListener. */
     public static GSAAccountChangeListener getInstance() {
         if (sInstance == null) {
+            assert !SysUtils.isLowEndDevice();
             Context context = ContextUtils.getApplicationContext();
             sInstance = new GSAAccountChangeListener(context);
         }
