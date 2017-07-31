@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bcaa513f_e953446b",
+        "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContext.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-07-31T21:35:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2511dc40_2a6d4c5a",
+      "revId": "48ff446c6a78da4882b17670907d15eef5568a69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8116c6cb_572289f5",
         "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContext.cpp",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-31T21:09:45Z",
       "side": 1,
       "message": "nit: Is the bug number here (and below on line 194) necessary?",
+      "revId": "48ff446c6a78da4882b17670907d15eef5568a69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a66933c4_2f6a44c0",
+        "filename": "third_party/WebKit/Source/modules/webaudio/BaseAudioContext.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-07-31T21:35:10Z",
+      "side": 1,
+      "message": "I am removing this one, but want to leave l.194 alone. The underlying cause of the crash is that bug, while the cause of l.175 is a undefined behavior.",
+      "parentUuid": "8116c6cb_572289f5",
       "revId": "48ff446c6a78da4882b17670907d15eef5568a69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
