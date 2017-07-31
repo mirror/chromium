@@ -16,6 +16,24 @@
       "revId": "1dd32c9db48d749b842c9cddc8ad0e858bfc152b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08050b10_81bdf580",
+        "filename": "third_party/WebKit/public/platform/WebMediaPlayer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1165541
+      },
+      "writtenOn": "2017-07-31T01:31:56Z",
+      "side": 1,
+      "message": "Done. I have to set last_uploaded_frame_size_ and last_uploaded_frame_timestamp_ mutable to make it const.",
+      "parentUuid": "3cf7ae39_b1801c71",
+      "revId": "1dd32c9db48d749b842c9cddc8ad0e858bfc152b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
