@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49536f17_61894439",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-31T17:48:32Z",
+      "side": 1,
+      "message": "Do we need to still pass unique_ptr? Can we just use double?",
+      "range": {
+        "startLine": 36,
+        "startChar": 42,
+        "endLine": 36,
+        "endChar": 76
+      },
+      "revId": "8f8c271f19888ded752170bbf3ff89479589b856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76623cd0_6d4b7444",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-31T17:48:32Z",
+      "side": 1,
+      "message": "I have a mixed feeling on this, will get back to this one later.",
+      "range": {
+        "startLine": 71,
+        "startChar": 35,
+        "endLine": 71,
+        "endChar": 70
+      },
+      "revId": "8f8c271f19888ded752170bbf3ff89479589b856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "462ec588_b470d9c4",
+        "filename": "services/resource_coordinator/coordination_unit/web_contents_coordination_unit_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-31T17:48:32Z",
+      "side": 1,
+      "message": "Get the main frame cu of the current web contents cu, and check if its parent process cu is change_source.",
+      "range": {
+        "startLine": 76,
+        "startChar": 2,
+        "endLine": 96,
+        "endChar": 3
+      },
+      "revId": "8f8c271f19888ded752170bbf3ff89479589b856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d1e6c33_76b68f2c",
+        "filename": "services/resource_coordinator/coordination_unit/web_contents_coordination_unit_impl_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-07-31T17:48:32Z",
+      "side": 1,
+      "message": "could you move this to tab_signal_generator_impl_unittest?",
+      "range": {
+        "startLine": 104,
+        "startChar": 0,
+        "endLine": 141,
+        "endChar": 1
+      },
+      "revId": "8f8c271f19888ded752170bbf3ff89479589b856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
