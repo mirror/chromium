@@ -79,7 +79,13 @@ class GLImageNativePixmapTestDelegate {
 
 using GLImageScanoutType = testing::Types<
     GLImageNativePixmapTestDelegate<gfx::BufferUsage::SCANOUT,
-                                    gfx::BufferFormat::BGRA_8888>>;
+                                    gfx::BufferFormat::BGRX_8888>,
+    GLImageNativePixmapTestDelegate<gfx::BufferUsage::SCANOUT,
+                                    gfx::BufferFormat::BGRA_8888>,
+    GLImageNativePixmapTestDelegate<gfx::BufferUsage::SCANOUT,
+                                    gfx::BufferFormat::RGBX_8888>,
+    GLImageNativePixmapTestDelegate<gfx::BufferUsage::SCANOUT,
+                                    gfx::BufferFormat::RGBA_8888>>;
 
 INSTANTIATE_TYPED_TEST_CASE_P(GLImageNativePixmapScanout,
                               GLImageTest,
