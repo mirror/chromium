@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b309f65_e2dd335f",
+        "filename": "url/gurl.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-07-31T04:19:36Z",
+      "side": 1,
+      "message": "I think this is too strong of a claim. You could have an invalid URL that has all three of these (I think). Why not just \"if the GURL is invalid or missing a scheme, authority or path, it will return an empty, invalid GURL.\"?",
+      "range": {
+        "startLine": 190,
+        "startChar": 5,
+        "endLine": 190,
+        "endChar": 51
+      },
+      "revId": "04027f4d8027b5397bbde84b04668c3299b926bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
