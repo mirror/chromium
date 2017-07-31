@@ -38,15 +38,30 @@ bool ShouldOverrideNavigation(
     const Extension* extension,
     content::WebContents* source,
     const navigation_interception::NavigationParams& params) {
+  DVLOG(1) << "ShouldOverrideNavigation called for: " << params.url();
+
   Browser* browser = chrome::FindBrowserWithWebContents(source);
   if (browser == nullptr) {
     DVLOG(1) << "Don't override: No browser, can't know if already in app.";
     return false;
   }
 
+  DVLOG(1) << "Navigation core type: "
+           << PageTransitionGetCoreTransitionString(params.transition_type());
+
   if (browser->app_name() ==
       web_app::GenerateApplicationNameFromExtensionId(extension->id())) {
     DVLOG(1) << "Don't override: Already in app.";
+    return false;
+  }
+
+  if (params.transition_type() & ui::PAGE_TRANSITION_TYPED) {
+    DVLOG(1) << "Don't override: Omnibox or explicit navigation.";
+    return false;
+  }
+
+  if (params.transition_type() & ui::PAGE_TRANSITION_RELOAD) {
+    DVLOG(1) << "Don't override: Reloading.";
     return false;
   }
 
