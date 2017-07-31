@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1cf09466_51d64bed",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-31T22:28:28Z",
+      "side": 1,
+      "message": "nit: put this with CalculatePreferredSize() since they\u0027re both views::View overrides",
+      "range": {
+        "startLine": 68,
+        "startChar": 7,
+        "endLine": 68,
+        "endChar": 27
+      },
+      "revId": "3ee3adf2c664cd88c60e0a7e51a39dac95294df9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
