@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7fed165_a8e18d4a",
+        "filename": "content/browser/cache_storage/cache_storage_context_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-07-31T22:49:42Z",
+      "side": 1,
+      "message": "same",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 21
+      },
+      "revId": "2902eb6ddbf7e80f2e255a4a9b5e900935180459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaa042d8_c3dc93c0",
+        "filename": "content/browser/cache_storage/cache_storage_context_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-07-31T22:49:42Z",
+      "side": 1,
+      "message": "nit: I think you can remove this now",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 11
+      },
+      "revId": "2902eb6ddbf7e80f2e255a4a9b5e900935180459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dce13ae2_13284301",
+        "filename": "content/browser/devtools/protocol/storage_handler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-07-31T22:49:42Z",
+      "side": 1,
+      "message": "Please also comment on observer registration lifetime, something like:\n\"Registered on the CacheStorageContext as an observer on object creation, and unregistered on destruction\"",
+      "range": {
+        "startLine": 57,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 66
+      },
+      "revId": "2902eb6ddbf7e80f2e255a4a9b5e900935180459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
