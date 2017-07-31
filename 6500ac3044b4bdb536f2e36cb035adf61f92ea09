@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "eb33f76a_ad528932",
+        "filename": "chrome/browser/resources/md_extensions/pack_dialog.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-07-31T23:54:42Z",
+      "side": 1,
+      "message": "You\u0027re right, this.lastRespose_ \u003d null works.",
+      "parentUuid": "1a1445c8_f82ec3d9",
+      "revId": "6500ac3044b4bdb536f2e36cb035adf61f92ea09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4837628_d937dbb9",
         "filename": "chrome/test/data/webui/extensions/extension_pack_dialog_test.js",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "6500ac3044b4bdb536f2e36cb035adf61f92ea09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c2d840c_2fc310e7",
+        "filename": "chrome/test/data/webui/extensions/extension_pack_dialog_test.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-07-31T23:54:42Z",
+      "side": 1,
+      "message": "I\u0027ll re-intialize them in the respective functions.",
+      "parentUuid": "e4837628_d937dbb9",
+      "revId": "6500ac3044b4bdb536f2e36cb035adf61f92ea09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d7384928_b5fca1d6",
+        "filename": "chrome/test/data/webui/extensions/extension_pack_dialog_test.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-07-31T23:54:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24323e5f_b9a2993e",
+      "revId": "6500ac3044b4bdb536f2e36cb035adf61f92ea09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3918826d_396e09af",
         "filename": "chrome/test/data/webui/extensions/extension_pack_dialog_test.js",
         "patchSetId": 7
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "704bf4e9_101291c9",
+        "filename": "chrome/test/data/webui/extensions/extension_pack_dialog_test.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-07-31T23:54:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3918826d_396e09af",
+      "revId": "6500ac3044b4bdb536f2e36cb035adf61f92ea09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1dd86135_245a1fd8",
         "filename": "chrome/test/data/webui/extensions/extension_pack_dialog_test.js",
         "patchSetId": 7
@@ -84,6 +156,24 @@
       "revId": "6500ac3044b4bdb536f2e36cb035adf61f92ea09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edab5da3_be422160",
+        "filename": "chrome/test/data/webui/extensions/extension_pack_dialog_test.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-07-31T23:54:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1dd86135_245a1fd8",
+      "revId": "6500ac3044b4bdb536f2e36cb035adf61f92ea09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
