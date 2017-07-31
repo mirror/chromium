@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9b08b0e9_1c69adef",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-31T19:41:44Z",
+      "side": 1,
+      "message": "haha yep, let me change it to something a bit better. How about kIndentdedSingleColumnSetId?",
+      "parentUuid": "ac0b3a0f_ac6d635d",
+      "range": {
+        "startLine": 297,
+        "startChar": 12,
+        "endLine": 297,
+        "endChar": 39
+      },
+      "revId": "121fd5e0c453ec41b15efebede9d6d4d61824324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4035d4d_43cee563",
         "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "121fd5e0c453ec41b15efebede9d6d4d61824324",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e9668fd_fc216ee5",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-31T19:41:44Z",
+      "side": 1,
+      "message": "Done. Two things:\n\n1. I wasn\u0027t quite sure which label color to choose but \"LabelEnabledColor\" seemed closest.\n2. It wasn\u0027t clear that OnNativeThemeChanged will always be called after initialization. I didn\u0027t want to rely on this fact so I added a \"StyleLearnMoreButton\" method that is called in both initialization and OnNativeThemeChanged.",
+      "parentUuid": "f4035d4d_43cee563",
+      "range": {
+        "startLine": 432,
+        "startChar": 35,
+        "endLine": 432,
+        "endChar": 50
+      },
+      "revId": "121fd5e0c453ec41b15efebede9d6d4d61824324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7e22a4af_d851be22",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-31T19:41:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "573a6902_3dde998b",
+      "range": {
+        "startLine": 434,
+        "startChar": 48,
+        "endLine": 434,
+        "endChar": 61
+      },
+      "revId": "121fd5e0c453ec41b15efebede9d6d4d61824324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e88086e7_94ce002f",
         "filename": "components/vector_icons/help_outline.icon",
         "patchSetId": 8
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "851d5407_0fe9c42e",
+        "filename": "components/vector_icons/help_outline.icon",
+        "patchSetId": 8
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-31T19:41:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e88086e7_94ce002f",
+      "range": {
+        "startLine": 3,
+        "startChar": 24,
+        "endLine": 3,
+        "endChar": 28
+      },
+      "revId": "121fd5e0c453ec41b15efebede9d6d4d61824324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3fce9aaf_f0e65735",
         "filename": "components/vector_icons/help_outline.icon",
         "patchSetId": 8
@@ -105,6 +201,30 @@
       "writtenOn": "2017-07-31T15:43:15Z",
       "side": 1,
       "message": "nit: for generically sized icons we typically use the 48x48 SVG from go/icons",
+      "range": {
+        "startLine": 4,
+        "startChar": 19,
+        "endLine": 4,
+        "endChar": 21
+      },
+      "revId": "121fd5e0c453ec41b15efebede9d6d4d61824324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7059fee0_6bcbfbf5",
+        "filename": "components/vector_icons/help_outline.icon",
+        "patchSetId": 8
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-31T19:41:44Z",
+      "side": 1,
+      "message": "Hm, no matter what settings I generate the icon in go/icons, when I run it through http://evanstade.github.io/skiafy/ it still gives me a canvas of 24 here. I tried this with the \"2x\" setting as well as \"48dp\".",
+      "parentUuid": "3fce9aaf_f0e65735",
       "range": {
         "startLine": 4,
         "startChar": 19,
