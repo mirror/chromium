@@ -1,0 +1,354 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55614c09_a50f65d2",
+        "filename": "base/task_scheduler/priority_queue.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-31T20:23:19Z",
+      "side": 1,
+      "message": "Add method comment.",
+      "revId": "2d90d32771f39064c8e623ad8bda93ccc11c4c56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "386cd0c5_ab413126",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-31T20:23:19Z",
+      "side": 1,
+      "message": "Add: \"Reset when TaskUnblocked() is called.\"",
+      "revId": "2d90d32771f39064c8e623ad8bda93ccc11c4c56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e97a7a2d_652fbf20",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-31T20:23:19Z",
+      "side": 1,
+      "message": "this thread having been blocked for a sufficient amount of time.\n\nWDYT?",
+      "range": {
+        "startLine": 197,
+        "startChar": 65,
+        "endLine": 198,
+        "endChar": 22
+      },
+      "revId": "2d90d32771f39064c8e623ad8bda93ccc11c4c56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b812c6f4_3d5201d5",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-31T20:23:19Z",
+      "side": 1,
+      "message": "I would:\n\n1. Get rid of the BlockedThreshold() method.\n2. Replace this line with:\nif (!worker_capacity_increase_disallowed_.IsSet() \u0026\u0026 delegate-\u003eShouldCapacityIncreaseAfterBlock())\n3. In ShouldCapacityIncreaseAfterBlock(), use a constant instead of an argument for the maximum block threshold.\n\nI think that having BlockedThreshold() just to support disallowing capacity increase is unnecessary complexity.",
+      "range": {
+        "startLine": 375,
+        "startChar": 6,
+        "endLine": 376,
+        "endChar": 27
+      },
+      "revId": "2d90d32771f39064c8e623ad8bda93ccc11c4c56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4efcaeea_04ef0351",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-31T20:23:19Z",
+      "side": 1,
+      "message": "Currently, this method creates new SchedulerWorkers but doesn\u0027t wake up suspended SchedulerWorkers.\n\nWe should first figure out how many additional SchedulerWorkers must run tasks. Then, we should wake up suspended SchedulerWorkers. Finally, if that isn\u0027t enough, we should create new SchedulerWorkers.",
+      "range": {
+        "startLine": 384,
+        "startChar": 17,
+        "endLine": 384,
+        "endChar": 52
+      },
+      "revId": "2d90d32771f39064c8e623ad8bda93ccc11c4c56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b45ea543_3ccb5018",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-31T20:23:19Z",
+      "side": 1,
+      "message": "DCHECK(blocked_start_time_.is_null());",
+      "revId": "2d90d32771f39064c8e623ad8bda93ccc11c4c56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "520b8a0d_36ef84b5",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-31T20:23:19Z",
+      "side": 1,
+      "message": "I would change ContainsNearBottom() so that don\u0027t need the if above and you can pass |target_suspended_workers| directly here. See my comments in scheduler_worker_stack.h/.cc.",
+      "range": {
+        "startLine": 758,
+        "startChar": 2,
+        "endLine": 760,
+        "endChar": 47
+      },
+      "revId": "2d90d32771f39064c8e623ad8bda93ccc11c4c56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76f7aff1_03c8762c",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-31T20:23:19Z",
+      "side": 1,
+      "message": "GetWorkerCapacityForTesting",
+      "range": {
+        "startLine": 123,
+        "startChar": 9,
+        "endLine": 123,
+        "endChar": 33
+      },
+      "revId": "2d90d32771f39064c8e623ad8bda93ccc11c4c56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "178d91e3_ec14d825",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-31T20:23:19Z",
+      "side": 1,
+      "message": "// Disallows any increase of |worker_capacity_|.\nvoid DisallowWorkerCapacityIncreaseForTesting();\n\nIn ShouldCapacityIncreaseAfterBlock(), return false if |blocked_time_threshold| is TimeDelta::Max().",
+      "range": {
+        "startLine": 128,
+        "startChar": 2,
+        "endLine": 132,
+        "endChar": 3
+      },
+      "revId": "2d90d32771f39064c8e623ad8bda93ccc11c4c56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecf1c327_73bc46e8",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-31T20:23:19Z",
+      "side": 1,
+      "message": "|worker|\nno the",
+      "range": {
+        "startLine": 172,
+        "startChar": 21,
+        "endLine": 172,
+        "endChar": 33
+      },
+      "revId": "2d90d32771f39064c8e623ad8bda93ccc11c4c56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69993304_d34e7433",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-31T20:23:19Z",
+      "side": 1,
+      "message": "Returns the amount of time that a SchedulerWorker must be within the scope of a ScopedMayBlock before |worker_capacity_| can be increased.",
+      "range": {
+        "startLine": 178,
+        "startChar": 2,
+        "endLine": 179,
+        "endChar": 61
+      },
+      "revId": "2d90d32771f39064c8e623ad8bda93ccc11c4c56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9213c71_20e7207e",
+        "filename": "base/task_scheduler/scheduler_worker_stack.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-31T20:23:19Z",
+      "side": 1,
+      "message": "DCHECK_GE(n, 0);",
+      "range": {
+        "startLine": 43,
+        "startChar": 2,
+        "endLine": 43,
+        "endChar": 17
+      },
+      "revId": "2d90d32771f39064c8e623ad8bda93ccc11c4c56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c26862a5_869ba905",
+        "filename": "base/task_scheduler/scheduler_worker_stack.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-31T20:23:19Z",
+      "side": 1,
+      "message": "I think it would be more intuitive if ContainsAtBottom(worker, n) returned true iff |worker| was in one of the first n spots from the bottom of the stack.\n\nE.g.\n\nstack \u003d \n  0 -\u003e a\n  1 -\u003e b\n  2 -\u003e c\n  3 -\u003e d\n\nContainsAtBottom(a, 2) returns true \nContainsAtBottom(b, 2) returns true\nContainsAtBottom(c, 2) returns false\nContainsAtBottom(d, 2) returns false",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 79
+      },
+      "revId": "2d90d32771f39064c8e623ad8bda93ccc11c4c56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44d8c557_ac9c2be2",
+        "filename": "base/task_scheduler/scheduler_worker_stack.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-31T20:23:19Z",
+      "side": 1,
+      "message": "false",
+      "range": {
+        "startLine": 45,
+        "startChar": 24,
+        "endLine": 45,
+        "endChar": 26
+      },
+      "revId": "2d90d32771f39064c8e623ad8bda93ccc11c4c56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2af546f_fb934af1",
+        "filename": "base/task_scheduler/scheduler_worker_stack.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-31T20:23:19Z",
+      "side": 1,
+      "message": "ContainsAtBottom",
+      "range": {
+        "startLine": 46,
+        "startChar": 7,
+        "endLine": 46,
+        "endChar": 25
+      },
+      "revId": "2d90d32771f39064c8e623ad8bda93ccc11c4c56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce1c797e_ec14491f",
+        "filename": "base/task_scheduler/scheduler_worker_stack_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-31T20:23:19Z",
+      "side": 1,
+      "message": "I think ContainsNearBottom() should be changed so that this returns false. |worker_a_| is at spot 0 but it not in one of the \"0 spots from the bottom of the stack\".",
+      "range": {
+        "startLine": 254,
+        "startChar": 2,
+        "endLine": 254,
+        "endChar": 60
+      },
+      "revId": "2d90d32771f39064c8e623ad8bda93ccc11c4c56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
