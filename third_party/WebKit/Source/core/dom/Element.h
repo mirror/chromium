@@ -858,6 +858,8 @@ class CORE_EXPORT Element : public ContainerNode {
   void ScrollFrameBy(const ScrollToOptions&);
   void ScrollFrameTo(const ScrollToOptions&);
 
+  bool CanConsumeScrollState(const ScrollState&);
+
   bool HasElementFlag(ElementFlags mask) const {
     return HasRareData() && HasElementFlagInternal(mask);
   }

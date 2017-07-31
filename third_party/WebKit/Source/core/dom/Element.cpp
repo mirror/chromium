@@ -623,6 +623,10 @@ void Element::CallDistributeScroll(ScrollState& scroll_state) {
     NativeDistributeScroll(scroll_state);
     return;
   }
+
+  if (!CanConsumeScrollState(scroll_state))
+    return;
+
   if (callback->NativeScrollBehavior() !=
       WebNativeScrollBehavior::kPerformAfterNativeScroll)
     callback->handleEvent(&scroll_state);
@@ -712,6 +716,10 @@ void Element::CallApplyScroll(ScrollState& scroll_state) {
     NativeApplyScroll(scroll_state);
     return;
   }
+
+  if (!CanConsumeScrollState(scroll_state))
+    return;
+
   if (callback->NativeScrollBehavior() !=
       WebNativeScrollBehavior::kPerformAfterNativeScroll)
     callback->handleEvent(&scroll_state);
@@ -4372,6 +4380,23 @@ void Element::LogUpdateAttributeIfIsolatedWorldAndInDocument(
   argv.push_back(params.old_value);
   argv.push_back(params.new_value);
   activity_logger->LogEvent("blinkSetAttribute", argv.size(), argv.data());
+}
+
+bool Element::CanConsumeScrollState(const ScrollState& scroll_state) {
+  ScrollCustomization scroll_customization =
+      GetLayoutBox()->Style()->GetScrollCustomization();
+  return (scroll_state.deltaX() > 0 ||
+          scroll_customization &&
+              ScrollCustomization::kScrollCustomizationPanLeft) &&
+         (scroll_state.deltaX() < 0 ||
+          scroll_customization &&
+              ScrollCustomization::kScrollCustomizationPanRight) &&
+         (scroll_state.deltaY() > 0 ||
+          scroll_customization &&
+              ScrollCustomization::kScrollCustomizationPanDown) &&
+         (scroll_state.deltaX() > 0 ||
+          scroll_customization &&
+              ScrollCustomization::kScrollCustomizationPanUp);
 }
 
 DEFINE_TRACE(Element) {
