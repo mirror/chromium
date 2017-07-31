@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2b7122de_f96b7973",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-31T13:15:55Z",
+      "side": 1,
+      "message": "Actually, long tags in log messages seem to be rather uncommon, so I\u0027d rather be short and less precise.",
+      "parentUuid": "bdde8aae_4e2f1e25",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 5
+      },
+      "revId": "372e13a6d9c871736f297f9ca4eb774bbd69b44c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "29882ab9_8e902979",
         "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher.h",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "22f6525d_c4f2c2ae",
+        "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-31T13:15:55Z",
+      "side": 1,
+      "message": "This would certainly keep the folders more organized. How should I move forward? File a bug that all contextual-related sources should be moved into a separate folder (in one CL, of course)?",
+      "parentUuid": "29882ab9_8e902979",
+      "range": {
+        "startLine": 5,
+        "startChar": 38,
+        "endLine": 5,
+        "endChar": 39
+      },
+      "revId": "372e13a6d9c871736f297f9ca4eb774bbd69b44c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b440056_53357611",
         "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher.h",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "372e13a6d9c871736f297f9ca4eb774bbd69b44c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97e0cc23_d17cc000",
+        "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-31T13:15:55Z",
+      "side": 1,
+      "message": "Done, good catch.",
+      "parentUuid": "8b440056_53357611",
+      "range": {
+        "startLine": 22,
+        "startChar": 6,
+        "endLine": 22,
+        "endChar": 34
+      },
+      "revId": "372e13a6d9c871736f297f9ca4eb774bbd69b44c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -118,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "174bbe84_c19224bf",
+        "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-31T13:15:55Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4bcd7184_5eab7ab6",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 42
+      },
+      "revId": "372e13a6d9c871736f297f9ca4eb774bbd69b44c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4b3d47d_6ad4befa",
         "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher_impl.h",
         "patchSetId": 1
@@ -141,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "e2c739b8_f644af91",
+        "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-31T13:15:55Z",
+      "side": 1,
+      "message": "Done, not here, but in the parent.",
+      "parentUuid": "d4b3d47d_6ad4befa",
+      "range": {
+        "startLine": 41,
+        "startChar": 3,
+        "endLine": 41,
+        "endChar": 35
+      },
+      "revId": "372e13a6d9c871736f297f9ca4eb774bbd69b44c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c32b98bf_efb31f5d",
         "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher_impl.h",
         "patchSetId": 1
@@ -161,6 +281,30 @@
       "revId": "372e13a6d9c871736f297f9ca4eb774bbd69b44c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6c0ec79_66414d9c",
+        "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-07-31T13:15:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c32b98bf_efb31f5d",
+      "range": {
+        "startLine": 43,
+        "startChar": 2,
+        "endLine": 43,
+        "endChar": 34
+      },
+      "revId": "372e13a6d9c871736f297f9ca4eb774bbd69b44c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
