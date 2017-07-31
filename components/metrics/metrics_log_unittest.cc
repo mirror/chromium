@@ -55,8 +55,7 @@ class TestMetricsLog : public MetricsLog {
                  LogType log_type,
                  MetricsServiceClient* client,
                  TestingPrefServiceSimple* prefs)
-      : MetricsLog(client_id, session_id, log_type, client, prefs),
-        prefs_(prefs) {
+      : MetricsLog(client_id, session_id, log_type, client), prefs_(prefs) {
     InitPrefs();
   }
 
@@ -130,10 +129,10 @@ TEST_F(MetricsLogTest, LogType) {
   TestMetricsServiceClient client;
   TestingPrefServiceSimple prefs;
 
-  MetricsLog log1("id", 0, MetricsLog::ONGOING_LOG, &client, &prefs);
+  MetricsLog log1("id", 0, MetricsLog::ONGOING_LOG, &client);
   EXPECT_EQ(MetricsLog::ONGOING_LOG, log1.log_type());
 
-  MetricsLog log2("id", 0, MetricsLog::INITIAL_STABILITY_LOG, &client, &prefs);
+  MetricsLog log2("id", 0, MetricsLog::INITIAL_STABILITY_LOG, &client);
   EXPECT_EQ(MetricsLog::INITIAL_STABILITY_LOG, log2.log_type());
 }
 
@@ -142,7 +141,7 @@ TEST_F(MetricsLogTest, BasicRecord) {
   client.set_version_string("bogus version");
   TestingPrefServiceSimple prefs;
   MetricsLog log("totally bogus client ID", 137, MetricsLog::ONGOING_LOG,
-                 &client, &prefs);
+                 &client);
   log.CloseLog();
 
   std::string encoded;

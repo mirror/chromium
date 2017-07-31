@@ -65,13 +65,8 @@ class TestMetricsLog : public MetricsLog {
  public:
   TestMetricsLog(const std::string& client_id,
                  int session_id,
-                 MetricsServiceClient* client,
-                 PrefService* local_state)
-      : MetricsLog(client_id,
-                   session_id,
-                   MetricsLog::ONGOING_LOG,
-                   client,
-                   local_state) {}
+                 MetricsServiceClient* client)
+      : MetricsLog(client_id, session_id, MetricsLog::ONGOING_LOG, client) {}
 
   ~TestMetricsLog() override {}
 
@@ -190,7 +185,7 @@ TEST_F(MetricsServiceTest, InitialStabilityLogAtProviderRequest) {
   // Save an existing system profile to prefs, to correspond to what would be
   // saved from a previous session.
   TestMetricsServiceClient client;
-  TestMetricsLog log("client", 1, &client, GetLocalState());
+  TestMetricsLog log("client", 1, &client);
   DelegatingProvider delegating_provider;
   log.RecordEnvironment(&delegating_provider, 0, 0);
 
@@ -261,7 +256,7 @@ TEST_F(MetricsServiceTest, InitialStabilityLogAfterCrash) {
   // Save an existing system profile to prefs, to correspond to what would be
   // saved from a previous session.
   TestMetricsServiceClient client;
-  TestMetricsLog log("client", 1, &client, GetLocalState());
+  TestMetricsLog log("client", 1, &client);
   DelegatingProvider delegating_provider;
   log.RecordEnvironment(&delegating_provider, 0, 0);
 
