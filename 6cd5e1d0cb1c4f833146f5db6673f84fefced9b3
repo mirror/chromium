@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d9fcdfe2_5349e90f",
+        "filename": "chrome/browser/safe_browsing/download_protection_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1230988
+      },
+      "writtenOn": "2017-07-31T16:20:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75aad27c_19daff35",
+      "revId": "6cd5e1d0cb1c4f833146f5db6673f84fefced9b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8974d12_29b9455a",
         "filename": "chrome/browser/safe_browsing/download_protection_service.cc",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "6cd5e1d0cb1c4f833146f5db6673f84fefced9b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4fa0fad_ec1146ee",
+        "filename": "chrome/browser/safe_browsing/download_protection_service.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 985,
+      "author": {
+        "id": 1230988
+      },
+      "writtenOn": "2017-07-31T16:20:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8974d12_29b9455a",
+      "revId": "6cd5e1d0cb1c4f833146f5db6673f84fefced9b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
