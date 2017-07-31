@@ -33,6 +33,7 @@
 
 #include <memory>
 #include "core/frame/csp/ContentSecurityPolicy.h"
+#include "core/workers/GlobalScopeCreationParams.h"
 #include "core/workers/WorkerClients.h"
 #include "modules/ModulesExport.h"
 #include "platform/WebTaskRunner.h"
@@ -47,7 +48,6 @@
 
 namespace blink {
 
-class ThreadableLoadingContext;
 class ServiceWorkerGlobalScopeProxy;
 class ServiceWorkerInstalledScriptsManager;
 class WaitableEvent;
@@ -124,17 +124,17 @@ class MODULES_EXPORT WebEmbeddedWorkerImpl final
   void OnScriptLoaderFinished();
   void StartWorkerThread();
 
+  std::unique_ptr<GlobalScopeCreationParams> CreateGlobalScopeCreationParams();
+  WorkerClients* CreateWorkerClients();
+
   WebEmbeddedWorkerStartData worker_start_data_;
 
   std::unique_ptr<WebServiceWorkerContextClient> worker_context_client_;
 
-  // This is valid until the worker thread is created. After the worker thread
-  // is created, this is passed to the worker thread.
+  // These are valid until StartWorkerThread() is called. After the worker
+  // thread is created, these are passed to the worker thread.
   std::unique_ptr<ServiceWorkerInstalledScriptsManager>
       installed_scripts_manager_;
-
-  // This is kept until startWorkerContext is called, and then passed on
-  // to WorkerContext.
   std::unique_ptr<WebContentSettingsClient> content_settings_client_;
 
   service_manager::InterfaceProvider interface_provider_;
@@ -153,7 +153,6 @@ class MODULES_EXPORT WebEmbeddedWorkerImpl final
   WebView* web_view_;
 
   Persistent<WebLocalFrameBase> main_frame_;
-  Persistent<ThreadableLoadingContext> loading_context_;
 
   bool loading_shadow_page_;
   bool asked_to_terminate_;

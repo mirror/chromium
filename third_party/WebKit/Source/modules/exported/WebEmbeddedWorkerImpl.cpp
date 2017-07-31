@@ -45,7 +45,6 @@
 #include "core/loader/ThreadableLoadingContext.h"
 #include "core/loader/WorkerFetchContext.h"
 #include "core/probe/CoreProbes.h"
-#include "core/workers/GlobalScopeCreationParams.h"
 #include "core/workers/ParentFrameTaskRunners.h"
 #include "core/workers/WorkerBackingThreadStartupData.h"
 #include "core/workers/WorkerContentSettingsClient.h"
@@ -163,6 +162,16 @@ void WebEmbeddedWorkerImpl::StartWorkerContext(
       WebEmbeddedWorkerStartData::kPauseAfterDownload)
     pause_after_download_state_ = kDoPauseAfterDownload;
   PrepareShadowPageForLoader();
+
+  // If we were asked to wait for debugger then it is the good time to do that.
+  worker_context_client_->WorkerReadyForInspection();
+  if (worker_start_data_.wait_for_debugger_mode ==
+      WebEmbeddedWorkerStartData::kWaitForDebugger) {
+    waiting_for_debugger_state_ = kWaitingForDebugger;
+    return;
+  }
+
+  LoadShadowPage();
 }
 
 void WebEmbeddedWorkerImpl::TerminateWorkerContext() {
@@ -309,16 +318,6 @@ void WebEmbeddedWorkerImpl::PrepareShadowPageForLoader() {
   main_frame_ = WebFactory::GetInstance().CreateMainWebLocalFrameBase(
       web_view_, this, nullptr);
   main_frame_->SetDevToolsAgentClient(this);
-
-  // If we were asked to wait for debugger then it is the good time to do that.
-  worker_context_client_->WorkerReadyForInspection();
-  if (worker_start_data_.wait_for_debugger_mode ==
-      WebEmbeddedWorkerStartData::kWaitForDebugger) {
-    waiting_for_debugger_state_ = kWaitingForDebugger;
-    return;
-  }
-
-  LoadShadowPage();
 }
 
 void WebEmbeddedWorkerImpl::LoadShadowPage() {
@@ -439,37 +438,36 @@ void WebEmbeddedWorkerImpl::StartWorkerThread() {
   DCHECK(!asked_to_terminate_);
 
   Document* document = main_frame_->GetFrame()->GetDocument();
+  worker_global_scope_proxy_ =
+      ServiceWorkerGlobalScopeProxy::Create(*this, *worker_context_client_);
+  worker_thread_ = WTF::MakeUnique<ServiceWorkerThread>(
+      ThreadableLoadingContext::Create(*document), *worker_global_scope_proxy_,
+      std::move(installed_scripts_manager_));
+
+  // We have a dummy document here for loading but it doesn't really represent
+  // the document/frame of associated document(s) for this worker. Here we
+  // populate the task runners with default task runners of the main thread.
+  worker_thread_->Start(CreateGlobalScopeCreationParams(),
+                        WorkerBackingThreadStartupData::CreateDefault(),
+                        ParentFrameTaskRunners::Create());
+
+  worker_inspector_proxy_->WorkerThreadCreated(document, worker_thread_.get(),
+                                               worker_start_data_.script_url);
+}
+
+std::unique_ptr<GlobalScopeCreationParams>
+WebEmbeddedWorkerImpl::CreateGlobalScopeCreationParams() {
+  Document* document = main_frame_->GetFrame()->GetDocument();
 
   // FIXME: this document's origin is pristine and without any extra privileges.
   // (crbug.com/254993)
   SecurityOrigin* starter_origin = document->GetSecurityOrigin();
 
-  WorkerClients* worker_clients = WorkerClients::Create();
-  ProvideIndexedDBClientToWorker(worker_clients,
-                                 IndexedDBClientImpl::Create(*worker_clients));
-
-  ProvideContentSettingsClientToWorker(worker_clients,
-                                       std::move(content_settings_client_));
-  ProvideServiceWorkerGlobalScopeClientToWorker(
-      worker_clients,
-      new ServiceWorkerGlobalScopeClient(*worker_context_client_));
-  ProvideServiceWorkerContainerClientToWorker(
-      worker_clients, worker_context_client_->CreateServiceWorkerProvider());
-
-  if (RuntimeEnabledFeatures::OffMainThreadFetchEnabled()) {
-    std::unique_ptr<WebWorkerFetchContext> web_worker_fetch_context =
-        worker_context_client_->CreateServiceWorkerFetchContext();
-    DCHECK(web_worker_fetch_context);
-    web_worker_fetch_context->SetDataSaverEnabled(
-        document->GetFrame()->GetSettings()->GetDataSaverEnabled());
-    ProvideWorkerFetchContextToWorker(worker_clients,
-                                      std::move(web_worker_fetch_context));
-  }
-
+  WorkerClients* worker_clients = CreateWorkerClients();
   WorkerThreadStartMode start_mode =
       worker_inspector_proxy_->WorkerStartMode(document);
   std::unique_ptr<WorkerSettings> worker_settings =
-      WTF::WrapUnique(new WorkerSettings(document->GetSettings()));
+      WTF::MakeUnique<WorkerSettings>(document->GetSettings());
 
   std::unique_ptr<GlobalScopeCreationParams> global_scope_creation_params;
   // |main_script_loader_| isn't created if the InstalledScriptsManager had the
@@ -505,22 +503,33 @@ void WebEmbeddedWorkerImpl::StartWorkerThread() {
         nullptr /* OriginTrialTokens */, std::move(worker_settings),
         static_cast<V8CacheOptions>(worker_start_data_.v8_cache_options));
   }
+  return global_scope_creation_params;
+}
 
-  worker_global_scope_proxy_ =
-      ServiceWorkerGlobalScopeProxy::Create(*this, *worker_context_client_);
-  worker_thread_ = WTF::MakeUnique<ServiceWorkerThread>(
-      ThreadableLoadingContext::Create(*document), *worker_global_scope_proxy_,
-      std::move(installed_scripts_manager_));
+WorkerClients* WebEmbeddedWorkerImpl::CreateWorkerClients() {
+  WorkerClients* worker_clients = WorkerClients::Create();
+  ProvideIndexedDBClientToWorker(worker_clients,
+                                 IndexedDBClientImpl::Create(*worker_clients));
 
-  // We have a dummy document here for loading but it doesn't really represent
-  // the document/frame of associated document(s) for this worker. Here we
-  // populate the task runners with default task runners of the main thread.
-  worker_thread_->Start(std::move(global_scope_creation_params),
-                        WorkerBackingThreadStartupData::CreateDefault(),
-                        ParentFrameTaskRunners::Create());
+  ProvideContentSettingsClientToWorker(worker_clients,
+                                       std::move(content_settings_client_));
+  ProvideServiceWorkerGlobalScopeClientToWorker(
+      worker_clients,
+      new ServiceWorkerGlobalScopeClient(*worker_context_client_));
+  ProvideServiceWorkerContainerClientToWorker(
+      worker_clients, worker_context_client_->CreateServiceWorkerProvider());
 
-  worker_inspector_proxy_->WorkerThreadCreated(document, worker_thread_.get(),
-                                               worker_start_data_.script_url);
+  if (RuntimeEnabledFeatures::OffMainThreadFetchEnabled()) {
+    std::unique_ptr<WebWorkerFetchContext> web_worker_fetch_context =
+        worker_context_client_->CreateServiceWorkerFetchContext();
+    DCHECK(web_worker_fetch_context);
+    web_worker_fetch_context->SetDataSaverEnabled(
+        main_frame_->GetFrame()->GetSettings()->GetDataSaverEnabled());
+    ProvideWorkerFetchContextToWorker(worker_clients,
+                                      std::move(web_worker_fetch_context));
+  }
+
+  return worker_clients;
 }
 
 }  // namespace blink
