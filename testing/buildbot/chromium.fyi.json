@@ -3235,6 +3235,18 @@
             }
           ]
         },
+        "test": "services_unittests"
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true,
+          "dimension_sets": [
+            {
+              "android_devices": "1",
+              "device_type": "coho"
+            }
+          ]
+        },
         "test": "skia_unittests"
       },
       {
@@ -3671,6 +3683,12 @@
         "swarming": {
           "can_use_on_swarming_builders": true
         },
+        "test": "services_unittests"
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
         "test": "skia_unittests"
       },
       {
@@ -3948,6 +3966,12 @@
           "can_use_on_swarming_builders": true
         },
         "test": "sandbox_linux_unittests"
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
+        "test": "services_unittests"
       },
       {
         "swarming": {
@@ -4277,6 +4301,12 @@
         "swarming": {
           "can_use_on_swarming_builders": true
         },
+        "test": "services_unittests"
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
         "test": "skia_unittests"
       },
       {
@@ -4523,6 +4553,12 @@
           "can_use_on_swarming_builders": true
         },
         "test": "sandbox_linux_unittests"
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
+        "test": "services_unittests"
       },
       {
         "swarming": {
@@ -4811,6 +4847,12 @@
           "can_use_on_swarming_builders": true
         },
         "test": "sandbox_mac_unittests"
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
+        "test": "services_unittests"
       },
       {
         "swarming": {
@@ -5124,6 +5166,12 @@
           "can_use_on_swarming_builders": true
         },
         "test": "sandbox_mac_unittests"
+      },
+      {
+        "swarming": {
+          "can_use_on_swarming_builders": true
+        },
+        "test": "services_unittests"
       },
       {
         "swarming": {
