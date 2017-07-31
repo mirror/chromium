@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3b11275a_8b38f0bc",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-07-31T21:22:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9dad9d8_4583e2ce",
+      "revId": "0a24cd78e68d7dfb6199e0dbe2a34bb932a3134b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90c15f44_678411b4",
         "filename": "base/win/win_util.cc",
         "patchSetId": 12
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "1d5e06a1_e57e3ec2",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-07-31T21:22:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90c15f44_678411b4",
+      "revId": "0a24cd78e68d7dfb6199e0dbe2a34bb932a3134b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e24e228_3927aa13",
         "filename": "base/win/win_util.cc",
         "patchSetId": 12
@@ -50,6 +86,24 @@
       "revId": "0a24cd78e68d7dfb6199e0dbe2a34bb932a3134b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a8e614e_7d20f290",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-07-31T21:22:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e24e228_3927aa13",
+      "revId": "0a24cd78e68d7dfb6199e0dbe2a34bb932a3134b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "2d93fcb3_141ae86e",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-07-31T21:22:30Z",
+      "side": 1,
+      "message": "Hmm... this logging was useful when I was trying to find the issue, so SetValue does actually set the error value. I double-checked that this is logging 0 when this function is successful too, so I don\u0027t think it was coming from elsewhere.",
+      "parentUuid": "a1f7226c_846cd378",
+      "range": {
+        "startLine": 74,
+        "startChar": 6,
+        "endLine": 74,
+        "endChar": 11
+      },
+      "revId": "0a24cd78e68d7dfb6199e0dbe2a34bb932a3134b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76567407_fa566776",
         "filename": "chrome/browser/ui/views/frame/browser_window_property_manager_browsertest_win.cc",
         "patchSetId": 12
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "be4019ec_8bc42bc7",
+        "filename": "chrome/browser/ui/views/frame/browser_window_property_manager_browsertest_win.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-07-31T21:22:30Z",
+      "side": 1,
+      "message": "Done. I didn\u0027t realize Callback had a default constructor.",
+      "parentUuid": "76567407_fa566776",
+      "range": {
+        "startLine": 180,
+        "startChar": 21,
+        "endLine": 180,
+        "endChar": 71
+      },
+      "revId": "0a24cd78e68d7dfb6199e0dbe2a34bb932a3134b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8403698a_5e508675",
         "filename": "ui/base/win/shell.cc",
         "patchSetId": 12
@@ -116,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "dbffaef4_77773421",
+        "filename": "ui/base/win/shell.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-07-31T21:22:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8403698a_5e508675",
+      "revId": "0a24cd78e68d7dfb6199e0dbe2a34bb932a3134b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cbc81f03_d555d8fd",
         "filename": "ui/base/win/shell.cc",
         "patchSetId": 12
@@ -130,6 +250,24 @@
       "revId": "0a24cd78e68d7dfb6199e0dbe2a34bb932a3134b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44b5d0a9_888c12fd",
+        "filename": "ui/base/win/shell.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-07-31T21:22:30Z",
+      "side": 1,
+      "message": "For the same reason I had the DCHECK that wouldn\u0027t work above: I forgot DCHECK resolved to nothing :) This is done.",
+      "parentUuid": "cbc81f03_d555d8fd",
+      "revId": "0a24cd78e68d7dfb6199e0dbe2a34bb932a3134b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
