@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21427542_f238c472",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater_unittests.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-07-31T23:44:07Z",
+      "side": 1,
+      "message": "This file wasn\u0027t intended on being included this patch. Feel free to ignore this for now.",
+      "range": {
+        "startLine": 24,
+        "startChar": 45,
+        "endLine": 24,
+        "endChar": 46
+      },
+      "revId": "2c320435337878522bac69c404bf27c02376aad6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
