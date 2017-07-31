@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "daaffa37_dece38b7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/Tile.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-31T20:46:03Z",
+      "side": 1,
+      "message": "Yes, once provided from C++. relevant pending CLs are https://chromium-review.googlesource.com/c/593659/ and https://chromium-review.googlesource.com/c/568492/ (probably abandoned now). So I\u0027d be happy leaving this like that for now, if I can land this before the C++ one",
+      "parentUuid": "d870ad56_54d95a6e",
+      "range": {
+        "startLine": 52,
+        "startChar": 59,
+        "endLine": 52,
+        "endChar": 62
+      },
+      "revId": "12ba3593eeb9d0f702be893ea0e897641febc317",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d0953fd7_e3637b79",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
         "patchSetId": 14
@@ -45,6 +69,30 @@
       "revId": "12ba3593eeb9d0f702be893ea0e897641febc317",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac5899fc_e5555043",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-31T20:46:03Z",
+      "side": 1,
+      "message": "Coded as \n\n`if (findTile(newTile.getUrl(), sectionTiles) !\u003d null) throw new IllegalStateException();`\n\nSo a url should be unique per section. Detailed the comment",
+      "parentUuid": "d0953fd7_e3637b79",
+      "range": {
+        "startLine": 342,
+        "startChar": 40,
+        "endLine": 342,
+        "endChar": 46
+      },
+      "revId": "12ba3593eeb9d0f702be893ea0e897641febc317",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

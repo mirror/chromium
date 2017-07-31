@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a0d8d6c3_a7d648ee",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-31T20:46:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84bc0c1d_a80dcded",
+      "range": {
+        "startLine": 105,
+        "startChar": 32,
+        "endLine": 105,
+        "endChar": 57
+      },
+      "revId": "051dde65cf8d458ef9d634d710a72905199e1ed8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aeba3f54_9106b60b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
         "patchSetId": 13
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "63e2b2ef_a61d9181",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-31T20:46:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aeba3f54_9106b60b",
+      "range": {
+        "startLine": 319,
+        "startChar": 15,
+        "endLine": 319,
+        "endChar": 40
+      },
+      "revId": "051dde65cf8d458ef9d634d710a72905199e1ed8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4da9de5_837cee5a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
         "patchSetId": 13
@@ -68,6 +116,30 @@
       "revId": "051dde65cf8d458ef9d634d710a72905199e1ed8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5e35c27_9f396821",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroup.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-31T20:46:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4da9de5_837cee5a",
+      "range": {
+        "startLine": 398,
+        "startChar": 11,
+        "endLine": 398,
+        "endChar": 15
+      },
+      "revId": "051dde65cf8d458ef9d634d710a72905199e1ed8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

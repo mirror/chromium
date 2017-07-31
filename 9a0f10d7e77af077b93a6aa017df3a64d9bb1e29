@@ -22,6 +22,30 @@
       "revId": "9a0f10d7e77af077b93a6aa017df3a64d9bb1e29",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b921f61e_21c9ee83",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/Tile.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-31T20:46:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7fe652c_c713f2ae",
+      "range": {
+        "startLine": 61,
+        "startChar": 30,
+        "endLine": 61,
+        "endChar": 38
+      },
+      "revId": "9a0f10d7e77af077b93a6aa017df3a64d9bb1e29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
