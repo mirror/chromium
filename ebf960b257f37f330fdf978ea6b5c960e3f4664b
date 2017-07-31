@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ce76fb1_63d365cb",
+        "filename": "ui/accessibility/ax_enums.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-07-31T16:10:49Z",
+      "side": 0,
+      "message": "FYI, this action is actually useful for other renderes e.g. ARC++. I\u0027ll probably end up adding it back.",
+      "revId": "ebf960b257f37f330fdf978ea6b5c960e3f4664b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
