@@ -34,6 +34,24 @@
       "revId": "b1635af028b0e77be9dae44d0eb44464e3c9d56e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55a26a49_ae78f6b7",
+        "filename": "chrome/common/mac/cfbundle_blocker_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1139794
+      },
+      "writtenOn": "2017-07-31T06:02:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e14ffd68_4106a44f",
+      "revId": "b1635af028b0e77be9dae44d0eb44464e3c9d56e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

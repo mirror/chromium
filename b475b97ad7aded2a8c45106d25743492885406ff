@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "95b560e7_2aa985b1",
+        "filename": "chrome/common/mac/cfbundle_blocker_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1139794
+      },
+      "writtenOn": "2017-07-31T06:02:06Z",
+      "side": 1,
+      "message": "Correct and good point. Fixed in the latest patch.",
+      "parentUuid": "19ff9a2d_967df495",
+      "revId": "b475b97ad7aded2a8c45106d25743492885406ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd7cd655_b8758670",
         "filename": "chrome/common/mac/cfbundle_blocker_unittest.mm",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "b475b97ad7aded2a8c45106d25743492885406ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fad663f_c74f80eb",
+        "filename": "chrome/common/mac/cfbundle_blocker_unittest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1139794
+      },
+      "writtenOn": "2017-07-31T06:02:06Z",
+      "side": 1,
+      "message": "Indeed, but I thought that in Chromium we put the expected/constant value first and this is why I implemented it this way. Fixed in the latest patch.",
+      "parentUuid": "fd7cd655_b8758670",
+      "revId": "b475b97ad7aded2a8c45106d25743492885406ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -112,6 +148,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "4888f9cd_9058ff52",
+      "revId": "b475b97ad7aded2a8c45106d25743492885406ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8bb75117_b5ce9887",
+        "filename": "third_party/mach_override/README.chromium",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1139794
+      },
+      "writtenOn": "2017-07-31T06:02:06Z",
+      "side": 1,
+      "message": "Resolving?",
+      "parentUuid": "cbe52045_9a78de77",
+      "range": {
+        "startLine": 20,
+        "startChar": 46,
+        "endLine": 20,
+        "endChar": 86
+      },
       "revId": "b475b97ad7aded2a8c45106d25743492885406ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -204,6 +264,24 @@
       "revId": "b475b97ad7aded2a8c45106d25743492885406ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc47e34b_76ae46c3",
+        "filename": "third_party/mach_override/chromium.patch",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1139794
+      },
+      "writtenOn": "2017-07-31T06:02:06Z",
+      "side": 1,
+      "message": "Sure, I use atomic operations now, including in retrieval.",
+      "parentUuid": "5e14dcf1_500f827c",
+      "revId": "b475b97ad7aded2a8c45106d25743492885406ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
