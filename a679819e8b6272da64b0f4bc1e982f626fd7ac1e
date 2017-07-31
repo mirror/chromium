@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "a8e0a3ca_b6cf99f9",
+        "filename": "content/network/cookie_service_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-31T16:23:09Z",
+      "side": 1,
+      "message": "nit:  net::CookieStore* const?  (Indicating the pointer won\u0027t change)",
+      "range": {
+        "startLine": 85,
+        "startChar": 34,
+        "endLine": 85,
+        "endChar": 0
+      },
+      "revId": "a679819e8b6272da64b0f4bc1e982f626fd7ac1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a15b0c6_a7aece42",
+        "filename": "content/network/cookie_service_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-31T16:23:09Z",
+      "side": 1,
+      "message": "include vector, memory",
+      "range": {
+        "startLine": 88,
+        "startChar": 6,
+        "endLine": 88,
+        "endChar": 31
+      },
+      "revId": "a679819e8b6272da64b0f4bc1e982f626fd7ac1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac16b362_1971052a",
+        "filename": "content/network/cookie_service_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-31T16:23:09Z",
+      "side": 1,
+      "message": "macros.h",
+      "range": {
+        "startLine": 90,
+        "startChar": 2,
+        "endLine": 90,
+        "endChar": 26
+      },
+      "revId": "a679819e8b6272da64b0f4bc1e982f626fd7ac1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eaf10ee3_ccf8c97e",
         "filename": "content/public/common/cookie.mojom",
         "patchSetId": 4
@@ -19,6 +88,23 @@
         "endLine": 18,
         "endChar": 52
       },
+      "revId": "a679819e8b6272da64b0f4bc1e982f626fd7ac1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96aae00e_66624926",
+        "filename": "content/public/common/cookie.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-07-31T16:23:09Z",
+      "side": 1,
+      "message": "If the goal is to default to the most secure settings, should this be true, too?",
       "revId": "a679819e8b6272da64b0f4bc1e982f626fd7ac1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
