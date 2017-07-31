@@ -517,4 +517,10 @@ TEST_F(TaskGroupTest, NetworkBytesTransferredAsGroupThenNone) {
             task_group_.cumulative_per_process_network_usage());
 }
 
+// Test the task can't be killed with a PID of base::kNullProcessId
+TEST_F(TaskGroupTest, TaskWithPidZero) {
+  FakeTask fake_task(base::kNullProcessId, Task::RENDERER);
+  EXPECT_FALSE(fake_task.IsKillable());
+}
+
 }  // namespace task_manager
