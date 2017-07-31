@@ -318,7 +318,7 @@ void PolicyApplicator::ApplyRemainingPolicies() {
        it != remaining_policies_.end(); ++it) {
     const base::DictionaryValue* network_policy = GetByGUID(all_policies_, *it);
     DCHECK(network_policy);
-
+    
     VLOG(1) << "Creating new configuration managed by policy " << *it
             << " in profile " << profile_.ToDebugString() << ".";
 
