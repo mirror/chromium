@@ -2076,8 +2076,6 @@ libsysinfo_la_LIBADD = $(NANOSLEEP_LIBS) $(am__append_9)
 @MINGW_TRUE@                        src/windows/preamble_patcher.cc \
 @MINGW_TRUE@                        src/windows/preamble_patcher_with_stub.cc
 
-# patch_functions.cc uses Psapi.lib.  MSVC has a #pragma for that, but not us.
-@MINGW_TRUE@libwindows_la_LIBADD = -lPsapi
 # spinlock is the only code that uses atomicops.
 @MINGW_FALSE@SPINLOCK_INCLUDES = src/base/spinlock.h \
 @MINGW_FALSE@                    src/base/spinlock_internal.h \
