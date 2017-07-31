@@ -22,6 +22,30 @@
       "revId": "2dbd82b1d99d29ce7c7a785df4fddcf878dd6621",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "034251cd_ed7db98c",
+        "filename": "components/safe_browsing/browser/threat_details.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-07-31T14:56:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c689b0dc_9856fe7f",
+      "range": {
+        "startLine": 313,
+        "startChar": 15,
+        "endLine": 313,
+        "endChar": 28
+      },
+      "revId": "2dbd82b1d99d29ce7c7a785df4fddcf878dd6621",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
