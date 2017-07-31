@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6139fc30_20122262",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-07-31T11:07:49Z",
+      "side": 1,
+      "message": "In the call site of this function, gl is sometimes produced by ContextGL() which does some additional check. If we remove this, then we will lost those check here, I am not sure whether that\u0027s safe or not.",
+      "parentUuid": "3459824c_67916719",
+      "range": {
+        "startLine": 106,
+        "startChar": 4,
+        "endLine": 106,
+        "endChar": 34
+      },
+      "revId": "fe41956cf9d172f0b5262c91c7abd8e36f4f7dc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8573efdb_be3cd0a1",
         "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
         "patchSetId": 19
@@ -45,6 +69,30 @@
       "revId": "fe41956cf9d172f0b5262c91c7abd8e36f4f7dc2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d989846_fbb1585e",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-07-31T11:07:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8573efdb_be3cd0a1",
+      "range": {
+        "startLine": 421,
+        "startChar": 30,
+        "endLine": 421,
+        "endChar": 34
+      },
+      "revId": "fe41956cf9d172f0b5262c91c7abd8e36f4f7dc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "290d058f_8e9792fa",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 1049,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-07-31T11:07:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80e5fc63_2aa43c6d",
+      "range": {
+        "startLine": 1049,
+        "startChar": 6,
+        "endLine": 1049,
+        "endChar": 23
+      },
+      "revId": "fe41956cf9d172f0b5262c91c7abd8e36f4f7dc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "185b49b2_af4857d4",
         "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.h",
         "patchSetId": 19
@@ -91,6 +163,30 @@
       "revId": "fe41956cf9d172f0b5262c91c7abd8e36f4f7dc2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1219e87b_63566dc8",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-07-31T11:07:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "185b49b2_af4857d4",
+      "range": {
+        "startLine": 192,
+        "startChar": 14,
+        "endLine": 192,
+        "endChar": 40
+      },
+      "revId": "fe41956cf9d172f0b5262c91c7abd8e36f4f7dc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

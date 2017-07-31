@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f0dec11_691a3df1",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 1000,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-07-31T11:07:49Z",
+      "side": 1,
+      "message": "junov@: please let me know your thoughts on this function. In PS#21, this function was written as:\nif (weak_ptr) {\n   // do things\n} else {\n   // do things that may have duplicate code path compare to the above\n}\n\nI integrate most of the duplicated code path and the logic now may not be so obvious.",
+      "range": {
+        "startLine": 1000,
+        "startChar": 0,
+        "endLine": 1000,
+        "endChar": 48
+      },
+      "revId": "ab23dbfcdf12697cc9f0008d7d6c67a45b9474c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
