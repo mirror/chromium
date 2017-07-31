@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dfb17d2e_7a4d6c14",
+        "filename": "ios/chrome/today_extension/today_metrics_logger.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-07-31T14:45:56Z",
+      "side": 0,
+      "message": "You need to keep the MessageLoop here as it is used by the SequencedWorkerPool.",
+      "range": {
+        "startLine": 58,
+        "startChar": 20,
+        "endLine": 58,
+        "endChar": 33
+      },
+      "revId": "6155ab855eedf4bec6c40774ac2e92ecec976bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8423aa8f_4e579ec5",
+        "filename": "ios/chrome/today_extension/today_metrics_logger.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-07-31T14:45:56Z",
+      "side": 0,
+      "message": "You will need to update this method.",
+      "range": {
+        "startLine": 87,
+        "startChar": 18,
+        "endLine": 87,
+        "endChar": 29
+      },
+      "revId": "6155ab855eedf4bec6c40774ac2e92ecec976bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd06e6c5_814d6409",
+        "filename": "ios/chrome/today_extension/today_metrics_logger.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-07-31T14:45:56Z",
+      "side": 0,
+      "message": "Remove PrefService?",
+      "revId": "6155ab855eedf4bec6c40774ac2e92ecec976bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
