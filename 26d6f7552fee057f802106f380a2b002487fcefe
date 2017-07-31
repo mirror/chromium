@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "506576aa_9cbf2dbc",
+        "filename": "content/renderer/dom_serializer_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-07-31T03:40:52Z",
+      "side": 1,
+      "message": "Thanks -- I didn\u0027t realize that would work. I figured once I had to capture \u0027this\u0027 explicitly in the lambda, that I\u0027d need to reference it explicitly as well. Moot since switching to WebVector, but thanks for the pointer :)",
+      "parentUuid": "df1b3a06_8ed9fbff",
+      "revId": "26d6f7552fee057f802106f380a2b002487fcefe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fede4fc2_ec64d3a2",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 3
@@ -94,6 +112,24 @@
       "side": 1,
       "message": "\u003e Is there any drawback to using WebVector here also?\n\nOr better yet, this seems to mostly sink into a std::string -- why not pass a std::string directly?",
       "parentUuid": "b91ac143_d00f021e",
+      "revId": "26d6f7552fee057f802106f380a2b002487fcefe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7a3b0ea_70669c39",
+        "filename": "third_party/WebKit/Source/core/frame/WebFrameSerializerImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-07-31T03:40:52Z",
+      "side": 1,
+      "message": "As far as I know, std::string is not allowed here -- in blink generally, but especially not in the platform/Web* layer. WebString is the closest, but I was avoiding it since it means declaring an encoding, which I don\u0027t think is appropriate (WebString handles some encodings, but there are a couple that WTF::TextEncoding can deal with that WebString can\u0027t. We really need raw bytes.)\n\nHowever, for this task, you\u0027re right, it does all go to strings at each end, so perhaps  WebVector\u003cchar\u003e would be best.",
+      "parentUuid": "d1c25101_a74cf07e",
       "revId": "26d6f7552fee057f802106f380a2b002487fcefe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
