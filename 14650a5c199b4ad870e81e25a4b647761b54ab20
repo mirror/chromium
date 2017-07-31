@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1bc6eb67_db8a95f6",
+        "filename": "ios/chrome/browser/ntp_snippets/ios_chrome_content_suggestions_service_factory_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-31T08:04:25Z",
+      "side": 1,
+      "message": "No. It seems that the return type of a function is covariant only for raw pointers.",
+      "parentUuid": "733cc84f_856317e4",
+      "range": {
+        "startLine": 104,
+        "startChar": 16,
+        "endLine": 104,
+        "endChar": 28
+      },
+      "revId": "14650a5c199b4ad870e81e25a4b647761b54ab20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0fb8df71_972266da",
         "filename": "ios/chrome/browser/ntp_snippets/ios_chrome_content_suggestions_service_factory_util.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "14650a5c199b4ad870e81e25a4b647761b54ab20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17a7b41a_66c33930",
+        "filename": "ios/chrome/browser/ntp_snippets/ios_chrome_content_suggestions_service_factory_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-31T08:04:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0fb8df71_972266da",
+      "range": {
+        "startLine": 114,
+        "startChar": 2,
+        "endLine": 114,
+        "endChar": 52
+      },
+      "revId": "14650a5c199b4ad870e81e25a4b647761b54ab20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "20a12ab6_9a0ebcda",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-31T08:04:25Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "499c206e_2e517037",
+      "range": {
+        "startLine": 32,
+        "startChar": 70,
+        "endLine": 32,
+        "endChar": 73
+      },
+      "revId": "14650a5c199b4ad870e81e25a4b647761b54ab20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ada86bb_99cc82c7",
         "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_egtest.mm",
         "patchSetId": 2
@@ -85,6 +157,24 @@
       "revId": "14650a5c199b4ad870e81e25a4b647761b54ab20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d7344d7_f2d3a543",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-31T08:04:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ada86bb_99cc82c7",
+      "revId": "14650a5c199b4ad870e81e25a4b647761b54ab20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "9a8f3adf_027c7c39",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-31T08:04:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53c2854c_1f16c5d0",
+      "revId": "14650a5c199b4ad870e81e25a4b647761b54ab20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26bd46e1_719c040f",
         "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_egtest.mm",
         "patchSetId": 2
@@ -122,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "4ad0504b_3f4794dd",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-31T08:04:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26bd46e1_719c040f",
+      "revId": "14650a5c199b4ad870e81e25a4b647761b54ab20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10b69f66_2378bf73",
         "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_egtest.mm",
         "patchSetId": 2
@@ -133,6 +259,24 @@
       "writtenOn": "2017-07-28T16:15:00Z",
       "side": 1,
       "message": "Why does this need to be in the per test setUp?\n\nDo we need to clean it up in tearDown?",
+      "revId": "14650a5c199b4ad870e81e25a4b647761b54ab20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6b4a4d4_c6001ad3",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-31T08:04:25Z",
+      "side": 1,
+      "message": "The scopedCommandLine restores the commandLine to its initial value in its dealloc, so no cleanup is needed.\nIt is in test setUp in order to have it setup before the opening of the NTP in [super setUp]. The correct place to have it would be in the init of the testCase but it felt wrong. Should I move it in init?",
+      "parentUuid": "10b69f66_2378bf73",
       "revId": "14650a5c199b4ad870e81e25a4b647761b54ab20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -156,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "55d15fe0_44d32730",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-31T08:04:25Z",
+      "side": 1,
+      "message": "No. It is opening a NTP and I want it to be opened with ContentSuggestions enabled. I have added a comment.",
+      "parentUuid": "459a1e17_4fc3bc49",
+      "revId": "14650a5c199b4ad870e81e25a4b647761b54ab20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38cea196_94a77a0c",
         "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_egtest.mm",
         "patchSetId": 2
@@ -170,6 +332,24 @@
       "revId": "14650a5c199b4ad870e81e25a4b647761b54ab20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "866b943a_b49e4f23",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-31T08:04:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38cea196_94a77a0c",
+      "revId": "14650a5c199b4ad870e81e25a4b647761b54ab20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -190,6 +370,24 @@
     },
     {
       "key": {
+        "uuid": "de9e68bc_6c8e46d3",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-31T08:04:25Z",
+      "side": 1,
+      "message": "Yes. This CL is mainly for the factory. The tests are just here to show how I plan to use it.\nI plan to add a lot more tests in it.",
+      "parentUuid": "f2fae3b6_bd5ca445",
+      "revId": "14650a5c199b4ad870e81e25a4b647761b54ab20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56979ffb_28cb246e",
         "filename": "ios/chrome/test/earl_grey/BUILD.gn",
         "patchSetId": 2
@@ -201,6 +399,24 @@
       "writtenOn": "2017-07-28T16:15:00Z",
       "side": 1,
       "message": "I think this is fine. What is the reason you would consider having it in a separate target?",
+      "revId": "14650a5c199b4ad870e81e25a4b647761b54ab20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20c208ba_1a96375b",
+        "filename": "ios/chrome/test/earl_grey/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-07-31T08:04:25Z",
+      "side": 1,
+      "message": "The main reason is the fact that I am changing the factory for the ContentSuggestionsService. It also seems that some recent additions (password, reading list...) have their own target.\nAlso I am planning to add more than 10 tests and ios_chrome_ui_egtests is already big.",
+      "parentUuid": "56979ffb_28cb246e",
       "revId": "14650a5c199b4ad870e81e25a4b647761b54ab20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
