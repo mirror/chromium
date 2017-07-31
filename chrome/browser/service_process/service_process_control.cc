@@ -193,7 +193,7 @@ void ServiceProcessControl::Launch(const base::Closure& success_task,
   std::unique_ptr<base::CommandLine> cmd_line(
       CreateServiceProcessCommandLine());
   // And then start the process asynchronously.
-  launcher_ = new Launcher(std::move(cmd_line));
+  launcher_ = base::MakeRefCounted<Launcher>(std::move(cmd_line));
   launcher_->Run(base::Bind(&ServiceProcessControl::OnProcessLaunched,
                             base::Unretained(this)));
 }
@@ -402,8 +402,10 @@ ServiceProcessControl::Launcher::Launcher(
 void ServiceProcessControl::Launcher::Run(const base::Closure& task) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   notify_task_ = task;
-  BrowserThread::PostTask(BrowserThread::PROCESS_LAUNCHER, FROM_HERE,
-                          base::Bind(&Launcher::DoRun, this));
+  base::PostTaskWithTraits(FROM_HERE,
+                           {base::MayBlock(), base::TaskPriority::USER_VISIBLE,
+                            base::TaskShutdownBehavior::BLOCK_SHUTDOWN},
+                           base::BindOnce(&Launcher::DoRun, this));
 }
 
 ServiceProcessControl::Launcher::~Launcher() {
