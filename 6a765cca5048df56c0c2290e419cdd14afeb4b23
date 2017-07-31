@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5d757a9f_c3e301c6",
+        "filename": "extensions/browser/api/runtime/restart_after_delay_api_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-31T20:31:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98696975_1b28f087",
+      "revId": "6a765cca5048df56c0c2290e419cdd14afeb4b23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "772ab8d1_91127524",
         "filename": "extensions/browser/api/runtime/restart_after_delay_api_unittest.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "6a765cca5048df56c0c2290e419cdd14afeb4b23",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b924d080_fa25c2b9",
+        "filename": "extensions/browser/api/runtime/restart_after_delay_api_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-31T20:31:26Z",
+      "side": 1,
+      "message": "only if we static_cast it back. Still, that\u0027s probably safer than maintaining our own pointer -- done.",
+      "parentUuid": "772ab8d1_91127524",
+      "revId": "6a765cca5048df56c0c2290e419cdd14afeb4b23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "71066b33_68b83e8f",
+        "filename": "extensions/browser/test_extensions_browser_client.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-31T20:31:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b8a8619_35ab573a",
+      "range": {
+        "startLine": 55,
+        "startChar": 13,
+        "endLine": 55,
+        "endChar": 21
+      },
+      "revId": "6a765cca5048df56c0c2290e419cdd14afeb4b23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96054b38_777c30c6",
         "filename": "extensions/shell/test/shell_test_base_aura.cc",
         "patchSetId": 5
@@ -70,6 +130,24 @@
       "writtenOn": "2017-07-31T07:33:55Z",
       "side": 1,
       "message": "helper_.reset() ?\n\nAlternatively, you may just create as instance variable (instead of unique_ptr). Up to you.",
+      "revId": "6a765cca5048df56c0c2290e419cdd14afeb4b23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cd41d86_8df35be9",
+        "filename": "extensions/shell/test/shell_test_base_aura.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-31T20:31:26Z",
+      "side": 1,
+      "message": "\u003e helper_.reset() ?\n\nI think that\u0027s unnecessary.\n\n\u003e \n\u003e Alternatively, you may just create as instance variable (instead of unique_ptr). Up to you.\n\nI don\u0027t like that too much. The original AuraTestHelper has logic in its constructor, so it matters when it\u0027s created vs. when SetUp() is called. Our new ShellTestHelperAura doesn\u0027t have constructor logic, but it could someday.",
+      "parentUuid": "96054b38_777c30c6",
       "revId": "6a765cca5048df56c0c2290e419cdd14afeb4b23",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
