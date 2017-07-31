@@ -27,6 +27,12 @@ class WebContentsCoordinationUnitImpl : public CoordinationUnitImpl {
  private:
   double CalculateCPUUsage();
 
+  // Returns 0.0 as an invalid value.
+  double CalculateExpectedTaskQueueingDuration();
+
+  // Returns the main frame CU or nullptr if this tab has no main frame.
+  FrameCoordinationUnitImpl* GetMainFrameCoordinationUnit();
+
   DISALLOW_COPY_AND_ASSIGN(WebContentsCoordinationUnitImpl);
 };
 
