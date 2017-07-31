@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cf537869_4e33b271",
+        "filename": "cc/base/synced_property.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-31T19:46:34Z",
+      "side": 1,
+      "message": "Good idea. I changed it to PushMainToPending (matches PushPendingToActive). How does this sound?\n\nPushFromMainThreadToPending felt a bit too verbose.",
+      "parentUuid": "eb386857_159a5145",
+      "revId": "da95fd41ba70a8e7d61a84650ef78b8be259ee12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b137ee88_5c7bbaab",
         "filename": "cc/base/synced_property.h",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-31T00:23:54Z",
       "side": 1,
       "message": "Current(false)\n\u003d\u003d pending_base_.Combine(PendingDelta())\n\u003d\u003d pending_base_ + (!clobber_active_value_ ? (active_delta_.InverseCombine(reflected_delta_in_pending_tree_)))\n\u003d\u003d pending_base_ + (!clobber_active_value_ ? active_delta_ - reflected_delta_in_pending_tree_)\n\nIs this really saying:\nif (clobber_active_value_)\n  return false;\nreturn active_delta_ - reflected_delta_in_pending_tree_ \u003d\u003d Identity();\nIf so, is that correct?",
+      "revId": "da95fd41ba70a8e7d61a84650ef78b8be259ee12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1367be7_13de29b2",
+        "filename": "cc/base/synced_property.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-31T19:46:34Z",
+      "side": 1,
+      "message": "\u003e Current(false)\n\u003e \u003d\u003d pending_base_.Combine(PendingDelta())\n\u003e \u003d\u003d pending_base_ + (!clobber_active_value_ ? (active_delta_.InverseCombine(reflected_delta_in_pending_tree_)))\n\u003e \u003d\u003d pending_base_ + (!clobber_active_value_ ? active_delta_ - reflected_delta_in_pending_tree_)\n\u003e \n\u003e Is this really saying:\n\u003e if (clobber_active_value_)\n\u003e   return false;\n\u003e return active_delta_ - reflected_delta_in_pending_tree_ \u003d\u003d Identity();\n\u003e If so, is that correct?\n\nYup. So the active_delta_ is made up of 3 components:\n\n1) The unsent delta on the impl thread. Delta accumulated but not yet sent to the main thread.\n2) The delta in flight to the main thread (reflected_delta_in_main_tree_).\n3) The delta sent to the main thread and reflected back in this pending tree update (reflected_delta_in_pending_tree_).\n\nWe will keep applying any delta that has not been synchronized with the main thread to the pending or the active tree. For the pending tree that would be the unsent delta + delta in flight (relfected_delta_in_main_tree_). So this is saying that if that delta is not identity, the value on the pending tree is inconsistent with the value received from the main thread. Expect if the main thread has decided to clobber any accumulated delta on the impl thread.",
+      "parentUuid": "b137ee88_5c7bbaab",
       "revId": "da95fd41ba70a8e7d61a84650ef78b8be259ee12",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "50ea26bc_4cf77d72",
+        "filename": "cc/base/synced_property.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-31T19:46:34Z",
+      "side": 1,
+      "message": "The PushFromMainThread and PushPendingToActive happen at different stages of the pipeline. PushFromMainThread will happen during the commit. PushPendingToActive will happen during activation.\n\nIts only if we are committing directly to the active tree (i.e. single threaded mode) that these 2 calls happen as a part of the commit, for code consistency.",
+      "parentUuid": "61b6f7e9_4e7b18dd",
+      "revId": "da95fd41ba70a8e7d61a84650ef78b8be259ee12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "08b48e91_552d1372",
         "filename": "cc/base/synced_property.h",
         "patchSetId": 2
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "64c32255_ee159f8b",
+        "filename": "cc/base/synced_property.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-31T19:46:34Z",
+      "side": 1,
+      "message": "I have a slight preference for keeping it this way since it makes it immediately obvious what the intent is here.",
+      "parentUuid": "08b48e91_552d1372",
+      "revId": "da95fd41ba70a8e7d61a84650ef78b8be259ee12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6a8f13c3_d6628ccc",
         "filename": "cc/trees/property_tree.cc",
         "patchSetId": 2
@@ -81,6 +153,24 @@
       "writtenOn": "2017-07-31T00:23:54Z",
       "side": 1,
       "message": "Do we build property trees on the impl thread outside of tests?",
+      "revId": "da95fd41ba70a8e7d61a84650ef78b8be259ee12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76152bac_38ba53b5",
+        "filename": "cc/trees/property_tree.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1470,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-31T19:46:34Z",
+      "side": 1,
+      "message": "No, this should only be tests.",
+      "parentUuid": "6a8f13c3_d6628ccc",
       "revId": "da95fd41ba70a8e7d61a84650ef78b8be259ee12",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
