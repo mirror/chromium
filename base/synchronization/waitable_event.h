@@ -13,11 +13,15 @@
 
 #if defined(OS_WIN)
 #include "base/win/scoped_handle.h"
-#endif
+#elif defined(OS_MACOSX)
+#include <mach/mach.h>
 
-#if defined(OS_POSIX)
+#include "base/mac/scoped_mach_port.h"
+#include "base/memory/ref_counted.h"
+#elif defined(OS_POSIX)
 #include <list>
 #include <utility>
+
 #include "base/memory/ref_counted.h"
 #include "base/synchronization/lock.h"
 #endif
@@ -154,6 +158,44 @@ class BASE_EXPORT WaitableEvent {
 
 #if defined(OS_WIN)
   win::ScopedHandle handle_;
+#elif defined(OS_MACOSX)
+  // Peeks the message queue named by |port| and returns true if a message
+  // is present and false if not. If |dequeue| is true, the messsage will be
+  // drained from the queue. If |dequeue| is false, the queue will only be
+  // peeked.
+  static bool PeekPort(mach_port_t port, bool dequeue);
+
+  // The Mach receive right is waited on by both WaitableEvent and
+  // WaitableEventWatcher. It is valid to signal and then delete an event, and
+  // an watcher should still be notified. If the right were to be destroyed
+  // immediately, the watcher would not recveive the signal. Because Mach
+  // receive rights cannot have a user refcount greater than one, the right
+  // must be reference-counted manually.
+  class ReceiveRight : public RefCountedThreadSafe<ReceiveRight> {
+   public:
+    explicit ReceiveRight(mach_port_t name);
+
+    mach_port_t Name() const { return right_.get(); };
+
+   private:
+    friend class RefCountedThreadSafe<ReceiveRight>;
+    ~ReceiveRight();
+
+    mac::ScopedMachReceiveRight right_;
+
+    DISALLOW_COPY_AND_ASSIGN(ReceiveRight);
+  };
+
+  // Whether the event's ResetPolicy is AUTOMATIC.
+  const bool auto_reset_;
+
+  // The receive right for the event.
+  scoped_refptr<ReceiveRight> receive_right_;
+
+  // The send right used to signal the event. This can be disposed of with
+  // the event, unlike the receive right, since a deleted event cannot be
+  // signaled.
+  mac::ScopedMachSendRight send_right_;
 #else
   // On Windows, you must not close a HANDLE which is currently being waited on.
   // The MSDN documentation says that the resulting behaviour is 'undefined'.
