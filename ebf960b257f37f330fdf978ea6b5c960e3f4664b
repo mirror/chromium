@@ -16,6 +16,24 @@
       "revId": "ebf960b257f37f330fdf978ea6b5c960e3f4664b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc200e28_4eb8c19e",
+        "filename": "ui/accessibility/ax_enums.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-31T16:56:38Z",
+      "side": 0,
+      "message": "Yes, that\u0027s fine, but we need to document exactly what it does.\nIn practice all this action was doing was loading inline text\nboxes, so if we want to start keeping track of accessibility\nfocus we should have a separate action for that and not\nconflate them.",
+      "parentUuid": "0ce76fb1_63d365cb",
+      "revId": "ebf960b257f37f330fdf978ea6b5c960e3f4664b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
