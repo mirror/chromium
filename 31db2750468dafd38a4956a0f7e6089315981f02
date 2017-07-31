@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "827884c8_41ac4ec5",
+        "filename": "services/device/serial/serial_device_enumerator_impl_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-07-31T13:39:45Z",
+      "side": 1,
+      "message": "Let\u0027s put this comment above line 40.",
+      "revId": "31db2750468dafd38a4956a0f7e6089315981f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
