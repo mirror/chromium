@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6f9d83ef_9ad4a7ce",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-allow-access-control-origin-header.htm",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-07-31T08:23:07Z",
+      "side": 1,
+      "message": "Understood! I\u0027ll avoid using them in future situations like this. Thanks for the tip! Let me know if it looks all right now!",
+      "parentUuid": "bf521b70_280718bd",
+      "range": {
+        "startLine": 16,
+        "startChar": 8,
+        "endLine": 16,
+        "endChar": 13
+      },
+      "revId": "02bd5c385b40db8aa05a1e0dab5364f0747957f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b86cf99_64e01de3",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-allow-access-control-origin-header.htm",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "02bd5c385b40db8aa05a1e0dab5364f0747957f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d10ea289_402b5755",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-allow-access-control-origin-header.htm",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-07-31T08:23:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b86cf99_64e01de3",
+      "range": {
+        "startLine": 23,
+        "startChar": 14,
+        "endLine": 23,
+        "endChar": 15
+      },
+      "revId": "02bd5c385b40db8aa05a1e0dab5364f0747957f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
