@@ -332,7 +332,7 @@ void SchedulerWorkerPoolImpl::GetHistograms(
 // TODO(jeffreyhe): Add and return an |initial_worker_capacity_| member when
 // worker capacity becomes dynamic.
 int SchedulerWorkerPoolImpl::GetMaxConcurrentTasksDeprecated() const {
-  DCHECK(worker_capacity_ > 0);
+  DCHECK_GT(worker_capacity_, 0);
   return worker_capacity_;
 }
 
