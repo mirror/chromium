@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b8a8619_35ab573a",
+        "filename": "extensions/browser/test_extensions_browser_client.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-07-31T03:22:16Z",
+      "side": 1,
+      "message": "Nit: add comment that main_context can\u0027t be incognito.",
+      "range": {
+        "startLine": 55,
+        "startChar": 13,
+        "endLine": 55,
+        "endChar": 21
+      },
+      "revId": "6a765cca5048df56c0c2290e419cdd14afeb4b23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
