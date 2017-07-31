@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b73bbd37_971c36f4",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/BidirectionalStreamTest.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-07-31T16:18:40Z",
+      "side": 1,
+      "message": "my bad, it was for debugging earlier",
+      "parentUuid": "25fd43d8_1f830f82",
+      "revId": "978274a9c51debc836bcabab9ccbd8d22010ad40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8000e61f_040ab699",
         "filename": "components/cronet/android/test/javatests/src/org/chromium/net/CronetTestCommon.java",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "978274a9c51debc836bcabab9ccbd8d22010ad40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af4bd808_750fd27e",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/CronetTestCommon.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-07-31T16:18:40Z",
+      "side": 1,
+      "message": "Ya, this happens, they are moved over through an lex/yacc based convert script.\nThey script does not parse java comments.\n\nRemoved these",
+      "parentUuid": "8000e61f_040ab699",
+      "revId": "978274a9c51debc836bcabab9ccbd8d22010ad40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "43df7f24_294f51bd",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/CronetTestCommon.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-07-31T16:18:40Z",
+      "side": 1,
+      "message": "Removed",
+      "parentUuid": "f1bd5eb3_09484d16",
+      "revId": "978274a9c51debc836bcabab9ccbd8d22010ad40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7c32b97e_242eafe8",
         "filename": "components/cronet/android/test/javatests/src/org/chromium/net/CronetTestRule.java",
         "patchSetId": 8
@@ -64,6 +118,24 @@
       "writtenOn": "2017-07-28T18:39:57Z",
       "side": 1,
       "message": "where did the comments for these methods go?",
+      "revId": "978274a9c51debc836bcabab9ccbd8d22010ad40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa38d22a_8168d78a",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/CronetTestRule.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-07-31T16:18:40Z",
+      "side": 1,
+      "message": "Same as earlier.\n\nAdded",
+      "parentUuid": "7c32b97e_242eafe8",
       "revId": "978274a9c51debc836bcabab9ccbd8d22010ad40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
