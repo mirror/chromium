@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a47ecc91_e9624e44",
+        "filename": "third_party/WebKit/Source/core/svg/SVGPathQuery.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1115594
+      },
+      "writtenOn": "2017-07-31T15:07:18Z",
+      "side": 0,
+      "message": "There\u0027s probably more that could be cleaned up/ripped out as a consequence of this removal (segment_index_ and related state.)",
+      "range": {
+        "startLine": 110,
+        "startChar": 23,
+        "endLine": 110,
+        "endChar": 46
+      },
+      "revId": "6c9555ea5307829e8536f6cd03d8f7ef98e59446",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
