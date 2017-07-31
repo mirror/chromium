@@ -22,6 +22,30 @@
       "revId": "e4b3c4e5daeee5e79c04b981ea8bcb4ac9582040",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1a5775f_6a56f29b",
+        "filename": "cc/trees/layer_tree_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1512,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-07-31T18:31:32Z",
+      "side": 1,
+      "message": "I\u0027m not sure I follow. LayerTreeHostImpl::RootScrollBegin is not on the callstack for scrolls driven by InputHandlerProxy::SynchronouslySetRootScrollOffset as far as I can see. The path is actually quite direct, if you look at the implementation of LayerTreeHostImpl::SetSynchronousInputHandlerRootScrollOffset (which is called directly from the InputHandlerProxy). That function immediately \u0027distributes\u0027 the root scroll, which directly sets scroll offsets on the outer/inner viewport.",
+      "parentUuid": "fbae6e78_70e520ca",
+      "range": {
+        "startLine": 1511,
+        "startChar": 1,
+        "endLine": 1512,
+        "endChar": 42
+      },
+      "revId": "e4b3c4e5daeee5e79c04b981ea8bcb4ac9582040",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
