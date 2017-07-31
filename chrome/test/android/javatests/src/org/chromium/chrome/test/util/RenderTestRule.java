@@ -38,11 +38,14 @@ import java.util.concurrent.Callable;
  * @RunWith(ChromeJUnit4ClassRunner.class)
  * @CommandLineFlags.Add({ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE})
  * public class MyTest {
+ *     // Provide RenderTestRule with the path from src/ to the golden directory.
  *     @Rule
  *     public RenderTestRule mRenderTestRule =
  *             new RenderTestRule("chrome/test/data/android/render_tests");
  *
  *     @Test
+ *     // The test must have the feature "RenderTest" for the bots to display renders.
+ *     @Feature({"RenderTest"})
  *     public void testViewAppearance() {
  *         // Setup the UI.
  *         ...
