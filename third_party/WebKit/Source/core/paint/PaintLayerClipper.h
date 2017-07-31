@@ -85,7 +85,6 @@ class ClipRectsContext {
                 : kRespectOverflowClip) {}
 
   void SetIgnoreOverflowClip() {
-    DCHECK(!UsesCache() || cache_slot_ == kPaintingClipRects);
     DCHECK(respect_overflow_clip == kRespectOverflowClip);
     if (UsesCache())
       cache_slot_ = kPaintingClipRectsIgnoringOverflowClip;
@@ -204,10 +203,6 @@ class CORE_EXPORT PaintLayerClipper {
                       ClipRect& background_rect,
                       ClipRect& foreground_rect,
                       const LayoutPoint* offset_from_root = 0) const;
-
-  ClipRects& PaintingClipRects(const PaintLayer* root_layer,
-                               ShouldRespectOverflowClipType,
-                               const LayoutSize& subpixel_accumulation) const;
 
  private:
   void ClearCache(ClipRectsCacheSlot);
