@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c24b952b_a6930060",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-31T09:50:22Z",
+      "side": 1,
+      "message": "nit: Could you remove a trailing whitespace?",
+      "revId": "bb18c20033199688ef4f6fc73dcd2b36f69c2191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4ffe640_4715949f",
+        "filename": "third_party/WebKit/Source/core/editing/FrameSelection.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-31T09:50:22Z",
+      "side": 1,
+      "message": "I think this function is just for \"quick\" fix of the issue.\nCould you add a comment to mention it with asking people to use it.",
+      "revId": "bb18c20033199688ef4f6fc73dcd2b36f69c2191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf6e068b_b60b201e",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObject.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2622,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-31T09:50:22Z",
+      "side": 1,
+      "message": "nit: s/FIXME/TODO(yoichio)/",
+      "revId": "bb18c20033199688ef4f6fc73dcd2b36f69c2191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d48a7d0_10515bf2",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObject.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2625,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-07-31T09:50:22Z",
+      "side": 1,
+      "message": "Can we use |SelectionState() \u003d\u003d SelectionState::kEnd || SelectionStart() \u003d\u003d kStartAndEnd || SetSeletionState() \u003d\u003d kStart|?",
+      "revId": "bb18c20033199688ef4f6fc73dcd2b36f69c2191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
