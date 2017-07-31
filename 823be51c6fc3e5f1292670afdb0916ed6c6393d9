@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cee5d455_803eb4b0",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 5
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-31T17:27:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ccb6ff67_3c18072b",
+      "revId": "823be51c6fc3e5f1292670afdb0916ed6c6393d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e63abc2b_ed5fcf43",
         "filename": "ui/webui/resources/chromeos/README.md",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "823be51c6fc3e5f1292670afdb0916ed6c6393d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca1ec776_299d1251",
+        "filename": "ui/webui/resources/chromeos/README.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-31T17:27:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e63abc2b_ed5fcf43",
+      "revId": "823be51c6fc3e5f1292670afdb0916ed6c6393d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1335eeb6_ad491097",
+        "filename": "ui/webui/resources/chromeos/bluetooth_dialog.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-31T17:27:19Z",
+      "side": 1,
+      "message": "Sadly no, this is what I mentioned in the standup. Elements served from webui_resources do not get i18n{} processed.",
+      "parentUuid": "6af188db_c40d55ce",
+      "revId": "823be51c6fc3e5f1292670afdb0916ed6c6393d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71e71fb0_c23e9351",
         "filename": "ui/webui/resources/chromeos/bluetooth_dialog.js",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "823be51c6fc3e5f1292670afdb0916ed6c6393d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6edd5ab4_7b48df2e",
+        "filename": "ui/webui/resources/chromeos/bluetooth_dialog.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-31T17:27:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71e71fb0_c23e9351",
+      "revId": "823be51c6fc3e5f1292670afdb0916ed6c6393d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "2271f684_4757865e",
+        "filename": "ui/webui/resources/chromeos/bluetooth_dialog.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-31T17:27:19Z",
+      "side": 1,
+      "message": "Removed, thanks.",
+      "parentUuid": "604554ed_78240306",
+      "range": {
+        "startLine": 168,
+        "startChar": 2,
+        "endLine": 168,
+        "endChar": 15
+      },
+      "revId": "823be51c6fc3e5f1292670afdb0916ed6c6393d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b4691951_87f73188",
         "filename": "ui/webui/resources/chromeos/bluetooth_dialog.js",
         "patchSetId": 5
@@ -104,6 +200,30 @@
       "writtenOn": "2017-07-29T01:01:18Z",
       "side": 1,
       "message": "Rebase error? dpapad@ changed {}.bind(this) functions to arrow functions.",
+      "range": {
+        "startLine": 386,
+        "startChar": 54,
+        "endLine": 386,
+        "endChar": 62
+      },
+      "revId": "823be51c6fc3e5f1292670afdb0916ed6c6393d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "999bb461_c87a5eeb",
+        "filename": "ui/webui/resources/chromeos/bluetooth_dialog.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-31T17:27:19Z",
+      "side": 1,
+      "message": "This generates a warning but on closer inspection it is just a warning. I went ahead and fixed this and the presubmit.",
+      "parentUuid": "b4691951_87f73188",
       "range": {
         "startLine": 386,
         "startChar": 54,
