@@ -22,6 +22,30 @@
       "revId": "e54aa82bfe677848d81b8df913180b5a2b598acd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c40d1c2_1f40dd0f",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 1098,
+      "author": {
+        "id": 1234114
+      },
+      "writtenOn": "2017-07-31T08:09:40Z",
+      "side": 1,
+      "message": "\u003e Please make the final testing. Add logging of |field-\u003eusername_vote_type()| to the console and test two user flow:\n\u003e 1. Credentials reuse.\n\u003e 2. Username override. \n\u003e \n\u003e Make sure you run chrome with flag \"--password-store\u003dbasic\"\n\u003e \n\u003e Does Chrome output correct username vote type?\n\nI tried on several sites and indeed, Chrome outputs the correct username vote type.",
+      "parentUuid": "cd75c07c_8151ebe2",
+      "range": {
+        "startLine": 1098,
+        "startChar": 8,
+        "endLine": 1098,
+        "endChar": 72
+      },
+      "revId": "e54aa82bfe677848d81b8df913180b5a2b598acd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
