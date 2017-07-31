@@ -1201,6 +1201,10 @@ GURL RenderFrameDevToolsAgentHost::GetFaviconURL() {
   return GURL();
 }
 
+bool RenderFrameDevToolsAgentHost::GetNetworkCapability() {
+  return IsChildFrame();
+}
+
 bool RenderFrameDevToolsAgentHost::Activate() {
   WebContentsImpl* wc = static_cast<WebContentsImpl*>(web_contents());
   if (wc) {

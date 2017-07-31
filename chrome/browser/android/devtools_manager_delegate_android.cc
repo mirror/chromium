@@ -84,6 +84,8 @@ class TabProxyDelegate : public content::DevToolsExternalAgentProxyDelegate,
     return agent_host_ ? agent_host_->GetFaviconURL() : GURL();
   }
 
+  bool GetNetworkCapability() override { return false; }
+
   std::string GetFrontendURL() override {
     return std::string();
   }

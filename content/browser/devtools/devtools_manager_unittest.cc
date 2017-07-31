@@ -250,6 +250,7 @@ class TestExternalAgentDelegate: public DevToolsExternalAgentProxyDelegate {
   std::string GetDescription() override { return std::string(); }
   GURL GetURL() override { return GURL(); }
   GURL GetFaviconURL() override { return GURL(); }
+  bool GetNetworkCapability() override { return false; }
   std::string GetFrontendURL() override { return std::string(); }
   bool Activate() override { return false; };
   void Reload() override { };

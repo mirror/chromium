@@ -135,6 +135,7 @@ class AgentHostDelegate
   GURL GetURL() override;
   GURL GetFaviconURL() override;
   std::string GetFrontendURL() override;
+  bool GetNetworkCapability() override;
   bool Activate() override;
   void Reload() override;
   bool Close() override;
@@ -161,6 +162,7 @@ class AgentHostDelegate
   std::string description_;
   GURL url_;
   GURL favicon_url_;
+  bool network_capability_;
   bool socket_opened_;
   std::vector<std::string> pending_messages_;
   std::unique_ptr<AndroidDeviceManager::AndroidWebSocket> web_socket_;
@@ -208,6 +210,14 @@ static std::string GetTargetPath(base::DictionaryValue* value) {
   return target_path;
 }
 
+static bool DetermineNetworkCapability(const std::string& type,
+                                       base::DictionaryValue* value) {
+  bool result = false;
+  if (value && value->GetBoolean("networkCapability", &result))
+    return result;
+  return type == "service_worker" || type == "iframe";
+}
+
 // static
 scoped_refptr<content::DevToolsAgentHost>
 AgentHostDelegate::GetOrCreateAgentHost(
@@ -245,15 +255,16 @@ AgentHostDelegate::AgentHostDelegate(
       remote_type_(type),
       remote_id_(value ? GetStringProperty(value, "id") : ""),
       frontend_url_(value ? GetFrontendURLFromValue(value) : ""),
-      title_(value ? base::UTF16ToUTF8(net::UnescapeForHTML(base::UTF8ToUTF16(
-          GetStringProperty(value, "title")))) : ""),
+      title_(value ? base::UTF16ToUTF8(net::UnescapeForHTML(
+                         base::UTF8ToUTF16(GetStringProperty(value, "title"))))
+                   : ""),
       description_(value ? GetStringProperty(value, "description") : ""),
       url_(GURL(value ? GetStringProperty(value, "url") : "")),
       favicon_url_(GURL(value ? GetStringProperty(value, "faviconUrl") : "")),
+      network_capability_(DetermineNetworkCapability(type, value)),
       socket_opened_(false),
       agent_host_(nullptr),
-      proxy_(nullptr) {
-}
+      proxy_(nullptr) {}
 
 AgentHostDelegate::~AgentHostDelegate() {
 }
@@ -296,6 +307,10 @@ GURL AgentHostDelegate::GetFaviconURL() {
 
 std::string AgentHostDelegate::GetFrontendURL() {
   return frontend_url_;
+}
+
+bool AgentHostDelegate::GetNetworkCapability() {
+  return network_capability_;
 }
 
 bool AgentHostDelegate::Activate() {

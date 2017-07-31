@@ -21,6 +21,7 @@ std::unique_ptr<Target::TargetInfo> CreateInfo(DevToolsAgentHost* host) {
       .SetUrl(host->GetURL().spec())
       .SetType(host->GetType())
       .SetAttached(host->IsAttached())
+      .SetNetworkCapability(host->GetNetworkCapability())
       .Build();
 }
 

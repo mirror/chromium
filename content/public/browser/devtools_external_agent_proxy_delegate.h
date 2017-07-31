@@ -42,6 +42,9 @@ class DevToolsExternalAgentProxyDelegate {
   // Returns the front-end url for this agent host.
   virtual std::string GetFrontendURL() = 0;
 
+  // Returns true if the agent host has a network capability.
+  virtual bool GetNetworkCapability() = 0;
+
   // Activates agent host.
   virtual bool Activate() = 0;
 

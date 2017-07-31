@@ -188,6 +188,9 @@ class CONTENT_EXPORT DevToolsAgentHost
   // Returns the frontend url for this host.
   virtual std::string GetFrontendURL() = 0;
 
+  // Returns true if the agent host has a network capability.
+  virtual bool GetNetworkCapability() = 0;
+
   // Activates agent host. Returns false if the operation failed.
   virtual bool Activate() = 0;
 
