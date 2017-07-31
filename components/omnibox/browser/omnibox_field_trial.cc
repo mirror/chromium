@@ -155,6 +155,11 @@ typedef HUPScoringParams::ScoreBuckets ScoreBuckets;
 // Field trial names.
 const char kStopTimerFieldTrialName[] = "OmniboxStopTimer";
 
+// Parameter name used by the experiment redirecting Zero Suggestion requests
+// to a service provided by the Chrome team.
+const char kZeroSuggestRedirectToChromeExperimentIdParam[] =
+    "ZeroSuggestRedirectToChromeExperimentID";
+
 void InitializeBucketsFromString(const std::string& bucket_string,
                                  ScoreBuckets* score_buckets) {
   // Clear the buckets.
@@ -315,6 +320,13 @@ bool OmniboxFieldTrial::InZeroSuggestPersonalizedFieldTrial() {
   return variations::GetVariationParamValue(
       kBundledExperimentFieldTrialName,
       kZeroSuggestVariantRule) == "Personalized";
+}
+
+// static
+int OmniboxFieldTrial::GetZeroSuggestRedirectToChromeExperimentId() {
+  return base::GetFieldTrialParamByFeatureAsInt(
+      omnibox::kZeroSuggestRedirectToChrome,
+      kZeroSuggestRedirectToChromeExperimentIdParam, /*default_value=*/-1);
 }
 
 bool OmniboxFieldTrial::ShortcutsScoringMaxRelevance(
@@ -713,25 +725,6 @@ int OmniboxFieldTrial::GetPhysicalWebAfterTypingBaseRelevance() {
   return 700;
 }
 
-// static
-bool OmniboxFieldTrial::InZeroSuggestRedirectToChromeFieldTrial() {
-  return base::FeatureList::IsEnabled(omnibox::kZeroSuggestRedirectToChrome);
-}
-
-// static
-std::string OmniboxFieldTrial::ZeroSuggestRedirectToChromeServerAddress() {
-  return base::GetFieldTrialParamValueByFeature(
-      omnibox::kZeroSuggestRedirectToChrome,
-      kZeroSuggestRedirectToChromeServerAddressParam);
-}
-
-// static
-std::string OmniboxFieldTrial::ZeroSuggestRedirectToChromeAdditionalFields() {
-  return base::GetFieldTrialParamValueByFeature(
-      omnibox::kZeroSuggestRedirectToChrome,
-      kZeroSuggestRedirectToChromeAdditionalFieldsParam);
-}
-
 const char OmniboxFieldTrial::kBundledExperimentFieldTrialName[] =
     "OmniboxBundledExperimentV1";
 const char OmniboxFieldTrial::kDisableProvidersRule[] = "DisableProviders";
@@ -814,12 +807,6 @@ const char OmniboxFieldTrial::kPhysicalWebZeroSuggestBaseRelevanceParam[] =
     "PhysicalWebZeroSuggestBaseRelevance";
 const char OmniboxFieldTrial::kPhysicalWebAfterTypingBaseRelevanceParam[] =
     "PhysicalWebAfterTypingBaseRelevanceParam";
-
-const char OmniboxFieldTrial::kZeroSuggestRedirectToChromeServerAddressParam[] =
-    "ZeroSuggestRedirectToChromeServerAddress";
-const char
-    OmniboxFieldTrial::kZeroSuggestRedirectToChromeAdditionalFieldsParam[] =
-        "ZeroSuggestRedirectToChromeAdditionalFields";
 
 const char OmniboxFieldTrial::kUIMaxAutocompleteMatchesParam[] =
     "UIMaxAutocompleteMatches";
