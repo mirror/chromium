@@ -139,6 +139,9 @@ void HighlighterView::OnRedraw(gfx::Canvas& canvas,
   flags.setStrokeWidth(kPenTipWidth);
   flags.setStrokeJoin(cc::PaintFlags::kRound_Join);
 
+  // Decrease the segment height by the outline stroke width,
+  // so that the vertical cross-section of the drawn segment
+  // is exactly kPenTipHeight.
   const int height = kPenTipHeight - kPenTipWidth;
 
   for (size_t i = 1; i < points_.size(); ++i) {
