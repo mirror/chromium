@@ -5,13 +5,17 @@
 #ifndef CHROME_BROWSER_SAFE_BROWSING_CHROME_CLEANER_CHROME_CLEANER_DIALOG_CONTROLLER_IMPL_WIN_H_
 #define CHROME_BROWSER_SAFE_BROWSING_CHROME_CLEANER_CHROME_CLEANER_DIALOG_CONTROLLER_IMPL_WIN_H_
 
+#include <memory>
 #include <set>
+#include <utility>
 
 #include "base/files/file_path.h"
 #include "base/macros.h"
 #include "base/time/time.h"
 #include "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_controller_win.h"
 #include "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_win.h"
+#include "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_prompt_delegate.h"
+#include "chrome/browser/ui/browser_list_observer.h"
 
 class Browser;
 
@@ -19,7 +23,8 @@ namespace safe_browsing {
 
 class ChromeCleanerDialogControllerImpl
     : public ChromeCleanerDialogController,
-      public ChromeCleanerController::Observer {
+      public ChromeCleanerController::Observer,
+      public chrome::BrowserListObserver {
  public:
   // An instance should only be created when |cleaner_controller| is in the
   // kScanning state.
@@ -43,6 +48,11 @@ class ChromeCleanerDialogControllerImpl
   void OnCleaning(const std::set<base::FilePath>& files_to_delete) override;
   void OnRebootRequired() override;
 
+  // chrome::BrowserListObserver overrides.
+  void OnBrowserSetLastActive(Browser* browser) override;
+
+  void SetPromptDelegateForTests(ChromeCleanerPromptDelegate* delegate);
+
  protected:
   ~ChromeCleanerDialogControllerImpl() override;
 
@@ -51,8 +61,10 @@ class ChromeCleanerDialogControllerImpl
 
   ChromeCleanerController* cleaner_controller_ = nullptr;
   bool dialog_shown_ = false;
+  bool prompt_pending_ = false;
   base::Time time_dialog_shown_;  // Used for reporting metrics.
   Browser* browser_ = nullptr;
+  std::unique_ptr<ChromeCleanerPromptDelegate> prompt_delegate_;
 
   DISALLOW_COPY_AND_ASSIGN(ChromeCleanerDialogControllerImpl);
 };
