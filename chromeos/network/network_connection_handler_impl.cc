@@ -321,6 +321,13 @@ void NetworkConnectionHandlerImpl::DisconnectNetwork(
   CallShillDisconnect(service_path, success_callback, error_callback);
 }
 
+void NetworkConnectionHandlerImpl::ConfigureNonInteractiveNetwork(
+    const std::string& service_path) {
+  NET_LOG_USER("ConfigureNonInteractiveNetwork", service_path);
+  for (auto& observer : observers_)
+    observer.ConfigureNonInteractiveNetwork(service_path);
+}
+
 bool NetworkConnectionHandlerImpl::HasConnectingNetwork(
     const std::string& service_path) {
   return pending_requests_.count(service_path) != 0;
