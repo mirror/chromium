@@ -148,7 +148,8 @@ void LayerImpl::SetScrollTreeIndex(int index) {
 void LayerImpl::PopulateSharedQuadState(SharedQuadState* state) const {
   state->SetAll(draw_properties_.target_space_transform, gfx::Rect(bounds()),
                 draw_properties_.visible_layer_rect, draw_properties_.clip_rect,
-                draw_properties_.is_clipped, draw_properties_.opacity,
+                draw_properties_.is_clipped,
+                contents_opaque() || IsLayerOpaque(), draw_properties_.opacity,
                 SkBlendMode::kSrcOver, GetSortingContextId());
 }
 
@@ -168,7 +169,8 @@ void LayerImpl::PopulateScaledSharedQuadState(
 
   state->SetAll(scaled_draw_transform, gfx::Rect(scaled_bounds),
                 scaled_visible_layer_rect, draw_properties().clip_rect,
-                draw_properties().is_clipped, draw_properties().opacity,
+                draw_properties().is_clipped,
+                contents_opaque() || IsLayerOpaque(), draw_properties().opacity,
                 SkBlendMode::kSrcOver, GetSortingContextId());
 }
 
@@ -710,8 +712,12 @@ gfx::ScrollOffset LayerImpl::CurrentScrollOffset() const {
   return GetScrollTree().current_scroll_offset(element_id());
 }
 
+bool LayerImpl::IsLayerOpaque() const {
+  return false;
+}
+
 SimpleEnclosedRegion LayerImpl::VisibleOpaqueRegion() const {
-  if (contents_opaque())
+  if (contents_opaque() || IsLayerOpaque())
     return SimpleEnclosedRegion(visible_layer_rect());
   return SimpleEnclosedRegion();
 }
