@@ -13,11 +13,12 @@
 #include "extensions/common/extension_resource.h"
 
 // This file defines an interface for reading a file asynchronously on a
-// background thread.
+// background sequence.
 // Consider abstracting out a FilePathProvider (ExtensionResource) and moving
 // back to chrome/browser/net if other subsystems want to use it.
 class FileReader : public base::RefCountedThreadSafe<FileReader> {
  public:
+  // TODO(devlin): Use base::OnceCallback here.
   // Reports success or failure and the data of the file upon success.
   using DoneCallback = base::Callback<void(bool, std::unique_ptr<std::string>)>;
   // Lets the caller accomplish tasks on the file data, after the file content
@@ -36,14 +37,16 @@ class FileReader : public base::RefCountedThreadSafe<FileReader> {
  private:
   friend class base::RefCountedThreadSafe<FileReader>;
 
-  virtual ~FileReader();
+  ~FileReader();
 
-  void ReadFileOnBackgroundThread();
+  void ReadFileOnFileSequence();
 
   extensions::ExtensionResource resource_;
   OptionalFileThreadTaskCallback optional_file_thread_task_callback_;
   DoneCallback done_callback_;
   const scoped_refptr<base::SingleThreadTaskRunner> origin_task_runner_;
+
+  DISALLOW_COPY_AND_ASSIGN(FileReader);
 };
 
 #endif  // EXTENSIONS_BROWSER_FILE_READER_H_

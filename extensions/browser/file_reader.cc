@@ -8,9 +8,7 @@
 #include "base/callback_helpers.h"
 #include "base/files/file_util.h"
 #include "base/threading/thread_task_runner_handle.h"
-#include "content/public/browser/browser_thread.h"
-
-using content::BrowserThread;
+#include "extensions/browser/extension_file_task_runner.h"
 
 FileReader::FileReader(
     const extensions::ExtensionResource& resource,
@@ -22,14 +20,16 @@ FileReader::FileReader(
       origin_task_runner_(base::ThreadTaskRunnerHandle::Get()) {}
 
 void FileReader::Start() {
-  BrowserThread::PostTask(
-      BrowserThread::FILE, FROM_HERE,
-      base::Bind(&FileReader::ReadFileOnBackgroundThread, this));
+  extensions::GetExtensionFileTaskRunner()->PostTask(
+      FROM_HERE, base::Bind(&FileReader::ReadFileOnFileSequence, this));
 }
 
 FileReader::~FileReader() {}
 
-void FileReader::ReadFileOnBackgroundThread() {
+void FileReader::ReadFileOnFileSequence() {
+  DCHECK(
+      extensions::GetExtensionFileTaskRunner()->RunsTasksInCurrentSequence());
+
   std::unique_ptr<std::string> data(new std::string());
   bool success = base::ReadFileToString(resource_.GetFilePath(), data.get());
 
