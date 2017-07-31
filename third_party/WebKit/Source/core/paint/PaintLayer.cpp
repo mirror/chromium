@@ -1745,7 +1745,7 @@ void PaintLayer::CollectFragments(
   for (; !iterator.AtEnd(); iterator.Advance()) {
     PaintLayerFragment fragment;
     fragment.pagination_offset = ToLayoutPoint(iterator.PaginationOffset());
-    fragment.pagination_clip = iterator.ClipRectInFlowThread();
+    LayoutRect pagination_clip = iterator.ClipRectInFlowThread();
 
     // Set our four rects with all clipping applied that was internal to the
     // flow thread.
@@ -1766,7 +1766,7 @@ void PaintLayer::CollectFragments(
     // Now intersect with our pagination clip. This will typically mean we're
     // just intersecting the dirty rect with the column clip, so the column clip
     // ends up being all we apply.
-    fragment.Intersect(fragment.pagination_clip);
+    fragment.Intersect(pagination_clip);
 
     // TODO(mstensho): Don't add empty fragments. We've always done that in some
     // cases, but there should be no reason to do so. Either filter them out
@@ -2199,8 +2199,8 @@ bool PaintLayer::HitTestContentsForFragments(
          !fragment.foreground_rect.Intersects(hit_test_location)))
       continue;
     inside_clip_rect = true;
-    if (HitTestContents(result, fragment.layer_bounds, hit_test_location,
-                        hit_test_filter))
+    if (HitTestContents(result, fragment.layer_bounds.Location(),
+                        hit_test_location, hit_test_filter))
       return true;
   }
 
@@ -2308,14 +2308,14 @@ PaintLayer* PaintLayer::HitTestLayerByApplyingTransform(
 }
 
 bool PaintLayer::HitTestContents(HitTestResult& result,
-                                 const LayoutRect& layer_bounds,
+                                 const LayoutPoint& fragment_offset,
                                  const HitTestLocation& hit_test_location,
                                  HitTestFilter hit_test_filter) const {
   DCHECK(IsSelfPaintingLayer() || HasSelfPaintingLayerDescendant());
 
   if (!GetLayoutObject().HitTest(
           result, hit_test_location,
-          ToLayoutPoint(layer_bounds.Location() - LayoutBoxLocation()),
+          ToLayoutPoint(fragment_offset - LayoutBoxLocation()),
           hit_test_filter)) {
     // It's wrong to set innerNode, but then claim that you didn't hit anything,
     // unless it is a rect-based test.
