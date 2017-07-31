@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "e3e7de58_f660371d",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-31T21:25:41Z",
+      "side": 1,
+      "message": "Can you please go through this file and check that there are #includes for the types that are used such as media_router::DnsSdService, net::IPAddress, etc.  Not necessary if these are already included in cast_media_sink_service.h.\n\nSee the paragraph of the style guide that begins \"You should include...\"\n\nhttps://google.github.io/styleguide/cppguide.html#Names_and_Order_of_Includes\n\nThe reasoning is that if you are relying on foo.h which currently includes bar.h, it makes it too easy to break unrelated files if that include is ever removed.",
+      "revId": "5a44b21bf09bb6540ea4ab5d8c2598ddc721331d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c93101c1_caa91af7",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
         "patchSetId": 5
@@ -42,6 +59,132 @@
     },
     {
       "key": {
+        "uuid": "e53abce2_74eb8565",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-31T21:25:41Z",
+      "side": 1,
+      "message": "Something would need to guarantee that this task gets cancelled when the impl is destroyed.",
+      "parentUuid": "0c35d56f_256b1e22",
+      "range": {
+        "startLine": 136,
+        "startChar": 66,
+        "endLine": 136,
+        "endChar": 0
+      },
+      "revId": "5a44b21bf09bb6540ea4ab5d8c2598ddc721331d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "993d055f_90c0ea57",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-31T21:25:41Z",
+      "side": 1,
+      "message": "Nit: #include \u003cvector\u003e",
+      "revId": "5a44b21bf09bb6540ea4ab5d8c2598ddc721331d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08bed60c_18ab2c68",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-31T21:25:41Z",
+      "side": 1,
+      "message": "Please add an #include for MediaSinkInternal",
+      "revId": "5a44b21bf09bb6540ea4ab5d8c2598ddc721331d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abf93487_7d70088e",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-31T21:25:41Z",
+      "side": 1,
+      "message": "Since you are requiring this run on the IO thread (for now), it would make sense to assert that with a DHECK in the ctor.",
+      "revId": "5a44b21bf09bb6540ea4ab5d8c2598ddc721331d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2efedf8_89bf2220",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-31T21:25:41Z",
+      "side": 1,
+      "message": "Please reorder definitions to follow the same order as declarations in the .h.",
+      "revId": "5a44b21bf09bb6540ea4ab5d8c2598ddc721331d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba58386b_6cdaceef",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-31T21:25:41Z",
+      "side": 1,
+      "message": "Extra newline",
+      "revId": "5a44b21bf09bb6540ea4ab5d8c2598ddc721331d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b2cea47_59823930",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-31T21:25:41Z",
+      "side": 1,
+      "message": "Does |observer_| need to be created lazily, or can it just be created in the ctor (no unique_ptr needed)?",
+      "revId": "5a44b21bf09bb6540ea4ab5d8c2598ddc721331d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b035908f_39d7f006",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
         "patchSetId": 5
@@ -53,6 +196,74 @@
       "writtenOn": "2017-07-31T19:39:45Z",
       "side": 1,
       "message": "nit: add empty line above",
+      "revId": "5a44b21bf09bb6540ea4ab5d8c2598ddc721331d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c47f6687_a3cd0df2",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-31T21:25:41Z",
+      "side": 1,
+      "message": "The CastSocketObserver here seems to do nothing.  Can it be removed?",
+      "revId": "5a44b21bf09bb6540ea4ab5d8c2598ddc721331d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de84d4ec_080fc2e6",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-31T21:25:41Z",
+      "side": 1,
+      "message": "Constant declarations should precede ctor/dtor.\n\nhttps://google.github.io/styleguide/cppguide.html#Declaration_Order",
+      "revId": "5a44b21bf09bb6540ea4ab5d8c2598ddc721331d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1fddce8_6b2fe366",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-31T21:25:41Z",
+      "side": 1,
+      "message": "Nit: This class is documented as only usable from the IO thread, so threading comments on individual methods are not necessary.",
+      "revId": "5a44b21bf09bb6540ea4ab5d8c2598ddc721331d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4fabab0_590fdd91",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-31T21:25:41Z",
+      "side": 1,
+      "message": "nit: IP",
       "revId": "5a44b21bf09bb6540ea4ab5d8c2598ddc721331d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +298,74 @@
       "writtenOn": "2017-07-31T19:39:45Z",
       "side": 1,
       "message": "1u",
+      "revId": "5a44b21bf09bb6540ea4ab5d8c2598ddc721331d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43e24a30_b7420a8a",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-31T21:25:41Z",
+      "side": 1,
+      "message": "When would two distinct channel_ids return the same socket?",
+      "revId": "5a44b21bf09bb6540ea4ab5d8c2598ddc721331d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36151b5e_4d8ea03d",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-31T21:25:41Z",
+      "side": 1,
+      "message": "nit: EXPECT_EQ(sinks, std::vector\u003c...\u003e{cast_sink2}) is a little shorter.",
+      "revId": "5a44b21bf09bb6540ea4ab5d8c2598ddc721331d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca484cd0_9e2354d1",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-31T21:25:41Z",
+      "side": 1,
+      "message": "EXPECT_EQ(current_sinks_, std::vector\u003c\u003e{cast_sink3})",
+      "revId": "5a44b21bf09bb6540ea4ab5d8c2598ddc721331d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04e79ac6_e95f3c23",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-07-31T21:25:41Z",
+      "side": 1,
+      "message": "During browser shutdown, will the task to delete the impl have already finished on the IO thread?",
       "revId": "5a44b21bf09bb6540ea4ab5d8c2598ddc721331d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
