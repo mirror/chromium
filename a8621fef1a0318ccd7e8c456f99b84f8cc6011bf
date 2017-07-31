@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b4c9d716_e9c15fed",
+        "filename": "ios/chrome/browser/ui/settings/passwords_settings_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1250,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-07-31T21:52:06Z",
+      "side": 1,
+      "message": "My idea of this was more on the line of 10s representing infinity. Given the overall timeout for the test (which I believe is some tens of seconds), if the test needs more than 10s for PasswordStore operations, then it likely times out overall anyway.",
+      "parentUuid": "731d2f31_e28a35e0",
+      "range": {
+        "startLine": 1250,
+        "startChar": 21,
+        "endLine": 1250,
+        "endChar": 32
+      },
+      "revId": "a8621fef1a0318ccd7e8c456f99b84f8cc6011bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "23ff2db1_da48908e",
         "filename": "ios/chrome/browser/ui/settings/passwords_settings_egtest.mm",
         "patchSetId": 1
