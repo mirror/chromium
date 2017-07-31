@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b613864_923ede91",
+        "filename": "chrome/browser/vr/elements/content_element.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-31T15:13:59Z",
+      "side": 1,
+      "message": "nit: \u003d nullptr;",
+      "revId": "c66a34454f8e6480d31c21de84550c4a1abf5e00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4939e96_590b1b32",
+        "filename": "chrome/browser/vr/ui_input_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-31T15:13:59Z",
+      "side": 1,
+      "message": "Should we add another method to identify the content element until this is fixed properly? debug_id seems very brittle.",
+      "revId": "c66a34454f8e6480d31c21de84550c4a1abf5e00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3349754b_1c8749ab",
+        "filename": "chrome/browser/vr/ui_scene.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-31T15:13:59Z",
+      "side": 1,
+      "message": "I know, this is not part of your CL. But is this ever going to go into UiSceneManager?",
+      "revId": "c66a34454f8e6480d31c21de84550c4a1abf5e00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ba1054d_3d7e83de",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-31T15:13:59Z",
+      "side": 1,
+      "message": "Why not main_content?",
+      "revId": "c66a34454f8e6480d31c21de84550c4a1abf5e00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54df6d51_11d1a8a4",
+        "filename": "chrome/browser/vr/vr_shell_renderer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1213279
+      },
+      "writtenOn": "2017-07-31T15:13:59Z",
+      "side": 1,
+      "message": "This draws both normal UI elements and the content quad, right?",
+      "revId": "c66a34454f8e6480d31c21de84550c4a1abf5e00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
