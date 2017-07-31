@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3abe10a_904e3d02",
+        "filename": "chrome/browser/browser_resources.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-31T21:38:49Z",
+      "side": 1,
+      "message": "Why is this necessary?",
+      "range": {
+        "startLine": 463,
+        "startChar": 115,
+        "endLine": 463,
+        "endChar": 141
+      },
+      "revId": "354ecbef3c9f18f0620cd08fe43fa63a3742640f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
