@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1966f913_73e08ebd",
+        "filename": "chrome/browser/chromeos/note_taking_helper_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 883,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-07-31T23:50:05Z",
+      "side": 1,
+      "message": "this fails because an ArcIntentHelperBridge isn\u0027t being created for the second profile. i am not sure how to fix this. i suspect i need to pass a factory via the TestingProfile::TestingFactories arg above, but figuring out how to do this seems a bit beyond me. do you know if there are existing places where we initialize at least a portion of ARC for a profile created in a unit test?",
+      "revId": "a0d09a51abb9b43677972c0c4160a586a88fe6dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
