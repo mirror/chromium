@@ -243,6 +243,24 @@
     },
     {
       "key": {
+        "uuid": "abb76021_6a2cacb5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-31T06:31:18Z",
+      "side": 1,
+      "message": "I think you might have missed my question here. Totally agree that the architecture is too complex now. But I think it\u0027d be preferable to just fail (can importScripts() throw an exception or something?), especially if the code also ends up simpler.",
+      "parentUuid": "34aa3af4_10eddccf",
+      "revId": "3de326b1ec588c05b0f70d3e5092fd482cc8538a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e33ae6d_cc44c49a",
         "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
         "patchSetId": 5
