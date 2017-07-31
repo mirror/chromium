@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "16b670ac_14240b5d",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-31T06:40:15Z",
+      "side": 1,
+      "message": "Done - I agree it\u0027s better to use i18n, so I went with your first suggestion, since the only reason I did it the way I did was because of the 10 arguments.",
+      "parentUuid": "a86a15f5_3add5866",
+      "revId": "b07d1b5ef50dc6467f9b09aeff008dfc538d1fc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9df52952_e7cf59c0",
         "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.js",
         "patchSetId": 4
@@ -51,6 +69,24 @@
       "revId": "b07d1b5ef50dc6467f9b09aeff008dfc538d1fc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6b60211_f3a1ec41",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-31T06:40:15Z",
+      "side": 1,
+      "message": "Oops, yeah the return statement should have been deleted - otherwise, a permission that changes from a non-DEFAULT/PREFERENCE source to a DEFAULT source won\u0027t have the two-line class removed and have extra space underneath. Fixed.",
+      "parentUuid": "9df52952_e7cf59c0",
+      "revId": "b07d1b5ef50dc6467f9b09aeff008dfc538d1fc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "fdc221d8_112c32ac",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-31T06:40:15Z",
+      "side": 1,
+      "message": "Thanks for the suggestion! I agree either of those options are better, I went with the second. (I also realised that there\u0027s no way to re-enable controls if they become user-controllable again, so fixed that and added test coverage.)",
+      "parentUuid": "574a7502_d545f1aa",
+      "revId": "b07d1b5ef50dc6467f9b09aeff008dfc538d1fc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "951569d1_4beddf64",
         "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.js",
         "patchSetId": 4
@@ -85,6 +139,24 @@
       "revId": "b07d1b5ef50dc6467f9b09aeff008dfc538d1fc0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cb72028_11fd42f9",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-07-31T06:40:15Z",
+      "side": 1,
+      "message": "Acking this now, but feel free to unresolve if you don\u0027t like the vanilla i18n strings in the next patchset.",
+      "parentUuid": "951569d1_4beddf64",
+      "revId": "b07d1b5ef50dc6467f9b09aeff008dfc538d1fc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
