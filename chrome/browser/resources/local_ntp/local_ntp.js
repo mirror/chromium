@@ -88,6 +88,7 @@ var IDS = {
   FAKEBOX: 'fakebox',
   FAKEBOX_INPUT: 'fakebox-input',
   FAKEBOX_TEXT: 'fakebox-text',
+  FAKEBOX_SPEECH: 'fakebox-speech',
   LOGO: 'logo',
   NOTIFICATION: 'mv-notice',
   NOTIFICATION_CLOSE_BUTTON: 'mv-notice-x',
@@ -485,7 +486,8 @@ function isFakeboxFocused() {
  * @return {boolean} True if the click occurred in an enabled fakebox.
  */
 function isFakeboxClick(event) {
-  return $(IDS.FAKEBOX).contains(event.target);
+  return $(IDS.FAKEBOX).contains(event.target) &&
+      !$(IDS.FAKEBOX_SPEECH).contains(event.target);
 }
 
 
@@ -534,6 +536,9 @@ function handlePostMessage(event) {
  * section, and Google-specific elements for a Google-provided page.
  */
 function init() {
+  configData.language =
+      window.navigator.userLanguage || window.navigator.language;
+
   // Hide notifications after fade out, so we can't focus on links via keyboard.
   $(IDS.NOTIFICATION).addEventListener('transitionend', hideNotification);
 
@@ -578,6 +583,25 @@ function init() {
 
     $(IDS.FAKEBOX_TEXT).textContent =
         configData.translatedStrings.searchboxPlaceholder;
+
+    if (configData.isVoiceSearchEnabled) {
+      $(IDS.FAKEBOX_SPEECH).hidden = false;
+      $(IDS.FAKEBOX_SPEECH)
+          .setAttribute(
+              'title', configData.translatedStrings.fakeboxSpeechTooltip);
+
+      sfs.speech.init_(configData);
+
+      $(IDS.FAKEBOX_SPEECH).onmouseup = function(event) {
+        // If propagated, closes the overlay (click on the background).
+        event.stopPropagation();
+        sfs.speech.toggleStartStop_();
+      };
+      window.addEventListener('keydown', sfs.speech.handleKeyDown_);
+      // TODO(oskopek): Do not override the event handler, just add one.
+      searchboxApiHandle.onfocuschange =
+          sfs.speech.handleEmbeddedSearchOmniboxFocused_;
+    }
 
     // Listener for updating the key capture state.
     document.body.onmousedown = function(event) {
