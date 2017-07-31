@@ -97,7 +97,8 @@ void WebMessagePortChannelImpl::SetClient(WebMessagePortChannelClient* client) {
 
 void WebMessagePortChannelImpl::PostMessage(
     const WebString& encoded_message,
-    WebMessagePortChannelArray channels) {
+    WebMessagePortChannelArray channels,
+    const blink::WebVector<blink::WebBlobInfo>& blobs) {
   std::vector<MessagePort> ports;
   if (!channels.IsEmpty()) {
     ports.resize(channels.size());
@@ -106,15 +107,30 @@ void WebMessagePortChannelImpl::PostMessage(
           ReleaseMessagePort();
     }
   }
-  port_.PostMessage(encoded_message.Utf16(), std::move(ports));
+  std::vector<storage::mojom::SerializedBlobPtr> mojo_blobs;
+  if (!blobs.IsEmpty()) {
+    mojo_blobs.resize(blobs.size());
+    for (size_t i = 0; i < blobs.size(); ++i) {
+      storage::mojom::BlobPtr mojo_blob;
+      mojo_blob.Bind(storage::mojom::BlobPtrInfo(
+          blobs[i].CloneBlobHandle(), storage::mojom::Blob::Version_));
+      mojo_blobs[i] = storage::mojom::SerializedBlob::New(
+          blobs[i].Uuid().Utf8(), blobs[i].GetType().Utf8(), blobs[i].size(),
+          std::move(mojo_blob));
+    }
+  }
+  port_.PostMessage(encoded_message.Utf16(), std::move(ports),
+                    std::move(mojo_blobs));
 }
 
 bool WebMessagePortChannelImpl::TryGetMessage(
     WebString* encoded_message,
-    WebMessagePortChannelArray& channels) {
+    WebMessagePortChannelArray& channels,
+    blink::WebVector<blink::WebBlobInfo>& blobs) {
   base::string16 buffer;
   std::vector<MessagePort> ports;
-  if (!port_.GetMessage(&buffer, &ports))
+  std::vector<storage::mojom::SerializedBlobPtr> mojo_blobs;
+  if (!port_.GetMessage(&buffer, &ports, &mojo_blobs))
     return false;
 
   *encoded_message = WebString::FromUTF16(buffer);
@@ -123,6 +139,16 @@ bool WebMessagePortChannelImpl::TryGetMessage(
     channels = WebMessagePortChannelArray(ports.size());
     for (size_t i = 0; i < ports.size(); ++i)
       channels[i] = base::MakeUnique<WebMessagePortChannelImpl>(ports[i]);
+  }
+  if (!mojo_blobs.empty()) {
+    blobs = blink::WebVector<blink::WebBlobInfo>(mojo_blobs.size());
+    for (size_t i = 0; i < blobs.size(); ++i) {
+      blobs[i] = blink::WebBlobInfo{
+          blink::WebString::FromUTF8(mojo_blobs[i]->uuid),
+          blink::WebString::FromUTF8(mojo_blobs[i]->content_type),
+          mojo_blobs[i]->size,
+          mojo_blobs[i]->blob.PassInterface().PassHandle()};
+    }
   }
   return true;
 }

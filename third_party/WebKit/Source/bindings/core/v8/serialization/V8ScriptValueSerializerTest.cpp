@@ -874,10 +874,16 @@ class WebMessagePortChannelImpl final : public WebMessagePortChannel {
  public:
   // WebMessagePortChannel
   void SetClient(WebMessagePortChannelClient* client) override {}
-  void PostMessage(const WebString&, WebMessagePortChannelArray) {
+  void PostMessage(const WebString&,
+                   WebMessagePortChannelArray,
+                   const WebVector<WebBlobInfo>&) {
     NOTIMPLEMENTED();
   }
-  bool TryGetMessage(WebString*, WebMessagePortChannelArray&) { return false; }
+  bool TryGetMessage(WebString*,
+                     WebMessagePortChannelArray&,
+                     WebVector<WebBlobInfo>&) {
+    return false;
+  }
 };
 
 MessagePort* MakeMessagePort(

@@ -117,8 +117,10 @@ void BlockingReadFromMessagePort(MessagePort port, base::string16* message) {
   run_loop.Run();
 
   std::vector<MessagePort> should_be_empty;
-  EXPECT_TRUE(port.GetMessage(message, &should_be_empty));
+  std::vector<storage::mojom::SerializedBlobPtr> blobs;
+  EXPECT_TRUE(port.GetMessage(message, &should_be_empty, &blobs));
   EXPECT_TRUE(should_be_empty.empty());
+  EXPECT_TRUE(blobs.empty());
 }
 
 class MockSharedWorkerMessageFilter : public SharedWorkerMessageFilter {
@@ -382,8 +384,9 @@ TEST_F(SharedWorkerServiceImplTest, BasicTest) {
 
   // Verify that |worker_msg_port| corresponds to |connector->local_port()|.
   base::string16 expected_message(base::ASCIIToUTF16("test1"));
-  connector->local_port().PostMessage(expected_message,
-                                      std::vector<MessagePort>());
+  connector->local_port().PostMessage(
+      expected_message, std::vector<MessagePort>(),
+      std::vector<storage::mojom::SerializedBlobPtr>());
   base::string16 received_message;
   BlockingReadFromMessagePort(worker_msg_port, &received_message);
   EXPECT_EQ(expected_message, received_message);
@@ -473,8 +476,9 @@ TEST_F(SharedWorkerServiceImplTest, TwoRendererTest) {
 
   // Verify that |worker_msg_port1| corresponds to |connector0->local_port()|.
   base::string16 expected_message1(base::ASCIIToUTF16("test1"));
-  connector0->local_port().PostMessage(expected_message1,
-                                       std::vector<MessagePort>());
+  connector0->local_port().PostMessage(
+      expected_message1, std::vector<MessagePort>(),
+      std::vector<storage::mojom::SerializedBlobPtr>());
   base::string16 received_message1;
   BlockingReadFromMessagePort(worker_msg_port1, &received_message1);
   EXPECT_EQ(expected_message1, received_message1);
@@ -545,8 +549,9 @@ TEST_F(SharedWorkerServiceImplTest, TwoRendererTest) {
 
   // Verify that |worker_msg_port2| corresponds to |connector1->local_port()|.
   base::string16 expected_message2(base::ASCIIToUTF16("test2"));
-  connector1->local_port().PostMessage(expected_message2,
-                                       std::vector<MessagePort>());
+  connector1->local_port().PostMessage(
+      expected_message2, std::vector<MessagePort>(),
+      std::vector<storage::mojom::SerializedBlobPtr>());
   base::string16 received_message2;
   BlockingReadFromMessagePort(worker_msg_port2, &received_message2);
   EXPECT_EQ(expected_message2, received_message2);

@@ -15,6 +15,7 @@
 #include "content/common/content_export.h"
 #include "mojo/public/cpp/system/message_pipe.h"
 #include "mojo/public/cpp/system/watcher.h"
+#include "storage/public/interfaces/blobs.mojom.h"
 
 namespace content {
 
@@ -62,12 +63,14 @@ class CONTENT_EXPORT MessagePort {
   // Sends an encoded message (along with ports to transfer) to this port's
   // peer.
   void PostMessage(const base::string16& encoded_message,
-                   std::vector<MessagePort> ports);
+                   std::vector<MessagePort> ports,
+                   std::vector<storage::mojom::SerializedBlobPtr> blobs);
 
   // Get the next available encoded message if any. Returns true if a message
   // was read.
   bool GetMessage(base::string16* encoded_message,
-                  std::vector<MessagePort>* ports);
+                  std::vector<MessagePort>* ports,
+                  std::vector<storage::mojom::SerializedBlobPtr>* blobs);
 
   // This callback will be invoked on a background thread when messages are
   // available to be read via GetMessage. It must not synchronously call back

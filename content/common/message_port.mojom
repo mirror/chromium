@@ -4,6 +4,8 @@
 
 module content.mojom;
 
+import "storage/public/interfaces/blobs.mojom";
+
 // This struct represents a message as it is sent across a MessagePort. A
 // MessagePort itself is represented as a raw mojo message pipe, and messages
 // on it are (in both directions) serialized versions of this struct.
@@ -12,4 +14,5 @@ struct MessagePortMessage {
   array<uint8> encoded_message;
   // Any ports being transfered as part of this message.
   array<handle<message_pipe>> ports;
+  array<storage.mojom.SerializedBlob> blobs;
 };

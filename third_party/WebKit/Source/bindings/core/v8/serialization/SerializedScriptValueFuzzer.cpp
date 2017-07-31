@@ -38,10 +38,16 @@ class WebMessagePortChannelImpl final : public WebMessagePortChannel {
  public:
   // WebMessagePortChannel
   void SetClient(WebMessagePortChannelClient* client) override {}
-  void PostMessage(const WebString&, WebMessagePortChannelArray) {
+  void PostMessage(const WebString&,
+                   WebMessagePortChannelArray,
+                   const blink::WebVector<blink::WebBlobInfo>&) {
     NOTIMPLEMENTED();
   }
-  bool TryGetMessage(WebString*, WebMessagePortChannelArray&) { return false; }
+  bool TryGetMessage(WebString*,
+                     WebMessagePortChannelArray&,
+                     blink::WebVector<blink::WebBlobInfo>&) {
+    return false;
+  }
 };
 
 }  // namespace
