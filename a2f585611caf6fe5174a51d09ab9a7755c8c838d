@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff1f8794_04d038cf",
+        "filename": "content/browser/renderer_host/media/audio_input_sync_writer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-31T23:46:44Z",
+      "side": 1,
+      "message": "nit: Arrow syntax feels more readable here, IMHO:\n\n  params_it-\u003evolume, params_it-\u003ekey_pressed, ...",
+      "range": {
+        "startLine": 312,
+        "startChar": 8,
+        "endLine": 313,
+        "endChar": 37
+      },
+      "revId": "a2f585611caf6fe5174a51d09ab9a7755c8c838d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dddcd46_93b76a39",
+        "filename": "media/audio/mac/audio_low_latency_input_mac.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 949,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-31T23:46:44Z",
+      "side": 1,
+      "message": "Should |capture_latency| be |delay| here? Otherwise, it seems you are\nincrementing |delay| but never using the value anywhere.",
+      "range": {
+        "startLine": 949,
+        "startChar": 34,
+        "endLine": 949,
+        "endChar": 50
+      },
+      "revId": "a2f585611caf6fe5174a51d09ab9a7755c8c838d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d405270_d30b264e",
+        "filename": "media/audio/pulse/pulse_input.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-31T23:46:44Z",
+      "side": 1,
+      "message": "Not relevant to your change, but this logic here seems odd. The other platforms don\u0027t do this. And, FWICT, AudioInputSyncWriter allows for a little queueing in shmem.",
+      "range": {
+        "startLine": 318,
+        "startChar": 0,
+        "endLine": 321,
+        "endChar": 72
+      },
+      "revId": "a2f585611caf6fe5174a51d09ab9a7755c8c838d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bda5c5d9_f6cdde87",
+        "filename": "media/audio/win/audio_low_latency_input_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-31T23:46:44Z",
+      "side": 1,
+      "message": "It may help to consult what was done for this same change in the output_win.cc. You may also want to loop-in the developer that made the output interface bytes--\u003eTimeXXX changes to take a quick look at this CL.\n\nref: https://codereview.chromium.org/2517503003/",
+      "range": {
+        "startLine": 446,
+        "startChar": 8,
+        "endLine": 446,
+        "endChar": 79
+      },
+      "revId": "a2f585611caf6fe5174a51d09ab9a7755c8c838d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f8f1317_8bfd526a",
+        "filename": "media/base/audio_parameters.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-31T23:46:44Z",
+      "side": 1,
+      "message": "Thinking a bit about this: What happens if you use base::TimeDelta and base::TimeTicks instead of the int64_t\u0027s here? I could be misunderstanding something, but since these are direct read/writes on shared memory, it should \"just work\" right? This would save you from having to convert in AudioInputSyncWriter.",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 9
+      },
+      "revId": "a2f585611caf6fe5174a51d09ab9a7755c8c838d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
