@@ -1,0 +1,366 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc9c8ec5_c302d34d",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_browsertest_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1130491
+      },
+      "writtenOn": "2017-07-31T20:06:56Z",
+      "side": 1,
+      "message": "This makes more sense to be done inside each test case. If in the future we decide to add tests for other methods, this will not be applicable for all tests.",
+      "revId": "7db9b7a203cc95d8e7dd195e0742fae474dc76d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84b2d695_461fe157",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_browsertest_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1130491
+      },
+      "writtenOn": "2017-07-31T20:06:56Z",
+      "side": 1,
+      "message": "\"According to the documentation\" doesn\u0027t add any value here and can be removed.",
+      "range": {
+        "startLine": 55,
+        "startChar": 7,
+        "endLine": 55,
+        "endChar": 39
+      },
+      "revId": "7db9b7a203cc95d8e7dd195e0742fae474dc76d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "978f6cf2_26901cfb",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_browsertest_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1130491
+      },
+      "writtenOn": "2017-07-31T20:06:56Z",
+      "side": 1,
+      "message": "cleaner_controller -\u003e cleaner_controller_\n\n(same for the other two fields)",
+      "range": {
+        "startLine": 63,
+        "startChar": 49,
+        "endLine": 63,
+        "endChar": 0
+      },
+      "revId": "7db9b7a203cc95d8e7dd195e0742fae474dc76d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57734d60_acbb5132",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_browsertest_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1130491
+      },
+      "writtenOn": "2017-07-31T20:06:56Z",
+      "side": 1,
+      "message": "Nit: rename this to OnInfectedBrowserAvailable",
+      "range": {
+        "startLine": 69,
+        "startChar": 23,
+        "endLine": 69,
+        "endChar": 49
+      },
+      "revId": "7db9b7a203cc95d8e7dd195e0742fae474dc76d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "002431d9_48b86517",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_browsertest_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1130491
+      },
+      "writtenOn": "2017-07-31T20:06:56Z",
+      "side": 1,
+      "message": "Please add an empty line.",
+      "range": {
+        "startLine": 71,
+        "startChar": 50,
+        "endLine": 71,
+        "endChar": 0
+      },
+      "revId": "7db9b7a203cc95d8e7dd195e0742fae474dc76d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2b30879_71ebfc0e",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_browsertest_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1130491
+      },
+      "writtenOn": "2017-07-31T20:06:56Z",
+      "side": 1,
+      "message": "Nit: please use std::set\u003cbase::FilePath\u003e() instead of declaring a variable.",
+      "range": {
+        "startLine": 72,
+        "startChar": 32,
+        "endLine": 72,
+        "endChar": 54
+      },
+      "revId": "7db9b7a203cc95d8e7dd195e0742fae474dc76d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9399652_3442d248",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_browsertest_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1130491
+      },
+      "writtenOn": "2017-07-31T20:06:56Z",
+      "side": 1,
+      "message": "Nit: rename this to OnInfectedBrowserNotAvailable",
+      "range": {
+        "startLine": 76,
+        "startChar": 23,
+        "endLine": 76,
+        "endChar": 52
+      },
+      "revId": "7db9b7a203cc95d8e7dd195e0742fae474dc76d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9dfa3a9_cfcb4bcb",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_browsertest_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1130491
+      },
+      "writtenOn": "2017-07-31T20:06:56Z",
+      "side": 1,
+      "message": "Please add an empty line after expectations.",
+      "range": {
+        "startLine": 77,
+        "startChar": 72,
+        "endLine": 77,
+        "endChar": 0
+      },
+      "revId": "7db9b7a203cc95d8e7dd195e0742fae474dc76d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c97cb21_2e5157d3",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1130491
+      },
+      "writtenOn": "2017-07-31T20:06:56Z",
+      "side": 1,
+      "message": "Add an extra line before this.",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 27
+      },
+      "revId": "7db9b7a203cc95d8e7dd195e0742fae474dc76d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1310d5bc_7e0c581d",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1130491
+      },
+      "writtenOn": "2017-07-31T20:06:56Z",
+      "side": 1,
+      "message": "\"{}\" -\u003e \"\u003d default;\"",
+      "range": {
+        "startLine": 44,
+        "startChar": 62,
+        "endLine": 44,
+        "endChar": 0
+      },
+      "revId": "7db9b7a203cc95d8e7dd195e0742fae474dc76d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02d501e6_07f72bb4",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1130491
+      },
+      "writtenOn": "2017-07-31T20:06:56Z",
+      "side": 1,
+      "message": "Please add an empty line before this.",
+      "range": {
+        "startLine": 45,
+        "startChar": 62,
+        "endLine": 45,
+        "endChar": 0
+      },
+      "revId": "7db9b7a203cc95d8e7dd195e0742fae474dc76d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e48810c_877567bb",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1130491
+      },
+      "writtenOn": "2017-07-31T20:06:56Z",
+      "side": 1,
+      "message": "This should only be done is prompt_pending_ is true, right?",
+      "range": {
+        "startLine": 148,
+        "startChar": 38,
+        "endLine": 148,
+        "endChar": 0
+      },
+      "revId": "7db9b7a203cc95d8e7dd195e0742fae474dc76d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a2ad9be_ac299b82",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1130491
+      },
+      "writtenOn": "2017-07-31T20:06:56Z",
+      "side": 1,
+      "message": "We should be able to measure when this happens and how many users eventually were shown the prompt because of this. I think we can do this:\n - In tools/metrics/histograms/enums.xml, deprecate \"5 - Browser not available\" and add \"8 -\n Waiting for browser\" (you will also need to update enum NoPromptReasonHistogramValue).\n - Bring back the call to RecordPromptNotShownWithReasonHistogram(), this time using the new constant.\n\n(more changes related to metrics below)",
+      "range": {
+        "startLine": 167,
+        "startChar": 18,
+        "endLine": 167,
+        "endChar": 0
+      },
+      "revId": "7db9b7a203cc95d8e7dd195e0742fae474dc76d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f7abd74_77dd4ae2",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1130491
+      },
+      "writtenOn": "2017-07-31T20:06:56Z",
+      "side": 1,
+      "message": "The corresponding histogram is defined in tools/metrics/histograms/histograms.xml (SoftwareRepoter.PromptShown) and is currently a boolean (even though we only log true for it). Please change it to be an enum instead (1: \"Legacy prompt shown\", 2: \"On transition to infected state\", 3: \"On browser window available\").\n\nYou will need to create a new enum in both the file where RecordPromptShownHistogram() is defined and in enums.xml.",
+      "range": {
+        "startLine": 204,
+        "startChar": 31,
+        "endLine": 204,
+        "endChar": 0
+      },
+      "revId": "7db9b7a203cc95d8e7dd195e0742fae474dc76d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6feb916f_d1088505",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1130491
+      },
+      "writtenOn": "2017-07-31T20:06:56Z",
+      "side": 1,
+      "message": "Please add an empty line before this and separate in a new section like \"Test specific methods\".",
+      "range": {
+        "startLine": 69,
+        "startChar": 72,
+        "endLine": 69,
+        "endChar": 0
+      },
+      "revId": "7db9b7a203cc95d8e7dd195e0742fae474dc76d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ac03aa3_16ae9403",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_win.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1130491
+      },
+      "writtenOn": "2017-07-31T20:06:56Z",
+      "side": 1,
+      "message": "This can be private.",
+      "range": {
+        "startLine": 70,
+        "startChar": 33,
+        "endLine": 70,
+        "endChar": 0
+      },
+      "revId": "7db9b7a203cc95d8e7dd195e0742fae474dc76d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
