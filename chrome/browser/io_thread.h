@@ -202,10 +202,10 @@ class IOThread : public content::BrowserThreadDelegate {
 
   const net::HttpNetworkSession::Params& NetworkSessionParams() const;
 
-  // Dynamically disables QUIC for HttpNetworkSessions owned by io_thread, and
-  // to HttpNetworkSession::Params which are used for the creation of new
-  // HttpNetworkSessions. Not that re-enabling Quic dynamically is not
-  // supported for simplicity and requires a browser restart.
+  // Dynamically disables QUIC for all NetworkContext using the IOThread's
+  // NetworkService HttpNetworkSessions, as well as for the network service (if
+  // enabled). Not that re-enabling Quic dynamically is not supported for
+  // simplicity and requires a browser restart. Called on the UI thread.
   void DisableQuic();
 
   // Returns the callback for updating data use prefs.
@@ -273,7 +273,6 @@ class IOThread : public content::BrowserThreadDelegate {
   // configure |params|.
   static void ConfigureParamsFromFieldTrialsAndCommandLine(
       const base::CommandLine& command_line,
-      bool is_quic_allowed_by_policy,
       bool http_09_on_non_default_ports_enabled,
       net::HttpNetworkSession::Params* params);
 
@@ -286,6 +285,11 @@ class IOThread : public content::BrowserThreadDelegate {
   // extensions from the IOThread.
   extensions::EventRouterForwarder* extension_event_router_forwarder_;
 #endif
+
+  // UI thread interface for the |network_service| in |globals_|.
+  content::mojom::NetworkServicePtr network_service_interface_;
+
+  content::mojom::NetworkServiceRequest network_service_interface_request_;
 
   // These member variables are basically global, but their lifetimes are tied
   // to the IOThread.  IOThread owns them all, despite not using scoped_ptr.
@@ -353,9 +357,6 @@ class IOThread : public content::BrowserThreadDelegate {
 
   scoped_refptr<net::URLRequestContextGetter>
       system_url_request_context_getter_;
-
-  // True if QUIC is allowed by policy.
-  bool is_quic_allowed_by_policy_;
 
   // True if HTTP/0.9 is allowed on non-default ports by policy.
   bool http_09_on_non_default_ports_enabled_;

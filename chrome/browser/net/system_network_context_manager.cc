@@ -6,7 +6,13 @@
 
 #include "base/feature_list.h"
 #include "base/logging.h"
+#include "base/values.h"
 #include "build/build_config.h"
+#include "chrome/browser/browser_process.h"
+#include "chrome/browser/io_thread.h"
+#include "components/policy/core/common/policy_namespace.h"
+#include "components/policy/core/common/policy_service.h"
+#include "components/policy/policy_constants.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/network_service_instance.h"
 #include "content/public/common/content_features.h"
@@ -54,7 +60,21 @@ SystemNetworkContextManager* SystemNetworkContextManager::GetInstance() {
   return g_system_network_context_manager.Pointer();
 }
 
-SystemNetworkContextManager::SystemNetworkContextManager() {}
+SystemNetworkContextManager::SystemNetworkContextManager() {
+  const base::Value* value =
+      g_browser_process->policy_service()
+          ->GetPolicies(policy::PolicyNamespace(policy::POLICY_DOMAIN_CHROME,
+                                                std::string()))
+          .GetValue(policy::key::kQuicAllowed);
+  if (value)
+    value->GetAsBoolean(&is_quic_allowed_);
+
+  // Can only disable QUIC for the IOThread, at this point, as services aren't
+  // ready to be used yet.
+  // TODO(mmenke): Once IOThread has been removed, remove this.
+  if (!is_quic_allowed_)
+    g_browser_process->io_thread()->DisableQuic();
+}
 
 SystemNetworkContextManager::~SystemNetworkContextManager() {}
 
@@ -66,9 +86,23 @@ content::mojom::NetworkContext* SystemNetworkContextManager::GetContext() {
   }
 
   if (!network_service_network_context_) {
-    content::GetNetworkService()->CreateNetworkContext(
+    content::mojom::NetworkService* network_service =
+        content::GetNetworkService();
+    if (!is_quic_allowed_)
+      network_service->DisableQuic();
+    network_service->CreateNetworkContext(
         MakeRequest(&network_service_network_context_),
         CreateNetworkContextParams());
   }
   return network_service_network_context_.get();
+}
+
+void SystemNetworkContextManager::DisableQuic() {
+  SystemNetworkContextManager* manager = GetInstance();
+  if (!manager->is_quic_allowed_)
+    return;
+
+  manager->is_quic_allowed_ = false;
+  content::GetNetworkService()->DisableQuic();
+  g_browser_process->io_thread()->DisableQuic();
 }
