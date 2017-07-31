@@ -314,23 +314,6 @@ Polymer({
   },
 
   /**
-   * @param {!{detail: {action: string, device: !chrome.bluetooth.Device}}} e
-   * @private
-   */
-  onDeviceEvent_: function(e) {
-    var action = e.detail.action;
-    var device = e.detail.device;
-    if (action == 'connect')
-      this.connectDevice_(device);
-    else if (action == 'disconnect')
-      this.disconnectDevice_(device);
-    else if (action == 'remove')
-      this.forgetDevice_(device);
-    else
-      console.error('Unexected action: ' + action);
-  },
-
-  /**
    * @param {boolean} enabled
    * @param {string} onstr
    * @param {string} offstr
