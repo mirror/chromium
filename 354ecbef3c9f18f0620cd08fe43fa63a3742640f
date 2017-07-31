@@ -46,6 +46,30 @@
       "revId": "354ecbef3c9f18f0620cd08fe43fa63a3742640f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b44d10e_a70df61d",
+        "filename": "chrome/browser/browser_resources.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 463,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-31T23:08:40Z",
+      "side": 1,
+      "message": "I don\u0027t remember the specifics of allowexternalscript, so asked just to make sure it was necessary. I don\u0027t know of a different way, but now I am more inclined to look at what does allowexternalscript really do. Either way LGTM",
+      "parentUuid": "7d03e2ef_13751c35",
+      "range": {
+        "startLine": 463,
+        "startChar": 115,
+        "endLine": 463,
+        "endChar": 141
+      },
+      "revId": "354ecbef3c9f18f0620cd08fe43fa63a3742640f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
