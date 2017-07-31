@@ -204,13 +204,28 @@ void PerformanceMonitor::Did(const probe::CallFunction& probe) {
 }
 
 void PerformanceMonitor::Will(const probe::V8Compile& probe) {
-  // Todo(maxlg): https://crbug.com/738495 Intentionally leave out as we need to
-  // verify monotonical time is reasonable in overhead.
+  if (!enabled_ || !thresholds_[kLongTask] || subscriptions_.at(kLongTask))
+    return;
+
+  probe.CaptureStartTime();
 }
 
 void PerformanceMonitor::Did(const probe::V8Compile& probe) {
-  // Todo(maxlg): https://crbug.com/738495 Intentionally leave out as we need to
-  // verify monotonical time is reasonable in overhead.
+  if (!enabled_)
+    return;
+
+  double duration = probe.Duration();
+
+  if (!thresholds_[kLongTask] || duration <= thresholds_[kLongTask])
+    return;
+
+  String text = String::Format("'%s'(line: %d, column: %d) took %ldms",
+                               probe.file_name.Characters8(), probe.line,
+                               probe.column, lround(duration * 1000));
+
+  InnerReportGenericViolation(
+      probe.context, kLongTask, text, duration,
+      SourceLocation::Capture(probe.file_name, probe.line, probe.column));
 }
 
 void PerformanceMonitor::Will(const probe::UserCallback& probe) {
