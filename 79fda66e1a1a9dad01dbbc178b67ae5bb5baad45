@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "369a3b30_9a06961d",
+        "filename": "chrome/browser/net/network_context_configuration_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-07-31T01:56:22Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "276da136_cf11edb3",
+      "range": {
+        "startLine": 125,
+        "startChar": 23,
+        "endLine": 125,
+        "endChar": 61
+      },
+      "revId": "79fda66e1a1a9dad01dbbc178b67ae5bb5baad45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e3532d2_67f67ce4",
         "filename": "chrome/browser/net/network_context_configuration_browsertest.cc",
         "patchSetId": 8
@@ -93,6 +117,30 @@
       "revId": "79fda66e1a1a9dad01dbbc178b67ae5bb5baad45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b3341f7_1a6dfec9",
+        "filename": "chrome/browser/net/network_context_configuration_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-07-31T01:56:22Z",
+      "side": 1,
+      "message": "Ok.  If I take a step back, it\u0027s really not needed for testing what this CL itself is doing, which is configuration.",
+      "parentUuid": "a7f2e9d1_cb4562ee",
+      "range": {
+        "startLine": 183,
+        "startChar": 0,
+        "endLine": 183,
+        "endChar": 1
+      },
+      "revId": "79fda66e1a1a9dad01dbbc178b67ae5bb5baad45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -143,6 +191,30 @@
     },
     {
       "key": {
+        "uuid": "36bc4a31_84e71339",
+        "filename": "chrome/browser/net/profile_network_context_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-07-31T01:56:22Z",
+      "side": 1,
+      "message": "I don\u0027t feel strongly; it just seemed an obvious enough solution to the problem to be worth raising.  You\u0027ve got a lot more context (including where you\u0027d like to see this going) than I do.",
+      "parentUuid": "fe41f704_33c7f79b",
+      "range": {
+        "startLine": 29,
+        "startChar": 39,
+        "endLine": 29,
+        "endChar": 40
+      },
+      "revId": "79fda66e1a1a9dad01dbbc178b67ae5bb5baad45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b585ccfc_6d3e67fb",
         "filename": "content/network/network_context.cc",
         "patchSetId": 8
@@ -178,6 +250,30 @@
       "side": 1,
       "message": "It will, but for now, that would break Chrome, by overwriting the properties ProfileIOData sets.  My cache config CL moves some of the stuff over to ApplyContextParamsToBuilder, but there\u0027s still more to do.\n\nI hope to move all the configuration logic from MakeURLRequestContext into ApplyContextParamsToBuilder, but that doesn\u0027t work yet.",
       "parentUuid": "b585ccfc_6d3e67fb",
+      "range": {
+        "startLine": 86,
+        "startChar": 27,
+        "endLine": 86,
+        "endChar": 51
+      },
+      "revId": "79fda66e1a1a9dad01dbbc178b67ae5bb5baad45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7ea309b_76d09517",
+        "filename": "content/network/network_context.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-07-31T01:56:22Z",
+      "side": 1,
+      "message": "Is it reasonable to have a header (/.mojo) comment about what does and doesn\u0027t work around NetworkContextParams, maybe with a TODO?  IIUC, on the main path the NetworkContextParams are used along the cache and cookie file paths are ignored.  \n\nIf the usage pattern is more twisty than I\u0027m seeing s.t. the main usage of the NetworkContextParams from the mojo side is actually respected, then I can live without.  But from my perspective the non-network service enabled path is at least as salient as the NS enabled path, so if those params are going to be ignored in the non-network service path it seems like we should warn about that in the .mojo file.",
+      "parentUuid": "b7df3970_af874262",
       "range": {
         "startLine": 86,
         "startChar": 27,
@@ -237,6 +333,30 @@
     },
     {
       "key": {
+        "uuid": "3f166710_52c66d44",
+        "filename": "content/network/network_context.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-07-31T01:56:22Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4b8ef3c7_de8c654f",
+      "range": {
+        "startLine": 88,
+        "startChar": 25,
+        "endLine": 88,
+        "endChar": 26
+      },
+      "revId": "79fda66e1a1a9dad01dbbc178b67ae5bb5baad45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63937a0f_d746a4f5",
         "filename": "content/public/common/network_service.mojom",
         "patchSetId": 8
@@ -281,6 +401,30 @@
       "revId": "79fda66e1a1a9dad01dbbc178b67ae5bb5baad45",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35aaa66a_a4aab0af",
+        "filename": "content/public/common/network_service.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-07-31T01:56:22Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "dcb19cd5_ae3e6e2d",
+      "range": {
+        "startLine": 19,
+        "startChar": 44,
+        "endLine": 19,
+        "endChar": 52
+      },
+      "revId": "79fda66e1a1a9dad01dbbc178b67ae5bb5baad45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
