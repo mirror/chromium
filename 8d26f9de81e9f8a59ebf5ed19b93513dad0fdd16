@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "7d0cf5b7_927a7077",
+        "filename": "chrome/browser/sessions/session_service_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1026,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-31T16:02:32Z",
+      "side": 1,
+      "message": "Did you intentionally remove the loop? Seems like you need it?",
+      "revId": "8d26f9de81e9f8a59ebf5ed19b93513dad0fdd16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fed7ac0c_c6dfcb3a",
         "filename": "chrome/browser/sessions/session_service_unittest.cc",
         "patchSetId": 2
