@@ -13,7 +13,7 @@ class UkmRecorder;
 
 class UkmInterface : public mojom::UkmRecorderInterface {
  public:
-  UkmInterface(UkmRecorder* ukm_recorder, int64_t instance_id);
+  explicit UkmInterface(UkmRecorder* ukm_recorder);
   ~UkmInterface() override;
 
   static void Create(UkmRecorder* ukm_recorder,
@@ -25,7 +25,6 @@ class UkmInterface : public mojom::UkmRecorderInterface {
   void UpdateSourceURL(int64_t source_id, const std::string& url) override;
 
   UkmRecorder* ukm_recorder_;
-  int64_t instance_id_;
 
   DISALLOW_COPY_AND_ASSIGN(UkmInterface);
 };
