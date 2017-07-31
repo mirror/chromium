@@ -33,14 +33,15 @@ constexpr PoolTag kNoPoolTag(0xFF);
 
 // Specification of references in an image file.
 struct ReferenceTypeTraits {
+  constexpr ReferenceTypeTraits() = default;
   constexpr ReferenceTypeTraits(offset_t width,
                                 TypeTag type_tag,
                                 PoolTag pool_tag)
       : width(width), type_tag(type_tag), pool_tag(pool_tag) {}
 
   // |width| specifies number of bytes covered by the reference's binary
-  // |encoding.
-  offset_t width;
+  // encoding.
+  offset_t width = 0;
   // |type_tag| identifies the reference type being described.
   TypeTag type_tag = kNoTypeTag;
   // |pool_tag| identifies the pool this type belongs to.
@@ -58,6 +59,14 @@ struct Reference {
 inline bool operator==(const Reference& a, const Reference& b) {
   return a.location == b.location && a.target == b.target;
 }
+
+struct TypedReference {
+  TypeTag type_tag;
+  offset_t location;
+  offset_t target;
+
+  explicit operator Reference() const { return {location, target}; }
+};
 
 // Helper functions to mark an offset_t, so we can distinguish file offsets from
 // Label indexes. Implementation: Marking is flagged by the most significant bit
