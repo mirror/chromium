@@ -514,7 +514,10 @@ class SmoothnessGpuRasterizationPolymer(_Smoothness):
   def GetExpectations(self):
     class StoryExpectations(story_module.expectations.StoryExpectations):
       def SetExpectations(self):
-        pass # Nothing.
+        self.DisableStory(
+            # pylint: disable=line-too-long
+            'http://www.polymer-project.org/components/paper-calculator/demo.html',
+            [story_module.expectations.ANDROID_NEXUS5X], 'crbug.com/746729')
     return StoryExpectations()
 
 
