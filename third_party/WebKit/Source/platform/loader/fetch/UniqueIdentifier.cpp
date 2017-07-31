@@ -28,11 +28,13 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include <atomic>
+
 #include "platform/loader/fetch/UniqueIdentifier.h"
 
 namespace blink {
 
-static unsigned long g_unique_identifier = 0;
+static std::atomic_ulong g_unique_identifier(0);
 
 unsigned long CreateUniqueIdentifier() {
   return ++g_unique_identifier;
