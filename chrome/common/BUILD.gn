@@ -416,7 +416,6 @@ static_library("common") {
     if (enable_print_preview) {
       # Full printing support.
       sources += [
-        "service_messages.h",
         "service_process_util.cc",
         "service_process_util.h",
         "service_process_util_linux.cc",
@@ -733,5 +732,15 @@ mojom("page_load_metrics_mojom") {
   public_deps = [
     "//mojo/common:common_custom_types",
     "//third_party/WebKit/public:web_feature_mojo_bindings",
+  ]
+}
+
+mojom("service_process_mojom") {
+  sources = [
+    "cloud_print.mojom",
+    "service_process.mojom",
+  ]
+  public_deps = [
+    "//mojo/common:common_custom_types",
   ]
 }
