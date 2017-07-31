@@ -300,14 +300,14 @@ class LegacyInputRouterImplTest : public testing::Test {
 
   void SimulateGestureEvent(WebGestureEvent gesture) {
     if (gesture.GetType() == WebInputEvent::kGestureScrollBegin &&
-        gesture.source_device == blink::kWebGestureDeviceTouchscreen &&
+        gesture.SourceDevice() == blink::kWebGestureDeviceTouchscreen &&
         !gesture.data.scroll_begin.delta_x_hint &&
         !gesture.data.scroll_begin.delta_y_hint) {
       // Ensure non-zero scroll-begin offset-hint to make the event sane,
       // prevents unexpected filtering at TouchActionFilter.
       gesture.data.scroll_begin.delta_y_hint = 2.f;
     } else if (gesture.GetType() == WebInputEvent::kGestureFlingStart &&
-               gesture.source_device == blink::kWebGestureDeviceTouchscreen &&
+               gesture.SourceDevice() == blink::kWebGestureDeviceTouchscreen &&
                !gesture.data.fling_start.velocity_x &&
                !gesture.data.fling_start.velocity_y) {
       // Ensure non-zero touchscreen fling velocities, as the router will
@@ -2308,7 +2308,7 @@ class LegacyInputRouterImplScaleGestureEventTest
   WebGestureEvent BuildGestureEvent(WebInputEvent::Type type,
                                     const gfx::Point& point) {
     WebGestureEvent event = SyntheticWebGestureEventBuilder::Build(
-        type, blink::kWebGestureDeviceTouchpad);
+        type, blink::kWebGestureDeviceTouchscreen);
     event.global_x = event.x = point.x();
     event.global_y = event.y = point.y();
     return event;
@@ -2449,6 +2449,7 @@ TEST_F(LegacyInputRouterImplScaleGestureEventTest, GestureTapDown) {
 
 TEST_F(LegacyInputRouterImplScaleGestureEventTest, GestureTapOthers) {
   TestTap("GestureDoubleTap", WebInputEvent::kGestureDoubleTap);
+  TestTap("GestureTapDown", WebInputEvent::kGestureTapDown);
   TestTap("GestureTap", WebInputEvent::kGestureTap);
   TestTap("GestureTapUnconfirmed", WebInputEvent::kGestureTapUnconfirmed);
 }
@@ -2501,6 +2502,11 @@ TEST_F(LegacyInputRouterImplScaleGestureEventTest, GestureTwoFingerTap) {
 
 TEST_F(LegacyInputRouterImplScaleGestureEventTest, GestureFlingStart) {
   const gfx::Point orig(10, 20), scaled(20, 40);
+
+  WebGestureEvent prepare_fling =
+      BuildGestureEvent(WebInputEvent::kGestureScrollBegin, orig);
+  SimulateGestureEvent(prepare_fling);
+
   WebGestureEvent event =
       BuildGestureEvent(WebInputEvent::kGestureFlingStart, orig);
   event.data.fling_start.velocity_x = 30;
