@@ -52,7 +52,7 @@ class WebLeakDetectorClient {
     unsigned number_of_worker_global_scopes;
   };
 
-  virtual void OnLeakDetectionComplete(const Result&) = 0;
+  virtual void OnGarbageCollectionComplete(const Result&) = 0;
 };
 
 // |WebLeakDetector| detects leaks of various Blink objects, counting

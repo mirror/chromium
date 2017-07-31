@@ -186,7 +186,7 @@ class RenderViewTest : public testing::Test, blink::WebLeakDetectorClient {
   void TearDown() override;
 
   // blink::WebLeakDetectorClient implementation.
-  void OnLeakDetectionComplete(const Result& result) override;
+  void OnGarbageCollectionComplete(const Result& result) override;
 
  protected:
   base::test::ScopedTaskEnvironment scoped_task_environment_;
