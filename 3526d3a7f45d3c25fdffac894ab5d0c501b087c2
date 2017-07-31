@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "921ab7fb_589a54cd",
+        "filename": "chrome/browser/ui/cocoa/passwords/pending_password_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-07-31T09:58:47Z",
+      "side": 0,
+      "message": "nit: keep the line",
+      "revId": "3526d3a7f45d3c25fdffac894ab5d0c501b087c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

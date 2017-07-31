@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "badb083a_b08c16e5",
+        "filename": "chrome/browser/ui/cocoa/passwords/passwords_list_view_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-07-31T09:58:47Z",
+      "side": 1,
+      "message": "Can\u0027t you forward declare SavePendingPasswordViewController?",
+      "range": {
+        "startLine": 13,
+        "startChar": 32,
+        "endLine": 13,
+        "endChar": 33
+      },
+      "revId": "f36ead85d0752b6226d288fd56c329e508708937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
