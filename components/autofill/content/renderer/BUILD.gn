@@ -78,6 +78,7 @@ static_library("test_support") {
 source_set("unit_tests") {
   testonly = true
   sources = [
+    "autofill_agent_unittest.cc",
     "renderer_save_password_progress_logger_unittest.cc",
   ]
 
@@ -85,5 +86,6 @@ source_set("unit_tests") {
     ":test_support",
     "//components/autofill/content/common:mojo_interfaces",
     "//testing/gtest",
+    "//third_party/WebKit/public:blink",
   ]
 }

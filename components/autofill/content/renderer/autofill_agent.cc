@@ -432,27 +432,34 @@ void AutofillAgent::DoAcceptDataListSuggestion(
   // If this element takes multiple values then replace the last part with
   // the suggestion.
   if (input_element->IsMultiple() && input_element->IsEmailField()) {
-    base::string16 value = input_element->EditingValue().Utf16();
-    std::vector<base::StringPiece16> parts =
-        base::SplitStringPiece(value, base::ASCIIToUTF16(","),
-                               base::KEEP_WHITESPACE, base::SPLIT_WANT_ALL);
-    if (parts.size() == 0)
-      parts.push_back(base::StringPiece16());
-
-    base::string16 last_part = parts.back().as_string();
-    // We want to keep just the leading whitespace.
-    for (size_t i = 0; i < last_part.size(); ++i) {
-      if (!base::IsUnicodeWhitespace(last_part[i])) {
-        last_part = last_part.substr(0, i);
-        break;
-      }
-    }
-    last_part.append(suggested_value);
-    parts.back() = last_part;
-
-    new_value = base::JoinString(parts, base::ASCIIToUTF16(","));
+    new_value = GetMultipleValueFromSuggestion(
+        input_element->EditingValue().Utf16(), suggested_value);
   }
   DoFillFieldWithValue(new_value, input_element);
+}
+
+// static
+base::string16 AutofillAgent::GetMultipleValueFromSuggestion(
+    const base::string16& input_element_value,
+    const base::string16& suggested_value) {
+  std::vector<base::StringPiece16> parts =
+      base::SplitStringPiece(input_element_value, base::ASCIIToUTF16(","),
+                             base::KEEP_WHITESPACE, base::SPLIT_WANT_ALL);
+  if (parts.size() == 0)
+    parts.push_back(base::StringPiece16());
+
+  base::string16 last_part = parts.back().as_string();
+  // We want to keep just the leading whitespace.
+  for (size_t i = 0; i < last_part.size(); ++i) {
+    if (!base::IsUnicodeWhitespace(last_part[i])) {
+      last_part = last_part.substr(0, i);
+      break;
+    }
+  }
+  last_part.append(suggested_value);
+  parts.back() = last_part;
+
+  return base::JoinString(parts, base::ASCIIToUTF16(","));
 }
 
 // mojom::AutofillAgent:

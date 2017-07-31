@@ -97,6 +97,7 @@ class AutofillAgent : public content::RenderFrameObserver,
   void DidAssociateFormControlsDynamically() override;
 
  private:
+  FRIEND_TEST_ALL_PREFIXES(AutofillAgentTest, GetMultipleValueFromSuggestion);
   FRIEND_TEST_ALL_PREFIXES(FormAutocompleteTest, CollectFormlessElements);
   FRIEND_TEST_ALL_PREFIXES(FormAutocompleteTest, DoAcceptDataListSuggestion);
 
@@ -201,6 +202,13 @@ class AutofillAgent : public content::RenderFrameObserver,
 
   // Sets the element value to reflect the selected |suggested_value|.
   void DoAcceptDataListSuggestion(const base::string16& suggested_value);
+
+  // Gets the final string value to autofill a "multiple" input field, based on
+  // the current value and the suggestion. May replace all or just part of the
+  // current value.
+  static base::string16 GetMultipleValueFromSuggestion(
+      const base::string16& input_element_value,
+      const base::string16& suggested_value);
 
   // Fills |form| and |field| with the FormData and FormField corresponding to
   // |node|. Returns true if the data was found; and false otherwise.
