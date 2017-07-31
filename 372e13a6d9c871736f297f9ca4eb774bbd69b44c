@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bdde8aae_4e2f1e25",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-31T12:36:50Z",
+      "side": 1,
+      "message": "nit: You could use [NTP::Contextual]",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 5
+      },
+      "revId": "372e13a6d9c871736f297f9ca4eb774bbd69b44c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29882ab9_8e902979",
+        "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-31T12:36:50Z",
+      "side": 1,
+      "message": "have you considered moving these files into contextual folder?\n\nBasically, there are quite a few files in remote already and contextual files are very similar to the existing ones, so it may be cumbersome to find the right ones.",
+      "range": {
+        "startLine": 5,
+        "startChar": 38,
+        "endLine": 5,
+        "endChar": 39
+      },
+      "revId": "372e13a6d9c871736f297f9ca4eb774bbd69b44c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b440056_53357611",
+        "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-31T12:36:50Z",
+      "side": 1,
+      "message": "Please add a virtual destructor with a default implementation (e.g. like in category_ranker.h). Without it there will be a memory leak if you destroy an inherited object through a pointer to this class (because ContextuallSuggestionsFetcher destructor will be called).",
+      "range": {
+        "startLine": 22,
+        "startChar": 6,
+        "endLine": 22,
+        "endChar": 34
+      },
+      "revId": "372e13a6d9c871736f297f9ca4eb774bbd69b44c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06163eda_b353672a",
+        "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-31T12:36:50Z",
+      "side": 1,
+      "message": "It is a bit a shame to have two similar interfaces for fetchers. Have you considered merging RemoteSuggestionsFetcher and this class into SuggestionsFetcher?\n\nBasically, currently they are doing exactly the same with a few minor differences.\n\nIn my view the only real issue with merging them is which callback should Fetching use for returning suggestions. However, I believe Contextual Fetcher could cope with returning through SnippetsAvailableCallback (but please rename it to Suggestions*). \n\nI understand that we are not going to reuse ContextualFetcher in RemoteProvider, but still having almost duplicate interfaces feels strange.\nTherefore, it may be worth confirming this with someone else before investing time :)",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 42
+      },
+      "revId": "372e13a6d9c871736f297f9ca4eb774bbd69b44c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4b3d47d_6ad4befa",
+        "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-31T12:36:50Z",
+      "side": 1,
+      "message": "This must be virtual.",
+      "range": {
+        "startLine": 41,
+        "startChar": 3,
+        "endLine": 41,
+        "endChar": 35
+      },
+      "revId": "372e13a6d9c871736f297f9ca4eb774bbd69b44c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c32b98bf_efb31f5d",
+        "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-31T12:36:50Z",
+      "side": 1,
+      "message": "Please add\n\n// ContextualSuggestionsFetcher implementation.\n\nbefore this line.",
+      "range": {
+        "startLine": 43,
+        "startChar": 2,
+        "endLine": 43,
+        "endChar": 34
+      },
+      "revId": "372e13a6d9c871736f297f9ca4eb774bbd69b44c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
