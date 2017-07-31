@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "74ec8669_8da7bbef",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-07-31T11:41:02Z",
+      "side": 1,
+      "message": "I was being a bit defensive, I changed this into a dcheck and pulled checking platform_private_footprint up to where os_dump is checked.",
+      "parentUuid": "ecd1beb1_512a6047",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 42
+      },
+      "revId": "5063af0b6a3a37a920f4ba417c394ffeaf670aee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb6627e0_283d518f",
         "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/client_process_impl.cc",
         "patchSetId": 3
