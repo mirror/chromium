@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d3d726f4_6b193059",
+        "filename": "content/browser/shared_worker/shared_worker_content_settings_proxy_impl.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1227909
+      },
+      "writtenOn": "2017-07-31T02:35:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c94b13a_21523380",
+      "range": {
+        "startLine": 25,
+        "startChar": 12,
+        "endLine": 25,
+        "endChar": 16
+      },
+      "revId": "00ef3679565045f14655052d96672af6f80af79b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "510a5be8_ec58ab81",
         "filename": "content/browser/shared_worker/shared_worker_content_settings_proxy_impl.h",
         "patchSetId": 24
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-28T08:59:19Z",
       "side": 1,
       "message": "Not a blocking comment, but I wonder if we should just have SharedWorkerHost own this / implement this in a followup? Then we don\u0027t need a WeakPtr (and the lifetime will be strongly associated with the SharedWorkerHost).",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 46
+      },
+      "revId": "00ef3679565045f14655052d96672af6f80af79b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "495b4470_5a2fa810",
+        "filename": "content/browser/shared_worker/shared_worker_content_settings_proxy_impl.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1227909
+      },
+      "writtenOn": "2017-07-31T02:35:54Z",
+      "side": 1,
+      "message": "Thanks! I\u0027ll do it in another patch.",
+      "parentUuid": "510a5be8_ec58ab81",
       "range": {
         "startLine": 46,
         "startChar": 2,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f19261b6_4534341b",
+        "filename": "content/browser/shared_worker/shared_worker_host.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1227909
+      },
+      "writtenOn": "2017-07-31T02:35:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad2e3e32_4b0599f7",
+      "range": {
+        "startLine": 210,
+        "startChar": 2,
+        "endLine": 210,
+        "endChar": 11
+      },
+      "revId": "00ef3679565045f14655052d96672af6f80af79b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8386904_090d7807",
         "filename": "content/common/worker_messages.h",
         "patchSetId": 24
@@ -91,6 +163,30 @@
       "revId": "00ef3679565045f14655052d96672af6f80af79b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0eee61e_174c5451",
+        "filename": "content/common/worker_messages.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1227909
+      },
+      "writtenOn": "2017-07-31T02:35:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8386904_090d7807",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 53
+      },
+      "revId": "00ef3679565045f14655052d96672af6f80af79b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "8878ff51_54dd6ec3",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 2280,
+      "author": {
+        "id": 1227909
+      },
+      "writtenOn": "2017-07-31T02:35:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7b037a4_e3f4670a",
+      "range": {
+        "startLine": 2280,
+        "startChar": 6,
+        "endLine": 2280,
+        "endChar": 36
+      },
+      "revId": "00ef3679565045f14655052d96672af6f80af79b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a41430b_1211e540",
         "filename": "content/renderer/shared_worker/embedded_shared_worker_stub.cc",
         "patchSetId": 24
@@ -137,6 +257,30 @@
       "revId": "00ef3679565045f14655052d96672af6f80af79b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95fb9ff7_10e0b734",
+        "filename": "content/renderer/shared_worker/embedded_shared_worker_stub.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1227909
+      },
+      "writtenOn": "2017-07-31T02:35:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a41430b_1211e540",
+      "range": {
+        "startLine": 148,
+        "startChar": 6,
+        "endLine": 148,
+        "endChar": 35
+      },
+      "revId": "00ef3679565045f14655052d96672af6f80af79b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "f5f82a40_68bd75f6",
+        "filename": "third_party/WebKit/Source/core/workers/SharedWorkerContentSettingsProxy.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1227909
+      },
+      "writtenOn": "2017-07-31T02:35:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c99c1e5_3ab4ffaa",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 17
+      },
+      "revId": "00ef3679565045f14655052d96672af6f80af79b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32de29a9_00985657",
         "filename": "third_party/WebKit/Source/core/workers/SharedWorkerContentSettingsProxy.cpp",
         "patchSetId": 24
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "22b8847a_0bb33ecc",
+        "filename": "third_party/WebKit/Source/core/workers/SharedWorkerContentSettingsProxy.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1227909
+      },
+      "writtenOn": "2017-07-31T02:35:54Z",
+      "side": 1,
+      "message": "Added some comment.",
+      "parentUuid": "32de29a9_00985657",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 41
+      },
+      "revId": "00ef3679565045f14655052d96672af6f80af79b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c170b713_723e0fcf",
         "filename": "third_party/WebKit/Source/core/workers/SharedWorkerContentSettingsProxy.h",
         "patchSetId": 24
@@ -200,6 +392,24 @@
       "revId": "00ef3679565045f14655052d96672af6f80af79b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00bf64d5_3b577c6e",
+        "filename": "third_party/WebKit/Source/core/workers/SharedWorkerContentSettingsProxy.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1227909
+      },
+      "writtenOn": "2017-07-31T02:35:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c170b713_723e0fcf",
+      "revId": "00ef3679565045f14655052d96672af6f80af79b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -226,6 +436,30 @@
     },
     {
       "key": {
+        "uuid": "cc7e43e9_716077d5",
+        "filename": "third_party/WebKit/Source/core/workers/SharedWorkerContentSettingsProxy.h",
+        "patchSetId": 24
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1227909
+      },
+      "writtenOn": "2017-07-31T02:35:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a18977c4_0ab98288",
+      "range": {
+        "startLine": 31,
+        "startChar": 36,
+        "endLine": 31,
+        "endChar": 46
+      },
+      "revId": "00ef3679565045f14655052d96672af6f80af79b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4729326d_2462f3d6",
         "filename": "third_party/WebKit/public/web/shared_worker_content_settings_proxy.mojom",
         "patchSetId": 24
@@ -237,6 +471,30 @@
       "writtenOn": "2017-07-28T08:59:19Z",
       "side": 1,
       "message": "Do we have more than one origin active per SharedWorkerHost?\n\n(This shouldn\u0027t be blocking, as it replicates the original logic. However, I\u0027m wondering why we need to pass it over IPC; perhaps the interface or method comments could explain more a bit about the relationship between SharedWorkerHost and different origins)",
+      "range": {
+        "startLine": 18,
+        "startChar": 17,
+        "endLine": 18,
+        "endChar": 40
+      },
+      "revId": "00ef3679565045f14655052d96672af6f80af79b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a553a6b_5eefdcaf",
+        "filename": "third_party/WebKit/public/web/shared_worker_content_settings_proxy.mojom",
+        "patchSetId": 24
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1227909
+      },
+      "writtenOn": "2017-07-31T02:35:54Z",
+      "side": 1,
+      "message": "I\u0027ll do it in another patch too.",
+      "parentUuid": "4729326d_2462f3d6",
       "range": {
         "startLine": 18,
         "startChar": 17,
