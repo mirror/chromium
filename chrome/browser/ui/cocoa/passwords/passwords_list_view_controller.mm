@@ -35,6 +35,15 @@ CGFloat ManagePasswordItemWidth() {
                   undoExplanationWidth + kItemLabelSpacing + undoLinkWidth);
 }
 
+NSTextField* EditableUsernameField(const base::string16& text) {
+  base::scoped_nsobject<NSTextField> textField(
+      [[NSTextField alloc] initWithFrame:NSZeroRect]);
+  InitLabel(textField, text);
+  [textField setEditable:YES];
+  [textField setSelectable:YES];
+  return textField.autorelease();
+}
+
 NSTextField* Label(const base::string16& text) {
   base::scoped_nsobject<NSTextField> textField(
       [[NSTextField alloc] initWithFrame:NSZeroRect]);
@@ -204,12 +213,20 @@ NSTextField* FederationLabel(const base::string16& text) {
 
 @implementation PendingPasswordItemView
 
-- (id)initWithForm:(const autofill::PasswordForm&)form {
+- (NSTextField*)usernameField {
+  return usernameField_.get();
+}
+
+- (id)initWithForm:(const autofill::PasswordForm&)form editMode:(BOOL)editMode {
   if ((self = [super initWithFrame:NSZeroRect])) {
     // Add the username.
-    usernameField_.reset([UsernameLabel(GetDisplayUsername(form)) retain]);
+    if (editMode) {
+      usernameField_.reset(
+          [EditableUsernameField(GetDisplayUsername(form)) retain]);
+    } else {
+      usernameField_.reset([UsernameLabel(GetDisplayUsername(form)) retain]);
+    }
     [self addSubview:usernameField_];
-
     if (form.federation_origin.unique()) {
       passwordField_.reset([PasswordLabel(form.password_value) retain]);
     } else {
@@ -276,7 +293,7 @@ NSTextField* FederationLabel(const base::string16& text) {
 - (void)refresh;
 
 // Find the next content view.
-- (void)updateContent;
+- (PendingPasswordItemView*)updateContent;
 @end
 
 @implementation ManagePasswordItemViewController
@@ -314,29 +331,49 @@ NSTextField* FederationLabel(const base::string16& text) {
                                       ManagePasswordsBubbleModel::ADD_PASSWORD);
 }
 
-- (void)refresh {
-  [self updateContent];
-  [self layoutWithFirstColumn:[delegate_ firstColumnMaxWidth]
-                 secondColumn:[delegate_ secondColumnMaxWidth]];
+- (BOOL)control:(NSControl*)control
+               textView:(NSTextView*)fieldEditor
+    doCommandBySelector:(SEL)commandSelector {
+  if (commandSelector == @selector(insertNewline:) ||
+      commandSelector == @selector(insertTab:) ||
+      commandSelector == @selector(cancelOperation:)) {
+    [delegate_ onEditModeUpdated:FALSE];
+    // TODO(crbug.com/734965): handle username update.
+    return TRUE;
+  }
+  return FALSE;
 }
 
-- (void)updateContent {
+- (void)refresh {
+  PendingPasswordItemView* item = [self updateContent];
+  [self layoutWithFirstColumn:[delegate_ firstColumnMaxWidth]
+                 secondColumn:[delegate_ secondColumnMaxWidth]];
+  if ([delegate_ editMode]) {
+    [[contentView_ window] makeFirstResponder:[item usernameField]];
+    [[item usernameField] setDelegate:self];
+  }
+}
+
+- (PendingPasswordItemView*)updateContent {
   switch (state_) {
-    case MANAGE_PASSWORD_ITEM_STATE_PENDING:
-      contentView_.reset(
-          [[PendingPasswordItemView alloc] initWithForm:*passwordForm_]);
-      return;
+    case MANAGE_PASSWORD_ITEM_STATE_PENDING: {
+      PendingPasswordItemView* item =
+          [[PendingPasswordItemView alloc] initWithForm:*passwordForm_
+                                               editMode:[delegate_ editMode]];
+      contentView_.reset(item);
+      return item;
+    }
     case MANAGE_PASSWORD_ITEM_STATE_MANAGE:
       contentView_.reset([[ManagePasswordItemView alloc]
           initWithForm:*passwordForm_
                 target:self
                 action:@selector(onDeleteClicked:)]);
-      return;
+      return nil;
     case MANAGE_PASSWORD_ITEM_STATE_DELETED:
       contentView_.reset([[UndoPasswordItemView alloc]
           initWithTarget:self
                   action:@selector(onUndoClicked:)]);
-      return;
+      return nil;
   };
 }
 
@@ -383,6 +420,7 @@ NSTextField* FederationLabel(const base::string16& text) {
 
 @synthesize firstColumnMaxWidth = firstColumnMaxWidth_;
 @synthesize secondColumnMaxWidth = secondColumnMaxWidth_;
+@synthesize editMode = editMode_;
 
 - (id)initWithModelAndForms:(ManagePasswordsBubbleModel*)model
                       forms:(const PasswordFormsVector*)password_forms {
@@ -403,7 +441,9 @@ NSTextField* FederationLabel(const base::string16& text) {
 }
 
 - (id)initWithModelAndForm:(ManagePasswordsBubbleModel*)model
-                      form:(const autofill::PasswordForm*)form {
+                      form:(const autofill::PasswordForm*)form
+                  editMode:(BOOL)editMode {
+  editMode_ = editMode;
   if ((self = [super initWithNibName:nil bundle:nil])) {
     base::scoped_nsobject<NSMutableArray> items(
         [[NSMutableArray arrayWithCapacity:1] retain]);
@@ -415,6 +455,19 @@ NSTextField* FederationLabel(const base::string16& text) {
     itemViews_.reset(items.release());
   }
   return self;
+}
+
+- (void)setDelegate:(SavePendingPasswordViewController*)delegate {
+  delegate_ = delegate;
+}
+
+- (void)onEditModeUpdated:(BOOL)editMode {
+  if (!editMode && delegate_) {
+    [delegate_ onSwitchEditMode:nil];
+  }
+  editMode_ = editMode;
+  ManagePasswordItemViewController* item = [itemViews_ objectAtIndex:0];
+  [item refresh];
 }
 
 - (void)loadView {

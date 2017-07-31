@@ -14,7 +14,6 @@
 @interface SavePendingPasswordViewController ()
 - (void)onSaveClicked:(id)sender;
 - (void)onNeverForThisSiteClicked:(id)sender;
-- (void)onEditClicked:(id)sender;
 @end
 
 @implementation SavePendingPasswordViewController
@@ -42,7 +41,13 @@
   [self.delegate viewShouldDismiss];
 }
 
-- (void)onEditClicked:(id)sender {
+- (void)onSwitchEditMode:(id)sender {
+  if ([editButton_ isEnabled]) {
+    [passwordItem_ onEditModeUpdated:TRUE];
+    [editButton_ setEnabled:FALSE];
+  } else {
+    [editButton_ setEnabled:TRUE];
+  }
   // TODO(crbug.com/734965)
 }
 
@@ -53,7 +58,9 @@
     return nil;
   passwordItem_.reset([[PasswordsListViewController alloc]
       initWithModelAndForm:self.model
-                      form:&self.model->pending_password()]);
+                      form:&self.model->pending_password()
+                  editMode:FALSE]);
+  [passwordItem_ setDelegate:self];
   return [passwordItem_ view];
 }
 
@@ -80,7 +87,7 @@
         addButton:l10n_util::GetNSString(IDS_PASSWORD_MANAGER_EDIT_BUTTON)
            toView:view
            target:self
-           action:@selector(onEditClicked:)] retain]);
+           action:@selector(onSwitchEditMode:)] retain]);
     return @[ saveButton_, neverButton_, editButton_ ];
   }
   return @[ saveButton_, neverButton_ ];

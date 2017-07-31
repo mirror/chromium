@@ -10,6 +10,7 @@
 #import <Cocoa/Cocoa.h>
 
 #import "base/mac/scoped_nsobject.h"
+#import "chrome/browser/ui/cocoa/passwords/save_pending_password_view_controller.h"
 
 namespace autofill {
 struct PasswordForm;
@@ -24,8 +25,10 @@ typedef std::vector<autofill::PasswordForm> PasswordFormsVector;
 // Retrieves the model
 @property(readonly, nonatomic) ManagePasswordsBubbleModel* model;
 
+@property(readonly, nonatomic) BOOL editMode;
 @property(readonly, nonatomic) CGFloat firstColumnMaxWidth;
 @property(readonly, nonatomic) CGFloat secondColumnMaxWidth;
+- (void)onEditModeUpdated:(BOOL)editMode;
 @end
 
 // Shows a list of usernames/passwords.
@@ -38,11 +41,17 @@ typedef std::vector<autofill::PasswordForm> PasswordFormsVector;
   // Maximum widthes of columns across all the rows.
   CGFloat firstColumnMaxWidth_;
   CGFloat secondColumnMaxWidth_;
+  // Edit mode for username field.
+  BOOL editMode_;
+  SavePendingPasswordViewController* delegate_;
 }
+
 - (id)initWithModelAndForms:(ManagePasswordsBubbleModel*)model
                       forms:(const PasswordFormsVector*)password_forms;
 - (id)initWithModelAndForm:(ManagePasswordsBubbleModel*)model
-                      form:(const autofill::PasswordForm*)form;
+                      form:(const autofill::PasswordForm*)form
+                  editMode:(BOOL)editMode;
+- (void)setDelegate:(SavePendingPasswordViewController*)delegate;
 @end
 
 @interface PasswordsListViewController (Testing)

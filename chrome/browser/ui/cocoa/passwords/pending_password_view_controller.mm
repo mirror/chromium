@@ -135,7 +135,6 @@
   if (passwordRow) {
     // Password item goes on the next row.
     [passwordRow setFrameOrigin:NSMakePoint(curX, curY)];
-
     // Title goes at the top after some padding.
     curY = NSMaxY([passwordRow frame]) + kUnrelatedControlVerticalPadding;
   }
