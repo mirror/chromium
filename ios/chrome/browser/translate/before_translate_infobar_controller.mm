@@ -302,10 +302,12 @@ NSTimeInterval kPickerAnimationDurationInSeconds = 0.2;
       initWithBarButtonSystemItem:UIBarButtonSystemItemDone
                            target:self
                            action:@selector(languageSelectionDone)];
+  [doneButton setAccessibilityIdentifier:@"Done"];
   UIBarButtonItem* cancelButton = [[UIBarButtonItem alloc]
       initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
                            target:self
                            action:@selector(dismissLanguageSelectionView)];
+  [cancelButton setAccessibilityIdentifier:@"Cancel"];
   UINavigationItem* item = [[UINavigationItem alloc] initWithTitle:@""];
   [item setRightBarButtonItem:doneButton];
   [item setLeftBarButtonItem:cancelButton];
