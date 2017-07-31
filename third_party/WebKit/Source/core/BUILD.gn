@@ -1630,6 +1630,7 @@ jumbo_source_set("unit_tests") {
 
   deps = [
     ":core",
+    "//skia",
     "//testing/gmock",
     "//testing/gtest",
     "//third_party/WebKit/Source/core/editing:unit_tests",

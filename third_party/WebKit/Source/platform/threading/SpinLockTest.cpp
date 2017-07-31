@@ -33,6 +33,7 @@
 #include <memory>
 #include "platform/CrossThreadFunctional.h"
 #include "platform/WebTaskRunner.h"
+#include "platform/testing/TestingPlatformSupport.h"
 #include "platform/wtf/PtrUtil.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebThread.h"
@@ -40,6 +41,14 @@
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace blink {
+
+class SpinLockTestPlatform : public TestingPlatformSupport {
+ public:
+  std::unique_ptr<WebThread> CreateThread(const char* name) {
+    DCHECK(old_platform_);
+    return old_platform_->CreateThread(name);
+  }
+};
 
 static const size_t kBufferSize = 16;
 
@@ -71,6 +80,7 @@ static void ThreadMain(volatile char* buffer) {
 }
 
 TEST(SpinLockTest, Torture) {
+  ScopedTestingPlatformSupport<SpinLockTestPlatform> platform;
   char shared_buffer[kBufferSize];
 
   std::unique_ptr<WebThread> thread1 =
