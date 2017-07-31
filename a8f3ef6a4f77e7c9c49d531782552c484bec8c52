@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf7515d2_fabf2f0a",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1844,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-07-31T16:09:56Z",
+      "side": 1,
+      "message": "Nit: simplify to kChromeHomeModernLayoutName and kChromeHomeModernLayoutDescription. I originally used the \"Enable\" part but realized now it\u0027s cleaner and fine without it.",
+      "range": {
+        "startLine": 1844,
+        "startChar": 25,
+        "endLine": 1844,
+        "endChar": 58
+      },
+      "revId": "a8f3ef6a4f77e7c9c49d531782552c484bec8c52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
