@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c749d92c_e675c4e9",
+        "filename": "content/browser/geolocation/geolocation_service_impl_unittest.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-31T23:48:48Z",
+      "side": 1,
+      "message": "ADD_FAILURE() \u003c\u003c \"Permissions checked unexpectedly.\";",
+      "range": {
+        "startLine": 135,
+        "startChar": 8,
+        "endLine": 135,
+        "endChar": 48
+      },
+      "revId": "b57594854ea2576f796b7f5104c68581535f2533",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
