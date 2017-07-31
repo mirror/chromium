@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e78ad431_161a2e23",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1282,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-07-31T18:27:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01822a92_bfb2dc88",
+      "range": {
+        "startLine": 1282,
+        "startChar": 7,
+        "endLine": 1282,
+        "endChar": 42
+      },
+      "revId": "150a2f121239cb6aa9323b0e9b98a2db89cd44f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "621490bf_6e23b2b6",
         "filename": "content/browser/loader/resource_scheduler.h",
         "patchSetId": 9
@@ -71,6 +95,54 @@
     },
     {
       "key": {
+        "uuid": "b1afc649_d24eed3e",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-07-31T18:27:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "621490bf_6e23b2b6",
+      "range": {
+        "startLine": 181,
+        "startChar": 2,
+        "endLine": 181,
+        "endChar": 8
+      },
+      "revId": "150a2f121239cb6aa9323b0e9b98a2db89cd44f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e5f18156_3a6ac0a7",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-07-31T18:27:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd176fd7_6a5f796d",
+      "range": {
+        "startLine": 181,
+        "startChar": 16,
+        "endLine": 181,
+        "endChar": 55
+      },
+      "revId": "150a2f121239cb6aa9323b0e9b98a2db89cd44f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb2d5491_3ef02457",
         "filename": "content/browser/loader/resource_scheduler.h",
         "patchSetId": 9
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "d02896e6_74d1932e",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-07-31T18:27:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb2d5491_3ef02457",
+      "range": {
+        "startLine": 228,
+        "startChar": 15,
+        "endLine": 228,
+        "endChar": 60
+      },
+      "revId": "150a2f121239cb6aa9323b0e9b98a2db89cd44f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68046c3f_d3db45e6",
         "filename": "content/browser/loader/resource_scheduler.h",
         "patchSetId": 9
@@ -105,6 +201,30 @@
       "writtenOn": "2017-07-31T17:39:45Z",
       "side": 1,
       "message": "I wonder if it is better to create a struct that contains all the experiment params. This way it is easier to see which variables belong to which experiment, and helps in readability as we add more experiments.",
+      "range": {
+        "startLine": 232,
+        "startChar": 13,
+        "endLine": 232,
+        "endChar": 36
+      },
+      "revId": "150a2f121239cb6aa9323b0e9b98a2db89cd44f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70aa3f82_a2f4699d",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-07-31T18:27:18Z",
+      "side": 1,
+      "message": "That\u0027s probably a good idea. May work on it after this CL as a refactor CL.",
+      "parentUuid": "68046c3f_d3db45e6",
       "range": {
         "startLine": 232,
         "startChar": 13,
