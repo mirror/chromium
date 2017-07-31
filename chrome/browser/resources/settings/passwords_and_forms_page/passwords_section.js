@@ -308,30 +308,68 @@ Polymer({
   },
 
   /**
+   * @param {?HTMLElement} headingLabel
+   * @param {!HTMLElement} noneLabel
+   * @param {!HTMLElement} noResultsLabel
+   * @param {!Array<Object>} list
+   * @param {?function(Object): boolean} filter
+   */
+  getFilteredAndUpdateLabels_: function(
+      headingLabel, noneLabel, noResultsLabel, list, filter) {
+    headingLabel = headingLabel || /** @type HTMLElement */ ({hidden: false});
+
+    if (!list.length) {
+      headingLabel.hidden = true;
+      noneLabel.hidden = false;
+      noResultsLabel.hidden = true;
+
+      return list;
+    }
+
+    if (!filter) {
+      headingLabel.hidden = false;
+      noneLabel.hidden = true;
+      noResultsLabel.hidden = true;
+
+      return list;
+    }
+
+    var filteredList =
+        list.filter(/** @type function(Object)): boolean */ (filter));
+
+    headingLabel.hidden = !filteredList.length;
+    noneLabel.hidden = true;
+    noResultsLabel.hidden = !!filteredList.length;
+
+    return filteredList;
+  },
+
+  /**
    * @param {!Array<!chrome.passwordsPrivate.PasswordUiEntry>} savedPasswords
    * @param {string} filter
    * @return {!Array<!chrome.passwordsPrivate.PasswordUiEntry>}
    * @private
    */
   getFilteredPasswords_: function(savedPasswords, filter) {
-    if (!filter)
-      return savedPasswords;
-
-    return savedPasswords.filter(function(password) {
-      return password.loginPair.urls.shown.includes(filter) ||
-          password.loginPair.username.includes(filter);
-    });
+    return this.getFilteredAndUpdateLabels_(
+        this.$.savedPasswordsHeading, this.$.noPasswordsLabel,
+        this.$.noPasswordsFoundLabel, savedPasswords, filter ? (password) => {
+          return password.loginPair.urls.shown.includes(filter) ||
+              password.loginPair.username.includes(filter);
+        } : null);
   },
 
   /**
+   * @param {!Array<!chrome.passwordsPrivate.ExceptionEntry>} exceptions
    * @param {string} filter
-   * @return {function(!chrome.passwordsPrivate.ExceptionEntry): boolean}
+   * @return {!Array<!chrome.passwordsPrivate.ExceptionEntry>}
    * @private
    */
-  passwordExceptionFilter_: function(filter) {
-    return function(exception) {
-      return exception.urls.shown.includes(filter);
-    };
+  getFilteredExceptions_: function(exceptions, filter) {
+    return this.getFilteredAndUpdateLabels_(
+        null,  // No heading in password exceptions.
+        this.$.noExceptionsLabel, this.$.noExceptionsFoundLabel, exceptions,
+        filter ? exception => exception.urls.shown.includes(filter) : null);
   },
 
   /**
