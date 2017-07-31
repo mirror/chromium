@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "6edec2ee_b22e7268",
+        "filename": "chrome/browser/ui/cocoa/passwords/password_item_views.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-31T12:56:10Z",
+      "side": 1,
+      "message": "What happened here? The comment is wrong now.",
+      "range": {
+        "startLine": 71,
+        "startChar": 37,
+        "endLine": 71,
+        "endChar": 51
+      },
+      "revId": "f36ead85d0752b6226d288fd56c329e508708937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fef3063_7cf6fafb",
+        "filename": "chrome/browser/ui/cocoa/passwords/password_item_views.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-31T12:56:10Z",
+      "side": 1,
+      "message": "Property should be declared before the methods https://google.github.io/styleguide/objcguide.xml#Properties",
+      "range": {
+        "startLine": 75,
+        "startChar": 1,
+        "endLine": 75,
+        "endChar": 9
+      },
+      "revId": "f36ead85d0752b6226d288fd56c329e508708937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7f40df8_183ef8c4",
+        "filename": "chrome/browser/ui/cocoa/passwords/password_item_views.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-31T12:56:10Z",
+      "side": 1,
+      "message": "That\u0027s an implementation detail and can go to the mm file.",
+      "range": {
+        "startLine": 86,
+        "startChar": 50,
+        "endLine": 86,
+        "endChar": 69
+      },
+      "revId": "f36ead85d0752b6226d288fd56c329e508708937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "badb083a_b08c16e5",
         "filename": "chrome/browser/ui/cocoa/passwords/passwords_list_view_controller.h",
         "patchSetId": 1
@@ -46,6 +115,282 @@
       "revId": "f36ead85d0752b6226d288fd56c329e508708937",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7ae00e4f_2937cdfd",
+        "filename": "chrome/browser/ui/cocoa/passwords/passwords_list_view_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-31T12:56:10Z",
+      "side": 1,
+      "message": "blank line before",
+      "range": {
+        "startLine": 31,
+        "startChar": 8,
+        "endLine": 31,
+        "endChar": 25
+      },
+      "revId": "f36ead85d0752b6226d288fd56c329e508708937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c009c32f_44eda626",
+        "filename": "chrome/browser/ui/cocoa/passwords/passwords_list_view_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-31T12:56:10Z",
+      "side": 1,
+      "message": "This class shouldn\u0027t be mentioned in PasswordsListViewController. We should use a protocol instead.",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 35
+      },
+      "revId": "f36ead85d0752b6226d288fd56c329e508708937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35b19a63_d7d11daf",
+        "filename": "chrome/browser/ui/cocoa/passwords/passwords_list_view_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-31T12:56:10Z",
+      "side": 1,
+      "message": "Why isn\u0027t it a property?",
+      "range": {
+        "startLine": 54,
+        "startChar": 8,
+        "endLine": 54,
+        "endChar": 19
+      },
+      "revId": "f36ead85d0752b6226d288fd56c329e508708937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d7be663_955d6373",
+        "filename": "chrome/browser/ui/cocoa/passwords/passwords_list_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-31T12:56:10Z",
+      "side": 1,
+      "message": "Update the comment about what\u0027s returned.",
+      "range": {
+        "startLine": 296,
+        "startChar": 3,
+        "endLine": 296,
+        "endChar": 26
+      },
+      "revId": "f36ead85d0752b6226d288fd56c329e508708937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fc0a596_f20ae6fa",
+        "filename": "chrome/browser/ui/cocoa/passwords/passwords_list_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-31T12:56:10Z",
+      "side": 1,
+      "message": "What does the method do? From the name it\u0027s unclear.\n\nAlso it\u0027s not declared for some reason.",
+      "range": {
+        "startLine": 334,
+        "startChar": 8,
+        "endLine": 334,
+        "endChar": 15
+      },
+      "revId": "f36ead85d0752b6226d288fd56c329e508708937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d6bd52e_ca85d4e3",
+        "filename": "chrome/browser/ui/cocoa/passwords/passwords_list_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-31T12:56:10Z",
+      "side": 1,
+      "message": "Doesn\u0027t the NSTextField finishes editing anyway?",
+      "range": {
+        "startLine": 337,
+        "startChar": 35,
+        "endLine": 337,
+        "endChar": 48
+      },
+      "revId": "f36ead85d0752b6226d288fd56c329e508708937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e334fe64_b7db5d01",
+        "filename": "chrome/browser/ui/cocoa/passwords/passwords_list_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-31T12:56:10Z",
+      "side": 1,
+      "message": "Same question here.",
+      "range": {
+        "startLine": 338,
+        "startChar": 35,
+        "endLine": 338,
+        "endChar": 44
+      },
+      "revId": "f36ead85d0752b6226d288fd56c329e508708937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cedc566f_38557dda",
+        "filename": "chrome/browser/ui/cocoa/passwords/passwords_list_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-31T12:56:10Z",
+      "side": 1,
+      "message": "What happens if you leave the dedault handler?",
+      "range": {
+        "startLine": 339,
+        "startChar": 35,
+        "endLine": 339,
+        "endChar": 50
+      },
+      "revId": "f36ead85d0752b6226d288fd56c329e508708937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b6b182e_2b7a11ea",
+        "filename": "chrome/browser/ui/cocoa/passwords/passwords_list_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-31T12:56:10Z",
+      "side": 1,
+      "message": "I think it\u0027s not enough. I can click with the mouse to move focus away. Seems like you should be handling control:textShouldEndEditing",
+      "range": {
+        "startLine": 340,
+        "startChar": 15,
+        "endLine": 340,
+        "endChar": 32
+      },
+      "revId": "f36ead85d0752b6226d288fd56c329e508708937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05ad4c81_e91c9778",
+        "filename": "chrome/browser/ui/cocoa/passwords/passwords_list_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-31T12:56:10Z",
+      "side": 1,
+      "message": "You don\u0027t need PendingPasswordItemView* but just the username field here.",
+      "range": {
+        "startLine": 348,
+        "startChar": 2,
+        "endLine": 348,
+        "endChar": 25
+      },
+      "revId": "f36ead85d0752b6226d288fd56c329e508708937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dd99541_f36a86b9",
+        "filename": "chrome/browser/ui/cocoa/passwords/passwords_list_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-31T12:56:10Z",
+      "side": 1,
+      "message": "That method is confusing. Once it\u0027s called from the top NSView to propagate down; in another case it\u0027s another way around. I\u0027d prefer two methods.",
+      "range": {
+        "startLine": 464,
+        "startChar": 8,
+        "endLine": 464,
+        "endChar": 25
+      },
+      "revId": "f36ead85d0752b6226d288fd56c329e508708937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9eaedb0_5ac737c4",
+        "filename": "chrome/browser/ui/cocoa/passwords/save_pending_password_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-31T12:56:10Z",
+      "side": 1,
+      "message": "If it\u0027s a handler for the button then I\u0027d prefer it to be called only from there.",
+      "range": {
+        "startLine": 44,
+        "startChar": 8,
+        "endLine": 44,
+        "endChar": 24
+      },
+      "revId": "f36ead85d0752b6226d288fd56c329e508708937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
