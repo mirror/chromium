@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f72ea5bc_1aacd05f",
+        "filename": "cc/paint/solid_color_analyzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-31T20:27:54Z",
+      "side": 1,
+      "message": "FWIW I think enne@ found that this always returns true for our cases, but I think it\u0027s fine to be consistent with the other IsFullQuad and we can fix both at the same time.",
+      "range": {
+        "startLine": 78,
+        "startChar": 14,
+        "endLine": 78,
+        "endChar": 24
+      },
+      "revId": "ef52204077a39b8e3210355202cafd8d23cfa53b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bade544_aaf6017e",
+        "filename": "cc/paint/solid_color_analyzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-31T20:27:54Z",
+      "side": 1,
+      "message": "Is it possible to use rectStaysRect here? As far as I can tell, the only difference is that it also accepts rotations of multiples of 90 deg",
+      "range": {
+        "startLine": 92,
+        "startChar": 14,
+        "endLine": 92,
+        "endChar": 30
+      },
+      "revId": "ef52204077a39b8e3210355202cafd8d23cfa53b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03d77c18_f931f188",
+        "filename": "cc/paint/solid_color_analyzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-31T20:27:54Z",
+      "side": 1,
+      "message": "nit: SkRect clip_rect \u003d SkRect::Make(clip_irect);",
+      "range": {
+        "startLine": 99,
+        "startChar": 9,
+        "endLine": 100,
+        "endChar": 28
+      },
+      "revId": "ef52204077a39b8e3210355202cafd8d23cfa53b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8cd949e_ec992c0b",
+        "filename": "cc/paint/solid_color_analyzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-31T20:27:54Z",
+      "side": 1,
+      "message": "Looking at this function, it seems that we can just templatize the other IsFullRect on the second parameter and use that for both rects and rrects. Is that true or are there important subtle differences I\u0027m missing? If there are differences, could you comment on them here. If not, then I would just combine the two functions into one.",
+      "range": {
+        "startLine": 102,
+        "startChar": 2,
+        "endLine": 102,
+        "endChar": 41
+      },
+      "revId": "ef52204077a39b8e3210355202cafd8d23cfa53b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "548c9426_bbed8ae5",
+        "filename": "cc/paint/solid_color_analyzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-31T20:27:54Z",
+      "side": 1,
+      "message": "I\u0027m a bit concerned that we\u0027re re-using is_solid_color here. The problem is that we have a sequence of commands like\n\ndraw-not-solid\nsave\ncliprrect-solid\nrestore\n\nthen we\u0027ll end up saying that this is solid color where in reality it isn\u0027t.\n\nMaybe just return \"does_cover_canvas\" here or just do the check where you use this function (ie just check if (IsFullQuad(canvas, rrect_op-\u003errect)))",
+      "range": {
+        "startLine": 166,
+        "startChar": 4,
+        "endLine": 166,
+        "endChar": 27
+      },
+      "revId": "ef52204077a39b8e3210355202cafd8d23cfa53b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a0d5bea_45e23773",
+        "filename": "cc/paint/solid_color_analyzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-31T20:27:54Z",
+      "side": 1,
+      "message": "FWIW, with your changes here, we can probably trivially handle this case as well.",
+      "range": {
+        "startLine": 240,
+        "startChar": 6,
+        "endLine": 240,
+        "endChar": 34
+      },
+      "revId": "ef52204077a39b8e3210355202cafd8d23cfa53b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99b6c3a0_b6567615",
+        "filename": "cc/paint/solid_color_analyzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-31T20:27:54Z",
+      "side": 1,
+      "message": "Can you leave a comment here saying that \"if it\u0027s a full rect clip, then we can just treat it as if there was no clip and continue\" or something to that effect?",
+      "revId": "ef52204077a39b8e3210355202cafd8d23cfa53b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
