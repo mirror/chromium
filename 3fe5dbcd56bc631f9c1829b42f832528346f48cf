@@ -22,6 +22,30 @@
       "revId": "3fe5dbcd56bc631f9c1829b42f832528346f48cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae7c3fb5_8713eec2",
+        "filename": "ios/web/navigation/crw_navigation_item_holder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-07-31T15:38:27Z",
+      "side": 1,
+      "message": "Done. Unfortunately this means we can no longer use the dot syntax, but it doesn\u0027t look like there is a way to suppress the generation of setter for @property. :(",
+      "parentUuid": "a11ab6c6_3e19c25e",
+      "range": {
+        "startLine": 37,
+        "startChar": 8,
+        "endLine": 37,
+        "endChar": 29
+      },
+      "revId": "3fe5dbcd56bc631f9c1829b42f832528346f48cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
