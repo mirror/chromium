@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "84869c99_df6a708b",
+        "filename": "tools/grit/grit/format/android_xml.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-31T19:12:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dcd2ff94_339c748f",
+      "range": {
+        "startLine": 89,
+        "startChar": 2,
+        "endLine": 89,
+        "endChar": 34
+      },
+      "revId": "c03e3245033cd6ae9d0ec29f2311155bd496afe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6da8e6f7_22aec563",
         "filename": "tools/grit/grit/format/android_xml.py",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "c03e3245033cd6ae9d0ec29f2311155bd496afe9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b4f3684_ce64ecfb",
+        "filename": "tools/grit/grit/format/android_xml.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-31T19:12:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6da8e6f7_22aec563",
+      "range": {
+        "startLine": 91,
+        "startChar": 9,
+        "endLine": 91,
+        "endChar": 18
+      },
+      "revId": "c03e3245033cd6ae9d0ec29f2311155bd496afe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
