@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "07520a29_cbd06740",
+        "filename": "ash/highlighter/highlighter_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-07-31T21:31:20Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "40eef402_5e80e4fd",
+      "revId": "3b45499d31f8fba85f0c0edf9560a6eca0a87689",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9683151_224aa1fd",
         "filename": "ash/highlighter/highlighter_controller.cc",
         "patchSetId": 8
@@ -30,6 +48,30 @@
       "writtenOn": "2017-07-29T19:21:16Z",
       "side": 1,
       "message": "can we do this without having to make a copy of all points like GetTrace does?",
+      "range": {
+        "startLine": 119,
+        "startChar": 15,
+        "endLine": 119,
+        "endChar": 32
+      },
+      "revId": "3b45499d31f8fba85f0c0edf9560a6eca0a87689",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f438d72e_6c7f106b",
+        "filename": "ash/highlighter/highlighter_controller.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-07-31T21:31:20Z",
+      "side": 1,
+      "message": "Of course. Thanks for pointing this out!",
+      "parentUuid": "f9683151_224aa1fd",
       "range": {
         "startLine": 119,
         "startChar": 15,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "9b2ed226_80086ad5",
+        "filename": "ash/highlighter/highlighter_controller.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-07-31T21:31:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e30d09eb_6574b205",
+      "range": {
+        "startLine": 60,
+        "startChar": 55,
+        "endLine": 60,
+        "endChar": 68
+      },
+      "revId": "3b45499d31f8fba85f0c0edf9560a6eca0a87689",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d58ed6d6_ed815168",
         "filename": "ash/highlighter/highlighter_view.cc",
         "patchSetId": 8
@@ -76,6 +142,24 @@
       "writtenOn": "2017-07-29T19:21:16Z",
       "side": 1,
       "message": "commented on this code already in the other patch. does this CL need a rebase?",
+      "revId": "3b45499d31f8fba85f0c0edf9560a6eca0a87689",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec5db120_f30fd74d",
+        "filename": "ash/highlighter/highlighter_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-07-31T21:31:20Z",
+      "side": 1,
+      "message": "It does. I am still trying to figure out how to upload dependent CLs together",
+      "parentUuid": "d58ed6d6_ed815168",
       "revId": "3b45499d31f8fba85f0c0edf9560a6eca0a87689",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
