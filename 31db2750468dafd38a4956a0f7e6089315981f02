@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "10c393ef_d85a75e9",
+        "filename": "extensions/browser/api/serial/serial_api.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-31T19:07:04Z",
+      "side": 1,
+      "message": "This conditional is unnecessary because Run() will only ever be called once.",
+      "range": {
+        "startLine": 87,
+        "startChar": 2,
+        "endLine": 87,
+        "endChar": 21
+      },
+      "revId": "31db2750468dafd38a4956a0f7e6089315981f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "827884c8_41ac4ec5",
         "filename": "services/device/serial/serial_device_enumerator_impl_unittest.cc",
         "patchSetId": 14
