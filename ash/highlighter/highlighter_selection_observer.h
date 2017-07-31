@@ -5,9 +5,13 @@
 #ifndef ASH_HIGHLIGHTER_HIGHLIGHTER_SELECTION_OBSERVER_H_
 #define ASH_HIGHLIGHTER_HIGHLIGHTER_SELECTION_OBSERVER_H_
 
+namespace aura {
+class Window;
+}
+
 namespace gfx {
 class Rect;
-}  // namespace gfx
+}
 
 namespace ash {
 
@@ -16,7 +20,9 @@ class HighlighterSelectionObserver {
  public:
   virtual ~HighlighterSelectionObserver() {}
 
-  virtual void HandleSelection(const gfx::Rect& rect) = 0;
+  // |rect| is the selected rectangle, in DIP relative to |root_window|.
+  virtual void HandleSelection(aura::Window* root_window,
+                               const gfx::Rect& rect) = 0;
 };
 
 }  // namespace ash

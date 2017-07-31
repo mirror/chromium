@@ -85,13 +85,10 @@ void HighlighterController::OnTouchEvent(ui::TouchEvent* event) {
     const gfx::RectF box = GetBoundingBox(highlighter_view_->points());
     const gfx::PointF pivot(box.CenterPoint());
 
-    const float scale_factor = current_window->layer()->device_scale_factor();
-
     if (DetectHorizontalStroke(box, HighlighterView::kPenTipSize)) {
       const gfx::Rect box_adjusted = gfx::ToEnclosingRect(
           AdjustHorizontalStroke(box, HighlighterView::kPenTipSize));
-      observer_->HandleSelection(
-          gfx::ScaleToEnclosingRect(box_adjusted, scale_factor));
+      observer_->HandleSelection(current_window, box_adjusted);
       highlighter_view_->Animate(pivot,
                                  HighlighterView::AnimationMode::kFadeout);
 
@@ -100,8 +97,7 @@ void HighlighterController::OnTouchEvent(ui::TouchEvent* event) {
     } else if (DetectClosedShape(box, highlighter_view_->points())) {
       const gfx::Rect box_enclosing = gfx::ToEnclosingRect(box);
 
-      observer_->HandleSelection(
-          gfx::ScaleToEnclosingRect(box_enclosing, scale_factor));
+      observer_->HandleSelection(current_window, box_enclosing);
       highlighter_view_->Animate(pivot,
                                  HighlighterView::AnimationMode::kInflate);
 
