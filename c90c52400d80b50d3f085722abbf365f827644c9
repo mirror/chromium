@@ -34,6 +34,24 @@
       "revId": "c90c52400d80b50d3f085722abbf365f827644c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1b297ff_16347474",
+        "filename": "testing/scripts/run_telemetry_benchmark_as_googletest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1189781
+      },
+      "writtenOn": "2017-07-31T17:11:15Z",
+      "side": 1,
+      "message": "After chatting with Emily, it seems that this might be dead code but we aren\u0027t certain of it\nWe\u0027re thinking to wait on deleting the possibly dead code and doing it in a separate follow up cl; so I added a TODO\nIt might have some interesting complications with changing over to histogram set",
+      "parentUuid": "93405ebc_0520562c",
+      "revId": "c90c52400d80b50d3f085722abbf365f827644c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
