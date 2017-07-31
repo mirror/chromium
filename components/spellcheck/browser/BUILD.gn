@@ -14,7 +14,6 @@ source_set("browser") {
     "spellcheck_host_metrics.cc",
     "spellcheck_host_metrics.h",
     "spellcheck_message_filter_platform.h",
-    "spellcheck_message_filter_platform_android.cc",
     "spellcheck_platform.h",
     "spellcheck_platform_android.cc",
     "spellcheck_platform_mac.mm",
