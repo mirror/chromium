@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f880fb2_fd894aaf",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 1
+      },
+      "lineNbr": 2353,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-31T20:35:24Z",
+      "side": 1,
+      "message": "Huh, interesting...",
+      "range": {
+        "startLine": 2353,
+        "startChar": 49,
+        "endLine": 2353,
+        "endChar": 59
+      },
+      "revId": "1a5cb3feb5c73ac0ad2c09d88fc09f431b6120a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b495a78_8be2be2c",
+        "filename": "third_party/WebKit/LayoutTests/platform/win/images/color-profile-layer-expected.png",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-31T20:35:24Z",
+      "side": 1,
+      "message": "Here the mac and linux versions got deleted and the win/ version remains behind (in modified), but at win/? I don\u0027t understand this.",
+      "revId": "1a5cb3feb5c73ac0ad2c09d88fc09f431b6120a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50e3a280_938067f2",
+        "filename": "third_party/WebKit/LayoutTests/virtual/gpu-rasterization/images/color-profile-clip-expected.png",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-31T20:35:24Z",
+      "side": 1,
+      "message": "This file is now identical across platforms, yes? So I guess mac and linux already were identical?\n\nBut the test was only failing on win10, not on win7, so won\u0027t this break win7?",
+      "revId": "1a5cb3feb5c73ac0ad2c09d88fc09f431b6120a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
