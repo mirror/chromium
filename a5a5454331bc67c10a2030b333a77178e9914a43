@@ -16,6 +16,24 @@
       "revId": "a5a5454331bc67c10a2030b333a77178e9914a43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9136d43_138bc57c",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-07-31T23:46:58Z",
+      "side": 1,
+      "message": "Sadly, no, we currently don\u0027t have naming conventions. We should, but we don\u0027t :).\n\nI\u0027d like to make this `fuschsia_compile` instead of \"Fuchsia Compile\", that would be the closest to what I consider to be \"current best practice\" :).",
+      "parentUuid": "f340ad04_a9b18a4e",
+      "revId": "a5a5454331bc67c10a2030b333a77178e9914a43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
