@@ -97,6 +97,9 @@ class AutofillAgent : public content::RenderFrameObserver,
   void DidAssociateFormControlsDynamically() override;
 
  private:
+  FRIEND_TEST_ALL_PREFIXES(FormAutocompleteTest, CollectFormlessElements);
+  FRIEND_TEST_ALL_PREFIXES(FormAutocompleteTest, DoAcceptDataListSuggestion);
+
   // Functor used as a simplified comparison function for FormData. Only
   // compares forms at a high level (notably name, origin, action).
   struct FormDataCompare {
@@ -181,7 +184,6 @@ class AutofillAgent : public content::RenderFrameObserver,
   // form tag) and writes them into |output|. Returns true if the process is
   // successful, and all conditions for firing events are true.
   bool CollectFormlessElements(FormData* output);
-  FRIEND_TEST_ALL_PREFIXES(FormAutocompleteTest, CollectFormlessElements);
 
   // Called in a posted task by textFieldDidChange() to work-around a WebKit bug
   // http://bugs.webkit.org/show_bug.cgi?id=16976
