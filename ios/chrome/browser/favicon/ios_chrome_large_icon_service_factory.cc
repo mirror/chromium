@@ -7,7 +7,6 @@
 #include "base/memory/ptr_util.h"
 #include "base/memory/singleton.h"
 #include "base/threading/sequenced_worker_pool.h"
-#include "base/threading/thread_task_runner_handle.h"
 #include "components/favicon/core/large_icon_service.h"
 #include "components/image_fetcher/core/image_fetcher_impl.h"
 #include "components/image_fetcher/ios/ios_image_decoder_impl.h"
@@ -45,13 +44,9 @@ IOSChromeLargeIconServiceFactory::BuildServiceInstanceFor(
     web::BrowserState* context) const {
   ios::ChromeBrowserState* browser_state =
       ios::ChromeBrowserState::FromBrowserState(context);
-  base::SequencedWorkerPool* sequenced_worker_pool =
-      web::WebThread::GetBlockingPool();
-
   return base::MakeUnique<favicon::LargeIconService>(
       ios::FaviconServiceFactory::GetForBrowserState(
           browser_state, ServiceAccessType::EXPLICIT_ACCESS),
-      sequenced_worker_pool,
       base::MakeUnique<image_fetcher::ImageFetcherImpl>(
           image_fetcher::CreateIOSImageDecoder(),
           browser_state->GetRequestContext()));
