@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "387bcbe6_fc048ae3",
+        "filename": "net/disk_cache/cleanup_context.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-07-31T15:44:26Z",
+      "side": 1,
+      "message": "Rename file to match class name?",
+      "range": {
+        "startLine": 27,
+        "startChar": 6,
+        "endLine": 27,
+        "endChar": 27
+      },
+      "revId": "2cacc2cff697b0087c202cc7712f5896487d1aab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
