@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f340ad04_a9b18a4e",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-07-31T23:40:03Z",
+      "side": 1,
+      "message": "nit: Is there a naming convention for builders \u0026 try-bots?  Looks like we usually name these unix_hacker_style, except when we don\u0027t...",
+      "revId": "a5a5454331bc67c10a2030b333a77178e9914a43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
