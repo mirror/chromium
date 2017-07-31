@@ -52,7 +52,8 @@ class CORE_EXPORT Worklet : public GarbageCollectedFinalized<Worklet>,
   explicit Worklet(LocalFrame*);
 
   // Returns one of available global scopes.
-  WorkletGlobalScopeProxy* FindAvailableGlobalScope() const;
+  WorkletGlobalScopeProxy* FindAvailableGlobalScope(
+      unsigned selected_global_scope = 0) const;
 
   size_t GetNumberOfGlobalScopes() const { return proxies_.size(); }
 
