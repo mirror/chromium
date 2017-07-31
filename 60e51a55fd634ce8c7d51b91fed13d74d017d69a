@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0f94c92_37fb5ff9",
+        "filename": "chrome/browser/extensions/extension_service_sync_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1549,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-31T16:02:15Z",
+      "side": 1,
+      "message": "Hmm... we have code that cleans up command lines as part of our testing system; is the only reason this didn\u0027t work before because the two tests were part of the same test suite?  Or is there a different bug there?",
+      "revId": "60e51a55fd634ce8c7d51b91fed13d74d017d69a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
