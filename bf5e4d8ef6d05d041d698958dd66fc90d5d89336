@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "376bf259_5a9a4678",
+        "filename": "components/exo/wm_helper.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-07-31T04:29:23Z",
+      "side": 1,
+      "message": "nit: remove Exo from this name. maybe just have WMHelper implement this interface instead?",
+      "revId": "bf5e4d8ef6d05d041d698958dd66fc90d5d89336",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
