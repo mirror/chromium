@@ -48,6 +48,98 @@
     },
     {
       "key": {
+        "uuid": "556d81cd_395bb8fc",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1130491
+      },
+      "writtenOn": "2017-07-31T14:59:04Z",
+      "side": 1,
+      "message": "If we move to the idle state, we will not want to prompt the user (for example, the IPC may have disconnected). Instead, this class should remove itself from the browser list observers.",
+      "range": {
+        "startLine": 138,
+        "startChar": 41,
+        "endLine": 138,
+        "endChar": 0
+      },
+      "revId": "df52b91795d11f797a62814011dfc209a3cacb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0037cf4c_4ad1f52f",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1130491
+      },
+      "writtenOn": "2017-07-31T14:59:04Z",
+      "side": 1,
+      "message": "This TODO can be deleted.",
+      "range": {
+        "startLine": 157,
+        "startChar": 77,
+        "endLine": 157,
+        "endChar": 0
+      },
+      "revId": "df52b91795d11f797a62814011dfc209a3cacb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a19ee65d_ba88d57d",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1130491
+      },
+      "writtenOn": "2017-07-31T14:59:04Z",
+      "side": 1,
+      "message": "Please move lines 165-168 (which are basically the same as 186-189) to an auxiliary function to avoid duplicate code.",
+      "range": {
+        "startLine": 165,
+        "startChar": 59,
+        "endLine": 165,
+        "endChar": 0
+      },
+      "revId": "df52b91795d11f797a62814011dfc209a3cacb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6774cd1c_131f41fd",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1130491
+      },
+      "writtenOn": "2017-07-31T14:59:04Z",
+      "side": 1,
+      "message": "Please pass an std::unique_ptr\u003c\u003e and move it to prompt_delegate_. This way, it will be clearer that the intention is to transfer ownership.",
+      "range": {
+        "startLine": 196,
+        "startChar": 44,
+        "endLine": 196,
+        "endChar": 0
+      },
+      "revId": "df52b91795d11f797a62814011dfc209a3cacb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0a6dc10c_370ed522",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_win.h",
         "patchSetId": 1
@@ -71,6 +163,52 @@
     },
     {
       "key": {
+        "uuid": "2010e4fe_34d09afd",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1130491
+      },
+      "writtenOn": "2017-07-31T14:59:04Z",
+      "side": 1,
+      "message": "What is the difference between this variable and dialog_shown_ above?",
+      "range": {
+        "startLine": 64,
+        "startChar": 31,
+        "endLine": 64,
+        "endChar": 0
+      },
+      "revId": "df52b91795d11f797a62814011dfc209a3cacb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99e08a65_48e4f789",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_prompt_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1130491
+      },
+      "writtenOn": "2017-07-31T14:59:04Z",
+      "side": 1,
+      "message": "No need to create a separate file for this. Please move to the other file.",
+      "range": {
+        "startLine": 14,
+        "startChar": 35,
+        "endLine": 14,
+        "endChar": 0
+      },
+      "revId": "df52b91795d11f797a62814011dfc209a3cacb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ded7d3f_a1338217",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_prompt_delegate.h",
         "patchSetId": 1
@@ -82,6 +220,30 @@
       "writtenOn": "2017-07-31T14:42:00Z",
       "side": 1,
       "message": "what is the meaning of Official in this context? If this is a Google-Chrome only feature, should this be behind a GOOGLE_CHROME_BUILD ifdef / in a separate .h/.cc file that is included only for official builds?",
+      "range": {
+        "startLine": 22,
+        "startChar": 42,
+        "endLine": 22,
+        "endChar": 43
+      },
+      "revId": "df52b91795d11f797a62814011dfc209a3cacb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0f04002_1f8a5905",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_prompt_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1130491
+      },
+      "writtenOn": "2017-07-31T14:59:04Z",
+      "side": 1,
+      "message": "The name should be ChromeCleanerPromptDelegateImpl.",
+      "parentUuid": "8ded7d3f_a1338217",
       "range": {
         "startLine": 22,
         "startChar": 42,
