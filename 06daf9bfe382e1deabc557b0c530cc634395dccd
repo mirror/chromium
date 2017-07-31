@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c02adc62_3124b74c",
+        "filename": "components/os_crypt/os_crypt_linux.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-07-31T10:03:45Z",
+      "side": 1,
+      "message": "This could hide errors in clients who actually do want to configure a backend, but don\u0027t do it at the correct time. It\u0027s already hard to reason about OSCrypt\u0027s lazy initialisation. I\u0027d like to limit this fix to environments which explicitly don\u0027t care about configuring OSCrypt\u0027s backend.\n\nYou could just set an empty config in your client code. The fact that GetKeyStorage is reached means that it is actually used at some moment.\n\nAlternatively, you can hide this behind an #ifdef with a flag specific to your environment.\nYou can also make it a bit more generic by using the flags from https://cs.chromium.org/chromium/src/components/os_crypt/BUILD.gn?rcl\u003dbc0a64abea2b1b04019b6e0d11f77fc7bb52d517\u0026l\u003d85, but only if all 3 cases are false for you.",
+      "range": {
+        "startLine": 73,
+        "startChar": 6,
+        "endLine": 73,
+        "endChar": 12
+      },
+      "revId": "06daf9bfe382e1deabc557b0c530cc634395dccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
