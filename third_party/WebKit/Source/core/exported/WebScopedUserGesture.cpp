@@ -37,6 +37,7 @@
 namespace blink {
 
 WebScopedUserGesture::WebScopedUserGesture(const WebUserGestureToken& token) {
+  NOTREACHED();
   if (!token.IsNull())
     indicator_.reset(new UserGestureIndicator(token));
 }
