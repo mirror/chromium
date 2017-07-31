@@ -92,7 +92,8 @@ Audits2.Audits2Panel = class extends UI.Panel {
         continue;
 
       for (var version of registration.versions.values()) {
-        if (version.controlledClients.length > 1)
+        const uniqueClients = Array.from(new Set(version.controlledClients));
+        if (uniqueClients.length > 1)
           return true;
       }
     }
