@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68f6f5ce_de43c335",
+        "filename": "chrome/browser/extensions/external_pref_loader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-31T19:25:05Z",
+      "side": 1,
+      "message": "Note: As discussed in crbug.com/750122, file tasks might be tricky.  I *think* this one is safe, because I can\u0027t see any other places that use the same file paths as the ones here.  But please double check that, and it probably at least warrants a comment.\n\nI also a CL up (https://chromium-review.googlesource.com/c/593854/) today that will create an extensions file task runner, if you think it would be better to just wait for that and use it here.",
+      "revId": "bd5effc9d11d79771cc94707f383607ceacb30fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
