@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a479d06d_667c7df4",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/UniqueIdentifier.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-31T07:46:49Z",
+      "side": 1,
+      "message": "nit: could it be better to do fetch_add(1, std::memory_order_relaxed); ?",
+      "revId": "25f3216ff64913d64deb7f6513b10524f6c8be94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
