@@ -22,6 +22,30 @@
       "revId": "23a180b7fae0ca5b600e793fd5ca652234b09c5a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07ffabb1_c709a909",
+        "filename": "chrome/common/pref_names.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1002806
+      },
+      "writtenOn": "2017-07-31T18:47:01Z",
+      "side": 1,
+      "message": "This pref is only used by the component app, and we will remove it after the migration is fully complete.",
+      "parentUuid": "1dc070bd_4b22b74e",
+      "range": {
+        "startLine": 466,
+        "startChar": 0,
+        "endLine": 466,
+        "endChar": 39
+      },
+      "revId": "23a180b7fae0ca5b600e793fd5ca652234b09c5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
