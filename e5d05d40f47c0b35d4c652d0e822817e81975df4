@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ba530be_94b3b937",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-31T19:29:24Z",
+      "side": 0,
+      "message": "Why is this removed?",
+      "revId": "e5d05d40f47c0b35d4c652d0e822817e81975df4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e3c542a_f90bda7d",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_graph_observer.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-31T19:29:24Z",
+      "side": 1,
+      "message": "Why do we need to add those 2 APIs? The CU graph observer can do this on their own already.\n\nFrom the CL, it seems to me frame CU will only call OnFramePropertyChanged. But this is not obvious by seeing this header file. People may wonder if OnPropertyChanged and OnFramePeropertyChanged will both be called for a frame CU. Same applies to WebContesntsCU. So I suggest still just keeping OnPropertyChanged and do not add the above 2 helpers.",
+      "range": {
+        "startLine": 62,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 34
+      },
+      "revId": "cb6313ce6ddb92cd468a58728681d6f7b3383451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ada9724c_c61a06d8",
+        "filename": "services/resource_coordinator/coordination_unit/frame_coordination_unit_impl.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-31T19:29:24Z",
+      "side": 1,
+      "message": "Please add some comment to explain that a frame can have no parent WebContents when it has not committed.",
+      "revId": "cb6313ce6ddb92cd468a58728681d6f7b3383451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
