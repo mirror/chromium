@@ -83,6 +83,8 @@ class SharedSession final : public mojom::RemotingSource,
     return state_;
   }
 
+  std::string sink_name() const { return sink_metadata_.friendly_name; }
+
   // Queries on remoting sink capabilities.
   bool HasVideoCapability(mojom::RemotingSinkVideoCapability capability) const;
   bool HasAudioCapability(mojom::RemotingSinkAudioCapability capability) const;
