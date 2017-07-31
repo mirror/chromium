@@ -45,16 +45,16 @@ Polymer({
     'click': 'onClick_',
     'dblclick': 'onDblClick_',
     'contextmenu': 'onContextMenu_',
+    'auxclick': 'onMiddleClick_',
+    'mousedown': 'cancelMiddleMouseBehavior_',
+    'mouseup': 'cancelMiddleMouseBehavior_',
   },
 
   /** @override */
   attached: function() {
-    this.watch('item_', function(store) {
-      return store.nodes[this.itemId];
-    }.bind(this));
-    this.watch('isSelectedItem_', function(store) {
-      return !!store.selection.items.has(this.itemId);
-    }.bind(this));
+    this.watch('item_', (store) => store.nodes[this.itemId]);
+    this.watch(
+        'isSelectedItem_', (store) => !!store.selection.items.has(this.itemId));
 
     this.updateFromStore();
   },
@@ -157,6 +157,36 @@ Polymer({
     var itemSet = this.getState().selection.items;
     if (commandManager.canExecute(Command.OPEN, itemSet))
       commandManager.handle(Command.OPEN, itemSet);
+  },
+
+  /**
+   * @param {MouseEvent} e
+   * @private
+   */
+  onMiddleClick_: function(e) {
+    if (e.button != 1)
+      return;
+
+    this.selectThisItem_();
+    if (this.isFolder_)
+      return;
+
+    var commandManager = bookmarks.CommandManager.getInstance();
+    var itemSet = this.getState().selection.items;
+    var command = e.shiftKey ? Command.OPEN : Command.OPEN_NEW_TAB;
+    if (commandManager.canExecute(command, itemSet))
+      commandManager.handle(command, itemSet);
+  },
+
+  /**
+   * Prevent default middle-mouse behavior. On Windows, this prevents autoscroll
+   * (during mousedown), and on Linux this prevents paste (during mouseup).
+   * @param {MouseEvent} e
+   * @private
+   */
+  cancelMiddleMouseBehavior_: function(e) {
+    if (e.button == 1)
+      e.preventDefault();
   },
 
   /**
