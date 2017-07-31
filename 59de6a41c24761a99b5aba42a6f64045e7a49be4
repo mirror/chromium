@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "152fbfcb_f89dede3",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-31T05:17:16Z",
+      "side": 1,
+      "message": "nit: parens around binary operator !\u003d here and the line below",
+      "revId": "59de6a41c24761a99b5aba42a6f64045e7a49be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70a89cc1_5b07a3ce",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-31T05:17:16Z",
+      "side": 1,
+      "message": "Why don\u0027t you run the request anywhere without the token, a la above?\nIf the token fetcher never returns, do you want to disable all results?  That seems odd.",
+      "range": {
+        "startLine": 71,
+        "startChar": 57,
+        "endLine": 71,
+        "endChar": 0
+      },
+      "revId": "59de6a41c24761a99b5aba42a6f64045e7a49be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c871ca69_7d95f46d",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-31T05:17:16Z",
+      "side": 1,
+      "message": "Rather than have this function here, can you put a simple function in omnibox_field_trial.{h,cc} that does this call?  Then it will remain easy to spot existing omnibox field trial parameters to keep track of them all.",
+      "range": {
+        "startLine": 137,
+        "startChar": 28,
+        "endLine": 139,
+        "endChar": 75
+      },
+      "revId": "59de6a41c24761a99b5aba42a6f64045e7a49be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62174d6c_41aca9ac",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-31T05:17:16Z",
+      "side": 1,
+      "message": "Why is this public?  I.e., why does someone outside of this class need to call it?\n(Add answer to comment.)",
+      "range": {
+        "startLine": 66,
+        "startChar": 11,
+        "endLine": 66,
+        "endChar": 0
+      },
+      "revId": "59de6a41c24761a99b5aba42a6f64045e7a49be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f6c8a19_5a76728f",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-31T05:17:16Z",
+      "side": 1,
+      "message": "This is for all suggestions, not just experimental suggestions, right?",
+      "range": {
+        "startLine": 181,
+        "startChar": 26,
+        "endLine": 181,
+        "endChar": 38
+      },
+      "revId": "59de6a41c24761a99b5aba42a6f64045e7a49be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8365d29_4d7badef",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-31T05:17:16Z",
+      "side": 1,
+      "message": "It seems like this should never happen.  Why do you need it?",
+      "range": {
+        "startLine": 185,
+        "startChar": 25,
+        "endLine": 185,
+        "endChar": 0
+      },
+      "revId": "59de6a41c24761a99b5aba42a6f64045e7a49be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78ab611c_7ca92767",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-31T05:17:16Z",
+      "side": 1,
+      "message": "This doesn\u0027t look right.  It looks like we\u0027re still going to send a request (without a contextual URL) even if we\u0027re, say, in an incognito window.",
+      "range": {
+        "startLine": 189,
+        "startChar": 6,
+        "endLine": 189,
+        "endChar": 61
+      },
+      "revId": "59de6a41c24761a99b5aba42a6f64045e7a49be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

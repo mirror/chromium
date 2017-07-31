@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "92e6b681_347ea504",
+        "filename": "components/omnibox/browser/base_search_provider_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-31T05:17:16Z",
+      "side": 1,
+      "message": "I defer to them.\n\nYou may want to check whether this is necessary for physical web provider, clipboard provider, and builtin provider tests.  I don\u0027t think they make any requests, yet you added this environment to them too.  Did you add it because it was necessary or due to an abundance of caution?",
+      "parentUuid": "6c7e77dc_57509e70",
+      "range": {
+        "startLine": 86,
+        "startChar": 61,
+        "endLine": 86,
+        "endChar": 0
+      },
+      "revId": "5547dd843562167230679b0036162756ac3e1aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9873a630_2e6d1198",
         "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
         "patchSetId": 12
@@ -214,6 +238,30 @@
     },
     {
       "key": {
+        "uuid": "b09dac2c_dea4124f",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-31T05:17:16Z",
+      "side": 1,
+      "message": "It is a lot cleaner now.  I\u0027m glad you found this design.",
+      "parentUuid": "5809134d_6d763fe2",
+      "range": {
+        "startLine": 137,
+        "startChar": 2,
+        "endLine": 137,
+        "endChar": 39
+      },
+      "revId": "5547dd843562167230679b0036162756ac3e1aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3ab1fe7_33ef81e2",
         "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
         "patchSetId": 12
@@ -258,6 +306,30 @@
       "revId": "5547dd843562167230679b0036162756ac3e1aa6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af53efee_f6db1747",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-31T05:17:16Z",
+      "side": 1,
+      "message": "The current state is reasonable.",
+      "parentUuid": "3a873812_3d617b6f",
+      "range": {
+        "startLine": 140,
+        "startChar": 2,
+        "endLine": 150,
+        "endChar": 72
+      },
+      "revId": "5547dd843562167230679b0036162756ac3e1aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -379,6 +451,30 @@
     },
     {
       "key": {
+        "uuid": "b660c883_b05f4171",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-31T05:17:16Z",
+      "side": 1,
+      "message": "lgtm, more readable and more correct.",
+      "parentUuid": "e0c5dd70_f807b951",
+      "range": {
+        "startLine": 260,
+        "startChar": 4,
+        "endLine": 260,
+        "endChar": 37
+      },
+      "revId": "5547dd843562167230679b0036162756ac3e1aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "313291bf_a386ebee",
         "filename": "components/omnibox/browser/mock_autocomplete_provider_client.h",
         "patchSetId": 12
@@ -447,6 +543,30 @@
       "revId": "5547dd843562167230679b0036162756ac3e1aa6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "603474cb_bee80f69",
+        "filename": "components/omnibox/browser/mock_autocomplete_provider_client.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-31T05:17:16Z",
+      "side": 1,
+      "message": "The cleanup/refactoring looks good.",
+      "parentUuid": "50de9389_1f386158",
+      "range": {
+        "startLine": 17,
+        "startChar": 67,
+        "endLine": 17,
+        "endChar": 0
+      },
+      "revId": "5547dd843562167230679b0036162756ac3e1aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
