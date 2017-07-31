@@ -34,6 +34,24 @@
       "revId": "abd277103d5540d910d1e0024ff3bff2c6f24c1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17a38cdc_767bffd2",
+        "filename": "ui/display/win/screen_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-07-31T23:39:15Z",
+      "side": 1,
+      "message": "Gah, changing how the flags work is super-confusing, and causes a lot of headaches IMHO.\nCan we just create a new flag in this CL called kDetectHDR or something, and get rid of kHighDynamicRange at the earliest convenience? (IE, as soon as the two places listed above have been fixed.)",
+      "parentUuid": "665ebc24_f77b417e",
+      "revId": "abd277103d5540d910d1e0024ff3bff2c6f24c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
