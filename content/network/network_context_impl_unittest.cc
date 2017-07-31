@@ -13,7 +13,7 @@
 #include "build/build_config.h"
 #include "components/network_session_configurator/browser/network_session_configurator.h"
 #include "components/network_session_configurator/common/network_switches.h"
-#include "content/network/network_context.h"
+#include "content/network/network_context_impl.h"
 #include "content/network/network_service_impl.h"
 #include "content/public/common/network_service.mojom.h"
 #include "mojo/public/cpp/bindings/interface_request.h"
@@ -33,17 +33,17 @@ namespace content {
 
 namespace {
 
-class NetworkContextTest : public testing::Test {
+class NetworkContextImplTest : public testing::Test {
  public:
-  NetworkContextTest()
+  NetworkContextImplTest()
       : scoped_task_environment_(
             base::test::ScopedTaskEnvironment::MainThreadType::IO),
         network_service_(NetworkServiceImpl::CreateForTesting()) {}
-  ~NetworkContextTest() override {}
+  ~NetworkContextImplTest() override {}
 
-  std::unique_ptr<NetworkContext> CreateContextWithParams(
+  std::unique_ptr<NetworkContextImpl> CreateContextWithParams(
       mojom::NetworkContextParamsPtr context_params) {
-    return base::MakeUnique<NetworkContext>(
+    return base::MakeUnique<NetworkContextImpl>(
         network_service_.get(), mojo::MakeRequest(&network_context_ptr_),
         std::move(context_params));
   }
@@ -72,40 +72,41 @@ class NetworkContextTest : public testing::Test {
  private:
   base::test::ScopedTaskEnvironment scoped_task_environment_;
   std::unique_ptr<NetworkServiceImpl> network_service_;
-  // Stores the NetworkContextPtr of the most recently created NetworkContext,
-  // since destroying this before the NetworkContext itself triggers deletion of
-  // the NetworkContext. These tests are probably fine anyways, since the
-  // message loop must be spun for that to happen.
+  // Stores the NetworkContextImplPtr of the most recently created
+  // NetworkContextImpl, since destroying this before the NetworkContextImpl
+  // itself triggers deletion of the NetworkContextImpl. These tests are
+  // probably fine anyways, since the message loop must be spun for that to
+  // happen.
   mojom::NetworkContextPtr network_context_ptr_;
 };
 
-TEST_F(NetworkContextTest, DisableDataUrlSupport) {
+TEST_F(NetworkContextImplTest, DisableDataUrlSupport) {
   mojom::NetworkContextParamsPtr context_params =
       mojom::NetworkContextParams::New();
   context_params->enable_data_url_support = false;
-  std::unique_ptr<NetworkContext> network_context =
+  std::unique_ptr<NetworkContextImpl> network_context =
       CreateContextWithParams(std::move(context_params));
   EXPECT_FALSE(
       network_context->url_request_context()->job_factory()->IsHandledProtocol(
           url::kDataScheme));
 }
 
-TEST_F(NetworkContextTest, EnableDataUrlSupport) {
+TEST_F(NetworkContextImplTest, EnableDataUrlSupport) {
   mojom::NetworkContextParamsPtr context_params =
       mojom::NetworkContextParams::New();
   context_params->enable_data_url_support = true;
-  std::unique_ptr<NetworkContext> network_context =
+  std::unique_ptr<NetworkContextImpl> network_context =
       CreateContextWithParams(std::move(context_params));
   EXPECT_TRUE(
       network_context->url_request_context()->job_factory()->IsHandledProtocol(
           url::kDataScheme));
 }
 
-TEST_F(NetworkContextTest, DisableFileUrlSupport) {
+TEST_F(NetworkContextImplTest, DisableFileUrlSupport) {
   mojom::NetworkContextParamsPtr context_params =
       mojom::NetworkContextParams::New();
   context_params->enable_file_url_support = false;
-  std::unique_ptr<NetworkContext> network_context =
+  std::unique_ptr<NetworkContextImpl> network_context =
       CreateContextWithParams(std::move(context_params));
   EXPECT_FALSE(
       network_context->url_request_context()->job_factory()->IsHandledProtocol(
@@ -113,11 +114,11 @@ TEST_F(NetworkContextTest, DisableFileUrlSupport) {
 }
 
 #if !BUILDFLAG(DISABLE_FILE_SUPPORT)
-TEST_F(NetworkContextTest, EnableFileUrlSupport) {
+TEST_F(NetworkContextImplTest, EnableFileUrlSupport) {
   mojom::NetworkContextParamsPtr context_params =
       mojom::NetworkContextParams::New();
   context_params->enable_file_url_support = true;
-  std::unique_ptr<NetworkContext> network_context =
+  std::unique_ptr<NetworkContextImpl> network_context =
       CreateContextWithParams(std::move(context_params));
   EXPECT_TRUE(
       network_context->url_request_context()->job_factory()->IsHandledProtocol(
@@ -125,11 +126,11 @@ TEST_F(NetworkContextTest, EnableFileUrlSupport) {
 }
 #endif  // !BUILDFLAG(DISABLE_FILE_SUPPORT)
 
-TEST_F(NetworkContextTest, DisableFtpUrlSupport) {
+TEST_F(NetworkContextImplTest, DisableFtpUrlSupport) {
   mojom::NetworkContextParamsPtr context_params =
       mojom::NetworkContextParams::New();
   context_params->enable_ftp_url_support = false;
-  std::unique_ptr<NetworkContext> network_context =
+  std::unique_ptr<NetworkContextImpl> network_context =
       CreateContextWithParams(std::move(context_params));
   EXPECT_FALSE(
       network_context->url_request_context()->job_factory()->IsHandledProtocol(
@@ -137,11 +138,11 @@ TEST_F(NetworkContextTest, DisableFtpUrlSupport) {
 }
 
 #if !BUILDFLAG(DISABLE_FTP_SUPPORT)
-TEST_F(NetworkContextTest, EnableFtpUrlSupport) {
+TEST_F(NetworkContextImplTest, EnableFtpUrlSupport) {
   mojom::NetworkContextParamsPtr context_params =
       mojom::NetworkContextParams::New();
   context_params->enable_ftp_url_support = true;
-  std::unique_ptr<NetworkContext> network_context =
+  std::unique_ptr<NetworkContextImpl> network_context =
       CreateContextWithParams(std::move(context_params));
   EXPECT_TRUE(
       network_context->url_request_context()->job_factory()->IsHandledProtocol(
@@ -149,22 +150,22 @@ TEST_F(NetworkContextTest, EnableFtpUrlSupport) {
 }
 #endif  // !BUILDFLAG(DISABLE_FTP_SUPPORT)
 
-TEST_F(NetworkContextTest, NoCache) {
+TEST_F(NetworkContextImplTest, NoCache) {
   mojom::NetworkContextParamsPtr context_params =
       mojom::NetworkContextParams::New();
   context_params->http_cache_enabled = false;
-  std::unique_ptr<NetworkContext> network_context =
+  std::unique_ptr<NetworkContextImpl> network_context =
       CreateContextWithParams(std::move(context_params));
   EXPECT_FALSE(network_context->url_request_context()
                    ->http_transaction_factory()
                    ->GetCache());
 }
 
-TEST_F(NetworkContextTest, MemoryCache) {
+TEST_F(NetworkContextImplTest, MemoryCache) {
   mojom::NetworkContextParamsPtr context_params =
       mojom::NetworkContextParams::New();
   context_params->http_cache_enabled = true;
-  std::unique_ptr<NetworkContext> network_context =
+  std::unique_ptr<NetworkContextImpl> network_context =
       CreateContextWithParams(std::move(context_params));
   net::HttpCache* cache = network_context->url_request_context()
                               ->http_transaction_factory()
@@ -180,7 +181,7 @@ TEST_F(NetworkContextTest, MemoryCache) {
   EXPECT_EQ(net::MEMORY_CACHE, backend->GetCacheType());
 }
 
-TEST_F(NetworkContextTest, DiskCache) {
+TEST_F(NetworkContextImplTest, DiskCache) {
   mojom::NetworkContextParamsPtr context_params =
       mojom::NetworkContextParams::New();
   context_params->http_cache_enabled = true;
@@ -189,7 +190,7 @@ TEST_F(NetworkContextTest, DiskCache) {
   ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
   context_params->http_cache_path = temp_dir.GetPath();
 
-  std::unique_ptr<NetworkContext> network_context =
+  std::unique_ptr<NetworkContextImpl> network_context =
       CreateContextWithParams(std::move(context_params));
   net::HttpCache* cache = network_context->url_request_context()
                               ->http_transaction_factory()
@@ -209,8 +210,8 @@ TEST_F(NetworkContextTest, DiskCache) {
 }
 
 // This makes sure that network_session_configurator::ChooseCacheType is
-// connected to NetworkContext.
-TEST_F(NetworkContextTest, SimpleCache) {
+// connected to NetworkContextImpl.
+TEST_F(NetworkContextImplTest, SimpleCache) {
   base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
       switches::kUseSimpleCacheBackend, "on");
   mojom::NetworkContextParamsPtr context_params =
@@ -221,7 +222,7 @@ TEST_F(NetworkContextTest, SimpleCache) {
   ASSERT_TRUE(temp_dir.CreateUniqueTempDir());
   context_params->http_cache_path = temp_dir.GetPath();
 
-  std::unique_ptr<NetworkContext> network_context =
+  std::unique_ptr<NetworkContextImpl> network_context =
       CreateContextWithParams(std::move(context_params));
   net::HttpCache* cache = network_context->url_request_context()
                               ->http_transaction_factory()

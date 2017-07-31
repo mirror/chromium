@@ -20,14 +20,14 @@
 
 namespace content {
 
-class NetworkContext;
+class NetworkContextImpl;
 class NetToMojoPendingBuffer;
 struct ResourceResponse;
 
 class CONTENT_EXPORT URLLoaderImpl : public mojom::URLLoader,
                                      public net::URLRequest::Delegate {
  public:
-  URLLoaderImpl(NetworkContext* context,
+  URLLoaderImpl(class NetworkContextImpl* context,
                 mojom::URLLoaderRequest url_loader_request,
                 int32_t options,
                 const ResourceRequest& request,
@@ -35,7 +35,7 @@ class CONTENT_EXPORT URLLoaderImpl : public mojom::URLLoader,
                 const net::NetworkTrafficAnnotationTag& traffic_annotation);
   ~URLLoaderImpl() override;
 
-  // Called when the associated NetworkContext is going away.
+  // Called when the associated NetworkContextImpl is going away.
   void Cleanup();
 
   // mojom::URLLoader implementation:
@@ -63,7 +63,7 @@ class CONTENT_EXPORT URLLoaderImpl : public mojom::URLLoader,
   void DeleteIfNeeded();
   void SendResponseToClient();
 
-  NetworkContext* context_;
+  NetworkContextImpl* context_;
   int32_t options_;
   bool connected_;
   std::unique_ptr<net::URLRequest> url_request_;

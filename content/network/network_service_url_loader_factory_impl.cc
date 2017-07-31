@@ -11,7 +11,7 @@
 namespace content {
 
 NetworkServiceURLLoaderFactoryImpl::NetworkServiceURLLoaderFactoryImpl(
-    NetworkContext* context,
+    NetworkContextImpl* context,
     uint32_t process_id)
     : context_(context), process_id_(process_id) {
   ignore_result(process_id_);
