@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "572ba7fd_423f6a08",
+        "filename": "ash/shelf/shelf_view_test_api.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-07-31T14:15:25Z",
+      "side": 1,
+      "message": "Return an int here, like the underlying function.",
+      "revId": "67d8830bae7cdfe6c14964718d8efc25b0a90afd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
