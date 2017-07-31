@@ -46,6 +46,30 @@
       "revId": "e4b3c4e5daeee5e79c04b981ea8bcb4ac9582040",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5793477_594f1e9a",
+        "filename": "cc/trees/layer_tree_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1512,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-31T18:46:38Z",
+      "side": 1,
+      "message": "Ah, you\u0027re right. Sigh...yet another special path...\n\nThis method shouldn\u0027t exist, we should be calling through the regular DistributeScrollDelta, that already has checks for user_scrollable and will reduce the branching and duplication that leads to bugs like this.\n\nCould you see if you can make this work by calling RootScrollBegin (to set the target to the viewport) followed by DistributeScrollDelta from SetSynchronousInputHandlerRootScrollOffset, rather than calling into this method? Hopefully then you wouldn\u0027t need any additional changes.",
+      "parentUuid": "a1a5775f_6a56f29b",
+      "range": {
+        "startLine": 1511,
+        "startChar": 1,
+        "endLine": 1512,
+        "endChar": 42
+      },
+      "revId": "e4b3c4e5daeee5e79c04b981ea8bcb4ac9582040",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
