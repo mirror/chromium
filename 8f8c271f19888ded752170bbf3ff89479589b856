@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "a1d8afdc_fef1ce9e",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_grc_tab_signal_observer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-31T17:54:42Z",
+      "side": 1,
+      "message": "Will this ever happen?",
+      "revId": "8f8c271f19888ded752170bbf3ff89479589b856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49536f17_61894439",
         "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.h",
         "patchSetId": 12
@@ -25,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "c8298705_4a7e04bc",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-31T17:54:42Z",
+      "side": 1,
+      "message": "This should use double. The conversion should happen in GRCTabSignalObserver",
+      "parentUuid": "49536f17_61894439",
+      "range": {
+        "startLine": 36,
+        "startChar": 42,
+        "endLine": 36,
+        "endChar": 76
+      },
+      "revId": "8f8c271f19888ded752170bbf3ff89479589b856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "76623cd0_6d4b7444",
         "filename": "services/resource_coordinator/coordination_unit/coordination_unit_impl.h",
         "patchSetId": 12
@@ -36,6 +77,30 @@
       "writtenOn": "2017-07-31T17:48:32Z",
       "side": 1,
       "message": "I have a mixed feeling on this, will get back to this one later.",
+      "range": {
+        "startLine": 71,
+        "startChar": 35,
+        "endLine": 71,
+        "endChar": 70
+      },
+      "revId": "8f8c271f19888ded752170bbf3ff89479589b856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51d06ecc_58bd4e30",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-31T17:54:42Z",
+      "side": 1,
+      "message": "I don\u0027t think we need this. The one gets called should be able to know how to recalculate the property by itself.",
+      "parentUuid": "76623cd0_6d4b7444",
       "range": {
         "startLine": 71,
         "startChar": 35,
@@ -88,6 +153,23 @@
         "endLine": 141,
         "endChar": 1
       },
+      "revId": "8f8c271f19888ded752170bbf3ff89479589b856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c19018a_d4b3bc21",
+        "filename": "services/resource_coordinator/public/interfaces/tab_signal.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-31T17:54:42Z",
+      "side": 1,
+      "message": "This line is too long?",
       "revId": "8f8c271f19888ded752170bbf3ff89479589b856",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
