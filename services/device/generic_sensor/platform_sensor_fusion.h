@@ -52,7 +52,7 @@ class PlatformSensorFusion : public PlatformSensor,
       const PlatformSensorConfiguration& configuration) override;
 
   // PlatformSensor::Client:
-  void OnSensorReadingChanged() override;
+  void OnSensorReadingChanged(mojom::SensorType type) override;
   void OnSensorError() override;
   bool IsSuspended() override;
 
