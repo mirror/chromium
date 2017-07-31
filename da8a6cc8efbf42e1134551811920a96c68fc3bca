@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0f5727fd_dbd3d74c",
+        "filename": "ios/chrome/browser/web/placeholder_overlay_tab_helper.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-31T21:00:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09b2541a_0840032f",
+      "range": {
+        "startLine": 78,
+        "startChar": 36,
+        "endLine": 78,
+        "endChar": 39
+      },
+      "revId": "da8a6cc8efbf42e1134551811920a96c68fc3bca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28512ed6_1e68fd15",
         "filename": "ios/chrome/browser/web/placeholder_overlay_tab_helper.mm",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-29T00:07:04Z",
       "side": 1,
       "message": "I\u0027m fine for this helper to signal that the page isn\u0027t loaded, and to expose an image.\n\nBut tab holders shouldn\u0027t manipulate view hierarchies or perform animations. I\u0027d prefer the UI layer explicitly handled that.\n\nThat said, we can probably handle that in a future CL where we get this feature working in the clean skeleton.",
+      "range": {
+        "startLine": 82,
+        "startChar": 34,
+        "endLine": 82,
+        "endChar": 58
+      },
+      "revId": "da8a6cc8efbf42e1134551811920a96c68fc3bca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e301868d_79c2e7ed",
+        "filename": "ios/chrome/browser/web/placeholder_overlay_tab_helper.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-31T21:00:33Z",
+      "side": 1,
+      "message": "Moved view removal to delegate.",
+      "parentUuid": "28512ed6_1e68fd15",
       "range": {
         "startLine": 82,
         "startChar": 34,
