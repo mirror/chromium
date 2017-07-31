@@ -344,6 +344,30 @@
     },
     {
       "key": {
+        "uuid": "c19a6c7c_5eaf3a5a",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2915,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-07-31T16:06:09Z",
+      "side": 1,
+      "message": "Long term we want to move to PointerEvent in views. We\u0027re not there though, so that generating a PointerEvent here is going to be problematic.\n\nYou say Microsoft is going to generate a mouseevent in this case. How does that reconcile with the actual mouse? What if the user is using both? Do they actually warp the mouse cursor to the pen (this was done with touch in win7 I believe). If Windows is doing that at a lower layer, is there really anything for us to do here?",
+      "parentUuid": "f3828c0b_ff9261cb",
+      "range": {
+        "startLine": 2915,
+        "startChar": 64,
+        "endLine": 2915,
+        "endChar": 66
+      },
+      "revId": "1903c322639529fb8f6bfd771511a0ed73ebf2d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fdf1088c_96ec3fd2",
         "filename": "ui/views/win/hwnd_message_handler.cc",
         "patchSetId": 7
