@@ -22,6 +22,30 @@
       "revId": "96ee5dd1ee073d00519ab53a43322d2487967c32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0acf3a4_fafbb9ea",
+        "filename": "docs/fuchsia_sdk_updates.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-07-31T16:53:17Z",
+      "side": 1,
+      "message": "I had it all wrapped and then I wasn\u0027t sure why the old one wasn\u0027t wrapped... But it seems fine, done.",
+      "parentUuid": "869298d2_8dc9b12f",
+      "range": {
+        "startLine": 3,
+        "startChar": 117,
+        "endLine": 3,
+        "endChar": 212
+      },
+      "revId": "96ee5dd1ee073d00519ab53a43322d2487967c32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
