@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a1445c8_f82ec3d9",
+        "filename": "chrome/browser/resources/md_extensions/pack_dialog.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-31T20:46:29Z",
+      "side": 1,
+      "message": "Does\nthis.lastResponse_ \u003d null; \n\nnot work equivalently here and at line 96? I see that this.set() is used in most other places in this file, but my understanding this.set() is useful only when setting a subproprety like this.set(\u0027a.b.c\u0027, \u0027foo\u0027);",
+      "revId": "6500ac3044b4bdb536f2e36cb035adf61f92ea09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4837628_d937dbb9",
+        "filename": "chrome/test/data/webui/extensions/extension_pack_dialog_test.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-31T20:46:29Z",
+      "side": 1,
+      "message": "This silently assumes that choosePackRootDirectory is only called once for the lifetime of the MockDelegate(). Can you verify that this assumption holds so far?\n\nOnce we convert to TestBrowserProxy, there will be a reset() method available, so this will not be an issue.",
+      "revId": "6500ac3044b4bdb536f2e36cb035adf61f92ea09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24323e5f_b9a2993e",
+        "filename": "chrome/test/data/webui/extensions/extension_pack_dialog_test.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-31T20:46:29Z",
+      "side": 1,
+      "message": "Nit: Per current Chromium styleguide https://chromium.googlesource.com/chromium/src/+/master/styleguide/web/web.md#Style, we are omitting braces in those cases (although there is ongoing discussion about the subject).",
+      "revId": "6500ac3044b4bdb536f2e36cb035adf61f92ea09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3918826d_396e09af",
+        "filename": "chrome/test/data/webui/extensions/extension_pack_dialog_test.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-31T20:46:29Z",
+      "side": 1,
+      "message": "Nit: |ele| is not an established abbreviation. Either rename to |el| or |element|.",
+      "revId": "6500ac3044b4bdb536f2e36cb035adf61f92ea09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dd86135_245a1fd8",
+        "filename": "chrome/test/data/webui/extensions/extension_pack_dialog_test.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-31T20:46:29Z",
+      "side": 1,
+      "message": "Can this be moved before suite() as its own function?\n\nfunction isElementVisible() {...}\n\nsuite(...);",
+      "revId": "6500ac3044b4bdb536f2e36cb035adf61f92ea09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
