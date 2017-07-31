@@ -81,6 +81,10 @@ class NewTabButton : public views::ImageButton,
   // Tab strip that contains this button.
   TabStrip* tab_strip_;
 
+  // Promotional UI that appears next to the NewTabButton and encourages its
+  // use. Owned by its NativeWidget.
+  NewTabPromo* new_tab_promo_;
+
   // The offset used to paint the background image.
   gfx::Point background_offset_;
 
