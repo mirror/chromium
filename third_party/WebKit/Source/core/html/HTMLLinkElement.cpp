@@ -32,6 +32,7 @@
 #include "core/dom/Document.h"
 #include "core/dom/TaskRunnerHelper.h"
 #include "core/events/Event.h"
+#include "core/events/EventQueue.h"
 #include "core/frame/LocalFrameClient.h"
 #include "core/frame/UseCounter.h"
 #include "core/html/CrossOriginAttribute.h"
@@ -118,7 +119,10 @@ void HTMLLinkElement::ParseAttribute(
 }
 
 bool HTMLLinkElement::ShouldLoadLink() {
-  return IsInDocumentTree() || (isConnected() && rel_attribute_.IsStyleSheet());
+  const KURL& href = GetNonEmptyURLAttribute(hrefAttr);
+  return (IsInDocumentTree() ||
+          (isConnected() && rel_attribute_.IsStyleSheet())) &&
+         !href.PotentiallyDanglingMarkup();
 }
 
 bool HTMLLinkElement::LoadLink(const String& type,
@@ -136,6 +140,7 @@ bool HTMLLinkElement::LoadLink(const String& type,
 LinkResource* HTMLLinkElement::LinkResourceToProcess() {
   if (!ShouldLoadLink()) {
     DCHECK(!GetLinkStyle() || !GetLinkStyle()->HasSheet());
+    LinkLoadingErrored();
     return nullptr;
   }
 
@@ -193,8 +198,7 @@ Node::InsertionNotificationRequest HTMLLinkElement::InsertedInto(
   if (!insertion_point->isConnected())
     return kInsertionDone;
   DCHECK(isConnected());
-  if (!ShouldLoadLink()) {
-    DCHECK(IsInShadowTree());
+  if (!ShouldLoadLink() && IsInShadowTree()) {
     String message = "HTML element <link> is ignored in shadow tree.";
     GetDocument().AddConsoleMessage(ConsoleMessage::Create(
         kJSMessageSource, kWarningMessageLevel, message));
@@ -250,7 +254,13 @@ void HTMLLinkElement::LinkLoaded() {
 }
 
 void HTMLLinkElement::LinkLoadingErrored() {
-  DispatchEvent(Event::Create(EventTypeNames::error));
+  // Queue up an error event rather than dispatching directly, as we might call
+  // this method during element insertion (where event firing is forbidden).
+  EventQueue* queue = GetExecutionContext()->GetEventQueue();
+  Event* event = Event::Create(EventTypeNames::error);
+  event->SetTarget(this);
+  event->SetTrusted(true);
+  queue->EnqueueEvent(BLINK_FROM_HERE, event);
 }
 
 void HTMLLinkElement::DidStartLinkPrerender() {
