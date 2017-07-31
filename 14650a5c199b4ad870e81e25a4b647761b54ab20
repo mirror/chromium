@@ -283,6 +283,24 @@
     },
     {
       "key": {
+        "uuid": "c4aa58b4_c86d8ecf",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-31T16:46:06Z",
+      "side": 1,
+      "message": "This should be fine. Thank you for the explanation!",
+      "parentUuid": "c6b4a4d4_c6001ad3",
+      "revId": "14650a5c199b4ad870e81e25a4b647761b54ab20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "459a1e17_4fc3bc49",
         "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_egtest.mm",
         "patchSetId": 2
@@ -417,6 +435,24 @@
       "side": 1,
       "message": "The main reason is the fact that I am changing the factory for the ContentSuggestionsService. It also seems that some recent additions (password, reading list...) have their own target.\nAlso I am planning to add more than 10 tests and ios_chrome_ui_egtests is already big.",
       "parentUuid": "56979ffb_28cb246e",
+      "revId": "14650a5c199b4ad870e81e25a4b647761b54ab20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4c3390a_7ef4ce49",
+        "filename": "ios/chrome/test/earl_grey/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-07-31T16:46:06Z",
+      "side": 1,
+      "message": "We have plans to split it up into smaller targets for the bots.",
+      "parentUuid": "20c208ba_1a96375b",
       "revId": "14650a5c199b4ad870e81e25a4b647761b54ab20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
