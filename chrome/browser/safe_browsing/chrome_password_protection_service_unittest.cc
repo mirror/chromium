@@ -539,4 +539,5 @@ TEST_F(ChromePasswordProtectionServiceTest, VerifyUpdateSecurityState) {
       service_->GetCachedVerdict(
           url, LoginReputationClientRequest::PASSWORD_REUSE_EVENT, &verdict));
 }
+
 }  // namespace safe_browsing
