@@ -133,7 +133,7 @@ struct URL_EXPORT Parsed {
   // Scheme without the colon: "http://foo"/ would have a scheme of "http".
   // The length will be -1 if no scheme is specified ("foo.com"), or 0 if there
   // is a colon but no scheme (":foo"). Note that the scheme is not guaranteed
-  // to start at the beginning of the string if there are preceeding whitespace
+  // to start at the beginning of the string if there are preceding whitespace
   // or control characters.
   Component scheme;
 
@@ -154,14 +154,14 @@ struct URL_EXPORT Parsed {
 
   // Path, this is everything following the host name, stopping at the query of
   // ref delimiter (if any). Length will be -1 if unspecified. This includes
-  // the preceeding slash, so the path on http://www.google.com/asdf" is
+  // the preceding slash, so the path on http://www.google.com/asdf" is
   // "/asdf". As a result, it is impossible to have a 0 length path, it will
   // be -1 in cases like "http://host?foo".
   // Note that we treat backslashes the same as slashes.
   Component path;
 
   // Stuff between the ? and the # after the path. This does not include the
-  // preceeding ? character. Length will be -1 if unspecified, 0 if there is
+  // preceding ? character. Length will be -1 if unspecified, 0 if there is
   // a question mark but no query string.
   Component query;
 

@@ -280,7 +280,7 @@ bool DoExtractScheme(const CHAR* url,
 // |after_scheme| is the character immediately following the scheme (after the
 //   colon) where we'll begin parsing.
 //
-// Compatability data points. I list "host", "path" extracted:
+// Compatibility data points. I list "host", "path" extracted:
 // Input                IE6             Firefox                Us
 // -----                --------------  --------------         --------------
 // http://foo.com/      "foo.com", "/"  "foo.com", "/"         "foo.com", "/"
@@ -565,7 +565,7 @@ void DoParseMailtoURL(const CHAR* spec, int spec_len, Parsed* parsed) {
     }
   }
 
-  // For compatability with the standard URL parser, treat no path as
+  // For compatibility with the standard URL parser, treat no path as
   // -1, rather than having a length of 0
   if (path_begin == path_end) {
     parsed->path.reset();
@@ -802,7 +802,7 @@ int Parsed::CountCharactersBefore(ComponentType type,
 Component Parsed::GetContent() const {
   const int begin = CountCharactersBefore(USERNAME, false);
   const int len = Length() - begin;
-  // For compatability with the standard URL parser, we treat no content as
+  // For compatibility with the standard URL parser, we treat no content as
   // -1, rather than having a length of 0 (we normally wouldn't care so
   // much for these non-standard URLs).
   return len ? Component(begin, len) : Component();
