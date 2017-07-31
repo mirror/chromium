@@ -8,8 +8,25 @@
 #import <Cocoa/Cocoa.h>
 
 #import "base/mac/scoped_nsobject.h"
+#include "base/strings/string16.h"
 #include "content/browser/accessibility/browser_accessibility.h"
 #include "content/browser/accessibility/browser_accessibility_manager.h"
+
+namespace content {
+
+// Used to store changes in edit fields, required by Voiceover in order to
+// support character echo and other nnouncements during editing.
+struct AXTextEdit {
+  AXTextEdit() = default;
+  AXTextEdit(base::string16 text, bool is_deleted)
+      : Text(text), IsDeleted(is_deleted) {}
+
+  base::string16 Text;
+  // Whether the text has been inserted  or deleted.
+  bool IsDeleted;
+};
+
+}  // namespace content
 
 // BrowserAccessibilityCocoa is a cocoa wrapper around the BrowserAccessibility
 // object. The renderer converts webkit's accessibility tree into a
@@ -19,6 +36,8 @@
  @private
   content::BrowserAccessibility* browserAccessibility_;
   base::scoped_nsobject<NSMutableArray> children_;
+  // Stores the previous value of an edit field.
+  base::string16 oldValue_;
 }
 
 // This creates a cocoa browser accessibility object around
@@ -47,6 +66,9 @@
 
 // Get the BrowserAccessibility that this object wraps.
 - (content::BrowserAccessibility*)browserAccessibility;
+
+// Computes the text that was added or deleted in a text field after an edit.
+- (content::AXTextEdit)ComputeTextEdit;
 
 // Determines if this object is alive, i.e. it hasn't been detached.
 - (BOOL)instanceActive;
