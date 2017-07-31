@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "845db04c_c7238a96",
+        "filename": "chrome/common/extensions/api/webview_tag.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-31T23:10:09Z",
+      "side": 1,
+      "message": "For your consideration: I wonder if this should now be merged into getAudioState()? The result from getAudioState() could include both \"audible\" and \"muted\". This would be less API surface, and also highlight the difference between audible vs muted.",
+      "range": {
+        "startLine": 710,
+        "startChar": 17,
+        "endLine": 710,
+        "endChar": 29
+      },
+      "revId": "31759c74656d5dd72bbd0deba7b55678c8f0d9b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8bf9b80_b24b98f6",
+        "filename": "chrome/test/data/extensions/platform_apps/web_view/audio_state_api/main.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-31T23:10:09Z",
+      "side": 1,
+      "message": "This variable should be named isMuted (not audible).",
+      "range": {
+        "startLine": 24,
+        "startChar": 40,
+        "endLine": 24,
+        "endChar": 47
+      },
+      "revId": "31759c74656d5dd72bbd0deba7b55678c8f0d9b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d80b7bbd_bfe6d7c7",
+        "filename": "chrome/test/data/extensions/platform_apps/web_view/audio_state_api/main.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-31T23:10:09Z",
+      "side": 1,
+      "message": "isMuted",
+      "range": {
+        "startLine": 25,
+        "startChar": 35,
+        "endLine": 25,
+        "endChar": 42
+      },
+      "revId": "31759c74656d5dd72bbd0deba7b55678c8f0d9b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cffbb11_ae5fe217",
+        "filename": "content/public/browser/web_contents.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-07-31T23:10:09Z",
+      "side": 1,
+      "message": "nit: Since there are hundreds of methods in this class, consider placing this near IsAudioMuted() and SetAudioMuted() (here and impl.h and impl.cc files).",
+      "range": {
+        "startLine": 575,
+        "startChar": 0,
+        "endLine": 576,
+        "endChar": 40
+      },
+      "revId": "31759c74656d5dd72bbd0deba7b55678c8f0d9b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
