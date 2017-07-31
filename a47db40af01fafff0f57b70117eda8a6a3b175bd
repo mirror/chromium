@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "860a858a_5569a4e2",
+        "filename": "chrome/browser/vr/ui_input_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-31T19:46:12Z",
+      "side": 1,
+      "message": "I find this comment confusing. Per discussion, we do support hit testing opacity, but we don\u0027t support multiple dispatch which we will someday want for gesture recognition at the least.",
+      "range": {
+        "startLine": 80,
+        "startChar": 4,
+        "endLine": 82,
+        "endChar": 44
+      },
+      "revId": "a47db40af01fafff0f57b70117eda8a6a3b175bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
