@@ -508,13 +508,13 @@ CommandHandler.onCommand = function(command) {
 
         // Stop if we've wrapped back to the document.
         var maybeDoc = newRange.start.node;
-        if (maybeDoc.role == RoleType.ROOT_WEB_AREA &&
-            maybeDoc.parent.root.role == RoleType.DESKTOP) {
+        if (AutomationPredicate.root(maybeDoc)) {
           ChromeVoxState.isReadingContinuously = false;
           return;
         }
 
         ChromeVoxState.instance.setCurrentRange(newRange);
+        newRange.select();
 
         new Output()
             .withRichSpeechAndBraille(
