@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0294d50d_ac9d3fc3",
+        "filename": "ios/chrome/browser/web/mailto_handler.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-31T23:41:46Z",
+      "side": 1,
+      "message": "Generally it is better to use |range.length \u003d\u003d 0| for checks like this, because if |keyvalue| is nil, then .location will not be NSNotFound.\n\nIn this case how about using API from net/base/url_util.h?",
+      "range": {
+        "startLine": 59,
+        "startChar": 31,
+        "endLine": 59,
+        "endChar": 41
+      },
+      "revId": "800212d9c21fb9f9d3570ffc12fb67fad20e06a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b1f59ad_eaec7aa7",
+        "filename": "ios/chrome/browser/web/mailto_handler.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-31T23:41:46Z",
+      "side": 1,
+      "message": "Would it be better to use local variable for supportedHeaders?",
+      "range": {
+        "startLine": 63,
+        "startChar": 16,
+        "endLine": 63,
+        "endChar": 32
+      },
+      "revId": "800212d9c21fb9f9d3570ffc12fb67fad20e06a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "428b3a51_ccc5ced0",
+        "filename": "ios/chrome/browser/web/mailto_handler_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-31T23:41:46Z",
+      "side": 1,
+      "message": "nit: Do you want to promote this comment to a method comment?",
+      "range": {
+        "startLine": 33,
+        "startChar": 18,
+        "endLine": 33,
+        "endChar": 21
+      },
+      "revId": "800212d9c21fb9f9d3570ffc12fb67fad20e06a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe0ad9b2_a03f0e4c",
+        "filename": "ios/chrome/browser/web/mailto_handler_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-31T23:41:46Z",
+      "side": 1,
+      "message": "nit: TestRewriteBodyWithUrl",
+      "range": {
+        "startLine": 40,
+        "startChar": 24,
+        "endLine": 40,
+        "endChar": 46
+      },
+      "revId": "800212d9c21fb9f9d3570ffc12fb67fad20e06a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
