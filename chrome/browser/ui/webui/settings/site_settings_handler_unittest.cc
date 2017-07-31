@@ -9,13 +9,19 @@
 #include "base/test/histogram_tester.h"
 #include "chrome/browser/chrome_notification_types.h"
 #include "chrome/browser/content_settings/host_content_settings_map_factory.h"
+#include "chrome/browser/infobars/infobar_service.h"
+#include "chrome/browser/ui/browser_window.h"
+#include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/browser/ui/webui/site_settings_helper.h"
+#include "chrome/test/base/browser_with_test_window_test.h"
 #include "chrome/test/base/testing_profile.h"
 #include "components/content_settings/core/browser/host_content_settings_map.h"
 #include "components/content_settings/core/common/content_settings.h"
 #include "components/content_settings/core/common/content_settings_types.h"
 #include "components/content_settings/core/common/pref_names.h"
+#include "components/infobars/core/infobar.h"
 #include "components/sync_preferences/testing_pref_service_syncable.h"
+#include "content/public/browser/navigation_controller.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/web_ui_data_source.h"
 #include "content/public/test/test_browser_thread_bundle.h"
@@ -546,6 +552,166 @@ TEST_F(SiteSettingsHandlerTest, ZoomLevels) {
   double default_level = host_zoom_map->GetDefaultZoomLevel();
   double level = host_zoom_map->GetZoomLevelForHostAndScheme("http", host);
   EXPECT_EQ(default_level, level);
+}
+
+class SiteSettingsHandlerInfobarTest : public BrowserWithTestWindowTest {
+ public:
+  SiteSettingsHandlerInfobarTest()
+      : kNotifications(site_settings::ContentSettingsTypeToGroupName(
+            CONTENT_SETTINGS_TYPE_NOTIFICATIONS)) {}
+
+  void SetUp() override {
+    BrowserWithTestWindowTest::SetUp();
+    handler_ = base::MakeUnique<SiteSettingsHandler>(profile());
+    handler()->set_web_ui(web_ui());
+    handler()->AllowJavascript();
+    web_ui()->ClearTrackedCalls();
+
+    window2_ = base::WrapUnique(CreateBrowserWindow());
+    browser2_ = base::WrapUnique(
+        CreateBrowser(profile(), browser()->type(), false, window2_.get()));
+  }
+
+  void TearDown() override {
+    // Destroy |browser2_| before |handler_|. This is because |handler_|
+    // maintains a HostZoomMap::Subscription internally, which needs to be
+    // destroyed before the HostZoomMapImpl's CallbackList gets destroyed. The
+    // last HostZoomMap::Subscription maintained exists on the final tab opened,
+    // which belongs to |browser2_|.
+    browser2()->tab_strip_model()->CloseAllTabs();
+    browser2_.reset();
+    handler_.reset();
+    BrowserWithTestWindowTest::TearDown();
+  }
+
+  InfoBarService* GetInfobarServiceForTab(Browser* browser, int tab_index) {
+    content::WebContents* web_contents =
+        browser->tab_strip_model()->GetWebContentsAt(tab_index);
+    GURL tab_url = web_contents->GetLastCommittedURL();
+    return InfoBarService::FromWebContents(web_contents);
+  }
+
+  content::TestWebUI* web_ui() { return &web_ui_; }
+  SiteSettingsHandler* handler() { return handler_.get(); }
+  Browser* browser2() { return browser2_.get(); }
+
+  const std::string kNotifications;
+
+ private:
+  content::TestWebUI web_ui_;
+  std::unique_ptr<SiteSettingsHandler> handler_;
+  std::unique_ptr<BrowserWindow> window2_;
+  std::unique_ptr<Browser> browser2_;
+
+  DISALLOW_COPY_AND_ASSIGN(SiteSettingsHandlerInfobarTest);
+};
+
+TEST_F(SiteSettingsHandlerInfobarTest, SettingPermissionsTriggersInfobar) {
+  //               __________  __________  ________  __________  ___________
+  //   Window 1:  / foo_path \' origin_1 \' chrome \' origin_2 \' extension \
+  // -------------------------            ------------------------------------
+  std::string origin_string = "https://www.example.com/with/path/blah#heading";
+  const GURL foo_path("http://foo");
+  const GURL origin_1(origin_string);
+  const GURL chrome("chrome://about");
+  const GURL origin_2("https://www.example.com/");
+  const GURL extension("chrome-extension://1i23bh3j45bhj6h5va17a/path/to.html");
+
+  //               __________  __________  ___________  _______
+  //   Window 2:  / insecure \' origin_3 '/ subdomain \' about \
+  // -------------------------------------             -----------------------
+  const GURL insecure("http://www.example.com/");
+  const GURL origin_3("https://www.example.com/?param=value");
+  const GURL subdomain("https://subdomain.example.com/");
+  const GURL about("about:blank");
+
+  // Set up. Note AddTab() adds tab at index 0, so add them in reverse order.
+  AddTab(browser(), extension);
+  AddTab(browser(), origin_2);
+  AddTab(browser(), chrome);
+  AddTab(browser(), origin_1);
+  AddTab(browser(), foo_path);
+  for (int i = 0; i < 5; ++i) {
+    EXPECT_EQ(0u, GetInfobarServiceForTab(browser(), i)->infobar_count());
+  }
+
+  AddTab(browser2(), about);
+  AddTab(browser2(), subdomain);
+  AddTab(browser2(), origin_3);
+  AddTab(browser2(), insecure);
+  for (int i = 0; i < 4; ++i) {
+    EXPECT_EQ(0u, GetInfobarServiceForTab(browser2(), i)->infobar_count());
+  }
+
+  // Block notifications.
+  base::ListValue set_args;
+  set_args.AppendString(origin_string);
+  {
+    auto category_list = base::MakeUnique<base::ListValue>();
+    category_list->AppendString(kNotifications);
+    set_args.Append(std::move(category_list));
+  }
+  set_args.AppendString(
+      content_settings::ContentSettingToString(CONTENT_SETTING_BLOCK));
+  handler()->HandleSetOriginPermissions(&set_args);
+
+  // Make sure all tabs belonging to the same origin as |origin_1| have an
+  // infobar shown.
+  for (int i = 0; i < 5; ++i) {
+    if (i == 1 /* |origin_1| */ || i == 3 /* |origin_2| */)
+      EXPECT_EQ(1u, GetInfobarServiceForTab(browser(), i)->infobar_count());
+    else
+      EXPECT_EQ(0u, GetInfobarServiceForTab(browser(), i)->infobar_count());
+  }
+  for (int i = 0; i < 4; ++i) {
+    if (i == 1 /* |origin_3| */)
+      EXPECT_EQ(1u, GetInfobarServiceForTab(browser2(), i)->infobar_count());
+    else
+      EXPECT_EQ(0u, GetInfobarServiceForTab(browser2(), i)->infobar_count());
+  }
+
+  // Navigate the |foo_path| tab to the same origin as |origin_1|, and the
+  // |origin_3| tab to a different origin.
+  const GURL origin_4("https://www.example.com/path/to/page.html");
+  content::NavigationController* foo_path_controller =
+      &browser()->tab_strip_model()->GetWebContentsAt(0)->GetController();
+  NavigateAndCommit(foo_path_controller, origin_4);
+
+  const GURL similar("https://example.com/");
+  content::NavigationController* origin_3_controller =
+      &browser2()->tab_strip_model()->GetWebContentsAt(1)->GetController();
+  NavigateAndCommit(origin_3_controller, similar);
+
+  // Reset all permissions.
+  base::ListValue reset_args;
+  reset_args.AppendString(origin_string);
+  auto category_list = base::MakeUnique<base::ListValue>();
+  category_list->AppendString(kNotifications);
+  reset_args.Append(std::move(category_list));
+  reset_args.AppendString(
+      content_settings::ContentSettingToString(CONTENT_SETTING_DEFAULT));
+  handler()->HandleSetOriginPermissions(&reset_args);
+
+  // Check the same tabs (plus the tab navigated to |origin_4|) still have
+  // infobars showing.
+  for (int i = 0; i < 5; ++i) {
+    if (i == 0 /* |origin_4| */ || i == 1 /* |origin_1| */ ||
+        i == 3 /* |origin_2| */) {
+      EXPECT_EQ(1u, GetInfobarServiceForTab(browser(), i)->infobar_count());
+      break;
+    }
+    EXPECT_EQ(0u, GetInfobarServiceForTab(browser(), i)->infobar_count());
+  }
+  // The infobar on |origin_3| (now navigated to |similar|) should disappear.
+  for (int i = 0; i < 4; ++i)
+    EXPECT_EQ(0u, GetInfobarServiceForTab(browser2(), i)->infobar_count());
+
+  // Make sure it's the correct infobar that's being shown.
+  EXPECT_EQ(infobars::InfoBarDelegate::PAGE_INFO_INFOBAR_DELEGATE,
+            GetInfobarServiceForTab(browser(), 0 /* |origin_4| */)
+                ->infobar_at(0)
+                ->delegate()
+                ->GetIdentifier());
 }
 
 }  // namespace settings
