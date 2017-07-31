@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a872d24_a55845da",
+        "filename": "testing/buildbot/chromium.android.fyi.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-07-31T21:08:17Z",
+      "side": 1,
+      "message": "Not needed.",
+      "range": {
+        "startLine": 422,
+        "startChar": 22,
+        "endLine": 422,
+        "endChar": 23
+      },
+      "revId": "6fa1f3e49e29a403cf7ccc7e1e68325ddd4b6d11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62e028c1_c1e3f3bd",
+        "filename": "testing/buildbot/chromium.android.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-07-31T21:08:17Z",
+      "side": 1,
+      "message": "Will \"Android Cronet Builder\" get swarming testers in separate CL?",
+      "range": {
+        "startLine": 192,
+        "startChar": 11,
+        "endLine": 192,
+        "endChar": 17
+      },
+      "revId": "6fa1f3e49e29a403cf7ccc7e1e68325ddd4b6d11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcf2cc74_54bf9f46",
+        "filename": "testing/buildbot/chromium.android.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-07-31T21:08:17Z",
+      "side": 1,
+      "message": "Can we run \"cronet_test_instrumentation_apk\" on multiple os versions?",
+      "range": {
+        "startLine": 305,
+        "startChar": 15,
+        "endLine": 305,
+        "endChar": 24
+      },
+      "revId": "6fa1f3e49e29a403cf7ccc7e1e68325ddd4b6d11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9f8cffd_3a41aba4",
+        "filename": "testing/buildbot/chromium.android.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-07-31T21:08:17Z",
+      "side": 1,
+      "message": "\"Android Cronet Data Reduction Proxy Builder\" can be removed per other comments.",
+      "range": {
+        "startLine": 427,
+        "startChar": 23,
+        "endLine": 427,
+        "endChar": 32
+      },
+      "revId": "6fa1f3e49e29a403cf7ccc7e1e68325ddd4b6d11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "624bddac_b6eebd4c",
+        "filename": "testing/buildbot/chromium.android.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 617,
+      "author": {
+        "id": 1002889
+      },
+      "writtenOn": "2017-07-31T21:08:17Z",
+      "side": 1,
+      "message": "KTU84P used on other builders is also KitKat. \nDo you know, how is this one different?",
+      "range": {
+        "startLine": 617,
+        "startChar": 18,
+        "endLine": 617,
+        "endChar": 24
+      },
+      "revId": "6fa1f3e49e29a403cf7ccc7e1e68325ddd4b6d11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
