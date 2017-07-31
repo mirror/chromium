@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf521b70_280718bd",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-allow-access-control-origin-header.htm",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-31T08:02:17Z",
+      "side": 1,
+      "message": "I think you don\u0027t need this try-catch. The exception should be caught and handled as failure automatically.",
+      "range": {
+        "startLine": 16,
+        "startChar": 8,
+        "endLine": 16,
+        "endChar": 13
+      },
+      "revId": "02bd5c385b40db8aa05a1e0dab5364f0747957f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b86cf99_64e01de3",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-allow-access-control-origin-header.htm",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-07-31T08:02:17Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 23,
+        "startChar": 14,
+        "endLine": 23,
+        "endChar": 15
+      },
+      "revId": "02bd5c385b40db8aa05a1e0dab5364f0747957f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
