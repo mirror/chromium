@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7fd62f6a_d56f95b6",
+        "filename": "tools/clang/traffic_annotation_extractor/tests/test.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-07-31T08:48:38Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "cda804d5_0edb348e",
+      "revId": "5d5cbed68a6ece3832689c010830989b34d3befe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea19067e_d1d23545",
         "filename": "tools/clang/traffic_annotation_extractor/tests/tests.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-29T03:00:29Z",
       "side": 1,
       "message": "Nit: remove commented-out code.",
+      "revId": "5d5cbed68a6ece3832689c010830989b34d3befe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c40e7af_b3b0fd6d",
+        "filename": "tools/clang/traffic_annotation_extractor/tests/tests.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-07-31T08:48:38Z",
+      "side": 1,
+      "message": "This comment was related to the question that I had in the first message of the CL:\n\nTo add some of the test cases, I need to include files from \u0027net/\u0027 folder, and those files include files from \u0027out/.../gen/\u0027 folder.\nTo make tests independent of gen, the only solution that I thought of was to write dummy classes for all required classes from net in my test file, do you have any alternative solution?",
+      "parentUuid": "ea19067e_d1d23545",
       "revId": "5d5cbed68a6ece3832689c010830989b34d3befe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
