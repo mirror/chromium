@@ -1458,7 +1458,7 @@ void PaintLayerScrollableArea::UpdateScrollCornerStyle() {
           ? style_source.GetUncachedPseudoStyle(
                 PseudoStyleRequest(kPseudoIdScrollbarCorner),
                 style_source.Style())
-          : PassRefPtr<ComputedStyle>(nullptr);
+          : RefPtr<ComputedStyle>(nullptr);
   if (corner) {
     if (!scroll_corner_) {
       scroll_corner_ =
@@ -1620,7 +1620,7 @@ void PaintLayerScrollableArea::UpdateResizerStyle() {
       Box().HasOverflowClip()
           ? style_source.GetUncachedPseudoStyle(
                 PseudoStyleRequest(kPseudoIdResizer), style_source.Style())
-          : PassRefPtr<ComputedStyle>(nullptr);
+          : RefPtr<ComputedStyle>(nullptr);
   if (resizer) {
     if (!resizer_) {
       resizer_ =
