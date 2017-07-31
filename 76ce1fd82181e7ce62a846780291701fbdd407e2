@@ -16,6 +16,24 @@
       "revId": "76ce1fd82181e7ce62a846780291701fbdd407e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05c29454_2b64bcb2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 806,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-07-31T17:22:14Z",
+      "side": 1,
+      "message": "The reason I put it separately from isGsaAvailable is because it seems a bit weird to conflate the two together. After all other code may use isGSAAvailable to check for something different.\n\nThat\u0027s also why I don\u0027t report STATUS_GSA_NOT_AVAILABLE here. I moved the order of checks to make sure we avoid unnecessary queries here.",
+      "parentUuid": "93d3311e_78a98d47",
+      "revId": "76ce1fd82181e7ce62a846780291701fbdd407e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
