@@ -97,10 +97,9 @@ public class RenderTestRule extends TestWatcher {
     }
 
     public RenderTestRule(String goldenFolder) {
-        mGoldenFolder = goldenFolder;
+        mGoldenFolder = UrlUtils.getIsolatedTestFilePath(goldenFolder);
         // The output directory can be overridden with the --render-test-output-dir command.
-        mOutputDirectory =
-                CommandLine.getInstance().getSwitchValue("render-test-output-dir", goldenFolder);
+        mOutputDirectory = CommandLine.getInstance().getSwitchValue("render-test-output-dir");
     }
 
     @Override
@@ -248,7 +247,7 @@ public class RenderTestRule extends TestWatcher {
      * Convenience method to create a File pointing to |filename| in |mGoldenFolder|.
      */
     private File createGoldenPath(String filename) throws IOException {
-        return createPath(UrlUtils.getIsolatedTestFilePath(mGoldenFolder), filename);
+        return createPath(mGoldenFolder, filename);
     }
 
     /**
@@ -256,7 +255,8 @@ public class RenderTestRule extends TestWatcher {
      * |mOutputDirectory|.
      */
     private File createOutputPath(String subfolder, String filename) throws IOException {
-        return createPath(mOutputDirectory + subfolder, filename);
+        String directory = mOutputDirectory != null ? mOutputDirectory : mGoldenFolder;
+        return createPath(directory + subfolder, filename);
     }
 
     private static File createPath(String folder, String filename) throws IOException {
