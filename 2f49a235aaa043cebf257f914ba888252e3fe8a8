@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b32d4410_7c3f4cce",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsConfigurationService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1147294
+      },
+      "writtenOn": "2017-07-31T14:24:40Z",
+      "side": 1,
+      "message": "This job ID should be registered in TaskIds:\nhttps://cs.chromium.org/chromium/src/components/background_task_scheduler/android/java/src/org/chromium/components/background_task_scheduler/TaskIds.java\n\notherwise your Job ID might clash with someone else\u0027s (I\u0027m mentioning this even if this CL is an experiment because you might end up with very annoying bugs if your Job ID is the same as someone else\u0027s - you will override each other\u0027s jobs).",
+      "range": {
+        "startLine": 70,
+        "startChar": 29,
+        "endLine": 70,
+        "endChar": 46
+      },
+      "revId": "2f49a235aaa043cebf257f914ba888252e3fe8a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2638fabd_424a712f",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsConfigurationService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1147294
+      },
+      "writtenOn": "2017-07-31T14:24:40Z",
+      "side": 1,
+      "message": "Starting the service here seems unnecessary - can we just pass this information with the JobInfo instead?",
+      "range": {
+        "startLine": 171,
+        "startChar": 8,
+        "endLine": 174,
+        "endChar": 49
+      },
+      "revId": "2f49a235aaa043cebf257f914ba888252e3fe8a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25555d12_d30956c9",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsConfigurationService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1147294
+      },
+      "writtenOn": "2017-07-31T14:24:40Z",
+      "side": 1,
+      "message": "I can never remember when assert actually triggers - you might want to throw an exception here instead for ease of debugging :)",
+      "range": {
+        "startLine": 185,
+        "startChar": 8,
+        "endLine": 185,
+        "endChar": 53
+      },
+      "revId": "2f49a235aaa043cebf257f914ba888252e3fe8a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddb0e002_4add0738",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwVariationsConfigurationService.java",
+        "patchSetId": 14
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1147294
+      },
+      "writtenOn": "2017-07-31T14:24:40Z",
+      "side": 1,
+      "message": "Could we unbind earlier (in onServiceConnected above), or would we then not be able to fetch the seed?",
+      "range": {
+        "startLine": 298,
+        "startChar": 0,
+        "endLine": 298,
+        "endChar": 76
+      },
+      "revId": "2f49a235aaa043cebf257f914ba888252e3fe8a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
