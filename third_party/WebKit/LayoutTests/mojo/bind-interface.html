@@ -77,25 +77,31 @@ promise_test(() => {
   return Promise.reject();
 }, "interface interceptors are mutually exclusive");
 
-test(() => {
+test(async () => {
   const kTestInterfaceName = "foo::mojom::Bar";
-  let interceptedHandle = null;
 
   let interceptor = new MojoInterfaceInterceptor(kTestInterfaceName);
-  interceptor.oninterfacerequest = e => { interceptedHandle = e.handle; };
+  let promise = new Promise(resolve => {
+    interceptor.oninterfacerequest = e => {
+      resolve(e.handle);
+    };
+  });
   interceptor.start();
 
-  let {handle0, handle1} = Mojo.createMessagePipe();
-  Mojo.bindInterface(kTestInterfaceName, handle0);
+  let pipe = Mojo.createMessagePipe();
+  Mojo.bindInterface(kTestInterfaceName, pipe.handle0);
+  let interceptedHandle = await promise;
   interceptor.stop();
 
   assert_true(interceptedHandle instanceof MojoHandle);
   interceptedHandle.close();
-  interceptedHandle = null;
+  pipe.handle1.close();
 
-  Mojo.bindInterface(kTestInterfaceName, handle1);
-  assert_equals(interceptedHandle, null);
-  handle1.close();
+  let pipe = Mojo.createMessagePipe();
+  console.log(pipe.result);
+  Mojo.bindInterface(kTestInterfaceName, pipe.handle0);
+  await new Promise(resolve => pipe.handle1.watch({peerClosed: true}, resolve));
+  pipe.handle1.close();
 
   interceptor = new MojoInterfaceInterceptor(kTestInterfaceName);
   interceptor.oninterfacerequest = e => {};
