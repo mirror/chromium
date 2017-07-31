@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1068b3f_20b8457c",
+        "filename": "chrome/browser/ui/views/payments/shipping_address_editor_view_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 383,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-07-31T15:48:13Z",
+      "side": 1,
+      "message": "FYI, addresses are not constrained to at most 2 lines. It\u0027s typical for a university addresses and some countries to have up to 5 lines, for example.",
+      "range": {
+        "startLine": 383,
+        "startChar": 9,
+        "endLine": 383,
+        "endChar": 17
+      },
+      "revId": "c3379ae3312ba417e0e9af1334961b9707feb7ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
