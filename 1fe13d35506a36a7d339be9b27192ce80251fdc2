@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "220e58cf_61c0713b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-07-31T22:24:23Z",
+      "side": 1,
+      "message": "Just a reminder to please update the bug description so that it is consistent with the CL description.",
+      "parentUuid": "4473761b_e9e39db2",
+      "range": {
+        "startLine": 7,
+        "startChar": 50,
+        "endLine": 7,
+        "endChar": 59
+      },
+      "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "08d6278c_710a0e07",
         "filename": "components/ui_devtools/protocol.json",
         "patchSetId": 2
@@ -343,6 +367,24 @@
     },
     {
       "key": {
+        "uuid": "3812b78f_fa419034",
+        "filename": "components/ui_devtools/protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-07-31T22:24:23Z",
+      "side": 1,
+      "message": "As discussed offline, please add a TODO (probably in ui_devtools_dom_agent.h just above the |layer_for_highlighting_| member) to indicate that the layer should be owned by the overlay agent.",
+      "parentUuid": "09fc5e02_9323d8b9",
+      "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ba7fe045_d4b36e9f",
         "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
         "patchSetId": 2
@@ -467,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "190cb669_6bc546c8",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-07-31T22:24:23Z",
+      "side": 1,
+      "message": "Let\u0027s leave this as a question for Sadrul during his OWNERS review.",
+      "parentUuid": "1084e745_e61f669f",
+      "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b317aff9_92547b06",
         "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
         "patchSetId": 2
@@ -567,6 +627,24 @@
       "side": 1,
       "message": "window-\u003eGetEventHandlerForPoint(p) returns a closest window to the pointer so even though this window doesn\u0027t contain the point, it still return this closest window and the result wont be correct (crashed at some points also). We still need this to Contains check here.",
       "parentUuid": "5d09ab79_467df1f6",
+      "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e498f2ee_8594a7f1",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-07-31T22:24:23Z",
+      "side": 1,
+      "message": "This feels like it might be a bug in window event targeting. Let\u0027s leave this open for Sadrul to comment on as part of his OWNERS review.",
+      "parentUuid": "e510f3a0_7f491256",
       "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

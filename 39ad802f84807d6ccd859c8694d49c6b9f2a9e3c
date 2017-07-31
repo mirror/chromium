@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd24c1e5_2e34881f",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-07-31T22:24:23Z",
+      "side": 1,
+      "message": "nit: newline",
+      "revId": "39ad802f84807d6ccd859c8694d49c6b9f2a9e3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b70de041_ed242b16",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-07-31T22:24:23Z",
+      "side": 1,
+      "message": "nit: newline",
+      "revId": "39ad802f84807d6ccd859c8694d49c6b9f2a9e3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e797d00d_fc9c2bf8",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-07-31T22:24:23Z",
+      "side": 1,
+      "message": "nit: Suggested rewording: \"Return the id of the UI element targeted by an event located at |p|, where |p| is in the local coodinate space of |window_element_root_|. The function first searches for the targeted window, then the targeted widget (if one exists), then the targeted view (if one exists).\"\n\nAlso, optional, perhaps consider a function name such as \"FindElementIdTargetedByPoint\" or similar.",
+      "revId": "39ad802f84807d6ccd859c8694d49c6b9f2a9e3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bd20027_1052b96f",
+        "filename": "components/ui_devtools/views/ui_devtools_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-07-31T22:24:23Z",
+      "side": 1,
+      "message": "Since there is only one EXPECT_*(...) assertion in this test, the only thing you are testing is whether or not FindElementByEventHandler() returns a non-zero ID when given a point |p|. This is itself a good thing to be checking, but I don\u0027t think it requires entering inspection mode, dispatching a mouse event, and then exiting inspect mode. I think this test could just be:\n\nCreateTestWidget(...);\n...DOM::Node... root;\ndom_agent()-\u003egetDocument(\u0026root);\ngfx::Point p(1,1);\nEXPECT_NE(0, dom_agent()-\u003eFindElementByEventHandler(p));\n\nThat test could be named FindElementByEventHandler (or similar) with the description \"Tests that FindElementByEventHandler returns a non-zero id when a UI element target exists.\"\n\n\nThen, as a second test case, you could do something similar to lines 356-372 in order to verify that dispatching a mouse event has the intended effect. So, consider something like:\n\nCreateTestWidget(...);\n...DOM::Node... root;\ndom_agent()-\u003egetDocument(\u0026root);\n\noverlay_agent()-\u003esetInspectMode(\"searchForNode\", ...);\n\n// Dispatch a mouse move using EventGenerator.\n// Verify that nodeHighlightRequested was sent to the FE (*).\n\n// Dispatch a mouse press using EventGenerator.\n// Verify that inspectNodeRequested was sent to the FE (*).\n\n// Dispatch a mouse move.\n// Verify that neither event was sent to the FE (*), since the previous mouse-press removed the overlay agent as a pre-target handler.\n\nNote that for each of the lines marked as (*) above, I am assuming that you are able to see what is being dispatched to the FE by using |fake_frontend_channel_|.\n\n\nThese are just some thoughts, which may or may not be correct; feel free to leave the test as-is and keep this comment thread Unresolved so that Sadrul can weigh in during his code review.",
+      "revId": "39ad802f84807d6ccd859c8694d49c6b9f2a9e3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
