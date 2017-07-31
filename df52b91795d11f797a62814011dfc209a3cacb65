@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a4ee6995_b6496304",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_browsertest_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1236349
+      },
+      "writtenOn": "2017-07-31T18:45:07Z",
+      "side": 1,
+      "message": "Work In progress",
+      "parentUuid": "5c3c8cef_fb946e1a",
+      "range": {
+        "startLine": 22,
+        "startChar": 65,
+        "endLine": 22,
+        "endChar": 66
+      },
+      "revId": "df52b91795d11f797a62814011dfc209a3cacb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49c3e6b9_831614af",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_win.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-31T14:42:00Z",
       "side": 1,
       "message": "It looks like we unconditionally create the Official variant here. What is the non-official ChromeCleanerPromptDelegate interface used for?",
+      "range": {
+        "startLine": 53,
+        "startChar": 77,
+        "endLine": 53,
+        "endChar": 0
+      },
+      "revId": "df52b91795d11f797a62814011dfc209a3cacb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fb0a992_3aa1b5f8",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1236349
+      },
+      "writtenOn": "2017-07-31T18:45:07Z",
+      "side": 1,
+      "message": "I think it is better if I change the Official part of the name to Impl, this delegate on normal builds will just call ShowPrompt for the cleaner. However in order to have test codes we want this delegate to implement some mocks.",
+      "parentUuid": "49c3e6b9_831614af",
       "range": {
         "startLine": 53,
         "startChar": 77,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "871005c4_6e7bbaef",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1236349
+      },
+      "writtenOn": "2017-07-31T18:45:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "556d81cd_395bb8fc",
+      "range": {
+        "startLine": 138,
+        "startChar": 41,
+        "endLine": 138,
+        "endChar": 0
+      },
+      "revId": "df52b91795d11f797a62814011dfc209a3cacb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0037cf4c_4ad1f52f",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_win.cc",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "df52b91795d11f797a62814011dfc209a3cacb65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "994e0f34_737322f3",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1236349
+      },
+      "writtenOn": "2017-07-31T18:45:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0037cf4c_4ad1f52f",
+      "range": {
+        "startLine": 157,
+        "startChar": 77,
+        "endLine": 157,
+        "endChar": 0
+      },
+      "revId": "df52b91795d11f797a62814011dfc209a3cacb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "7e2137dc_66a1d2d3",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1236349
+      },
+      "writtenOn": "2017-07-31T18:45:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a19ee65d_ba88d57d",
+      "range": {
+        "startLine": 165,
+        "startChar": 59,
+        "endLine": 165,
+        "endChar": 0
+      },
+      "revId": "df52b91795d11f797a62814011dfc209a3cacb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6774cd1c_131f41fd",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_win.cc",
         "patchSetId": 1
@@ -137,6 +257,30 @@
       "revId": "df52b91795d11f797a62814011dfc209a3cacb65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6dcd702_3d67989b",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1236349
+      },
+      "writtenOn": "2017-07-31T18:45:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6774cd1c_131f41fd",
+      "range": {
+        "startLine": 196,
+        "startChar": 44,
+        "endLine": 196,
+        "endChar": 0
+      },
+      "revId": "df52b91795d11f797a62814011dfc209a3cacb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "6fcdd3a8_c9e1a121",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1236349
+      },
+      "writtenOn": "2017-07-31T18:45:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a6dc10c_370ed522",
+      "range": {
+        "startLine": 54,
+        "startChar": 7,
+        "endLine": 54,
+        "endChar": 32
+      },
+      "revId": "df52b91795d11f797a62814011dfc209a3cacb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2010e4fe_34d09afd",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_win.h",
         "patchSetId": 1
@@ -174,6 +342,30 @@
       "writtenOn": "2017-07-31T14:59:04Z",
       "side": 1,
       "message": "What is the difference between this variable and dialog_shown_ above?",
+      "range": {
+        "startLine": 64,
+        "startChar": 31,
+        "endLine": 64,
+        "endChar": 0
+      },
+      "revId": "df52b91795d11f797a62814011dfc209a3cacb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d39c9d9_6fd984bd",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1236349
+      },
+      "writtenOn": "2017-07-31T18:45:07Z",
+      "side": 1,
+      "message": "This variable is used to signal that no browser was available and we need to prompt the user, I added a comment explaining that.",
+      "parentUuid": "2010e4fe_34d09afd",
       "range": {
         "startLine": 64,
         "startChar": 31,
@@ -206,6 +398,30 @@
       "revId": "df52b91795d11f797a62814011dfc209a3cacb65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "196ea924_78c55ef4",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_prompt_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1236349
+      },
+      "writtenOn": "2017-07-31T18:45:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99e08a65_48e4f789",
+      "range": {
+        "startLine": 14,
+        "startChar": 35,
+        "endLine": 14,
+        "endChar": 0
+      },
+      "revId": "df52b91795d11f797a62814011dfc209a3cacb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -253,6 +469,30 @@
       "revId": "df52b91795d11f797a62814011dfc209a3cacb65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f168f79_aee95304",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_prompt_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1236349
+      },
+      "writtenOn": "2017-07-31T18:45:07Z",
+      "side": 1,
+      "message": "Change the name of the class to impl,",
+      "parentUuid": "a0f04002_1f8a5905",
+      "range": {
+        "startLine": 22,
+        "startChar": 42,
+        "endLine": 22,
+        "endChar": 43
+      },
+      "revId": "df52b91795d11f797a62814011dfc209a3cacb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
