@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f99112ae_787dccf8",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/ScrollingCoordinator.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-07-31T11:08:08Z",
+      "side": 1,
+      "message": "I have integrated this loop into the for loop before ProjectRectsToGraphicsLayerSpace. The reason is that this for loop goes through the |layers_with_touch_rects_|, and that for loop is putting things into the same object, so seems to make sense to put it over there.",
+      "parentUuid": "a30d37fb_ad7ac325",
+      "revId": "47cea8e33289033c7c231d53ca3702324c8cb14a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c85e3f23_11a69e1f",
         "filename": "third_party/WebKit/Source/core/page/scrolling/ScrollingCoordinator.cpp",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "47cea8e33289033c7c231d53ca3702324c8cb14a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "933cf721_62f52e3f",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/ScrollingCoordinator.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 816,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-07-31T11:08:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c85e3f23_11a69e1f",
+      "revId": "47cea8e33289033c7c231d53ca3702324c8cb14a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "906ac589_6a190c20",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/ScrollingCoordinatorTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-07-31T11:08:08Z",
+      "side": 1,
+      "message": "I believe we should check the main graphics layer\u0027s touch action. Using the touch-action.html which is added in this CL as an example, we have a div \"scrollable\" which is the main graphics layer, it has touch-action pan-x | pan-down. IMO, check the touch-action bit for that layer should be enough.\n\nThis test does test it w/o RootLayerScrolling. This test has a line:\nINSTANTIATE_TEST_CASE_P(All, ScrollingCoordinatorTest, ::testing::Bool());\n\nwhich means the test takes a bool to indicate whether RootLayerScrolling is enabled or not. By running --test-filter \u003d All/ScrollingCoordinatorTest.touchAction/1 this test enables RootLayerScrolling, and running with /0 disables it. Does that make sense.",
+      "parentUuid": "a608dd1a_e623b818",
+      "revId": "47cea8e33289033c7c231d53ca3702324c8cb14a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aab1fb59_e3b0bd11",
         "filename": "third_party/WebKit/public/platform/WebLayer.h",
         "patchSetId": 8
@@ -67,6 +121,24 @@
       "revId": "47cea8e33289033c7c231d53ca3702324c8cb14a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a60e4119_6ab0057e",
+        "filename": "third_party/WebKit/public/platform/WebLayer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-07-31T11:08:08Z",
+      "side": 1,
+      "message": "I thought about putting this in the test file. But the implementation of this function requires us to have access to cc::Region, which we cannot do in Webkit/Core, so I rename it to xxxForTesting in the latest patch.",
+      "parentUuid": "aab1fb59_e3b0bd11",
+      "revId": "47cea8e33289033c7c231d53ca3702324c8cb14a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
