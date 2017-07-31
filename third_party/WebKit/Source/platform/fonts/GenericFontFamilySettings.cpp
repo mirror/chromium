@@ -44,6 +44,26 @@ GenericFontFamilySettings::GenericFontFamilySettings(
       fantasy_font_family_map_(other.fantasy_font_family_map_),
       pictograph_font_family_map_(other.pictograph_font_family_map_) {}
 
+void GenericFontFamilySettings::DeepCopyHashMap(const ScriptFontFamilyMap& src,
+                                                ScriptFontFamilyMap& dest) {
+  for (const auto& kv : src) {
+    dest.insert(kv.key, AtomicString(kv.value.GetString().IsolatedCopy()));
+  }
+}
+
+void GenericFontFamilySettings::DeepThreadSafeCopyTo(
+    GenericFontFamilySettings& dest) {
+  DeepCopyHashMap(standard_font_family_map_, dest.standard_font_family_map_);
+  DeepCopyHashMap(serif_font_family_map_, dest.serif_font_family_map_);
+  DeepCopyHashMap(fixed_font_family_map_, dest.fixed_font_family_map_);
+  DeepCopyHashMap(sans_serif_font_family_map_,
+                  dest.sans_serif_font_family_map_);
+  DeepCopyHashMap(cursive_font_family_map_, dest.cursive_font_family_map_);
+  DeepCopyHashMap(fantasy_font_family_map_, dest.fantasy_font_family_map_);
+  DeepCopyHashMap(pictograph_font_family_map_,
+                  dest.pictograph_font_family_map_);
+}
+
 GenericFontFamilySettings& GenericFontFamilySettings::operator=(
     const GenericFontFamilySettings& other) {
   standard_font_family_map_ = other.standard_font_family_map_;
