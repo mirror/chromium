@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ed9b28d8_f804c148",
+        "filename": "ios/chrome/content_widget_extension/content_widget_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-07-31T16:44:27Z",
+      "side": 1,
+      "message": "showMode modifies the display to match compact or expanded view (which it does by modifying the constant on a constraint, but I feel like that\u0027s internal detail). I don\u0027t think this has reason to be a property?",
+      "parentUuid": "c9d9fdfe_793d43b9",
+      "range": {
+        "startLine": 23,
+        "startChar": 8,
+        "endLine": 23,
+        "endChar": 16
+      },
+      "revId": "22fbabf127d1374b60b47f4b40187672af8623ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72f054ce_21839842",
         "filename": "ios/chrome/content_widget_extension/content_widget_view.h",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "2dedebfd_abacdb98",
+        "filename": "ios/chrome/content_widget_extension/content_widget_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-07-31T16:44:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "72f054ce_21839842",
+      "range": {
+        "startLine": 26,
+        "startChar": 11,
+        "endLine": 26,
+        "endChar": 23
+      },
+      "revId": "22fbabf127d1374b60b47f4b40187672af8623ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bdc5e68e_5072b36c",
         "filename": "ios/chrome/content_widget_extension/content_widget_view.mm",
         "patchSetId": 1
@@ -62,6 +110,24 @@
       "revId": "22fbabf127d1374b60b47f4b40187672af8623ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3861894d_aef60157",
+        "filename": "ios/chrome/content_widget_extension/content_widget_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-07-31T16:44:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bdc5e68e_5072b36c",
+      "revId": "22fbabf127d1374b60b47f4b40187672af8623ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "48b75c03_23e78031",
+        "filename": "ios/chrome/content_widget_extension/content_widget_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-07-31T16:44:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4407b3c2_1f4a4c29",
+      "range": {
+        "startLine": 116,
+        "startChar": 8,
+        "endLine": 116,
+        "endChar": 19
+      },
+      "revId": "22fbabf127d1374b60b47f4b40187672af8623ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e32856f2_df9889cc",
         "filename": "ios/chrome/content_widget_extension/content_widget_view.mm",
         "patchSetId": 1
@@ -108,6 +198,30 @@
       "revId": "22fbabf127d1374b60b47f4b40187672af8623ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a0e2f43_5baaaeff",
+        "filename": "ios/chrome/content_widget_extension/content_widget_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-07-31T16:44:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e32856f2_df9889cc",
+      "range": {
+        "startLine": 141,
+        "startChar": 13,
+        "endLine": 141,
+        "endChar": 14
+      },
+      "revId": "22fbabf127d1374b60b47f4b40187672af8623ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "a24c98bf_430ec82b",
+        "filename": "ios/chrome/content_widget_extension/content_widget_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-07-31T16:44:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1bc991e6_9a841c34",
+      "range": {
+        "startLine": 55,
+        "startChar": 12,
+        "endLine": 55,
+        "endChar": 15
+      },
+      "revId": "22fbabf127d1374b60b47f4b40187672af8623ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0fb8f79a_2c4c9ae7",
         "filename": "ios/chrome/content_widget_extension/content_widget_view_controller.mm",
         "patchSetId": 1
@@ -154,6 +292,30 @@
       "revId": "22fbabf127d1374b60b47f4b40187672af8623ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10029283_b3b22248",
+        "filename": "ios/chrome/content_widget_extension/content_widget_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-07-31T16:44:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0fb8f79a_2c4c9ae7",
+      "range": {
+        "startLine": 61,
+        "startChar": 35,
+        "endLine": 61,
+        "endChar": 51
+      },
+      "revId": "22fbabf127d1374b60b47f4b40187672af8623ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "58c2c431_e65868c8",
+        "filename": "ios/chrome/content_widget_extension/most_visited_tile_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-07-31T16:44:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0824eb8_8c59a6b0",
+      "range": {
+        "startLine": 59,
+        "startChar": 24,
+        "endLine": 59,
+        "endChar": 40
+      },
+      "revId": "22fbabf127d1374b60b47f4b40187672af8623ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f9c009a_a7781bf9",
         "filename": "ios/chrome/content_widget_extension/most_visited_tile_view.mm",
         "patchSetId": 1
@@ -200,6 +386,30 @@
       "revId": "22fbabf127d1374b60b47f4b40187672af8623ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc0391ce_a8740f74",
+        "filename": "ios/chrome/content_widget_extension/most_visited_tile_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-07-31T16:44:27Z",
+      "side": 1,
+      "message": "No, the label will be the site title. However I realised I don\u0027t need this actionbutton anyway, I can just make the view itself  recognize the gesture, so I will remove this and add tapping functionality in the next cl.",
+      "parentUuid": "8f9c009a_a7781bf9",
+      "range": {
+        "startLine": 63,
+        "startChar": 40,
+        "endLine": 63,
+        "endChar": 45
+      },
+      "revId": "22fbabf127d1374b60b47f4b40187672af8623ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
