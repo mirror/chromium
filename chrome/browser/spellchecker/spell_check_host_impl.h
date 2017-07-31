@@ -14,6 +14,7 @@
 #error "Spellcheck should be enabled."
 #endif
 
+class SpellCheckerSessionBridge;
 class SpellcheckCustomDictionary;
 class SpellcheckService;
 
@@ -35,6 +36,9 @@ class SpellCheckHostImpl : public spellcheck::mojom::SpellCheckHost {
   void NotifyChecked(const base::string16& word, bool misspelled) override;
   void CallSpellingService(const base::string16& text,
                            CallSpellingServiceCallback callback) override;
+  void RequestTextCheck(const base::string16& text,
+                        RequestTextCheckCallback callback) override;
+  void ToggleSpellCheck(bool enabled, bool checked) override;
 
 #if !BUILDFLAG(USE_BROWSER_SPELLCHECKER)
   // Invoked when the remote Spelling service has finished checking the
@@ -62,6 +66,14 @@ class SpellCheckHostImpl : public spellcheck::mojom::SpellCheckHost {
 
   // A JSON-RPC client that calls the remote Spelling service.
   SpellingServiceClient client_;
+
+#if BUILDFLAG(USE_BROWSER_SPELLCHECKER)
+#if defined(OS_ANDROID)
+  std::unique_ptr<SpellCheckerSessionBridge> session_bridge_;
+#else
+// TODO(xiaochengh): Migrate Mac spell check IPC messages to Mojo.
+#endif  // defined(OS_ANDROID)
+#endif  // BUILDFLAG(USE_BROWSER_SPELLCHECKER)
 
   DISALLOW_COPY_AND_ASSIGN(SpellCheckHostImpl);
 };

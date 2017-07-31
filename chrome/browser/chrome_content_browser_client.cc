@@ -1026,7 +1026,8 @@ void ChromeContentBrowserClient::RenderProcessWillLaunch(
 #if BUILDFLAG(ENABLE_PRINTING)
   host->AddFilter(new printing::PrintingMessageFilter(id, profile));
 #endif
-#if BUILDFLAG(USE_BROWSER_SPELLCHECKER)
+#if defined(OS_MACOSX)
+  // TODO(xiaochengh): Migrate Mac spell check IPC to mojo.
   host->AddFilter(new SpellCheckMessageFilterPlatform(id));
 #endif
   host->AddFilter(new prerender::PrerenderMessageFilter(id, profile));

@@ -13,8 +13,6 @@
 #include "components/spellcheck/common/spellcheck_result.h"
 #include "content/public/browser/browser_message_filter.h"
 
-class SpellCheckerSessionBridge;
-
 // A message filter implementation that receives
 // the platform-specific spell checker requests from SpellCheckProvider.
 class SpellCheckMessageFilterPlatform : public content::BrowserMessageFilter {
@@ -52,17 +50,7 @@ class SpellCheckMessageFilterPlatform : public content::BrowserMessageFilter {
 
   int render_process_id_;
 
-#if defined(OS_ANDROID)
-  friend struct content::BrowserThread::DeleteOnThread<
-      content::BrowserThread::UI>;
-  friend class base::DeleteHelper<SpellCheckMessageFilterPlatform>;
-
-  void OnToggleSpellCheck(bool enabled, bool checked);
-  void OnDestruct() const override;
-
-  // Android-specific object used to query the Android spellchecker.
-  std::unique_ptr<SpellCheckerSessionBridge> impl_;
-#else
+#if !defined(OS_ANDROID)
   // A JSON-RPC client that calls the Spelling service in the background.
   std::unique_ptr<SpellingServiceClient> client_;
 #endif
