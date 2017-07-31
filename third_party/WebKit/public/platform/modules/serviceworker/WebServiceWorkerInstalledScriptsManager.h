@@ -30,6 +30,8 @@ class WebServiceWorkerInstalledScriptsManager {
         WebString encoding,
         WebVector<BytesChunk> script_text,
         WebVector<BytesChunk> meta_data);
+    // Create an empty data with a failure bit.
+    static std::unique_ptr<RawScriptData> CreateFailureData();
 
     // Implementation of the destructor should be in the Blink side because only
     // Blink can know all of members.
@@ -37,6 +39,8 @@ class WebServiceWorkerInstalledScriptsManager {
 
     void AddHeader(const WebString& key, const WebString& value);
 
+    // Returns true if it fails to receive the script from the browser.
+    bool Failed() const { return failed_; }
     // The encoding of the script text.
     const WebString& Encoding() const { return encoding_; }
     // An array of raw byte chunks of the script text.
@@ -59,7 +63,9 @@ class WebServiceWorkerInstalledScriptsManager {
     // know the exact size of this instance.
     RawScriptData(WebString encoding,
                   WebVector<BytesChunk> script_text,
-                  WebVector<BytesChunk> meta_data);
+                  WebVector<BytesChunk> meta_data,
+                  bool failed);
+    const bool failed_;
     WebString encoding_;
     WebVector<BytesChunk> script_text_;
     WebVector<BytesChunk> meta_data_;

@@ -25,7 +25,8 @@ class InstalledScriptsManager {
     ScriptData(const KURL& script_url,
                String source_text,
                std::unique_ptr<Vector<char>> meta_data,
-               std::unique_ptr<CrossThreadHTTPHeaderMapData>);
+               std::unique_ptr<CrossThreadHTTPHeaderMapData>,
+               bool failed);
 
     String TakeSourceText() { return std::move(source_text_); }
     std::unique_ptr<Vector<char>> TakeMetaData() {
@@ -37,8 +38,11 @@ class InstalledScriptsManager {
     String GetReferrerPolicy();
     std::unique_ptr<Vector<String>> CreateOriginTrialTokens();
 
+    bool Failed() const { return failed_; }
+
    private:
     const KURL script_url_;
+    const bool failed_;
     String source_text_;
     std::unique_ptr<Vector<char>> meta_data_;
     HTTPHeaderMap headers_;
