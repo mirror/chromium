@@ -155,7 +155,8 @@ void AutofillPopupViewViews::DrawAutofillEntry(gfx::Canvas* canvas,
       (frontend_id == POPUP_ITEM_ID_HTTP_NOT_SECURE_WARNING_MESSAGE);
   const bool icon_in_front_of_text =
       (is_http_warning ||
-       frontend_id == POPUP_ITEM_ID_ALL_SAVED_PASSWORDS_ENTRY);
+       frontend_id == POPUP_ITEM_ID_ALL_SAVED_PASSWORDS_ENTRY ||
+       frontend_id == POPUP_ITEM_ID_GENERATE_PASSWORD_ENTRY);
   const bool is_rtl = controller_->IsRTL();
   const int text_align =
       is_rtl ? gfx::Canvas::TEXT_ALIGN_RIGHT : gfx::Canvas::TEXT_ALIGN_LEFT;
