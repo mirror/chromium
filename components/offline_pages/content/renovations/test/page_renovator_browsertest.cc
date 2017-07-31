@@ -9,9 +9,11 @@
 #include <vector>
 
 #include "base/files/file_path.h"
+#include "base/path_service.h"
 #include "base/run_loop.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/values.h"
+#include "build/build_config.h"
 #include "components/offline_pages/content/renovations/render_frame_script_injector.h"
 #include "components/offline_pages/core/renovations/page_renovation_loader.h"
 #include "content/public/browser/browser_thread.h"
@@ -23,6 +25,7 @@
 #include "content/shell/browser/shell.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "ui/base/resource/resource_bundle.h"
 #include "url/gurl.h"
 
 namespace offline_pages {
@@ -30,7 +33,18 @@ namespace offline_pages {
 namespace {
 
 const char kDocRoot[] = "components/test/data/offline_pages";
-const char kTestPageURL[] = "/renovator_test_page.html";
+
+// For testing real renovations.
+const char kWikipediaTestPagePath[] = "/wikipedia_renovation_test_page.html";
+
+const char kCheckUnfoldBlockScript[] =
+    "document.getElementById('unfold-block').classList.contains('open-block')";
+const char kCheckUnfoldHeadingScript[] =
+    "document.getElementById('unfold-heading').classList.contains('open-block'"
+    ")";
+
+// For running against the test renovations.
+const char kTestPagePath[] = "/renovator_test_page.html";
 const char kTestRenovationScript[] =
     R"*(function foo() {
       var node = document.getElementById('foo');
@@ -88,6 +102,11 @@ class PageRenovatorBrowserTest : public content::ContentBrowserTest {
  public:
   void SetUpOnMainThread() override;
 
+  void InitializeWithTestingRenovations(const GURL& fake_url);
+  void InitializeWithRealRenovations(const GURL& fake_url);
+
+  void Navigate(const std::string& test_page_path);
+
   void QuitRunLoop();
 
  protected:
@@ -100,16 +119,29 @@ class PageRenovatorBrowserTest : public content::ContentBrowserTest {
 };
 
 void PageRenovatorBrowserTest::SetUpOnMainThread() {
+  // Add resources pack to resource bundle so PageRenovationLoader can
+  // load our renovation script.
+  base::FilePath pak_dir;
+#if defined(OS_ANDROID)
+  PathService::Get(base::DIR_ANDROID_APP_DATA, &pak_dir);
+  pak_dir = pak_dir.Append(FILE_PATH_LITERAL("paks"));
+#else
+  PathService::Get(base::DIR_MODULE, &pak_dir);
+#endif  // OS_ANDROID
+  base::FilePath pak_file =
+      pak_dir.Append(FILE_PATH_LITERAL("components_tests_resources.pak"));
+  ui::ResourceBundle::GetSharedInstance().AddDataPackFromPath(
+      pak_file, ui::SCALE_FACTOR_NONE);
+
   // Serve our test HTML.
   test_server_.ServeFilesFromSourceDirectory(kDocRoot);
   ASSERT_TRUE(test_server_.Start());
 
-  // Navigate to test page.
-  GURL url = test_server_.GetURL(kTestPageURL);
-  content::NavigateToURL(shell(), url);
-  render_frame_ = shell()->web_contents()->GetMainFrame();
+  run_loop_.reset(new base::RunLoop);
+}
 
-  // Initialize renovations.
+void PageRenovatorBrowserTest::InitializeWithTestingRenovations(
+    const GURL& fake_url) {
   std::vector<std::unique_ptr<PageRenovation>> renovations;
   renovations.push_back(base::MakeUnique<FooPageRenovation>());
   renovations.push_back(base::MakeUnique<BarPageRenovation>());
@@ -122,11 +154,24 @@ void PageRenovatorBrowserTest::SetUpOnMainThread() {
 
   auto script_injector = base::MakeUnique<RenderFrameScriptInjector>(
       render_frame_, content::ISOLATED_WORLD_ID_CONTENT_END);
-  GURL fake_url("http://foo.bar/");
   page_renovator_.reset(new PageRenovator(
       page_renovation_loader_.get(), std::move(script_injector), fake_url));
+}
 
-  run_loop_.reset(new base::RunLoop);
+void PageRenovatorBrowserTest::Navigate(const std::string& test_page_path) {
+  GURL url = test_server_.GetURL(test_page_path);
+  content::NavigateToURL(shell(), url);
+  render_frame_ = shell()->web_contents()->GetMainFrame();
+}
+
+void PageRenovatorBrowserTest::InitializeWithRealRenovations(
+    const GURL& fake_url) {
+  page_renovation_loader_.reset(new PageRenovationLoader);
+
+  auto script_injector = base::MakeUnique<RenderFrameScriptInjector>(
+      render_frame_, content::ISOLATED_WORLD_ID_CONTENT_END);
+  page_renovator_.reset(new PageRenovator(
+      page_renovation_loader_.get(), std::move(script_injector), fake_url));
 }
 
 void PageRenovatorBrowserTest::QuitRunLoop() {
@@ -137,6 +182,8 @@ void PageRenovatorBrowserTest::QuitRunLoop() {
 }
 
 IN_PROC_BROWSER_TEST_F(PageRenovatorBrowserTest, CorrectRenovationsRun) {
+  Navigate(kTestPagePath);
+  InitializeWithTestingRenovations(GURL("http://foo.bar/"));
   // This should run FooPageRenovation and AlwaysRenovation, but not
   // BarPageRenovation.
   page_renovator_->RunRenovations(base::Bind(
@@ -157,6 +204,25 @@ IN_PROC_BROWSER_TEST_F(PageRenovatorBrowserTest, CorrectRenovationsRun) {
   EXPECT_TRUE(fooResult->GetBool());
   EXPECT_FALSE(barResult->GetBool());
   EXPECT_TRUE(alwaysResult->GetBool());
+}
+
+IN_PROC_BROWSER_TEST_F(PageRenovatorBrowserTest, WikipediaRenovationRuns) {
+  Navigate(kWikipediaTestPagePath);
+  InitializeWithRealRenovations(GURL("http://wikipedia.org/"));
+  page_renovator_->RunRenovations(base::Bind(
+      &PageRenovatorBrowserTest::QuitRunLoop, base::Unretained(this)));
+  content::RunThisRunLoop(run_loop_.get());
+
+  std::unique_ptr<base::Value> unfoldBlockResult =
+      content::ExecuteScriptAndGetValue(render_frame_, kCheckUnfoldBlockScript);
+  std::unique_ptr<base::Value> unfoldHeadingResult =
+      content::ExecuteScriptAndGetValue(render_frame_,
+                                        kCheckUnfoldHeadingScript);
+
+  ASSERT_TRUE(unfoldBlockResult.get() != nullptr);
+  ASSERT_TRUE(unfoldHeadingResult.get() != nullptr);
+  EXPECT_TRUE(unfoldBlockResult->GetBool());
+  EXPECT_TRUE(unfoldHeadingResult->GetBool());
 }
 
 // TODO(collinbaker): add test for Wikipedia renovation here.
