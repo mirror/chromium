@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9320c032_3ddb6a8c",
+        "filename": "ui/views/controls/button/toggle_button.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1111184
+      },
+      "writtenOn": "2017-07-31T20:57:01Z",
+      "side": 1,
+      "message": "IIUC this will effectively hide the focus affordance after a toggle button is triggered by any non-keyboard event, even though the button still has focus?  Personally I\u0027m not a fan of that because presumably an \u003center\u003e or \u003cspace\u003e keystroke will still activate the toggle action.  Do you know if design or accessibility have input here?\n\nSimilarly, if a ToggleButton has focus and a user clicks or taps on it they won\u0027t see any change.\n\nWould a circle shaped InkDropHighlight, shown only on focus, be a viable solution to both concerns here?",
+      "range": {
+        "startLine": 222,
+        "startChar": 8,
+        "endLine": 222,
+        "endChar": 16
+      },
+      "revId": "649fc9673a4dd580193c08056520333eed48e0fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
