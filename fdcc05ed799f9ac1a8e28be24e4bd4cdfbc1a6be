@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a430c3f_e180ef80",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/RootScrollerController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-07-31T17:40:47Z",
+      "side": 1,
+      "message": "If the condition is false, don\u0027t you still need a call to view-\u003eGetFrame().OwnerLayoutObject()-\u003eUpdateGeometry() ?",
+      "revId": "fdcc05ed799f9ac1a8e28be24e4bd4cdfbc1a6be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
