@@ -52,12 +52,7 @@ aura::Window* ArcNotificationSurfaceImpl::GetWindow() const {
 
 aura::Window* ArcNotificationSurfaceImpl::GetContentWindow() const {
   DCHECK(surface_->host_window());
-  DCHECK(!surface_->host_window()->children().empty());
-
-  aura::Window* content_window = surface_->host_window()->children()[0];
-
-  DCHECK(content_window);
-  return content_window;
+  return surface_->host_window();
 }
 
 const std::string& ArcNotificationSurfaceImpl::GetNotificationKey() const {
