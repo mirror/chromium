@@ -787,15 +787,6 @@ bool SandboxedUnpacker::RewriteImageFiles(SkBitmap* install_icon) {
 
   // Write our parsed images back to disk as well.
   for (size_t i = 0; i < images.size(); ++i) {
-    if (BrowserThread::GetBlockingPool()->IsShutdownInProgress()) {
-      // Abort package installation if shutdown was initiated, crbug.com/235525
-      ReportFailure(
-          ABORTED_DUE_TO_SHUTDOWN,
-          l10n_util::GetStringFUTF16(IDS_EXTENSION_PACKAGE_INSTALL_ERROR,
-                                     ASCIIToUTF16("ABORTED_DUE_TO_SHUTDOWN")));
-      return false;
-    }
-
     const SkBitmap& image = std::get<0>(images[i]);
     base::FilePath path_suffix = std::get<1>(images[i]);
     if (path_suffix.MaybeAsASCII() == install_icon_path)
