@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "532fc88b_6f1ac11d",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-07-31T18:32:13Z",
+      "side": 1,
+      "message": "Great, thanks!",
+      "parentUuid": "4d3cccde_ef7e4929",
+      "range": {
+        "startLine": 184,
+        "startChar": 66,
+        "endLine": 184,
+        "endChar": 0
+      },
+      "revId": "09711325374f828b62bc15b4687d262d325cbbd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db003d6f_21dd0fe9",
         "filename": "components/cast_channel/cast_socket.cc",
         "patchSetId": 2
