@@ -75,6 +75,8 @@ class PLATFORM_EXPORT GenericFontFamilySettings {
 
   GenericFontFamilySettings& operator=(const GenericFontFamilySettings&);
 
+  void DeepThreadSafeCopy(GenericFontFamilySettings&);
+
  private:
   // UScriptCode uses -1 and 0 for UScriptInvalidCode and UScriptCommon.
   // We need to use -2 and -3 for empty value and deleted value.
@@ -97,6 +99,8 @@ class PLATFORM_EXPORT GenericFontFamilySettings {
                                UScriptCode);
   const AtomicString& GenericFontFamilyForScript(const ScriptFontFamilyMap&,
                                                  UScriptCode) const;
+  void DeepCopyHashMap(const ScriptFontFamilyMap& src,
+                       ScriptFontFamilyMap& dest);
 
   ScriptFontFamilyMap standard_font_family_map_;
   ScriptFontFamilyMap serif_font_family_map_;
