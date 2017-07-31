@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "69246af2_3dcb5be1",
+        "filename": "cc/paint/discardable_image_map.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-31T18:59:15Z",
+      "side": 1,
+      "message": "We need to come up with a plan for how to replace them at raster. But we should now have access to them at discovery time to track what needs to be pre-decoded.",
+      "parentUuid": "3c5245ee_5a73d174",
+      "range": {
+        "startLine": 133,
+        "startChar": 57,
+        "endLine": 133,
+        "endChar": 69
+      },
+      "revId": "c3c85cc8b5a3e58c51117da7b195706689e9d6ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36449a4b_df43aa0c",
         "filename": "cc/paint/image_provider.h",
         "patchSetId": 15
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d6c173d8_06305f4c",
+        "filename": "cc/paint/image_provider.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-31T18:59:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36449a4b_df43aa0c",
+      "range": {
+        "startLine": 21,
+        "startChar": 36,
+        "endLine": 21,
+        "endChar": 48
+      },
+      "revId": "c3c85cc8b5a3e58c51117da7b195706689e9d6ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d00023fb_89482670",
         "filename": "cc/paint/image_provider.h",
         "patchSetId": 15
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-26T23:54:35Z",
       "side": 1,
       "message": "Why doesn\u0027t this just return DecodedDrawImage? Why the indirection?",
+      "range": {
+        "startLine": 26,
+        "startChar": 26,
+        "endLine": 26,
+        "endChar": 44
+      },
+      "revId": "c3c85cc8b5a3e58c51117da7b195706689e9d6ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f2f2b19_8b7794ae",
+        "filename": "cc/paint/image_provider.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-31T18:59:15Z",
+      "side": 1,
+      "message": "I needed a scoped object to automatically unref the image with the underlying DrawImage after the draw is finished. Replaced it with a ScopedDecodedDrawImage and a callback to be called on destruction to do this instead.",
+      "parentUuid": "d00023fb_89482670",
       "range": {
         "startLine": 26,
         "startChar": 26,
@@ -117,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "2db3f760_78ab5389",
+        "filename": "cc/paint/paint_image.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-31T18:59:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56e55fb8_10b6fb50",
+      "range": {
+        "startLine": 27,
+        "startChar": 44,
+        "endLine": 27,
+        "endChar": 55
+      },
+      "revId": "c3c85cc8b5a3e58c51117da7b195706689e9d6ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd84794e_48a87e94",
         "filename": "cc/paint/paint_op_buffer.cc",
         "patchSetId": 15
@@ -137,6 +233,30 @@
       "revId": "c3c85cc8b5a3e58c51117da7b195706689e9d6ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fdb9609_479b392c",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-31T18:59:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fd84794e_48a87e94",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 29,
+        "endChar": 22
+      },
+      "revId": "c3c85cc8b5a3e58c51117da7b195706689e9d6ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "9942b698_01974a6f",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-31T18:59:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "355c87e8_f69998ba",
+      "range": {
+        "startLine": 127,
+        "startChar": 0,
+        "endLine": 133,
+        "endChar": 5
+      },
+      "revId": "c3c85cc8b5a3e58c51117da7b195706689e9d6ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b5db00a_05f795f5",
         "filename": "cc/paint/paint_op_buffer.cc",
         "patchSetId": 15
@@ -183,6 +327,30 @@
       "revId": "c3c85cc8b5a3e58c51117da7b195706689e9d6ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e74ada1_f7bee729",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1255,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-31T18:59:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b5db00a_05f795f5",
+      "range": {
+        "startLine": 1255,
+        "startChar": 1,
+        "endLine": 1255,
+        "endChar": 30
+      },
+      "revId": "c3c85cc8b5a3e58c51117da7b195706689e9d6ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +377,30 @@
     },
     {
       "key": {
+        "uuid": "cddbf633_8cf5ead5",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1295,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-31T18:59:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ef2b520_f7d3196c",
+      "range": {
+        "startLine": 1295,
+        "startChar": 2,
+        "endLine": 1295,
+        "endChar": 29
+      },
+      "revId": "c3c85cc8b5a3e58c51117da7b195706689e9d6ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "314c860d_43a6ac7c",
         "filename": "cc/paint/paint_op_buffer.cc",
         "patchSetId": 15
@@ -229,6 +421,30 @@
       "revId": "c3c85cc8b5a3e58c51117da7b195706689e9d6ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "705606f3_e0d4035c",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1616,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-31T18:59:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "314c860d_43a6ac7c",
+      "range": {
+        "startLine": 1616,
+        "startChar": 22,
+        "endLine": 1616,
+        "endChar": 32
+      },
+      "revId": "c3c85cc8b5a3e58c51117da7b195706689e9d6ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +471,30 @@
     },
     {
       "key": {
+        "uuid": "5635750f_3aa2161c",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1618,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-31T18:59:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f022d22b_e63a7459",
+      "range": {
+        "startLine": 1618,
+        "startChar": 6,
+        "endLine": 1618,
+        "endChar": 12
+      },
+      "revId": "c3c85cc8b5a3e58c51117da7b195706689e9d6ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e171f0ba_42224295",
         "filename": "cc/paint/paint_op_buffer.cc",
         "patchSetId": 15
@@ -278,6 +518,30 @@
     },
     {
       "key": {
+        "uuid": "870a97e5_4da4d914",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1933,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-31T18:59:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e171f0ba_42224295",
+      "range": {
+        "startLine": 1933,
+        "startChar": 12,
+        "endLine": 1933,
+        "endChar": 26
+      },
+      "revId": "c3c85cc8b5a3e58c51117da7b195706689e9d6ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c0b6904_401017a9",
         "filename": "cc/tiles/tile_manager.cc",
         "patchSetId": 15
@@ -289,6 +553,24 @@
       "writtenOn": "2017-07-26T23:54:35Z",
       "side": 1,
       "message": "Why unique ptr instead of a move only type?",
+      "revId": "c3c85cc8b5a3e58c51117da7b195706689e9d6ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3756672_28fc731d",
+        "filename": "cc/tiles/tile_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1160,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-07-31T18:59:15Z",
+      "side": 1,
+      "message": "Replaced with base::Optional instead.",
+      "parentUuid": "6c0b6904_401017a9",
       "revId": "c3c85cc8b5a3e58c51117da7b195706689e9d6ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
