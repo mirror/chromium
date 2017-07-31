@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16b4d35f_c3d5f7d3",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/RenderTestRule.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-07-31T21:10:35Z",
+      "side": 1,
+      "message": "Nit: While you\u0027re here, could you unify the usage of \"folder\" vs. \"directory\" here? Also, could you make it clearer what the difference between the parameter and the member is? (I guess something like, the parameter is relative and the member is absolute.)",
+      "range": {
+        "startLine": 100,
+        "startChar": 15,
+        "endLine": 100,
+        "endChar": 21
+      },
+      "revId": "bd95b0e25cb58db1945d4ec5cf0689f98a648736",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
