@@ -4378,8 +4378,7 @@
           "-v",
           "--upload-results",
           "--output-format=chartjson",
-          "--browser=release_x64",
-          "--output-format=json-test-results"
+          "--browser=release_x64"
         ],
         "isolate_name": "telemetry_perf_tests",
         "name": "system_health.common_desktop",
@@ -4410,7 +4409,6 @@
           "--upload-results",
           "--output-format=chartjson",
           "--browser=reference",
-          "--output-format=json-test-results",
           "--output-trace-tag=_ref"
         ],
         "isolate_name": "telemetry_perf_tests",
@@ -4441,8 +4439,7 @@
           "-v",
           "--upload-results",
           "--output-format=chartjson",
-          "--browser=release_x64",
-          "--output-format=json-test-results"
+          "--browser=release_x64"
         ],
         "isolate_name": "telemetry_perf_tests",
         "name": "system_health.memory_desktop",
@@ -4473,7 +4470,6 @@
           "--upload-results",
           "--output-format=chartjson",
           "--browser=reference",
-          "--output-format=json-test-results",
           "--output-trace-tag=_ref"
         ],
         "isolate_name": "telemetry_perf_tests",
@@ -9439,8 +9435,7 @@
           "-v",
           "--upload-results",
           "--output-format=chartjson",
-          "--browser=release_x64",
-          "--output-format=json-test-results"
+          "--browser=release_x64"
         ],
         "isolate_name": "telemetry_perf_tests",
         "name": "system_health.common_desktop",
@@ -9471,7 +9466,6 @@
           "--upload-results",
           "--output-format=chartjson",
           "--browser=reference",
-          "--output-format=json-test-results",
           "--output-trace-tag=_ref"
         ],
         "isolate_name": "telemetry_perf_tests",
@@ -9502,8 +9496,7 @@
           "-v",
           "--upload-results",
           "--output-format=chartjson",
-          "--browser=release_x64",
-          "--output-format=json-test-results"
+          "--browser=release_x64"
         ],
         "isolate_name": "telemetry_perf_tests",
         "name": "system_health.memory_desktop",
@@ -9534,7 +9527,6 @@
           "--upload-results",
           "--output-format=chartjson",
           "--browser=reference",
-          "--output-format=json-test-results",
           "--output-trace-tag=_ref"
         ],
         "isolate_name": "telemetry_perf_tests",

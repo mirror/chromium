@@ -66,14 +66,13 @@ def main():
     failures = []
     chartjson_results_present = '--output-format=chartjson' in rest_args
     chartresults = None
-    json_test_results_present = '--output-format=json-test-results' in rest_args
     json_test_results = None
 
     results = None
     try:
       rc = common.run_command([sys.executable] + rest_args + [
         '--output-dir', tempfile_dir,
-        '--output-format=json'
+        '--output-format=json-test-results',
       ], env=env)
             # If we have also output chartjson read it in and return it.
       # results-chart.json is the file name output by telemetry when the
@@ -99,10 +98,9 @@ def main():
             failures.append(name)
         valid = bool(rc == 0 or failures)
 
-      if json_test_results_present:
-        tempfile_name = os.path.join(tempfile_dir, 'test-results.json')
-        with open(tempfile_name) as f:
-          json_test_results = json.load(f)
+      tempfile_name = os.path.join(tempfile_dir, 'test-results.json')
+      with open(tempfile_name) as f:
+        json_test_results = json.load(f)
 
     except Exception:
       traceback.print_exc()
@@ -122,12 +120,6 @@ def main():
       chartjson_output_file = \
         open(args.isolated_script_test_chartjson_output, 'w')
       json.dump(chartresults, chartjson_output_file)
-
-    if not json_test_results_present:
-      json_test_results = {
-          'valid': valid,
-          'failures': failures
-      }
 
     json.dump(json_test_results, args.isolated_script_test_output)
     return rc
