@@ -47,8 +47,12 @@ class CONTENT_EXPORT WebUIMessageHandler {
   FRIEND_TEST_ALL_PREFIXES(WebUIMessageHandlerTest, ExtractDoubleValue);
   FRIEND_TEST_ALL_PREFIXES(WebUIMessageHandlerTest, ExtractStringValue);
 
-  // Subclasses must call this once the page is ready for JavaScript calls
-  // from this handler.
+  // This method must be called once the handler's corresponding JavaScript
+  // component is initialized. That means this should only be called within a
+  // WebUI message handler similar to: 'initializeFooPage' or 'getInitialState'.
+  // This should never be called from a function that is not a message handler.
+  // This should never be called from a function used as a C++ callback used
+  // as a reply for a posted task or asynchronous operation.
   void AllowJavascript();
 
   // Helper methods:
