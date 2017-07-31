@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa3ed96b_a3fef6d3",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 929,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-07-31T22:03:47Z",
+      "side": 1,
+      "message": "Please include an example situation where this combination of states happens. That should help the next person determine whether this is \u0027still a thing\u0027.",
+      "range": {
+        "startLine": 927,
+        "startChar": 0,
+        "endLine": 929,
+        "endChar": 63
+      },
+      "revId": "ea0dc1198090ab27fad8984515ed7f5894062631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
