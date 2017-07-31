@@ -11,9 +11,6 @@
 
 namespace bubble_util {
 
-// Calculate the coordinates of the point of the speech bubble's triangle based
-// on the |frame| of the target UI element and the bubble's |arrowDirection|.
-// The returned point is in the same coordinate system as |frame|.
 CGPoint AnchorPoint(CGRect targetFrame, BubbleArrowDirection arrowDirection) {
   CGPoint anchorPoint;
   anchorPoint.x = CGRectGetMidX(targetFrame);
