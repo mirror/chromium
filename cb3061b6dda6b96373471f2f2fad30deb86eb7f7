@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8235f212_e259ea75",
+        "filename": "ios/chrome/browser/web/resources/credential_manager.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-31T20:34:42Z",
+      "side": 1,
+      "message": "Nit: I don\u0027t remember encountering this syntax for TODOs anywhere else in Chromium. Did you find some instructions that suggest this?\n\nUsually it is as follows\n// TODO(username) .... crbug.com/12345 mentioned here....",
+      "revId": "cb3061b6dda6b96373471f2f2fad30deb86eb7f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
