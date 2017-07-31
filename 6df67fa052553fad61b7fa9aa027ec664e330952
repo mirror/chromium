@@ -126,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "585c96a5_49a51dec",
+        "filename": "chrome/browser/chromeos/arc/fileapi/file_system_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-31T10:00:36Z",
+      "side": 1,
+      "message": "Is there a reference on how external file URLs work or what the eventual plan is here? It will be difficult to review this CL without any implementation: as an intermediate step, how about we add all the boilerplate and commit the CLs adding the interface in the mojom, but leave out the method declarations in the mojom until the dbus client is ready?",
+      "parentUuid": "625b08b9_6e4e2a84",
+      "revId": "6df67fa052553fad61b7fa9aa027ec664e330952",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a59c4c86_c5781275",
         "filename": "chrome/browser/chromeos/arc/fileapi/file_system_host_impl.h",
         "patchSetId": 1
