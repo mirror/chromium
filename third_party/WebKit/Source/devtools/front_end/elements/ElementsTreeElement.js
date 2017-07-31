@@ -1729,14 +1729,13 @@ Elements.ElementsTreeElement = class extends UI.TreeElement {
      * @param {string} content
      */
     function addAttributeAnnotation(content) {
-      var space = tagElement.createTextChild(' ');
+      tagElement.createTextChild(' ');
       var placeholder = tagElement.createChild('span', 'placeholder-attribute');
       placeholder.title = Common.UIString('Double-click to add the attribute');
       placeholder.createChild('code').createTextChild(content);
       placeholder.addEventListener('dblclick', () => {
         node.setAttribute('', content).then(this._updateFlags.bind(this));
         placeholder.remove();
-        space.remove();
       });
     }
   }

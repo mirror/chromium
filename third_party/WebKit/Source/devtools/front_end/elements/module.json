@@ -240,6 +240,16 @@
             "order": 7,
             "persistence": "permanent",
             "className": "Elements.PropertiesWidget"
+        },
+        {
+            "type": "view",
+            "location": "elements-sidebar",
+            "id": "elements.domAnalysis",
+            "title": "Analysis",
+            "order": 8,
+            "persistence": "permanent",
+            "className": "Elements.AnalysisWidget",
+            "experiment": "DOMFlagsAndAnnotations"
         }
     ],
     "dependencies": [
@@ -247,9 +257,11 @@
         "extensions",
         "inline_editor",
         "color_picker",
-        "event_listeners"
+        "event_listeners",
+        "console_counters"
     ],
     "scripts": [
+        "AnalysisWidget.js",
         "InspectElementModeController.js",
         "ColorSwatchPopoverIcon.js",
         "ComputedStyleModel.js",
@@ -270,6 +282,7 @@
         "ElementsTreeElementHighlighter.js"
     ],
     "resources": [
+        "analysisWidget.css",
         "breadcrumbs.css",
         "classesPaneWidget.css",
         "computedStyleSidebarPane.css",

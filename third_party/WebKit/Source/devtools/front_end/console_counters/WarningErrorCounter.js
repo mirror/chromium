@@ -7,11 +7,18 @@
  * @unrestricted
  */
 ConsoleCounters.WarningErrorCounter = class {
-  constructor() {
+  /**
+   * @param {function():number} errorCount
+   * @param {function():number} warningCount
+   * @param {!Array<{model: !SDK.AnalysisModel, events: !Array<*>}>} listeners
+   * @param {function(!Event=)} onclick
+   */
+  constructor(errorCount, warningCount, listeners, onclick) {
     ConsoleCounters.WarningErrorCounter._instanceForTest = this;
 
     this._counter = createElement('div');
-    this._counter.addEventListener('click', Common.console.show.bind(Common.console), false);
+    if (onclick)
+      this._counter.addEventListener('click', onclick, false);
     this._toolbarItem = new UI.ToolbarItem(this._counter);
     var shadowRoot = UI.createShadowRootWithCoreStyles(this._counter, 'console_counters/errorWarningCounter.css');
 
@@ -19,9 +26,15 @@ ConsoleCounters.WarningErrorCounter = class {
     this._warnings = this._createItem(shadowRoot, 'smallicon-warning');
     this._titles = [];
 
-    ConsoleModel.consoleModel.addEventListener(ConsoleModel.ConsoleModel.Events.ConsoleCleared, this._update, this);
-    ConsoleModel.consoleModel.addEventListener(ConsoleModel.ConsoleModel.Events.MessageAdded, this._update, this);
-    ConsoleModel.consoleModel.addEventListener(ConsoleModel.ConsoleModel.Events.MessageUpdated, this._update, this);
+    this._errorCount = errorCount;
+    this._warningCount = warningCount;
+
+    if (listeners) {
+      for (var listener of listeners) {
+        for (var event of listener.events)
+          listener.model.addEventListener(event, this._update, this);
+      }
+    }
     this._update();
   }
 
@@ -42,26 +55,24 @@ ConsoleCounters.WarningErrorCounter = class {
   /**
    * @param {!{item: !Element, text: !Element}} item
    * @param {number} count
-   * @param {boolean} first
    * @param {string} title
    */
-  _updateItem(item, count, first, title) {
+  _updateItem(item, count, title) {
     item.item.classList.toggle('hidden', !count);
-    item.item.classList.toggle('counter-item-first', first);
     item.text.textContent = count;
     if (count)
       this._titles.push(title);
   }
 
   _update() {
-    var errors = ConsoleModel.consoleModel.errors();
-    var warnings = ConsoleModel.consoleModel.warnings();
+    var errors = this._errorCount();
+    var warnings = this._warningCount();
 
     this._titles = [];
     this._toolbarItem.setVisible(!!(errors || warnings));
-    this._updateItem(this._errors, errors, false, Common.UIString(errors === 1 ? '%d error' : '%d errors', errors));
+    this._updateItem(this._errors, errors, Common.UIString(errors === 1 ? '%d error' : '%d errors', errors));
     this._updateItem(
-        this._warnings, warnings, !errors, Common.UIString(warnings === 1 ? '%d warning' : '%d warnings', warnings));
+        this._warnings, warnings, Common.UIString(warnings === 1 ? '%d warning' : '%d warnings', warnings));
     this._counter.title = this._titles.join(', ');
     UI.inspectorView.toolbarItemResized();
   }
@@ -72,5 +83,45 @@ ConsoleCounters.WarningErrorCounter = class {
    */
   item() {
     return this._toolbarItem;
+  }
+};
+
+/**
+ * @implements {UI.ToolbarItem.Provider}
+ * @unrestricted
+ */
+ConsoleCounters.ConsoleWarningErrorCounter = class extends ConsoleCounters.WarningErrorCounter {
+  constructor() {
+    super(
+        ConsoleModel.consoleModel.errors.bind(ConsoleModel.consoleModel),
+        ConsoleModel.consoleModel.warnings.bind(ConsoleModel.consoleModel), [{
+          model: ConsoleModel.consoleModel,
+          events: [
+            ConsoleModel.ConsoleModel.Events.ConsoleCleared, ConsoleModel.ConsoleModel.Events.MessageAdded,
+            ConsoleModel.ConsoleModel.Events.MessageUpdated
+          ]
+        }],
+        Common.console.show.bind(Common.console));
+  }
+};
+
+/**
+ * @implements {UI.ToolbarItem.Provider}
+ * @unrestricted
+ */
+ConsoleCounters.DOMWarningErrorCounter = class extends ConsoleCounters.WarningErrorCounter {
+  /**
+   * @param {!SDK.AnalysisModel} analysisModel
+   */
+  constructor(analysisModel) {
+    super(
+        () => analysisModel.flagCount('error'), () => analysisModel.flagCount('warning'), [{
+          model: analysisModel,
+          events: [
+            SDK.AnalysisModel.Events.NodeFlagged,
+            SDK.AnalysisModel.Events.ClearFlags,
+          ]
+        }],
+        /** @type {function()} */ (UI.viewManager.showView.bind(UI.viewManager, 'elements.domAnalysis')));
   }
 };

@@ -211,6 +211,12 @@
         },
         {
             "type": "@UI.ToolbarItem.Provider",
+            "className": "ConsoleCounters.ConsoleWarningErrorCounter",
+            "order": 1,
+            "location": "main-toolbar-right"
+        },
+        {
+            "type": "@UI.ToolbarItem.Provider",
             "separator": true,
             "order": 98,
             "location": "main-toolbar-right"
