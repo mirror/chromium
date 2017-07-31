@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4372e75d_a8b2d007",
+        "filename": "third_party/WebKit/Source/platform/wtf/Assertions.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1232329
+      },
+      "writtenOn": "2017-07-31T03:17:35Z",
+      "side": 0,
+      "message": "base/logging.h has been including the \"base/logging.h\". And Assertions.cpp includes it. That\u0027s why there was no warning.",
+      "parentUuid": "16c43f2f_fa09c397",
+      "revId": "491f4e44b695f5a58dd3939ece104c8283ed79fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff0b9d04_4cf563d7",
         "filename": "third_party/WebKit/Source/platform/wtf/Assertions.h",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "491f4e44b695f5a58dd3939ece104c8283ed79fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe0b291e_f63a01f5",
+        "filename": "third_party/WebKit/Source/platform/wtf/Assertions.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1232329
+      },
+      "writtenOn": "2017-07-31T03:17:35Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "ff0b9d04_4cf563d7",
+      "revId": "491f4e44b695f5a58dd3939ece104c8283ed79fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
