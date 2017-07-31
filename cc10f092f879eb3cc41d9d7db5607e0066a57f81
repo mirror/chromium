@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d69e3d6e_c0aced1c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-31T17:23:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc53e68a_b8d12778",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 4
+      },
+      "revId": "cc10f092f879eb3cc41d9d7db5607e0066a57f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9bbe9de6_3fde013f",
         "filename": "chrome/browser/resources/settings/passwords_and_forms_page/password_edit_dialog.js",
         "patchSetId": 4
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "33d008d1_5431f482",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/password_edit_dialog.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-31T17:23:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d72b5e2d_69f01f6e",
+      "range": {
+        "startLine": 16,
+        "startChar": 14,
+        "endLine": 16,
+        "endChar": 34
+      },
+      "revId": "cc10f092f879eb3cc41d9d7db5607e0066a57f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "522f41cd_18c1072f",
         "filename": "chrome/browser/resources/settings/passwords_and_forms_page/password_list_item.html",
         "patchSetId": 4
@@ -92,6 +140,30 @@
       "revId": "cc10f092f879eb3cc41d9d7db5607e0066a57f81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e38ed224_8308c0e5",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/password_list_item.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-31T17:23:52Z",
+      "side": 1,
+      "message": "Looking at your screenshot not eliding definitely seems better. However, let\u0027s see bad eliding still is after I increase the width of the password column in the next patch set.",
+      "parentUuid": "522f41cd_18c1072f",
+      "range": {
+        "startLine": 39,
+        "startChar": 36,
+        "endLine": 39,
+        "endChar": 46
+      },
+      "revId": "cc10f092f879eb3cc41d9d7db5607e0066a57f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -142,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "f28dfd14_7448f48c",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/password_list_item.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-31T17:23:52Z",
+      "side": 1,
+      "message": "Ack. I don\u0027t have a good reason for this except consistency with password-edit-dialog and ever so slightly shorter testing code. We could use `passwordListItem.$.password` instead of `passwordListItem.$$(\u0027#password\u0027)`, but neither of those are very good reasons IMO.\n\nKeeping dom-if SGTM.",
+      "parentUuid": "9d879bf3_fbdc22df",
+      "range": {
+        "startLine": 42,
+        "startChar": 10,
+        "endLine": 42,
+        "endChar": 70
+      },
+      "revId": "cc10f092f879eb3cc41d9d7db5607e0066a57f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ea8fb43_bd141b32",
         "filename": "chrome/browser/resources/settings/passwords_and_forms_page/password_list_item.html",
         "patchSetId": 4
@@ -165,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "920ee695_1295f0cb",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/password_list_item.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-31T17:23:52Z",
+      "side": 1,
+      "message": "Given that we want to minimize the needed clicks to show the password I think we should keep the button. I added the focus attributes now.",
+      "parentUuid": "4ea8fb43_bd141b32",
+      "range": {
+        "startLine": 42,
+        "startChar": 10,
+        "endLine": 47,
+        "endChar": 19
+      },
+      "revId": "cc10f092f879eb3cc41d9d7db5607e0066a57f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "843570ad_cd1977b3",
         "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.js",
         "patchSetId": 4
@@ -185,6 +305,30 @@
       "revId": "cc10f092f879eb3cc41d9d7db5607e0066a57f81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4834152a_164d90b5",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-31T17:23:52Z",
+      "side": 1,
+      "message": "Ack, `git cl format --js` doesn\u0027t let me unfortunately.",
+      "parentUuid": "843570ad_cd1977b3",
+      "range": {
+        "startLine": 376,
+        "startChar": 8,
+        "endLine": 378,
+        "endChar": 9
+      },
+      "revId": "cc10f092f879eb3cc41d9d7db5607e0066a57f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -235,6 +379,30 @@
     },
     {
       "key": {
+        "uuid": "bed6e97c_2f7f9594",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/show_password_behavior.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-31T17:23:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3dde4b0d_5b6b5ebb",
+      "range": {
+        "startLine": 11,
+        "startChar": 4,
+        "endLine": 11,
+        "endChar": 24
+      },
+      "revId": "cc10f092f879eb3cc41d9d7db5607e0066a57f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e8aa73b_1880652a",
         "filename": "chrome/browser/resources/settings/passwords_and_forms_page/show_password_behavior.js",
         "patchSetId": 4
@@ -255,6 +423,30 @@
       "revId": "cc10f092f879eb3cc41d9d7db5607e0066a57f81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8bcf2a1_402933f8",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/show_password_behavior.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-31T17:23:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e8aa73b_1880652a",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 4
+      },
+      "revId": "cc10f092f879eb3cc41d9d7db5607e0066a57f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
