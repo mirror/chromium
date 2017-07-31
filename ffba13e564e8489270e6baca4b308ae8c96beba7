@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c4fa82a2_77e13a2c",
+        "filename": "components/ntp_tiles/most_visited_sites_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-31T17:32:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b8688803_055d3ed4",
+      "range": {
+        "startLine": 288,
+        "startChar": 79,
+        "endLine": 288,
+        "endChar": 0
+      },
+      "revId": "ffba13e564e8489270e6baca4b308ae8c96beba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d3d23932_ef3654bb",
         "filename": "components/ntp_tiles/popular_sites_impl.cc",
         "patchSetId": 2
@@ -39,6 +63,24 @@
       "revId": "ffba13e564e8489270e6baca4b308ae8c96beba7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acf20857_0db4981c",
+        "filename": "components/ntp_tiles/popular_sites_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-31T17:32:45Z",
+      "side": 1,
+      "message": "Done. Although this means that we cannot test UI without working server-side sites.\n(Reverted debug default_popular_sites.json in consequence.)",
+      "parentUuid": "d3d23932_ef3654bb",
+      "revId": "ffba13e564e8489270e6baca4b308ae8c96beba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "bbda3f2b_762db38b",
+        "filename": "components/ntp_tiles/popular_sites_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-31T17:32:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60f1605f_59e3aed2",
+      "range": {
+        "startLine": 121,
+        "startChar": 56,
+        "endLine": 121,
+        "endChar": 0
+      },
+      "revId": "ffba13e564e8489270e6baca4b308ae8c96beba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c49a6b1c_4a85e6b5",
         "filename": "components/ntp_tiles/popular_sites_impl.cc",
         "patchSetId": 2
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "328401b9_c5b860d8",
+        "filename": "components/ntp_tiles/popular_sites_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-31T17:32:45Z",
+      "side": 1,
+      "message": "So far, we accepted every list and silently skipped elements which either are no dictionary or have invalid URL/Title.\nTherefore actually, every list is a valid v5 list but empty lists are valid lists in v5 and v6, so it makes no sense to allow empty lists here.\nI added a comment to highlight that we actually need just one.",
+      "parentUuid": "c49a6b1c_4a85e6b5",
+      "range": {
+        "startLine": 126,
+        "startChar": 18,
+        "endLine": 126,
+        "endChar": 0
+      },
+      "revId": "ffba13e564e8489270e6baca4b308ae8c96beba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6dc4602d_29e60b8a",
         "filename": "components/ntp_tiles/popular_sites_impl.cc",
         "patchSetId": 2
@@ -102,6 +192,24 @@
       "revId": "ffba13e564e8489270e6baca4b308ae8c96beba7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e20df0b9_5a7b45bf",
+        "filename": "components/ntp_tiles/popular_sites_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-31T17:32:45Z",
+      "side": 1,
+      "message": "Okay, dropped.",
+      "parentUuid": "6dc4602d_29e60b8a",
+      "revId": "ffba13e564e8489270e6baca4b308ae8c96beba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "380496d3_ff26f6f8",
+        "filename": "components/ntp_tiles/popular_sites_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-31T17:32:45Z",
+      "side": 1,
+      "message": "I usually would agree. But in this case, there are many ways to receive a stale, deprecated sites list so I really wouldn\u0027t like to give up the fallback. I restructured it to check version first and only fall back if it fails.",
+      "parentUuid": "bbcc9aa9_fa0b233d",
+      "range": {
+        "startLine": 161,
+        "startChar": 35,
+        "endLine": 161,
+        "endChar": 0
+      },
+      "revId": "ffba13e564e8489270e6baca4b308ae8c96beba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "595fb6c1_f4121b3b",
         "filename": "components/ntp_tiles/popular_sites_impl.cc",
         "patchSetId": 2
@@ -148,6 +280,30 @@
       "revId": "ffba13e564e8489270e6baca4b308ae8c96beba7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71764af2_0483bf76",
+        "filename": "components/ntp_tiles/popular_sites_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-07-31T17:32:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "595fb6c1_f4121b3b",
+      "range": {
+        "startLine": 180,
+        "startChar": 55,
+        "endLine": 180,
+        "endChar": 0
+      },
+      "revId": "ffba13e564e8489270e6baca4b308ae8c96beba7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
