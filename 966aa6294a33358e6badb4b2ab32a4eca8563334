@@ -22,6 +22,30 @@
       "revId": "966aa6294a33358e6badb4b2ab32a4eca8563334",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38cdb5d6_296c09ff",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-07-31T12:54:43Z",
+      "side": 1,
+      "message": "Out of curiosity, does this blow up something? According to the previous comment, this desiredSizePx is not used in c++.",
+      "parentUuid": "81337c20_e239c629",
+      "range": {
+        "startLine": 202,
+        "startChar": 16,
+        "endLine": 202,
+        "endChar": 37
+      },
+      "revId": "966aa6294a33358e6badb4b2ab32a4eca8563334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
