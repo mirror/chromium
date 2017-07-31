@@ -13,6 +13,7 @@
 
 namespace blink {
 
+const unsigned PaintWorklet::kNumGlobalScopes = 2u;
 DocumentPaintDefinition* const kInvalidDocumentDefinition = nullptr;
 
 // static
@@ -31,11 +32,21 @@ void PaintWorklet::AddPendingGenerator(const String& name,
   pending_generator_registry_->AddPendingGenerator(name, generator);
 }
 
+// For this document, we try to check how many times there is a repaint, which
+// represents how many frames that have executed this paint function. Then for
+// every 120 frames, we switch to another global scope, to balance the workload.
+unsigned PaintWorklet::SelectedGlobalScope() {
+  unsigned frame_cnt_to_switch = 120;
+  unsigned current_paint_frame_cnt = GetFrame()->View()->PaintFrameCount();
+  unsigned selected_global_scope =
+      (current_paint_frame_cnt / frame_cnt_to_switch) % kNumGlobalScopes;
+  return selected_global_scope;
+}
+
 RefPtr<Image> PaintWorklet::Paint(const String& name,
                                   const ImageResourceObserver& observer,
                                   const IntSize& size,
                                   const CSSStyleValueVector* data) {
-  // TODO(xidachen): add policy for which global scope to select.
   if (!document_definition_map_.Contains(name))
     return nullptr;
 
@@ -45,8 +56,8 @@ RefPtr<Image> PaintWorklet::Paint(const String& name,
   if (document_definition == kInvalidDocumentDefinition)
     return nullptr;
 
-  PaintWorkletGlobalScopeProxy* proxy =
-      PaintWorkletGlobalScopeProxy::From(FindAvailableGlobalScope());
+  PaintWorkletGlobalScopeProxy* proxy = PaintWorkletGlobalScopeProxy::From(
+      FindAvailableGlobalScope(SelectedGlobalScope()));
   CSSPaintDefinition* paint_definition = proxy->FindDefinition(name);
   return paint_definition->Paint(observer, size, data);
 }

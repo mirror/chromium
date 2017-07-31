@@ -93,10 +93,11 @@ void Worklet::ContextDestroyed(ExecutionContext* execution_context) {
     proxy->TerminateWorkletGlobalScope();
 }
 
-WorkletGlobalScopeProxy* Worklet::FindAvailableGlobalScope() const {
+WorkletGlobalScopeProxy* Worklet::FindAvailableGlobalScope(
+    unsigned selected_global_scope) const {
   DCHECK(IsMainThread());
   // TODO(nhiroki): Support the case where there are multiple global scopes.
-  return proxies_.begin()->Get();
+  return proxies_.at(selected_global_scope);
 }
 
 // Implementation of the second half of the "addModule(moduleURL, options)"

@@ -29,6 +29,10 @@ class PaintWorkletTest : public ::testing::Test {
         .paintWorklet();
   }
 
+  unsigned SelectedGlobalScope(PaintWorklet* paint_worklet) {
+    return paint_worklet->SelectedGlobalScope();
+  }
+
   PaintWorkletGlobalScopeProxy* GetProxy() {
     return PaintWorkletGlobalScopeProxy::From(proxy_.Get());
   }
@@ -78,6 +82,27 @@ TEST_F(PaintWorkletTest, GarbageCollectionOfCSSPaintDefinition) {
   ThreadState::Current()->CollectAllGarbage();
   V8GCController::CollectAllGarbageForTesting(isolate);
   DCHECK(handle.IsEmpty());
+}
+
+TEST_F(PaintWorkletTest, GlobalScopeSelection) {
+  PaintWorklet* paint_worklet = GetPaintWorklet();
+  const unsigned update_life_cycle_cnt = 250u;
+  for (unsigned i = 0; i < update_life_cycle_cnt; i++) {
+    paint_worklet->GetFrame()->View()->UpdateAllLifecyclePhases();
+    if (i == 100u)
+      DCHECK_EQ(SelectedGlobalScope(paint_worklet), 0u);
+    if (i == 118u)
+      DCHECK_EQ(SelectedGlobalScope(paint_worklet), 0u);
+    if (i == 119u)
+      DCHECK_EQ(SelectedGlobalScope(paint_worklet), 1u);
+    if (i == 238u)
+      DCHECK_EQ(SelectedGlobalScope(paint_worklet), 1u);
+    if (i == 239u)
+      DCHECK_EQ(SelectedGlobalScope(paint_worklet), 0u);
+  }
+
+  // Delete the page & associated objects.
+  Terminate();
 }
 
 }  // namespace blink
