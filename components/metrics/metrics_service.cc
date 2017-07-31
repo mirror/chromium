@@ -155,6 +155,7 @@
 #include "components/metrics/metrics_rotation_scheduler.h"
 #include "components/metrics/metrics_service_client.h"
 #include "components/metrics/metrics_state_manager.h"
+#include "components/metrics/persistent_system_profile.h"
 #include "components/metrics/stability_metrics_provider.h"
 #include "components/metrics/url_constants.h"
 #include "components/prefs/pref_registry_simple.h"
@@ -318,6 +319,12 @@ void MetricsService::EnableRecording() {
 
   state_manager_->ForceClientIdCreation();
   client_->SetMetricsClientId(state_manager_->client_id());
+
+  SystemProfileProto system_profile;
+  MetricsLog::RecordCoreSystemProfile(client_, &system_profile);
+  GlobalPersistentSystemProfile::GetInstance()->SetSystemProfile(
+      system_profile, /*complete=*/false);
+
   if (!log_manager_.current_log())
     OpenNewLog();
 
@@ -763,7 +770,7 @@ bool MetricsService::PrepareInitialStabilityLog(
   // log describes stats from the _previous_ session.
   std::string system_profile_app_version;
   if (!initial_stability_log->LoadSavedEnvironmentFromPrefs(
-          &system_profile_app_version)) {
+          local_state_, &system_profile_app_version)) {
     return false;
   }
   if (system_profile_app_version != prefs_previous_version)
@@ -842,14 +849,19 @@ void MetricsService::CheckForClonedInstall() {
 std::unique_ptr<MetricsLog> MetricsService::CreateLog(
     MetricsLog::LogType log_type) {
   return base::MakeUnique<MetricsLog>(state_manager_->client_id(), session_id_,
-                                      log_type, client_, local_state_);
+                                      log_type, client_);
 }
 
 void MetricsService::RecordCurrentEnvironment(MetricsLog* log) {
   DCHECK(client_);
-  std::string serialized_environment = log->RecordEnvironment(
+  const SystemProfileProto& system_profile = log->RecordEnvironment(
       metrics_providers_, GetInstallDate(), GetMetricsReportingEnabledDate());
-  client_->OnEnvironmentUpdate(&serialized_environment);
+  EnvironmentRecorder recorder(local_state_);
+  std::string serialized_proto =
+      recorder.SerializeAndRecordEnvironmentToPrefs(system_profile);
+  GlobalPersistentSystemProfile::GetInstance()->SetSystemProfile(
+      serialized_proto, /*complete=*/true);
+  client_->OnEnvironmentUpdate(&serialized_proto);
 }
 
 void MetricsService::RecordCurrentHistograms() {
