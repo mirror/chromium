@@ -63,6 +63,8 @@ void Task::Activate() {
 }
 
 bool Task::IsKillable() {
+  if (process_id() == 0)
+    return false;
   return true;
 }
 
