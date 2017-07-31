@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b382df5_39266318",
+        "filename": "ui/display/win/screen_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-07-31T22:18:50Z",
+      "side": 1,
+      "message": "this makes no sense\nhdr_enabled is set from kHighDynamicRange so why ANDing with it?\n\nAlso, this implies that kHighDynamicRange is going to transform from \"force HDR on\" to \"turn on HDR if it is detected\", which is fine, but where is the force flag then?",
+      "revId": "abd277103d5540d910d1e0024ff3bff2c6f24c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
