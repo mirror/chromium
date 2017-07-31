@@ -440,6 +440,30 @@
     },
     {
       "key": {
+        "uuid": "20ca5318_4ac3cc1b",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2915,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-31T21:44:31Z",
+      "side": 1,
+      "message": "I was hoping/assuming the stylus would cause either (1) the mouse-cursor to relocate to match the location of the stylus, or (2) the mouse-cursor to hide on stylus interaction. Does neither of that happen?",
+      "parentUuid": "8a1c2afb_3e798c35",
+      "range": {
+        "startLine": 2915,
+        "startChar": 64,
+        "endLine": 2915,
+        "endChar": 66
+      },
+      "revId": "1903c322639529fb8f6bfd771511a0ed73ebf2d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fdf1088c_96ec3fd2",
         "filename": "ui/views/win/hwnd_message_handler.cc",
         "patchSetId": 7
