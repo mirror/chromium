@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cba36ed5_c7065e51",
+        "filename": "components/viz/common/frame_sinks/begin_frame_source_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-07-31T23:06:47Z",
+      "side": 1,
+      "message": "Thanks for writing this test!",
+      "revId": "35f4fe82a8032734a1e591261ebce625c2610b8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "434cc9e5_2c3cd164",
+        "filename": "content/browser/compositor/gpu_vsync_begin_frame_source.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-07-31T23:06:47Z",
+      "side": 1,
+      "message": "Do we need double tick prevention here like in DelayBasedBFS?",
+      "revId": "35f4fe82a8032734a1e591261ebce625c2610b8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c347401b_31106485",
+        "filename": "content/browser/compositor/gpu_vsync_begin_frame_source.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-07-31T23:06:47Z",
+      "side": 1,
+      "message": "nit: can you use type NORMAL here and let the code below create a copy with type MISSED after comparing with observer\u0027s last args?",
+      "revId": "35f4fe82a8032734a1e591261ebce625c2610b8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07fa0057_2cce2c5b",
+        "filename": "content/browser/compositor/gpu_vsync_begin_frame_source.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-07-31T23:06:47Z",
+      "side": 1,
+      "message": "nit: We\u0027re not doing this check when generating new args above.",
+      "revId": "35f4fe82a8032734a1e591261ebce625c2610b8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
