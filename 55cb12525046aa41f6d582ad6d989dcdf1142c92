@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8476533d_9e58e970",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 902,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-07-31T21:17:48Z",
+      "side": 1,
+      "message": "Please add documentation for the write_fd parameter.",
+      "range": {
+        "startLine": 902,
+        "startChar": 36,
+        "endLine": 902,
+        "endChar": 0
+      },
+      "revId": "55cb12525046aa41f6d582ad6d989dcdf1142c92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21323657_819394e2",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1510,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-07-31T21:17:48Z",
+      "side": 1,
+      "message": "Please be more explicit about the possible exceptions and why it\u0027s safe to ignore these errors.",
+      "range": {
+        "startLine": 1510,
+        "startChar": 28,
+        "endLine": 1510,
+        "endChar": 0
+      },
+      "revId": "55cb12525046aa41f6d582ad6d989dcdf1142c92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd977d68_3be3ec31",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-07-31T21:17:48Z",
+      "side": 1,
+      "message": "Add \"before exiting.\"",
+      "range": {
+        "startLine": 481,
+        "startChar": 22,
+        "endLine": 481,
+        "endChar": 0
+      },
+      "revId": "55cb12525046aa41f6d582ad6d989dcdf1142c92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2874895f_7b7a90fd",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-07-31T21:17:48Z",
+      "side": 1,
+      "message": "Doesn\u0027t this introduce a race condition between the this alarm and the error message logged in response to that failure. Would it make sense to add a couple of seconds slack here to make it more likely that the user will see that error message?",
+      "range": {
+        "startLine": 491,
+        "startChar": 24,
+        "endLine": 491,
+        "endChar": 0
+      },
+      "revId": "55cb12525046aa41f6d582ad6d989dcdf1142c92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3627b6c5_6309cda5",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-07-31T21:17:48Z",
+      "side": 1,
+      "message": "The !feof conditional seems at odds with the comment, which is talking about shells closing the pipe prematurely. In fact, the comment about \"all other shells\" implies that we will wrongly report a problem to the user (I presume the reason we don\u0027t is that the script closes the pipe).\n\nWhy is !feof needed?",
+      "range": {
+        "startLine": 521,
+        "startChar": 48,
+        "endLine": 521,
+        "endChar": 0
+      },
+      "revId": "55cb12525046aa41f6d582ad6d989dcdf1142c92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dd9160c_df736160",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-07-31T21:17:48Z",
+      "side": 1,
+      "message": "Maybe call this pipe_created instead? It\u0027s more in line with the usual naming convention for booleans.",
+      "range": {
+        "startLine": 550,
+        "startChar": 20,
+        "endLine": 550,
+        "endChar": 0
+      },
+      "revId": "55cb12525046aa41f6d582ad6d989dcdf1142c92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6483da3f_11213707",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-07-31T21:17:48Z",
+      "side": 1,
+      "message": "Should this be a more severe error? IIUC, it\u0027s akin to the situation where the shell closes the pipe and so we can\u0027t tell whether or not the host started correctly. It seems like there should be a message here similar to the one we show in that scenario telling the user to check the log file.",
+      "range": {
+        "startLine": 556,
+        "startChar": 47,
+        "endLine": 556,
+        "endChar": 0
+      },
+      "revId": "55cb12525046aa41f6d582ad6d989dcdf1142c92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
