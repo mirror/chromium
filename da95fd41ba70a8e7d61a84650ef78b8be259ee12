@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb386857_159a5145",
+        "filename": "cc/base/synced_property.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-07-31T00:23:54Z",
+      "side": 1,
+      "message": "I think your comment helps a lot. WDYT of also naming this PushFromMainThreadToPending?",
+      "revId": "da95fd41ba70a8e7d61a84650ef78b8be259ee12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b137ee88_5c7bbaab",
+        "filename": "cc/base/synced_property.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-07-31T00:23:54Z",
+      "side": 1,
+      "message": "Current(false)\n\u003d\u003d pending_base_.Combine(PendingDelta())\n\u003d\u003d pending_base_ + (!clobber_active_value_ ? (active_delta_.InverseCombine(reflected_delta_in_pending_tree_)))\n\u003d\u003d pending_base_ + (!clobber_active_value_ ? active_delta_ - reflected_delta_in_pending_tree_)\n\nIs this really saying:\nif (clobber_active_value_)\n  return false;\nreturn active_delta_ - reflected_delta_in_pending_tree_ \u003d\u003d Identity();\nIf so, is that correct?",
+      "revId": "da95fd41ba70a8e7d61a84650ef78b8be259ee12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61b6f7e9_4e7b18dd",
+        "filename": "cc/base/synced_property.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-07-31T00:23:54Z",
+      "side": 1,
+      "message": "PushPendingToActive is almost always called after PushFromMainThread. Can these be combined into one function for pushing from the main thread?",
+      "revId": "da95fd41ba70a8e7d61a84650ef78b8be259ee12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08b48e91_552d1372",
+        "filename": "cc/base/synced_property.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-07-31T00:23:54Z",
+      "side": 1,
+      "message": "Nit: save a call to Current(true) by refactoring as:\nreturn pending_value_before_push !\u003d active_value_before_push ||\n  active_value_before_push !\u003d Current(true);",
+      "revId": "da95fd41ba70a8e7d61a84650ef78b8be259ee12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a8f13c3_d6628ccc",
+        "filename": "cc/trees/property_tree.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1470,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-07-31T00:23:54Z",
+      "side": 1,
+      "message": "Do we build property trees on the impl thread outside of tests?",
+      "revId": "da95fd41ba70a8e7d61a84650ef78b8be259ee12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
