@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5dc545d9_f8aeb67b",
+        "filename": "chrome/browser/resources/md_extensions/item.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-07-31T19:05:26Z",
+      "side": 1,
+      "message": "[[isControlled_(data)]] doesn\u0027t seem to work if \"data\" itself doesn\u0027t change and only data.controlledInfo changes.",
+      "parentUuid": "90546f8e_7064419a",
+      "revId": "6020e08fc3fb4e92cd2fe265ff27990b89ae4c32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b9c45a9a_a39b1fd5",
         "filename": "chrome/browser/resources/md_extensions/item_util.js",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "aa0d4015_85e6486b",
+        "filename": "chrome/browser/resources/md_extensions/item_util.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-07-31T19:05:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9c45a9a_a39b1fd5",
+      "revId": "6020e08fc3fb4e92cd2fe265ff27990b89ae4c32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0bba6a4_ed152d7a",
         "filename": "chrome/browser/resources/md_extensions/item_util.js",
         "patchSetId": 3
@@ -50,6 +86,24 @@
       "revId": "6020e08fc3fb4e92cd2fe265ff27990b89ae4c32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbdb1149_f5343f0d",
+        "filename": "chrome/browser/resources/md_extensions/item_util.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-07-31T19:05:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0bba6a4_ed152d7a",
+      "revId": "6020e08fc3fb4e92cd2fe265ff27990b89ae4c32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
