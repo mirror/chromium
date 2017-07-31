@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "d5e720fa_3236a0f9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkInfo.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-31T18:58:42Z",
+      "side": 1,
+      "message": "Nit: put this as the first extra set.",
+      "range": {
+        "startLine": 247,
+        "startChar": 15,
+        "endLine": 247,
+        "endChar": 23
+      },
+      "revId": "1381d96492a521516873778753f271c87e5a29a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c1cef31_71bc3f46",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-31T18:58:42Z",
+      "side": 1,
+      "message": "This should use the Holder pattern so that it remains thread-safe and gets lazily initialised. See WebappRegistry.java for an example (private static class Holder)",
+      "range": {
+        "startLine": 92,
+        "startChar": 4,
+        "endLine": 92,
+        "endChar": 11
+      },
+      "revId": "1381d96492a521516873778753f271c87e5a29a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4be4b39d_bbecf2e9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-31T18:58:42Z",
+      "side": 1,
+      "message": "Should you put the WebappInfo in the cache at this point?",
+      "range": {
+        "startLine": 116,
+        "startChar": 12,
+        "endLine": 116,
+        "endChar": 25
+      },
+      "revId": "1381d96492a521516873778753f271c87e5a29a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bee8d9df_3998b922",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
         "patchSetId": 13
@@ -42,6 +111,52 @@
     },
     {
       "key": {
+        "uuid": "84b2790c_ec735be6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-31T18:58:42Z",
+      "side": 1,
+      "message": "I don\u0027t think you need the boolean. This is a bit neater as:\n\nif (info \u003d\u003d null) {\n  info \u003d createWebappInfo(intent);\n} else if (info.shouldForceNavigation()) {\n  resetSavedInstanceState();\n}\n\nmWebappInfo \u003d info;",
+      "range": {
+        "startLine": 167,
+        "startChar": 8,
+        "endLine": 167,
+        "endChar": 10
+      },
+      "revId": "1381d96492a521516873778753f271c87e5a29a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf98e41a_30d95b73",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-31T18:58:42Z",
+      "side": 1,
+      "message": "Should this go in the cache?",
+      "range": {
+        "startLine": 168,
+        "startChar": 19,
+        "endLine": 168,
+        "endChar": 35
+      },
+      "revId": "1381d96492a521516873778753f271c87e5a29a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4a5e4932_33c43bdc",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
         "patchSetId": 13
@@ -53,6 +168,121 @@
       "writtenOn": "2017-07-31T14:23:39Z",
       "side": 1,
       "message": "Nit: \"navigate use current intent.\" -\u003e \"navigate using WebappInfo retrieved from cache.\"",
+      "revId": "1381d96492a521516873778753f271c87e5a29a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a10e5d58_9a65857b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-31T18:58:42Z",
+      "side": 1,
+      "message": "Meta comment: this looks like an unrelated fix. Can it be done separately? That way you can split this CL into:\n\nCL 1. introducing the webappinfo map\nCL 2. introducing this resetSavedInstanceState fix.\n\nAs a general rule, attaching more than one bug to a CL often means it could be split.",
+      "range": {
+        "startLine": 176,
+        "startChar": 12,
+        "endLine": 176,
+        "endChar": 35
+      },
+      "revId": "1381d96492a521516873778753f271c87e5a29a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff390c17_43e3715a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-31T18:58:42Z",
+      "side": 1,
+      "message": "Call this addWebappInfo(String id, WebappInfo info).",
+      "range": {
+        "startLine": 391,
+        "startChar": 23,
+        "endLine": 391,
+        "endChar": 43
+      },
+      "revId": "1381d96492a521516873778753f271c87e5a29a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7faa5d0b_ee4895c0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-31T18:58:42Z",
+      "side": 1,
+      "message": "Call this getWebappInfo(String id). No need for the FromCache.",
+      "range": {
+        "startLine": 395,
+        "startChar": 29,
+        "endLine": 395,
+        "endChar": 56
+      },
+      "revId": "1381d96492a521516873778753f271c87e5a29a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68774a50_8ba83432",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappInfo.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-31T18:58:42Z",
+      "side": 1,
+      "message": "idFromIntent for consistency with urlFromIntent.",
+      "range": {
+        "startLine": 327,
+        "startChar": 25,
+        "endLine": 327,
+        "endChar": 40
+      },
+      "revId": "1381d96492a521516873778753f271c87e5a29a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f95e545f_89a57d68",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappLauncherActivity.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-31T18:58:42Z",
+      "side": 1,
+      "message": "Should this look up from the cache?",
+      "range": {
+        "startLine": 58,
+        "startChar": 8,
+        "endLine": 58,
+        "endChar": 18
+      },
       "revId": "1381d96492a521516873778753f271c87e5a29a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
