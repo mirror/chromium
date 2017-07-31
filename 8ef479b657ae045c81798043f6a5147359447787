@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ffc81adb_ccc5d761",
+        "filename": "ios/web_view/internal/app/application_context.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-07-31T12:01:10Z",
+      "side": 1,
+      "message": "Why is std::move() necessary here?  What does it do when you have a stack variable?",
+      "revId": "8ef479b657ae045c81798043f6a5147359447787",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
