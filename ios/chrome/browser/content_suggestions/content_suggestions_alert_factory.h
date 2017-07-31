@@ -9,7 +9,7 @@
 
 @class AlertCoordinator;
 @class CollectionViewItem;
-@protocol ContentSuggestionsAlertCommands;
+@protocol ContentSuggestionsGestureCommands;
 
 // Factory for AlertCoordinators for ContentSuggestions.
 @interface ContentSuggestionsAlertFactory : NSObject
@@ -24,8 +24,9 @@ alertCoordinatorForSuggestionItem:(CollectionViewItem*)item
                  onViewController:(UIViewController*)viewController
                           atPoint:(CGPoint)touchLocation
                       atIndexPath:(NSIndexPath*)indexPath
+                  readLaterAction:(BOOL)readLaterAction
                    commandHandler:
-                       (id<ContentSuggestionsAlertCommands>)commandHandler;
+                       (id<ContentSuggestionsGestureCommands>)commandHandler;
 
 // Same as above but for a MostVisited item.
 + (AlertCoordinator*)
@@ -34,7 +35,7 @@ alertCoordinatorForMostVisitedItem:(CollectionViewItem*)item
                            atPoint:(CGPoint)touchLocation
                        atIndexPath:(NSIndexPath*)indexPath
                     commandHandler:
-                        (id<ContentSuggestionsAlertCommands>)commandHandler;
+                        (id<ContentSuggestionsGestureCommands>)commandHandler;
 
 @end
 
