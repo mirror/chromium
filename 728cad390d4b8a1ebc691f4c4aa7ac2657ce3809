@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "891c0a90_3959f546",
+        "filename": "chrome/browser/android/shortcut_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-31T19:32:18Z",
+      "side": 1,
+      "message": "Nit: let\u0027s rephrase this comment:\n\nConstruct a callback to fetch the splash screen. The callback pointer is sent to Java, which sends it back for execution after shortcut creation completes.",
+      "range": {
+        "startLine": 109,
+        "startChar": 5,
+        "endLine": 109,
+        "endChar": 8
+      },
+      "revId": "728cad390d4b8a1ebc691f4c4aa7ac2657ce3809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93358972_33d3c1aa",
+        "filename": "chrome/browser/android/webapps/add_to_homescreen_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-31T19:32:18Z",
+      "side": 1,
+      "message": "I would just inline the stuff in webapp_metrics in this file. If we do end up adding more metrics in the future we can think about splitting them out. For now it\u0027s probably not necessary to have the separate file and namespace.",
+      "range": {
+        "startLine": 20,
+        "startChar": 41,
+        "endLine": 20,
+        "endChar": 55
+      },
+      "revId": "728cad390d4b8a1ebc691f4c4aa7ac2657ce3809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f473cfe_5b8a2415",
+        "filename": "chrome/browser/android/webapps/add_to_homescreen_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-31T19:32:18Z",
+      "side": 1,
+      "message": "I don\u0027t think having this pointer is much more clear over just using data_fetcher_-\u003eshortcut_info().",
+      "range": {
+        "startLine": 71,
+        "startChar": 16,
+        "endLine": 71,
+        "endChar": 29
+      },
+      "revId": "728cad390d4b8a1ebc691f4c4aa7ac2657ce3809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bd9c812_f1ff3016",
+        "filename": "chrome/browser/android/webapps/add_to_homescreen_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-31T19:32:18Z",
+      "side": 1,
+      "message": "Perhaps make this a method on ShortcutInfo?\n\nif (shortcut_info.IsStandaloneOrFullscreen())",
+      "range": {
+        "startLine": 77,
+        "startChar": 6,
+        "endLine": 77,
+        "endChar": 19
+      },
+      "revId": "728cad390d4b8a1ebc691f4c4aa7ac2657ce3809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7468ba70_c76a5232",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 85052,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-31T19:32:18Z",
+      "side": 1,
+      "message": "You can probably add me as an owner here too.",
+      "range": {
+        "startLine": 85052,
+        "startChar": 3,
+        "endLine": 85052,
+        "endChar": 8
+      },
+      "revId": "728cad390d4b8a1ebc691f4c4aa7ac2657ce3809",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
