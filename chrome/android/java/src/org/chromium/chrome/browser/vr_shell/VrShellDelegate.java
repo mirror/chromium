@@ -76,6 +76,12 @@ public class VrShellDelegate
     // Pseudo-random number to avoid request id collisions.
     public static final int EXIT_VR_RESULT = 721251;
 
+    // Flags needed to hide the Android system UI when in VR mode.
+    public static final int VR_SYSTEM_UI_FLAGS = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN
+            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
+
     private static final int ENTER_VR_NOT_NECESSARY = 0;
     private static final int ENTER_VR_CANCELLED = 1;
     private static final int ENTER_VR_REQUESTED = 2;
@@ -105,11 +111,6 @@ public class VrShellDelegate
     private static final int EXPECT_DON_TIMEOUT_MS = 2000;
 
     private static final String FEEDBACK_REPORT_TYPE = "USER_INITIATED_FEEDBACK_REPORT_VR";
-
-    private static final int VR_SYSTEM_UI_FLAGS = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN
-            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY;
 
     private static final String VR_CORE_MARKET_URI =
             "market://details?id=" + VrCoreVersionChecker.VR_CORE_PACKAGE_ID;
@@ -753,7 +754,7 @@ public class VrShellDelegate
         }
         mVrClassesWrapper.setVrModeEnabled(mActivity, true);
         if (!isWindowModeCorrectForVr()) {
-            setWindowModeForVr(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+            setWindowModeForVr();
             mEnterVrHandler.post(new Runnable() {
                 @Override
                 public void run() {
@@ -882,6 +883,7 @@ public class VrShellDelegate
             if (!ChromeFeatureList.isEnabled(ChromeFeatureList.WEBVR_AUTOPRESENT)
                     || !activitySupportsPresentation(activity)
                     || !isVrShellEnabled(instance.mVrSupportLevel)) {
+                // TODO(ymalik): Handle system UI show correctly!
                 instance.onAutopresentUnsupported();
                 return;
             }
@@ -947,7 +949,7 @@ public class VrShellDelegate
     @Override
     public void onSystemUiVisibilityChange(int visibility) {
         if (mInVr && !isWindowModeCorrectForVr()) {
-            setWindowModeForVr(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+            setWindowModeForVr();
         }
     }
 
@@ -973,20 +975,40 @@ public class VrShellDelegate
                 && orientation == Configuration.ORIENTATION_LANDSCAPE;
     }
 
-    private void setWindowModeForVr(int requestedOrientation) {
+    private void setWindowModeForVr() {
+        mActivity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+        // Set landscape orientation.
         if (mRestoreOrientation == null) {
             mRestoreOrientation = mActivity.getRequestedOrientation();
         }
-        mActivity.setRequestedOrientation(requestedOrientation);
+        mActivity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
         ScreenOrientationDelegateManager.setOrientationDelegate(this);
-        setupVrModeWindowFlags();
+
+        // Hide system UI.
+        if (mRestoreSystemUiVisibilityFlag == -1) {
+            mRestoreSystemUiVisibilityFlag =
+                    mActivity.getWindow().getDecorView().getSystemUiVisibility();
+        }
+        mActivity.getWindow().getDecorView().setSystemUiVisibility(VR_SYSTEM_UI_FLAGS);
     }
 
     private void restoreWindowMode() {
-        if (mRestoreOrientation != null) mActivity.setRequestedOrientation(mRestoreOrientation);
+        mActivity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+        // Restore orientation.
+        if (mRestoreOrientation != null) {
+            mActivity.setRequestedOrientation(mRestoreOrientation);
+        }
         ScreenOrientationDelegateManager.setOrientationDelegate(null);
         mRestoreOrientation = null;
-        clearVrModeWindowFlags();
+
+        // Restore system UI flags.
+        if (mRestoreSystemUiVisibilityFlag != -1) {
+            mActivity.getWindow().getDecorView().setSystemUiVisibility(
+                    mRestoreSystemUiVisibilityFlag);
+        }
+        mRestoreSystemUiVisibilityFlag = -1;
     }
 
     /* package */ boolean canEnterVr(Tab tab, boolean justCompletedDon) {
@@ -1172,7 +1194,7 @@ public class VrShellDelegate
             // We're about to enter VR, so set the VR Mode as early as possible to avoid screen
             // brightness flickering while in the headset.
             mVrClassesWrapper.setVrModeEnabled(mActivity, true);
-            setWindowModeForVr(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+            setWindowModeForVr();
         }
     }
 
@@ -1498,24 +1520,6 @@ public class VrShellDelegate
         mActivity.onExitVr();
         FrameLayout decor = (FrameLayout) mActivity.getWindow().getDecorView();
         decor.removeView(mVrShell.getContainer());
-    }
-
-    private void setupVrModeWindowFlags() {
-        if (mRestoreSystemUiVisibilityFlag == -1) {
-            mRestoreSystemUiVisibilityFlag = mActivity.getWindow().getDecorView()
-                    .getSystemUiVisibility();
-        }
-        mActivity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        mActivity.getWindow().getDecorView().setSystemUiVisibility(VR_SYSTEM_UI_FLAGS);
-    }
-
-    private void clearVrModeWindowFlags() {
-        mActivity.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        if (mRestoreSystemUiVisibilityFlag != -1) {
-            mActivity.getWindow().getDecorView()
-                    .setSystemUiVisibility(mRestoreSystemUiVisibilityFlag);
-        }
-        mRestoreSystemUiVisibilityFlag = -1;
     }
 
     /**

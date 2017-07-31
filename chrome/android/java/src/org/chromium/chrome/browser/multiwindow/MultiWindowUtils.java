@@ -24,6 +24,7 @@ import org.chromium.chrome.browser.ChromeTabbedActivity2;
 import org.chromium.chrome.browser.IntentHandler;
 import org.chromium.chrome.browser.document.ChromeLauncherActivity;
 import org.chromium.chrome.browser.util.IntentUtils;
+import org.chromium.chrome.browser.vr_shell.VrIntentHandler;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.InvocationTargetException;
@@ -115,6 +116,9 @@ public class MultiWindowUtils implements ActivityStateListener {
             // activity state changes to facilitate determining which ChromeTabbedActivity should
             // be used for intents.
             ApplicationStatus.registerStateListenerForAllActivities(sInstance.get());
+            Class<? extends ChromeTabbedActivity> tabbedActivityClass =
+                    ChromeTabbedActivity.getRunningPrimaryTabbedActivityClass(current);
+            if (tabbedActivityClass != null) return tabbedActivityClass;
             return ChromeTabbedActivity.class;
         } else if (current instanceof ChromeTabbedActivity) {
             mTabbedActivity2TaskRunning = true;
@@ -160,32 +164,37 @@ public class MultiWindowUtils implements ActivityStateListener {
      */
     public Class<? extends ChromeTabbedActivity> getTabbedActivityForIntent(
             @Nullable Intent intent, Context context) {
-        // 1. Exit early if the build version doesn't support Android N+ multi-window mode or
-        // ChromeTabbedActivity2 isn't running.
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.M
-                || (mTabbedActivity2TaskRunning != null && !mTabbedActivity2TaskRunning)) {
-            return ChromeTabbedActivity.class;
+        // Build version doesn't support Android N+ multi-window mode.
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.M) return ChromeTabbedActivity.class;
+
+        // There should only be one base tabbed activity running at a given time. If we have one
+        // running, we should use that one.
+        Class<? extends ChromeTabbedActivity> tabbedActivityClass =
+                ChromeTabbedActivity.getRunningPrimaryTabbedActivityClass(context);
+        boolean tabbedTaskRunning = tabbedActivityClass != null;
+        tabbedActivityClass = tabbedTaskRunning
+                ? tabbedActivityClass
+                : VrIntentHandler.getDefaultTabbedActivityForIntent(intent);
+
+        // 1. Exit early if ChromeTabbedActivity2 isn't running.
+        if (mTabbedActivity2TaskRunning != null && !mTabbedActivity2TaskRunning) {
+            return tabbedActivityClass;
         }
 
         // 2. If the intent has a window id set, use that.
         if (intent != null && IntentUtils.safeHasExtra(intent, IntentHandler.EXTRA_WINDOW_ID)) {
             int windowId = IntentUtils.safeGetIntExtra(intent, IntentHandler.EXTRA_WINDOW_ID, 0);
-            if (windowId == 1) return ChromeTabbedActivity.class;
+            if (windowId == 1) return tabbedActivityClass;
             if (windowId == 2) return ChromeTabbedActivity2.class;
         }
 
         // 3. If only one ChromeTabbedActivity is currently in Android recents, use it.
         boolean tabbed2TaskRunning = isActivityTaskInRecents(
                 ChromeTabbedActivity2.class.getName(), context);
-
-        // Exit early if ChromeTabbedActivity2 isn't running.
         if (!tabbed2TaskRunning) {
             mTabbedActivity2TaskRunning = false;
-            return ChromeTabbedActivity.class;
+            return tabbedActivityClass;
         }
-
-        boolean tabbedTaskRunning = isActivityTaskInRecents(
-                ChromeTabbedActivity.class.getName(), context);
         if (!tabbedTaskRunning) {
             return ChromeTabbedActivity2.class;
         }
@@ -195,15 +204,15 @@ public class MultiWindowUtils implements ActivityStateListener {
         // to the bottom.
 
         // Find the activities.
-        Activity tabbedActivity = null;
-        Activity tabbedActivity2 = null;
+        ChromeTabbedActivity tabbedActivity = null;
+        ChromeTabbedActivity tabbedActivity2 = null;
         for (WeakReference<Activity> reference : ApplicationStatus.getRunningActivities()) {
             Activity activity = reference.get();
             if (activity == null) continue;
-            if (activity.getClass().equals(ChromeTabbedActivity.class)) {
-                tabbedActivity = activity;
+            if (ChromeTabbedActivity.isPrimaryTabbedModeClassName(activity.getClass().getName())) {
+                tabbedActivity = (ChromeTabbedActivity) activity;
             } else if (activity.getClass().equals(ChromeTabbedActivity2.class)) {
-                tabbedActivity2 = activity;
+                tabbedActivity2 = (ChromeTabbedActivity) activity;
             }
         }
 
@@ -211,7 +220,7 @@ public class MultiWindowUtils implements ActivityStateListener {
         boolean tabbedActivityVisible = isActivityVisible(tabbedActivity);
         boolean tabbedActivity2Visible = isActivityVisible(tabbedActivity2);
         if (tabbedActivityVisible ^ tabbedActivity2Visible) {
-            if (tabbedActivityVisible) return ChromeTabbedActivity.class;
+            if (tabbedActivityVisible) return tabbedActivity.getClass();
             return ChromeTabbedActivity2.class;
         }
 
@@ -219,20 +228,20 @@ public class MultiWindowUtils implements ActivityStateListener {
         if (mLastResumedTabbedActivity != null) {
             ChromeTabbedActivity lastResumedActivity = mLastResumedTabbedActivity.get();
             if (lastResumedActivity != null) {
-                Class<?> lastResumedClassName = lastResumedActivity.getClass();
                 if (tabbedTaskRunning
-                        && lastResumedClassName.equals(ChromeTabbedActivity.class)) {
-                    return ChromeTabbedActivity.class;
+                        && ChromeTabbedActivity.isPrimaryTabbedModeClassName(
+                                   lastResumedActivity.getClass().getName())) {
+                    return tabbedActivity.getClass();
                 }
                 if (tabbed2TaskRunning
-                        && lastResumedClassName.equals(ChromeTabbedActivity2.class)) {
+                        && lastResumedActivity.getClass().equals(ChromeTabbedActivity2.class)) {
                     return ChromeTabbedActivity2.class;
                 }
             }
         }
 
-        // 6. Default to regular ChromeTabbedActivity.
-        return ChromeTabbedActivity.class;
+        // 6. Default to regular tabbed activity class.
+        return tabbedActivityClass;
     }
 
     /**

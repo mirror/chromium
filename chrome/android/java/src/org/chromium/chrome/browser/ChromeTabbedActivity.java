@@ -118,6 +118,7 @@ import org.chromium.chrome.browser.tabmodel.TabWindowManager;
 import org.chromium.chrome.browser.toolbar.ToolbarControlContainer;
 import org.chromium.chrome.browser.util.FeatureUtilities;
 import org.chromium.chrome.browser.util.IntentUtils;
+import org.chromium.chrome.browser.vr_shell.ChromeTabbedActivityVrLaunch;
 import org.chromium.chrome.browser.vr_shell.VrShellDelegate;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheetMetrics;
@@ -365,7 +366,20 @@ public class ChromeTabbedActivity
     public static boolean isTabbedModeClassName(String className) {
         return TextUtils.equals(className, ChromeTabbedActivity.class.getName())
                 || TextUtils.equals(className, MultiInstanceChromeTabbedActivity.class.getName())
-                || TextUtils.equals(className, ChromeTabbedActivity2.class.getName());
+                || TextUtils.equals(className, ChromeTabbedActivity2.class.getName())
+                || TextUtils.equals(className, ChromeTabbedActivityVrLaunch.class.getName());
+    }
+
+    /**
+     * Return whether the passed in class name matches any of the primary tabbed mode activities. A
+     * primary tabbed mode activity is the first activity that is created when no other tabbed
+     * activity is already running. For example, ChromeTabbedActivity2 is not a primary tabbed mode
+     * activity because it's only created for multiwindow mode when ChromeTabbedActivity already
+     * exists.
+     */
+    public static boolean isPrimaryTabbedModeClassName(String className) {
+        return TextUtils.equals(className, ChromeTabbedActivity.class.getName())
+                || TextUtils.equals(className, ChromeTabbedActivityVrLaunch.class.getName());
     }
 
     /**
@@ -2140,6 +2154,31 @@ public class ChromeTabbedActivity
         mTabModelSelectorImpl.mergeState();
 
         setMergedInstanceTaskId(getTaskId());
+    }
+
+    /**
+     * Returns the first running primary ChromeTabbedActivity class that's found when going through
+     * all the app tasks.
+     * Note: There should only be one primary tabbed activity running at a given time.
+     */
+    @SuppressWarnings("unchecked")
+    public static Class<? extends ChromeTabbedActivity> getRunningPrimaryTabbedActivityClass(
+            Context context) {
+        ActivityManager activityManager =
+                (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List<AppTask> appTasks = activityManager.getAppTasks();
+        for (AppTask task : appTasks) {
+            if (task.getTaskInfo() == null || task.getTaskInfo().baseActivity == null) continue;
+            String className = task.getTaskInfo().baseActivity.getClassName();
+            if (isPrimaryTabbedModeClassName(className)) {
+                try {
+                    return (Class<? extends ChromeTabbedActivity>) Class.forName(className);
+                } catch (ClassNotFoundException e) {
+                    Log.e(TAG, "Unable to get running tabbed activity", e);
+                }
+            }
+        }
+        return null;
     }
 
     @Override

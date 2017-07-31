@@ -390,6 +390,16 @@ by a child template that "extends" this file.
         >
             {{ self.supports_vr() }}
         </activity>
+        <activity android:name="org.chromium.chrome.browser.vr_shell.ChromeTabbedActivityVrLaunch"
+            android:theme="@style/TabbedModeThemeVrSupport"
+            android:exported="false"
+            android:taskAffinity="{{ manifest_package }}.ChromeTabbedActivityVrLaunch"
+            android:launchMode="singleTask"
+            {{ self.chrome_activity_common() }}
+            {{ self.supports_video_persistence() }}
+        >
+            {{ self.supports_vr() }}
+        </activity>
         <activity android:name="org.chromium.chrome.browser.multiwindow.MultiInstanceChromeTabbedActivity"
             android:theme="@style/TabbedModeTheme"
             android:exported="false"

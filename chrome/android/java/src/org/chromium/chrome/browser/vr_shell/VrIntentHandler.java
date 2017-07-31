@@ -7,6 +7,7 @@ package org.chromium.chrome.browser.vr_shell;
 import android.content.Intent;
 
 import org.chromium.base.VisibleForTesting;
+import org.chromium.chrome.browser.ChromeTabbedActivity;
 import org.chromium.chrome.browser.IntentHandler;
 
 // TODO(bsheedy): Move more VR intent related code into here even if it doesn't need
@@ -17,6 +18,19 @@ import org.chromium.chrome.browser.IntentHandler;
 public class VrIntentHandler {
     private static VrIntentHandler sInstance;
     private static final String DAYDREAM_HOME_PACKAGE = "com.google.android.vr.home";
+
+    /**
+     * Returns the default ChromeTabbedActivity that should handle the given intent.
+     * Note: This doesn't necessarily mean that it's the class that will handle the intent, see
+     * {@link MultiWindowUtils#getTabbedActivityForIntent}
+     */
+    public static Class<? extends ChromeTabbedActivity> getDefaultTabbedActivityForIntent(
+            Intent intent) {
+        if (VrIntentHandler.getInstance().isTrustedDaydreamIntent(intent)) {
+            return ChromeTabbedActivityVrLaunch.class;
+        }
+        return ChromeTabbedActivity.class;
+    }
 
     /**
      * Determines whether the given intent is a VR intent from Daydream Home.
