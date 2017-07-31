@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc8fa292_68cac2ff",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-31T18:25:51Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be done as part of this CL.",
+      "revId": "945346f8c27a7caf2d7449e6057f428a6e72f4c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
