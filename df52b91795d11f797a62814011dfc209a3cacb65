@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c3c8cef_fb946e1a",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_browsertest_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116013
+      },
+      "writtenOn": "2017-07-31T14:42:00Z",
+      "side": 1,
+      "message": "should this test be testing something?",
+      "range": {
+        "startLine": 22,
+        "startChar": 65,
+        "endLine": 22,
+        "endChar": 66
+      },
+      "revId": "df52b91795d11f797a62814011dfc209a3cacb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49c3e6b9_831614af",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1116013
+      },
+      "writtenOn": "2017-07-31T14:42:00Z",
+      "side": 1,
+      "message": "It looks like we unconditionally create the Official variant here. What is the non-official ChromeCleanerPromptDelegate interface used for?",
+      "range": {
+        "startLine": 53,
+        "startChar": 77,
+        "endLine": 53,
+        "endChar": 0
+      },
+      "revId": "df52b91795d11f797a62814011dfc209a3cacb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a6dc10c_370ed522",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1116013
+      },
+      "writtenOn": "2017-07-31T14:42:00Z",
+      "side": 1,
+      "message": "nit: no blank line above",
+      "range": {
+        "startLine": 54,
+        "startChar": 7,
+        "endLine": 54,
+        "endChar": 32
+      },
+      "revId": "df52b91795d11f797a62814011dfc209a3cacb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ded7d3f_a1338217",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_prompt_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116013
+      },
+      "writtenOn": "2017-07-31T14:42:00Z",
+      "side": 1,
+      "message": "what is the meaning of Official in this context? If this is a Google-Chrome only feature, should this be behind a GOOGLE_CHROME_BUILD ifdef / in a separate .h/.cc file that is included only for official builds?",
+      "range": {
+        "startLine": 22,
+        "startChar": 42,
+        "endLine": 22,
+        "endChar": 43
+      },
+      "revId": "df52b91795d11f797a62814011dfc209a3cacb65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
