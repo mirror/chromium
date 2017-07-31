@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f6d4c17_a61511a1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-07-31T11:47:50Z",
+      "side": 1,
+      "message": "OmniboxViewIOS implements the delegate methods.",
+      "revId": "63cc4cc8b22a3ae3a7a81e2b71737e7db16b0e2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d0123d7_0aa62fa0",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_view_ios.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-07-31T11:47:50Z",
+      "side": 1,
+      "message": "Can this be forward-declared instead?",
+      "revId": "63cc4cc8b22a3ae3a7a81e2b71737e7db16b0e2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a8cd009_583ddd17",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_view_ios.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-07-31T11:47:50Z",
+      "side": 1,
+      "message": "Nit: I prefer to put the namespaced forward-declares after the rest, separated by a blank line.",
+      "revId": "63cc4cc8b22a3ae3a7a81e2b71737e7db16b0e2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2477989e_483bcb8f",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_view_ios.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-07-31T11:47:50Z",
+      "side": 1,
+      "message": "Nit: Consider switching arguments 2 and 3, so that the two model arguments come first, then the two delegates.",
+      "revId": "63cc4cc8b22a3ae3a7a81e2b71737e7db16b0e2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19025572_9d56c3a4",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_popup_view_suggestions_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-07-31T11:47:50Z",
+      "side": 1,
+      "message": "// Called when the user chooses a suggestion from the popup via the \"append\" button.",
+      "revId": "63cc4cc8b22a3ae3a7a81e2b71737e7db16b0e2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e7c0f9d_fb964a64",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_view_ios.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-07-31T11:47:50Z",
+      "side": 1,
+      "message": "Include the delegate.h file instead.",
+      "revId": "63cc4cc8b22a3ae3a7a81e2b71737e7db16b0e2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bfe7fca_fbf6bdd8",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_view_ios.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-07-31T11:47:50Z",
+      "side": 1,
+      "message": "No need to include the comments here.",
+      "revId": "63cc4cc8b22a3ae3a7a81e2b71737e7db16b0e2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03f29e3b_80821520",
+        "filename": "ios/chrome/browser/ui/omnibox/omnibox_view_ios.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 796,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-07-31T11:47:50Z",
+      "side": 1,
+      "message": "Could we simply copy all of this code into the body of the delegate method?  It looks like the current delegate method just forwards to this one and does nothing else.",
+      "revId": "63cc4cc8b22a3ae3a7a81e2b71737e7db16b0e2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
