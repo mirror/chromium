@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "fa4ad14a_24b06846",
+        "filename": "third_party/crashpad/crashpad/snapshot/win/pe_image_reader_test.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-07-31T21:25:21Z",
+      "side": 1,
+      "message": "Done. I\u0027ve removed the #ifndef",
+      "parentUuid": "18f88088_7c2074d2",
+      "revId": "a1d905d6c3fbbe204d2385d6577d71c48158370d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c113b89a_d95b4a9b",
         "filename": "third_party/tcmalloc/chromium/src/windows/patch_functions.cc",
         "patchSetId": 12
@@ -51,6 +69,24 @@
       "revId": "a1d905d6c3fbbe204d2385d6577d71c48158370d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1b8ae3d_c8bd2062",
+        "filename": "third_party/tcmalloc/chromium/src/windows/patch_functions.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1228990
+      },
+      "writtenOn": "2017-07-31T21:25:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c113b89a_d95b4a9b",
+      "revId": "a1d905d6c3fbbe204d2385d6577d71c48158370d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
