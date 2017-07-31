@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "a2e945d8_8eb0d1d5",
+        "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-31T13:31:28Z",
+      "side": 1,
+      "message": "It\u0027s up to you. You may file a bug. Otherwise, you can just make a CL and move everything without a bug. Just don\u0027t change unnecessary code in that CL, only move files and change ones that depend on them.",
+      "parentUuid": "22f6525d_c4f2c2ae",
+      "range": {
+        "startLine": 5,
+        "startChar": 38,
+        "endLine": 5,
+        "endChar": 39
+      },
+      "revId": "372e13a6d9c871736f297f9ca4eb774bbd69b44c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b440056_53357611",
         "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher.h",
         "patchSetId": 1

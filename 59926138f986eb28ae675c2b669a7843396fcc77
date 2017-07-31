@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b69d6d2_487a6174",
+        "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-31T13:31:28Z",
+      "side": 1,
+      "message": "You should not use NTP, because we may have other surfaces.\nI know, that NTP is all over the code here, but not using it more is anyway beneficial.",
+      "range": {
+        "startLine": 21,
+        "startChar": 42,
+        "endLine": 21,
+        "endChar": 45
+      },
+      "revId": "59926138f986eb28ae675c2b669a7843396fcc77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b370c443_d458ebbb",
+        "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-31T13:31:28Z",
+      "side": 1,
+      "message": "\"optional will be empty.\"?",
+      "range": {
+        "startLine": 26,
+        "startChar": 28,
+        "endLine": 27,
+        "endChar": 11
+      },
+      "revId": "59926138f986eb28ae675c2b669a7843396fcc77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b74b93ee_bd5bc30f",
+        "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-31T13:31:28Z",
+      "side": 1,
+      "message": "DVLOG(0) is very uncommon (40 mentions vs 1000 for DVLOG(1)).\n\nI feel like this will print always (i.e. verbosity \u003d\u003d 0 by default), but I cannot find a proof.\n\nWould you mind to verify? Or to move to DVLOG(1)? :)",
+      "range": {
+        "startLine": 232,
+        "startChar": 2,
+        "endLine": 232,
+        "endChar": 10
+      },
+      "revId": "59926138f986eb28ae675c2b669a7843396fcc77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
