@@ -217,7 +217,7 @@ component("core") {
   ]
 
   if (is_win && is_debug && is_component_build &&
-      visual_studio_version == "2015" && (current_cpu == "x64" || is_clang)) {
+      visual_studio_version == "2015" && current_cpu == "x64") {
     # Incremental linking fails when the .ilk file gets too large.
     # 64-bit debug builds and Clang builds with full symbols trigger this
     # problem, so we turn off incremental linking in those configurations.
