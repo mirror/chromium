@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "cd087ee8_31db2b85",
+        "filename": "chrome/renderer/autofill/password_autofill_agent_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3043,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-31T09:38:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "41680c7c_ed378c2d",
+      "range": {
+        "startLine": 3043,
+        "startChar": 8,
+        "endLine": 3043,
+        "endChar": 9
+      },
+      "revId": "9c41aaa644323aa07cfca52c7850c3ad699387a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5373212_c587200c",
         "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
         "patchSetId": 3
@@ -93,6 +117,30 @@
       "revId": "9c41aaa644323aa07cfca52c7850c3ad699387a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e7692887_4b0e2faf",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 933,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-31T09:38:58Z",
+      "side": 1,
+      "message": "I see two possibilities if you remove \"if (!is_gaia_reauthentication_page_)\"\n- SendPasswordForms returns early due to the lines 1206-1211. Then this condition is excessive.\n- SendPasswordForms for some reason sends the forms. That means IsGaiaReauthenticationForm(form) returned false for all the forms and |is_gaia_reauthentication_page_| is false. Then this check wouldn\u0027t work.",
+      "parentUuid": "46fd9a8a_7849ef6b",
+      "range": {
+        "startLine": 933,
+        "startChar": 8,
+        "endLine": 933,
+        "endChar": 25
+      },
+      "revId": "9c41aaa644323aa07cfca52c7850c3ad699387a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -178,6 +226,30 @@
       "side": 1,
       "message": "char* is better since LoadHTMLWithUrlOverride takes char*, why we need something else?",
       "parentUuid": "2bc39441_5175b448",
+      "range": {
+        "startLine": 244,
+        "startChar": 33,
+        "endLine": 244,
+        "endChar": 37
+      },
+      "revId": "9c41aaa644323aa07cfca52c7850c3ad699387a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8504adb5_6cbcee90",
+        "filename": "components/autofill/content/renderer/password_form_conversion_utils_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-07-31T09:38:58Z",
+      "side": 1,
+      "message": "In general we could pass |html| and |origin| as either string() or const char* avoiding .c_str() calls. But if LoadHTMLWithUrlOverride doesn\u0027t support it then it won\u0027t pay off today.",
+      "parentUuid": "2d00618c_7a5fe258",
       "range": {
         "startLine": 244,
         "startChar": 33,
