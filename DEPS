@@ -56,7 +56,7 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling build tools
   # and whatever else without interference from each other.
-  'buildtools_revision': '5ad14542a6a74dd914f067b948c5d3e8d170396b',
+  'buildtools_revision': '838f297722836d123b45db07a9d2c09f49a160de',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling SwiftShader
   # and whatever else without interference from each other.
@@ -1218,7 +1218,7 @@ hooks_os = {
       'action': [
         'python',
         'src/build/fuchsia/update_sdk.py',
-        '79326d8c556f621c815ebb7d24e34054f43ba1a5',
+        '2bebd264dfe3bec89469a4179a8292b416cdf2fa',
       ],
     },
   ],
