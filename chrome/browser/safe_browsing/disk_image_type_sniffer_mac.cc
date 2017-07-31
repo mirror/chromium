@@ -19,7 +19,6 @@ DiskImageTypeSnifferMac::DiskImageTypeSnifferMac() {}
 
 // static
 bool DiskImageTypeSnifferMac::IsAppleDiskImage(const base::FilePath& dmg_file) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::FILE);
 
   base::File file(dmg_file, base::File::FLAG_OPEN | base::File::FLAG_READ);
   if (!file.IsValid())
