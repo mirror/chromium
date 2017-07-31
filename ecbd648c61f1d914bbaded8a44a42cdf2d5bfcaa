@@ -16,6 +16,24 @@
       "revId": "ecbd648c61f1d914bbaded8a44a42cdf2d5bfcaa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e875ec0f_f98c836a",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 2251,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-07-31T21:07:11Z",
+      "side": 1,
+      "message": "Using actual GPU memory of composited scrolling layers does make sense. Have uploaded a patch about this:https://chromium-review.googlesource.com/c/595068/.\nThis percentage patch is still somehow useful I think. We cannot provide 100% accurate results but it could give us an idea of the impact of the \"not compositing small scroller\" experiment. WDYT?",
+      "parentUuid": "9eacb923_2ce8ca78",
+      "revId": "ecbd648c61f1d914bbaded8a44a42cdf2d5bfcaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
