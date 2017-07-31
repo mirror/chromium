@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d30d5b3d_bf69c911",
+        "filename": "components/autofill/core/browser/personal_data_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1345,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-31T23:10:52Z",
+      "side": 1,
+      "message": "Consider moving this block to a private function, WaitForOnPersonalDataChanged();",
+      "revId": "f308ecb48a66202d73ce6a79028b2deb476467ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb9e7072_03ff617f",
+        "filename": "components/autofill/core/browser/personal_data_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2487,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-07-31T23:10:52Z",
+      "side": 1,
+      "message": "Sidetrack: have we made a decision about whether to keep this experiment or not? Sounds like no one is too hot about it.",
+      "revId": "f308ecb48a66202d73ce6a79028b2deb476467ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
