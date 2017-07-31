@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5707f0ee_66b0e1d4",
+        "filename": "cc/layers/viewport.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-31T18:01:50Z",
+      "side": 1,
+      "message": "Does this mean that the controls will come up as soon as the user hits the end of the page? i.e. one long scroll gesture will both scroll the page and show the controls? I think that might interact badly with fling and scrolls near the bottom of the page (e.g. scrolling down might start hiding the controls and then suddenly change direction). Perhaps we should only do this when the page is fully scrolled on a GestureScrollBegin, similarly to how pull-to-refresh works.",
+      "range": {
+        "startLine": 48,
+        "startChar": 8,
+        "endLine": 48,
+        "endChar": 37
+      },
+      "revId": "dcf6d212444fec6faa0c95de7c7b26dcfd87ca41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2e3a03b_919a5c82",
+        "filename": "cc/layers/viewport.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-31T18:01:50Z",
+      "side": 1,
+      "message": "Please add a comment describing the intended \"pull up when fully scrolled for bottom controls\" behavior here.",
+      "range": {
+        "startLine": 98,
+        "startChar": 7,
+        "endLine": 98,
+        "endChar": 36
+      },
+      "revId": "dcf6d212444fec6faa0c95de7c7b26dcfd87ca41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca0fd1c4_81690b70",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollableArea.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-31T18:01:50Z",
+      "side": 1,
+      "message": "Generally, this is already handled by using the \"BrowserControlsAdjustment\". In LocalFrameView::MaximumScrollOffsetInt (and other ScrollableAreas\u0027 MaximumScrollOffset methods) we use the TopDocumentRootScrollerController::RootScrollerVisibleArea() as the visible area. This value includes the BrowserControlsAdjustment which allows scrolling over the limit by the amount that the top controls are shown. This compensates for the fact that we\u0027ll get scroll deltas from the compositor before we get the Resize in Blink.\n\nIf you need to avoid clamping you should use that value/logic rather than disabling clamping, however, this should already be working, we set the browser controls shown ratio before scroll offsets for this reason in WebViewImpl::ApplyViewportDeltas - could you investigate why this logic is failing?",
+      "range": {
+        "startLine": 184,
+        "startChar": 2,
+        "endLine": 185,
+        "endChar": 75
+      },
+      "revId": "dcf6d212444fec6faa0c95de7c7b26dcfd87ca41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
