@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2bf03985_6ff6924e",
+        "filename": "extensions/browser/file_reader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-31T19:24:09Z",
+      "side": 1,
+      "message": "I see that the class itself has only a single client. Maybe we can just remove it? (subsequently). Clients should be able to perform this logic on their own. (Post a task to the file task runner and back to the originating sequence).",
+      "range": {
+        "startLine": 19,
+        "startChar": 6,
+        "endLine": 19,
+        "endChar": 16
+      },
+      "revId": "6f519ea13897502e560743752a2ee98a44c03909",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ba53c71_079a169a",
+        "filename": "extensions/browser/file_reader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-31T19:24:09Z",
+      "side": 1,
+      "message": "Change to OptionalFileSequenceTaskCallback?",
+      "range": {
+        "startLine": 27,
+        "startChar": 8,
+        "endLine": 27,
+        "endChar": 38
+      },
+      "revId": "6f519ea13897502e560743752a2ee98a44c03909",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "522c3cc3_84b0c53e",
+        "filename": "extensions/browser/file_reader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-31T19:24:09Z",
+      "side": 1,
+      "message": "s/thread/sequence.",
+      "range": {
+        "startLine": 33,
+        "startChar": 54,
+        "endLine": 33,
+        "endChar": 60
+      },
+      "revId": "6f519ea13897502e560743752a2ee98a44c03909",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eccc77b6_19c74caa",
+        "filename": "extensions/browser/file_reader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-31T19:24:09Z",
+      "side": 1,
+      "message": "ExecuteCodeFunction::GetFileURLAndMaybeLocalizeInBackground will now be invoked on the ExtensionFileTaskRunner instead of the file thread. Can you confirm if that\u0027s ok? (Seems to be the case).",
+      "range": {
+        "startLine": 35,
+        "startChar": 7,
+        "endLine": 35,
+        "endChar": 12
+      },
+      "revId": "6f519ea13897502e560743752a2ee98a44c03909",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f5118f2_c400ff74",
+        "filename": "extensions/browser/file_reader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-31T19:24:09Z",
+      "side": 1,
+      "message": "s/thread/sequence.",
+      "range": {
+        "startLine": 45,
+        "startChar": 33,
+        "endLine": 45,
+        "endChar": 68
+      },
+      "revId": "6f519ea13897502e560743752a2ee98a44c03909",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e50cdf1_3a6edf50",
+        "filename": "extensions/browser/file_reader_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-07-31T19:24:09Z",
+      "side": 1,
+      "message": "run git cl format and sort headers.",
+      "range": {
+        "startLine": 5,
+        "startChar": 10,
+        "endLine": 5,
+        "endChar": 20
+      },
+      "revId": "6f519ea13897502e560743752a2ee98a44c03909",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
