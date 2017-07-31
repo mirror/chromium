@@ -179,8 +179,8 @@ blink::WebGestureEvent MakeWebGestureEventFromUiEvent(
 
   blink::WebGestureEvent webkit_event(
       type, EventFlagsToWebEventModifiers(event.flags()),
-      EventTimeStampToSeconds(event.time_stamp()));
-  webkit_event.source_device = blink::kWebGestureDeviceTouchpad;
+      EventTimeStampToSeconds(event.time_stamp()),
+      blink::kWebGestureDeviceTouchpad);
   if (event.type() == ET_SCROLL_FLING_START) {
     webkit_event.data.fling_start.velocity_x = event.x_offset();
     webkit_event.data.fling_start.velocity_y = event.y_offset();
@@ -368,10 +368,9 @@ blink::WebGestureEvent MakeWebGestureEventFlingCancel() {
   blink::WebGestureEvent gesture_event(
       blink::WebInputEvent::kGestureFlingCancel,
       blink::WebInputEvent::kNoModifiers,
-      EventTimeStampToSeconds(EventTimeForNow()));
-
+      EventTimeStampToSeconds(EventTimeForNow()),
+      blink::kWebGestureDeviceTouchpad);
   // All other fields are ignored on a GestureFlingCancel event.
-  gesture_event.source_device = blink::kWebGestureDeviceTouchpad;
   return gesture_event;
 }
 
