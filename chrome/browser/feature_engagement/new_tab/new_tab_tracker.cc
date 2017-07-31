@@ -4,6 +4,7 @@
 
 #include "chrome/browser/feature_engagement/new_tab/new_tab_tracker.h"
 
+#include "base/metrics/field_trial.h"
 #include "base/time/time.h"
 #include "chrome/browser/feature_engagement/tracker_factory.h"
 #include "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker.h"
@@ -23,24 +24,7 @@ const int kTwoHoursInMinutes = 120;
 
 namespace feature_engagement {
 
-NewTabTracker::NewTabTracker(Profile* profile)
-    : duration_tracker_(metrics::DesktopSessionDurationTracker::Get()),
-      profile_(profile) {
-  duration_tracker_->AddObserver(this);
-}
-
-NewTabTracker::NewTabTracker()
-    : duration_tracker_(metrics::DesktopSessionDurationTracker::Get()),
-      profile_(nullptr) {}
-
-NewTabTracker::~NewTabTracker() = default;
-
-// static
-void NewTabTracker::RegisterProfilePrefs(
-    user_prefs::PrefRegistrySyncable* registry) {
-  registry->RegisterBooleanPref(prefs::kNewTabInProductHelp, false);
-  registry->RegisterIntegerPref(prefs::kSessionTimeTotal, 0);
-}
+NewTabTracker::NewTabTracker(Profile* profile) : FeatureTracker(profile) {}
 
 void NewTabTracker::DismissNewTabTracker() {
   GetFeatureTracker()->Dismissed(kIPHNewTabFeature);
@@ -54,13 +38,23 @@ void NewTabTracker::OnOmniboxNavigation() {
   GetFeatureTracker()->NotifyEvent(events::kOmniboxInteraction);
 }
 
-void NewTabTracker::OnSessionTimeMet() {
-  GetFeatureTracker()->NotifyEvent(events::kSessionTime);
-}
-
 void NewTabTracker::OnOmniboxFocused() {
   if (ShouldShowPromo())
     ShowPromo();
+}
+
+// static
+void NewTabTracker::RegisterProfilePrefs(
+    user_prefs::PrefRegistrySyncable* registry) {
+  registry->RegisterBooleanPref(prefs::kNewTabInProductHelp, false);
+}
+
+bool NewTabTracker::ShouldShowPromo() {
+  return GetFeatureTracker()->ShouldTriggerHelpUI(kIPHNewTabFeature);
+}
+
+bool NewTabTracker::HasEnoughSessionTimeElapsed() {
+  return GetPrefs()->GetInteger(prefs::kSessionTimeTotal) >= kTwoHoursInMinutes;
 }
 
 void NewTabTracker::ShowPromo() {
@@ -71,43 +65,11 @@ void NewTabTracker::ShowPromo() {
   GetFeatureTracker()->Dismissed(kIPHNewTabFeature);
 }
 
-bool NewTabTracker::ShouldShowPromo() {
-  return GetFeatureTracker()->ShouldTriggerHelpUI(kIPHNewTabFeature);
-}
-
-Tracker* NewTabTracker::GetFeatureTracker() {
-  return TrackerFactory::GetForBrowserContext(profile_);
-}
-
-PrefService* NewTabTracker::GetPrefs() {
-  return profile_->GetPrefs();
-}
-
-bool NewTabTracker::HasEnoughSessionTimeElapsed() {
-  return GetPrefs()->GetInteger(prefs::kSessionTimeTotal) >= kTwoHoursInMinutes;
-}
-
-void NewTabTracker::UpdateSessionTime(base::TimeDelta elapsed) {
-  // Session time does not need to be tracked anymore if the
-  // in-product help has been shown already.
-  // This prevents unnecessary interaction with prefs.
-  if (GetPrefs()->GetBoolean(prefs::kNewTabInProductHelp))
-    return;
-
-  base::TimeDelta elapsed_session_time;
-  elapsed_session_time += base::TimeDelta::FromMinutes(GetPrefs()->GetInteger(
-                              prefs::kSessionTimeTotal)) +
-                          elapsed;
-  GetPrefs()->SetInteger(prefs::kSessionTimeTotal,
-                         elapsed_session_time.InMinutes());
-}
-
-void NewTabTracker::OnSessionEnded(base::TimeDelta delta) {
-  UpdateSessionTime(delta);
-  if (HasEnoughSessionTimeElapsed()) {
-    OnSessionTimeMet();
-    duration_tracker_->RemoveObserver(this);
-  }
+bool NewTabTracker::IsIPHNewTabEnabled() {
+  const std::string group_name =
+      base::FieldTrialList::FindFullName("NewTabInProductHelp");
+  return base::StartsWith(group_name, "Enabled",
+                          base::CompareCase::INSENSITIVE_ASCII);
 }
 
 }  // namespace feature_engagement
