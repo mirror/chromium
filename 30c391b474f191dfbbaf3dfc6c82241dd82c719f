@@ -129,6 +129,30 @@
     },
     {
       "key": {
+        "uuid": "73f58173_b56edf67",
+        "filename": "chrome/test/data/extensions/api_test/bluetooth_private/adapter_state/test.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1180904
+      },
+      "writtenOn": "2017-07-31T23:22:02Z",
+      "side": 1,
+      "message": "This part has been removed in the latest patch.",
+      "parentUuid": "221299c0_cad8d942",
+      "range": {
+        "startLine": 46,
+        "startChar": 31,
+        "endLine": 46,
+        "endChar": 35
+      },
+      "revId": "30c391b474f191dfbbaf3dfc6c82241dd82c719f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74a2cadb_ca6049e8",
         "filename": "extensions/browser/api/bluetooth/bluetooth_private_apitest.cc",
         "patchSetId": 13
@@ -152,6 +176,30 @@
     },
     {
       "key": {
+        "uuid": "0233c827_b78ad2e7",
+        "filename": "extensions/browser/api/bluetooth/bluetooth_private_apitest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1180904
+      },
+      "writtenOn": "2017-07-31T23:22:02Z",
+      "side": 1,
+      "message": "This part has been removed in the latest patch.",
+      "parentUuid": "74a2cadb_ca6049e8",
+      "range": {
+        "startLine": 198,
+        "startChar": 31,
+        "endLine": 198,
+        "endChar": 46
+      },
+      "revId": "30c391b474f191dfbbaf3dfc6c82241dd82c719f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02d24343_bf9f1437",
         "filename": "extensions/common/api/bluetooth_private.idl",
         "patchSetId": 13
@@ -172,6 +220,30 @@
       "revId": "30c391b474f191dfbbaf3dfc6c82241dd82c719f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5d87716_fe44fe84",
+        "filename": "extensions/common/api/bluetooth_private.idl",
+        "patchSetId": 13
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1180904
+      },
+      "writtenOn": "2017-07-31T23:22:02Z",
+      "side": 1,
+      "message": "This part has been removed in the latest patch.",
+      "parentUuid": "02d24343_bf9f1437",
+      "range": {
+        "startLine": 88,
+        "startChar": 13,
+        "endLine": 88,
+        "endChar": 25
+      },
+      "revId": "30c391b474f191dfbbaf3dfc6c82241dd82c719f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
