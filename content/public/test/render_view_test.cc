@@ -356,7 +356,7 @@ void RenderViewTest::TearDown() {
   ipc_support_.reset();
 }
 
-void RenderViewTest::OnLeakDetectionComplete(const Result& result) {
+void RenderViewTest::OnGarbageCollectionComplete(const Result& result) {
   EXPECT_EQ(0u, result.number_of_live_audio_nodes);
   EXPECT_EQ(0u, result.number_of_live_documents);
   EXPECT_EQ(0u, result.number_of_live_nodes);

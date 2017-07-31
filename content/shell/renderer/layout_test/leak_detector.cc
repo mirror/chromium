@@ -71,7 +71,7 @@ void LeakDetector::TryLeakDetection(blink::WebFrame* frame) {
   web_leak_detector_->CollectGarbageAndReport();
 }
 
-void LeakDetector::OnLeakDetectionComplete(
+void LeakDetector::OnGarbageCollectionComplete(
     const WebLeakDetectorClient::Result& result) {
   LeakDetectionResult report;
   report.leaked = false;
