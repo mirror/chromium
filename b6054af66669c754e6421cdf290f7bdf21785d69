@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b61cdcb_e3a56f3e",
+        "filename": "third_party/WebKit/Source/core/page/Page.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-31T20:27:02Z",
+      "side": 1,
+      "message": "This won\u0027t affect workers. Is that intentional? Should workers be updated? (There are a number of ways this could be done, such as using a lock or an atomic generation ID.)",
+      "revId": "b6054af66669c754e6421cdf290f7bdf21785d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd6011be_3bcc5b6d",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontGlobalContext.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-31T20:27:02Z",
+      "side": 1,
+      "message": "nit: recommend returning a reference rather than a pointer",
+      "revId": "b6054af66669c754e6421cdf290f7bdf21785d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "687539e0_37063549",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontGlobalContext.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-31T20:27:02Z",
+      "side": 1,
+      "message": "GenericFontFamilySettings has a non-trivial destructor, and we prefer to avoid such static destructors. DEFINE_THREAD_SAFE_STATIC_LOCAL is the recommended workaround.",
+      "revId": "b6054af66669c754e6421cdf290f7bdf21785d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f32e3989_3b95f7d0",
+        "filename": "third_party/WebKit/Source/platform/fonts/GenericFontFamilySettings.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-31T20:27:02Z",
+      "side": 1,
+      "message": "nit: This doesn\u0027t need to be a member of the class. A free function with internal linkage would suffice.",
+      "revId": "b6054af66669c754e6421cdf290f7bdf21785d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21eec941_0955fd01",
+        "filename": "third_party/WebKit/Source/platform/fonts/GenericFontFamilySettings.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-31T20:27:02Z",
+      "side": 1,
+      "message": "nit: mildly prefer this to using the StringImpl directly:\n\ndest.insert(kv.key, kv.value.GetString().IsolatedCopy());",
+      "revId": "b6054af66669c754e6421cdf290f7bdf21785d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbdff75b_bdb5aa92",
+        "filename": "third_party/WebKit/Source/platform/fonts/GenericFontFamilySettings.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-07-31T20:27:02Z",
+      "side": 1,
+      "message": "nit: maybe \"DeepThreadSafeCopyTo\", to be clear that the argument is the destination, not the source? Name the parameter as well to make this clear.",
+      "revId": "b6054af66669c754e6421cdf290f7bdf21785d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
