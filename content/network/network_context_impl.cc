@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/network/network_context.h"
+#include "content/network/network_context_impl.h"
 
 #include "base/command_line.h"
 #include "base/logging.h"
@@ -115,22 +115,30 @@ std::unique_ptr<net::URLRequestContext> MakeURLRequestContext(
 
 }  // namespace
 
-NetworkContext::NetworkContext(NetworkServiceImpl* network_service,
-                               mojom::NetworkContextRequest request,
-                               mojom::NetworkContextParamsPtr params)
+std::unique_ptr<NetworkContext> NetworkContext::CreateForURLRequestContext(
+    mojom::NetworkContextRequest network_context_request,
+    net::URLRequestContext* url_request_context) {
+  return base::MakeUnique<NetworkContextImpl>(
+      std::move(network_context_request), url_request_context);
+}
+
+NetworkContextImpl::NetworkContextImpl(NetworkServiceImpl* network_service,
+                                       mojom::NetworkContextRequest request,
+                                       mojom::NetworkContextParamsPtr params)
     : network_service_(network_service),
-      url_request_context_(MakeURLRequestContext(params.get())),
       params_(std::move(params)),
+      owned_url_request_context_(MakeURLRequestContext(params_.get())),
+      url_request_context_(owned_url_request_context_.get()),
       binding_(this, std::move(request)) {
   network_service_->RegisterNetworkContext(this);
-  binding_.set_connection_error_handler(
-      base::Bind(&NetworkContext::OnConnectionError, base::Unretained(this)));
+  binding_.set_connection_error_handler(base::Bind(
+      &NetworkContextImpl::OnConnectionError, base::Unretained(this)));
 }
 
 // TODO(mmenke): Share URLRequestContextBulder configuration between two
 // constructors. Can only share them once consumer code is ready for its
 // corresponding options to be overwritten.
-NetworkContext::NetworkContext(
+NetworkContextImpl::NetworkContextImpl(
     mojom::NetworkContextRequest request,
     mojom::NetworkContextParamsPtr params,
     std::unique_ptr<net::URLRequestContextBuilder> builder)
@@ -138,14 +146,15 @@ NetworkContext::NetworkContext(
       params_(std::move(params)),
       binding_(this, std::move(request)) {
   ApplyContextParamsToBuilder(builder.get(), params_.get());
-  url_request_context_ = builder->Build();
+  owned_url_request_context_ = builder->Build();
+  url_request_context_ = owned_url_request_context_.get();
 }
 
-NetworkContext::~NetworkContext() {
+NetworkContextImpl::~NetworkContextImpl() {
   // Call each URLLoaderImpl and ask it to release its net::URLRequest, as the
   // corresponding net::URLRequestContext is going away with this
-  // NetworkContext. The loaders can be deregistering themselves in Cleanup(),
-  // so have to be careful.
+  // NetworkContextImpl. The loaders can be deregistering themselves in
+  // Cleanup(), so have to be careful.
   while (!url_loaders_.empty())
     (*url_loaders_.begin())->Cleanup();
 
@@ -154,21 +163,21 @@ NetworkContext::~NetworkContext() {
     network_service_->DeregisterNetworkContext(this);
 }
 
-std::unique_ptr<NetworkContext> NetworkContext::CreateForTesting() {
-  return base::WrapUnique(new NetworkContext);
+std::unique_ptr<NetworkContextImpl> NetworkContextImpl::CreateForTesting() {
+  return base::WrapUnique(new NetworkContextImpl);
 }
 
-void NetworkContext::RegisterURLLoader(URLLoaderImpl* url_loader) {
+void NetworkContextImpl::RegisterURLLoader(URLLoaderImpl* url_loader) {
   DCHECK(url_loaders_.count(url_loader) == 0);
   url_loaders_.insert(url_loader);
 }
 
-void NetworkContext::DeregisterURLLoader(URLLoaderImpl* url_loader) {
+void NetworkContextImpl::DeregisterURLLoader(URLLoaderImpl* url_loader) {
   size_t removed_count = url_loaders_.erase(url_loader);
   DCHECK(removed_count);
 }
 
-void NetworkContext::CreateURLLoaderFactory(
+void NetworkContextImpl::CreateURLLoaderFactory(
     mojom::URLLoaderFactoryRequest request,
     uint32_t process_id) {
   loader_factory_bindings_.AddBinding(
@@ -176,25 +185,33 @@ void NetworkContext::CreateURLLoaderFactory(
       std::move(request));
 }
 
-void NetworkContext::HandleViewCacheRequest(const GURL& url,
-                                            mojom::URLLoaderClientPtr client) {
-  StartCacheURLLoader(url, url_request_context_.get(), std::move(client));
+void NetworkContextImpl::HandleViewCacheRequest(
+    const GURL& url,
+    mojom::URLLoaderClientPtr client) {
+  StartCacheURLLoader(url, url_request_context_, std::move(client));
 }
 
-void NetworkContext::Cleanup() {
+void NetworkContextImpl::Cleanup() {
   // The NetworkService is going away, so have to destroy the
-  // net::URLRequestContext held by this NetworkContext.
+  // net::URLRequestContext held by this NetworkContextImpl.
   delete this;
 }
 
-NetworkContext::NetworkContext()
+NetworkContextImpl::NetworkContextImpl()
     : network_service_(nullptr),
       params_(mojom::NetworkContextParams::New()),
-      binding_(this) {
-  url_request_context_ = MakeURLRequestContext(params_.get());
-}
+      owned_url_request_context_(MakeURLRequestContext(params_.get())),
+      url_request_context_(owned_url_request_context_.get()),
+      binding_(this) {}
 
-void NetworkContext::OnConnectionError() {
+NetworkContextImpl::NetworkContextImpl(
+    mojom::NetworkContextRequest request,
+    net::URLRequestContext* url_request_context)
+    : network_service_(nullptr),
+      url_request_context_(url_request_context),
+      binding_(this, std::move(request)) {}
+
+void NetworkContextImpl::OnConnectionError() {
   // Don't delete |this| in response to connection errors when it was created by
   // CreateForTesting.
   if (network_service_)

@@ -1384,8 +1384,8 @@ TEST_F(TranslateManagerRenderViewHostTest, AlwaysTranslateLanguagePref) {
   // Let's switch to incognito mode, it should not be autotranslated in that
   // case either.
   TestingProfile* test_profile =
-      static_cast<TestingProfile*>(web_contents()->GetBrowserContext());
-  test_profile->ForceIncognito(true);
+      static_cast<TestingProfile*>(web_contents()->GetBrowserContext())
+          ->BuildIncognito();
   SimulateNavigation(GURL("http://www.youtube.fr"), "fr", true);
   EXPECT_FALSE(GetTranslateMessage(&original_lang, &target_lang));
   EXPECT_TRUE(GetTranslateInfoBar() != NULL);
@@ -1532,8 +1532,8 @@ TEST_F(TranslateManagerRenderViewHostTest, BeforeTranslateExtraButtons) {
   // shown in that case, then 4 times in normal mode.
   translate::TranslateInfoBarDelegate* infobar;
   TestingProfile* test_profile =
-      static_cast<TestingProfile*>(web_contents()->GetBrowserContext());
-  test_profile->ForceIncognito(true);
+      static_cast<TestingProfile*>(web_contents()->GetBrowserContext())
+          ->BuildIncognito();
   for (int i = 0; i < 8; ++i) {
     SCOPED_TRACE(::testing::Message() << "Iteration " << i << " incognito mode="
                                       << test_profile->IsOffTheRecord());
