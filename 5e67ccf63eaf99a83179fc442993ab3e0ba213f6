@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c2b3747b_88c2dbfe",
+        "filename": "content/renderer/media/media_factory.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1216499
+      },
+      "writtenOn": "2017-07-31T23:12:51Z",
+      "side": 1,
+      "message": "We could, but I was hoping to pass fetch_context_ to other places like WebMediaPlayerImpl that takes WebFrame right now. But I can make UrlIndex own ResourceFetchContext for now until that time. Let me know if you want me to make that change.",
+      "parentUuid": "6e90fa01_5d2914d4",
+      "range": {
+        "startLine": 176,
+        "startChar": 11,
+        "endLine": 176,
+        "endChar": 19
+      },
+      "revId": "5e67ccf63eaf99a83179fc442993ab3e0ba213f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "15566051_f11faef1",
         "filename": "media/blink/resource_fetch_context.h",
         "patchSetId": 9
@@ -42,6 +66,47 @@
         "endLine": 22,
         "endChar": 13
       },
+      "revId": "5e67ccf63eaf99a83179fc442993ab3e0ba213f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d4ce539_e65d3f88",
+        "filename": "media/blink/resource_fetch_context.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1216499
+      },
+      "writtenOn": "2017-07-31T23:12:51Z",
+      "side": 1,
+      "message": "I plan to add other functions like GetSecurityOrigin, etc. to remove dependency on WebFrame.",
+      "parentUuid": "15566051_f11faef1",
+      "range": {
+        "startLine": 22,
+        "startChar": 10,
+        "endLine": 22,
+        "endChar": 13
+      },
+      "revId": "5e67ccf63eaf99a83179fc442993ab3e0ba213f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ea42fac_9466eaa2",
+        "filename": "media/blink/resource_multibuffer_data_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1216499
+      },
+      "writtenOn": "2017-07-31T23:12:51Z",
+      "side": 1,
+      "message": "While you are here, is this DCHECK correct?",
       "revId": "5e67ccf63eaf99a83179fc442993ab3e0ba213f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -71,6 +136,30 @@
     },
     {
       "key": {
+        "uuid": "2f96a74e_31bd2728",
+        "filename": "media/blink/resource_multibuffer_data_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1216499
+      },
+      "writtenOn": "2017-07-31T23:12:51Z",
+      "side": 1,
+      "message": "Not necessary for this patch. I can move it to another patch if you want but I think it is preferable to early return for the case above and not bother doing any extra work.",
+      "parentUuid": "0b19edde_4e61f73f",
+      "range": {
+        "startLine": 82,
+        "startChar": 42,
+        "endLine": 82,
+        "endChar": 0
+      },
+      "revId": "5e67ccf63eaf99a83179fc442993ab3e0ba213f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f5bcd75f_9910f204",
         "filename": "media/blink/url_index.cc",
         "patchSetId": 9
@@ -82,6 +171,30 @@
       "writtenOn": "2017-07-31T22:02:39Z",
       "side": 1,
       "message": "please don\u0027t use auto unless it unless the gain is obvious.\n\nHow about:\nunique_ptr\u003cResourceMultiBufferDataProvider\u003e ret(new Resource.....) instead?",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 6
+      },
+      "revId": "5e67ccf63eaf99a83179fc442993ab3e0ba213f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "242fd9d4_43dcdd88",
+        "filename": "media/blink/url_index.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1216499
+      },
+      "writtenOn": "2017-07-31T23:12:51Z",
+      "side": 1,
+      "message": "It is my understanding from documentation that auto/MakeUnique is preferred:\nhttps://chromium.googlesource.com/chromium/src.git/+/lkcr/base/memory/ptr_util.h#43\n\nIt specifically discourages using bare calls to new and the example usage uses auto.",
+      "parentUuid": "f5bcd75f_9910f204",
       "range": {
         "startLine": 31,
         "startChar": 2,
