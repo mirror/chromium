@@ -16,6 +16,24 @@
       "revId": "b2f411beba4d16f05297ffee7a268dfc4da98d2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa31636c_d3eb08a7",
+        "filename": "ui/app_list/views/indicator_chip_view.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-07-31T05:38:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c6573ec_58921340",
+      "revId": "b2f411beba4d16f05297ffee7a268dfc4da98d2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
