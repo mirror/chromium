@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa0e31ec_1a519b5f",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-07-31T23:07:07Z",
+      "side": 1,
+      "message": "op-\u003eGetType()",
+      "revId": "fd4cb9cac8ef21b67b252cb25068ab3110932e37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18ddf7e5_8ecb4928",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-07-31T23:07:07Z",
+      "side": 1,
+      "message": "I think mode is important here.  If it\u0027s kSrcOver, then instead of using alpha, I think you need to use SkMulDiv255Round(alpha, SkColorGetA(color)) instead of just alpha? You could ignore other modes (like SupportsFoldingAlpha does) or support them differently.",
+      "revId": "fd4cb9cac8ef21b67b252cb25068ab3110932e37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
