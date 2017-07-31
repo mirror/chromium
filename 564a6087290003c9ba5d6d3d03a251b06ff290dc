@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "54d5e22b_ecd4c629",
+        "filename": "base/containers/circular_deque.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-31T21:17:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e9de4c17_faff0b12",
+      "revId": "564a6087290003c9ba5d6d3d03a251b06ff290dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80bd73d8_4fec23e7",
         "filename": "base/containers/circular_deque.h",
         "patchSetId": 12
@@ -177,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "6e01baab_32f9b3a7",
+        "filename": "base/containers/circular_deque.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-31T21:17:56Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "646fe9f2_65c25049",
+      "revId": "564a6087290003c9ba5d6d3d03a251b06ff290dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "de3d6a90_3f6ad15c",
         "filename": "base/containers/circular_deque.h",
         "patchSetId": 12
@@ -241,6 +277,24 @@
       "side": 1,
       "message": "Crazypants!",
       "parentUuid": "efd496cd_db83292c",
+      "revId": "564a6087290003c9ba5d6d3d03a251b06ff290dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a6635cd_c29c5487",
+        "filename": "base/containers/circular_deque.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-31T21:17:56Z",
+      "side": 1,
+      "message": "Inorite?!",
+      "parentUuid": "54f3950c_5c69dabd",
       "revId": "564a6087290003c9ba5d6d3d03a251b06ff290dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -509,6 +563,24 @@
     },
     {
       "key": {
+        "uuid": "d4552732_189d3c98",
+        "filename": "base/containers/circular_deque.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-31T21:17:56Z",
+      "side": 1,
+      "message": "Oh interesting, that makes sense. Thanks for the explanation!",
+      "parentUuid": "5963436d_528dacbe",
+      "revId": "564a6087290003c9ba5d6d3d03a251b06ff290dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2c27b1ac_ef442725",
         "filename": "base/containers/circular_deque.h",
         "patchSetId": 12
@@ -561,6 +633,24 @@
     },
     {
       "key": {
+        "uuid": "30184ae8_2d576552",
+        "filename": "base/containers/vector_buffer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-31T21:17:56Z",
+      "side": 1,
+      "message": "\u003e We\u0027ve implemented something similar in the compositor, and we ran into alignment issues (ie, I think this allocation need to be aligned so that T can be constructed in it?\n\u003e \n\u003e I think there\u0027s a base aligned memory thing that helps with that.\n\nping",
+      "parentUuid": "5d8d1aee_8f026891",
+      "revId": "564a6087290003c9ba5d6d3d03a251b06ff290dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d4b9267_b48123e4",
         "filename": "base/containers/vector_buffer.h",
         "patchSetId": 12
@@ -572,6 +662,24 @@
       "writtenOn": "2017-07-24T17:16:50Z",
       "side": 1,
       "message": "Should this call dtors where appropriate? Or should circular_queue dtor call DestructRange?",
+      "revId": "564a6087290003c9ba5d6d3d03a251b06ff290dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcf7d482_db55fe6e",
+        "filename": "base/containers/vector_buffer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-31T21:17:56Z",
+      "side": 1,
+      "message": "\u003e Should this call dtors where appropriate? Or should circular_queue dtor call DestructRange?\n\nping",
+      "parentUuid": "8d4b9267_b48123e4",
       "revId": "564a6087290003c9ba5d6d3d03a251b06ff290dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62c50484_c1d998b9",
+        "filename": "base/containers/circular_deque.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-31T21:17:56Z",
+      "side": 1,
+      "message": "FWIW, std::vector::push_back is also amortized constant time. std::deque::push_back is worst-case constant. So I _think_ that this container would also have amortized constant time ends insertions? Or am I missing something?",
+      "range": {
+        "startLine": 30,
+        "startChar": 17,
+        "endLine": 30,
+        "endChar": 40
+      },
+      "revId": "b440c0f0ef18866babd169b9b05d4795e31c6518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a231c58_61b6be11",
+        "filename": "base/containers/circular_deque.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-31T21:17:56Z",
+      "side": 1,
+      "message": "nit: You don\u0027t specify the template parameters anywhere else in these iterator classes. I don\u0027t mind either way (weakly, I prefer not specifying it so that we know that we\u0027re referring to exactly the same template parameters), but we should be consistent in the usage.",
+      "range": {
+        "startLine": 337,
+        "startChar": 27,
+        "endLine": 337,
+        "endChar": 30
+      },
+      "revId": "b440c0f0ef18866babd169b9b05d4795e31c6518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "258d798a_e727e451",
+        "filename": "base/containers/circular_deque.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-31T21:17:56Z",
+      "side": 1,
+      "message": "nit: \u003d default;",
+      "range": {
+        "startLine": 376,
+        "startChar": 19,
+        "endLine": 376,
+        "endChar": 21
+      },
+      "revId": "b440c0f0ef18866babd169b9b05d4795e31c6518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ade34b35_a4de1633",
+        "filename": "base/containers/circular_deque.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-31T21:17:56Z",
+      "side": 1,
+      "message": "minor nit: personally, I prefer not putting this, but it\u0027s up to you",
+      "range": {
+        "startLine": 400,
+        "startChar": 57,
+        "endLine": 400,
+        "endChar": 68
+      },
+      "revId": "b440c0f0ef18866babd169b9b05d4795e31c6518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7a330b7_44132505",
+        "filename": "base/containers/circular_deque.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-07-31T21:17:56Z",
+      "side": 1,
+      "message": "nit: intializer_list has ::size(), I thought",
+      "range": {
+        "startLine": 429,
+        "startChar": 12,
+        "endLine": 429,
+        "endChar": 53
+      },
+      "revId": "b440c0f0ef18866babd169b9b05d4795e31c6518",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
