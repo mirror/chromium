@@ -98,14 +98,15 @@ class RestartAfterDelayApiTest : public ApiUnitTest {
   ~RestartAfterDelayApiTest() override {}
 
   void SetUp() override {
-    ApiUnitTest::SetUp();
-
     // Use our ExtensionsBrowserClient that returns our RuntimeAPIDelegate.
-    test_browser_client_.reset(
+    std::unique_ptr<DelayedRestartExtensionsBrowserClient> test_browser_client(
         new DelayedRestartExtensionsBrowserClient(browser_context()));
-    test_browser_client_->set_extension_system_factory(
-        extensions_browser_client()->extension_system_factory());
-    ExtensionsBrowserClient::Set(test_browser_client_.get());
+
+    // ExtensionsTest takes ownership of the ExtensionsBrowserClient.
+    test_browser_client_ = test_browser_client.get();
+    SetExtensionsBrowserClient(std::move(test_browser_client));
+
+    ApiUnitTest::SetUp();
 
     // The RuntimeAPI should only be accessed (i.e. constructed) after the above
     // ExtensionsBrowserClient has been setup.
@@ -117,6 +118,12 @@ class RestartAfterDelayApiTest : public ApiUnitTest {
 
     RuntimeAPI::RegisterPrefs(
         test_browser_client_->testing_pref_service()->registry());
+  }
+
+  void TearDown() override {
+    // ExtensionsTest will delete the ExtensionsBrowserClient in TearDoWn().
+    test_browser_client_ = nullptr;
+    ApiUnitTest::TearDown();
   }
 
   base::TimeTicks WaitForSuccessfulRestart() {
@@ -166,7 +173,8 @@ class RestartAfterDelayApiTest : public ApiUnitTest {
     return function->GetError();
   }
 
-  std::unique_ptr<DelayedRestartExtensionsBrowserClient> test_browser_client_;
+  // Not owned.
+  DelayedRestartExtensionsBrowserClient* test_browser_client_ = nullptr;
 
   DISALLOW_COPY_AND_ASSIGN(RestartAfterDelayApiTest);
 };
