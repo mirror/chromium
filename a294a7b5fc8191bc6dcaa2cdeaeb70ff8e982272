@@ -16,6 +16,24 @@
       "revId": "a294a7b5fc8191bc6dcaa2cdeaeb70ff8e982272",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55ea1f52_39f8949d",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/security/dangling-markup/link-prefetch.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115449
+      },
+      "writtenOn": "2017-07-31T01:38:53Z",
+      "side": 1,
+      "message": "I\u0027m not sure I understand why it was ever called in patchset 2... (and have no up-to-date build to test on) Also, are you sure it was called for all relevant rel types? (e.g. dns-prefetch)\n\nIf we want to trigger onerror in dangling markup blocks, we can do that inside ShouldLoadLink by calling LinkLoadingErrored() for that case (and that case only). Is that behavior specced somewhere?",
+      "parentUuid": "e1efa6d5_8f92ad5d",
+      "revId": "a294a7b5fc8191bc6dcaa2cdeaeb70ff8e982272",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
