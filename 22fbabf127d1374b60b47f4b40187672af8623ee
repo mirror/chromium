@@ -1,0 +1,205 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9d9fdfe_793d43b9",
+        "filename": "ios/chrome/content_widget_extension/content_widget_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-31T15:58:12Z",
+      "side": 1,
+      "message": "If this is just setting a write-only property, the method should be -setCompactMode: or -setCompacted: (or even -setCompact:).\n\nYou could also just make this a @property (with the usual \"is\" getter for a BOOL).",
+      "range": {
+        "startLine": 23,
+        "startChar": 8,
+        "endLine": 23,
+        "endChar": 16
+      },
+      "revId": "22fbabf127d1374b60b47f4b40187672af8623ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72f054ce_21839842",
+        "filename": "ios/chrome/content_widget_extension/content_widget_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-31T15:58:12Z",
+      "side": 1,
+      "message": "Should this be a readonly property?",
+      "range": {
+        "startLine": 26,
+        "startChar": 11,
+        "endLine": 26,
+        "endChar": 23
+      },
+      "revId": "22fbabf127d1374b60b47f4b40187672af8623ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdc5e68e_5072b36c",
+        "filename": "ios/chrome/content_widget_extension/content_widget_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-31T15:58:12Z",
+      "side": 1,
+      "message": "Either no line between these lines, or add newlines at the beginning and end of the namespace block.",
+      "revId": "22fbabf127d1374b60b47f4b40187672af8623ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4407b3c2_1f4a4c29",
+        "filename": "ios/chrome/content_widget_extension/content_widget_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-31T15:58:12Z",
+      "side": 1,
+      "message": "Add a comment explaining why this is empty.",
+      "range": {
+        "startLine": 116,
+        "startChar": 8,
+        "endLine": 116,
+        "endChar": 19
+      },
+      "revId": "22fbabf127d1374b60b47f4b40187672af8623ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e32856f2_df9889cc",
+        "filename": "ios/chrome/content_widget_extension/content_widget_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-31T15:58:12Z",
+      "side": 1,
+      "message": "Add a comment explaining the height calculation.",
+      "range": {
+        "startLine": 141,
+        "startChar": 13,
+        "endLine": 141,
+        "endChar": 14
+      },
+      "revId": "22fbabf127d1374b60b47f4b40187672af8623ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bc991e6_9a841c34",
+        "filename": "ios/chrome/content_widget_extension/content_widget_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-31T15:58:12Z",
+      "side": 1,
+      "message": "Extract this into a constant.",
+      "range": {
+        "startLine": 55,
+        "startChar": 12,
+        "endLine": 55,
+        "endChar": 15
+      },
+      "revId": "22fbabf127d1374b60b47f4b40187672af8623ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fb8f79a_2c4c9ae7",
+        "filename": "ios/chrome/content_widget_extension/content_widget_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-31T15:58:12Z",
+      "side": 1,
+      "message": "You have this logic repeated at least twice -- is it worth extracting into a property?",
+      "range": {
+        "startLine": 61,
+        "startChar": 35,
+        "endLine": 61,
+        "endChar": 51
+      },
+      "revId": "22fbabf127d1374b60b47f4b40187672af8623ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0824eb8_8c59a6b0",
+        "filename": "ios/chrome/content_widget_extension/most_visited_tile_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-31T15:58:12Z",
+      "side": 1,
+      "message": "Delete commented-out code, maybe replace with a TODO?",
+      "range": {
+        "startLine": 59,
+        "startChar": 24,
+        "endLine": 59,
+        "endChar": 40
+      },
+      "revId": "22fbabf127d1374b60b47f4b40187672af8623ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f9c009a_a7781bf9",
+        "filename": "ios/chrome/content_widget_extension/most_visited_tile_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-07-31T15:58:12Z",
+      "side": 1,
+      "message": "This should be an IDS string, right?",
+      "range": {
+        "startLine": 63,
+        "startChar": 40,
+        "endLine": 63,
+        "endChar": 45
+      },
+      "revId": "22fbabf127d1374b60b47f4b40187672af8623ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
