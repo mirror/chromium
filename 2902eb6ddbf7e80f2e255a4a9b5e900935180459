@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "06addaa4_a6b9d161",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-07-31T23:06:19Z",
+      "side": 1,
+      "message": "maybe mention that end to end plumbing to raise events when items are added and removed from an indivudual cache is in place but not yet in use, that will come in a later CL.",
+      "revId": "2902eb6ddbf7e80f2e255a4a9b5e900935180459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aebdd787_315a32e7",
+        "filename": "content/browser/cache_storage/cache_storage.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-07-31T23:06:19Z",
+      "side": 1,
+      "message": "a more typical name for this would be something like reset_manager() and to have the one line impl inlined",
+      "revId": "2902eb6ddbf7e80f2e255a4a9b5e900935180459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f7fed165_a8e18d4a",
         "filename": "content/browser/cache_storage/cache_storage_context_impl.cc",
         "patchSetId": 6

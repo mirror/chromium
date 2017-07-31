@@ -1117,6 +1117,23 @@
       "revId": "c29609461a149e6e0a7eefd716419a66d34f23ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b33d3202_12fe49e4",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 5
+      },
+      "lineNbr": 4738,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-07-31T23:06:19Z",
+      "side": 1,
+      "message": "drive-by comment on this inspector part of things: I\u0027m not sure about adding these to the \u0027storage\u0027 vs the \u0027cacheStorage\u0027 domain, seems like these new methods and events belong more in \u0027cacheStorage\u0027. Is there a reason to put them in \u0027storage\u0027?",
+      "revId": "c29609461a149e6e0a7eefd716419a66d34f23ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
