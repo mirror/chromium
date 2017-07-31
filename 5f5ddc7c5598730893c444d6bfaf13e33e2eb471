@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba916f5e_4eee54f7",
+        "filename": "content/browser/appcache/appcache_update_request_base.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-07-31T18:18:52Z",
+      "side": 1,
+      "message": "nit: this interface isn\u0027t copyable because of the pure virtual methods, so this isn\u0027t needed",
+      "revId": "5f5ddc7c5598730893c444d6bfaf13e33e2eb471",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
