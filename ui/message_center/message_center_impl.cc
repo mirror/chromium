@@ -16,6 +16,7 @@
 #include "base/observer_list.h"
 #include "base/stl_util.h"
 #include "build/build_config.h"
+#include "ui/message_center/message_center_delegate.h"
 #include "ui/message_center/message_center_style.h"
 #include "ui/message_center/message_center_switches.h"
 #include "ui/message_center/message_center_types.h"
@@ -941,6 +942,15 @@ void MessageCenterImpl::PausePopupTimers() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   if (popup_timers_controller_)
     popup_timers_controller_->PauseAll();
+}
+
+base::string16 MessageCenterImpl::GetProductOSName() {
+  return delegate_ ? delegate_->GetProductOSName() : base::string16();
+}
+
+void MessageCenterImpl::SetDelegate(
+    std::unique_ptr<MessageCenterDelegate> delegate) {
+  delegate_ = std::move(delegate);
 }
 
 void MessageCenterImpl::DisableTimersForTest() {
