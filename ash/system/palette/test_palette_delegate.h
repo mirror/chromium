@@ -48,12 +48,18 @@ class TestPaletteDelegate : public PaletteDelegate {
 
   int hide_metalayer_count() const { return hide_metalayer_count_; }
 
+  bool has_seen_stylus_pref() const { return has_seen_stylus_pref_; }
+
+  void set_has_seen_stylus_pref(bool has_seen_stylus);
+
   base::Closure metalayer_closed() const { return metalayer_closed_; }
 
  private:
   // PaletteDelegate:
   std::unique_ptr<EnableListenerSubscription> AddPaletteEnableListener(
       const EnableListener& on_state_changed) override;
+  std::unique_ptr<SeenStylusListenerSubscription> AddSeenStylusListener(
+      const SeenStylusListener& on_state_changed) override;
   void CreateNote() override;
   bool HasNoteApp() override;
   bool ShouldAutoOpenPalette() override;
@@ -64,6 +70,7 @@ class TestPaletteDelegate : public PaletteDelegate {
   bool IsMetalayerSupported() override;
   void ShowMetalayer(const base::Closure& closed) override;
   void HideMetalayer() override;
+  void SetHasSeenStylusEvent() override;
 
   int create_note_count_ = 0;
   int has_note_app_count_ = 0;
@@ -77,6 +84,9 @@ class TestPaletteDelegate : public PaletteDelegate {
   int show_metalayer_count_ = 0;
   int hide_metalayer_count_ = 0;
   base::Closure metalayer_closed_;
+  bool has_seen_stylus_pref_ = false;
+
+  base::CallbackList<void(bool)> seen_stylus_callback_list_;
 
   DISALLOW_COPY_AND_ASSIGN(TestPaletteDelegate);
 };

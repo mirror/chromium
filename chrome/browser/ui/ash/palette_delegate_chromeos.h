@@ -38,6 +38,8 @@ class PaletteDelegateChromeOS
   // ash::PaletteDelegate:
   std::unique_ptr<EnableListenerSubscription> AddPaletteEnableListener(
       const EnableListener& on_state_changed) override;
+  std::unique_ptr<SeenStylusListenerSubscription> AddSeenStylusListener(
+      const SeenStylusListener& on_state_changed) override;
   void CreateNote() override;
   bool HasNoteApp() override;
   bool ShouldAutoOpenPalette() override;
@@ -48,6 +50,7 @@ class PaletteDelegateChromeOS
   bool IsMetalayerSupported() override;
   void ShowMetalayer(const base::Closure& closed) override;
   void HideMetalayer() override;
+  void SetHasSeenStylusEvent() override;
 
   // user_manager::UserManager::UserSessionStateObserver:
   void ActiveUserChanged(const user_manager::User* active_user) override;
@@ -59,11 +62,14 @@ class PaletteDelegateChromeOS
 
   // Called when the palette enabled pref has changed.
   void OnPaletteEnabledPrefChanged();
+  // Called when the has seen stylus before pref has changed.
+  void OnSeenStylusPrefChanged();
 
   void SetProfile(Profile* profile);
   void OnPartialScreenshotDone(const base::Closure& then);
 
   base::CallbackList<void(bool)> palette_enabled_callback_list_;
+  base::CallbackList<void(bool)> seen_stylus_callback_list_;
 
   // Unowned pointer to the active profile.
   Profile* profile_ = nullptr;
