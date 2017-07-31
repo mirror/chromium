@@ -19,6 +19,41 @@
     },
     {
       "key": {
+        "uuid": "9f368245_733804ed",
+        "filename": "content/browser/payments/payment_app_provider_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2017-07-31T18:32:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57979b4f_14feb34f",
+      "revId": "3f46b6bc69cd591b7a23b8bd930ffd74d706d346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0da0ce11_89f083fc",
+        "filename": "content/browser/payments/payment_app_provider_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2017-07-31T18:32:25Z",
+      "side": 1,
+      "message": "FYI, I used AdaptCallbackForRepeating here as per nhiroki@\u0027s comment.\nhttps://chromium-review.googlesource.com/c/574992/3/content%252Fbrowser%252Fpayments%252Fpayment_app_provider_impl.cc#190",
+      "revId": "3f46b6bc69cd591b7a23b8bd930ffd74d706d346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a7b2f0ff_7eaa7b63",
         "filename": "content/browser/payments/payment_app_provider_impl.cc",
         "patchSetId": 1
@@ -33,6 +68,24 @@
       "revId": "3f46b6bc69cd591b7a23b8bd930ffd74d706d346",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16462c7d_d83fd158",
+        "filename": "content/browser/payments/payment_app_provider_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1114659
+      },
+      "writtenOn": "2017-07-31T18:32:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7b2f0ff_7eaa7b63",
+      "revId": "3f46b6bc69cd591b7a23b8bd930ffd74d706d346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
