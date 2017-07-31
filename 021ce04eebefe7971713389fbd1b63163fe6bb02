@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a69ab48_ba5ea3d1",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/wheel/mouse-wheel-scroll-latching.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-31T15:23:31Z",
+      "side": 1,
+      "message": "Can we make this tighter than 20? If an animation is in progress, presumably it should update on each RAF - we might need a bit of wiggle room for the animation to initially start but IIRC that was 3 frames or so.",
+      "range": {
+        "startLine": 70,
+        "startChar": 67,
+        "endLine": 70,
+        "endChar": 69
+      },
+      "revId": "021ce04eebefe7971713389fbd1b63163fe6bb02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a5a1f8a_51d59b48",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/wheel/mouse-wheel-scroll-latching.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-31T15:23:31Z",
+      "side": 1,
+      "message": "I don\u0027t think we need this condition, an animation should never be that long running.",
+      "range": {
+        "startLine": 70,
+        "startChar": 10,
+        "endLine": 70,
+        "endChar": 30
+      },
+      "revId": "021ce04eebefe7971713389fbd1b63163fe6bb02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
