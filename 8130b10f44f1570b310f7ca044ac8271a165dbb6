@@ -1,0 +1,285 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2672b93_5afb971b",
+        "filename": "components/autofill/core/browser/autofill_address_validator.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-07-31T13:48:20Z",
+      "side": 1,
+      "message": "Anonymous namespace?",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 23
+      },
+      "revId": "8130b10f44f1570b310f7ca044ac8271a165dbb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ad3b8da_6f3f2eda",
+        "filename": "components/autofill/core/browser/autofill_address_validator.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-07-31T13:48:20Z",
+      "side": 1,
+      "message": "I don\u0027t think this needs to be an object, it this a utils class would fit better since it does not need to keep any internal state.\n\nhttps://cs.chromium.org/chromium/src/components/autofill/core/browser/autofill_data_util.h is a good example.",
+      "range": {
+        "startLine": 21,
+        "startChar": 26,
+        "endLine": 21,
+        "endChar": 50
+      },
+      "revId": "8130b10f44f1570b310f7ca044ac8271a165dbb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef6e10bf_038ff1b8",
+        "filename": "components/autofill/core/browser/autofill_address_validator.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-07-31T13:48:20Z",
+      "side": 1,
+      "message": "Also DCHECK that the rules are loaded for the region of the address?",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 29,
+        "endChar": 8
+      },
+      "revId": "8130b10f44f1570b310f7ca044ac8271a165dbb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e700433_04ea0aec",
+        "filename": "components/autofill/core/browser/autofill_address_validator.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-07-31T13:48:20Z",
+      "side": 1,
+      "message": "Most of these can be put in the .cc file instead.",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 42
+      },
+      "revId": "8130b10f44f1570b310f7ca044ac8271a165dbb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58143001_9a09d6a8",
+        "filename": "components/autofill/core/browser/autofill_address_validator.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-07-31T13:48:20Z",
+      "side": 1,
+      "message": "Can you add a class comment describing what it does? :)",
+      "revId": "8130b10f44f1570b310f7ca044ac8271a165dbb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "323ae2b6_b87ead9a",
+        "filename": "components/autofill/core/browser/autofill_address_validator.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-07-31T13:48:20Z",
+      "side": 1,
+      "message": "These can probably be put in the anonymous namespace in the cc file.",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 57,
+        "endChar": 38
+      },
+      "revId": "8130b10f44f1570b310f7ca044ac8271a165dbb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b94dfc71_1dadbcd8",
+        "filename": "components/autofill/core/browser/autofill_address_validator.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-07-31T13:48:20Z",
+      "side": 1,
+      "message": "nit: newline between each?",
+      "revId": "8130b10f44f1570b310f7ca044ac8271a165dbb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc8a9a16_080cc4c9",
+        "filename": "components/autofill/core/browser/autofill_address_validator_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-07-31T13:48:20Z",
+      "side": 1,
+      "message": "Nit: I think we only need to know that the profile is valid :)",
+      "range": {
+        "startLine": 111,
+        "startChar": 2,
+        "endLine": 115,
+        "endChar": 25
+      },
+      "revId": "8130b10f44f1570b310f7ca044ac8271a165dbb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a17798f_65f65abe",
+        "filename": "components/autofill/core/browser/autofill_address_validator_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-07-31T13:48:20Z",
+      "side": 1,
+      "message": "Can you add one for an invalid country?",
+      "range": {
+        "startLine": 125,
+        "startChar": 37,
+        "endLine": 125,
+        "endChar": 71
+      },
+      "revId": "8130b10f44f1570b310f7ca044ac8271a165dbb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3929d51a_33a358fd",
+        "filename": "components/autofill/core/browser/autofill_address_validator_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-07-31T13:48:20Z",
+      "side": 1,
+      "message": "can you do a test with Québec and one with QC, and or qc?",
+      "range": {
+        "startLine": 153,
+        "startChar": 34,
+        "endLine": 153,
+        "endChar": 40
+      },
+      "revId": "8130b10f44f1570b310f7ca044ac8271a165dbb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ce2fb09_af326331",
+        "filename": "components/autofill/core/browser/autofill_profile_validator.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-07-31T13:48:20Z",
+      "side": 1,
+      "message": "Let\u0027s make this a constant for easier modification.",
+      "range": {
+        "startLine": 38,
+        "startChar": 72,
+        "endLine": 38,
+        "endChar": 73
+      },
+      "revId": "8130b10f44f1570b310f7ca044ac8271a165dbb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e59419aa_3eedb835",
+        "filename": "components/autofill/core/browser/autofill_profile_validator.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-07-31T13:48:20Z",
+      "side": 1,
+      "message": "incomplete comment? :P",
+      "range": {
+        "startLine": 108,
+        "startChar": 30,
+        "endLine": 108,
+        "endChar": 38
+      },
+      "revId": "8130b10f44f1570b310f7ca044ac8271a165dbb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30cc44da_c3a72397",
+        "filename": "components/autofill/core/browser/autofill_profile_validator_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-07-31T13:48:20Z",
+      "side": 1,
+      "message": "Nice tests! However I don\u0027t think you need them all since the validation itself is tested in your other class. This one should test that\n\nyou get a profile with validation data set if the rules are loaded.\nif the rules are not loaded, it loads them then validate.\nif it can\u0027t load the rules it returns an unvalidated profile.\n\nWDYT?",
+      "revId": "8130b10f44f1570b310f7ca044ac8271a165dbb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
