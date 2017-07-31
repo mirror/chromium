@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dccf70de_b60e0b93",
+        "filename": "third_party/WebKit/Source/platform/wtf/text/StringToNumberTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-31T07:13:02Z",
+      "side": 1,
+      "message": "Will add test cases.",
+      "parentUuid": "b497631d_3657e879",
+      "revId": "89a6292ba6c29f907305d4900f37a592ee130786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e546f6b6_2733894d",
         "filename": "third_party/WebKit/Source/platform/wtf/text/StringToNumberTest.cpp",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-31T06:59:25Z",
       "side": 1,
       "message": "Why \"1.5   \" fails on L273 and \" 123 \" succeeds here?\nThe length is 4, but the returned value (parsed double value) is ...??",
+      "revId": "89a6292ba6c29f907305d4900f37a592ee130786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6693c471_425d3ac5",
+        "filename": "third_party/WebKit/Source/platform/wtf/text/StringToNumberTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-31T07:13:02Z",
+      "side": 1,
+      "message": "Because CharactersToDouble with |parsed_length| never fails for tailing garbage. This function was designed for parsing a floating point number with a suffix, and a callsite can know where the number is finished.",
+      "parentUuid": "e546f6b6_2733894d",
       "revId": "89a6292ba6c29f907305d4900f37a592ee130786",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
