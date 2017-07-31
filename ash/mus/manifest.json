@@ -9,6 +9,7 @@
         "ash": [
           "app_list::mojom::AppList",
           "ash::mojom::AcceleratorController",
+          "ash::mojom::BluetoothAdapterController",
           "ash::mojom::CastConfig",
           "ash::mojom::ImeController",
           "ash::mojom::LocaleNotificationController",

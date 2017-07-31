@@ -13,11 +13,13 @@
 #include "ash/login/lock_screen_controller.h"
 #include "ash/media_controller.h"
 #include "ash/new_window_controller.h"
+#include "ash/public/interfaces/bluetooth_adapter.mojom.h"
 #include "ash/session/session_controller.h"
 #include "ash/shelf/shelf_controller.h"
 #include "ash/shell.h"
 #include "ash/shell_delegate.h"
 #include "ash/shutdown_controller.h"
+#include "ash/system/bluetooth/tray_bluetooth_helper.h"
 #include "ash/system/locale/locale_notification_controller.h"
 #include "ash/system/network/vpn_list.h"
 #include "ash/system/night_light/night_light_controller.h"
@@ -74,6 +76,11 @@ void BindMediaControllerRequestOnMainThread(
 void BindNewWindowControllerRequestOnMainThread(
     mojom::NewWindowControllerRequest request) {
   Shell::Get()->new_window_controller()->BindRequest(std::move(request));
+}
+
+void BindBluetoothAdapterControllerRequestOnMainThread(
+    mojom::BluetoothAdapterControllerRequest request) {
+  Shell::Get()->tray_bluetooth_helper()->BindRequest(std::move(request));
 }
 
 void BindNightLightControllerRequestOnMainThread(
@@ -150,6 +157,9 @@ void RegisterInterfaces(
         base::Bind(&BindNightLightControllerRequestOnMainThread),
         main_thread_task_runner);
   }
+  registry->AddInterface(
+      base::Bind(&BindBluetoothAdapterControllerRequestOnMainThread),
+      main_thread_task_runner);
   registry->AddInterface(base::Bind(&BindSessionControllerRequestOnMainThread),
                          main_thread_task_runner);
   registry->AddInterface(base::Bind(&BindShelfRequestOnMainThread),

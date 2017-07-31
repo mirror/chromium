@@ -42,6 +42,7 @@
 #include "chrome/browser/chromeos/app_mode/kiosk_mode_idle_app_name_notification.h"
 #include "chrome/browser/chromeos/arc/arc_service_launcher.h"
 #include "chrome/browser/chromeos/ash_config.h"
+#include "chrome/browser/chromeos/bluetooth/bluetooth_adapter_client.h"
 #include "chrome/browser/chromeos/boot_times_recorder.h"
 #include "chrome/browser/chromeos/dbus/chrome_console_service_provider_delegate.h"
 #include "chrome/browser/chromeos/dbus/chrome_display_power_service_provider_delegate.h"
@@ -1009,6 +1010,8 @@ void ChromeBrowserMainPartsChromeos::PostBrowserStart() {
         g_browser_process->system_request_context());
     night_light_client_->Start();
   }
+
+  bluetooth_adapter_client_ = base::MakeUnique<BluetoothAdapterClient>();
 
   ChromeBrowserMainPartsLinux::PostBrowserStart();
 }

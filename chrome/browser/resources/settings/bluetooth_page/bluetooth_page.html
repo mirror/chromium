@@ -41,11 +41,12 @@
             </button>
           </template>
           <div class="separator"></div>
-          <paper-toggle-button id="enableBluetooth"
+          <settings-toggle-button id="enableBluetooth"
+              pref="{{prefs.settings.bluetooth.adapter_enabled}}"
               checked="{{bluetoothToggleState_}}"
               disabled$="[[bluetoothToggleDisabled_]]" on-tap="stopTap_"
               aria-label="$i18n{bluetoothToggleA11yLabel}">
-          </paper-toggle-button>
+          </settings-toggle-button>
         </div>
       </neon-animatable>
 

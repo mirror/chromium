@@ -9,10 +9,12 @@
 #include <vector>
 
 #include "ash/ash_export.h"
+#include "ash/public/interfaces/bluetooth_adapter.mojom.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
 #include "device/bluetooth/bluetooth_adapter.h"
+#include "mojo/public/cpp/bindings/binding.h"
 
 namespace device {
 class BluetoothDiscoverySession;
@@ -43,7 +45,8 @@ using BluetoothDeviceList = std::vector<BluetoothDeviceInfo>;
 // device operations are asynchronous, hence the two step initialization.
 // Exported for test.
 class ASH_EXPORT TrayBluetoothHelper
-    : public device::BluetoothAdapter::Observer {
+    : public NON_EXPORTED_BASE(mojom::BluetoothAdapterController),
+      public device::BluetoothAdapter::Observer {
  public:
   TrayBluetoothHelper();
   ~TrayBluetoothHelper() override;
@@ -94,6 +97,10 @@ class ASH_EXPORT TrayBluetoothHelper
   void DeviceRemoved(device::BluetoothAdapter* adapter,
                      device::BluetoothDevice* device) override;
 
+  void BindRequest(mojom::BluetoothAdapterControllerRequest request);
+
+  void SetClient(mojom::BluetoothAdapterClientPtr client) override;
+
  private:
   void OnStartDiscoverySession(
       std::unique_ptr<device::BluetoothDiscoverySession> discovery_session);
@@ -101,6 +108,10 @@ class ASH_EXPORT TrayBluetoothHelper
   bool should_run_discovery_ = false;
   scoped_refptr<device::BluetoothAdapter> adapter_;
   std::unique_ptr<device::BluetoothDiscoverySession> discovery_session_;
+
+  mojo::Binding<mojom::BluetoothAdapterController> binding_;
+
+  mojom::BluetoothAdapterClientPtr bluetooth_adapter_client_;
 
   // Object could be deleted during a prolonged Bluetooth operation.
   base::WeakPtrFactory<TrayBluetoothHelper> weak_ptr_factory_;

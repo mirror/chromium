@@ -425,6 +425,8 @@ source_set("chromeos") {
     "base/file_flusher.h",
     "base/locale_util.cc",
     "base/locale_util.h",
+    "bluetooth/bluetooth_adapter_client.cc",
+    "bluetooth/bluetooth_adapter_client.h",
     "bluetooth/bluetooth_pairing_dialog.cc",
     "bluetooth/bluetooth_pairing_dialog.h",
     "boot_times_recorder.cc",
