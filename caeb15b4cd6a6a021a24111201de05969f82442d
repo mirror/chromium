@@ -45,6 +45,54 @@
       "revId": "caeb15b4cd6a6a021a24111201de05969f82442d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9875bb1_c9867b2d",
+        "filename": "ios/chrome/browser/translate/before_translate_infobar_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-07-31T22:10:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86824e07_3c11eab7",
+      "range": {
+        "startLine": 305,
+        "startChar": 43,
+        "endLine": 305,
+        "endChar": 47
+      },
+      "revId": "caeb15b4cd6a6a021a24111201de05969f82442d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6f6e9829_f35f1e74",
+        "filename": "ios/chrome/browser/translate/before_translate_infobar_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-07-31T22:10:39Z",
+      "side": 1,
+      "message": "Nice! Thanks for sharing the link",
+      "parentUuid": "a538a41b_af33b85c",
+      "range": {
+        "startLine": 305,
+        "startChar": 14,
+        "endLine": 305,
+        "endChar": 40
+      },
+      "revId": "caeb15b4cd6a6a021a24111201de05969f82442d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
