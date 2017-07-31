@@ -13,6 +13,7 @@
 #include "base/synchronization/waitable_event.h"
 #include "base/threading/platform_thread.h"
 #include "base/threading/sequenced_task_runner_handle.h"
+#include "base/threading/simple_thread.h"
 #include "build/build_config.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -50,7 +51,7 @@ class DecrementCountContainer {
 class WaitableEventWatcherTest
     : public testing::TestWithParam<MessageLoop::Type> {};
 
-TEST_P(WaitableEventWatcherTest, BasicSignal) {
+TEST_P(WaitableEventWatcherTest, BasicSignalManual) {
   MessageLoop message_loop(GetParam());
 
   // A manual-reset event that is not yet signaled.
@@ -63,6 +64,26 @@ TEST_P(WaitableEventWatcherTest, BasicSignal) {
   event.Signal();
 
   RunLoop().Run();
+
+  EXPECT_TRUE(event.IsSignaled());
+  EXPECT_TRUE(event.IsSignaled());
+}
+
+TEST_P(WaitableEventWatcherTest, BasicSignalAutomatic) {
+  MessageLoop message_loop(GetParam());
+
+  WaitableEvent event(WaitableEvent::ResetPolicy::AUTOMATIC,
+                      WaitableEvent::InitialState::NOT_SIGNALED);
+
+  WaitableEventWatcher watcher;
+  watcher.StartWatching(&event, BindOnce(&QuitWhenSignaled));
+
+  event.Signal();
+
+  RunLoop().Run();
+
+  // The WaitableEventWatcher consumes the event signal.
+  EXPECT_FALSE(event.IsSignaled());
 }
 
 TEST_P(WaitableEventWatcherTest, BasicCancel) {
@@ -123,7 +144,7 @@ TEST_P(WaitableEventWatcherTest, OutlivesMessageLoop) {
   }
 }
 
-TEST_P(WaitableEventWatcherTest, SignaledAtStart) {
+TEST_P(WaitableEventWatcherTest, SignaledAtStartManual) {
   MessageLoop message_loop(GetParam());
 
   WaitableEvent event(WaitableEvent::ResetPolicy::MANUAL,
@@ -133,6 +154,21 @@ TEST_P(WaitableEventWatcherTest, SignaledAtStart) {
   watcher.StartWatching(&event, BindOnce(&QuitWhenSignaled));
 
   RunLoop().Run();
+}
+
+TEST_P(WaitableEventWatcherTest, SignaledAtStartAutomatic) {
+  MessageLoop message_loop(GetParam());
+
+  WaitableEvent event(WaitableEvent::ResetPolicy::AUTOMATIC,
+                      WaitableEvent::InitialState::SIGNALED);
+
+  WaitableEventWatcher watcher;
+  watcher.StartWatching(&event, BindOnce(&QuitWhenSignaled));
+
+  RunLoop().Run();
+
+  // The watcher consumes the event signal for AUTOMATIC events.
+  EXPECT_FALSE(event.IsSignaled());
 }
 
 TEST_P(WaitableEventWatcherTest, StartWatchingInCallback) {
@@ -154,6 +190,46 @@ TEST_P(WaitableEventWatcherTest, StartWatchingInCallback) {
   event.Signal();
 
   RunLoop().Run();
+}
+
+// Tests that all async waiters on an automatic-reset event get called back,
+// and that the event remains signaled.
+TEST_P(WaitableEventWatcherTest, MultipleWatchersOnAutoEvent) {
+  MessageLoop message_loop(GetParam());
+
+  WaitableEvent event(WaitableEvent::ResetPolicy::AUTOMATIC,
+                      WaitableEvent::InitialState::NOT_SIGNALED);
+
+  int counter1 = 0;
+  int counter2 = 0;
+
+  auto callback = [](int* counter, WaitableEvent* event) {
+    ++(*counter);
+    RunLoop::QuitCurrentWhenIdleDeprecated();
+  };
+
+  WaitableEventWatcher watcher1;
+  watcher1.StartWatching(&event, BindOnce(callback, Unretained(&counter1)));
+
+  WaitableEventWatcher watcher2;
+  watcher2.StartWatching(&event, BindOnce(callback, Unretained(&counter2)));
+
+  event.Signal();
+  RunLoop().Run();
+
+  // Only one of the waiters should have been signaled.
+  EXPECT_TRUE((counter1 == 1) ^ (counter2 == 1));
+
+  EXPECT_FALSE(event.IsSignaled());
+
+  event.Signal();
+  RunLoop().Run();
+
+  EXPECT_FALSE(event.IsSignaled());
+
+  // The other watcher should have been signaled.
+  EXPECT_EQ(1, counter1);
+  EXPECT_EQ(1, counter2);
 }
 
 // To help detect errors around deleting WaitableEventWatcher, an additional
