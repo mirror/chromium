@@ -17,7 +17,6 @@
 #include "services/ui/ws/display_creation_config.h"
 #include "services/ui/ws/display_manager.h"
 #include "services/ui/ws/frame_sink_manager_client_binding.h"
-#include "services/ui/ws/gpu_host.h"
 #include "services/ui/ws/threaded_image_cursors.h"
 #include "services/ui/ws/threaded_image_cursors_factory.h"
 #include "services/ui/ws/window_manager_access_policy.h"
@@ -540,6 +539,62 @@ TestWindowServerDelegate::GetThreadedImageCursorsFactory() {
   return threaded_image_cursors_factory_.get();
 }
 
+// TestFrameSinkManagerImpl  ----------------------------------------
+
+TestFrameSinkManagerImpl::TestFrameSinkManagerImpl() = default;
+
+TestFrameSinkManagerImpl::~TestFrameSinkManagerImpl() = default;
+
+void TestFrameSinkManagerImpl::RegisterFrameSinkId(
+    const viz::FrameSinkId& frame_sink_id) {}
+
+void TestFrameSinkManagerImpl::InvalidateFrameSinkId(
+    const viz::FrameSinkId& frame_sink_id) {}
+
+void TestFrameSinkManagerImpl::CreateRootCompositorFrameSink(
+    const viz::FrameSinkId& frame_sink_id,
+    gpu::SurfaceHandle surface_handle,
+    const viz::RendererSettings& renderer_settings,
+    viz::mojom::CompositorFrameSinkAssociatedRequest request,
+    viz::mojom::CompositorFrameSinkClientPtr client,
+    viz::mojom::DisplayPrivateAssociatedRequest display_private_request) {}
+
+void TestFrameSinkManagerImpl::CreateCompositorFrameSink(
+    const viz::FrameSinkId& frame_sink_id,
+    viz::mojom::CompositorFrameSinkRequest request,
+    viz::mojom::CompositorFrameSinkClientPtr client) {}
+
+void TestFrameSinkManagerImpl::RegisterFrameSinkHierarchy(
+    const viz::FrameSinkId& parent_frame_sink_id,
+    const viz::FrameSinkId& child_frame_sink_id) {}
+
+void TestFrameSinkManagerImpl::UnregisterFrameSinkHierarchy(
+    const viz::FrameSinkId& parent_frame_sink_id,
+    const viz::FrameSinkId& child_frame_sink_id) {}
+
+void TestFrameSinkManagerImpl::AssignTemporaryReference(
+    const viz::SurfaceId& surface_id,
+    const viz::FrameSinkId& owner) {}
+
+void TestFrameSinkManagerImpl::DropTemporaryReference(
+    const viz::SurfaceId& surface_id) {}
+
+// TestGpuHost  --------------------------------------------------------------
+
+TestGpuHost::TestGpuHost() = default;
+
+TestGpuHost::~TestGpuHost() = default;
+
+void TestGpuHost::Add(mojom::GpuRequest request) {}
+
+void TestGpuHost::OnAcceleratedWidgetAvailable(gfx::AcceleratedWidget widget) {}
+
+void TestGpuHost::OnAcceleratedWidgetDestroyed(gfx::AcceleratedWidget widget) {}
+
+void TestGpuHost::CreateFrameSinkManager(
+    viz::mojom::FrameSinkManagerRequest request,
+    viz::mojom::FrameSinkManagerClientPtr client) {}
+
 // WindowServerTestHelper  ---------------------------------------------------
 
 WindowServerTestHelper::WindowServerTestHelper()
@@ -549,14 +604,10 @@ WindowServerTestHelper::WindowServerTestHelper()
     message_loop_ = base::MakeUnique<base::MessageLoop>();
   PlatformDisplay::set_factory_for_testing(&platform_display_factory_);
   window_server_ = base::MakeUnique<WindowServer>(&window_server_delegate_);
-  // TODO(staraz): Replace DefaultGpuHost and FrameSinkManagerClientBinding with
-  // test implementations.
-  std::unique_ptr<GpuHost> gpu_host =
-      base::MakeUnique<DefaultGpuHost>(window_server_.get());
+  std::unique_ptr<GpuHost> gpu_host = base::MakeUnique<TestGpuHost>();
   window_server_->SetGpuHost(std::move(gpu_host));
-  std::unique_ptr<FrameSinkManagerClientBinding> frame_sink_manager =
-      base::MakeUnique<FrameSinkManagerClientBinding>(
-          window_server_.get(), window_server_->gpu_host());
+  std::unique_ptr<TestFrameSinkManagerImpl> frame_sink_manager =
+      base::MakeUnique<TestFrameSinkManagerImpl>();
   window_server_->SetFrameSinkManager(std::move(frame_sink_manager));
   window_server_delegate_.set_window_server(window_server_.get());
 }

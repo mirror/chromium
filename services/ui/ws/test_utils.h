@@ -23,6 +23,7 @@
 #include "services/ui/ws/display_binding.h"
 #include "services/ui/ws/drag_controller.h"
 #include "services/ui/ws/event_dispatcher.h"
+#include "services/ui/ws/gpu_host.h"
 #include "services/ui/ws/platform_display.h"
 #include "services/ui/ws/platform_display_factory.h"
 #include "services/ui/ws/test_change_tracker.h"
@@ -578,6 +579,54 @@ class TestWindowTreeBinding : public WindowTreeBinding {
   std::unique_ptr<TestWindowManager> window_manager_;
 
   DISALLOW_COPY_AND_ASSIGN(TestWindowTreeBinding);
+};
+
+// -----------------------------------------------------------------------------
+class TestFrameSinkManagerImpl : public viz::mojom::FrameSinkManager {
+ public:
+  TestFrameSinkManagerImpl();
+  ~TestFrameSinkManagerImpl() override;
+
+ private:
+  // viz::mojom::FrameSinkManager:
+  void RegisterFrameSinkId(const viz::FrameSinkId& frame_sink_id) override;
+  void InvalidateFrameSinkId(const viz::FrameSinkId& frame_sink_id) override;
+  void CreateRootCompositorFrameSink(
+      const viz::FrameSinkId& frame_sink_id,
+      gpu::SurfaceHandle surface_handle,
+      const viz::RendererSettings& renderer_settings,
+      viz::mojom::CompositorFrameSinkAssociatedRequest request,
+      viz::mojom::CompositorFrameSinkClientPtr client,
+      viz::mojom::DisplayPrivateAssociatedRequest display_private_request)
+      override;
+  void CreateCompositorFrameSink(
+      const viz::FrameSinkId& frame_sink_id,
+      viz::mojom::CompositorFrameSinkRequest request,
+      viz::mojom::CompositorFrameSinkClientPtr client) override;
+  void RegisterFrameSinkHierarchy(
+      const viz::FrameSinkId& parent_frame_sink_id,
+      const viz::FrameSinkId& child_frame_sink_id) override;
+  void UnregisterFrameSinkHierarchy(
+      const viz::FrameSinkId& parent_frame_sink_id,
+      const viz::FrameSinkId& child_frame_sink_id) override;
+  void AssignTemporaryReference(const viz::SurfaceId& surface_id,
+                                const viz::FrameSinkId& owner) override;
+  void DropTemporaryReference(const viz::SurfaceId& surface_id) override;
+};
+
+// -----------------------------------------------------------------------------
+class TestGpuHost : public GpuHost {
+ public:
+  TestGpuHost();
+  ~TestGpuHost() override;
+
+ private:
+  void Add(mojom::GpuRequest request) override;
+  void OnAcceleratedWidgetAvailable(gfx::AcceleratedWidget widget) override;
+  void OnAcceleratedWidgetDestroyed(gfx::AcceleratedWidget widget) override;
+  void CreateFrameSinkManager(
+      viz::mojom::FrameSinkManagerRequest request,
+      viz::mojom::FrameSinkManagerClientPtr client) override;
 };
 
 // -----------------------------------------------------------------------------
