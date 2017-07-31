@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04038060_b30e919f",
+        "filename": "build/fuchsia/test_runner.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-07-31T17:33:04Z",
+      "side": 1,
+      "message": "(Sorry about adding the wrong name here, I would have sworn I copied Android or something, but apparently not.)",
+      "revId": "8edd40bb1b877d29431f0f9710caac45b2b4716d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d82f8a93_efe13161",
+        "filename": "build/fuchsia/test_runner.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-07-31T17:33:04Z",
+      "side": 1,
+      "message": "nit; \u0027:\u0027 + m.group(1) maybe?",
+      "revId": "8edd40bb1b877d29431f0f9710caac45b2b4716d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
