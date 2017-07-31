@@ -548,6 +548,11 @@ void MediaControlsImpl::Reset() {
   OnControlsListUpdated();
 }
 
+void MediaControlsImpl::UpdateTimeIndicators() {
+  timeline_->SetPosition(MediaElement().currentTime());
+  UpdateCurrentTimeDisplay();
+}
+
 void MediaControlsImpl::OnControlsListUpdated() {
   BatchedControlUpdate batch(this);
 
@@ -573,7 +578,8 @@ void MediaControlsImpl::MaybeShow() {
   if (overlay_play_button_)
     overlay_play_button_->UpdateDisplayType();
   // Only make the controls visible if they won't get hidden by OnTimeUpdate.
-  if (MediaElement().paused() || !ShouldHideMediaControls())
+  if (MediaElement().paused() || MediaElement().seeking() ||
+      !ShouldHideMediaControls())
     MakeOpaque();
 }
 
@@ -877,7 +883,7 @@ void MediaControlsImpl::HideMediaControlsTimerFired(TimerBase*) {
   hide_timer_behavior_flags_ = kIgnoreNone;
   keep_showing_until_timer_fires_ = false;
 
-  if (MediaElement().paused())
+  if (MediaElement().paused() || MediaElement().seeking())
     return;
 
   if (!ShouldHideMediaControls(behavior_flags))
@@ -935,8 +941,7 @@ void MediaControlsImpl::OnFocusIn() {
 }
 
 void MediaControlsImpl::OnTimeUpdate() {
-  timeline_->SetPosition(MediaElement().currentTime());
-  UpdateCurrentTimeDisplay();
+  UpdateTimeIndicators();
 
   // 'timeupdate' might be called in a paused state. The controls should not
   // become transparent in that case.
@@ -981,6 +986,11 @@ void MediaControlsImpl::OnPause() {
   MakeOpaque();
 
   StopHideMediaControlsTimer();
+}
+
+void MediaControlsImpl::OnSeeking() {
+  UpdateTimeIndicators();
+  MaybeShow();
 }
 
 void MediaControlsImpl::OnTextTracksAddedOrRemoved() {
