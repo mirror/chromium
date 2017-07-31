@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "934ff04e_9cb3e575",
+        "filename": "base/numerics/safe_conversions.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1002378
+      },
+      "writtenOn": "2017-07-31T22:03:33Z",
+      "side": 1,
+      "message": "Yeah, this was one got a bit convoluted in order to hit the right heuristics across compilers and architectures. I\u0027ll comment it.",
+      "parentUuid": "b61b0f34_2279fb63",
+      "revId": "138ec8a678f9a4518fe343d17b1e3a719a291314",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1eede688_f10bc87a",
         "filename": "base/numerics/safe_conversions_impl.h",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "138ec8a678f9a4518fe343d17b1e3a719a291314",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c92d2fc8_66f95227",
+        "filename": "base/numerics/safe_conversions_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 858,
+      "author": {
+        "id": 1002378
+      },
+      "writtenOn": "2017-07-31T22:03:33Z",
+      "side": 1,
+      "message": "This was a weird one that I carried over. Looking at it again, Clang always seems to do the right thing. MSVC is less consistent, but neither approach is consistently better for commonly used types. So, I\u0027m just going to ignore MSVC, simplify the code, and assume it evens out out in the wash.",
+      "parentUuid": "1eede688_f10bc87a",
+      "revId": "138ec8a678f9a4518fe343d17b1e3a719a291314",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
