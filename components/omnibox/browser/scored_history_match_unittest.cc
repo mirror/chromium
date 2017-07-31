@@ -386,6 +386,25 @@ TEST_F(ScoredHistoryMatchTest, Inlining) {
     EXPECT_FALSE(scored_f.match_in_scheme);
     EXPECT_FALSE(scored_f.match_in_subdomain);
     EXPECT_TRUE(scored_f.match_after_host);
+    ScoredHistoryMatch scored_g(row, visits, ASCIIToUTF16("https://www"),
+                                Make1Term("https://www"), one_word_no_offset,
+                                word_starts, false, 1, now);
+    EXPECT_TRUE(scored_g.match_in_scheme);
+    EXPECT_TRUE(scored_g.match_in_subdomain);
+    EXPECT_FALSE(scored_g.match_after_host);
+    ScoredHistoryMatch scored_h(row, visits, ASCIIToUTF16("testing.com/x"),
+                                Make1Term("testing.com/x"), one_word_no_offset,
+                                word_starts, false, 1, now);
+    EXPECT_FALSE(scored_h.match_in_scheme);
+    EXPECT_FALSE(scored_h.match_in_subdomain);
+    EXPECT_TRUE(scored_h.match_after_host);
+    ScoredHistoryMatch scored_i(row, visits,
+                                ASCIIToUTF16("https://www.testing.com/x"),
+                                Make1Term("https://www.testing.com/x"),
+                                one_word_no_offset, word_starts, false, 1, now);
+    EXPECT_TRUE(scored_i.match_in_scheme);
+    EXPECT_TRUE(scored_i.match_in_subdomain);
+    EXPECT_TRUE(scored_i.match_after_host);
   }
 
   {
