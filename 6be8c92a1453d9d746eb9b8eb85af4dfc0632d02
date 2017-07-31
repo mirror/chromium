@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "c5a28c0a_be0f99de",
+        "filename": "content/common/cookie.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-31T17:06:24Z",
+      "side": 1,
+      "message": "Thanks for the explanation. I misunderstood the meaning of the TODO.\n\nI will defer to you whether a sort order is needed. :)",
+      "parentUuid": "cd125cec_4c7d3120",
+      "revId": "6be8c92a1453d9d746eb9b8eb85af4dfc0632d02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1d9fffa8_5598dfd9",
         "filename": "content/common/cookie.mojom",
         "patchSetId": 2
@@ -206,6 +224,24 @@
       "side": 1,
       "message": "Chuckle.  \"Tug on a string.\"  There are a couple of different issues this brings up.\n\n* First of all, my apologies--you called this out in the first CL, and I thought I had taken care of it, and I obviously hadn\u0027t.  Will do.\n\n* However, the issue I was originally concerned about was the caller knowing the point in their own timeline after which they could count on seeing cookie notifications.  I.e. We didn\u0027t want a situation where they confirmed a particular cookie existed, the cookie was destroyed by some other entity, and then they registered for notifications around cookie destruction, missing the fact the cookie was destroyed.  That just requires a callback, it doesn\u0027t actually require returning a request instead of sending a pointer.  I had returned a request because I had somehow gotten it into my head that it was more idiomatic mojo to pass around requests than pointers, and I\u0027d be happy to switch to sending a pointer instead of returning a request if you\u0027d prefer.\n\n* But on further thought, I\u0027ve realized that the argument in the paragraph above doesn\u0027t actually hold water.  If we have a pure async fire-and-forget interface here (that sends a pointer rather than retrieves a request), and the caller does a getter of some sort on the same interface after requesting notifications, they can rely on the getter providing information about the cookie store strictly after the notification was installed because of in-order delivery of messages on the same mojo pipe.  \n\nGiven all the above, I think the right answer is to make the interface pure async (no callback), sending a CookieChangeNotificationPtr, and to document the pattern the caller may want to use to make sure they don\u0027t miss notifications.  That\u0027s what I\u0027ll do.  But I\u0027m happy to do something different if that\u0027s not the most idiomatic I can make the interface.",
       "parentUuid": "c715df89_674149bf",
+      "revId": "6be8c92a1453d9d746eb9b8eb85af4dfc0632d02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f3a9f5c_41610c23",
+        "filename": "content/common/cookie.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-31T17:06:24Z",
+      "side": 1,
+      "message": "The pure async approach sounds good to me.",
+      "parentUuid": "173bd541_2cc1da47",
       "revId": "6be8c92a1453d9d746eb9b8eb85af4dfc0632d02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
