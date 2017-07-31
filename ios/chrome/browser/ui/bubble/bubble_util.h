@@ -52,6 +52,15 @@ CGRect BubbleFrame(CGPoint anchorPoint,
                    BubbleAlignment alignment,
                    CGFloat boundingWidth);
 
+// Returns the portion of |rect| that can enclose a bubble pointed anchored at
+// |anchorPoint| and pointing in |direction|. If |direction| is
+// |BubbleViewArrowDirectionUp|, then the rectangle inside of |rect| and beneath
+// |anchorPoint| is returned. If |direction| is |BubbleViewArrowDirectionDown|,
+// then the rectangle inside of |rect| and above |anchorPoint| is returned.
+CGRect DivideRectAtPoint(CGRect rect,
+                         CGPoint anchorPoint,
+                         BubbleArrowDirection direction);
+
 }  // namespace bubble_util
 
 #endif  // IOS_CHROME_BROWSER_UI_BUBBLE_BUBBLE_UTIL_H_

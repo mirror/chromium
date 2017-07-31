@@ -299,3 +299,69 @@ TEST_F(BubbleUtilTest, MaxWidthTrailingWithTargetOnRightRTL) {
       anchorPoint, BubbleAlignmentTrailing, containerWidth_);
   EXPECT_EQ(50.0f + kTestBubbleAlignmentOffset, rightAlignedWidthRTL);
 }
+
+// Test the |DivideRectAtPoint| method when the bubble's arrow is facing up
+// (which means the bubble itself is below the anchor point).
+TEST_F(BubbleUtilTest, DivideRectDirectionUp) {
+  CGRect sourceRect = CGRectMake(0, 0, 100, 100);
+  CGPoint anchorPoint = CGPointMake(30, 40);
+
+  CGRect dividedRect = bubble_util::DivideRectAtPoint(sourceRect, anchorPoint,
+                                                      BubbleArrowDirectionUp);
+
+  CGRect expectedRect = CGRectMake(0.0f, 40.0f, 100.0f, 60.0f);
+  EXPECT_EQ(expectedRect.origin.x, dividedRect.origin.x);
+  EXPECT_EQ(expectedRect.origin.y, dividedRect.origin.y);
+  EXPECT_EQ(expectedRect.size.width, dividedRect.size.width);
+  EXPECT_EQ(expectedRect.size.height, dividedRect.size.height);
+}
+
+// Test the |DivideRectAtPoint| method when the bubble's arrow is facing down
+// (which means the bubble itself is above the anchor point).
+TEST_F(BubbleUtilTest, DivideRectDirectionDown) {
+  CGRect sourceRect = CGRectMake(0, 0, 100, 100);
+  CGPoint anchorPoint = CGPointMake(30, 40);
+
+  CGRect dividedRect = bubble_util::DivideRectAtPoint(sourceRect, anchorPoint,
+                                                      BubbleArrowDirectionDown);
+
+  CGRect expectedRect = CGRectMake(0.0f, 0.0f, 100.0f, 40.0f);
+  EXPECT_EQ(expectedRect.origin.x, dividedRect.origin.x);
+  EXPECT_EQ(expectedRect.origin.y, dividedRect.origin.y);
+  EXPECT_EQ(expectedRect.size.width, dividedRect.size.width);
+  EXPECT_EQ(expectedRect.size.height, dividedRect.size.height);
+}
+
+// Test the |DivideRectAtPoint| method when the bubble's arrow is facing up
+// (which means the bubble itself is below the anchor point) and the rect to be
+// divided is not at the origin.
+TEST_F(BubbleUtilTest, DivideRectDirectionUpNotAtOrigin) {
+  CGRect sourceRect = CGRectMake(20, 30, 80, 50);
+  CGPoint anchorPoint = CGPointMake(30, 40);
+
+  CGRect dividedRect = bubble_util::DivideRectAtPoint(sourceRect, anchorPoint,
+                                                      BubbleArrowDirectionUp);
+
+  CGRect expectedRect = CGRectMake(20.0f, 40.0f, 80.0f, 40.0f);
+  EXPECT_EQ(expectedRect.origin.x, dividedRect.origin.x);
+  EXPECT_EQ(expectedRect.origin.y, dividedRect.origin.y);
+  EXPECT_EQ(expectedRect.size.width, dividedRect.size.width);
+  EXPECT_EQ(expectedRect.size.height, dividedRect.size.height);
+}
+
+// Test the |DivideRectAtPoint| method when the bubble's arrow is facing down
+// (which means the bubble itself is above the anchor point) and the rect to be
+// divided is not at the origin.
+TEST_F(BubbleUtilTest, DivideRectDirectionDownNotAtOrigin) {
+  CGRect sourceRect = CGRectMake(20, 30, 80, 50);
+  CGPoint anchorPoint = CGPointMake(30, 40);
+
+  CGRect dividedRect = bubble_util::DivideRectAtPoint(sourceRect, anchorPoint,
+                                                      BubbleArrowDirectionDown);
+
+  CGRect expectedRect = CGRectMake(20.0f, 30.0f, 80.0f, 10.0f);
+  EXPECT_EQ(expectedRect.origin.x, dividedRect.origin.x);
+  EXPECT_EQ(expectedRect.origin.y, dividedRect.origin.y);
+  EXPECT_EQ(expectedRect.size.width, dividedRect.size.width);
+  EXPECT_EQ(expectedRect.size.height, dividedRect.size.height);
+}

@@ -4,6 +4,7 @@
 
 #import "ios/chrome/browser/ui/bubble/bubble_util.h"
 
+#import <CoreGraphics/CGGeometry.h>
 #include "base/i18n/rtl.h"
 #include "base/logging.h"
 #import "ios/chrome/browser/ui/bubble/bubble_view.h"
@@ -112,6 +113,29 @@ CGRect BubbleFrame(CGPoint anchorPoint,
   CGRect bubbleFrame = LayoutRectGetRect(
       LayoutRectMake(leading, boundingWidth, originY, size.width, size.height));
   return bubbleFrame;
+}
+
+CGRect DivideRectAtPoint(CGRect rect,
+                         CGPoint anchorPoint,
+                         BubbleArrowDirection direction) {
+  DCHECK(CGRectContainsPoint(rect, anchorPoint));
+  switch (direction) {
+    case BubbleArrowDirectionUp:
+      // If the arrow is pointing up, then the space below the anchor point is
+      // valid.
+      return CGRectMake(CGRectGetMinX(rect), anchorPoint.y,
+                        CGRectGetWidth(rect),
+                        CGRectGetMaxY(rect) - anchorPoint.y);
+    case BubbleArrowDirectionDown:
+      // If the arrow is pointing down, then the space above the anchor point is
+      // valid.
+      return CGRectMake(CGRectGetMinX(rect), CGRectGetMinY(rect),
+                        CGRectGetWidth(rect),
+                        anchorPoint.y - CGRectGetMinY(rect));
+    default:
+      NOTREACHED() << "Invalid BubbleArrowDirection " << direction;
+      return CGRectNull;
+  }
 }
 
 }  // namespace bubble_util
