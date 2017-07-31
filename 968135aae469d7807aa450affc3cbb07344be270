@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2f5d4b9f_15fe8442",
+        "filename": "base/values.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-31T17:53:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ea85e03_45612f51",
+      "revId": "968135aae469d7807aa450affc3cbb07344be270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b4c0ce2_17bcbb6f",
         "filename": "base/values.cc",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "d5ce4c2c_3e83f52c",
+        "filename": "base/values.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-31T17:53:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b4c0ce2_17bcbb6f",
+      "revId": "968135aae469d7807aa450affc3cbb07344be270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a5d0298f_b40acd15",
         "filename": "base/values.cc",
         "patchSetId": 5
@@ -47,6 +83,30 @@
       "writtenOn": "2017-07-27T20:50:57Z",
       "side": 1,
       "message": "While this is true, we could subscript path.begin(). All random-access iterators support operator[], meaning you could use |*path.begin()[i]| to get a reference to the ith element. But we might be able to get rid of i entirely, see the comment below.",
+      "range": {
+        "startLine": 372,
+        "startChar": 22,
+        "endLine": 372,
+        "endChar": 60
+      },
+      "revId": "968135aae469d7807aa450affc3cbb07344be270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6038a07e_a901fc95",
+        "filename": "base/values.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-31T17:53:40Z",
+      "side": 1,
+      "message": "I tried various ways to subscribe begin() with no luck so assumed it returned some magic internal thing. But then I just tried it and it worked fine. I must have been doing something dumb before.",
+      "parentUuid": "a5d0298f_b40acd15",
       "range": {
         "startLine": 372,
         "startChar": 22,
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "87cd73c0_9e07b28d",
+        "filename": "base/values.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-31T17:53:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5aa59f6_7a6cf590",
+      "revId": "968135aae469d7807aa450affc3cbb07344be270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f619e4a_8c8fc74d",
         "filename": "base/values.cc",
         "patchSetId": 5
@@ -99,6 +177,30 @@
     },
     {
       "key": {
+        "uuid": "66926af2_dd922eb0",
+        "filename": "base/values.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-31T17:53:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f619e4a_8c8fc74d",
+      "range": {
+        "startLine": 386,
+        "startChar": 10,
+        "endLine": 386,
+        "endChar": 60
+      },
+      "revId": "968135aae469d7807aa450affc3cbb07344be270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e2dea16_0b0ede30",
         "filename": "base/values.cc",
         "patchSetId": 5
@@ -110,6 +212,30 @@
       "writtenOn": "2017-07-27T20:50:57Z",
       "side": 1,
       "message": "Nit: |inserted| could be inlined:\n\ncur \u003d cur-\u003edict_-\u003eemplace_hint(found, path_component, MakeUnique\u003cValue\u003e(Type::Dictionary))-\u003esecond.get();\n\nbut at this point reading the code is getting hard.",
+      "range": {
+        "startLine": 387,
+        "startChar": 12,
+        "endLine": 387,
+        "endChar": 20
+      },
+      "revId": "968135aae469d7807aa450affc3cbb07344be270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f43f10b6_688d8ce6",
+        "filename": "base/values.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-31T17:53:40Z",
+      "side": 1,
+      "message": "Yeah, I thought my version was more readable.",
+      "parentUuid": "8e2dea16_0b0ede30",
       "range": {
         "startLine": 387,
         "startChar": 12,
@@ -145,6 +271,30 @@
     },
     {
       "key": {
+        "uuid": "69bdf94a_5912e956",
+        "filename": "base/values.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-31T17:53:40Z",
+      "side": 1,
+      "message": "I find the ?: operator difficult to read in most circumstances so prefer simple branching.",
+      "parentUuid": "a8b8796d_324f5669",
+      "range": {
+        "startLine": 396,
+        "startChar": 2,
+        "endLine": 396,
+        "endChar": 8
+      },
+      "revId": "968135aae469d7807aa450affc3cbb07344be270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "61284e58_3f0ea742",
         "filename": "base/values.h",
         "patchSetId": 5
@@ -156,6 +306,24 @@
       "writtenOn": "2017-07-27T20:50:57Z",
       "side": 1,
       "message": "We *could* make returning an iterator work in the following way: \n\nIn the case where no value is found we simply return this-\u003eDictEnd(). This works because calling |FindPath| implies |this-\u003eis_dict()| to begin with.\n\nWe then would require callers to do a check against this-\u003eDictEnd instead of null.\n\n\nNote: I certainly don\u0027t mind returning a pointer here, as this can be simpler in some cases. However, I would like to see consistency in the return types of {FindKey, FindPath} and {SetKey, SetPath} if possible.",
+      "revId": "968135aae469d7807aa450affc3cbb07344be270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "613ac72f_8c240d19",
+        "filename": "base/values.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-07-31T17:53:40Z",
+      "side": 1,
+      "message": "That\u0027s possible for end(), but then what do we return on success? That\u0027s still an iterator into another container.",
+      "parentUuid": "61284e58_3f0ea742",
       "revId": "968135aae469d7807aa450affc3cbb07344be270",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
