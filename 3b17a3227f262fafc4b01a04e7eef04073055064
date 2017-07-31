@@ -16,6 +16,24 @@
       "revId": "3b17a3227f262fafc4b01a04e7eef04073055064",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52aeaff1_9cace575",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 35988,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-07-31T18:15:26Z",
+      "side": 1,
+      "message": "Great idea, thanks. Done.\n\nAre you sure this will work, though? My (limited) understanding was that 0 was being recorded for any values not found in this histogram. If 0 is now a known value, is it possible it will it record -1 or something else?",
+      "parentUuid": "2a01fadb_e7403e15",
+      "revId": "3b17a3227f262fafc4b01a04e7eef04073055064",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
