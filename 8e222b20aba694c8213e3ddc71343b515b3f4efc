@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "378ffd62_c9b997a1",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-07-31T20:36:17Z",
+      "side": 1,
+      "message": "nit: \"if (gl) {...}\"",
+      "revId": "8e222b20aba694c8213e3ddc71343b515b3f4efc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
