@@ -4,21 +4,23 @@
 
 #include "remoting/host/host_attributes.h"
 
+#include <string>
 #include <type_traits>
+#include <vector>
 
 #include "base/atomicops.h"
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/strings/string_piece.h"
+#include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
 #include "build/build_config.h"
+#include "remoting/host/evaluate_capability.h"
+#include "remoting/host/host_exit_codes.h"
+#include "remoting/host/switches.h"
 
 #if defined(OS_WIN)
-#include <D3DCommon.h>
-
 #include "base/win/windows_version.h"
-#include "third_party/webrtc/modules/desktop_capture/win/dxgi_duplicator_controller.h"
-#include "third_party/webrtc/modules/desktop_capture/win/screen_capturer_win_directx.h"
 #endif
 
 namespace remoting {
@@ -89,7 +91,8 @@ static constexpr Attribute kAttributes[] = {
 static_assert(std::is_pod<Attribute>::value, "Attribute should be POD.");
 
 std::string GetHostAttributes() {
-  std::vector<base::StringPiece> result;
+  // Use std::string to ensure temporary variables can be correctly copied.
+  std::vector<std::string> result;
   // By using ranged for-loop, MSVC throws error C3316:
   // 'const remoting::StaticAttribute [0]':
   // an array of unknown size cannot be used in a range-based for statement.
@@ -102,16 +105,18 @@ std::string GetHostAttributes() {
   }
 #if defined(OS_WIN)
   {
-    webrtc::DxgiDuplicatorController::D3dInfo info;
-    webrtc::ScreenCapturerWinDirectx::RetrieveD3dInfo(&info);
-    if (info.min_feature_level >= D3D_FEATURE_LEVEL_10_0) {
-      result.push_back("MinD3DGT10");
-    }
-    if (info.min_feature_level >= D3D_FEATURE_LEVEL_11_0) {
-      result.push_back("MinD3DGT11");
-    }
-    if (info.min_feature_level >= D3D_FEATURE_LEVEL_12_0) {
-      result.push_back("MinD3DGT12");
+    std::string d3d_info;
+    if (EvaluateCapability(kEvaluateD3D, &d3d_info) != kSuccessExitCode) {
+      result.push_back("No-DirectX-Capturer");
+    } else {
+      auto capabilities = base::SplitString(
+          d3d_info,
+          base::kWhitespaceASCII,
+          base::TRIM_WHITESPACE,
+          base::SPLIT_WANT_NONEMPTY);
+      for (const auto& capability : capabilities) {
+        result.push_back(capability);
+      }
     }
 
     auto version = base::win::GetVersion();

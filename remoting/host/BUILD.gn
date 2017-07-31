@@ -137,6 +137,8 @@ static_library("host") {
     "dns_blackhole_checker.h",
     "evaluate_capability.cc",
     "evaluate_capability.h",
+    "evaluate_d3d_win.cc",
+    "evaluate_d3d_win.h",
     "forward_process_stats_agent.cc",
     "forward_process_stats_agent.h",
     "gcd_rest_client.cc",
