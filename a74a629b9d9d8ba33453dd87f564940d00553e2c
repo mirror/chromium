@@ -16,6 +16,24 @@
       "revId": "a74a629b9d9d8ba33453dd87f564940d00553e2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c1e0763_94fe79e7",
+        "filename": "chrome/browser/extensions/api/dial/dial_api.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-07-31T18:48:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11ec8fea_8321632d",
+      "revId": "a74a629b9d9d8ba33453dd87f564940d00553e2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
