@@ -20827,6 +20827,18 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="2" label="Notification shown for multiple hosts"/>
 </enum>
 
+<enum name="InstantTethering_TechnologyStateAndReason">
+  <int value="0" label="Other or unknown"/>
+  <int value="1" label="Unavailable: BLE advertising not supported"/>
+  <int value="2" label="Unavailable: Screen locked"/>
+  <int value="3" label="Unavailable: No available hosts"/>
+  <int value="4" label="Unavailable: Cellular is disabled"/>
+  <int value="5" label="Prohibited"/>
+  <int value="6" label="Uninitialized: Bluetooth is disabled"/>
+  <int value="7" label="Available: Instant Tethering user pref is disabled"/>
+  <int value="8" label="Enabled"/>
+</enum>
+
 <enum name="IntelMaxMicroArchitecture">
   <int value="0" label="Pentium"/>
   <int value="1" label="SSE"/>

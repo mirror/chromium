@@ -27300,6 +27300,17 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="InstantTethering.TechnologyStateAndReason"
+    enum="InstantTethering_TechnologyStateAndReason">
+  <owner>hansberry@chromium.com</owner>
+  <summary>
+    Breaks down the 'TechnologyState' of Instant Tethering, and the reason for
+    that TechnologyState, at the end of each user session. This histogram is
+    emitted to at the end of each user session and should roughly reflect if
+    Instant Tethering was enabled during that session (and if not, why).
+  </summary>
+</histogram>
+
 <histogram name="InterProcessTimeTicks.BrowserAhead" units="ms">
   <owner>ppi@chromium.org</owner>
   <summary>
