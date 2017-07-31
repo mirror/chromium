@@ -20,10 +20,13 @@
 
 namespace content {
 
-// A TestURLLoaderClient records URLLoaderClient function calls. It also calls
-// the closure set via set_quit_closure if set, in order to make it possible to
-// create a base::RunLoop, set its quit closure to this client and then run the
-// RunLoop.
+// TestURLLoaderClient records URLLoaderClient function calls.
+// Usage:
+//   TestURLLoaderClient client;
+//   factory_->CreateLoaderAndStart(..., client.CreateInterfacePtr(), ...);
+//   client.RunUntilComplete();
+//   EXPECT_EQ(client.has_received_completion());
+//   ...
 class TestURLLoaderClient final : public mojom::URLLoaderClient {
  public:
   TestURLLoaderClient();
