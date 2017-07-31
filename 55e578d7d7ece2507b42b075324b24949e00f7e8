@@ -22,6 +22,30 @@
       "revId": "55e578d7d7ece2507b42b075324b24949e00f7e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bdfd3a1_f75b502e",
+        "filename": "chrome/browser/webshare/share_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-07-31T03:09:40Z",
+      "side": 1,
+      "message": "Ah. I saw this line changing in my terminal but I couldn\u0027t figure out what exactly had changed. Done.",
+      "parentUuid": "e1bf097e_b2461bee",
+      "range": {
+        "startLine": 198,
+        "startChar": 56,
+        "endLine": 198,
+        "endChar": 58
+      },
+      "revId": "55e578d7d7ece2507b42b075324b24949e00f7e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
