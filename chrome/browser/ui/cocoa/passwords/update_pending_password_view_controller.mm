@@ -50,7 +50,8 @@
   } else {
     passwordItem_.reset([[PasswordsListViewController alloc]
         initWithModelAndForm:self.model
-                        form:&self.model->pending_password()]);
+                        form:&self.model->pending_password()
+                    editMode:FALSE]);
 
     return [passwordItem_ view];
   }

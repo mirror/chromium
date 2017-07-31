@@ -67,11 +67,12 @@ enum ManagePasswordItemState {
 // Shows a username and obscured password in a single row.
 @interface PendingPasswordItemView : NSView<PasswordItemTwoColumnView> {
  @private
-  base::scoped_nsobject<NSTextField> usernameField_;
   // The field contains the password or IDP origin for federated credentials.
+  base::scoped_nsobject<NSTextField> usernameField_;
   base::scoped_nsobject<NSTextField> passwordField_;
 }
-- (id)initWithForm:(const autofill::PasswordForm&)form;
+- (id)initWithForm:(const autofill::PasswordForm&)form editMode:(BOOL)editMode;
+@property(readonly) NSTextField* usernameField;
 @end
 
 @interface PendingPasswordItemView (Testing)
@@ -82,7 +83,7 @@ enum ManagePasswordItemState {
 // Shows a single item in a password management list. Transitions between
 // PENDING, MANAGE, and DELETED states according to user interaction.
 @interface ManagePasswordItemViewController
-    : NSViewController<PasswordItemTwoColumnView> {
+    : NSViewController<PasswordItemTwoColumnView, NSTextFieldDelegate> {
  @private
   id<PasswordItemDelegate> delegate_;  // weak
   const autofill::PasswordForm* passwordForm_;
