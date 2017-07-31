@@ -29,9 +29,9 @@ cr.define('bookmarks', function() {
 
   /**
    * A one-shot debouncer which fires the given callback after a delay. The
-   * delay can be refreshed by calling resetTimer. Resetting with no delay moves
-   * the callback to the end of the task queue.
-   * @param {!function()} callback
+   * delay can be refreshed by calling resetTimer. Resetting the timeout with no
+   * delay moves the callback to the end of the task queue.
+   * @param {?function()} callback
    * @constructor
    */
   function Debouncer(callback) {
@@ -54,8 +54,7 @@ cr.define('bookmarks', function() {
      * @param {number=} delay
      */
     resetTimeout: function(delay) {
-      if (this.timer_)
-        this.timerProxy_.clearTimeout(this.timer_);
+      this.cancelTimeout();
       this.timer_ =
           this.timerProxy_.setTimeout(this.boundTimerCallback_, delay);
     },
@@ -72,6 +71,20 @@ cr.define('bookmarks', function() {
      */
     get promise() {
       return this.promiseResolver_.promise;
+    },
+
+    reset: function(callback) {
+      if (callback)
+        this.callback_ = callback;
+
+      this.isDone_ = false;
+      this.promiseResolver_ = new PromiseResolver();
+      this.cancelTimeout();
+    },
+
+    cancelTimeout: function() {
+      if (this.timer_)
+        this.timerProxy_.clearTimeout(this.timer_);
     },
 
     /** @private */

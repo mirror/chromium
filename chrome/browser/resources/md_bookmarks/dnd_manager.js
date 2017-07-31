@@ -166,14 +166,13 @@ cr.define('bookmarks', function() {
     /** @const {number} */
     this.EXPAND_FOLDER_DELAY = 400;
 
-    /** @private {number} */
-    this.lastTimestamp_ = 0;
-
     /** @private {BookmarkElement|null} */
     this.lastElement_ = null;
 
     /** @private {number} */
     this.testTimestamp_ = 0;
+
+    this.debouncer_ = new bookmarks.Debouncer();
   }
 
   AutoExpander.prototype = {
@@ -186,28 +185,21 @@ cr.define('bookmarks', function() {
       var itemId = overElement ? overElement.itemId : null;
       var store = bookmarks.Store.getInstance();
 
-      // If hovering over the same folder as last update, open the folder after
-      // the delay has passed.
-      if (overElement && overElement == this.lastElement_) {
-        if (eventTimestamp - this.lastTimestamp_ < this.EXPAND_FOLDER_DELAY)
-          return;
-
-        var action = bookmarks.actions.changeFolderOpen(itemId, true);
-        store.dispatch(action);
-      } else if (
-          overElement && isClosedBookmarkFolderNode(overElement) &&
-          bookmarks.util.hasChildFolders(itemId, store.data.nodes)) {
-        // Since this is a closed folder node that has children, set the auto
-        // expander to this element.
-        this.lastTimestamp_ = eventTimestamp;
-        this.lastElement_ = overElement;
-        return;
+      if (overElement) {
+        if (overElement == this.lastElement_) {
+          this.debouncer_.resetTimeout(this.EXPAND_FOLDER_DELAY);
+        } else if (
+            isClosedBookmarkFolderNode(overElement) &&
+            bookmarks.util.hasChildFolders(itemId, store.data.nodes)) {
+          this.lastElement_ = overElement;
+          this.debouncer_.reset(() => {
+            var action = bookmarks.actions.changeFolderOpen(itemId, true);
+            store.dispatch(action);
+          });
+        }
+      } else if (overElement != this.lastElement_) {
+        this.debouncer_.cancelTimeout();
       }
-
-      // If the folder has been expanded or we have moved to a different
-      // element, reset the auto expander.
-      this.lastTimestamp_ = 0;
-      this.lastElement_ = null;
     },
   };
 
@@ -494,10 +486,12 @@ cr.define('bookmarks', function() {
 
         var movePromises = this.dragInfo_.dragData.elements.map((item) => {
           return new Promise((resolve) => {
-            chrome.bookmarks.move(item.id, {
-              parentId: dropInfo.parentId,
-              index: dropInfo.index == -1 ? undefined : dropInfo.index
-            }, resolve);
+            chrome.bookmarks.move(
+                item.id, {
+                  parentId: dropInfo.parentId,
+                  index: dropInfo.index == -1 ? undefined : dropInfo.index
+                },
+                resolve);
           });
         });
 
