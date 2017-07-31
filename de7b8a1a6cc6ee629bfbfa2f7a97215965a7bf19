@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6a05a739_6f47cd6c",
+        "filename": "chrome/browser/page_load_metrics/observers/ads_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-31T20:55:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a1d7e88_bc8baa40",
+      "revId": "de7b8a1a6cc6ee629bfbfa2f7a97215965a7bf19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43d72c1b_4aa48a7e",
         "filename": "chrome/browser/page_load_metrics/observers/ads_page_load_metrics_observer_unittest.cc",
         "patchSetId": 1
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "21caa297_586074b4",
+        "filename": "chrome/browser/page_load_metrics/observers/ads_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-31T20:55:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43d72c1b_4aa48a7e",
+      "range": {
+        "startLine": 112,
+        "startChar": 6,
+        "endLine": 112,
+        "endChar": 38
+      },
+      "revId": "de7b8a1a6cc6ee629bfbfa2f7a97215965a7bf19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50e953d8_e3b99e61",
         "filename": "chrome/browser/page_load_metrics/observers/ads_page_load_metrics_observer_unittest.cc",
         "patchSetId": 1
@@ -62,6 +104,30 @@
       "revId": "de7b8a1a6cc6ee629bfbfa2f7a97215965a7bf19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54eaeec1_a1f4be11",
+        "filename": "chrome/browser/page_load_metrics/observers/ads_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-07-31T20:55:28Z",
+      "side": 1,
+      "message": "CreateAndNavigateSubFrame assumes the navigation succeeds and returns a RFH. If the navigation fails (as it does here), GetFinalRenderFrameHost has a DCHECK failure.\n\nLMK if you\u0027d like me to resolve this in another way.",
+      "parentUuid": "50e953d8_e3b99e61",
+      "range": {
+        "startLine": 740,
+        "startChar": 2,
+        "endLine": 740,
+        "endChar": 14
+      },
+      "revId": "de7b8a1a6cc6ee629bfbfa2f7a97215965a7bf19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
