@@ -153,6 +153,15 @@ void RasterWithAlpha(const PaintOp* op,
         flags_op->RasterWithFlags(canvas, &alpha_flags, params);
       }
     }
+  } else if (static_cast<PaintOpType>(op->type) == PaintOpType::DrawColor) {
+    auto* draw_color_op = static_cast<const DrawColorOp*>(op);
+
+    SkPaint paint;
+    SkColor color = draw_color_op->color;
+    paint.setColor(SkColorSetARGB(alpha, SkColorGetR(color), SkColorGetG(color),
+                                  SkColorGetB(color)));
+    paint.setBlendMode(draw_color_op->mode);
+    canvas->drawPaint(paint);
   } else {
     bool unset = bounds.x() == PaintOp::kUnsetRect.x();
     canvas->saveLayerAlpha(unset ? nullptr : &bounds, alpha);
