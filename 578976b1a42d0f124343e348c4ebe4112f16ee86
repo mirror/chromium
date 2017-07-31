@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "0945c7a8_82d25d6f",
+        "filename": "chrome/browser/policy/configuration_policy_handler_list_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-07-31T06:48:15Z",
+      "side": 1,
+      "message": "Yeah a clean up here some day will be good. :)",
+      "parentUuid": "001746bf_3a2722a9",
+      "range": {
+        "startLine": 688,
+        "startChar": 0,
+        "endLine": 688,
+        "endChar": 24
+      },
+      "revId": "578976b1a42d0f124343e348c4ebe4112f16ee86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fbec1db_6fd1450a",
         "filename": "chrome/common/pref_names.cc",
         "patchSetId": 3
@@ -178,6 +202,30 @@
     },
     {
       "key": {
+        "uuid": "f0c98cc2_033e78c4",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 9835,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-07-31T06:48:15Z",
+      "side": 1,
+      "message": "Yes please.",
+      "parentUuid": "27576402_35a7e49e",
+      "range": {
+        "startLine": 9835,
+        "startChar": 66,
+        "endLine": 9835,
+        "endChar": 77
+      },
+      "revId": "578976b1a42d0f124343e348c4ebe4112f16ee86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "da3e37de_ffa1a7e1",
         "filename": "components/policy/resources/policy_templates.json",
         "patchSetId": 3
@@ -213,6 +261,30 @@
       "side": 1,
       "message": "I had decided to not mention the eclipse... Sure. More seriously, this is modeled after the dinosaur game policy: \"[...] If this policy is not set, users are not allowed to play the dinosaur easter egg game on enrolled Chrome OS, but are allowed to play it under other circumstances.\" (Line 729.) I think \"other circumstances\" is fine.",
       "parentUuid": "da3e37de_ffa1a7e1",
+      "range": {
+        "startLine": 9837,
+        "startChar": 285,
+        "endLine": 9837,
+        "endChar": 310
+      },
+      "revId": "578976b1a42d0f124343e348c4ebe4112f16ee86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b24f1dd7_bf9e4c04",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 9837,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-07-31T06:48:15Z",
+      "side": 1,
+      "message": "To be honest I don\u0027t know why they picked this wording there. I would say since in this case \"other circumstances\" and \"otherwise\" coincide in meaning I would prefer for the clearer version.",
+      "parentUuid": "55eb59c9_092b27c9",
       "range": {
         "startLine": 9837,
         "startChar": 285,
@@ -316,6 +388,30 @@
       "revId": "578976b1a42d0f124343e348c4ebe4112f16ee86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4334f75d_fe9bcd6d",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 9855,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-07-31T06:48:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "80364bb6_3252c49f",
+      "range": {
+        "startLine": 9855,
+        "startChar": 37,
+        "endLine": 9855,
+        "endChar": 46
+      },
+      "revId": "578976b1a42d0f124343e348c4ebe4112f16ee86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

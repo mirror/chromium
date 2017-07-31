@@ -141,6 +141,30 @@
       "revId": "65028f3f777077841fe5c2ab6f8f688c3503bde0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7c3b5ec_9ec7643b",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 9855,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-07-31T06:48:15Z",
+      "side": 1,
+      "message": "sounds ok to me. PrefValueFromDefaultStore should be rather IsManaged.",
+      "parentUuid": "4d882366_f22e7dd6",
+      "range": {
+        "startLine": 9855,
+        "startChar": 254,
+        "endLine": 9855,
+        "endChar": 295
+      },
+      "revId": "65028f3f777077841fe5c2ab6f8f688c3503bde0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
