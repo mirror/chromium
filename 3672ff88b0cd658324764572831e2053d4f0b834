@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ed7982d_9d8c8de3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001841
+      },
+      "writtenOn": "2017-07-31T03:35:02Z",
+      "side": 1,
+      "message": "buddy doesn\u0027t use v4l2vda. Maybe use elm, peach, go2001, and nyan?",
+      "revId": "3672ff88b0cd658324764572831e2053d4f0b834",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
