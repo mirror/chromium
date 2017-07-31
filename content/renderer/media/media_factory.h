@@ -132,6 +132,15 @@ class MediaFactory {
 
   media::CdmFactory* GetCdmFactory();
 
+  // The render frame we're helping. RenderFrameImpl owns this factory, so the
+  // pointer will always be valid.
+  RenderFrameImpl* render_frame_;
+
+  // A helper to forward interface requests to our |render_frame_|'s current
+  // remote interface provider, is it might change on navigations.
+  std::unique_ptr<service_manager::mojom::InterfaceProvider>
+      frame_remote_interfaces_forwarder_;
+
 #if BUILDFLAG(ENABLE_MOJO_MEDIA)
   service_manager::mojom::InterfaceProvider* GetMediaInterfaceProvider();
 
@@ -139,17 +148,8 @@ class MediaFactory {
   std::unique_ptr<MediaInterfaceProvider> media_interface_provider_;
 #endif
 
-  // The render frame we're helping. RenderFrameImpl owns this factory, so the
-  // pointer will always be valid.
-  RenderFrameImpl* render_frame_;
-
   // Injected callback for requesting overlay routing tokens.
   media::RequestRoutingTokenCallback request_routing_token_cb_;
-
-  // Handy pointer to RenderFrame's remote interfaces. Null until SetupMojo().
-  // Lifetime matches that of the owning |render_frame_|. Will always be valid
-  // once assigned.
-  service_manager::InterfaceProvider* remote_interfaces_ = nullptr;
 
 #if defined(OS_ANDROID)
   // Manages media players and sessions in this render frame for communicating

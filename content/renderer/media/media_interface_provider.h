@@ -27,7 +27,7 @@ class CONTENT_EXPORT MediaInterfaceProvider
     : public service_manager::mojom::InterfaceProvider {
  public:
   explicit MediaInterfaceProvider(
-      service_manager::InterfaceProvider* remote_interfaces);
+      service_manager::mojom::InterfaceProvider* remote_interfaces);
   ~MediaInterfaceProvider() final;
 
   // InterfaceProvider implementation.
@@ -38,7 +38,7 @@ class CONTENT_EXPORT MediaInterfaceProvider
   media::mojom::InterfaceFactory* GetMediaInterfaceFactory();
   void OnConnectionError();
 
-  service_manager::InterfaceProvider* remote_interfaces_;
+  service_manager::mojom::InterfaceProvider* remote_interfaces_;
   media::mojom::InterfaceFactoryPtr media_interface_factory_;
 
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
