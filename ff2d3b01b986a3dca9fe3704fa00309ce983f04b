@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1ca8903c_a0f405b0",
+        "filename": "chrome/browser/extensions/api/feedback_private/feedback_private_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-31T02:26:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "af943c8b_b625dfd5",
+      "range": {
+        "startLine": 208,
+        "startChar": 10,
+        "endLine": 208,
+        "endChar": 56
+      },
+      "revId": "ff2d3b01b986a3dca9fe3704fa00309ce983f04b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa5ecaef_ee47e64f",
         "filename": "chrome/browser/extensions/api/feedback_private/feedback_private_api.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-28T21:34:17Z",
       "side": 1,
       "message": "... and here.\n\nSo I guess my question is what is the benefit of this change? Or is it just an intermediate step until we\u0027re able to remove Profile use entirely?",
+      "range": {
+        "startLine": 257,
+        "startChar": 6,
+        "endLine": 257,
+        "endChar": 51
+      },
+      "revId": "ff2d3b01b986a3dca9fe3704fa00309ce983f04b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "267459a9_298d6b26",
+        "filename": "chrome/browser/extensions/api/feedback_private/feedback_private_api.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-07-31T02:26:01Z",
+      "side": 1,
+      "message": "It\u0027s an intermediate step, yes. Makes later diffs a bit easier. The general best practice is to not use Profile unless you really need a Profile (something Chrome-specific).\n\nThe goal is to move this file into //extensions, so these Profile uses will have to go -- ARC and sign-in are examples of pieces we\u0027ll probably just delegate back to Chrome (so they\u0027ll keep using Profile, just in a new file).",
+      "parentUuid": "aa5ecaef_ee47e64f",
       "range": {
         "startLine": 257,
         "startChar": 6,
