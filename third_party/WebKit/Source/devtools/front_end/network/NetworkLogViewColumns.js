@@ -22,15 +22,16 @@ Network.NetworkLogViewColumns = class {
 
     /** @type {!Map<string, !Array<number>>} */
     this._eventDividers = new Map();
-    this._eventDividersShown = false;
+    this._eventDividersShown = true;
 
     this._gridMode = true;
 
     /** @type {!Array.<!Network.NetworkLogViewColumns.Descriptor>} */
     this._columns = [];
 
-    this._waterfallRequestsAreStale = false;
-    this._waterfallScrollerWidthIsStale = true;
+    /** @type {?Element} */
+    this._waterfallInnerContainer = null;
+    this._hasScrollbar = false;
 
     /** @type {!Components.Linkifier} */
     this._popupLinkifier = new Components.Linkifier();
@@ -82,7 +83,6 @@ Network.NetworkLogViewColumns = class {
     for (var currentConfigColumn of defaultColumns) {
       var columnConfig = /** @type {!Network.NetworkLogViewColumns.Descriptor} */ (
           Object.assign({}, defaultColumnConfig, currentConfigColumn));
-      columnConfig.id = columnConfig.id;
       if (columnConfig.subtitle)
         columnConfig.titleDOMFragment = this._makeHeaderFragment(columnConfig.title, columnConfig.subtitle);
       this._columns.push(columnConfig);
@@ -100,8 +100,7 @@ Network.NetworkLogViewColumns = class {
       if (!this._dataGrid.selectedNode && event.button)
         event.consume();
     }, true);
-
-    this._dataGridScroller = this._dataGrid.scrollContainer;
+    this._dataGrid.scrollContainer.addEventListener('scroll', () => this._popoverHelper.hidePopover(), {passive: true});
 
     this._updateColumns();
     this._dataGrid.addEventListener(DataGrid.DataGrid.Events.SortingChanged, this._sortHandler, this);
@@ -110,114 +109,106 @@ Network.NetworkLogViewColumns = class {
     this._activeWaterfallSortId = Network.NetworkLogViewColumns.WaterfallSortIds.StartTime;
     this._dataGrid.markColumnAsSortedBy(
         Network.NetworkLogViewColumns._initialSortColumn, DataGrid.DataGrid.Order.Ascending);
-
-    this._splitWidget = new UI.SplitWidget(true, true, 'networkPanelSplitViewWaterfall', 200);
-    var widget = this._dataGrid.asWidget();
-    widget.setMinimumSize(150, 0);
-    this._splitWidget.setMainWidget(widget);
   }
 
   _setupWaterfall() {
     this._waterfallColumn = new Network.NetworkWaterfallColumn(this._networkLogView.calculator());
 
-    this._waterfallColumn.element.addEventListener('contextmenu', handleContextMenu.bind(this));
-    this._waterfallColumn.element.addEventListener('mousewheel', this._onMouseWheel.bind(this, false), {passive: true});
-    this._dataGridScroller.addEventListener('mousewheel', this._onMouseWheel.bind(this, true), true);
+    var waterfallColumnConfig = this._columns.find(columnDescriptor => columnDescriptor.id === 'waterfall');
+    if (waterfallColumnConfig) {
+      waterfallColumnConfig.sortingFunction = (a, b) =>
+          Network.NetworkRequestNode.RequestPropertyComparator(this._activeWaterfallSortId, a, b);
+    }
 
-    this._waterfallScroller = this._waterfallColumn.contentElement.createChild('div', 'network-waterfall-v-scroll');
-    this._waterfallScrollerContent = this._waterfallScroller.createChild('div', 'network-waterfall-v-scroll-content');
-
-    this._dataGrid.addEventListener(DataGrid.DataGrid.Events.PaddingChanged, () => {
-      this._waterfallScrollerWidthIsStale = true;
-      this._syncScrollers();
-    });
     this._dataGrid.addEventListener(
-        DataGrid.ViewportDataGrid.Events.ViewportCalculated, this._redrawWaterfallColumn.bind(this));
+        DataGrid.ViewportDataGrid.Events.ViewportCalculated,
+        event => this._redrawWaterfallColumn(/** @type {!DataGrid.ViewportDataGrid.ViewportState} */ (event.data)));
 
-    this._createWaterfallHeader();
     this._waterfallColumn.contentElement.classList.add('network-waterfall-view');
 
-    this._waterfallColumn.setMinimumSize(100, 0);
-    this._splitWidget.setSidebarWidget(this._waterfallColumn);
+    this._dataGrid.addEventListener(DataGrid.DataGrid.Events.ColumnsResized, () => {
+      if (!this._waterfallColumn.isShowing())
+        return;
+      this._configureTimeDividers();
+      this._waterfallColumn.onResize();
+    });
 
     this.switchViewMode(false);
-
-    /**
-     * @param {!Event} event
-     * @this {Network.NetworkLogViewColumns}
-     */
-    function handleContextMenu(event) {
-      var node = this._waterfallColumn.getNodeFromPoint(event.offsetX, event.offsetY);
-      if (!node)
-        return;
-      var request = node.request();
-      if (!request)
-        return;
-      var contextMenu = new UI.ContextMenu(event);
-      this._networkLogView.handleContextMenuForRequest(contextMenu, request);
-      contextMenu.show();
-    }
   }
 
   /**
-   * @param {boolean} shouldConsume
-   * @param {!Event} event
+   * @param {!DataGrid.ViewportDataGrid.ViewportState=} viewportState
    */
-  _onMouseWheel(shouldConsume, event) {
-    if (shouldConsume)
-      event.consume(true);
-    this._activeScroller.scrollTop -= event.wheelDeltaY;
-    this._syncScrollers();
-  }
-
-  _syncScrollers() {
-    if (!this._waterfallColumn.isShowing())
+  _redrawWaterfallColumn(viewportState) {
+    if (!this._dataGrid.asWidget().isShowing())
       return;
-    this._waterfallScrollerContent.style.height = this._dataGridScroller.scrollHeight + 'px';
-    this._updateScrollerWidthIfNeeded();
-    this._dataGridScroller.scrollTop = this._waterfallScroller.scrollTop;
-  }
+    if (!this._waterfallInnerContainer) {
+      var visibleColumns = this._dataGrid.visibleColumns();
+      var columnIndex = visibleColumns.findIndex(columnDescriptor => columnDescriptor.id === 'waterfall');
+      if (columnIndex === -1)
+        return;
+      var topFillerRowElement = this._dataGrid.topFillerRowElement().children[columnIndex];
+      topFillerRowElement.classList.add('waterfall-overlay');
+      var waterfallContainer = topFillerRowElement.createChild('div', 'waterfall-container');
+      this._waterfallInnerContainer = waterfallContainer.createChild('div');
+      var contentElement = createElementWithClass('div', 'waterfall-root vbox flex-auto');
 
-  _updateScrollerWidthIfNeeded() {
-    if (this._waterfallScrollerWidthIsStale) {
-      this._waterfallScrollerWidthIsStale = false;
-      this._waterfallColumn.setRightPadding(
-          this._waterfallScroller.offsetWidth - this._waterfallScrollerContent.offsetWidth);
+      var shadowRoot = UI.createShadowRootWithCoreStyles(this._waterfallInnerContainer);
+      shadowRoot.appendChild(contentElement);
+      this._waterfallColumn.show(contentElement);
     }
-  }
-
-  _redrawWaterfallColumn() {
-    if (!this._waterfallRequestsAreStale) {
-      this._updateScrollerWidthIfNeeded();
-      this._waterfallColumn.update(
-          this._activeScroller.scrollTop, this._eventDividersShown ? this._eventDividers : undefined);
-      return;
+    /** @type {!Array<!Network.NetworkNode>|undefined} */
+    var visibleNodes;
+    if (viewportState) {
+      visibleNodes = /** @type {!Array<!Network.NetworkNode>} */ (viewportState.visibleNodes);
+      this._hasScrollbar = viewportState.contentHeight > viewportState.clientHeight ||
+          !!(viewportState.topPadding || viewportState.bottomPadding);
+      this._resizeWaterfallIfNeeded(viewportState.contentHeight);
     }
-    this._syncScrollers();
-    var nodes = this._networkLogView.flatNodesList();
-    this._waterfallColumn.update(this._activeScroller.scrollTop, this._eventDividers, nodes);
+    this._configureTimeDividers();
+    this._waterfallColumn.update(visibleNodes, this._eventDividersShown ? this._eventDividers : undefined);
   }
 
-  _createWaterfallHeader() {
-    this._waterfallHeaderElement = this._waterfallColumn.contentElement.createChild('div', 'network-waterfall-header');
-    this._waterfallHeaderElement.addEventListener('click', waterfallHeaderClicked.bind(this));
-    this._waterfallHeaderElement.addEventListener(
-        'contextmenu', event => this._innerHeaderContextMenu(new UI.ContextMenu(event)));
-    var innerElement = this._waterfallHeaderElement.createChild('div');
-    innerElement.textContent = Common.UIString('Waterfall');
-    this._waterfallColumnSortIcon = UI.Icon.create('', 'sort-order-icon');
-    this._waterfallHeaderElement.createChild('div', 'sort-order-icon-container')
-        .appendChild(this._waterfallColumnSortIcon);
+  /**
+   * @param {number} contentHeight
+   */
+  _resizeWaterfallIfNeeded(contentHeight) {
+    var hasScrollbarClass = this._waterfallInnerContainer.classList.contains('network-log-grid-has-scrollbar');
+    var resized = false;
+    if (this._hasScrollbar && !hasScrollbarClass) {
+      this._waterfallInnerContainer.classList.add('network-log-grid-has-scrollbar');
+      resized = true;
+    } else if (!this._hasScrollbar && hasScrollbarClass) {
+      this._waterfallInnerContainer.classList.remove('network-log-grid-has-scrollbar');
+      resized = true;
+    }
+    var newHeightPx = contentHeight + 'px';
+    if (!this._hasScrollbar)
+      newHeightPx = this._dataGrid.scrollContainer.offsetHeight + 'px';
+    if (this._waterfallInnerContainer.style.height !== newHeightPx) {
+      this._waterfallInnerContainer.style.height = newHeightPx;
+      resized = true;
+    }
+    if (resized)
+      this._waterfallColumn.onResize();
+  }
 
-    /**
-     * @this {Network.NetworkLogViewColumns}
-     */
-    function waterfallHeaderClicked() {
-      var sortOrders = DataGrid.DataGrid.Order;
-      var sortOrder =
-          this._dataGrid.sortOrder() === sortOrders.Ascending ? sortOrders.Descending : sortOrders.Ascending;
-      this._dataGrid.markColumnAsSortedBy('waterfall', sortOrder);
-      this._sortHandler();
+  _configureTimeDividers() {
+    var calculator = this._networkLogView.calculator();
+    var dividersData = PerfUI.TimelineGrid.calculateDividerOffsets(calculator, /* freeZoneAtLeft */ 100);
+    this._waterfallColumn.setDividersData(dividersData);
+    var headerElement = this._dataGrid.headerTableHeader('waterfall');
+    var waterfallTimeDividersContainer = headerElement.ownerDocument.getElementById('waterfall-dividers-container');
+    if (!waterfallTimeDividersContainer) {
+      waterfallTimeDividersContainer = headerElement.createChild('div');
+      waterfallTimeDividersContainer.id = 'waterfall-dividers-container';
+    }
+    waterfallTimeDividersContainer.removeChildren();
+    for (var offsetInfo of dividersData.offsets) {
+      var dividerElement = waterfallTimeDividersContainer.createChild('div', 'header-divider');
+      var labelElement = dividerElement.createChild('span', 'header-divider-label');
+      dividerElement.style.left = (100 * offsetInfo.position / waterfallTimeDividersContainer.clientWidth) + '%';
+      labelElement.textContent = calculator.formatValue(offsetInfo.time, dividersData.precision);
     }
   }
 
@@ -238,18 +229,14 @@ Network.NetworkLogViewColumns = class {
     this._dataGrid.element.classList.toggle('small', !largeRows);
     this._dataGrid.scheduleUpdate();
 
-    this._waterfallScrollerWidthIsStale = true;
     this._waterfallColumn.setRowHeight(largeRows ? 41 : 21);
-    this._waterfallScroller.classList.toggle('small', !largeRows);
-    this._waterfallHeaderElement.classList.toggle('small', !largeRows);
-    this._waterfallColumn.setHeaderHeight(this._waterfallScroller.offsetTop);
   }
 
   /**
    * @param {!Element} element
    */
   show(element) {
-    this._splitWidget.show(element);
+    this._dataGrid.asWidget().show(element);
   }
 
   /**
@@ -266,19 +253,6 @@ Network.NetworkLogViewColumns = class {
   _sortHandler() {
     var columnId = this._dataGrid.sortColumnId();
     this._networkLogView.removeAllNodeHighlights();
-    this._waterfallRequestsAreStale = true;
-    if (columnId === 'waterfall') {
-      if (this._dataGrid.sortOrder() === DataGrid.DataGrid.Order.Ascending)
-        this._waterfallColumnSortIcon.setIconType('smallicon-triangle-up');
-      else
-        this._waterfallColumnSortIcon.setIconType('smallicon-triangle-down');
-
-      var sortFunction = Network.NetworkRequestNode.RequestPropertyComparator.bind(null, this._activeWaterfallSortId);
-      this._dataGrid.sortNodes(sortFunction, !this._dataGrid.isSortOrderAscending());
-      this._networkLogView.dataGridSorted();
-      return;
-    }
-    this._waterfallColumnSortIcon.setIconType('');
 
     var columnConfig = this._columns.find(columnConfig => columnConfig.id === columnId);
     if (!columnConfig || !columnConfig.sortingFunction)
@@ -298,6 +272,11 @@ Network.NetworkLogViewColumns = class {
     } else {
       visibleColumns.name = true;
     }
+    // First detach the waterfall since DataGrid does not know how to handle widgets.
+    if (this._waterfallInnerContainer) {
+      this._waterfallColumn.detach();
+      this._waterfallInnerContainer = null;
+    }
     this._dataGrid.setColumnsVisiblity(visibleColumns);
   }
 
@@ -308,19 +287,11 @@ Network.NetworkLogViewColumns = class {
     if (this._gridMode === gridMode)
       return;
     this._gridMode = gridMode;
-
     if (gridMode) {
       if (this._dataGrid.selectedNode)
         this._dataGrid.selectedNode.selected = false;
-      this._splitWidget.showBoth();
-      this._activeScroller = this._waterfallScroller;
-      this._waterfallScroller.scrollTop = this._dataGridScroller.scrollTop;
-      this._dataGrid.setScrollContainer(this._waterfallScroller);
     } else {
       this._networkLogView.removeAllNodeHighlights();
-      this._splitWidget.hideSidebar();
-      this._activeScroller = this._dataGridScroller;
-      this._dataGrid.setScrollContainer(this._dataGridScroller);
     }
     this._networkLogView.element.classList.toggle('brief-mode', !gridMode);
     this._updateColumns();
@@ -354,7 +325,7 @@ Network.NetworkLogViewColumns = class {
         columnConfig = this._addCustomHeader(setting.title, columnId);
       if (columnConfig.hideable && typeof setting.visible === 'boolean')
         columnConfig.visible = !!setting.visible;
-      if (typeof setting.title === 'string')
+      if (typeof setting.title === 'string' && columnId !== 'waterfall')
         columnConfig.title = setting.title;
     }
   }
@@ -532,10 +503,16 @@ Network.NetworkLogViewColumns = class {
     if (!hoveredNode)
       return null;
 
+    var request = hoveredNode.request();
+    if (this._dataGrid.columnIdFromNode(/** @type {!Node} */ (event.target)) === 'waterfall') {
+      if (!request)
+        return null;
+      return this._waterfallColumn.getPopoverRequest(request, event.offsetX, event.offsetY);
+    }
+
     var anchor = event.target.enclosingNodeOrSelfWithClass('network-script-initiated');
     if (!anchor)
       return null;
-    var request = hoveredNode.request();
     var initiator = request ? request.initiator() : null;
     if (!initiator || !initiator.stack)
       return null;
@@ -795,8 +772,13 @@ Network.NetworkLogViewColumns._defaultColumns = [
     title: Common.UIString('Vary'),
     sortingFunction: Network.NetworkRequestNode.ResponseHeaderStringComparator.bind(null, 'vary')
   },
-  // This header is a placeholder to let datagrid know that it can be sorted by this column, but never shown.
-  {id: 'waterfall', title: '', visible: false, hideable: false}
+  {
+    id: 'waterfall',
+    title: Common.UIString('Waterfall'),
+    visible: true,
+    hideable: false
+    // Sorting function setup in waterfall function.
+  }
 ];
 
 Network.NetworkLogViewColumns._filmStripDividerColor = '#fccc49';

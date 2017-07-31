@@ -56,6 +56,33 @@
     background: transparent;
 }
 
+.network-log-grid-has-scrollbar {
+    padding-right: 15px;
+}
+
+.network-log-grid.data-grid .waterfall-overlay {
+    border-left: 0px;
+    vertical-align: bottom;
+    overflow: visible;
+}
+
+.network-log-grid.data-grid .waterfall-container {
+    height: 0px;
+    width: 100%;
+    position: relative;
+    bottom: 0px;
+    overflow: visible;
+    pointer-events: none;
+}
+
+.network-log-grid.data-grid .waterfall-container .div {
+    position: absolute;
+    height: 0px;
+    left: 0px;
+    right: 0px;
+    pointer-events: none;
+}
+
 .network-log-grid.data-grid td {
     height: 41px;
     border-left: 1px solid #e1e1e1;
@@ -70,25 +97,45 @@
     height: 21px;
 }
 
-.network-waterfall-header, .network-log-grid.data-grid th {
-    border-bottom: 1px solid rgb(205, 205, 205);
-    border-left: 1px solid rgb(205, 205, 205);
-}
-
 .network-log-grid.data-grid th {
     background: white;
-}
-
-.network-waterfall-header, .network-log-grid.data-grid .header-container {
-    height: 31px;
 }
 
 .network-log-grid.data-grid .data-container {
     top: 31px;
 }
 
-.network-waterfall-header.small, .network-log-grid.data-grid.small .header-container {
+.network-log-grid.data-grid th {
+    border-bottom: 1px solid rgb(205, 205, 205);
+    border-left: 1px solid rgb(205, 205, 205);
+}
+
+.network-log-grid.data-grid .header-container {
+    height: 31px;
+}
+
+.network-log-grid.data-grid.small .header-container {
     height: 27px;
+}
+
+#waterfall-dividers-container {
+    height: 0px;
+    position: relative;
+    overflow: visible;
+    bottom: 11px;
+    /* Keep in line with .data-grid th in dataGrid */
+    margin: 0px -5px 0px -4px;
+}
+
+.header-divider {
+    font-size: 8px;
+    position: absolute;
+    overflow: visible;
+}
+
+.header-divider-label {
+    right: 2px;
+    position: absolute;
 }
 
 .network-log-grid.data-grid.small .data-container {
@@ -104,15 +151,6 @@
 
 .network-log-grid.data-grid .name-column {
     cursor: pointer;
-}
-
-.network-log-grid.data-grid .waterfall-column {
-    padding: 1px 0;
-}
-
-.network-log-grid.data-grid .waterfall-column .sort-order-icon-container {
-    right: 15px;
-    pointer-events: none;
 }
 
 .network-log-grid.data-grid th.sortable:active {
@@ -278,10 +316,6 @@
     visibility: hidden;
 }
 
-#network-container:not(.brief-mode) .data-container {
-    overflow: hidden;
-}
-
 .network-summary-bar .summary-blue {
     color: blue;
 }
@@ -321,43 +355,6 @@
     font-size: 14px;
     text-align: center;
     line-height: 28px;
-}
-
-.network-waterfall-header {
-    position: absolute;
-    border-left: 0px;
-    width: 100%;
-    display: table;
-    z-index: 200;
-}
-
-.network-waterfall-header:hover {
-    background-color: hsla(0, 0%, 10%, 0.1);
-}
-
-.network-waterfall-header div {
-    display: table-cell;
-    line-height: 14px;
-    margin: auto 0px;
-    vertical-align: middle;
-    text-align: left;
-    font-weight: normal;
-    padding: 0px 4px;
-}
-
-.network-waterfall-header .sort-order-icon-container {
-    position: absolute;
-    top: 1px;
-    right: 0;
-    bottom: 1px;
-    display: flex;
-    align-items: center;
-}
-
-.network-waterfall-header .sort-order-icon {
-    align-items: center;
-    margin-right: 4px;
-    margin-bottom: -2px;
 }
 
 .network-frame-group-icon {
