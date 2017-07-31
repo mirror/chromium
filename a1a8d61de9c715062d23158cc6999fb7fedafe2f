@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8388ff02_486ff98a",
+        "filename": "ios/chrome/test/earl_grey/chrome_test_case.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-07-31T13:33:52Z",
+      "side": 1,
+      "message": "I suggest you should consider switching to feature flags and using ScopedFeatureList instead of mucking with the command line in tests. go/feature-flags-on-ios for current thinking about feature flags.",
+      "range": {
+        "startLine": 257,
+        "startChar": 0,
+        "endLine": 257,
+        "endChar": 36
+      },
+      "revId": "a1a8d61de9c715062d23158cc6999fb7fedafe2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
