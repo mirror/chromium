@@ -36,6 +36,7 @@ class CC_EXPORT SharedQuadState {
               const gfx::Rect& visible_layer_rect,
               const gfx::Rect& clip_rect,
               bool is_clipped,
+              bool is_opaque,
               float opacity,
               SkBlendMode blend_mode,
               int sorting_context_id);
@@ -51,6 +52,8 @@ class CC_EXPORT SharedQuadState {
   // This rect lives in the target content space.
   gfx::Rect clip_rect;
   bool is_clipped;
+  // Whether DrawQuads shared this SharedQuadState are opaque or not.
+  bool is_opaque;
   float opacity;
   SkBlendMode blend_mode;
   int sorting_context_id;

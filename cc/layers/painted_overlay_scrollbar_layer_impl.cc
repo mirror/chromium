@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "cc/layers/painted_overlay_scrollbar_layer_impl.h"
+#include "cc/trees/layer_tree_impl.h"
 
 namespace cc {
 
@@ -54,6 +55,10 @@ void PaintedOverlayScrollbarLayerImpl::PushPropertiesTo(LayerImpl* layer) {
   scrollbar_layer->SetAperture(aperture_);
 
   scrollbar_layer->set_thumb_ui_resource_id(thumb_ui_resource_id_);
+}
+
+bool PaintedOverlayScrollbarLayerImpl::IsLayerOpaque() const {
+  return layer_tree_impl()->IsUIResourceOpaque(thumb_ui_resource_id_);
 }
 
 bool PaintedOverlayScrollbarLayerImpl::WillDraw(
