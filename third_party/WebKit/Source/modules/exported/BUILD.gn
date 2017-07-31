@@ -23,6 +23,8 @@ blink_modules_sources("exported") {
     "WebSpeechRecognitionResult.cpp",
     "WebStorageEventDispatcherImpl.cpp",
     "WebUserMediaRequest.cpp",
+    "WebWorkerShadowPage.cpp",
+    "WebWorkerShadowPage.h",
   ]
 
   defines = [ "BLINK_MODULES_IMPLEMENTATION=1" ]
