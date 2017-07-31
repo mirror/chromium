@@ -60,7 +60,7 @@ const int64_t kServerTimeResolutionMs = 1000;
 
 // Whether the VariationsService should always be created, even in Chromium
 // builds.
-bool g_enabled_for_testing = false;
+bool g_enabled_for_testing = true;
 
 // Returns a string that will be used for the value of the 'osname' URL param
 // to the variations server.
