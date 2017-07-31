@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6dfcc112_e1755f3a",
+        "filename": "content/common/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-31T08:04:12Z",
+      "side": 1,
+      "message": "Why we need this change?",
+      "revId": "a30a36ab4eb8c8a301330075e66e6219e203e472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
