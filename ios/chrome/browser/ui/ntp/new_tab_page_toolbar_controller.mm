@@ -70,6 +70,7 @@ enum {
   self = [super initWithStyle:ToolbarControllerStyleLightMode
                    dispatcher:dispatcher];
   if (self) {
+    _dispatcher = dispatcher;
     [self.backgroundView setHidden:YES];
 
     CGFloat boundingWidth = self.view.bounds.size.width;
