@@ -502,7 +502,7 @@ void Layer::SetLayerFilters() {
     filters.Append(cc::FilterOperation::CreateInvertFilter(1.0));
   if (layer_blur_sigma_) {
     filters.Append(cc::FilterOperation::CreateBlurFilter(
-        layer_blur_sigma_, SkBlurImageFilter::kClamp_TileMode));
+        layer_blur_sigma_, SkBlurImageFilter::TileMode::kClamp));
   }
   // Brightness goes last, because the resulting colors neeed clamping, which
   // cause further color matrix filters to be applied separately. In this order,
@@ -526,7 +526,7 @@ void Layer::SetLayerBackgroundFilters() {
 
   if (background_blur_sigma_) {
     filters.Append(cc::FilterOperation::CreateBlurFilter(
-        background_blur_sigma_, SkBlurImageFilter::kClamp_TileMode));
+        background_blur_sigma_, SkBlurImageFilter::TileMode::kClamp));
   }
 
   cc_layer_->SetBackgroundFilters(filters);

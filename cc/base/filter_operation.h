@@ -138,7 +138,7 @@ class CC_BASE_EXPORT FilterOperation {
   static FilterOperation CreateBlurFilter(
       float amount,
       SkBlurImageFilter::TileMode tile_mode =
-          SkBlurImageFilter::kClampToBlack_TileMode) {
+          SkBlurImageFilter::TileMode::kClampToBlack) {
     return FilterOperation(BLUR, amount, tile_mode);
   }
 
