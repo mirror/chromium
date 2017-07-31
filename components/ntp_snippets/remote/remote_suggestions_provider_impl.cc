@@ -601,12 +601,15 @@ void RemoteSuggestionsProviderImpl::OnDatabaseLoaded(
   }
 
   // Sort the suggestions in each category.
-  // TODO(treib): Persist the actual order in the DB somehow? crbug.com/654409
   for (auto& entry : category_contents_) {
     CategoryContent* content = &entry.second;
     std::sort(content->suggestions.begin(), content->suggestions.end(),
               [](const std::unique_ptr<RemoteSuggestion>& lhs,
                  const std::unique_ptr<RemoteSuggestion>& rhs) {
+                if (lhs->rank() != rhs->rank()) {
+                  return lhs->rank() > rhs->rank();
+                }
+                // Fallback to score for suggestions, which don't have rank.
                 return lhs->score() > rhs->score();
               });
   }
@@ -719,6 +722,12 @@ void RemoteSuggestionsProviderImpl::OnFetchFinished(
       content->included_in_last_server_response = true;
       SanitizeReceivedSuggestions(content->dismissed,
                                   &fetched_category.suggestions);
+      std::sort(fetched_category.suggestions.begin(),
+                fetched_category.suggestions.end(),
+                [](const std::unique_ptr<RemoteSuggestion>& first,
+                   const std::unique_ptr<RemoteSuggestion>& second) {
+                  return first->score() > second->score();
+                });
       IntegrateSuggestions(fetched_category.category, content,
                            std::move(fetched_category.suggestions));
     }
@@ -867,6 +876,9 @@ void RemoteSuggestionsProviderImpl::IntegrateSuggestions(
   // Note, that ArchiveSuggestions will clear |content->suggestions|.
   ArchiveSuggestions(content, &content->suggestions);
 
+  for (size_t i = 0; i < new_suggestions.size(); ++i) {
+    new_suggestions[i]->set_rank(i);
+  }
   database_->SaveSnippets(new_suggestions);
 
   content->suggestions = std::move(new_suggestions);
