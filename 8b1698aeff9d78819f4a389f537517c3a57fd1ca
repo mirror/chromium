@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dfae2496_15b098d9",
+        "filename": "components/ntp_snippets/remote/proto/ntp_snippets.proto",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-31T11:14:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d82512d5_2c59441b",
+      "revId": "8b1698aeff9d78819f4a389f537517c3a57fd1ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7074598a_e14fa4f0",
         "filename": "components/ntp_snippets/remote/remote_suggestion.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "8b1698aeff9d78819f4a389f537517c3a57fd1ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cfdab7e_b525fec1",
+        "filename": "components/ntp_snippets/remote/remote_suggestion.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-31T11:14:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7074598a_e14fa4f0",
+      "revId": "8b1698aeff9d78819f4a389f537517c3a57fd1ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2f050b09_35b3d369",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-31T11:14:03Z",
+      "side": 1,
+      "message": "Done.\n\n // Suggestion created before the rank was introduced have rank\n // equal to INT_MAX by default. Sort them by score.",
+      "parentUuid": "46df095d_366b2cdb",
+      "revId": "8b1698aeff9d78819f4a389f537517c3a57fd1ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96d798a0_0a5e708a",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "8b1698aeff9d78819f4a389f537517c3a57fd1ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1027c3ca_6e6c2fa0",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2748,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-31T11:14:03Z",
+      "side": 1,
+      "message": "Somewhat done.\n\nI added tests for rank and only score cases.\nThere should not be a mix of rank and scores and the same time.",
+      "parentUuid": "96d798a0_0a5e708a",
+      "revId": "8b1698aeff9d78819f4a389f537517c3a57fd1ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
