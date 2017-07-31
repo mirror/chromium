@@ -42,18 +42,6 @@ std::string GenerateFeatureFlag(const std::string& feature, bool enabled) {
   return feature + (enabled ? "-enabled" : "-disabled");
 }
 
-keyboard::KeyboardMode getKeyboardModeEnum(keyboard_api::KeyboardMode mode) {
-  switch (mode) {
-    case keyboard_api::KEYBOARD_MODE_NONE:
-      return keyboard::NONE;
-    case keyboard_api::KEYBOARD_MODE_FULL_WIDTH:
-      return keyboard::FULL_WIDTH;
-    case keyboard_api::KEYBOARD_MODE_FLOATING:
-      return keyboard::FLOATING;
-  }
-  return keyboard::NONE;
-}
-
 keyboard::KeyboardState getKeyboardStateEnum(
     keyboard_api::KeyboardState state) {
   switch (state) {
@@ -165,14 +153,14 @@ bool ChromeVirtualKeyboardDelegate::ShowLanguageSettings() {
 }
 
 bool ChromeVirtualKeyboardDelegate::SetVirtualKeyboardMode(int mode_enum) {
-  keyboard::KeyboardMode keyboard_mode =
-      getKeyboardModeEnum(static_cast<keyboard_api::KeyboardMode>(mode_enum));
+  // This function no longer does anything. The implementation of keyboard mode
+  // was removed but will eventually be re-implemented and so leave this stub
+  // function here to prevent API churn.
   keyboard::KeyboardController* controller =
       keyboard::KeyboardController::GetInstance();
   if (!controller)
     return false;
 
-  controller->SetKeyboardMode(keyboard_mode);
   return true;
 }
 
