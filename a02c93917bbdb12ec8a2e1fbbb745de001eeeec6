@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d6887ad_e1cadef9",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 2043,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-31T20:25:58Z",
+      "side": 1,
+      "message": "Nit (optional): Could this regex be more specific to ui/webui/resources/chromeos ?",
+      "revId": "a02c93917bbdb12ec8a2e1fbbb745de001eeeec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "565f167d_36152e05",
+        "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_subpage.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-31T20:25:58Z",
+      "side": 1,
+      "message": "This is not a valid value for a boolean. Can it be changed to false or left undefined instead?",
+      "revId": "a02c93917bbdb12ec8a2e1fbbb745de001eeeec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "928b4d9d_6641c31c",
+        "filename": "content/browser/webui/shared_resources_data_source.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-31T20:25:58Z",
+      "side": 1,
+      "message": "Can this be inside an #if CHROMEOS only block?",
+      "revId": "a02c93917bbdb12ec8a2e1fbbb745de001eeeec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7fd04e4_eb73cdad",
+        "filename": "ui/webui/resources/chromeos/bluetooth_dialog.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-07-31T20:25:58Z",
+      "side": 1,
+      "message": "What\u0027s the difference between\nui/webui/resources/chromeos\nui/webui/resources/cr_elements/chromeos/\n\nHow does one decide which one to choose? Do we need both?",
+      "revId": "a02c93917bbdb12ec8a2e1fbbb745de001eeeec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
