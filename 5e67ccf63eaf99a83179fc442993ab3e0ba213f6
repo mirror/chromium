@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e90fa01_5d2914d4",
+        "filename": "content/renderer/media/media_factory.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-07-31T22:02:39Z",
+      "side": 1,
+      "message": "Update comment.\n(QQ: Should the UrlIndex own the fetch context?)",
+      "range": {
+        "startLine": 176,
+        "startChar": 11,
+        "endLine": 176,
+        "endChar": 19
+      },
+      "revId": "5e67ccf63eaf99a83179fc442993ab3e0ba213f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15566051_f11faef1",
+        "filename": "media/blink/resource_fetch_context.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-07-31T22:02:39Z",
+      "side": 1,
+      "message": "Don\u0027t we usually prefer callbacks over single-function interfaces?",
+      "range": {
+        "startLine": 22,
+        "startChar": 10,
+        "endLine": 22,
+        "endChar": 13
+      },
+      "revId": "5e67ccf63eaf99a83179fc442993ab3e0ba213f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b19edde_4e61f73f",
+        "filename": "media/blink/resource_multibuffer_data_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-07-31T22:02:39Z",
+      "side": 1,
+      "message": "Any reason why this was moved?",
+      "range": {
+        "startLine": 82,
+        "startChar": 42,
+        "endLine": 82,
+        "endChar": 0
+      },
+      "revId": "5e67ccf63eaf99a83179fc442993ab3e0ba213f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5bcd75f_9910f204",
+        "filename": "media/blink/url_index.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-07-31T22:02:39Z",
+      "side": 1,
+      "message": "please don\u0027t use auto unless it unless the gain is obvious.\n\nHow about:\nunique_ptr\u003cResourceMultiBufferDataProvider\u003e ret(new Resource.....) instead?",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 6
+      },
+      "revId": "5e67ccf63eaf99a83179fc442993ab3e0ba213f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
