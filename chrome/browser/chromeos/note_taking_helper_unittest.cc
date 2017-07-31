@@ -34,6 +34,7 @@
 #include "components/arc/arc_service_manager.h"
 #include "components/arc/arc_util.h"
 #include "components/arc/common/intent_helper.mojom.h"
+#include "components/arc/intent_helper/arc_intent_helper_bridge.h"
 #include "components/arc/test/fake_intent_helper_instance.h"
 #include "components/crx_file/id_util.h"
 #include "components/sync_preferences/testing_pref_service_syncable.h"
@@ -867,13 +868,20 @@ TEST_P(NoteTakingHelperTest, AddProfileWithPlayStoreEnabled) {
   auto prefs = base::MakeUnique<sync_preferences::TestingPrefServiceSyncable>();
   chrome::RegisterUserProfilePrefs(prefs->registry());
   prefs->SetBoolean(prefs::kArcEnabled, true);
-  profile_manager_->CreateTestingProfile(
+  TestingProfile* second_profile = profile_manager_->CreateTestingProfile(
       kSecondProfileName, std::move(prefs), base::ASCIIToUTF16("Second User"),
       1 /* avatar_id */, std::string() /* supervised_user_id */,
       TestingProfile::TestingFactories());
   EXPECT_TRUE(helper()->play_store_enabled());
   EXPECT_FALSE(helper()->android_apps_received());
   EXPECT_EQ(1, observer.num_updates());
+
+  // Check that NoteTakingHelper registers to be notified about intent filter
+  // updates for the second profile: https://crbug.com/748763
+  auto* bridge =
+      arc::ArcIntentHelperBridge::GetForBrowserContext(second_profile);
+  ASSERT_TRUE(bridge);
+  EXPECT_TRUE(bridge->HasObserver(helper()));
 
   // Notification of updated intent filters should result in the apps being
   // refreshed.
