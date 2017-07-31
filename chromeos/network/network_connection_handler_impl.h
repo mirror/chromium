@@ -34,6 +34,7 @@ class CHROMEOS_EXPORT NetworkConnectionHandlerImpl
       const std::string& service_path,
       const base::Closure& success_callback,
       const network_handler::ErrorCallback& error_callback) override;
+  void ConfigureNonInteractiveNetwork(const std::string& service_path) override;
   bool HasConnectingNetwork(const std::string& service_path) override;
   bool HasPendingConnectRequest() override;
 

@@ -35,6 +35,10 @@ class CHROMEOS_EXPORT NetworkConnectionObserver {
   // changes instead.
   virtual void DisconnectRequested(const std::string& service_path);
 
+  // Called when the user clicks on an active non-interactive network entry to
+  // configure it.
+  virtual void ConfigureNonInteractiveNetwork(const std::string& service_path);
+
  protected:
   virtual ~NetworkConnectionObserver();
 

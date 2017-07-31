@@ -156,6 +156,12 @@ class CHROMEOS_EXPORT NetworkConnectionHandler {
       const base::Closure& success_callback,
       const network_handler::ErrorCallback& error_callback) = 0;
 
+  // ConfigureNonInteractiveNetwork() informs all NetworkConnectionObservers
+  // that the user clicked on the network matching |service_path| to
+  // configure it.  This can be used to bring up a UI dialog, if supported.
+  virtual void ConfigureNonInteractiveNetwork(
+      const std::string& service_path) = 0;
+
   // Returns true if ConnectToNetwork has been called with |service_path| and
   // has not completed (i.e. success or error callback has been called).
   virtual bool HasConnectingNetwork(const std::string& service_path) = 0;
