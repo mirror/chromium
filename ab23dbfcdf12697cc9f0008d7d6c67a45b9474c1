@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "263f84cd_df011a39",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-07-31T17:42:49Z",
+      "side": 1,
+      "message": "No need to pass \u0027gl\u0027: You can get it from context_provider_wrapper.",
+      "range": {
+        "startLine": 106,
+        "startChar": 32,
+        "endLine": 106,
+        "endChar": 34
+      },
+      "revId": "ab23dbfcdf12697cc9f0008d7d6c67a45b9474c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a9be6f8_5c6306e8",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-07-31T17:42:49Z",
+      "side": 1,
+      "message": "Prefer: \"if (!context_provider_wrapper-\u003eContextProvider())\"",
+      "range": {
+        "startLine": 110,
+        "startChar": 7,
+        "endLine": 110,
+        "endChar": 9
+      },
+      "revId": "ab23dbfcdf12697cc9f0008d7d6c67a45b9474c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0f0dec11_691a3df1",
         "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
         "patchSetId": 22
@@ -18,6 +64,122 @@
         "startChar": 0,
         "endLine": 1000,
         "endChar": 48
+      },
+      "revId": "ab23dbfcdf12697cc9f0008d7d6c67a45b9474c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a54fd0a_da3e500d",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 1000,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-07-31T17:42:49Z",
+      "side": 1,
+      "message": "I think this function does not need to be a member of the class Canvas2DLayerBridge since it is never referenced outside of this file.  Might as well just make it a local static function.",
+      "parentUuid": "0f0dec11_691a3df1",
+      "range": {
+        "startLine": 1000,
+        "startChar": 0,
+        "endLine": 1000,
+        "endChar": 48
+      },
+      "revId": "ab23dbfcdf12697cc9f0008d7d6c67a45b9474c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4762d703_b505032f",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 1001,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-07-31T17:42:49Z",
+      "side": 1,
+      "message": "This name is not meaningful. Perhaps layer_bridge?",
+      "range": {
+        "startLine": 1001,
+        "startChar": 33,
+        "endLine": 1001,
+        "endChar": 41
+      },
+      "revId": "ab23dbfcdf12697cc9f0008d7d6c67a45b9474c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c64dbe7e_c777592e",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 1009,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-07-31T17:42:49Z",
+      "side": 1,
+      "message": "This variable no longer has the same meaning. PErhaps you should call it context_or_layer_bridge_lost",
+      "range": {
+        "startLine": 1009,
+        "startChar": 7,
+        "endLine": 1009,
+        "endChar": 19
+      },
+      "revId": "ab23dbfcdf12697cc9f0008d7d6c67a45b9474c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cef1d2f6_5eecbcb7",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 1019,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-07-31T17:42:49Z",
+      "side": 1,
+      "message": "Why is this logic necessary?  I think we can just always use context_provider_wrapper. Also, no need ot resolve \u0027gl\u0027 in this function.",
+      "range": {
+        "startLine": 1019,
+        "startChar": 14,
+        "endLine": 1019,
+        "endChar": 28
+      },
+      "revId": "ab23dbfcdf12697cc9f0008d7d6c67a45b9474c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f30aa3b9_7cabcb52",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 22
+      },
+      "lineNbr": 1044,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-07-31T17:42:49Z",
+      "side": 1,
+      "message": "The logic of this expression is hard to follow.  I think it should be re-written like this:\nbool layer_bridge_with_valid_context \u003d layer_bridge \u0026\u0026 !context_or_layer_bridge_lost;\nif (layer_bridge_with_valid_context || !layer_bridge) {\n(...)",
+      "range": {
+        "startLine": 1044,
+        "startChar": 9,
+        "endLine": 1044,
+        "endChar": 17
       },
       "revId": "ab23dbfcdf12697cc9f0008d7d6c67a45b9474c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
