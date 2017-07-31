@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "bbaa90ac_89c2bc0b",
+        "filename": "content/browser/frame_host/render_widget_host_view_child_frame.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 911,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-07-31T18:40:33Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "862490ee_7223d155",
+      "revId": "e0620629cbd4e127abd76a3bec185f58bce6b5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad7f21a5_22b051f9",
         "filename": "content/browser/frame_host/render_widget_host_view_child_frame.h",
         "patchSetId": 8
@@ -299,6 +317,24 @@
     },
     {
       "key": {
+        "uuid": "471c276e_9dfa56e3",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 7217,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-07-31T18:40:33Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9c8a82fb_ec3818f8",
+      "revId": "e0620629cbd4e127abd76a3bec185f58bce6b5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78d37d75_b0fb7628",
         "filename": "content/browser/site_per_process_browsertest.cc",
         "patchSetId": 8
@@ -331,6 +367,24 @@
       "revId": "e0620629cbd4e127abd76a3bec185f58bce6b5ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5343fa69_3b98e0d3",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 7226,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-07-31T18:40:33Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "cd3bd512_6c751d46",
+      "revId": "e0620629cbd4e127abd76a3bec185f58bce6b5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -398,6 +452,24 @@
       "side": 1,
       "message": "To accommodate that, I could either make 1) CanBecomeVisible() public, 2) Expose a test version of it, 3) Make this test friend with RWHVCF. I am trying option 1 in the new patch. WDYT?",
       "parentUuid": "7e9069c8_200f7025",
+      "revId": "e0620629cbd4e127abd76a3bec185f58bce6b5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74b5739b_9ea5a35b",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 7234,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-07-31T18:40:33Z",
+      "side": 1,
+      "message": "If we anticipate other code needing CanBecomeVisible, I\u0027m ok leaving it public, but if only this test needs this, I\u0027d go with 3).  There\u0027s already precedent for that in RWHVCF, and we can always expose this more broadly when needed.",
+      "parentUuid": "d1ea9557_2e33189c",
       "revId": "e0620629cbd4e127abd76a3bec185f58bce6b5ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -506,6 +578,24 @@
       "revId": "e0620629cbd4e127abd76a3bec185f58bce6b5ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f346b672_0bcb7b87",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 7319,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-07-31T18:40:33Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4d792d6b_425cd26e",
+      "revId": "e0620629cbd4e127abd76a3bec185f58bce6b5ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
