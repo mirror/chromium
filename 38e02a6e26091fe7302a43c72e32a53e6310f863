@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b2da2829_81e9b085",
+        "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-07-31T09:30:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91ebc95a_f91b999e",
+      "range": {
+        "startLine": 40,
+        "startChar": 55,
+        "endLine": 40,
+        "endChar": 56
+      },
+      "revId": "38e02a6e26091fe7302a43c72e32a53e6310f863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a736ef60_26f64ecf",
         "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager.h",
         "patchSetId": 8
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "2ab899ac_c717d83f",
+        "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-07-31T09:30:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a736ef60_26f64ecf",
+      "range": {
+        "startLine": 92,
+        "startChar": 33,
+        "endLine": 92,
+        "endChar": 39
+      },
+      "revId": "38e02a6e26091fe7302a43c72e32a53e6310f863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "074292e8_ac97631c",
         "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager.h",
         "patchSetId": 8
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "e8e8bee0_dbf784d8",
+        "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-07-31T09:30:19Z",
+      "side": 1,
+      "message": "(Unshoe your eyes :-p) Look at line 54.",
+      "parentUuid": "074292e8_ac97631c",
+      "revId": "38e02a6e26091fe7302a43c72e32a53e6310f863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1549ae20_07e362bc",
         "filename": "chromeos/dbus/fake_auth_policy_client.cc",
         "patchSetId": 8
@@ -76,6 +142,30 @@
       "writtenOn": "2017-07-28T14:38:04Z",
       "side": 1,
       "message": "Is this valid? signal_callback is a local variable (not a unique_ptr) and is destroyed at the end of the scope, so its pointer loses validity.",
+      "range": {
+        "startLine": 236,
+        "startChar": 34,
+        "endLine": 236,
+        "endChar": 64
+      },
+      "revId": "38e02a6e26091fe7302a43c72e32a53e6310f863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dbe62f5_ec806783",
+        "filename": "chromeos/dbus/fake_auth_policy_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-07-31T09:30:19Z",
+      "side": 1,
+      "message": "It\u0027s just to pass ownership (basically use std::move).",
+      "parentUuid": "1549ae20_07e362bc",
       "range": {
         "startLine": 236,
         "startChar": 34,
