@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "479e0ada_5d1d2f80",
+        "filename": "content/child/loader/cors_url_loader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-07-31T09:18:39Z",
+      "side": 1,
+      "message": "It\u0027s probably not necessary to link to the wip CL, but maybe good to link to the issue (crbug link) which is usually more stable / contains more context.",
+      "revId": "50a1f065ff10f9cccbd5fdfe7679a1b2d2fa5207",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
