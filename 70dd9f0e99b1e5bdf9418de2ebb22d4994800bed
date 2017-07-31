@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "907f6cfd_8e73fb19",
+        "filename": "chrome/browser/plugins/plugin_power_saver_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-31T15:30:54Z",
+      "side": 1,
+      "message": "This CL removes the tiny-same-origin throttling feature flag and enables the behavior by default. Therefore the actual expected behavior has changed.",
+      "parentUuid": "2ae7be08_2648efd8",
+      "revId": "70dd9f0e99b1e5bdf9418de2ebb22d4994800bed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c0294f13_18ab5d12",
         "filename": "chrome/renderer/plugins/power_saver_info.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "70dd9f0e99b1e5bdf9418de2ebb22d4994800bed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "becf8d2e_1a321ad8",
+        "filename": "chrome/renderer/plugins/power_saver_info.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-31T15:30:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0294f13_18ab5d12",
+      "revId": "70dd9f0e99b1e5bdf9418de2ebb22d4994800bed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f2bc5f80_610a6275",
+        "filename": "chrome/test/data/prerender/prerender_plugin_delay_load.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-31T15:30:54Z",
+      "side": 1,
+      "message": "Exactly! The existing infrastructure assumes that we can synchronously determine pass/fail, but we can\u0027t.\n\nTherefore I\u0027ve updated the test to additionally call DidPluginLoad which is an asynchronous test.",
+      "parentUuid": "9be56c79_c9b8ad45",
+      "revId": "70dd9f0e99b1e5bdf9418de2ebb22d4994800bed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9fa3da47_e10a4cad",
         "filename": "content/public/common/content_switches.cc",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "70dd9f0e99b1e5bdf9418de2ebb22d4994800bed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9da7de01_3322d572",
+        "filename": "content/public/common/content_switches.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 682,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-31T15:30:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fa3da47_e10a4cad",
+      "revId": "70dd9f0e99b1e5bdf9418de2ebb22d4994800bed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
