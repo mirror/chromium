@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c6b91c67_fd0d4cc9",
+        "filename": "chrome/browser/ui/views/harmony/harmony_typography_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-31T01:44:53Z",
+      "side": 1,
+      "message": "Awesome! Thanks for finding this fix.",
+      "parentUuid": "d817bea9_4b90190d",
+      "revId": "d60be2b8e8fac6ee75d98d6d1502bd2df4021f96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "392ac550_7917898a",
         "filename": "ui/views/controls/table/table_view.cc",
         "patchSetId": 9

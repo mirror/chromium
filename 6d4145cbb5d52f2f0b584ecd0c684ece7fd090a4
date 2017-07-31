@@ -16,6 +16,148 @@
       "revId": "6d4145cbb5d52f2f0b584ecd0c684ece7fd090a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be7636c9_9879f808",
+        "filename": "chrome/browser/ui/views/harmony/layout_provider_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-31T01:44:53Z",
+      "side": 1,
+      "message": "nit: DISALLOW_COPY_AND_ASSIGN (you\u0027ll need a default constructor)\n\n[ Maybe the C++20 standard will have metaclasses that will finally give us a nicer way to do this :/ - https://herbsutter.files.wordpress.com/2017/07/p0707r1.pdf ]",
+      "revId": "6d4145cbb5d52f2f0b584ecd0c684ece7fd090a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e19820f_0a629f91",
+        "filename": "chrome/browser/ui/views/harmony/layout_provider_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-31T01:44:53Z",
+      "side": 1,
+      "message": "There will be some failures in this test case when running with --gtest_also_run_disabled_tests due to the DirectWrite change.. but I\u0027m still smoking things out, so I wouldn\u0027t worry about them too much (also the plan is just to delete this test case eventually). However, the other DISABLED_ test case is a bit more important - see below.",
+      "revId": "6d4145cbb5d52f2f0b584ecd0c684ece7fd090a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aff1a3e6_106c878e",
+        "filename": "chrome/browser/ui/views/harmony/layout_provider_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-31T01:44:53Z",
+      "side": 1,
+      "message": "28 -\u003e 27\n\n(these match the constants in harmony_typography_provider.cc -- the idea is to flag a test failure if Microsoft/Apple update the properties on the default OS font in a way that breaks the Harmony spec. But this test is currently disabled by default since some bots are setup wrong).",
+      "range": {
+        "startLine": 176,
+        "startChar": 12,
+        "endLine": 176,
+        "endChar": 14
+      },
+      "revId": "6d4145cbb5d52f2f0b584ecd0c684ece7fd090a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe236d33_0b7724ce",
+        "filename": "chrome/browser/ui/views/harmony/layout_provider_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-31T01:44:53Z",
+      "side": 1,
+      "message": "#elif defined(OS_WIN)\nEXPECT_EQ(18, body1_font.GetHeight());  // Add 2.\n#else..",
+      "revId": "6d4145cbb5d52f2f0b584ecd0c684ece7fd090a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34f6b1e3_dde17304",
+        "filename": "chrome/browser/ui/views/harmony/layout_provider_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-31T01:44:53Z",
+      "side": 1,
+      "message": "#if defined(OS_WIN)\nEXPECT_EQ(16, body2_font.GetHeight());  // Add 4.\n#else\nEXPECT_EQ(15, body2_font.GetHeight());  // Other platforms: Add 5.\n#endif",
+      "revId": "6d4145cbb5d52f2f0b584ecd0c684ece7fd090a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84f98b75_93236e23",
+        "filename": "chrome/browser/ui/views/harmony/layout_provider_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-31T01:44:53Z",
+      "side": 1,
+      "message": "#if defined(OS_WIN)\nEXPECT_EQ(16, button_font.GetHeight());\n#else\nEXPECT_EQ(15, button_font.GetHeight());\n#endif",
+      "revId": "6d4145cbb5d52f2f0b584ecd0c684ece7fd090a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83817985_324848c2",
+        "filename": "chrome/browser/ui/views/harmony/layout_provider_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-31T01:44:53Z",
+      "side": 1,
+      "message": "There\u0027s still a red bot :/. From comments in direct_write.cc it looks as though there are cases where the GDI fallback may be in effect.\n\nPerhaps up on line 314, we also need a check for Windows like\n\n#if defined(OS_WIN)\nif (!SkFontMgr_New_DirectWrite()) {\n  LOG(WARNING) \u003c\u003c \"Skipping: Test machine not using DirectWrite.\"\n  return;\n}\n#endif\n\n\nOf course.. the implications of this are that on *user* machines where this happens, dialogs will have different layout/line heights since we\u0027re using the same constants for GDI and DirectWrite fonts.\n\nI suspect(/hope?) that those user configurations are uncommon enough (and the differences minor enough) that we are OK with just using the same constants and having some discrepancies.  Otherwise, we maybe want to detect GDI in harmony_typography_provider.cc and use the old constants.\n\n(Sorry - I don\u0027t really know much about font rendering on Windows..)\n\n\nEither way, this CL is headed in the right direction. But we need to ensure it gets through the CQ and doesn\u0027t get reverted due to flakes :). If my SkFontMgr_New_DirectWrite() suggestion doesn\u0027t work, perhaps bail out if `base::win::GetVersion() \u003d\u003d base::win::VERSION_WIN7;` and file a bug.",
+      "revId": "6d4145cbb5d52f2f0b584ecd0c684ece7fd090a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79b8db02_b222dbf3",
+        "filename": "ui/views/layout/layout_provider.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-07-31T01:44:53Z",
+      "side": 1,
+      "message": "nit: DistanceMetric:: (you got all the others, but must have missed this :)",
+      "revId": "6d4145cbb5d52f2f0b584ecd0c684ece7fd090a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
