@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6facd108_6ebded64",
+        "filename": "ios/chrome/app/spotlight/spotlight_manager_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-31T20:02:16Z",
+      "side": 1,
+      "message": "Appears unused and unneeded; removed.",
+      "parentUuid": "b7f939f2_8b200cf8",
+      "range": {
+        "startLine": 82,
+        "startChar": 2,
+        "endLine": 82,
+        "endChar": 26
+      },
+      "revId": "2a95b0b185693c3ab069a9017b65a7c89fc9d924",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f8c67acf_786a2e79",
         "filename": "ios/chrome/browser/ui/history/favicon_view_provider_unittest.mm",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2017-07-31T19:17:10Z",
       "side": 1,
       "message": "FYI: this is a superset of a ScopedTaskEnvironment so this test is fine.\n\nAnd the test below doesn\u0027t appear to RunLoop so I suspect you won\u0027t run into problems because the test use to provide the main thread as the |background_task_runner_| and is now always async.",
+      "revId": "2a95b0b185693c3ab069a9017b65a7c89fc9d924",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "eca6d1b8_c84d308b",
+        "filename": "ios/chrome/browser/ui/history/favicon_view_provider_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-31T20:02:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f8c67acf_786a2e79",
       "revId": "2a95b0b185693c3ab069a9017b65a7c89fc9d924",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
