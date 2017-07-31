@@ -38,7 +38,36 @@ class SingleThreadTaskRunner;
 // a nested RunLoop but please do not use nested loops in production code!
 class BASE_EXPORT RunLoop {
  public:
-  RunLoop();
+  // The type of RunLoop: a DEFAULT RunLoop at the top-level (non-nested) will
+  // process system and chrome tasks assigned to its Delegate. When nested
+  // however a DEFAULT RunLoop will only process system tasks while a
+  // NESTABLE_TASKS_ALLOWED RunLoop will continue to process chrome tasks even
+  // if nested.
+  //
+  // This is relevant in the case of recursive run loops. Some unwanted run
+  // loops may occur when using common controls or printer functions. By
+  // default, recursive task processing is disabled.
+  //
+  // In general, nestable run loops are to be avoided. They are dangerous and
+  // difficult to get right, so please use with extreme caution. To further
+  // protect this: NESTABLE_TASKS_ALLOWED RunLoops are only allowed on threads
+  // where IsNestingAllowedOnCurrentThread().
+  //
+  // A specific example where this makes a difference is:
+  // - The thread is running a run loop.
+  // - It receives a task #1 and executes it.
+  // - The task #1 implicitly starts a run loop, like a MessageBox in the unit
+  //   test. This can also be StartDoc or GetSaveFileName.
+  // - The thread receives a task #2 before or while in this second run loop.
+  // - With a NESTABLE_TASKS_ALLOWED RunLoop, the task #2 will run right away.
+  //   Otherwise, it will get executed right after task #1 completes at "thread
+  //   run loop level".
+  enum class Type {
+    DEFAULT,
+    NESTABLE_TASKS_ALLOWED,
+  };
+
+  RunLoop(Type type = Type::DEFAULT);
   ~RunLoop();
 
   // Run the current RunLoop::Delegate. This blocks until Quit is called. Before
@@ -137,16 +166,20 @@ class BASE_EXPORT RunLoop {
     class BASE_EXPORT Client {
      public:
       // Returns true if this Client should return from the topmost Run() when
-      // it becomes idle. The Client is responsible for probing this when it
+      // it becomes idle. The Delegate is responsible for probing this when it
       // becomes idle.
       bool ShouldQuitWhenIdle() const;
 
       // Returns true if this |outer_| is currently in nested runs. This is a
       // shortcut for RunLoop::IsNestedOnCurrentThread() for the owner of this
       // interface.
-      // TODO(gab): consider getting rid of this and the Client class altogether
-      // when it's the only method left on Client. http://crbug.com/703346.
       bool IsNested() const;
+
+      // Returns true if the Delegate is allowed to process chrome tasks. This
+      // typically returns true except in nested run loops outside the scope of
+      // a ScopedNestableTaskAllowed as, by default, nested run loops are only
+      // meant to process system events.
+      bool ProcessingTasksAllowed() const;
 
      private:
       // Only a Delegate can instantiate a Delegate::Client.
@@ -166,9 +199,12 @@ class BASE_EXPORT RunLoop {
     // eventual matching Quit() call. Upon receiving a Quit() call it should
     // return from the Run() call as soon as possible without executing
     // remaining tasks/messages. Run() calls can nest in which case each Quit()
-    // call should result in the topmost active Run() call returning. The
-    // only other trigger for Run() to return is Client::ShouldQuitWhenIdle()
-    // which the Client should probe before sleeping when it becomes idle.
+    // call should result in the topmost active Run() call returning. The only
+    // other trigger for Run() to return is Client::ShouldQuitWhenIdle() which
+    // the Client should probe before sleeping when it becomes idle. Run()
+    // implementations should also check Client::ProcessingTasksAllowed() before
+    // processing assigned chrome tasks (they should only process system tasks
+    // otherwise).
     virtual void Run() = 0;
     virtual void Quit() = 0;
 
@@ -229,6 +265,8 @@ class BASE_EXPORT RunLoop {
   // access without using TLS (also allows access to state from another sequence
   // during Run(), ref. |sequence_checker_| below).
   Delegate* delegate_;
+
+  const Type type_;
 
 #if DCHECK_IS_ON()
   bool run_called_ = false;

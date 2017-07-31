@@ -43,7 +43,7 @@ void ShouldNotRunTask() {
 }
 
 void RunNestedLoopTask(int* counter) {
-  RunLoop nested_run_loop;
+  RunLoop nested_run_loop(RunLoop::Type::NESTABLE_TASKS_ALLOWED);
 
   // This task should quit |nested_run_loop| but not the main RunLoop.
   ThreadTaskRunnerHandle::Get()->PostTask(
@@ -53,13 +53,6 @@ void RunNestedLoopTask(int* counter) {
   ThreadTaskRunnerHandle::Get()->PostDelayedTask(
       FROM_HERE, BindOnce(&ShouldNotRunTask), TimeDelta::FromDays(1));
 
-  std::unique_ptr<MessageLoop::ScopedNestableTaskAllower> allower;
-  if (MessageLoop::current()) {
-    // Need to allow nestable tasks in MessageLoop driven environments.
-    // TODO(gab): Move nestable task allowance concept to RunLoop.
-    allower = base::MakeUnique<MessageLoop::ScopedNestableTaskAllower>(
-        MessageLoop::current());
-  }
   nested_run_loop.Run();
 
   ++(*counter);
@@ -136,7 +129,8 @@ class MockDelegate : public RunLoop::Delegate {
  private:
   void Run() override {
     while (!should_quit_) {
-      if (!mock_task_runner_->ProcessTask()) {
+      if (!run_loop_client_->ProcessingTasksAllowed() ||
+          !mock_task_runner_->ProcessTask()) {
         if (run_loop_client_->ShouldQuitWhenIdle()) {
           break;
         } else {
@@ -419,7 +413,7 @@ TEST_P(RunLoopTest, IsNestedOnCurrentThread) {
       FROM_HERE, BindOnce([]() {
         EXPECT_FALSE(RunLoop::IsNestedOnCurrentThread());
 
-        RunLoop nested_run_loop;
+        RunLoop nested_run_loop(RunLoop::Type::NESTABLE_TASKS_ALLOWED);
 
         ThreadTaskRunnerHandle::Get()->PostTask(
             FROM_HERE, BindOnce([]() {
@@ -429,13 +423,6 @@ TEST_P(RunLoopTest, IsNestedOnCurrentThread) {
                                                 nested_run_loop.QuitClosure());
 
         EXPECT_FALSE(RunLoop::IsNestedOnCurrentThread());
-        std::unique_ptr<MessageLoop::ScopedNestableTaskAllower> allower;
-        if (MessageLoop::current()) {
-          // Need to allow nestable tasks in MessageLoop driven environments.
-          // TODO(gab): Move nestable task allowance concept to RunLoop.
-          allower = base::MakeUnique<MessageLoop::ScopedNestableTaskAllower>(
-              MessageLoop::current());
-        }
         nested_run_loop.Run();
         EXPECT_FALSE(RunLoop::IsNestedOnCurrentThread());
       }));
@@ -463,20 +450,13 @@ TEST_P(RunLoopTest, NestingObservers) {
   RunLoop::AddNestingObserverOnCurrentThread(&nesting_observer);
 
   const RepeatingClosure run_nested_loop = Bind([]() {
-    RunLoop nested_run_loop;
+    RunLoop nested_run_loop(RunLoop::Type::NESTABLE_TASKS_ALLOWED);
     ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE, BindOnce([]() {
           EXPECT_TRUE(RunLoop::IsNestingAllowedOnCurrentThread());
         }));
     ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
                                             nested_run_loop.QuitClosure());
-    std::unique_ptr<MessageLoop::ScopedNestableTaskAllower> allower;
-    if (MessageLoop::current()) {
-      // Need to allow nestable tasks in MessageLoop driven environments.
-      // TODO(gab): Move nestable task allowance concept to RunLoop.
-      allower = base::MakeUnique<MessageLoop::ScopedNestableTaskAllower>(
-          MessageLoop::current());
-    }
     nested_run_loop.Run();
   });
 
