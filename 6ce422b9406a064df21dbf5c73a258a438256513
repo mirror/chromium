@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e1538ad_f9e99859",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/password_list_item.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-31T21:45:54Z",
+      "side": 1,
+      "message": "It might be worthwhile to add a\n\n#password {\n   font-family: inherit;\n   font-size: inherit;\n}\n\nhere. The reason for this is that #password is an input field which inherits the System\u0027s font and ignores the font specified in text_defaults_md.css\n(https://codesearch.chromium.org/chromium/src/ui/webui/resources/css/text_defaults_md.css?l\u003d24-27).\n\nThe result is this: https://bugs.chromium.org/p/chromium/issues/attachment?aid\u003d295492\u0026inline\u003d1\n\nWhen adding the CSS snippet mentioned above the result changes to the following, which subjectively looks better to me, since it is consistent with the rest: https://bugs.chromium.org/p/chromium/issues/attachment?aid\u003d295493\u0026inline\u003d1\n\nWhat do you think?",
+      "range": {
+        "startLine": 22,
+        "startChar": 6,
+        "endLine": 22,
+        "endChar": 11
+      },
+      "revId": "6ce422b9406a064df21dbf5c73a258a438256513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b45f41ef_5b1e488e",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-31T21:45:54Z",
+      "side": 1,
+      "message": "This is in response to moving the #passwordMenu button out of the #password-column div in password_list_item.html. Without this hidden button the labels wouldn\u0027t be aligned with the columns anymore. However, this solution seems very hacky to me. Is there a nicer way to achieve the same result?",
+      "range": {
+        "startLine": 69,
+        "startChar": 10,
+        "endLine": 69,
+        "endChar": 16
+      },
+      "revId": "6ce422b9406a064df21dbf5c73a258a438256513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14f1b92a_4d0a1393",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_shared_css.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-31T21:45:54Z",
+      "side": 1,
+      "message": "This gives website, username and password columns the same amount of width as discussed and agreed on in the email thread. A screenshot of this behavior is here: https://bugs.chromium.org/p/chromium/issues/attachment?aid\u003d295491\u0026inline\u003d1",
+      "range": {
+        "startLine": 16,
+        "startChar": 14,
+        "endLine": 16,
+        "endChar": 15
+      },
+      "revId": "6ce422b9406a064df21dbf5c73a258a438256513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

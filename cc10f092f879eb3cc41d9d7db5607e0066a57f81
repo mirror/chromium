@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "6108e7d5_4cfbc003",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/password_list_item.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-07-31T21:45:54Z",
+      "side": 1,
+      "message": "I decided to go with your suggestion. Another reason is the copying of long passwords when visible. Having a text-elide there will always show an ellipsis, even when the user scrolls right while highlighting the password. Ctrl+C will work correctly and copy the full password, but it felt odd to me. Not having the elide seemed definitely better.",
+      "parentUuid": "e38ed224_8308c0e5",
+      "range": {
+        "startLine": 39,
+        "startChar": 36,
+        "endLine": 39,
+        "endChar": 46
+      },
+      "revId": "cc10f092f879eb3cc41d9d7db5607e0066a57f81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da26d12f_c1367ae7",
         "filename": "chrome/browser/resources/settings/passwords_and_forms_page/password_list_item.html",
         "patchSetId": 4
