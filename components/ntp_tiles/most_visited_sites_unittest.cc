@@ -287,16 +287,48 @@ class PopularSitesFactoryForTest {
       url_fetcher_factory_.SetFakeResponse(
           GURL("https://www.gstatic.com/chrome/ntp/suggested_sites_IN_7.json"),
           R"([{
-                "title": "PopularSite1",
-                "url": "http://popularsite1/",
-                "favicon_url": "http://popularsite1/favicon.ico"
+                "section": 0, // PERSONALIZED
+                "sites": [{
+                    "title": "PopularSite1",
+                    "url": "http://popularsite1/",
+                    "favicon_url": "http://popularsite1/favicon.ico"
+                  },
+                  {
+                    "title": "PopularSite2",
+                    "url": "http://popularsite2/",
+                    "favicon_url": "http://popularsite2/favicon.ico"
+                  },
+                 ]
+              },
+              // 1 and 2 come after 3. 4 and 5 intentionally skipped.
+              {
+                  "section": 3,  // NEWS
+                  "sites": [{
+                      "large_icon_url": "https://news.google.com/icon.ico",
+                      "title": "Google News",
+                      "url": "https://news.google.com/"
+                  },
+                  {
+                      "favicon_url": "https://news.google.com/icon.ico",
+                      "title": "Google News Germany",
+                      "url": "https://news.google.de/"
+                  }]
               },
               {
-                "title": "PopularSite2",
-                "url": "http://popularsite2/",
-                "favicon_url": "http://popularsite2/favicon.ico"
+                  "section": 1,  // SOCIAL
+                  "sites": [{
+                      "large_icon_url": "https://ssl.gstatic.com/icon.png",
+                      "title": "Google+",
+                      "url": "https://plus.google.com/"
+                  }]
               },
-             ])",
+              {
+                  "section": 2,  // ENTERTAINMENT
+                  "sites": [
+                      // Intentionally empty site list.
+                  ]
+              }
+          ])",
           net::HTTP_OK, net::URLRequestStatus::SUCCESS);
     }
   }
@@ -862,7 +894,8 @@ TEST_P(MostVisitedSitesTest, ShouldContainSiteExplorationsWhenFeatureEnabled) {
                                         TileSource::POPULAR),
                             MatchesTile("PopularSite2", "http://popularsite2/",
                                         TileSource::POPULAR)))),
-            Contains(Pair(SectionType::SOCIAL, SizeIs(3ul)))));
+            Contains(Pair(SectionType::NEWS, SizeIs(2ul))),
+            Contains(Pair(SectionType::SOCIAL, SizeIs(1ul)))));
   EXPECT_THAT(sections, Not(Contains(Pair(_, IsEmpty()))));
 }
 
