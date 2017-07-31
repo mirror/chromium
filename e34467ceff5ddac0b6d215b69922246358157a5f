@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "647faac4_780c5446",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-07-31T22:29:36Z",
+      "side": 1,
+      "message": "why check both thresholds_ and subscriptions_ (!subscriptions_) ?",
+      "range": {
+        "startLine": 207,
+        "startChar": 46,
+        "endLine": 207,
+        "endChar": 60
+      },
+      "revId": "e34467ceff5ddac0b6d215b69922246358157a5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "83a06bac_33d4c2ca",
         "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.cpp",
         "patchSetId": 2
@@ -13,6 +36,29 @@
       "writtenOn": "2017-07-31T20:36:26Z",
       "side": 1,
       "message": "Maybe this change will make it clearer?\n\n\"Script \u0027%s\u0027(line: %d, column: %d) took %ldms to compile.\"",
+      "revId": "e34467ceff5ddac0b6d215b69922246358157a5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5268c93_25254789",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-07-31T22:29:36Z",
+      "side": 1,
+      "message": "I\u0027ll defer to devtools folks whether they want violation report (probably not initially)\n\nFor Long Tasks we instead want to report this as extra bit of attribution in ReportLongTask.\nThis should eventually surface as setting fields in relevant TaskAttributionTiming entry:\nname (\"scriptparse\"), start-time, duration.\nI\u0027d prefer to do that plumbing in a separate CL, here we just record start-time \u0026 duration of compile in a member var that is later sent to ReportLongTask.",
+      "range": {
+        "startLine": 226,
+        "startChar": 2,
+        "endLine": 226,
+        "endChar": 29
+      },
       "revId": "e34467ceff5ddac0b6d215b69922246358157a5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
