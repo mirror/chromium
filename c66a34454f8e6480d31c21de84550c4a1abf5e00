@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d8795177_8d7c5d79",
+        "filename": "chrome/browser/vr/elements/content_element.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-07-31T16:43:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b613864_923ede91",
+      "revId": "c66a34454f8e6480d31c21de84550c4a1abf5e00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4939e96_590b1b32",
         "filename": "chrome/browser/vr/ui_input_manager.cc",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "603ab743_15114ed8",
+        "filename": "chrome/browser/vr/ui_input_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-07-31T16:43:20Z",
+      "side": 1,
+      "message": "Added a comment to UiElementDebugId to clarify my intention to use this identifier beyond testing and debugging.",
+      "parentUuid": "f4939e96_590b1b32",
+      "revId": "c66a34454f8e6480d31c21de84550c4a1abf5e00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3349754b_1c8749ab",
         "filename": "chrome/browser/vr/ui_scene.cc",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-31T15:13:59Z",
       "side": 1,
       "message": "I know, this is not part of your CL. But is this ever going to go into UiSceneManager?",
+      "revId": "c66a34454f8e6480d31c21de84550c4a1abf5e00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "981028b1_0a0d7adb",
+        "filename": "chrome/browser/vr/ui_scene.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-07-31T16:43:20Z",
+      "side": 1,
+      "message": "If we transition to a UiElement hierarchy, I think this will get sorted out naturally. I\u0027m not sure it\u0027s worth removing the TODO until we work that out, though.",
+      "parentUuid": "3349754b_1c8749ab",
       "revId": "c66a34454f8e6480d31c21de84550c4a1abf5e00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -84,6 +138,24 @@
       "revId": "c66a34454f8e6480d31c21de84550c4a1abf5e00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc33f126_d5498414",
+        "filename": "chrome/browser/vr/vr_shell_renderer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-07-31T16:43:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54df6d51_11d1a8a4",
+      "revId": "c66a34454f8e6480d31c21de84550c4a1abf5e00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
