@@ -242,5 +242,57 @@ TEST_F(TaskSchedulerWorkerStackTest, PushTwice) {
   EXPECT_DCHECK_DEATH({ stack.Push(worker_a_.get()); });
 }
 
+// Verify that ContainsNearBottom() correctly returns the whether workers
+// are near the bottom of the stack.
+TEST_F(TaskSchedulerWorkerStackTest, ContainsNearBottom) {
+  SchedulerWorkerStack stack;
+  EXPECT_FALSE(stack.ContainsNearBottom(worker_a_.get(), 0));
+  EXPECT_FALSE(stack.ContainsNearBottom(worker_b_.get(), 1));
+  EXPECT_FALSE(stack.ContainsNearBottom(worker_c_.get(), 2));
+
+  stack.Push(worker_a_.get());
+  EXPECT_TRUE(stack.ContainsNearBottom(worker_a_.get(), 0));
+  EXPECT_TRUE(stack.ContainsNearBottom(worker_a_.get(), 1));
+  EXPECT_TRUE(stack.ContainsNearBottom(worker_a_.get(), 2));
+
+  EXPECT_FALSE(stack.ContainsNearBottom(worker_b_.get(), 0));
+  EXPECT_FALSE(stack.ContainsNearBottom(worker_c_.get(), 0));
+  EXPECT_FALSE(stack.ContainsNearBottom(worker_b_.get(), 2));
+  EXPECT_FALSE(stack.ContainsNearBottom(worker_c_.get(), 2));
+
+  stack.Push(worker_b_.get());
+  EXPECT_TRUE(stack.ContainsNearBottom(worker_a_.get(), 0));
+  EXPECT_FALSE(stack.ContainsNearBottom(worker_b_.get(), 0));
+  EXPECT_TRUE(stack.ContainsNearBottom(worker_b_.get(), 1));
+
+  stack.Push(worker_c_.get());
+  EXPECT_TRUE(stack.ContainsNearBottom(worker_a_.get(), 0));
+  EXPECT_TRUE(stack.ContainsNearBottom(worker_a_.get(), 1));
+  EXPECT_TRUE(stack.ContainsNearBottom(worker_a_.get(), 2));
+
+  EXPECT_FALSE(stack.ContainsNearBottom(worker_b_.get(), 0));
+  EXPECT_TRUE(stack.ContainsNearBottom(worker_b_.get(), 1));
+  EXPECT_TRUE(stack.ContainsNearBottom(worker_b_.get(), 2));
+
+  EXPECT_FALSE(stack.ContainsNearBottom(worker_c_.get(), 0));
+  EXPECT_FALSE(stack.ContainsNearBottom(worker_c_.get(), 1));
+  EXPECT_TRUE(stack.ContainsNearBottom(worker_c_.get(), 2));
+
+  stack.Pop();
+  EXPECT_TRUE(stack.ContainsNearBottom(worker_a_.get(), 0));
+  EXPECT_TRUE(stack.ContainsNearBottom(worker_b_.get(), 1));
+  EXPECT_FALSE(stack.ContainsNearBottom(worker_c_.get(), 2));
+
+  stack.Pop();
+  EXPECT_TRUE(stack.ContainsNearBottom(worker_a_.get(), 0));
+  EXPECT_FALSE(stack.ContainsNearBottom(worker_b_.get(), 1));
+  EXPECT_FALSE(stack.ContainsNearBottom(worker_c_.get(), 2));
+
+  stack.Pop();
+  EXPECT_FALSE(stack.ContainsNearBottom(worker_a_.get(), 0));
+  EXPECT_FALSE(stack.ContainsNearBottom(worker_b_.get(), 1));
+  EXPECT_FALSE(stack.ContainsNearBottom(worker_c_.get(), 2));
+}
+
 }  // namespace internal
 }  // namespace base

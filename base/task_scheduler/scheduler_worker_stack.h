@@ -41,6 +41,10 @@ class BASE_EXPORT SchedulerWorkerStack {
   // Returns true if |worker| is already on the stack.
   bool Contains(const SchedulerWorker* worker) const;
 
+  // Returns true if |worker| is within |n| spots from the bottom element of
+  // the stack. Returns -1 if |worker| is not within this region.
+  bool ContainsNearBottom(const SchedulerWorker* worker, int n) const;
+
   // Removes |worker| from the stack.
   void Remove(const SchedulerWorker* worker);
 
