@@ -88,6 +88,24 @@
       "revId": "f0d9d6f1a683dc32c2c7c7619e663c19aa55af4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3da2c9c0_8c16f412",
+        "filename": "chrome/common/media_router/mojo/media_router_struct_traits.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-07-31T18:39:55Z",
+      "side": 1,
+      "message": "+1, seems simpler to just pass the port to MRP.",
+      "parentUuid": "a3e72a3d_23872cf1",
+      "revId": "f0d9d6f1a683dc32c2c7c7619e663c19aa55af4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
