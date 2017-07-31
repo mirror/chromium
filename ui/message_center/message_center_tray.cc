@@ -104,6 +104,9 @@ MessageCenterTray::MessageCenterTray(
       popups_visible_(false),
       delegate_(delegate) {
   message_center_->AddObserver(this);
+#ifdef OS_CHROMEOS
+  message_center_->SetProductOSName(delegate->GetProductOSName());
+#endif
 }
 
 MessageCenterTray::~MessageCenterTray() {

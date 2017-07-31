@@ -37,6 +37,7 @@ class WebNotificationTray : public message_center::MessageCenterTrayDelegate {
   void OnMessageCenterTrayChanged() override;
   bool ShowNotifierSettings() override;
   bool IsContextMenuEnabled() const override;
+  base::string16 GetProductOSName() override;
 
   MessageCenterTray* GetMessageCenterTray() override;
 
