@@ -16,6 +16,24 @@
       "revId": "c90c52400d80b50d3f085722abbf365f827644c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93405ebc_0520562c",
+        "filename": "testing/scripts/run_telemetry_benchmark_as_googletest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1170907
+      },
+      "writtenOn": "2017-07-31T15:23:34Z",
+      "side": 1,
+      "message": "Do we have another way to determine if a benchmark was run but no results due to being disabled?  Has this been plumbed through to the recipe side of things?",
+      "parentUuid": "e4ef458f_9cf3d257",
+      "revId": "c90c52400d80b50d3f085722abbf365f827644c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
