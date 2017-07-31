@@ -6,8 +6,15 @@ package org.chromium.net.urlconnection;
 
 import android.support.test.filters.SmallTest;
 
+import org.junit.Assert;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.chromium.base.annotations.SuppressFBWarnings;
+import org.chromium.base.test.BaseJUnit4ClassRunner;
 import org.chromium.base.test.util.Feature;
-import org.chromium.net.CronetTestBase;
+import org.chromium.net.CronetTestRule;
 
 import java.io.IOException;
 import java.net.SocketTimeoutException;
@@ -19,7 +26,12 @@ import java.util.concurrent.ThreadFactory;
 /**
  * Tests the MessageLoop implementation.
  */
-public class MessageLoopTest extends CronetTestBase {
+@RunWith(BaseJUnit4ClassRunner.class)
+public class MessageLoopTest {
+    @SuppressFBWarnings("URF_UNREAD_PUBLIC_OR_PROTECTED_FIELD")
+    @Rule
+    public CronetTestRule mTestRule = new CronetTestRule();
+
     private Thread mTestThread;
     private final ExecutorService mExecutorService =
             Executors.newSingleThreadExecutor(new ExecutorThreadFactory());
@@ -31,11 +43,12 @@ public class MessageLoopTest extends CronetTestBase {
     }
     private boolean mFailed = false;
 
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     public void testInterrupt() throws Exception {
         final MessageLoop loop = new MessageLoop();
-        assertFalse(loop.isRunning());
+        Assert.assertFalse(loop.isRunning());
         Future future = mExecutorService.submit(new Runnable() {
             @Override
             public void run() {
@@ -48,34 +61,35 @@ public class MessageLoopTest extends CronetTestBase {
             }
         });
         Thread.sleep(1000);
-        assertTrue(loop.isRunning());
-        assertFalse(loop.hasLoopFailed());
+        Assert.assertTrue(loop.isRunning());
+        Assert.assertFalse(loop.hasLoopFailed());
         mTestThread.interrupt();
         future.get();
-        assertFalse(loop.isRunning());
-        assertTrue(loop.hasLoopFailed());
-        assertFalse(mFailed);
+        Assert.assertFalse(loop.isRunning());
+        Assert.assertTrue(loop.hasLoopFailed());
+        Assert.assertFalse(mFailed);
         // Re-spinning the message loop is not allowed after interrupt.
         mExecutorService.submit(new Runnable() {
             @Override
             public void run() {
                 try {
                     loop.loop();
-                    fail();
+                    Assert.fail();
                 } catch (Exception e) {
                     if (!(e instanceof IllegalStateException)) {
-                        fail();
+                        Assert.fail();
                     }
                 }
             }
         }).get();
     }
 
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     public void testTaskFailed() throws Exception {
         final MessageLoop loop = new MessageLoop();
-        assertFalse(loop.isRunning());
+        Assert.assertFalse(loop.isRunning());
         Future future = mExecutorService.submit(new Runnable() {
             @Override
             public void run() {
@@ -96,42 +110,43 @@ public class MessageLoopTest extends CronetTestBase {
             }
         };
         Thread.sleep(1000);
-        assertTrue(loop.isRunning());
-        assertFalse(loop.hasLoopFailed());
+        Assert.assertTrue(loop.isRunning());
+        Assert.assertFalse(loop.hasLoopFailed());
         loop.execute(failedTask);
         future.get();
-        assertFalse(loop.isRunning());
-        assertTrue(loop.hasLoopFailed());
-        assertFalse(mFailed);
+        Assert.assertFalse(loop.isRunning());
+        Assert.assertTrue(loop.hasLoopFailed());
+        Assert.assertFalse(mFailed);
         // Re-spinning the message loop is not allowed after exception.
         mExecutorService.submit(new Runnable() {
             @Override
             public void run() {
                 try {
                     loop.loop();
-                    fail();
+                    Assert.fail();
                 } catch (Exception e) {
                     if (!(e instanceof IllegalStateException)) {
-                        fail();
+                        Assert.fail();
                     }
                 }
             }
         }).get();
     }
 
+    @Test
     @SmallTest
     @Feature({"Cronet"})
     public void testLoopWithTimeout() throws Exception {
         final MessageLoop loop = new MessageLoop();
-        assertFalse(loop.isRunning());
+        Assert.assertFalse(loop.isRunning());
         // The MessageLoop queue is empty. Use a timeout of 100ms to check that
         // it doesn't block forever.
         try {
             loop.loop(100);
-            fail();
+            Assert.fail();
         } catch (SocketTimeoutException e) {
             // Expected.
         }
-        assertFalse(loop.isRunning());
+        Assert.assertFalse(loop.isRunning());
     }
 }

@@ -13,7 +13,7 @@ import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertTrue;
 
-import static org.chromium.net.CronetTestBase.assertContains;
+import static org.chromium.net.CronetTestRule.assertContains;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
