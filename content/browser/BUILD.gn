@@ -71,6 +71,7 @@ source_set("browser") {
     "//content/common:features",
     "//content/common:mojo_bindings",
     "//content/public/common:common_sources",
+    "//content/public/network:network_sources",
     "//crypto",
     "//device/bluetooth",
     "//device/gamepad",
