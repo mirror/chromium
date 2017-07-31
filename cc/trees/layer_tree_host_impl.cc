@@ -1107,9 +1107,22 @@ DrawResult LayerTreeHostImpl::PrepareToDraw(FrameData* frame) {
   if (const char* client_name = GetClientNameForMetrics()) {
     size_t total_memory_in_bytes = 0;
     size_t total_gpu_memory_for_tilings_in_bytes = 0;
+    // The scroller itself usually does not have content and the content that
+    // gets scrolled is a child layer that will share the same scroll index.
+    // By adding up all layers that share the same index we could calculate
+    // the GPU memory cost for compositing a scroller and all with it.
+    std::unordered_map<int, size_t> scroll_tree_index_to_memory_map;
     for (const PictureLayerImpl* layer : active_tree()->picture_layers()) {
       total_memory_in_bytes += layer->GetRasterSource()->GetMemoryUsage();
-      total_gpu_memory_for_tilings_in_bytes += layer->GPUMemoryUsageInBytes();
+      size_t gpu_memory_for_tilings_in_bytes = layer->GPUMemoryUsageInBytes();
+      total_gpu_memory_for_tilings_in_bytes += gpu_memory_for_tilings_in_bytes;
+
+      if (layer->scrollable() ||
+          (scroll_tree_index_to_memory_map.find(layer->scroll_tree_index()) !=
+           scroll_tree_index_to_memory_map.end())) {
+        scroll_tree_index_to_memory_map[layer->scroll_tree_index()] +=
+            gpu_memory_for_tilings_in_bytes;
+      }
     }
     if (total_memory_in_bytes != 0) {
       // GetClientNameForMetrics only returns one non-null value over the
@@ -1142,6 +1155,18 @@ DrawResult LayerTreeHostImpl::PrepareToDraw(FrameData* frame) {
                                     1024),
           1, kGPUMemoryForTilingsLargestBucketKb,
           kGPUMemoryForTilingsBucketCount);
+
+      for (const auto& index_memory : scroll_tree_index_to_memory_map) {
+        if (index_memory.second > 0) {
+          UMA_HISTOGRAM_CUSTOM_COUNTS(
+              base::StringPrintf(
+                  "Compositing.%s.GPUMemoryForTilingsForScrollersInKb",
+                  client_name),
+              base::saturated_cast<int>(index_memory.second / 1024), 1,
+              kGPUMemoryForTilingsLargestBucketKb,
+              kGPUMemoryForTilingsBucketCount);
+        }
+      }
     }
   }
 
