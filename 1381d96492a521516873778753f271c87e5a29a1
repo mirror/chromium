@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bee8d9df_3998b922",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-07-31T14:23:39Z",
+      "side": 1,
+      "message": "Add \u0027.\u0027 after the \u0027)\u0027",
+      "range": {
+        "startLine": 160,
+        "startChar": 61,
+        "endLine": 160,
+        "endChar": 62
+      },
+      "revId": "1381d96492a521516873778753f271c87e5a29a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b04c7605_acbceb8e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-07-31T14:23:39Z",
+      "side": 1,
+      "message": "Nits:\n- Start (A) and (B) on a new line.\n- Add a \u0027.\u0027 after recents",
+      "revId": "1381d96492a521516873778753f271c87e5a29a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a5e4932_33c43bdc",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappActivity.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-07-31T14:23:39Z",
+      "side": 1,
+      "message": "Nit: \"navigate use current intent.\" -\u003e \"navigate using WebappInfo retrieved from cache.\"",
+      "revId": "1381d96492a521516873778753f271c87e5a29a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a901d58a_4dec6c90",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappLauncherActivity.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1176654
+      },
+      "writtenOn": "2017-07-31T14:23:39Z",
+      "side": 1,
+      "message": "Nit: Maybe move LaunchMetrics#recordHomeScreenLaunchIntoStandaloneActivity() above the comment. That way all of the code related to launching an activity is in one spot.",
+      "revId": "1381d96492a521516873778753f271c87e5a29a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
