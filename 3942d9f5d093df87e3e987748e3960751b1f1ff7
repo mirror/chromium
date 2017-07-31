@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8be29e32_81c2eeb1",
+        "filename": "chrome/installer/zucchini/zucchini_commands.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-31T18:17:54Z",
+      "side": 1,
+      "message": "Done, but going with all-caps: CRC32.",
+      "parentUuid": "c51e786c_fcdf4c00",
+      "range": {
+        "startLine": 119,
+        "startChar": 15,
+        "endLine": 119,
+        "endChar": 16
+      },
+      "revId": "3942d9f5d093df87e3e987748e3960751b1f1ff7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e638c2cf_681dbbf6",
         "filename": "chrome/installer/zucchini/zucchini_commands.h",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "3942d9f5d093df87e3e987748e3960751b1f1ff7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d54f6183_bbde7f39",
+        "filename": "chrome/installer/zucchini/zucchini_commands.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-07-31T18:17:54Z",
+      "side": 1,
+      "message": "Done. Including \u003costream\u003e despite that \u003ciostream\u003e is included, for portability.",
+      "parentUuid": "e638c2cf_681dbbf6",
+      "range": {
+        "startLine": 8,
+        "startChar": 9,
+        "endLine": 8,
+        "endChar": 18
+      },
+      "revId": "3942d9f5d093df87e3e987748e3960751b1f1ff7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
