@@ -40,6 +40,19 @@ namespace viz {
 class SurfaceClient;
 class SurfaceManager;
 
+// A Surface is a representation of a sequence of CompositorFrames with a
+// common set of properties uniquely identified by a SurfaceId. In particular,
+// all CompositorFrames submitted to a single Surface share properties described
+// in SurfaceInfo: device scale factor and size. A Surface can hold up to two
+// CompositorFrames at a given time:
+//   Active frame:  An active frame is a candidate for display. A
+//                  CompositorFrame is active if it has been explicitly marked
+//                  as active after a deadline has passed or all its activation
+//                  dependencies are active.
+//   Pending frame: A pending CompositorFrame cannot be displayed on screen. A
+//                  CompositorFrame is pending if it has unresolved
+//                  dependencies: surface Ids to which there are no active
+//                  CompositorFrames.
 class VIZ_SERVICE_EXPORT Surface : public SurfaceDeadlineObserver {
  public:
   using WillDrawCallback =
@@ -67,6 +80,8 @@ class VIZ_SERVICE_EXPORT Surface : public SurfaceDeadlineObserver {
     return deadline_.InheritFrom(deadline);
   }
 
+  // Sets a deadline a number of frames ahead to active the currently pending
+  // CompositorFrame held by this surface.
   void SetActivationDeadline(uint32_t number_of_frames_to_deadline) {
     deadline_.Set(number_of_frames_to_deadline);
   }
@@ -212,7 +227,7 @@ class VIZ_SERVICE_EXPORT Surface : public SurfaceDeadlineObserver {
       cc::CompositorFrame* frame,
       std::vector<ui::LatencyInfo>* latency_info);
 
-  SurfaceInfo surface_info_;
+  const SurfaceInfo surface_info_;
   SurfaceId previous_frame_surface_id_;
   SurfaceManager* const surface_manager_;
   base::WeakPtr<SurfaceClient> surface_client_;
