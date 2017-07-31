@@ -32,7 +32,8 @@ RasterSource::RasterSource(const RecordingSource* other)
       size_(other->size_),
       clear_canvas_with_debug_color_(other->clear_canvas_with_debug_color_),
       slow_down_raster_scale_factor_for_debug_(
-          other->slow_down_raster_scale_factor_for_debug_) {}
+          other->slow_down_raster_scale_factor_for_debug_),
+      recording_scale_factor_(other->recording_scale_factor_) {}
 RasterSource::~RasterSource() = default;
 
 void RasterSource::PlaybackToCanvas(
@@ -54,7 +55,8 @@ void RasterSource::PlaybackToCanvas(
   raster_canvas->clipRect(SkRect::MakeFromIRect(raster_bounds));
   raster_canvas->translate(raster_transform.translation().x(),
                            raster_transform.translation().y());
-  raster_canvas->scale(raster_transform.scale(), raster_transform.scale());
+  raster_canvas->scale(raster_transform.scale() / recording_scale_factor_,
+                       raster_transform.scale() / recording_scale_factor_);
   PlaybackToCanvas(raster_canvas, target_color_space, settings);
   raster_canvas->restore();
 }
@@ -198,6 +200,7 @@ bool RasterSource::PerformSolidColorAnalysis(gfx::Rect layer_rect,
   TRACE_EVENT0("cc", "RasterSource::PerformSolidColorAnalysis");
 
   layer_rect.Intersect(gfx::Rect(size_));
+  layer_rect = gfx::ScaleToRoundedRect(layer_rect, recording_scale_factor_);
   return display_list_->GetColorIfSolidInRect(layer_rect, color);
 }
 

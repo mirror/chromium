@@ -60,7 +60,8 @@ Compositor::Compositor(const viz::FrameSinkId& frame_sink_id,
                        ui::ContextFactoryPrivate* context_factory_private,
                        scoped_refptr<base::SingleThreadTaskRunner> task_runner,
                        bool enable_surface_synchronization,
-                       bool external_begin_frames_enabled)
+                       bool external_begin_frames_enabled,
+                       bool enable_pixel_canvas)
     : context_factory_(context_factory),
       context_factory_private_(context_factory_private),
       frame_sink_id_(frame_sink_id),
@@ -70,6 +71,7 @@ Compositor::Compositor(const viz::FrameSinkId& frame_sink_id,
       layer_animator_collection_(this),
       scheduled_timeout_(base::TimeTicks()),
       allow_locks_to_extend_timeout_(false),
+      is_pixel_canvas_(enable_pixel_canvas),
       weak_ptr_factory_(this),
       lock_timeout_weak_ptr_factory_(this) {
   if (context_factory_private) {
@@ -336,6 +338,8 @@ void Compositor::SetScaleAndSize(float scale, const gfx::Size& size_in_pixel) {
   if (device_scale_factor_ != scale) {
     device_scale_factor_ = scale;
     host_->SetDeviceScaleFactor(scale);
+    if (is_pixel_canvas())
+      host_->SetRecordingScaleFactor(scale);
     if (root_layer_)
       root_layer_->OnDeviceScaleFactorChanged(scale);
   }
