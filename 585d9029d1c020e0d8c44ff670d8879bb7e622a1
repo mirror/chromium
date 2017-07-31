@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ca1910be_f30e3661",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-07-31T23:49:57Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "4816dce2_97c97118",
+      "revId": "585d9029d1c020e0d8c44ff670d8879bb7e622a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "863eaac0_59bdcd85",
         "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
         "patchSetId": 2
@@ -59,6 +77,48 @@
     },
     {
       "key": {
+        "uuid": "68e9a0aa_bc5b8eb6",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-07-31T23:49:57Z",
+      "side": 1,
+      "message": "Hid it behind the check for now, with a comment that we will handle this later.",
+      "parentUuid": "863eaac0_59bdcd85",
+      "revId": "585d9029d1c020e0d8c44ff670d8879bb7e622a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab3b474f_cbebd402",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-07-31T23:49:57Z",
+      "side": 1,
+      "message": "Changed has_damage to true.",
+      "parentUuid": "6d186737_e1fbe291",
+      "range": {
+        "startLine": 76,
+        "startChar": 2,
+        "endLine": 76,
+        "endChar": 13
+      },
+      "revId": "585d9029d1c020e0d8c44ff670d8879bb7e622a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7370a866_d77752f2",
         "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
         "patchSetId": 2
@@ -70,6 +130,30 @@
       "writtenOn": "2017-07-29T05:14:52Z",
       "side": 1,
       "message": "\u003e Not necessarily, since a SubmitFrame can occur before we start on BeginFrames.\n\u003e If I remove it, things error out when I pause, which makes sense, since\n\u003e it still thinks it needs to render the last frame.\n\nyou mean the SubmitFrame called in StopRendering?  maybe it should PutCurrentFrame if it calls SubmitFrame, then.  looking at VFC, it seems like this is reasonable now.  in VLI, we didn\u0027t know _when_ the frame would actually be used, since all we could do is ask for a redraw that would happen some time later.  nor did we know if we\u0027d draw the same frame more than once.\n\ndoes that cause every call to Submit to be followed by a Put?  if so, i guess we could put it into the end of Submit.  kinda makes sense -- we shouldn\u0027t be submitting more than one compositor frame for one video frame.  should be zero or one.\n\nin any case, DidReceiveCompositorFrameAck isn\u0027t the right place to call it, since we have no idea if it\u0027s even the same video frame in VFC anymore.  the compositor frame ack is making a round trip to viz, so it could be a very long time after we actually used the video frame.",
+      "range": {
+        "startLine": 139,
+        "startChar": 17,
+        "endLine": 139,
+        "endChar": 18
+      },
+      "revId": "585d9029d1c020e0d8c44ff670d8879bb7e622a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b761f8b_98323d46",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1215059
+      },
+      "writtenOn": "2017-07-31T23:49:57Z",
+      "side": 1,
+      "message": "Weird, I couldn\u0027t get it to error again. Done.",
+      "parentUuid": "7370a866_d77752f2",
       "range": {
         "startLine": 139,
         "startChar": 17,
