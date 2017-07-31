@@ -8,6 +8,11 @@
 #include <utility>
 
 #include "base/optional.h"
+#include "build/build_config.h"
+
+#if defined(OS_WIN)
+#include "remoting/host/evaluate_d3d_win.h"
+#endif
 
 namespace remoting {
 
@@ -40,7 +45,9 @@ DesktopEnvironmentOptions::operator=(
 void DesktopEnvironmentOptions::Initialize() {
   desktop_capture_options_.set_detect_updated_region(true);
 #if defined (OS_WIN)
-  desktop_capture_options_.set_allow_directx_capturer(true);
+  if (GetD3DCapability()) {
+    desktop_capture_options_.set_allow_directx_capturer(true);
+  }
 #endif
 }
 
