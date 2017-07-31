@@ -34,6 +34,24 @@
       "revId": "3b17a3227f262fafc4b01a04e7eef04073055064",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecf0e74d_3103600f",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 35988,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-31T18:19:32Z",
+      "side": 1,
+      "message": "The dashboard displays numbers or strings.  If the number isn\u0027t listed in the enum, the dashboard simply displays the number directly.  That\u0027s how I know all the values you\u0027re getting are actually recorded in the UMA histogram code in the client as a 0.  If the client logged them as a 4, the dashboard would display them as a 4.\n\n(Did you read the message I wrote on this comment thread starting with \"I don\u0027t understand how this solves your problem.\"?)",
+      "parentUuid": "52aeaff1_9cace575",
+      "revId": "3b17a3227f262fafc4b01a04e7eef04073055064",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
