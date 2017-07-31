@@ -189,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "8eea6df4_746a584f",
+        "filename": "net/disk_cache/cleanup_context.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-07-31T13:16:38Z",
+      "side": 1,
+      "message": "I am leaning no, because of the inheritance requirement, as it means either the 3rd party client code has to be more complicated than BindOnce( ..., .GetWeakPtr(), ... ), or we need to have an adapter here, which would just bloat up the code --- which is way simpler than what ObserverListThreadSafe does, too.",
+      "parentUuid": "5c3a1ffa_2261b819",
+      "range": {
+        "startLine": 43,
+        "startChar": 7,
+        "endLine": 43,
+        "endChar": 29
+      },
+      "revId": "11c2b82e29750edf8db9f26af3f61960e82bf784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "37f10ce1_7305221b",
         "filename": "net/disk_cache/disk_cache.cc",
         "patchSetId": 7
