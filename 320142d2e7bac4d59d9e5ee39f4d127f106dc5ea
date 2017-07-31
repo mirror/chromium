@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a97b4450_1ba29b54",
+        "filename": "services/device/generic_sensor/linear_acceleration_fusion_algorithm_using_accelerometer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-31T19:34:48Z",
+      "side": 1,
+      "message": "DCHECK_GT(readings[0].timestamp, initial_timestamp_);\n\nThough if you take my suggestion below you don\u0027t need to worry about this to prevent a divide by zero.",
+      "range": {
+        "startLine": 47,
+        "startChar": 2,
+        "endLine": 47,
+        "endChar": 59
+      },
+      "revId": "320142d2e7bac4d59d9e5ee39f4d127f106dc5ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28da1fd9_c50f458f",
+        "filename": "services/device/generic_sensor/linear_acceleration_fusion_algorithm_using_accelerometer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-31T19:34:48Z",
+      "side": 1,
+      "message": "double delivery_rate \u003d\n    (readings[0].timestamp - initial_timestamp_) / reading_updates_count_;",
+      "range": {
+        "startLine": 48,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 76
+      },
+      "revId": "320142d2e7bac4d59d9e5ee39f4d127f106dc5ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d3ba6f5_bec1a183",
+        "filename": "services/device/generic_sensor/linear_acceleration_fusion_algorithm_using_accelerometer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-07-31T19:34:48Z",
+      "side": 1,
+      "message": "To avoid bugs I would only put this initialization in Reset() and call that from the constructor.",
+      "revId": "320142d2e7bac4d59d9e5ee39f4d127f106dc5ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
