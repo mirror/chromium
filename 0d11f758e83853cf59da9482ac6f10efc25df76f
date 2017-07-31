@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "968459aa_8d167cbf",
+        "filename": "chrome/browser/extensions/api/virtual_keyboard_private/chrome_virtual_keyboard_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-07-31T23:00:56Z",
+      "side": 1,
+      "message": "I think this function should be removed.",
+      "range": {
+        "startLine": 155,
+        "startChar": 36,
+        "endLine": 155,
+        "endChar": 58
+      },
+      "revId": "0d11f758e83853cf59da9482ac6f10efc25df76f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cc764f1_533a272a",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-07-31T23:00:56Z",
+      "side": 1,
+      "message": "Remove the TODO? It doesn\u0027t looks like a useful comment.",
+      "range": {
+        "startLine": 716,
+        "startChar": 0,
+        "endLine": 716,
+        "endChar": 77
+      },
+      "revId": "0d11f758e83853cf59da9482ac6f10efc25df76f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e389937d_cfed793d",
+        "filename": "ui/keyboard/keyboard_test_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-07-31T23:00:56Z",
+      "side": 1,
+      "message": "nit: Remove FullWidth ?",
+      "revId": "0d11f758e83853cf59da9482ac6f10efc25df76f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
