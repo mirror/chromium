@@ -4,7 +4,7 @@
 
 /** @fileoverview Suite of accessibility tests for the passwords page. */
 
-suite('SettingsPasswordsAccessibility', function() {
+suite('MANAGE_PASSWORDS', function() {
   var passwordsSection = null;
   var passwordManager = null;
 
