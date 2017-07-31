@@ -10,25 +10,7 @@
 Polymer({
   is: 'password-list-item',
 
-  behaviors: [FocusRowBehavior],
-
-  properties: {
-    /**
-     * The password whose info should be displayed.
-     * @type {!chrome.passwordsPrivate.PasswordUiEntry}
-     */
-    item: Array,
-  },
-
-  /**
-   * Creates an empty password of specified length.
-   * @param {number} length
-   * @return {string} password
-   * @private
-   */
-  getEmptyPassword_: function(length) {
-    return ' '.repeat(length);
-  },
+  behaviors: [FocusRowBehavior, ShowPasswordBehavior],
 
   /**
    * Opens the password action menu.
