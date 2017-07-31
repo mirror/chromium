@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0968b2d3_3ce000ef",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_grc_tab_signal_observer.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-31T23:32:55Z",
+      "side": 1,
+      "message": "Add a DCHECK to check the value is double.",
+      "range": {
+        "startLine": 66,
+        "startChar": 39,
+        "endLine": 66,
+        "endChar": 55
+      },
+      "revId": "28b3d7a9d10f37ae52cab597a94310cf1b835d74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "961c98b6_a7a22ac1",
+        "filename": "services/resource_coordinator/coordination_unit/web_contents_coordination_unit_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-31T23:32:55Z",
+      "side": 1,
+      "message": "Why should this not double? It is better to just use DCHECK here.",
+      "revId": "28b3d7a9d10f37ae52cab597a94310cf1b835d74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54316c2b_d43d7840",
+        "filename": "services/resource_coordinator/coordination_unit/web_contents_coordination_unit_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-31T23:32:55Z",
+      "side": 1,
+      "message": "Use NOTREACHED() so we know for sure what values are being recalculated.",
+      "range": {
+        "startLine": 106,
+        "startChar": 6,
+        "endLine": 106,
+        "endChar": 11
+      },
+      "revId": "28b3d7a9d10f37ae52cab597a94310cf1b835d74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d728acb2_dd7d6a47",
+        "filename": "services/resource_coordinator/coordination_unit/web_contents_coordination_unit_impl.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-07-31T23:32:55Z",
+      "side": 1,
+      "message": "Why is 0 invalid? Is EQT defined as alway positive? I thought queueing time can be 0 if a task does not need to wait?",
+      "range": {
+        "startLine": 30,
+        "startChar": 13,
+        "endLine": 30,
+        "endChar": 16
+      },
+      "revId": "28b3d7a9d10f37ae52cab597a94310cf1b835d74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
