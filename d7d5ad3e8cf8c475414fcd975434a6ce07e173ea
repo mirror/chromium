@@ -249,6 +249,24 @@
     },
     {
       "key": {
+        "uuid": "b749f80e_f167a372",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 821,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-31T06:34:11Z",
+      "side": 1,
+      "message": "I guess my feeling is that even if a browser decides not to\nrearrange the accessibility tree based on aria-owns, that\ndoesn\u0027t mean it can\u0027t respect aria-owns when figuring out\nthe proper event path if that\u0027s what we specify.\n\nThis one is more important for interop because you\u0027d be able\nto observe the difference as a web dev, whereas the Chrome\nand Firefox aria-owns impl so far is only observable by AT,\nand in theory that same AT could do its own polyfill or hack\nfor other browsers if it wanted to.\n\nAnyway, I went ahead and added a test. If there\u0027s pushback\nthen we can always remove it.",
+      "parentUuid": "19bf9567_02b8edf2",
+      "revId": "d7d5ad3e8cf8c475414fcd975434a6ce07e173ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "303ee925_193da657",
         "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
         "patchSetId": 4
@@ -334,6 +352,24 @@
       "revId": "d7d5ad3e8cf8c475414fcd975434a6ce07e173ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a654f1c_74959bc7",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 860,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-31T06:34:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ecf6582a_f984ae73",
+      "revId": "d7d5ad3e8cf8c475414fcd975434a6ce07e173ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
