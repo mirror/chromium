@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7f939f2_8b200cf8",
+        "filename": "ios/chrome/app/spotlight/spotlight_manager_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-31T19:17:10Z",
+      "side": 1,
+      "message": "Either this needs to become a base::test::ScopedTaskEnvironment or the MessageLoop was actually not required by this test (other than to have a base::ThreadTaskRunnerHandle::Get() to handoff).\n\nIf you do need the ScopedTaskEnvironment, it\u0027s likely you\u0027ll also need to replace RunLoop().RunUntilIdle() in a few place with scoped_task_environment_.RunUntilIdle().",
+      "range": {
+        "startLine": 82,
+        "startChar": 2,
+        "endLine": 82,
+        "endChar": 26
+      },
+      "revId": "2a95b0b185693c3ab069a9017b65a7c89fc9d924",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8c67acf_786a2e79",
+        "filename": "ios/chrome/browser/ui/history/favicon_view_provider_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-31T19:17:10Z",
+      "side": 1,
+      "message": "FYI: this is a superset of a ScopedTaskEnvironment so this test is fine.\n\nAnd the test below doesn\u0027t appear to RunLoop so I suspect you won\u0027t run into problems because the test use to provide the main thread as the |background_task_runner_| and is now always async.",
+      "revId": "2a95b0b185693c3ab069a9017b65a7c89fc9d924",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
