@@ -277,16 +277,15 @@ class DedicatedWorkerTest : public ::testing::Test {
   Persistent<InProcessWorkerMessagingProxyForTest> worker_messaging_proxy_;
 };
 
-TEST_F(DedicatedWorkerTest, PendingActivity_NoActivity) {
+TEST_F(DedicatedWorkerTest, PendingActivity_NoActivityAfterContextDestroyed) {
   const String source_code = "// Do nothing";
   WorkerMessagingProxy()->StartWithSourceCode(source_code);
 
   // Worker initialization should be counted as a pending activity.
   EXPECT_TRUE(WorkerMessagingProxy()->HasPendingActivity());
 
-  // There should be no pending activities after the initialization.
-  EXPECT_EQ(Notification::kPendingActivityReported,
-            WorkerMessagingProxy()->WaitForNotification());
+  // Destroying the context should result in no pending activities.
+  WorkerMessagingProxy()->TerminateGlobalScope();
   EXPECT_FALSE(WorkerMessagingProxy()->HasPendingActivity());
 }
 
@@ -298,10 +297,8 @@ TEST_F(DedicatedWorkerTest, PendingActivity_SetTimeout) {
   // Worker initialization should be counted as a pending activity.
   EXPECT_TRUE(WorkerMessagingProxy()->HasPendingActivity());
 
-  // The timer is fired soon and there should be no pending activities after
-  // that.
-  EXPECT_EQ(Notification::kPendingActivityReported,
-            WorkerMessagingProxy()->WaitForNotification());
+  // Destroying the context should result in no pending activities.
+  WorkerMessagingProxy()->TerminateGlobalScope();
   EXPECT_FALSE(WorkerMessagingProxy()->HasPendingActivity());
 }
 
@@ -326,9 +323,8 @@ TEST_F(DedicatedWorkerTest, PendingActivity_SetInterval) {
   EXPECT_EQ(0u, WorkerMessagingProxy()->UnconfirmedMessageCount());
   EXPECT_TRUE(WorkerMessagingProxy()->HasPendingActivity());
 
-  // There should be no pending activities after the timer is stopped.
-  EXPECT_EQ(Notification::kPendingActivityReported,
-            WorkerMessagingProxy()->WaitForNotification());
+  // Destroying the context should result in no pending activities.
+  WorkerMessagingProxy()->TerminateGlobalScope();
   EXPECT_FALSE(WorkerMessagingProxy()->HasPendingActivity());
 }
 
@@ -342,9 +338,6 @@ TEST_F(DedicatedWorkerTest, PendingActivity_SetTimeoutOnMessageEvent) {
 
   // Worker initialization should be counted as a pending activity.
   EXPECT_TRUE(WorkerMessagingProxy()->HasPendingActivity());
-  EXPECT_EQ(Notification::kPendingActivityReported,
-            WorkerMessagingProxy()->WaitForNotification());
-  EXPECT_FALSE(WorkerMessagingProxy()->HasPendingActivity());
 
   // A message starts the oneshot timer that is counted as a pending activity.
   DispatchMessageEvent();
@@ -355,10 +348,8 @@ TEST_F(DedicatedWorkerTest, PendingActivity_SetTimeoutOnMessageEvent) {
   EXPECT_EQ(0u, WorkerMessagingProxy()->UnconfirmedMessageCount());
   EXPECT_TRUE(WorkerMessagingProxy()->HasPendingActivity());
 
-  // The timer is fired soon and there should be no pending activities after
-  // that.
-  EXPECT_EQ(Notification::kPendingActivityReported,
-            WorkerMessagingProxy()->WaitForNotification());
+  // Destroying the context should result in no pending activities.
+  WorkerMessagingProxy()->TerminateGlobalScope();
   EXPECT_FALSE(WorkerMessagingProxy()->HasPendingActivity());
 }
 
@@ -380,9 +371,6 @@ TEST_F(DedicatedWorkerTest, PendingActivity_SetIntervalOnMessageEvent) {
 
   // Worker initialization should be counted as a pending activity.
   EXPECT_TRUE(WorkerMessagingProxy()->HasPendingActivity());
-  EXPECT_EQ(Notification::kPendingActivityReported,
-            WorkerMessagingProxy()->WaitForNotification());
-  EXPECT_FALSE(WorkerMessagingProxy()->HasPendingActivity());
 
   // The first message event sets the active timer that is counted as a
   // pending activity.
@@ -410,9 +398,8 @@ TEST_F(DedicatedWorkerTest, PendingActivity_SetIntervalOnMessageEvent) {
             WorkerMessagingProxy()->WaitForNotification());
   EXPECT_EQ(0u, WorkerMessagingProxy()->UnconfirmedMessageCount());
 
-  // There should be no pending activities after the timer is stopped.
-  EXPECT_EQ(Notification::kPendingActivityReported,
-            WorkerMessagingProxy()->WaitForNotification());
+  // Destroying the context should result in no pending activities.
+  WorkerMessagingProxy()->TerminateGlobalScope();
   EXPECT_FALSE(WorkerMessagingProxy()->HasPendingActivity());
 }
 
