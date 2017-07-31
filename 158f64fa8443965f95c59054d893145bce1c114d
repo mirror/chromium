@@ -1,0 +1,228 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6e2b152_1d2545a6",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-31T20:13:45Z",
+      "side": 1,
+      "message": "Optional: I wonder if this should be named both semantically.\n\nSummary file contains the summary. IDs file contains IDs. TSV files contains something in the TSV format, but what?",
+      "range": {
+        "startLine": 43,
+        "startChar": 2,
+        "endLine": 43,
+        "endChar": 13
+      },
+      "revId": "158f64fa8443965f95c59054d893145bce1c114d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "998f0b87_c44ee5a2",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-31T20:13:45Z",
+      "side": 1,
+      "message": "Can you elaborate a bit more what is this object?",
+      "range": {
+        "startLine": 128,
+        "startChar": 21,
+        "endLine": 128,
+        "endChar": 34
+      },
+      "revId": "158f64fa8443965f95c59054d893145bce1c114d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a17fbfa1_803fc964",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-31T20:13:45Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 129,
+        "startChar": 47,
+        "endLine": 129,
+        "endChar": 55
+      },
+      "revId": "158f64fa8443965f95c59054d893145bce1c114d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7eea32d2_6f9e7266",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-31T20:13:45Z",
+      "side": 1,
+      "message": "Also DCHECK(..., \" {\") ?",
+      "range": {
+        "startLine": 138,
+        "startChar": 2,
+        "endLine": 138,
+        "endChar": 8
+      },
+      "revId": "158f64fa8443965f95c59054d893145bce1c114d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6144eba_c8064931",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-31T20:13:45Z",
+      "side": 1,
+      "message": "style: Braces around multiline for.",
+      "range": {
+        "startLine": 144,
+        "startChar": 48,
+        "endLine": 144,
+        "endChar": 49
+      },
+      "revId": "158f64fa8443965f95c59054d893145bce1c114d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6242fdc_5c845059",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-31T20:13:45Z",
+      "side": 1,
+      "message": "!output.empty()",
+      "range": {
+        "startLine": 145,
+        "startChar": 8,
+        "endLine": 145,
+        "endChar": 23
+      },
+      "revId": "158f64fa8443965f95c59054d893145bce1c114d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "781382a9_cb5f275d",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-31T20:13:45Z",
+      "side": 1,
+      "message": "DCHECK(!output.empty())",
+      "revId": "158f64fa8443965f95c59054d893145bce1c114d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bbdffbe_b26aa858",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-31T20:13:45Z",
+      "side": 1,
+      "message": "Also DCHECK?",
+      "range": {
+        "startLine": 153,
+        "startChar": 2,
+        "endLine": 153,
+        "endChar": 41
+      },
+      "revId": "158f64fa8443965f95c59054d893145bce1c114d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb667f04_90178b68",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-31T20:13:45Z",
+      "side": 1,
+      "message": "!empty()",
+      "range": {
+        "startLine": 201,
+        "startChar": 42,
+        "endLine": 201,
+        "endChar": 50
+      },
+      "revId": "158f64fa8443965f95c59054d893145bce1c114d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ced82e3_aa6c6f0d",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-07-31T20:13:45Z",
+      "side": 1,
+      "message": "Can this actually happen? Is semantics.destination() generated as an int or enum?",
+      "range": {
+        "startLine": 208,
+        "startChar": 6,
+        "endLine": 208,
+        "endChar": 8
+      },
+      "revId": "158f64fa8443965f95c59054d893145bce1c114d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
