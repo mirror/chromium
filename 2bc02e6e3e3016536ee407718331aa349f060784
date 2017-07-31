@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "99789a40_cb89dbaf",
+        "filename": "chrome/browser/content_settings/content_settings_update_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-31T06:33:36Z",
+      "side": 1,
+      "message": "Getting approval from someone who knows more about that API sounds good. From briefly reading up on it though, it doesn\u0027t seem like an origin can do much wrong though.",
+      "parentUuid": "27918534_5be00157",
+      "revId": "2bc02e6e3e3016536ee407718331aa349f060784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1438bb78_a124f625",
         "filename": "chrome/browser/content_settings/content_settings_update_observer.cc",
         "patchSetId": 4
