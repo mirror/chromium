@@ -22,6 +22,30 @@
       "revId": "3f261f2e65a32f0455aa24b1e401df48d958e8c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97dada9d_97228dd2",
+        "filename": "components/sync/engine/sequenced_model_worker_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-07-31T15:57:20Z",
+      "side": 1,
+      "message": "Still used at line 49 and 60.",
+      "parentUuid": "336c16c2_e30ecb74",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 43
+      },
+      "revId": "3f261f2e65a32f0455aa24b1e401df48d958e8c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
