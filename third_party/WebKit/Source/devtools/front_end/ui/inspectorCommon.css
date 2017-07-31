@@ -381,19 +381,19 @@ label[is=dt-icon-label] {
     background-image: url(Images/popoverArrows.png);
 }
 
-.force-white-icons [is=ui-icon].spritesheet-smallicons, [is=ui-icon].force-white-icons.spritesheet-smallicons {
+.force-white-icons [is=ui-icon].spritesheet-smallicons:not(.force-color), [is=ui-icon].force-white-icons.spritesheet-smallicons:not(.force-color) {
     -webkit-mask-image: -webkit-image-set(url(Images/smallIcons.png) 1x, url(Images/smallIcons_2x.png) 2x);
     -webkit-mask-position: var(--spritesheet-position);
     background: white !important;
 }
 
-.force-white-icons [is=ui-icon].spritesheet-largeicons, [is=ui-icon].force-white-icons.spritesheet-largeicons {
+.force-white-icons [is=ui-icon].spritesheet-largeicons:not(.force-color), [is=ui-icon].force-white-icons.spritesheet-largeicons:not(.force-color) {
     -webkit-mask-image: -webkit-image-set(url(Images/largeIcons.png) 1x, url(Images/largeIcons_2x.png) 2x);
     -webkit-mask-position: var(--spritesheet-position);
     background: white !important;
 }
 
-.force-white-icons [is=ui-icon].spritesheet-mediumicons, [is=ui-icon].force-white-icons.spritesheet-mediumicons {
+.force-white-icons [is=ui-icon].spritesheet-mediumicons:not(.force-color), [is=ui-icon].force-white-icons.spritesheet-mediumicons:not(.force-color) {
     -webkit-mask-image: -webkit-image-set(url(Images/mediumIcons.png) 1x, url(Images/mediumIcons_2x.png) 2x);
     -webkit-mask-position: var(--spritesheet-position);
     background: white !important;
