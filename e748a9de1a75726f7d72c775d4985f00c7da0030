@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8f34128_c320b4a9",
+        "filename": "chrome/profiling/profiling_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-31T23:59:11Z",
+      "side": 1,
+      "message": "btw you don\u0027t appear to use this for anything. that\u0027s OK if you want the profiling service process to essentially live until browser shutdown anyway, but if you want it to be brought up and shut down as needed, you\u0027ll want to actually add and release refs using this factory (e.g. add a ref when a MemlogRequest is bound, release a ref when a memlog binding is dropped.\n\nno action required, just FYI",
+      "revId": "e748a9de1a75726f7d72c775d4985f00c7da0030",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
