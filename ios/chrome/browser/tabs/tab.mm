@@ -1595,6 +1595,13 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
 
 - (void)webController:(CRWWebController*)webController
     retrievePlaceholderOverlayImage:(void (^)(UIImage*))block {
+  [self getPlaceholderOverlayImageWithCompletionHandler:block];
+}
+
+#pragma mark - PlaceholderOverlay
+
+- (void)getPlaceholderOverlayImageWithCompletionHandler:
+    (void (^)(UIImage*))completionHandler {
   NSString* sessionID = self.tabId;
   // The snapshot is always grey, even if |useGreyImageCache_| is NO, as this
   // overlay represents an out-of-date website and is shown only until the
@@ -1603,13 +1610,14 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
   // In other cases, such as during startup, either disk access or a greyspace
   // conversion is required, as there will be no grey snapshots in memory.
   if (useGreyImageCache_) {
-    [_snapshotManager greyImageForSessionID:sessionID callback:block];
+    [_snapshotManager greyImageForSessionID:sessionID
+                                   callback:completionHandler];
   } else {
     [_webControllerSnapshotHelper
-        retrieveGreySnapshotForWebController:webController
+        retrieveGreySnapshotForWebController:self.webController
                                    sessionID:sessionID
                                 withOverlays:[self snapshotOverlays]
-                                    callback:block];
+                                    callback:completionHandler];
   }
 }
 
@@ -1660,6 +1668,8 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
   }
   [_overscrollActionsController clear];
 }
+
+#pragma mark - CRWWebDelegate and CRWWebStateObserver protocol methods
 
 - (void)webStateDidSuppressDialog:(web::WebState*)webState {
   DCHECK(_isPrerenderTab);
@@ -1816,6 +1826,32 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
 - (BOOL)isTabVisibleForTabHelper:(SadTabTabHelper*)tabHelper {
   UIApplicationState state = UIApplication.sharedApplication.applicationState;
   return _visible && !IsApplicationStateNotActive(state);
+}
+
+#pragma mark - PagePlaceholderTabHelperDelegate
+
+- (void)pagePlaceholderTabHelper:(PagePlaceholderTabHelper*)tabHelper
+    getImageWithCompletionHandler:(void (^)(UIImage*))completionHandler {
+  [self getPlaceholderOverlayImageWithCompletionHandler:completionHandler];
+}
+
+- (void)pagePlaceholderTabHelper:(PagePlaceholderTabHelper*)tabHelper
+          displayPlaceholderView:(UIView*)view {
+  UIView* webStateView = self.webState->GetView();
+  view.frame = webStateView.bounds;
+  [webStateView addSubview:view];
+}
+
+// Removes page placeholder view with fade-out animation.
+- (void)pagePlaceholderTabHelper:(PagePlaceholderTabHelper*)tabHelper
+           removePlaceholderView:(UIView*)view {
+  [UIView animateWithDuration:0.5
+      animations:^{
+        view.alpha = 0.0f;
+      }
+      completion:^(BOOL finished) {
+        [view removeFromSuperview];
+      }];
 }
 
 @end
