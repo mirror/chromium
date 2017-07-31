@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "38642bd4_1db65cf3",
+        "filename": "third_party/WebKit/Source/platform/wtf/Assertions.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-07-31T04:46:23Z",
+      "side": 0,
+      "message": "I\u0027m talking about build/build_config.h, not base/logging.h.\n\nPlease keep build/build_config.h.\nI found PRESUBMIT.py warned only if defined(OS_FOO) is *added* in a CL. This CL doesn\u0027t touch existing defined(OS_FOO), and PRESUBMIT.py failed to detect requirement of build/build_config.h",
+      "parentUuid": "4372e75d_a8b2d007",
+      "revId": "491f4e44b695f5a58dd3939ece104c8283ed79fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff0b9d04_4cf563d7",
         "filename": "third_party/WebKit/Source/platform/wtf/Assertions.h",
         "patchSetId": 3
