@@ -1,0 +1,63 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Async Cookes: DOM Interoperability with set/get/getAll</title>
+<script src="/resources/testharness.js"></script>
+<script src="/resources/testharnessreport.js"></script>
+<script src="/cookies/resources/testharness-helpers.js"></script>
+<!--!
+    ! Document-based polyfill I wrote for bootstrapping; current version can be
+    ! fetched from the WICG GitHub repo like this:
+    ! curl -Ls https://github.com/WICG/async-cookies-api/raw/gh-pages/cookies.js
+    !-->
+<script src="cookies.js"></script>
+<script>
+'use strict';
+
+// Set cookies on ORIGINAL_HOST, then move ourselves to TEST_ROOT so
+// we can verify registrable domain and cross-origin behavior.
+//
+// Originally copied from http/tests/cookies/same-site/basics.html
+if (location.hostname == '127.0.0.1') {
+    location.hostname = ORIGINAL_HOST;
+} else if (location.hostname == ORIGINAL_HOST) {
+    clearKnownCookies();
+    document.cookie = STRICT_DOM + '=1; SameSite=Strict; Max-Age=100; path=/';
+    document.cookie = LAX_DOM + '=1; SameSite=Lax; Max-Age=100; path=/';
+    document.cookie = NORMAL_DOM + '=1; Max-Age=100; path=/';
+    location.hostname = TEST_HOST;
+} else {
+
+    // Sanity test originally copied from http/tests/cookies/same-site/basics.html
+    test(_ => {
+        clearKnownCookies();
+        clearKnownCookies('; domain=' + TEST_HOST);
+        assert_equals(document.cookie, '', 'cookie jar empty at start of test');
+
+        document.cookie = STRICT_DOM + '=2; SameSite=Strict; domain=' + TEST_HOST + '; path=/';
+        document.cookie = LAX_DOM + '=2; SameSite=Lax; domain=' + TEST_HOST + '; path=/';
+        document.cookie = NORMAL_DOM + '=2; domain=' + TEST_HOST + '; path=/';
+        assert_equals(document.cookie, STRICT_DOM + '=2; ' + LAX_DOM + '=2; ' + NORMAL_DOM + '=2', 'all three SameSite options work with explicit domain');
+
+        clearKnownCookies();
+        clearKnownCookies('; domain=' + TEST_HOST);
+        assert_equals(document.cookie, '', 'cookie jar empty at end of test');
+    }, 'cookies can be set and cleared from DOM');
+
+    promise_test(async testCase => {
+        clearKnownCookies();
+        clearKnownCookies('; domain=' + TEST_HOST);
+        assert_equals(document.cookie, '', 'cookie jar empty at start of test');
+
+        assert_equals((await cookieStore.getAll()).length, 0, 'cookieStore.getAll sees cookie jar empty at start of test');
+        await cookieStore.set('answer', '42');
+        assert_equals(document.cookie, 'answer=42', 'document.cookie sees cookieStore.set-written cookie');
+        const allCookies = await cookieStore.getAll();
+        assert_equals(allCookies.length, 1, 'cookieStore.getAll sees one cookie after we wrote one');
+        const [{name: onlyCookieName, value: onlyCookieValue}] = allCookies;
+        assert_equals(onlyCookieName + '=' + onlyCookieValue, 'answer=42', 'cookieStore.getAll sees the cookie we wrote');
+        const {name: answerName, value: answerValue} = await cookieStore.get('answer');
+        assert_equals(answerName + '=' + answerValue, 'answer=42', 'cookieStore.get sees the cookie we wrote');
+    }, 'get and getAll see cookie we set');
+
+}
+</script>
