@@ -392,6 +392,30 @@
     },
     {
       "key": {
+        "uuid": "c482eb86_34c23ca0",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2915,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-07-31T17:58:05Z",
+      "side": 1,
+      "message": "As a work-around, we could probably look at Env:IsMouseButtonDown(), and if the mouse-button is down, just not dispatch the mouse-move events from here?",
+      "parentUuid": "81b32cd8_ac776018",
+      "range": {
+        "startLine": 2915,
+        "startChar": 64,
+        "endLine": 2915,
+        "endChar": 66
+      },
+      "revId": "1903c322639529fb8f6bfd771511a0ed73ebf2d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fdf1088c_96ec3fd2",
         "filename": "ui/views/win/hwnd_message_handler.cc",
         "patchSetId": 7
