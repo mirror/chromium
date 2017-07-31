@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ab08402_a03f2970",
+        "filename": "build/nocompile.gni",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-31T11:35:47Z",
+      "side": 1,
+      "message": "On Linux we only use libunwind on arm (and likely soon on fuchsia). But if it works everywhere for nc tests, then this is fine",
+      "revId": "5633ae09fec02afe21c7ab898846f3f98fbebc80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
