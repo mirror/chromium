@@ -4,7 +4,7 @@
 #ifndef CSSPropertyPositionUtils_h
 #define CSSPropertyPositionUtils_h
 
-#include "core/CSSValueKeywords.h"
+#include "core/css/CSSValueKeywords.h"
 #include "core/css/parser/CSSParserMode.h"
 
 #include "platform/wtf/Allocator.h"
