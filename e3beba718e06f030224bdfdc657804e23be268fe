@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "200e5f42_3693bc64",
+        "filename": "media/audio/audio_manager_base.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-07-31T15:48:54Z",
+      "side": 1,
+      "message": "make above as part of #if/else, no reason to spend time on GetDefaultOutputDeviceID() if so.",
+      "revId": "e3beba718e06f030224bdfdc657804e23be268fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
