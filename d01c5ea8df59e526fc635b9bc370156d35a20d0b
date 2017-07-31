@@ -16,6 +16,24 @@
       "revId": "d01c5ea8df59e526fc635b9bc370156d35a20d0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e7731f9_a1edbb1c",
+        "filename": "ios/chrome/browser/web/resources/credential_manager.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-07-31T11:18:32Z",
+      "side": 1,
+      "message": "Changed it to typedefs in next patch set. CredentialRequestOptions and CredentialCreationOptions  are very simple dictionaries without any methods, which should be created by the user and passed as arguments to get() and create(), so I thought typedef should suffice.\n\nPlease verify the typedefs I made in next patch set (I wasn\u0027t sure about how to typedef a dictionary without any fields, which is CredentialCreationOptions) and also let me know if I should still stick with one way for defining all types.",
+      "parentUuid": "a17474b4_96a89b6d",
+      "revId": "d01c5ea8df59e526fc635b9bc370156d35a20d0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
