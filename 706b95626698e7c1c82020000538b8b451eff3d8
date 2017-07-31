@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ed886fd_18f73592",
+        "filename": "third_party/WebKit/Source/core/leak_detector/LeakDetector.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-07-31T05:32:52Z",
+      "side": 1,
+      "message": "Unnecessary include. Covered by LocalFrame.h",
+      "range": {
+        "startLine": 9,
+        "startChar": 21,
+        "endLine": 9,
+        "endChar": 26
+      },
+      "revId": "706b95626698e7c1c82020000538b8b451eff3d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "074b01c7_c1af87b1",
+        "filename": "third_party/WebKit/Source/core/leak_detector/LeakDetector.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-07-31T05:32:52Z",
+      "side": 1,
+      "message": "Unused include.",
+      "revId": "706b95626698e7c1c82020000538b8b451eff3d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b08280d_1c18eed6",
+        "filename": "third_party/WebKit/Source/core/leak_detector/LeakDetector.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-07-31T05:32:52Z",
+      "side": 1,
+      "message": "It would change the logic a bit but I think it would be better to move this to the top of this function. InProcessWorkerMessagingProxy::ProxyCount() will be updated during BlinkGC so it would make a bit more sense.\n\nYou could rename LeakDetector::DelayedGC to something like GCTimerFired. And also call OnGarbageCollectionComplete directly. That way we won\u0027t need the separate Timer, delayed_report_timer_.\n\nBasically I want to remove the string \"report\" from this class as we don\u0027t report results here.",
+      "range": {
+        "startLine": 93,
+        "startChar": 0,
+        "endLine": 109,
+        "endChar": 3
+      },
+      "revId": "706b95626698e7c1c82020000538b8b451eff3d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd9b2449_72f0d2a5",
+        "filename": "third_party/WebKit/Source/core/leak_detector/LeakDetector.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-07-31T05:32:52Z",
+      "side": 1,
+      "message": "Use forward declaration instead of include.",
+      "range": {
+        "startLine": 9,
+        "startChar": 21,
+        "endLine": 9,
+        "endChar": 26
+      },
+      "revId": "706b95626698e7c1c82020000538b8b451eff3d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d081d48_4577dd19",
+        "filename": "third_party/WebKit/Source/core/leak_detector/LeakDetector.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-07-31T05:32:52Z",
+      "side": 1,
+      "message": "nit: Move to separate file.",
+      "range": {
+        "startLine": 14,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 24
+      },
+      "revId": "706b95626698e7c1c82020000538b8b451eff3d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a540f87_62a60084",
+        "filename": "third_party/WebKit/Source/core/leak_detector/LeakDetector.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-07-31T05:32:52Z",
+      "side": 1,
+      "message": "Add class level comments.",
+      "revId": "706b95626698e7c1c82020000538b8b451eff3d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83bbe184_4137db59",
+        "filename": "third_party/WebKit/public/web/WebLeakDetector.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-07-31T05:32:52Z",
+      "side": 1,
+      "message": "nit: shall we keep this name OnLeakDetectionComplete? It doesn\u0027t seem to make sense that OnGarbageCollectionComplete would pass a Results object.",
+      "range": {
+        "startLine": 55,
+        "startChar": 15,
+        "endLine": 55,
+        "endChar": 42
+      },
+      "revId": "706b95626698e7c1c82020000538b8b451eff3d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
