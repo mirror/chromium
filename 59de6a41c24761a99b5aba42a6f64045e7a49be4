@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "42bf7920_104fcb20",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-07-31T15:15:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "152fbfcb_f89dede3",
+      "revId": "59de6a41c24761a99b5aba42a6f64045e7a49be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70a89cc1_5b07a3ce",
         "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
         "patchSetId": 16
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "53804ea1_9bb88021",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-07-31T15:15:12Z",
+      "side": 1,
+      "message": "I agree. Done.",
+      "parentUuid": "70a89cc1_5b07a3ce",
+      "range": {
+        "startLine": 71,
+        "startChar": 57,
+        "endLine": 71,
+        "endChar": 0
+      },
+      "revId": "59de6a41c24761a99b5aba42a6f64045e7a49be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c871ca69_7d95f46d",
         "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
         "patchSetId": 16
@@ -53,6 +95,30 @@
       "writtenOn": "2017-07-31T05:17:16Z",
       "side": 1,
       "message": "Rather than have this function here, can you put a simple function in omnibox_field_trial.{h,cc} that does this call?  Then it will remain easy to spot existing omnibox field trial parameters to keep track of them all.",
+      "range": {
+        "startLine": 137,
+        "startChar": 28,
+        "endLine": 139,
+        "endChar": 75
+      },
+      "revId": "59de6a41c24761a99b5aba42a6f64045e7a49be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74e11275_82eb378c",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-07-31T15:15:12Z",
+      "side": 1,
+      "message": "Done. I\u0027m not sure the placement in the file is what you wanted. Let me know if you want me to move it up or down.",
+      "parentUuid": "c871ca69_7d95f46d",
       "range": {
         "startLine": 137,
         "startChar": 28,
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "ff8c9815_1cda3b7d",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-07-31T15:15:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62174d6c_41aca9ac",
+      "range": {
+        "startLine": 66,
+        "startChar": 11,
+        "endLine": 66,
+        "endChar": 0
+      },
+      "revId": "59de6a41c24761a99b5aba42a6f64045e7a49be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f6c8a19_5a76728f",
         "filename": "components/omnibox/browser/zero_suggest_provider.cc",
         "patchSetId": 16
@@ -108,6 +198,30 @@
       "revId": "59de6a41c24761a99b5aba42a6f64045e7a49be4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a539669_4f41843c",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-07-31T15:15:12Z",
+      "side": 1,
+      "message": "Right. Done.",
+      "parentUuid": "3f6c8a19_5a76728f",
+      "range": {
+        "startLine": 181,
+        "startChar": 26,
+        "endLine": 181,
+        "endChar": 38
+      },
+      "revId": "59de6a41c24761a99b5aba42a6f64045e7a49be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "d236c6e2_8d919da9",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-07-31T15:15:12Z",
+      "side": 1,
+      "message": "Noise from previously failing unit tests. Indeed not needed anymore. Removed.",
+      "parentUuid": "a8365d29_4d7badef",
+      "range": {
+        "startLine": 185,
+        "startChar": 25,
+        "endLine": 185,
+        "endChar": 0
+      },
+      "revId": "59de6a41c24761a99b5aba42a6f64045e7a49be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78ab611c_7ca92767",
         "filename": "components/omnibox/browser/zero_suggest_provider.cc",
         "patchSetId": 16
@@ -145,6 +283,30 @@
       "writtenOn": "2017-07-31T05:17:16Z",
       "side": 1,
       "message": "This doesn\u0027t look right.  It looks like we\u0027re still going to send a request (without a contextual URL) even if we\u0027re, say, in an incognito window.",
+      "range": {
+        "startLine": 189,
+        "startChar": 6,
+        "endLine": 189,
+        "endChar": 61
+      },
+      "revId": "59de6a41c24761a99b5aba42a6f64045e7a49be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7652e29e_8f04425e",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-07-31T15:15:12Z",
+      "side": 1,
+      "message": "Correct me if I\u0027m wrong, but I think these checks have been performed in the beginning of this function. For incognito specifically, there is an early return checking client()-\u003eIsOffTheRecord(). It\u0027s assumed that at this point we should be allowed to send the URL if can_attach_current_url \u003d\u003d true.\n\nI also tried in incognito mode and there was no request to Google servers when clicking on the omnibox: https://screenshot.googleplex.com/81tPSjfaDWH\n\nBut maybe you\u0027re seeing something I am not, so I\u0027ll keep this issue open to keep the discussion going.",
+      "parentUuid": "78ab611c_7ca92767",
       "range": {
         "startLine": 189,
         "startChar": 6,

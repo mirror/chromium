@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "c6f08e2a_fc7e3de4",
+        "filename": "components/omnibox/browser/base_search_provider_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-07-31T15:15:12Z",
+      "side": 1,
+      "message": "These three unit tests were failing in a previous patch set. Adding this environment is not necessary anymore. Thanks for pointing it out. Done.",
+      "parentUuid": "92e6b681_347ea504",
+      "range": {
+        "startLine": 86,
+        "startChar": 61,
+        "endLine": 86,
+        "endChar": 0
+      },
+      "revId": "5547dd843562167230679b0036162756ac3e1aa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9873a630_2e6d1198",
         "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
         "patchSetId": 12
