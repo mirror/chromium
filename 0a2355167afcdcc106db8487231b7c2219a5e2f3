@@ -34,6 +34,24 @@
       "revId": "0a2355167afcdcc106db8487231b7c2219a5e2f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4dcae9b_2ee6dae7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-07-31T22:07:31Z",
+      "side": 1,
+      "message": "ah, i\u0027m wrong - i thought controlledClients contains structs, but those are just string ids. we should do this on backend!",
+      "parentUuid": "82d67082_692affd4",
+      "revId": "0a2355167afcdcc106db8487231b7c2219a5e2f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
