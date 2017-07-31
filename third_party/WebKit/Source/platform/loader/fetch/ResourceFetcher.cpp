@@ -1232,12 +1232,11 @@ void ResourceFetcher::WarnUnusedPreloads() {
   for (const auto& pair : preloads_) {
     Resource* resource = pair.value;
     if (resource && resource->IsLinkPreload() && resource->IsUnusedPreload()) {
-      Context().AddConsoleMessage(
+      Context().AddJSWarningConsoleMessage(
           "The resource " + resource->Url().GetString() +
-              " was preloaded using link preload but not used within a few "
-              "seconds from the window's load event. Please make sure it "
-              "wasn't preloaded for nothing.",
-          FetchContext::kLogWarningMessage);
+          " was preloaded using link preload but not used within a few "
+          "seconds from the window's load event. Please make sure it "
+          "wasn't preloaded for nothing.");
     }
   }
 }
@@ -1245,19 +1244,17 @@ void ResourceFetcher::WarnUnusedPreloads() {
 ArchiveResource* ResourceFetcher::CreateArchive(Resource* resource) {
   // Only the top-frame can load MHTML.
   if (!Context().IsMainFrame()) {
-    Context().AddConsoleMessage(
+    Context().AddJSErrorConsoleMessage(
         "Attempted to load a multipart archive into an subframe: " +
-            resource->Url().GetString(),
-        FetchContext::kLogErrorMessage);
+        resource->Url().GetString());
     return nullptr;
   }
 
   archive_ = MHTMLArchive::Create(resource->Url(), resource->ResourceBuffer());
   if (!archive_) {
     // Log if attempting to load an invalid archive resource.
-    Context().AddConsoleMessage(
-        "Malformed multipart archive: " + resource->Url().GetString(),
-        FetchContext::kLogErrorMessage);
+    Context().AddJSErrorConsoleMessage("Malformed multipart archive: " +
+                                       resource->Url().GetString());
     return nullptr;
   }
 
