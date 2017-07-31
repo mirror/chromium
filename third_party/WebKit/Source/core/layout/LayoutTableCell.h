@@ -329,6 +329,12 @@ class CORE_EXPORT LayoutTableCell final : public LayoutBlockFlow {
            RowIndex() + RowSpan() == other->RowIndex() + other->RowSpan();
   }
 
+  void SetIsSpanningCollapsedRow(bool spanningCollapsedRow) {
+    is_spanning_collapsed_row_ = spanningCollapsedRow;
+  }
+
+  bool IsSpanningCollapsedRow() const { return is_spanning_collapsed_row_; }
+
  protected:
   void StyleDidChange(StyleDifference, const ComputedStyle* old_style) override;
   void ComputePreferredLogicalWidths() override;
@@ -347,6 +353,9 @@ class CORE_EXPORT LayoutTableCell final : public LayoutBlockFlow {
   bool IsOfType(LayoutObjectType type) const override {
     return type == kLayoutObjectTableCell || LayoutBlockFlow::IsOfType(type);
   }
+
+  // Whether the cell is spanning a row that has been collapsed.
+  bool is_spanning_collapsed_row_ const = false;
 
   void WillBeRemovedFromTree() override;
 

@@ -888,6 +888,21 @@ int LayoutTableSection::CalcRowLogicalHeight() {
               std::max(index_of_first_stretchable_row, row_index_below_cell);
         } else if (cell->RowSpan() > 1) {
           DCHECK(!row_span_cells.Contains(cell));
+
+          if (is_any_row_collapsed_) {
+            unsigned end_row = cell->RowSpan() + r;
+            bool is_any_spanning_row_collapsed = false;
+            for (unsigned spanning = r; spanning < end_row; spanning++) {
+              if (RowHasVisibilityCollapse(spanning)) {
+                cell->SetIsSpanningCollapsedRow(true);
+                is_any_spanning_row_collapsed = true;
+                break;
+              }
+            }
+            if (!is_any_row_collapsed_ && cell->IsSpanningCollapsedRow())
+              cell->SetIsSpanningCollapsedRow(false);
+          }
+
           row_span_cells.push_back(cell);
         }
 
