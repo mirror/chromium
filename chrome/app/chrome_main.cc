@@ -132,8 +132,18 @@ int ChromeMain(int argc, const char** argv) {
 #endif  // ENABLE_OOP_HEAP_PROFILING
 
 #if defined(OS_CHROMEOS) && BUILDFLAG(ENABLE_PACKAGE_MASH_SERVICES)
-  if (service_manager::ServiceManagerIsRemote())
+  if (service_manager::ServiceManagerIsRemote()) {
+    params.create_discardable_memory = false;
     params.env_mode = aura::Env::Mode::MUS;
+  }
+  // In config==mus the ui service runs in process and is shutdown well before
+  // the rest of chrome. Have chrome create the DiscardableSharedMemoryManager
+  // to ensure the DiscardableSharedMemoryManager is destroyed later on. Doing
+  // this avoids lifetime issues when internal implementation details of
+  // DiscardableSharedMemoryManager assume DiscardableSharedMemoryManager is
+  // long lived.
+  if (command_line->GetSwitchValueASCII(switches::kMusConfig) == switches::kMus)
+    params.create_discardable_memory = true;
 #endif  // BUILDFLAG(ENABLE_PACKAGE_MASH_SERVICES)
 
   int rv = content::ContentMain(params);
