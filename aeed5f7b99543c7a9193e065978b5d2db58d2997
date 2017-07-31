@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "c28b3733_07422cb3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/Tab.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1031,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-31T20:24:54Z",
+      "side": 1,
+      "message": "nit: isShowingNativePage",
+      "range": {
+        "startLine": 1031,
+        "startChar": 19,
+        "endLine": 1031,
+        "endChar": 31
+      },
+      "revId": "aeed5f7b99543c7a9193e065978b5d2db58d2997",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a5128324_5322f106",
         "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
         "patchSetId": 2
@@ -41,6 +64,29 @@
         "startChar": 6,
         "endLine": 594,
         "endChar": 28
+      },
+      "revId": "aeed5f7b99543c7a9193e065978b5d2db58d2997",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae68ae63_0b2c33fe",
+        "filename": "chrome/browser/android/vr_shell/vr_shell.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-31T20:24:54Z",
+      "side": 1,
+      "message": "Eventually we will also have to handle Tab#isShowingErrorPage, as this is a weird special case that isn\u0027t really a tab or a NativePage, but at the moment we get kicked out of VR. Mind adding a TODO here?",
+      "range": {
+        "startLine": 786,
+        "startChar": 31,
+        "endLine": 786,
+        "endChar": 51
       },
       "revId": "aeed5f7b99543c7a9193e065978b5d2db58d2997",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
