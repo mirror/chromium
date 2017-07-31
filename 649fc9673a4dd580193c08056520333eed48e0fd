@@ -22,6 +22,30 @@
       "revId": "649fc9673a4dd580193c08056520333eed48e0fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f335649_a2739de3",
+        "filename": "ui/views/controls/button/toggle_button.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-31T22:18:38Z",
+      "side": 1,
+      "message": "To your first point, yes. And that\u0027s pretty normal behavior --- we typically don\u0027t show focus indicators when someone is using the mouse to interact. And this matches paper-toggle-button. All that said, I consider this a corner case.\n\n\u003e Similarly, if a ToggleButton has focus and a user clicks or taps on it they won\u0027t see any change.\n\nnot so, as a \"tap\" implies a completed tap (down and up). Thus the glow would disperse at the end of the tap. Once again this matches paper-toggle-button.\n\n\u003e ...Highlight...\n\nNo, I don\u0027t think so because it doesn\u0027t easily give us the same nice animations when it comes and goes. It would just fade out instead of bursting.",
+      "parentUuid": "9320c032_3ddb6a8c",
+      "range": {
+        "startLine": 222,
+        "startChar": 8,
+        "endLine": 222,
+        "endChar": 16
+      },
+      "revId": "649fc9673a4dd580193c08056520333eed48e0fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
