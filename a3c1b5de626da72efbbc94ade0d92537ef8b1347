@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6f7ac27_6ece1a62",
+        "filename": "components/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1104794
+      },
+      "writtenOn": "2017-07-31T21:28:44Z",
+      "side": 1,
+      "message": "These if statements are confusing.\n\nI suggest something like this.\nif (IsPowerChangedComeFromAndroid()) {\n  DequeueRemoteChange();\n} else {\n  EnqueueLocalChange();\n}",
+      "range": {
+        "startLine": 400,
+        "startChar": 0,
+        "endLine": 401,
+        "endChar": 54
+      },
+      "revId": "a3c1b5de626da72efbbc94ade0d92537ef8b1347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f61a8493_d5a5d051",
+        "filename": "components/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 1104794
+      },
+      "writtenOn": "2017-07-31T21:28:44Z",
+      "side": 1,
+      "message": "These if statements are confusing.\n\nI suggest something like this.\nif (IsPowerChangedComeFromAndroid()) {\n  EnqueueRemoteChange();\n  bluetooth_adapter_-\u003eSetPowered(true, ...)\n} else {\n  DequeueLocalChange();\n}",
+      "range": {
+        "startLine": 741,
+        "startChar": 2,
+        "endLine": 741,
+        "endChar": 80
+      },
+      "revId": "a3c1b5de626da72efbbc94ade0d92537ef8b1347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a4fd2a0_10c2ca8d",
+        "filename": "components/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 754,
+      "author": {
+        "id": 1104794
+      },
+      "writtenOn": "2017-07-31T21:28:44Z",
+      "side": 1,
+      "message": "Can we move this into the Dequeue function?\n\nIt is cleaner that way.",
+      "range": {
+        "startLine": 754,
+        "startChar": 4,
+        "endLine": 754,
+        "endChar": 31
+      },
+      "revId": "a3c1b5de626da72efbbc94ade0d92537ef8b1347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7289a5cf_216234a5",
+        "filename": "components/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 765,
+      "author": {
+        "id": 1104794
+      },
+      "writtenOn": "2017-07-31T21:28:44Z",
+      "side": 1,
+      "message": "These if statements are confusing.\n\nI suggest something like this.\nif (IsPowerChangedComeFromAndroid()) {\n  EnqueueRemoteChange();\n  bluetooth_adapter_-\u003eSetPowered(false, ...)\n} else {\n  DequeueLocalChange();\n}",
+      "range": {
+        "startLine": 764,
+        "startChar": 0,
+        "endLine": 765,
+        "endChar": 49
+      },
+      "revId": "a3c1b5de626da72efbbc94ade0d92537ef8b1347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8358658_c91b6764",
+        "filename": "components/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1993,
+      "author": {
+        "id": 1104794
+      },
+      "writtenOn": "2017-07-31T21:28:44Z",
+      "side": 1,
+      "message": "Add comment why we don\u0027t need to send TURN_OFF in init",
+      "range": {
+        "startLine": 1993,
+        "startChar": 25,
+        "endLine": 1993,
+        "endChar": 48
+      },
+      "revId": "a3c1b5de626da72efbbc94ade0d92537ef8b1347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "463c3e77_2372f058",
+        "filename": "components/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2036,
+      "author": {
+        "id": 1104794
+      },
+      "writtenOn": "2017-07-31T21:28:44Z",
+      "side": 1,
+      "message": "This part is a bit confusing.\n\nWhat about\n\nstd::queue\u003cAdapterPowerState\u003e empty_queue;\nstd::swap(local_power_changes_, empty_queue);\nif (last_change !\u003d current_change) return;\nlocal_power_changes_.push(last_change);\nSendBluetoothPoweredStateBroadcast(last_change);\npower_intent_timer_.Start(\n    FROM_HERE, kPowerIntentTimeout,\n    base::Bind(\u0026ArcBluetoothBridge::DequeuePowerIntent,\n               weak_factory_.GetWeakPtr(), last_change));",
+      "range": {
+        "startLine": 2020,
+        "startChar": 0,
+        "endLine": 2036,
+        "endChar": 59
+      },
+      "revId": "a3c1b5de626da72efbbc94ade0d92537ef8b1347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7cf6a83_e7928cfa",
+        "filename": "components/arc/bluetooth/arc_bluetooth_bridge.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1104794
+      },
+      "writtenOn": "2017-07-31T21:28:44Z",
+      "side": 1,
+      "message": "const?",
+      "range": {
+        "startLine": 364,
+        "startChar": 4,
+        "endLine": 364,
+        "endChar": 23
+      },
+      "revId": "a3c1b5de626da72efbbc94ade0d92537ef8b1347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
