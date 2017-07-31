@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5197cd0_bad7b679",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_benchmarks/vr_memory.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2017-07-31T09:59:01Z",
+      "side": 1,
+      "message": "No need to override this method. True is already the default, and the method itself will go away soon.",
+      "revId": "ef00bee3fd41ea2bb114d651b0e7fa32483521ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5255a90c_69cb7e19",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_page_sets/webvr_sample_pages.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2017-07-31T09:59:01Z",
+      "side": 1,
+      "message": "nit: would be great to provide some better names; e.g. \u0027test-slow-render-10-seconds\u0027 would be fine, but the current \u0027test-slow-render.html_10_seconds\u0027 looks awkward.",
+      "revId": "ef00bee3fd41ea2bb114d651b0e7fa32483521ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e20a65f2_6f2003bb",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_page_sets/webvr_sample_pages.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2017-07-31T09:59:01Z",
+      "side": 1,
+      "message": "MeasureMemory already includes some \"Wait\"s in it. What is the purpose of this one here?",
+      "revId": "ef00bee3fd41ea2bb114d651b0e7fa32483521ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

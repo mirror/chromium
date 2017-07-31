@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "d2cb9f43_11347a7d",
+        "filename": "tools/perf/contrib/vr_benchmarks/vr_benchmarks/vr_memory.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1123010
+      },
+      "writtenOn": "2017-07-31T09:59:01Z",
+      "side": 1,
+      "message": "Since that code is already getting a fair amount of duplication in the codebase, I think something like _MemoryInfra with a default ValueCanBeAddedPredicate should be made public.\n\nYou can create a base clase for that (probably in memory.py) and use it for your new benchmark. I\u0027ll try to plan some cleanup/refactoring to get other memory benchmarks using it too.",
+      "parentUuid": "74e2bd55_07464b64",
+      "range": {
+        "startLine": 14,
+        "startChar": 36,
+        "endLine": 14,
+        "endChar": 48
+      },
+      "revId": "2135708b9cf79dacb676fe5b46798742ab0eacf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e174c09d_823cc9b3",
         "filename": "tools/perf/contrib/vr_benchmarks/vr_benchmarks/vr_memory.py",
         "patchSetId": 4
