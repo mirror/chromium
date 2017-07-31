@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38982f96_a0738735",
+        "filename": "build/linux/sysroot_scripts/sysroot-creator.sh",
+        "patchSetId": 2
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-07-31T20:37:50Z",
+      "side": 1,
+      "message": "Update comment.",
+      "range": {
+        "startLine": 283,
+        "startChar": 52,
+        "endLine": 283,
+        "endChar": 57
+      },
+      "revId": "cd754cd4507acfd69f7778714098a1798f749e45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
