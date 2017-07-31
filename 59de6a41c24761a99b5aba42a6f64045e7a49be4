@@ -131,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "c8781f9c_2158b56b",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-31T22:50:23Z",
+      "side": 1,
+      "message": "\u003e Done. I\u0027m not sure the placement in the file is what you wanted. Let me know if you want me to move it up or down.\n\nYour placement in the other file is generally fine.  See other comments there.",
+      "parentUuid": "74e11275_82eb378c",
+      "range": {
+        "startLine": 137,
+        "startChar": 28,
+        "endLine": 139,
+        "endChar": 75
+      },
+      "revId": "59de6a41c24761a99b5aba42a6f64045e7a49be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62174d6c_41aca9ac",
         "filename": "components/omnibox/browser/contextual_suggestions_service.h",
         "patchSetId": 16
@@ -316,6 +340,30 @@
       "revId": "59de6a41c24761a99b5aba42a6f64045e7a49be4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5a3e6a0_c0693846",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-31T22:50:23Z",
+      "side": 1,
+      "message": "\u003e Correct me if I\u0027m wrong, but I think these checks have been performed in the beginning of this function. For incognito specifically, there is an early return checking client()-\u003eIsOffTheRecord(). It\u0027s assumed that at this point we should be allowed to send the URL if can_attach_current_url \u003d\u003d true.\n\u003e \n\u003e I also tried in incognito mode and there was no request to Google servers when clicking on the omnibox: https://screenshot.googleplex.com/81tPSjfaDWH\n\u003e \n\u003e But maybe you\u0027re seeing something I am not, so I\u0027ll keep this issue open to keep the discussion going.\n\nYou got it right.  I forgot that if control makes it here, we might be in non-incognito mode.  Sorry for the noise.",
+      "parentUuid": "7652e29e_8f04425e",
+      "range": {
+        "startLine": 189,
+        "startChar": 6,
+        "endLine": 189,
+        "endChar": 61
+      },
+      "revId": "59de6a41c24761a99b5aba42a6f64045e7a49be4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

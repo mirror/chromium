@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "f36970ba_9b6d9931",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-31T22:50:23Z",
+      "side": 1,
+      "message": "... why?\n\n(Reading the test of this class would make one think that this is not something that needs to be exposed, as this class constructs the fetcher itself.)",
+      "range": {
+        "startLine": 69,
+        "startChar": 25,
+        "endLine": 69,
+        "endChar": 0
+      },
+      "revId": "edffd6b33d92bb36529020357254f22adf5e7e33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "653e4bef_81750451",
+        "filename": "components/omnibox/browser/omnibox_field_trial.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-31T22:50:23Z",
+      "side": 1,
+      "message": "Usually param names in this file are defined in the .h file (for testing) and listed in a big block.  Please follow the existing (though odd) style.",
+      "range": {
+        "startLine": 160,
+        "startChar": 11,
+        "endLine": 160,
+        "endChar": 56
+      },
+      "revId": "edffd6b33d92bb36529020357254f22adf5e7e33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e95f6e73_f367772f",
+        "filename": "components/omnibox/browser/omnibox_field_trial.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-07-31T22:50:23Z",
+      "side": 1,
+      "message": "Please comment, especially with regard to the default value.",
+      "range": {
+        "startLine": 205,
+        "startChar": 13,
+        "endLine": 205,
+        "endChar": 55
+      },
+      "revId": "edffd6b33d92bb36529020357254f22adf5e7e33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e190568b_9d38c123",
         "filename": "components/omnibox/browser/zero_suggest_provider.cc",
         "patchSetId": 18
