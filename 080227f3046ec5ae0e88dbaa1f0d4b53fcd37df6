@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "430d6b15_36b9632f",
+        "filename": "extensions/browser/api/networking_private/networking_private_service_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-31T16:47:43Z",
+      "side": 1,
+      "message": "Move to initializer list",
+      "revId": "080227f3046ec5ae0e88dbaa1f0d4b53fcd37df6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

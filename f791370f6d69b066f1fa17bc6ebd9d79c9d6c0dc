@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40fcf827_bcc33a20",
+        "filename": "extensions/browser/api/networking_private/networking_private_service_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-31T16:47:43Z",
+      "side": 0,
+      "message": "Just to make sure this is intentional. The use of a SequenceToken here was making it such that every instance of NetworkingPrivateServiceClient was using the same sequence. With this CL, every instance will use its own instance.\n\nThat\u0027s ok so long as there\u0027s no global state shared between each instance which requires mutually exclusive access (should probably have another owner take a look with this in mind?)\n\nIf you need a single task runner for every instance you can use a LazySequencedTaskRunner instantiated in this file\u0027s anonymous namespace.",
+      "revId": "f791370f6d69b066f1fa17bc6ebd9d79c9d6c0dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
