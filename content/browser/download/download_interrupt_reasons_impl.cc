@@ -121,8 +121,37 @@ DownloadInterruptReason ConvertNetErrorToInterruptReason(
   return DOWNLOAD_INTERRUPT_REASON_NONE;
 }
 
-std::string DownloadInterruptReasonToString(DownloadInterruptReason error) {
+DownloadInterruptReason ConvertMojoNetworkRequestStatusToInterruptReason(
+    mojom::NetworkRequestStatus status) {
+  switch (status) {
+    case mojom::NetworkRequestStatus::NETWORK_REQUEST_STATUS_OK:
+      return DOWNLOAD_INTERRUPT_REASON_NONE;
+    case mojom::NetworkRequestStatus::NETWORK_REQUEST_STATUS_NETWORK_TIMEOUT:
+      return DOWNLOAD_INTERRUPT_REASON_NETWORK_TIMEOUT;
+    case mojom::NetworkRequestStatus::
+        NETWORK_REQUEST_STATUS_NETWORK_DISCONNECTED:
+      return DOWNLOAD_INTERRUPT_REASON_NETWORK_DISCONNECTED;
+    case mojom::NetworkRequestStatus::
+        NETWORK_REQUEST_STATUS_NETWORK_SERVER_DOWN:
+      return DOWNLOAD_INTERRUPT_REASON_NETWORK_SERVER_DOWN;
+    case mojom::NetworkRequestStatus::NETWORK_REQUEST_STATUS_SERVER_NO_RANGE:
+      return DOWNLOAD_INTERRUPT_REASON_SERVER_NO_RANGE;
+    case mojom::NetworkRequestStatus::
+        NETWORK_REQUEST_STATUS_SERVER_CONTENT_LENGTH_MISMATCH:
+      return DOWNLOAD_INTERRUPT_REASON_SERVER_CONTENT_LENGTH_MISMATCH;
+    case mojom::NetworkRequestStatus::NETWORK_REQUEST_STATUS_SERVER_UNREACHABLE:
+      return DOWNLOAD_INTERRUPT_REASON_SERVER_UNREACHABLE;
+    case mojom::NetworkRequestStatus::
+        NETWORK_REQUEST_STATUS_SERVER_CERT_PROBLEM:
+      return DOWNLOAD_INTERRUPT_REASON_SERVER_CERT_PROBLEM;
+    case mojom::NetworkRequestStatus::NETWORK_REQUEST_STATUS_USER_CANCELED:
+      return DOWNLOAD_INTERRUPT_REASON_USER_CANCELED;
+    case mojom::NetworkRequestStatus::NETWORK_REQUEST_STATUS_NETWORK_FAILED:
+      return DOWNLOAD_INTERRUPT_REASON_NETWORK_FAILED;
+  }
+}
 
+std::string DownloadInterruptReasonToString(DownloadInterruptReason error) {
 #define INTERRUPT_REASON(name, value)  \
     case DOWNLOAD_INTERRUPT_REASON_##name: return #name;
 

@@ -1,0 +1,28 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module content.mojom;
+
+enum NetworkRequestStatus {
+  NETWORK_REQUEST_STATUS_OK,
+  NETWORK_REQUEST_STATUS_NETWORK_TIMEOUT,
+  NETWORK_REQUEST_STATUS_NETWORK_DISCONNECTED,
+  NETWORK_REQUEST_STATUS_NETWORK_SERVER_DOWN,
+  NETWORK_REQUEST_STATUS_SERVER_NO_RANGE,
+  NETWORK_REQUEST_STATUS_SERVER_CONTENT_LENGTH_MISMATCH,
+  NETWORK_REQUEST_STATUS_SERVER_UNREACHABLE,
+  NETWORK_REQUEST_STATUS_SERVER_CERT_PROBLEM,
+  NETWORK_REQUEST_STATUS_USER_CANCELED,
+  NETWORK_REQUEST_STATUS_NETWORK_FAILED,
+};
+
+// Used to pass the interruption status to the consumer of the data pipe.
+interface DownloadStreamClient {
+  OnCompleted(NetworkRequestStatus status);
+};
+
+struct DownloadStreamHandle {
+  handle<data_pipe_consumer> stream;
+  DownloadStreamClient& client_request;
+};

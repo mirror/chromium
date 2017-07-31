@@ -27,6 +27,7 @@
 #include "content/browser/download/rate_estimator.h"
 #include "content/public/browser/download_item.h"
 #include "content/public/browser/download_save_info.h"
+#include "mojo/public/cpp/bindings/binding.h"
 #include "mojo/public/cpp/system/simple_watcher.h"
 #include "net/log/net_log_with_source.h"
 
@@ -51,7 +52,7 @@ class CONTENT_EXPORT DownloadFileImpl : public DownloadFile {
                    base::WeakPtr<DownloadDestinationObserver> observer);
   DownloadFileImpl(std::unique_ptr<DownloadSaveInfo> save_info,
                    const base::FilePath& default_downloads_directory,
-                   mojo::ScopedDataPipeConsumerHandle consumer_handle,
+                   mojom::DownloadStreamHandlePtr stream_handle,
                    const net::NetLogWithSource& net_log,
                    base::WeakPtr<DownloadDestinationObserver> observer);
 
@@ -65,7 +66,7 @@ class CONTENT_EXPORT DownloadFileImpl : public DownloadFile {
   void AddByteStream(std::unique_ptr<ByteStreamReader> stream_reader,
                      int64_t offset,
                      int64_t length) override;
-  void AddDataPipeConsumerHandle(mojo::ScopedDataPipeConsumerHandle handle,
+  void AddDataPipeConsumerHandle(mojom::DownloadStreamHandlePtr stream_handle,
                                  int64_t offset,
                                  int64_t length) override;
   void RenameAndUniquify(const base::FilePath& full_path,
@@ -110,15 +111,18 @@ class CONTENT_EXPORT DownloadFileImpl : public DownloadFile {
   // response is handled.
   //
   // Multiple SourceStreams can concurrently write to the same file sink.
-  class CONTENT_EXPORT SourceStream {
+  class CONTENT_EXPORT SourceStream : public mojom::DownloadStreamClient {
    public:
     SourceStream(int64_t offset,
                  int64_t length,
                  std::unique_ptr<ByteStreamReader> stream_reader);
     SourceStream(int64_t offset,
                  int64_t length,
-                 mojo::ScopedDataPipeConsumerHandle consumer_handle);
-    ~SourceStream();
+                 mojom::DownloadStreamHandlePtr stream_handle);
+    ~SourceStream() override;
+
+    // mojom::DownloadStreamClient
+    void OnCompleted(mojom::NetworkRequestStatus status) override;
 
     // Called after successfully writing a buffer to disk.
     void OnWriteBytesToDisk(int64_t bytes_write);
@@ -142,15 +146,20 @@ class CONTENT_EXPORT DownloadFileImpl : public DownloadFile {
     // DownloadManager pass the status code to DownloadItem or DownloadFile.
     // However, a DownloadFile can have multiple SourceStreams, so we have to
     // maintain a map between data pipe and DownloadItem/DownloadFile somewhere.
-    DownloadInterruptReason GetStatus();
+    DownloadInterruptReason GetCompletionStatus();
+
+    using CompletionCallback = base::OnceCallback<void(SourceStream*)>;
+    // Register an callback to be called when download completes.
+    void RegisterCompletionCallback(CompletionCallback callback);
 
     // Results for reading the SourceStream.
-    enum ReadResult {
+    enum StreamState {
       EMPTY = 0,
       HAS_DATA,
+      WAIT_FOR_COMPLETION,
       COMPLETE,
     };
-    ReadResult Read(scoped_refptr<net::IOBuffer>* data, size_t* length);
+    StreamState Read(scoped_refptr<net::IOBuffer>* data, size_t* length);
 
     int64_t offset() const { return offset_; }
     int64_t length() const { return length_; }
@@ -183,8 +192,17 @@ class CONTENT_EXPORT DownloadFileImpl : public DownloadFile {
     // The stream through which data comes.
     std::unique_ptr<ByteStreamReader> stream_reader_;
 
-    // Objects for reading from a mojo data pipe.
+    // Status when the response completes, used by data pipe.
+    DownloadInterruptReason completion_status_;
+
+    // Whether the producer has completed handling the response.
+    bool is_producer_completed_;
+
+    CompletionCallback completion_callback_;
+
+    // Objects for reading from the input mojo stream handle.
     mojo::ScopedDataPipeConsumerHandle consumer_handle_;
+    mojo::Binding<mojom::DownloadStreamClient> binding_;
     std::unique_ptr<mojo::SimpleWatcher> handle_watcher_;
 
     DISALLOW_COPY_AND_ASSIGN(SourceStream);
@@ -250,6 +268,15 @@ class CONTENT_EXPORT DownloadFileImpl : public DownloadFile {
 
   // Register callback and start to read data from the stream.
   void RegisterAndActivateStream(SourceStream* source_stream);
+
+  // Called when a stream completes.
+  void OnStreamCompleted(SourceStream* source_stream);
+
+  // Notify |observer_| about the download status.
+  void NotifyObserver(SourceStream* source_stream,
+                      DownloadInterruptReason reason,
+                      SourceStream::StreamState stream_state,
+                      bool should_terminate);
 
   // Adds a new slice to |received_slices_| and update the existing entries in
   // |source_streams_| as their lengths will change.

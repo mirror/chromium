@@ -13,9 +13,9 @@
 #include "base/callback_forward.h"
 #include "base/files/file_path.h"
 #include "content/common/content_export.h"
+#include "content/common/download/download_stream.mojom.h"
 #include "content/public/browser/download_interrupt_reasons.h"
 #include "content/public/browser/download_item.h"
-#include "mojo/public/cpp/system/data_pipe.h"
 
 class GURL;
 
@@ -65,7 +65,7 @@ class CONTENT_EXPORT DownloadFile {
 
   // Add the consumer handle of a DataPipe to write into a slice of the file.
   virtual void AddDataPipeConsumerHandle(
-      mojo::ScopedDataPipeConsumerHandle handle,
+      mojom::DownloadStreamHandlePtr stream_handle,
       int64_t offset,
       int64_t length) = 0;
 
