@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "980e2790_6d2811f2",
+        "filename": "cc/layers/viewport.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-07-31T15:10:09Z",
+      "side": 1,
+      "message": "Is it possible to make this a const method?",
+      "revId": "f06eaf999498d957ddedb18437cf93b4e39e41bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19abda68_2975996a",
+        "filename": "cc/trees/layer_tree_host_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-07-31T15:10:09Z",
+      "side": 1,
+      "message": "This feels like ScrollNode should be passed in as const and this be a const method. I don\u0027t know if all the appropriate definitions are available though to do this (it might require some effort and then it is useless). But for correctness ideally this method would be const.",
+      "range": {
+        "startLine": 616,
+        "startChar": 35,
+        "endLine": 616,
+        "endChar": 46
+      },
+      "revId": "f06eaf999498d957ddedb18437cf93b4e39e41bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
