@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "878167af_652b956f",
+        "filename": "content/browser/devtools/protocol/service_worker_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-07-31T23:57:31Z",
+      "side": 1,
+      "message": "client_set",
+      "revId": "6f280b2ea02fa095a28e24832b675f617dd3eb9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
