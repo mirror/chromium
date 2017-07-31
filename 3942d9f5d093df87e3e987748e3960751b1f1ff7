@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e638c2cf_681dbbf6",
+        "filename": "chrome/installer/zucchini/zucchini_commands.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-07-31T13:25:21Z",
+      "side": 1,
+      "message": "can you get by with \u003ciosfwd\u003e here and include \u003costream\u003e in the .cc?",
+      "range": {
+        "startLine": 8,
+        "startChar": 9,
+        "endLine": 8,
+        "endChar": 18
+      },
+      "revId": "3942d9f5d093df87e3e987748e3960751b1f1ff7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
