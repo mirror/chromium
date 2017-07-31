@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbae6e78_70e520ca",
+        "filename": "cc/trees/layer_tree_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1512,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-07-31T16:28:21Z",
+      "side": 1,
+      "message": "I think this should be higher up in the call stack.  LayerTreeHostImpl::RootScrollBegin looks like it might be the right place, it\u0027s called from InputHandlerProxy when target_viewport is set to true (as I think it is in this case, right?). It\u0027s only called for GestureScrollBegin but you should be able to prevent setting a currently scrolling node which should then drop any following GSUs. Returning the right ScrollResult from there might even prevent generating GSUs but I\u0027m not sure how those get generated.",
+      "range": {
+        "startLine": 1511,
+        "startChar": 1,
+        "endLine": 1512,
+        "endChar": 42
+      },
+      "revId": "e4b3c4e5daeee5e79c04b981ea8bcb4ac9582040",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
