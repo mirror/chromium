@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "09bbb033_f3c641a2",
+        "filename": "third_party/WebKit/Source/core/page/Page.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-07-31T20:47:21Z",
+      "side": 1,
+      "message": "yes, the idea is that the worker gets the fonts that were default when the worker was created. This is a UA specific behavior, so there\u0027s no spec to follow.\n\nI did it to avoid the locking on read. (Even though given how many caches we have, who knows if it\u0027s an issue or not). Either way is such a weird feature, right?",
+      "parentUuid": "5b61cdcb_e3a56f3e",
+      "revId": "b6054af66669c754e6421cdf290f7bdf21785d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cd6011be_3bcc5b6d",
         "filename": "third_party/WebKit/Source/platform/fonts/FontGlobalContext.cpp",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "b6054af66669c754e6421cdf290f7bdf21785d69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9634417_33644029",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontGlobalContext.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-07-31T20:47:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd6011be_3bcc5b6d",
+      "revId": "b6054af66669c754e6421cdf290f7bdf21785d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e8a5d6af_04b18d17",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontGlobalContext.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-07-31T20:47:21Z",
+      "side": 1,
+      "message": "I had done like that before, but GenericFontFamilySettings doesn\u0027t have a new constructor.",
+      "parentUuid": "687539e0_37063549",
+      "revId": "b6054af66669c754e6421cdf290f7bdf21785d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f32e3989_3b95f7d0",
         "filename": "third_party/WebKit/Source/platform/fonts/GenericFontFamilySettings.cpp",
         "patchSetId": 5
@@ -64,6 +118,24 @@
       "writtenOn": "2017-07-31T20:27:02Z",
       "side": 1,
       "message": "nit: This doesn\u0027t need to be a member of the class. A free function with internal linkage would suffice.",
+      "revId": "b6054af66669c754e6421cdf290f7bdf21785d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3f7067a_64e03bd3",
+        "filename": "third_party/WebKit/Source/platform/fonts/GenericFontFamilySettings.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-07-31T20:47:21Z",
+      "side": 1,
+      "message": "ScriptFontFamilyMap is private on the class. :/",
+      "parentUuid": "f32e3989_3b95f7d0",
       "revId": "b6054af66669c754e6421cdf290f7bdf21785d69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "c83acbc7_06a5ba10",
+        "filename": "third_party/WebKit/Source/platform/fonts/GenericFontFamilySettings.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-07-31T20:47:21Z",
+      "side": 1,
+      "message": "Fine. I was proud to be able to do it at all. Done.",
+      "parentUuid": "21eec941_0955fd01",
+      "revId": "b6054af66669c754e6421cdf290f7bdf21785d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cbdff75b_bdb5aa92",
         "filename": "third_party/WebKit/Source/platform/fonts/GenericFontFamilySettings.h",
         "patchSetId": 5
@@ -101,6 +191,24 @@
       "revId": "b6054af66669c754e6421cdf290f7bdf21785d69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4861f2a6_d547c13f",
+        "filename": "third_party/WebKit/Source/platform/fonts/GenericFontFamilySettings.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-07-31T20:47:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbdff75b_bdb5aa92",
+      "revId": "b6054af66669c754e6421cdf290f7bdf21785d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
