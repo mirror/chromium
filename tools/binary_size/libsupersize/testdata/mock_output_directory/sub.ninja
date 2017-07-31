@@ -1,3 +1,8 @@
-build obj/third_party/ffmpeg/libffmpeg_internal.a: alink obj/third_party/sub/fft_fixed.o obj/third_party/sub/fft_float.o | bar
-build obj/third_party/WebKit.a: alink obj/third_party/sub/PaintChunker.o obj/third_party/sub/ContiguousContainer.o
-build a b c d elf: link obj/base/base/page_allocator.o obj/third_party/WebKit.a || dum dee doo dee
+subninja sub.ninja
+
+build obj/third_party/icu/icuuc/ucnv_ext.o: cxx gen/third_party/icu/ucnv_ext.c || obj/foo.inputdeps.stamp
+build obj/base/base/page_allocator.o: rule ../../base/page_allocator.cc
+build obj/third_party/sub/fft_float.o: rule ../../third_party/fft_float.cc
+build obj/third_party/sub/fft_fixed.o: rule ../../third_party/fft_fixed.cc
+build obj/third_party/sub/ContiguousContainer.o: rule ../../third_party/container.c
+build obj/third_party/sub/PaintChunker.o: rule ../../third_party/paint.cc
