@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f32e0c4e_e16be390",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebappInfo.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1186534
+      },
+      "writtenOn": "2017-07-31T19:19:17Z",
+      "side": 0,
+      "message": "The subtlety here is that we no longer check that the URL passed in here is valid. If we\u0027re sure this is okay, can you assert that mUri !\u003d null?",
+      "range": {
+        "startLine": 183,
+        "startChar": 25,
+        "endLine": 183,
+        "endChar": 29
+      },
+      "revId": "40b1b276f9915429400e95777ec4baf925aca2d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
