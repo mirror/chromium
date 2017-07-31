@@ -1324,7 +1324,9 @@ class VIEWS_EXPORT View : public ui::LayerDelegate,
   gfx::Vector2d GetPaintContextOffset() const;
 
   // Adjusts the transform of |recorder| in advance of painting.
-  void SetupTransformRecorderForPainting(ui::TransformRecorder* recorder) const;
+  void SetupTransformRecorderForPainting(
+      const gfx::Vector2d& offset_from_parent,
+      ui::TransformRecorder* recorder) const;
 
   // Recursively calls the painting method |func| on all non-layered children,
   // in Z order.

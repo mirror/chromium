@@ -893,19 +893,33 @@ void View::Paint(const ui::PaintContext& parent_context) {
       clip_recorder.ClipRect(GetMirroredBounds());
     } else {
       gfx::Path clip_path_in_parent = clip_path_;
-      clip_path_in_parent.offset(GetMirroredX(), y());
+
+      // Transform |clip_path_| from local space to parent recording space.
+      gfx::Transform to_parent_recording_space;
+
+      to_parent_recording_space.Scale(
+          SkFloatToScalar(paint_info.paint_recording_scale_x()),
+          SkFloatToScalar(paint_info.paint_recording_scale_y()));
+      to_parent_recording_space.Translate(paint_info.offset_from_parent());
+
+      clip_path_in_parent.transform(to_parent_recording_space.matrix());
       clip_recorder.ClipPathWithAntiAliasing(clip_path_in_parent);
     }
   }
 
   ui::TransformRecorder transform_recorder(context);
-  SetupTransformRecorderForPainting(&transform_recorder);
+  SetupTransformRecorderForPainting(paint_info.offset_from_parent(),
+                                    &transform_recorder);
 
   // Note that the cache is not aware of the offset of the view
   // relative to the parent since painting is always done relative to
   // the top left of the individual view.
-  if (is_invalidated || !paint_cache_.UseCache(context, size())) {
-    ui::PaintRecorder recorder(context, size(), &paint_cache_);
+  if (is_invalidated ||
+      !paint_cache_.UseCache(context, paint_info.paint_recording_size())) {
+    ui::PaintRecorder recorder(context, paint_info.paint_recording_size(),
+                               paint_info.paint_recording_scale_x(),
+                               paint_info.paint_recording_scale_y(),
+                               &paint_cache_);
     gfx::Canvas* canvas = recorder.canvas();
     gfx::ScopedRTLFlipCanvas scoped_canvas(canvas, width(),
                                            flip_canvas_on_paint_for_rtl_ui_);
@@ -1977,6 +1991,7 @@ gfx::Vector2d View::GetPaintContextOffset() const {
 }
 
 void View::SetupTransformRecorderForPainting(
+    const gfx::Vector2d& offset_from_parent,
     ui::TransformRecorder* recorder) const {
   // If the view is backed by a layer, it should paint with itself as the origin
   // rather than relative to its parent.
@@ -2016,12 +2031,16 @@ void View::PaintDebugRects(const ui::PaintContext& parent_context) {
 
   ui::PaintContext context(parent_context, GetPaintContextOffset());
   ui::TransformRecorder transform_recorder(context);
-  SetupTransformRecorderForPainting(&transform_recorder);
+  SetupTransformRecorderForPainting(paint_info.offset_from_parent(),
+                                    &transform_recorder);
 
   RecursivePaintHelper(&View::PaintDebugRects, context);
 
   // Draw outline rects for debugging.
-  ui::PaintRecorder recorder(context, size());
+  ui::PaintRecorder recorder(context, paint_info.paint_recording_size(),
+                             paint_info.paint_recording_scale_x(),
+                             paint_info.paint_recording_scale_y(),
+                             &paint_cache_);
   gfx::Canvas* canvas = recorder.canvas();
   const float scale = canvas->UndoDeviceScaleFactor();
   gfx::RectF outline_rect(ScaleToEnclosedRect(GetLocalBounds(), scale));

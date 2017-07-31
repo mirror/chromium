@@ -21,6 +21,8 @@ namespace ui {
 // to the |context|'s PaintOpBuffer.
 PaintRecorder::PaintRecorder(const PaintContext& context,
                              const gfx::Size& recording_size,
+                             float recording_scale_x,
+                             float recording_scale_y,
                              PaintCache* cache)
     : context_(context),
       local_list_(cache ? base::MakeRefCounted<cc::DisplayItemList>(
@@ -41,11 +43,22 @@ PaintRecorder::PaintRecorder(const PaintContext& context,
   DCHECK(!context.inside_paint_recorder_);
   context.inside_paint_recorder_ = true;
 #endif
+  if (context_.is_pixel_canvas()) {
+    canvas()->Save();
+    canvas()->Scale(recording_scale_x, recording_scale_y);
+  }
 }
 
 PaintRecorder::PaintRecorder(const PaintContext& context,
                              const gfx::Size& recording_size)
-    : PaintRecorder(context, recording_size, nullptr) {}
+    : PaintRecorder(
+          context,
+          gfx::ScaleToRoundedSize(
+              recording_size,
+              context.is_pixel_canvas() ? context.device_scale_factor_ : 1.f),
+          context.device_scale_factor_,
+          context.device_scale_factor_,
+          nullptr) {}
 
 PaintRecorder::~PaintRecorder() {
 #if DCHECK_IS_ON()

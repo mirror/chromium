@@ -407,7 +407,11 @@ void BubbleFrameView::OnPaint(gfx::Canvas* canvas) {
 void BubbleFrameView::PaintChildren(const ui::PaintContext& context) {
   NonClientFrameView::PaintChildren(context);
 
-  ui::PaintRecorder recorder(context, size());
+  ui::PaintCache paint_cache;
+  ui::PaintRecorder recorder(
+      paint_info.context(), paint_info.paint_recording_size(),
+      paint_info.paint_recording_scale_x(),
+      paint_info.paint_recording_scale_y(), &paint_cache);
   OnPaintBorder(recorder.canvas());
 }
 

@@ -28,8 +28,8 @@ void TopContainerView::PaintChildren(const ui::PaintContext& context) {
     // invalidation info, as we're painting something outside of the normal
     // parent-child relationship, so invalidations are no longer in the correct
     // space to compare.
-    browser_view_->frame()->GetFrameView()->Paint(ui::PaintContext(
-        context, ui::PaintContext::CLONE_WITHOUT_INVALIDATION));
+    browser_view_->frame()->GetFrameView()->Paint(
+        views::PaintInfo::ClonePaintInfo(paint_info));
   }
   View::PaintChildren(context);
 }
