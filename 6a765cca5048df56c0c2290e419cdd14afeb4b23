@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "98696975_1b28f087",
+        "filename": "extensions/browser/api/runtime/restart_after_delay_api_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-31T07:33:55Z",
+      "side": 1,
+      "message": "nit: MakeUnique",
+      "revId": "6a765cca5048df56c0c2290e419cdd14afeb4b23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "772ab8d1_91127524",
+        "filename": "extensions/browser/api/runtime/restart_after_delay_api_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-31T07:33:55Z",
+      "side": 1,
+      "message": "can  you use extensions_browser_client() instead?",
+      "revId": "6a765cca5048df56c0c2290e419cdd14afeb4b23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4b8a8619_35ab573a",
         "filename": "extensions/browser/test_extensions_browser_client.h",
         "patchSetId": 5
@@ -19,6 +53,23 @@
         "endLine": 55,
         "endChar": 21
       },
+      "revId": "6a765cca5048df56c0c2290e419cdd14afeb4b23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96054b38_777c30c6",
+        "filename": "extensions/shell/test/shell_test_base_aura.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-07-31T07:33:55Z",
+      "side": 1,
+      "message": "helper_.reset() ?\n\nAlternatively, you may just create as instance variable (instead of unique_ptr). Up to you.",
       "revId": "6a765cca5048df56c0c2290e419cdd14afeb4b23",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
