@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ae7be08_2648efd8",
+        "filename": "chrome/browser/plugins/plugin_power_saver_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-31T05:15:49Z",
+      "side": 1,
+      "message": "nit: not sure why this changed?",
+      "revId": "70dd9f0e99b1e5bdf9418de2ebb22d4994800bed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0294f13_18ab5d12",
+        "filename": "chrome/renderer/plugins/power_saver_info.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-31T05:15:49Z",
+      "side": 1,
+      "message": "nit: fill 80 chars on previous line",
+      "revId": "70dd9f0e99b1e5bdf9418de2ebb22d4994800bed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9be56c79_c9b8ad45",
+        "filename": "chrome/test/data/prerender/prerender_plugin_delay_load.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-31T05:15:49Z",
+      "side": 1,
+      "message": "I don\u0027t know the pre-render tests enough to understand the implications of this. Does it just basically mean that we need to call DidPluginLoad below instead of relying on the existing prerender browsertest infrastructure?",
+      "revId": "70dd9f0e99b1e5bdf9418de2ebb22d4994800bed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fa3da47_e10a4cad",
+        "filename": "content/public/common/content_switches.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 682,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-07-31T05:15:49Z",
+      "side": 1,
+      "message": "nit: fill 80 chars on previous line",
+      "revId": "70dd9f0e99b1e5bdf9418de2ebb22d4994800bed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
