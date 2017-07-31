@@ -28,6 +28,7 @@
 #include "chromeos/dbus/image_loader_client.h"
 #include "chromeos/dbus/lorgnette_manager_client.h"
 #include "chromeos/dbus/media_analytics_client.h"
+#include "chromeos/dbus/midis_client.h"
 #include "chromeos/dbus/modem_messaging_client.h"
 #include "chromeos/dbus/permission_broker_client.h"
 #include "chromeos/dbus/power_manager_client.h"
@@ -194,6 +195,10 @@ ImageLoaderClient* DBusThreadManager::GetImageLoaderClient() {
 MediaAnalyticsClient* DBusThreadManager::GetMediaAnalyticsClient() {
   return clients_browser_ ? clients_browser_->media_analytics_client_.get()
                           : nullptr;
+}
+
+MidisClient* DBusThreadManager::GetMidisClient() {
+  return clients_common_->midis_client_.get();
 }
 
 ModemMessagingClient* DBusThreadManager::GetModemMessagingClient() {

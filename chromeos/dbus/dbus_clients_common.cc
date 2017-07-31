@@ -25,6 +25,7 @@
 #include "chromeos/dbus/fake_sms_client.h"
 #include "chromeos/dbus/fake_system_clock_client.h"
 #include "chromeos/dbus/gsm_sms_client.h"
+#include "chromeos/dbus/midis_client.h"
 #include "chromeos/dbus/modem_messaging_client.h"
 #include "chromeos/dbus/permission_broker_client.h"
 #include "chromeos/dbus/power_manager_client.h"
@@ -112,6 +113,9 @@ DBusClientsCommon::DBusClientsCommon(bool use_real_clients) {
     system_clock_client_.reset(new FakeSystemClockClient);
 
   update_engine_client_.reset(UpdateEngineClient::Create(client_impl_type));
+
+  if (use_real_clients)
+    midis_client_.reset(MidisClient::Create());
 }
 
 DBusClientsCommon::~DBusClientsCommon() {}
@@ -123,6 +127,7 @@ void DBusClientsCommon::Initialize(dbus::Bus* system_bus) {
   cras_audio_client_->Init(system_bus);
   cryptohome_client_->Init(system_bus);
   gsm_sms_client_->Init(system_bus);
+  midis_client_->Init(system_bus);
   modem_messaging_client_->Init(system_bus);
   permission_broker_client_->Init(system_bus);
   power_manager_client_->Init(system_bus);

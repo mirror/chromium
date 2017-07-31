@@ -217,6 +217,8 @@ component("chromeos") {
     "dbus/lorgnette_manager_client.h",
     "dbus/media_analytics_client.cc",
     "dbus/media_analytics_client.h",
+    "dbus/midis_client.cc",
+    "dbus/midis_client.h",
     "dbus/modem_messaging_client.cc",
     "dbus/modem_messaging_client.h",
     "dbus/permission_broker_client.cc",

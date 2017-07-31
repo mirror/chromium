@@ -15,6 +15,9 @@ class MIDI_EXPORT MidiManagerCros final : public MidiManager {
   explicit MidiManagerCros(MidiService* service);
   ~MidiManagerCros() override;
 
+  // MidiManager implementation
+  void StartInitialization() override;
+
   DISALLOW_COPY_AND_ASSIGN(MidiManagerCros);
 };
 
