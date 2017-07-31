@@ -76,9 +76,13 @@ static void RasterizeSource(
         100.0f * fraction_saved);
   }
 
+  // As an optimization, inform Skia to discard when not doing partial raster.
+  if (raster_full_rect == playback_rect)
+    canvas->discard();
+
   raster_source->PlaybackToCanvas(
-      sk_surface->getCanvas(), resource_lock->color_space_for_raster(),
-      raster_full_rect, playback_rect, transform, playback_settings);
+      canvas, resource_lock->color_space_for_raster(), raster_full_rect,
+      playback_rect, transform, playback_settings);
 }
 
 }  // namespace
