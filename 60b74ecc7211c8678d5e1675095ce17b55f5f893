@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2fec951b_c38e3ea7",
+        "filename": "chrome/installer/zucchini/image_index.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-31T21:15:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a9a5a70_37775624",
+      "range": {
+        "startLine": 59,
+        "startChar": 22,
+        "endLine": 59,
+        "endChar": 31
+      },
+      "revId": "60b74ecc7211c8678d5e1675095ce17b55f5f893",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f89c8850_9e52a851",
         "filename": "chrome/installer/zucchini/image_index.h",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "a6513c9e_823358b1",
+        "filename": "chrome/installer/zucchini/image_index.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-31T21:15:54Z",
+      "side": 1,
+      "message": "Fixed",
+      "parentUuid": "f89c8850_9e52a851",
+      "range": {
+        "startLine": 83,
+        "startChar": 63,
+        "endLine": 84,
+        "endChar": 49
+      },
+      "revId": "60b74ecc7211c8678d5e1675095ce17b55f5f893",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2dc1c751_157379df",
         "filename": "chrome/installer/zucchini/image_index.h",
         "patchSetId": 5
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-28T18:30:49Z",
       "side": 1,
       "message": "Both of these are referenced by [type]. How about aggregate them into one struct:\n\nstruct TypeInfo {\n  ReferenceTypeTraits traits;\n  std::vector\u003cReference\u003e refs;\n};\nstd::vector\u003cTypeInfo\u003e types_;\n\n?",
+      "range": {
+        "startLine": 122,
+        "startChar": 0,
+        "endLine": 125,
+        "endChar": 50
+      },
+      "revId": "60b74ecc7211c8678d5e1675095ce17b55f5f893",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c002c127_f0ba64b4",
+        "filename": "chrome/installer/zucchini/image_index.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-31T21:15:54Z",
+      "side": 1,
+      "message": "I can try. I\u0027m a bit concerned though about clang tidy requiring out of line copy constructor, destructor, etc. in which case I\u0027d rather avoid the hassle. I\u0027m updating and I\u0027ll see what clang says.",
+      "parentUuid": "2dc1c751_157379df",
       "range": {
         "startLine": 122,
         "startChar": 0,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "7f103434_ed157e79",
+        "filename": "chrome/installer/zucchini/image_index.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-31T21:15:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29aa7fa5_f79619ff",
+      "range": {
+        "startLine": 127,
+        "startChar": 0,
+        "endLine": 130,
+        "endChar": 35
+      },
+      "revId": "60b74ecc7211c8678d5e1675095ce17b55f5f893",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58440c85_97c53631",
         "filename": "chrome/installer/zucchini/image_utils.h",
         "patchSetId": 5
@@ -105,6 +201,30 @@
       "writtenOn": "2017-07-28T18:30:49Z",
       "side": 1,
       "message": "Relying on type cast operator seems hacky. Can this be be made explicit? E.g.:\n\nReference AsReference() const { ... }",
+      "range": {
+        "startLine": 68,
+        "startChar": 2,
+        "endLine": 68,
+        "endChar": 20
+      },
+      "revId": "60b74ecc7211c8678d5e1675095ce17b55f5f893",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bef4976c_fafbbc6b",
+        "filename": "chrome/installer/zucchini/image_utils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-31T21:15:54Z",
+      "side": 1,
+      "message": "I realized that this is dead code.",
+      "parentUuid": "58440c85_97c53631",
       "range": {
         "startLine": 68,
         "startChar": 2,

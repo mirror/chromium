@@ -908,6 +908,30 @@
     },
     {
       "key": {
+        "uuid": "8a5f182d_cbbcfa87",
+        "filename": "chrome/installer/zucchini/test_disassembler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-07-31T21:15:54Z",
+      "side": 1,
+      "message": "I suggest :\n-move ReferenceReader and ReferenceWriter in image_utils (since they are used almost everytime Reference is used).\n-rename test_disassembler.h for test_reference_reader.h",
+      "parentUuid": "42997bed_e9c8e1a5",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 54
+      },
+      "revId": "37701c47f1fe6942a967894b5a8b689eade77737",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "08b9eca5_1d04a6e8",
         "filename": "chrome/installer/zucchini/test_disassembler.h",
         "patchSetId": 1
