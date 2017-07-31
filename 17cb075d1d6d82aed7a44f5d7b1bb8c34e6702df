@@ -1,0 +1,187 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3780456_3664e9b1",
+        "filename": "content/browser/shared_worker/shared_worker_content_settings_proxy_impl.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-31T05:26:32Z",
+      "side": 1,
+      "message": "style guide: else() needs braces when the if() has them",
+      "revId": "17cb075d1d6d82aed7a44f5d7b1bb8c34e6702df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d00d2bec_4697cec6",
+        "filename": "content/browser/shared_worker/shared_worker_content_settings_proxy_impl.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-31T05:26:32Z",
+      "side": 1,
+      "message": "style guide: else() needs braces when the if() has them",
+      "revId": "17cb075d1d6d82aed7a44f5d7b1bb8c34e6702df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53b46d9e_aac07f00",
+        "filename": "content/browser/shared_worker/shared_worker_content_settings_proxy_impl.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-31T05:26:32Z",
+      "side": 1,
+      "message": "the include guard should have the path of the filename, it should end with: CONTENT_SETTINGS_PROXY_IMPL_H\n\n(bit surprised there\u0027s no presubmit for this)",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 65
+      },
+      "revId": "17cb075d1d6d82aed7a44f5d7b1bb8c34e6702df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3db8b5a3_b5774013",
+        "filename": "content/browser/shared_worker/shared_worker_content_settings_proxy_impl.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-31T05:26:32Z",
+      "side": 1,
+      "message": "\"Mojo connection\" seems superfluous here.\nIn addition to \"renderer counterpart\", it\u0027d be nice to give the class name for people reading through the code.\n\nWould recommend:\nSharedWorkerContentSettingsProxyImpl passes content settings to its renderer counterpart blink::SharedWorkerContentSettingsProxy.",
+      "revId": "17cb075d1d6d82aed7a44f5d7b1bb8c34e6702df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f69a3c7_6644f903",
+        "filename": "content/browser/shared_worker/shared_worker_content_settings_proxy_impl.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-31T05:26:32Z",
+      "side": 1,
+      "message": "\"connects to the counterpart at that moment\" ?",
+      "revId": "17cb075d1d6d82aed7a44f5d7b1bb8c34e6702df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6ab127d_48d62c5b",
+        "filename": "third_party/WebKit/Source/core/workers/SharedWorkerContentSettingsProxy.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-31T05:26:32Z",
+      "side": 1,
+      "message": "content_settings",
+      "range": {
+        "startLine": 37,
+        "startChar": 38,
+        "endLine": 37,
+        "endChar": 45
+      },
+      "revId": "17cb075d1d6d82aed7a44f5d7b1bb8c34e6702df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "209252a7_9a74a3b6",
+        "filename": "third_party/WebKit/Source/core/workers/SharedWorkerContentSettingsProxy.cpp",
+        "patchSetId": 25
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-31T05:26:32Z",
+      "side": 1,
+      "message": "i think it should be named \"content_settings_instance_host\" for consistency with thec class name",
+      "range": {
+        "startLine": 44,
+        "startChar": 6,
+        "endLine": 44,
+        "endChar": 21
+      },
+      "revId": "17cb075d1d6d82aed7a44f5d7b1bb8c34e6702df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "536948f5_694d2f9a",
+        "filename": "third_party/WebKit/Source/core/workers/SharedWorkerContentSettingsProxy.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-31T05:26:32Z",
+      "side": 1,
+      "message": "\"information\" is not countable so I dont\u0027 think it\u0027s \"each information\"\nIt\u0027s just \"information\"",
+      "range": {
+        "startLine": 17,
+        "startChar": 3,
+        "endLine": 17,
+        "endChar": 7
+      },
+      "revId": "17cb075d1d6d82aed7a44f5d7b1bb8c34e6702df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "506d3364_3d05eb44",
+        "filename": "third_party/WebKit/Source/core/workers/SharedWorkerContentSettingsProxy.h",
+        "patchSetId": 25
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-07-31T05:26:32Z",
+      "side": 1,
+      "message": "\"a\" \u003d\u003e \"\"\n\"localstorage\" \u003d\u003e \"local storage\"",
+      "range": {
+        "startLine": 37,
+        "startChar": 20,
+        "endLine": 37,
+        "endChar": 39
+      },
+      "revId": "17cb075d1d6d82aed7a44f5d7b1bb8c34e6702df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
