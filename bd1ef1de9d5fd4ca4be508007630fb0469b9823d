@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db75741b_b33856d6",
+        "filename": "services/viz/compositing/privileged/interfaces/frame_sink_manager.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-07-31T14:39:14Z",
+      "side": 1,
+      "message": "Two suggestions:\n- Can we send only the read_handle?  Only the HitTestAggregator should ever have to write so do we ever need to send it? \n- Would it be better to use a name that describes the data rather than the data type? Eg. UpdateAggregatedHitTestRegionList or OnAggregatedHitTestRegionListUpdated? The current name could refer to anything and it may add value to use a more descriptive name. \n\nEg. UpdateAggregatedHitTestRegionList(cc.mojom.FrameSinkId frame_sink_id,\n                                handle\u003cshared_buffer\u003e aggregated_hit_test_region_list_handle,\n                                uint32 read_size );",
+      "range": {
+        "startLine": 110,
+        "startChar": 2,
+        "endLine": 114,
+        "endChar": 51
+      },
+      "revId": "bd1ef1de9d5fd4ca4be508007630fb0469b9823d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
