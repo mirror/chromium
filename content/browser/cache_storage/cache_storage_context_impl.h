@@ -13,6 +13,8 @@
 #include "content/public/browser/cache_storage_context.h"
 #include "content/public/browser/cache_storage_usage_info.h"
 
+class GURL;
+
 namespace base {
 class FilePath;
 class SequencedTaskRunner;
@@ -24,6 +26,10 @@ class URLRequestContextGetter;
 
 namespace storage {
 class QuotaManagerProxy;
+}
+
+namespace url {
+class Origin;
 }
 
 namespace content {
@@ -40,6 +46,16 @@ class CONTENT_EXPORT CacheStorageContextImpl
     : NON_EXPORTED_BASE(public CacheStorageContext) {
  public:
   explicit CacheStorageContextImpl(BrowserContext* browser_context);
+
+  class Observer {
+   public:
+    virtual void OnCacheListChanged(const url::Origin& origin) = 0;
+    virtual void OnCacheContentChanged(const url::Origin& origin,
+                                       const std::string& cache_name) = 0;
+
+   protected:
+    virtual ~Observer() {};
+  };
 
   // Init and Shutdown are for use on the UI thread when the profile,
   // storagepartition is being setup and torn down.
@@ -65,6 +81,10 @@ class CONTENT_EXPORT CacheStorageContextImpl
   // CacheStorageContext
   void GetAllOriginsInfo(const GetUsageInfoCallback& callback) override;
   void DeleteForOrigin(const GURL& origin) override;
+
+  // Only callable on the IO thread.
+  void AddObserver(CacheStorageContextImpl::Observer* observer);
+  void RemoveObserver(CacheStorageContextImpl::Observer* observer);
 
  protected:
   ~CacheStorageContextImpl() override;
