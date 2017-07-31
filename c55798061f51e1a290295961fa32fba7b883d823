@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af7853a3_9eb4cf76",
+        "filename": "chrome/browser/chromeos/arc/cast_receiver/arc_cast_receiver_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-31T01:35:29Z",
+      "side": 1,
+      "message": "nit: \u003d base::MakeUnique\u003cPrefChangeRegistrar\u003e()",
+      "range": {
+        "startLine": 53,
+        "startChar": 24,
+        "endLine": 53,
+        "endChar": 58
+      },
+      "revId": "c55798061f51e1a290295961fa32fba7b883d823",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07c54269_1b5e36d5",
+        "filename": "components/arc/common/cast_receiver.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-31T01:35:29Z",
+      "side": 1,
+      "message": "nit: @0 is reserved for Init.",
+      "range": {
+        "startLine": 14,
+        "startChar": 20,
+        "endLine": 14,
+        "endChar": 22
+      },
+      "revId": "c55798061f51e1a290295961fa32fba7b883d823",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ed28dd5_4cc77c18",
+        "filename": "chrome/browser/chromeos/arc/cast_receiver/arc_cast_receiver_service.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-31T01:35:29Z",
+      "side": 1,
+      "message": "nit: constexpr",
+      "range": {
+        "startLine": 22,
+        "startChar": 0,
+        "endLine": 22,
+        "endChar": 5
+      },
+      "revId": "ae8cc389c9c0c2e9326006f9dadc9c7eae4a30de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b36d7904_8301edea",
+        "filename": "chrome/browser/chromeos/arc/cast_receiver/arc_cast_receiver_service.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-31T01:35:29Z",
+      "side": 1,
+      "message": "nit: move it to the anonymous namespace and drop the |static|",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 6
+      },
+      "revId": "ae8cc389c9c0c2e9326006f9dadc9c7eae4a30de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99bc4b43_3cf0c7f5",
+        "filename": "chrome/browser/chromeos/arc/cast_receiver/arc_cast_receiver_service.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-31T01:35:29Z",
+      "side": 1,
+      "message": "nit: \u003d base::MakeUnique\u003cPrefChangeRegistrar\u003e()",
+      "range": {
+        "startLine": 64,
+        "startChar": 24,
+        "endLine": 64,
+        "endChar": 57
+      },
+      "revId": "ae8cc389c9c0c2e9326006f9dadc9c7eae4a30de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "398b02d0_eaa4ee50",
+        "filename": "chrome/browser/chromeos/arc/cast_receiver/arc_cast_receiver_service.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-07-31T01:35:29Z",
+      "side": 1,
+      "message": "nit: Add a comment why base::Unretained is safe to use (because |pref_change_registrar_| is owned by this class).",
+      "range": {
+        "startLine": 70,
+        "startChar": 34,
+        "endLine": 70,
+        "endChar": 38
+      },
+      "revId": "ae8cc389c9c0c2e9326006f9dadc9c7eae4a30de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
