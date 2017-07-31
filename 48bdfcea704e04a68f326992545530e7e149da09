@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13308ebf_4a4d94ce",
+        "filename": "third_party/WebKit/Source/core/dom/FirstLetterPseudoElement.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-07-31T20:24:34Z",
+      "side": 1,
+      "message": "\"inherits\"",
+      "revId": "48bdfcea704e04a68f326992545530e7e149da09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3919811e_fa6ac1ea",
+        "filename": "third_party/WebKit/Source/core/dom/FirstLetterPseudoElement.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-07-31T20:24:34Z",
+      "side": 1,
+      "message": "For display:contents, the parent to inherit from does not necessarily have a LayoutObject.\n\nI think conditions in the test case below should hold:\n\n\u003c!DOCTYPE html\u003e\n\u003cstyle\u003e\n  .fl::first-letter { background-color: lime }\n\u003c/style\u003e\n\u003cdiv class\u003d\"fl\"\u003e\n  \u003cdiv style\u003d\"color:red\"\u003e\n    \u003cdiv style\u003d\"color:green;display:contents\"\u003eFirst letter should be green on lime background.\u003c/div\u003e\n  \u003c/div\u003e\n\u003c/div\u003e",
+      "revId": "48bdfcea704e04a68f326992545530e7e149da09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
