@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "913f99a7_c900221a",
+        "filename": "android_webview/browser/aw_content_browser_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-31T23:34:33Z",
+      "side": 1,
+      "message": "This is a method inherited from ContentBrowserCilent.\n\nRegarding std::vector:\nIt is expected to more URLLoaderThrottle will be added. (Similar to content::ResourceThrottle in the old code path, which we have multiple implementations for different features, too.)\n\nRegarding std::unique_ptr:\nThe ownership is transferred to the caller. content::URLLoaderThrottle is a virtual interface that needs to be implemented, so we cannot return \"instances\" such as std::vector\u003ccontent::URLLoaderThrottle\u003e.",
+      "parentUuid": "a19be6df_4ca65f03",
+      "range": {
+        "startLine": 576,
+        "startChar": 5,
+        "endLine": 576,
+        "endChar": 11
+      },
+      "revId": "1ca320006f8aa1ec73fe12b79e40c9571eaf4c35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7822b6f1_4df42fe8",
         "filename": "android_webview/browser/aw_safe_browsing_resource_throttle.h",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e3850489_e0d282ad",
+        "filename": "android_webview/browser/aw_safe_browsing_resource_throttle.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-31T23:34:33Z",
+      "side": 1,
+      "message": "The interface was designed to be ref-counted (which is beyond the scope of this CL).\n\nIn the new code path, all SafeBrowsingUrlCheckerImpl instances share the same UrlCheckerDelegate, so I decided to use ref-counted UrlCheckerDelegate. I feel that it is consistent with the other safe-browsing objects: for example, we also pass around ref-counted SafeBrowsing[DataBase|UI]Manager, etc.\n\nIt is possible to get rid of the ref-counted, because ContentBrowserClient subclasses usually live till the end of the browser, so we could just let ContentBrowserClient subclasses own a UrlCheckerDelegate object and give out raw pointers to it. I am not sure whether using raw pointers makes the ownership more clear, though. Or we could create multiple safe_browsing::UrlCheckerDelegate as needed, which makes the ownership more clear but slightly less efficient.\n\nWDYT? Thanks!",
+      "parentUuid": "7822b6f1_4df42fe8",
+      "range": {
+        "startLine": 67,
+        "startChar": 16,
+        "endLine": 67,
+        "endChar": 29
+      },
+      "revId": "1ca320006f8aa1ec73fe12b79e40c9571eaf4c35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bdce4519_e6e7b6ee",
         "filename": "android_webview/browser/aw_url_checker_delegate_impl.cc",
         "patchSetId": 6
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-31T19:05:17Z",
       "side": 1,
       "message": "not ideal as we are now creating AwWebResourceRequest outside its constructor and initializing it by setting the members explicitly. I think it is better to create it in AwWebResourceRequest by adding a create method.",
+      "range": {
+        "startLine": 43,
+        "startChar": 23,
+        "endLine": 43,
+        "endChar": 30
+      },
+      "revId": "1ca320006f8aa1ec73fe12b79e40c9571eaf4c35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "179051ea_8635aad3",
+        "filename": "android_webview/browser/aw_url_checker_delegate_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-07-31T23:34:33Z",
+      "side": 1,
+      "message": "Thanks, that is a good point.\nI added a new constructor for AwWebResourceRequest.",
+      "parentUuid": "bdce4519_e6e7b6ee",
       "range": {
         "startLine": 43,
         "startChar": 23,
