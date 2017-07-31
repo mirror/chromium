@@ -396,7 +396,7 @@ void SchedulerWorkerPoolImpl::AdjustWorkerCapacity() {
 
 // TODO(jeffreyhe): Add and return an |initial_worker_capacity_| member when
 // worker capacity becomes dynamic.
-int SchedulerWorkerPoolImpl::GetMaxConcurrentTasksDeprecated() const {
+int SchedulerWorkerPoolImpl::GetMaxConcurrentNonBlockedTasksDeprecated() const {
   DCHECK_GT(initial_worker_capacity_, 0U);
   return initial_worker_capacity_;
 }
