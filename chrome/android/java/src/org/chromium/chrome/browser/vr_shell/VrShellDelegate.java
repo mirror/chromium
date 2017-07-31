@@ -1217,8 +1217,8 @@ public class VrShellDelegate
         if (!mDoffOptional && !success && showDoff(false /* optional */)) return;
 
         mShowingDaydreamDoff = false;
-        callOnExitVrRequestListener(success);
         if (success) {
+            callOnExitVrRequestListener(success);
             shutdownVr(true /* disableVrMode */, !mExitingCct /* stayingInChrome */);
             if (mExitingCct) ((CustomTabActivity) mActivity).finishAndClose(false);
         }
