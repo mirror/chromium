@@ -92,7 +92,7 @@ TextFieldTextEditHandler.prototype = {
         evt.target != this.node_)
       return;
 
-    this.editableText_.onUpdate();
+    this.editableText_.onUpdate(evt.eventFrom);
   },
 };
 
@@ -124,8 +124,9 @@ AutomationEditableText.prototype = {
 
   /**
    * Called when the text field has been updated.
+   * @param {string|undefined} eventFrom
    */
-  onUpdate: function() {
+  onUpdate: function(eventFrom) {
     var newValue = this.node_.value || '';
 
     if (this.value != newValue)
@@ -227,7 +228,7 @@ AutomationRichEditableText.prototype = {
   __proto__: AutomationEditableText.prototype,
 
   /** @override */
-  onUpdate: function() {
+  onUpdate: function(eventFrom) {
     var root = this.node_.root;
     if (!root.anchorObject || !root.focusObject ||
         root.anchorOffset === undefined || root.focusOffset === undefined)
@@ -262,6 +263,22 @@ AutomationRichEditableText.prototype = {
     }
     var prev = this.line_;
     this.line_ = cur;
+
+    var finish = function() {
+      // The state in EditableTextBase needs to get updated with the new line
+      // contents, so that subsequent intra-line changes get the right state
+      // transitions.
+      this.value = cur.text;
+      this.start = cur.startOffset;
+      this.end = cur.endOffset;
+    }.bind(this);
+
+    // For ChromeVox initiated actions, skip most of the below.
+    if (eventFrom == 'action') {
+      this.brailleCurrentRichLine_();
+      finish();
+      return;
+    }
 
     // Selection stayed within the same line(s) and didn't cross into new lines.
     if (anchorLine.isSameLine(prevAnchorLine) &&
@@ -397,13 +414,7 @@ AutomationRichEditableText.prototype = {
       this.speakCurrentRichLine_(prev);
       this.brailleCurrentRichLine_();
     }
-
-    // The state in EditableTextBase needs to get updated with the new line
-    // contents, so that subsequent intra-line changes get the right state
-    // transitions.
-    this.value = cur.text;
-    this.start = cur.startOffset;
-    this.end = cur.endOffset;
+    finish();
   },
 
   /**

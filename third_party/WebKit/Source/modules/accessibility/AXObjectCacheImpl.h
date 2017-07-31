@@ -244,11 +244,6 @@ class MODULES_EXPORT AXObjectCacheImpl : public AXObjectCacheBase {
   // aria-owns relationship.
   HashMap<String, std::unique_ptr<HashSet<AXID>>> id_to_aria_owners_mapping_;
 
-  TaskRunnerTimer<AXObjectCacheImpl> notification_post_timer_;
-  HeapVector<std::pair<Member<AXObject>, AXNotification>>
-      notifications_to_post_;
-  void NotificationPostTimerFired(TimerBase*);
-
   AXObject* FocusedImageMapUIElement(HTMLAreaElement*);
 
   AXID GetOrCreateAXID(AXObject*);
