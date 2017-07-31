@@ -17,6 +17,7 @@
 #include "base/synchronization/lock.h"
 #include "base/synchronization/waitable_event.h"
 #include "base/test/scoped_task_environment.h"
+#include "base/test/test_timeouts.h"
 #include "base/threading/platform_thread.h"
 #include "base/threading/thread.h"
 #include "base/threading/thread_checker_impl.h"
@@ -43,7 +44,7 @@ void ShouldNotRunTask() {
 }
 
 void RunNestedLoopTask(int* counter) {
-  RunLoop nested_run_loop;
+  RunLoop nested_run_loop(RunLoop::Type::NESTABLE_TASKS_ALLOWED);
 
   // This task should quit |nested_run_loop| but not the main RunLoop.
   ThreadTaskRunnerHandle::Get()->PostTask(
@@ -53,13 +54,6 @@ void RunNestedLoopTask(int* counter) {
   ThreadTaskRunnerHandle::Get()->PostDelayedTask(
       FROM_HERE, BindOnce(&ShouldNotRunTask), TimeDelta::FromDays(1));
 
-  std::unique_ptr<MessageLoop::ScopedNestableTaskAllower> allower;
-  if (MessageLoop::current()) {
-    // Need to allow nestable tasks in MessageLoop driven environments.
-    // TODO(gab): Move nestable task allowance concept to RunLoop.
-    allower = base::MakeUnique<MessageLoop::ScopedNestableTaskAllower>(
-        MessageLoop::current());
-  }
   nested_run_loop.Run();
 
   ++(*counter);
@@ -133,12 +127,24 @@ class MockDelegate : public RunLoop::Delegate {
     run_loop_client_ = RunLoop::RegisterDelegateForCurrentThread(this);
   }
 
+  // Runs |closure| on the MockDelegate thread as part of Run(). Useful to
+  // inject code in an otherwise livelocked Run() state.
+  void RunClosureOnDelegate(OnceClosure closure) {
+    AutoLock auto_lock(closure_lock_);
+    closure_ = std::move(closure);
+  }
+
  private:
   void Run() override {
     while (!should_quit_) {
-      if (!mock_task_runner_->ProcessTask()) {
-        if (run_loop_client_->ShouldQuitWhenIdle()) {
+      if (!run_loop_client_->ProcessingTasksAllowed() ||
+          !mock_task_runner_->ProcessTask()) {
+        if (run_loop_client_->ShouldQuitWhenIdle())
           break;
+
+        AutoLock auto_lock(closure_lock_);
+        if (!closure_.is_null()) {
+          std::move(closure_).Run();
         } else {
           PlatformThread::YieldCurrentThread();
         }
@@ -154,6 +160,9 @@ class MockDelegate : public RunLoop::Delegate {
   std::unique_ptr<ThreadTaskRunnerHandle> thread_task_runner_handle_;
 
   bool should_quit_ = false;
+
+  Lock closure_lock_;
+  OnceClosure closure_;
 
   RunLoop::Delegate::Client* run_loop_client_ = nullptr;
 };
@@ -419,7 +428,7 @@ TEST_P(RunLoopTest, IsNestedOnCurrentThread) {
       FROM_HERE, BindOnce([]() {
         EXPECT_FALSE(RunLoop::IsNestedOnCurrentThread());
 
-        RunLoop nested_run_loop;
+        RunLoop nested_run_loop(RunLoop::Type::NESTABLE_TASKS_ALLOWED);
 
         ThreadTaskRunnerHandle::Get()->PostTask(
             FROM_HERE, BindOnce([]() {
@@ -429,13 +438,6 @@ TEST_P(RunLoopTest, IsNestedOnCurrentThread) {
                                                 nested_run_loop.QuitClosure());
 
         EXPECT_FALSE(RunLoop::IsNestedOnCurrentThread());
-        std::unique_ptr<MessageLoop::ScopedNestableTaskAllower> allower;
-        if (MessageLoop::current()) {
-          // Need to allow nestable tasks in MessageLoop driven environments.
-          // TODO(gab): Move nestable task allowance concept to RunLoop.
-          allower = base::MakeUnique<MessageLoop::ScopedNestableTaskAllower>(
-              MessageLoop::current());
-        }
         nested_run_loop.Run();
         EXPECT_FALSE(RunLoop::IsNestedOnCurrentThread());
       }));
@@ -463,20 +465,13 @@ TEST_P(RunLoopTest, NestingObservers) {
   RunLoop::AddNestingObserverOnCurrentThread(&nesting_observer);
 
   const RepeatingClosure run_nested_loop = Bind([]() {
-    RunLoop nested_run_loop;
+    RunLoop nested_run_loop(RunLoop::Type::NESTABLE_TASKS_ALLOWED);
     ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE, BindOnce([]() {
           EXPECT_TRUE(RunLoop::IsNestingAllowedOnCurrentThread());
         }));
     ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
                                             nested_run_loop.QuitClosure());
-    std::unique_ptr<MessageLoop::ScopedNestableTaskAllower> allower;
-    if (MessageLoop::current()) {
-      // Need to allow nestable tasks in MessageLoop driven environments.
-      // TODO(gab): Move nestable task allowance concept to RunLoop.
-      allower = base::MakeUnique<MessageLoop::ScopedNestableTaskAllower>(
-          MessageLoop::current());
-    }
     nested_run_loop.Run();
   });
 
@@ -516,10 +511,73 @@ INSTANTIATE_TEST_CASE_P(Mock,
 
 // Disabled on Android per http://crbug.com/643760.
 #if defined(GTEST_HAS_DEATH_TEST) && !defined(OS_ANDROID)
-TEST(RunLoopDeathTest, MustRegisterBeforeInstantiating) {
+TEST(RunLoopDelegateTest, MustRegisterBeforeInstantiating) {
+  // Create the MockDelegate without calling BindToCurrentThread.
   MockDelegate unbound_mock_delegate_;
   EXPECT_DEATH({ RunLoop(); }, "");
 }
 #endif  // defined(GTEST_HAS_DEATH_TEST) && !defined(OS_ANDROID)
+
+TEST(RunLoopDelegateTest, NestableTasksDontRunInDefaultNestedLoops) {
+  MockDelegate mock_delegate;
+  mock_delegate.BindToCurrentThread();
+
+  base::Thread other_thread("other");
+  other_thread.Start();
+
+  RunLoop main_loop;
+  // A nested run loop which isn't NESTABLE_TASKS_ALLOWED.
+  RunLoop nested_run_loop(RunLoop::Type::DEFAULT);
+
+  bool nested_run_loop_ended = false;
+
+  // The first task on the main loop will result in a nested run loop. Since
+  // it's not NESTABLE_TASKS_ALLOWED, no further task should be processed until
+  // it's quit.
+  ThreadTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE,
+      BindOnce([](RunLoop* nested_run_loop) { nested_run_loop->Run(); },
+               Unretained(&nested_run_loop)));
+
+  // Post a task that will fail if it runs inside the nested run loop.
+  ThreadTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE, BindOnce(
+                     [](const bool& nested_run_loop_ended,
+                        OnceClosure continuation_callback) {
+                       EXPECT_TRUE(nested_run_loop_ended);
+                       EXPECT_FALSE(RunLoop::IsNestedOnCurrentThread());
+                       std::move(continuation_callback).Run();
+                     },
+                     ConstRef(nested_run_loop_ended), main_loop.QuitClosure()));
+
+  // Post a task flipping the boolean bit for extra verification right before
+  // quitting |nested_run_loop|.
+  other_thread.task_runner()->PostDelayedTask(
+      FROM_HERE,
+      BindOnce(
+          [](bool* nested_run_loop_ended) {
+            EXPECT_FALSE(*nested_run_loop_ended);
+            *nested_run_loop_ended = true;
+          },
+          Unretained(&nested_run_loop_ended)),
+      TestTimeouts::tiny_timeout());
+  // Post an async delayed task to exit the run loop when idle. This confirms
+  // that (1) the test task only ran in the main loop after the nested loop
+  // exited and (2) the nested run loop actually considers itself idle while
+  // spinning. Note: The quit closure needs to be injected directly on the
+  // delegate as invoking QuitWhenIdle() off-thread results in a thread bounce
+  // which will not processed because of the very logic under test (nestable
+  // tasks don't run in |nested_run_loop|).
+  other_thread.task_runner()->PostDelayedTask(
+      FROM_HERE,
+      BindOnce(
+          [](MockDelegate* mock_delegate, OnceClosure injected_closure) {
+            mock_delegate->RunClosureOnDelegate(std::move(injected_closure));
+          },
+          Unretained(&mock_delegate), nested_run_loop.QuitWhenIdleClosure()),
+      TestTimeouts::tiny_timeout());
+
+  main_loop.Run();
+}
 
 }  // namespace base
