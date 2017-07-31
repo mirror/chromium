@@ -1101,6 +1101,8 @@ source_set("chromeos") {
     "login/version_info_updater.h",
     "login/wizard_controller.cc",
     "login/wizard_controller.h",
+    "message_center/message_center_delegate_impl.cc",
+    "message_center/message_center_delegate_impl.h",
     "mobile/mobile_activator.cc",
     "mobile/mobile_activator.h",
     "mobile_config.cc",

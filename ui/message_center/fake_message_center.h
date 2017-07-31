@@ -68,6 +68,8 @@ class FakeMessageCenter : public MessageCenter {
   bool IsMessageCenterVisible() const override;
   void RestartPopupTimers() override;
   void PausePopupTimers() override;
+  base::string16 GetProductOSName() override;
+  void SetDelegate(std::unique_ptr<MessageCenterDelegate> delegate) override;
 
  protected:
   void DisableTimersForTest() override;
