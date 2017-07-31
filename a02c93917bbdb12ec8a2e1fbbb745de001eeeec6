@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dc776ee5_e9dbaf69",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 2043,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-31T20:42:12Z",
+      "side": 1,
+      "message": "Heh, that\u0027s what I had before but michael suggested this :)\nSince \u0027chromeos\u0027 and \u0027ios\u0027 are mutually exclusive, I think having this less specific is actually better.",
+      "parentUuid": "6d6887ad_e1cadef9",
+      "revId": "a02c93917bbdb12ec8a2e1fbbb745de001eeeec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "565f167d_36152e05",
         "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_subpage.js",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "a02c93917bbdb12ec8a2e1fbbb745de001eeeec6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f5c4da8_796ef54a",
+        "filename": "chrome/browser/resources/settings/bluetooth_page/bluetooth_subpage.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-31T20:42:12Z",
+      "side": 1,
+      "message": "Should be false. I hate that closure can\u0027t catch these.\nDone.",
+      "parentUuid": "565f167d_36152e05",
+      "revId": "a02c93917bbdb12ec8a2e1fbbb745de001eeeec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9adaea13_613b4ac5",
+        "filename": "content/browser/webui/shared_resources_data_source.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-31T20:42:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "928b4d9d_6641c31c",
+      "revId": "a02c93917bbdb12ec8a2e1fbbb745de001eeeec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a7fd04e4_eb73cdad",
         "filename": "ui/webui/resources/chromeos/bluetooth_dialog.html",
         "patchSetId": 8
@@ -67,6 +121,24 @@
       "revId": "a02c93917bbdb12ec8a2e1fbbb745de001eeeec6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "689587ba_0c476878",
+        "filename": "ui/webui/resources/chromeos/bluetooth_dialog.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-07-31T20:42:12Z",
+      "side": 1,
+      "message": "The actual difference is that elements in ui/webui/resources/chromeos can use i18n.\n\nThe intended conceptual differences is that elements in ui/webui/resources/chromeos are larger pieces of shared (chrome os specific) web UI, and cr_elements/ are more generic elements that shouldn\u0027t make any assumptions about how they are used.\n\nI tried to cover that in the README.md for the new directory.",
+      "parentUuid": "a7fd04e4_eb73cdad",
+      "revId": "a02c93917bbdb12ec8a2e1fbbb745de001eeeec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
