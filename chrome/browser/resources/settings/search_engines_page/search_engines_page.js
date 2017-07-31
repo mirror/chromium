@@ -13,20 +13,10 @@ Polymer({
 
   properties: {
     /** @type {!Array<!SearchEngine>} */
-    defaultEngines: {
-      type: Array,
-      value: function() {
-        return [];
-      }
-    },
+    defaultEngines: Array,
 
     /** @type {!Array<!SearchEngine>} */
-    otherEngines: {
-      type: Array,
-      value: function() {
-        return [];
-      }
-    },
+    otherEngines: Array,
 
     /** @type {!Array<!SearchEngine>} */
     extensions: {
@@ -52,6 +42,27 @@ Polymer({
     showExtensionsList_: {
       type: Boolean,
       computed: 'computeShowExtensionsList_(extensions)',
+    },
+
+    /** Filters out all search engines that do not match. */
+    filter: {
+      type: String,
+      value: '',
+    },
+
+    matchingDefaultEngines_: {
+      type: Array,
+      computed: 'computeMatchingEngines_(defaultEngines, filter)',
+    },
+
+    matchingOtherEngines_: {
+      type: Array,
+      computed: 'computeMatchingEngines_(otherEngines, filter)',
+    },
+
+    matchingExtensions_: {
+      type: Array,
+      computed: 'computeMatchingEngines_(extensions, filter)',
     },
 
     /** @private {HTMLElement} */
@@ -120,5 +131,26 @@ Polymer({
   /** @private */
   computeShowExtensionsList_: function() {
     return this.extensions.length > 0;
+  },
+
+  /**
+   * Filters the given list based on the currently existing filter string.
+   * @param {!Array<!SearchEngine>}
+   * @return {!Array<!SearchEngine>}
+   * @private
+   */
+  computeMatchingEngines_: function(list) {
+    if (this.filter == '')
+      return list;
+
+    var filter = this.filter.toLowerCase();
+    return list.filter(e => {
+      return [e.displayName, e.name, e.keyword, e.url].some(
+          term => term.toLowerCase().includes(filter));
+    });
+  },
+
+  showNoResultsMessage_: function(list, filteredList) {
+    return list.length > 0 && filteredList.length == 0;
   },
 });
