@@ -965,7 +965,7 @@ const CGFloat kShiftTilesDownAnimationDuration = 0.2;
       [[strongSelf dataSource] logMostVisitedClick:index
                                           tileType:cell.tileType];
       [[strongSelf dispatcher] webPageOrderedOpen:url
-                                         referrer:web::Referrer()
+                                         referrer:web  //::Referrer()
                                       inIncognito:YES
                                      inBackground:NO
                                          appendTo:kCurrentTab];
