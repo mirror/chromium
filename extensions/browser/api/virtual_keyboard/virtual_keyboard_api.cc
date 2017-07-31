@@ -10,6 +10,7 @@
 #include "extensions/browser/api/virtual_keyboard_private/virtual_keyboard_private_api.h"
 #include "extensions/common/api/virtual_keyboard.h"
 #include "ui/base/ime/chromeos/input_method_manager.h"
+#include "ui/keyboard/keyboard_util.h"
 
 using chromeos::input_method::InputMethodManager;
 
@@ -24,27 +25,34 @@ VirtualKeyboardRestrictFeaturesFunction::Run() {
       api::virtual_keyboard::RestrictFeatures::Params::Create(*args_));
   EXTENSION_FUNCTION_VALIDATE(params);
 
-  bool features_enabled = params->restrictions.auto_correct_enabled;
-  if (params->restrictions.auto_complete_enabled != features_enabled ||
-      params->restrictions.spell_check_enabled != features_enabled ||
-      params->restrictions.voice_input_enabled != features_enabled ||
-      params->restrictions.handwriting_enabled != features_enabled) {
-    return RespondNow(
-        Error("All features are expected to have the same enabled state."));
+  auto restrictions = std::move(params->restrictions);
+  keyboard::KeyboardConfig config = {
+      .spell_check = restrictions.spell_check_enabled,
+      .auto_complete = restrictions.auto_complete_enabled,
+      .auto_correct = restrictions.auto_correct_enabled,
+      .voice_input = restrictions.voice_input_enabled,
+      .handwriting = restrictions.handwriting_enabled,
+  };
+  if (keyboard::UpdateKeyboardConfig(config)) {
+    // This reloads virtual keyboard even if it exists. This ensures virtual
+    // keyboard gets the correct state through
+    // chrome.virtualKeyboardPrivate.getKeyboardConfig.
+    // TODO(oka): Extension should reload on it's own by receiving event
+    if (keyboard::IsKeyboardEnabled()) {
+      VirtualKeyboardAPI* api =
+          BrowserContextKeyedAPIFactory<VirtualKeyboardAPI>::Get(
+              browser_context());
+      api->delegate()->RecreateKeyboard();
+    }
   }
-  VirtualKeyboardAPI* api =
-      BrowserContextKeyedAPIFactory<VirtualKeyboardAPI>::Get(browser_context());
-  api->delegate()->SetKeyboardRestricted(!features_enabled);
 
   InputMethodManager* input_method_manager = InputMethodManager::Get();
-  if (input_method_manager) {
-    input_method_manager->SetImeMenuFeatureEnabled(
-        InputMethodManager::FEATURE_VOICE,
-        params->restrictions.voice_input_enabled);
-    input_method_manager->SetImeMenuFeatureEnabled(
-        InputMethodManager::FEATURE_HANDWRITING,
-        params->restrictions.handwriting_enabled);
-  }
+  CHECK(input_method_manager);
+  input_method_manager->SetImeMenuFeatureEnabled(
+      InputMethodManager::FEATURE_HANDWRITING,
+      restrictions.handwriting_enabled);
+  input_method_manager->SetImeMenuFeatureEnabled(
+      InputMethodManager::FEATURE_VOICE, restrictions.voice_input_enabled);
   return RespondNow(NoArguments());
 }
 

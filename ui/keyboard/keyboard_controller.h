@@ -117,7 +117,10 @@ class KEYBOARD_EXPORT KeyboardController : public ui::InputMethodObserver,
 
   KeyboardUI* ui() { return ui_.get(); }
 
-  void set_keyboard_locked(bool lock) { keyboard_locked_ = lock; }
+  void set_keyboard_locked(bool lock) {
+    LOG(ERROR) << "set_keyboard_locked: " << lock;
+    keyboard_locked_ = lock;
+  }
 
   bool keyboard_locked() const { return keyboard_locked_; }
 

@@ -25,7 +25,6 @@ class ShellVirtualKeyboardDelegate : public VirtualKeyboardDelegate {
   bool InsertText(const base::string16& text) override;
   bool OnKeyboardLoaded() override;
   void SetHotrodKeyboard(bool enable) override;
-  void SetKeyboardRestricted(bool restricted) override;
   bool LockKeyboard(bool state) override;
   bool SendKeyEvent(const std::string& type,
                     int char_value,

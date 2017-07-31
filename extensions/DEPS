@@ -27,8 +27,9 @@ include_rules = [
   #      (see for example ui/views)
   "-ui",
   "+ui/base",
-  "+ui/gfx",
   "+ui/events",
+  "+ui/gfx",
+  "+ui/keyboard",
 
   # NOTE: Please do not add includes without talking to the app shell team;
   # see OWNERS for this directory.

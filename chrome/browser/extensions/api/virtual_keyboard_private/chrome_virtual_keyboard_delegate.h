@@ -25,7 +25,6 @@ class ChromeVirtualKeyboardDelegate : public VirtualKeyboardDelegate {
   bool InsertText(const base::string16& text) override;
   bool OnKeyboardLoaded() override;
   void SetHotrodKeyboard(bool enable) override;
-  void SetKeyboardRestricted(bool restricted) override;
   bool LockKeyboard(bool state) override;
   bool SendKeyEvent(const std::string& type,
                     int char_value,
@@ -36,10 +35,11 @@ class ChromeVirtualKeyboardDelegate : public VirtualKeyboardDelegate {
   bool IsLanguageSettingsEnabled() override;
   bool SetVirtualKeyboardMode(int mode_enum) override;
   bool SetRequestedKeyboardState(int state_enum) override;
+  void RecreateKeyboard() override;
 
  private:
   void OnHasInputDevices(OnKeyboardSettingsCallback on_settings_callback,
-                         bool has_input_devices);
+                         bool has_audio_input_devices);
 
   base::WeakPtr<ChromeVirtualKeyboardDelegate> weak_this_;
   base::WeakPtrFactory<ChromeVirtualKeyboardDelegate> weak_factory_;
