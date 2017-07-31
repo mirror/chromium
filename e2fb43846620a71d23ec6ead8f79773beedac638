@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5cf0de7e_dd67511c",
+        "filename": "base/debug/stack_trace_fuchsia.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-07-31T20:18:33Z",
+      "side": 1,
+      "message": "This is intentional. The heap might be in a bad state when this code is executed, so I try to avoid dynamically allocating memory (which std::string is dependent on.)",
+      "parentUuid": "d97812eb_9479233a",
+      "revId": "e2fb43846620a71d23ec6ead8f79773beedac638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0358b716_5e97fb2e",
         "filename": "base/debug/stack_trace_fuchsia.cc",
         "patchSetId": 12
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-27T20:01:32Z",
       "side": 1,
       "message": "This should be a size_t - I\u0027m surprised you don\u0027t get a warning about the narrowing conversion",
+      "revId": "e2fb43846620a71d23ec6ead8f79773beedac638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74fd2376_c6da8c16",
+        "filename": "base/debug/stack_trace_fuchsia.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-07-31T20:18:33Z",
+      "side": 1,
+      "message": "Wow, strange - I get the warning when I declare map_capacity as a variable, but goes away when I use constexpr. I raised this inconsistency with dcheng, he\u0027ll look into it.\n\nOK, fixed.",
+      "parentUuid": "0358b716_5e97fb2e",
       "revId": "e2fb43846620a71d23ec6ead8f79773beedac638",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "e2fb43846620a71d23ec6ead8f79773beedac638",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "214df880_44da15e0",
+        "filename": "base/debug/stack_trace_fuchsia.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-07-31T20:18:33Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "753638e1_d0453c36",
+      "revId": "e2fb43846620a71d23ec6ead8f79773beedac638",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
