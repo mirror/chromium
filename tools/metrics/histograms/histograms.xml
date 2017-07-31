@@ -8667,6 +8667,18 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Compositing.Browser.GPUMemoryForTilingsForScrollersInKb"
+    units="Kb">
+  <owner>yigu@chromium.org</owner>
+  <summary>
+    The GPU memory allocated for tilings (in a browser process) for scrollers,
+    summed over all picture layers that use the same scroll tree index. Emitted
+    once per drawing. Nothing is recorded if there are no picture layers.
+
+    Team: threaded-rendering-dev@chromium.org.
+  </summary>
+</histogram>
+
 <histogram name="Compositing.Browser.GPUMemoryForTilingsInKb" units="Kb">
   <owner>yigu@chromium.org</owner>
   <summary>
@@ -9004,6 +9016,18 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     Time spent updating (i.e. recording) a display list, in microseconds.
     Recorded when display list is updated (in a renderer process).
+  </summary>
+</histogram>
+
+<histogram name="Compositing.Renderer.GPUMemoryForTilingsForScrollersInKb"
+    units="Kb">
+  <owner>yigu@chromium.org</owner>
+  <summary>
+    The GPU memory allocated for tilings (in a renderer process) for scrollers,
+    summed over all picture layers that use the same scroll tree index. Emitted
+    once per drawing. Nothing is recorded if there are no picture layers.
+
+    Team: threaded-rendering-dev@chromium.org.
   </summary>
 </histogram>
 
