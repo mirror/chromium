@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8257170_503596f8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-31T21:03:42Z",
+      "side": 1,
+      "message": "The review tool seems to be highlighting these lines.  Are there extra spaces at the end of the lines?",
+      "revId": "cf7e2f47845d1a162498ad265e2fcfb966fd55e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f523988_fd4686e5",
+        "filename": "chrome/browser/task_manager/providers/task.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-07-31T21:03:42Z",
+      "side": 1,
+      "message": "Let\u0027s add a comment as well, like \"Don\u0027t allow the browser process to be killed.\"",
+      "revId": "cf7e2f47845d1a162498ad265e2fcfb966fd55e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
