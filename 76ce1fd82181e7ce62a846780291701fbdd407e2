@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93d3311e_78a98d47",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 806,
+      "author": {
+        "id": 1132034
+      },
+      "writtenOn": "2017-07-31T15:48:19Z",
+      "side": 1,
+      "message": "Can we move the low-end check above the isGsaAvailable() one?\nThis way we save an intent resolution, and a round-trip to ActivityManager.\n\nCan we also add a debug assert to the account name getter on low-end devices?",
+      "revId": "76ce1fd82181e7ce62a846780291701fbdd407e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
