@@ -17,6 +17,8 @@
 #include "components/omnibox/browser/autocomplete_match_type.h"
 #include "components/omnibox/browser/vector_icons.h"
 #include "ui/app_list/app_list_constants.h"
+#include "ui/app_list/app_list_features.h"
+#include "ui/app_list/vector_icons/vector_icons.h"
 #include "ui/gfx/paint_vector_icon.h"
 #include "url/gurl.h"
 #include "url/url_canon.h"
@@ -26,6 +28,11 @@ using bookmarks::BookmarkModel;
 namespace app_list {
 
 namespace {
+
+constexpr int kIconSize = 18;
+// #000 at 87% opacity.
+constexpr SkColor kIconColorFullscreen =
+    SkColorSetARGBMacro(0xDE, 0x00, 0x00, 0x00);
 
 int ACMatchStyleToTagStyle(int styles) {
   int tag_styles = 0;
@@ -40,10 +47,9 @@ int ACMatchStyleToTagStyle(int styles) {
 }
 
 // Translates ACMatchClassifications into SearchResult tags.
-void ACMatchClassificationsToTags(
-    const base::string16& text,
-    const ACMatchClassifications& text_classes,
-    SearchResult::Tags* tags) {
+void ACMatchClassificationsToTags(const base::string16& text,
+                                  const ACMatchClassifications& text_classes,
+                                  SearchResult::Tags* tags) {
   int tag_styles = SearchResult::Tag::NONE;
   size_t tag_start = 0;
 
@@ -52,8 +58,8 @@ void ACMatchClassificationsToTags(
 
     // Closes current tag.
     if (tag_styles != SearchResult::Tag::NONE) {
-      tags->push_back(SearchResult::Tag(
-          tag_styles, tag_start, text_class.offset));
+      tags->push_back(
+          SearchResult::Tag(tag_styles, tag_start, text_class.offset));
       tag_styles = SearchResult::Tag::NONE;
     }
 
@@ -65,8 +71,7 @@ void ACMatchClassificationsToTags(
   }
 
   if (tag_styles != SearchResult::Tag::NONE) {
-    tags->push_back(SearchResult::Tag(
-        tag_styles, tag_start, text.length()));
+    tags->push_back(SearchResult::Tag(tag_styles, tag_start, text.length()));
   }
 }
 
@@ -144,8 +149,7 @@ OmniboxResult::OmniboxResult(Profile* profile,
   }
 }
 
-OmniboxResult::~OmniboxResult() {
-}
+OmniboxResult::~OmniboxResult() = default;
 
 void OmniboxResult::Open(int event_flags) {
   RecordHistogram(OMNIBOX_SEARCH_RESULT);
@@ -169,10 +173,28 @@ void OmniboxResult::UpdateIcon() {
   bool is_bookmarked =
       bookmark_model && bookmark_model->IsBookmarked(match_.destination_url);
 
-  const gfx::VectorIcon& icon =
-      is_bookmarked ? omnibox::kStarIcon
-                    : AutocompleteMatch::TypeToVectorIcon(match_.type);
-  SetIcon(gfx::CreateVectorIcon(icon, 16, app_list::kIconColor));
+  if (features::IsFullscreenAppListEnabled()) {
+    if (is_bookmarked) {
+      SetIcon(gfx::CreateVectorIcon(kIcBookmarkIcon, kIconSize,
+                                    kIconColorFullscreen));
+    } else if (AutocompleteMatch::IsDomainIconType(match_.type)) {
+      SetIcon(gfx::CreateVectorIcon(kIcDomainIcon, kIconSize,
+                                    kIconColorFullscreen));
+    } else if (AutocompleteMatch::IsSearchIconType(match_.type)) {
+      SetIcon(gfx::CreateVectorIcon(kIcSearchIcon, kIconSize,
+                                    kIconColorFullscreen));
+    } else if (AutocompleteMatch::IsCalculatorIconType(match_.type)) {
+      SetIcon(
+          gfx::CreateVectorIcon(kIcEqualIcon, kIconSize, kIconColorFullscreen));
+    } else {
+      NOTREACHED();
+    }
+  } else {
+    const gfx::VectorIcon& icon =
+        is_bookmarked ? omnibox::kStarIcon
+                      : AutocompleteMatch::TypeToVectorIcon(match_.type);
+    SetIcon(gfx::CreateVectorIcon(icon, 16, kIconColor));
+  }
 }
 
 void OmniboxResult::UpdateTitleAndDetails() {

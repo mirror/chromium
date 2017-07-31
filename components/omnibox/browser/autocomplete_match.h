@@ -113,6 +113,13 @@ struct AutocompleteMatch {
   // Gets the vector icon identifier for the icon to be shown for |type|.
   static const gfx::VectorIcon& TypeToVectorIcon(Type type);
 
+  // Returns true if |type| should use a domain icon.
+  static bool IsDomainIconType(Type type);
+  // Returns true if |type| should use a search icon.
+  static bool IsSearchIconType(Type type);
+  // Returns true if |type| should use a calculator icon.
+  static bool IsCalculatorIconType(Type type);
+
   // Comparison function for determining when one match is better than another.
   static bool MoreRelevant(const AutocompleteMatch& elem1,
                            const AutocompleteMatch& elem2);

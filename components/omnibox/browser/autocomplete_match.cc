@@ -180,49 +180,44 @@ AutocompleteMatch& AutocompleteMatch::operator=(
 // static
 const gfx::VectorIcon& AutocompleteMatch::TypeToVectorIcon(Type type) {
 #if !defined(OS_ANDROID) && !defined(OS_IOS)
-  switch (type) {
-    case Type::URL_WHAT_YOU_TYPED:
-    case Type::HISTORY_URL:
-    case Type::HISTORY_TITLE:
-    case Type::HISTORY_BODY:
-    case Type::HISTORY_KEYWORD:
-    case Type::NAVSUGGEST:
-    case Type::BOOKMARK_TITLE:
-    case Type::NAVSUGGEST_PERSONALIZED:
-    case Type::CLIPBOARD:
-    case Type::PHYSICAL_WEB:
-    case Type::PHYSICAL_WEB_OVERFLOW:
-      return omnibox::kHttpIcon;
-
-    case Type::SEARCH_WHAT_YOU_TYPED:
-    case Type::SEARCH_HISTORY:
-    case Type::SEARCH_SUGGEST:
-    case Type::SEARCH_SUGGEST_ENTITY:
-    case Type::SEARCH_SUGGEST_TAIL:
-    case Type::SEARCH_SUGGEST_PERSONALIZED:
-    case Type::SEARCH_SUGGEST_PROFILE:
-    case Type::SEARCH_OTHER_ENGINE:
-    case Type::CONTACT_DEPRECATED:
-    case Type::VOICE_SUGGEST:
-      return vector_icons::kSearchIcon;
-
-    case Type::EXTENSION_APP:
-      return omnibox::kExtensionAppIcon;
-
-    case Type::CALCULATOR:
-      return omnibox::kCalculatorIcon;
-
-    case Type::NUM_TYPES:
-      NOTREACHED();
-      break;
-  }
-  NOTREACHED();
-  return omnibox::kHttpIcon;
-#else
+  if (IsDomainIconType(type))
+    return omnibox::kHttpIcon;
+  else if (IsSearchIconType(type))
+    return vector_icons::kSearchIcon;
+  else if (IsCalculatorIconType(type))
+    return omnibox::kCalculatorIcon;
+  else if (Type::EXTENSION_APP == type)
+    return omnibox::kExtensionAppIcon;
+#endif
   NOTREACHED();
   static const gfx::VectorIcon dummy = {};
   return dummy;
-#endif
+}
+
+// static
+bool AutocompleteMatch::IsDomainIconType(Type type) {
+  return type == Type::URL_WHAT_YOU_TYPED || type == Type::HISTORY_URL ||
+         type == Type::HISTORY_TITLE || type == Type::HISTORY_BODY ||
+         type == Type::HISTORY_KEYWORD || type == Type::NAVSUGGEST ||
+         type == Type::BOOKMARK_TITLE ||
+         type == Type::NAVSUGGEST_PERSONALIZED || type == Type::CLIPBOARD ||
+         type == Type::PHYSICAL_WEB || type == Type::PHYSICAL_WEB_OVERFLOW;
+}
+
+// static
+bool AutocompleteMatch::IsSearchIconType(Type type) {
+  return type == Type::SEARCH_WHAT_YOU_TYPED || type == Type::SEARCH_HISTORY ||
+         type == Type::SEARCH_SUGGEST || type == Type::SEARCH_SUGGEST_ENTITY ||
+         type == Type::SEARCH_SUGGEST_TAIL ||
+         type == Type::SEARCH_SUGGEST_PERSONALIZED ||
+         type == Type::SEARCH_SUGGEST_PROFILE ||
+         type == Type::SEARCH_OTHER_ENGINE ||
+         type == Type::CONTACT_DEPRECATED || type == Type::VOICE_SUGGEST;
+}
+
+// static
+bool AutocompleteMatch::IsCalculatorIconType(Type type) {
+  return type == Type::CALCULATOR;
 }
 
 // static
