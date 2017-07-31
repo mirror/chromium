@@ -1,0 +1,242 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c871f3d_586c6de7",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/cookies/resources/testharness-helpers.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-07-31T22:14:12Z",
+      "side": 1,
+      "message": "Can you please copy this function to our directory instead of modifying it here?",
+      "revId": "d599b33668a983c68d243ad148fa73dd404802f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a1da954_2b725668",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/cookies/resources/testharness-helpers.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-07-31T22:14:12Z",
+      "side": 1,
+      "message": "Technically there are very few WPT style requirements, but we prefer to stick close to Chromium\u0027s style. The applicable bit there is the 80-character line length.\n\nSeparately: Can you please come up with more descriptive names than c and s? Perhaps cookieName (if I understand this correctly) and cookiePathSuffix?",
+      "revId": "d599b33668a983c68d243ad148fa73dd404802f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e40a3dde_473bc6d9",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/cookies.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-07-31T22:14:12Z",
+      "side": 1,
+      "message": "This won\u0027t be part of the final CL, so consider this an optional nit -- can you do \"use strict\" at the top of the file?",
+      "revId": "d599b33668a983c68d243ad148fa73dd404802f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d29dc01_587eea61",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/dom_interop.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-07-31T22:14:12Z",
+      "side": 1,
+      "message": "What does DOM interoperability mean? If by DOM you mean \"document.cookies\" can you please call it out explicitly?",
+      "revId": "d599b33668a983c68d243ad148fa73dd404802f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efbd91eb_60bd5a03",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/dom_interop.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-07-31T22:14:12Z",
+      "side": 1,
+      "message": "\"I wrote\" seems redundant.",
+      "revId": "d599b33668a983c68d243ad148fa73dd404802f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38db377d_3e081038",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/dom_interop.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-07-31T22:14:12Z",
+      "side": 1,
+      "message": "I think the URL is sufficient -- \"The current version is at https://...\". The repo name and fetch directions seem redundant.",
+      "revId": "d599b33668a983c68d243ad148fa73dd404802f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c75c65f_9f3637eb",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/dom_interop.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-07-31T22:14:12Z",
+      "side": 1,
+      "message": "Can you rename the file to something like async-cookies-polyfill? This would clarify the file\u0027s purpose.",
+      "revId": "d599b33668a983c68d243ad148fa73dd404802f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "effd3aaf_cbe96087",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/dom_interop.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-07-31T22:14:12Z",
+      "side": 1,
+      "message": "Can you please expand the comment to explain what cookies get set where, and what their meaning is?",
+      "revId": "d599b33668a983c68d243ad148fa73dd404802f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34cfeef8_518bbe47",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/dom_interop.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-07-31T22:14:12Z",
+      "side": 1,
+      "message": "Is this 100 seconds? If the expiration time isn\u0027t meaningful on its own, can you please use a super-large value that isn\u0027t likely to be hit if the runner slows down a lot?",
+      "revId": "d599b33668a983c68d243ad148fa73dd404802f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2eba8e07_b2b41061",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/dom_interop.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-07-31T22:14:12Z",
+      "side": 1,
+      "message": "In the context of this test, it\u0027s unclear what \"clearKnownCookies\" means. I\u0027d expect that it uses the async cookies API, so it\u0027d be an async method. Given that you\u0027re including the helpers from the document.cookies tests, I\u0027m guessing clearKnownCookies() uses the synchronous API.\n\nCan you please write helpers that use the async cookies API? I think the tests should only touch document.cookie when verifying that changes done via one API (async / document.cookie) are reflected by the other API. Reasoning: 1) Test robustness. 2) It should be possible to remove the document.cookie API and the tests that use it, and still remain with a good suite of tests.",
+      "revId": "d599b33668a983c68d243ad148fa73dd404802f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "426aec25_a19bea9d",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/dom_interop.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-07-31T22:14:12Z",
+      "side": 1,
+      "message": "I\u0027m not sure how this tests the (polyfilled) async cookie API. Did you mean to set the cookies using the async cookies API, and read them using document.cookie?",
+      "revId": "d599b33668a983c68d243ad148fa73dd404802f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7321f3cc_42c67dbf",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/dom_interop.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-07-31T22:14:12Z",
+      "side": 1,
+      "message": "The test name below suggests that it covers one-way sync from document.cookie to CookieStore.get() / CookieStore.getAll(). Please move this to a separate test, or change the test name. FWIW, separate tests seem better to me.",
+      "revId": "d599b33668a983c68d243ad148fa73dd404802f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c82ffa5a_3820c3d6",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/dom_interop.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-07-31T22:14:12Z",
+      "side": 1,
+      "message": "The string munging adds unnecessary complexity to the test. Please use assert_object_equals if you want to test the precise shape of the cookie object, or use separate asserts for the name and value otherwise.",
+      "revId": "d599b33668a983c68d243ad148fa73dd404802f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a24327c5_f57929bd",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/dom_interop.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-07-31T22:14:12Z",
+      "side": 1,
+      "message": "\u0027get and getAll read cookie set using document.cookie\u0027?",
+      "revId": "d599b33668a983c68d243ad148fa73dd404802f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
