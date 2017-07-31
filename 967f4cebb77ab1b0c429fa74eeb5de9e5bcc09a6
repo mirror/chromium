@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d55e7af2_20ba159b",
+        "filename": "extensions/browser/api/networking_private/networking_private_service_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-31T19:48:37Z",
+      "side": 1,
+      "message": "Add a comment about your uncertainty here, e.g.:\n\n// Each NetworkingPrivateServiceClient could probably run on its own sequence but the code prior to the TaskScheduler era had every instance use the same sequence (perhaps unintentionally..?).\n\nThat way if someone looks deeper and doesn\u0027t see why it needs to be that way, they\u0027ll know it\u0027s more an uncertainty than a fully thoughtout requirement.",
+      "revId": "967f4cebb77ab1b0c429fa74eeb5de9e5bcc09a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3abd711_4f8d8d3e",
+        "filename": "extensions/browser/api/networking_private/networking_private_service_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-07-31T19:48:37Z",
+      "side": 1,
+      "message": "Code below can just use |g_sequenced_task_runner| directly, I don\u0027t see a reason to also store this in a member?",
+      "revId": "967f4cebb77ab1b0c429fa74eeb5de9e5bcc09a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
