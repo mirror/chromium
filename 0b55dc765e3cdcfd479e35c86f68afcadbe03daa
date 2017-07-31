@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1a1aa2e_f07def5a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-31T13:15:25Z",
+      "side": 1,
+      "message": "You write what the code does, but for people skimming through the description this may be not that important. \n\nInstead you should tell what this CL does and why.\n\nI would rewrite this as:\n\nThis CL adds FakeContextualSuggestionsFetcher, MockFetchContextualSuggestionsCallback and a unittest for ContextualSuggestionsSource suggestion fetching.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 51
+      },
+      "revId": "0b55dc765e3cdcfd479e35c86f68afcadbe03daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93a35347_07b1516e",
+        "filename": "components/ntp_snippets/contextual_suggestions_source_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-31T13:15:25Z",
+      "side": 1,
+      "message": "So fetcher is in remote, but this class isn\u0027t. Why?\n\nI would definitely prefer keeping everything \"contextual\" in one folder.",
+      "range": {
+        "startLine": 5,
+        "startChar": 34,
+        "endLine": 5,
+        "endChar": 65
+      },
+      "revId": "0b55dc765e3cdcfd479e35c86f68afcadbe03daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afb3c942_1a59be9e",
+        "filename": "components/ntp_snippets/contextual_suggestions_source_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-31T13:15:25Z",
+      "side": 1,
+      "message": "Why?",
+      "range": {
+        "startLine": 24,
+        "startChar": 41,
+        "endLine": 24,
+        "endChar": 73
+      },
+      "revId": "0b55dc765e3cdcfd479e35c86f68afcadbe03daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a7392e8_c05f05b7",
+        "filename": "components/ntp_snippets/contextual_suggestions_source_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-31T13:15:25Z",
+      "side": 1,
+      "message": "Welcome to the world of Gmock magic :)\n\nhttps://github.com/google/googletest/blob/master/googlemock/docs/CheatSheet.md\n\nBasically you can rewrite this matcher using built-in tools. While this may be not that elegant (but usually it is), it will be much cheaper to read and understand afterwards.\n\nElementsAre(AllOf(Property(\u0026ContentSuggestion:id, Property(\u0026ContentSuggestion::ID:category, Category::FromKnownCategory(KnownCategories::CONTEXTUAL))), Property(\u0026ContentSuggestion::url, GURL(kSuggestionURL))))\n\nand it reads as:\nwe expect an array, which contains one element, which matches all of the following:\n- its id().category() equals to CONTEXTUAL\n- its url() equals to GURL(kSuggestionURL)\n\nAlso you get neat error reporting for free.",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 58,
+        "endChar": 1
+      },
+      "revId": "0b55dc765e3cdcfd479e35c86f68afcadbe03daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03da6123_91e78742",
+        "filename": "components/ntp_snippets/contextual_suggestions_source_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-31T13:15:25Z",
+      "side": 1,
+      "message": "I believe using RemoteSuggestionBuilder from ntp_snippets/remote/test_utils.h will be better in the long run.\n\nIt should have reasonable defaults and will help you to avoid having gazzilion of helpers like CreateTestSuggestionWithABC. Otherwise, you can improve it :)",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 66,
+        "endChar": 1
+      },
+      "revId": "0b55dc765e3cdcfd479e35c86f68afcadbe03daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb65e5ab_510b9c5d",
+        "filename": "components/ntp_snippets/contextual_suggestions_source_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-31T13:15:25Z",
+      "side": 1,
+      "message": "Mixing mocks and fakes is usually confusing. Please return empty strings/urls.",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 53
+      },
+      "revId": "0b55dc765e3cdcfd479e35c86f68afcadbe03daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74c2c7cf_ffcfd9c8",
+        "filename": "components/ntp_snippets/contextual_suggestions_source_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-31T13:15:25Z",
+      "side": 1,
+      "message": "Could you elaborate in a comment on how this works? It may take some time to understand this.\n\nSomething like \"GMock does support movable-only types (ContentSuggestion). Instead WrappedRun is used as callback and it redirects the call to a method without movable-only types, which is then mocked.\" would do.",
+      "range": {
+        "startLine": 83,
+        "startChar": 6,
+        "endLine": 83,
+        "endChar": 44
+      },
+      "revId": "0b55dc765e3cdcfd479e35c86f68afcadbe03daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19e74f37_06350b98",
+        "filename": "components/ntp_snippets/contextual_suggestions_source_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-07-31T13:15:25Z",
+      "side": 1,
+      "message": "ToOnceCallback?",
+      "range": {
+        "startLine": 93,
+        "startChar": 2,
+        "endLine": 93,
+        "endChar": 19
+      },
+      "revId": "0b55dc765e3cdcfd479e35c86f68afcadbe03daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
