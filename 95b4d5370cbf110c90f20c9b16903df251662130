@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f80e5c0f_0c09ee83",
+        "filename": "components/viz/service/surfaces/surface.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-07-31T21:09:28Z",
+      "side": 1,
+      "message": "I think it would be nice if you added additional explanation of how a surface can be used to synchronize.",
+      "revId": "95b4d5370cbf110c90f20c9b16903df251662130",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
