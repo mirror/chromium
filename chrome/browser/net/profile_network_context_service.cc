@@ -16,7 +16,6 @@
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/network_service_instance.h"
-#include "content/public/browser/storage_partition.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/service_names.mojom.h"
 #include "mojo/public/cpp/bindings/associated_interface_ptr.h"
@@ -63,39 +62,50 @@ content::mojom::NetworkContextParamsPtr CreateMainNetworkContextParams(
 }  // namespace
 
 ProfileNetworkContextService::ProfileNetworkContextService(Profile* profile)
-    : profile_(profile) {}
+    : profile_(profile),
+      profile_io_data_context_request_(
+          mojo::MakeRequest(&profile_io_data_main_network_context_)) {}
 
-ProfileNetworkContextService::~ProfileNetworkContextService() {}
+ProfileNetworkContextService::~ProfileNetworkContextService() {
+  // Some interactive_ui_tests use a real ChromeContentBrowserClient with a
+  // TestingProfile, which results in CreateMainNetworkContext() being called
+  // but not SetUpProfileIODataMainContext(). InterfaceRequests DCHECK on
+  // destruction when pending by default, so need this to avoid DCHECKing in
+  // those tests.
+  //
+  // TODO(mmenke): Remove this once ProfileIOData no longer calls
+  // SetUpProfileIODataMainContext(). This will probably only be the case when
+  // ProfileIOData is removed.
+  if (profile_io_data_context_request_.is_pending())
+    profile_io_data_context_request_.ResetWithReason(0u, "Tests are weird");
+}
 
 void ProfileNetworkContextService::SetUpProfileIODataMainContext(
     content::mojom::NetworkContextRequest* network_context_request,
     content::mojom::NetworkContextParamsPtr* network_context_params) {
-  DCHECK(!profile_io_data_main_network_context_);
-  *network_context_request =
-      mojo::MakeRequest(&profile_io_data_main_network_context_);
+  DCHECK(network_context_request);
+  DCHECK(network_context_params);
+  DCHECK(profile_io_data_context_request_.is_pending());
+
+  *network_context_request = std::move(profile_io_data_context_request_);
+
   if (!base::FeatureList::IsEnabled(features::kNetworkService)) {
     *network_context_params = CreateMainNetworkContextParams(profile_);
-  } else {
-    // Just use default if network service is enabled, to avoid the legacy
-    // in-process URLRequestContext from fighting with the NetworkService over
-    // ownership of on-disk files.
-    *network_context_params = content::mojom::NetworkContextParams::New();
+    return;
   }
-}
 
-content::mojom::NetworkContext* ProfileNetworkContextService::MainContext() {
-  // ProfileIOData must be initialized before this call.
-  DCHECK(profile_io_data_main_network_context_);
-  if (!base::FeatureList::IsEnabled(features::kNetworkService))
-    return profile_io_data_main_network_context_.get();
-
-  return content::BrowserContext::GetDefaultStoragePartition(profile_)
-      ->GetNetworkContext();
+  // Just use default if network service is enabled, to avoid the legacy
+  // in-process URLRequestContext from fighting with the NetworkService over
+  // ownership of on-disk files.
+  *network_context_params = content::mojom::NetworkContextParams::New();
 }
 
 content::mojom::NetworkContextPtr
 ProfileNetworkContextService::CreateMainNetworkContext() {
-  DCHECK(base::FeatureList::IsEnabled(features::kNetworkService));
+  DCHECK(profile_io_data_main_network_context_);
+
+  if (!base::FeatureList::IsEnabled(features::kNetworkService))
+    return std::move(profile_io_data_main_network_context_);
 
   content::mojom::NetworkContextPtr network_context;
   content::GetNetworkService()->CreateNetworkContext(
