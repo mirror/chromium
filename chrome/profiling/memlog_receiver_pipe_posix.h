@@ -26,7 +26,7 @@ class MemlogReceiverPipe
     : public base::RefCountedThreadSafe<MemlogReceiverPipe>,
       public base::MessageLoopForIO::Watcher {
  public:
-  explicit MemlogReceiverPipe(int fd);
+  explicit MemlogReceiverPipe(base::ScopedPlatformFile fd);
 
   // Must be called on the IO thread.
   void StartReadingOnIOThread();

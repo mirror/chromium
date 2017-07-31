@@ -5,12 +5,17 @@
 #include "chrome/common/profiling/memlog_sender.h"
 
 #include "base/command_line.h"
+#include "base/process/process.h"
 #include "base/strings/string_number_conversions.h"
 #include "build/build_config.h"
 #include "chrome/common/chrome_switches.h"
+#include "chrome/common/profiling/constants.mojom.h"
+#include "chrome/common/profiling/memlog.mojom.h"
 #include "chrome/common/profiling/memlog_allocator_shim.h"
 #include "chrome/common/profiling/memlog_sender_pipe.h"
 #include "chrome/common/profiling/memlog_stream.h"
+#include "content/public/common/service_manager_connection.h"
+#include "services/service_manager/public/cpp/connector.h"
 
 #if defined(OS_POSIX)
 #include "base/posix/global_descriptors.h"
@@ -27,43 +32,34 @@ namespace {
 // how to get the lifetime of this that allows that function call to work.
 MemlogSenderPipe* memlog_sender_pipe = nullptr;
 
+struct RequestContext {
+  mojom::MemlogPtr memlog;
+};
+
 }  // namespace
 
-void InitMemlogSenderIfNecessary() {
+void InitMemlogSenderIfNecessary(
+    content::ServiceManagerConnection* connection) {
   const base::CommandLine& cmdline = *base::CommandLine::ForCurrentProcess();
   std::string pipe_id_str = cmdline.GetSwitchValueASCII(switches::kMemlogPipe);
-  if (!pipe_id_str.empty()) {
-    int pipe_id = 0;
-    if (!base::StringToInt(pipe_id_str, &pipe_id))
-      return;
-
-#if defined(OS_WIN)
-    StartMemlogSender(mojo::edk::ScopedPlatformHandle(
-        mojo::edk::PlatformHandle(reinterpret_cast<HANDLE>(pipe_id))));
-#else
-    // TODO(ajwong): The posix value of the kMemlogPipe is bogus. Fix? This
-    // might be true for windows too if everything is done via the launch
-    // handles as opposed to the original code's use of a shared pipe name.
-    //
-    // TODO(ajwong): This still does not work on Mac because the hook to insert
-    // the file mapping is linux only.
-
-    // TODO(ajwong): In posix, the startup sequence does not correctly pass the
-    // file handle down to the gpu process still. Abort if it's a gpu process
-    // for now.
-    if (cmdline.GetSwitchValueASCII(switches::kProcessType) ==
-        switches::kGpuProcess) {
-      return;
-    }
-
-    StartMemlogSender(mojo::edk::ScopedPlatformHandle(mojo::edk::PlatformHandle(
-        base::GlobalDescriptors::GetInstance()->Get(kProfilingDataPipe))));
-#endif
+  if (pipe_id_str.empty()) {
+    return;
   }
+
+  RequestContext* context = new RequestContext();
+  connection->GetConnector()->BindInterface(profiling::mojom::kServiceName,
+                                            &context->memlog);
+  base::ProcessId pid = base::Process::Current().Pid();
+  context->memlog->GetMemlogPipe(pid, base::Bind(&StartMemlogSender));
 }
 
-void StartMemlogSender(mojo::edk::ScopedPlatformHandle fd) {
-  static MemlogSenderPipe pipe(std::move(fd));
+void StartMemlogSender(mojo::ScopedHandle handle) {
+  base::PlatformFile fd;
+  CHECK_EQ(mojo::UnwrapPlatformFile(std::move(handle), &fd), MOJO_RESULT_OK);
+  base::ScopedPlatformFile scoped_fd(fd);
+  LOG(ERROR) << "Starting with fd: " << fd;
+
+  static MemlogSenderPipe pipe(std::move(scoped_fd));
   memlog_sender_pipe = &pipe;
 
   StreamHeader header;

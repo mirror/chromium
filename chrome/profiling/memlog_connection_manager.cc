@@ -11,17 +11,17 @@
 #include "chrome/profiling/allocation_tracker.h"
 #include "chrome/profiling/memlog_receiver_pipe.h"
 #include "chrome/profiling/memlog_stream_parser.h"
-#include "chrome/profiling/profiling_globals.h"
 
 namespace profiling {
 
 struct MemlogConnectionManager::Connection {
   Connection(AllocationTracker::CompleteCallback complete_cb,
+             BacktraceStorage* backtrace_storage,
              int process_id,
              scoped_refptr<MemlogReceiverPipe> p)
       : thread(base::StringPrintf("Proc %d thread", process_id)),
         pipe(p),
-        tracker(std::move(complete_cb)) {}
+        tracker(std::move(complete_cb), backtrace_storage) {}
 
   ~Connection() {
     // The parser may outlive this class because it's refcounted, make sure no
@@ -36,22 +36,19 @@ struct MemlogConnectionManager::Connection {
   AllocationTracker tracker;
 };
 
-MemlogConnectionManager::MemlogConnectionManager() {}
+MemlogConnectionManager::MemlogConnectionManager(
+    scoped_refptr<base::SequencedTaskRunner> io_runner,
+    BacktraceStorage* backtrace_storage)
+    : io_runner_(io_runner), backtrace_storage_(backtrace_storage) {}
 
-MemlogConnectionManager::~MemlogConnectionManager() {
-}
+MemlogConnectionManager::~MemlogConnectionManager() {}
 
-void MemlogConnectionManager::OnStartMojoControl() {
-  ProfilingGlobals::Get()->GetIORunner()->PostTask(
-      FROM_HERE,
-      base::Bind(
-          &ProfilingProcess::EnsureMojoStarted,
-          base::Unretained(ProfilingGlobals::Get()->GetProfilingProcess())));
-}
-
-void MemlogConnectionManager::OnNewConnection(
-    scoped_refptr<MemlogReceiverPipe> new_pipe,
-    int sender_pid) {
+void MemlogConnectionManager::OnNewConnection(base::ScopedPlatformFile file,
+                                              int sender_pid) {
+  LOG(ERROR) << "New Connection " << sender_pid;
+  CHECK(connections_.find(sender_pid) == connections_.end());
+  scoped_refptr<MemlogReceiverPipe> new_pipe =
+      new MemlogReceiverPipe(std::move(file));
   // Task to post to clean up the connection. Don't need to retain |this| since
   // it wil be called by objects owned by the MemlogConnectionManager.
   AllocationTracker::CompleteCallback complete_cb =
@@ -60,27 +57,25 @@ void MemlogConnectionManager::OnNewConnection(
                      base::MessageLoop::current()->task_runner(), sender_pid);
 
   std::unique_ptr<Connection> connection = base::MakeUnique<Connection>(
-      std::move(complete_cb), sender_pid, new_pipe);
+      std::move(complete_cb), backtrace_storage_, sender_pid, new_pipe);
   connection->thread.Start();
 
-  connection->parser = new MemlogStreamParser(this, &connection->tracker);
+  connection->parser = new MemlogStreamParser(&connection->tracker);
   new_pipe->SetReceiver(connection->thread.task_runner(), connection->parser);
 
   connections_[sender_pid] = std::move(connection);
 
-  ProfilingGlobals::Get()->GetIORunner()->PostTask(
+  io_runner_->PostTask(
       FROM_HERE,
       base::Bind(&MemlogReceiverPipe::StartReadingOnIOThread, new_pipe));
 }
 
 void MemlogConnectionManager::OnConnectionComplete(int process_id) {
+  LOG(ERROR) << "Removing process " << process_id;
   auto found = connections_.find(process_id);
   CHECK(found != connections_.end());
+  found->second.release();
   connections_.erase(found);
-
-  // When all connections are closed, exit.
-  if (connections_.empty())
-    ProfilingGlobals::Get()->QuitWhenIdle();
 }
 
 // Posts back to the given thread the connection complete message.
