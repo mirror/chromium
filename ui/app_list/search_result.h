@@ -257,6 +257,8 @@ class APP_LIST_EXPORT SearchResult {
 
   base::ObserverList<SearchResultObserver> observers_;
 
+  const bool is_fullscreen_app_list_enabled_;
+
   DISALLOW_COPY_AND_ASSIGN(SearchResult);
 };
 
