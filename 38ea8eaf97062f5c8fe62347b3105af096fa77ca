@@ -140,6 +140,30 @@
       "revId": "38ea8eaf97062f5c8fe62347b3105af096fa77ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "299ef1ef_72a0992a",
+        "filename": "chrome/browser/android/ntp/ntp_snippets_bridge.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-07-31T15:07:19Z",
+      "side": 1,
+      "message": "bridge is fairly generic, so the long name makes sense, as you said. So I don\u0027t think SnippetsBridge.java needs to be changed. For Image/Thumbnail I think it should be consistent across the board, so deferring back to you :p\n\nSeparate CL for ContextualSuggestionsSource sgtm",
+      "parentUuid": "67e9f43d_245e2b24",
+      "range": {
+        "startLine": 356,
+        "startChar": 8,
+        "endLine": 356,
+        "endChar": 38
+      },
+      "revId": "38ea8eaf97062f5c8fe62347b3105af096fa77ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
