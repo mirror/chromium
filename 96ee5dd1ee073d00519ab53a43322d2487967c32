@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "869298d2_8dc9b12f",
+        "filename": "docs/fuchsia_sdk_updates.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-07-31T16:45:53Z",
+      "side": 1,
+      "message": "80 coluuuuuuumns",
+      "range": {
+        "startLine": 3,
+        "startChar": 117,
+        "endLine": 3,
+        "endChar": 212
+      },
+      "revId": "96ee5dd1ee073d00519ab53a43322d2487967c32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
