@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92ed0ce4_6809c412",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/ContentSuggestionsNotificationHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-07-31T11:31:40Z",
+      "side": 1,
+      "message": "Is there a strong reason to version this, rather than just store a bool? (or even not store anything since deleting / recreating a channel should be a no-op if called multiple times). \n\nIf you are planning on experimenting with different properties in different versions you may run into difficulties with the current approach, depending on what properties change, due to the fact that reregistering a channel with the same Id, *even after deleting it* will resurrect the original channel\u0027s properties. So to do this properly you would need to append the version to the channel Id or something like that, and ensure the old one is cleared up.",
+      "revId": "e1018362c2cca1369b693c2752011427ed07dd4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34ae907e_a2b323f6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/ContentSuggestionsNotificationHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-07-31T11:31:40Z",
+      "side": 1,
+      "message": "I\u0027m not sure whether it\u0027s totally safe yet to call o apis without reflection until this bug is resolved https://bugs.chromium.org/p/chromium/issues/detail?id\u003d735481 if you use the notification manager proxy impl it will use reflection under the hood.",
+      "revId": "e1018362c2cca1369b693c2752011427ed07dd4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
