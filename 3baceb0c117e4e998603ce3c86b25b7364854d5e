@@ -1,0 +1,628 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c096b45_18332d1a",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 8331,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-31T13:39:05Z",
+      "side": 1,
+      "message": "nit: Other IDs here use \"NEW_TAB\" rather than \"NTP\", let\u0027s try to stay consistent.",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1738f75_6daaeef2",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 8332,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-31T13:39:05Z",
+      "side": 1,
+      "message": "What\u0027s MSG_speech_ready? Let\u0027s formulate this in a less technical way, so that the translators can understand.",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4bfb6aa_aad7b07a",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 8340,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-31T13:39:05Z",
+      "side": 1,
+      "message": "What\u0027s up with the \"link to retry\" stuff? I don\u0027t understand that part of the sentence.",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "626b4d93_64cbcaf0",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-31T13:39:05Z",
+      "side": 1,
+      "message": "nit: Please use either \"voice\" or \"voice search\" everywhere, for consistency",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f78334d8_80013832",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-31T13:39:05Z",
+      "side": 1,
+      "message": "What\u0027s \"sfs\"? (I assume the name is copied from the remote NTP, but let\u0027s use something more descriptive if we can.)",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75d264ed_de144cb8",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-31T13:39:05Z",
+      "side": 1,
+      "message": "The icon should probably be included via url() in the css file",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1211bc0_3ba685bb",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-31T13:39:05Z",
+      "side": 1,
+      "message": "Style stuff should go into the css file",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cd743c7_7293f835",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-31T13:39:05Z",
+      "side": 1,
+      "message": "Are both userLanguage and language required?\nAlso, let\u0027s not write into configData. Just query the language directly where it\u0027s needed.",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b6045e1_d51d22bd",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-31T13:39:05Z",
+      "side": 1,
+      "message": "nit: Does just \".title \u003d ..\" work?",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8effe2f_8557be5c",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-31T13:39:05Z",
+      "side": 1,
+      "message": "So \".addEventListener(\u0027onfocuschange\u0027, ...)\"?",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77e8258e_af6614ea",
+        "filename": "chrome/browser/resources/local_ntp/voice_search.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-31T13:39:05Z",
+      "side": 1,
+      "message": "Oh wow, this is a lot of code. Have you checked that everything is actually used/required?",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "319c964d_2c2e5137",
+        "filename": "chrome/browser/resources/local_ntp/voice_search.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-31T13:39:05Z",
+      "side": 1,
+      "message": "What\u0027s this for?",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "019f8260_1ff84b4a",
+        "filename": "chrome/browser/resources/local_ntp/voice_search.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-31T13:39:05Z",
+      "side": 1,
+      "message": "I think this deserves a comment. What\u0027s \"speech\" and \"view\"?",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aec7abdb_989c5fea",
+        "filename": "chrome/browser/resources/local_ntp/voice_search.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-31T13:39:05Z",
+      "side": 1,
+      "message": "Remove comment :)\nAlso, no need to keep the weird IDs.\n\nOut of curiosity: What difference does the SearchMethod make anyway?",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3205bb9a_968e9506",
+        "filename": "chrome/browser/resources/local_ntp/voice_search.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-31T13:39:05Z",
+      "side": 1,
+      "message": "Not used",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e47b38cb_475608b1",
+        "filename": "chrome/browser/resources/local_ntp/voice_search.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-31T13:39:05Z",
+      "side": 1,
+      "message": "Not used",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "815a8b48_6d51dc10",
+        "filename": "chrome/browser/resources/local_ntp/voice_search.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-31T13:39:05Z",
+      "side": 1,
+      "message": "?",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0da286c6_699ed4ca",
+        "filename": "chrome/browser/resources/local_ntp/voice_search.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-31T13:39:05Z",
+      "side": 1,
+      "message": "I don\u0027t think either of these can really fail (or rather, that kind of failure doesn\u0027t need to be handled at runtime).",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f72203e_425fc4d1",
+        "filename": "chrome/browser/resources/local_ntp/voice_search.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-31T13:39:05Z",
+      "side": 1,
+      "message": "...and then we can probably get rid of the DISABLED logic.",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffa2c252_e907afac",
+        "filename": "chrome/browser/resources/local_ntp/voice_search.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-31T13:39:05Z",
+      "side": 1,
+      "message": "Wow. Can you verify if this actually happens?",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe9e933a_30bb98c6",
+        "filename": "chrome/browser/resources/local_ntp/voice_search.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-31T13:39:05Z",
+      "side": 1,
+      "message": "I don\u0027t think this applies here.",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5852c84_1ec9e0e0",
+        "filename": "chrome/browser/resources/local_ntp/voice_search.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-31T13:39:05Z",
+      "side": 1,
+      "message": "nit: Remove \"EmbeddedSearch\" - there is only one kind of omnibox :)",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf69c17f_e6b414f1",
+        "filename": "chrome/browser/resources/local_ntp/voice_search.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-31T13:39:05Z",
+      "side": 1,
+      "message": "Ugh, setting a \"global\" variable in a (presumed) getter is kinda ugly.. maybe make a separate function getRecognitionErrorTimeout(RecognitionError)?",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d0f4370_d82f1298",
+        "filename": "chrome/browser/resources/local_ntp/voice_search.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-31T13:39:05Z",
+      "side": 1,
+      "message": "Unused",
+      "range": {
+        "startLine": 614,
+        "startChar": 18,
+        "endLine": 614,
+        "endChar": 0
+      },
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2cd6c0b_d3d8a80c",
+        "filename": "chrome/browser/resources/local_ntp/voice_search.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-31T13:39:05Z",
+      "side": 1,
+      "message": "Hm. This is clearly useful while developing, but eventually we shouldn\u0027t spam the console with these messages. Are you planning to remove this? Or maybe only enable it in developer builds somehow?",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee62d7d6_b6caebe9",
+        "filename": "chrome/browser/resources/local_ntp/voice_search.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-31T13:39:05Z",
+      "side": 1,
+      "message": "Please remove internal bug reference",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5696b36b_d5bf90a3",
+        "filename": "chrome/browser/resources/local_ntp/voice_search.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 706,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-31T13:39:05Z",
+      "side": 1,
+      "message": "Wow. Do you know if this can actually (still) happen?",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca36046d_b0067836",
+        "filename": "chrome/browser/resources/local_ntp/voice_search.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 725,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-31T13:39:05Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be required, I think we can assume it\u0027s always there?",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec36b362_c15a849e",
+        "filename": "chrome/browser/resources/local_ntp/voice_search.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 890,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-31T13:39:05Z",
+      "side": 1,
+      "message": "IMO, there\u0027s no need to handle this kind of thing at runtime. If those elements aren\u0027t there, something\u0027s seriously wrong, no point in trying to handle things gracefully.",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88aa980f_19365c92",
+        "filename": "chrome/browser/resources/local_ntp/voice_search.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 909,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-31T13:39:05Z",
+      "side": 1,
+      "message": "Is the opt_hasLink param required if we\u0027re checking for existence of \"link\" anyway?",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1eb3fd0a_141571e7",
+        "filename": "chrome/browser/resources/local_ntp/voice_search.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1060,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-31T13:39:05Z",
+      "side": 1,
+      "message": "Hm, could we achieve the same (or a similar) result with a CSS animation?",
+      "range": {
+        "startLine": 1060,
+        "startChar": 70,
+        "endLine": 1060,
+        "endChar": 0
+      },
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ca46221_c606bee5",
+        "filename": "chrome/browser/search/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-31T13:39:05Z",
+      "side": 1,
+      "message": "Hm, an alternative to a second action would be to make the script accept multiple inputs, e.g. by making an explicit --out argument, so that all positional arguments can be considered inputs. WDYT?",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f36a706_61ed05f9",
+        "filename": "chrome/browser/search/local_ntp_source.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-31T13:39:05Z",
+      "side": 1,
+      "message": "Why does the link need to be dynamically inserted?",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db4c6773_abd9cf82",
+        "filename": "chrome/browser/search/local_ntp_source.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-31T13:39:05Z",
+      "side": 1,
+      "message": "C++ variables should use hacker_style, throughout the whole file.",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6834b3c3_1724ec85",
+        "filename": "chrome/browser/search/local_ntp_source.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-31T13:39:05Z",
+      "side": 1,
+      "message": "Hm, I was wondering if this can even happen, but right now there is actually a permission popup, right? We should figure out a way to suppress that. A TODO is fine for now, but I\u0027d remove the string - no need to put extra work on the translators if we\u0027re going to remove it anyway.",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6deed73_eca49cf4",
+        "filename": "chrome/browser/search/local_ntp_source.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-07-31T13:39:05Z",
+      "side": 1,
+      "message": "Instead of a \"raw\" commandline flag, this should be a base::Feature (search for features::kOneGoogleBarOnLocalNtp in this file for an example). Then we can enable it remotely (or turn it off again if something breaks). You can still test locally with \"--enable-features\u003dVoiceSearchOnLocalNtp\" (or whatever you end up naming it - this would be consistent with OneGoogleBarOnLocalNtp)",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
