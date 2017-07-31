@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ed24617_4aba01cb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1472,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-07-31T19:22:55Z",
+      "side": 1,
+      "message": "This should live in enterVrWithCorrectWindowMode().",
+      "range": {
+        "startLine": 1472,
+        "startChar": 8,
+        "endLine": 1472,
+        "endChar": 78
+      },
+      "revId": "be2839940408763078200aa000156ecc848d54a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
