@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac0b3a0f_ac6d635d",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-31T15:43:15Z",
+      "side": 1,
+      "message": "this is a really weird way to capitalize this variable name",
+      "range": {
+        "startLine": 297,
+        "startChar": 12,
+        "endLine": 297,
+        "endChar": 39
+      },
+      "revId": "121fd5e0c453ec41b15efebede9d6d4d61824324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4035d4d_43cee563",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-31T15:43:15Z",
+      "side": 1,
+      "message": "this is not quite the right color because it assumes a normal chrome theme. As you can see in the screenshot posted on the bug, in GTK theme mode we will use different colors so this may not be visible on the background (if the gtk theme yields a dark background). You should use color_utils::DeriveDefaultIconColor() and the native theme\u0027s label text color. You may need to do this in NativeThemeChanged since the correct native theme might not be available during initialization.",
+      "range": {
+        "startLine": 432,
+        "startChar": 35,
+        "endLine": 432,
+        "endChar": 50
+      },
+      "revId": "121fd5e0c453ec41b15efebede9d6d4d61824324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "573a6902_3dde998b",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-31T15:43:15Z",
+      "side": 1,
+      "message": "ditto (this color should be the text color)",
+      "range": {
+        "startLine": 434,
+        "startChar": 48,
+        "endLine": 434,
+        "endChar": 61
+      },
+      "revId": "121fd5e0c453ec41b15efebede9d6d4d61824324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e88086e7_94ce002f",
+        "filename": "components/vector_icons/help_outline.icon",
+        "patchSetId": 8
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-31T15:43:15Z",
+      "side": 1,
+      "message": "nit: \\n",
+      "range": {
+        "startLine": 3,
+        "startChar": 24,
+        "endLine": 3,
+        "endChar": 28
+      },
+      "revId": "121fd5e0c453ec41b15efebede9d6d4d61824324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fce9aaf_f0e65735",
+        "filename": "components/vector_icons/help_outline.icon",
+        "patchSetId": 8
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-07-31T15:43:15Z",
+      "side": 1,
+      "message": "nit: for generically sized icons we typically use the 48x48 SVG from go/icons",
+      "range": {
+        "startLine": 4,
+        "startChar": 19,
+        "endLine": 4,
+        "endChar": 21
+      },
+      "revId": "121fd5e0c453ec41b15efebede9d6d4d61824324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
