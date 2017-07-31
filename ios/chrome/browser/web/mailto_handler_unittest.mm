@@ -33,6 +33,27 @@ TEST(MailtoHandlerTest, TestRewriteGood) {
   EXPECT_NSEQ(@"mailtohandler:/co?to=someone@there.com&subject=trash", result);
 }
 
+TEST(MailtoHandlerTest, TestRewriteBodyWithURL) {
+  MailtoHandler* handler = [[MailtoHandler alloc] init];
+  // Tests mailto URL with a body that includes a = sign.
+  NSString* result = [handler
+      rewriteMailtoURL:GURL("mailto:user@domain.com?body=http://foo.bar?x=y")];
+  EXPECT_NSEQ(@"mailtohandler:/co?to=user@domain.com&body=http://foo.bar?x=y",
+              result);
+}
+
+TEST(MailtoHandlerTest, TestRewriteWithMixedCase) {
+  MailtoHandler* handler = [[MailtoHandler alloc] init];
+  // Tests mailto URL with parameters that are mixed upper/lower cases.
+  NSString* result = [handler
+      rewriteMailtoURL:
+          GURL("mailto:user@domain.com?Subject=Blah&BODY=http://foo.bar?x=y")];
+  EXPECT_NSEQ(
+      @"mailtohandler:/co?to=user@domain.com&subject=Blah&body=http://"
+      @"foo.bar?x=y",
+      result);
+}
+
 TEST(MailtoHandlerTest, TestRewriteBad) {
   MailtoHandler* handler = [[MailtoHandler alloc] init];
   NSString* result = [handler rewriteMailtoURL:GURL("http://www.google.com")];
