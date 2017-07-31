@@ -130,7 +130,6 @@ TEST_F(UiSceneManagerTest, ToastTransience) {
   MakeManager(kNotInCct, kNotInWebVr);
   EXPECT_FALSE(IsVisible(kExclusiveScreenToast));
 
-  manager_->SetFullscreen(true);
   EXPECT_TRUE(IsVisible(kExclusiveScreenToast));
   task_runner_->FastForwardUntilNoTasksRemain();
   EXPECT_FALSE(IsVisible(kExclusiveScreenToast));

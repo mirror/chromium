@@ -33,7 +33,7 @@ void LinearLayout::LayOutChildren() {
     if (direction_ == kHorizontal)
       child->SetLayoutOffset(offset + 0.5 * extent, 0);
     else
-      child->SetLayoutOffset(0, offset + 0.5 * extent);
+      child->SetLayoutOffset(0, -(offset + 0.5 * extent));
     offset += extent + margin_;
   }
 }

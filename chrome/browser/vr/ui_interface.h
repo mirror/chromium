@@ -46,13 +46,10 @@ class UiInterface {
   virtual void SetSplashScreenIcon(const SkBitmap& bitmap) = 0;
 
   // Tab handling.
-  virtual void InitTabList() {}
-  virtual void AppendToTabList(bool incognito,
-                               int id,
-                               const base::string16& title) {}
-  virtual void FlushTabList() {}
-  virtual void UpdateTab(bool incognito, int id, const std::string& title) {}
-  virtual void RemoveTab(bool incognito, int id) {}
+  virtual void AddOrUpdateTab(bool incognito,
+                              int id,
+                              const base::string16& title) = 0;
+  virtual void RemoveTab(bool incognito, int id) = 0;
 
   virtual void SetExitVrPromptEnabled(bool enabled,
                                       UiUnsupportedMode reason) = 0;

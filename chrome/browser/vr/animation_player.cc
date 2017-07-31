@@ -70,12 +70,6 @@ void ReverseAnimation(base::TimeTicks monotonic_time,
                              (2 * (monotonic_time - animation->start_time())));
 }
 
-std::unique_ptr<cc::CubicBezierTimingFunction>
-CreateTransitionTimingFunction() {
-  return cc::CubicBezierTimingFunction::CreatePreset(
-      cc::CubicBezierTimingFunction::EaseType::EASE);
-}
-
 base::TimeDelta GetStartTime(cc::Animation* animation) {
   if (animation->direction() == cc::Animation::Direction::NORMAL) {
     return base::TimeDelta();
@@ -407,6 +401,14 @@ void AnimationPlayer::TransitionBooleanTo(base::TimeTicks monotonic_time,
                                      GetNextGroupId(), target_property));
 }
 
+bool AnimationPlayer::IsAnimatingProperty(int property) const {
+  for (auto& animation : animations_) {
+    if (animation->target_property_id() == property)
+      return true;
+  }
+  return false;
+}
+
 cc::Animation* AnimationPlayer::GetRunningAnimationForProperty(
     int target_property) const {
   for (auto& animation : animations_) {
@@ -419,12 +421,9 @@ cc::Animation* AnimationPlayer::GetRunningAnimationForProperty(
   return nullptr;
 }
 
-bool AnimationPlayer::IsAnimatingProperty(int property) const {
-  for (auto& animation : animations_) {
-    if (animation->target_property_id() == property)
-      return true;
-  }
-  return false;
+std::unique_ptr<cc::CubicBezierTimingFunction>
+AnimationPlayer::CreateTransitionTimingFunction() const {
+  return cc::CubicBezierTimingFunction::CreatePreset(transition_.ease_type);
 }
 
 }  // namespace vr

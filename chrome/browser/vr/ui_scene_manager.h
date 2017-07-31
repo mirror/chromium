@@ -11,6 +11,7 @@
 #include "base/values.h"
 #include "chrome/browser/vr/color_scheme.h"
 #include "chrome/browser/vr/elements/simple_textured_element.h"
+#include "chrome/browser/vr/model/tabset_model.h"
 #include "chrome/browser/vr/ui_interface.h"
 #include "chrome/browser/vr/ui_unsupported_mode.h"
 #include "third_party/skia/include/core/SkBitmap.h"
@@ -27,6 +28,8 @@ class UiElement;
 class UiScene;
 class UrlBar;
 class ExitPrompt;
+class PagedGridView;
+class LocationBar;
 
 class UiSceneManager {
  public:
@@ -68,6 +71,12 @@ class UiSceneManager {
   void OnSecurityIconClickedForTesting();
   void OnExitPromptChoiceForTesting(bool chose_exit);
 
+  int AllocateId();
+
+  // Tab handling.
+  void AddOrUpdateTab(bool incognito, int id, const base::string16& title);
+  void RemoveTab(bool incognito, int id);
+
  private:
   void CreateScreenDimmer();
   void CreateSecurityWarnings();
@@ -80,6 +89,8 @@ class UiSceneManager {
   void CreateCloseButton();
   void CreateExitPrompt();
   void CreateToasts();
+  void CreateModel();
+  void CreateTabMenu();
 
   void ConfigureScene();
   void ConfigureSecurityWarnings();
@@ -91,10 +102,12 @@ class UiSceneManager {
   void OnExitPromptChoice(bool chose_exit);
   void OnExitPromptBackplaneClicked();
   void OnCloseButtonClicked();
+  void OnNewTabButtonClicked();
   void OnUnsupportedMode(UiUnsupportedMode mode);
-  int AllocateId();
   ColorScheme::Mode mode() const;
   const ColorScheme& color_scheme() const;
+  TabSetModel& GetTabSet(bool incognito);
+  std::vector<TabModel>::iterator FindTab(bool incognito, int id);
 
   UiBrowserInterface* browser_;
   UiScene* scene_;
@@ -120,6 +133,9 @@ class UiSceneManager {
   UrlBar* url_bar_ = nullptr;
   TransientUrlBar* transient_url_bar_ = nullptr;
   LoadingIndicator* loading_indicator_ = nullptr;
+  PagedGridView* paged_grid_view_ = nullptr;
+  UiElement* location_bar_thumb_ = nullptr;
+  LocationBar* location_bar_ = nullptr;
 
   std::vector<UiElement*> system_indicators_;
 
@@ -149,6 +165,8 @@ class UiSceneManager {
   std::vector<UiElement*> background_panels_;
   std::vector<UiElement*> content_elements_;
   std::vector<UiElement*> control_elements_;
+
+  std::vector<TabSetModel> tab_sets_;
 
   base::WeakPtrFactory<UiSceneManager> weak_ptr_factory_;
 

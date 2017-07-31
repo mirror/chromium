@@ -385,7 +385,6 @@ void VrShell::OnTabListCreated(JNIEnv* env,
                                jobjectArray incognito_tabs) {
   ProcessTabArray(env, tabs, false);
   ProcessTabArray(env, incognito_tabs, true);
-  ui_->FlushTabList();
 }
 
 void VrShell::ProcessTabArray(JNIEnv* env, jobjectArray tabs, bool incognito) {
@@ -394,7 +393,7 @@ void VrShell::ProcessTabArray(JNIEnv* env, jobjectArray tabs, bool incognito) {
     jobject jtab = env->GetObjectArrayElement(tabs, i);
     TabAndroid* tab =
         TabAndroid::GetNativeTab(env, JavaParamRef<jobject>(env, jtab));
-    ui_->AppendToTabList(incognito, tab->GetAndroidId(), tab->GetTitle());
+    ui_->AddOrUpdateTab(incognito, tab->GetAndroidId(), tab->GetTitle());
   }
 }
 
@@ -403,9 +402,9 @@ void VrShell::OnTabUpdated(JNIEnv* env,
                            jboolean incognito,
                            jint id,
                            jstring jtitle) {
-  std::string title;
-  base::android::ConvertJavaStringToUTF8(env, jtitle, &title);
-  ui_->UpdateTab(incognito, id, title);
+  base::string16 title;
+  base::android::ConvertJavaStringToUTF16(env, jtitle, &title);
+  ui_->AddOrUpdateTab(incognito, id, title);
 }
 
 void VrShell::OnTabRemoved(JNIEnv* env,
@@ -532,12 +531,6 @@ void VrShell::DoUiAction(const UiAction action,
       Java_VrShellImpl_showTab(env, j_vr_shell_, id);
       return;
     }
-    case OPEN_NEW_TAB: {
-      bool incognito;
-      CHECK(arguments->GetBoolean("incognito", &incognito));
-      Java_VrShellImpl_openNewTab(env, j_vr_shell_, incognito);
-      return;
-    }
     case HISTORY_FORWARD:
       Java_VrShellImpl_navigateForward(env, j_vr_shell_);
       break;
@@ -643,6 +636,11 @@ void VrShell::OnExitVrPromptResult(vr::UiUnsupportedMode reason,
   JNIEnv* env = base::android::AttachCurrentThread();
   Java_VrShellImpl_onExitVrRequestResult(env, j_vr_shell_,
                                          static_cast<int>(reason), should_exit);
+}
+
+void VrShell::OpenNewTab(bool incognito) {
+  JNIEnv* env = base::android::AttachCurrentThread();
+  Java_VrShellImpl_openNewTab(env, j_vr_shell_, incognito);
 }
 
 void VrShell::UpdateVSyncInterval(base::TimeTicks vsync_timebase,

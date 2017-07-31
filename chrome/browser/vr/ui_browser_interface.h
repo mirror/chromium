@@ -23,6 +23,7 @@ class UiBrowserInterface {
   virtual void OnUnsupportedMode(UiUnsupportedMode mode) = 0;
   virtual void OnExitVrPromptResult(UiUnsupportedMode reason,
                                     ExitVrPromptChoice choice) = 0;
+  virtual void OpenNewTab(bool incognito) = 0;
 };
 
 }  // namespace vr
