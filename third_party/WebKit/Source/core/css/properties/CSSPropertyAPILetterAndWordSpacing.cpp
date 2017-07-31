@@ -10,10 +10,11 @@
 class CSSParserLocalContext;
 namespace blink {
 
-const CSSValue* CSSPropertyAPILetterAndWordSpacing::parseSingleValue(
+const CSSValue* CSSPropertyAPILetterAndWordSpacing::ParseSingleValue(
+    CSSPropertyID,
     CSSParserTokenRange& range,
     const CSSParserContext& context,
-    const CSSParserLocalContext&) {
+    const CSSParserLocalContext&) const {
   if (range.Peek().Id() == CSSValueNormal)
     return CSSPropertyParserHelpers::ConsumeIdent(range);
   // TODO(timloh): allow <percentage>s in word-spacing.
