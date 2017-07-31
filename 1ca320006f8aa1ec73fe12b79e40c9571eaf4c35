@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a19be6df_4ca65f03",
+        "filename": "android_webview/browser/aw_content_browser_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-07-31T19:05:17Z",
+      "side": 1,
+      "message": "why is this returning a vector of a unique_ptr?",
+      "range": {
+        "startLine": 576,
+        "startChar": 5,
+        "endLine": 576,
+        "endChar": 11
+      },
+      "revId": "1ca320006f8aa1ec73fe12b79e40c9571eaf4c35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7822b6f1_4df42fe8",
+        "filename": "android_webview/browser/aw_safe_browsing_resource_throttle.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-07-31T19:05:17Z",
+      "side": 1,
+      "message": "does this have to use refptr?",
+      "range": {
+        "startLine": 67,
+        "startChar": 16,
+        "endLine": 67,
+        "endChar": 29
+      },
+      "revId": "1ca320006f8aa1ec73fe12b79e40c9571eaf4c35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdce4519_e6e7b6ee",
+        "filename": "android_webview/browser/aw_url_checker_delegate_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-07-31T19:05:17Z",
+      "side": 1,
+      "message": "not ideal as we are now creating AwWebResourceRequest outside its constructor and initializing it by setting the members explicitly. I think it is better to create it in AwWebResourceRequest by adding a create method.",
+      "range": {
+        "startLine": 43,
+        "startChar": 23,
+        "endLine": 43,
+        "endChar": 30
+      },
+      "revId": "1ca320006f8aa1ec73fe12b79e40c9571eaf4c35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
