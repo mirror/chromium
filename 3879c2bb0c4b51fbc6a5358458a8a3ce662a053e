@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa68c2d4_b56c57a7",
+        "filename": "content/common/download/download_stream.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-31T15:10:22Z",
+      "side": 1,
+      "message": "Please don\u0027t call an interface a \"callback\" - doing this will make you sad the moment you realize you want to add more API surface to it. How about DownloadStreamClient?",
+      "revId": "3879c2bb0c4b51fbc6a5358458a8a3ce662a053e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68501cc1_c16a4ed1",
+        "filename": "content/common/download/download_stream.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-31T15:10:22Z",
+      "side": 1,
+      "message": "It\u0027s unfortunate that there\u0027s no usable enum for this. Can we define one?",
+      "revId": "3879c2bb0c4b51fbc6a5358458a8a3ce662a053e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
