@@ -16,6 +16,24 @@
       "revId": "e3beba718e06f030224bdfdc657804e23be268fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1da57743_6f500713",
+        "filename": "media/audio/audio_manager_base.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-07-31T16:48:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "200e5f42_3693bc64",
+      "revId": "e3beba718e06f030224bdfdc657804e23be268fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
