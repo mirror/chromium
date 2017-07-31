@@ -9,6 +9,8 @@ namespace feature_engagement {
 namespace events {
 
 #if defined(OS_WIN) || defined(OS_LINUX)
+const char kBookmarkAdded[] = "bookmark_added";
+
 const char kOmniboxInteraction[] = "omnibox_used";
 
 const char kHistoryDeleted[] = "history_deleted";
