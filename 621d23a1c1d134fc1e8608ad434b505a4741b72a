@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33cb8bef_debe35c8",
+        "filename": "chrome/browser/net/profile_network_context_service_browsertest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-07-31T14:52:48Z",
+      "side": 1,
+      "message": "I think it\u0027s actually guaranteed to do it (as in it happens-before the reply), as long as HttpCacheTransaction is actually used.",
+      "range": {
+        "startLine": 76,
+        "startChar": 15,
+        "endLine": 76,
+        "endChar": 0
+      },
+      "revId": "621d23a1c1d134fc1e8608ad434b505a4741b72a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e70a664b_f9e10bd4",
+        "filename": "components/network_session_configurator/browser/network_session_configurator_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-07-31T14:52:48Z",
+      "side": 1,
+      "message": "What happened to TestingFixedPorts?",
+      "revId": "621d23a1c1d134fc1e8608ad434b505a4741b72a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "558848b5_ba8b0447",
+        "filename": "content/network/network_context_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-07-31T14:52:48Z",
+      "side": 1,
+      "message": "Does this get automatically saved/restored between tests?",
+      "range": {
+        "startLine": 215,
+        "startChar": 1,
+        "endLine": 215,
+        "endChar": 2
+      },
+      "revId": "621d23a1c1d134fc1e8608ad434b505a4741b72a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
