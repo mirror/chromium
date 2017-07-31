@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7931c2ff_9ff150fa",
+        "filename": "net/disk_cache/cleanup_context.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-07-31T14:36:13Z",
+      "side": 1,
+      "message": "nit: prefer Create to Make",
+      "range": {
+        "startLine": 35,
+        "startChar": 25,
+        "endLine": 35,
+        "endChar": 39
+      },
+      "revId": "86c8d3a0ce02689e3e2a158d3e0242f384110633",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1434185e_fab0f89a",
+        "filename": "net/disk_cache/disk_cache.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-07-31T14:36:13Z",
+      "side": 1,
+      "message": "What is one referring to?",
+      "range": {
+        "startLine": 143,
+        "startChar": 60,
+        "endLine": 143,
+        "endChar": 63
+      },
+      "revId": "86c8d3a0ce02689e3e2a158d3e0242f384110633",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02c3905b_409e3d20",
+        "filename": "net/disk_cache/disk_cache.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-07-31T14:36:13Z",
+      "side": 1,
+      "message": "remove this text",
+      "range": {
+        "startLine": 147,
+        "startChar": 30,
+        "endLine": 147,
+        "endChar": 41
+      },
+      "revId": "86c8d3a0ce02689e3e2a158d3e0242f384110633",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9e90626_f73605ac",
+        "filename": "net/disk_cache/disk_cache.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-07-31T14:36:13Z",
+      "side": 1,
+      "message": "TryMakeCleanupContextAndRun",
+      "range": {
+        "startLine": 147,
+        "startChar": 10,
+        "endLine": 147,
+        "endChar": 24
+      },
+      "revId": "86c8d3a0ce02689e3e2a158d3e0242f384110633",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88c830be_6bf331bb",
+        "filename": "net/disk_cache/disk_cache.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-07-31T14:36:13Z",
+      "side": 1,
+      "message": "insert \u0027the\u0027",
+      "range": {
+        "startLine": 154,
+        "startChar": 13,
+        "endLine": 154,
+        "endChar": 14
+      },
+      "revId": "86c8d3a0ce02689e3e2a158d3e0242f384110633",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
