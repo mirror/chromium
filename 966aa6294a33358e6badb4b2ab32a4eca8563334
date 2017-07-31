@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81337c20_e239c629",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
+        "patchSetId": 31
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-07-31T07:07:23Z",
+      "side": 1,
+      "message": "Any reason why 0 is specified here? \nThis is changed compared to SnippetArticleViewHolder.java:487 before this CL. Could you please put the 32px constant here, again?",
+      "range": {
+        "startLine": 202,
+        "startChar": 16,
+        "endLine": 202,
+        "endChar": 37
+      },
+      "revId": "966aa6294a33358e6badb4b2ab32a4eca8563334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
