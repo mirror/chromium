@@ -46,6 +46,23 @@
       "revId": "02331b3353377da27ebe1e3f98e1482729f2a49f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d1e81df_af28f14a",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-07-31T20:23:52Z",
+      "side": 1,
+      "message": "Yeah, it looks like ANNOTATE_LEAKING_OBJECT_PTR is only used for pointers that might become unreachable.",
+      "revId": "02331b3353377da27ebe1e3f98e1482729f2a49f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
