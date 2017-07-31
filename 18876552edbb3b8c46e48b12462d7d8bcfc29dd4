@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05d6d6a9_3f076ac5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115956
+      },
+      "writtenOn": "2017-07-31T10:59:18Z",
+      "side": 1,
+      "message": "Because chromium compilation may be using",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 36
+      },
+      "revId": "18876552edbb3b8c46e48b12462d7d8bcfc29dd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4760854c_aa1d850b",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1115956
+      },
+      "writtenOn": "2017-07-31T10:59:18Z",
+      "side": 1,
+      "message": "nit: Please replace all tabs with spaces.",
+      "range": {
+        "startLine": 695,
+        "startChar": 0,
+        "endLine": 695,
+        "endChar": 1
+      },
+      "revId": "18876552edbb3b8c46e48b12462d7d8bcfc29dd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3134780_71c4e0c0",
+        "filename": "build/config/mips.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115956
+      },
+      "writtenOn": "2017-07-31T10:59:18Z",
+      "side": 1,
+      "message": "nit: Trying to reformulate this - I think it\u0027s implicit here that these are gn args. How about:\n# The MIPS arch variant loongson3 is for operating on the loongson platform.",
+      "range": {
+        "startLine": 11,
+        "startChar": 2,
+        "endLine": 12,
+        "endChar": 53
+      },
+      "revId": "18876552edbb3b8c46e48b12462d7d8bcfc29dd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
