@@ -34,6 +34,24 @@
       "revId": "df8de6c5629cd14c812c4f9b3759bbfb18fe6294",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b0a46f3_ccda1211",
+        "filename": "chrome/browser/extensions/api/automation_internal/automation_internal_api.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-07-31T13:41:56Z",
+      "side": 1,
+      "message": "Nice!",
+      "parentUuid": "0730d681_99890b38",
+      "revId": "df8de6c5629cd14c812c4f9b3759bbfb18fe6294",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
