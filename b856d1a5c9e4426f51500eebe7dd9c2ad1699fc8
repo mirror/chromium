@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e7d5086_f774af1b",
+        "filename": "components/subresource_filter/content/renderer/subresource_filter_agent.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-07-31T15:32:56Z",
+      "side": 0,
+      "message": "Trying to understand the reason as to why do we not want to change the value of activation_state_for_next_commit_?",
+      "revId": "b856d1a5c9e4426f51500eebe7dd9c2ad1699fc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
