@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8108ab70_a65fdc77",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_impl.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-31T15:53:24Z",
+      "side": 1,
+      "message": "drive-by nit for future cleanup: It might make more sense to hide this and simply pass an interface request and error handler into the constructor.",
+      "revId": "1f637d9b2977128cc48202a0cb5c9c5f8ed7a647",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
