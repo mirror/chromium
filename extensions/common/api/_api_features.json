@@ -128,6 +128,10 @@
     "dependencies": ["permission:declarativeWebRequest"],
     "contexts": ["blessed_extension"]
   },
+  "declarativeNetRequest" : {
+    "dependencies" : ["permission:declarativeNetRequest"],
+    "contexts" : ["blessed_extension"]
+  },
   "diagnostics": {
     "dependencies": ["permission:diagnostics"],
     "extension_types": ["platform_app"],
