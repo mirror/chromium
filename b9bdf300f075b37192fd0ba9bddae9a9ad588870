@@ -1,0 +1,176 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01368f8f_7cd200de",
+        "filename": "content/browser/accessibility/browser_accessibility_cocoa.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-31T21:23:24Z",
+      "side": 1,
+      "message": "Voiceover -\u003e VoiceOver (capitalize the O)",
+      "range": {
+        "startLine": 17,
+        "startChar": 53,
+        "endLine": 17,
+        "endChar": 62
+      },
+      "revId": "b9bdf300f075b37192fd0ba9bddae9a9ad588870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3551d36e_3ec0d8ed",
+        "filename": "content/browser/accessibility/browser_accessibility_cocoa.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-31T21:23:24Z",
+      "side": 1,
+      "message": "nnouncements -\u003e announcements",
+      "revId": "b9bdf300f075b37192fd0ba9bddae9a9ad588870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8965530_f51e6872",
+        "filename": "content/browser/accessibility/browser_accessibility_cocoa.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-31T21:23:24Z",
+      "side": 1,
+      "message": "lowercase",
+      "range": {
+        "startLine": 24,
+        "startChar": 8,
+        "endLine": 24,
+        "endChar": 16
+      },
+      "revId": "b9bdf300f075b37192fd0ba9bddae9a9ad588870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32c9955a_bed3d8ec",
+        "filename": "content/browser/accessibility/browser_accessibility_cocoa.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-31T21:23:24Z",
+      "side": 1,
+      "message": "nit: delete extra space before the word \"or\"",
+      "range": {
+        "startLine": 25,
+        "startChar": 41,
+        "endLine": 25,
+        "endChar": 43
+      },
+      "revId": "b9bdf300f075b37192fd0ba9bddae9a9ad588870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea0215d6_ab47b5b7",
+        "filename": "content/browser/accessibility/browser_accessibility_cocoa.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-31T21:23:24Z",
+      "side": 1,
+      "message": "I think this should be is_deleted (lowercase with underscores)\nsince it\u0027s a C struct and not an objective-C class.",
+      "range": {
+        "startLine": 26,
+        "startChar": 7,
+        "endLine": 26,
+        "endChar": 16
+      },
+      "revId": "b9bdf300f075b37192fd0ba9bddae9a9ad588870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6079dfd2_fff7a3fd",
+        "filename": "content/browser/accessibility/browser_accessibility_cocoa.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-31T21:23:24Z",
+      "side": 1,
+      "message": "I think this one is correct because it\u0027s obj-c",
+      "range": {
+        "startLine": 40,
+        "startChar": 17,
+        "endLine": 40,
+        "endChar": 26
+      },
+      "revId": "b9bdf300f075b37192fd0ba9bddae9a9ad588870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9e2727a_35ce979a",
+        "filename": "content/browser/accessibility/browser_accessibility_cocoa.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 983,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-31T21:23:24Z",
+      "side": 1,
+      "message": "This looks correct, but would it be easier to put the conditions in the while loop?\n\nwhile (editableRoot \u0026\u0026 instanceActive \u0026\u0026 !...ATTR_EDITABLE_ROOT)\n  editableRoot \u003d [editableRoot parent];",
+      "range": {
+        "startLine": 983,
+        "startChar": 2,
+        "endLine": 983,
+        "endChar": 7
+      },
+      "revId": "b9bdf300f075b37192fd0ba9bddae9a9ad588870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dde99d80_7ec91b56",
+        "filename": "content/browser/accessibility/browser_accessibility_manager_mac.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-07-31T21:23:24Z",
+      "side": 1,
+      "message": "What if the user changes something inside the editable\nsubtree but doesn\u0027t change the editable root itself?\nIt seems that this wouldn\u0027t get called.\n\nI think what you need to do is:\n* For each change, see if it\u0027s editable\n* If it\u0027s editable, find its editable root and add it to\n  a set of editable roots to update\n* At the end of the loop, call ComputeTextEdit on each\n  editable root\n\nOr do we even care if it\u0027s not focused? Maybe you should\njust find the focused node and see if it\u0027s an editable root,\nthen update it once if there were any changes within its\nsubtree?",
+      "revId": "b9bdf300f075b37192fd0ba9bddae9a9ad588870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
