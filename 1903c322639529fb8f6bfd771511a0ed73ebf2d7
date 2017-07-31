@@ -320,6 +320,30 @@
     },
     {
       "key": {
+        "uuid": "f3828c0b_ff9261cb",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2915,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-07-31T15:29:06Z",
+      "side": 1,
+      "message": "sky@ would it make more sense to generate a ui::PointerEvent here instead then?\n\nGenerally views haven\u0027t responded to PointerEvent but then that wouldn\u0027t confuse this code.\n\nMicrosoft has confirmed that they are going to do this from a web perspective (MouseEvents during hovering, but TouchEvents when contact is made).\n\nBut we can certainly hide that logic in aura if we use PointerEvent which is supposed to encompass them both. But we don\u0027t know how much ui::views actually deals with PointerEvents that are created not from other events (that mus-ash did).",
+      "parentUuid": "b0db293f_476ea5e4",
+      "range": {
+        "startLine": 2915,
+        "startChar": 64,
+        "endLine": 2915,
+        "endChar": 66
+      },
+      "revId": "1903c322639529fb8f6bfd771511a0ed73ebf2d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fdf1088c_96ec3fd2",
         "filename": "ui/views/win/hwnd_message_handler.cc",
         "patchSetId": 7
