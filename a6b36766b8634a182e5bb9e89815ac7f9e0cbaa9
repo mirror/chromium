@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af859e6f_1e33a55c",
+        "filename": "content/browser/android/app_web_message_port.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-31T22:47:24Z",
+      "side": 1,
+      "message": "I am personally not a fan of holding binary data in StringPiece: for one, it means that reinterpret cast is required.\n\nC++17 was supposed to have array_view but then dropped it, and the replacement (in a later version of C++ maybe?) is not yet ready.\n\nAll this is to say: maybe it would be better / sufficient to just pass a pointer + a size? \u003d/",
+      "range": {
+        "startLine": 66,
+        "startChar": 38,
+        "endLine": 66,
+        "endChar": 68
+      },
+      "revId": "a6b36766b8634a182e5bb9e89815ac7f9e0cbaa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9428459_a63b578f",
+        "filename": "content/common/message_port.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-07-31T22:47:24Z",
+      "side": 1,
+      "message": "Hmm... can we put this in a standalone file to satisfy normal conventions for struct traits?",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 2
+      },
+      "revId": "a6b36766b8634a182e5bb9e89815ac7f9e0cbaa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
