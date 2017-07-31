@@ -123,6 +123,24 @@
       "revId": "0294448bbfcd93a1d5cd1d6e9c4e720f65722fd1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "514eb594_a0e61c07",
+        "filename": "third_party/WebKit/Source/core/dom/Text.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1212729
+      },
+      "writtenOn": "2017-07-31T15:02:04Z",
+      "side": 1,
+      "message": "It does not (because of the prev_in_flow-\u003eIsText()) check. That being said, it should if there\u0027s a next in flow text node, which is the case I describe above.",
+      "parentUuid": "5d3d44db_fd2187a0",
+      "revId": "0294448bbfcd93a1d5cd1d6e9c4e720f65722fd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
