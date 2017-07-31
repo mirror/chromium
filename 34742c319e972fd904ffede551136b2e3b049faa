@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec778642_8334abc6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-07-31T12:09:10Z",
+      "side": 1,
+      "message": "Please update with the new protocol name.",
+      "revId": "34742c319e972fd904ffede551136b2e3b049faa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20ec2594_642dde4c",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_anchor_point_provider.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-07-31T12:09:10Z",
+      "side": 1,
+      "message": "Perhaps also specify that the returned value is in the window\u0027s coordinate system.",
+      "revId": "34742c319e972fd904ffede551136b2e3b049faa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
