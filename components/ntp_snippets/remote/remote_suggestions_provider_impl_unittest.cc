@@ -2745,4 +2745,74 @@ TEST_F(RemoteSuggestionsProviderImplTest,
               SizeIs(1));
 }
 
+TEST_F(RemoteSuggestionsProviderImplTest, ShouldSortFetchedSuggestionsByScore) {
+  auto provider = MakeSuggestionsProvider();
+
+  std::vector<FetchedCategory> fetched_categories;
+  fetched_categories.push_back(
+      FetchedCategoryBuilder()
+          .SetCategory(articles_category())
+          .AddSuggestionViaBuilder(RemoteSuggestionBuilder()
+                                       .AddId("http://1.com")
+                                       .SetUrl("http://1.com")
+                                       .SetScore(1))
+          .AddSuggestionViaBuilder(RemoteSuggestionBuilder()
+                                       .AddId("http://3.com")
+                                       .SetUrl("http://3.com")
+                                       .SetScore(3))
+          .AddSuggestionViaBuilder(RemoteSuggestionBuilder()
+                                       .AddId("http://2.com")
+                                       .SetUrl("http://2.com")
+                                       .SetScore(2))
+          .Build());
+  FetchTheseSuggestions(provider.get(), /*interactive_request=*/true,
+                        Status(StatusCode::SUCCESS, "message"),
+                        std::move(fetched_categories));
+  EXPECT_THAT(
+      observer().SuggestionsForCategory(articles_category()),
+      ElementsAre(
+          Property(&ContentSuggestion::id, MakeArticleID("http://3.com")),
+          Property(&ContentSuggestion::id, MakeArticleID("http://2.com")),
+          Property(&ContentSuggestion::id, MakeArticleID("http://1.com"))));
+}
+
+TEST_F(RemoteSuggestionsProviderImplTest,
+       ShouldRestoreSuggestionsFromDatabaseInOrder) {
+  auto provider = MakeSuggestionsProvider();
+
+  std::vector<FetchedCategory> fetched_categories;
+  fetched_categories.push_back(
+      FetchedCategoryBuilder()
+          .SetCategory(articles_category())
+          .AddSuggestionViaBuilder(RemoteSuggestionBuilder()
+                                       .AddId("http://1.com")
+                                       .SetUrl("http://1.com")
+                                       .SetScore(1))
+          .AddSuggestionViaBuilder(RemoteSuggestionBuilder()
+                                       .AddId("http://3.com")
+                                       .SetUrl("http://3.com")
+                                       .SetScore(3))
+          .AddSuggestionViaBuilder(RemoteSuggestionBuilder()
+                                       .AddId("http://2.com")
+                                       .SetUrl("http://2.com")
+                                       .SetScore(2))
+          .Build());
+  FetchTheseSuggestions(provider.get(), /*interactive_request=*/true,
+                        Status(StatusCode::SUCCESS, "message"),
+                        std::move(fetched_categories));
+  ASSERT_THAT(
+      observer().SuggestionsForCategory(articles_category()),
+      ElementsAre(
+          Property(&ContentSuggestion::id, MakeArticleID("http://3.com")),
+          Property(&ContentSuggestion::id, MakeArticleID("http://2.com")),
+          Property(&ContentSuggestion::id, MakeArticleID("http://1.com"))));
+
+  ResetSuggestionsProvider(&provider);
+  ASSERT_THAT(
+      provider->GetSuggestionsForTesting(articles_category()),
+      ElementsAre(Pointee(Property(&RemoteSuggestion::id, "http://3.com")),
+                  Pointee(Property(&RemoteSuggestion::id, "http://2.com")),
+                  Pointee(Property(&RemoteSuggestion::id, "http://1.com"))));
+}
+
 }  // namespace ntp_snippets
