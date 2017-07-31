@@ -79,6 +79,8 @@ class UIDevToolsDOMAgent : public ui_devtools::UiDevToolsBaseAgent<
   // First by looking for the closest window, then looking for the closest
   // widget if exists, then looking for the closest view if exists.
   int FindElementByEventHandler(const gfx::Point& p);
+  int GetUIElementParentOfNodeId(int pinned_id);
+  void ShowParentUIElement(int pinned_id);
   void ShowDistances(int pinned_id, int element_id);
   void DrawR1ContainsR2(const gfx::RectF& pinned_rectF,
                         const gfx::RectF& hovered_rectF,

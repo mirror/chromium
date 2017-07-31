@@ -268,6 +268,14 @@ int UIDevToolsDOMAgent::FindElementByEventHandler(const gfx::Point& p) {
   return 0;
 }
 
+int UIDevToolsDOMAgent::GetUIElementParentOfNodeId(int pinned_id) {
+  DCHECK(node_id_to_ui_element_.count(pinned_id));
+  UIElement* element = node_id_to_ui_element_[pinned_id];
+  if (element->parent() && element->parent() != window_element_root_.get())
+    return element->parent()->node_id();
+  return 0;
+}
+
 void UIDevToolsDOMAgent::ShowDistances(int pinned_id, int element_id) {
   gfx::Rect r1, r2;
   std::pair<aura::Window*, gfx::Rect> pair_r2 =
