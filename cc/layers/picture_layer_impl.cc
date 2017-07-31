@@ -227,7 +227,9 @@ void PictureLayerImpl::AppendQuads(RenderPass* render_pass,
   Occlusion scaled_occlusion =
       draw_properties()
           .occlusion_in_content_space.GetOcclusionWithGivenDrawTransform(
-              shared_quad_state->quad_to_target_transform);
+              mask_type_ == Layer::LayerMaskType::MULTI_TEXTURE_MASK
+                  ? render_target()->draw_transform()
+                  : shared_quad_state->quad_to_target_transform);
 
   if (current_draw_mode_ == DRAW_MODE_RESOURCELESS_SOFTWARE) {
     AppendDebugBorderQuad(
