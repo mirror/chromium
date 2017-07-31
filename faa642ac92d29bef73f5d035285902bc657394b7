@@ -22,6 +22,30 @@
       "revId": "faa642ac92d29bef73f5d035285902bc657394b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0677da72_900eeff3",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3283,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-07-31T11:03:13Z",
+      "side": 1,
+      "message": "Fair point. I\u0027ll add android once it\u0027s there and change to OsDesktop now.",
+      "parentUuid": "1f4e912e_2e86209a",
+      "range": {
+        "startLine": 3283,
+        "startChar": 66,
+        "endLine": 3283,
+        "endChar": 72
+      },
+      "revId": "faa642ac92d29bef73f5d035285902bc657394b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
