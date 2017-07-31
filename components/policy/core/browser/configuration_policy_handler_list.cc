@@ -88,6 +88,7 @@ bool ConfigurationPolicyHandlerList::IsPlatformDevicePolicy(
   const PolicyDetails* policy_details = details_callback_.Run(iter->first);
   if (!policy_details) {
     const std::string prefix(kPolicyCommentPrefix);
+    LOG(ERROR) << "Daria: isplatform " << prefix << " ; " << iter->first;
     if (iter->first.compare(0, prefix.length(), prefix) != 0) {
       LOG(ERROR) << "Unknown policy: " << iter->first;
     }

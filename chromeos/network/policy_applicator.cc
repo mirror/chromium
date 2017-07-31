@@ -184,10 +184,12 @@ void PolicyApplicator::GetEntryCallback(
                              << " to previously unmanaged "
                              << "configuration.";
 
+     LOG(ERROR) << "Daria guid: " << old_guid << " " << new_guid << " " << was_managed;
     if (old_guid == new_guid &&
         remaining_policies_.find(new_guid) == remaining_policies_.end()) {
       VLOG(1) << "Not updating existing managed configuration with guid "
               << new_guid << " because the policy didn't change.";
+
     } else {
       const base::DictionaryValue* user_settings =
           ui_data ? ui_data->user_settings() : NULL;
@@ -232,7 +234,7 @@ void PolicyApplicator::GetEntryCallback(
   } else if (was_managed) {
     VLOG(1) << "Removing configuration previously managed by policy "
             << old_guid << ", because the policy was removed.";
-
+    LOG(ERROR) << "Daria guid: " << old_guid << " " << was_managed;
     // Remove the entry, because the network was managed but isn't anymore.
     // Note: An alternative might be to preserve the user settings, but it's
     // unclear which values originating the policy should be removed.
@@ -318,7 +320,7 @@ void PolicyApplicator::ApplyRemainingPolicies() {
        it != remaining_policies_.end(); ++it) {
     const base::DictionaryValue* network_policy = GetByGUID(all_policies_, *it);
     DCHECK(network_policy);
-
+    LOG(ERROR) << "Daria apply policy: " << *it;
     VLOG(1) << "Creating new configuration managed by policy " << *it
             << " in profile " << profile_.ToDebugString() << ".";
 
