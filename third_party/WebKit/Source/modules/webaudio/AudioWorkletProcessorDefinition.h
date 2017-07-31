@@ -38,6 +38,7 @@ class MODULES_EXPORT AudioWorkletProcessorDefinition final
   v8::Local<v8::Function> ConstructorLocal(v8::Isolate*);
   v8::Local<v8::Function> ProcessLocal(v8::Isolate*);
   void SetAudioParamDescriptors(const HeapVector<AudioParamDescriptor>&);
+  const HeapVector<AudioParamDescriptor>& GetAudioParamDescriptors() const;
   const Vector<String> GetAudioParamDescriptorNames() const;
   const AudioParamDescriptor* GetAudioParamDescriptor(const String& key) const;
 
