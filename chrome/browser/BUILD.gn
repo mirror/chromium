@@ -2066,6 +2066,10 @@ split_static_library("browser") {
       ]
     }
 
+    if (is_android) {
+      sources += [ "spellchecker/spell_check_host_impl_android.cc" ]
+    }
+
     deps += [
       "//components/spellcheck/browser",
       "//components/spellcheck/common:common",
