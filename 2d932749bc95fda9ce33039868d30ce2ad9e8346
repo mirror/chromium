@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1b11e325_258558b8",
+        "filename": "chrome/common/cloud_print.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-07-31T09:54:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00c0c874_ce17cbd7",
+      "revId": "2d932749bc95fda9ce33039868d30ce2ad9e8346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b9143a1_eef224d7",
         "filename": "chrome/common/service_process.mojom",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ea348fa8_36e0552b",
+        "filename": "chrome/common/service_process.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-07-31T09:54:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b9143a1_eef224d7",
+      "revId": "2d932749bc95fda9ce33039868d30ce2ad9e8346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3d7db11_0e69a58d",
         "filename": "chrome/service/cloud_print/cloud_print_message_handler.h",
         "patchSetId": 6
@@ -50,6 +86,24 @@
       "revId": "2d932749bc95fda9ce33039868d30ce2ad9e8346",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19bf8a66_f035ef43",
+        "filename": "chrome/service/cloud_print/cloud_print_message_handler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-07-31T09:54:37Z",
+      "side": 1,
+      "message": "Static methods named Create are fairly common for creating mojo interface impls bound to a request.",
+      "parentUuid": "e3d7db11_0e69a58d",
+      "revId": "2d932749bc95fda9ce33039868d30ce2ad9e8346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "4febc67f_89ec19c2",
+        "filename": "chrome/service/service_ipc_server.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-07-31T09:54:37Z",
+      "side": 1,
+      "message": "Service process doesn\u0027t have a connection to service manager. Previously, there was a single pipe used to bootstrap the legacy IPC connection. This CL changes it to use that pipe as an InterfaceProvider interface for establishing the other interface connections. I guess this could go through service manager, but I don\u0027t think that adds much.",
+      "parentUuid": "ce668130_dafb7519",
+      "range": {
+        "startLine": 30,
+        "startChar": 56,
+        "endLine": 30,
+        "endChar": 73
+      },
+      "revId": "2d932749bc95fda9ce33039868d30ce2ad9e8346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "430de6b9_787a132e",
         "filename": "chrome/service/service_ipc_server.h",
         "patchSetId": 6
@@ -96,6 +174,30 @@
       "revId": "2d932749bc95fda9ce33039868d30ce2ad9e8346",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44a777db_fe6f237d",
+        "filename": "chrome/service/service_ipc_server.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-07-31T09:54:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "430de6b9_787a132e",
+      "range": {
+        "startLine": 99,
+        "startChar": 50,
+        "endLine": 99,
+        "endChar": 74
+      },
+      "revId": "2d932749bc95fda9ce33039868d30ce2ad9e8346",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
