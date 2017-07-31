@@ -71,7 +71,16 @@ void BroadcastChannel::postMessage(const ScriptValue& message,
   value->ToWireBytes(data);
   Vector<uint8_t> mojo_data;
   mojo_data.AppendVector(data);
-  remote_client_->OnMessage(std::move(mojo_data));
+
+  Vector<storage::mojom::blink::SerializedBlobPtr> blobs;
+  if (RuntimeEnabledFeatures::MojoBlobsEnabled()) {
+    for (const auto& it : value->BlobDataHandles()) {
+      blobs.push_back(storage::mojom::blink::SerializedBlob::New(
+          it.value->Uuid(), it.value->GetType(), it.value->size(),
+          it.value->CloneBlobPtr()));
+    }
+  }
+  remote_client_->OnMessage(std::move(mojo_data), std::move(blobs));
 }
 
 void BroadcastChannel::close() {
@@ -97,12 +106,20 @@ DEFINE_TRACE(BroadcastChannel) {
   EventTargetWithInlineData::Trace(visitor);
 }
 
-void BroadcastChannel::OnMessage(const WTF::Vector<uint8_t>& message) {
+void BroadcastChannel::OnMessage(
+    const WTF::Vector<uint8_t>& message,
+    WTF::Vector<storage::mojom::blink::SerializedBlobPtr> blobs) {
   // Queue a task to dispatch the event.
   RefPtr<SerializedScriptValue> value = SerializedScriptValue::Create(
       message.IsEmpty() ? nullptr
                         : reinterpret_cast<const char*>(&message.front()),
       message.size());
+  for (auto& blob : blobs) {
+    value->BlobDataHandles().Set(
+        blob->uuid,
+        BlobDataHandle::Create(blob->uuid, blob->content_type, blob->size,
+                               blob->blob.PassInterface()));
+  }
   MessageEvent* event = MessageEvent::Create(
       nullptr, std::move(value),
       GetExecutionContext()->GetSecurityOrigin()->ToString());

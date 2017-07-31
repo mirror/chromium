@@ -31,9 +31,11 @@
 #ifndef WebMessagePortChannel_h
 #define WebMessagePortChannel_h
 
-#include "WebCommon.h"
-#include "WebVector.h"
 #include <memory>
+#include "WebBlobInfo.h"
+#include "WebCommon.h"
+#include "WebString.h"
+#include "WebVector.h"
 
 namespace blink {
 
@@ -51,8 +53,12 @@ class WebMessagePortChannel {
   virtual void SetClient(WebMessagePortChannelClient*) = 0;
   // Callee receives ownership of the passed vector.
   // FIXME: Blob refs should be passed to maintain ref counts. crbug.com/351753
-  virtual void PostMessage(const WebString&, WebMessagePortChannelArray) = 0;
-  virtual bool TryGetMessage(WebString*, WebMessagePortChannelArray&) = 0;
+  virtual void PostMessage(const WebString&,
+                           WebMessagePortChannelArray,
+                           const WebVector<WebBlobInfo>& blobs) = 0;
+  virtual bool TryGetMessage(WebString*,
+                             WebMessagePortChannelArray&,
+                             WebVector<WebBlobInfo>&) = 0;
 };
 
 }  // namespace blink

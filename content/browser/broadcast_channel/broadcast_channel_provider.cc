@@ -24,9 +24,19 @@ class BroadcastChannelProvider::Connection
              blink::mojom::BroadcastChannelClientAssociatedRequest connection,
              BroadcastChannelProvider* service);
 
-  void OnMessage(const std::vector<uint8_t>& message) override;
-  void MessageToClient(const std::vector<uint8_t>& message) const {
-    client_->OnMessage(message);
+  void OnMessage(const std::vector<uint8_t>& message,
+                 std::vector<storage::mojom::SerializedBlobPtr> blobs) override;
+  void MessageToClient(
+      const std::vector<uint8_t>& message,
+      const std::vector<storage::mojom::SerializedBlobPtr>& blobs) const {
+    std::vector<storage::mojom::SerializedBlobPtr> blob_clones;
+    for (const auto& blob : blobs) {
+      storage::mojom::BlobPtr blob_clone;
+      blob->blob->Clone(MakeRequest(&blob_clone));
+      blob_clones.push_back(storage::mojom::SerializedBlob::New(
+          blob->uuid, blob->content_type, blob->size, std::move(blob_clone)));
+    }
+    client_->OnMessage(message, std::move(blob_clones));
   }
   const url::Origin& origin() const { return origin_; }
   const std::string& name() const { return name_; }
@@ -59,8 +69,9 @@ BroadcastChannelProvider::Connection::Connection(
 }
 
 void BroadcastChannelProvider::Connection::OnMessage(
-    const std::vector<uint8_t>& message) {
-  service_->ReceivedMessageOnConnection(this, message);
+    const std::vector<uint8_t>& message,
+    std::vector<storage::mojom::SerializedBlobPtr> blobs) {
+  service_->ReceivedMessageOnConnection(this, message, blobs);
 }
 
 BroadcastChannelProvider::BroadcastChannelProvider() {}
@@ -102,13 +113,14 @@ void BroadcastChannelProvider::UnregisterConnection(Connection* c) {
 
 void BroadcastChannelProvider::ReceivedMessageOnConnection(
     Connection* c,
-    const std::vector<uint8_t>& message) {
+    const std::vector<uint8_t>& message,
+    const std::vector<storage::mojom::SerializedBlobPtr>& blobs) {
   auto& connections = connections_[c->origin()];
   for (auto it = connections.lower_bound(c->name()),
             end = connections.upper_bound(c->name());
        it != end; ++it) {
     if (it->second.get() != c)
-      it->second->MessageToClient(message);
+      it->second->MessageToClient(message, blobs);
   }
 }
 

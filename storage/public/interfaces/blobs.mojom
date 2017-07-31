@@ -21,6 +21,13 @@ interface Blob {
   GetInternalUUID() => (string uuid);
 };
 
+struct SerializedBlob {
+  string uuid;
+  string content_type;
+  uint64 size;
+  Blob blob;
+};
+
 // This interface is the primary access point to the blob system. This interface
 // provides methods to register new blobs and get references to existing blobs.
 interface BlobRegistry {

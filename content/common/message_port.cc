@@ -44,8 +44,10 @@ std::vector<mojo::ScopedMessagePipeHandle> MessagePort::ReleaseHandles(
   return handles;
 }
 
-void MessagePort::PostMessage(const base::string16& encoded_message,
-                              std::vector<MessagePort> ports) {
+void MessagePort::PostMessage(
+    const base::string16& encoded_message,
+    std::vector<MessagePort> ports,
+    std::vector<storage::mojom::SerializedBlobPtr> blobs) {
   DCHECK(state_->handle().is_valid());
 
   uint32_t num_bytes = encoded_message.size() * sizeof(base::char16);
@@ -59,14 +61,17 @@ void MessagePort::PostMessage(const base::string16& encoded_message,
   msg->ports.resize(ports.size());
   for (size_t i = 0; i < ports.size(); ++i)
     msg->ports[i] = ports[i].ReleaseHandle();
+  msg->blobs = std::move(blobs);
   mojo::Message mojo_message =
       mojom::MessagePortMessage::SerializeAsMessage(&msg);
   mojo::WriteMessageNew(state_->handle().get(), mojo_message.TakeMojoMessage(),
                         MOJO_WRITE_MESSAGE_FLAG_NONE);
 }
 
-bool MessagePort::GetMessage(base::string16* encoded_message,
-                             std::vector<MessagePort>* ports) {
+bool MessagePort::GetMessage(
+    base::string16* encoded_message,
+    std::vector<MessagePort>* ports,
+    std::vector<storage::mojom::SerializedBlobPtr>* blobs) {
   DCHECK(state_->handle().is_valid());
   mojo::ScopedMessageHandle message_handle;
   MojoResult rv = mojo::ReadMessageNew(state_->handle().get(), &message_handle,
@@ -88,7 +93,7 @@ bool MessagePort::GetMessage(base::string16* encoded_message,
   ports->resize(msg->ports.size());
   for (size_t i = 0; i < ports->size(); ++i)
     ports->at(i) = MessagePort(std::move(msg->ports[i]));
-
+  *blobs = std::move(msg->blobs);
   return true;
 }
 

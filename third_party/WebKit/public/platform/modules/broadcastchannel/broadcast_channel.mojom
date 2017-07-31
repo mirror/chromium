@@ -4,6 +4,7 @@
 
 module blink.mojom;
 
+import "storage/public/interfaces/blobs.mojom";
 import "url/mojo/origin.mojom";
 
 // A pair of BroadcastChannelClient interfaces is used to represent a connection
@@ -12,7 +13,7 @@ import "url/mojo/origin.mojom";
 // in the renderer for messages from the browser to the renderer.
 interface BroadcastChannelClient {
   // Messages are passed as SerializedScriptValue.
-  OnMessage(array<uint8> message);
+  OnMessage(array<uint8> message, array<storage.mojom.SerializedBlob> blobs);
 };
 
 // This interface is used to set up connections to broadcast channels. All
