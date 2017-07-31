@@ -29,6 +29,7 @@ class CC_EXPORT PaintedOverlayScrollbarLayerImpl
   // LayerImpl implementation.
   std::unique_ptr<LayerImpl> CreateLayerImpl(LayerTreeImpl* tree_impl) override;
   void PushPropertiesTo(LayerImpl* layer) override;
+  bool IsLayerOpaque() const override;
 
   bool WillDraw(DrawMode draw_mode,
                 ResourceProvider* resource_provider) override;
