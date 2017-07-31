@@ -1472,6 +1472,19 @@ void PaintLayerScrollableArea::UpdateScrollCornerStyle() {
   }
 }
 
+Scrollbar* PaintLayerScrollableArea::ScrollbarAtFramePoint(
+    const IntPoint& local_point) {
+  if (HorizontalScrollbar() &&
+      HorizontalScrollbar()->ShouldParticipateInHitTesting() &&
+      HorizontalScrollbar()->FrameRect().Contains(local_point))
+    return HorizontalScrollbar();
+  if (VerticalScrollbar() &&
+      VerticalScrollbar()->ShouldParticipateInHitTesting() &&
+      VerticalScrollbar()->FrameRect().Contains(local_point))
+    return VerticalScrollbar();
+  return nullptr;
+}
+
 bool PaintLayerScrollableArea::HitTestOverflowControls(
     HitTestResult& result,
     const IntPoint& local_point) {
@@ -1487,6 +1500,12 @@ bool PaintLayerScrollableArea::HitTestOverflowControls(
       return true;
   }
 
+  LocalFrameView* frame_view = Box().GetFrameView();
+  DCHECK(frame_view);
+  IntPoint root_frame_point =
+      frame_view->ContentsToFrame(result.RoundedPointInMainFrame());
+  root_frame_point = frame_view->ConvertToRootFrame(root_frame_point);
+
   int resize_control_size = max(resize_control_rect.Height(), 0);
   if (HasVerticalScrollbar() &&
       VerticalScrollbar()->ShouldParticipateInHitTesting()) {
@@ -1499,8 +1518,14 @@ bool PaintLayerScrollableArea::HitTestOverflowControls(
                  ? HorizontalScrollbar()->ScrollbarThickness()
                  : resize_control_size));
     if (v_bar_rect.Contains(local_point)) {
-      result.SetScrollbar(VerticalScrollbar());
-      return true;
+      if (VerticalScrollbar()->IsOverlayScrollbar()) {
+        ScrollbarPart part = VerticalScrollbar()->GetTheme().HitTest(
+            *VerticalScrollbar(), root_frame_point);
+        if (part == kNoPart) {
+          return false;
+        }
+        result.SetScrollbar(VerticalScrollbar());
+        return true;
     }
   }
 
@@ -1519,6 +1544,12 @@ bool PaintLayerScrollableArea::HitTestOverflowControls(
             .ToInt(),
         HorizontalScrollbar()->ScrollbarThickness());
     if (h_bar_rect.Contains(local_point)) {
+      if (HorizontalScrollbar()->IsOverlayScrollbar()) {
+        ScrollbarPart part = HorizontalScrollbar()->GetTheme().HitTest(
+            *HorizontalScrollbar(), root_frame_point);
+        if (part == kNoPart)
+          return false;
+      }
       result.SetScrollbar(HorizontalScrollbar());
       return true;
     }
