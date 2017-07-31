@@ -22,6 +22,30 @@
       "revId": "8221e91df07fff4e54d2d1c7f0a8ff6b902bcb40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abdf6dcb_0228be55",
+        "filename": "ios/chrome/browser/web/resources/credential_manager.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1229234
+      },
+      "writtenOn": "2017-07-31T15:33:15Z",
+      "side": 1,
+      "message": "No, it\u0027s supported since ES6. Changed to var.",
+      "parentUuid": "3751b2d8_157aafbc",
+      "range": {
+        "startLine": 35,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 28
+      },
+      "revId": "8221e91df07fff4e54d2d1c7f0a8ff6b902bcb40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
