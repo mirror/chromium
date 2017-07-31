@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07e71060_5ee835b9",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-31T14:48:23Z",
+      "side": 1,
+      "message": "nit: Maybe congruity between the type alias and the method name? i.e. they should both refer to either \"callback\" or \"interceptor\" imho. Perhaps callback is better since it\u0027s easily understood.",
+      "revId": "24c29c04947747fdf6d6661206e5740691efa843",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

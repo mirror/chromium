@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a3856b1_b8d45a57",
+        "filename": "services/service_manager/public/cpp/interface_provider.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-07-31T14:48:23Z",
+      "side": 1,
+      "message": "I still think it\u0027s rather unfortunate that we\u0027d actually add inheritance to this public API class simply to appease some existing code\u0027s assumptions. In fact I\u0027m almost positive the \u0027get()\u0027 was added a long time ago as a stop-gap to help *remove* this very same inheritance relation from InterfaceProvider without having to update the very same media code.\n\nCould you please just add a local adapter in media_factory.cc which implements the mojom interface and forwards to the frame\u0027s remote interfaces?",
+      "revId": "f23f10d1c7f46c6009057878620032b12bbfc3ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
