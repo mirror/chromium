@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b497631d_3657e879",
+        "filename": "third_party/WebKit/Source/platform/wtf/text/StringToNumberTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-07-31T06:59:25Z",
+      "side": 1,
+      "message": "Does it accept \"1e3.5\", \"1e.3\" or \"1e3.\"?\n(should not, right?)",
+      "revId": "89a6292ba6c29f907305d4900f37a592ee130786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e546f6b6_2733894d",
+        "filename": "third_party/WebKit/Source/platform/wtf/text/StringToNumberTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-07-31T06:59:25Z",
+      "side": 1,
+      "message": "Why \"1.5   \" fails on L273 and \" 123 \" succeeds here?\nThe length is 4, but the returned value (parsed double value) is ...??",
+      "revId": "89a6292ba6c29f907305d4900f37a592ee130786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0c8caa6_f54a6c15",
+        "filename": "third_party/WebKit/Source/platform/wtf/text/StringToNumberTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-07-31T06:59:25Z",
+      "side": 1,
+      "message": "Why \"1.5px\" fails on line 274 and \" 123px\" succeeds here?",
+      "revId": "89a6292ba6c29f907305d4900f37a592ee130786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfbb0d6a_4c086d65",
+        "filename": "third_party/WebKit/Source/platform/wtf/text/StringToNumberTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-07-31T06:59:25Z",
+      "side": 1,
+      "message": "L363-364 Ditto as double.",
+      "revId": "89a6292ba6c29f907305d4900f37a592ee130786",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
