@@ -45,6 +45,30 @@
       "revId": "75d530de0768b9e95855f936ec5779091603d579",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "984bf602_9e6fca71",
+        "filename": "components/omnibox/browser/scored_history_match.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-07-31T23:49:16Z",
+      "side": 1,
+      "message": "Spun off into this CL: https://chromium-review.googlesource.com/c/595040/",
+      "parentUuid": "2b446f24_c9f5173f",
+      "range": {
+        "startLine": 518,
+        "startChar": 6,
+        "endLine": 518,
+        "endChar": 22
+      },
+      "revId": "75d530de0768b9e95855f936ec5779091603d579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
