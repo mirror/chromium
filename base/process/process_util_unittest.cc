@@ -891,8 +891,8 @@ TEST_F(ProcessUtilTest, DelayedTermination) {
   ASSERT_TRUE(spawn_child.process.IsValid());
   base::EnsureProcessTerminated(spawn_child.process.Duplicate());
   int exit_code;
-  spawn_child.process.WaitForExitWithTimeout(base::TimeDelta::FromSeconds(5),
-                                             &exit_code);
+  EXPECT_TRUE(spawn_child.process.WaitForExitWithTimeout(
+      base::TimeDelta::FromSeconds(5), &exit_code));
 
   // Check that process was really killed.
   EXPECT_TRUE(IsProcessDead(spawn_child.process.Handle()));
