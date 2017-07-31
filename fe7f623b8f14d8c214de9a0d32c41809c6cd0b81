@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "899a3506_5e33336e",
+        "filename": "net/dns/dns_response.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-07-31T18:49:16Z",
+      "side": 1,
+      "message": "I think it would be better to check the return value here.",
+      "revId": "fe7f623b8f14d8c214de9a0d32c41809c6cd0b81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bf2ee2a_ae703f8c",
+        "filename": "net/dns/dns_test_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-07-31T18:49:16Z",
+      "side": 1,
+      "message": "It looks like there are still codepaths where there\u0027s a failure with a null response, so the old behavior here is still useful to test along with the new one.",
+      "revId": "fe7f623b8f14d8c214de9a0d32c41809c6cd0b81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a9306f0_86fe0023",
+        "filename": "net/dns/host_resolver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1175,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-07-31T18:49:16Z",
+      "side": 1,
+      "message": "I\u0027d rather have this case handled in ParseToAddressList(), similar to the NODATA case, and then rearrange the logic here so it\u0027s called on either OK or ERR_NAME_NOT_RESOLVED, to keep all the record parsing at the transaction layer.",
+      "revId": "fe7f623b8f14d8c214de9a0d32c41809c6cd0b81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d546854_1d221f73",
+        "filename": "net/dns/host_resolver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1313,
+      "author": {
+        "id": 1113149
+      },
+      "writtenOn": "2017-07-31T18:49:16Z",
+      "side": 1,
+      "message": "Usual style here is to leave this private and add an accessor. Or instead you could pass it as an argument to OnDnsTaskFailure() like what the success case does.",
+      "range": {
+        "startLine": 1313,
+        "startChar": 1,
+        "endLine": 1313,
+        "endChar": 7
+      },
+      "revId": "fe7f623b8f14d8c214de9a0d32c41809c6cd0b81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
