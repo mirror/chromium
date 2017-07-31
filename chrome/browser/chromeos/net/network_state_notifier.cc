@@ -206,7 +206,9 @@ bool NetworkStateNotifier::UpdateDefaultNetwork(const NetworkState* network) {
 void NetworkStateNotifier::UpdateVpnConnectionState(const NetworkState* vpn) {
   if (vpn->path() == connected_vpn_) {
     if (!vpn->IsConnectedState() && !vpn->IsConnectingState()) {
-      ShowVpnDisconnectedNotification(vpn);
+      if (vpn->IsInteractive()) {
+        ShowVpnDisconnectedNotification(vpn);
+      }
       connected_vpn_.clear();
     }
   } else if (vpn->IsConnectedState()) {

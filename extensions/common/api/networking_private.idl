@@ -278,6 +278,9 @@ namespace networkingPrivate {
     DOMString? Gateway;
     DOMString? IPAddress;
     DOMString[]? NameServers;
+    DOMString[]? SearchDomains;
+    DOMString[]? IncludedRoutes;
+    DOMString[]? ExcludedRoutes;
     long? RoutingPrefix;
     DOMString? Type;
     DOMString? WebProxyAutoDiscoveryUrl;
@@ -287,6 +290,9 @@ namespace networkingPrivate {
     ManagedDOMString? Gateway;
     ManagedDOMString? IPAddress;
     ManagedDOMStringList? NameServers;
+    ManagedDOMStringList? SearchDomains;
+    ManagedDOMStringList? IncludedRoutes;
+    ManagedDOMStringList? ExcludedRoutes;
     ManagedLong? RoutingPrefix;
     ManagedDOMString? Type;
     ManagedDOMString? WebProxyAutoDiscoveryUrl;
@@ -490,6 +496,14 @@ namespace networkingPrivate {
     DOMString? ProviderName;
   };
 
+  dictionary ARCVPNProperties {
+    DOMString TunnelChrome;
+  };
+
+  dictionary ManagedARCVPNProperties {
+    ManagedDOMString TunnelChrome;
+  };
+
   // Network type dictionary types.
 
   dictionary CellularProperties {
@@ -598,6 +612,7 @@ namespace networkingPrivate {
     L2TPProperties? L2TP;
     OpenVPNProperties? OpenVPN;
     ThirdPartyVPNProperties? ThirdPartyVPN;
+    ARCVPNProperties? ARCVPN;
     DOMString? Type;
   };
 
@@ -608,6 +623,7 @@ namespace networkingPrivate {
     ManagedL2TPProperties? L2TP;
     ManagedOpenVPNProperties? OpenVPN;
     ManagedThirdPartyVPNProperties? ThirdPartyVPN;
+    ManagedARCVPNProperties? ARCVPN;
     ManagedDOMString Type;
   };
 

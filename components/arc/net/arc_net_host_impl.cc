@@ -693,6 +693,177 @@ void ArcNetHostImpl::DeviceListChanged() {
   net_instance->WifiEnabledStateChanged(is_enabled);
 }
 
+bool ArcNetHostImpl::LookupArcVpnGuid() {
+  if (!arc_vpn_guid_.empty()) {
+    return true;
+  }
+
+  chromeos::NetworkTypePattern network_pattern =
+      chromeos::onc::NetworkTypePatternFromOncType(onc::network_type::kVPN);
+  std::unique_ptr<base::ListValue> network_properties_list =
+      chromeos::network_util::TranslateNetworkListToONC(
+          network_pattern, true /* configured_only */,
+          false /* visible_only */,
+          kGetNetworksListLimit);
+
+  for (const auto& value : *network_properties_list) {
+    const base::DictionaryValue* network_dict = nullptr;
+    value.GetAsDictionary(&network_dict);
+    DCHECK(network_dict);
+
+    std::string vpn_type;
+    if (network_dict->GetString(onc::network_config::VpnProperty(
+                                   onc::network_config::kType), &vpn_type) &&
+        vpn_type == onc::vpn::kArcVpn) {
+      network_dict->GetStringWithoutPathExpansion(onc::network_config::kGUID,
+                                                  &arc_vpn_guid_);
+      DCHECK(!arc_vpn_guid_.empty());
+      return true;
+    }
+  }
+
+  return false;
+}
+
+void ArcNetHostImpl::ConnectAndroidVpn(const std::string& service_path,
+                                       const std::string& guid) {
+  VLOG(1) << "ConnectAndroidVpn " << guid << " @ " << service_path;
+  GetNetworkConnectionHandler()->ConnectToNetwork(
+      service_path,
+      base::Bind(&ArcNetHostImpl::AndroidVpnSuccessCallback,
+                 weak_factory_.GetWeakPtr()),
+      base::Bind(&ArcNetHostImpl::AndroidVpnErrorCallback,
+                 weak_factory_.GetWeakPtr()),
+      false /* check_error_state */);
+}
+
+void ArcNetHostImpl::AndroidVpnSuccessCallback() {
+  VLOG(1) << "AndroidVpnSuccessCallback";
+}
+
+void ArcNetHostImpl::AndroidVpnErrorCallback(
+      const std::string& error_name,
+      std::unique_ptr<base::DictionaryValue> error_data) {
+  LOG(ERROR) << "AndroidVpnErrorCallback: " << error_name;
+}
+
+std::unique_ptr<base::Value> ArcNetHostImpl::TranslateStringListToOnc(
+    const std::vector<std::string>& in) {
+  std::vector<base::Value> vec;
+  for (const auto& item : in) {
+    vec.push_back(base::Value(item));
+  }
+  return base::MakeUnique<base::Value>(vec);
+}
+
+std::unique_ptr<base::DictionaryValue>
+    ArcNetHostImpl::TranslateVpnConfigurationToOnc(
+        const mojom::AndroidVpnConfiguration& cfg) {
+  std::unique_ptr<base::DictionaryValue> top_dict(new base::DictionaryValue);
+
+  // Name, Type
+  top_dict->SetStringWithoutPathExpansion(onc::network_config::kName,
+                                          cfg.session_name.empty() ?
+                                          cfg.app_name : cfg.session_name);
+  top_dict->SetStringWithoutPathExpansion(onc::network_config::kType,
+                                          onc::network_config::kVPN);
+
+  // StaticIPConfig dictionary
+  top_dict->SetStringWithoutPathExpansion(
+      onc::network_config::kIPAddressConfigType,
+      onc::network_config::kIPConfigTypeStatic);
+  top_dict->SetStringWithoutPathExpansion(
+      onc::network_config::kNameServersConfigType,
+      onc::network_config::kIPConfigTypeStatic);
+
+  std::unique_ptr<base::DictionaryValue> ip_dict(new base::DictionaryValue);
+  ip_dict->SetStringWithoutPathExpansion(onc::ipconfig::kType,
+                                         onc::ipconfig::kIPv4);
+  ip_dict->SetStringWithoutPathExpansion(onc::ipconfig::kIPAddress,
+                                         cfg.ipv4_gateway);
+  ip_dict->SetStringWithoutPathExpansion(onc::ipconfig::kGateway,
+                                         cfg.ipv4_gateway);
+
+  ip_dict->SetWithoutPathExpansion(onc::ipconfig::kNameServers,
+                                   TranslateStringListToOnc(cfg.nameservers));
+  ip_dict->SetWithoutPathExpansion(onc::ipconfig::kSearchDomains,
+                                   TranslateStringListToOnc(cfg.domains));
+  ip_dict->SetWithoutPathExpansion(onc::ipconfig::kIncludedRoutes,
+                                   TranslateStringListToOnc(cfg.split_include));
+  ip_dict->SetWithoutPathExpansion(onc::ipconfig::kExcludedRoutes,
+                                   TranslateStringListToOnc(cfg.split_exclude));
+
+  top_dict->SetWithoutPathExpansion(onc::network_config::kStaticIPConfig,
+                                    std::move(ip_dict));
+
+  // VPN dictionary
+  std::unique_ptr<base::DictionaryValue> vpn_dict(new base::DictionaryValue);
+  vpn_dict->SetStringWithoutPathExpansion(onc::vpn::kHost,
+                                          onc::vpn::kArcVpn);
+  vpn_dict->SetStringWithoutPathExpansion(onc::vpn::kType,
+                                          onc::vpn::kArcVpn);
+
+  // ARCVPN dictionary
+  std::unique_ptr<base::DictionaryValue> arcvpn_dict(new base::DictionaryValue);
+  arcvpn_dict->SetStringWithoutPathExpansion(onc::arc_vpn::kTunnelChrome,
+                                             cfg.tunnel_chrome_traffic ?
+                                             "true" : "false");
+  vpn_dict->SetWithoutPathExpansion(onc::vpn::kArcVpn, std::move(arcvpn_dict));
+
+  top_dict->SetWithoutPathExpansion(onc::network_config::kVPN,
+                                    std::move(vpn_dict));
+
+  return top_dict;
+}
+
+void ArcNetHostImpl::AndroidVpnConnected(
+    mojom::AndroidVpnConfigurationPtr cfg) {
+  std::unique_ptr<base::DictionaryValue> properties;
+  properties = TranslateVpnConfigurationToOnc(*cfg);
+
+  if (LookupArcVpnGuid()) {
+    std::string service_path;
+    GetNetworkPathFromGuid(arc_vpn_guid_, &service_path);
+    DCHECK(!service_path.empty());
+    VLOG(1) << "AndroidVpnConnected: reusing " << arc_vpn_guid_
+            << " @ " << service_path;
+    GetManagedConfigurationHandler()->SetProperties(
+        service_path,
+        *properties,
+        base::Bind(&ArcNetHostImpl::ConnectAndroidVpn,
+                   weak_factory_.GetWeakPtr(),
+                   service_path, arc_vpn_guid_),
+        base::Bind(&ArcNetHostImpl::AndroidVpnErrorCallback,
+                   weak_factory_.GetWeakPtr()));
+  } else {
+    VLOG(1) << "AndroidVpnConnected: creating new ARC VPN";
+    std::string user_id_hash = chromeos::LoginState::Get()->primary_user_hash();
+    GetManagedConfigurationHandler()->CreateConfiguration(
+        user_id_hash,
+        *properties,
+        base::Bind(&ArcNetHostImpl::ConnectAndroidVpn,
+                   weak_factory_.GetWeakPtr()),
+        base::Bind(&ArcNetHostImpl::AndroidVpnErrorCallback,
+                   weak_factory_.GetWeakPtr()));
+  }
+}
+
+void ArcNetHostImpl::AndroidVpnStateChanged(mojom::ConnectionStateType state) {
+  VLOG(1) << "AndroidVpnStateChanged";
+  if (state == arc::mojom::ConnectionStateType::NOT_CONNECTED) {
+    std::string service_path;
+    GetNetworkPathFromGuid(arc_vpn_guid_, &service_path);
+    DCHECK(!service_path.empty());
+
+    GetNetworkConnectionHandler()->DisconnectNetwork(
+        service_path,
+        base::Bind(&ArcNetHostImpl::AndroidVpnSuccessCallback,
+                   weak_factory_.GetWeakPtr()),
+        base::Bind(&ArcNetHostImpl::AndroidVpnErrorCallback,
+                   weak_factory_.GetWeakPtr()));
+  }
+}
+
 void ArcNetHostImpl::OnShuttingDown() {
   DCHECK(observing_network_state_);
   GetStateHandler()->RemoveObserver(this, FROM_HERE);

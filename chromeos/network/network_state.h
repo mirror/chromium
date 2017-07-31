@@ -144,6 +144,11 @@ class CHROMEOS_EXPORT NetworkState : public ManagedState {
   // Returns true if the network properties are stored in a user profile.
   bool IsPrivate() const;
 
+  // Returns true if the user can initiate connections and can be notified
+  // of disconnections.  Returns false if this is a system-managed network
+  // that connects and disconnects without the user's knowledge.
+  bool IsInteractive() const;
+
   // Returns the |raw_ssid| as a hex-encoded string
   std::string GetHexSsid() const;
 
