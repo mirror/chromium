@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "270835f2_d0be187f",
+        "filename": "ios/chrome/browser/web/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-07-31T16:16:54Z",
+      "side": 1,
+      "message": "Thanks! Just checked compiled chrome_bundle.js and it does not contain any extra scripts, so this code should be correct.",
+      "parentUuid": "e121ce39_6d69eb8f",
+      "range": {
+        "startLine": 97,
+        "startChar": 6,
+        "endLine": 97,
+        "endChar": 24
+      },
+      "revId": "fbeb240e7e2f47cb1d511395528c5a5303c1ba66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9be33385_ffd3e0c6",
         "filename": "ios/chrome/browser/web/chrome_web_client.mm",
         "patchSetId": 8
