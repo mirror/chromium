@@ -22,6 +22,30 @@
       "revId": "bd1ef1de9d5fd4ca4be508007630fb0469b9823d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ce43b11_764647a9",
+        "filename": "services/viz/compositing/privileged/interfaces/frame_sink_manager.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-07-31T15:21:43Z",
+      "side": 1,
+      "message": "Can we send only the read_handle?  Only the HitTestAggregator should ever have to write so do we ever need to send it?\n-\u003e Right now it works like this: HitTestAggregator should only send new read_handle and write_handle when they are initialized or updated when the list size gets bigger than the write size; it would send empty handles if HitTestAggregator only swapped handles. HitTestQuery would store/ update these two handles received when they are valid and only swap them to get the new active buffer it should read from when they are not valid (empty handles). So we don\u0027t need to send actual handles all the time and HitTestQuery only needs to Map them once (or more if we update handles). WDYT?\n\nWould it be better to use a name that describes the data rather than the data type?\n-\u003e Yes that\u0027s a better name! Updated and will be in the next patch.",
+      "parentUuid": "db75741b_b33856d6",
+      "range": {
+        "startLine": 110,
+        "startChar": 2,
+        "endLine": 114,
+        "endChar": 51
+      },
+      "revId": "bd1ef1de9d5fd4ca4be508007630fb0469b9823d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
