@@ -214,7 +214,7 @@ component("core") {
   ]
 
   if (is_win && is_debug && is_component_build &&
-      (current_cpu == "x64" || is_clang)) {
+      visual_studio_version == "2015" && (current_cpu == "x64" || is_clang)) {
     # Incremental linking fails when the .ilk file gets too large.
     # 64-bit debug builds and Clang builds with full symbols trigger this
     # problem, so we turn off incremental linking in those configurations.
@@ -222,6 +222,7 @@ component("core") {
     # information.
     # VC++ bug filed for 64-bit debug incremental link failures:
     # https://connect.microsoft.com/VisualStudio/feedback/details/2846790
+    # This is fixed in MSVC2017.
     configs -= [ "//build/config/win:default_incremental_linking" ]
     configs += [ "//build/config/win:no_incremental_linking" ]
   }
