@@ -329,6 +329,9 @@ class CORE_EXPORT LayoutTableCell final : public LayoutBlockFlow {
            RowIndex() + RowSpan() == other->RowIndex() + other->RowSpan();
   }
 
+  // Whether the cell is spanning a row that has been collapsed.
+  bool is_spanning_collapsed_row_ = false;
+
  protected:
   void StyleDidChange(StyleDifference, const ComputedStyle* old_style) override;
   void ComputePreferredLogicalWidths() override;
