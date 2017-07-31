@@ -49,7 +49,8 @@ class PasswordsListViewControllerTest : public ManagePasswordsControllerTest {
     ManagePasswordsControllerTest::SetUpSavePendingState(false);
     controller_.reset([[PasswordsListViewController alloc]
         initWithModelAndForm:GetModelAndCreateIfNull()
-                        form:form]);
+                        form:form
+                    editMode:FALSE]);
   }
 
   ManagePasswordItemViewController* GetControllerAt(unsigned i) {
