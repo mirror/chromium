@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9271c0ad_dd5016c8",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_grc_tab_signal_observer.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-07-31T22:55:52Z",
+      "side": 1,
+      "message": "Sometimes, this does happen in some browser tests such as SessionRestoreTest.SessionStorageAfterTabReplace. I think this is possible because mojo IPCs are asynchronous.",
+      "parentUuid": "a1d8afdc_fef1ce9e",
+      "revId": "8f8c271f19888ded752170bbf3ff89479589b856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "49536f17_61894439",
         "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.h",
         "patchSetId": 12
@@ -63,6 +81,30 @@
       "revId": "8f8c271f19888ded752170bbf3ff89479589b856",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c334db10_33dbd9fb",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_stats_collector.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-07-31T22:55:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8298705_4a7e04bc",
+      "range": {
+        "startLine": 36,
+        "startChar": 42,
+        "endLine": 36,
+        "endChar": 76
+      },
+      "revId": "8f8c271f19888ded752170bbf3ff89479589b856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -113,6 +155,30 @@
     },
     {
       "key": {
+        "uuid": "148e1ad4_ac5bd0b8",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_impl.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-07-31T22:55:52Z",
+      "side": 1,
+      "message": "Done. In the new patch set, I remove this and avoid the propagation of EQT values if the associated frames are not main frames.",
+      "parentUuid": "51d06ecc_58bd4e30",
+      "range": {
+        "startLine": 71,
+        "startChar": 35,
+        "endLine": 71,
+        "endChar": 70
+      },
+      "revId": "8f8c271f19888ded752170bbf3ff89479589b856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "462ec588_b470d9c4",
         "filename": "services/resource_coordinator/coordination_unit/web_contents_coordination_unit_impl.cc",
         "patchSetId": 12
@@ -124,6 +190,30 @@
       "writtenOn": "2017-07-31T17:48:32Z",
       "side": 1,
       "message": "Get the main frame cu of the current web contents cu, and check if its parent process cu is change_source.",
+      "range": {
+        "startLine": 76,
+        "startChar": 2,
+        "endLine": 96,
+        "endChar": 3
+      },
+      "revId": "8f8c271f19888ded752170bbf3ff89479589b856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e2afe56_00da03b6",
+        "filename": "services/resource_coordinator/coordination_unit/web_contents_coordination_unit_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-07-31T22:55:52Z",
+      "side": 1,
+      "message": "Done. I remove the change_source in the next patch set.",
+      "parentUuid": "462ec588_b470d9c4",
       "range": {
         "startLine": 76,
         "startChar": 2,
@@ -159,6 +249,30 @@
     },
     {
       "key": {
+        "uuid": "c874b88e_f5c3ae6e",
+        "filename": "services/resource_coordinator/coordination_unit/web_contents_coordination_unit_impl_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-07-31T22:55:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d1e6c33_76b68f2c",
+      "range": {
+        "startLine": 104,
+        "startChar": 0,
+        "endLine": 141,
+        "endChar": 1
+      },
+      "revId": "8f8c271f19888ded752170bbf3ff89479589b856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c19018a_d4b3bc21",
         "filename": "services/resource_coordinator/public/interfaces/tab_signal.mojom",
         "patchSetId": 12
@@ -170,6 +284,24 @@
       "writtenOn": "2017-07-31T17:54:42Z",
       "side": 1,
       "message": "This line is too long?",
+      "revId": "8f8c271f19888ded752170bbf3ff89479589b856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebead79c_9db8c732",
+        "filename": "services/resource_coordinator/public/interfaces/tab_signal.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-07-31T22:55:52Z",
+      "side": 1,
+      "message": "Done. I thought \"git cl format\" would check this but *.mojom seem not to be formatted.",
+      "parentUuid": "5c19018a_d4b3bc21",
       "revId": "8f8c271f19888ded752170bbf3ff89479589b856",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
