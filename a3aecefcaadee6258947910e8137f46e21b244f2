@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f241992_3fbb31fd",
+        "filename": "components/viz/host/host_frame_sink_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-07-31T23:33:12Z",
+      "side": 1,
+      "message": "Using |frame_sink_manager_| directly should know which one of |frame_sink_manager_ptr_| and |frame_sink_manager_impl_| to use based on this comment (https://cs.chromium.org/chromium/src/components/viz/host/host_frame_sink_manager.h?type\u003dcs\u0026l\u003d138)?",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 52,
+        "endChar": 60
+      },
+      "revId": "a3aecefcaadee6258947910e8137f46e21b244f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db54bb79_5225c446",
+        "filename": "components/viz/host/host_frame_sink_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-07-31T23:33:12Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 62
+      },
+      "revId": "a3aecefcaadee6258947910e8137f46e21b244f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1b4ef32_849ae729",
+        "filename": "components/viz/host/host_frame_sink_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-07-31T23:33:12Z",
+      "side": 1,
+      "message": "received a?",
+      "range": {
+        "startLine": 176,
+        "startChar": 14,
+        "endLine": 176,
+        "endChar": 35
+      },
+      "revId": "a3aecefcaadee6258947910e8137f46e21b244f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
