@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a54ffc03_9cc39642",
+        "filename": "chrome/browser/ui/exclusive_access/exclusive_access_bubble_hide_callback.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-07-31T22:40:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc62b6f4_a372e26f",
+      "range": {
+        "startLine": 13,
+        "startChar": 8,
+        "endLine": 14,
+        "endChar": 51
+      },
+      "revId": "42534c0e7f97ca264ced62c8e7f8634339163fc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36d9e488_ea2cfefb",
         "filename": "chrome/browser/ui/exclusive_access/mouse_lock_controller.cc",
         "patchSetId": 6
@@ -83,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "2d81ab07_f95fecce",
+        "filename": "chrome/browser/ui/exclusive_access/mouse_lock_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-07-31T22:40:10Z",
+      "side": 1,
+      "message": "Done. Renamed to |OnBubbleHidden()|.",
+      "parentUuid": "95d18577_3159f3a3",
+      "range": {
+        "startLine": 76,
+        "startChar": 7,
+        "endLine": 76,
+        "endChar": 44
+      },
+      "revId": "42534c0e7f97ca264ced62c8e7f8634339163fc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f87efdf4_b997da38",
         "filename": "chrome/browser/ui/views/exclusive_access_bubble_views.cc",
         "patchSetId": 6
@@ -103,6 +151,30 @@
       "revId": "42534c0e7f97ca264ced62c8e7f8634339163fc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3b6c144_878367e1",
+        "filename": "chrome/browser/ui/views/exclusive_access_bubble_views.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-07-31T22:40:10Z",
+      "side": 1,
+      "message": "Done. Added accessor |IsHideTimeoutRunning()|.",
+      "parentUuid": "f87efdf4_b997da38",
+      "range": {
+        "startLine": 276,
+        "startChar": 5,
+        "endLine": 276,
+        "endChar": 26
+      },
+      "revId": "42534c0e7f97ca264ced62c8e7f8634339163fc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
