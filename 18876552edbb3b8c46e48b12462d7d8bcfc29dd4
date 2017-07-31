@@ -68,6 +68,30 @@
       "revId": "18876552edbb3b8c46e48b12462d7d8bcfc29dd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32e27745_3bd4f8f2",
+        "filename": "build/config/mips.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-07-31T23:49:53Z",
+      "side": 1,
+      "message": "I would just omit these two lines in the comment. I don\u0027t think they add anything to the code.",
+      "parentUuid": "f3134780_71c4e0c0",
+      "range": {
+        "startLine": 11,
+        "startChar": 2,
+        "endLine": 12,
+        "endChar": 53
+      },
+      "revId": "18876552edbb3b8c46e48b12462d7d8bcfc29dd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
