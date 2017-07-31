@@ -19,6 +19,7 @@
 #include "base/time/time.h"
 #include "chromeos/network/device_state.h"
 #include "chromeos/network/network_connect.h"
+#include "chromeos/network/network_connection_handler.h"
 #include "chromeos/network/network_state.h"
 #include "chromeos/network/network_state_handler.h"
 #include "third_party/cros_system_api/dbus/service_constants.h"
@@ -225,8 +226,15 @@ void NetworkStateListDetailedView::HandleViewClicked(views::View* view) {
         list_type_ == LIST_TYPE_VPN
             ? UMA_STATUS_AREA_SHOW_VPN_CONNECTION_DETAILS
             : UMA_STATUS_AREA_SHOW_NETWORK_CONNECTION_DETAILS);
-    Shell::Get()->system_tray_controller()->ShowNetworkSettings(
-        network ? network->guid() : std::string());
+    if (network->type() == shill::kTypeVPN &&
+        network->vpn_provider_type() == shill::kProviderArcVpn) {
+      NetworkHandler::Get()
+          ->network_connection_handler()
+          ->ConfigureNonInteractiveNetwork(network->path());
+    } else {
+      Shell::Get()->system_tray_controller()->ShowNetworkSettings(
+          network ? network->guid() : std::string());
+    }
   } else {
     Shell::Get()->metrics()->RecordUserMetricsAction(
         list_type_ == LIST_TYPE_VPN

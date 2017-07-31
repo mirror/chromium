@@ -83,6 +83,9 @@ class TestNetworkConnectionHandler : public NetworkConnectionHandler {
 
   bool HasPendingConnectRequest() override { return false; }
 
+  void ConfigureNonInteractiveNetwork(
+      const std::string& service_path) override {}
+
   void Init(NetworkStateHandler* network_state_handler,
             NetworkConfigurationHandler* network_configuration_handler,
             ManagedNetworkConfigurationHandler*
