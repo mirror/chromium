@@ -16,6 +16,24 @@
       "revId": "34b732f392bc656abd573f4c849e866126b77403",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3824ba2e_e701adec",
+        "filename": "device/bluetooth/test/fake_peripheral.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-07-31T17:55:09Z",
+      "side": 1,
+      "message": "\u003e\u003e On Sat, Jul 29, 2017 at 3:04 AM Vincent Scheib \u003cscheib@chromium.org\u003e wrote:\n\u003e\u003e We\u0027ll need to explain this in the test as well.\n\u003e\u003e \n\u003e\u003e +1 for getHealthThermometerDeviceWithServicesDiscovered. That implies that the test does NOT need to set setNextGATTConnectionResponse because we know there is a connection (the iframe is holding one open). The test can then call .disconnect().connect.then(_ \u003d\u003e promise). Explain in test that the spec only defines that connected\u003d\u003dtrue means we know there\u0027s an OS level connection, but that \u003d\u003dfalse only means that this instance is disconnected.\n\u003e\u003e \n\u003e\u003e By the way, I do think we should eventually clean up connect/disconnect some. But, I don\u0027t think it\u0027s a bug that disconnect() then connect() may result in a  gattserverdisconnected event shortly afterwards. The app will always have to be ready for gattserverdisconnected. Trying to wait for a disconnect to fully complete at the OS level may result in uncontrollable delays.\n\u003e \n\u003e \n\u003e On Sun, Jul 30, 2017 at 6:47 PM, Giovanni Ortuño \u003cortuno@google.com\u003e wrote:\n\u003e \n\u003e Fair enough. Also, did you happen to just reply on an email? I don\u0027t think this comment was included on the code review.\n\n\nI thought gerrit supported email replies. Seems it does not.",
+      "parentUuid": "8d25b082_6bd970cc",
+      "revId": "34b732f392bc656abd573f4c849e866126b77403",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
