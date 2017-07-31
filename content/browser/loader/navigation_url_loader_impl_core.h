@@ -28,10 +28,10 @@ class NavigationResourceHandler;
 class NavigationData;
 class ResourceContext;
 class ServiceWorkerNavigationHandleCore;
+class SSLStatus;
 class StreamHandle;
 struct GlobalRequestID;
 struct ResourceResponse;
-struct SSLStatus;
 
 // The IO-thread counterpart to the NavigationURLLoaderImpl. It lives on the IO
 // thread and is owned by the UI-thread NavigationURLLoaderImpl and the

@@ -23,10 +23,10 @@ class AppCacheNavigationHandle;
 class NavigationURLLoaderImplCore;
 class NavigationData;
 class ServiceWorkerNavigationHandle;
+class SSLStatus;
 class StreamHandle;
 struct GlobalRequestID;
 struct ResourceResponse;
-struct SSLStatus;
 
 class NavigationURLLoaderImpl : public NavigationURLLoader {
  public:
