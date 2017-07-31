@@ -38,6 +38,7 @@ class ServiceWorkerDevToolsAgentHost : public WorkerDevToolsAgentHost {
   std::string GetType() override;
   std::string GetTitle() override;
   GURL GetURL() override;
+  bool GetNetworkCapability() override;
   bool Activate() override;
   void Reload() override;
   bool Close() override;

@@ -4,11 +4,13 @@
 
 #include "content/browser/devtools/shared_worker_devtools_agent_host.h"
 
+#include "base/feature_list.h"
 #include "base/strings/utf_string_conversions.h"
 #include "content/browser/devtools/shared_worker_devtools_manager.h"
 #include "content/browser/shared_worker/shared_worker_instance.h"
 #include "content/browser/shared_worker/shared_worker_service_impl.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/common/content_features.h"
 
 namespace content {
 
@@ -40,6 +42,10 @@ std::string SharedWorkerDevToolsAgentHost::GetTitle() {
 
 GURL SharedWorkerDevToolsAgentHost::GetURL() {
   return shared_worker_->url();
+}
+
+bool SharedWorkerDevToolsAgentHost::GetNetworkCapability() {
+  return base::FeatureList::IsEnabled(features::kOffMainThreadFetch);
 }
 
 bool SharedWorkerDevToolsAgentHost::Activate() {

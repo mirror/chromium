@@ -81,6 +81,7 @@ class CONTENT_EXPORT RenderFrameDevToolsAgentHost
   std::string GetDescription() override;
   GURL GetURL() override;
   GURL GetFaviconURL() override;
+  bool GetNetworkCapability() override;
   bool Activate() override;
   void Reload() override;
 

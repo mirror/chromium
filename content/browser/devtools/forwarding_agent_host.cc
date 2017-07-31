@@ -66,6 +66,10 @@ std::string ForwardingAgentHost::GetFrontendURL() {
   return delegate_->GetFrontendURL();
 }
 
+bool ForwardingAgentHost::GetNetworkCapability() {
+  return delegate_->GetNetworkCapability();
+}
+
 bool ForwardingAgentHost::Activate() {
   return delegate_->Activate();
 }

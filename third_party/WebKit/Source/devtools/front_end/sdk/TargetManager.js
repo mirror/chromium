@@ -462,22 +462,20 @@ SDK.ChildTargetManager = class {
   }
 
   /**
-   * @param {string} type
+   * @param {!Protocol.Target.TargetInfo} targetInfo
    * @return {number}
    */
-  _capabilitiesForType(type) {
-    if (type === 'worker') {
-      if (Runtime.experiments.isEnabled('networkInWorkers'))
-        return SDK.Target.Capability.JS | SDK.Target.Capability.Log | SDK.Target.Capability.Network;
-      else
-        return SDK.Target.Capability.JS | SDK.Target.Capability.Log;
-    }
+  _capabilitiesForTarget(targetInfo) {
+    var type = targetInfo.type;
+    var capability = targetInfo.networkCapability ? SDK.Target.Capability.Network : 0;
+    if (type === 'worker')
+      return capability | SDK.Target.Capability.JS | SDK.Target.Capability.Log;
     if (type === 'service_worker')
-      return SDK.Target.Capability.Log | SDK.Target.Capability.Network | SDK.Target.Capability.Target;
+      return capability | SDK.Target.Capability.Log | SDK.Target.Capability.Target;
     if (type === 'iframe') {
-      return SDK.Target.Capability.Browser | SDK.Target.Capability.DOM | SDK.Target.Capability.JS |
-          SDK.Target.Capability.Log | SDK.Target.Capability.Network | SDK.Target.Capability.Target |
-          SDK.Target.Capability.Tracing | SDK.Target.Capability.Emulation | SDK.Target.Capability.Input;
+      return capability | SDK.Target.Capability.Browser | SDK.Target.Capability.DOM | SDK.Target.Capability.JS |
+          SDK.Target.Capability.Log | SDK.Target.Capability.Target | SDK.Target.Capability.Tracing |
+          SDK.Target.Capability.Emulation | SDK.Target.Capability.Input;
     }
     if (type === 'node')
       return SDK.Target.Capability.JS;
@@ -546,7 +544,7 @@ SDK.ChildTargetManager = class {
           parsedURL ? parsedURL.lastPathComponentWithFragment() : '#' + (++this._targetManager._lastAnonymousTargetId);
     }
     var target = this._targetManager.createTarget(
-        targetInfo.targetId, targetName, this._capabilitiesForType(targetInfo.type),
+        targetInfo.targetId, targetName, this._capabilitiesForTarget(targetInfo),
         this._createChildConnection.bind(this, this._targetAgent, sessionId), this._parentTarget);
 
     // Only pause the new worker if debugging SW - we are going through the pause on start checkbox.

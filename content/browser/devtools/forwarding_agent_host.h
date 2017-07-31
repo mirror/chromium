@@ -42,6 +42,7 @@ class ForwardingAgentHost
   GURL GetURL() override;
   GURL GetFaviconURL() override;
   std::string GetFrontendURL() override;
+  bool GetNetworkCapability() override;
   bool Activate() override;
   void Reload() override;
   bool Close() override;

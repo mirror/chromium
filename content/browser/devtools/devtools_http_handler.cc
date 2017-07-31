@@ -67,6 +67,7 @@ const char kTargetTitleField[] = "title";
 const char kTargetDescriptionField[] = "description";
 const char kTargetUrlField[] = "url";
 const char kTargetFaviconUrlField[] = "faviconUrl";
+const char kTargetNetworkCapabilityField[] = "networkCapability";
 const char kTargetWebSocketDebuggerUrlField[] = "webSocketDebuggerUrl";
 const char kTargetDevtoolsFrontendUrlField[] = "devtoolsFrontendUrl";
 
@@ -872,6 +873,9 @@ std::unique_ptr<base::DictionaryValue> DevToolsHttpHandler::SerializeDescriptor(
   GURL favicon_url = agent_host->GetFaviconURL();
   if (favicon_url.is_valid())
     dictionary->SetString(kTargetFaviconUrlField, favicon_url.spec());
+
+  dictionary->SetBoolean(kTargetNetworkCapabilityField,
+                         agent_host->GetNetworkCapability());
 
   if (!agent_host->IsAttached()) {
     dictionary->SetString(kTargetWebSocketDebuggerUrlField,

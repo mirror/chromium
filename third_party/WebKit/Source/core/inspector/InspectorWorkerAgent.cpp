@@ -32,6 +32,7 @@
 
 #include "core/dom/Document.h"
 #include "core/inspector/InspectedFrames.h"
+#include "platform/RuntimeEnabledFeatures.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/wtf/RefPtr.h"
 #include "platform/wtf/text/WTFString.h"
@@ -233,15 +234,18 @@ void InspectorWorkerAgent::ConnectToProxy(WorkerInspectorProxy* proxy,
   proxy->ConnectToInspector(connection, this);
   DCHECK(GetFrontend());
   AttachedSessionIds()->setBoolean(session_id, true);
-  GetFrontend()->attachedToTarget(session_id,
-                                  protocol::Target::TargetInfo::create()
-                                      .setTargetId(proxy->InspectorId())
-                                      .setType("worker")
-                                      .setTitle(proxy->Url())
-                                      .setUrl(proxy->Url())
-                                      .setAttached(true)
-                                      .build(),
-                                  waiting_for_debugger);
+  GetFrontend()->attachedToTarget(
+      session_id,
+      protocol::Target::TargetInfo::create()
+          .setTargetId(proxy->InspectorId())
+          .setType("worker")
+          .setTitle(proxy->Url())
+          .setUrl(proxy->Url())
+          .setAttached(true)
+          .setNetworkCapability(
+              RuntimeEnabledFeatures::OffMainThreadFetchEnabled())
+          .build(),
+      waiting_for_debugger);
 }
 
 void InspectorWorkerAgent::DispatchMessageFromWorker(

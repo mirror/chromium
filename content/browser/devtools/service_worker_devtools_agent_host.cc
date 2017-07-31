@@ -78,6 +78,10 @@ GURL ServiceWorkerDevToolsAgentHost::GetURL() {
   return service_worker_->url();
 }
 
+bool ServiceWorkerDevToolsAgentHost::GetNetworkCapability() {
+  return true;
+}
+
 bool ServiceWorkerDevToolsAgentHost::Activate() {
   return false;
 }

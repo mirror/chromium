@@ -79,6 +79,10 @@ GURL BrowserDevToolsAgentHost::GetURL() {
   return GURL();
 }
 
+bool BrowserDevToolsAgentHost::GetNetworkCapability() {
+  return false;
+}
+
 bool BrowserDevToolsAgentHost::Activate() {
   return false;
 }
