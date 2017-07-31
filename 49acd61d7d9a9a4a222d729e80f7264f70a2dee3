@@ -227,6 +227,30 @@
     },
     {
       "key": {
+        "uuid": "733fa107_938e91e0",
+        "filename": "chrome/browser/extensions/bookmark_app_helper.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-07-31T05:18:38Z",
+      "side": 1,
+      "message": "Done. Also added tests for the function. Thanks for your patience!",
+      "parentUuid": "5f80e173_22d991e1",
+      "range": {
+        "startLine": 353,
+        "startChar": 5,
+        "endLine": 353,
+        "endChar": 33
+      },
+      "revId": "49acd61d7d9a9a4a222d729e80f7264f70a2dee3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6f13bdb_1ad143ee",
         "filename": "chrome/browser/extensions/convert_web_app.cc",
         "patchSetId": 22
