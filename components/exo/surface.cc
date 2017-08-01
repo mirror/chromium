@@ -814,9 +814,13 @@ void Surface::UpdateSurface(bool full_damage) {
   gfx::Rect quad_rect = output_rect;
   cc::SharedQuadState* quad_state =
       render_pass->CreateAndAppendSharedQuadState();
-  quad_state->quad_layer_rect = gfx::Rect(contents_surface_size);
-  quad_state->visible_quad_layer_rect = quad_rect;
-  quad_state->opacity = state_.alpha;
+  quad_state->SetAll(
+      /*quad_to_target_transform=*/gfx::Transform(),
+      /*quad_layer_rect=*/gfx::Rect(contents_surface_size),
+      /*visible_quad_layer_rect=*/quad_rect,
+      /*clip_rect=*/gfx::Rect(),
+      /*is_clipped=*/false, /*opacity=*/state_.alpha,
+      /*blend_mode=*/SkBlendMode::kSrcOver, /*sorting_context_id=*/0);
 
   cc::CompositorFrame frame;
   // If we commit while we don't have an active BeginFrame, we acknowledge a
