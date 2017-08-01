@@ -154,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "063b7c82_0d20d8df",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-01T07:53:53Z",
+      "side": 1,
+      "message": "Do you recall if the HRESULT was useful in those cases? Was it the HRESULT_FROM_WIN32 of the last error code you observed?\n\nHere are my arguments against DPLOG:\n- IPropertyStore::SetValue and IPropertyStore::Commit are not documented as setting the last error code, so the code is undefined (but maybe it is useful).\n- There\u0027s code between those calls and DPLOG, which could potentially mutate the last error code.\n\nTwo options that would make me more comfortable with this:\n- change this block to:\n  // Despite not being documented, the property store implementation seems to\n  // set the last error code on failure. Capture it for use in the logging\n  // below.\n  const DWORD last_error \u003d ::GetLastError();\n  ScopedCoMem\u003cOLECHAR\u003e guidString;\n  ::StringFromCLSID(property_key.fmtid, \u0026guidString);\n  ::SetLastError(last_error);\n  // See...\n  DPLOG(ERROR) \u003c\u003c ...;\n- check to see if HRESULT_FACILITY(result) \u003d\u003d FACILITY_WIN32 and ::SetLastError(HRESULT_CODE(result)) just before this line if so.",
+      "parentUuid": "2d93fcb3_141ae86e",
+      "range": {
+        "startLine": 74,
+        "startChar": 6,
+        "endLine": 74,
+        "endChar": 11
+      },
+      "revId": "0a24cd78e68d7dfb6199e0dbe2a34bb932a3134b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76567407_fa566776",
         "filename": "chrome/browser/ui/views/frame/browser_window_property_manager_browsertest_win.cc",
         "patchSetId": 12

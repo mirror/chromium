@@ -16,6 +16,64 @@
       "revId": "9c2d7404a2a1a9ed7c1f2b954745deeb75a0aa89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4530392_a721329e",
+        "filename": "ui/base/win/shell.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-01T07:53:53Z",
+      "side": 1,
+      "message": "alternatively, insert a blank line:\n\n#include \u003cdwmapi.h\u003e\n#include \u003cshlobj.h\u003e  // Must be before propkey.\n\n#include \u003cpropkey.h\u003e\n#include \u003cshellapi.h\u003e",
+      "parentUuid": "d711ef97_f7038362",
+      "revId": "9c2d7404a2a1a9ed7c1f2b954745deeb75a0aa89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26832819_07e1a21a",
+        "filename": "ui/base/win/shell.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-01T07:53:53Z",
+      "side": 1,
+      "message": "isn\u0027t this undefined in non-DCHECK builds if GetCount fails?",
+      "range": {
+        "startLine": 180,
+        "startChar": 24,
+        "endLine": 180,
+        "endChar": 38
+      },
+      "revId": "9c2d7404a2a1a9ed7c1f2b954745deeb75a0aa89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f288d33c_6ccf936a",
+        "filename": "ui/base/win/shell.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-01T07:53:53Z",
+      "side": 1,
+      "message": "MSDN docs for IPropertyStore::SetValue explicitly state that removal isn\u0027t supported, but the docs for SHGetPropertyStoreForWindow say that this empty-setting is the way to remove. confusing!\n\nthis loop assumes that every property can be removed -- is it possible that there is some property in the collection that can\u0027t be removed? it seems safer to start at count-1 and work your way down to zero.",
+      "revId": "9c2d7404a2a1a9ed7c1f2b954745deeb75a0aa89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
