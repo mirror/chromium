@@ -861,8 +861,7 @@ void DocumentThreadableLoader::HandleResponse(
 
   if (response.WasFetchedViaServiceWorker()) {
     if (response.WasFetchedViaForeignFetch()) {
-      loading_context_->GetFetchContext()->CountUsage(
-          WebFeature::kForeignFetchInterception);
+      loading_context_->GetFetchContext().CountUsageForeignFetchInterception();
     }
     if (response.WasFallbackRequiredByServiceWorker()) {
       // At this point we must have m_fallbackRequestForServiceWorker. (For
@@ -1244,7 +1243,7 @@ bool DocumentThreadableLoader::IsAllowedRedirect(
 const SecurityOrigin* DocumentThreadableLoader::GetSecurityOrigin() const {
   return security_origin_
              ? security_origin_.Get()
-             : loading_context_->GetFetchContext()->GetSecurityOrigin();
+             : loading_context_->GetFetchContext().GetSecurityOrigin();
 }
 
 Document* DocumentThreadableLoader::GetDocument() const {

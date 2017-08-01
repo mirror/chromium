@@ -80,8 +80,8 @@ ThreadableLoadingContext* ThreadableLoadingContext::Create(
   return new WorkerThreadableLoadingContext(worker_global_scope);
 }
 
-BaseFetchContext* ThreadableLoadingContext::GetFetchContext() {
-  return static_cast<BaseFetchContext*>(&GetResourceFetcher()->Context());
+FetchContext& ThreadableLoadingContext::GetFetchContext() {
+  return GetResourceFetcher()->Context();
 }
 
 }  // namespace blink

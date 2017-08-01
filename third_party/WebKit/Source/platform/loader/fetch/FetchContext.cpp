@@ -54,8 +54,7 @@ void FetchContext::DispatchDidChangeResourcePriority(unsigned long,
                                                      ResourceLoadPriority,
                                                      int) {}
 
-void FetchContext::AddAdditionalRequestHeaders(ResourceRequest&,
-                                               FetchResourceType) {}
+void FetchContext::AddAdditionalRequestHeaders(ResourceRequest&) {}
 
 WebCachePolicy FetchContext::ResourceRequestCachePolicy(
     const ResourceRequest&,

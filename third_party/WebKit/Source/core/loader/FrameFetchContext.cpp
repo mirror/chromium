@@ -282,14 +282,8 @@ LocalFrameClient* FrameFetchContext::GetLocalFrameClient() const {
   return GetFrame()->Client();
 }
 
-void FrameFetchContext::AddAdditionalRequestHeaders(ResourceRequest& request,
-                                                    FetchResourceType type) {
-  BaseFetchContext::AddAdditionalRequestHeaders(request, type);
-
-  // The remaining modifications are only necessary for HTTP and HTTPS.
-  if (!request.Url().IsEmpty() && !request.Url().ProtocolIsInHTTPFamily())
-    return;
-
+void FrameFetchContext::AddAdditionalRequestHeaders(
+    ResourceRequest& request) const {
   if (IsDetached())
     return;
 
@@ -720,38 +714,37 @@ void FrameFetchContext::SendImagePing(const KURL& url) {
   PingLoader::LoadImage(GetFrame(), url);
 }
 
-void FrameFetchContext::AddConsoleMessage(const String& message,
-                                          LogMessageType message_type) const {
-  if (IsDetached())
-    return;
-
-  MessageLevel level = message_type == kLogWarningMessage ? kWarningMessageLevel
-                                                          : kErrorMessageLevel;
-  ConsoleMessage* console_message =
-      ConsoleMessage::Create(kJSMessageSource, level, message);
+void FrameFetchContext::AddConsoleMessage(ConsoleMessage* message) const {
   // Route the console message through Document if it's attached, so
   // that script line numbers can be included. Otherwise, route directly to the
   // FrameConsole, to ensure we never drop a message.
   if (document_ && document_->GetFrame())
-    document_->AddConsoleMessage(console_message);
+    document_->AddConsoleMessage(message);
   else
-    GetFrame()->Console().AddMessage(console_message);
+    GetFrame()->Console().AddMessage(message);
+}
+
+void FrameFetchContext::AddWarningJSConsoleMessage(
+    const String& message) const {
+  if (IsDetached())
+    return;
+
+  AddConsoleMessage(
+      ConsoleMessage::Create(kJSMessageSource, kWarningMessageLevel, message));
+}
+
+void FrameFetchContext::AddErrorJSConsoleMessage(const String& message) const {
+  if (IsDetached())
+    return;
+
+  AddConsoleMessage(
+      ConsoleMessage::Create(kJSMessageSource, kErrorMessageLevel, message));
 }
 
 SecurityOrigin* FrameFetchContext::GetSecurityOrigin() const {
   if (IsDetached())
     return frozen_state_->security_origin.Get();
   return document_ ? document_->GetSecurityOrigin() : nullptr;
-}
-
-void FrameFetchContext::ModifyRequestForCSP(ResourceRequest& resource_request) {
-  if (IsDetached())
-    return;
-
-  // Record the latest requiredCSP value that will be used when sending this
-  // request.
-  GetFrame()->Loader().RecordLatestRequiredCSP();
-  GetFrame()->Loader().ModifyRequestForCSP(resource_request, document_);
 }
 
 float FrameFetchContext::ClientHintsDeviceMemory(int64_t physical_memory_mb) {
@@ -821,9 +814,20 @@ void FrameFetchContext::PopulateResourceRequest(
     const ClientHintsPreferences& hints_preferences,
     const FetchParameters::ResourceWidth& resource_width,
     ResourceRequest& request) {
-  ModifyRequestForCSP(request);
+  if (!IsDetached()) {
+    // Record the latest requiredCSP value that will be used when sending this
+    // request.
+    GetFrame()->Loader().RecordLatestRequiredCSP();
+    GetFrame()->Loader().ModifyRequestForCSP(request, document_);
+  }
+
   AddClientHintsIfNecessary(hints_preferences, resource_width, request);
-  AddCSPHeaderIfNecessary(type, request);
+
+  const ContentSecurityPolicy* csp = GetContentSecurityPolicy();
+  if (!csp)
+    return;
+  if (csp->ShouldSendCSPHeader(type))
+    request.AddHTTPHeaderField("CSP", "active");
 }
 
 void FrameFetchContext::SetFirstPartyCookieAndRequestorOrigin(
@@ -1010,11 +1014,6 @@ const ContentSecurityPolicy* FrameFetchContext::GetContentSecurityPolicy()
   if (IsDetached())
     return frozen_state_->content_security_policy;
   return document_ ? document_->GetContentSecurityPolicy() : nullptr;
-}
-
-void FrameFetchContext::AddConsoleMessage(ConsoleMessage* message) const {
-  if (document_)
-    document_->AddConsoleMessage(message);
 }
 
 ContentSettingsClient* FrameFetchContext::GetContentSettingsClient() const {
