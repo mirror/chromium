@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b31d257f_ad1f3469",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-01T01:17:45Z",
+      "side": 1,
+      "message": "Which is the only op that needs an SkRegion?",
+      "range": {
+        "startLine": 9,
+        "startChar": 44,
+        "endLine": 10,
+        "endChar": 19
+      },
+      "revId": "26a59d164df780d4429eba938af473414e68d5c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d38372e_cedb44df",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-01T01:17:45Z",
+      "side": 1,
+      "message": "I guess the raster source will generate this op, is that the intent?",
+      "range": {
+        "startLine": 11,
+        "startChar": 46,
+        "endLine": 12,
+        "endChar": 19
+      },
+      "revId": "26a59d164df780d4429eba938af473414e68d5c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
