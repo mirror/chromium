@@ -10,6 +10,7 @@
 #include "base/metrics/user_metrics_action.h"
 #include "components/feature_engagement/public/event_constants.h"
 #include "components/feature_engagement/public/tracker.h"
+#include "components/ntp_snippets/ntp_snippets_constants.h"
 #include "components/reading_list/core/reading_list_model.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #include "ios/chrome/browser/favicon/ios_chrome_large_icon_service_factory.h"
@@ -251,8 +252,13 @@ readingListCollectionViewController:
 
   [readingListCollectionViewController willBeDismissed];
 
+  // Use a referrer with a specific URL to signal that this entry should not be
+  // taken into account for the Most Visited tiles.
+  web::Referrer referrer;
+  referrer.url = GURL(ntp_snippets::kContentSuggestionsApiScope);
+
   [self.URLLoader loadURL:entry->URL()
-                 referrer:web::Referrer()
+                 referrer:referrer
                transition:ui::PAGE_TRANSITION_AUTO_BOOKMARK
         rendererInitiated:NO];
 
