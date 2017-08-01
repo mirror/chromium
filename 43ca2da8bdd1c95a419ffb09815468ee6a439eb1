@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea6a463e_b8a8fd8a",
+        "filename": "chrome/browser/extensions/activity_log/activity_log.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 787,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-01T00:12:01Z",
+      "side": 1,
+      "message": "There are a lot of callers to WebContents::GetTitle(), which makes me wonder how many other ones might have this same problem.  Is there a reason this is the only one that needs to change?  (For example, could the task manager end up showing the wrong title?)\n\nI worry about future code as well, since it\u0027s not obvious that callers have to wait until loading stops before they can query the title.  If we continue, we should at least update the documentation for GetTitle in web_contents.h.",
+      "revId": "43ca2da8bdd1c95a419ffb09815468ee6a439eb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a6f948e_097afeb0",
+        "filename": "content/browser/android/web_contents_observer_proxy.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-01T00:12:01Z",
+      "side": 1,
+      "message": "What was the reason this and the TabsEventRouter change were needed?  I\u0027m wondering if we should add a comment, since it\u0027s not clear to me why it was wrong before or needed now.",
+      "revId": "43ca2da8bdd1c95a419ffb09815468ee6a439eb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fdd4cba_a372e96b",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1266,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-01T00:12:01Z",
+      "side": 1,
+      "message": "Can this case come before line 1253?  It doesn\u0027t seem dependent on being in the else branch, and putting it earlier would make it easier to read and reason about.",
+      "revId": "43ca2da8bdd1c95a419ffb09815468ee6a439eb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "855f0fd8_f2129fcd",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1275,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-01T00:12:01Z",
+      "side": 1,
+      "message": "Ah, const.  Can we make last_page_title_ mutable instead of having a const_cast?",
+      "revId": "43ca2da8bdd1c95a419ffb09815468ee6a439eb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ec016ac_9f8f05c7",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1280,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-01T00:12:01Z",
+      "side": 1,
+      "message": "minor nit: Rewrap.",
+      "revId": "43ca2da8bdd1c95a419ffb09815468ee6a439eb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad7d7c11_e8588035",
+        "filename": "content/browser/web_contents/web_contents_impl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 1404,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-01T00:12:01Z",
+      "side": 1,
+      "message": "Can you update the comment to reflect that this is updated after every title change and is shown until the next page either sets a title or stops loading?",
+      "revId": "43ca2da8bdd1c95a419ffb09815468ee6a439eb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
