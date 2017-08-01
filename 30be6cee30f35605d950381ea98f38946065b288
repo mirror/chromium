@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dee895ae_59cdf23e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/ChromeTabbedActivityVrLaunch.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-08-01T00:17:23Z",
+      "side": 1,
+      "message": "@Ted/Yusuf, note that adding this class should have no UI / visual changes to the user when they\u0027re using Chrome in standard 2D mode, except for one thing which is worth pointing out.\n\nSo the main gist of this CL is to start a CTA subclass with the \"android:windowDisablePreview:true\" attribute so that the system UI doesn\u0027t show when android is showing the preview window. This has the side-effect that when CTAVrLaunch is used for 2D browsing (e.g after they exit VR mode), we may loose the benefit of the \"android:windowDisablePreview:true\". But here\u0027s why I think this is okay:\n- The preview window is only helpful on slow devices. This activity will only be ON for Daydream enabled devices (pixel / pixel xl) which seem to be pretty fast.\n- I believe android shows the preview window only when its spinning up the process because it could take a while. FWIW, I tried locally with the \"Don\u0027t keep activities\" developer setting and didn\u0027t see any visual difference at all.\n- This only happens when CTA-VR is actually running in the background and we get a 2D intent. The subset of users is really small. We can actually make it smaller by killing Chrome for cases when the user goes back to Daydream instead of exiting VR into Chrome (which is probably the more common case). But I don\u0027t think we should do that unless we find that we really have to.\n\nThis is one of those cases where the culprit is really the android platform. Apps with VR mode enabled shouldn\u0027t have to do these hacks to hide the system UI (other VR apps also do this). I\u0027ll be making a feature request to hide the system UI for this case, but I don\u0027t think we want to block on that.\n\nThe best long term solution is probably truly sharing the tab state, so that this VR activity is only used for VR browsing and not 2D browsing. We probably don\u0027t want to block on that either :)\n\nWould this approach be okay given the things above?",
+      "range": {
+        "startLine": 26,
+        "startChar": 13,
+        "endLine": 26,
+        "endChar": 41
+      },
+      "revId": "30be6cee30f35605d950381ea98f38946065b288",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
