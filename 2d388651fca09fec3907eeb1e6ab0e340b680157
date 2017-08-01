@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "3eda02f2_f351277b",
+        "filename": "cc/paint/paint_op_buffer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2342,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-01T18:45:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9cce11cf_23bd1192",
+      "revId": "2d388651fca09fec3907eeb1e6ab0e340b680157",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2a6888c_e9c78b7f",
         "filename": "cc/paint/paint_op_reader.cc",
         "patchSetId": 2
@@ -47,6 +65,24 @@
       "writtenOn": "2017-07-28T00:16:11Z",
       "side": 1,
       "message": "It\u0027s fine to punt on this in this patch, but probably we could add a top level PaintOpBuffer serialize / deserialize.",
+      "revId": "2d388651fca09fec3907eeb1e6ab0e340b680157",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82d7126b_b376604a",
+        "filename": "cc/paint/paint_op_reader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-01T18:45:57Z",
+      "side": 1,
+      "message": "Agreed.",
+      "parentUuid": "e2a6888c_e9c78b7f",
       "revId": "2d388651fca09fec3907eeb1e6ab0e340b680157",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
