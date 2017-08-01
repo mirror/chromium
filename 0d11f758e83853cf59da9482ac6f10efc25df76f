@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fa3b2c67_dc0c2cae",
+        "filename": "chrome/browser/extensions/api/virtual_keyboard_private/chrome_virtual_keyboard_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2017-08-01T01:25:42Z",
+      "side": 1,
+      "message": "This is bound as the bridge to the JS side of the API. I feel like this is a good point to draw the line for the scope of this CL. Although if we truly want to get rid of it, I can change the comment from why-this-is-here to todo-remove-this.",
+      "parentUuid": "968459aa_8d167cbf",
+      "range": {
+        "startLine": 155,
+        "startChar": 36,
+        "endLine": 155,
+        "endChar": 58
+      },
+      "revId": "0d11f758e83853cf59da9482ac6f10efc25df76f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0cc764f1_533a272a",
         "filename": "ui/keyboard/keyboard_controller.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "3d4aeacb_7bd9963c",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2017-08-01T01:25:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0cc764f1_533a272a",
+      "range": {
+        "startLine": 716,
+        "startChar": 0,
+        "endLine": 716,
+        "endChar": 77
+      },
+      "revId": "0d11f758e83853cf59da9482ac6f10efc25df76f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e389937d_cfed793d",
         "filename": "ui/keyboard/keyboard_test_util.h",
         "patchSetId": 2
@@ -59,6 +107,24 @@
       "writtenOn": "2017-07-31T23:00:56Z",
       "side": 1,
       "message": "nit: Remove FullWidth ?",
+      "revId": "0d11f758e83853cf59da9482ac6f10efc25df76f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "147026b3_b0d92538",
+        "filename": "ui/keyboard/keyboard_test_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1214366
+      },
+      "writtenOn": "2017-08-01T01:25:42Z",
+      "side": 1,
+      "message": "I actually tried and decided to do it in a separate CL. This is used in tons of places outside of ui/keyboard and was starting to create a file/owners explosion.",
+      "parentUuid": "e389937d_cfed793d",
       "revId": "0d11f758e83853cf59da9482ac6f10efc25df76f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
