@@ -705,6 +705,24 @@
     },
     {
       "key": {
+        "uuid": "e37df334_056dab1f",
+        "filename": "base/containers/vector_buffer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-08-01T17:51:50Z",
+      "side": 1,
+      "message": "As with anything STL, it\u0027s not like there\u0027s simple call :)\nFor vector:\n  https://llvm.org/svn/llvm-project/libcxx/trunk/include/vector\nsearch for \"vector\u003c_Tp, _Allocator\u003e::allocate(size_type __n)\" which calls __alloc_traits::allocate which for the default allocator traits calls allocator::allocate which I think ends up here:\n  https://llvm.org/svn/llvm-project/libcxx/trunk/include/memory\nsearch for \"pointer allocate(size_type __n, allocator\u003cvoid\u003e::const_pointer \u003d 0)\" which you can see just calls\n  static_cast\u003cpointer\u003e(_VSTD::__allocate(__n * sizeof(_Tp)));\n\nThere is no alignment anywhere in that chain and for the last call the type is lost.\n\nI can\u0027t link to VC source code, but it ends up doing something similar calling through the default allocator which does the equivalent of:\n  return static_cast\u003cpointer\u003e(allocate(count, sizeof(T)));",
+      "parentUuid": "85ecef7d_0d83a0cd",
+      "revId": "564a6087290003c9ba5d6d3d03a251b06ff290dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d4b9267_b48123e4",
         "filename": "base/containers/vector_buffer.h",
         "patchSetId": 12
