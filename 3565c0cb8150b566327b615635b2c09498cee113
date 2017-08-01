@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba0086cd_c621992c",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1259,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-01T01:07:43Z",
+      "side": 1,
+      "message": "What is the pattern that we use when we should skip all images, like for low res tiles? Do we get a provider that returns a null image?",
+      "revId": "3565c0cb8150b566327b615635b2c09498cee113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be342476_733abab2",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1269,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-01T01:07:43Z",
+      "side": 1,
+      "message": "Comment here if that\u0027s the thing that is used when we should skip images",
+      "revId": "3565c0cb8150b566327b615635b2c09498cee113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
