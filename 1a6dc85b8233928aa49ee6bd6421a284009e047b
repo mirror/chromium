@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1893dafa_3f81133d",
+        "filename": "content/browser/blob_storage/blob_url_loader_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-08-01T19:10:07Z",
+      "side": 1,
+      "message": "can you describe the method call / point where we pass ownership? I don\u0027t see this.",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 38,
+        "endChar": 78
+      },
+      "revId": "1a6dc85b8233928aa49ee6bd6421a284009e047b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b40eef6_49f58251",
+        "filename": "content/browser/blob_storage/blob_url_loader_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-08-01T19:10:07Z",
+      "side": 1,
+      "message": "How else are we deleting this object? Only after we manually call OnComplete? What happens if someone else calls OnComplete? How do we delete the object?",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 18
+      },
+      "revId": "1a6dc85b8233928aa49ee6bd6421a284009e047b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75c53602_53596394",
+        "filename": "storage/browser/blob/mojo_blob_reader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-08-01T19:10:07Z",
+      "side": 1,
+      "message": "Please comment that the object can be deleted after this call. Also maybe comment that this is the one and only place this object is destroyed.",
+      "revId": "1a6dc85b8233928aa49ee6bd6421a284009e047b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d5978df_caaa2f27",
+        "filename": "storage/browser/blob/mojo_blob_reader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-08-01T19:10:07Z",
+      "side": 1,
+      "message": "where is the definition of this function?",
+      "revId": "1a6dc85b8233928aa49ee6bd6421a284009e047b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
