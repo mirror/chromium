@@ -26,10 +26,9 @@
 #include "chrome/browser/extensions/api/identity/identity_remove_cached_auth_token_function.h"
 #include "chrome/browser/extensions/api/identity/web_auth_flow.h"
 #include "chrome/browser/extensions/chrome_extension_function.h"
-#include "components/signin/core/browser/profile_identity_provider.h"
+#include "components/signin/core/browser/signin_manager.h"
 #include "extensions/browser/browser_context_keyed_api_factory.h"
 #include "extensions/browser/event_router.h"
-#include "google_apis/gaia/account_tracker.h"
 #include "google_apis/gaia/oauth2_mint_token_flow.h"
 #include "google_apis/gaia/oauth2_token_service.h"
 
@@ -73,7 +72,8 @@ class IdentityTokenCacheValue {
 };
 
 class IdentityAPI : public BrowserContextKeyedAPI,
-                    public gaia::AccountTracker::Observer {
+                    public OAuth2TokenService::Observer,
+                    public SigninManagerBase::Observer {
  public:
   typedef std::map<ExtensionTokenKey, IdentityTokenCacheValue> CachedTokens;
 
@@ -97,19 +97,10 @@ class IdentityAPI : public BrowserContextKeyedAPI,
   void Shutdown() override;
   static BrowserContextKeyedAPIFactory<IdentityAPI>* GetFactoryInstance();
 
-  // gaia::AccountTracker::Observer implementation:
-  void OnAccountSignInChanged(const gaia::AccountIds& ids,
-                              bool is_signed_in) override;
-
   void set_get_auth_token_function(
       IdentityGetAuthTokenFunction* get_auth_token_function) {
     get_auth_token_function_ = get_auth_token_function;
   }
-
-  // TODO(blundell): Eliminate this method once this class is no longer using
-  // AccountTracker.
-  // Makes |account_tracker_| aware of this account.
-  void SetAccountStateForTesting(const std::string& account_id, bool signed_in);
 
   // Callback that is used in testing contexts to test the implementation of
   // the chrome.identity.onSignInChanged event. Note that the passed-in Event is
@@ -127,16 +118,31 @@ class IdentityAPI : public BrowserContextKeyedAPI,
   static const char* service_name() { return "IdentityAPI"; }
   static const bool kServiceIsNULLWhileTesting = true;
 
+  // OAuth2TokenService::Observer implementation.
+  void OnRefreshTokenAvailable(const std::string& account_id) override;
+  void OnRefreshTokenRevoked(const std::string& account_id) override;
+
+  // SigninManagerBase::Observer:
+  void GoogleSigninSucceeded(const std::string& account_id,
+                             const std::string& username) override;
+  void GoogleSignedOut(const std::string& account_id,
+                       const std::string& username) override;
+
+  // Fires the chrome.identity.onSignInChanged event.
+  void FireOnAccountSignInChanged(const std::string& account_id,
+                                  bool is_signed_in);
+
   content::BrowserContext* browser_context_;
   IdentityMintRequestQueue mint_queue_;
   CachedTokens token_cache_;
-  ProfileIdentityProvider profile_identity_provider_;
-  gaia::AccountTracker account_tracker_;
 
   OnSignInChangedCallback on_signin_changed_callback_for_testing_;
 
   // May be null.
   IdentityGetAuthTokenFunction* get_auth_token_function_;
+
+  // True if there is a primary account.
+  bool primary_acccount_is_available_;
 };
 
 template <>

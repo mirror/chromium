@@ -383,14 +383,6 @@ class MockQueuedMintRequest : public IdentityMintRequestQueue::Request {
   MOCK_METHOD1(StartMintToken, void(IdentityMintRequestQueue::MintType));
 };
 
-gaia::AccountIds CreateIds(const std::string& email, const std::string& obfid) {
-  gaia::AccountIds ids;
-  ids.account_key = email;
-  ids.email = email;
-  ids.gaia = obfid;
-  return ids;
-}
-
 class IdentityTestWithSignin : public AsyncExtensionBrowserTest {
  public:
   void SetUpInProcessBrowserTestFixture() override {
@@ -2022,8 +2014,6 @@ class OnSignInChangedEventTest : public IdentityTestWithSignin {
 
 // Test that an event is fired when the primary account signs in.
 IN_PROC_BROWSER_TEST_F(OnSignInChangedEventTest, FireOnPrimaryAccountSignIn) {
-  id_api()->SetAccountStateForTesting("primary", false);
-
   api::identity::AccountInfo account_info;
   account_info.id = "primary";
   AddExpectedEvent(api::identity::OnSignInChanged::Create(account_info, true));
@@ -2037,7 +2027,7 @@ IN_PROC_BROWSER_TEST_F(OnSignInChangedEventTest, FireOnPrimaryAccountSignIn) {
 #if !defined(OS_CHROMEOS)
 // Test that an event is fired when the primary account signs out.
 IN_PROC_BROWSER_TEST_F(OnSignInChangedEventTest, FireOnPrimaryAccountSignOut) {
-  id_api()->SetAccountStateForTesting("primary", true);
+  SignIn("primary", "primary");
 
   api::identity::AccountInfo account_info;
   account_info.id = "primary";
@@ -2054,7 +2044,7 @@ IN_PROC_BROWSER_TEST_F(OnSignInChangedEventTest, FireOnPrimaryAccountSignOut) {
 // revoked.
 IN_PROC_BROWSER_TEST_F(OnSignInChangedEventTest,
                        FireOnPrimaryAccountRefreshTokenRevoked) {
-  id_api()->SetAccountStateForTesting("primary", true);
+  SignIn("primary", "primary");
 
   api::identity::AccountInfo account_info;
   account_info.id = "primary";
@@ -2070,8 +2060,6 @@ IN_PROC_BROWSER_TEST_F(OnSignInChangedEventTest,
 // newly available.
 IN_PROC_BROWSER_TEST_F(OnSignInChangedEventTest,
                        FireOnPrimaryAccountRefreshTokenAvailable) {
-  id_api()->SetAccountStateForTesting("primary", false);
-
   SignIn("primary", "primary");
   token_service_->RevokeCredentials("primary");
 
@@ -2089,9 +2077,6 @@ IN_PROC_BROWSER_TEST_F(OnSignInChangedEventTest,
 // a primary account available.
 IN_PROC_BROWSER_TEST_F(OnSignInChangedEventTest,
                        FireForSecondaryAccountWhenPrimaryAccountExists) {
-  id_api()->SetAccountStateForTesting("primary", false);
-  id_api()->SetAccountStateForTesting("secondary", false);
-
   SignIn("primary", "primary");
 
   api::identity::AccountInfo account_info;
@@ -2100,7 +2085,7 @@ IN_PROC_BROWSER_TEST_F(OnSignInChangedEventTest,
 
   // Make a secondary account's refresh token available and check that the
   // callback fires.
-  token_service_->UpdateCredentials("secondary", "refresh_token");
+  AddAccount("secondary", "secondary");
   EXPECT_FALSE(HasExpectedEvent());
 
   // Revoke the secondary account's refresh token and check that the callback
@@ -2135,8 +2120,8 @@ IN_PROC_BROWSER_TEST_F(OnSignInChangedEventTest,
 // secondary accounts.
 IN_PROC_BROWSER_TEST_F(OnSignInChangedEventTest,
                        FireForAllAccountsOnPrimaryAccountSignOut) {
-  id_api()->SetAccountStateForTesting("primary", true);
-  id_api()->SetAccountStateForTesting("secondary", true);
+  SignIn("primary", "primary");
+  AddAccount("secondary", "secondary");
 
   api::identity::AccountInfo account_info;
   account_info.id = "primary";
