@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4d15dad_bac7183d",
+        "filename": "pdf/pdf_engine.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-01T23:40:19Z",
+      "side": 1,
+      "message": "Document",
+      "revId": "86f15cb37e673e8bf125da7558ab807534e865db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "315c7df2_03adc76f",
+        "filename": "pdf/pdfium/pdfium_engine.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 2466,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-01T23:40:19Z",
+      "side": 1,
+      "message": "I would add DCHECK(CanEditText()) to help make sure this is called at the right time.",
+      "revId": "86f15cb37e673e8bf125da7558ab807534e865db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d99bf80_498e1aff",
+        "filename": "third_party/WebKit/Source/core/exported/WebPluginContainerTest.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-01T23:40:19Z",
+      "side": 1,
+      "message": "Is there a reason for doing the static_cast? What\u0027s wrong with using ToWebPluginContainerImpl()?",
+      "revId": "86f15cb37e673e8bf125da7558ab807534e865db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
