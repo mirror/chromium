@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0a69e38_977c6568",
+        "filename": "cc/quads/render_pass.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-08-01T18:49:23Z",
+      "side": 1,
+      "message": "nit: I\u0027d say with Transparent or something, cuz the color is not an argument.",
+      "revId": "d5e9bbddb7b344d33b7efc4c4e1a16f9e292a900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29280f69_f51a5969",
+        "filename": "cc/quads/render_pass.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-08-01T18:49:23Z",
+      "side": 1,
+      "message": "confused at the claim the quad has an opaque rect when it\u0027s transparent. should it still occlude things? Can you leave a comment here and explain why? Maybe it should be OccludingTransparent in the function name or something, this should be very clear I think, as there\u0027s a lot going on.",
+      "revId": "d5e9bbddb7b344d33b7efc4c4e1a16f9e292a900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78d8a619_cf453f7c",
+        "filename": "cc/quads/render_pass.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-08-01T18:49:23Z",
+      "side": 1,
+      "message": "also not clear to me why this would be preserved given its transparent now, this seems redundant?",
+      "revId": "d5e9bbddb7b344d33b7efc4c4e1a16f9e292a900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
