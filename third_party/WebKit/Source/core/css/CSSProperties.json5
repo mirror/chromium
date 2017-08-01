@@ -2149,7 +2149,7 @@
       field_template: "external",
       type_name: "ScrollSnapType",
       field_group: "rare-non-inherited->scroll-snap",
-      include_paths: ["core/style/ScrollSnap.h"],
+      include_paths: ["platform/graphics/ScrollSnapData.h"],
       default_value: "ScrollSnapType()",
     },
     {
@@ -2163,7 +2163,7 @@
       type_name: "ScrollSnapAlign",
       field_group: "rare-non-inherited->scroll-snap",
       default_value: "ScrollSnapAlign()",
-      include_paths: ["core/style/ScrollSnap.h"],
+      include_paths: ["platform/graphics/ScrollSnapData.h"],
     },
     {
       name: "scroll-snap-stop",
