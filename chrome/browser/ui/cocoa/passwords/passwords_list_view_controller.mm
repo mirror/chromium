@@ -35,6 +35,15 @@ CGFloat ManagePasswordItemWidth() {
                   undoExplanationWidth + kItemLabelSpacing + undoLinkWidth);
 }
 
+NSTextField* EditableUsernameField(const base::string16& text) {
+  base::scoped_nsobject<NSTextField> textField(
+      [[NSTextField alloc] initWithFrame:NSZeroRect]);
+  InitLabel(textField, text);
+  [textField setEditable:YES];
+  [textField setSelectable:YES];
+  return textField.autorelease();
+}
+
 NSTextField* Label(const base::string16& text) {
   base::scoped_nsobject<NSTextField> textField(
       [[NSTextField alloc] initWithFrame:NSZeroRect]);
@@ -204,12 +213,20 @@ NSTextField* FederationLabel(const base::string16& text) {
 
 @implementation PendingPasswordItemView
 
-- (id)initWithForm:(const autofill::PasswordForm&)form {
+- (NSTextField*)usernameField {
+  return usernameField_.get();
+}
+
+- (id)initWithForm:(const autofill::PasswordForm&)form editMode:(BOOL)editMode {
   if ((self = [super initWithFrame:NSZeroRect])) {
     // Add the username.
-    usernameField_.reset([UsernameLabel(GetDisplayUsername(form)) retain]);
+    if (editMode) {
+      usernameField_.reset(
+          [EditableUsernameField(GetDisplayUsername(form)) retain]);
+    } else {
+      usernameField_.reset([UsernameLabel(GetDisplayUsername(form)) retain]);
+    }
     [self addSubview:usernameField_];
-
     if (form.federation_origin.unique()) {
       passwordField_.reset([PasswordLabel(form.password_value) retain]);
     } else {
@@ -323,8 +340,9 @@ NSTextField* FederationLabel(const base::string16& text) {
 - (void)updateContent {
   switch (state_) {
     case MANAGE_PASSWORD_ITEM_STATE_PENDING:
-      contentView_.reset(
-          [[PendingPasswordItemView alloc] initWithForm:*passwordForm_]);
+      contentView_.reset([[PendingPasswordItemView alloc]
+          initWithForm:*passwordForm_
+              editMode:FALSE]);
       return;
     case MANAGE_PASSWORD_ITEM_STATE_MANAGE:
       contentView_.reset([[ManagePasswordItemView alloc]
