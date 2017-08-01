@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "a79af468_d565c728",
+        "filename": "third_party/WebKit/Source/core/page/Page.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 514,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-01T15:11:24Z",
+      "side": 1,
+      "message": "If junov@ is okay with this, then I have no objections. Easy enough to change later, I suppose.",
+      "parentUuid": "09bbb033_f3c641a2",
+      "revId": "b6054af66669c754e6421cdf290f7bdf21785d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cd6011be_3bcc5b6d",
         "filename": "third_party/WebKit/Source/platform/fonts/FontGlobalContext.cpp",
         "patchSetId": 5
@@ -107,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "3a77ad2e_c571ebad",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontGlobalContext.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-01T15:11:24Z",
+      "side": 1,
+      "message": "Removing DISALLOW_NEW seems fine here in order to avoid the static destructor.\n\nAside: did you consider using WorkerSettings? Now that I look, it seems like the present approach uses Settings rather than a static, so the most parallel construction seems to be WorkerSettings.",
+      "parentUuid": "e8a5d6af_04b18d17",
+      "revId": "b6054af66669c754e6421cdf290f7bdf21785d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f32e3989_3b95f7d0",
         "filename": "third_party/WebKit/Source/platform/fonts/GenericFontFamilySettings.cpp",
         "patchSetId": 5
@@ -142,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "568bcd0f_82765cbf",
+        "filename": "third_party/WebKit/Source/platform/fonts/GenericFontFamilySettings.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-01T15:11:24Z",
+      "side": 1,
+      "message": "Ahhh, okay. It can probably be made static, at least, then, but that\u0027s a super-nit.",
+      "parentUuid": "e3f7067a_64e03bd3",
+      "revId": "b6054af66669c754e6421cdf290f7bdf21785d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "21eec941_0955fd01",
         "filename": "third_party/WebKit/Source/platform/fonts/GenericFontFamilySettings.cpp",
         "patchSetId": 5
@@ -171,6 +225,24 @@
       "side": 1,
       "message": "Fine. I was proud to be able to do it at all. Done.",
       "parentUuid": "21eec941_0955fd01",
+      "revId": "b6054af66669c754e6421cdf290f7bdf21785d69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "637390cd_94928189",
+        "filename": "third_party/WebKit/Source/platform/fonts/GenericFontFamilySettings.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-01T15:11:24Z",
+      "side": 1,
+      "message": "I did say it was a nit. :)",
+      "parentUuid": "c83acbc7_06a5ba10",
       "revId": "b6054af66669c754e6421cdf290f7bdf21785d69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

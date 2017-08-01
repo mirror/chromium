@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "757d2da2_9262915a",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontCache.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-01T15:11:24Z",
+      "side": 1,
+      "message": "Why is this code need now but not before? I\u0027m not seeing where this was moved from.",
+      "revId": "0394e0f07885e996f71ed47f3e0fcb43944aa281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2682af92_0fb3624b",
+        "filename": "third_party/WebKit/Source/platform/fonts/GenericFontFamilySettings.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-01T15:11:24Z",
+      "side": 1,
+      "message": "nit: this member function can be const",
+      "revId": "0394e0f07885e996f71ed47f3e0fcb43944aa281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9735ca08_cee102b4",
+        "filename": "third_party/WebKit/Source/platform/fonts/GenericFontFamilySettings.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-01T15:11:24Z",
+      "side": 1,
+      "message": "nit: can this be static?",
+      "revId": "0394e0f07885e996f71ed47f3e0fcb43944aa281",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
