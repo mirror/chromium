@@ -4,6 +4,7 @@
 
 #include "chrome/browser/chromeos/net/tether_notification_presenter.h"
 
+#include "ash/system/system_notifier.h"
 #include "base/bind.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/string16.h"
@@ -57,10 +58,6 @@ int GetNormalizedSignalStrength(int signal_strength) {
 }  // namespace
 
 // static
-constexpr const char TetherNotificationPresenter::kTetherNotifierId[] =
-    "cros_tether_notification_ids.notifier_id";
-
-// static
 constexpr const char TetherNotificationPresenter::kActiveHostNotificationId[] =
     "cros_tether_notification_ids.active_host";
 
@@ -82,43 +79,10 @@ constexpr const char
 // static
 constexpr const char* const
     TetherNotificationPresenter::kIdsWhichOpenTetherSettingsOnClick[] = {
-        TetherNotificationPresenter::kTetherNotifierId,
+        ash::system_notifier::kNotifierTether,
         TetherNotificationPresenter::kActiveHostNotificationId,
         TetherNotificationPresenter::kPotentialHotspotNotificationId,
         TetherNotificationPresenter::kSetupRequiredNotificationId};
-
-// static
-std::unique_ptr<message_center::Notification>
-TetherNotificationPresenter::CreateNotificationWithMediumSignalStrengthIcon(
-    const std::string& id,
-    const base::string16& title,
-    const base::string16& message) {
-  return CreateNotification(id, title, message,
-                            message_center::RichNotificationData(),
-                            kMediumSignalStrength);
-}
-
-// static
-std::unique_ptr<message_center::Notification>
-TetherNotificationPresenter::CreateNotification(
-    const std::string& id,
-    const base::string16& title,
-    const base::string16& message,
-    const message_center::RichNotificationData rich_notification_data,
-    int signal_strength) {
-  auto source = base::MakeUnique<ash::network_icon::SignalStrengthImageSource>(
-      ash::network_icon::BARS, gfx::kGoogleBlue500, kTetherSignalIconSize,
-      GetNormalizedSignalStrength(signal_strength));
-  return base::MakeUnique<message_center::Notification>(
-      message_center::NotificationType::NOTIFICATION_TYPE_SIMPLE, id, title,
-      message,
-      gfx::Image(gfx::ImageSkia(std::move(source), kTetherSignalIconSize)),
-      base::string16() /* display_source */, GURL() /* origin_url */,
-      message_center::NotifierId(
-          message_center::NotifierId::NotifierType::SYSTEM_COMPONENT,
-          kTetherNotifierId),
-      rich_notification_data, nullptr);
-}
 
 TetherNotificationPresenter::TetherNotificationPresenter(
     Profile* profile,
@@ -258,6 +222,40 @@ void TetherNotificationPresenter::OnNotificationButtonClicked(
     network_connect_->ConnectToNetworkId(hotspot_nearby_device_.GetDeviceId());
   }
   message_center_->RemoveNotification(notification_id, true /* by_user */);
+}
+
+std::unique_ptr<message_center::Notification>
+TetherNotificationPresenter::CreateNotificationWithMediumSignalStrengthIcon(
+    const std::string& id,
+    const base::string16& title,
+    const base::string16& message) {
+  return CreateNotification(id, title, message,
+                            message_center::RichNotificationData(),
+                            kMediumSignalStrength);
+}
+
+std::unique_ptr<message_center::Notification>
+TetherNotificationPresenter::CreateNotification(
+    const std::string& id,
+    const base::string16& title,
+    const base::string16& message,
+    const message_center::RichNotificationData rich_notification_data,
+    int signal_strength) {
+  auto source = base::MakeUnique<ash::network_icon::SignalStrengthImageSource>(
+      ash::network_icon::BARS, gfx::kGoogleBlue500, kTetherSignalIconSize,
+      GetNormalizedSignalStrength(signal_strength));
+  std::unique_ptr<message_center::Notification> notification =
+      base::MakeUnique<message_center::Notification>(
+          message_center::NotificationType::NOTIFICATION_TYPE_SIMPLE, id, title,
+          message,
+          gfx::Image(gfx::ImageSkia(std::move(source), kTetherSignalIconSize)),
+          base::string16() /* display_source */, GURL() /* origin_url */,
+          message_center::NotifierId(
+              message_center::NotifierId::NotifierType::SYSTEM_COMPONENT,
+              ash::system_notifier::kNotifierTether),
+          rich_notification_data, nullptr);
+  notification->SetSystemPriority();
+  return notification;
 }
 
 void TetherNotificationPresenter::SetSettingsUiDelegateForTesting(
