@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "9dcba733_546ed1c2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-01T00:57:48Z",
+      "side": 1,
+      "message": "Done, thanks!",
+      "parentUuid": "220e58cf_61c0713b",
+      "range": {
+        "startLine": 7,
+        "startChar": 50,
+        "endLine": 7,
+        "endChar": 59
+      },
+      "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08d6278c_710a0e07",
         "filename": "components/ui_devtools/protocol.json",
         "patchSetId": 2
@@ -382,6 +406,24 @@
       "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cf73a37_eb3ace87",
+        "filename": "components/ui_devtools/protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-01T00:57:48Z",
+      "side": 1,
+      "message": "Done, thanks!",
+      "parentUuid": "3812b78f_fa419034",
+      "revId": "1fe13d35506a36a7d339be9b27192ce80251fdc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
