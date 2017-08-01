@@ -114,6 +114,8 @@ class PasswordAutofillAgent : public content::RenderFrameObserver,
   // on a non-secure page.
   void ShowNotSecureWarning(const blink::WebInputElement& element);
 
+  void ManualFallbackSuggestion(const blink::WebInputElement& element);
+
   // Called when new form controls are inserted.
   void OnDynamicFormsSeen();
 
