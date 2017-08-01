@@ -29,6 +29,8 @@
 #include "base/auto_reset.h"
 #include "base/command_line.h"
 #include "base/i18n/rtl.h"
+#include "base/metrics/histogram_macros.h"
+#include "ui/app_list/app_list_constants.h"
 #include "ui/app_list/app_list_features.h"
 #include "ui/base/ui_base_switches.h"
 #include "ui/compositor/layer.h"
@@ -746,8 +748,9 @@ void ShelfLayoutManager::CalculateTargetBounds(const State& state,
     status_size.set_width(kShelfSize);
 
   gfx::Point status_origin = SelectValueForShelfAlignment(
-      gfx::Point(0, 0), gfx::Point(shelf_width - status_size.width(),
-                                   shelf_height - status_size.height()),
+      gfx::Point(0, 0),
+      gfx::Point(shelf_width - status_size.width(),
+                 shelf_height - status_size.height()),
       gfx::Point(0, shelf_height - status_size.height()));
   if (shelf_->IsHorizontalAlignment() && !base::i18n::IsRTL())
     status_origin.set_x(shelf_width - status_size.width());
@@ -1231,6 +1234,9 @@ void ShelfLayoutManager::CompleteAppListDrag(
             ->GetDisplayNearestWindow(shelf_widget_->GetNativeWindow())
             .work_area()
             .y());
+    UMA_HISTOGRAM_ENUMERATION(app_list::kAppListToggleMethod,
+                              app_list::SWIPE_FROM_SHELF,
+                              app_list::SWIPE_FROM_SHELF);
   } else {
     Shell::Get()->DismissAppList();
   }
