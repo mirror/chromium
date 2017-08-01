@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "db27ca3e_1aca0f1c",
+        "filename": "components/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1111839
+      },
+      "writtenOn": "2017-08-01T05:19:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6f7ac27_6ece1a62",
+      "range": {
+        "startLine": 400,
+        "startChar": 0,
+        "endLine": 401,
+        "endChar": 54
+      },
+      "revId": "a3c1b5de626da72efbbc94ade0d92537ef8b1347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f61a8493_d5a5d051",
         "filename": "components/arc/bluetooth/arc_bluetooth_bridge.cc",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "a3c1b5de626da72efbbc94ade0d92537ef8b1347",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bded2ed5_4659f3d4",
+        "filename": "components/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 1111839
+      },
+      "writtenOn": "2017-08-01T05:19:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f61a8493_d5a5d051",
+      "range": {
+        "startLine": 741,
+        "startChar": 2,
+        "endLine": 741,
+        "endChar": 80
+      },
+      "revId": "a3c1b5de626da72efbbc94ade0d92537ef8b1347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "004fe287_9b74bcae",
+        "filename": "components/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 754,
+      "author": {
+        "id": 1111839
+      },
+      "writtenOn": "2017-08-01T05:19:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a4fd2a0_10c2ca8d",
+      "range": {
+        "startLine": 754,
+        "startChar": 4,
+        "endLine": 754,
+        "endChar": 31
+      },
+      "revId": "a3c1b5de626da72efbbc94ade0d92537ef8b1347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7289a5cf_216234a5",
         "filename": "components/arc/bluetooth/arc_bluetooth_bridge.cc",
         "patchSetId": 9
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "d88be729_b8cb3fab",
+        "filename": "components/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 765,
+      "author": {
+        "id": 1111839
+      },
+      "writtenOn": "2017-08-01T05:19:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7289a5cf_216234a5",
+      "range": {
+        "startLine": 764,
+        "startChar": 0,
+        "endLine": 765,
+        "endChar": 49
+      },
+      "revId": "a3c1b5de626da72efbbc94ade0d92537ef8b1347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8358658_c91b6764",
         "filename": "components/arc/bluetooth/arc_bluetooth_bridge.cc",
         "patchSetId": 9
@@ -114,6 +210,30 @@
       "revId": "a3c1b5de626da72efbbc94ade0d92537ef8b1347",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6997a1f_50a5618e",
+        "filename": "components/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1993,
+      "author": {
+        "id": 1111839
+      },
+      "writtenOn": "2017-08-01T05:19:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8358658_c91b6764",
+      "range": {
+        "startLine": 1993,
+        "startChar": 25,
+        "endLine": 1993,
+        "endChar": 48
+      },
+      "revId": "a3c1b5de626da72efbbc94ade0d92537ef8b1347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -164,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "c7dfdc94_54de565d",
+        "filename": "components/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 2036,
+      "author": {
+        "id": 1111839
+      },
+      "writtenOn": "2017-08-01T05:19:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8584474f_9439a1e2",
+      "range": {
+        "startLine": 2020,
+        "startChar": 0,
+        "endLine": 2036,
+        "endChar": 59
+      },
+      "revId": "a3c1b5de626da72efbbc94ade0d92537ef8b1347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7cf6a83_e7928cfa",
         "filename": "components/arc/bluetooth/arc_bluetooth_bridge.h",
         "patchSetId": 9
@@ -175,6 +319,30 @@
       "writtenOn": "2017-07-31T21:28:44Z",
       "side": 1,
       "message": "const?",
+      "range": {
+        "startLine": 364,
+        "startChar": 4,
+        "endLine": 364,
+        "endChar": 23
+      },
+      "revId": "a3c1b5de626da72efbbc94ade0d92537ef8b1347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82f31323_bf8e6929",
+        "filename": "components/arc/bluetooth/arc_bluetooth_bridge.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1111839
+      },
+      "writtenOn": "2017-08-01T05:19:55Z",
+      "side": 1,
+      "message": "Since SendInitialPowerChange of |bluetooth_bridge_| will be called by OnInstanceReady, and SendInitialPowerChange invoke EnqueuePowerIntent which changes the member variable of |bluetooth_bridge_|, so it is not feasible to mark |bluetooth_bridge_| as const.",
+      "parentUuid": "c7cf6a83_e7928cfa",
       "range": {
         "startLine": 364,
         "startChar": 4,
