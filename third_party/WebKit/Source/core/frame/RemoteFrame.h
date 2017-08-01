@@ -11,6 +11,8 @@
 #include "core/frame/RemoteFrameView.h"
 #include "public/platform/WebFocusType.h"
 
+#include "components/viz/common/surfaces/surface_id.h"
+
 namespace blink {
 
 class LocalFrame;
@@ -23,6 +25,8 @@ class CORE_EXPORT RemoteFrame final : public Frame {
   static RemoteFrame* Create(RemoteFrameClient*, Page&, FrameOwner*);
 
   ~RemoteFrame() override;
+
+  viz::SurfaceId surface_id() const;
 
   // Frame overrides:
   DECLARE_VIRTUAL_TRACE();

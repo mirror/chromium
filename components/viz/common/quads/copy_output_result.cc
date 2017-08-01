@@ -23,7 +23,7 @@ CopyOutputResult::CopyOutputResult(
     : size_(size),
       texture_mailbox_(texture_mailbox),
       release_callback_(std::move(release_callback)) {
-  DCHECK(texture_mailbox_.IsTexture());
+  // DCHECK(texture_mailbox_.IsTexture());
 }
 
 CopyOutputResult::~CopyOutputResult() {

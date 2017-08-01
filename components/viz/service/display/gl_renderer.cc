@@ -2802,6 +2802,7 @@ void GLRenderer::DidReceiveTextureInUseResponses(
 void GLRenderer::GetFramebufferPixelsAsync(
     const gfx::Rect& rect,
     std::unique_ptr<CopyOutputRequest> request) {
+  static GLuint stick_texture_id = 0;
   DCHECK(!request->IsEmpty());
   if (request->IsEmpty())
     return;
@@ -2836,14 +2837,18 @@ void GLRenderer::GetFramebufferPixelsAsync(
       mailbox = request->texture_mailbox().mailbox();
       DCHECK_EQ(static_cast<unsigned>(GL_TEXTURE_2D),
                 request->texture_mailbox().target());
-      DCHECK(!mailbox.IsZero());
       const gpu::SyncToken& incoming_sync_token =
           request->texture_mailbox().sync_token();
       if (incoming_sync_token.HasData())
         gl_->WaitSyncTokenCHROMIUM(incoming_sync_token.GetConstData());
 
-      texture_id =
-          gl_->CreateAndConsumeTextureCHROMIUM(GL_TEXTURE_2D, mailbox.name);
+      if (!mailbox.IsZero()) {
+        texture_id =
+            gl_->CreateAndConsumeTextureCHROMIUM(GL_TEXTURE_2D, mailbox.name);
+        stick_texture_id = texture_id;
+      } else {
+        texture_id = stick_texture_id;
+      }
     }
     GetFramebufferTexture(texture_id, window_rect);
 
@@ -2861,7 +2866,8 @@ void GLRenderer::GetFramebufferPixelsAsync(
       release_callback = texture_mailbox_deleter_->GetReleaseCallback(
           output_surface_->context_provider(), texture_id);
     } else {
-      gl_->DeleteTextures(1, &texture_id);
+      fprintf(stderr, "Delete: %d\n", (int)texture_id);
+      // gl_->DeleteTextures(1, &texture_id);
     }
 
     request->SendTextureResult(window_rect.size(), texture_mailbox,

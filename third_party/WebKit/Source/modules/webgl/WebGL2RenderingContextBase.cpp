@@ -6,7 +6,9 @@
 
 #include <memory>
 #include "bindings/modules/v8/WebGLAny.h"
+#include "core/frame/RemoteFrame.h"
 #include "core/html/HTMLCanvasElement.h"
+#include "core/html/HTMLIFrameElement.h"
 #include "core/html/HTMLImageElement.h"
 #include "core/html/HTMLVideoElement.h"
 #include "core/html/ImageData.h"
@@ -30,6 +32,10 @@
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/WebGraphicsContext3DProvider.h"
+
+#include "core/exported/WebRemoteFrameImpl.h"
+#include "core/frame/RemoteFrameClientImpl.h"
+#include "public/web/WebRemoteFrameClient.h"
 
 using WTF::String;
 
@@ -1514,6 +1520,75 @@ void WebGL2RenderingContextBase::texSubImage2D(
       execution_context->GetSecurityOrigin(), kTexSubImage2D, target, level, 0,
       format, type, xoffset, yoffset, 0, video,
       GetTextureSourceSubRectangle(width, height), 1, 0, exception_state);
+}
+
+void WebGL2RenderingContextBase::bindTexSource(
+    ExecutionContext* execution_context,
+    GLenum target,
+    HTMLIFrameElement* iframe,
+    ExceptionState& exception_state) {
+  if (isContextLost())
+    return;
+  if (target != GL_TEXTURE_2D) {
+    SynthesizeGLError(GL_INVALID_ENUM, "bindTexSource", "invalid target");
+    return;
+  }
+  DCHECK(iframe);
+  Frame* frame = iframe->ContentFrame();
+  DCHECK(frame);
+  if (frame->IsRemoteFrame()) {
+    RemoteFrame* remote_frame = reinterpret_cast<RemoteFrame*>(frame);
+    DCHECK(remote_frame);
+    viz::SurfaceId surface_id = remote_frame->surface_id();
+    if (!surface_id.is_valid()) {
+      SynthesizeGLError(GL_INVALID_OPERATION, "bindTexSource",
+                        "Source not ready: 1");
+    } else {
+      RemoteFrameClientImpl* client =
+          reinterpret_cast<RemoteFrameClientImpl*>(remote_frame->Client());
+      DCHECK(client);
+      WebRemoteFrameImpl* web_frame = client->GetWebFrame();
+      DCHECK(web_frame);
+      WebRemoteFrameClient* web_client = web_frame->Client();
+      DCHECK(web_client);
+
+      gpu::Mailbox mailbox;
+      ContextGL()->GenMailboxCHROMIUM(mailbox.name);
+      ContextGL()->ProduceTextureCHROMIUM(target, mailbox.name);
+      web_client->SetRenderingTargetTexture(surface_id, mailbox);
+      fprintf(stderr, "bindTexSource: %d", (int)surface_id.hash());
+    }
+  } else {
+    SynthesizeGLError(GL_INVALID_OPERATION, "bindTexSource",
+                      "Source not ready: 0");
+  }
+}
+
+void WebGL2RenderingContextBase::requestFrame(
+    ExecutionContext* execution_context,
+    GLenum target,
+    HTMLIFrameElement* iframe,
+    ExceptionState& exception_state) {
+  if (isContextLost())
+    return;
+  DCHECK(iframe);
+  Frame* frame = iframe->ContentFrame();
+  DCHECK(frame);
+  DCHECK(frame->IsRemoteFrame());
+  RemoteFrame* remote_frame = reinterpret_cast<RemoteFrame*>(frame);
+  DCHECK(remote_frame);
+  viz::SurfaceId surface_id = remote_frame->surface_id();
+  DCHECK(surface_id.is_valid());
+  RemoteFrameClientImpl* client =
+      reinterpret_cast<RemoteFrameClientImpl*>(remote_frame->Client());
+  DCHECK(client);
+  WebRemoteFrameImpl* web_frame = client->GetWebFrame();
+  DCHECK(web_frame);
+  WebRemoteFrameClient* web_client = web_frame->Client();
+  DCHECK(web_client);
+
+  gpu::Mailbox mailbox;
+  web_client->SetRenderingTargetTexture(surface_id, mailbox);
 }
 
 void WebGL2RenderingContextBase::texSubImage2D(

@@ -64,6 +64,10 @@ SurfaceLayer::~SurfaceLayer() {
   DCHECK(!layer_tree_host());
 }
 
+viz::SurfaceId SurfaceLayer::surface_id() const {
+  return primary_surface_info().id();
+}
+
 void SurfaceLayer::SetPrimarySurfaceInfo(const viz::SurfaceInfo& surface_info) {
   primary_surface_info_ = surface_info;
   UpdateDrawsContent(HasDrawableContent());
