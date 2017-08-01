@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a596d2d3_0c8eb9ee",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console_model/ConsoleModel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-01T19:22:01Z",
+      "side": 1,
+      "message": "For `console.context(\"foo\")`, V8 generates a context name with a hashtag, e.g. \u0027foo#1\u0027.\n\nThis is to distinguish contexts created with the same name\nconsole.context(\"foo\")    // context: \u0027foo#1\u0027\nconsole.context(\"foo\")    // context: \u0027foo#2\u0027\n\nIn this CL, I\u0027m treating these the same, even though we could differentiate them in the future.",
+      "revId": "d2d7b1ecb2f071b5cda9e5d0293599ef2a7afc97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
