@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b43087af_1b149e91",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1112153
+      },
+      "writtenOn": "2017-08-01T22:39:22Z",
+      "side": 1,
+      "message": "Sorry for confusing. removed it.\n\nIt blocks https://chromium-review.googlesource.com/c/580702/ which is related to webgl, because it resolves buffer format and internal format mismatch. However, it\u0027s very subtle relationship, so removed it.",
+      "parentUuid": "a7b331a9_b3e1b018",
+      "revId": "33ff0e9685a226c4ef5ea629d0cc2bf26d246e71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "da9777dd_77539f5b",
         "filename": "gpu/command_buffer/common/gpu_memory_buffer_support.h",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-01T21:33:05Z",
       "side": 1,
       "message": "Multiple internalformats can be used with the same gfx::BufferFormat. Adding this function gives the impression that this is not the case.",
+      "revId": "33ff0e9685a226c4ef5ea629d0cc2bf26d246e71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55339361_284c9b41",
+        "filename": "gpu/command_buffer/common/gpu_memory_buffer_support.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1112153
+      },
+      "writtenOn": "2017-08-01T22:39:22Z",
+      "side": 1,
+      "message": "So far, there is the case multiple buffer format is used with the same internal format, but there isn\u0027t an opposite case.\ne.g.\n    case gfx::BufferFormat::RGBA_4444:\n    case gfx::BufferFormat::RGBA_F16:\n      return internalformat \u003d\u003d GL_RGBA;\n\nDo you want to remain it for future generalization? In my opinion, as buffer format is quite 1:1 to fourcc format, which implies one internal format under the mesa.\n\nIn the case in the future that Mac and ChromeOS needs to point out different internal format, I think we can use #ifdef.",
+      "parentUuid": "da9777dd_77539f5b",
       "revId": "33ff0e9685a226c4ef5ea629d0cc2bf26d246e71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
