@@ -119,7 +119,8 @@ class PLATFORM_EXPORT CrossOriginAccessControl {
   static RedirectStatus CheckRedirectLocation(const KURL&);
 
   static bool HandleRedirect(RefPtr<SecurityOrigin>,
-                             ResourceRequest&,
+                             const KURL& new_url,
+                             WebURLRequest::RequestContext,
                              const ResourceResponse&,
                              WebURLRequest::FetchCredentialsMode,
                              ResourceLoaderOptions&,

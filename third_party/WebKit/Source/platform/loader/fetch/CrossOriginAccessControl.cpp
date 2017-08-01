@@ -542,14 +542,14 @@ void CrossOriginAccessControl::RedirectErrorString(
 
 bool CrossOriginAccessControl::HandleRedirect(
     RefPtr<SecurityOrigin> current_security_origin,
-    ResourceRequest& new_request,
+    const KURL& new_url,
+    WebURLRequest::RequestContext request_context,
     const ResourceResponse& redirect_response,
     WebURLRequest::FetchCredentialsMode credentials_mode,
     ResourceLoaderOptions& options,
     String& error_message) {
   // http://www.w3.org/TR/cors/#redirect-steps terminology:
   const KURL& last_url = redirect_response.Url();
-  const KURL& new_url = new_request.Url();
 
   RefPtr<SecurityOrigin> new_security_origin = current_security_origin;
 
@@ -581,7 +581,7 @@ bool CrossOriginAccessControl::HandleRedirect(
       builder.Append("' has been blocked by CORS policy: ");
       CrossOriginAccessControl::AccessControlErrorString(
           builder, cors_status, redirect_response,
-          current_security_origin.Get(), new_request.GetRequestContext());
+          current_security_origin.Get(), request_context);
       error_message = builder.ToString();
       return false;
     }
@@ -596,8 +596,10 @@ bool CrossOriginAccessControl::HandleRedirect(
   }
 
   if (!current_security_origin->CanRequest(new_url)) {
-    new_request.ClearHTTPOrigin();
-    new_request.SetHTTPOrigin(new_security_origin.Get());
+    // TODO(tyoshino): We need to let the new request to be sent have the
+    // Origin header generated from |new_security_origin|. Create a path to
+    // propagate the new value to net/ layer. See http://crbug.com/746687 and
+    // http://crbug.com/665766.
 
     options.cors_flag = true;
   }
