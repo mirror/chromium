@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9bfe0a5_69e45c8f",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/CompositingRecorder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-01T21:26:14Z",
+      "side": 1,
+      "message": "From the perspective of a CompositingRecorder user, it\u0027s not clear that bounds is a performance hint if passed without clip_to_bounds. WDYT of combining bounds and clip_to_bounds so that passing a nullptr for bounds implies no clip? This could, regrettably, add some clips in cases where we know the bounds but my intuition is that those are not common.",
+      "revId": "1640112c83c2d568dd94514e90dad39f641ae0c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
