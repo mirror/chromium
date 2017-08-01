@@ -78,6 +78,8 @@ static_library("ntp_snippets") {
     "remote/prefetched_pages_tracker_impl.h",
     "remote/remote_suggestion.cc",
     "remote/remote_suggestion.h",
+    "remote/remote_suggestion_builder.cc",
+    "remote/remote_suggestion_builder.h",
     "remote/remote_suggestions_database.cc",
     "remote/remote_suggestions_database.h",
     "remote/remote_suggestions_fetcher.cc",
