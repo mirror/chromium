@@ -177,7 +177,7 @@ class MediaEngagementContentsObserverTest
     const ukm::UkmSource* source =
         test_ukm_recorder_.GetSourceForUrl(url.spec().c_str());
     EXPECT_EQ(url, source->url());
-    EXPECT_EQ(1, test_ukm_recorder_.CountEntries(
+    EXPECT_EQ(1, test_ukm_recorder_.CountMetricsForEventName(
                      *source, MediaEngagementContentsObserver::kUkmEntryName));
     test_ukm_recorder_.ExpectMetric(
         *source, MediaEngagementContentsObserver::kUkmEntryName,

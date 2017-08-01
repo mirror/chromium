@@ -53,12 +53,8 @@ double WebContentsCoordinationUnitImpl::CalculateCPUUsage() {
                                  .size();
     DCHECK_LE(1u, tabs_in_process);
 
-    base::Value process_cpu_usage_value =
-        process_coordination_unit->GetProperty(mojom::PropertyType::kCPUUsage);
-    double process_cpu_usage =
-        process_cpu_usage_value.IsType(base::Value::Type::NONE)
-            ? 0.0
-            : process_cpu_usage_value.GetDouble();
+    double process_cpu_usage = int64_t(
+        process_coordination_unit->GetProperty(mojom::PropertyType::kCPUUsage));
     cpu_usage += process_cpu_usage / tabs_in_process;
   }
 
@@ -70,8 +66,7 @@ void WebContentsCoordinationUnitImpl::RecalculateProperty(
   if (property_type == mojom::PropertyType::kCPUUsage) {
     double cpu_usage = CalculateCPUUsage();
 
-    SetProperty(mojom::PropertyType::kCPUUsage,
-                base::MakeUnique<base::Value>(cpu_usage));
+    SetProperty(mojom::PropertyType::kCPUUsage, cpu_usage * 1000);
   }
 }
 

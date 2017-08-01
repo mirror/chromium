@@ -142,12 +142,7 @@ mojom::UkmEntryPtr TestUkmRecorder::GetMergedEntryForSourceID(
 
 bool TestUkmRecorder::HasEntry(const UkmSource& source,
                                const char* event_name) const {
-  return CountEntries(source, event_name) > 0;
-}
-
-int TestUkmRecorder::CountEntries(const UkmSource& source,
-                                  const char* event_name) const {
-  return GetEntriesForSourceID(source.id(), event_name).size();
+  return CountMetricsForEventName(source, event_name) > 0;
 }
 
 void TestUkmRecorder::ExpectEntry(
@@ -194,8 +189,16 @@ void TestUkmRecorder::ExpectEntry(
 
 int TestUkmRecorder::CountMetricsForEventName(const UkmSource& source,
                                               const char* event_name) const {
-  mojom::UkmEntryPtr entry = GetMergedEntryForSourceID(source.id(), event_name);
-  return entry.get() ? entry->metrics.size() : 0;
+  int count = 0;
+  const uint64_t event_hash = base::HashMetricName(event_name);
+  std::vector<const mojom::UkmEntry*> entries;
+  for (size_t i = 0; i < entries_count(); ++i) {
+    const mojom::UkmEntry* entry = GetEntry(i);
+    if (entry->source_id == source.id() && entry->event_hash == event_hash) {
+      count++;
+    }
+  }
+  return count;
 }
 
 bool TestUkmRecorder::HasMetric(const UkmSource& source,

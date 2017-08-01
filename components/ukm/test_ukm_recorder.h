@@ -86,10 +86,6 @@ class TestUkmRecorder : public UkmRecorderImpl {
   // that aren't recorded multiple times per source should prefer using
   // HasMetric/CountMetrics/ExpectMetric(s) above.
 
-  // Returns the number of entries recorded with the given |event_name|, for the
-  // given UKM |source|.
-  int CountEntries(const ukm::UkmSource& source, const char* event_name) const;
-
   // Expects that an entry with the given |expected_metrics| was recorded, for
   // the given |source| and |event_name|. The order of |expected_metrics| is not
   // significant. |expected_metrics| contains (metric name,metric value) pairs.
