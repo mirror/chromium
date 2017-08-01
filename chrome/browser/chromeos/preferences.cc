@@ -121,6 +121,10 @@ void Preferences::RegisterPrefs(PrefRegistrySimple* registry) {
   registry->RegisterIntegerPref(
       prefs::kSystemTimezoneAutomaticDetectionPolicy,
       enterprise_management::SystemTimezoneProto::USERS_DECIDE);
+
+  // Register ash prefs.
+  if (!ash_util::IsRunningInMash())
+    ash::Shell::RegisterLocalStatePrefs(registry);
 }
 
 // static
