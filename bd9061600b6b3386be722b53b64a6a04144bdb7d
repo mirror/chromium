@@ -46,6 +46,30 @@
       "revId": "bd9061600b6b3386be722b53b64a6a04144bdb7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81602bee_0a603fcf",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2223,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-01T19:43:06Z",
+      "side": 1,
+      "message": "I think you\u0027re assuming the BookmarkBar was never created. That is, bookmark_bar_view_ is null. I suspect that isn\u0027t the case. What seems more likely is that the bookmarkbar was created but there is no active web contents. Previously if this happened the bookmarkbar would not hidden, that isn\u0027t the case after your patch.\n\nAs we discussed in the previous patch, generally this only happens during shutdown, but there may be a small window of time where this can happen; when chrome is temporarily in some bad state with a window still open but no tabs.",
+      "parentUuid": "7c086095_9d9d524b",
+      "range": {
+        "startLine": 2223,
+        "startChar": 17,
+        "endLine": 2223,
+        "endChar": 37
+      },
+      "revId": "bd9061600b6b3386be722b53b64a6a04144bdb7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
