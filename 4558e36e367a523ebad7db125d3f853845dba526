@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "75917201_21ba3baa",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-08-01T21:59:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0321149_6d3c852e",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 59
+      },
+      "revId": "4558e36e367a523ebad7db125d3f853845dba526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc96ba51_d6a3bbc5",
         "filename": "chrome/browser/chromeos/tether/tether_service.cc",
         "patchSetId": 2
@@ -72,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "10ad0725_60191446",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-08-01T21:59:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fb3a95b_25923ab7",
+      "range": {
+        "startLine": 152,
+        "startChar": 2,
+        "endLine": 152,
+        "endChar": 25
+      },
+      "revId": "4558e36e367a523ebad7db125d3f853845dba526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7425d528_71a89ca3",
         "filename": "chromeos/components/tether/notification_remover.cc",
         "patchSetId": 2
@@ -116,6 +164,30 @@
       "revId": "4558e36e367a523ebad7db125d3f853845dba526",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "666030ad_ecac769d",
+        "filename": "chromeos/components/tether/notification_remover.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-08-01T21:59:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8afb5132_e26b0d51",
+      "range": {
+        "startLine": 37,
+        "startChar": 9,
+        "endLine": 37,
+        "endChar": 32
+      },
+      "revId": "4558e36e367a523ebad7db125d3f853845dba526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
