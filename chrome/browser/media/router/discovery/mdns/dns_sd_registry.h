@@ -15,6 +15,7 @@
 #include "base/memory/singleton.h"
 #include "base/observer_list.h"
 #include "base/threading/thread_checker.h"
+#include "chrome/browser/media/router/discovery/discovery_network_monitor.h"
 #include "chrome/browser/media/router/discovery/mdns/dns_sd_delegate.h"
 
 namespace local_discovery {
@@ -27,7 +28,8 @@ class DnsSdDeviceLister;
 class ServiceTypeData;
 
 // Registry class for keeping track of discovered network services over DNS-SD.
-class DnsSdRegistry : public DnsSdDelegate {
+class DnsSdRegistry : public DnsSdDelegate,
+                      public DiscoveryNetworkMonitor::Observer {
  public:
   typedef std::vector<DnsSdService> DnsSdServiceList;
 
@@ -79,6 +81,11 @@ class DnsSdRegistry : public DnsSdDelegate {
     // Methods for adding, updating or removing services for this service type.
     bool UpdateService(bool added, const DnsSdService& service);
     bool RemoveService(const std::string& service_name);
+    // Merges a cached service list with the existing service list.
+    void MergeCachedServices(
+        DnsSdDelegate* delegate,
+        const std::string& service_type,
+        const DnsSdRegistry::DnsSdServiceList& cached_service_list);
     // Called when the discovery service was restarted.
     // Clear the local cache and initiate rediscovery.
     bool ClearServices();
@@ -105,6 +112,9 @@ class DnsSdRegistry : public DnsSdDelegate {
                       const std::string& service_name) override;
   void ServicesFlushed(const std::string& service_type) override;
 
+  // DiscoveryNetworkMonitor::Observer implementation
+  void OnNetworksChanged(const std::string& network_id) override;
+
   std::map<std::string, std::unique_ptr<ServiceTypeData>> service_data_map_;
 
  private:
@@ -113,11 +123,17 @@ class DnsSdRegistry : public DnsSdDelegate {
   friend class TestDnsSdRegistry;
 
   DnsSdRegistry();
-  explicit DnsSdRegistry(local_discovery::ServiceDiscoverySharedClient* client);
+  DnsSdRegistry(DiscoveryNetworkMonitor* network_monitor,
+                local_discovery::ServiceDiscoverySharedClient* client);
   virtual ~DnsSdRegistry();
 
   void DispatchApiEvent(const std::string& service_type);
   bool IsRegistered(const std::string& service_type);
+
+  std::string last_seen_network_id_ =
+      DiscoveryNetworkMonitor::kNetworkIdUnknown;
+  std::map<std::string, std::map<std::string, DnsSdServiceList>>
+      service_list_cache_;
 
   scoped_refptr<local_discovery::ServiceDiscoverySharedClient>
       service_discovery_client_;
