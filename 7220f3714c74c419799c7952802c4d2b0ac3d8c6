@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5a9f299_f450e7be",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/internals/cycle-connection-gc.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-01T16:01:23Z",
+      "side": 1,
+      "message": "Why is this changed?",
+      "range": {
+        "startLine": 23,
+        "startChar": 8,
+        "endLine": 29,
+        "endChar": 43
+      },
+      "revId": "7220f3714c74c419799c7952802c4d2b0ac3d8c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "970834d0_854af9bb",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioNode.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-08-01T16:01:23Z",
+      "side": 1,
+      "message": "I am sure that you already checked, but just want to make sure this doesn\u0027t break on any real-world example with the debug build.",
+      "range": {
+        "startLine": 408,
+        "startChar": 2,
+        "endLine": 408,
+        "endChar": 36
+      },
+      "revId": "7220f3714c74c419799c7952802c4d2b0ac3d8c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
