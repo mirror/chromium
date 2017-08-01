@@ -16,6 +16,24 @@
       "revId": "cc90f7e8378e3304d09706edd506336d36b0ec80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c3543a2_7d7143d1",
+        "filename": "components/viz/service/display/surface_aggregator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1108704
+      },
+      "writtenOn": "2017-08-01T19:54:58Z",
+      "side": 1,
+      "message": "I was looking at Function Argument Comments in https://google.github.io/styleguide/cppguide.html#Implementation_Comments.\nThe code example given is:\nconst DecimalNumber product \u003d\n    CalculateProduct(values, options, /*completion_callback\u003d*/nullptr);",
+      "parentUuid": "e2fed89a_b8b0ae50",
+      "revId": "cc90f7e8378e3304d09706edd506336d36b0ec80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
