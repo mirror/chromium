@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a67d3ee1_4a73b292",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSShorthandPropertyAPIGrid.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-01T08:16:39Z",
+      "side": 1,
+      "message": "I wonder if there\u0027s a way to make these AddProperty calls shorter by adding a way of adding properties in bulk?",
+      "revId": "b24a70d3bf3c4b73fa9df6fc646fed397a3ca180",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
