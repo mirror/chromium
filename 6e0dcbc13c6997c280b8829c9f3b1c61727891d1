@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c725b6c_e50e8dfd",
+        "filename": "third_party/WebKit/LayoutTests/compositing/overflow/scaled-composited-scroller-position.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-08-01T21:26:03Z",
+      "side": 1,
+      "message": "nit: Move after .promoter. i.e. in the order of appearance.",
+      "range": {
+        "startLine": 10,
+        "startChar": 3,
+        "endLine": 10,
+        "endChar": 11
+      },
+      "revId": "6e0dcbc13c6997c280b8829c9f3b1c61727891d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d17b544_4faf3147",
+        "filename": "third_party/WebKit/LayoutTests/compositing/overflow/scaled-composited-scroller-position.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-08-01T21:26:03Z",
+      "side": 1,
+      "message": "This looks like another complication because it involves kicking the background to the scrolling contents layer. How about just putting a background on the spacer?",
+      "revId": "6e0dcbc13c6997c280b8829c9f3b1c61727891d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ab79b84_6a18d4fd",
+        "filename": "third_party/WebKit/LayoutTests/compositing/overflow/scaled-composited-scroller-position.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-08-01T21:26:03Z",
+      "side": 1,
+      "message": "Opacity can potentially be an extra source of rounding error. How about just z-index:0 if the motivation is to make it a stacking context?",
+      "revId": "6e0dcbc13c6997c280b8829c9f3b1c61727891d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c81676a_24d8a608",
+        "filename": "third_party/WebKit/LayoutTests/compositing/overflow/scaled-composited-scroller-position.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-08-01T21:26:03Z",
+      "side": 1,
+      "message": "nit: Remove unrelated properties.",
+      "revId": "6e0dcbc13c6997c280b8829c9f3b1c61727891d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8692bc6_cbdbc986",
+        "filename": "third_party/WebKit/LayoutTests/compositing/overflow/scaled-composited-scroller-position.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-08-01T21:26:03Z",
+      "side": 1,
+      "message": "FYI: There is a simpler trick if the rendering of scrollbar is not in interest.\n::-webkit-scrollbar {\n  width: 0px;\n  height: 0px;\n}\nThough in this particular test IMO we should expect scrollbar to draw identically.",
+      "revId": "6e0dcbc13c6997c280b8829c9f3b1c61727891d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
