@@ -1487,6 +1487,10 @@ void LocalDOMWindow::DispatchLoadEvent() {
     Performance* performance = DOMWindowPerformance::performance(*this);
     DCHECK(performance);
     performance->NotifyNavigationTimingToObservers();
+    // PerformanceMonitor is designed to subscribe long tasks before OnLoad to
+    // capture the long tasks before OnLoad. This line is to unsubscribe long
+    // tasks when there is no long task observer after OnLoad.
+    performance->UpdateLongTaskInstrumentation();
   }
 
   // For load events, send a separate load event to the enclosing frame only.
