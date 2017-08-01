@@ -423,6 +423,21 @@ class ASH_EXPORT Shell : public SessionObserver,
   // TODO(jamescook): Move to Shelf.
   void UpdateShelfVisibility();
 
+  // Gets the current active user pref service. Null if there's no active user.
+  //
+  // For code being backported to M61: Code that uses this method must listen to
+  // ash::SessionObserver::OnActiveUserSessionChanged() and call this function
+  // again to get the new user's pref service and re-read prefs.
+  //
+  // For all other code: Do not use this function. Instead listen to
+  // ShellObserver::OnActiveUserPrefServiceChanged() and use the PrefService
+  // it provides.
+  //
+  // TODO(jamescook): Either maintain pref service connections for all multiuser
+  // profiles or make the pref service switch atomic with active user switch.
+  // http://crbug.com/749906
+  PrefService* GetActiveUserPrefService() const;
+
   // Gets the local state pref service. It can be null in mash if connecting to
   // local state pref service has not completed successfully.
   PrefService* GetLocalStatePrefService() const;

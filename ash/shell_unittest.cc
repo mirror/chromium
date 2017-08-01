@@ -584,12 +584,14 @@ TEST_F(ShellPrefsTest, Observer) {
       &pref_service1_);
   session->SwitchActiveUser(AccountId::FromUserEmail("user1@test.com"));
   EXPECT_EQ(&pref_service1_, observer.last_pref_service_);
+  EXPECT_EQ(&pref_service1_, Shell::Get()->GetActiveUserPrefService());
 
   // Switching users notifies observers of the new user pref service.
   ash_test_helper()->test_shell_delegate()->set_active_user_pref_service(
       &pref_service2_);
   session->SwitchActiveUser(AccountId::FromUserEmail("user2@test.com"));
   EXPECT_EQ(&pref_service2_, observer.last_pref_service_);
+  EXPECT_EQ(&pref_service2_, Shell::Get()->GetActiveUserPrefService());
 
   Shell::Get()->RemoveShellObserver(&observer);
 }
