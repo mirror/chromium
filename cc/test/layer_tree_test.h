@@ -58,7 +58,7 @@ class LayerTreeHostClientForTesting;
 // BeginTest() is called once the main message loop is running and the layer
 // tree host is initialized.
 //
-// Key stages of the drawing loop, e.g. drawing or commiting, redirect to
+// Key stages of the drawing loop, e.g. drawing or committing, redirect to
 // LayerTreeTest methods of similar names. To track the commit process, override
 // these functions.
 //

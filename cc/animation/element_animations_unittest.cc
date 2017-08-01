@@ -917,7 +917,7 @@ TEST_F(ElementAnimationsTest, UpdateStateWithoutAnimate) {
 }
 
 // Ensure that when the impl animations doesn't have a value provider,
-// the main-thread animations's value provider is used to obtain the intial
+// the main-thread animations's value provider is used to obtain the initial
 // scroll offset.
 TEST_F(ElementAnimationsTest, ScrollOffsetTransitionNoImplProvider) {
   CreateTestLayer(false, false);
@@ -2074,7 +2074,7 @@ TEST_F(ElementAnimationsTest, FinishedAndAbortedEventsForGroup) {
   player_impl_->Tick(kInitialTickTime + TimeDelta::FromMilliseconds(1000));
   player_impl_->UpdateState(true, events.get());
 
-  // We should have exactly 2 events: a FINISHED event for the tranform
+  // We should have exactly 2 events: a FINISHED event for the transform
   // animation, and an ABORTED event for the opacity animation.
   EXPECT_EQ(2u, events->events_.size());
   EXPECT_EQ(AnimationEvent::FINISHED, events->events_[0].type);

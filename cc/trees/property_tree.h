@@ -491,7 +491,7 @@ struct AnimationScaleData {
   float local_starting_animation_scale;
 
   // The maximum scale that this node's |to_target| transform will have during
-  // current animations, considering only scales at keyframes not incuding the
+  // current animations, considering only scales at keyframes not including the
   // starting keyframe of each animation.
   float combined_maximum_animation_target_scale;
 

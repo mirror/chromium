@@ -2680,7 +2680,7 @@ TEST_F(PictureLayerImplTest, HighResTilingDuringAnimation) {
 
   // When animating with a maxmium animation scale factor that is so large
   // that the layer grows larger than the viewport at this scale, and where
-  // the intial source scale is < 1, a new high-res tiling should get created
+  // the initial source scale is < 1, a new high-res tiling should get created
   // at source scale 1.
   animating_transform = true;
   contents_scale = 0.1f;

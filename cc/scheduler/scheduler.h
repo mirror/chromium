@@ -125,7 +125,7 @@ class CC_EXPORT Scheduler : public viz::BeginFrameObserverBase {
   void DidCreateAndInitializeLayerTreeFrameSink();
 
   // Tests do not want to shut down until all possible BeginMainFrames have
-  // occured to prevent flakiness.
+  // occurred to prevent flakiness.
   bool MainFrameForTestingWillHappen() const {
     return state_machine_.CommitPending() ||
            state_machine_.CouldSendBeginMainFrame();

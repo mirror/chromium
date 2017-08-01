@@ -815,7 +815,7 @@ class EnlargedTextureWithAlphaThresholdFilter
     : public LayerTreeHostFiltersPixelTest {
  protected:
   void RunPixelTestType(PixelTestType test_type, base::FilePath image_name) {
-    // Rectangles choosen so that if flipped, the test will fail.
+    // Rectangles chosen so that if flipped, the test will fail.
     gfx::Rect rect1(10, 10, 10, 15);
     gfx::Rect rect2(20, 25, 70, 65);
 
@@ -871,7 +871,7 @@ class EnlargedTextureWithCropOffsetFilter
     : public LayerTreeHostFiltersPixelTest {
  protected:
   void RunPixelTestType(PixelTestType test_type, base::FilePath image_name) {
-    // Rectangles choosen so that if flipped, the test will fail.
+    // Rectangles chosen so that if flipped, the test will fail.
     gfx::Rect rect1(10, 10, 10, 15);
     gfx::Rect rect2(20, 25, 70, 65);
 

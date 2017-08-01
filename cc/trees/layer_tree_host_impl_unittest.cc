@@ -4787,7 +4787,7 @@ TEST_F(LayerTreeHostImplBrowserControlsTest,
       UpdateState(gfx::Point(), gfx::Vector2dF(0.f, -50.f)).get());
 
   // The entire scroll delta should have been used to show the browser controls.
-  // The outer viewport should be resized to accomodate and scrolled to the
+  // The outer viewport should be resized to accommodate and scrolled to the
   // bottom of the document to keep the viewport in place.
   EXPECT_EQ(1.f, host_impl_->active_tree()->CurrentBrowserControlsShownRatio());
   EXPECT_EQ(50.f, outer_container->BoundsForScrolling().height());
@@ -10267,7 +10267,7 @@ TEST_F(LayerTreeHostImplVirtualViewportTest, FlingScrollBubblesToInner) {
     EXPECT_VECTOR_EQ(inner_expected, inner_scroll->CurrentScrollOffset());
     EXPECT_VECTOR_EQ(outer_expected, outer_scroll->CurrentScrollOffset());
 
-    // Fling past the inner viewport boundry, make sure outer viewport scrolls.
+    // Fling past the inner viewport boundary, make sure outer viewport scrolls.
     EXPECT_EQ(InputHandler::SCROLL_ON_IMPL_THREAD,
               host_impl_
                   ->ScrollBegin(BeginState(gfx::Point()).get(),

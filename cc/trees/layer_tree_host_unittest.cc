@@ -2502,7 +2502,7 @@ class LayerTreeHostTestDamageWithScale : public LayerTreeHostTest {
 
 SINGLE_AND_MULTI_THREAD_TEST_F(LayerTreeHostTestDamageWithScale);
 
-// This test verifies that properties on the layer tree host are commited
+// This test verifies that properties on the layer tree host are committed
 // to the impl side.
 class LayerTreeHostTestCommit : public LayerTreeHostTest {
  public:
@@ -6116,7 +6116,7 @@ class LayerTreeHostTestSynchronousCompositeSwapPromise
   void AfterTest() override {
     EXPECT_EQ(3, commit_count_);
 
-    // Initial swap promise should have succeded.
+    // Initial swap promise should have succeeded.
     {
       base::AutoLock lock(swap_promise_result_[0].lock);
       EXPECT_TRUE(swap_promise_result_[0].did_swap_called);

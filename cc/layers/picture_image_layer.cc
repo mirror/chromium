@@ -39,7 +39,7 @@ void PictureImageLayer::SetImage(PaintImage image) {
   // SetImage() currently gets called whenever there is any
   // style change that affects the layer even if that change doesn't
   // affect the actual contents of the image (e.g. a CSS animation).
-  // With this check in place we avoid unecessary texture uploads.
+  // With this check in place we avoid unnecessary texture uploads.
   if (image_ == image)
     return;
 

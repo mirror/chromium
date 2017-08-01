@@ -32,7 +32,7 @@ static const ElementIdType kInvalidElementId = 0;
 // across updates.
 //
 // Historically, the layer tree stored all compositing data but this has been
-// refactored over time into auxilliary structures such as property trees.
+// refactored over time into auxiliary structures such as property trees.
 //
 // In composited scrolling, Layers directly reference scroll tree nodes
 // (Layer::scroll_tree_index) but scroll tree nodes are being refactored to
@@ -43,7 +43,7 @@ static const ElementIdType kInvalidElementId = 0;
 // compositing where, for example, multiple layers scroll with one scroll node.
 //
 // The animation system (see: ElementAnimations and blink::ElementAnimations) is
-// another auxilliary structure to the layer tree and uses element ids as a
+// another auxiliary structure to the layer tree and uses element ids as a
 // stable identifier for animation targets. A Layer's element id can change over
 // the Layer's lifetime because non-default ElementIds are only set during an
 // animation's lifetime.

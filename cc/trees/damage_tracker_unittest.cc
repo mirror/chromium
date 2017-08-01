@@ -1669,7 +1669,7 @@ TEST_F(DamageTrackerTest, VerifyDamageAccumulatesUntilReset) {
   root->layer_tree_impl()->property_trees()->needs_rebuild = true;
   EmulateDrawingOneFrame(root);
 
-  // Sanity check damage after the first frame; this isnt the actual test yet.
+  // Sanity check damage after the first frame; this isn't the actual test yet.
   gfx::Rect root_damage_rect;
   EXPECT_TRUE(GetRenderSurface(root)->damage_tracker()->GetDamageRectIfValid(
       &root_damage_rect));

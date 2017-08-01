@@ -188,7 +188,7 @@ class CC_EXPORT ResourceProvider
   // Gets the child->parent resource ID map.
   const ResourceIdMap& GetChildToParentMap(int child) const;
 
-  // Prepares resources to be transfered to the parent, moving them to
+  // Prepares resources to be transferred to the parent, moving them to
   // mailboxes and serializing meta-data into TransferableResources.
   // Resources are not removed from the ResourceProvider, but are marked as
   // "in use".

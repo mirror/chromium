@@ -790,7 +790,7 @@ TEST_F(ScrollbarAnimationControllerAuraOverlayTest, ScrollWithMouseNear) {
                   h_scrollbar_layer_->thumb_thickness_scale_factor());
 }
 
-// Tests that main thread scroll updates immediatley queue a fade out animation
+// Tests that main thread scroll updates immediately queue a fade out animation
 // without requiring a ScrollEnd.
 TEST_F(ScrollbarAnimationControllerAuraOverlayTest,
        MainThreadScrollQueuesFade) {

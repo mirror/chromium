@@ -125,7 +125,7 @@ void TextureLayer::SetTextureMailboxInternal(
          allow_mailbox_reuse);
   DCHECK_EQ(mailbox.IsValid(), !!release_callback);
 
-  // If we never commited the mailbox, we need to release it here.
+  // If we never committed the mailbox, we need to release it here.
   if (mailbox.IsValid()) {
     holder_ref_ =
         TextureMailboxHolder::Create(mailbox, std::move(release_callback));

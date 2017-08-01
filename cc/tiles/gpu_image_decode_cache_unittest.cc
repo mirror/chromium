@@ -1718,7 +1718,7 @@ TEST_P(GpuImageDecodeCacheTest, ClearCacheInUse) {
   // But the num (persistent) entries should be 0, as the entry is orphaned.
   EXPECT_EQ(cache.GetNumCacheEntriesForTesting(), 0u);
 
-  // Unref the image, it should immidiately delete, leaving our cache empty.
+  // Unref the image, it should immediately delete, leaving our cache empty.
   cache.UnrefImage(draw_image);
   EXPECT_EQ(cache.GetBytesUsedForTesting(), 0u);
   EXPECT_EQ(cache.GetNumCacheEntriesForTesting(), 0u);

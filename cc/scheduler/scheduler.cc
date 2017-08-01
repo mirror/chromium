@@ -547,7 +547,7 @@ void Scheduler::OnBeginImplFrameDeadline() {
   TRACE_EVENT0("cc,benchmark", "Scheduler::OnBeginImplFrameDeadline");
   begin_impl_frame_deadline_task_.Cancel();
   // We split the deadline actions up into two phases so the state machine
-  // has a chance to trigger actions that should occur durring and after
+  // has a chance to trigger actions that should occur during and after
   // the deadline separately. For example:
   // * Sending the BeginMainFrame will not occur after the deadline in
   //     order to wait for more user-input before starting the next commit.

@@ -210,7 +210,7 @@ void PictureLayerTilingSet::VerifyTilings(
 
   if (!tilings_.empty()) {
     DCHECK_LE(NumHighResTilings(), 1);
-    // When commiting from the main thread the high res tiling may get dropped,
+    // When committing from the main thread the high res tiling may get dropped,
     // but when cloning to the active tree, there should always be one.
     if (pending_twin_set) {
       DCHECK_EQ(1, NumHighResTilings())

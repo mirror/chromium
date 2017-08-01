@@ -1244,7 +1244,7 @@ class UIResourceLostAfterCommit : public UIResourceLostTestSimple {
 
 SINGLE_AND_MULTI_THREAD_TEST_F(UIResourceLostAfterCommit);
 
-// Losing context before UI resource requests can be commited.  Three sequences
+// Losing context before UI resource requests can be committed.  Three sequences
 // of creation/deletion are considered:
 // 1. Create one resource -> Context Lost => Expect the resource to have been
 // created.
