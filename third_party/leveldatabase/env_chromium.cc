@@ -364,6 +364,19 @@ base::LazyInstance<ChromiumEnv>::Leaky default_env = LAZY_INSTANCE_INITIALIZER;
 
 }  // unnamed namespace
 
+ChromiumOptions::ChromiumOptions() {
+// Currently log reuse is an experimental feature in leveldb. More info at:
+// https://github.com/google/leveldb/commit/251ebf5dc70129ad3
+#if defined(OS_CHROMEOS)
+  // Reusing logs on Chrome OS resulted in an unacceptably high leveldb
+  // corruption rate (at least for Indexed DB). More info at
+  // https://crbug.com/460568
+  reuse_logs = false;
+#else
+  reuse_logs = true;
+#endif
+}
+
 const char* MethodIDToString(MethodID method) {
   switch (method) {
     case kSequentialFileRead:
