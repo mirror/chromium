@@ -202,10 +202,10 @@ class IOThread : public content::BrowserThreadDelegate {
 
   const net::HttpNetworkSession::Params& NetworkSessionParams() const;
 
-  // Dynamically disables QUIC for HttpNetworkSessions owned by io_thread, and
-  // to HttpNetworkSession::Params which are used for the creation of new
-  // HttpNetworkSessions. Not that re-enabling Quic dynamically is not
-  // supported for simplicity and requires a browser restart.
+  // Dynamically disables QUIC for all NetworkContext using the IOThread's
+  // NetworkService HttpNetworkSessions, as well as for the network service (if
+  // enabled). Not that re-enabling Quic dynamically is not supported for
+  // simplicity and requires a browser restart. Called on the UI thread.
   void DisableQuic();
 
   // Returns the callback for updating data use prefs.
@@ -245,6 +245,8 @@ class IOThread : public content::BrowserThreadDelegate {
   void Init() override;
   void CleanUp() override;
 
+  void DisableQuicOnIOThread();
+
   std::unique_ptr<net::HttpAuthHandlerFactory> CreateDefaultAuthHandlerFactory(
       net::HostResolver* host_resolver);
 
@@ -273,7 +275,6 @@ class IOThread : public content::BrowserThreadDelegate {
   // configure |params|.
   static void ConfigureParamsFromFieldTrialsAndCommandLine(
       const base::CommandLine& command_line,
-      bool is_quic_allowed_by_policy,
       bool http_09_on_non_default_ports_enabled,
       net::HttpNetworkSession::Params* params);
 
@@ -354,8 +355,9 @@ class IOThread : public content::BrowserThreadDelegate {
   scoped_refptr<net::URLRequestContextGetter>
       system_url_request_context_getter_;
 
-  // True if QUIC is allowed by policy.
-  bool is_quic_allowed_by_policy_;
+  // True if QUIC should be disallowed immediately after NetworkService
+  // creation. Only set to true before the IOThread starts.
+  bool disable_quic_on_init_;
 
   // True if HTTP/0.9 is allowed on non-default ports by policy.
   bool http_09_on_non_default_ports_enabled_;
