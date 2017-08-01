@@ -34,6 +34,24 @@
       "revId": "fdcc05ed799f9ac1a8e28be24e4bd4cdfbc1a6be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92e4ae37_12dd728f",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/RootScrollerController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-08-01T19:51:55Z",
+      "side": 1,
+      "message": "That makes.\n\nThe comment, as written, is a bit confusing, though.  Can you be more explicit about whether code runs on the parent or child frame?  For example, \"reentering Layout on our parent,\" and \"when our parent finishes laying out.\"  This RootScrollerController *is* the parent, so the wording is confusing.\n\nMaybe something like, \"if this Document is laying out, then UpdateGeometry on the child frame will get called from PerformPostLayoutTasks on the parent frame.\"",
+      "parentUuid": "dcf09680_e8ddeec3",
+      "revId": "fdcc05ed799f9ac1a8e28be24e4bd4cdfbc1a6be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
