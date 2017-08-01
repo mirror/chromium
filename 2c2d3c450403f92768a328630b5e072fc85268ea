@@ -16,6 +16,24 @@
       "revId": "2c2d3c450403f92768a328630b5e072fc85268ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01eb7231_3e0c48e3",
+        "filename": "extensions/browser/app_window/app_window_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-01T21:31:34Z",
+      "side": 1,
+      "message": "\u003e This doesn\u0027t seem quite right.  I think tests should only be calling this once.\n\nI agree. In a given test, it should only be Set() once with a non-nullptr. (Tests outside Chrome don\u0027t automatically set up an AppWindowClient, so they\u0027ll want to call this, then clear it afterward.) But in a series of tests run in-process it will be called repeatedly; allowing it to be set back to nullptr lets later tests create their own. This also allows the pattern of creating a TestingBrowserProcess per test. (That works today because Chrome\u0027s AppWindowClient is a singleton, so the pointer has always been the same and there has been no harm in the early return here.)\n\n\u003e  Additionally, having tests that create multiple browser processes already sounds pretty dangerous, since that would affect any number of global state objects dangling off the browser process.\n\nI\u0027ve filed crbug.com/751242 to track that. I\u0027ve only found one test that creates a second BrowserProcessImpl... to test BrowserProcessImpl :-O\n\n\u003e \n\u003e Could we instead fix the tests to only instantiate one browser process at a time?\n\nIt\u0027s not as bad as I\u0027d thought. I updated the comment to explain better.",
+      "parentUuid": "d5b870b3_1108cd9b",
+      "revId": "2c2d3c450403f92768a328630b5e072fc85268ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
