@@ -34,20 +34,23 @@ base::TimeDelta ExpectedQueueingTimeFromTask(base::TimeTicks task_start,
   DCHECK(task_start <= task_end);
   DCHECK(task_start <= window_end);
   DCHECK(window_start < window_end);
-  DCHECK(task_end >= window_start);
-  base::TimeTicks task_in_window_start_time =
-      std::max(task_start, window_start);
-  base::TimeTicks task_in_window_end_time = std::min(task_end, window_end);
-  DCHECK(task_in_window_end_time <= task_in_window_end_time);
+  // Because we skip steps when the renderer is backgrounded, we may have gone
+  // into the future, and in that case we ignore this task completely.
+  if (task_end < window_start)
+    return base::TimeDelta();
+
+  base::TimeTicks task_in_step_start_time = std::max(task_start, window_start);
+  base::TimeTicks task_in_step_end_time = std::min(task_end, window_end);
+  DCHECK(task_in_step_end_time <= task_in_step_end_time);
 
   double probability_of_this_task =
-      static_cast<double>((task_in_window_end_time - task_in_window_start_time)
-                              .InMicroseconds()) /
+      static_cast<double>(
+          (task_in_step_end_time - task_in_step_start_time).InMicroseconds()) /
       (window_end - window_start).InMicroseconds();
 
   base::TimeDelta expected_queueing_duration_within_task =
-      ((task_end - task_in_window_start_time) +
-       (task_end - task_in_window_end_time)) /
+      ((task_end - task_in_step_start_time) +
+       (task_end - task_in_step_end_time)) /
       2;
 
   return base::TimeDelta::FromMillisecondsD(
@@ -84,6 +87,12 @@ void QueueingTimeEstimator::OnBeginNestedRunLoop() {
   state_.OnBeginNestedRunLoop();
 }
 
+void QueueingTimeEstimator::OnRendererBackgrounded(
+    bool backgrounded,
+    base::TimeTicks background_time) {
+  state_.OnRendererBackgrounded(backgrounded, background_time);
+}
+
 QueueingTimeEstimator::State::State(int steps_per_window)
     : step_queueing_times(steps_per_window) {}
 
@@ -100,8 +109,8 @@ void QueueingTimeEstimator::State::OnTopLevelTaskCompleted(
     current_task_start_time = base::TimeTicks();
     return;
   }
-  if (window_start_time.is_null())
-    window_start_time = current_task_start_time;
+  if (step_start_time.is_null())
+    step_start_time = current_task_start_time;
   if (task_end_time - current_task_start_time > kInvalidTaskThreshold) {
     // This task took too long, so we'll pretend it never happened. This could
     // be because the user's machine went to sleep during a task.
@@ -109,24 +118,28 @@ void QueueingTimeEstimator::State::OnTopLevelTaskCompleted(
     return;
   }
 
-  while (TimePastWindowEnd(task_end_time)) {
-    if (!TimePastWindowEnd(current_task_start_time)) {
+  if (!CalculateNextVisibleStep())
+    return;
+
+  while (TimePastStepEnd(task_end_time)) {
+    if (!TimePastStepEnd(current_task_start_time)) {
       // Include the current task in this window.
       step_expected_queueing_time += ExpectedQueueingTimeFromTask(
-          current_task_start_time, task_end_time, window_start_time,
-          window_start_time + window_step_width);
+          current_task_start_time, task_end_time, step_start_time,
+          step_start_time + window_step_width);
     }
     step_queueing_times.Add(step_expected_queueing_time);
     client->OnQueueingTimeForWindowEstimated(step_queueing_times.GetAverage(),
-                                             window_start_time);
-    window_start_time += window_step_width;
+                                             step_start_time);
+    step_start_time += window_step_width;
     step_expected_queueing_time = base::TimeDelta();
+    if (!CalculateNextVisibleStep())
+      return;
   }
 
   step_expected_queueing_time += ExpectedQueueingTimeFromTask(
-      current_task_start_time, task_end_time, window_start_time,
-      window_start_time + window_step_width);
-
+      current_task_start_time, task_end_time, step_start_time,
+      step_start_time + window_step_width);
   current_task_start_time = base::TimeTicks();
 }
 
@@ -134,8 +147,77 @@ void QueueingTimeEstimator::State::OnBeginNestedRunLoop() {
   in_nested_message_loop_ = true;
 }
 
-bool QueueingTimeEstimator::State::TimePastWindowEnd(base::TimeTicks time) {
-  return time > window_start_time + window_step_width;
+void QueueingTimeEstimator::State::OnRendererBackgrounded(
+    bool backgrounded,
+    base::TimeTicks background_time) {
+  background_status_changes_.push_back(
+      std::make_pair(background_time, backgrounded));
+}
+
+// This method calculates the first step such that there is no time during that
+// step when the renderer was backgrounded. If, given the current background
+// status changes, there is no such time in the future, the method returns
+// false. If the first such step is not the current step then the expected
+// queueuing time for the step is reset. The Deque |background_status_changes_|
+// may be modified: events occuring in the past or otherwise not affecting
+// future calculations are removed.
+bool QueueingTimeEstimator::State::CalculateNextVisibleStep() {
+  base::TimeTicks step_end_time = step_start_time + window_step_width;
+  while (true) {
+    // If there are no changes left, then the step is visible.
+    if (background_status_changes_.IsEmpty())
+      return true;
+
+    const std::pair<base::TimeTicks, bool>& background_change =
+        background_status_changes_.front();
+    // If the oldest change is to false, ignore it and remove it from the list.
+    if (!background_change.second) {
+      background_status_changes_.pop_front();
+      continue;
+    }
+    // If the oldest change is after our current step, then the step is visible.
+    if (background_change.first >= step_end_time)
+      return true;
+
+    // If the change happens inside our current step, then this step is not
+    // visible but the next step may be.
+    if (background_change.first > step_start_time) {
+      step_start_time += window_step_width;
+      step_end_time += window_step_width;
+      step_expected_queueing_time = base::TimeDelta();
+    }
+    // If this is the only change in the list, no future step is visible.
+    if (background_status_changes_.size() == 1) {
+      step_expected_queueing_time = base::TimeDelta();
+      return false;
+    }
+
+    const std::pair<base::TimeTicks, bool>& next_background_change =
+        background_status_changes_.at(1);
+    // If the next change is after the start time, skip some steps until that is
+    // not the case.
+    if (next_background_change.first > step_start_time) {
+      const base::TimeDelta kZeroTimeDelta;
+      int num_steps_to_skip =
+          (next_background_change.first - step_start_time) / window_step_width +
+          ((next_background_change.first - step_start_time) %
+                       window_step_width !=
+                   kZeroTimeDelta
+               ? 1
+               : 0);
+      DCHECK(num_steps_to_skip > 0);
+      step_start_time += num_steps_to_skip * window_step_width;
+      step_end_time += num_steps_to_skip * window_step_width;
+      step_expected_queueing_time = base::TimeDelta();
+    }
+    // Now the next change is before the curent step, so we can now ignore the
+    // first change.
+    background_status_changes_.pop_front();
+  }
+}
+
+bool QueueingTimeEstimator::State::TimePastStepEnd(base::TimeTicks time) {
+  return time > step_start_time + window_step_width;
 }
 
 QueueingTimeEstimator::RunningAverage::RunningAverage(int size) {
