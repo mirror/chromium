@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "34a05ce7_75a3ce2f",
+        "filename": "ios/chrome/browser/web/mailto_handler.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-08-01T22:28:29Z",
+      "side": 1,
+      "message": "net::AppendQueryParameter() encodes the key/value. In the case of mailto, we actually prefer to leave the parameters unchanged.",
+      "parentUuid": "b88e9e9a_f181ed6c",
+      "range": {
+        "startLine": 21,
+        "startChar": 3,
+        "endLine": 21,
+        "endChar": 14
+      },
+      "revId": "9d452d18c67679d4222db7a96e5da8a6615aae7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bdba2ef3_458a3414",
         "filename": "ios/chrome/browser/web/mailto_handler.mm",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-01T21:56:01Z",
       "side": 1,
       "message": "Now that we are using GURL API for building the query, would it make sense to make |_supportedHeaders| std::set to avoid back and forth string conversions?",
+      "range": {
+        "startLine": 82,
+        "startChar": 15,
+        "endLine": 82,
+        "endChar": 31
+      },
+      "revId": "9d452d18c67679d4222db7a96e5da8a6615aae7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04ffcde5_57c29c0d",
+        "filename": "ios/chrome/browser/web/mailto_handler.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-08-01T22:28:29Z",
+      "side": 1,
+      "message": "I\u0027ve thought about that initially, but decided to keep the API as-is to be more ObjC-like. I understand the value of not doing string conversions back-and-forth, but prefer not to change the API to match the implementation.",
+      "parentUuid": "bdba2ef3_458a3414",
       "range": {
         "startLine": 82,
         "startChar": 15,
