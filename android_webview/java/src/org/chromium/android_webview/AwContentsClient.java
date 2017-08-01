@@ -34,7 +34,7 @@ import java.util.HashMap;
 
 /**
  * Base-class that an AwContents embedder derives from to receive callbacks.
- * This extends ContentViewClient, as in many cases we want to pass-thru ContentViewCore
+ * This extends ContentViewClient, as in many cases we want to pass-through ContentViewCore
  * callbacks right to our embedder, and this setup facilities that.
  * For any other callbacks we need to make transformations of (e.g. adapt parameters
  * or perform filtering) we can provide final overrides for methods here, and then introduce

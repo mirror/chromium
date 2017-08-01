@@ -235,7 +235,7 @@ public class AndroidScrollIntegrationTest extends AwTestBase {
         // While the math used in the functional code is correct (See crbug.com/261239), it can't
         // be verified down to the pixel in this test which doesn't have all internal values.
         // In non-rational cases, this can lead to a deviation of up to one pixel when using
-        // the floor directly. To accomodate this scenario, the test allows a -1 px deviation.
+        // the floor directly. To accommodate this scenario, the test allows a -1 px deviation.
         //
         // For example, imagine the following valid values:
         // scroll_offset_dip = 132

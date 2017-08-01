@@ -513,7 +513,7 @@ void BrowserViewRenderer::DidInitializeCompositor(
   DCHECK(compositor);
   CompositorID compositor_id(process_id, routing_id);
   // This assumes that a RenderViewHost has at most 1 synchronous compositor
-  // througout its lifetime.
+  // throughout its lifetime.
   DCHECK(compositor_map_.count(compositor_id) == 0);
   compositor_map_[compositor_id] = compositor;
 

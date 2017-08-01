@@ -140,7 +140,7 @@ public class AwContentsClientCallbackHelper {
     private static final long ON_NEW_PICTURE_MIN_PERIOD_MILLIS = 500;
     // Timestamp of the most recent onNewPicture callback.
     private long mLastPictureTime;
-    // True when a onNewPicture callback is currenly in flight.
+    // True when a onNewPicture callback is currently in flight.
     private boolean mHasPendingOnNewPicture;
 
     private final AwContentsClient mContentsClient;

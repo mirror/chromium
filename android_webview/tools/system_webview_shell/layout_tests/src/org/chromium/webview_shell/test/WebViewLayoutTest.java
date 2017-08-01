@@ -57,7 +57,7 @@ public class WebViewLayoutTest {
             "webexposed/global-interface-listing-expected.txt";
 
     // Due to the specifics of the rebaselining algorithm in blink the files containing
-    // stable interfaces can dissapear and reappear later. To select the file to compare
+    // stable interfaces can disappear and reappear later. To select the file to compare
     // against a fallback approach is used. The order in the List below is important due
     // to how blink performs baseline optimizations. For more details see
     // third_party/WebKit/Tools/Scripts/webkitpy/common/checkout/baseline_optimizer.py.

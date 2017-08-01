@@ -374,7 +374,7 @@ public class CookieManagerTest extends AwTestBase {
         // up with two TestServers on different ports (these count as having different origins) but
         // Chrome is not strict about this and does not check the port. Instead we cheat making some
         // of the urls come from localhost and some from 127.0.0.1 which count (both in theory and
-        // pratice) as having different origins.
+        // practice) as having different origins.
         TestWebServer webServer = TestWebServer.start();
         try {
             // Turn global allow on.

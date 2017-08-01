@@ -94,7 +94,7 @@ class AwContentsClientBridge {
                        const std::string& account,
                        const std::string& args);
 
-  // Called when a resource loading error has occured (e.g. an I/O error,
+  // Called when a resource loading error has occurred (e.g. an I/O error,
   // host name lookup failure etc.)
   void OnReceivedError(const AwWebResourceRequest& request,
                        int error_code,

@@ -160,7 +160,7 @@ public class AwContentsAnchorViewTest extends AwTestBase {
         // Replace containerView
         FrameLayout updatedContainerView = updateContainerView();
 
-        // Verify that anchor views are transfered with the same layout params.
+        // Verify that anchor views are transferred with the same layout params.
         assertFalse(isViewInContainer(mContainerView, anchorView1));
         assertFalse(isViewInContainer(mContainerView, anchorView2));
         assertTrue(isViewInContainer(updatedContainerView, anchorView1));
