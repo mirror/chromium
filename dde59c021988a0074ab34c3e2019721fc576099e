@@ -16,6 +16,24 @@
       "revId": "dde59c021988a0074ab34c3e2019721fc576099e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db5cc7e9_c440e5fb",
+        "filename": "components/test/data/payments/render_tests/PaymentRequestFreeShippingTest.free_shipping.Nexus_5-19.png",
+        "patchSetId": 8
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-01T14:59:07Z",
+      "side": 1,
+      "message": "According to https://www.chromium.org/Home/chromium-security/enamel#TOC-Eliding-Origin-Names-And-Hostnames we need to elide from the left. We display the https://tools.ietf.org/html/rfc6454 origin, not the URL. This looks weird only for files, because their \"origin\" is the full file path.\n\nThis dissemination of knowledge is the immediate payoff of the render tests :-)",
+      "parentUuid": "7a96aaac_e315a3e7",
+      "revId": "dde59c021988a0074ab34c3e2019721fc576099e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
