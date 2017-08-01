@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2fed89a_b8b0ae50",
+        "filename": "components/viz/service/display/surface_aggregator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-08-01T19:23:40Z",
+      "side": 1,
+      "message": "The usual way I\u0027ve seen this is like\n\nSetAll(\n foo /* name_of_it */,\n bar_value /* other_name */);",
+      "revId": "cc90f7e8378e3304d09706edd506336d36b0ec80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
