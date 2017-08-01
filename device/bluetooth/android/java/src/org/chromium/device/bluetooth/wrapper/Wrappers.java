@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-package org.chromium.device.bluetooth;
+package org.chromium.device.bluetooth.wrapper;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -45,7 +45,7 @@ import java.util.UUID;
  */
 @JNINamespace("device")
 @TargetApi(Build.VERSION_CODES.M)
-class Wrappers {
+public class Wrappers {
     private static final String TAG = "Bluetooth";
 
     public static final int DEVICE_CLASS_UNSPECIFIED = 0x1F00;
@@ -56,7 +56,7 @@ class Wrappers {
      * UI Thread. To be able to provide a set of test methods, ThreadUtilsWrapper
      * uses the factory pattern.
      */
-    static class ThreadUtilsWrapper {
+    public static class ThreadUtilsWrapper {
         private static Factory sFactory;
 
         private static ThreadUtilsWrapper sInstance;
@@ -99,7 +99,7 @@ class Wrappers {
     /**
      * Wraps android.bluetooth.BluetoothAdapter.
      */
-    static class BluetoothAdapterWrapper {
+    public static class BluetoothAdapterWrapper {
         private final BluetoothAdapter mAdapter;
         protected final Context mContext;
         protected BluetoothLeScannerWrapper mScannerWrapper;
@@ -203,7 +203,7 @@ class Wrappers {
     /**
      * Wraps android.bluetooth.BluetoothLeScanner.
      */
-    static class BluetoothLeScannerWrapper {
+    public static class BluetoothLeScannerWrapper {
         protected final BluetoothLeScanner mScanner;
         private final HashMap<ScanCallbackWrapper, ForwardScanCallbackToWrapper> mCallbacks;
 
@@ -238,7 +238,7 @@ class Wrappers {
      * it extending from ScanCallback. Fakes must function even on Android
      * versions where ScanCallback class is not defined.
      */
-    static class ForwardScanCallbackToWrapper extends ScanCallback {
+    public static class ForwardScanCallbackToWrapper extends ScanCallback {
         final ScanCallbackWrapper mWrapperCallback;
 
         ForwardScanCallbackToWrapper(ScanCallbackWrapper wrapperCallback) {
@@ -269,7 +269,7 @@ class Wrappers {
     /**
      * Wraps android.bluetooth.le.ScanCallback, being called by ScanCallbackImpl.
      */
-    abstract static class ScanCallbackWrapper {
+    public abstract static class ScanCallbackWrapper {
         public abstract void onBatchScanResult(List<ScanResultWrapper> results);
         public abstract void onScanResult(int callbackType, ScanResultWrapper result);
         public abstract void onScanFailed(int errorCode);
@@ -278,7 +278,7 @@ class Wrappers {
     /**
      * Wraps android.bluetooth.le.ScanResult.
      */
-    static class ScanResultWrapper {
+    public static class ScanResultWrapper {
         private final ScanResult mScanResult;
 
         public ScanResultWrapper(ScanResult scanResult) {
@@ -305,7 +305,7 @@ class Wrappers {
     /**
      * Wraps android.bluetooth.BluetoothDevice.
      */
-    static class BluetoothDeviceWrapper {
+    public static class BluetoothDeviceWrapper {
         private final BluetoothDevice mDevice;
         private final HashMap<BluetoothGattCharacteristic, BluetoothGattCharacteristicWrapper>
                 mCharacteristicsToWrappers;
@@ -353,11 +353,11 @@ class Wrappers {
     /**
      * Wraps android.bluetooth.BluetoothGatt.
      */
-    static class BluetoothGattWrapper {
+    public static class BluetoothGattWrapper {
         private final BluetoothGatt mGatt;
         private final BluetoothDeviceWrapper mDeviceWrapper;
 
-        BluetoothGattWrapper(BluetoothGatt gatt, BluetoothDeviceWrapper deviceWrapper) {
+        public BluetoothGattWrapper(BluetoothGatt gatt, BluetoothDeviceWrapper deviceWrapper) {
             mGatt = gatt;
             mDeviceWrapper = deviceWrapper;
         }
@@ -384,24 +384,24 @@ class Wrappers {
             return servicesWrapped;
         }
 
-        boolean readCharacteristic(BluetoothGattCharacteristicWrapper characteristic) {
+        public boolean readCharacteristic(BluetoothGattCharacteristicWrapper characteristic) {
             return mGatt.readCharacteristic(characteristic.mCharacteristic);
         }
 
-        boolean setCharacteristicNotification(
+        public boolean setCharacteristicNotification(
                 BluetoothGattCharacteristicWrapper characteristic, boolean enable) {
             return mGatt.setCharacteristicNotification(characteristic.mCharacteristic, enable);
         }
 
-        boolean writeCharacteristic(BluetoothGattCharacteristicWrapper characteristic) {
+        public boolean writeCharacteristic(BluetoothGattCharacteristicWrapper characteristic) {
             return mGatt.writeCharacteristic(characteristic.mCharacteristic);
         }
 
-        boolean readDescriptor(BluetoothGattDescriptorWrapper descriptor) {
+        public boolean readDescriptor(BluetoothGattDescriptorWrapper descriptor) {
             return mGatt.readDescriptor(descriptor.mDescriptor);
         }
 
-        boolean writeDescriptor(BluetoothGattDescriptorWrapper descriptor) {
+        public boolean writeDescriptor(BluetoothGattDescriptorWrapper descriptor) {
             return mGatt.writeDescriptor(descriptor.mDescriptor);
         }
     }
@@ -414,7 +414,7 @@ class Wrappers {
      * without it extending from BluetoothGattCallback. Fakes must function even on
      * Android versions where BluetoothGattCallback class is not defined.
      */
-    static class ForwardBluetoothGattCallbackToWrapper extends BluetoothGattCallback {
+    public static class ForwardBluetoothGattCallbackToWrapper extends BluetoothGattCallback {
         final BluetoothGattCallbackWrapper mWrapperCallback;
         final BluetoothDeviceWrapper mDeviceWrapper;
 
@@ -481,7 +481,7 @@ class Wrappers {
      * necessary from the initial BluetoothDeviceWrapper.connectGatt
      * call.
      */
-    abstract static class BluetoothGattCallbackWrapper {
+    public abstract static class BluetoothGattCallbackWrapper {
         public abstract void onCharacteristicChanged(
                 BluetoothGattCharacteristicWrapper characteristic);
         public abstract void onCharacteristicRead(
@@ -499,7 +499,7 @@ class Wrappers {
     /**
      * Wraps android.bluetooth.BluetoothGattService.
      */
-    static class BluetoothGattServiceWrapper {
+    public static class BluetoothGattServiceWrapper {
         private final BluetoothGattService mService;
         private final BluetoothDeviceWrapper mDeviceWrapper;
 
@@ -539,7 +539,7 @@ class Wrappers {
     /**
      * Wraps android.bluetooth.BluetoothGattCharacteristic.
      */
-    static class BluetoothGattCharacteristicWrapper {
+    public static class BluetoothGattCharacteristicWrapper {
         final BluetoothGattCharacteristic mCharacteristic;
         final BluetoothDeviceWrapper mDeviceWrapper;
 
@@ -592,7 +592,7 @@ class Wrappers {
     /**
      * Wraps android.bluetooth.BluetoothGattDescriptor.
      */
-    static class BluetoothGattDescriptorWrapper {
+    public static class BluetoothGattDescriptorWrapper {
         private final BluetoothGattDescriptor mDescriptor;
         final BluetoothDeviceWrapper mDeviceWrapper;
 

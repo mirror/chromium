@@ -54,7 +54,7 @@ owns Devices, Services, etc. Java counter parts interface with the Android
 Bluetooth objects. E.g.
 
 For testing, the Android objects are __wrapped__ in:
-`android/java/src/org/chromium/device/bluetooth/Wrappers.java`. <br>
+`android/java/src/org/chromium/device/bluetooth/wrapper/Wrappers.java`. <br>
 and __fakes__ implemented in:
 `test/android/java/src/org/chromium/device/bluetooth/Fakes.java`.
 

@@ -10,6 +10,7 @@ import android.os.Build;
 import org.chromium.base.Log;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
+import org.chromium.device.bluetooth.wrapper.Wrappers;
 
 import java.util.List;
 
@@ -86,15 +87,13 @@ final class ChromeBluetoothRemoteGattCharacteristic {
     // BluetoothRemoteGattCharacteristicAndroid methods implemented in java:
 
     // Implements BluetoothRemoteGattCharacteristicAndroid::Create.
-    // TODO(http://crbug.com/505554): Replace 'Object' with specific type when JNI fixed.
     @CalledByNative
     private static ChromeBluetoothRemoteGattCharacteristic create(
             long nativeBluetoothRemoteGattCharacteristicAndroid,
-            Object bluetoothGattCharacteristicWrapper, String instanceId,
-            ChromeBluetoothDevice chromeDevice) {
+            Wrappers.BluetoothGattCharacteristicWrapper bluetoothGattCharacteristicWrapper,
+            String instanceId, ChromeBluetoothDevice chromeDevice) {
         return new ChromeBluetoothRemoteGattCharacteristic(
-                nativeBluetoothRemoteGattCharacteristicAndroid,
-                (Wrappers.BluetoothGattCharacteristicWrapper) bluetoothGattCharacteristicWrapper,
+                nativeBluetoothRemoteGattCharacteristicAndroid, bluetoothGattCharacteristicWrapper,
                 instanceId, chromeDevice);
     }
 
@@ -175,8 +174,8 @@ final class ChromeBluetoothRemoteGattCharacteristic {
     native void nativeOnWrite(long nativeBluetoothRemoteGattCharacteristicAndroid, int status);
 
     // Binds to BluetoothRemoteGattCharacteristicAndroid::CreateGattRemoteDescriptor.
-    // TODO(http://crbug.com/505554): Replace 'Object' with specific type when JNI fixed.
     private native void nativeCreateGattRemoteDescriptor(
             long nativeBluetoothRemoteGattCharacteristicAndroid, String instanceId,
-            Object bluetoothGattDescriptorWrapper, Object chromeBluetoothDevice);
+            Wrappers.BluetoothGattDescriptorWrapper bluetoothGattDescriptorWrapper,
+            Object chromeBluetoothDevice);
 }
