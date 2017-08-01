@@ -36,6 +36,9 @@
 // the type of tab to open.
 - (void)switchModesAndOpenNewTab:(OpenNewTabCommand*)newTabCommand;
 
+// Preloads voice search on the current BVC.
+- (void)preloadVoiceSearch;
+
 // Starts a voice search on the current BVC.
 - (void)startVoiceSearch:(StartVoiceSearchCommand*)command;
 

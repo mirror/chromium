@@ -42,7 +42,6 @@
 #define IDC_SHOW_MAIL_COMPOSER                         40926
 #define IDC_BACK_FORWARD_IN_TAB_HISTORY                40930
 #define IDC_REPORT_AN_ISSUE                            40936
-#define IDC_PRELOAD_VOICE_SEARCH                       40937
 #define IDC_SHOW_BACK_HISTORY                          40938
 #define IDC_SHOW_FORWARD_HISTORY                       40939
 #define IDC_CLOSE_SETTINGS                             40944

@@ -4150,12 +4150,6 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
     case IDC_HELP_PAGE_VIA_MENU:
       [self showHelpPage];
       break;
-    case IDC_PRELOAD_VOICE_SEARCH:
-      // Preload VoiceSearchController and views and view controllers needed
-      // for voice search.
-      [self ensureVoiceSearchControllerCreated];
-      _voiceSearchController->PrepareToAppear();
-      break;
     case IDC_SHOW_MAIL_COMPOSER:
       [self showMailComposer:sender];
       break;
@@ -4262,7 +4256,6 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
         });
   }
 }
-
 
 - (void)sharePageWithData:(ShareToData*)data {
   id<ShareProtocol> controller = [_dependencyFactory shareControllerInstance];
@@ -4542,6 +4535,11 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
                  completionHandler:completionHandlerBlock];
 }
 #endif  // !defined(NDEBUG)
+
+- (void)preloadVoiceSearch {
+  [self ensureVoiceSearchControllerCreated];
+  _voiceSearchController->PrepareToAppear();
+}
 
 - (void)startVoiceSearchWithOriginView:(UIView*)originView {
   _voiceSearchButton = originView;

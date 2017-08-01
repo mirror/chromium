@@ -136,6 +136,10 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint
 // related to showing the previously selected tab.
 - (void)expectNewForegroundTab;
 
+// Preload VoiceSearchController and views and view controllers needed
+// for voice search.
+- (void)preloadVoiceSearch;
+
 // Shows the voice search UI. |originView|'s center is used for the presentation
 // and dismissal animations of the Voice Search UI. |originView| can be nil.
 - (void)startVoiceSearchWithOriginView:(UIView*)originView;
