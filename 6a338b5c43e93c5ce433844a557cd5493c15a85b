@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb3123cf_61df988a",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-01T18:04:11Z",
+      "side": 1,
+      "message": "Put an empty line between libraries and other includes.\nAlso, what is the thinking behind including \"\u003cCoreGraphics/CGGeometry.h\u003e\" vs. \"\u003cCoreGraphics/CoreGraphics.h\u003e\"?",
+      "revId": "6a338b5c43e93c5ce433844a557cd5493c15a85b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62e93c33_789aecc8",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-01T18:04:11Z",
+      "side": 1,
+      "message": "Nice check!",
+      "revId": "6a338b5c43e93c5ce433844a557cd5493c15a85b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cf8bdae_fe9744b4",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-01T18:04:11Z",
+      "side": 1,
+      "message": "Try to enforce consistency: Other NOTREACHED() statements in this file use a descriptive style (e.g., \"bubble alignment\") rather than a specific type (e.g., BubbleArrowDirection). I care more about consistency in this case than a specific style. If you feel strongly about your style, be sure to update other parts of the file as necessary (with as little changes as possible).",
+      "revId": "6a338b5c43e93c5ce433844a557cd5493c15a85b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
