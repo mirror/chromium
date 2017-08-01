@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de8b7da9_ab244394",
+        "filename": "extensions/browser/api/serial/serial_api.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-01T18:12:42Z",
+      "side": 1,
+      "message": "In addition to calling GetDevices() we should also set_connection_error_handler() so that if the Mojo connection fails the extension function call does not hang.",
+      "revId": "6a8bf76c51e408bf5a047d272b115d72dbdad657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9659d178_ddddce84",
+        "filename": "extensions/browser/api/serial/serial_apitest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-01T18:12:42Z",
+      "side": 1,
+      "message": "auto device0 \u003d device::mojom::SerialDeviceInfo::New();",
+      "range": {
+        "startLine": 42,
+        "startChar": 4,
+        "endLine": 43,
+        "endChar": 48
+      },
+      "revId": "6a8bf76c51e408bf5a047d272b115d72dbdad657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35c9709c_633ba9af",
+        "filename": "extensions/browser/api/serial/serial_apitest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-01T18:12:42Z",
+      "side": 1,
+      "message": "Same here.",
+      "range": {
+        "startLine": 45,
+        "startChar": 4,
+        "endLine": 46,
+        "endChar": 48
+      },
+      "revId": "6a8bf76c51e408bf5a047d272b115d72dbdad657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
