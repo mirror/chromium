@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "9c095bb4_ebe4847a",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-08-01T14:54:15Z",
+      "side": 1,
+      "message": "I meant either of these can limit the access and more is described in the comments. Do you suggest rephrasing the comment?",
+      "parentUuid": "60a01b9c_35790e84",
+      "range": {
+        "startLine": 89,
+        "startChar": 8,
+        "endLine": 93,
+        "endChar": 9
+      },
+      "revId": "ea6fc4b0dbfdcdd1d416f4856949ce014eb59cd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "52bae2c4_520ddc21",
         "filename": "net/proxy/proxy_script_fetcher_impl.cc",
         "patchSetId": 2
