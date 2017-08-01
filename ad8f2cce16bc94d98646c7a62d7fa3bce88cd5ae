@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2782a702_d57c821f",
+        "filename": "chrome/browser/ui/ash/chrome_screenshot_grabber.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-01T19:54:09Z",
+      "side": 1,
+      "message": "is there any chance that ChromeScreenshotGrabber can be deleted before the posted task runs? if so, can you use WeakPtr instead?",
+      "range": {
+        "startLine": 424,
+        "startChar": 14,
+        "endLine": 424,
+        "endChar": 36
+      },
+      "revId": "ad8f2cce16bc94d98646c7a62d7fa3bce88cd5ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6ba0f80_c6ce67dd",
+        "filename": "chrome/browser/ui/ash/chrome_screenshot_grabber.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-01T19:54:09Z",
+      "side": 1,
+      "message": "i didn\u0027t realize that screenshots are sometimes saved to drive. just for my own information, do you know when that happens?",
+      "revId": "ad8f2cce16bc94d98646c7a62d7fa3bce88cd5ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c93cbf6_4f4780af",
+        "filename": "chrome/browser/ui/ash/chrome_screenshot_grabber.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 460,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-01T19:54:09Z",
+      "side": 1,
+      "message": "move this comment to the header file, and also use |screenshot_path| and |screenshot_cache_path|, since i think that pipes are usually put around variable names in comments in chrome.",
+      "revId": "ad8f2cce16bc94d98646c7a62d7fa3bce88cd5ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c896c409_dedd298c",
+        "filename": "chrome/browser/ui/ash/chrome_screenshot_grabber.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-01T19:54:09Z",
+      "side": 1,
+      "message": "it will make the code more complicated, but i think we usually decode images read from disk in a sandboxed process for security reasons. i think there\u0027s at least one helper class that makes this easier to do; let me know if you aren\u0027t able to find it.",
+      "revId": "ad8f2cce16bc94d98646c7a62d7fa3bce88cd5ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cec51baa_5fb92aca",
+        "filename": "chrome/browser/ui/ash/chrome_screenshot_grabber.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-01T19:54:09Z",
+      "side": 1,
+      "message": "please add comments above each of these methods documenting what they do.\n\nplease also document parameters -- the difference between screenshot_path and screenshot_cache_path isn\u0027t obvious to me as i read this code.",
+      "revId": "ad8f2cce16bc94d98646c7a62d7fa3bce88cd5ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
