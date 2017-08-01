@@ -34,6 +34,24 @@
       "revId": "fae5137b1f8cc1f5945f506d0ef5f7f396d45fe4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5234e1f8_fdf08689",
+        "filename": "third_party/WebKit/LayoutTests/inspector/coverage/gutter-js-expected.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-01T18:32:23Z",
+      "side": 1,
+      "message": "Ah, thanks! Well, I guess let\u0027s land this one and file a bug to have it fixed.",
+      "parentUuid": "5235a874_3400e495",
+      "revId": "fae5137b1f8cc1f5945f506d0ef5f7f396d45fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
