@@ -23,13 +23,13 @@
 
 using leveldb::DB;
 using leveldb::Env;
-using leveldb::Options;
 using leveldb::ReadOptions;
 using leveldb::Slice;
 using leveldb::Status;
 using leveldb::WritableFile;
 using leveldb::WriteOptions;
 using leveldb_env::ChromiumEnv;
+using leveldb_env::ChromiumOptions;
 using leveldb_env::DBTracker;
 using leveldb_env::MethodID;
 
@@ -100,7 +100,7 @@ bool GetFirstLDBFile(const base::FilePath& dir, base::FilePath* ldb_file) {
 }
 
 TEST(ChromiumEnv, DeleteBackupTables) {
-  Options options;
+  ChromiumOptions options;
   options.create_if_missing = true;
   options.env = Env::Default();
 
@@ -245,7 +245,7 @@ TEST_F(ChromiumEnvDBTrackerTest, OpenDatabase) {
   };
 
   // Open a new database using DBTracker::Open, write some data.
-  Options options;
+  ChromiumOptions options;
   options.create_if_missing = true;
   std::string name = temp_path().AsUTF8Unsafe();
   DBTracker::TrackedDB* tracked_db;
@@ -275,7 +275,7 @@ TEST_F(ChromiumEnvDBTrackerTest, OpenDatabase) {
 }
 
 TEST_F(ChromiumEnvDBTrackerTest, TrackedDBInfo) {
-  Options options;
+  ChromiumOptions options;
   options.create_if_missing = true;
   std::string name = temp_path().AsUTF8Unsafe();
   DBTracker::TrackedDB* db;
@@ -293,7 +293,7 @@ TEST_F(ChromiumEnvDBTrackerTest, VisitDatabases) {
 
   // Open several databases.
   for (const char* tag : {"poets", "movies", "recipes", "novels"}) {
-    Options options;
+    ChromiumOptions options;
     options.create_if_missing = true;
     std::string name = temp_path().AppendASCII(tag).AsUTF8Unsafe();
     DBTracker::TrackedDB* db;
@@ -314,7 +314,7 @@ TEST_F(ChromiumEnvDBTrackerTest, VisitDatabases) {
 }
 
 TEST_F(ChromiumEnvDBTrackerTest, OpenDBTracking) {
-  Options options;
+  ChromiumOptions options;
   options.create_if_missing = true;
   std::unique_ptr<leveldb::DB> db;
   auto status = leveldb_env::OpenDB(options, temp_path().AsUTF8Unsafe(), &db);
