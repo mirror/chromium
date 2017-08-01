@@ -185,11 +185,6 @@ bool WindowManagerState::SetCapture(ServerWindow* window,
   return event_dispatcher_.SetCaptureWindow(window, client_id);
 }
 
-void WindowManagerState::ReleaseCaptureBlockedByModalWindow(
-    const ServerWindow* modal_window) {
-  event_dispatcher_.ReleaseCaptureBlockedByModalWindow(modal_window);
-}
-
 void WindowManagerState::ReleaseCaptureBlockedByAnyModalWindow() {
   event_dispatcher_.ReleaseCaptureBlockedByAnyModalWindow();
 }
@@ -794,6 +789,11 @@ void WindowManagerState::OnEventTargetNotFound(const ui::Event& event,
                                          nullptr /* ignore_tree */, display_id);
   if (event.IsMousePointerEvent())
     UpdateNativeCursorFromDispatcher();
+}
+
+void WindowManagerState::OnEventOccurredOutsideOfModalWindow(
+    ServerWindow* modal_transient) {
+  // TODO(sky): notify WindowManager so it can do an animation.
 }
 
 void WindowManagerState::OnWindowEmbeddedAppDisconnected(ServerWindow* window) {

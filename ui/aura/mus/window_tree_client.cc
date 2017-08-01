@@ -135,7 +135,7 @@ WindowTreeHostMus* GetWindowTreeHostMus(WindowMus* window) {
 }
 
 bool IsInternalProperty(const void* key) {
-  return key == client::kModalKey;
+  return key == client::kModalKey || key == client::kChildModalParentKey;
 }
 
 void SetWindowTypeFromProperties(
@@ -567,15 +567,27 @@ void WindowTreeClient::OnConnectionLost() {
 bool WindowTreeClient::HandleInternalPropertyChanged(WindowMus* window,
                                                      const void* key,
                                                      int64_t old_value) {
-  if (key != client::kModalKey)
-    return false;
-
-  const uint32_t change_id =
-      ScheduleInFlightChange(base::MakeUnique<InFlightSetModalTypeChange>(
-          window, static_cast<ui::ModalType>(old_value)));
-  tree_->SetModalType(change_id, window->server_id(),
-                      window->GetWindow()->GetProperty(client::kModalKey));
-  return true;
+  if (key == client::kModalKey) {
+    const uint32_t change_id =
+        ScheduleInFlightChange(base::MakeUnique<InFlightSetModalTypeChange>(
+            window, static_cast<ui::ModalType>(old_value)));
+    tree_->SetModalType(change_id, window->server_id(),
+                        window->GetWindow()->GetProperty(client::kModalKey));
+    return true;
+  }
+  if (key == client::kChildModalParentKey) {
+    const uint32_t change_id =
+        ScheduleInFlightChange(base::MakeUnique<CrashInFlightChange>(
+            window, ChangeType::CHILD_MODAL_PARENT));
+    Window* child_modal_parent =
+        window->GetWindow()->GetProperty(client::kChildModalParentKey);
+    tree_->SetChildModalParent(
+        change_id, window->server_id(),
+        child_modal_parent ? WindowMus::Get(child_modal_parent)->server_id()
+                           : kInvalidServerId);
+    return true;
+  }
+  return false;
 }
 
 void WindowTreeClient::OnEmbedImpl(
@@ -1543,6 +1555,13 @@ void WindowTreeClient::RequestClose(uint32_t window_id) {
   // Since the window is the root window, we send close request to the entire
   // WindowTreeHost.
   GetWindowTreeHostMus(window->GetWindow())->OnCloseRequest();
+}
+
+void WindowTreeClient::MarkAsTopLevelContainer(Window* window) {
+  if (window_manager_client_) {
+    window_manager_client_->SetIsTopLevelContainer(
+        WindowMus::Get(window)->server_id(), true);
+  }
 }
 
 bool WindowTreeClient::WaitForInitialDisplays() {

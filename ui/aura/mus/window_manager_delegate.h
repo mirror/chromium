@@ -89,6 +89,10 @@ class AURA_EXPORT WindowManagerClient {
   // this does nothing.
   virtual void RequestClose(Window* window) = 0;
 
+  // Sets the window as a container for top-level windows. Only used in the
+  // window manager.
+  virtual void MarkAsTopLevelContainer(Window* window) = 0;
+
   // Blocks until the initial displays have been received, or if displays are
   // not automatically created until the connection to mus has been
   // established.

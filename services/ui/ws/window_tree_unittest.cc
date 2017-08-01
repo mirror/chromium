@@ -222,6 +222,7 @@ void WindowTreeTest::SetupEventTargeting(TestWindowTreeClient** out_client,
       gfx::Rect(0, 0, 100, 100), gfx::Rect(0, 0, 50, 50));
   window_event_targeting_helper_.CreateSecondaryTree(
       embed_window, gfx::Rect(20, 20, 20, 20), out_client, window_tree, window);
+  FirstRoot(*window_tree)->set_is_top_level_container(true);
 }
 
 // Verifies focus correctly changes on pointer events.
@@ -1134,7 +1135,7 @@ TEST_F(WindowTreeTest, MoveCaptureWindowToModalParent) {
   EXPECT_NO_FATAL_FAILURE(SetupEventTargeting(&embed_client, &tree, &w1));
 
   w1->SetBounds(gfx::Rect(10, 10, 30, 30));
-  const ServerWindow* root_window = *tree->roots().begin();
+  ServerWindow* root_window = FirstRoot(tree);
   ClientWindowId root_window_id = ClientWindowIdForWindow(tree, root_window);
   ClientWindowId w1_id = ClientWindowIdForWindow(tree, w1);
   Display* display = tree->GetDisplay(w1);
