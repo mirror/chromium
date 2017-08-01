@@ -554,6 +554,30 @@
     },
     {
       "key": {
+        "uuid": "b41b9dae_cb00d1b6",
+        "filename": "chrome/installer/zucchini/patch_reader.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-01T04:40:17Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4af54053_b49b17c4",
+      "range": {
+        "startLine": 200,
+        "startChar": 27,
+        "endLine": 200,
+        "endChar": 35
+      },
+      "revId": "02de9312d58f5d1e536b742926b720308f9ecc37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e644b6a4_9f6869fc",
         "filename": "chrome/installer/zucchini/patch_reader.cc",
         "patchSetId": 20
@@ -630,6 +654,24 @@
       "side": 1,
       "message": "1-Done ensuring element fits in image files.\n2-Done ensuring full coverage, disjoint and increasing.\n3-Not sure about \"old\" elements: some elements are separators, so they really they should be are allowed to overlap.\n4-Implied by 2.",
       "parentUuid": "d59ec37d_b86c0d02",
+      "revId": "02de9312d58f5d1e536b742926b720308f9ecc37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aae91de0_f767d164",
+        "filename": "chrome/installer/zucchini/patch_reader.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-01T04:40:17Z",
+      "side": 1,
+      "message": "Full coverage in general is too strict...",
+      "parentUuid": "caefcce3_d37e8da6",
       "revId": "02de9312d58f5d1e536b742926b720308f9ecc37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
