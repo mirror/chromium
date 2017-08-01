@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "240f10bb_942c1136",
+        "filename": "chrome/browser/ui/browser_dialogs.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-01T01:40:53Z",
+      "side": 1,
+      "message": "Nit: Maybe \"should only be called\" instead of \"is only called\"?  I\u0027m always leery of \"is\" comments in this vein since it\u0027s very easy for later code changes to make them untrue, and then it\u0027s hard for readers to know which course of action to take to fix it.  But \"should\" makes it clear that if they disagree, the fix is to change the caller side.",
+      "revId": "4d4a908395c7872ce3e580b522a3720c90808e7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d83e7d6_d9bfb751",
+        "filename": "chrome/browser/ui/cocoa/browser_dialogs_views_mac.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-01T01:40:53Z",
+      "side": 1,
+      "message": "I don\u0027t really get why we have this method when the implementation calls through to the views code with no #ifdef.  It seems like from a linking perspective we\u0027re not buying much with that, and it\u0027s confusing when we also have the global chrome::ShowFirstRunBubble().  And we\u0027re trying to remove chrome::, so it would be nice to not add more things to it.  However, I know you and Trent have been working a lot on a consistent dialog invocation method for Mac, so maybe this makes sense in a larger context I don\u0027t have.",
+      "revId": "4d4a908395c7872ce3e580b522a3720c90808e7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe96f959_70920864",
+        "filename": "chrome/browser/ui/first_run_bubble_presenter.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-01T01:40:53Z",
+      "side": 1,
+      "message": "Nit: Init these in initializer list?",
+      "revId": "4d4a908395c7872ce3e580b522a3720c90808e7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efba0154_acb86839",
+        "filename": "chrome/browser/ui/first_run_bubble_presenter.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-01T01:40:53Z",
+      "side": 1,
+      "message": "Nit: Prefer using a ScopedObserver to manual Add/Remove calls, for safety.",
+      "revId": "4d4a908395c7872ce3e580b522a3720c90808e7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7aefee4a_6ad8cb8c",
+        "filename": "chrome/browser/ui/first_run_bubble_presenter.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-01T01:40:53Z",
+      "side": 1,
+      "message": "Nit: Why null this out?",
+      "revId": "4d4a908395c7872ce3e580b522a3720c90808e7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d60cbbb7_c42f2f66",
+        "filename": "chrome/browser/ui/views/browser_dialogs_views.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-01T01:40:53Z",
+      "side": 1,
+      "message": "Nit: Can combine these blocks:\n\n#if defined(OS_CHROMEOS)\n#include \"chrome/browser/ui/views/intent_picker_bubble_view.h\"\n#else\n#include \"chrome/browser/ui/views/first_run_bubble.h\"\n#endif",
+      "revId": "4d4a908395c7872ce3e580b522a3720c90808e7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20b588f3_d0c53d8c",
+        "filename": "chrome/browser/ui/views/first_run_bubble.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-01T01:40:53Z",
+      "side": 1,
+      "message": "Nit: Declaration order in the .h and definition order here should match.  If you want non-class functions to come above the class, do that in the .h too.",
+      "revId": "4d4a908395c7872ce3e580b522a3720c90808e7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df77799d_9e75c0c7",
+        "filename": "chrome/browser/ui/views/first_run_bubble.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-01T01:40:53Z",
+      "side": 1,
+      "message": "Nit: Are the anchor view insets used with an anchor rect?  Wondering if this should be:\n\n  if (anchor_view) {\n    SetAnchorView(...);\n    set_anchor_view_insets(...);\n  } else {\n    SetAnchorRect(...);\n  }\n\nAlso, the class declaration should talk about how the anchor view may be null, and what happens if it is.  (And in general what the other params are for too.)",
+      "revId": "4d4a908395c7872ce3e580b522a3720c90808e7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9582327_52d589b1",
+        "filename": "chrome/browser/ui/views/first_run_bubble.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-01T01:40:53Z",
+      "side": 1,
+      "message": "Nit: #include doesn\u0027t seem to be used in this file",
+      "revId": "4d4a908395c7872ce3e580b522a3720c90808e7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22dda187_53be3716",
+        "filename": "chrome/browser/ui/views/first_run_bubble.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-01T01:40:53Z",
+      "side": 1,
+      "message": "Nit: I\u0027m not a big fan of this namespace.  I\u0027d eliminate it and instead make these functions static methods on FirstRunBubble (named Show() and ShowForTesting() or something).\n\nIf somehow this doesn\u0027t work, I\u0027d probably make these globals.  If that doesn\u0027t work either, and you want to keep this namespace here, then I\u0027d eliminate FirstRun from the function names, as it\u0027s now redundant.",
+      "revId": "4d4a908395c7872ce3e580b522a3720c90808e7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cafbbe2_aad6f4cc",
+        "filename": "chrome/browser/ui/views/first_run_bubble.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-01T01:40:53Z",
+      "side": 1,
+      "message": "Nit: Comments on these, at least on the testing one to explain how it differs, would help.",
+      "revId": "4d4a908395c7872ce3e580b522a3720c90808e7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55f7c98b_a09a450b",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-01T01:40:53Z",
+      "side": 1,
+      "message": "Nit: #include looks unneeded",
+      "revId": "4d4a908395c7872ce3e580b522a3720c90808e7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
