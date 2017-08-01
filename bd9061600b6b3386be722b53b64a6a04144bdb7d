@@ -118,6 +118,30 @@
       "revId": "bd9061600b6b3386be722b53b64a6a04144bdb7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92fab262_08e3a769",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2223,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-08-01T23:39:24Z",
+      "side": 1,
+      "message": "In that case, the crash may also occur before CL 2946813002. Should it be better to add a if condition wrap at L2238 to only set navigator when we have active web content?",
+      "parentUuid": "d84fa442_5733548d",
+      "range": {
+        "startLine": 2223,
+        "startChar": 17,
+        "endLine": 2223,
+        "endChar": 37
+      },
+      "revId": "bd9061600b6b3386be722b53b64a6a04144bdb7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
