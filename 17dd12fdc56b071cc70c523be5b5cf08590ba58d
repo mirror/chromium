@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d597399e_861079c2",
+        "filename": "third_party/apache-win32/README.chromium",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-08-01T18:25:13Z",
+      "side": 1,
+      "message": "Got it, updated here.",
+      "parentUuid": "fbdbde15_8c617285",
+      "revId": "17dd12fdc56b071cc70c523be5b5cf08590ba58d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6cd9003a_8050d940",
         "filename": "third_party/apache-win32/remove_files_not_needed_for_chromium.sh",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "17dd12fdc56b071cc70c523be5b5cf08590ba58d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa2acdb4_b24f9738",
+        "filename": "third_party/apache-win32/remove_files_not_needed_for_chromium.sh",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-08-01T18:25:13Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "6cd9003a_8050d940",
+      "revId": "17dd12fdc56b071cc70c523be5b5cf08590ba58d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
