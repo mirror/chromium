@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5f01d78_8ef91d78",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-01T19:19:07Z",
+      "side": 1,
+      "message": "It\u0027s a bit confusing to call this a vector when it\u0027s a deque.",
+      "range": {
+        "startLine": 92,
+        "startChar": 7,
+        "endLine": 92,
+        "endChar": 13
+      },
+      "revId": "f6564a9cc14e99f28d1a1a66ce7f7139852c80b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
