@@ -262,6 +262,30 @@
     },
     {
       "key": {
+        "uuid": "9750578b_37c6d19d",
+        "filename": "services/resource_coordinator/coordination_unit/metrics_collector.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-01T23:22:26Z",
+      "side": 1,
+      "message": "Just removing IsVisible from FrameCU sounds good to me.",
+      "parentUuid": "32e9ac21_7b058120",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 13
+      },
+      "revId": "cb6313ce6ddb92cd468a58728681d6f7b3383451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f70e39f_7c73b393",
         "filename": "services/resource_coordinator/coordination_unit/metrics_collector.cc",
         "patchSetId": 16
