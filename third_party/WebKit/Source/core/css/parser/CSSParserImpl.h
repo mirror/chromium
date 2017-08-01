@@ -20,7 +20,7 @@ namespace blink {
 class CSSLazyParsingState;
 class CSSParserContext;
 class CSSParserObserver;
-class CSSParserObserverWrapper;
+class CSSParserTokenStream;
 class StyleRule;
 class StyleRuleBase;
 class StyleRuleCharset;
@@ -103,7 +103,8 @@ class CSSParserImpl {
                                           CSSParserObserver&);
 
   static StylePropertySet* ParseDeclarationListForLazyStyle(
-      CSSParserTokenRange block,
+      const String& block,
+      size_t offset,
       const CSSParserContext*);
 
  private:
@@ -111,38 +112,60 @@ class CSSParserImpl {
 
   // Returns whether the first encountered rule was valid
   template <typename T>
-  bool ConsumeRuleList(CSSParserTokenRange, RuleListType, T callback);
+  bool ConsumeRuleList(CSSParserTokenStream&, RuleListType, T callback);
 
   // These two functions update the range they're given
-  StyleRuleBase* ConsumeAtRule(CSSParserTokenRange&, AllowedRulesType);
-  StyleRuleBase* ConsumeQualifiedRule(CSSParserTokenRange&, AllowedRulesType);
+  StyleRuleBase* ConsumeAtRule(CSSParserTokenStream&, AllowedRulesType);
+  StyleRuleBase* ConsumeQualifiedRule(CSSParserTokenStream&,
+                                      AllowedRulesType,
+                                      size_t offset = 0);
 
-  static StyleRuleCharset* ConsumeCharsetRule(CSSParserTokenRange prelude);
-  StyleRuleImport* ConsumeImportRule(CSSParserTokenRange prelude);
-  StyleRuleNamespace* ConsumeNamespaceRule(CSSParserTokenRange prelude);
+  static StyleRuleCharset* ConsumeCharsetRule(CSSParserTokenRange prelude,
+                                              size_t start_offset,
+                                              size_t end_offset);
+  StyleRuleImport* ConsumeImportRule(CSSParserTokenRange prelude,
+                                     size_t prelude_start_offset,
+                                     size_t prelude_end_offset);
+  StyleRuleNamespace* ConsumeNamespaceRule(CSSParserTokenRange prelude,
+                                           size_t prelude_start_offset);
   StyleRuleMedia* ConsumeMediaRule(CSSParserTokenRange prelude,
-                                   CSSParserTokenRange block);
+                                   CSSParserTokenStream& block,
+                                   size_t prelude_start_offset);
   StyleRuleSupports* ConsumeSupportsRule(CSSParserTokenRange prelude,
-                                         CSSParserTokenRange block);
+                                         CSSParserTokenStream& block,
+                                         size_t prelude_start_offset);
   StyleRuleViewport* ConsumeViewportRule(CSSParserTokenRange prelude,
-                                         CSSParserTokenRange block);
+                                         CSSParserTokenStream& block,
+                                         size_t prelude_start_offset);
   StyleRuleFontFace* ConsumeFontFaceRule(CSSParserTokenRange prelude,
-                                         CSSParserTokenRange block);
+                                         CSSParserTokenStream& block,
+                                         size_t prelude_start_offset);
   StyleRuleKeyframes* ConsumeKeyframesRule(bool webkit_prefixed,
                                            CSSParserTokenRange prelude,
-                                           CSSParserTokenRange block);
+                                           CSSParserTokenStream& block,
+                                           size_t prelude_start_offset);
   StyleRulePage* ConsumePageRule(CSSParserTokenRange prelude,
-                                 CSSParserTokenRange block);
+                                 CSSParserTokenStream& block,
+                                 size_t prelude_start_offset);
   // Updates parsed_properties_
   void ConsumeApplyRule(CSSParserTokenRange prelude);
 
   StyleRuleKeyframe* ConsumeKeyframeStyleRule(CSSParserTokenRange prelude,
-                                              CSSParserTokenRange block);
+                                              CSSParserTokenStream& block,
+                                              size_t prelude_start_offset);
   StyleRule* ConsumeStyleRule(CSSParserTokenRange prelude,
-                              CSSParserTokenRange block);
+                              CSSParserTokenStream& block,
+                              size_t offset);
 
-  void ConsumeDeclarationList(CSSParserTokenRange, StyleRule::RuleType);
-  void ConsumeDeclaration(CSSParserTokenRange, StyleRule::RuleType);
+  void ConsumeDeclarationListForAtApply(CSSParserTokenRange);
+  void ConsumeDeclarationList(CSSParserTokenStream&, StyleRule::RuleType);
+  void ConsumeDeclaration(CSSParserTokenStream&,
+                          StyleRule::RuleType,
+                          size_t declaration_start_offset);
+  void ConsumeDeclaration(CSSParserTokenRange,
+                          StyleRule::RuleType,
+                          size_t declaration_start_offset,
+                          size_t declaration_end_offset);
   void ConsumeDeclarationValue(CSSParserTokenRange,
                                CSSPropertyID,
                                bool important,
@@ -162,10 +185,9 @@ class CSSParserImpl {
   Member<const CSSParserContext> context_;
   Member<StyleSheetContents> style_sheet_;
 
-  // For the inspector
-  CSSParserObserverWrapper* observer_wrapper_;
-
   Member<CSSLazyParsingState> lazy_state_;
+
+  CSSParserObserver* observer_ = nullptr;
 };
 
 }  // namespace blink

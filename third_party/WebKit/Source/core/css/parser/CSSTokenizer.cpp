@@ -16,62 +16,39 @@ namespace blink {
 
 namespace blink {
 
-CSSTokenizer::CSSTokenizer(const String& string) : input_(string) {
-  // According to the spec, we should perform preprocessing here.
-  // See: http://dev.w3.org/csswg/css-syntax/#input-preprocessing
-  //
-  // However, we can skip this step since:
-  // * We're using HTML spaces (which accept \r and \f as a valid white space)
-  // * Do not count white spaces
-  // * CSSTokenizerInputStream::NextInputChar() replaces NULLs for replacement
-  //   characters
+// We handle input preprocessing substitutions during tokenization:
+// * We also accept \r and \f as white space
+// * CSSTokenizerInputStream::nextInputChar() replaces NULLs for replacement
+//   characters
 
-  if (string.IsEmpty())
-    return;
+CSSTokenizer::CSSTokenizer(const String& string, size_t offset)
+    : input_(string) {
+  input_.Advance(offset);
+}
 
-  // To avoid resizing we err on the side of reserving too much space.
-  // Most strings we tokenize have about 3.5 to 5 characters per token.
-  tokens_.ReserveInitialCapacity(string.length() / 3);
-
+CSSParserToken CSSTokenizer::TokenizeSingle() {
   while (true) {
     CSSParserToken token = NextToken();
-    if (token.GetType() == kCommentToken)
+    if (token.GetType() == CSSParserTokenType::kCommentToken)
       continue;
-    if (token.GetType() == kEOFToken)
-      return;
-    tokens_.push_back(token);
+    if (token.GetType() != CSSParserTokenType::kEOFToken)
+      tokens_.push_back(token);
+    return token;
   }
 }
 
-CSSTokenizer::CSSTokenizer(const String& string,
-                           CSSParserObserverWrapper& wrapper)
-    : input_(string) {
-  if (string.IsEmpty())
-    return;
-
-  unsigned offset = 0;
-  while (true) {
-    CSSParserToken token = NextToken();
-    if (token.GetType() == kEOFToken)
-      break;
-    if (token.GetType() == kCommentToken) {
-      wrapper.AddComment(offset, input_.Offset(), tokens_.size());
-    } else {
-      tokens_.push_back(token);
-      wrapper.AddToken(offset);
-    }
-    offset = input_.Offset();
+void CSSTokenizer::EnsureTokenizedToEOF() {
+  while (TokenizeSingle().GetType() != CSSParserTokenType::kEOFToken) {
   }
-
-  wrapper.AddToken(offset);
-  wrapper.FinalizeConstruction(tokens_.begin());
 }
 
 CSSParserTokenRange CSSTokenizer::TokenRange() {
+  EnsureTokenizedToEOF();
   return tokens_;
 }
 
 unsigned CSSTokenizer::TokenCount() {
+  EnsureTokenizedToEOF();
   return tokens_.size();
 }
 
