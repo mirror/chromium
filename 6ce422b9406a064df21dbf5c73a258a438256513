@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "444a28c5_0e8319b3",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/password_list_item.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-08-01T21:56:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a585d3de_cee5a22b",
+      "range": {
+        "startLine": 22,
+        "startChar": 6,
+        "endLine": 22,
+        "endChar": 11
+      },
+      "revId": "6ce422b9406a064df21dbf5c73a258a438256513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9be2dc4d_887fec8c",
         "filename": "chrome/browser/resources/settings/passwords_and_forms_page/password_list_item.html",
         "patchSetId": 7
@@ -69,6 +93,30 @@
       "revId": "6ce422b9406a064df21dbf5c73a258a438256513",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21733558_71c53c9b",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/password_list_item.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-08-01T21:56:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9be2dc4d_887fec8c",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 18
+      },
+      "revId": "6ce422b9406a064df21dbf5c73a258a438256513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -119,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "6a2e70d0_9068b2ae",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-08-01T21:56:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51c910d4_82949b6b",
+      "range": {
+        "startLine": 69,
+        "startChar": 10,
+        "endLine": 69,
+        "endChar": 16
+      },
+      "revId": "6ce422b9406a064df21dbf5c73a258a438256513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14f1b92a_4d0a1393",
         "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_shared_css.html",
         "patchSetId": 7
@@ -154,6 +226,30 @@
       "side": 1,
       "message": "Let\u0027s use flex: 1, for all 3 :-)",
       "parentUuid": "14f1b92a_4d0a1393",
+      "range": {
+        "startLine": 16,
+        "startChar": 14,
+        "endLine": 16,
+        "endChar": 15
+      },
+      "revId": "6ce422b9406a064df21dbf5c73a258a438256513",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c886a7d6_ae8625af",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_shared_css.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-08-01T21:56:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b878c36_206ccd1f",
       "range": {
         "startLine": 16,
         "startChar": 14,
