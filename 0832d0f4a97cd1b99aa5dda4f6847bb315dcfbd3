@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef752ad8_3f799ec0",
+        "filename": "ios/chrome/browser/ui/commands/application_commands.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-01T09:40:02Z",
+      "side": 1,
+      "message": "Add it to the BrowserCommands protocol instead.",
+      "range": {
+        "startLine": 40,
+        "startChar": 8,
+        "endLine": 40,
+        "endChar": 26
+      },
+      "revId": "0832d0f4a97cd1b99aa5dda4f6847bb315dcfbd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
