@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af7fff35_a0a9f308",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-08-01T12:05:32Z",
+      "side": 1,
+      "message": "s/Upprev/Uprev/",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 6
+      },
+      "revId": "3560998a577d489f73bb12b7b0b6fa3ab0cd4e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55b74a43_557fe111",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1175129
+      },
+      "writtenOn": "2017-08-01T12:05:32Z",
+      "side": 1,
+      "message": "Could you please add the bug due to which this is happening for tracking purposes? (I assume 737960)",
+      "range": {
+        "startLine": 9,
+        "startChar": 5,
+        "endLine": 9,
+        "endChar": 9
+      },
+      "revId": "3560998a577d489f73bb12b7b0b6fa3ab0cd4e35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
