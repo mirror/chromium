@@ -5,6 +5,7 @@
 #include "components/ui_devtools/views/ui_devtools_dom_agent.h"
 
 #include "components/ui_devtools/devtools_server.h"
+#include "components/ui_devtools/views/ui_devtools_overlay_agent.h"
 #include "components/ui_devtools/views/ui_element.h"
 #include "components/ui_devtools/views/view_element.h"
 #include "components/ui_devtools/views/widget_element.h"
@@ -36,6 +37,7 @@ std::unique_ptr<DOM::Node> BuildNode(
   constexpr int kDomElementNodeType = 1;
   std::unique_ptr<DOM::Node> node = DOM::Node::create()
                                         .setNodeId(node_ids)
+                                        .setBackendNodeId(node_ids)
                                         .setNodeName(name)
                                         .setNodeType(kDomElementNodeType)
                                         .setAttributes(std::move(attributes))
@@ -105,6 +107,7 @@ std::unique_ptr<DOM::Node> BuildDomNodeFromUIElement(UIElement* root) {
   constexpr int kDomElementNodeType = 1;
   std::unique_ptr<DOM::Node> node = DOM::Node::create()
                                         .setNodeId(root->node_id())
+                                        .setBackendNodeId(root->node_id())
                                         .setNodeName(root->GetTypeName())
                                         .setNodeType(kDomElementNodeType)
                                         .setAttributes(GetAttributes(root))
@@ -136,16 +139,19 @@ ui_devtools::protocol::Response UIDevToolsDOMAgent::getDocument(
   return ui_devtools::protocol::Response::OK();
 }
 
-ui_devtools::protocol::Response UIDevToolsDOMAgent::highlightNode(
-    std::unique_ptr<ui_devtools::protocol::DOM::HighlightConfig>
-        highlight_config,
-    ui_devtools::protocol::Maybe<int> node_id) {
-  return HighlightNode(std::move(highlight_config), node_id.fromJust());
-}
-
 ui_devtools::protocol::Response UIDevToolsDOMAgent::hideHighlight() {
   if (layer_for_highlighting_ && layer_for_highlighting_->visible())
     layer_for_highlighting_->SetVisible(false);
+  return ui_devtools::protocol::Response::OK();
+}
+
+ui_devtools::protocol::Response
+UIDevToolsDOMAgent::pushNodesByBackendIdsToFrontend(
+    std::unique_ptr<protocol::Array<int>> backend_node_ids,
+    std::unique_ptr<protocol::Array<int>>* result) {
+  *result = protocol::Array<int>::create();
+  for (size_t index = 0; index < backend_node_ids->length(); ++index)
+    (*result)->addItem(backend_node_ids->get(index));
   return ui_devtools::protocol::Response::OK();
 }
 
@@ -203,6 +209,71 @@ void UIDevToolsDOMAgent::RemoveObserver(UIDevToolsDOMAgentObserver* observer) {
 
 UIElement* UIDevToolsDOMAgent::GetElementFromNodeId(int node_id) {
   return node_id_to_ui_element_[node_id];
+}
+
+ui_devtools::protocol::Response UIDevToolsDOMAgent::HighlightNode(
+    std::unique_ptr<ui_devtools::protocol::Overlay::HighlightConfig>
+        highlight_config,
+    int node_id) {
+  if (!layer_for_highlighting_) {
+    layer_for_highlighting_.reset(
+        new ui::Layer(ui::LayerType::LAYER_SOLID_COLOR));
+    layer_for_highlighting_->set_name("HighlightingLayer");
+  }
+  std::pair<aura::Window*, gfx::Rect> window_and_bounds =
+      node_id_to_ui_element_.count(node_id)
+          ? node_id_to_ui_element_[node_id]->GetNodeWindowAndBounds()
+          : std::make_pair<aura::Window*, gfx::Rect>(nullptr, gfx::Rect());
+
+  if (!window_and_bounds.first)
+    return ui_devtools::protocol::Response::Error("No node found with that id");
+
+  SkColor content_color =
+      RGBAToSkColor(highlight_config->getContentColor(nullptr));
+  UpdateHighlight(window_and_bounds, content_color);
+
+  if (!layer_for_highlighting_->visible())
+    layer_for_highlighting_->SetVisible(true);
+
+  return ui_devtools::protocol::Response::OK();
+}
+
+int UIDevToolsDOMAgent::FindElementIdTargetedByPoint(const gfx::Point& p) {
+  for (auto* element_window : window_element_root_->children()) {
+    aura::Window* root_window =
+        UIElement::GetBackingElement<aura::Window, WindowElement>(
+            element_window);
+    if (!root_window->bounds().Contains(p))
+      continue;
+
+    aura::Window* targeted_window = root_window->GetEventHandlerForPoint(p);
+    if (!targeted_window)
+      continue;
+
+    views::Widget* targeted_widget =
+        views::Widget::GetWidgetForNativeWindow(targeted_window);
+    if (!targeted_widget) {
+      return window_element_root_
+          ->FindUIElementIdForBackendElement<aura::Window>(targeted_window);
+    }
+
+    views::View* root_view = targeted_widget->GetRootView();
+    if (!root_view) {
+      return window_element_root_
+          ->FindUIElementIdForBackendElement<views::Widget>(targeted_widget);
+    }
+
+    gfx::Point point_in_targeted_window(p);
+    aura::Window::ConvertPointToTarget(root_window, targeted_window,
+                                       &point_in_targeted_window);
+    views::View* targeted_view =
+        root_view->GetEventHandlerForPoint(point_in_targeted_window);
+    DCHECK(targeted_view);
+    return window_element_root_->FindUIElementIdForBackendElement<views::View>(
+        targeted_view);
+  }
+  NOTREACHED();
+  return 0;
 }
 
 void UIDevToolsDOMAgent::OnHostInitialized(aura::WindowTreeHost* host) {
@@ -351,34 +422,6 @@ void UIDevToolsDOMAgent::UpdateHighlight(
   screen_position_client->ConvertPointFromScreen(root, &origin);
   bounds.set_origin(origin);
   layer_for_highlighting_->SetBounds(bounds);
-}
-
-ui_devtools::protocol::Response UIDevToolsDOMAgent::HighlightNode(
-    std::unique_ptr<ui_devtools::protocol::DOM::HighlightConfig>
-        highlight_config,
-    int node_id) {
-  if (!layer_for_highlighting_) {
-    layer_for_highlighting_.reset(
-        new ui::Layer(ui::LayerType::LAYER_SOLID_COLOR));
-    layer_for_highlighting_->set_name("HighlightingLayer");
-  }
-
-  std::pair<aura::Window*, gfx::Rect> window_and_bounds =
-      node_id_to_ui_element_.count(node_id)
-          ? node_id_to_ui_element_[node_id]->GetNodeWindowAndBounds()
-          : std::make_pair<aura::Window*, gfx::Rect>(nullptr, gfx::Rect());
-
-  if (!window_and_bounds.first) {
-    return ui_devtools::protocol::Response::Error("No node found with that id");
-  }
-  SkColor content_color =
-      RGBAToSkColor(highlight_config->getContentColor(nullptr));
-  UpdateHighlight(window_and_bounds, content_color);
-
-  if (!layer_for_highlighting_->visible())
-    layer_for_highlighting_->SetVisible(true);
-
-  return ui_devtools::protocol::Response::OK();
 }
 
 }  // namespace ui_devtools
