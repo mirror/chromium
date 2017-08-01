@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88f8f31c_753c3b97",
+        "filename": "components/payments/content/payment_response_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-08-01T15:30:27Z",
+      "side": 0,
+      "message": "Do we have validation for this?\n\nI think this is the right change, just want to make sure that we know we\u0027re not breaking anything.",
+      "range": {
+        "startLine": 85,
+        "startChar": 35,
+        "endLine": 85,
+        "endChar": 38
+      },
+      "revId": "aa061e550891fab4b55e75d85955e27eed25bf94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

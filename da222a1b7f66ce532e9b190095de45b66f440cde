@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dcb04bdd_6eeb8787",
+        "filename": "components/autofill/core/browser/autofill_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 6044,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-08-01T15:30:27Z",
+      "side": 1,
+      "message": "discard?",
+      "revId": "da222a1b7f66ce532e9b190095de45b66f440cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9254ecf_d5f87168",
+        "filename": "components/autofill/core/browser/form_group.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-08-01T15:30:27Z",
+      "side": 1,
+      "message": "still needed?",
+      "revId": "da222a1b7f66ce532e9b190095de45b66f440cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
