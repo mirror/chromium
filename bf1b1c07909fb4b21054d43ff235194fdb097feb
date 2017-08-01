@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "648ca0ef_81120373",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-01T01:02:12Z",
+      "side": 1,
+      "message": "optional: I like to put \"cros:\" or \"chromeos:\" in CL titles so the chrome sheriffs know the patch didn\u0027t break Windows/Mac/etc. I don\u0027t think sheriffs know that src/ash is chromeos-only. :-)",
+      "revId": "bf1b1c07909fb4b21054d43ff235194fdb097feb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a13be28_58746513",
+        "filename": "chrome/browser/ui/ash/palette_delegate_chromeos.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-01T01:02:12Z",
+      "side": 1,
+      "message": "Can this computation be done in ash? I\u0027m asking because this HighlighterSelectionObserver will be hard to convert to mojo for mustash if it passes aura::Window* around, whereas it will be easier if it passes screen coordinate rectangles / scale factors / etc. Under mustash only the window manager (ash) has knowledge of root windows.",
+      "revId": "bf1b1c07909fb4b21054d43ff235194fdb097feb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
