@@ -1300,13 +1300,24 @@ void RenderFrameHostImpl::SetLastCommittedOrigin(const url::Origin& origin) {
 
 void RenderFrameHostImpl::SetLastCommittedUrl(const GURL& url) {
   last_committed_url_ = url;
+  // Only send UKM source IDs to GRC for toplevel frames as they're the
+  // only frames we can log URLs from.
+  if (frame_tree_node_->parent())
+    return;
+
   resource_coordinator::ResourceCoordinatorInterface* coordinator =
       GetFrameResourceCoordinator();
-  if (coordinator) {
-    coordinator->SetProperty(
-        resource_coordinator::mojom::PropertyType::kURL,
-        base::MakeUnique<base::Value>(last_committed_url_.spec()));
-  }
+  if (!coordinator)
+    return;
+
+  ukm::SourceId ukm_source_id = ukm::UkmRecorder::GetNewSourceID();
+  ukm::UkmRecorder* ukm_recorder = ukm::UkmRecorder::Get();
+  if (!ukm_recorder)
+    return;
+
+  ukm_recorder->UpdateSourceURL(ukm_source_id, last_committed_url_);
+  coordinator->SetProperty(
+      resource_coordinator::mojom::PropertyType::kUKMSourceId, ukm_source_id);
 }
 
 void RenderFrameHostImpl::OnDetach() {

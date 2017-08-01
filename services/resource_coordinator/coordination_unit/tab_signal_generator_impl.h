@@ -33,7 +33,7 @@ class TabSignalGeneratorImpl : public CoordinationUnitGraphObserver,
   bool ShouldObserve(const CoordinationUnitImpl* coordination_unit) override;
   void OnPropertyChanged(const CoordinationUnitImpl* coordination_unit,
                          const mojom::PropertyType property_type,
-                         const base::Value& value) override;
+                         int64_t value) override;
 
   void BindToInterface(
       resource_coordinator::mojom::TabSignalGeneratorRequest request);
@@ -42,7 +42,7 @@ class TabSignalGeneratorImpl : public CoordinationUnitGraphObserver,
   void OnFramePropertyChanged(
       const FrameCoordinationUnitImpl* coordination_unit,
       const mojom::PropertyType property_type,
-      const base::Value& value);
+      int64_t value);
 
   mojo::BindingSet<mojom::TabSignalGenerator> bindings_;
   mojo::InterfacePtrSet<mojom::TabSignalObserver> observers_;
