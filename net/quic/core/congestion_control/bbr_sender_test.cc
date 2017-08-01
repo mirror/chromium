@@ -92,6 +92,7 @@ class BbrSenderTest : public QuicTest {
                               {&receiver_, &competing_receiver_}) {
     // These will be changed by the appropriate tests as necessary.
     FLAGS_quic_reloadable_flag_quic_bbr_add_tso_cwnd = false;
+    FLAGS_quic_reloadable_flag_quic_bbr_ack_aggregation_bytes4 = true;
 
     rtt_stats_ = bbr_sender_.connection()->sent_packet_manager().GetRttStats();
     sender_ = SetupBbrSender(&bbr_sender_);
@@ -239,6 +240,14 @@ class BbrSenderTest : public QuicTest {
     simulator_.RunFor(wait_time + kTestRtt);
     ASSERT_EQ(0u, bbr_sender_.bytes_to_transfer());
   }
+
+  void SetConnectionOption(QuicTag option) {
+    QuicConfig config;
+    QuicTagVector options;
+    options.push_back(option);
+    QuicConfigPeer::SetReceivedConnectionOptions(&config, options);
+    sender_->SetFromConfig(config, Perspective::IS_SERVER);
+  }
 };
 
 // Test a simple long data transfer in the default setup.
@@ -351,10 +360,13 @@ TEST_F(BbrSenderTest, SimpleTransferAckDecimation) {
 }
 
 // Test a simple long data transfer with 2 rtts of aggregation.
-TEST_F(BbrSenderTest, SimpleTransfer2RTTAggregationBytes3) {
-  FLAGS_quic_reloadable_flag_quic_bbr_ack_aggregation_bytes3 = true;
+TEST_F(BbrSenderTest, SimpleTransfer2RTTAggregationBytes4) {
   FLAGS_quic_reloadable_flag_quic_bbr_add_tso_cwnd = false;
+
   CreateDefaultSetup();
+  // Enable ack aggregation that forces the queue to be drained.
+  SetConnectionOption(kBBR1);
+
   // 2 RTTs of aggregation, with a max of 10kb.
   EnableAggregation(10 * 1024, 2 * kTestRtt);
 
@@ -377,8 +389,7 @@ TEST_F(BbrSenderTest, SimpleTransfer2RTTAggregationBytes3) {
 }
 
 // Test a simple long data transfer with 2 rtts of aggregation.
-TEST_F(BbrSenderTest, SimpleTransferAckDecimation3) {
-  FLAGS_quic_reloadable_flag_quic_bbr_ack_aggregation_bytes3 = true;
+TEST_F(BbrSenderTest, SimpleTransferAckDecimation4) {
   // Decrease the CWND gain so extra CWND is required with stretch acks.
   FLAGS_quic_bbr_cwnd_gain = 1.0;
   sender_ = new BbrSender(
@@ -392,6 +403,8 @@ TEST_F(BbrSenderTest, SimpleTransferAckDecimation3) {
   QuicConnectionPeer::SetAckMode(receiver_.connection(),
                                  QuicConnection::AckMode::ACK_DECIMATION);
   CreateDefaultSetup();
+  // Enable ack aggregation that forces the queue to be drained.
+  SetConnectionOption(kBBR1);
 
   // Transfer 12MB.
   DoSimpleTransfer(12 * 1024 * 1024, QuicTime::Delta::FromSeconds(35));
@@ -661,11 +674,7 @@ TEST_F(BbrSenderTest, NoBandwidthDropOnStartup) {
 TEST_F(BbrSenderTest, SimpleTransfer1RTTStartup) {
   CreateDefaultSetup();
 
-  QuicConfig config;
-  QuicTagVector options;
-  options.push_back(k1RTT);
-  QuicConfigPeer::SetReceivedConnectionOptions(&config, options);
-  sender_->SetFromConfig(config, Perspective::IS_SERVER);
+  SetConnectionOption(k1RTT);
   EXPECT_EQ(1u, sender_->num_startup_rtts());
 
   // Run until the full bandwidth is reached and check how many rounds it was.
@@ -695,11 +704,7 @@ TEST_F(BbrSenderTest, SimpleTransfer2RTTStartup) {
   FLAGS_quic_reloadable_flag_quic_bbr_add_tso_cwnd = false;
   CreateDefaultSetup();
 
-  QuicConfig config;
-  QuicTagVector options;
-  options.push_back(k2RTT);
-  QuicConfigPeer::SetReceivedConnectionOptions(&config, options);
-  sender_->SetFromConfig(config, Perspective::IS_SERVER);
+  SetConnectionOption(k2RTT);
   EXPECT_EQ(2u, sender_->num_startup_rtts());
 
   // Run until the full bandwidth is reached and check how many rounds it was.
@@ -728,11 +733,7 @@ TEST_F(BbrSenderTest, SimpleTransferLRTTStartup) {
   FLAGS_quic_reloadable_flag_quic_bbr_exit_startup_on_loss = true;
   CreateDefaultSetup();
 
-  QuicConfig config;
-  QuicTagVector options;
-  options.push_back(kLRTT);
-  QuicConfigPeer::SetReceivedConnectionOptions(&config, options);
-  sender_->SetFromConfig(config, Perspective::IS_SERVER);
+  SetConnectionOption(kLRTT);
   EXPECT_EQ(3u, sender_->num_startup_rtts());
 
   // Run until the full bandwidth is reached and check how many rounds it was.
@@ -761,11 +762,7 @@ TEST_F(BbrSenderTest, SimpleTransferLRTTStartupSmallBuffer) {
   FLAGS_quic_reloadable_flag_quic_bbr_exit_startup_on_loss = true;
   CreateSmallBufferSetup();
 
-  QuicConfig config;
-  QuicTagVector options;
-  options.push_back(kLRTT);
-  QuicConfigPeer::SetReceivedConnectionOptions(&config, options);
-  sender_->SetFromConfig(config, Perspective::IS_SERVER);
+  SetConnectionOption(kLRTT);
   EXPECT_EQ(3u, sender_->num_startup_rtts());
 
   // Run until the full bandwidth is reached and check how many rounds it was.
