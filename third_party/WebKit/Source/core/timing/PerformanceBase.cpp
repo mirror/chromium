@@ -77,12 +77,14 @@ DOMHighResTimeStamp GetUnixAtZeroMonotonic() {
 using PerformanceObserverVector = HeapVector<Member<PerformanceObserver>>;
 
 static const size_t kDefaultResourceTimingBufferSize = 150;
+static const size_t kDefaultLongtaskTimingBufferSize = 150;
 static const size_t kDefaultFrameTimingBufferSize = 150;
 
 PerformanceBase::PerformanceBase(double time_origin,
                                  RefPtr<WebTaskRunner> task_runner)
     : frame_timing_buffer_size_(kDefaultFrameTimingBufferSize),
       resource_timing_buffer_size_(kDefaultResourceTimingBufferSize),
+      longtask_timing_buffer_size_(kDefaultLongtaskTimingBufferSize),
       user_timing_(nullptr),
       time_origin_(time_origin),
       observer_filter_options_(PerformanceEntry::kInvalid),
@@ -244,6 +246,22 @@ void PerformanceBase::setResourceTimingBufferSize(unsigned size) {
     DispatchEvent(Event::Create(EventTypeNames::resourcetimingbufferfull));
 }
 
+void PerformanceBase::clearLongtaskTimings() {
+  longtask_timing_buffer_.clear();
+}
+
+void PerformanceBase::setLongtaskTimingBufferSize(unsigned size) {
+  longtask_timing_buffer_size_ = size;
+  if (IsLongtaskTimingBufferFull())
+    DispatchEvent(Event::Create(EventTypeNames::longtasktimingbufferfull));
+}
+
+PerformanceEntryVector PerformanceBase::getLongtaskTimingsBufferedEntries() {
+  PerformanceEntryVector entries;
+  entries.AppendVector(longtask_timing_buffer_);
+  return entries;
+}
+
 bool PerformanceBase::PassesTimingAllowCheck(
     const ResourceResponse& response,
     const SecurityOrigin& initiator_security_origin,
@@ -397,19 +415,35 @@ bool PerformanceBase::IsResourceTimingBufferFull() {
   return resource_timing_buffer_.size() >= resource_timing_buffer_size_;
 }
 
-void PerformanceBase::AddLongTaskTiming(double start_time,
+void PerformanceBase::AddLongtaskTimingBuffer(PerformanceEntry& entry) {
+  longtask_timing_buffer_.push_back(&entry);
+
+  if (IsLongtaskTimingBufferFull())
+    DispatchEvent(Event::Create(EventTypeNames::longtasktimingbufferfull));
+}
+
+bool PerformanceBase::IsLongtaskTimingBufferFull() {
+  return longtask_timing_buffer_.size() >= longtask_timing_buffer_size_;
+}
+
+void PerformanceBase::AddLongtaskTiming(double start_time,
                                         double end_time,
                                         const String& name,
                                         const String& frame_src,
                                         const String& frame_id,
                                         const String& frame_name) {
-  if (!HasObserverFor(PerformanceEntry::kLongTask))
+  if (IsLongtaskTimingBufferFull() &&
+      !HasObserverFor(PerformanceEntry::kLongTask))
     return;
+
   PerformanceEntry* entry = PerformanceLongTaskTiming::Create(
       MonotonicTimeToDOMHighResTimeStamp(start_time),
       MonotonicTimeToDOMHighResTimeStamp(end_time), name, frame_src, frame_id,
       frame_name);
-  NotifyObserversOfEntry(*entry);
+  if (HasObserverFor(PerformanceEntry::kLongTask))
+    NotifyObserversOfEntry(*entry);
+  if (!IsLongtaskTimingBufferFull())
+    AddLongtaskTimingBuffer(*entry);
 }
 
 void PerformanceBase::mark(const String& mark_name,
@@ -447,7 +481,7 @@ void PerformanceBase::RegisterPerformanceObserver(
     PerformanceObserver& observer) {
   observer_filter_options_ |= observer.FilterOptions();
   observers_.insert(&observer);
-  UpdateLongTaskInstrumentation();
+  UpdateLongtaskInstrumentation();
 }
 
 void PerformanceBase::UnregisterPerformanceObserver(
@@ -461,7 +495,7 @@ void PerformanceBase::UnregisterPerformanceObserver(
   }
   observers_.erase(&old_observer);
   UpdatePerformanceObserverFilterOptions();
-  UpdateLongTaskInstrumentation();
+  UpdateLongtaskInstrumentation();
 }
 
 void PerformanceBase::UpdatePerformanceObserverFilterOptions() {
@@ -469,7 +503,7 @@ void PerformanceBase::UpdatePerformanceObserverFilterOptions() {
   for (const auto& observer : observers_) {
     observer_filter_options_ |= observer->FilterOptions();
   }
-  UpdateLongTaskInstrumentation();
+  UpdateLongtaskInstrumentation();
 }
 
 void PerformanceBase::NotifyObserversOfEntry(PerformanceEntry& entry) {
@@ -567,6 +601,7 @@ DEFINE_TRACE(PerformanceBase) {
   visitor->Trace(observers_);
   visitor->Trace(active_observers_);
   visitor->Trace(suspended_observers_);
+  visitor->Trace(longtask_timing_buffer_);
   EventTargetWithInlineData::Trace(visitor);
 }
 

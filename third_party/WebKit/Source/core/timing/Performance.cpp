@@ -153,7 +153,7 @@ PerformanceNavigationTiming* Performance::CreateNavigationTimingInstance() {
                                          serverTiming);
 }
 
-void Performance::UpdateLongTaskInstrumentation() {
+void Performance::UpdateLongtaskInstrumentation() {
   DCHECK(GetFrame());
   if (!GetFrame()->GetDocument())
     return;
@@ -254,12 +254,12 @@ void Performance::ReportLongTask(double start_time,
   DOMWindow* culprit_dom_window = attribution.second;
   if (!culprit_dom_window || !culprit_dom_window->GetFrame() ||
       !culprit_dom_window->GetFrame()->DeprecatedLocalOwner()) {
-    AddLongTaskTiming(start_time, end_time, attribution.first, g_empty_string,
+    AddLongtaskTiming(start_time, end_time, attribution.first, g_empty_string,
                       g_empty_string, g_empty_string);
   } else {
     HTMLFrameOwnerElement* frame_owner =
         culprit_dom_window->GetFrame()->DeprecatedLocalOwner();
-    AddLongTaskTiming(
+    AddLongtaskTiming(
         start_time, end_time, attribution.first,
         GetFrameAttribute(frame_owner, HTMLNames::srcAttr, false),
         GetFrameAttribute(frame_owner, HTMLNames::idAttr, false),
