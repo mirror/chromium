@@ -126,4 +126,50 @@ TEST_F(BrowserAccessibilityTest, RetainedDetachedObjectsReturnNil) {
   [retainedFirstChild release];
 }
 
+TEST_F(BrowserAccessibilityTest, TestComputeTextEdit) {
+  BrowserAccessibility* wrapper = [accessibility_ browserAccessibility];
+  ASSERT_NE(nullptr, wrapper);
+
+  ui::AXNodeData& data = wrapper->GetData();
+  data.SetValue("text");
+  AXTextEdit text_edit = [accessibility_ computeTextEdit];
+  EXPECT_EQ("text", text_edit.text);
+  EXPECT_FALSE(text_edit.is_deleted);
+
+  data.SetValue("new text");
+  AXTextEdit text_edit = [accessibility_ computeTextEdit];
+  EXPECT_EQ("new ", text_edit.text);
+  EXPECT_FALSE(text_edit.is_deleted);
+
+  data.SetValue("new text hello");
+  AXTextEdit text_edit = [accessibility_ computeTextEdit];
+  EXPECT_EQ(" hello", text_edit.text);
+  EXPECT_FALSE(text_edit.is_deleted);
+
+  data.SetValue("newer text hello");
+  AXTextEdit text_edit = [accessibility_ computeTextEdit];
+  EXPECT_EQ("er", text_edit.text);
+  EXPECT_FALSE(text_edit.is_deleted);
+
+  data.SetValue("new text hello");
+  AXTextEdit text_edit = [accessibility_ computeTextEdit];
+  EXPECT_EQ("er", text_edit.text);
+  EXPECT_TRUE(text_edit.is_deleted);
+
+  data.SetValue("new text");
+  AXTextEdit text_edit = [accessibility_ computeTextEdit];
+  EXPECT_EQ(" hello", text_edit.text);
+  EXPECT_TRUE(text_edit.is_deleted);
+
+  data.SetValue("text");
+  AXTextEdit text_edit = [accessibility_ computeTextEdit];
+  EXPECT_EQ("new ", text_edit.text);
+  EXPECT_TRUE(text_edit.is_deleted);
+
+  data.SetValue("");
+  AXTextEdit text_edit = [accessibility_ computeTextEdit];
+  EXPECT_EQ("text", text_edit.text);
+  EXPECT_TRUE(text_edit.is_deleted);
+}
+
 }  // namespace content
