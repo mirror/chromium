@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3d0b757e_cd4bc983",
+        "filename": "remoting/ios/app/host_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-08-01T22:54:35Z",
+      "side": 1,
+      "message": "In RTL languages, where does the FAB end up normally? Seems like it starts on the left side, so I can add a check for that.",
+      "parentUuid": "0446fb7c_8f0b7206",
+      "range": {
+        "startLine": 113,
+        "startChar": 54,
+        "endLine": 113,
+        "endChar": 55
+      },
+      "revId": "a14b329d32119d0303fdb8ed229c6d3583680932",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1a9cda2_c4d4a4b4",
         "filename": "remoting/resources/remoting_strings.grd",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "fedc548d_282f7679",
+        "filename": "remoting/resources/remoting_strings.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 720,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-08-01T22:54:35Z",
+      "side": 1,
+      "message": "It is a Google concept. They can google it? :D",
+      "parentUuid": "a1a9cda2_c4d4a4b4",
+      "range": {
+        "startLine": 720,
+        "startChar": 57,
+        "endLine": 720,
+        "endChar": 60
+      },
+      "revId": "a14b329d32119d0303fdb8ed229c6d3583680932",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc766afa_d39d8e57",
         "filename": "remoting/resources/remoting_strings.grd",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "a14b329d32119d0303fdb8ed229c6d3583680932",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29d18cd2_6494df39",
+        "filename": "remoting/resources/remoting_strings.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 721,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-08-01T22:54:35Z",
+      "side": 1,
+      "message": "I don\u0027t know if users will know what \"Dock\" means.",
+      "parentUuid": "fc766afa_d39d8e57",
+      "range": {
+        "startLine": 721,
+        "startChar": 8,
+        "endLine": 721,
+        "endChar": 17
+      },
+      "revId": "a14b329d32119d0303fdb8ed229c6d3583680932",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
