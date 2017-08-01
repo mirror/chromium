@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <set>
 #include <string>
+#include <utility>
 #include <vector>
 
 #include "base/bind.h"
@@ -158,6 +159,143 @@ gfx::NativeCursor ContentSettingBubbleContents::Favicon::GetCursor(
   return views::GetNativeHandCursor();
 }
 
+// ContentSettingBubbleContents::ListItemContainer -----------------------------
+
+class ContentSettingBubbleContents::ListItemContainer : public views::View {
+ public:
+  explicit ListItemContainer(ContentSettingBubbleContents* parent);
+
+  // Create and add child views representing |item|. If a child is a button,
+  // set tag with row number for listener.
+  void AddItem(const ContentSettingBubbleModel::ListItem& item);
+
+  // Calling this will delete related children.
+  void RemoveItem(int row);
+
+  // views::View override:
+  void Layout() override;
+  gfx::Size CalculatePreferredSize() const override;
+
+  // Returns row index of |link| among list items.
+  int GetRowIndexOf(views::Link* link);
+
+ private:
+  ContentSettingBubbleContents* parent_;
+
+  int icon_column_width_;
+
+  // Our controls representing list items, so we can add or remove
+  // these dynamically. Each pair represetns one list item.
+  std::vector<std::pair<views::ImageView*, views::Label*>> list_item_views_;
+
+  // views representing |ContentSettingBubbleModel::ListItem|.
+  std::vector<std::pair<views::ImageView*, views::Label*>> item_views_;
+
+  DISALLOW_COPY_AND_ASSIGN(ListItemContainer);
+};
+
+ContentSettingBubbleContents::ListItemContainer::ListItemContainer(
+    ContentSettingBubbleContents* parent)
+        : parent_(parent), icon_column_width_(0) {}
+
+void ContentSettingBubbleContents::ListItemContainer::AddItem(
+    const ContentSettingBubbleModel::ListItem& item) {
+  views::ImageView* icon = nullptr;
+  views::Label* label = nullptr;
+  if (item.has_link) {
+    views::Link* link = new views::Link(item.title);
+    link->set_listener(parent_);
+    link->SetElideBehavior(gfx::ELIDE_MIDDLE);
+    icon = new Favicon(item.image, parent_, link);
+    label = link;
+  } else {
+    icon = new views::ImageView();
+    icon->SetImage(item.image.AsImageSkia());
+    label = new views::Label(item.title);
+  }
+  AddChildView(icon);
+  AddChildView(label);
+  icon_column_width_ = std::max(icon->GetPreferredSize().width(),
+                                icon_column_width_);
+  list_item_views_.push_back(std::make_pair(icon, label));
+}
+
+void ContentSettingBubbleContents::ListItemContainer::RemoveItem(int row) {
+  std::pair<views::ImageView*, views::Label*> children =
+      list_item_views_.at(row);
+  list_item_views_.erase(list_item_views_.begin() + row);
+  RemoveChildView(children.first);
+  RemoveChildView(children.second);
+  delete children.first;
+  delete children.second;
+}
+
+void ContentSettingBubbleContents::ListItemContainer::Layout() {
+  gfx::Rect row_bounds = GetContentsBounds();
+  const ChromeLayoutProvider* provider = ChromeLayoutProvider::Get();
+  const int related_control_horizontal_spacing =
+      provider->GetDistanceMetric(views::DISTANCE_RELATED_CONTROL_HORIZONTAL);
+  const int related_control_vertical_spacing =
+      provider->GetDistanceMetric(views::DISTANCE_RELATED_CONTROL_VERTICAL);
+  for (const std::pair<views::ImageView*, views::Label*>& row :
+       list_item_views_) {
+    int x = row_bounds.x();
+    gfx::Size icon_pref_size = row.first->GetPreferredSize();
+    gfx::Size label_pref_size = row.second->GetPreferredSize();
+    row_bounds.set_height(std::max(icon_pref_size.height(),
+                                   label_pref_size.height()));
+    row.first->SetBounds(x, row_bounds.y(), icon_pref_size.width(),
+        row_bounds.height());
+
+    x += icon_column_width_ + related_control_horizontal_spacing;
+    row.second->SetBounds(x, row_bounds.y(),
+        std::min(label_pref_size.width(), row_bounds.right() - x),
+        row_bounds.height());
+    row_bounds.set_y(row_bounds.bottom() + related_control_vertical_spacing);
+  }
+}
+
+gfx::Size
+ContentSettingBubbleContents::ListItemContainer::CalculatePreferredSize()
+    const {
+  const ChromeLayoutProvider* provider = ChromeLayoutProvider::Get();
+  const int related_control_horizontal_spacing =
+      provider->GetDistanceMetric(views::DISTANCE_RELATED_CONTROL_HORIZONTAL);
+  const int related_control_vertical_spacing =
+      provider->GetDistanceMetric(views::DISTANCE_RELATED_CONTROL_VERTICAL);
+
+  gfx::Size preferred_size;
+  for (const std::pair<views::ImageView*, views::Label*>& row :
+       list_item_views_) {
+    gfx::Size icon_pref_size = row.first->GetPreferredSize();
+    gfx::Size label_pref_size = row.second->GetPreferredSize();
+    int row_width = icon_column_width_ + related_control_horizontal_spacing +
+                    label_pref_size.width();
+    int row_height = std::max(icon_pref_size.height(),
+                              label_pref_size.height());
+
+    preferred_size.set_width(std::max(row_width, preferred_size.width()));
+    preferred_size.set_height(preferred_size.height() + row_height);
+  }
+
+  preferred_size.set_height(preferred_size.height() +
+      (list_item_views_.size() - 1) * related_control_vertical_spacing);
+
+  gfx::Insets insets = GetInsets();
+  preferred_size.Enlarge(insets.width(), insets.height());
+
+  return preferred_size;
+}
+
+int ContentSettingBubbleContents::ListItemContainer::GetRowIndexOf(
+    views::Link* link) {
+  for (size_t i = 0; i < list_item_views_.size(); i++) {
+    if (list_item_views_.at(i).second == link)
+      return i;
+  }
+
+  return -1;
+}
 
 // ContentSettingBubbleContents -----------------------------------------------
 
@@ -169,6 +307,7 @@ ContentSettingBubbleContents::ContentSettingBubbleContents(
     : content::WebContentsObserver(web_contents),
       BubbleDialogDelegateView(anchor_view, arrow),
       content_setting_bubble_model_(content_setting_bubble_model),
+      list_item_container_(nullptr),
       custom_link_(nullptr),
       manage_link_(nullptr),
       manage_checkbox_(nullptr),
@@ -264,35 +403,22 @@ void ContentSettingBubbleContents::Init() {
   // Layout for the item list (blocked plugins and popups).
   if (!bubble_content.list_items.empty()) {
     const int kItemListColumnSetId = 2;
-    views::ColumnSet* item_list_column_set =
-        layout->AddColumnSet(kItemListColumnSetId);
-    item_list_column_set->AddColumn(GridLayout::LEADING, GridLayout::FILL, 0,
-                                    GridLayout::USE_PREF, 0, 0);
-    item_list_column_set->AddPaddingColumn(0,
-                                           related_control_horizontal_spacing);
-    item_list_column_set->AddColumn(GridLayout::LEADING, GridLayout::FILL, 1,
-                                    GridLayout::USE_PREF, 0, 0);
+    views::ColumnSet* column_set = layout->AddColumnSet(kItemListColumnSetId);
+    column_set->AddColumn(GridLayout::LEADING, GridLayout::FILL, 1,
+                          GridLayout::USE_PREF, 0, 0);
 
-    int row = 0;
     for (const ContentSettingBubbleModel::ListItem& list_item :
          bubble_content.list_items) {
-      if (!bubble_content_empty)
-        layout->AddPaddingRow(0, related_control_vertical_spacing);
-      layout->StartRow(0, kItemListColumnSetId);
-      if (list_item.has_link) {
-        views::Link* link = new views::Link(list_item.title);
-        link->set_listener(this);
-        link->SetElideBehavior(gfx::ELIDE_MIDDLE);
-        list_item_links_[link] = row;
-        layout->AddView(new Favicon(list_item.image, this, link));
-        layout->AddView(link);
-      } else {
-        views::ImageView* icon = new views::ImageView();
-        icon->SetImage(list_item.image.AsImageSkia());
-        layout->AddView(icon);
-        layout->AddView(new views::Label(list_item.title));
+      if (!list_item_container_) {
+        if (!bubble_content_empty)
+          layout->AddPaddingRow(0, related_control_vertical_spacing);
+
+        list_item_container_ = new ListItemContainer(this);
+        layout->StartRow(0, kItemListColumnSetId);
+        layout->AddView(list_item_container_);
       }
-      row++;
+
+      list_item_container_->AddItem(list_item);
       bubble_content_empty = false;
     }
   }
@@ -499,9 +625,14 @@ void ContentSettingBubbleContents::LinkClicked(views::Link* source,
     return;
   }
 
-  ListItemLinks::const_iterator i(list_item_links_.find(source));
-  DCHECK(i != list_item_links_.end());
-  content_setting_bubble_model_->OnListItemClicked(i->second);
+  int row = list_item_container_->GetRowIndexOf(source);
+  DCHECK_NE(row, -1);
+  content_setting_bubble_model_->OnListItemClicked(row, event_flags);
+
+  // TODO(bug 35097) Need more work here. There's no way to be notified changes
+  // in |content_setting_bubble_model_| dynamically for now.
+  list_item_container_->RemoveItem(row);
+  SizeToContents();
 }
 
 void ContentSettingBubbleContents::OnPerformAction(views::Combobox* combobox) {
