@@ -154,7 +154,7 @@ void ContextualSuggestionsFetcherImpl::StartRequest(
       .SetAuthentication(signin_manager_->GetAuthenticatedAccountId(),
                          base::StringPrintf(kAuthorizationRequestHeaderFormat,
                                             oauth_access_token.c_str()));
-  DVLOG(1) << "ContextualSuggestionsFetcherImpl::StartRequest";
+  DVLOG(0) << "ContextualSuggestionsFetcherImpl::StartRequest";
   std::unique_ptr<ContextualJsonRequest> request = builder.Build();
   ContextualJsonRequest* raw_request = request.get();
   raw_request->Start(base::BindOnce(
@@ -229,7 +229,7 @@ void ContextualSuggestionsFetcherImpl::JsonRequestDone(
     const std::string& error_details) {
   DCHECK(request);
 
-  DVLOG(1) << "ContextualSuggestionsFetcherImpl::JsonRequestDone status_code="
+  DVLOG(0) << "ContextualSuggestionsFetcherImpl::JsonRequestDone status_code="
            << static_cast<int>(status_code)
            << " error_details=" << error_details;
   last_fetch_json_ = request->GetResponseString();

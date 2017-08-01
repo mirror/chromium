@@ -18,12 +18,13 @@
 
 namespace ntp_snippets {
 
-// Fetches contextual suggestions from the server.
+// Fetches contextual suggestions for the NTP from the server.
 class ContextualSuggestionsFetcher {
  public:
   using OptionalSuggestions = base::Optional<RemoteSuggestion::PtrVector>;
 
-  // If fetching fails, the optional will be empty.
+  // If fetching fails, the base::Optional will not contain a suggestions
+  // vector.
   using SuggestionsAvailableCallback =
       base::OnceCallback<void(Status status,
                               OptionalSuggestions fetched_suggestions)>;
