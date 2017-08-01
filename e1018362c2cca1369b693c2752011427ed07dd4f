@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "47e498e1_e0098c82",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/ContentSuggestionsNotificationHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-01T17:04:48Z",
+      "side": 1,
+      "message": "\u003e Is there a strong reason to version this, rather than just store a bool? (or even not store anything since deleting / recreating a channel should be a no-op if called multiple times). \n\u003e \n\u003e If you are planning on experimenting with different properties in different versions you may run into difficulties with the current approach, depending on what properties change, due to the fact that reregistering a channel with the same Id, *even after deleting it* will resurrect the original channel\u0027s properties. So to do this properly you would need to append the version to the channel Id or something like that, and ensure the old one is cleared up.\n\nOh. In the future, I anticipate that we will rename the channel (to \"Google Feed\"; our suggestions aren\u0027t currently quite the same thing, but we\u0027re working on it). I had assumed that we could use this mechanism for a name change, but if not, then I\u0027ll switch to a boolean and we\u0027ll plan for a new channel then.",
+      "parentUuid": "92ed0ce4_6809c412",
+      "revId": "e1018362c2cca1369b693c2752011427ed07dd4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "34ae907e_a2b323f6",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/ContentSuggestionsNotificationHelper.java",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "e1018362c2cca1369b693c2752011427ed07dd4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b524733_a6ced4f2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/ContentSuggestionsNotificationHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-01T17:04:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34ae907e_a2b323f6",
+      "revId": "e1018362c2cca1369b693c2752011427ed07dd4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
