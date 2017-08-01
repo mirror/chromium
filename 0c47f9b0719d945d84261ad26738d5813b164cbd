@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "04deb689_7e43af22",
+        "filename": "components/omnibox/browser/scored_history_match.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-01T03:17:35Z",
+      "side": 1,
+      "message": "Definitely redundant.  Removed.",
+      "parentUuid": "3c132c6f_81fe6d7e",
+      "revId": "0c47f9b0719d945d84261ad26738d5813b164cbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9019728d_3a9e5943",
         "filename": "components/omnibox/browser/scored_history_match.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "0c47f9b0719d945d84261ad26738d5813b164cbd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3877476e_3d638029",
+        "filename": "components/omnibox/browser/scored_history_match.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 691,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-01T03:17:35Z",
+      "side": 1,
+      "message": "Good suggestion.  Done.",
+      "parentUuid": "9019728d_3a9e5943",
+      "revId": "0c47f9b0719d945d84261ad26738d5813b164cbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
