@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "400cc362_6f370d2e",
+        "filename": "base/run_loop_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-08-01T18:41:46Z",
+      "side": 0,
+      "message": "Why did you need to do this?",
+      "revId": "7ad1bb17ff3f134decf7280490c46776c58da1a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

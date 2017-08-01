@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2fca2f11_e30ed272",
+        "filename": "base/run_loop.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-08-01T18:41:46Z",
+      "side": 1,
+      "message": "if the Delegate should return",
+      "revId": "8e9d7f70feb90e78bf3682fd4dd288ff9be51e6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96f37b0d_1ba6caaf",
+        "filename": "base/run_loop.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-08-01T18:41:46Z",
+      "side": 1,
+      "message": "The Delegate is",
+      "revId": "8e9d7f70feb90e78bf3682fd4dd288ff9be51e6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1b7d556_40b4aec8",
+        "filename": "base/run_loop.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-08-01T18:41:46Z",
+      "side": 1,
+      "message": "the Delegate should",
+      "revId": "8e9d7f70feb90e78bf3682fd4dd288ff9be51e6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f2deb64_c1d96604",
+        "filename": "base/run_loop_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-08-01T18:41:46Z",
+      "side": 1,
+      "message": "This isn\u0027t a mock, which just lets u see what methods are called. See https://martinfowler.com/articles/mocksArentStubs.html.\n\nMaybe this is a SimpleSingleThreadTaskRunner? Or a ManualSingleThreadTaskRunner? Or what sets it apart from other SingleThreadTaskRunners?",
+      "revId": "8e9d7f70feb90e78bf3682fd4dd288ff9be51e6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "045a46be_2a6eec8e",
+        "filename": "base/run_loop_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-08-01T18:41:46Z",
+      "side": 1,
+      "message": "Also not a mock. What describes this Delegate?",
+      "revId": "8e9d7f70feb90e78bf3682fd4dd288ff9be51e6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "314c36c4_9695a791",
+        "filename": "base/run_loop_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-08-01T18:41:46Z",
+      "side": 1,
+      "message": "if (t) continue;",
+      "revId": "8e9d7f70feb90e78bf3682fd4dd288ff9be51e6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "585b73fd_1c0a2b51",
+        "filename": "base/run_loop_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-08-01T18:41:46Z",
+      "side": 1,
+      "message": "same",
+      "revId": "8e9d7f70feb90e78bf3682fd4dd288ff9be51e6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fa9d57a_38086785",
+        "filename": "base/run_loop_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-08-01T18:41:46Z",
+      "side": 1,
+      "message": "given?",
+      "revId": "8e9d7f70feb90e78bf3682fd4dd288ff9be51e6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ec4ddb2_1cb0c464",
+        "filename": "base/run_loop_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-08-01T18:41:46Z",
+      "side": 1,
+      "message": "It\u0027s maybe a little unusual to write a unit test to test behaviour of a test-only type. But if you feel this is important..",
+      "revId": "8e9d7f70feb90e78bf3682fd4dd288ff9be51e6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
