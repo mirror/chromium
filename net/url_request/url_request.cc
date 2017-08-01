@@ -940,6 +940,8 @@ void URLRequest::Redirect(const RedirectInfo& redirect_info) {
     final_upload_progress_ = upload_data_stream_->GetUploadProgress();
   PrepareToRestart();
 
+  const bool originally_had_origin_header = extra_request_headers_.HasHeader(
+      HttpRequestHeaders::kOrigin);
   if (redirect_info.new_method != method_) {
     // TODO(davidben): This logic still needs to be replicated at the consumers.
     if (method_ == "POST") {
@@ -948,6 +950,7 @@ void URLRequest::Redirect(const RedirectInfo& redirect_info) {
       // and
       // should be refactored into //content. See https://crbug.com/471397.
       extra_request_headers_.RemoveHeader(HttpRequestHeaders::kOrigin);
+      // Note that a null origin may be added later.
     }
     // The inclusion of a multipart Content-Type header can cause problems with
     // some
@@ -976,7 +979,7 @@ void URLRequest::Redirect(const RedirectInfo& redirect_info) {
   // up into //net's embedder. https://crbug.com/471397
   if (!url::Origin(redirect_info.new_url)
            .IsSameOriginWith(url::Origin(url())) &&
-      extra_request_headers_.HasHeader(HttpRequestHeaders::kOrigin)) {
+      originally_had_origin_header) {
     extra_request_headers_.SetHeader(HttpRequestHeaders::kOrigin,
                                      url::Origin().Serialize());
   }
