@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ea177c9_ec315581",
+        "filename": "chrome/test/data/webui/settings/accessibility_browsertest.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-08-01T08:26:47Z",
+      "side": 1,
+      "message": "This seems a little misleading - the test will fail only if there are audit failures.",
+      "revId": "03cad2944b6148ab26b005debb85d91965a0abf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "125bb23e_6bec0c07",
+        "filename": "chrome/test/data/webui/settings/accessibility_browsertest.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-08-01T08:26:47Z",
+      "side": 1,
+      "message": "Suggestion: \"resolved if the accessibility audit completes with no issues, or rejected if the audit finds any accessibility issues\".",
+      "range": {
+        "startLine": 43,
+        "startChar": 6,
+        "endLine": 43,
+        "endChar": 11
+      },
+      "revId": "03cad2944b6148ab26b005debb85d91965a0abf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2593c559_349fb20e",
+        "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-08-01T08:26:47Z",
+      "side": 1,
+      "message": "What about filtering the audit results after the audit completes, instead of throwing away all potential issues like this?",
+      "revId": "03cad2944b6148ab26b005debb85d91965a0abf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89624c68_32c3ad4b",
+        "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-08-01T08:26:47Z",
+      "side": 1,
+      "message": "Note that this is deprecated: https://www.chromestatus.com/features/6750456638341120",
+      "range": {
+        "startLine": 44,
+        "startChar": 54,
+        "endLine": 44,
+        "endChar": 58
+      },
+      "revId": "03cad2944b6148ab26b005debb85d91965a0abf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
