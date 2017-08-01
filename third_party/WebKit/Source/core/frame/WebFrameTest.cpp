@@ -96,8 +96,6 @@
 #include "core/testing/sim/SimDisplayItemList.h"
 #include "core/testing/sim/SimRequest.h"
 #include "core/testing/sim/SimTest.h"
-#include "modules/mediastream/MediaStream.h"
-#include "modules/mediastream/MediaStreamRegistry.h"
 #include "platform/Cursor.h"
 #include "platform/DragImage.h"
 #include "platform/KeyboardCodes.h"
@@ -4986,9 +4984,10 @@ TEST_P(ParameterizedWebFrameTest, FindDetachFrameBeforeScopeStrings) {
   WebString search_text = WebString::FromUTF8(kFindString);
   WebLocalFrameBase* main_frame = web_view_helper.LocalMainFrame();
 
-  for (WebFrame* frame = main_frame; frame; frame = frame->TraverseNext())
+  for (WebFrame* frame = main_frame; frame; frame = frame->TraverseNext()) {
     EXPECT_TRUE(frame->ToWebLocalFrame()->Find(kFindIdentifier, search_text,
                                                options, false));
+  }
 
   RunPendingTasks();
   EXPECT_FALSE(client.FindResultsAreReady());
@@ -5025,9 +5024,10 @@ TEST_P(ParameterizedWebFrameTest, FindDetachFrameWhileScopingStrings) {
   WebString search_text = WebString::FromUTF8(kFindString);
   WebLocalFrameBase* main_frame = web_view_helper.LocalMainFrame();
 
-  for (WebFrame* frame = main_frame; frame; frame = frame->TraverseNext())
+  for (WebFrame* frame = main_frame; frame; frame = frame->TraverseNext()) {
     EXPECT_TRUE(frame->ToWebLocalFrame()->Find(kFindIdentifier, search_text,
                                                options, false));
+  }
 
   RunPendingTasks();
   EXPECT_FALSE(client.FindResultsAreReady());
@@ -5068,9 +5068,10 @@ TEST_P(ParameterizedWebFrameTest, ResetMatchCount) {
   // Check that child frame exists.
   EXPECT_TRUE(!!main_frame->TraverseNext());
 
-  for (WebFrame* frame = main_frame; frame; frame = frame->TraverseNext())
+  for (WebFrame* frame = main_frame; frame; frame = frame->TraverseNext()) {
     EXPECT_FALSE(frame->ToWebLocalFrame()->Find(kFindIdentifier, search_text,
                                                 options, false));
+  }
 
   RunPendingTasks();
   EXPECT_FALSE(client.FindResultsAreReady());
@@ -6049,11 +6050,12 @@ class CompositedSelectionBoundsTest : public ParameterizedWebFrameTest {
     // selection behavior. However, such deviations from the expected value
     // should be consistent for the corresponding y coordinates.
     int y_bottom_epsilon = 0;
-    if (expected_result.Length() == 13)
+    if (expected_result.Length() == 13) {
       y_bottom_epsilon = expected_result.Get(context, 12)
                              .ToLocalChecked()
                              .As<v8::Int32>()
                              ->Value();
+    }
     int y_bottom_deviation =
         start_edge_bottom_in_layer_y - select_start->edge_bottom_in_layer.y;
     EXPECT_GE(y_bottom_epsilon, std::abs(y_bottom_deviation));
@@ -6674,11 +6676,11 @@ TEST_P(ParameterizedWebFrameTest, RemoveSpellingMarkersUnderWords) {
   document->execCommand("InsertText", false, " wellcome ", exception_state);
   EXPECT_FALSE(exception_state.HadException());
 
-  if (RuntimeEnabledFeatures::IdleTimeSpellCheckingEnabled())
+  if (RuntimeEnabledFeatures::IdleTimeSpellCheckingEnabled()) {
     frame->GetSpellChecker()
         .GetIdleSpellCheckCallback()
         .ForceInvocationForTesting();
-
+  }
   WebVector<unsigned> offsets1;
   GetSpellingMarkerOffsets(&offsets1, *frame->GetDocument());
   EXPECT_EQ(1U, offsets1.size());
@@ -6722,9 +6724,10 @@ class StubbornTextCheckClient : public WebTextCheckClient {
     if (!completion_)
       return;
     Vector<WebTextCheckingResult> results;
-    if (misspelling_start_offset >= 0 && misspelling_length > 0)
+    if (misspelling_start_offset >= 0 && misspelling_length > 0) {
       results.push_back(WebTextCheckingResult(type, misspelling_start_offset,
                                               misspelling_length));
+    }
     completion_->DidFinishCheckingText(results);
     completion_ = 0;
   }
@@ -6982,8 +6985,8 @@ TEST_P(ParameterizedWebFrameTest, DidAccessInitialDocumentViaJavascriptUrl) {
   web_view_helper.Reset();
 }
 
-TEST_P(ParameterizedWebFrameTest, DidAccessInitialDocumentBodyBeforeModalDialog)
-{
+TEST_P(ParameterizedWebFrameTest,
+       DidAccessInitialDocumentBodyBeforeModalDialog) {
   TestAccessInitialDocumentWebFrameClient web_frame_client;
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.Initialize(&web_frame_client);
@@ -7015,8 +7018,7 @@ TEST_P(ParameterizedWebFrameTest, DidAccessInitialDocumentBodyBeforeModalDialog)
   web_view_helper.Reset();
 }
 
-TEST_P(ParameterizedWebFrameTest, DidWriteToInitialDocumentBeforeModalDialog)
-{
+TEST_P(ParameterizedWebFrameTest, DidWriteToInitialDocumentBeforeModalDialog) {
   TestAccessInitialDocumentWebFrameClient web_frame_client;
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.Initialize(&web_frame_client);
@@ -7722,13 +7724,11 @@ TEST_P(ParameterizedWebFrameTest, FirstNonBlankSubframeNavigation) {
   WebLocalFrame* frame = web_view_helper.LocalMainFrame();
 
   std::string url1 = base_url_ + "history.html";
-  FrameTestHelpers::LoadFrame(
-      frame,
+  std::string load_frame_js =
       "javascript:var f = document.createElement('iframe'); "
-      "f.src = '" +
-          url1 +
-          "';"
-          "document.body.appendChild(f)");
+      "f.src = '";
+  load_frame_js += url1 + "';" + "document.body.appendChild(f)";
+  FrameTestHelpers::LoadFrame(frame, load_frame_js);
 
   WebLocalFrame* iframe = frame->FirstChild()->ToWebLocalFrame();
   EXPECT_EQ(url1, iframe->GetDocument().Url().GetString().Utf8());
