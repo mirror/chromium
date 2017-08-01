@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99458b7a_6e5b4350",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-08-01T07:36:47Z",
+      "side": 1,
+      "message": "I think the reason why we did not do this in the first place was to support ::slotted() rules in v0/v1 mixed documents. MatchSlottedRules() is only called for pure v1 documents, so I suspect this will change the behavior for v0/v1 mixed content?",
+      "revId": "929774c9e2db144b9b37bfa5d9881742a8d6c887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
