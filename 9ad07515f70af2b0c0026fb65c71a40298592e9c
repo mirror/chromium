@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "fe77f2bd_0c093d7b",
+        "filename": "chrome/browser/search/local_ntp_source.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-01T12:26:29Z",
+      "side": 1,
+      "message": "Well, \"not safe\" is kinda too strong. One example that breaks with caching is reordering the icons in the app drawer: With the previous code, the next NTP after a reordering would show the old order again, and only the second one would have the new ordering. In principle, the same applies to, say, changes to the profile picture, but in my experience those take a few minutes to propagate anyway.\n\nYes, the offline state relies on the HTTP cache and things will break if some resources are missing. But that\u0027s no worse than you could get on a flaky connection, so I think that\u0027s okay.\n\nProper offline support is a good feature request, I\u0027ll file a bug so we don\u0027t forget.",
+      "parentUuid": "f753ae68_343dfcc1",
+      "revId": "9ad07515f70af2b0c0026fb65c71a40298592e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a7c44fc_53e5ea79",
         "filename": "chrome/browser/search/one_google_bar/one_google_bar_service.cc",
         "patchSetId": 5
