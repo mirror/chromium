@@ -12,10 +12,13 @@
 #include <unordered_map>
 #include <vector>
 
+#include "base/files/file_util.h"
 #include "base/memory/weak_ptr.h"
+#include "base/optional.h"
 #include "base/single_thread_task_runner.h"
 #include "content/public/browser/web_contents.h"
 #include "headless/lib/browser/headless_devtools_manager_delegate.h"
+#include "headless/lib/browser/headless_download_manager_delegate.h"
 #include "headless/lib/browser/headless_web_contents_impl.h"
 #include "headless/public/headless_export.h"
 
@@ -74,6 +77,15 @@ class HEADLESS_EXPORT HeadlessBrowserImpl : public HeadlessBrowser,
 
   base::WeakPtr<HeadlessBrowserImpl> GetWeakPtr();
 
+  // Set the download behaviour of the HeadlessDownloadManagerDelegate for all
+  // current and future browser contexts.
+  void SetDownloadBehavior(
+      HeadlessDownloadManagerDelegate::DownloadBehavior behavior);
+
+  // Set the download directory of the HeadlessDownloadManagerDelegate for all
+  // current and future browser contexts.
+  void SetDownloadDirectory(const base::FilePath& path);
+
   // All the methods that begin with Platform need to be implemented by the
   // platform specific headless implementation.
   // Helper for one time initialization of application
@@ -91,6 +103,10 @@ class HEADLESS_EXPORT HeadlessBrowserImpl : public HeadlessBrowser,
   std::unordered_map<std::string, std::unique_ptr<HeadlessBrowserContextImpl>>
       browser_contexts_;
   HeadlessBrowserContext* default_browser_context_;  // Not owned.
+
+  base::Optional<HeadlessDownloadManagerDelegate::DownloadBehavior>
+      download_behavior_;
+  base::Optional<base::FilePath> download_path_;
 
   scoped_refptr<content::DevToolsAgentHost> agent_host_;
 
