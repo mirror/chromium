@@ -90,13 +90,13 @@ DownloadFeedbackService::~DownloadFeedbackService() {
 
 // static
 void DownloadFeedbackService::MaybeStorePingsForDownload(
-    DownloadProtectionService::DownloadCheckResult result,
+    DownloadCheckEnums::DownloadCheckResult result,
     bool upload_requested,
     content::DownloadItem* download,
     const std::string& ping,
     const std::string& response) {
   // We never upload SAFE files.
-  if (result == DownloadProtectionService::SAFE)
+  if (result == DownloadCheckEnums::SAFE)
     return;
 
   UMA_HISTOGRAM_BOOLEAN("SBDownloadFeedback.UploadRequestedByServer",
