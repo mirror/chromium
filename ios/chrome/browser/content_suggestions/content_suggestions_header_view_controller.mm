@@ -214,6 +214,12 @@ const CGFloat kHintLabelSidePadding = 12;
   [self.fakeOmnibox addTarget:self
                        action:@selector(fakeOmniboxTapped:)
              forControlEvents:UIControlEventTouchUpInside];
+  UILongPressGestureRecognizer* longPressRecognizer = [
+      [UILongPressGestureRecognizer alloc] initWithTarget:self
+                                                   action:@selector(doNothing)];
+  longPressRecognizer.numberOfTouchesRequired = 1;
+  [self.fakeOmnibox addGestureRecognizer:longPressRecognizer];
+
   [self.fakeOmnibox
       setAccessibilityLabel:l10n_util::GetNSString(IDS_OMNIBOX_EMPTY_HINT)];
   // Set isAccessibilityElement to NO so that Voice Search button is accessible.
@@ -342,6 +348,9 @@ const CGFloat kHintLabelSidePadding = 12;
     }
   };
   [self.collectionSynchronizer shiftTilesUpWithCompletionBlock:completionBlock];
+}
+
+- (void)doNothing {
 }
 
 #pragma mark - ToolbarOwner
