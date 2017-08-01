@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "9a4a5de5_7393b889",
+        "filename": "components/cryptauth/cryptauth_device_manager.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-01T00:08:22Z",
+      "side": 1,
+      "message": "tengs@: Actually CHANGED is triggered by any device change, but this is unclear because when I added this capability, I forgot to update the function/variable names accordingly. UpdateUnlockKeysFromPrefs() actually updates all synced devices.\n\nhsuregan@: For this CL, please leave this logic the same and only change the Observer calls to be part of their own functions. I can submit a follow-up CL which fixes the naming scheme used.",
+      "parentUuid": "ac1ceaac_acf3feb7",
+      "range": {
+        "startLine": 481,
+        "startChar": 42,
+        "endLine": 481,
+        "endChar": 61
+      },
+      "revId": "f2c8dd7db3d8e378e476cafd1d74dbbe9eef7730",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "959000d8_ca8e73e4",
         "filename": "components/cryptauth/cryptauth_device_manager.h",
         "patchSetId": 15
