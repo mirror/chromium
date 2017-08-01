@@ -70,6 +70,30 @@
       "revId": "06daf9bfe382e1deabc557b0c530cc634395dccd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a452e0ff_73ae6f66",
+        "filename": "components/os_crypt/os_crypt_linux.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-08-01T08:57:25Z",
+      "side": 1,
+      "message": "Forgot to resolve this",
+      "parentUuid": "1dad50a2_80cb885b",
+      "range": {
+        "startLine": 73,
+        "startChar": 6,
+        "endLine": 73,
+        "endChar": 12
+      },
+      "revId": "06daf9bfe382e1deabc557b0c530cc634395dccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
