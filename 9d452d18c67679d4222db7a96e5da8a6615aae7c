@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b88e9e9a_f181ed6c",
+        "filename": "ios/chrome/browser/web/mailto_handler.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-01T21:56:01Z",
+      "side": 1,
+      "message": "Is this function any different from net::AppendQueryParameter? Would it be better to use net::AppendQueryParameter instead?",
+      "range": {
+        "startLine": 21,
+        "startChar": 3,
+        "endLine": 21,
+        "endChar": 14
+      },
+      "revId": "9d452d18c67679d4222db7a96e5da8a6615aae7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdba2ef3_458a3414",
+        "filename": "ios/chrome/browser/web/mailto_handler.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-01T21:56:01Z",
+      "side": 1,
+      "message": "Now that we are using GURL API for building the query, would it make sense to make |_supportedHeaders| std::set to avoid back and forth string conversions?",
+      "range": {
+        "startLine": 82,
+        "startChar": 15,
+        "endLine": 82,
+        "endChar": 31
+      },
+      "revId": "9d452d18c67679d4222db7a96e5da8a6615aae7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
