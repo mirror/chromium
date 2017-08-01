@@ -38,7 +38,11 @@ public class PaymentManifestParser {
 
         /** Called on failed parse of a payment method manifest. */
         @CalledByNative("ManifestParseCallback")
-        void onManifestParseFailure();
+        void onPaymentMethodManifestParseFailure();
+
+        /** Called on failed parse of a web app manifest. */
+        @CalledByNative("ManifestParseCallback")
+        void onWebAppManifestParseFailure();
     }
 
     /** Owned native host of the utility process that parses manifest contents. */

@@ -138,7 +138,7 @@ public class PaymentManifestVerifierTest {
                     @Override
                     public void downloadPaymentMethodManifest(
                             URI uri, ManifestDownloadCallback callback) {
-                        callback.onManifestDownloadFailure();
+                        callback.onPaymentMethodManifestDownloadFailure();
                     }
 
                     @Override
@@ -166,7 +166,7 @@ public class PaymentManifestVerifierTest {
 
                     @Override
                     public void downloadWebAppManifest(URI uri, ManifestDownloadCallback callback) {
-                        callback.onManifestDownloadFailure();
+                        callback.onWebAppManifestDownloadFailure();
                     }
 
                     @Override
@@ -189,7 +189,7 @@ public class PaymentManifestVerifierTest {
                     @Override
                     public void parsePaymentMethodManifest(
                             String content, ManifestParseCallback callback) {
-                        callback.onManifestParseFailure();
+                        callback.onPaymentMethodManifestParseFailure();
                     }
                 }, mPackageManagerDelegate, mCallback);
 
@@ -221,7 +221,7 @@ public class PaymentManifestVerifierTest {
                     @Override
                     public void parseWebAppManifest(
                             String content, ManifestParseCallback callback) {
-                        callback.onManifestParseFailure();
+                        callback.onWebAppManifestParseFailure();
                     }
                 }, mPackageManagerDelegate, mCallback);
 
@@ -274,7 +274,7 @@ public class PaymentManifestVerifierTest {
             @Override
             public void parseWebAppManifest(String content, ManifestParseCallback callback) {
                 mParseWebAppManifestCounter++;
-                callback.onManifestParseFailure();
+                callback.onWebAppManifestParseFailure();
             }
         };
 
@@ -287,7 +287,7 @@ public class PaymentManifestVerifierTest {
             @Override
             public void downloadWebAppManifest(URI uri, ManifestDownloadCallback callback) {
                 if (mDownloadWebAppManifestCounter++ == 0) {
-                    callback.onManifestDownloadFailure();
+                    callback.onWebAppManifestDownloadFailure();
                 } else {
                     callback.onWebAppManifestDownloadSuccess("some content");
                 }
@@ -327,7 +327,7 @@ public class PaymentManifestVerifierTest {
             @Override
             public void parseWebAppManifest(String content, ManifestParseCallback callback) {
                 if (mParseWebAppManifestCounter++ == 0) {
-                    callback.onManifestParseFailure();
+                    callback.onWebAppManifestParseFailure();
                 } else {
                     callback.onWebAppManifestParseSuccess(new WebAppManifestSection[0]);
                 }
