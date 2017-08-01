@@ -134,4 +134,22 @@ AccessibilityRole AXARIAGridCell::ScanToDecideHeaderRole() {
   return kCellRole;
 }
 
+AXRestriction AXARIAGridCell::Restriction() const {
+  // aria-disabled takes precedence.
+  if (HasAttribute(HTMLNames::aria_disabledAttr))
+    return AXLayoutObject::Restriction();
+
+  // Restrictions irrelevant without parent grid/treegrid.
+  const AXObject* container = ParentTable();
+  if (!container || (container->RoleValue() != kGridRole &&
+                     container->RoleValue() != kTreeGridRole))
+    return kNone;
+
+  // If this gridcell does not have it's own ARIA input restriction,
+  // use parent grid's restriction.
+  return HasAttribute(HTMLNames::aria_readonlyAttr)
+             ? AXLayoutObject::Restriction()
+             : container->Restriction();
+}
+
 }  // namespace blink

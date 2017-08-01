@@ -1308,6 +1308,7 @@ bool AXNodeObject::CanSupportAriaReadOnly() const {
     case kSwitchRole:
     case kTextFieldRole:
     case kToggleButtonRole:
+    case kTreeGridRole:
       return true;
     default:
       break;
