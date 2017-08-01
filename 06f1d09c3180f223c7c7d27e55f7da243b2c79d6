@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5acd6f18_97a7eb47",
+        "filename": "components/arc/common/video_encode_accelerator.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-01T17:07:39Z",
+      "side": 1,
+      "message": "Does this ever need to be invoked more than once per call to Encode()? Could we just use the callback on Encode() to notify of completion?",
+      "range": {
+        "startLine": 202,
+        "startChar": 2,
+        "endLine": 202,
+        "endChar": 42
+      },
+      "revId": "06f1d09c3180f223c7c7d27e55f7da243b2c79d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
