@@ -20,6 +20,7 @@
 #include "services/ui/ws/ids.h"
 #include "services/viz/compositing/privileged/interfaces/frame_sink_manager.mojom.h"
 #include "services/viz/public/interfaces/compositing/compositor_frame_sink.mojom.h"
+#include "ui/base/window_tracker_template.h"
 #include "ui/gfx/geometry/insets.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/vector2d.h"
@@ -29,9 +30,9 @@
 namespace ui {
 namespace ws {
 
+class ServerWindowCompositorFrameSinkManager;
 class ServerWindowDelegate;
 class ServerWindowObserver;
-class ServerWindowCompositorFrameSinkManager;
 
 // Server side representation of a window. Delegate is informed of interesting
 // events.
@@ -139,6 +140,13 @@ class ServerWindow {
   ModalType modal_type() const { return modal_type_; }
   void SetModalType(ModalType modal_type);
 
+  void SetChildModalParent(ServerWindow* modal_parent);
+  const ServerWindow* GetChildModalParent() const;
+  ServerWindow* GetChildModalParent() {
+    return const_cast<ServerWindow*>(
+        const_cast<const ServerWindow*>(this)->GetChildModalParent());
+  }
+
   // Returns true if this contains |window| or is |window|.
   bool Contains(const ServerWindow* window) const;
 
@@ -177,6 +185,11 @@ class ServerWindow {
   mojom::EventTargetingPolicy event_targeting_policy() const {
     return event_targeting_policy_;
   }
+
+  void set_is_top_level_container(bool value) {
+    is_top_level_container_ = value;
+  }
+  bool is_top_level_container() const { return is_top_level_container_; }
 
   // Returns true if this window is attached to a root and all ancestors are
   // visible.
@@ -285,7 +298,14 @@ class ServerWindow {
   // operation. Clients must opt-in to this.
   bool accepts_drops_ = false;
 
+  // True if the children of this window are considered top level windows.
+  bool is_top_level_container_ = false;
+
   base::ObserverList<ServerWindowObserver> observers_;
+
+  // Used to track the modal parent of a child modal window.
+  std::unique_ptr<WindowTrackerTemplate<ServerWindow, ServerWindowObserver>>
+      child_modal_parent_tracker_;
 
   DISALLOW_COPY_AND_ASSIGN(ServerWindow);
 };

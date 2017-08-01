@@ -80,6 +80,7 @@ class TestWindowManagerClient : public ui::mojom::WindowManagerClient {
       ui::mojom::EventResult result,
       const std::unordered_map<std::string, std::vector<uint8_t>>& properties)
       override;
+  void SetIsTopLevelContainer(uint32_t window_id, bool value) override;
 
   std::vector<WindowManagerClientChangeType> changes_;
   int64_t last_internal_display_id_ = -1;

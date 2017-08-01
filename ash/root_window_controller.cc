@@ -64,6 +64,7 @@
 #include "ui/aura/client/drag_drop_client.h"
 #include "ui/aura/client/screen_position_client.h"
 #include "ui/aura/client/window_types.h"
+#include "ui/aura/mus/window_manager_delegate.h"
 #include "ui/aura/mus/window_mus.h"
 #include "ui/aura/mus/window_tree_client.h"
 #include "ui/aura/window.h"
@@ -255,6 +256,8 @@ aura::Window* CreateContainer(int window_id,
   if (Shell::GetAshConfig() != Config::CLASSIC) {
     window->SetEventTargetingPolicy(
         ui::mojom::EventTargetingPolicy::DESCENDANTS_ONLY);
+    if (IsActivatableShellWindowId(window_id))
+      Shell::window_manager_client()->MarkAsTopLevelContainer(window);
   }
   window->set_id(window_id);
   window->SetName(name);

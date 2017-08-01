@@ -421,6 +421,7 @@ class AURA_EXPORT WindowTreeClient
   void OnDragDropDone() override;
   void OnChangeCompleted(uint32_t change_id, bool success) override;
   void RequestClose(uint32_t window_id) override;
+  void MarkAsTopLevelContainer(Window* window) override;
   void GetWindowManager(
       mojo::AssociatedInterfaceRequest<WindowManager> internal) override;
 
