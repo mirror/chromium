@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8f358da6_0b605227",
+        "filename": "chrome/browser/net/network_context_configuration_browsertest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-01T22:07:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76de5f46_ac5a66e0",
+      "range": {
+        "startLine": 59,
+        "startChar": 5,
+        "endLine": 59,
+        "endChar": 11
+      },
+      "revId": "2dc0039f6ffb89ffc6ceeac9765bb118589558c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b2d204e_c6315e1b",
         "filename": "chrome/browser/profiles/profile_impl.cc",
         "patchSetId": 20
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "5b7ab4e6_4ffae2d9",
+        "filename": "chrome/browser/profiles/profile_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 1367,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-01T22:07:30Z",
+      "side": 1,
+      "message": "Removed.  Was just keeping the old code here, don\u0027t have strong opinion on it, either way.",
+      "parentUuid": "1b2d204e_c6315e1b",
+      "range": {
+        "startLine": 1367,
+        "startChar": 3,
+        "endLine": 1367,
+        "endChar": 19
+      },
+      "revId": "2dc0039f6ffb89ffc6ceeac9765bb118589558c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d328cb7d_bc15370f",
         "filename": "components/network_session_configurator/browser/network_session_configurator.cc",
         "patchSetId": 20
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-01T21:45:55Z",
       "side": 1,
       "message": "is one of these a default?  what does --use-simple-cache-backend\u003dfoo mean?",
+      "range": {
+        "startLine": 433,
+        "startChar": 4,
+        "endLine": 433,
+        "endChar": 28
+      },
+      "revId": "2dc0039f6ffb89ffc6ceeac9765bb118589558c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "590a4e89_a2ec30d4",
+        "filename": "components/network_session_configurator/browser/network_session_configurator.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-01T22:07:30Z",
+      "side": 1,
+      "message": "\"use-simple-cache-backend\u003dfoo\" uses the default, which is platform dependent.  This is maintaining behavior of existing code.",
+      "parentUuid": "d328cb7d_bc15370f",
       "range": {
         "startLine": 433,
         "startChar": 4,
@@ -130,6 +202,30 @@
       "side": 1,
       "message": "Ok, presumably the cache handles negative values safely?",
       "parentUuid": "2da66744_b147a9dc",
+      "range": {
+        "startLine": 23,
+        "startChar": 2,
+        "endLine": 23,
+        "endChar": 9
+      },
+      "revId": "2dc0039f6ffb89ffc6ceeac9765bb118589558c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31d70fc5_47730a3e",
+        "filename": "content/public/common/network_service.mojom",
+        "patchSetId": 20
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-01T22:07:30Z",
+      "side": 1,
+      "message": "I don\u0027t know - I don\u0027t actually work on the cache.  The memory cache does, but no idea about the others.  Looks like we DCHECK if it less than 0, which I interpret to mean we consider it a code bug that should be fixed if this ever happens.\n\nI\u0027ll go ahead and modify the code (At the URLRequestContextBuilder layer) to not create a cache in this case, since I don\u0027t see anything stopping the pref from being negative.",
+      "parentUuid": "24979a04_330750db",
       "range": {
         "startLine": 23,
         "startChar": 2,
