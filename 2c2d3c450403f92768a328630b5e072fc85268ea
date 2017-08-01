@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5b870b3_1108cd9b",
+        "filename": "extensions/browser/app_window/app_window_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-01T17:23:21Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem quite right.  I think tests should only be calling this once.  Additionally, having tests that create multiple browser processes already sounds pretty dangerous, since that would affect any number of global state objects dangling off the browser process.\n\nCould we instead fix the tests to only instantiate one browser process at a time?",
+      "revId": "2c2d3c450403f92768a328630b5e072fc85268ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
