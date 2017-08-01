@@ -8,6 +8,7 @@
 
 #include "cc/animation/animation_host.h"
 #include "cc/animation/animation_player.h"
+#include "cc/animation/group_animation_player.h"
 
 namespace cc {
 
@@ -23,6 +24,8 @@ AnimationTimeline::AnimationTimeline(int id)
 
 AnimationTimeline::~AnimationTimeline() {
   for (auto& kv : id_to_player_map_)
+    kv.second->SetAnimationTimeline(nullptr);
+  for (auto& kv : id_to_group_player_map_)
     kv.second->SetAnimationTimeline(nullptr);
 }
 
@@ -72,6 +75,40 @@ void AnimationTimeline::ClearPlayers() {
   SetNeedsPushProperties();
 }
 
+void AnimationTimeline::AttachGroupPlayer(
+    scoped_refptr<GroupAnimationPlayer> group_player) {
+  DCHECK(group_player->id());
+  group_player->SetAnimationHost(animation_host_);
+  group_player->SetAnimationTimeline(this);
+  id_to_group_player_map_.insert(
+      std::make_pair(group_player->id(), std::move(group_player)));
+
+  SetNeedsPushProperties();
+}
+
+void AnimationTimeline::DetachGroupPlayer(
+    scoped_refptr<GroupAnimationPlayer> group_player) {
+  DCHECK(group_player->id());
+  EraseGroupPlayer(group_player);
+  id_to_group_player_map_.erase(group_player->id());
+
+  SetNeedsPushProperties();
+}
+
+GroupAnimationPlayer* AnimationTimeline::GetGroupPlayerById(
+    int group_player_id) const {
+  auto f = id_to_group_player_map_.find(group_player_id);
+  return f == id_to_group_player_map_.end() ? nullptr : f->second.get();
+}
+
+void AnimationTimeline::ClearGroupPlayers() {
+  for (auto& kv : id_to_group_player_map_)
+    EraseGroupPlayer(kv.second);
+  id_to_group_player_map_.clear();
+
+  SetNeedsPushProperties();
+}
+
 void AnimationTimeline::SetNeedsPushProperties() {
   needs_push_properties_ = true;
   if (animation_host_)
@@ -115,11 +152,34 @@ void AnimationTimeline::RemoveDetachedPlayersFromImplThread(
   }
 }
 
+void AnimationTimeline::RemoveDetachedGroupPlayersFromImplThread(
+    AnimationTimeline* timeline_impl) const {
+  IdToGroupPlayerMap& group_players_impl =
+      timeline_impl->id_to_group_player_map_;
+
+  // Erase all the impl players which |this| doesn't have.
+  for (auto it = group_players_impl.begin(); it != group_players_impl.end();) {
+    if (GetGroupPlayerById(it->second->id())) {
+      ++it;
+    } else {
+      timeline_impl->EraseGroupPlayer(it->second);
+      it = group_players_impl.erase(it);
+    }
+  }
+}
+
 void AnimationTimeline::ErasePlayer(scoped_refptr<AnimationPlayer> player) {
   if (player->element_animations())
     player->DetachElement();
   player->SetAnimationTimeline(nullptr);
   player->SetAnimationHost(nullptr);
+}
+
+void AnimationTimeline::EraseGroupPlayer(
+    scoped_refptr<GroupAnimationPlayer> group_player) {
+  group_player->DetachElement();
+  group_player->SetAnimationTimeline(nullptr);
+  group_player->SetAnimationHost(nullptr);
 }
 
 void AnimationTimeline::PushPropertiesToImplThread(
