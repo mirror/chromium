@@ -46,6 +46,30 @@
       "revId": "983750491abb6ad7605549c1fad6c366d919da44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "535f59c6_fd316e51",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-01T11:30:14Z",
+      "side": 1,
+      "message": "Can you resize the UICollectionView so it Omnibox is not in it?",
+      "parentUuid": "2a547cb1_51de6ad1",
+      "range": {
+        "startLine": 455,
+        "startChar": 25,
+        "endLine": 455,
+        "endChar": 38
+      },
+      "revId": "983750491abb6ad7605549c1fad6c366d919da44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
