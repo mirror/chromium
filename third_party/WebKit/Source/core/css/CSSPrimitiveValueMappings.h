@@ -46,6 +46,7 @@
 #include "platform/fonts/FontSmoothingMode.h"
 #include "platform/fonts/TextRenderingMode.h"
 #include "platform/graphics/GraphicsTypes.h"
+#include "platform/graphics/ScrollSnapData.h"
 #include "platform/graphics/TouchAction.h"
 #include "platform/scroll/ScrollableArea.h"
 #include "platform/text/TextRun.h"
@@ -1959,19 +1960,19 @@ template <>
 inline CSSIdentifierValue::CSSIdentifierValue(SnapAxis axis)
     : CSSValue(kIdentifierClass) {
   switch (axis) {
-    case kSnapAxisX:
+    case SnapAxis::kSnapAxisX:
       value_id_ = CSSValueX;
       break;
-    case kSnapAxisY:
+    case SnapAxis::kSnapAxisY:
       value_id_ = CSSValueY;
       break;
-    case kSnapAxisBlock:
+    case SnapAxis::kSnapAxisBlock:
       value_id_ = CSSValueBlock;
       break;
-    case kSnapAxisInline:
+    case SnapAxis::kSnapAxisInline:
       value_id_ = CSSValueInline;
       break;
-    case kSnapAxisBoth:
+    case SnapAxis::kSnapAxisBoth:
       value_id_ = CSSValueBoth;
       break;
   }
@@ -1981,30 +1982,30 @@ template <>
 inline SnapAxis CSSIdentifierValue::ConvertTo() const {
   switch (GetValueID()) {
     case CSSValueX:
-      return kSnapAxisX;
+      return SnapAxis::kSnapAxisX;
     case CSSValueY:
-      return kSnapAxisY;
+      return SnapAxis::kSnapAxisY;
     case CSSValueBlock:
-      return kSnapAxisBlock;
+      return SnapAxis::kSnapAxisBlock;
     case CSSValueInline:
-      return kSnapAxisInline;
+      return SnapAxis::kSnapAxisInline;
     case CSSValueBoth:
-      return kSnapAxisBoth;
+      return SnapAxis::kSnapAxisBoth;
     default:
       break;
   }
   NOTREACHED();
-  return kSnapAxisBoth;
+  return SnapAxis::kSnapAxisBoth;
 }
 
 template <>
 inline CSSIdentifierValue::CSSIdentifierValue(SnapStrictness strictness)
     : CSSValue(kIdentifierClass) {
   switch (strictness) {
-    case kSnapStrictnessProximity:
+    case SnapStrictness::kSnapStrictnessProximity:
       value_id_ = CSSValueProximity;
       break;
-    case kSnapStrictnessMandatory:
+    case SnapStrictness::kSnapStrictnessMandatory:
       value_id_ = CSSValueMandatory;
       break;
   }
@@ -2014,30 +2015,30 @@ template <>
 inline SnapStrictness CSSIdentifierValue::ConvertTo() const {
   switch (GetValueID()) {
     case CSSValueProximity:
-      return kSnapStrictnessProximity;
+      return SnapStrictness::kSnapStrictnessProximity;
     case CSSValueMandatory:
-      return kSnapStrictnessMandatory;
+      return SnapStrictness::kSnapStrictnessMandatory;
     default:
       break;
   }
   NOTREACHED();
-  return kSnapStrictnessProximity;
+  return SnapStrictness::kSnapStrictnessProximity;
 }
 
 template <>
 inline CSSIdentifierValue::CSSIdentifierValue(SnapAlignment alignment)
     : CSSValue(kIdentifierClass) {
   switch (alignment) {
-    case kSnapAlignmentNone:
+    case SnapAlignment::kSnapAlignmentNone:
       value_id_ = CSSValueNone;
       break;
-    case kSnapAlignmentStart:
+    case SnapAlignment::kSnapAlignmentStart:
       value_id_ = CSSValueStart;
       break;
-    case kSnapAlignmentEnd:
+    case SnapAlignment::kSnapAlignmentEnd:
       value_id_ = CSSValueEnd;
       break;
-    case kSnapAlignmentCenter:
+    case SnapAlignment::kSnapAlignmentCenter:
       value_id_ = CSSValueCenter;
       break;
   }
@@ -2047,18 +2048,18 @@ template <>
 inline SnapAlignment CSSIdentifierValue::ConvertTo() const {
   switch (GetValueID()) {
     case CSSValueNone:
-      return kSnapAlignmentNone;
+      return SnapAlignment::kSnapAlignmentNone;
     case CSSValueStart:
-      return kSnapAlignmentStart;
+      return SnapAlignment::kSnapAlignmentStart;
     case CSSValueEnd:
-      return kSnapAlignmentEnd;
+      return SnapAlignment::kSnapAlignmentEnd;
     case CSSValueCenter:
-      return kSnapAlignmentCenter;
+      return SnapAlignment::kSnapAlignmentCenter;
     default:
       break;
   }
   NOTREACHED();
-  return kSnapAlignmentNone;
+  return SnapAlignment::kSnapAlignmentNone;
 }
 
 template <>

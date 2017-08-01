@@ -43,8 +43,8 @@ static LayoutBox* FindSnapContainer(const LayoutBox& snap_area) {
 
 void SnapCoordinator::SnapAreaDidChange(LayoutBox& snap_area,
                                         ScrollSnapAlign scroll_snap_align) {
-  if (scroll_snap_align.alignmentX == kSnapAlignmentNone &&
-      scroll_snap_align.alignmentY == kSnapAlignmentNone) {
+  if (scroll_snap_align.alignmentX == SnapAlignment::kSnapAlignmentNone &&
+      scroll_snap_align.alignmentY == SnapAlignment::kSnapAlignmentNone) {
     snap_area.SetSnapContainer(nullptr);
     return;
   }
@@ -75,6 +75,37 @@ void SnapCoordinator::SnapContainerDidChange(LayoutBox& snap_container,
   // them to an orphan list.
   // 2. Adding container: may take over snap areas from nearest ancestor snap
   // container or from existing areas in orphan pool.
+}
+
+WebSnapPoint SnapCoordinator::GetSnapPoint(const LayoutBox& snap_area) {
+  const ComputedStyle* style = snap_area.Style();
+  WebSnapPoint snap_point;
+
+}
+
+WebSnapData SnapCoordinator::GetSnapData(const ContainerNode& element) {
+  const ComputedStyle* style = element.GetComputedStyle();
+  const LayoutBox* snap_container = element.GetLayoutBox();
+  DCHECK(style);
+  DCHECK(snap_container);
+
+  WebSnapData data;
+  data.scroll_snap_type = style->GetScrollSnapType();
+  data.client_width = snap_container->ClientWidth().ToDouble();
+  data.client_height = snap_container->ClientHeight().ToDouble();
+  data.scroll_width = snap_container->ScrollWidth().ToDouble();
+  data.scroll_height = snap_container->ScrollHeight().ToDouble();
+  data.padding_left = style->ScrollPaddingLeft();
+  data.padding_top = style->ScrollPaddingTop();
+  data.padding_right = style->ScrollPaddingRight();
+  data.padding_bottom = style->ScrollPaddingBottom();
+  if (SnapAreaSet* snap_areas = snap_container->SnapAreas()) {
+    for (auto& snap_area : *snap_areas) {
+      data.AddSnapPoint(GetSnapPoint(*snap_area));
+    }
+  }
+
+  return data;
 }
 
 #ifndef NDEBUG

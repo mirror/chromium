@@ -277,23 +277,6 @@ enum CSSBoxType {
   kContentBox
 };
 
-enum SnapAxis {
-  kSnapAxisBoth,
-  kSnapAxisX,
-  kSnapAxisY,
-  kSnapAxisBlock,
-  kSnapAxisInline,
-};
-
-enum SnapStrictness { kSnapStrictnessProximity, kSnapStrictnessMandatory };
-
-enum SnapAlignment {
-  kSnapAlignmentNone,
-  kSnapAlignmentStart,
-  kSnapAlignmentEnd,
-  kSnapAlignmentCenter
-};
-
 }  // namespace blink
 
 #endif  // ComputedStyleConstants_h
