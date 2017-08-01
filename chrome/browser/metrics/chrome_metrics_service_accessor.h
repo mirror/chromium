@@ -77,6 +77,12 @@ namespace system_logs {
 class ChromeInternalLogSource;
 }
 
+namespace webrtc {
+namespace field_trial {
+bool RegisterSyntheticFieldTrial(const std::string&, const std::string&);
+}
+}  // namespace webrtc
+
 // This class limits and documents access to metrics service helper methods.
 // Since these methods are private, each user has to be explicitly declared
 // as a 'friend' below.
@@ -128,6 +134,9 @@ class ChromeMetricsServiceAccessor : public metrics::MetricsServiceAccessor {
   friend class ChromeMetricsServiceClient;
   friend class ChromePasswordManagerClient;
   friend class NavigationMetricsRecorder;
+  friend bool webrtc::field_trial::RegisterSyntheticFieldTrial(
+      const std::string&,
+      const std::string&);
 
   FRIEND_TEST_ALL_PREFIXES(ChromeMetricsServiceAccessorTest,
                            MetricsReportingEnabled);
