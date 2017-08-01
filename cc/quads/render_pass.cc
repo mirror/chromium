@@ -46,6 +46,19 @@ QuadList::QuadList(size_t default_size_to_reserve)
                               LargestDrawQuadSize(),
                               default_size_to_reserve) {}
 
+void QuadList::ReplaceExistingQuadWithSolidColor(Iterator at) {
+  gfx::Rect rect = at->rect;
+  gfx::Rect opaque_rect = at->opaque_rect;
+  grx::Rect visible_rect = at->visible_rect;
+  bool needs_blending = at->needs_blending;
+  const SharedQuadState* shared_quad_state = at->shared_quad_state;
+
+  SolidColorDrawQuad* replacement =
+      QuadList::ReplaceExistingElement<SolidColorDrawQuad>(at);
+  replacement->SetAll(shared_quad_state, rect, opaque_rect, visible_rect,
+                      needs_blending, Sk_ColorTRANSPARENT, true);
+}
+
 std::unique_ptr<RenderPass> RenderPass::Create() {
   return base::WrapUnique(new RenderPass());
 }
