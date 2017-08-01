@@ -13,6 +13,8 @@
 
 @optional  // Applies to all methods.
 
+// Move the FAB. This toggles the button from left to right.
+- (void)moveFAB;
 // Sets the setting to shrink the display of the host to the client window.
 - (void)setShrinkToFit:(BOOL)shrinkToFit;
 // Sets the setting to resize the host to fix the client window.
