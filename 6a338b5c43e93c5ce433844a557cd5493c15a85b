@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "eae05e09_e2b4bbde",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-01T19:17:39Z",
+      "side": 1,
+      "message": "Whoops, I thought I had tried \u003cCoreGraphics/CoreGraphics.h\u003e and it didn\u0027t work. You\u0027re right, though, it does. Fixed.",
+      "parentUuid": "fb3123cf_61df988a",
+      "revId": "6a338b5c43e93c5ce433844a557cd5493c15a85b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "62e93c33_789aecc8",
         "filename": "ios/chrome/browser/ui/bubble/bubble_util.mm",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "47f52082_d354c9d4",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-01T19:17:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "62e93c33_789aecc8",
+      "revId": "6a338b5c43e93c5ce433844a557cd5493c15a85b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6cf8bdae_fe9744b4",
         "filename": "ios/chrome/browser/ui/bubble/bubble_util.mm",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "6a338b5c43e93c5ce433844a557cd5493c15a85b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c9a0861_cd784838",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-01T19:17:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6cf8bdae_fe9744b4",
+      "revId": "6a338b5c43e93c5ce433844a557cd5493c15a85b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
