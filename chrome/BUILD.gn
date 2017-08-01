@@ -398,7 +398,7 @@ if (is_win) {
       "//content/app/resources",
       "//content/public/common:service_names",
       "//crypto",
-      "//headless:headless_shell_browser_lib",
+      "//headless:headless_shell_lib",
       "//net:net_resources",
       "//ppapi/features",
       "//services/service_manager/embedder",

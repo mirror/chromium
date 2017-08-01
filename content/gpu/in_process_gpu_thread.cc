@@ -20,6 +20,8 @@
 #include "ui/ozone/public/ozone_platform.h"
 #endif
 
+#include "media/gpu/dxva_video_decode_accelerator_win.h"
+
 namespace content {
 
 InProcessGpuThread::InProcessGpuThread(const InProcessChildThreadParams& params)
@@ -43,6 +45,8 @@ void InProcessGpuThread::Init() {
   // Up the priority of the |io_thread_| on Android.
   io_thread_priority = base::ThreadPriority::DISPLAY;
 #endif
+
+  media::DXVAVideoDecodeAccelerator::PreSandboxInitialization();
 
   gpu_process_ = new GpuProcess(io_thread_priority);
 
