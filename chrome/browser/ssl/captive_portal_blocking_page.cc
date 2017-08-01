@@ -36,6 +36,12 @@
 #include "net/ssl/ssl_info.h"
 #include "ui/base/l10n/l10n_util.h"
 
+#if defined(OS_ANDROID)
+#include "base/android/jni_android.h"
+#include "chrome/browser/android/captiveportal/portal_login_helper.h"
+#include "net/android/network_library.h"
+#endif
+
 namespace {
 
 const char kMetricsName[] = "captive_portal";
@@ -86,7 +92,12 @@ CaptivePortalBlockingPage::CaptivePortalBlockingPage(
       login_url_(login_url),
       ssl_info_(ssl_info),
       callback_(callback) {
+// login_url_ is empty on Android. On other platforms, it should be a valid URL.
+#if defined(OS_ANDROID)
+  DCHECK(!login_url_.is_valid());
+#else
   DCHECK(login_url_.is_valid());
+#endif
 
   if (ssl_cert_reporter) {
     cert_report_helper_.reset(new CertReportHelper(
@@ -128,6 +139,8 @@ std::string CaptivePortalBlockingPage::GetWiFiSSID() const {
     return std::string();
 #elif defined(OS_LINUX)
   ssid = net::GetWifiSSID();
+#elif defined(OS_ANDROID)
+  ssid = net::android::GetWifiSSID();
 #endif
   // TODO(meacer): Handle non UTF8 SSIDs.
   if (!base::IsStringUTF8(ssid))
@@ -165,7 +178,8 @@ void CaptivePortalBlockingPage::PopulateInterstitialStrings(
   load_time_data->SetString("heading", tab_title);
 
   base::string16 paragraph;
-  if (login_url_.spec() == captive_portal::CaptivePortalDetector::kDefaultURL) {
+  if (!login_url_.is_valid() ||
+      login_url_.spec() == captive_portal::CaptivePortalDetector::kDefaultURL) {
     // Captive portal may intercept requests without HTTP redirects, in which
     // case the login url would be the same as the captive portal detection url.
     // Don't show the login url in that case.
@@ -225,7 +239,15 @@ void CaptivePortalBlockingPage::CommandReceived(const std::string& command) {
   switch (cmd) {
     case security_interstitials::CMD_OPEN_LOGIN:
       RecordUMA(OPEN_LOGIN_PAGE);
-      CaptivePortalTabHelper::OpenLoginTabForWebContents(web_contents(), true);
+      {
+#if defined(OS_ANDROID)
+        JNIEnv* env = base::android::AttachCurrentThread();
+        chrome::android::LaunchCaptive(env);
+#else
+        CaptivePortalTabHelper::OpenLoginTabForWebContents(web_contents(),
+                                                           true);
+#endif
+      }
       break;
     case security_interstitials::CMD_DO_REPORT:
       controller()->SetReportingPreference(true);
