@@ -3668,7 +3668,8 @@
                     { "name": "type", "type": "string" },
                     { "name": "title", "type": "string" },
                     { "name": "url", "type": "string" },
-                    { "name": "attached", "type": "boolean", "description": "Whether the target has an attached client." }
+                    { "name": "attached", "type": "boolean", "description": "Whether the target has an attached client." },
+                    { "name": "isExperimentalNetworkCapableWorker", "type": "boolean", "optional": true, "experimental": true, "description": "True when the target is a worker which is able to directly send network requests because off-main-thread-fetch experiment flag is enabled." }
                 ]
             },
             {
