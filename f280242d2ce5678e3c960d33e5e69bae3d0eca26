@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "713fe45d_e3bb1d69",
+        "filename": "tools/v8_context_snapshot/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-08-01T14:28:13Z",
+      "side": 1,
+      "message": "Are you sure that lld doesn\u0027t support ICF?  I guess that lld is smart and supports ICF, even if the command line flag is different.\n\nProbably it\u0027s better to take a little more time to investigate this tomorrow.",
+      "revId": "f280242d2ce5678e3c960d33e5e69bae3d0eca26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
