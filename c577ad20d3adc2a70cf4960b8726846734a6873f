@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a332e0f5_ac66b3bf",
+        "filename": "ui/message_center/fake_message_center.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-08-01T05:57:49Z",
+      "side": 1,
+      "message": "base::EmptyString16() should be better",
+      "range": {
+        "startLine": 147,
+        "startChar": 15,
+        "endLine": 147,
+        "endChar": 25
+      },
+      "revId": "c577ad20d3adc2a70cf4960b8726846734a6873f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5517db5f_d6ada6fd",
+        "filename": "ui/message_center/message_center.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-08-01T05:57:49Z",
+      "side": 1,
+      "message": "could you make this const?",
+      "range": {
+        "startLine": 199,
+        "startChar": 25,
+        "endLine": 199,
+        "endChar": 43
+      },
+      "revId": "c577ad20d3adc2a70cf4960b8726846734a6873f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5f7d652_f1eafed6",
+        "filename": "ui/message_center/message_center_delegate.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-08-01T05:57:49Z",
+      "side": 1,
+      "message": "Could you make this method const?\n\nAnd I think the return value should be const reference string, since this string is not intended for modification.",
+      "range": {
+        "startLine": 18,
+        "startChar": 25,
+        "endLine": 18,
+        "endChar": 43
+      },
+      "revId": "c577ad20d3adc2a70cf4960b8726846734a6873f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b23fdec8_69e364f6",
+        "filename": "ui/message_center/message_center_impl.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 948,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-08-01T05:57:49Z",
+      "side": 1,
+      "message": "I think base::EmptyString16() might be better.",
+      "range": {
+        "startLine": 948,
+        "startChar": 53,
+        "endLine": 948,
+        "endChar": 69
+      },
+      "revId": "c577ad20d3adc2a70cf4960b8726846734a6873f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "734889e0_9cbdf807",
+        "filename": "ui/message_center/notification.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-08-01T05:57:49Z",
+      "side": 1,
+      "message": "I think the default color should be message_center::kSystemNotificationColorNormal (or pahaps Gray?). Or do you have any intention about using this value?",
+      "range": {
+        "startLine": 207,
+        "startChar": 18,
+        "endLine": 207,
+        "endChar": 44
+      },
+      "revId": "c577ad20d3adc2a70cf4960b8726846734a6873f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bb688d0_495b9f5a",
+        "filename": "ui/message_center/notification.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-08-01T05:57:49Z",
+      "side": 1,
+      "message": "We should remove default. Then compiler should warn if any \"case\" is missing.",
+      "range": {
+        "startLine": 218,
+        "startChar": 4,
+        "endLine": 218,
+        "endChar": 12
+      },
+      "revId": "c577ad20d3adc2a70cf4960b8726846734a6873f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37081fb6_821c6fe2",
+        "filename": "ui/message_center/views/notification_header_view.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-08-01T05:57:49Z",
+      "side": 1,
+      "message": "How about setting this default value in the header file, instead of here? It should be consistent with other properties.",
+      "range": {
+        "startLine": 133,
+        "startChar": 2,
+        "endLine": 133,
+        "endChar": 39
+      },
+      "revId": "c577ad20d3adc2a70cf4960b8726846734a6873f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3661c5f6_c389f041",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 729,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-08-01T05:57:49Z",
+      "side": 1,
+      "message": "I think SK_ColorTRANSPARENT is better (same value as 0,0,0,0)",
+      "range": {
+        "startLine": 729,
+        "startChar": 39,
+        "endLine": 729,
+        "endChar": 65
+      },
+      "revId": "c577ad20d3adc2a70cf4960b8726846734a6873f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
