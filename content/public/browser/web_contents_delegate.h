@@ -115,6 +115,11 @@ class CONTENT_EXPORT WebContentsDelegate {
   // security state changed and that security UI should be updated.
   virtual void VisibleSecurityStateChanged(WebContents* source) {}
 
+#if defined(OS_MACOSX)
+  // Called in MACOSX when a new popup's WebContents is shown in an error page
+  virtual void DisplayWebContentsInTouchbar(WebContents* contents) {}
+#endif
+
   // Creates a new tab with the already-created WebContents 'new_contents'.
   // The window for the added contents should be reparented correctly when this
   // method returns.  If |disposition| is NEW_POPUP, |initial_rect| should hold

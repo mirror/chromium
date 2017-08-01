@@ -840,6 +840,15 @@ class WebContents : public PageNavigator,
 
   // Returns true if the WebContents has completed its first meaningful paint.
   virtual bool CompletedFirstVisuallyNonEmptyPaint() const = 0;
+
+  // Indicates/Sets whether the current page is an error page.
+  virtual bool IsErrorPage() = 0;
+  virtual void SetIsErrorPage(bool is_error_page) = 0;
+
+  // Gets/Sets the popup's WebContents to display on the Touch Bar when the
+  // page is an error page.
+  virtual WebContents* GetPopupContents() = 0;
+  virtual void SetPopupContents(WebContents* popup_contents) = 0;
 #endif  // OS_ANDROID
 
  private:
