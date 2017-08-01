@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "f753ae68_343dfcc1",
+        "filename": "chrome/browser/search/local_ntp_source.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-01T12:16:42Z",
+      "side": 1,
+      "message": "I don\u0027t have any concerns about it, but I also didn\u0027t have any concerns about the old way. I don\u0027t recall any explanation (in the CL description or the code) about why it wouldn\u0027t be safe to use the cached version, so that might be useful.\n\nThe only thing that jumps out at me is that we are relying on the HTTP cache for the user\u0027s icon (not the notification icon: that\u0027s inline-svg). If we don\u0027t have it, we apparently show a white (invisible) circle there, which isn\u0027t great.\n\nI\u0027m not sure how much effort it\u0027s worth putting into getting the OGB to work offline, but it might be worth filing a feature request against OGB folks to make sure that it displays \"acceptably\" in the absence of resources that aren\u0027t included in the payload: e.g. a gray circle when the icon is missing.",
+      "parentUuid": "a07c6963_73dc2ee3",
+      "revId": "9ad07515f70af2b0c0026fb65c71a40298592e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8a7c44fc_53e5ea79",
         "filename": "chrome/browser/search/one_google_bar/one_google_bar_service.cc",
         "patchSetId": 5
