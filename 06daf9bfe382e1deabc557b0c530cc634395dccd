@@ -46,6 +46,30 @@
       "revId": "06daf9bfe382e1deabc557b0c530cc634395dccd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dad50a2_80cb885b",
+        "filename": "components/os_crypt/os_crypt_linux.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-08-01T08:56:03Z",
+      "side": 1,
+      "message": "That\u0027s even better. Thanks!",
+      "parentUuid": "e6a5f904_51f77b49",
+      "range": {
+        "startLine": 73,
+        "startChar": 6,
+        "endLine": 73,
+        "endChar": 12
+      },
+      "revId": "06daf9bfe382e1deabc557b0c530cc634395dccd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
