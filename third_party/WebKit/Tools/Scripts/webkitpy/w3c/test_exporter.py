@@ -38,7 +38,9 @@ class TestExporter(object):
         open_gerrit_cls = self.gerrit.query_exportable_open_cls()
         self.process_gerrit_cls(open_gerrit_cls)
 
-        exportable_commits = self.get_exportable_commits()
+        exportable_commits, errors = self.get_exportable_commits()
+        for error in errors:
+            _log.warn(error)
         for exportable_commit in exportable_commits:
             pull_request = self.wpt_github.pr_for_chromium_commit(exportable_commit)
 
@@ -119,39 +121,6 @@ class TestExporter(object):
         except MergeError:
             _log.info('Could not merge PR.')
 
-    def export_first_exportable_commit(self):
-        """Looks for exportable commits in Chromium, creates PR if found."""
-
-        wpt_commit, chromium_commit = self.local_wpt.most_recent_chromium_commit()
-        assert chromium_commit, 'No Chromium commit found, this is impossible'
-
-        wpt_behind_master = self.local_wpt.commits_behind_master(wpt_commit)
-
-        _log.info('\nLast Chromium export commit in web-platform-tests:')
-        _log.info('web-platform-tests@%s', wpt_commit)
-        _log.info('(%d behind web-platform-tests@origin/master)', wpt_behind_master)
-
-        _log.info('\nThe above WPT commit points to the following Chromium commit:')
-        _log.info('chromium@%s', chromium_commit.sha)
-        _log.info('(%d behind chromium@origin/master)', chromium_commit.num_behind_master())
-
-        exportable_commits = exportable_commits_over_last_n_commits(
-            chromium_commit.sha, self.host, self.local_wpt, self.wpt_github)
-
-        if not exportable_commits:
-            _log.info('No exportable commits found in Chromium, stopping.')
-            return
-
-        _log.info('Found %d exportable commits in Chromium:', len(exportable_commits))
-        for commit in exportable_commits:
-            _log.info('- %s %s', commit, commit.subject())
-
-        outbound_commit = exportable_commits[0]
-        _log.info('Picking the earliest commit and creating a PR')
-        _log.info('- %s %s', outbound_commit.sha, outbound_commit.subject())
-
-        self.create_pull_request(outbound_commit)
-
     def create_pull_request(self, outbound_commit):
         patch = outbound_commit.format_patch()
         message = outbound_commit.message()
@@ -186,8 +155,10 @@ class TestExporter(object):
         updating = bool(pull_request)
         action_str = 'updating' if updating else 'creating'
 
-        if self.local_wpt.test_patch(patch) == '':
-            _log.error('Gerrit CL patch did not apply cleanly.')
+        success, message = self.local_wpt.test_patch(patch)
+        if not success:
+            _log.error('Gerrit CL patch did not apply cleanly:')
+            _log.error(message)
             _log.error('First 500 characters of patch: %s', patch[0:500])
             return
 

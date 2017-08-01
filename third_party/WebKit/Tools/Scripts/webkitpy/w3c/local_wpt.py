@@ -120,31 +120,31 @@ class LocalWPT(object):
         else:
             self.run(['git', 'push', 'origin', branch_name])
 
-    def test_patch(self, patch, chromium_commit=None):
-        """Returns the expected output of a patch against origin/master.
+    def test_patch(self, patch):
+        """Tests whether a patch can be cleanly applied against origin/master.
 
         Args:
             patch: The patch to test against.
-            chromium_commit: The ChromiumCommit, for logging extra info.
 
         Returns:
-            A string containing the diff the patch produced.
+            (success, message): a boolean flag and a string. If successful,
+            message is the diff the patch produced; otherwise, it is the
+            error message produced by git.
         """
         self.clean()
-        applied = self.apply_patch(patch)
-        output = self.run(['git', 'diff', 'origin/master'])
+        error = self.apply_patch(patch)
+        diff = self.run(['git', 'diff', 'origin/master'])
         self.clean()
-        if applied:
-            return output
-        if chromium_commit:
-            _log.info('Commit: %s', chromium_commit.url())
-            _log.info('Commit subject: "%s"', chromium_commit.subject())
-        return ''
+        if error == '':
+            return True, diff
+        else:
+            return False, error
 
     def apply_patch(self, patch):
         """Applies a Chromium patch to the local WPT repo and stages.
 
-        Returns True if the patch could be applied, false otherwise.
+        Returns:
+            '' if the patch applies cleanly, otherwise error messages from git.
         """
         # Remove Chromium WPT directory prefix.
         patch = patch.replace(CHROMIUM_WPT_DIR, '')
@@ -152,10 +152,8 @@ class LocalWPT(object):
             self.run(['git', 'apply', '-'], input=patch)
             self.run(['git', 'add', '.'])
         except ScriptError as error:
-            _log.warning('Patch did not apply cleanly for the following commit:')
-            _log.warning('Message: %s\n\n', error.message)
-            return False
-        return True
+            return error.message
+        return ''
 
     def commits_behind_master(self, commit):
         """Returns the number of commits after the given commit on origin/master.

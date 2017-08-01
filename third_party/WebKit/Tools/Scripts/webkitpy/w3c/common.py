@@ -41,15 +41,17 @@ def exportable_commits_over_last_n_commits(
         wpt_github: A WPTGitHub instance, used to check whether PRs are closed.
 
     Returns:
-        A list of ChromiumCommit objects for commits that are exportable after
-        the given commit, in chronological order.
+        (exportable_commits, errors) where exportable_commits is a list of
+        ChromiumCommit objects for commits that are exportable after
+        the given commit, and errors is a list of error messages when failing to
+        apply patches, both in chronological order.
     """
     start_commit = 'HEAD~{}'.format(number + 1)
     return _exportable_commits_since(start_commit, host, local_wpt, wpt_github)
 
 
 def _exportable_commits_since(chromium_commit_hash, host, local_wpt, wpt_github):
-    """Lists exportable commits after a certain point.
+    """Lists exportable commits after the given commit.
 
     Args:
         chromium_commit_hash: The SHA of the Chromium commit from which this
@@ -59,8 +61,10 @@ def _exportable_commits_since(chromium_commit_hash, host, local_wpt, wpt_github)
         wpt_github: A WPTGitHub instance.
 
     Returns:
-        A list of ChromiumCommit objects for commits that are exportable after
-        the given commit, in chronological order.
+        (exportable_commits, errors) where exportable_commits is a list of
+        ChromiumCommit objects for commits that are exportable after the
+        given commit, and errors is a list of error messages when failing to
+        apply patches, both in chronological order.
     """
     chromium_repo_root = host.executive.run_command([
         'git', 'rev-parse', '--show-toplevel'
@@ -73,33 +77,51 @@ def _exportable_commits_since(chromium_commit_hash, host, local_wpt, wpt_github)
     ], cwd=absolute_chromium_dir(host)).splitlines()
     chromium_commits = [ChromiumCommit(host, sha=sha) for sha in commit_hashes]
     exportable_commits = []
+    errors = []
     for commit in chromium_commits:
-        if is_exportable(commit, local_wpt, wpt_github):
+        success, git_error = _test_commit(commit, local_wpt, wpt_github)
+        if success:
             exportable_commits.append(commit)
-    return exportable_commits
+        elif git_error != '':
+            errors.append('Commit did not apply cleanly: %s (%s)\n%s' %
+                          (commit.subject(), commit.url(), git_error))
+    return exportable_commits, errors
 
 
-def is_exportable(chromium_commit, local_wpt, wpt_github):
-    """Checks whether a given patch is exportable and can be applied."""
+def _test_commit(chromium_commit, local_wpt, wpt_github):
+    """Checks whether a given patch is exportable and can be applied.
+
+    Returns:
+        (success, git_error): success is a boolean flag. If the patch fails
+        to apply but is otherwise exportable, git_error contains the error
+        message produced by git; otherwise it is an empty string.
+    """
     message = chromium_commit.message()
     if 'NOEXPORT=true' in message or 'No-Export: true' in message or message.startswith('Import'):
-        return False
+        return False, ''
 
     patch = chromium_commit.format_patch()
     if not patch:
-        return False
+        return False, ''
 
     # If there's a corresponding closed PR, then this commit should not
     # be considered exportable; the PR might have been merged and reverted,
     # or it might have been closed manually without merging.
     pull_request = wpt_github.pr_for_chromium_commit(chromium_commit)
     if pull_request and pull_request.state == 'closed':
-        return False
+        return False, ''
 
-    if not local_wpt.test_patch(patch, chromium_commit):
-        return False
+    success, message = local_wpt.test_patch(patch)
+    if success:
+        # message is the diff after the patch is applied.
+        if message == '':
+            # The patch does not produce any diff.
+            return False, ''
+    else:
+        # Otherwise, message is the error from git.
+        return False, message
 
-    return True
+    return True, ''
 
 
 def read_credentials(host, credentials_json):
