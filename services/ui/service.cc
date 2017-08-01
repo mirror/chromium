@@ -147,6 +147,8 @@ Service::Service(const InProcessConfig* config)
       ime_registrar_(&ime_driver_) {}
 
 Service::~Service() {
+  in_destructor_ = true;
+
   // Destroy |window_server_| first, since it depends on |event_source_|.
   // WindowServer (or more correctly its Displays) may have state that needs to
   // be destroyed before GpuState as well.
@@ -354,9 +356,13 @@ void Service::OnFirstDisplayReady() {
 }
 
 void Service::OnNoMoreDisplays() {
-  // We may get here from the destructor, in which case there is no messageloop.
-  if (base::RunLoop::IsRunningOnCurrentThread())
-    base::RunLoop::QuitCurrentWhenIdleDeprecated();
+  // We may get here from the destructor. Don't try to use RequestQuit() when
+  // that happens as ServiceContext DCHECKs in this case.
+  if (in_destructor_)
+    return;
+
+  DCHECK(context());
+  context()->RequestQuit();
 }
 
 bool Service::IsTestConfig() const {
