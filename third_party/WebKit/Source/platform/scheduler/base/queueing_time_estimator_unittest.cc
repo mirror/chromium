@@ -448,5 +448,137 @@ TEST_F(QueueingTimeEstimatorTest,
               ::testing::ElementsAreArray(expected_durations));
 }
 
+// There are multiple windows, but some of the EQTs are not reported due to
+// backgrounded renderer. EQT(win1) = 0. EQT(win3) = (1500+500)/2 = 1000.
+// EQT(win4) = 1/2*500/2 = 250. EQT(win7) = 1/5*200/2 = 20.
+TEST_F(QueueingTimeEstimatorTest, BackgroundedEQTsWithSingleStepPerWindow) {
+  TestQueueingTimeEstimatorClient client;
+  QueueingTimeEstimatorForTest estimator(&client,
+                                         base::TimeDelta::FromSeconds(1), 1);
+  base::TimeTicks time;
+  time += base::TimeDelta::FromMilliseconds(1000);
+  estimator.OnTopLevelTaskStarted(time);
+  estimator.OnTopLevelTaskCompleted(time);
+  time += base::TimeDelta::FromMilliseconds(1001);
+
+  // Second window should not be reported.
+  estimator.OnRendererStateChanged(true, time);
+  estimator.OnTopLevelTaskStarted(time);
+  time += base::TimeDelta::FromMilliseconds(456);
+  estimator.OnTopLevelTaskCompleted(time);
+  time += base::TimeDelta::FromMilliseconds(200);
+  estimator.OnRendererStateChanged(false, time);
+  time += base::TimeDelta::FromMilliseconds(343);
+
+  // Third, fourth windows should be reported
+  estimator.OnTopLevelTaskStarted(time);
+  time += base::TimeDelta::FromMilliseconds(1500);
+  estimator.OnTopLevelTaskCompleted(time);
+  estimator.OnRendererStateChanged(false, time);
+  time += base::TimeDelta::FromMilliseconds(501);
+
+  // Fifth, sixth task should not be reported
+  estimator.OnTopLevelTaskStarted(time);
+  time += base::TimeDelta::FromMilliseconds(800);
+  estimator.OnTopLevelTaskCompleted(time);
+  estimator.OnRendererStateChanged(true, time);
+  time += base::TimeDelta::FromMilliseconds(200);
+  estimator.OnTopLevelTaskStarted(time);
+  time += base::TimeDelta::FromMilliseconds(998);
+  estimator.OnRendererStateChanged(false, time);
+
+  // Seventh task should be reported.
+  time += base::TimeDelta::FromMilliseconds(201);
+  estimator.OnTopLevelTaskCompleted(time);
+
+  time += base::TimeDelta::FromMilliseconds(1000);
+  estimator.OnTopLevelTaskStarted(time);
+  estimator.OnTopLevelTaskCompleted(time);
+
+  EXPECT_THAT(client.expected_queueing_times(),
+              ::testing::ElementsAre(base::TimeDelta::FromMilliseconds(0),
+                                     base::TimeDelta::FromMilliseconds(1000),
+                                     base::TimeDelta::FromMilliseconds(125),
+                                     base::TimeDelta::FromMilliseconds(20)));
+}
+
+// We only ignore steps that contain some part that is backgrounded. Thus a
+// window could be made up of non-contiguous steps. The following are EQTs, with
+// time deltas with respect to the end of the first, 0-time task:
+// Win1: [0-1000]. EQT of step [0-1000]: (2400+1800)/2*3/5 = 1260. EQT(win1) =
+// 1260/5 = 252.
+// Win2: [0-1000],[3000-4000]. EQT of [3000-4000]: (1100+100)/2 = 600.
+// EQT(win2) = (1260+600)/5 = 372.
+// Win3: [0-1000],[3000-4000],[6000-7000]. EQT
+// of [6000-7000]: 600/2*3/5 = 180. EQT(win3) = (1260+600+180)/5 = 408.
+// Win4: [0-1000],[3000-4000],[6000-8000]. EQT of [7000-8000]: (7500+6500)/2 =
+// 7000. EQT(win4) = (1260+600+180+7000)/5 = 1808.
+// Win5: [0-1000],[3000-4000],[6000-9000]. EQT of [8000-9000]: (6500+5500)/2 =
+// 6000. EQT(win5) = (1260+600+180+7000+6000)/5 = 3008.
+// Win6: [3000-4000],[6000-9000],[12000-13000]. EQT of [12000-13000]:
+// (2500+1500)/2 = 2000. EQT(win6) = (600+180+7000+6000+2000)/5 = 3156.
+// Win7: [6000-9000],[12000-14000]. EQT of [13000-14000]: (1500+500)/2 = 1000.
+// EQT(win7) = (180+7000+6000+2000+1000)/5 = 3236.
+// Win8: [7000-9000],[12000-15000]. EQT of [14000-15000]: 500/2*1/2=125.
+// EQT(win8) = (7000+6000+2000+1000+125)/5 = 3225.
+TEST_F(QueueingTimeEstimatorTest, BackgroundedEQTsWithMutipleStepsPerWindow) {
+  TestQueueingTimeEstimatorClient client;
+  QueueingTimeEstimatorForTest estimator(&client,
+                                         base::TimeDelta::FromSeconds(5), 5);
+  base::TimeTicks time;
+  time += base::TimeDelta::FromMilliseconds(5000);
+  estimator.OnTopLevelTaskStarted(time);
+  estimator.OnTopLevelTaskCompleted(time);
+
+  time += base::TimeDelta::FromMilliseconds(400);
+  estimator.OnTopLevelTaskStarted(time);
+  time += base::TimeDelta::FromMilliseconds(1000);
+  estimator.OnRendererStateChanged(true, time);
+  time += base::TimeDelta::FromMilliseconds(1000);
+  estimator.OnRendererStateChanged(false, time);
+  time += base::TimeDelta::FromMilliseconds(400);
+  estimator.OnTopLevelTaskCompleted(time);
+
+  time += base::TimeDelta::FromMilliseconds(100);
+  estimator.OnTopLevelTaskStarted(time);
+  time += base::TimeDelta::FromMilliseconds(1200);
+  estimator.OnTopLevelTaskCompleted(time);
+
+  time += base::TimeDelta::FromMilliseconds(400);
+  estimator.OnTopLevelTaskStarted(time);
+  time += base::TimeDelta::FromMilliseconds(400);
+  estimator.OnTopLevelTaskCompleted(time);
+
+  estimator.OnRendererStateChanged(true, time);
+  time += base::TimeDelta::FromMilliseconds(1000);
+  estimator.OnRendererStateChanged(false, time);
+  estimator.OnTopLevelTaskStarted(time);
+  time += base::TimeDelta::FromMilliseconds(700);
+  estimator.OnTopLevelTaskCompleted(time);
+
+  time += base::TimeDelta::FromMilliseconds(400);
+  estimator.OnTopLevelTaskStarted(time);
+  time += base::TimeDelta::FromMilliseconds(2500);
+  estimator.OnRendererStateChanged(true, time);
+  time += base::TimeDelta::FromMilliseconds(2500);
+  estimator.OnRendererStateChanged(false, time);
+  time += base::TimeDelta::FromMilliseconds(2500);
+  estimator.OnTopLevelTaskCompleted(time);
+
+  time += base::TimeDelta::FromMilliseconds(1000);
+  estimator.OnTopLevelTaskStarted(time);
+  estimator.OnTopLevelTaskCompleted(time);
+
+  EXPECT_THAT(client.expected_queueing_times(),
+              ::testing::ElementsAre(base::TimeDelta::FromMilliseconds(252),
+                                     base::TimeDelta::FromMilliseconds(372),
+                                     base::TimeDelta::FromMilliseconds(408),
+                                     base::TimeDelta::FromMilliseconds(1808),
+                                     base::TimeDelta::FromMilliseconds(3008),
+                                     base::TimeDelta::FromMilliseconds(3156),
+                                     base::TimeDelta::FromMilliseconds(3236),
+                                     base::TimeDelta::FromMilliseconds(3225)));
+}
+
 }  // namespace scheduler
 }  // namespace blink
