@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4c641ff_19151d6e",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_navigation_observer_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1203,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-01T21:39:47Z",
+      "side": 1,
+      "message": "My understanding may be incorrect but, to me, this comment suggests that the order is unpredictable.\nHowever, the code change suggests that checking |original_request_url| makes it predictable.",
+      "range": {
+        "startLine": 1203,
+        "startChar": 48,
+        "endLine": 1203,
+        "endChar": 52
+      },
+      "revId": "57b0f3375dbfb6a5214636cb04b9574e119e6b2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
