@@ -16,6 +16,24 @@
       "revId": "1f990277a5665d082cb02bca097a06165e73debc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38ccd53f_8d19e53c",
+        "filename": "content/browser/frame_host/navigation_handle_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-08-01T00:25:27Z",
+      "side": 1,
+      "message": "It seems like it could be possible (though weird) for an http/https URL to redirect to a non-http URL or vice-versa.  So I\u0027m not sure it necessarily makes sense to DCHECK, since it could be that the original URL was something it made sense to record for.  (We also have allowed recording for sources that do not have URL data, e.g. memory stats, so there could be legitimate cases too).",
+      "parentUuid": "8c05fd29_b7685564",
+      "revId": "1f990277a5665d082cb02bca097a06165e73debc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
