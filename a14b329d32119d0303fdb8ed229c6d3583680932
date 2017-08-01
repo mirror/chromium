@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "ed9641ee_758bd14a",
+        "filename": "remoting/ios/app/host_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-08-01T23:28:33Z",
+      "side": 1,
+      "message": "TBH I\u0027m not sure what\u0027s the right way to do...\n\nOn .com we show the FAB on the left on RTL language by default, and we change the text correspondingly. Check out the website with \"?hl\u003dar-XB\" (pseudo-localized RTL)",
+      "parentUuid": "3d0b757e_cd4bc983",
+      "range": {
+        "startLine": 113,
+        "startChar": 54,
+        "endLine": 113,
+        "endChar": 55
+      },
+      "revId": "a14b329d32119d0303fdb8ed229c6d3583680932",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1a9cda2_c4d4a4b4",
         "filename": "remoting/resources/remoting_strings.grd",
         "patchSetId": 1
@@ -96,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "1d73e9b3_b0823cbb",
+        "filename": "remoting/resources/remoting_strings.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 720,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-08-01T23:28:33Z",
+      "side": 1,
+      "message": "Maybe... But the translator could also be lazy and just ask you for more details (which happened to me) :)",
+      "parentUuid": "fedc548d_282f7679",
+      "range": {
+        "startLine": 720,
+        "startChar": 57,
+        "endLine": 720,
+        "endChar": 60
+      },
+      "revId": "a14b329d32119d0303fdb8ed229c6d3583680932",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc766afa_d39d8e57",
         "filename": "remoting/resources/remoting_strings.grd",
         "patchSetId": 1
@@ -131,6 +179,30 @@
       "side": 1,
       "message": "I don\u0027t know if users will know what \"Dock\" means.",
       "parentUuid": "fc766afa_d39d8e57",
+      "range": {
+        "startLine": 721,
+        "startChar": 8,
+        "endLine": 721,
+        "endChar": 17
+      },
+      "revId": "a14b329d32119d0303fdb8ed229c6d3583680932",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "73bf52a2_f6f577db",
+        "filename": "remoting/resources/remoting_strings.grd",
+        "patchSetId": 1
+      },
+      "lineNbr": 721,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-08-01T23:28:33Z",
+      "side": 1,
+      "message": "It was the term used on the website. I don\u0027t have a strong opinion though...",
+      "parentUuid": "29d18cd2_6494df39",
       "range": {
         "startLine": 721,
         "startChar": 8,
