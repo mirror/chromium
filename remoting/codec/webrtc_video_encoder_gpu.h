@@ -8,10 +8,6 @@
 #include "media/video/video_encode_accelerator.h"
 #include "remoting/codec/webrtc_video_encoder.h"
 
-namespace base {
-class SharedMemory;
-}
-
 namespace remoting {
 
 class WebrtcVideoEncoderGpu : public WebrtcVideoEncoder,
@@ -58,7 +54,7 @@ class WebrtcVideoEncoderGpu : public WebrtcVideoEncoder,
   scoped_refptr<media::VideoFrame> video_frame_;
 
   // Shared memory buffers for input/output with the VEA.
-  std::vector<std::unique_ptr<base::SharedMemory>> output_buffers_;
+  std::vector<uint8_t*> output_buffers_;
 
   unsigned int required_input_frame_count_;
   gfx::Size input_coded_size_;
