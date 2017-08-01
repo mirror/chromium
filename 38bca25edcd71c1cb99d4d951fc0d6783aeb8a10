@@ -22,6 +22,30 @@
       "revId": "38bca25edcd71c1cb99d4d951fc0d6783aeb8a10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75188699_dfb98dc4",
+        "filename": "chrome/browser/profiles/profile_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-01T21:08:44Z",
+      "side": 0,
+      "message": "\"GetMediaCachePath\" and \"GetCachePath\" append different things to the same base path.",
+      "parentUuid": "06a57af9_facc1b6f",
+      "range": {
+        "startLine": 648,
+        "startChar": 21,
+        "endLine": 648,
+        "endChar": 38
+      },
+      "revId": "38bca25edcd71c1cb99d4d951fc0d6783aeb8a10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
