@@ -7,6 +7,7 @@
 #include "base/command_line.h"
 #include "base/feature_list.h"
 #include "media/base/media_switches.h"
+#include "ui/base/ui_base_switches.h"
 #include "ui/display/display_switches.h"
 
 #if !defined(MEDIA_DISABLE_LIBVPX)
