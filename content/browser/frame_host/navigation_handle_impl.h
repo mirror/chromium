@@ -27,6 +27,7 @@
 #include "content/public/browser/restore_type.h"
 #include "content/public/browser/ssl_status.h"
 #include "content/public/common/request_context_type.h"
+#include "services/metrics/public/cpp/ukm_recorder.h"
 #include "third_party/WebKit/public/platform/WebMixedContentContextType.h"
 #include "url/gurl.h"
 
@@ -163,6 +164,8 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
   ReloadType GetReloadType() override;
   RestoreType GetRestoreType() override;
   const GURL& GetBaseURLForDataURL() override;
+  int GetNavigationId() const override;
+  ukm::SourceId GetUkmSourceId() const override;
   const GlobalRequestID& GetGlobalRequestID() override;
 
   // Resume and CancelDeferredNavigation must only be called by the
@@ -408,6 +411,8 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
                        CSPDisposition should_check_main_world_csp,
                        bool is_form_submission);
 
+  void UpdateUkmUrl();
+
   NavigationThrottle::ThrottleCheckResult CheckWillStartRequest();
   NavigationThrottle::ThrottleCheckResult CheckWillRedirectRequest();
   NavigationThrottle::ThrottleCheckResult CheckWillProcessResponse();
@@ -552,6 +557,9 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
   std::unique_ptr<NavigationUIData> navigation_ui_data_;
 
   SSLStatus ssl_status_;
+
+  // The unique id to identify this to navigation with.
+  int navigation_id_;
 
   // The id of the URLRequest tied to this navigation.
   GlobalRequestID request_id_;

@@ -16,6 +16,7 @@
 #include "net/base/host_port_pair.h"
 #include "net/base/net_errors.h"
 #include "net/http/http_response_info.h"
+#include "services/metrics/public/cpp/ukm_recorder.h"
 #include "ui/base/page_transition_types.h"
 
 class GURL;
@@ -113,6 +114,12 @@ class CONTENT_EXPORT NavigationHandle {
 
   // Used for specifying a base URL for pages loaded via data URLs.
   virtual const GURL& GetBaseURLForDataURL() = 0;
+
+  // Get a unique ID for this navigation.
+  virtual int GetNavigationId() const = 0;
+
+  // Get the id to identify this navigation for UKM logging.
+  virtual ukm::SourceId GetUkmSourceId() const = 0;
 
   // Parameters available at network request start time ------------------------
   //

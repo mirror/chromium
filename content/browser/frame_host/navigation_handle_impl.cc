@@ -37,12 +37,20 @@
 #include "content/public/common/url_constants.h"
 #include "net/base/net_errors.h"
 #include "net/url_request/redirect_info.h"
+#include "services/metrics/public/cpp/ukm_recorder.h"
 #include "url/gurl.h"
 #include "url/url_constants.h"
 
 namespace content {
 
 namespace {
+
+// Use this to get a new unique ID for a NavigationEntry during construction.
+// The returned ID is guaranteed to be nonzero (which is the "no ID" indicator).
+int GetUniqueIDInConstructor() {
+  static int unique_id_counter = 0;
+  return ++unique_id_counter;
+}
 
 void UpdateThrottleCheckResult(
     NavigationThrottle::ThrottleCheckResult* to_update,
@@ -111,6 +119,7 @@ NavigationHandleImpl::NavigationHandleImpl(
       request_context_type_(REQUEST_CONTEXT_TYPE_UNSPECIFIED),
       mixed_content_context_type_(
           blink::WebMixedContentContextType::kBlockable),
+      navigation_id_(GetUniqueIDInConstructor()),
       should_replace_current_entry_(false),
       redirect_chain_(redirect_chain),
       is_download_(false),
@@ -128,6 +137,8 @@ NavigationHandleImpl::NavigationHandleImpl(
                            frame_tree_node_->frame_tree_node_id(), "url",
                            url_.possibly_invalid_spec());
   DCHECK(!navigation_start.is_null());
+
+  UpdateUkmUrl();
 
   site_url_ = SiteInstance::GetSiteForURL(frame_tree_node_->current_frame_host()
                                               ->GetSiteInstance()
@@ -207,12 +218,22 @@ NavigationHandleImpl::~NavigationHandleImpl() {
   if (!IsBrowserSideNavigationEnabled() && !complete_callback_.is_null())
     RunCompleteCallback(NavigationThrottle::CANCEL_AND_IGNORE);
 
+  UpdateUkmUrl();
+
   if (IsInMainFrame()) {
     TRACE_EVENT_ASYNC_END2("navigation", "Navigation StartToCommit", this,
                            "URL", url_.spec(), "Net Error Code",
                            net_error_code_);
   }
   TRACE_EVENT_ASYNC_END0("navigation", "NavigationHandle", this);
+}
+
+void NavigationHandleImpl::UpdateUkmUrl() {
+  if (IsInMainFrame() && GetURL().SchemeIsHTTPOrHTTPS()) {
+    ukm::UkmRecorder* ukm_recorder = ukm::UkmRecorder::Get();
+    if (ukm_recorder)
+      ukm_recorder->UpdateSourceURL(GetUkmSourceId(), GetURL());
+  }
 }
 
 NavigatorDelegate* NavigationHandleImpl::GetDelegate() const {
@@ -503,6 +524,15 @@ const GlobalRequestID& NavigationHandleImpl::GetGlobalRequestID() {
   return request_id_;
 }
 
+int NavigationHandleImpl::GetNavigationId() const {
+  return navigation_id_;
+}
+
+ukm::SourceId NavigationHandleImpl::GetUkmSourceId() const {
+  return ukm::UkmRecorder::ConvertSourceId(
+      GetNavigationId(), ukm::UkmRecorder::SourceIdType::NAVIGATION_ID);
+}
+
 void NavigationHandleImpl::InitServiceWorkerHandle(
     ServiceWorkerContextWrapper* service_worker_context) {
   DCHECK(IsBrowserSideNavigationEnabled());
@@ -755,6 +785,8 @@ void NavigationHandleImpl::DidCommitNavigation(
       << "Only subframe navigations can get here without changing the "
       << "NavigationEntry";
   subframe_entry_committed_ = navigation_entry_committed;
+
+  UpdateUkmUrl();
 
   // If an error page reloads, net_error_code might be 200 but we still want to
   // count it as an error page.
