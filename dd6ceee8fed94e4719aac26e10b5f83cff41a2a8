@@ -65,6 +65,40 @@
     },
     {
       "key": {
+        "uuid": "01dbe880_66ac43c5",
+        "filename": "chrome/browser/ui/cocoa/browser/exclusive_access_controller_views.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-01T21:05:10Z",
+      "side": 1,
+      "message": "What if you just return the RWHV — would that work in both cases?",
+      "revId": "dd6ceee8fed94e4719aac26e10b5f83cff41a2a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c68c5d3_609a97fb",
+        "filename": "chrome/browser/ui/cocoa/browser_window_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 2058,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-01T21:05:10Z",
+      "side": 1,
+      "message": "What happens for people who don\u0027t have the content fullscreen flag turned on?",
+      "revId": "dd6ceee8fed94e4719aac26e10b5f83cff41a2a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0eb1ac61_32f9ce89",
         "filename": "chrome/browser/ui/cocoa/browser_window_controller.mm",
         "patchSetId": 2
@@ -88,6 +122,125 @@
     },
     {
       "key": {
+        "uuid": "17b4db49_2e3c2410",
+        "filename": "chrome/browser/ui/cocoa/fullscreen/fullscreen_toolbar_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-01T21:05:10Z",
+      "side": 1,
+      "message": "Do things still work with the flag off?",
+      "revId": "dd6ceee8fed94e4719aac26e10b5f83cff41a2a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d284da4c_ae814d27",
+        "filename": "chrome/browser/ui/cocoa/separate_fullscreen_window.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-01T21:05:10Z",
+      "side": 1,
+      "message": "- `#import`\n- …but, I don\u0027t think this class should know about BrowserWindowController. Instead, I\u0027d use the delegate pattern (this also incorporates the next comment):\n\n    @class SeparateFullscreenWindow;\n    \n    @protocol SeparateFullScreenWindowDelegate\n    - (NSTouchBar*)touchBarForFullscreenWindow:(SeparateFullscreenWindow*) API_AVAILABLE(macos(10.12.2));\n    @end\n\n    @interface SeparateFullscreenWindow : NSWindow\n    @property(nonatomic, assign) id\u003cSeparateFullScreenWindowDelegate\u003e controller;\n    @end\n    \n    @implementation SeparateFullscreenWindow\n    @synthesize delegate \u003d delegate_;\n    @end\n\n…then BrowserWindowController can conform to that protocol, and this class doesn\u0027t need its header at all. Either way, good use of `API_AVAILABLE` :).",
+      "revId": "dd6ceee8fed94e4719aac26e10b5f83cff41a2a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "765d5f64_d6b9221f",
+        "filename": "chrome/browser/ui/cocoa/separate_fullscreen_window.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-01T21:05:10Z",
+      "side": 1,
+      "message": "For new code, just declare instance variables on the @implementation section. However, in this case, I think it makes more sense to use a property, e.g.:\n\n    @interface SeparateFullscreenWindow : NSWindow\n    @property(nonatomic, assign) BrowserWindowController* controller;\n    @end\n    \n    @implementation SeparateFullscreenWindow\n    @synthesize controller \u003d controller_;\n    @end\n\nThe compiler will automatically generate `-controller` and `-setController:` methods.",
+      "revId": "dd6ceee8fed94e4719aac26e10b5f83cff41a2a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76f81d32_66adb913",
+        "filename": "chrome/browser/ui/cocoa/separate_fullscreen_window.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-01T21:05:10Z",
+      "side": 1,
+      "message": "If you try the delegate pattern, you shouldn\u0027t need this import.",
+      "revId": "dd6ceee8fed94e4719aac26e10b5f83cff41a2a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93c6defc_66ce773f",
+        "filename": "chrome/browser/ui/cocoa/separate_fullscreen_window.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-01T21:05:10Z",
+      "side": 1,
+      "message": "The check isn\u0027t needed, sending messages to `nil` returns `nil`.",
+      "revId": "dd6ceee8fed94e4719aac26e10b5f83cff41a2a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f146c23_925581cf",
+        "filename": "chrome/browser/ui/exclusive_access/exclusive_access_controller_base.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-01T21:05:10Z",
+      "side": 1,
+      "message": "This #if means that `exclusive_access_tab()` will only be defined for OS_MACOSX, but the change in fullscreen_controller.cc only calls exclusive_access_tab() if OS_MACOSX is *not* defined. Comment?",
+      "revId": "dd6ceee8fed94e4719aac26e10b5f83cff41a2a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de8487ca_a531cbf2",
+        "filename": "chrome/browser/ui/exclusive_access/fullscreen_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-01T21:05:10Z",
+      "side": 1,
+      "message": "See above.",
+      "revId": "dd6ceee8fed94e4719aac26e10b5f83cff41a2a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "624d20c0_9ed820ba",
         "filename": "chrome/browser/ui/exclusive_access/fullscreen_controller.cc",
         "patchSetId": 2
@@ -105,6 +258,23 @@
         "endLine": 169,
         "endChar": 10
       },
+      "revId": "dd6ceee8fed94e4719aac26e10b5f83cff41a2a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f34a94c3_c822389d",
+        "filename": "chrome/browser/ui/exclusive_access/fullscreen_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-01T21:05:10Z",
+      "side": 1,
+      "message": "I would flip this to get rid of the `!`.",
       "revId": "dd6ceee8fed94e4719aac26e10b5f83cff41a2a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
