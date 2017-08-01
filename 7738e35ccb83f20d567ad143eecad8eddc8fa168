@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eff26677_00f0245a",
+        "filename": "net/spdy/chromium/spdy_stream.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-08-01T20:11:09Z",
+      "side": 1,
+      "message": "can we rename this field slightly so it\u0027s clearer that this refers to a net error code rather than a H2 stream error ? \nmaybe s/error/net_error?",
+      "range": {
+        "startLine": 38,
+        "startChar": 8,
+        "endLine": 38,
+        "endChar": 13
+      },
+      "revId": "7738e35ccb83f20d567ad143eecad8eddc8fa168",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
