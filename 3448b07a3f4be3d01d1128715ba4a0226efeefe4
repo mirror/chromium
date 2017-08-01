@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "478faefb_8109b075",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 3490,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-08-01T13:39:49Z",
+      "side": 0,
+      "message": "🤔",
+      "range": {
+        "startLine": 3490,
+        "startChar": 2,
+        "endLine": 3490,
+        "endChar": 25
+      },
+      "revId": "3448b07a3f4be3d01d1128715ba4a0226efeefe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

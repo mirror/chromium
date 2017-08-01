@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a6383ac_fc402b30",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-08-01T13:39:49Z",
+      "side": 1,
+      "message": "\"copyable\" as on line 7",
+      "range": {
+        "startLine": 16,
+        "startChar": 1,
+        "endLine": 16,
+        "endChar": 9
+      },
+      "revId": "89a29a791eef01d321e30eea0b99184285c1a89e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "062c47c1_6e180695",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-08-01T13:39:49Z",
+      "side": 1,
+      "message": "💯",
+      "range": {
+        "startLine": 374,
+        "startChar": 5,
+        "endLine": 374,
+        "endChar": 45
+      },
+      "revId": "89a29a791eef01d321e30eea0b99184285c1a89e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
