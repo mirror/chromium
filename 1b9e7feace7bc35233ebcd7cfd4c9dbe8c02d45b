@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37ae489e_b10c54fa",
+        "filename": "testing/buildbot/chromium.fyi.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-08-01T02:00:39Z",
+      "side": 1,
+      "message": "This particular change troubles me; It seems unlikely to me that we actually want this running on a bot with a real GPU. Normally we reserve those bots for builders on the GPU waterfalls.",
+      "revId": "1b9e7feace7bc35233ebcd7cfd4c9dbe8c02d45b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
