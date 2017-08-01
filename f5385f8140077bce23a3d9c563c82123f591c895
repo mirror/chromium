@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85d3cc92_8c45694a",
+        "filename": "third_party/WebKit/LayoutTests/mojo/bind-interface.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-01T20:21:05Z",
+      "side": 1,
+      "message": "nit: does it make sense to check that interceptor.oninterfacerequest is not called in this case?",
+      "revId": "f5385f8140077bce23a3d9c563c82123f591c895",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bd0388f_866193cd",
+        "filename": "third_party/WebKit/Source/core/mojo/test/MojoInterfaceInterceptor.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-01T20:21:05Z",
+      "side": 1,
+      "message": "Please add an OWNER as reviewer for this change.",
+      "revId": "f5385f8140077bce23a3d9c563c82123f591c895",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
