@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "859918b7_db9619a5",
+        "filename": "third_party/WebKit/Source/core/exported/WebWorkerShadowPage.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-01T06:13:42Z",
+      "side": 1,
+      "message": "It\u0027s not coming from this patch, but where the request returned by mojo::MakeRequest() goes to? Is there anything special for the InterfaceProvider?\nI think we need a comment here.",
+      "range": {
+        "startLine": 37,
+        "startChar": 1,
+        "endLine": 37,
+        "endChar": 30
+      },
+      "revId": "6f55893e3126ee6460d0615eea33705f0bc6a951",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
