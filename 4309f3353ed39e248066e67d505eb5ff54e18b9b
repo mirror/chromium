@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37c17d9f_a0eba14d",
+        "filename": "net/cert/internal/certificate_policies.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-08-01T22:40:54Z",
+      "side": 1,
+      "message": "Some AddError calls just pass in a string constant instead of using DEFINE_CERT_ERROR_ID (other files too).",
+      "revId": "4309f3353ed39e248066e67d505eb5ff54e18b9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f68bafb8_3ff8550a",
+        "filename": "net/cert/internal/name_constraints.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-08-01T22:40:54Z",
+      "side": 1,
+      "message": "this is a different string than used in the other place that calls ParseGeneralName, which seems weird.",
+      "revId": "4309f3353ed39e248066e67d505eb5ff54e18b9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b824b616_41dc7772",
+        "filename": "net/cert/internal/name_constraints.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-08-01T22:40:54Z",
+      "side": 1,
+      "message": "I think x509_certificate_bytes.cc will need to be updated for this change",
+      "range": {
+        "startLine": 56,
+        "startChar": 18,
+        "endLine": 56,
+        "endChar": 24
+      },
+      "revId": "4309f3353ed39e248066e67d505eb5ff54e18b9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "444b5084_82b10ddd",
+        "filename": "net/cert/internal/verify_name_match.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-08-01T22:40:54Z",
+      "side": 1,
+      "message": "I wonder if there should just be a single kFailedNormalizingString with the tag as an error param? (and the tag could be a param to kFailedConvertingAttributeValue also).",
+      "range": {
+        "startLine": 163,
+        "startChar": 27,
+        "endLine": 163,
+        "endChar": 54
+      },
+      "revId": "4309f3353ed39e248066e67d505eb5ff54e18b9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8badbd15_4bd0d7cc",
+        "filename": "net/cert/x509_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-08-01T22:40:54Z",
+      "side": 1,
+      "message": "hmmm, off topic for this CL, but should this actually return false if GeneralNames::Create returns nullptr?",
+      "revId": "4309f3353ed39e248066e67d505eb5ff54e18b9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47c41155_826dc3be",
+        "filename": "net/data/parse_certificate_unittest/rebase-errors.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-08-01T22:40:54Z",
+      "side": 1,
+      "message": "\"0\" unnecessary (slice could be just be \"[:-1]\")",
+      "revId": "4309f3353ed39e248066e67d505eb5ff54e18b9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
