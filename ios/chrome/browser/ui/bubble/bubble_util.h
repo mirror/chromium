@@ -9,25 +9,6 @@
 
 namespace bubble_util {
 
-// Calculate the distance from the bubble's leading edge to the leading edge of
-// its bounding coordinate system. In LTR contexts, the returned float is the
-// x-coordinate of the bubble's origin. This calculation is based on
-// |targetFrame|, which is the frame of the target UI element, and the bubble's
-// alignment, direction, and size. The returned float is in the same coordinate
-// system as |targetFrame|, which should be the coordinate system in which the
-// bubble is drawn.
-CGFloat LeadingDistance(CGRect targetFrame,
-                        BubbleAlignment alignment,
-                        CGFloat bubbleWidth);
-
-// Calculate the y-coordinate of the bubble's origin based on |targetFrame|, and
-// the bubble's arrow direction and size. The returned float is in the same
-// coordinate system as |targetFrame|, which should be the coordinate system in
-// which the bubble is drawn.
-CGFloat OriginY(CGRect targetFrame,
-                BubbleArrowDirection arrowDirection,
-                CGFloat bubbleHeight);
-
 // Calculate the maximum width of the bubble such that it stays within its
 // bounding coordinate space. |targetFrame| is the frame the target UI element
 // in the coordinate system in which the bubble is drawn. |alignment| is the
@@ -36,6 +17,17 @@ CGFloat OriginY(CGRect targetFrame,
 CGFloat MaxWidth(CGRect targetFrame,
                  BubbleAlignment alignment,
                  CGFloat boundingWidth);
+
+// Calculate the bubble's frame. |targetFrame| is the frame of the UI element
+// the bubble is pointing to. |size| is the size of the bubble. |direction| is
+// the direction the bubble's arrow is pointing. |alignment| is the alignment of
+// the anchor (either leading, centered, or trailing). |boundingWidth| is the
+// width of the bubble's superview.
+CGRect BubbleFrame(CGRect targetFrame,
+                   CGSize size,
+                   BubbleArrowDirection direction,
+                   BubbleAlignment alignment,
+                   CGFloat boundingWidth);
 
 }  // namespace bubble_util
 
