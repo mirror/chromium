@@ -22,6 +22,30 @@
       "revId": "5990346cc42a824e76b45b85fdec8b9c1f587ef9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8de30eea_c58aaf02",
+        "filename": "media/renderers/skcanvas_video_renderer.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-08-01T19:45:58Z",
+      "side": 1,
+      "message": "coded_size() is the size of the texture. visible_rect() is the region within the texture that is the decoded frame. visible_rect() should only be used if MakeFromYUVTexturesCopy() is cropping as well, but that can\u0027t be done correctly if the origin point isn\u0027t passed along.\n\nThe + 1 in the original code is misleading, coded_size() should never be odd for 4:2:0 frames. (If for some reason it was, it should be rounded in the Y-plane too, but I don\u0027t think that the video renderer needs to worry about it.)",
+      "parentUuid": "42fb09b4_cfce276e",
+      "range": {
+        "startLine": 99,
+        "startChar": 7,
+        "endLine": 99,
+        "endChar": 11
+      },
+      "revId": "5990346cc42a824e76b45b85fdec8b9c1f587ef9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
