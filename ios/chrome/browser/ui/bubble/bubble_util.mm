@@ -7,9 +7,11 @@
 #include "base/i18n/rtl.h"
 #include "base/logging.h"
 #import "ios/chrome/browser/ui/bubble/bubble_view.h"
+#import "ios/chrome/browser/ui/rtl_geometry.h"
 
 namespace bubble_util {
 
+namespace {
 // Calculate the coordinates of the point of the speech bubble's triangle based
 // on the |frame| of the target UI element and the bubble's |arrowDirection|.
 // The returned point is in the same coordinate system as |frame|.
@@ -25,6 +27,13 @@ CGPoint AnchorPoint(CGRect targetFrame, BubbleArrowDirection arrowDirection) {
   return anchorPoint;
 }
 
+// Calculate the distance from the bubble's leading edge to the leading edge of
+// its bounding coordinate system. In LTR contexts, the returned float is the
+// x-coordinate of the bubble's origin. This calculation is based on
+// |targetFrame|, which is the frame of the target UI element, and the bubble's
+// alignment, direction, and size. The returned float is in the same coordinate
+// system as |targetFrame|, which should be the coordinate system in which the
+// bubble is drawn.
 CGFloat LeadingDistance(CGRect targetFrame,
                         BubbleAlignment alignment,
                         CGFloat bubbleWidth) {
@@ -49,6 +58,10 @@ CGFloat LeadingDistance(CGRect targetFrame,
   return anchorX - leadingOffset;
 }
 
+// Calculate the y-coordinate of the bubble's origin based on |targetFrame|, and
+// the bubble's arrow direction and size. The returned float is in the same
+// coordinate system as |targetFrame|, which should be the coordinate system in
+// which the bubble is drawn.
 CGFloat OriginY(CGRect targetFrame,
                 BubbleArrowDirection arrowDirection,
                 CGFloat bubbleHeight) {
@@ -62,6 +75,7 @@ CGFloat OriginY(CGRect targetFrame,
   }
   return originY;
 }
+}  // namespace
 
 CGFloat MaxWidth(CGRect targetFrame,
                  BubbleAlignment alignment,
@@ -101,6 +115,20 @@ CGFloat MaxWidth(CGRect targetFrame,
       break;
   }
   return maxWidth;
+}
+
+CGRect BubbleFrame(CGRect targetFrame,
+                   CGSize size,
+                   BubbleArrowDirection direction,
+                   BubbleAlignment alignment,
+                   CGFloat boundingWidth) {
+  CGFloat leading =
+      bubble_util::LeadingDistance(targetFrame, alignment, size.width);
+  CGFloat originY = bubble_util::OriginY(targetFrame, direction, size.height);
+  // Use a |LayoutRect| to ensure that the bubble is mirrored in RTL contexts.
+  CGRect bubbleFrame = LayoutRectGetRect(
+      LayoutRectMake(leading, boundingWidth, originY, size.width, size.height));
+  return bubbleFrame;
 }
 
 }  // namespace bubble_util

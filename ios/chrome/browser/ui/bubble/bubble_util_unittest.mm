@@ -36,7 +36,7 @@ class BubbleUtilTest : public PlatformTest {
   // Bounding width of the bubble's coordinate system.
   const CGFloat containerWidth_;
 };
-
+/*
 // Test |OriginY| when the bubble points up at the target element.
 TEST_F(BubbleUtilTest, OriginUpArrow) {
   CGFloat originY = bubble_util::OriginY(
@@ -73,7 +73,7 @@ TEST_F(BubbleUtilTest, LeadingDistanceTrailingAlignment) {
       rightAlignedTarget_, BubbleAlignmentTrailing, bubbleSize_.width);
   EXPECT_EQ(150.0f + kTestBubbleAlignmentOffset, leading);
 }
-
+*/
 // Test the |MaxWidth| method when the bubble is leading aligned, the target is
 // on the left side of the container, and the language is LTR.
 TEST_F(BubbleUtilTest, MaxWidthLeadingWithTargetOnLeft) {
@@ -252,4 +252,208 @@ TEST_F(BubbleUtilTest, MaxWidthTrailingWithTargetOnRightRTL) {
   CGFloat rightAlignedWidthRTL = bubble_util::MaxWidth(
       rightAlignedTarget_, BubbleAlignmentTrailing, containerWidth_);
   EXPECT_EQ(50.0f + kTestBubbleAlignmentOffset, rightAlignedWidthRTL);
+}
+
+// Test bubble_util::BubbleFrame when the bubble's direction is
+// |BubbleArrowDirectionUp|, the alignment is |BubbleAlignmentLeading|, and the
+// language is LTR
+TEST_F(BubbleUtilTest, BubbleFrameUpLeadingLTR) {
+  // Ensure that the language is LTR by setting the locale to English.
+  base::i18n::SetICUDefaultLocale("en");
+  CGRect bubbleFrame = bubble_util::BubbleFrame(
+      centerAlignedTarget_, bubbleSize_, BubbleArrowDirectionUp,
+      BubbleAlignmentLeading, containerWidth_);
+  CGRect expectedRect = CGRectMake(300.0f - kTestBubbleAlignmentOffset, 300.0f,
+                                   bubbleSize_.width, bubbleSize_.height);
+  EXPECT_EQ(expectedRect.origin.x, bubbleFrame.origin.x);
+  EXPECT_EQ(expectedRect.origin.y, bubbleFrame.origin.y);
+  EXPECT_EQ(expectedRect.size.width, bubbleFrame.size.width);
+  EXPECT_EQ(expectedRect.size.height, bubbleFrame.size.height);
+}
+
+// Test bubble_util::BubbleFrame when the bubble's direction is
+// |BubbleArrowDirectionUp|, the alignment is |BubbleAlignmentLeading|, and the
+// language is RTL
+TEST_F(BubbleUtilTest, BubbleFrameUpLeadingRTL) {
+  // Ensure that the language is RTL by setting the locale to Hebrew.
+  base::i18n::SetICUDefaultLocale("he");
+  CGRect bubbleFrame = bubble_util::BubbleFrame(
+      centerAlignedTarget_, bubbleSize_, BubbleArrowDirectionUp,
+      BubbleAlignmentLeading, containerWidth_);
+  CGRect expectedRect = CGRectMake(-100.0f + kTestBubbleAlignmentOffset, 300.0f,
+                                   bubbleSize_.width, bubbleSize_.height);
+  EXPECT_EQ(expectedRect.origin.x, bubbleFrame.origin.x);
+  EXPECT_EQ(expectedRect.origin.y, bubbleFrame.origin.y);
+  EXPECT_EQ(expectedRect.size.width, bubbleFrame.size.width);
+  EXPECT_EQ(expectedRect.size.height, bubbleFrame.size.height);
+}
+
+// Test bubble_util::BubbleFrame when the bubble's direction is
+// |BubbleArrowDirectionUp|, the alignment is |BubbleAlignmentCenter|, and the
+// language is LTR
+TEST_F(BubbleUtilTest, BubbleFrameUpCenteredLTR) {
+  // Ensure that the language is LTR by setting the locale to English.
+  base::i18n::SetICUDefaultLocale("en");
+  CGRect bubbleFrame = bubble_util::BubbleFrame(
+      centerAlignedTarget_, bubbleSize_, BubbleArrowDirectionUp,
+      BubbleAlignmentCenter, containerWidth_);
+  CGRect expectedRect =
+      CGRectMake(150.0f, 300.0f, bubbleSize_.width, bubbleSize_.height);
+  EXPECT_EQ(expectedRect.origin.x, bubbleFrame.origin.x);
+  EXPECT_EQ(expectedRect.origin.y, bubbleFrame.origin.y);
+  EXPECT_EQ(expectedRect.size.width, bubbleFrame.size.width);
+  EXPECT_EQ(expectedRect.size.height, bubbleFrame.size.height);
+}
+
+// Test bubble_util::BubbleFrame when the bubble's direction is
+// |BubbleArrowDirectionUp|, the alignment is |BubbleAlignmentCenter|, and the
+// language is RTL
+TEST_F(BubbleUtilTest, BubbleFrameUpCenteredRTL) {
+  // Ensure that the language is RTL by setting the locale to Hebrew.
+  base::i18n::SetICUDefaultLocale("he");
+  CGRect bubbleFrame = bubble_util::BubbleFrame(
+      centerAlignedTarget_, bubbleSize_, BubbleArrowDirectionUp,
+      BubbleAlignmentCenter, containerWidth_);
+  CGRect expectedRect =
+      CGRectMake(50.0f, 300.0f, bubbleSize_.width, bubbleSize_.height);
+  EXPECT_EQ(expectedRect.origin.x, bubbleFrame.origin.x);
+  EXPECT_EQ(expectedRect.origin.y, bubbleFrame.origin.y);
+  EXPECT_EQ(expectedRect.size.width, bubbleFrame.size.width);
+  EXPECT_EQ(expectedRect.size.height, bubbleFrame.size.height);
+}
+
+// Test bubble_util::BubbleFrame when the bubble's direction is
+// |BubbleArrowDirectionUp|, the alignment is |BubbleAlignmentTrailing|, and the
+// language is LTR
+TEST_F(BubbleUtilTest, BubbleFrameUpTrailingLTR) {
+  // Ensure that the language is LTR by setting the locale to English.
+  base::i18n::SetICUDefaultLocale("en");
+  CGRect bubbleFrame = bubble_util::BubbleFrame(
+      centerAlignedTarget_, bubbleSize_, BubbleArrowDirectionUp,
+      BubbleAlignmentTrailing, containerWidth_);
+  CGRect expectedRect = CGRectMake(kTestBubbleAlignmentOffset, 300.0f,
+                                   bubbleSize_.width, bubbleSize_.height);
+  EXPECT_EQ(expectedRect.origin.x, bubbleFrame.origin.x);
+  EXPECT_EQ(expectedRect.origin.y, bubbleFrame.origin.y);
+  EXPECT_EQ(expectedRect.size.width, bubbleFrame.size.width);
+  EXPECT_EQ(expectedRect.size.height, bubbleFrame.size.height);
+}
+
+// Test bubble_util::BubbleFrame when the bubble's direction is
+// |BubbleArrowDirectionUp|, the alignment is |BubbleAlignmentTrailing|, and the
+// language is RTL
+TEST_F(BubbleUtilTest, BubbleFrameUpTrailingRTL) {
+  // Ensure that the language is RTL by setting the locale to Hebrew.
+  base::i18n::SetICUDefaultLocale("he");
+  CGRect bubbleFrame = bubble_util::BubbleFrame(
+      centerAlignedTarget_, bubbleSize_, BubbleArrowDirectionUp,
+      BubbleAlignmentTrailing, containerWidth_);
+  CGRect expectedRect = CGRectMake(200.0f - kTestBubbleAlignmentOffset, 300.0f,
+                                   bubbleSize_.width, bubbleSize_.height);
+  EXPECT_EQ(expectedRect.origin.x, bubbleFrame.origin.x);
+  EXPECT_EQ(expectedRect.origin.y, bubbleFrame.origin.y);
+  EXPECT_EQ(expectedRect.size.width, bubbleFrame.size.width);
+  EXPECT_EQ(expectedRect.size.height, bubbleFrame.size.height);
+}
+
+// Test bubble_util::BubbleFrame when the bubble's direction is
+// |BubbleArrowDirectionDown|, the alignment is |BubbleAlignmentLeading|, and
+// the language is LTR
+TEST_F(BubbleUtilTest, BubbleFrameDownLeadingLTR) {
+  // Ensure that the language is LTR by setting the locale to English.
+  base::i18n::SetICUDefaultLocale("en");
+  CGRect bubbleFrame = bubble_util::BubbleFrame(
+      centerAlignedTarget_, bubbleSize_, BubbleArrowDirectionDown,
+      BubbleAlignmentLeading, containerWidth_);
+  CGRect expectedRect = CGRectMake(300.0f - kTestBubbleAlignmentOffset, 100.0f,
+                                   bubbleSize_.width, bubbleSize_.height);
+  EXPECT_EQ(expectedRect.origin.x, bubbleFrame.origin.x);
+  EXPECT_EQ(expectedRect.origin.y, bubbleFrame.origin.y);
+  EXPECT_EQ(expectedRect.size.width, bubbleFrame.size.width);
+  EXPECT_EQ(expectedRect.size.height, bubbleFrame.size.height);
+}
+
+// Test bubble_util::BubbleFrame when the bubble's direction is
+// |BubbleArrowDirectionDown|, the alignment is |BubbleAlignmentLeading|, and
+// the language is RTL
+TEST_F(BubbleUtilTest, BubbleFrameDownLeadingRTL) {
+  // Ensure that the language is RTL by setting the locale to Hebrew.
+  base::i18n::SetICUDefaultLocale("he");
+  CGRect bubbleFrame = bubble_util::BubbleFrame(
+      centerAlignedTarget_, bubbleSize_, BubbleArrowDirectionDown,
+      BubbleAlignmentLeading, containerWidth_);
+  CGRect expectedRect = CGRectMake(-100.0f + kTestBubbleAlignmentOffset, 100.0f,
+                                   bubbleSize_.width, bubbleSize_.height);
+  EXPECT_EQ(expectedRect.origin.x, bubbleFrame.origin.x);
+  EXPECT_EQ(expectedRect.origin.y, bubbleFrame.origin.y);
+  EXPECT_EQ(expectedRect.size.width, bubbleFrame.size.width);
+  EXPECT_EQ(expectedRect.size.height, bubbleFrame.size.height);
+}
+
+// Test bubble_util::BubbleFrame when the bubble's direction is
+// |BubbleArrowDirectionDown|, the alignment is |BubbleAlignmentCenter|, and the
+// language is LTR
+TEST_F(BubbleUtilTest, BubbleFrameDownCenteredLTR) {
+  // Ensure that the language is LTR by setting the locale to English.
+  base::i18n::SetICUDefaultLocale("en");
+  CGRect bubbleFrame = bubble_util::BubbleFrame(
+      centerAlignedTarget_, bubbleSize_, BubbleArrowDirectionDown,
+      BubbleAlignmentCenter, containerWidth_);
+  CGRect expectedRect =
+      CGRectMake(150.0f, 100.0f, bubbleSize_.width, bubbleSize_.height);
+  EXPECT_EQ(expectedRect.origin.x, bubbleFrame.origin.x);
+  EXPECT_EQ(expectedRect.origin.y, bubbleFrame.origin.y);
+  EXPECT_EQ(expectedRect.size.width, bubbleFrame.size.width);
+  EXPECT_EQ(expectedRect.size.height, bubbleFrame.size.height);
+}
+
+// Test bubble_util::BubbleFrame when the bubble's direction is
+// |BubbleArrowDirectionDown|, the alignment is |BubbleAlignmentCenter|, and the
+// language is RTL
+TEST_F(BubbleUtilTest, BubbleFrameDownCenteredRTL) {
+  // Ensure that the language is RTL by setting the locale to Hebrew.
+  base::i18n::SetICUDefaultLocale("he");
+  CGRect bubbleFrame = bubble_util::BubbleFrame(
+      centerAlignedTarget_, bubbleSize_, BubbleArrowDirectionDown,
+      BubbleAlignmentCenter, containerWidth_);
+  CGRect expectedRect =
+      CGRectMake(50.0f, 100.0f, bubbleSize_.width, bubbleSize_.height);
+  EXPECT_EQ(expectedRect.origin.x, bubbleFrame.origin.x);
+  EXPECT_EQ(expectedRect.origin.y, bubbleFrame.origin.y);
+  EXPECT_EQ(expectedRect.size.width, bubbleFrame.size.width);
+  EXPECT_EQ(expectedRect.size.height, bubbleFrame.size.height);
+}
+
+// Test bubble_util::BubbleFrame when the bubble's direction is
+// |BubbleArrowDirectionDown|, the alignment is |BubbleAlignmentTrailing|, and
+// the language is LTR
+TEST_F(BubbleUtilTest, BubbleFrameDownTrailingLTR) {
+  // Ensure that the language is LTR by setting the locale to English.
+  base::i18n::SetICUDefaultLocale("en");
+  CGRect bubbleFrame = bubble_util::BubbleFrame(
+      centerAlignedTarget_, bubbleSize_, BubbleArrowDirectionDown,
+      BubbleAlignmentTrailing, containerWidth_);
+  CGRect expectedRect = CGRectMake(kTestBubbleAlignmentOffset, 100.0f,
+                                   bubbleSize_.width, bubbleSize_.height);
+  EXPECT_EQ(expectedRect.origin.x, bubbleFrame.origin.x);
+  EXPECT_EQ(expectedRect.origin.y, bubbleFrame.origin.y);
+  EXPECT_EQ(expectedRect.size.width, bubbleFrame.size.width);
+  EXPECT_EQ(expectedRect.size.height, bubbleFrame.size.height);
+}
+
+// Test bubble_util::BubbleFrame when the bubble's direction is
+// |BubbleArrowDirectionDown|, the alignment is |BubbleAlignmentTrailing|, and
+// the language is RTL
+TEST_F(BubbleUtilTest, BubbleFrameDownTrailingRTL) {
+  // Ensure that the language is RTL by setting the locale to Hebrew.
+  base::i18n::SetICUDefaultLocale("he");
+  CGRect bubbleFrame = bubble_util::BubbleFrame(
+      centerAlignedTarget_, bubbleSize_, BubbleArrowDirectionDown,
+      BubbleAlignmentTrailing, containerWidth_);
+  CGRect expectedRect = CGRectMake(200.0f - kTestBubbleAlignmentOffset, 100.0f,
+                                   bubbleSize_.width, bubbleSize_.height);
+  EXPECT_EQ(expectedRect.origin.x, bubbleFrame.origin.x);
+  EXPECT_EQ(expectedRect.origin.y, bubbleFrame.origin.y);
+  EXPECT_EQ(expectedRect.size.width, bubbleFrame.size.width);
+  EXPECT_EQ(expectedRect.size.height, bubbleFrame.size.height);
 }
