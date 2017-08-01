@@ -142,6 +142,30 @@
       "revId": "bd9061600b6b3386be722b53b64a6a04144bdb7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bd71f01_466fc39e",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2223,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-01T23:45:36Z",
+      "side": 1,
+      "message": "If |contents| is null active web contents should also be null. \nBefore https://codereview.chromium.org/2946813002 we would hide the bookmark bar in this case, right? So, I think the crash is new to your patch.",
+      "parentUuid": "92fab262_08e3a769",
+      "range": {
+        "startLine": 2223,
+        "startChar": 17,
+        "endLine": 2223,
+        "endChar": 37
+      },
+      "revId": "bd9061600b6b3386be722b53b64a6a04144bdb7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
