@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47a4be35_4a936333",
+        "filename": "ppapi/tests/blink_test_plugin.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-08-01T01:29:16Z",
+      "side": 1,
+      "message": "I assume that this is trying to make the plugin background transparent.  I also tried this when I looked at this bug.  This change doesn\u0027t seem to work.  The plugin is still painting with no transparency.",
+      "range": {
+        "startLine": 117,
+        "startChar": 79,
+        "endLine": 117,
+        "endChar": 0
+      },
+      "revId": "79528e1dba5a81d3488ba9541effeb62a9e84eef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d1af713_b196d917",
+        "filename": "third_party/WebKit/LayoutTests/plugins/iframe-plugin-bgcolor.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-08-01T01:29:16Z",
+      "side": 1,
+      "message": "It looks like this is causing the test to wait until the plugin is fully loaded and painted.  I don\u0027t believe that this test is now testing the background color.  See my notes in https://bugs.chromium.org/p/chromium/issues/detail?id\u003d742670#c12.  The test is now just going to step 3.",
+      "range": {
+        "startLine": 8,
+        "startChar": 7,
+        "endLine": 8,
+        "endChar": 0
+      },
+      "revId": "79528e1dba5a81d3488ba9541effeb62a9e84eef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
