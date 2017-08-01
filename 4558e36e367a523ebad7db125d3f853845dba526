@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "b0321149_6d3c852e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-01T21:22:04Z",
+      "side": 1,
+      "message": "Please add context for this CL. What objects are we destroying in a different order? Why is the order being changed? What effect does changing the order have?",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 59
+      },
+      "revId": "4558e36e367a523ebad7db125d3f853845dba526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dc96ba51_d6a3bbc5",
         "filename": "chrome/browser/chromeos/tether/tether_service.cc",
         "patchSetId": 2
@@ -25,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "1fb3a95b_25923ab7",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-01T21:22:04Z",
+      "side": 1,
+      "message": "Hmm, good point. It doesn\u0027t appear that this is necessary. Leslie, please remove this and test the login/logout/enable/disable flows to make sure nothing breaks and that notifications still work between enable/disable sessions. If everything is fine, please remove this line.",
+      "parentUuid": "dc96ba51_d6a3bbc5",
+      "range": {
+        "startLine": 152,
+        "startChar": 2,
+        "endLine": 152,
+        "endChar": 25
+      },
+      "revId": "4558e36e367a523ebad7db125d3f853845dba526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7425d528_71a89ca3",
         "filename": "chromeos/components/tether/notification_remover.cc",
         "patchSetId": 2
@@ -36,6 +83,30 @@
       "writtenOn": "2017-08-01T20:59:57Z",
       "side": 1,
       "message": "NotificationPresenter is supposed to live beyond the lifetime of NotificationRemover. This paradigm exists across almost all of our classes, and we don\u0027t do a check like this in them. IMO, this DCHECK isn\u0027t appropriate. khorimoto@ what are your thoughts?",
+      "range": {
+        "startLine": 37,
+        "startChar": 9,
+        "endLine": 37,
+        "endChar": 32
+      },
+      "revId": "4558e36e367a523ebad7db125d3f853845dba526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8afb5132_e26b0d51",
+        "filename": "chromeos/components/tether/notification_remover.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-01T21:22:04Z",
+      "side": 1,
+      "message": "Correct, this DCHECK() is not appropriate - please remove.",
+      "parentUuid": "7425d528_71a89ca3",
       "range": {
         "startLine": 37,
         "startChar": 9,
