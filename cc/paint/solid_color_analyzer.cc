@@ -45,9 +45,13 @@ bool IsSolidColorPaint(const PaintFlags& flags) {
          flags.getStyle() == PaintFlags::kFill_Style;
 }
 
-// Returns true if the specified drawn_rect will cover the entire canvas, and
-// that the canvas is not clipped (i.e. it covers ALL of the canvas).
-bool IsFullQuad(const SkCanvas& canvas, const SkRect& drawn_rect) {
+// Returns true if the specified drawn_rounded_rect will cover the entire canvas
+// and that the canvas is not clipped (i.e. it covers ALL of the canvas).
+template <typename SkRectType>
+bool IsFullQuad(const SkCanvas& canvas, const SkRectType& drawn_rrect) {
+  if (!canvas.isClipRect())
+    return false;
+
   SkIRect clip_irect;
   if (!canvas.getDeviceClipBounds(&clip_irect))
     return false;
@@ -62,11 +66,13 @@ bool IsFullQuad(const SkCanvas& canvas, const SkRect& drawn_rect) {
   if (!matrix.rectStaysRect())
     return false;
 
-  SkRect device_rect;
-  matrix.mapRect(&device_rect, drawn_rect);
-  SkRect clip_rect;
-  clip_rect.set(clip_irect);
-  return device_rect.contains(clip_rect);
+  SkMatrix inverse;
+  if (!matrix.invert(&inverse))
+    return false;
+
+  SkRect clip_rect = SkRect::Make(clip_irect);
+  inverse.mapRect(&clip_rect, clip_rect);
+  return drawn_rrect.contains(clip_rect);
 }
 
 void CheckIfSolidColor(const SkCanvas& canvas,
@@ -97,8 +103,9 @@ void CheckIfSolidColor(const SkCanvas& canvas,
   }
 }
 
+template <typename SkRectType>
 void CheckIfSolidRect(const SkCanvas& canvas,
-                      const SkRect& rect,
+                      const SkRectType& rect,
                       const PaintFlags& flags,
                       bool* is_solid_color,
                       bool* is_transparent,
@@ -121,6 +128,13 @@ void CheckIfSolidRect(const SkCanvas& canvas,
   } else {
     *is_solid_color = false;
   }
+}
+
+bool CheckIfRRectClipCoversCanvas(const SkCanvas& canvas,
+                                  const SkRRect& rrect) {
+  TRACE_EVENT0(TRACE_DISABLED_BY_DEFAULT("cc.debug"),
+               "SolidColorAnalyzer::HandleRRect");
+  return IsFullQuad(canvas, rrect);
 }
 
 }  // namespace
@@ -193,7 +207,15 @@ base::Optional<SkColor> SolidColorAnalyzer::DetermineIfSolidColor(
       case PaintOpType::DrawOval:
       case PaintOpType::DrawPath:
       case PaintOpType::DrawPosText:
-      case PaintOpType::DrawRRect:
+        return base::nullopt;
+      case PaintOpType::DrawRRect: {
+        if (++num_ops > max_ops_to_analyze)
+          return base::nullopt;
+        const DrawRRectOp* rrect_op = static_cast<const DrawRRectOp*>(op);
+        CheckIfSolidRect(canvas, rrect_op->rrect, rrect_op->flags, &is_solid,
+                         &is_transparent, &color);
+        break;
+      }
       case PaintOpType::DrawText:
       case PaintOpType::DrawTextBlob:
       // Anything that has to do a save layer is probably not solid. As it will
@@ -205,9 +227,17 @@ base::Optional<SkColor> SolidColorAnalyzer::DetermineIfSolidColor(
       // cover the canvas.
       // TODO(vmpstr): We could investigate handling these.
       case PaintOpType::ClipPath:
-      case PaintOpType::ClipRRect:
         return base::nullopt;
-
+      case PaintOpType::ClipRRect: {
+        const ClipRRectOp* rrect_op = static_cast<const ClipRRectOp*>(op);
+        bool does_cover_canvas =
+            CheckIfRRectClipCoversCanvas(canvas, rrect_op->rrect);
+        // If the clip covers the full canvas, we can treat it as if there's no
+        // clip at all and continue, otherwise this is no longer a solid color.
+        if (!does_cover_canvas)
+          return base::nullopt;
+        break;
+      }
       case PaintOpType::DrawRect: {
         if (++num_ops > max_ops_to_analyze)
           return base::nullopt;
