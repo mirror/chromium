@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9be48fcb_c75dbd80",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptModuleResolverImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1119597
+      },
+      "writtenOn": "2017-08-01T16:45:03Z",
+      "side": 1,
+      "message": "This obviously does not currently contain the steps that are now implemented but at least it should soon.",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 47,
+        "endChar": 90
+      },
+      "revId": "37d4f85c9d536e546ee372155410e9602ea99082",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
