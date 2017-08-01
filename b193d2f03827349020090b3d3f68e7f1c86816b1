@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6c36e973_5d0e4e64",
+        "filename": "content/public/browser/ssl_status.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-01T05:06:27Z",
+      "side": 1,
+      "message": "sct_statuses is actually dead; just rebased atop https://chromium-review.googlesource.com/c/594274/ which removes it. (has been blocked on CQ flakiness all day)",
+      "parentUuid": "66c96317_0e0bc4ad",
+      "revId": "b193d2f03827349020090b3d3f68e7f1c86816b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "194a7819_980f2730",
         "filename": "content/public/browser/ssl_status.h",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-31T17:32:33Z",
       "side": 1,
       "message": "Just to confirm: the two SSLStatuses should still be considered equal if their user_data_ is different?",
+      "revId": "b193d2f03827349020090b3d3f68e7f1c86816b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9158e73_93379455",
+        "filename": "content/public/browser/ssl_status.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-01T05:06:27Z",
+      "side": 1,
+      "message": "The one callsite doesn\u0027t care about comparing user data, but this made me realize that there\u0027s only one callsite in production code and it doesn\u0027t really need this full Equals check, so having this method is a little silly. I went ahead and removed it -- one fewer place to have to enumerate all the fields.\n\nThere were two tests in ssl_browser_tests.cc that used it, but those were a hot mess (and I have no one to blame but myself):\n(a) The return value of SSLStatus::Equals wasn\u0027t actually being checked.\n(b) It turns out that a full equality check wasn\u0027t even the right check to be made and we want a more limited comparison in those tests, so I put that comparison directly in the tests.\n(c) Those tests probably aren\u0027t long for this world anyway, because they test implementations of InterstitialPageDelegate::OverrideEntry, which is a weird interstitial implementation thing that is due to go away with the interstitial refactor.",
+      "parentUuid": "194a7819_980f2730",
       "revId": "b193d2f03827349020090b3d3f68e7f1c86816b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
