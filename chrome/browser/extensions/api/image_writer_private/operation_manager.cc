@@ -60,8 +60,8 @@ void OperationManager::Shutdown() {
   for (OperationMap::iterator iter = operations_.begin();
        iter != operations_.end();
        iter++) {
-    BrowserThread::PostTask(BrowserThread::FILE, FROM_HERE,
-                            base::BindOnce(&Operation::Abort, iter->second));
+    scoped_refptr<Operation> operation = iter->second;
+    operation->PostTask(base::BindOnce(&Operation::Abort, operation));
   }
 }
 
@@ -92,8 +92,8 @@ void OperationManager::StartWriteFromUrl(
       device_path,
       GetAssociatedDownloadFolder()));
   operations_[extension_id] = operation;
-  BrowserThread::PostTask(BrowserThread::FILE, FROM_HERE,
-                          base::BindOnce(&Operation::Start, operation));
+  operation->PostTask(base::BindOnce(&Operation::Start, operation));
+
   callback.Run(true, "");
 }
 
@@ -117,8 +117,7 @@ void OperationManager::StartWriteFromFile(
       weak_factory_.GetWeakPtr(), extension_id, path, device_path,
       GetAssociatedDownloadFolder()));
   operations_[extension_id] = operation;
-  BrowserThread::PostTask(BrowserThread::FILE, FROM_HERE,
-                          base::BindOnce(&Operation::Start, operation));
+  operation->PostTask(base::BindOnce(&Operation::Start, operation));
   callback.Run(true, "");
 }
 
@@ -130,8 +129,7 @@ void OperationManager::CancelWrite(
   if (existing_operation == NULL) {
     callback.Run(false, error::kNoOperationInProgress);
   } else {
-    BrowserThread::PostTask(
-        BrowserThread::FILE, FROM_HERE,
+    existing_operation->PostTask(
         base::BindOnce(&Operation::Cancel, existing_operation));
     DeleteOperation(extension_id);
     callback.Run(true, "");
@@ -152,8 +150,7 @@ void OperationManager::DestroyPartitions(
       weak_factory_.GetWeakPtr(), extension_id, device_path,
       GetAssociatedDownloadFolder()));
   operations_[extension_id] = operation;
-  BrowserThread::PostTask(BrowserThread::FILE, FROM_HERE,
-                          base::BindOnce(&Operation::Start, operation));
+  operation->PostTask(base::BindOnce(&Operation::Start, operation));
   callback.Run(true, "");
 }
 
@@ -177,6 +174,7 @@ void OperationManager::OnProgress(const ExtensionId& extension_id,
 }
 
 void OperationManager::OnComplete(const ExtensionId& extension_id) {
+  printf("OperationManager::OnComplete, extension_id: %s\n", extension_id.c_str());
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   std::unique_ptr<base::ListValue> args(

@@ -27,19 +27,20 @@ const char kTestImageUrl[] = "http://localhost/test/image.zip";
 
 typedef net::LocalHostTestURLRequestInterceptor GetInterceptor;
 
+}  // namespace
+
 // This class gives us a generic Operation with the ability to set or inspect
 // the current path to the image file.
-class OperationForTest : public WriteFromUrlOperation {
+class WriteFromUrlOperationForTest : public WriteFromUrlOperation {
  public:
-  OperationForTest(base::WeakPtr<OperationManager> manager_,
+  WriteFromUrlOperationForTest(base::WeakPtr<OperationManager> manager,
                    const ExtensionId& extension_id,
                    net::URLRequestContextGetter* request_context,
                    GURL url,
                    const std::string& hash,
                    const std::string& storage_unit_id)
-      : WriteFromUrlOperation(manager_,
-                              extension_id,
-                              request_context,
+      : WriteFromUrlOperation(manager,
+                              extension_id, request_context,
                               url,
                               hash,
                               storage_unit_id,
@@ -49,15 +50,23 @@ class OperationForTest : public WriteFromUrlOperation {
 
   // Expose stages for testing.
   void GetDownloadTarget(const base::Closure& continuation) {
-    WriteFromUrlOperation::GetDownloadTarget(continuation);
+    PostTask(base::BindOnce(&WriteFromUrlOperation::GetDownloadTarget, this,
+                            continuation));
+    //WriteFromUrlOperation::GetDownloadTarget(continuation);
   }
 
   void Download(const base::Closure& continuation) {
-    WriteFromUrlOperation::Download(continuation);
+    PostTask(base::BindOnce(&WriteFromUrlOperation::Download, this, continuation));
+    //WriteFromUrlOperation::Download(continuation);
   }
 
   void VerifyDownload(const base::Closure& continuation) {
-    WriteFromUrlOperation::VerifyDownload(continuation);
+    PostTask(base::BindOnce(&WriteFromUrlOperation::VerifyDownload, this, continuation));
+    //WriteFromUrlOperation::VerifyDownload(continuation);
+  }
+
+  void Cancel() {
+    PostTask(base::BindOnce(&WriteFromUrlOperation::Cancel, this));
   }
 
   // Helpers to set-up state for intermediate stages.
@@ -65,25 +74,51 @@ class OperationForTest : public WriteFromUrlOperation {
     image_path_ = image_path;
   }
 
+
   base::FilePath GetImagePath() { return image_path_; }
 
  private:
-  ~OperationForTest() override {}
+  ~WriteFromUrlOperationForTest() override {}
+};
+
+class DummyOM : public OperationManager {
+ public:
+  explicit DummyOM(content::BrowserContext* c) : OperationManager(c) {
+    printf("+DummyOM\n");
+  }
+  ~DummyOM() override {}
+  void OnComplete(const ExtensionId& extension_id) override {
+    printf("                ->->OnComplete\n");
+//    OperationManager::OnComplete(extension_id);
+  }
+  void OnProgress(const ExtensionId& extension_id,
+                  image_writer_api::Stage stage,
+                  int progress) override {
+    printf("->->OnProgress\n");
+  }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(DummyOM);
 };
 
 class ImageWriterWriteFromUrlOperationTest : public ImageWriterUnitTestBase {
  protected:
-  ImageWriterWriteFromUrlOperationTest() : manager_(&test_profile_) {}
+  ImageWriterWriteFromUrlOperationTest()
+      : manager_(&test_profile_) {}
+        //dummy_(&test_profile_) {}
 
   void SetUp() override {
     ImageWriterUnitTestBase::SetUp();
 
     // Turn on interception and set up our dummy file.
     get_interceptor_.reset(new GetInterceptor(
+        //scoped_task_environment_.GetMainThreadTaskRunner(),
         BrowserThread::GetTaskRunnerForThread(BrowserThread::IO),
+        //scoped_task_environment_.GetMainThreadTaskRunner()
         base::CreateTaskRunnerWithTraits(
             {base::MayBlock(), base::TaskPriority::BACKGROUND,
-             base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN})));
+             base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN})
+    ));
     get_interceptor_->SetResponse(GURL(kTestImageUrl),
                                   test_utils_.GetImagePath());
   }
@@ -92,42 +127,66 @@ class ImageWriterWriteFromUrlOperationTest : public ImageWriterUnitTestBase {
     ImageWriterUnitTestBase::TearDown();
   }
 
-  scoped_refptr<OperationForTest> CreateOperation(const GURL& url,
+  scoped_refptr<WriteFromUrlOperationForTest> CreateOperation(const GURL& url,
                                                   const std::string& hash) {
-    scoped_refptr<OperationForTest> operation(
-        new OperationForTest(manager_.AsWeakPtr(),
+    scoped_refptr<WriteFromUrlOperationForTest> operation(
+        new WriteFromUrlOperationForTest(manager_.AsWeakPtr(),
                              kDummyExtensionId,
                              test_profile_.GetRequestContext(),
                              url,
                              hash,
                              test_utils_.GetDevicePath().AsUTF8Unsafe()));
-    operation->Start();
+    operation->StartOnUI();
     return operation;
   }
+
+  /*
+  scoped_refptr<WriteFromUrlOperationForTest> CreateOperation2(const GURL& url,
+                                                   const std::string& hash) {
+    scoped_refptr<WriteFromUrlOperationForTest> operation(
+        new WriteFromUrlOperationForTest(dummy_.AsWeakPtr(),
+                             kDummyExtensionId,
+                             test_profile_.GetRequestContext(),
+                             url,
+                             hash,
+                             test_utils_.GetDevicePath().AsUTF8Unsafe()));
+    operation->StartOnUI();
+    return operation;
+  }
+  */
 
   TestingProfile test_profile_;
   std::unique_ptr<GetInterceptor> get_interceptor_;
 
   MockOperationManager manager_;
+  //DummyOM dummy_;
 };
 
 TEST_F(ImageWriterWriteFromUrlOperationTest, SelectTargetWithoutExtension) {
-  scoped_refptr<OperationForTest> operation =
+  scoped_refptr<WriteFromUrlOperationForTest> operation =
       CreateOperation(GURL("http://localhost/foo/bar"), "");
 
-  operation->GetDownloadTarget(base::Bind(&base::DoNothing));
+  base::RunLoop run_loop;
+  operation->GetDownloadTarget(run_loop.QuitClosure());
+  run_loop.Run();
+  //content::RunAllPendingInMessageLoop();
 
   EXPECT_EQ(FILE_PATH_LITERAL("bar"),
             operation->GetImagePath().BaseName().value());
 
   operation->Cancel();
+  content::RunAllBlockingPoolTasksUntilIdle();
 }
 
 TEST_F(ImageWriterWriteFromUrlOperationTest, SelectTargetWithExtension) {
-  scoped_refptr<OperationForTest> operation =
+  scoped_refptr<WriteFromUrlOperationForTest> operation =
       CreateOperation(GURL("http://localhost/foo/bar.zip"), "");
 
-  operation->GetDownloadTarget(base::Bind(&base::DoNothing));
+  //operation->GetDownloadTarget(base::Bind(&base::DoNothing));
+  //content::RunAllPendingInMessageLoop();
+  base::RunLoop run_loop;
+  operation->GetDownloadTarget(run_loop.QuitClosure());
+  run_loop.Run();
 
   EXPECT_EQ(FILE_PATH_LITERAL("bar.zip"),
             operation->GetImagePath().BaseName().value());
@@ -140,14 +199,16 @@ TEST_F(ImageWriterWriteFromUrlOperationTest, DownloadFile) {
   // message queues while waiting for IO, thus we have to run until the
   // operation completes.
   base::RunLoop runloop;
-  base::Closure quit_closure = runloop.QuitClosure();
+  //base::Closure quit_closure = runloop.QuitClosure();
   base::FilePath download_target_path;
-  scoped_refptr<OperationForTest> operation =
+  scoped_refptr<WriteFromUrlOperationForTest> operation =
       CreateOperation(GURL(kTestImageUrl), "");
+      //CreateOperation2(GURL(kTestImageUrl), "");
 
   EXPECT_TRUE(base::CreateTemporaryFileInDir(test_utils_.GetTempDir(),
                                              &download_target_path));
   operation->SetImagePath(download_target_path);
+  printf("1\n");
 
   EXPECT_CALL(
       manager_,
@@ -162,18 +223,20 @@ TEST_F(ImageWriterWriteFromUrlOperationTest, DownloadFile) {
       OnProgress(kDummyExtensionId, image_writer_api::STAGE_DOWNLOAD, 100))
       .Times(AnyNumber());
 
-  content::BrowserThread::PostTask(
-      content::BrowserThread::FILE, FROM_HERE,
-      base::BindOnce(&OperationForTest::Download, operation, quit_closure));
-
+  operation->Download(runloop.QuitClosure());
+  printf("2\n");
   runloop.Run();
+  content::RunAllBlockingPoolTasksUntilIdle();
+  printf("2-\n");
 
   EXPECT_TRUE(base::ContentsEqual(test_utils_.GetImagePath(),
                                   operation->GetImagePath()));
 
   EXPECT_EQ(1, get_interceptor_->GetHitCount());
 
+  printf("3\n");
   operation->Cancel();
+  printf("4\n");
 }
 
 TEST_F(ImageWriterWriteFromUrlOperationTest, VerifyFile) {
@@ -183,7 +246,7 @@ TEST_F(ImageWriterWriteFromUrlOperationTest, VerifyFile) {
   base::MD5Sum(data_buffer.get(), kTestFileSize, &expected_digest);
   std::string expected_hash = base::MD5DigestToBase16(expected_digest);
 
-  scoped_refptr<OperationForTest> operation =
+  scoped_refptr<WriteFromUrlOperationForTest> operation =
       CreateOperation(GURL(""), expected_hash);
 
   EXPECT_CALL(
@@ -200,17 +263,14 @@ TEST_F(ImageWriterWriteFromUrlOperationTest, VerifyFile) {
                          100)).Times(AtLeast(1));
 
   operation->SetImagePath(test_utils_.GetImagePath());
-  content::BrowserThread::PostTask(
-      content::BrowserThread::FILE, FROM_HERE,
-      base::BindOnce(&OperationForTest::VerifyDownload, operation,
-                     base::Bind(&base::DoNothing)));
-
-  base::RunLoop().RunUntilIdle();
+  {
+    base::RunLoop run_loop;
+    operation->VerifyDownload(run_loop.QuitClosure());
+    run_loop.Run();
+  }
 
   operation->Cancel();
 }
-
-}  // namespace
 
 }  // namespace image_writer
 }  // namespace extensions
