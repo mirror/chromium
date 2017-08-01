@@ -51,7 +51,6 @@ namespace blink {
 
 class ConsoleMessageStorage;
 class InspectorTaskRunner;
-class InstalledScriptsManager;
 class WorkerBackingThread;
 class WorkerInspectorController;
 class WorkerOrWorkletGlobalScope;
@@ -176,11 +175,6 @@ class CORE_EXPORT WorkerThread : public WebThread::TaskObserver {
 
   service_manager::InterfaceProvider& GetInterfaceProvider();
 
-  // For ServiceWorkerScriptStreaming. Returns nullptr otherwise.
-  virtual InstalledScriptsManager* GetInstalledScriptsManager() {
-    return nullptr;
-  }
-
  protected:
   WorkerThread(ThreadableLoadingContext*, WorkerReportingProxy&);
 
@@ -219,6 +213,11 @@ class CORE_EXPORT WorkerThread : public WebThread::TaskObserver {
     kRunning,
     kReadyToShutdown,
   };
+
+  // Provides a hook point to override the creation params passed from the main
+  // thread.
+  virtual void OverrideGlobalScopeCreationParamsIfNeededOnWorkerThread(
+      GlobalScopeCreationParams*) {}
 
   // Posts a delayed task to forcibly terminate script execution in case the
   // normal shutdown sequence does not start within a certain time period.

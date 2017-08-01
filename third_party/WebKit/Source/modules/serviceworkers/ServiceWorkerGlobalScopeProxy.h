@@ -151,9 +151,6 @@ class ServiceWorkerGlobalScopeProxy final
   void PostMessageToPageInspector(int session_id, const String&) override;
   void DidCreateWorkerGlobalScope(WorkerOrWorkletGlobalScope*) override;
   void DidInitializeWorkerContext() override;
-  void DidLoadInstalledScript(
-      const ContentSecurityPolicyResponseHeaders&,
-      const String& referrer_policy_on_worker_thread) override;
   void WillEvaluateWorkerScript(size_t script_size,
                                 size_t cached_metadata_size) override;
   void WillEvaluateImportedScript(size_t script_size,
@@ -162,6 +159,19 @@ class ServiceWorkerGlobalScopeProxy final
   void DidCloseWorkerGlobalScope() override;
   void WillDestroyWorkerGlobalScope() override;
   void DidTerminateWorkerThread() override;
+
+  // TODO(nhiroki): Update the comment.
+  // Invoked when the worker's main script is loaded on ServiceWorkerThread's
+  // OverrideGlobalScopeCreationParamsIfNeededOnWorkerThread(). Only invoked
+  // when the script was loaded on the worker thread, i.e., via
+  // InstalledScriptsManager rather than via ResourceLoader.
+  // ContentSecurityPolicy and ReferrerPolicy are read from the response header
+  // of the main script. This may block until CSP/ReferrerPolicy are set on the
+  // main thread since they are required for script evaluation, which happens
+  // soon after this function is called.
+  void SetContentSecurityPolicyAndReferrerPolicy(
+      const ContentSecurityPolicyResponseHeaders&,
+      const String& referrer_policy_on_worker_thread);
 
   DECLARE_TRACE();
 

@@ -34,6 +34,7 @@
 #include "core/workers/GlobalScopeCreationParams.h"
 #include "core/workers/WorkerBackingThread.h"
 #include "modules/serviceworkers/ServiceWorkerGlobalScope.h"
+#include "modules/serviceworkers/ServiceWorkerGlobalScopeProxy.h"
 #include "modules/serviceworkers/ServiceWorkerInstalledScriptsManager.h"
 #include "platform/wtf/PtrUtil.h"
 
@@ -41,15 +42,18 @@ namespace blink {
 
 ServiceWorkerThread::ServiceWorkerThread(
     ThreadableLoadingContext* loading_context,
-    WorkerReportingProxy& worker_reporting_proxy,
+    ServiceWorkerGlobalScopeProxy* global_scope_proxy,
     std::unique_ptr<ServiceWorkerInstalledScriptsManager>
         installed_scripts_manager)
-    : WorkerThread(loading_context, worker_reporting_proxy),
+    : WorkerThread(loading_context, *global_scope_proxy),
+      global_scope_proxy_(global_scope_proxy),
       worker_backing_thread_(
           WorkerBackingThread::Create("ServiceWorker Thread")),
       installed_scripts_manager_(std::move(installed_scripts_manager)) {}
 
-ServiceWorkerThread::~ServiceWorkerThread() {}
+ServiceWorkerThread::~ServiceWorkerThread() {
+  global_scope_proxy_->Detach();
+}
 
 void ServiceWorkerThread::ClearWorkerBackingThread() {
   worker_backing_thread_ = nullptr;
@@ -61,8 +65,34 @@ WorkerOrWorkletGlobalScope* ServiceWorkerThread::CreateWorkerGlobalScope(
                                           time_origin_);
 }
 
-InstalledScriptsManager* ServiceWorkerThread::GetInstalledScriptsManager() {
-  return installed_scripts_manager_.get();
+void ServiceWorkerThread::
+    OverrideGlobalScopeCreationParamsIfNeededOnWorkerThread(
+        GlobalScopeCreationParams* creation_params) {
+  KURL script_url = creation_params->script_url;
+  if (RuntimeEnabledFeatures::ServiceWorkerScriptStreamingEnabled() &&
+      installed_scripts_manager_ &&
+      installed_scripts_manager_->IsScriptInstalled(script_url)) {
+    // GetScriptData blocks until the script is received from the browser.
+    auto script_data = installed_scripts_manager_->GetScriptData(script_url);
+    DCHECK(script_data);
+    DCHECK(creation_params->source_code.IsEmpty());
+    DCHECK(!creation_params->cached_meta_data);
+    creation_params->source_code = script_data->TakeSourceText();
+    creation_params->cached_meta_data = script_data->TakeMetaData();
+
+    String referrer_policy = script_data->GetReferrerPolicy();
+    ContentSecurityPolicyResponseHeaders
+        content_security_policy_response_headers =
+            script_data->GetContentSecurityPolicyResponseHeaders();
+    global_scope_proxy_->SetContentSecurityPolicyAndReferrerPolicy(
+        content_security_policy_response_headers, referrer_policy);
+
+    creation_params->content_security_policy_raw_headers =
+        std::move(content_security_policy_response_headers);
+    creation_params->referrer_policy = referrer_policy;
+    creation_params->origin_trial_tokens =
+        script_data->CreateOriginTrialTokens();
+  }
 }
 
 }  // namespace blink

@@ -68,19 +68,6 @@ class CORE_EXPORT WorkerReportingProxy {
   // WorkerThread::InitializeOnWorkerThread.
   virtual void DidInitializeWorkerContext() {}
 
-  // Invoked when the worker's main script is loaded on
-  // WorkerThread::InitializeOnWorkerThread(). Only invoked when the script was
-  // loaded on the worker thread, i.e., via InstalledScriptsManager rather than
-  // via ResourceLoader. ContentSecurityPolicy and ReferrerPolicy are read from
-  // the response header of the main script.
-  // This may block until CSP/ReferrerPolicy are set on the main thread
-  // since they are required for script evaluation, which happens soon after
-  // this function is called.
-  // Called before WillEvaluateWorkerScript().
-  virtual void DidLoadInstalledScript(
-      const ContentSecurityPolicyResponseHeaders&,
-      const String& referrer_policy_on_worker_thread) {}
-
   // Invoked when the worker script is about to be evaluated on
   // WorkerThread::InitializeOnWorkerThread.
   virtual void WillEvaluateWorkerScript(size_t script_size,

@@ -564,30 +564,6 @@ void ServiceWorkerGlobalScopeProxy::DidInitializeWorkerContext() {
       WorkerGlobalScope()->ScriptController()->GetContext());
 }
 
-void ServiceWorkerGlobalScopeProxy::DidLoadInstalledScript(
-    const ContentSecurityPolicyResponseHeaders& csp_headers_on_worker_thread,
-    const String& referrer_policy_on_worker_thread) {
-  DCHECK(embedded_worker_);
-
-  // Post a task to the main thread to set CSP and ReferrerPolicy on the shadow
-  // page.
-  WaitableEvent waitable_event;
-  parent_frame_task_runners_->Get(TaskType::kUnthrottled)
-      ->PostTask(
-          BLINK_FROM_HERE,
-          CrossThreadBind(
-              &WebEmbeddedWorkerImpl::SetContentSecurityPolicyAndReferrerPolicy,
-              CrossThreadUnretained(embedded_worker_),
-              csp_headers_on_worker_thread, referrer_policy_on_worker_thread,
-              CrossThreadUnretained(&waitable_event)));
-  Client().WorkerScriptLoaded();
-
-  // Wait for the task to complete before returning. This ensures that worker
-  // script evaluation can't start and issue any fetches until CSP and
-  // ReferrerPolicy are set.
-  waitable_event.Wait();
-}
-
 void ServiceWorkerGlobalScopeProxy::WillEvaluateWorkerScript(
     size_t script_size,
     size_t cached_metadata_size) {
@@ -623,6 +599,30 @@ void ServiceWorkerGlobalScopeProxy::WillDestroyWorkerGlobalScope() {
 
 void ServiceWorkerGlobalScopeProxy::DidTerminateWorkerThread() {
   Client().WorkerContextDestroyed();
+}
+
+void ServiceWorkerGlobalScopeProxy::SetContentSecurityPolicyAndReferrerPolicy(
+    const ContentSecurityPolicyResponseHeaders& csp_headers_on_worker_thread,
+    const String& referrer_policy_on_worker_thread) {
+  DCHECK(embedded_worker_);
+
+  // Post a task to the main thread to set CSP and ReferrerPolicy on the shadow
+  // page.
+  WaitableEvent waitable_event;
+  parent_frame_task_runners_->Get(TaskType::kUnthrottled)
+      ->PostTask(
+          BLINK_FROM_HERE,
+          CrossThreadBind(
+              &WebEmbeddedWorkerImpl::SetContentSecurityPolicyAndReferrerPolicy,
+              CrossThreadUnretained(embedded_worker_),
+              csp_headers_on_worker_thread, referrer_policy_on_worker_thread,
+              CrossThreadUnretained(&waitable_event)));
+  Client().WorkerScriptLoaded();
+
+  // Wait for the task to complete before returning. This ensures that worker
+  // script evaluation can't start and issue any fetches until CSP and
+  // ReferrerPolicy are set.
+  waitable_event.Wait();
 }
 
 ServiceWorkerGlobalScopeProxy::ServiceWorkerGlobalScopeProxy(
