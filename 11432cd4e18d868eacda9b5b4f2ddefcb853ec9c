@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b94b360f_7fe70ff3",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 9
+      },
+      "lineNbr": 2043,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-08-01T19:24:52Z",
+      "side": 1,
+      "message": "why is something that is filtering for \"chromeos\" called \"not_ios\"? That seems confusing.",
+      "revId": "11432cd4e18d868eacda9b5b4f2ddefcb853ec9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
