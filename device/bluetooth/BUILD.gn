@@ -429,7 +429,7 @@ if (is_android) {
     "android/java/src/org/chromium/device/bluetooth/ChromeBluetoothRemoteGattCharacteristic.java",
     "android/java/src/org/chromium/device/bluetooth/ChromeBluetoothRemoteGattDescriptor.java",
     "android/java/src/org/chromium/device/bluetooth/ChromeBluetoothRemoteGattService.java",
-    "android/java/src/org/chromium/device/bluetooth/Wrappers.java",
+    "android/java/src/org/chromium/device/bluetooth/wrapper/Wrappers.java",
   ]
 
   generate_jni("jni_headers") {

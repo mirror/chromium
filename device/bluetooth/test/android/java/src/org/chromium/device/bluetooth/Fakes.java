@@ -22,6 +22,7 @@ import org.chromium.base.annotations.JNINamespace;
 import org.chromium.components.location.LocationUtils;
 import org.chromium.device.bluetooth.test.TestRSSI;
 import org.chromium.device.bluetooth.test.TestTxPower;
+import org.chromium.device.bluetooth.wrapper.Wrappers;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -481,7 +482,8 @@ class Fakes {
         }
 
         @Override
-        boolean readCharacteristic(Wrappers.BluetoothGattCharacteristicWrapper characteristic) {
+        public boolean readCharacteristic(
+                Wrappers.BluetoothGattCharacteristicWrapper characteristic) {
             if (mReadCharacteristicWillFailSynchronouslyOnce) {
                 mReadCharacteristicWillFailSynchronouslyOnce = false;
                 return false;
@@ -492,7 +494,7 @@ class Fakes {
         }
 
         @Override
-        boolean setCharacteristicNotification(
+        public boolean setCharacteristicNotification(
                 Wrappers.BluetoothGattCharacteristicWrapper characteristic, boolean enable) {
             if (mSetCharacteristicNotificationWillFailSynchronouslyOnce) {
                 mSetCharacteristicNotificationWillFailSynchronouslyOnce = false;
@@ -504,7 +506,8 @@ class Fakes {
         }
 
         @Override
-        boolean writeCharacteristic(Wrappers.BluetoothGattCharacteristicWrapper characteristic) {
+        public boolean writeCharacteristic(
+                Wrappers.BluetoothGattCharacteristicWrapper characteristic) {
             if (mWriteCharacteristicWillFailSynchronouslyOnce) {
                 mWriteCharacteristicWillFailSynchronouslyOnce = false;
                 return false;
@@ -515,7 +518,7 @@ class Fakes {
         }
 
         @Override
-        boolean readDescriptor(Wrappers.BluetoothGattDescriptorWrapper descriptor) {
+        public boolean readDescriptor(Wrappers.BluetoothGattDescriptorWrapper descriptor) {
             if (mReadDescriptorWillFailSynchronouslyOnce) {
                 mReadDescriptorWillFailSynchronouslyOnce = false;
                 return false;
@@ -525,7 +528,7 @@ class Fakes {
         }
 
         @Override
-        boolean writeDescriptor(Wrappers.BluetoothGattDescriptorWrapper descriptor) {
+        public boolean writeDescriptor(Wrappers.BluetoothGattDescriptorWrapper descriptor) {
             if (mWriteDescriptorWillFailSynchronouslyOnce) {
                 mWriteDescriptorWillFailSynchronouslyOnce = false;
                 return false;

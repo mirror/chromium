@@ -7,6 +7,7 @@ package org.chromium.device.bluetooth;
 import org.chromium.base.Log;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
+import org.chromium.device.bluetooth.wrapper.Wrappers;
 
 import java.util.List;
 
@@ -51,11 +52,11 @@ final class ChromeBluetoothRemoteGattService {
     // TODO(http://crbug.com/505554): Replace 'Object' with specific type when JNI fixed.
     @CalledByNative
     private static ChromeBluetoothRemoteGattService create(
-            long nativeBluetoothRemoteGattServiceAndroid, Object bluetoothGattServiceWrapper,
-            String instanceId, ChromeBluetoothDevice chromeDevice) {
+            long nativeBluetoothRemoteGattServiceAndroid,
+            Wrappers.BluetoothGattServiceWrapper bluetoothGattServiceWrapper, String instanceId,
+            ChromeBluetoothDevice chromeDevice) {
         return new ChromeBluetoothRemoteGattService(nativeBluetoothRemoteGattServiceAndroid,
-                (Wrappers.BluetoothGattServiceWrapper) bluetoothGattServiceWrapper, instanceId,
-                chromeDevice);
+                bluetoothGattServiceWrapper, instanceId, chromeDevice);
     }
 
     // Implements BluetoothRemoteGattServiceAndroid::GetUUID.
@@ -84,8 +85,8 @@ final class ChromeBluetoothRemoteGattService {
     // BluetoothAdapterDevice C++ methods declared for access from java:
 
     // Binds to BluetoothRemoteGattServiceAndroid::CreateGattRemoteCharacteristic.
-    // TODO(http://crbug.com/505554): Replace 'Object' with specific type when JNI fixed.
     private native void nativeCreateGattRemoteCharacteristic(
             long nativeBluetoothRemoteGattServiceAndroid, String instanceId,
-            Object bluetoothGattCharacteristicWrapper, Object chromeBluetoothDevice);
+            Wrappers.BluetoothGattCharacteristicWrapper bluetoothGattCharacteristicWrapper,
+            Object chromeBluetoothDevice);
 }
