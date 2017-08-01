@@ -148,6 +148,7 @@
     "loadingerror",
     "loadstart",
     "lostpointercapture",
+    "longtasktimingbufferfull",
     "mark",
     "message",
     "messageerror",

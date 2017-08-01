@@ -64,7 +64,7 @@ class CORE_EXPORT Performance final : public PerformanceBase,
   PerformanceNavigation* navigation() const;
   PerformanceTiming* timing() const override;
 
-  void UpdateLongTaskInstrumentation() override;
+  void UpdateLongtaskInstrumentation() override;
 
   ScriptValue toJSONForBinding(ScriptState*) const;
 

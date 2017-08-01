@@ -68,7 +68,7 @@ class CORE_EXPORT PerformanceBase : public EventTargetWithInlineData {
 
   virtual PerformanceTiming* timing() const;
 
-  virtual void UpdateLongTaskInstrumentation() {}
+  virtual void UpdateLongtaskInstrumentation() {}
 
   // Reduce the resolution to 5µs to prevent timing attacks. See:
   // http://www.w3.org/TR/hr-time-2/#privacy-security
@@ -103,7 +103,13 @@ class CORE_EXPORT PerformanceBase : public EventTargetWithInlineData {
 
   DEFINE_ATTRIBUTE_EVENT_LISTENER(resourcetimingbufferfull);
 
-  void AddLongTaskTiming(double start_time,
+  void clearLongtaskTimings();
+  void setLongtaskTimingBufferSize(unsigned);
+  PerformanceEntryVector getLongtaskTimingsBufferedEntries();
+
+  DEFINE_ATTRIBUTE_EVENT_LISTENER(longtasktimingbufferfull);
+
+  void AddLongtaskTiming(double start_time,
                          double end_time,
                          const String& name,
                          const String& culprit_frame_src,
@@ -160,6 +166,9 @@ class CORE_EXPORT PerformanceBase : public EventTargetWithInlineData {
   bool IsResourceTimingBufferFull();
   void AddResourceTimingBuffer(PerformanceEntry&);
 
+  bool IsLongtaskTimingBufferFull();
+  void AddLongtaskTimingBuffer(PerformanceEntry&);
+
   void NotifyObserversOfEntry(PerformanceEntry&);
   void NotifyObserversOfEntries(PerformanceEntryVector&);
   bool HasObserverFor(PerformanceEntry::EntryType) const;
@@ -170,6 +179,8 @@ class CORE_EXPORT PerformanceBase : public EventTargetWithInlineData {
   unsigned frame_timing_buffer_size_;
   PerformanceEntryVector resource_timing_buffer_;
   unsigned resource_timing_buffer_size_;
+  PerformanceEntryVector longtask_timing_buffer_;
+  unsigned longtask_timing_buffer_size_;
   Member<PerformanceEntry> navigation_timing_;
   Member<UserTiming> user_timing_;
   Member<PerformanceEntry> first_paint_timing_;
