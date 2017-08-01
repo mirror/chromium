@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "6513a6bd_82850abb",
+        "filename": "ui/base/win/shell.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-08-01T22:34:27Z",
+      "side": 1,
+      "message": "Oops, victim of me typing \"git cl format \u0026\u0026 git commit [etc]\". NOLINT doesn\u0027t work here, so I added a blank line.",
+      "parentUuid": "e4530392_a721329e",
+      "revId": "9c2d7404a2a1a9ed7c1f2b954745deeb75a0aa89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26832819_07e1a21a",
         "filename": "ui/base/win/shell.cc",
         "patchSetId": 13
@@ -60,6 +78,30 @@
     },
     {
       "key": {
+        "uuid": "80148229_d555a9d6",
+        "filename": "ui/base/win/shell.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-08-01T22:34:27Z",
+      "side": 1,
+      "message": "Hmm, the documentation says implementers ~should~ set the output to 0 when GetCount fails, but that\u0027s not an actual guarantee. I changed this to set property_count to 0 when it fails, that way we can still run the other DCHECKs below.",
+      "parentUuid": "26832819_07e1a21a",
+      "range": {
+        "startLine": 180,
+        "startChar": 24,
+        "endLine": 180,
+        "endChar": 38
+      },
+      "revId": "9c2d7404a2a1a9ed7c1f2b954745deeb75a0aa89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f288d33c_6ccf936a",
         "filename": "ui/base/win/shell.cc",
         "patchSetId": 13
@@ -74,6 +116,24 @@
       "revId": "9c2d7404a2a1a9ed7c1f2b954745deeb75a0aa89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ead3407_502a4351",
+        "filename": "ui/base/win/shell.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-08-01T22:34:27Z",
+      "side": 1,
+      "message": "Well, this leaks resources if there are properties remaining when the window closes, so I\u0027d be surprised if there was one that wasn\u0027t removable. I feel like it\u0027s a bit more intuitive to count down though, so I changed this.",
+      "parentUuid": "f288d33c_6ccf936a",
+      "revId": "9c2d7404a2a1a9ed7c1f2b954745deeb75a0aa89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

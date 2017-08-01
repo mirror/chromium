@@ -178,6 +178,30 @@
     },
     {
       "key": {
+        "uuid": "2bc006da_19735bd1",
+        "filename": "base/win/win_util.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-08-01T22:34:27Z",
+      "side": 1,
+      "message": "I took the second option, since I vaguely recall that the HRESULT had the same information as GetLastError. It\u0027s very hard to reproduce this, otherwise I\u0027d poke around with it more.",
+      "parentUuid": "063b7c82_0d20d8df",
+      "range": {
+        "startLine": 74,
+        "startChar": 6,
+        "endLine": 74,
+        "endChar": 11
+      },
+      "revId": "0a24cd78e68d7dfb6199e0dbe2a34bb932a3134b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76567407_fa566776",
         "filename": "chrome/browser/ui/views/frame/browser_window_property_manager_browsertest_win.cc",
         "patchSetId": 12
