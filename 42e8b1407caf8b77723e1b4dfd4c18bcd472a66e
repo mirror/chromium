@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6e5ec12_66bf43a8",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-01T22:22:57Z",
+      "side": 1,
+      "message": "This namespace should be below the anonymous namespace.",
+      "revId": "42e8b1407caf8b77723e1b4dfd4c18bcd472a66e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf12a91a_102c23dd",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util_unittest.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-01T22:22:57Z",
+      "side": 1,
+      "message": "Need period for all comments.",
+      "revId": "42e8b1407caf8b77723e1b4dfd4c18bcd472a66e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
