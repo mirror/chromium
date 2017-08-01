@@ -34,6 +34,23 @@
       "revId": "1f990277a5665d082cb02bca097a06165e73debc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8242e323_7f6ae826",
+        "filename": "content/public/browser/navigation_handle.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-01T13:29:40Z",
+      "side": 1,
+      "message": "It seems very weird to me that we start depending from ukm metrics in NavigationHandle. This is code that\u0027s pretty central to navigation (and the webplatform), so it seems wrong that it depends from embedder specific code (ukms in Chrome).\n\nArchitecturally, it would be better to have some form of ids for navigation, that the navigation code manages and that is not tied to ukms. Then the ukm service can convert this id in whatever fro they want.",
+      "revId": "1f990277a5665d082cb02bca097a06165e73debc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
