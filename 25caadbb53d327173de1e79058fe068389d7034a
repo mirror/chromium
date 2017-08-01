@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "87c22c67_786fc8c4",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 4018,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-01T22:23:09Z",
+      "side": 1,
+      "message": "Would it make sense to emplace_back here?",
+      "revId": "25caadbb53d327173de1e79058fe068389d7034a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "482e8b67_7b5c9fea",
         "filename": "content/browser/indexed_db/indexed_db_backing_store.cc",
         "patchSetId": 3
@@ -140,6 +157,40 @@
     },
     {
       "key": {
+        "uuid": "7be27246_304202a9",
+        "filename": "content/browser/indexed_db/indexed_db_factory_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-01T22:23:09Z",
+      "side": 1,
+      "message": "may have been created?",
+      "revId": "25caadbb53d327173de1e79058fe068389d7034a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2a60557_940aef83",
+        "filename": "content/browser/indexed_db/indexed_db_factory_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-01T22:23:09Z",
+      "side": 1,
+      "message": "Is \"next patch\" a separate CL? If so, please use dmurph instead of \"next patch\". At least the compaction TODO below seems like it\u0027d fit just fine into a separate CL.",
+      "revId": "25caadbb53d327173de1e79058fe068389d7034a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa8aca17_7bd8c128",
         "filename": "content/browser/indexed_db/indexed_db_factory_impl.cc",
         "patchSetId": 3
@@ -157,6 +208,40 @@
         "endLine": 137,
         "endChar": 30
       },
+      "revId": "25caadbb53d327173de1e79058fe068389d7034a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea45417f_5dd62f92",
+        "filename": "content/browser/indexed_db/indexed_db_factory_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-01T22:23:09Z",
+      "side": 1,
+      "message": "Is the get() necessary? Would unique_ptr\u0027s operator bool() do the trick?\n\n(honest curiosity, please let me know if that\u0027s against the style guide or if it doesn\u0027t work)",
+      "revId": "25caadbb53d327173de1e79058fe068389d7034a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f8eeea0_f4136689",
+        "filename": "content/browser/indexed_db/indexed_db_leveldb_coding_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 968,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-01T22:23:09Z",
+      "side": 1,
+      "message": "\\o/",
       "revId": "25caadbb53d327173de1e79058fe068389d7034a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
