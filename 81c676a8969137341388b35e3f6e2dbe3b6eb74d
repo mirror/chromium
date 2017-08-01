@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "38ed3920_f769d46e",
+        "filename": "chrome/browser/ui/ash/chrome_screenshot_grabber.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-08-01T08:47:48Z",
+      "side": 1,
+      "message": "nit: We need definitions for drive::FileError, drive::ResourceEntry, and gfx::Image,\nso including header file for each of them should be better.",
+      "parentUuid": "f5ddc3ca_0377721a",
+      "revId": "81c676a8969137341388b35e3f6e2dbe3b6eb74d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a624224_df022762",
         "filename": "chrome/browser/ui/ash/chrome_screenshot_grabber.h",
         "patchSetId": 7
