@@ -1,0 +1,630 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "750d00bd_7b0269ab",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 4013,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-01T22:17:32Z",
+      "side": 1,
+      "message": "Status initializes to OK, but we do this elsewhere too.",
+      "range": {
+        "startLine": 4013,
+        "startChar": 18,
+        "endLine": 4013,
+        "endChar": 24
+      },
+      "revId": "25caadbb53d327173de1e79058fe068389d7034a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "482e8b67_7b5c9fea",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 4019,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-01T22:17:32Z",
+      "side": 1,
+      "message": "s/success/found/g",
+      "range": {
+        "startLine": 4019,
+        "startChar": 9,
+        "endLine": 4019,
+        "endChar": 16
+      },
+      "revId": "25caadbb53d327173de1e79058fe068389d7034a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e392742_3679b45b",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 4023,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-01T22:17:32Z",
+      "side": 1,
+      "message": "If not found, but success (something that does happen) this may return a partial collection of metadata and the caller won\u0027t know.",
+      "range": {
+        "startLine": 4023,
+        "startChar": 13,
+        "endLine": 4023,
+        "endChar": 19
+      },
+      "revId": "25caadbb53d327173de1e79058fe068389d7034a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "112f5bbd_3bc3d429",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-01T22:17:32Z",
+      "side": 1,
+      "message": "Nit: In a future CL we can make GetDatabaseNames, GetIDBDatabaseMetaData, GetObjectStores, GetIndexes, and GetCompleteMetadata all const methods.",
+      "range": {
+        "startLine": 589,
+        "startChar": 18,
+        "endLine": 589,
+        "endChar": 37
+      },
+      "revId": "25caadbb53d327173de1e79058fe068389d7034a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ddcd1ea_a5fdb38c",
+        "filename": "content/browser/indexed_db/indexed_db_backing_store.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-01T22:17:32Z",
+      "side": 1,
+      "message": "I know we can\u0027t pass non-const references as parameters, but what about returning one? Is that verboten?",
+      "range": {
+        "startLine": 592,
+        "startChar": 46,
+        "endLine": 592,
+        "endChar": 65
+      },
+      "revId": "25caadbb53d327173de1e79058fe068389d7034a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f73fac75_68293918",
+        "filename": "content/browser/indexed_db/indexed_db_factory_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-01T22:17:32Z",
+      "side": 1,
+      "message": "Why not do this in seconds?",
+      "range": {
+        "startLine": 38,
+        "startChar": 14,
+        "endLine": 38,
+        "endChar": 42
+      },
+      "revId": "25caadbb53d327173de1e79058fe068389d7034a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa8aca17_7bd8c128",
+        "filename": "content/browser/indexed_db/indexed_db_factory_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-01T22:17:32Z",
+      "side": 1,
+      "message": "I suggest creating a StartPreCloseTasks method in IndexedDBBackingStore. This will allow the GetCompleteMetadata to be made private.",
+      "range": {
+        "startLine": 137,
+        "startChar": 11,
+        "endLine": 137,
+        "endChar": 30
+      },
+      "revId": "25caadbb53d327173de1e79058fe068389d7034a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94b08504_5992ce12",
+        "filename": "content/browser/indexed_db/indexed_db_pre_close_task_list.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-01T22:17:32Z",
+      "side": 1,
+      "message": "Why not let this class create timeout_timer_?",
+      "range": {
+        "startLine": 23,
+        "startChar": 26,
+        "endLine": 23,
+        "endChar": 30
+      },
+      "revId": "25caadbb53d327173de1e79058fe068389d7034a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e303344_2cddf988",
+        "filename": "content/browser/indexed_db/indexed_db_pre_close_task_list.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-01T22:17:32Z",
+      "side": 1,
+      "message": "Maybe a DCHECK(started_) too?",
+      "range": {
+        "startLine": 60,
+        "startChar": 10,
+        "endLine": 60,
+        "endChar": 19
+      },
+      "revId": "25caadbb53d327173de1e79058fe068389d7034a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "853520b7_299cff89",
+        "filename": "content/browser/indexed_db/indexed_db_pre_close_task_list.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-01T22:17:32Z",
+      "side": 1,
+      "message": "Can you implement this using std::queue and rename to *Queue? This makes it clearer the order of task execution.",
+      "range": {
+        "startLine": 24,
+        "startChar": 6,
+        "endLine": 24,
+        "endChar": 31
+      },
+      "revId": "25caadbb53d327173de1e79058fe068389d7034a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd8e0fdc_24381620",
+        "filename": "content/browser/indexed_db/indexed_db_pre_close_task_list.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-01T22:17:32Z",
+      "side": 1,
+      "message": "made to",
+      "range": {
+        "startLine": 27,
+        "startChar": 28,
+        "endLine": 27,
+        "endChar": 30
+      },
+      "revId": "25caadbb53d327173de1e79058fe068389d7034a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efe6086b_fa4a6d89",
+        "filename": "content/browser/indexed_db/indexed_db_pre_close_task_list.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-01T22:17:32Z",
+      "side": 1,
+      "message": "space before #endif",
+      "range": {
+        "startLine": 99,
+        "startChar": 16,
+        "endLine": 99,
+        "endChar": 23
+      },
+      "revId": "25caadbb53d327173de1e79058fe068389d7034a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d5e4743_49cf3b95",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_sweeper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-01T22:17:32Z",
+      "side": 1,
+      "message": "CR after namespaces.",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 9
+      },
+      "revId": "25caadbb53d327173de1e79058fe068389d7034a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5521677_661b979f",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_sweeper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-01T22:17:32Z",
+      "side": 1,
+      "message": "We\u0027ve got this function in seven other places. Can you add a TODO to create a common implementation? Maybe in env_chromium.h?",
+      "range": {
+        "startLine": 20,
+        "startChar": 25,
+        "endLine": 20,
+        "endChar": 40
+      },
+      "revId": "25caadbb53d327173de1e79058fe068389d7034a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f588c699_aee4a418",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_sweeper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-01T22:17:32Z",
+      "side": 1,
+      "message": "Why not just a DCHECK here?",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 7
+      },
+      "revId": "25caadbb53d327173de1e79058fe068389d7034a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0d57375_bfc9403c",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_sweeper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-01T22:17:32Z",
+      "side": 1,
+      "message": "Maybe move inner_++ after the early return block?",
+      "range": {
+        "startLine": 47,
+        "startChar": 2,
+        "endLine": 47,
+        "endChar": 8
+      },
+      "revId": "25caadbb53d327173de1e79058fe068389d7034a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54834a6d_dfa4c8e7",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_sweeper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-01T22:17:32Z",
+      "side": 1,
+      "message": "DCHECK(database_metadata_);",
+      "revId": "25caadbb53d327173de1e79058fe068389d7034a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15ef57a8_3025faad",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_sweeper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-01T22:17:32Z",
+      "side": 1,
+      "message": "I don\u0027t see the need to make this synchronous.",
+      "revId": "25caadbb53d327173de1e79058fe068389d7034a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3244065_2e6fd4b7",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_sweeper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-01T22:17:32Z",
+      "side": 1,
+      "message": "Write can fail. Do you want to handle this error?",
+      "range": {
+        "startLine": 199,
+        "startChar": 13,
+        "endLine": 199,
+        "endChar": 18
+      },
+      "revId": "25caadbb53d327173de1e79058fe068389d7034a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95fceb0c_e02cb9bc",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_sweeper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-01T22:17:32Z",
+      "side": 1,
+      "message": "I was about to comment about the height/nesting level of this function. If you split it out into a separate method it would make this review much easier.",
+      "revId": "25caadbb53d327173de1e79058fe068389d7034a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c8842b1_cff46ea7",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_sweeper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-01T22:17:32Z",
+      "side": 1,
+      "message": "const",
+      "range": {
+        "startLine": 45,
+        "startChar": 16,
+        "endLine": 45,
+        "endChar": 17
+      },
+      "revId": "25caadbb53d327173de1e79058fe068389d7034a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5eac5668_1a9b408a",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_sweeper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-01T22:17:32Z",
+      "side": 1,
+      "message": "What about iterations_done_ - just something to prevent confusion with \"number to do\".",
+      "range": {
+        "startLine": 50,
+        "startChar": 9,
+        "endLine": 50,
+        "endChar": 20
+      },
+      "revId": "25caadbb53d327173de1e79058fe068389d7034a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76d44b53_5ac93106",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_sweeper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-01T22:17:32Z",
+      "side": 1,
+      "message": "How about making this private and adding FRIEND_TEST_ALL_PREFIXES?",
+      "range": {
+        "startLine": 82,
+        "startChar": 7,
+        "endLine": 82,
+        "endChar": 30
+      },
+      "revId": "25caadbb53d327173de1e79058fe068389d7034a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaf67502_efed0e84",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_sweeper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-01T22:17:32Z",
+      "side": 1,
+      "message": "one line comment for this struct.",
+      "range": {
+        "startLine": 121,
+        "startChar": 9,
+        "endLine": 121,
+        "endChar": 21
+      },
+      "revId": "25caadbb53d327173de1e79058fe068389d7034a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75a5e71d_f7c7994c",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_sweeper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-01T22:17:32Z",
+      "side": 1,
+      "message": "maybe prefix these with \"num_\"?",
+      "range": {
+        "startLine": 122,
+        "startChar": 8,
+        "endLine": 122,
+        "endChar": 28
+      },
+      "revId": "25caadbb53d327173de1e79058fe068389d7034a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d3d5af1_55b0b9d3",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_sweeper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-01T22:17:32Z",
+      "side": 1,
+      "message": "Not really, because both status and leveldb_error are populated in one case right?",
+      "range": {
+        "startLine": 130,
+        "startChar": 17,
+        "endLine": 130,
+        "endChar": 20
+      },
+      "revId": "25caadbb53d327173de1e79058fe068389d7034a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2836953c_fe6a2ae4",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_sweeper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-01T22:17:32Z",
+      "side": 1,
+      "message": "Never implemented.",
+      "range": {
+        "startLine": 139,
+        "startChar": 7,
+        "endLine": 139,
+        "endChar": 16
+      },
+      "revId": "25caadbb53d327173de1e79058fe068389d7034a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cc92165_17f08957",
+        "filename": "content/browser/indexed_db/indexed_db_tombstone_sweeper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-08-01T22:17:32Z",
+      "side": 1,
+      "message": "Nit: What do you think about Making curr_deletion_batch_ a unique_ptr, and then it\u0027ll be null if nothing to write? Then you could delete has_writes and move write_batch.h to the *.cc file.",
+      "range": {
+        "startLine": 154,
+        "startChar": 7,
+        "endLine": 154,
+        "endChar": 18
+      },
+      "revId": "25caadbb53d327173de1e79058fe068389d7034a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
