@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac80cb73_cd13e42f",
+        "filename": "chrome/browser/resources/chromeos/first_run/first_run.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-08-01T04:08:19Z",
+      "side": 1,
+      "message": "nit: Add {} for multi-line if body.",
+      "revId": "74bf3f3f6e4de838386ede6358f564084b846ea7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
