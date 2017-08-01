@@ -16,6 +16,24 @@
       "revId": "1b9e7feace7bc35233ebcd7cfd4c9dbe8c02d45b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13868ecf_baee412d",
+        "filename": "testing/buildbot/chromium.fyi.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 443,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-08-01T02:14:47Z",
+      "side": 1,
+      "message": "Note that this (as well as the rest of the configuration) was copied from \"Linux CFI\"; kbr gave this particular change the ok in https://codereview.chromium.org/2955003002\n\nI guess the other two options would be to diverge from the \"Linux CFI\" config here, or to remove it from both (which would mean losing CFI coverage for the GPU tests), neither of which seem particularly appealing to me.",
+      "parentUuid": "37ae489e_b10c54fa",
+      "revId": "1b9e7feace7bc35233ebcd7cfd4c9dbe8c02d45b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
