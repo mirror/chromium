@@ -18,7 +18,9 @@
 #include "media/blink/webmediaplayer_util.h"
 #include "media/renderers/gpu_video_accelerator_factories.h"
 #include "media/renderers/skcanvas_video_renderer.h"
+#include "third_party/WebKit/public/platform/WebLayerTreeView.h"
 #include "third_party/WebKit/public/platform/WebMediaPlayer.h"
+#include "third_party/WebKit/public/platform/WebSurfaceLayerBridge.h"
 #include "url/origin.h"
 
 namespace blink {
@@ -26,6 +28,7 @@ class WebLocalFrame;
 class WebMediaPlayerClient;
 class WebSecurityOrigin;
 class WebString;
+class WebVideoFrameSubmitter;
 }
 
 namespace media {
@@ -63,6 +66,7 @@ class WebMediaPlayerMSCompositor;
 //   WebKit client of this media player object.
 class CONTENT_EXPORT WebMediaPlayerMS
     : public NON_EXPORTED_BASE(blink::WebMediaPlayer),
+      public blink::WebSurfaceLayerBridgeObserver,
       public NON_EXPORTED_BASE(media::WebMediaPlayerDelegate::Observer),
       public NON_EXPORTED_BASE(base::SupportsWeakPtr<WebMediaPlayerMS>) {
  public:
@@ -81,9 +85,13 @@ class CONTENT_EXPORT WebMediaPlayerMS
       scoped_refptr<base::TaskRunner> worker_task_runner,
       media::GpuVideoAcceleratorFactories* gpu_factories,
       const blink::WebString& sink_id,
-      const blink::WebSecurityOrigin& security_origin);
+      const blink::WebSecurityOrigin& security_origin,
+      blink::WebLayerTreeView* layer_tree_view);
 
   ~WebMediaPlayerMS() override;
+
+  // WebSurfaceLayerBridgeObserver implementation.
+  void OnWebLayerReplaced() override;
 
   void Load(LoadType load_type,
             const blink::WebMediaPlayerSource& source,
@@ -243,16 +251,24 @@ class CONTENT_EXPORT WebMediaPlayerMS
   std::unique_ptr<MediaStreamRendererFactory> renderer_factory_;
 
   const scoped_refptr<base::SingleThreadTaskRunner> io_task_runner_;
-  const scoped_refptr<base::SingleThreadTaskRunner> compositor_task_runner_;
-  const scoped_refptr<base::SingleThreadTaskRunner> media_task_runner_;
+  // The |compositor_| runs on the compositor thread, or if
+  // kEnableSurfaceLayerForVideo is enabled, the media thread. This task runner
+  // posts tasks for the |compositor_| on the correct thread.
+  scoped_refptr<base::SingleThreadTaskRunner> compositor_task_runner_;
+  scoped_refptr<base::SingleThreadTaskRunner> media_task_runner_;
   const scoped_refptr<base::TaskRunner> worker_task_runner_;
   media::GpuVideoAcceleratorFactories* gpu_factories_;
 
   // Used for DCHECKs to ensure methods calls executed in the correct thread.
   base::ThreadChecker thread_checker_;
 
-  scoped_refptr<WebMediaPlayerMSCompositor> compositor_;
+  WebMediaPlayerMSCompositor* compositor_;
+  std::unique_ptr<blink::WebVideoFrameSubmitter> submitter_;
+  // Owns the weblayer and obtains/maintains SurfaceIds for
+  // kUseSurfaceLayerForVideo feature.
+  std::unique_ptr<blink::WebSurfaceLayerBridge> bridge_;
 
+  bool surface_layer_for_video_enabled_ = false;
   const std::string initial_audio_output_device_id_;
   const url::Origin initial_security_origin_;
 
