@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6605b052_d46e4956",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/translate/TranslateTabLayout.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-08-01T15:32:35Z",
+      "side": 1,
+      "message": "nit: define",
+      "range": {
+        "startLine": 35,
+        "startChar": 11,
+        "endLine": 35,
+        "endChar": 18
+      },
+      "revId": "3ce675aaf208e1049356b0def61c86d5fbf2d0e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
