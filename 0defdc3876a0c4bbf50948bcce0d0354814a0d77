@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf0e3398_e2119c52",
+        "filename": "chrome/browser/apps/app_url_redirector.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-08-01T01:05:56Z",
+      "side": 1,
+      "message": "I think this should be SOURCE_URL_HANDLER?",
+      "range": {
+        "startLine": 87,
+        "startChar": 56,
+        "endLine": 87,
+        "endChar": 78
+      },
+      "revId": "0defdc3876a0c4bbf50948bcce0d0354814a0d77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
