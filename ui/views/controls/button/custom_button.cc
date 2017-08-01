@@ -182,16 +182,14 @@ bool CustomButton::OnMouseDragged(const ui::MouseEvent& event) {
         should_enter_pushed && notify_action_ == NOTIFY_ON_RELEASE && !InDrag();
     if (HitTestPoint(event.location())) {
       SetState(should_enter_pushed ? STATE_PRESSED : STATE_HOVERED);
-      if (should_show_pending &&
-          GetInkDrop()->GetTargetInkDropState() ==
-              views::InkDropState::HIDDEN) {
+      if (should_show_pending && GetInkDrop()->GetTargetInkDropState() ==
+                                     views::InkDropState::HIDDEN) {
         AnimateInkDrop(views::InkDropState::ACTION_PENDING, &event);
       }
     } else {
       SetState(STATE_NORMAL);
-      if (should_show_pending &&
-          GetInkDrop()->GetTargetInkDropState() ==
-              views::InkDropState::ACTION_PENDING) {
+      if (should_show_pending && GetInkDrop()->GetTargetInkDropState() ==
+                                     views::InkDropState::ACTION_PENDING) {
         AnimateInkDrop(views::InkDropState::HIDDEN, &event);
       }
     }
@@ -455,7 +453,7 @@ bool CustomButton::IsTriggerableEvent(const ui::Event& event) {
   return event.type() == ui::ET_GESTURE_TAP_DOWN ||
          event.type() == ui::ET_GESTURE_TAP ||
          (event.IsMouseEvent() &&
-             (triggerable_event_flags_ & event.flags()) != 0);
+          (triggerable_event_flags_ & event.flags()) != 0);
 }
 
 bool CustomButton::ShouldUpdateInkDropOnClickCanceled() const {
