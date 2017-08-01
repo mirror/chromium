@@ -28,7 +28,8 @@ class DownloadCallback {
     JNIEnv* env = base::android::AttachCurrentThread();
 
     if (content.empty()) {
-      Java_ManifestDownloadCallback_onManifestDownloadFailure(env, jcallback_);
+      Java_ManifestDownloadCallback_onPaymentMethodManifestDownloadFailure(
+          env, jcallback_);
     } else {
       Java_ManifestDownloadCallback_onPaymentMethodManifestDownloadSuccess(
           env, jcallback_,
@@ -40,7 +41,8 @@ class DownloadCallback {
     JNIEnv* env = base::android::AttachCurrentThread();
 
     if (content.empty()) {
-      Java_ManifestDownloadCallback_onManifestDownloadFailure(env, jcallback_);
+      Java_ManifestDownloadCallback_onWebAppManifestDownloadFailure(env,
+                                                                    jcallback_);
     } else {
       Java_ManifestDownloadCallback_onWebAppManifestDownloadSuccess(
           env, jcallback_,

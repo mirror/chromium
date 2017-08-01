@@ -1,0 +1,13 @@
+{
+  "name": "JoePay",
+  "related_applications": [{
+    "platform": "play",
+    "id": "com.joepay",
+    "min_version": "1",
+    "fingerprints": [{
+      "type": "sha256_cert",
+      "value": "0A:AA:1B:37:15:55:2B:82:6E:CC:D0:58:58:F2:1A:26:11:0F:75:5E:32:B6:A7:C3:AC:FB:31:35:76:56:64:A3",
+      "comment": "This fingperint is SHA256 of '77777777771111111111'"
+    }]
+  }]
+}

@@ -140,11 +140,6 @@ public class PaymentManifestVerifier
     private boolean mIsManifestCacheStaleOrUnusable;
 
     /**
-     * Whether at least one payment method manifest or web app manifest failed to download or parse.
-     */
-    private boolean mAtLeastOneManifestFailedToDownloadOrParse;
-
-    /**
      * Builds the manifest verifier.
      *
      * @param methodName             The name of the payment method name that apps offer to handle.
@@ -368,7 +363,6 @@ public class PaymentManifestVerifier
         assert webAppManifestUris != null;
         assert supportedOrigins != null;
         assert webAppManifestUris.length > 0 || supportedOrigins.length > 0 || allOriginsSupported;
-        assert !mAtLeastOneManifestFailedToDownloadOrParse;
         assert mPendingWebAppManifestsCount == 0;
 
         if (allOriginsSupported) {
@@ -399,7 +393,6 @@ public class PaymentManifestVerifier
 
         mPendingWebAppManifestsCount = webAppManifestUris.length;
         for (int i = 0; i < webAppManifestUris.length; i++) {
-            if (mAtLeastOneManifestFailedToDownloadOrParse) return;
             assert webAppManifestUris[i] != null;
             mDownloader.downloadWebAppManifest(webAppManifestUris[i], this);
         }
@@ -407,7 +400,6 @@ public class PaymentManifestVerifier
 
     @Override
     public void onWebAppManifestDownloadSuccess(String content) {
-        if (mAtLeastOneManifestFailedToDownloadOrParse) return;
         mParser.parseWebAppManifest(content, this);
     }
 
@@ -415,8 +407,6 @@ public class PaymentManifestVerifier
     public void onWebAppManifestParseSuccess(WebAppManifestSection[] manifest) {
         assert manifest != null;
         assert manifest.length > 0;
-
-        if (mAtLeastOneManifestFailedToDownloadOrParse) return;
 
         for (int i = 0; i < manifest.length; i++) {
             mAppIdentifiersToCache.add(manifest[i].id);
@@ -432,16 +422,20 @@ public class PaymentManifestVerifier
             }
         }
 
+        finishProcessingOneWebAppManifest();
+    }
+
+    private void finishProcessingOneWebAppManifest() {
         mPendingWebAppManifestsCount--;
         if (mPendingWebAppManifestsCount != 0) return;
 
         if (mIsManifestCacheStaleOrUnusable) mCallback.onFinishedVerification();
 
-        // Cache supported apps' package names and origins. (Also cache "*" if applicable.)
+        // Cache supported app package names and origins. (Also cache "*" if applicable.)
         mCache.addPaymentMethodManifest(mMethodName.toString(),
                 mAppIdentifiersToCache.toArray(new String[mAppIdentifiersToCache.size()]));
 
-        // Cache supported apps' parsed manifests.
+        // Cache supported app parsed manifests.
         mCache.addPaymentWebAppManifest(flattenListOfArrays(mWebAppManifestsToCache));
 
         mCallback.onFinishedUsingResources();
@@ -530,20 +524,24 @@ public class PaymentManifestVerifier
     }
 
     @Override
-    public void onManifestDownloadFailure() {
-        if (mAtLeastOneManifestFailedToDownloadOrParse) return;
-        mAtLeastOneManifestFailedToDownloadOrParse = true;
-
+    public void onPaymentMethodManifestDownloadFailure() {
         if (mIsManifestCacheStaleOrUnusable) mCallback.onFinishedVerification();
         mCallback.onFinishedUsingResources();
     }
 
     @Override
-    public void onManifestParseFailure() {
-        if (mAtLeastOneManifestFailedToDownloadOrParse) return;
-        mAtLeastOneManifestFailedToDownloadOrParse = true;
-
+    public void onPaymentMethodManifestParseFailure() {
         if (mIsManifestCacheStaleOrUnusable) mCallback.onFinishedVerification();
         mCallback.onFinishedUsingResources();
+    }
+
+    @Override
+    public void onWebAppManifestDownloadFailure() {
+        finishProcessingOneWebAppManifest();
+    }
+
+    @Override
+    public void onWebAppManifestParseFailure() {
+        finishProcessingOneWebAppManifest();
     }
 }

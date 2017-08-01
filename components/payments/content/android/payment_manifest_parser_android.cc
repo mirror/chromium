@@ -39,7 +39,8 @@ class ParseCallback {
     if (web_app_manifest_urls.empty() && supported_origins.empty() &&
         !all_origins_supported) {
       // Can trigger synchronous deletion of PaymentManifestParserAndroid.
-      Java_ManifestParseCallback_onManifestParseFailure(env, jcallback_);
+      Java_ManifestParseCallback_onPaymentMethodManifestParseFailure(
+          env, jcallback_);
       return;
     }
 
@@ -80,7 +81,7 @@ class ParseCallback {
 
     if (manifest.empty()) {
       // Can trigger synchronous deletion of PaymentManifestParserAndroid.
-      Java_ManifestParseCallback_onManifestParseFailure(env, jcallback_);
+      Java_ManifestParseCallback_onWebAppManifestParseFailure(env, jcallback_);
       return;
     }
 
