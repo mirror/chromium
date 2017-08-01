@@ -1,0 +1,242 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f61d0e12_7fb7375b",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-01T21:16:04Z",
+      "side": 1,
+      "message": "Maybe OnDialSinksCleared()?",
+      "revId": "b31df08426b945bfea095946fce80cd51b55a7cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba2fcb35_27c3d183",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-01T21:16:04Z",
+      "side": 1,
+      "message": "Should this be DialMediaSinkObserver instead?  Since it is not used to help implement the class - only to notify unrelated code that something happened.",
+      "revId": "b31df08426b945bfea095946fce80cd51b55a7cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2da8fb9c_e3a7b4e0",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-01T21:16:04Z",
+      "side": 1,
+      "message": "I assume that |sink| must be a DIAL sink - can you clarify in this comment?",
+      "revId": "b31df08426b945bfea095946fce80cd51b55a7cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c692c67_88636349",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-01T21:16:04Z",
+      "side": 1,
+      "message": "Does this API make sense only for DIAL sinks, or for Cast sinks as well?\n\nIf so, this delegate (or observer) API could be implemented in MediaSinkService/MediaSinkServiceBase.\n\nBut I don\u0027t feel strongly, especially if there is no use case for observing Cast sinks right now.",
+      "revId": "b31df08426b945bfea095946fce80cd51b55a7cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19be5ac0_a0f0c689",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-01T21:16:04Z",
+      "side": 1,
+      "message": "Which sinks are removed?  Can you clarify this comment?",
+      "revId": "b31df08426b945bfea095946fce80cd51b55a7cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "074abe82_5704ccb4",
+        "filename": "chrome/browser/media/router/discovery/dial/dial_media_sink_service_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-01T21:16:04Z",
+      "side": 1,
+      "message": "Per my comment above, an observer pattern with Add/Remove observer seems a better fit; the lifetime guarantees are well understood for that.",
+      "revId": "b31df08426b945bfea095946fce80cd51b55a7cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86d06309_cdcdcb13",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-01T21:16:04Z",
+      "side": 1,
+      "message": "Can this be implemented in private:?\n\nThese methods are invoked on the IO thread, and that contradicts the comment about the UI thread at the top of the class.",
+      "revId": "b31df08426b945bfea095946fce80cd51b55a7cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e9185ac_cbd80318",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-01T21:16:04Z",
+      "side": 1,
+      "message": "Do we need to set default capabilities for the Cast sink?\nI don\u0027t recall what the Cast MRP does around this.",
+      "revId": "b31df08426b945bfea095946fce80cd51b55a7cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "801e67f5_1d8e624c",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-01T21:16:04Z",
+      "side": 1,
+      "message": "What does it mean for the \"fetch to be completed\" for Cast sinks?\nIs this called when the discovery loop timer fires?",
+      "revId": "b31df08426b945bfea095946fce80cd51b55a7cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2475ac43_fe2c572f",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-01T21:16:04Z",
+      "side": 1,
+      "message": "It might be helpful to log the unique id and IP address as well.",
+      "revId": "b31df08426b945bfea095946fce80cd51b55a7cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f327b8e1_ff8dcc9a",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-01T21:16:04Z",
+      "side": 1,
+      "message": "Similar comment here.",
+      "revId": "b31df08426b945bfea095946fce80cd51b55a7cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "420d7ae3_26772908",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-01T21:16:04Z",
+      "side": 1,
+      "message": "Tracking sinks by ip_endpoint is okay except for some corner cases, where a sink changes its IP address because it has renewed its DHCP lease, or the user has roamed between different networks and encounters a different device with the same IP.\n\nEventually this should sort itself out, as connections to non-existent devices will eventually time out.  But I recall in the Cast MRP we are usually careful to track sinks by device id and not by IP address.\n\nI don\u0027t know if this is worth changing a bunch of code at this point.  But if we see issues with stale devices being reported to the MR, we may want to reconsider.",
+      "revId": "b31df08426b945bfea095946fce80cd51b55a7cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33861210_75b2b552",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-01T21:16:04Z",
+      "side": 1,
+      "message": "It seems possible to have two pending requests to open a channel to the same sink discovered by both DIAL and Cast, resulting in the sink ending up in current_sinks_by_dial_ and current_sinks_by_mdns_.  I see that this is de-duped in onFetchCompleted through.  Will sinks always eventually end up in the correct map?",
+      "revId": "b31df08426b945bfea095946fce80cd51b55a7cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "018094a0_dce67566",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-08-01T21:16:04Z",
+      "side": 1,
+      "message": "This means that we will attempt Cast channel connections for all DIAL sinks for each round of discovery, which is wasteful if the DIAL sink is a non-Cast device.",
+      "revId": "b31df08426b945bfea095946fce80cd51b55a7cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
