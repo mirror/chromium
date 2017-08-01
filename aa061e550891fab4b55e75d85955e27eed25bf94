@@ -22,6 +22,30 @@
       "revId": "aa061e550891fab4b55e75d85955e27eed25bf94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42523a5d_0cc77637",
+        "filename": "components/payments/content/payment_response_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-08-01T16:03:43Z",
+      "side": 0,
+      "message": "We have payment_response_helper_unittest.cc and payment_request_payment_response_browsertest.cc :) It\u0027s good that you want to make sure.",
+      "parentUuid": "88f8f31c_753c3b97",
+      "range": {
+        "startLine": 85,
+        "startChar": 35,
+        "endLine": 85,
+        "endChar": 38
+      },
+      "revId": "aa061e550891fab4b55e75d85955e27eed25bf94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
