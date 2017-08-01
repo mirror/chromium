@@ -51,6 +51,24 @@
       "revId": "48bdfcea704e04a68f326992545530e7e149da09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9b5c627_4a9121a5",
+        "filename": "third_party/WebKit/Source/core/dom/FirstLetterPseudoElement.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-08-01T08:31:45Z",
+      "side": 1,
+      "message": "The inherit parent is the flat tree parent which can be found with FlatTreeTraversal::Parent() for the node, but you can ignore this for now. There are similar aspects of text nodes and parent boxes of text nodes when we have display:contents which needs to be fixed, so we can handle this as part of that work.\n\ndisplay:contents is being implemented behind a flag, but it\u0027s not quite finished and there are open spec issues.",
+      "parentUuid": "e8ce2c50_67de9cd2",
+      "revId": "48bdfcea704e04a68f326992545530e7e149da09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
