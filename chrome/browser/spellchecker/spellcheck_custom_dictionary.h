@@ -217,6 +217,9 @@ class SpellcheckCustomDictionary : public SpellcheckDictionary,
   // A post-startup task to fix the invalid custom dictionary file.
   base::CancelableClosure fix_invalid_file_;
 
+  // TaskRunner for all IO tasks modifying custom dictionaries.
+  scoped_refptr<base::SequencedTaskRunner> io_task_runner_;
+
   // Used to create weak pointers for an instance of this class.
   base::WeakPtrFactory<SpellcheckCustomDictionary> weak_ptr_factory_;
 
