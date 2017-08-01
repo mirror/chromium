@@ -46,6 +46,30 @@
       "revId": "16b63e1f54dc0d3e2785d130b32bea9d2b31a0d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f34dab9_ecbeb93f",
+        "filename": "chrome/browser/spellchecker/spellcheck_custom_dictionary.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1104796
+      },
+      "writtenOn": "2017-08-01T23:22:54Z",
+      "side": 0,
+      "message": "Verifying if IO is allowed is enough for me, I think.",
+      "parentUuid": "5a0e9e61_db84c100",
+      "range": {
+        "startLine": 62,
+        "startChar": 35,
+        "endLine": 62,
+        "endChar": 36
+      },
+      "revId": "16b63e1f54dc0d3e2785d130b32bea9d2b31a0d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

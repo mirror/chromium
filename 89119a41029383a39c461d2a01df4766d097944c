@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "93b5d75f_60919248",
+        "filename": "chrome/browser/spellchecker/spellcheck_custom_dictionary.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1104796
+      },
+      "writtenOn": "2017-08-01T23:22:54Z",
+      "side": 1,
+      "message": "Switched to SequencedTaskRunner just in case - unless I misunderstood and you\u0027re saying these already end up on a sequence anyways? (And if that\u0027s the case, is that sequence BLOCK_SHUTDOWN? If not, I\u0027ll still use the STR)",
+      "parentUuid": "a6fbfdaa_84606a07",
+      "range": {
+        "startLine": 451,
+        "startChar": 24,
+        "endLine": 451,
+        "endChar": 36
+      },
+      "revId": "89119a41029383a39c461d2a01df4766d097944c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "876ab5f5_099dfc45",
         "filename": "chrome/browser/spellchecker/spellcheck_custom_dictionary.cc",
         "patchSetId": 1
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Everything on BrowserThreads was previously blocking shutdown, while this wasn\u0027t great if there aren\u0027t existing shutdown hangs in this call it\u0027s probably fine. BLOCK_SHUTDOWN is intended specifically for this purpose too (saving user visible things).",
       "parentUuid": "876ab5f5_099dfc45",
+      "range": {
+        "startLine": 461,
+        "startChar": 56,
+        "endLine": 461,
+        "endChar": 64
+      },
+      "revId": "89119a41029383a39c461d2a01df4766d097944c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee793e1a_d9744486",
+        "filename": "chrome/browser/spellchecker/spellcheck_custom_dictionary.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1104796
+      },
+      "writtenOn": "2017-08-01T23:22:54Z",
+      "side": 1,
+      "message": "SequencedTaskRunner is BLOCK_SHUTDOWN now",
+      "parentUuid": "37693bf3_f98d6123",
       "range": {
         "startLine": 461,
         "startChar": 56,
