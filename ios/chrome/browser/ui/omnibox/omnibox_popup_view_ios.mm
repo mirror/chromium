@@ -101,7 +101,7 @@ OmniboxPopupViewIOS::OmniboxPopupViewIOS(OmniboxViewIOS* edit_view,
                                           multiplier:1
                                             constant:0]];
   } else {
-    // Add a white background to prevent seing the logo scroll through the
+    // Add a white background to prevent seeing the logo scroll through the
     // omnibox.
     UIView* whiteBackground = [[UIView alloc] initWithFrame:CGRectZero];
     [popupView_ addSubview:whiteBackground];
