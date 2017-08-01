@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a6139a4_0c5d157e",
+        "filename": "components/ntp_snippets/contextual_suggestions_source_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-01T07:01:08Z",
+      "side": 1,
+      "message": "You can inline this into push_back.",
+      "range": {
+        "startLine": 49,
+        "startChar": 14,
+        "endLine": 49,
+        "endChar": 37
+      },
+      "revId": "e4336f1a1c71aea039f00093962f4f5a64fbe170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "285ad2ed_c26ccead",
+        "filename": "components/ntp_snippets/contextual_suggestions_source_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-01T07:01:08Z",
+      "side": 1,
+      "message": "Is this the URL to fetch from? \nIt would be strange to have it is an ID.\nYou could just use suggestion URL.\n\nObviously, the best approach is to imitate the real behavior (i.e. what source would normally return).",
+      "range": {
+        "startLine": 50,
+        "startChar": 19,
+        "endLine": 50,
+        "endChar": 27
+      },
+      "revId": "e4336f1a1c71aea039f00093962f4f5a64fbe170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "317e6091_1158f2c3",
+        "filename": "components/ntp_snippets/contextual_suggestions_source_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-01T07:01:08Z",
+      "side": 1,
+      "message": "I still think it would be better to check whether the value is present first. Currently, if it is not, a DCHECK will fail, but we are discouraged from using DCHECKs in tests (see penultimate section in https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md).\n\nWhat about AllOf(Property(\u0026base::Optional::has_value, true), Pointee(...))?",
+      "range": {
+        "startLine": 115,
+        "startChar": 10,
+        "endLine": 115,
+        "endChar": 17
+      },
+      "revId": "e4336f1a1c71aea039f00093962f4f5a64fbe170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
