@@ -36,6 +36,40 @@
     },
     {
       "key": {
+        "uuid": "7e8c174c_ba55f706",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-08-01T23:06:30Z",
+      "side": 1,
+      "message": "nit: origin_anchor_string might be slightly clearer",
+      "revId": "2eabb43317bedaa7c3e801c6d3cb28e9bf3a12cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e29530f2_f4df7957",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-08-01T23:06:30Z",
+      "side": 1,
+      "message": "nit: The consecutive o\u0027s are error-prone. Maybe just fooextension?",
+      "revId": "2eabb43317bedaa7c3e801c6d3cb28e9bf3a12cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "14f57e2c_2dfa79f3",
         "filename": "chrome/browser/ui/webui/settings/site_settings_handler_unittest.cc",
         "patchSetId": 4
