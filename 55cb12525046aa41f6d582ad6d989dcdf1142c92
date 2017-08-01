@@ -273,6 +273,30 @@
     },
     {
       "key": {
+        "uuid": "19e6b807_465478b8",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-01T00:15:57Z",
+      "side": 1,
+      "message": "Fair point; leave it as-is for now. I do think it should be increased, because (as you say) it\u0027s pretty much impossible that the condition it seems to be designed to report to the user will happen before the alarm fires, but in the interests of not introducing any behavioural changes in this CL, it can wait.",
+      "parentUuid": "4c0f42ac_e55b2e5e",
+      "range": {
+        "startLine": 491,
+        "startChar": 24,
+        "endLine": 491,
+        "endChar": 0
+      },
+      "revId": "55cb12525046aa41f6d582ad6d989dcdf1142c92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a88a46c_d01a6344",
         "filename": "remoting/host/linux/remoting_user_session.cc",
         "patchSetId": 2
@@ -352,6 +376,30 @@
       "revId": "55cb12525046aa41f6d582ad6d989dcdf1142c92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bcfcb2a_f0a30f05",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-01T00:15:57Z",
+      "side": 1,
+      "message": "That\u0027s much clearer; thanks. I think you might be able to avoid the error message if host_ready is true, but since this should never trigger in that case, all bets are off if it does and so there\u0027s no harm in reporting a potential error.",
+      "parentUuid": "8ea1e9ca_40c39bf0",
+      "range": {
+        "startLine": 521,
+        "startChar": 48,
+        "endLine": 521,
+        "endChar": 0
+      },
+      "revId": "55cb12525046aa41f6d582ad6d989dcdf1142c92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -493,6 +541,30 @@
       "revId": "55cb12525046aa41f6d582ad6d989dcdf1142c92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30f7413b_645d171c",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-01T00:15:57Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "54111a40_a777787f",
+      "range": {
+        "startLine": 556,
+        "startChar": 47,
+        "endLine": 556,
+        "endChar": 0
+      },
+      "revId": "55cb12525046aa41f6d582ad6d989dcdf1142c92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
