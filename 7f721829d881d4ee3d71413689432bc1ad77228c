@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "72532082_796d43b5",
+        "filename": "content/app/strings/content_strings.grd",
+        "patchSetId": 4
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-08-01T19:26:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "816f14c7_719b810e",
+      "revId": "7f721829d881d4ee3d71413689432bc1ad77228c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c88edbfb_a948a5ad",
         "filename": "third_party/WebKit/public/platform/WebMediaPlayerClient.h",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "7f721829d881d4ee3d71413689432bc1ad77228c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acd6dc60_0fd45962",
+        "filename": "third_party/WebKit/public/platform/WebMediaPlayerClient.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-08-01T19:26:00Z",
+      "side": 1,
+      "message": "Done. Changed them to pure virtual.",
+      "parentUuid": "c88edbfb_a948a5ad",
+      "revId": "7f721829d881d4ee3d71413689432bc1ad77228c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
