@@ -9,6 +9,8 @@
 
 #include "base/values.h"
 
+#include "ui/base/ime/chromeos/input_method_manager.h"
+
 namespace extensions {
 
 ShellVirtualKeyboardDelegate::ShellVirtualKeyboardDelegate() {}
@@ -37,10 +39,6 @@ void ShellVirtualKeyboardDelegate::SetHotrodKeyboard(bool enable) {
   is_hotrod_keyboard_ = enable;
 }
 
-void ShellVirtualKeyboardDelegate::SetKeyboardRestricted(bool restricted) {
-  is_keyboard_restricted_ = restricted;
-}
-
 bool ShellVirtualKeyboardDelegate::LockKeyboard(bool state) {
   return false;
 }
@@ -67,6 +65,12 @@ bool ShellVirtualKeyboardDelegate::SetVirtualKeyboardMode(int mode_enum) {
 
 bool ShellVirtualKeyboardDelegate::SetRequestedKeyboardState(int state_enum) {
   return false;
+}
+
+void ShellVirtualKeyboardDelegate::RestrictFeatures(
+    const std::unique_ptr<api::virtual_keyboard::RestrictFeatures::Params>&
+        params) {
+  NOTIMPLEMENTED();
 }
 
 }  // namespace extensions

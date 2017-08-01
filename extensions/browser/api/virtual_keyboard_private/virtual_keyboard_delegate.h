@@ -13,6 +13,7 @@
 #include "base/strings/string16.h"
 #include "base/values.h"
 #include "content/public/browser/browser_thread.h"
+#include "extensions/common/api/virtual_keyboard.h"
 
 namespace extensions {
 
@@ -47,10 +48,6 @@ class VirtualKeyboardDelegate {
   // Sets the state of the hotrod virtual keyboad.
   virtual void SetHotrodKeyboard(bool enable) = 0;
 
-  // Sets the virtual keyboard in restricted state - i.e. state where advanced
-  // features like auto-correct, auto-complete, voice input are disabled.
-  virtual void SetKeyboardRestricted(bool restricted) = 0;
-
   // Activate and lock the virtual keyboad on screen or dismiss the keyboard
   // regardless of the state of text focus. Used in a11y mode to allow typing
   // hotkeys without the need for text focus. Returns true if successful.
@@ -76,6 +73,12 @@ class VirtualKeyboardDelegate {
 
   // Sets requested virtual keyboard state.
   virtual bool SetRequestedKeyboardState(int state_enum) = 0;
+
+  // Recreates the keyboard. TODO(oka): this method should be removed after
+  // extension starts to receive config change event and reload on its own.
+  virtual void RestrictFeatures(
+      const std::unique_ptr<api::virtual_keyboard::RestrictFeatures::Params>&
+          params) = 0;
 };
 
 }  // namespace extensions

@@ -463,6 +463,7 @@ void KeyboardController::ShowKeyboard(bool lock) {
 }
 
 void KeyboardController::ShowKeyboardInDisplay(int64_t display_id) {
+  LOG(ERROR) << "ShowKeyboardInDisplay";
   set_keyboard_locked(true);
   ShowKeyboardInternal(display_id);
 }
@@ -592,6 +593,7 @@ void KeyboardController::LoadKeyboardUiInBackground() {
 }
 
 void KeyboardController::ShowKeyboardInternal(int64_t display_id) {
+  LOG(ERROR) << "ShowKeyboardInternal";
   DCHECK(container_.get());
   keyboard::MarkKeyboardLoadStarted();
   PopulateKeyboardContent(display_id, true);
