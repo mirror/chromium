@@ -4,18 +4,26 @@
 
 #include "gpu/config/gpu_info_collector.h"
 
-#include "base/logging.h"
-
 namespace gpu {
 
+CollectInfoResult CollectContextGraphicsInfo(GPUInfo* gpu_info) {
+  NOTIMPLEMENTED();
+  return kCollectInfoFatalFailure;
+}
+
 CollectInfoResult CollectBasicGraphicsInfo(GPUInfo* gpu_info) {
-  NOTIMPLEMENTED();  // TODO(fuchsia): https://crbug.com/707031 Some day.
-  return kCollectInfoNonFatalFailure;
+  NOTIMPLEMENTED();
+  return kCollectInfoFatalFailure;
 }
 
 CollectInfoResult CollectDriverInfoGL(GPUInfo* gpu_info) {
-  NOTIMPLEMENTED();  // TODO(fuchsia): https://crbug.com/707031 Some day.
-  return kCollectInfoNonFatalFailure;
+  NOTIMPLEMENTED();
+  return kCollectInfoFatalFailure;
+}
+
+void MergeGPUInfo(GPUInfo* basic_gpu_info,
+                  const GPUInfo& context_gpu_info) {
+  NOTIMPLEMENTED();
 }
 
 }  // namespace gpu
