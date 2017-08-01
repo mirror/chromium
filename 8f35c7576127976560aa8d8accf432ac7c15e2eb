@@ -25,6 +25,70 @@
     },
     {
       "key": {
+        "uuid": "5c403f99_fb7cf5ed",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-01T03:38:21Z",
+      "side": 1,
+      "message": "I think the idea is ServiceWorkerVersionProxy is an interface the renderer uses to talk to browser-side ServiceWorkerVersion (and eventually it will be an interface used to talk directly to the \"service worker\" once event dispatching doesn\u0027t need to go through the browser process).\n\nServiceWorkerEventDispatcherProxy seems a bit odd since it IS_A mojom::ServiceWorkerEventDispatcher.\n\nI wouldn\u0027t be opposed to just calling it InBrowserServiceWorkerEventDispatcher or BrowserSideServiceWorkerEventDispatcher and getting a better name once it really moves to the renderer process.",
+      "parentUuid": "76598e00_4bd74f95",
+      "range": {
+        "startLine": 10,
+        "startChar": 2,
+        "endLine": 11,
+        "endChar": 35
+      },
+      "revId": "8f35c7576127976560aa8d8accf432ac7c15e2eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa7e19ea_0d6397be",
+        "filename": "content/browser/service_worker/service_worker_version_proxy.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-01T03:38:21Z",
+      "side": 1,
+      "message": "Seems funny to have this TODO for this function only and not on the others.",
+      "revId": "8f35c7576127976560aa8d8accf432ac7c15e2eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "832daf4d_2e764aac",
+        "filename": "content/browser/service_worker/service_worker_version_proxy.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-01T03:38:21Z",
+      "side": 1,
+      "message": "TODO(kinuko)\n\n(A TODO is not a commitment that the person referenced will fix the problem.)",
+      "range": {
+        "startLine": 29,
+        "startChar": 3,
+        "endLine": 29,
+        "endChar": 7
+      },
+      "revId": "8f35c7576127976560aa8d8accf432ac7c15e2eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4be92229_71e31f6e",
         "filename": "content/child/service_worker/service_worker_network_provider.cc",
         "patchSetId": 7
@@ -42,6 +106,23 @@
         "endLine": 228,
         "endChar": 45
       },
+      "revId": "8f35c7576127976560aa8d8accf432ac7c15e2eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "773b2cf1_f0300073",
+        "filename": "content/child/service_worker/service_worker_network_provider.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-01T03:38:21Z",
+      "side": 1,
+      "message": "Would it simplify things to just keep event_dispatcher_ on ServiceWorkerProviderContext? Then you don\u0027t need the Callback thing.",
       "revId": "8f35c7576127976560aa8d8accf432ac7c15e2eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
