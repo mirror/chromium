@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9b453035_76c641b7",
+        "filename": "components/offline_pages/core/offline_page_model_query.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-08-01T17:15:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "68c6937d_5cf294c2",
+      "revId": "253a0c0d4660766333655cd5bb4ddc965726a65b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0074947a_49b4100a",
         "filename": "components/offline_pages/core/offline_page_model_query.h",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "63073816_87dac048",
+        "filename": "components/offline_pages/core/offline_page_model_query.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-08-01T17:15:03Z",
+      "side": 1,
+      "message": "as discussed offline, removing.",
+      "parentUuid": "0074947a_49b4100a",
+      "revId": "253a0c0d4660766333655cd5bb4ddc965726a65b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e034a137_46e6832d",
         "filename": "components/offline_pages/core/offline_page_model_query.h",
         "patchSetId": 3
@@ -50,6 +86,24 @@
       "revId": "253a0c0d4660766333655cd5bb4ddc965726a65b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f984655_9d2d0ca0",
+        "filename": "components/offline_pages/core/offline_page_model_query.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-08-01T17:15:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e034a137_46e6832d",
+      "revId": "253a0c0d4660766333655cd5bb4ddc965726a65b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
