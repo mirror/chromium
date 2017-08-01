@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b64217d0_f60247e5",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-01T21:21:17Z",
+      "side": 1,
+      "message": "Remove |targetFrame| from comments -- here and everywhere.",
+      "revId": "7da0913766dd118b4697deb91a791fc26d2939a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
