@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1483a065_fe894b77",
+        "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-08-01T09:12:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b69d6d2_487a6174",
+      "range": {
+        "startLine": 21,
+        "startChar": 42,
+        "endLine": 21,
+        "endChar": 45
+      },
+      "revId": "59926138f986eb28ae675c2b669a7843396fcc77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b370c443_d458ebbb",
         "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher.h",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "344201a3_b1031713",
+        "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-08-01T09:12:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b370c443_d458ebbb",
+      "range": {
+        "startLine": 26,
+        "startChar": 28,
+        "endLine": 27,
+        "endChar": 11
+      },
+      "revId": "59926138f986eb28ae675c2b669a7843396fcc77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b74b93ee_bd5bc30f",
         "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher_impl.cc",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "59926138f986eb28ae675c2b669a7843396fcc77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7115e092_5d734835",
+        "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-08-01T09:12:44Z",
+      "side": 1,
+      "message": "DVLOG(1) should suffice.",
+      "parentUuid": "b74b93ee_bd5bc30f",
+      "range": {
+        "startLine": 232,
+        "startChar": 2,
+        "endLine": 232,
+        "endChar": 10
+      },
+      "revId": "59926138f986eb28ae675c2b669a7843396fcc77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

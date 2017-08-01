@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "70a33698_ee683a3f",
+        "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-08-01T09:12:44Z",
+      "side": 1,
+      "message": "http://crbug.com/750651",
+      "parentUuid": "a2e945d8_8eb0d1d5",
+      "range": {
+        "startLine": 5,
+        "startChar": 38,
+        "endLine": 5,
+        "endChar": 39
+      },
+      "revId": "372e13a6d9c871736f297f9ca4eb774bbd69b44c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b440056_53357611",
         "filename": "components/ntp_snippets/remote/contextual_suggestions_fetcher.h",
         "patchSetId": 1
