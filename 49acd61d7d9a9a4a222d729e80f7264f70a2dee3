@@ -251,6 +251,30 @@
     },
     {
       "key": {
+        "uuid": "2946d422_49c03378",
+        "filename": "chrome/browser/extensions/bookmark_app_helper.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 353,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-01T00:31:21Z",
+      "side": 1,
+      "message": "Cool!",
+      "parentUuid": "733fa107_938e91e0",
+      "range": {
+        "startLine": 353,
+        "startChar": 5,
+        "endLine": 353,
+        "endChar": 33
+      },
+      "revId": "49acd61d7d9a9a4a222d729e80f7264f70a2dee3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6f13bdb_1ad143ee",
         "filename": "chrome/browser/extensions/convert_web_app.cc",
         "patchSetId": 22
