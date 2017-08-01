@@ -111,6 +111,15 @@ BASE_EXPORT bool StringToDouble(const std::string& input, double* output);
 //   std::numeric_limits<size_t>::max() / 2
 BASE_EXPORT std::string HexEncode(const void* bytes, size_t size);
 
+// Return a std::string containing hex and ASCII representations of the binary
+// buffer |input|, with offsets at the beginning of each line, in the style of
+// hexdump.  Non-printable characters will be shown as '.' in the ASCII output.
+// Example output:
+// "0x0000:  0090 69bd 5400 000d 610f 0189 0800 4500  ..i.T...a.....E.\n"
+// "0x0010:  001c fb98 4000 4001 7e18 d8ef 2301 455d  ....@.@.~...#.E]\n"
+// "0x0020:  7fe2 0800 6bcb 0bc6 806e                 ....k....n\n"
+BASE_EXPORT std::string StringToHexASCIIDump(const StringPiece& input);
+
 // Best effort conversion, see StringToInt above for restrictions.
 // Will only successful parse hex values that will fit into |output|, i.e.
 // -0x80000000 < |input| < 0x7FFFFFFF.
