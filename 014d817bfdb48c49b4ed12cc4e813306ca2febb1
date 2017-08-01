@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1bc8ee18_fef3f4d6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-01T00:10:31Z",
+      "side": 1,
+      "message": "typo: implementation",
+      "revId": "014d817bfdb48c49b4ed12cc4e813306ca2febb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89c2a580_98f415eb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-01T00:10:31Z",
+      "side": 1,
+      "message": "I think you mean \"...is called with...\", though it\u0027d be good to give an example of why that would ever make sense - why does MemoryDataSourceTest do that..?",
+      "revId": "014d817bfdb48c49b4ed12cc4e813306ca2febb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
