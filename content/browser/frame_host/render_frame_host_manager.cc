@@ -87,6 +87,8 @@ void RenderFrameHostManager::Init(SiteInstance* site_instance,
                                   int32_t view_routing_id,
                                   int32_t frame_routing_id,
                                   int32_t widget_routing_id,
+                                  mojom::WidgetPtr widget,
+                                  mojom::WidgetRequest widget_request,
                                   bool renderer_initiated_creation) {
   DCHECK(site_instance);
   // TODO(avi): While RenderViewHostImpl is-a RenderWidgetHostImpl, this must
@@ -94,10 +96,10 @@ void RenderFrameHostManager::Init(SiteInstance* site_instance,
   // https://crbug.com/545684
   DCHECK(!frame_tree_node_->IsMainFrame() ||
          view_routing_id == widget_routing_id);
-  SetRenderFrameHost(CreateRenderFrameHost(site_instance, view_routing_id,
-                                           frame_routing_id, widget_routing_id,
-                                           delegate_->IsHidden(),
-                                           renderer_initiated_creation));
+  SetRenderFrameHost(CreateRenderFrameHost(
+      site_instance, view_routing_id, frame_routing_id, widget_routing_id,
+      std::move(widget), std::move(widget_request), delegate_->IsHidden(),
+      renderer_initiated_creation));
 
   // Notify the delegate of the creation of the current RenderFrameHost.
   // Do this only for subframes, as the main frame case is taken care of by
@@ -1662,6 +1664,8 @@ RenderFrameHostManager::CreateRenderFrameHost(
     int32_t view_routing_id,
     int32_t frame_routing_id,
     int32_t widget_routing_id,
+    mojom::WidgetPtr widget,
+    mojom::WidgetRequest widget_request,
     bool hidden,
     bool renderer_initiated_creation) {
   if (frame_routing_id == MSG_ROUTING_NONE)
@@ -1670,9 +1674,15 @@ RenderFrameHostManager::CreateRenderFrameHost(
   // Create a RVH for main frames, or find the existing one for subframes.
   FrameTree* frame_tree = frame_tree_node_->frame_tree();
   RenderViewHostImpl* render_view_host = nullptr;
+
   if (frame_tree_node_->IsMainFrame()) {
+    if (widget_routing_id == MSG_ROUTING_NONE) {
+      widget_request = mojo::MakeRequest(&widget);
+    }
+
     render_view_host = frame_tree->CreateRenderViewHost(
-        site_instance, view_routing_id, frame_routing_id, false, hidden);
+        site_instance, view_routing_id, frame_routing_id, std::move(widget),
+        false, hidden);
     // TODO(avi): It's a bit bizarre that this logic lives here instead of in
     // CreateRenderFrame(). It turns out that FrameTree::CreateRenderViewHost
     // doesn't /always/ create a new RenderViewHost. It first tries to find an
@@ -1695,7 +1705,8 @@ RenderFrameHostManager::CreateRenderFrameHost(
   return RenderFrameHostFactory::Create(
       site_instance, render_view_host, render_frame_delegate_,
       render_widget_delegate_, frame_tree, frame_tree_node_, frame_routing_id,
-      widget_routing_id, hidden, renderer_initiated_creation);
+      widget_routing_id, std::move(widget_request), hidden,
+      renderer_initiated_creation);
 }
 
 // PlzNavigate
@@ -1740,6 +1751,9 @@ std::unique_ptr<RenderFrameHostImpl> RenderFrameHostManager::CreateRenderFrame(
   // never create it in the same SiteInstance as our current RFH.
   CHECK_NE(render_frame_host_->GetSiteInstance(), instance);
 
+  mojom::WidgetPtr widget;
+  mojom::WidgetRequest widget_channel_request;
+
   // A RenderFrame in a different process from its parent RenderFrame
   // requires a RenderWidget for input/layout/painting.
   if (frame_tree_node_->parent() &&
@@ -1747,11 +1761,13 @@ std::unique_ptr<RenderFrameHostImpl> RenderFrameHostManager::CreateRenderFrame(
           instance) {
     CHECK(SiteIsolationPolicy::AreCrossProcessFramesPossible());
     widget_routing_id = instance->GetProcess()->GetNextRoutingID();
+
+    widget_channel_request = mojo::MakeRequest(&widget);
   }
 
   new_render_frame_host = CreateRenderFrameHost(
-      instance, MSG_ROUTING_NONE, MSG_ROUTING_NONE, widget_routing_id, hidden,
-      false);
+      instance, MSG_ROUTING_NONE, MSG_ROUTING_NONE, widget_routing_id,
+      std::move(widget), std::move(widget_channel_request), hidden, false);
   RenderViewHostImpl* render_view_host =
       new_render_frame_host->render_view_host();
 
@@ -1811,10 +1827,10 @@ int RenderFrameHostManager::CreateRenderFrameProxy(SiteInstance* instance) {
   // level structure in Blink.
   render_view_host =
       frame_tree_node_->frame_tree()->GetRenderViewHost(instance);
+
   if (!render_view_host) {
-    CHECK(frame_tree_node_->IsMainFrame());
     render_view_host = frame_tree_node_->frame_tree()->CreateRenderViewHost(
-        instance, MSG_ROUTING_NONE, MSG_ROUTING_NONE, true, true);
+        instance, MSG_ROUTING_NONE, MSG_ROUTING_NONE, nullptr, true, true);
   }
 
   RenderFrameProxyHost* proxy = GetRenderFrameProxyHost(instance);

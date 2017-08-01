@@ -46,6 +46,7 @@ class TestRenderFrameHost : public RenderFrameHostImpl,
                       FrameTreeNode* frame_tree_node,
                       int32_t routing_id,
                       int32_t widget_routing_id,
+                      mojom::WidgetRequest widget_request,
                       int flags);
   ~TestRenderFrameHost() override;
 

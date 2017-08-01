@@ -597,9 +597,13 @@ RenderViewHostImpl* InterstitialPageImpl::CreateRenderViewHost() {
   // TODO(avi): The view routing ID can be restored to MSG_ROUTING_NONE once
   // RenderViewHostImpl has-a RenderWidgetHostImpl. https://crbug.com/545684
   int32_t widget_routing_id = site_instance->GetProcess()->GetNextRoutingID();
+  mojom::WidgetPtr widget;
+  mojom::WidgetRequest widget_channel_request = mojo::MakeRequest(&widget);
+
   frame_tree_->root()->render_manager()->Init(
       site_instance.get(), widget_routing_id, MSG_ROUTING_NONE,
-      widget_routing_id, false);
+      widget_routing_id, std::move(widget), std::move(widget_channel_request),
+      false);
   return frame_tree_->root()->current_frame_host()->render_view_host();
 }
 

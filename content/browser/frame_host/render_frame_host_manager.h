@@ -200,6 +200,8 @@ class CONTENT_EXPORT RenderFrameHostManager
             int32_t view_routing_id,
             int32_t frame_routing_id,
             int32_t widget_routing_id,
+            mojom::WidgetPtr widget,
+            mojom::WidgetRequest widget_request,
             bool renderer_initiated_creation);
 
   // Returns the currently active RenderFrameHost.
@@ -670,6 +672,8 @@ class CONTENT_EXPORT RenderFrameHostManager
       int32_t view_routing_id,
       int32_t frame_routing_id,
       int32_t widget_routing_id,
+      mojom::WidgetPtr widget,
+      mojom::WidgetRequest widget_request,
       bool hidden,
       bool renderer_initiated_creation);
 
