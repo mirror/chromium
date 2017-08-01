@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eba2cb1d_5bda7b6b",
+        "filename": "components/plugins/renderer/webview_plugin.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-01T20:34:46Z",
+      "side": 1,
+      "message": "main_frame() guaranteed to have a FrameWidget() ?",
+      "revId": "6bff8fb08467aba342c31ffd63b201c28f0e21bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
