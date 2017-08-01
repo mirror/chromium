@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "174c4f4d_67bade59",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_graph_observer.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-01T07:39:13Z",
+      "side": 1,
+      "message": "Please take a look at Oystein\u0027s comments above. I am fine with both way since what you suggested was what I created before.\n\nI think some comments should be added here, I never expect people understand only with header files without proper documentation.",
+      "parentUuid": "7e3c542a_f90bda7d",
+      "range": {
+        "startLine": 62,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 34
+      },
+      "revId": "cb6313ce6ddb92cd468a58728681d6f7b3383451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ada9724c_c61a06d8",
         "filename": "services/resource_coordinator/coordination_unit/frame_coordination_unit_impl.h",
         "patchSetId": 16
@@ -36,6 +60,24 @@
       "writtenOn": "2017-07-31T19:29:24Z",
       "side": 1,
       "message": "Please add some comment to explain that a frame can have no parent WebContents when it has not committed.",
+      "revId": "cb6313ce6ddb92cd468a58728681d6f7b3383451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e00c4910_babbda17",
+        "filename": "services/resource_coordinator/coordination_unit/frame_coordination_unit_impl.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-01T07:39:13Z",
+      "side": 1,
+      "message": "Please see the comment at the declaration of FrameCoordinationUnitImpl.",
+      "parentUuid": "ada9724c_c61a06d8",
       "revId": "cb6313ce6ddb92cd468a58728681d6f7b3383451",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
