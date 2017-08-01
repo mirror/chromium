@@ -139,6 +139,24 @@
       "revId": "39ad802f84807d6ccd859c8694d49c6b9f2a9e3c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4c554bf_d20de375",
+        "filename": "components/ui_devtools/views/ui_devtools_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-08-01T15:48:37Z",
+      "side": 1,
+      "message": "Ah sorry, I don\u0027t think my suggestion here was very clear; I meant for the comments to represent pseudocode. Here\u0027s what I had in mind:\n\n  overlay_agent()-\u003esetInspectMode(\n        \"searchForNode\", protocol::Maybe\u003cprotocol::Overlay::HighlightConfig\u003e());\n\n  ui::test::EventGenerator generator(widget-\u003eGetNativeWindow());\n  gfx::Point p(1, 1);\n\n  // Moving the mouse cursor over the widget bounds should request a node highlight.\n  generator.MoveMouseBy(p.x(), p.y());\n  EXPECT_EQ(1, GetNodeHighlightRequestedCount());\n\n  // Clicking on the widget should request that element be inspected.\n  generator.PressLeftButton();\n  EXPECT_EQ(1, GetInspectNodeRequestedCount());\n\n  // Since the last event dispatched to the widget was a click, a subsequent\n  // mouse event should generate neither a nodeHighlightRequested nor a\n  // inspectNodeRequested event.\n  generator.MoveMouseBy(p.x(), p.y());\n  EXPECT_EQ(1, GetNodeHighlightRequestedCount());\n  EXPECT_EQ(1, GetInspectNodeRequestedCount());\n\nYou can implement the two Get*Count() methods similar to GetStyleSheetChangedCount().\n\nAs-is, because you are not EXPECT-ing anything in the second test in PS11, it doesn\u0027t verify the correct behavior in response to mouse events. Instead, all it is doing is verifying that the code you call does not cause a crash.",
+      "parentUuid": "0a890f34_4a8a21b1",
+      "revId": "39ad802f84807d6ccd859c8694d49c6b9f2a9e3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
