@@ -191,7 +191,7 @@ TEST_F(SingleScrollbarAnimationControllerThinningTest, MouseOver) {
   scrollbar_controller_->Animate(time);
   EXPECT_FLOAT_EQ(1.0f, scrollbar_layer_->thumb_thickness_scale_factor());
 
-  // Moving off the scrollbar but still withing the "near" threshold should do
+  // Moving off the scrollbar but still within the "near" threshold should do
   // nothing.
   scrollbar_controller_->DidMouseMove(
       NearScrollbar(-kMouseMoveDistanceToTriggerExpand + 1, 0));

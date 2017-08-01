@@ -684,7 +684,7 @@ DrawResult ProxyImpl::DrawInternal(bool forced_draw) {
   bool start_ready_animations = draw_frame;
   layer_tree_host_impl_->UpdateAnimationState(start_ready_animations);
 
-  // Tell the main thread that the the newly-commited frame was drawn.
+  // Tell the main thread that the the newly-committed frame was drawn.
   if (next_frame_is_newly_committed_frame_) {
     next_frame_is_newly_committed_frame_ = false;
     MainThreadTaskRunner()->PostTask(

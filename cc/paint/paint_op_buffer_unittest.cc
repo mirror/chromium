@@ -629,7 +629,7 @@ TEST(PaintOpBufferTest, NonAAPaint) {
     EXPECT_TRUE(buffer->HasNonAAPaint());
   }
 
-  // Drawing a record with non-aa paths into another propogates the value.
+  // Drawing a record with non-aa paths into another propagates the value.
   {
     auto buffer = sk_make_sp<PaintOpBuffer>();
     EXPECT_FALSE(buffer->HasNonAAPaint());

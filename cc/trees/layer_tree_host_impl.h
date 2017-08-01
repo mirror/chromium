@@ -306,7 +306,7 @@ class CC_EXPORT LayerTreeHostImpl
 
   virtual bool PrepareTiles();
 
-  // Returns DRAW_SUCCESS unless problems occured preparing the frame, and we
+  // Returns DRAW_SUCCESS unless problems occurred preparing the frame, and we
   // should try to avoid displaying the frame. If PrepareToDraw is called,
   // DidDrawAllLayers must also be called, regardless of whether DrawLayers is
   // called between the two.
@@ -751,7 +751,7 @@ class CC_EXPORT LayerTreeHostImpl
 
   // The following scoped variables must not outlive the
   // |layer_tree_frame_sink_|.
-  // These should be transfered to viz::ContextCacheController's
+  // These should be transferred to viz::ContextCacheController's
   // ClientBecameNotVisible() before the output surface is destroyed.
   std::unique_ptr<viz::ContextCacheController::ScopedVisibility>
       compositor_context_visibility_;
@@ -889,8 +889,9 @@ class CC_EXPORT LayerTreeHostImpl
   // scroll animation is created in ScrollAnimated.
   int scroll_animating_latched_node_id_;
 
-  // These callbacks are stored here to be transfered to the main thread when we
-  // begin main frame. These callbacks must only be called on the main thread.
+  // These callbacks are stored here to be transferred to the main thread when
+  // we begin main frame. These callbacks must only be called on the main
+  // thread.
   std::vector<base::Closure> completed_image_decode_callbacks_;
 
   // These are used to transfer usage of touch and wheel scrolls to the main

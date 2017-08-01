@@ -34,7 +34,7 @@ namespace cc {
 // Generally, when an image is required for raster, GpuImageDecodeCache
 // creates two tasks, one to decode the image, and one to upload the image to
 // the GPU. These tasks are completed before the raster task which depends on
-// the image. We need to seperate decode and upload tasks, as decode can occur
+// the image. We need to separate decode and upload tasks, as decode can occur
 // simultaneously on multiple threads, while upload requires the GL context
 // lock must happen on our non-concurrent raster thread.
 //

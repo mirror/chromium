@@ -1203,7 +1203,7 @@ void Layer::PushPropertiesTo(LayerImpl* layer) {
   DCHECK(layer->layer_tree_impl()->lifecycle().AllowsPropertyTreeAccess());
 
   // When a scroll offset animation is interrupted the new scroll position on
-  // the pending tree will clobber any impl-side scrolling occuring on the
+  // the pending tree will clobber any impl-side scrolling occurring on the
   // active tree. To do so, avoid scrolling the pending tree along with it
   // instead of trying to undo that scrolling later.
   if (ScrollOffsetAnimationWasInterrupted())

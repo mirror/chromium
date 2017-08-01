@@ -363,7 +363,7 @@ class CC_EXPORT LayerImpl {
   virtual void ReleaseResources();
 
   // Release tile resources held by this layer. Called when a rendering mode
-  // switch has occured and tiles are no longer valid.
+  // switch has occurred and tiles are no longer valid.
   virtual void ReleaseTileResources();
 
   // Recreate tile resources held by this layer after they were released by a

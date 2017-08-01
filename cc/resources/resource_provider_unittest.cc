@@ -765,7 +765,7 @@ TEST_P(ResourceProviderTest, TransferGLResources) {
   }
 
   {
-    // Check that transfering again the same resource from the child to the
+    // Check that transferring again the same resource from the child to the
     // parent works.
     ResourceProvider::ResourceIdArray resource_ids_to_transfer;
     resource_ids_to_transfer.push_back(id1);
@@ -1492,7 +1492,7 @@ TEST_P(ResourceProviderTest, TransferSoftwareResources) {
   EXPECT_EQ(0, memcmp(data2, result, pixel_size));
 
   {
-    // Check that transfering again the same resource from the child to the
+    // Check that transferring again the same resource from the child to the
     // parent works.
     ResourceProvider::ResourceIdArray resource_ids_to_transfer;
     resource_ids_to_transfer.push_back(id1);

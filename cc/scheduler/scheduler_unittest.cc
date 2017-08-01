@@ -963,7 +963,7 @@ class SchedulerClientNeedsPrepareTilesInDraw : public FakeSchedulerClient {
   }
 };
 
-// Test prepare tiles is independant of draws.
+// Test prepare tiles is independent of draws.
 TEST_F(SchedulerTest, PrepareTiles) {
   SchedulerClientNeedsPrepareTilesInDraw* client =
       new SchedulerClientNeedsPrepareTilesInDraw;
@@ -988,7 +988,7 @@ TEST_F(SchedulerTest, PrepareTiles) {
   EXPECT_ACTIONS("WillBeginImplFrame");
   EXPECT_TRUE(client_->IsInsideBeginImplFrame());
 
-  // On the deadline, the actions should have occured in the right order.
+  // On the deadline, the actions should have occurred in the right order.
   client->Reset();
   task_runner().RunPendingTasks();  // Run posted deadline.
   EXPECT_EQ(1, client->num_draws());

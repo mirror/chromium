@@ -5182,7 +5182,7 @@ TEST_F(LayerTreeHostCommonTest, TransformedClipParent) {
   ASSERT_EQ(gfx::Rect(3, 3, 10, 10), intervening->clip_rect());
 
   // Ensure that the render surface reports a content rect that has been grown
-  // to accomodate for the clip child.
+  // to accommodate for the clip child.
   ASSERT_EQ(gfx::Rect(1, 1, 20, 20),
             GetRenderSurface(render_surface)->content_rect());
 
@@ -5197,7 +5197,7 @@ TEST_F(LayerTreeHostCommonTest, TransformedClipParent) {
 TEST_F(LayerTreeHostCommonTest, ClipParentWithInterveningRenderSurface) {
   // Ensure that intervening render surfaces are not a problem in the basic
   // case. In the following tree, both render surfaces should be resized to
-  // accomodate for the clip child, despite an intervening clip.
+  // accommodate for the clip child, despite an intervening clip.
   //
   //   root (a render surface)
   //    + clip_parent (masks to bounds)
@@ -5467,7 +5467,7 @@ TEST_F(LayerTreeHostCommonTest,
             GetRenderSurface(render_surface1)->clip_rect());
   EXPECT_FALSE(GetRenderSurface(render_surface1)->is_clipped());
 
-  // That said, it should have grown to accomodate the unclipped descendant and
+  // That said, it should have grown to accommodate the unclipped descendant and
   // its own size.
   EXPECT_EQ(gfx::Rect(-1, 0, 6, 5),
             GetRenderSurface(render_surface1)->content_rect());
@@ -5478,7 +5478,7 @@ TEST_F(LayerTreeHostCommonTest,
   EXPECT_TRUE(GetRenderSurface(render_surface2)->is_clipped());
   EXPECT_FALSE(render_surface2->is_clipped());
 
-  // It also shouldn't have grown to accomodate the clip child.
+  // It also shouldn't have grown to accommodate the clip child.
   EXPECT_EQ(gfx::Rect(0, 0, 5, 5),
             GetRenderSurface(render_surface2)->content_rect());
 }

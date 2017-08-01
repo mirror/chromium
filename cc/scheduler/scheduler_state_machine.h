@@ -33,7 +33,7 @@ enum class ScrollHandlerState {
 };
 const char* ScrollHandlerStateToString(ScrollHandlerState state);
 
-// The SchedulerStateMachine decides how to coordinate main thread activites
+// The SchedulerStateMachine decides how to coordinate main thread activities
 // like painting/running javascript with rendering and input activities on the
 // impl thread.
 //
@@ -42,7 +42,7 @@ const char* ScrollHandlerStateToString(ScrollHandlerState state);
 // requested, while external state includes things like the current time being
 // near to the vblank time.
 //
-// The scheduler seperates "what to do next" from the updating of its internal
+// The scheduler separates "what to do next" from the updating of its internal
 // state to make testing cleaner.
 class CC_EXPORT SchedulerStateMachine {
  public:
