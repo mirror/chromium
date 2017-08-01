@@ -69,6 +69,24 @@
       "revId": "48bdfcea704e04a68f326992545530e7e149da09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49999096_1223e5f8",
+        "filename": "third_party/WebKit/Source/core/dom/FirstLetterPseudoElement.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-08-01T08:42:54Z",
+      "side": 1,
+      "message": "Thanks, so in display:contents world, FlatTreeTraversal::Parent(node)-\u003eStyle() !\u003d node-\u003eGetLayoutObject()-\u003eParent()-\u003eStyle()? I thought LayoutObject tree is built from FlatTreeTraversal and that they\u0027re the same, except that FlatTreeTraversal can compute without layout clean. I understand it\u0027s different from Node::Parent(), but the difference from LayoutObject::Parent() isn\u0027t very clear to me...\n\nYeah, a separate work sounds reasonable. Do you want to open a bug for this, or is this already under some umbrella bug?",
+      "parentUuid": "a9b5c627_4a9121a5",
+      "revId": "48bdfcea704e04a68f326992545530e7e149da09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
