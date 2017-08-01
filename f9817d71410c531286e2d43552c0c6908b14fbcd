@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99a88132_5dc41f8b",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-01T21:08:21Z",
+      "side": 1,
+      "message": "nit: Comment that it uses the ICU locale of the device.",
+      "revId": "f9817d71410c531286e2d43552c0c6908b14fbcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
