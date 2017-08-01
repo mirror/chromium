@@ -622,6 +622,8 @@ class SessionRestoreImpl : public content::NotificationObserver {
     // focused tab will be loaded by Browser, and TabLoader will load the rest.
     DCHECK(is_selected_tab || web_contents->GetController().NeedsReload());
 
+    SessionRestore::OnWillRestoreTab(web_contents);
+
     return web_contents;
   }
 
@@ -875,6 +877,12 @@ void SessionRestore::NotifySessionRestoreStartedLoadingTabs() {
   session_restore_started_ = true;
   for (auto& observer : *observers())
     observer.OnSessionRestoreStartedLoadingTabs();
+}
+
+// static
+void SessionRestore::OnWillRestoreTab(content::WebContents* web_contents) {
+  for (auto& observer : *observers())
+    observer.OnWillRestoreTab(web_contents);
 }
 
 // static
