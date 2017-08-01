@@ -99,6 +99,7 @@ class SelectionModifier {
   Member<LocalFrame> frame_;
   VisibleSelection selection_;
   LayoutUnit x_pos_for_vertical_arrow_navigation_;
+  VisiblePosition visible_extent_position_;
 
   DISALLOW_COPY_AND_ASSIGN(SelectionModifier);
 };
