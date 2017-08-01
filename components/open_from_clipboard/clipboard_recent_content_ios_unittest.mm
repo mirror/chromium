@@ -210,7 +210,7 @@ TEST_F(ClipboardRecentContentIOSTest, SupressedPasteboard) {
   EXPECT_FALSE(clipboard_content_->GetRecentURLFromClipboard(&gurl));
 
   // Check that if the pasteboard changes, the new content is not
-  // supressed anymore.
+  // suppressed anymore.
   SetPasteboardContent(kRecognizedURL2);
   EXPECT_TRUE(clipboard_content_->GetRecentURLFromClipboard(&gurl));
 }

@@ -31,7 +31,7 @@ struct GCMNetworkChannelDiagnostic {
   // Collect all the internal variables in a single readable dictionary.
   std::unique_ptr<base::DictionaryValue> CollectDebugData() const;
 
-  // TODO(pavely): Move this toString to a more appropiate place in GCMClient.
+  // TODO(pavely): Move this toString to a more appropriate place in GCMClient.
   std::string GCMClientResultToString(
       const gcm::GCMClient::Result result) const;
 

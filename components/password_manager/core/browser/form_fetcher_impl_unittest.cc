@@ -530,7 +530,7 @@ TEST_F(FormFetcherImplTest, TryToMigrateHTTPPasswordsOnHTTPSSites) {
 
   PasswordForm https_form = CreateNonFederated();
 
-  // Create HTTP form for the same orgin (except scheme), which will be passed
+  // Create HTTP form for the same origin (except scheme), which will be passed
   // to the migrator.
   GURL::Replacements http_rep;
   http_rep.SetSchemeStr(url::kHttpScheme);
@@ -598,7 +598,7 @@ TEST_F(FormFetcherImplTest, StateIsWaitingDuringMigration) {
 
   PasswordForm https_form = CreateNonFederated();
 
-  // Create HTTP form for the same orgin (except scheme), which will be passed
+  // Create HTTP form for the same origin (except scheme), which will be passed
   // to the migrator.
   GURL::Replacements http_rep;
   http_rep.SetSchemeStr(url::kHttpScheme);

@@ -75,7 +75,7 @@ class NaClValidationQuery {
 
   // The size of buffer_ is a somewhat arbitrary choice.  It needs to be at
   // at least kDigestLength * 2, but it can be arbitrarily large.  In practice
-  // there are 4 calls to AddData (version, architechture, cpu features, and
+  // there are 4 calls to AddData (version, architecture, cpu features, and
   // code), so 4 times digest length means the buffer will not need to be
   // compressed as an intermediate step in the expected use cases.
   char buffer_[kDigestLength * 4];

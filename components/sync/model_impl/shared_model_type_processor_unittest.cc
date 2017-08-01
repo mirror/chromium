@@ -1331,7 +1331,7 @@ TEST_F(SharedModelTypeProcessorTest, ReEncryptConflictResolutionUseLocal) {
   worker()->VerifyPendingCommits({kHash1});
 
   bridge()->SetConflictResolution(ConflictResolution::UseLocal());
-  // Unencrypted update needs to be re-commited with key k1.
+  // Unencrypted update needs to be re-committed with key k1.
   worker()->UpdateFromServer(kHash1, GenerateSpecifics(kKey1, kValue3), 1, "");
 
   // Ensure the re-commit has the correct value.
@@ -1353,7 +1353,7 @@ TEST_F(SharedModelTypeProcessorTest, ReEncryptConflictResolutionUseRemote) {
   bridge()->WriteItem(kKey1, kValue1);
 
   bridge()->SetConflictResolution(ConflictResolution::UseRemote());
-  // Unencrypted update needs to be re-commited with key k1.
+  // Unencrypted update needs to be re-committed with key k1.
   EntitySpecifics specifics = GenerateSpecifics(kKey1, kValue2);
   worker()->UpdateFromServer(kHash1, specifics, 1, "");
 
@@ -1371,7 +1371,7 @@ TEST_F(SharedModelTypeProcessorTest, ReEncryptConflictResolutionUseNew) {
 
   bridge()->SetConflictResolution(
       ConflictResolution::UseNew(GenerateEntityData(kKey1, kValue3)));
-  // Unencrypted update needs to be re-commited with key k1.
+  // Unencrypted update needs to be re-committed with key k1.
   worker()->UpdateFromServer(kHash1, GenerateSpecifics(kKey1, kValue2), 1, "");
 
   // Ensure the re-commit has the correct value.
@@ -1389,7 +1389,7 @@ TEST_F(SharedModelTypeProcessorTest, ReEncryptConflictWhileLoading) {
   worker()->UpdateWithEncryptionKey("k1");
   EXPECT_EQ(0U, worker()->GetNumPendingCommits());
 
-  // Unencrypted update needs to be re-commited with key k1.
+  // Unencrypted update needs to be re-committed with key k1.
   EntitySpecifics specifics = GenerateSpecifics(kKey1, kValue2);
   worker()->UpdateFromServer(kHash1, specifics, 1, "");
 

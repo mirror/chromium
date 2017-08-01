@@ -18,7 +18,7 @@ namespace ukm {
 
 namespace {
 
-// Gets the list of whitelisted Entries as string. Format is a comma seperated
+// Gets the list of whitelisted Entries as string. Format is a comma separated
 // list of Entry names (as strings).
 std::string GetWhitelistEntries() {
   return base::GetFieldTrialParamValueByFeature(kUkmFeature,

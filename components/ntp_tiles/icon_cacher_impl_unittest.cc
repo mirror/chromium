@@ -382,7 +382,7 @@ TEST_F(IconCacherTestPopularSites, ProvidesDefaultIconAndSucceedsWithFetching) {
         .WillOnce(PassFetch(128, 128));
 
     // Both callback are called async after the request but preliminary has to
-    // preceed icon_available.
+    // precede icon_available.
     EXPECT_CALL(preliminary_icon_available, Run())
         .WillOnce(Quit(&default_loop));
     EXPECT_CALL(icon_available, Run()).WillOnce(Quit(&fetch_loop));

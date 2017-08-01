@@ -68,7 +68,7 @@ void SafeJsonParserImpl::ReportResults(std::unique_ptr<base::Value> parsed_json,
       error_callback_.Run(error);
   }
 
-  // The parsing is done whether an error occured or not, so this instance can
+  // The parsing is done whether an error occurred or not, so this instance can
   // be cleaned up.
   delete this;
 }

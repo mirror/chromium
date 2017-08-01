@@ -190,7 +190,7 @@ TEST_F(PasswordAutofillManagerTest, PreviewSuggestion) {
       fill_data_id(), test_username_));
 }
 
-// Test that the popup is marked as visible after recieving password
+// Test that the popup is marked as visible after receiving password
 // suggestions.
 TEST_F(PasswordAutofillManagerTest, ExternalDelegatePasswordSuggestions) {
   for (bool is_suggestion_on_password_field : {false, true}) {
@@ -479,7 +479,7 @@ TEST_F(PasswordAutofillManagerTest, NoSuggestionForNonPrefixTokenMatch) {
 }
 
 // Verify that typing "foo@exam" into the username field will match username
-// "bar.foo@example.com" even if the field contents span accross multiple
+// "bar.foo@example.com" even if the field contents span across multiple
 // tokens.
 TEST_F(PasswordAutofillManagerTest,
        MatchingContentsWithSuggestionTokenSeparator) {

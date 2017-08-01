@@ -494,7 +494,7 @@ TEST_F(ComponentCloudPolicyStoreTest, Updates) {
   EXPECT_FALSE(IsStoreEmpty(*store_));
   EXPECT_TRUE(store_->policy().Equals(expected_bundle_));
 
-  // Deleting a non-existant namespace doesn't trigger updates.
+  // Deleting a non-existent namespace doesn't trigger updates.
   PolicyNamespace ns_fake(POLICY_DOMAIN_EXTENSIONS, "nosuchid");
   store_->Delete(ns_fake);
   Mock::VerifyAndClearExpectations(&store_delegate_);

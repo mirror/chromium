@@ -609,7 +609,7 @@ void ArcSessionImpl::ArcInstanceStopped(
     // Return GENERIC_BOOT_FAILURE for the case.
     reason = ArcStopReason::GENERIC_BOOT_FAILURE;
   } else {
-    // Otherwise, this is caused by CRASH occured inside of the ARC instance.
+    // Otherwise, this is caused by CRASH occurred inside of the ARC instance.
     reason = ArcStopReason::CRASH;
   }
   OnStopped(reason);

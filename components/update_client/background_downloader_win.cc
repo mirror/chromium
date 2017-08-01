@@ -83,7 +83,7 @@ using Microsoft::WRL::ComPtr;
 // to the "cancelled state" and the job object is removed from the BITS queue.
 // Along the way, the job can encounter recoverable and non-recoverable errors.
 // BITS moves the job to "transient error" or "error", depending on which kind
-// of error has occured.
+// of error has occurred.
 // If  the job has reached the "transient error" state, BITS retries the
 // job after a certain programmable delay. If the job can't be completed in a
 // certain time interval, BITS stops retrying and errors the job out. This time

@@ -184,9 +184,9 @@ class PaymentRequestSpec : public PaymentOptionsProvider {
   // |supported_card_networks_set_| to check merchant support.
   std::set<std::string> basic_card_specified_networks_;
 
-  // A list of supported url-based payment method identifers specified by the
+  // A list of supported url-based payment method identifiers specified by the
   // merchant. This encompasses one of the two types of payment method
-  // identifers, the other being standardized payment method identifiers i.e.,
+  // identifiers, the other being standardized payment method identifiers i.e.,
   // basic-card.
   std::vector<std::string> url_payment_method_identifiers_;
 

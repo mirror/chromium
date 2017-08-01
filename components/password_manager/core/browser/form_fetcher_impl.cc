@@ -187,7 +187,7 @@ void FormFetcherImpl::OnGetPasswordStoreResults(
 
   // Kick off the discovery of suppressed credentials, regardless of whether
   // there are some precisely matching |results|. These results are used only
-  // for recording metrics at PasswordFormManager desctruction time, this is why
+  // for recording metrics at PasswordFormManager destruction time, this is why
   // they are requested this late.
   if (should_query_suppressed_forms_ &&
       form_digest_.scheme == PasswordForm::SCHEME_HTML &&

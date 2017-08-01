@@ -33,7 +33,7 @@ ACTION_P(PopulateVector, items) {
 
 const char kFakeGuid[] = "fake_guid";
 
-// Matcher to compare driver entries. Not all the memeber fields are compared.
+// Matcher to compare driver entries. Not all the member fields are compared.
 // Currently no comparison in non test code, so no operator== override for
 // driver entry.
 MATCHER_P(DriverEntryEqual, entry, "") {

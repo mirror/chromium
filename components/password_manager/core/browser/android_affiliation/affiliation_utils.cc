@@ -123,7 +123,7 @@ bool CanonicalizePackageNameComponent(
   std::string package_name = net::UnescapeURLComponent(
       input_package_name.as_string(), net::UnescapeRule::NORMAL);
 
-  // TODO(engedy): We might want to use a regex to check this more throughly.
+  // TODO(engedy): We might want to use a regex to check this more thoroughly.
   if (!package_name.empty() &&
       ContainsOnlyAlphanumericAnd(package_name,
                                   kPackageNameNonAlphanumericChars)) {

@@ -33,7 +33,7 @@ class VIZ_SERVICE_EXPORT HitTestAggregator : public SurfaceObserver {
   // Called after surfaces have been aggregated into the DisplayFrame.
   // In this call HitTestRegionList structures received from active surfaces
   // are aggregated into the HitTestRegionList structure in
-  // shared memory used for event targetting.
+  // shared memory used for event targeting.
   void Aggregate(const SurfaceId& display_surface_id);
 
   // Performs the work of Aggregate by creating a PostTask so that

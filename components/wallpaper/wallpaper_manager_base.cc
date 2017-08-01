@@ -528,7 +528,7 @@ void WallpaperManagerBase::SaveCustomWallpaper(
   base::FilePath large_wallpaper_path = GetCustomWallpaperPath(
       kLargeWallpaperSubDir, wallpaper_files_id, file_name);
 
-  // Re-encode orginal file to jpeg format and saves the result in case that
+  // Re-encode original file to jpeg format and saves the result in case that
   // resized wallpaper is not generated (i.e. chrome shutdown before resized
   // wallpaper is saved).
   ResizeAndSaveWallpaper(*image, original_path, WALLPAPER_LAYOUT_STRETCH,

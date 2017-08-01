@@ -11,7 +11,7 @@
 
 namespace webcrypto {
 
-// Base class for an RSA algorithm whose keys additionaly have a hash parameter
+// Base class for an RSA algorithm whose keys additionally have a hash parameter
 // bound to them. Provides functionality for generating, importing, and
 // exporting keys.
 class RsaHashedAlgorithm : public AlgorithmImplementation {

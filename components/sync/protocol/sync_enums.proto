@@ -87,7 +87,7 @@ message SyncEnums {
     CLEAR_PENDING = 7;       // A clear of the user data is pending (e.g.
                              // initiated by privacy request).  Client should
                              // come back later.
-    TRANSIENT_ERROR = 8;     // A transient error occured (eg. backend
+    TRANSIENT_ERROR = 8;     // A transient error occurred (eg. backend
                              // timeout). Client should try again later.
     MIGRATION_DONE = 9;      // Migration has finished for one or more data
                              // types.  Client should clear the cache for

@@ -183,8 +183,8 @@ class VIZ_COMMON_EXPORT GLHelperScaling {
 
   scoped_refptr<ShaderProgram> GetShaderProgram(ShaderType type, bool swizzle);
 
-  // Interleaved array of 2-dimentional vertex positions (x, y) and
-  // 2-dimentional texture coordinates (s, t).
+  // Interleaved array of 2-dimensional vertex positions (x, y) and
+  // 2-dimensional texture coordinates (s, t).
   static const GLfloat kVertexAttributes[];
 
   gpu::gles2::GLES2Interface* gl_;

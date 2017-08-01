@@ -295,7 +295,7 @@ TEST_F(CryptographerTest, GetKeysThenInstall) {
   ASSERT_TRUE(another_cryptographer.CanDecrypt(keys));
   another_cryptographer.InstallKeys(keys);
 
-  // Verify that bootstrapped cryptographer decrypts succesfully using
+  // Verify that bootstrapped cryptographer decrypts successfully using
   // all the keys after key installation.
   EXPECT_TRUE(another_cryptographer.CanDecrypt(encrypted_k1));
   EXPECT_TRUE(another_cryptographer.CanDecrypt(encrypted_k2));

@@ -92,7 +92,7 @@ class PersistentSystemProfile {
     bool NextSegment() const;
 
     // Advance to the next record segment, creating a new one if necessary with
-    // sufficent |min_size| space.
+    // sufficient |min_size| space.
     bool AddSegment(size_t min_size);
 
     // Writes data to the current position, updating the passed values past

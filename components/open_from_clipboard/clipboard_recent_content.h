@@ -29,7 +29,7 @@ class ClipboardRecentContent {
   static void SetInstance(std::unique_ptr<ClipboardRecentContent> new_instance);
 
   // Returns true if the clipboard contains a recent URL that is appropriate to
-  // be suggested and has not been supressed, and copies it in |url|.
+  // be suggested and has not been suppressed, and copies it in |url|.
   // Otherwise, returns false. |url| must not be null.
   virtual bool GetRecentURLFromClipboard(GURL* url) = 0;
 

@@ -519,7 +519,7 @@ class SyncerTest : public testing::Test,
 
   // Configures SyncCycleContext and NudgeTracker so Syncer won't call
   // GetUpdates prior to Commit. This method can be used to ensure a Commit is
-  // not preceeded by GetUpdates.
+  // not preceded by GetUpdates.
   void ConfigureNoGetUpdatesRequired() {
     context_->set_server_enabled_pre_commit_update_avoidance(true);
     nudge_tracker_.OnInvalidationsEnabled();
@@ -818,7 +818,7 @@ TEST_F(SyncerTest, GetCommitIdsFiltersUnreadyEntries) {
   }
   EXPECT_TRUE(SyncShareNudge());
   {
-    // Nothing should have commited due to bookmarks being encrypted and
+    // Nothing should have committed due to bookmarks being encrypted and
     // the cryptographer having pending keys. A would have been resolved
     // as a simple conflict, but still be unsynced until the next sync cycle.
     syncable::ReadTransaction rtrans(FROM_HERE, directory());
@@ -1305,7 +1305,7 @@ TEST_F(SyncerTest, EncryptionAwareConflicts) {
   EXPECT_EQ(1, GetUpdateCounters(PREFERENCES).num_server_overwrites);
   EXPECT_EQ(1, GetUpdateCounters(BOOKMARKS).num_local_overwrites);
 
-  // We successfully commited item(s).
+  // We successfully committed item(s).
   EXPECT_EQ(2, GetCommitCounters(BOOKMARKS).num_commits_attempted);
   EXPECT_EQ(2, GetCommitCounters(BOOKMARKS).num_commits_success);
   EXPECT_EQ(1, GetCommitCounters(PREFERENCES).num_commits_attempted);
@@ -2647,7 +2647,7 @@ TEST_F(SyncerTest, DoublyChangedWithResolver) {
 }
 
 // We got this repro case when someone was editing bookmarks while sync was
-// occuring. The entry had changed out underneath the user.
+// occurring. The entry had changed out underneath the user.
 TEST_F(SyncerTest, CommitsUpdateDoesntAlterEntry) {
   const base::Time& test_time = ProtoTimeToTime(123456);
   syncable::Id local_id;
@@ -2797,7 +2797,7 @@ TEST_F(SyncerTest, UnappliedUpdateDuringCommit) {
 //   move bob into fred
 //   remove bob
 //   remove fred
-// if no syncing occured midway, bob will have an illegal parent
+// if no syncing occurred midway, bob will have an illegal parent
 TEST_F(SyncerTest, DeletingEntryInFolder) {
   // This test is a little fake.
   int64_t existing_metahandle;
@@ -3187,7 +3187,7 @@ TEST_F(SyncerTest, CommitManyItemsInOneGo_PostBufferFail) {
   ASSERT_EQ(items_to_commit, directory()->unsynced_entity_count());
 
   // The second commit should fail.  It will be preceded by one successful
-  // GetUpdate and one succesful commit.
+  // GetUpdate and one successful commit.
   mock_server_->FailNthPostBufferToPathCall(3);
   EXPECT_FALSE(SyncShareNudge());
 
@@ -5567,7 +5567,7 @@ TEST_F(SyncerUndeletionTest, UndeleteDuringCommit) {
   // Now, encounter a GetUpdates corresponding to the deletion from
   // the server.  The undeletion should prevail again and be committed.
   // None of this should trigger any conflict detection -- it is perfectly
-  // normal to recieve updates from our own commits.
+  // normal to receive updates from our own commits.
   mock_server_->SetMidCommitCallback(base::Closure());
   sync_pb::SyncEntity* update = mock_server_->AddUpdateFromLastCommit();
   update->set_originator_cache_guid(local_cache_guid());

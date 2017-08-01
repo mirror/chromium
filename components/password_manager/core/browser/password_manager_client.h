@@ -136,7 +136,7 @@ class PasswordManagerClient {
   virtual void NotifyStorePasswordCalled() = 0;
 
   // Called when a password is saved in an automated fashion. Embedder may
-  // inform the user that this save has occured.
+  // inform the user that this save has occurred.
   virtual void AutomaticPasswordSave(
       std::unique_ptr<PasswordFormManager> saved_form_manager) = 0;
 

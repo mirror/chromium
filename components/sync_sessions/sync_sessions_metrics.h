@@ -19,7 +19,7 @@ struct SyncedSession;
 class SyncSessionsMetrics {
  public:
   // Records via an UMA histogram the age of the youngest foreign tab the given
-  // manager is aware of. No attempt is made to aquire a more recent version of
+  // manager is aware of. No attempt is made to acquire a more recent version of
   // world. If anything goes wrong, such as the manager being null, no foreign
   // session present, or a foreign tab with a timestamp in the future then no
   // metric is emitted.

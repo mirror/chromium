@@ -122,7 +122,7 @@ class BidirectionalStream : public net::BidirectionalStream::Delegate {
     READING_DONE,
     // Stream is canceled.
     CANCELED,
-    // Error has occured, stream is closed.
+    // Error has occurred, stream is closed.
     ERR,
     // Reading and writing are done, and the stream is closed successfully.
     SUCCESS,

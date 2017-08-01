@@ -462,7 +462,7 @@ const char kNumRects[] = "num-rects";
 
 // Enables benchmark mode and specifies the number of benchmark runs to
 // perform before client will exit. Client will print the results to
-// standard output as a tab seperated list.
+// standard output as a tab separated list.
 //
 //  The output format is:
 //   "frames wall-time-ms cpu-time-ms"

@@ -41,7 +41,7 @@ class VisitSegmentDatabase {
                                       URLID url_id);
 
   // Return the ID of the URL currently used to represent this segment or 0 if
-  // an error occured.
+  // an error occurred.
   URLID GetSegmentRepresentationURL(SegmentID segment_id);
 
   // Create a segment for the provided URL ID with the given name. Returns the

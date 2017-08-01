@@ -39,7 +39,7 @@ class SyncableService : public SyncChangeProcessor,
   // history page is open, you want remote sessions data to be available there.
   // 3) You want to signal to sync that it's safe to start now that the
   // browser's IO-intensive startup process is over. The ModelType parameter is
-  // included so that the recieving end can track usage and timing statistics,
+  // included so that the receiving end can track usage and timing statistics,
   // make pptimizations or tradeoffs by type, etc.
   using StartSyncFlare = base::Callback<void(ModelType)>;
 

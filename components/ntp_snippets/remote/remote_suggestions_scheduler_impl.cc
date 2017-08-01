@@ -70,7 +70,7 @@ const double kDefaultFetchingIntervalHoursActiveNtpUser[] = {96.0, 48.0, 24.0,
 const double kDefaultFetchingIntervalHoursActiveSuggestionsConsumer[] = {
     48.0, 24.0, 12.0, 12.0, 1.0, 1.0};
 
-// For a simple comparision: fetching intervals that emulate the state really
+// For a simple comparison: fetching intervals that emulate the state really
 // rolled out to 100% M58 Stable. Used for evaluation of later changes. DBL_MAX
 // values simulate this interval being disabled.
 // TODO(jkrcal): Remove when not needed any more, incl. the feature. Probably

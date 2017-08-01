@@ -32,7 +32,7 @@
 - (instancetype)init NS_UNAVAILABLE;
 
 // Returns the copied URL if the clipboard contains a recent URL that has not
-// been supressed. Otherwise, returns nil.
+// been suppressed. Otherwise, returns nil.
 - (NSURL*)recentURLFromClipboard;
 
 // Returns how old the content of the clipboard is.

@@ -29,7 +29,7 @@ message AppNotification {
   // delegate messages to the applications. This is defined as 32 characters
   optional string app_id = 2;
   // Timestamp when the message was created in milliseconds.
-  // This is seperate from ctime as this is only set by the application.
+  // This is separate from ctime as this is only set by the application.
   optional int64 creation_timestamp_ms = 3;
 
   // Payload - these fields are visible to the user content is defined by the

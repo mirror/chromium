@@ -15,7 +15,7 @@
 
 namespace metrics {
 
-// This feature moves the upload schedule to a seperate schedule from the
+// This feature moves the upload schedule to a separate schedule from the
 // log rotation schedule.  This may change upload timing slightly, but
 // would allow some compartmentalization of uploader logic to allow more
 // code reuse between different metrics services.
@@ -66,7 +66,7 @@ base::TimeDelta GetUnsentLogsInterval() {
   return GetTimeParameterSeconds("UnsentLogsIntervalSeconds", 3);
 }
 
-// Inital time delay after a log uploaded fails before retrying it.
+// Initial time delay after a log uploaded fails before retrying it.
 base::TimeDelta GetInitialBackoffInterval() {
   return GetTimeParameterSeconds("InitialBackoffIntervalSeconds", 15);
 }

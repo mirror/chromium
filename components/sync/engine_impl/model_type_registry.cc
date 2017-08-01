@@ -135,7 +135,7 @@ void ModelTypeRegistry::ConnectNonBlockingType(
       UMA_HISTOGRAM_ENUMERATION("Sync.USSMigrationSuccess",
                                 ModelTypeToHistogramInt(type),
                                 static_cast<int>(MODEL_TYPE_COUNT));
-      // If we succesfully migrated, purge the directory of data for the type.
+      // If we successfully migrated, purge the directory of data for the type.
       // Purging removes the directory's local copy of the data only.
       directory()->PurgeEntriesWithTypeIn(ModelTypeSet(type), ModelTypeSet(),
                                           ModelTypeSet());

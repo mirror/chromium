@@ -258,7 +258,7 @@ TEST_F(WebCryptoRsaOaepTest, EncryptWithLargeMessageFails) {
 // Ensures that if the selected hash algorithm for the RSA-OAEP message is too
 // large, then it is rejected, independent of the actual message to be
 // encrypted.
-// For example, a 1024-bit RSA key is too small to accomodate a message that
+// For example, a 1024-bit RSA key is too small to accommodate a message that
 // uses OAEP with SHA-512, since it requires 1040 bits to encode
 // (2 * hash size + 2 padding bytes).
 TEST_F(WebCryptoRsaOaepTest, EncryptWithLargeDigestFails) {

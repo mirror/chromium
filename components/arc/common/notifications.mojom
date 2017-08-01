@@ -162,7 +162,7 @@ interface NotificationsInstance {
   Init@0(NotificationsHost host_ptr);
 
   // Sends an event from Chrome notification UI to Android.
-  // |event| is a type of occured event.
+  // |event| is a type of occurred event.
   SendNotificationEventToAndroid@1(string key, ArcNotificationEvent event);
 
   // Requests to Android side to create the notification window.

@@ -524,7 +524,7 @@ int PasswordProtectionService::GetStoredVerdictCount(TriggerType trigger_type) {
       if (cache_dictionary->GetDictionaryWithoutPathExpansion(
               base::StringPiece(kPasswordOnFocusCacheKey),
               &password_on_focus_dict)) {
-        // Substracts 1 from password_entry count if |kPasswordOnFocusCacheKey|
+        // Subtracts 1 from password_entry count if |kPasswordOnFocusCacheKey|
         // presents.
         stored_verdict_count_password_entry_ -= 1;
         stored_verdict_count_password_on_focus_ +=

@@ -242,7 +242,7 @@ bool WebCacheManager::AttemptTactic(AllocationTactic active_tactic,
   // Compute the unreserved space available.
   uint64_t total_extra = global_size_limit_ - (active_size + inactive_size);
 
-  // The plan for the extra space is to divide it evenly amoung the active
+  // The plan for the extra space is to divide it evenly among the active
   // renderers.
   uint64_t shares = active_renderers_.size();
 

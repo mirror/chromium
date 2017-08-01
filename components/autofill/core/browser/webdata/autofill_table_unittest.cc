@@ -575,7 +575,7 @@ TEST_F(AutofillTableTest, Autofill_AddFormFieldValues) {
 
 TEST_F(AutofillTableTest,
        Autofill_RemoveFormElementsAddedBetween_UsedOnlyBefore) {
-  // Add an entry used only before the targetted range.
+  // Add an entry used only before the targeted range.
   AutofillChangeList changes;
   FormFieldData field;
   field.name = ASCIIToUTF16("Name");
@@ -603,7 +603,7 @@ TEST_F(AutofillTableTest,
 
 TEST_F(AutofillTableTest,
        Autofill_RemoveFormElementsAddedBetween_UsedOnlyAfter) {
-  // Add an entry used only after the targetted range.
+  // Add an entry used only after the targeted range.
   AutofillChangeList changes;
   FormFieldData field;
   field.name = ASCIIToUTF16("Name");
@@ -631,7 +631,7 @@ TEST_F(AutofillTableTest,
 
 TEST_F(AutofillTableTest,
        Autofill_RemoveFormElementsAddedBetween_UsedOnlyDuring) {
-  // Add an entry used entirely during the targetted range.
+  // Add an entry used entirely during the targeted range.
   AutofillChangeList changes;
   FormFieldData field;
   field.name = ASCIIToUTF16("Name");
@@ -662,7 +662,7 @@ TEST_F(AutofillTableTest,
 
 TEST_F(AutofillTableTest,
        Autofill_RemoveFormElementsAddedBetween_UsedBeforeAndDuring) {
-  // Add an entry used both before and during the targetted range.
+  // Add an entry used both before and during the targeted range.
   AutofillChangeList changes;
   FormFieldData field;
   field.name = ASCIIToUTF16("Name");
@@ -699,7 +699,7 @@ TEST_F(AutofillTableTest,
 
 TEST_F(AutofillTableTest,
        Autofill_RemoveFormElementsAddedBetween_UsedDuringAndAfter) {
-  // Add an entry used both during and after the targetted range.
+  // Add an entry used both during and after the targeted range.
   AutofillChangeList changes;
   FormFieldData field;
   field.name = ASCIIToUTF16("Name");

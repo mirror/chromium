@@ -226,7 +226,7 @@ void PasswordProtectionRequest::SendRequest() {
 void PasswordProtectionRequest::StartTimeout() {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-  // If request is not done withing 10 seconds, we cancel this request.
+  // If request is not done within 10 seconds, we cancel this request.
   // The weak pointer used for the timeout will be invalidated (and
   // hence would prevent the timeout) if the check completes on time and
   // execution reaches Finish().

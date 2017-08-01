@@ -72,7 +72,7 @@ class DataUsageStore {
  private:
   friend class DataUsageStoreTest;
 
-  // Converts the given |bucket| into a string format for persistance to
+  // Converts the given |bucket| into a string format for persistence to
   // |DataReductionProxyStore| and adds it to the map. The key is generated
   // based on |current_bucket_index_|.
   // |current_bucket_index_| will be incremented before generating the key if

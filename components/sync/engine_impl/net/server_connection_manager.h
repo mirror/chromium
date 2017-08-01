@@ -43,11 +43,11 @@ struct HttpResponse {
     IO_ERROR,
 
     // SYNC_SERVER_ERROR is returned when the HTTP status code indicates that
-    // a non-auth error has occured.
+    // a non-auth error has occurred.
     SYNC_SERVER_ERROR,
 
     // SYNC_AUTH_ERROR is returned when the HTTP status code indicates that an
-    // auth error has occured (i.e. a 401 or sync-specific AUTH_INVALID
+    // auth error has occurred (i.e. a 401 or sync-specific AUTH_INVALID
     // response)
     // TODO(tim): Caring about AUTH_INVALID is a layering violation. But
     // this app-specific logic is being added as a stable branch hotfix so

@@ -64,8 +64,8 @@ class ActivationStateComputingNavigationThrottle
 
   // After the navigation is finished, the client may optionally choose to
   // continue using the DocumentSubresourceFilter that was used to compute the
-  // activation state for this frame. The transfered filter can be cached and
-  // used to calculate load policy for subframe navigations occuring in this
+  // activation state for this frame. The transferred filter can be cached and
+  // used to calculate load policy for subframe navigations occurring in this
   // frame.
   std::unique_ptr<AsyncDocumentSubresourceFilter> ReleaseFilter();
 

@@ -719,7 +719,7 @@ TEST_F(URLBlacklistManagerTest, BlacklistBasicCoverage) {
   EXPECT_FALSE(IsMatch("wrong ://*", "wrong ://app"));
   EXPECT_FALSE(IsMatch(" wrong:*", " wrong://app"));
 
-  // Ommitting the scheme matches most standard schemes.
+  // Omitting the scheme matches most standard schemes.
   EXPECT_TRUE(IsMatch("example.com", "chrome:example.com"));
   EXPECT_TRUE(IsMatch("example.com", "chrome://example.com"));
   EXPECT_TRUE(IsMatch("example.com", "file://example.com/"));
@@ -730,7 +730,7 @@ TEST_F(URLBlacklistManagerTest, BlacklistBasicCoverage) {
   EXPECT_TRUE(IsMatch("example.com", "ws://example.com"));
   EXPECT_TRUE(IsMatch("example.com", "wss://example.com"));
 
-  // Some schemes are not matched when the scheme is ommitted.
+  // Some schemes are not matched when the scheme is omitted.
   EXPECT_FALSE(IsMatch("example.com", "about://example.com"));
   EXPECT_FALSE(IsMatch("example.com", "about:example.com"));
   EXPECT_FALSE(IsMatch("example.com/*", "filesystem:///something"));

@@ -177,7 +177,7 @@ void ProcessUpdate(const sync_pb::SyncEntity& update,
   const syncable::Id& server_id = SyncableIdFromProto(update.id_string());
   const std::string name = SyncerProtoUtil::NameFromSyncEntity(update);
 
-  // Look to see if there's a local item that should recieve this update,
+  // Look to see if there's a local item that should receive this update,
   // maybe due to a duplicate client tag or a lost commit response.
   syncable::Id local_id = FindLocalIdToUpdate(trans, update);
 

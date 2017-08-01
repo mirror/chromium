@@ -96,7 +96,7 @@ class VariationsFieldTrialCreator {
   // Records the time of the most recent successful fetch.
   void RecordLastFetchTime();
 
-  // Loads the seed from the variations store into |seed|. If successfull,
+  // Loads the seed from the variations store into |seed|. If successful,
   // |seed| will contain the loaded data and true is returned. Set as virtual
   // so that it can be overridden by tests.
   virtual bool LoadSeed(VariationsSeed* seed);

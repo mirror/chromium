@@ -15,7 +15,7 @@ namespace testing {
 
 // This test class is intended to be used in conjunction with an
 // AsyncDocumentSubresourceFilter, and can be used to expect a certain
-// activation result occured.
+// activation result occurred.
 class TestActivationStateCallbackReceiver {
  public:
   TestActivationStateCallbackReceiver();

@@ -396,7 +396,7 @@ class RemoteSuggestionsProviderImplTest : public ::testing::Test {
   PrefetchedPagesTracker* prefetched_pages_tracker() {
     return prefetched_pages_tracker_;
   }
-  // TODO(tschumann): Make this a strict-mock. We want to avoid unneccesary
+  // TODO(tschumann): Make this a strict-mock. We want to avoid unnecessary
   // network requests.
   NiceMock<MockImageFetcher>* image_fetcher() { return image_fetcher_; }
   FakeImageDecoder* image_decoder() { return &image_decoder_; }

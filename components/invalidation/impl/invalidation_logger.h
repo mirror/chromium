@@ -30,11 +30,11 @@ class InvalidationLoggerObserver;
 // and then rebroadcast it to observers than can display it accordingly
 // (like a debugging page). This class only stores lightweight state, as in
 // which services are registered and listening for certain objects, and the
-// status of the InvalidatorService (in order not to increase unnecesary
+// status of the InvalidatorService (in order not to increase unnecessary
 // memory usage).
 //
 // Observers can be registered and will be called to be notified of any
-// status change immediatly. They can log there the history of what messages
+// status change immediately. They can log there the history of what messages
 // they receive.
 
 class InvalidationLogger {

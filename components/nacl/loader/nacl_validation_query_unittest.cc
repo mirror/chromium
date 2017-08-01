@@ -152,7 +152,7 @@ TEST_F(NaClValidationQueryTest, InconsistentShort) {
   AssertQueryDifferent();
 }
 
-// Test for a bug caught during development where AddData would accidently
+// Test for a bug caught during development where AddData would accidentally
 // overwrite previously written data and add uninitialzied memory to the hash.
 TEST_F(NaClValidationQueryTest, ConsistentShortBug) {
   query1->query->AddData(kShortData, sizeof(kShortData));
@@ -166,7 +166,7 @@ TEST_F(NaClValidationQueryTest, ConsistentShortBug) {
   AssertQuerySame();
 }
 
-// Test for a bug caught during development where AddData would accidently
+// Test for a bug caught during development where AddData would accidentally
 // overwrite previously written data and add uninitialzed memory to the hash.
 TEST_F(NaClValidationQueryTest, InconsistentShortBug1) {
   query1->query->AddData(kShortData, sizeof(kShortData));

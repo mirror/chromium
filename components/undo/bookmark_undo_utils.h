@@ -13,7 +13,7 @@ class UndoManager;
 // ScopedSuspendBookmarkUndo --------------------------------------------------
 
 // Scopes the suspension of the undo tracking for non-user initiated changes
-// such as those occuring during account synchronization.
+// such as those occurring during account synchronization.
 class ScopedSuspendBookmarkUndo {
  public:
   explicit ScopedSuspendBookmarkUndo(

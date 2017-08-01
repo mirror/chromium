@@ -64,7 +64,7 @@ class AutocompleteResult {
   AutocompleteResult();
   ~AutocompleteResult();
 
-  // Copies matches from |old_matches| to provide a consistant result set. See
+  // Copies matches from |old_matches| to provide a consistent result set. See
   // comments in code for specifics.
   void CopyOldMatches(const AutocompleteInput& input,
                       const AutocompleteResult& old_matches,

@@ -108,7 +108,7 @@ class ArcSessionRunner : public ArcSession::Observer,
     // with other services.
     RUNNING,
 
-    // Request to stop ARC instance is recieved. Stopping the ARC instance.
+    // Request to stop ARC instance is received. Stopping the ARC instance.
     STOPPING,
   };
 

@@ -159,7 +159,7 @@ TEST_F(HttpTest, SdchDisabledByDefault) {
   EXPECT_FALSE([[delegate_ responseBody] containsString:@"sdch"]);
 }
 
-// Verify that explictly setting Accept-Encoding request header to 'gzip,sdch"
+// Verify that explicitly setting Accept-Encoding request header to 'gzip,sdch"
 // is passed to the server and does not trigger any failures. This behavior may
 // In the future Cronet may not allow caller to set Accept-Encoding header and
 // could limit it to set of internally suported and enabled encodings, matching
@@ -176,7 +176,7 @@ TEST_F(HttpTest, AcceptEncodingSdchIsAllowed) {
   EXPECT_TRUE([[delegate_ responseBody] containsString:@"gzip,sdch"]);
 }
 
-// Verify that explictly setting Accept-Encoding request header to 'foo,bar"
+// Verify that explicitly setting Accept-Encoding request header to 'foo,bar"
 // is passed to the server and does not trigger any failures. This behavior may
 // In the future Cronet may not allow caller to set Accept-Encoding header and
 // could limit it to set of internally suported and enabled encodings, matching

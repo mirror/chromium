@@ -17,7 +17,7 @@ namespace metrics {
 // SingleSampleMetricsFactory implementation for creating SingleSampleMetric
 // instances that communicate over mojo to instances in another process.
 //
-// Persistance outside of the current process allows these metrics to record a
+// Persistence outside of the current process allows these metrics to record a
 // sample even in the event of sudden process termination. As an example, this
 // is useful for garbage collected objects which may never get a chance to run
 // their destructors in the event of a fast shutdown event (process kill).

@@ -324,7 +324,7 @@ class VIZ_COMMON_EXPORT GLHelper {
   GLint MaxDrawBuffers();
 
   // Checks whether the readbback is supported for texture with the
-  // matching config. This doesnt check for cross format readbacks.
+  // matching config. This doesn't check for cross format readbacks.
   bool IsReadbackConfigSupported(SkColorType texture_format);
 
  protected:

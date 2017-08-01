@@ -84,7 +84,7 @@ class ProcessorEntityTracker {
   void Delete();
 
   // Initializes a message representing this item's uncommitted state
-  // and assumes that it is forwarded to the sync engine for commiting.
+  // and assumes that it is forwarded to the sync engine for committing.
   void InitializeCommitRequestData(CommitRequestData* request);
 
   // Receives a successful commit response.

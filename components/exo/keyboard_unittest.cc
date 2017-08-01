@@ -461,7 +461,7 @@ TEST_F(KeyboardTest, AckKeyboardKeyExpired) {
       .WillOnce(testing::Return(1));
   generator.PressKey(ui::VKEY_W, ui::EF_CONTROL_DOWN);
 
-  // Keyboard processes pending events as if it's not handled if ack isnt' sent.
+  // Keyboard processes pending events as if it's not handled if ack isn't sent.
   EXPECT_CALL(*shell_surface.get(), AcceleratorPressed(ui::Accelerator(
                                         ui::VKEY_W, ui::EF_CONTROL_DOWN,
                                         ui::Accelerator::KeyState::PRESSED)))

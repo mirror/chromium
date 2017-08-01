@@ -744,7 +744,7 @@ void PersonalDataManager::RemoveByGUID(const std::string& guid) {
   } else {
     database_->RemoveAutofillProfile(guid);
 
-    // Reset the billing_address_id of any card that refered to this profile.
+    // Reset the billing_address_id of any card that referred to this profile.
     for (CreditCard* credit_card : GetCreditCards()) {
       if (credit_card->billing_address_id() == guid) {
         credit_card->set_billing_address_id("");
@@ -2008,7 +2008,7 @@ void PersonalDataManager::ConvertWalletAddressesAndUpdateWalletCards() {
   std::unordered_map<std::string, AutofillProfile*> server_id_profiles_map;
 
   // Create the map used to update credit card's billing addresses after the
-  // convertion/merge.
+  // conversion/merge.
   std::unordered_map<std::string, std::string> guids_merge_map;
 
   bool has_converted_addresses = ConvertWalletAddressesToLocalProfiles(

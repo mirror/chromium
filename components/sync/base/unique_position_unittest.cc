@@ -197,7 +197,7 @@ TEST_F(RelativePositioningTest, ComparisonSanityTest2) {
   EXPECT_FALSE(b.LessThan(a));
 }
 
-// Exercise comparision functions by sorting and re-sorting the list.
+// Exercise comparison functions by sorting and re-sorting the list.
 TEST_F(RelativePositioningTest, SortPositions) {
   ASSERT_EQ(kNumPositions, kNumSortedPositions);
   UniquePosition positions[arraysize(kPositionArray)];

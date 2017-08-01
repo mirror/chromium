@@ -467,7 +467,7 @@ void Surface::CommitSurfaceHierarchy(
   for (const auto& sub_surface_entry : base::Reversed(sub_surfaces_)) {
     auto* sub_surface = sub_surface_entry.first;
     // Synchronsouly commit all pending state of the sub-surface and its
-    // decendents.
+    // descendants.
     sub_surface->CommitSurfaceHierarchy(
         origin + sub_surface_entry.second.OffsetFromOrigin(), frame_type,
         frame_sink_holder, frame, frame_callbacks, presentation_callbacks);

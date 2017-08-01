@@ -40,7 +40,7 @@ namespace syncer {
 // data modification. Calling CommitWriteBatch writes all accumulated changes to
 // disk atomically. Callback passed to CommitWriteBatch will be called with
 // result of write operation. If write batch object is destroyed without
-// comitting accumulated write operations will not be persisted.
+// committing accumulated write operations will not be persisted.
 //
 // Destroying store object doesn't necessarily cancel asynchronous operations
 // issued previously. You should be prepared to handle callbacks from those

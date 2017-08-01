@@ -43,7 +43,7 @@ class PasswordGenerationAgent;
 // the browser.  There is one AutofillAgent per RenderFrame.
 // Note that Autofill encompasses:
 // - single text field suggestions, that we usually refer to as Autocomplete,
-// - password form fill, refered to as Password Autofill, and
+// - password form fill, referred to as Password Autofill, and
 // - entire form fill based on one field entry, referred to as Form Autofill.
 
 class AutofillAgent : public content::RenderFrameObserver,

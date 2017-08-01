@@ -354,7 +354,7 @@ void TranslateHelper::CheckTranslateStatus() {
 
   if (HasTranslationFinished()) {
     std::string actual_source_lang;
-    // Translation was successfull, if it was auto, retrieve the source
+    // Translation was successful, if it was auto, retrieve the source
     // language the Translate Element detected.
     if (source_lang_ == kAutoDetectionLanguage) {
       actual_source_lang = GetOriginalPageLanguage();

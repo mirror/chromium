@@ -22,9 +22,9 @@ const char kGaiaCookieHash[] = "gaia_cookie.hash";
 // should be converted into base::Time.
 const char kGaiaCookieChangedTime[] = "gaia_cookie.changed_time";
 
-// The last time that periodic reporting occured, to allow us to report as close
-// to once per intended interval as possible, through restarts. Stored as a
-// double that should be converted into base::Time.
+// The last time that periodic reporting occurred, to allow us to report as
+// close to once per intended interval as possible, through restarts. Stored as
+// a double that should be converted into base::Time.
 const char kGaiaCookiePeriodicReportTime[] = "gaia_cookie.periodic_report_time";
 
 // The profile's hosted domain; empty if unset;

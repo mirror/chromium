@@ -134,7 +134,7 @@ class COMPONENTS_PREFS_EXPORT JsonPrefStore
                         std::unique_ptr<base::Clock> clock);
     ~WriteCountHistogram();
 
-    // Record that a write has occured.
+    // Record that a write has occurred.
     void RecordWriteOccured();
 
     // Reports writes (that have not yet been reported) in all of the recorded
@@ -160,7 +160,7 @@ class COMPONENTS_PREFS_EXPORT JsonPrefStore
     // of write counts.
     base::Time last_report_time_;
 
-    // The number of writes that have occured since the last write count was
+    // The number of writes that have occurred since the last write count was
     // reported.
     uint32_t writes_since_last_report_;
 

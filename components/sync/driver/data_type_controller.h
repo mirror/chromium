@@ -54,7 +54,7 @@ class DataTypeController : public base::SupportsWeakPtr<DataTypeController> {
                           // determined by cloud state.
     ASSOCIATION_FAILED,   // An error occurred during model association.
     ABORTED,              // Start was aborted by calling Stop().
-    UNRECOVERABLE_ERROR,  // An unrecoverable error occured.
+    UNRECOVERABLE_ERROR,  // An unrecoverable error occurred.
     NEEDS_CRYPTO,         // The data type cannot be started yet because it
                           // depends on the cryptographer.
     RUNTIME_ERROR,        // After starting, a runtime error was encountered.

@@ -67,7 +67,7 @@ void BookmarkProvider::DoAutocomplete(const AutocompleteInput& input) {
   //    partial word matches. Any term of lesser length will only be used as an
   //    exact match. 'def' will match against 'define' but 'de' will not match.
   //  - A search containing multiple terms will return results with those words
-  //    occuring in any order.
+  //    occurring in any order.
   //  - Terms enclosed in quotes comprises a phrase that must match exactly.
   //  - Multiple terms enclosed in quotes will require those exact words in that
   //    exact order to match.

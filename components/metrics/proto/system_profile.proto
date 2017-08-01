@@ -413,7 +413,7 @@ message SystemProfileProto {
     optional int64 last_automatic_start_timestamp = 2;
 
     // The date at which Google Update last successfully sent an update check
-    // and recieved an intact response from the server, in seconds since the
+    // and received an intact response from the server, in seconds since the
     // Unix epoch. (The updates don't need to be successfully installed.)
     optional int64 last_update_check_timestamp = 3;
 

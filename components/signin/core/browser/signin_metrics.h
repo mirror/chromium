@@ -43,7 +43,7 @@ enum ProfileSignout {
   ABORT_SIGNIN,
   // The sync server caused the profile to be signed out.
   SERVER_FORCED_DISABLE,
-  // The credentials are being transfered to a new profile, so the old one is
+  // The credentials are being transferred to a new profile, so the old one is
   // signed out.
   TRANSFER_CREDENTIALS,
   // Signed out because credentials are invalid and force-sign-in is enabled.
@@ -187,7 +187,7 @@ enum CrossDevicePromoEligibility {
   OPTED_OUT,
   // The profile is already signed in.
   SIGNED_IN,
-  // The profile does not have a single, peristent GAIA cookie.
+  // The profile does not have a single, persistent GAIA cookie.
   NOT_SINGLE_GAIA_ACCOUNT,
   // Yet to determine how many devices the user has.
   UNKNOWN_COUNT_DEVICES,

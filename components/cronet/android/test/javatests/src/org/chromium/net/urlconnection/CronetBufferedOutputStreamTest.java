@@ -69,7 +69,7 @@ public class CronetBufferedOutputStreamTest extends CronetTestBase {
         out.write(TestUtil.UPLOAD_DATA);
         connection.connect();
         try {
-            // Attemp to write some more.
+            // Attempt to write some more.
             out.write(TestUtil.UPLOAD_DATA);
             fail();
         } catch (IllegalStateException e) {

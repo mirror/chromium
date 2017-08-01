@@ -71,7 +71,7 @@ class TranslateScript {
   static const char kJavascriptLoaderCallbackQueryName[];
   static const char kJavascriptLoaderCallbackQueryValue[];
 
-  // The callback when the script is fetched or a server error occured.
+  // The callback when the script is fetched or a server error occurred.
   void OnScriptFetchComplete(int id, bool success, const std::string& data);
 
   // URL fetcher to fetch the translate script.

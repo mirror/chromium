@@ -907,7 +907,7 @@ TEST_F(GCMMessageCryptographerReferenceTest, ReferenceDraft08) {
       kAuthSecret, base::Base64UrlDecodePolicy::IGNORE_PADDING, &auth_secret));
 
   // Attempt to decrypt the message using a GCMMessageCryptographer for this
-  // version of the draft, and then re-encrypt it agian to make sure it matches.
+  // version of the draft, and then re-encrypt it again to make sure it matches.
   GCMMessageCryptographer cryptographer(
       GCMMessageCryptographer::Version::DRAFT_08);
 

@@ -47,7 +47,7 @@ struct ThreatMetadata {
   bool operator!=(const ThreatMetadata& other) const;
 
   // Type of blacklisted page. Used on malware and UwS lists.
-  // This will be NONE if it wasn't present in the reponse.
+  // This will be NONE if it wasn't present in the response.
   ThreatPatternType threat_pattern_type;
 
   // Set of permissions blocked. Used with threat_type API_ABUSE.

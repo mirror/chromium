@@ -193,7 +193,7 @@ class DeviceInfoSyncBridgeTest : public testing::Test,
   }
 
   // Creates the bridge and runs any outstanding tasks. This will typically
-  // cause all initialization callbacks between the sevice and store to fire.
+  // cause all initialization callbacks between the service and store to fire.
   void InitializeAndPump() {
     InitializeBridge();
     base::RunLoop().RunUntilIdle();

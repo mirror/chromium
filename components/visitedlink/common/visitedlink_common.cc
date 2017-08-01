@@ -72,7 +72,7 @@ bool VisitedLinkCommon::IsVisited(Fingerprint fingerprint) const {
 //
 // FIXME: this uses the MD5SUM of the 16-bit character version. For systems
 // where wchar_t is not 16 bits (Linux uses 32 bits, I think), this will not be
-// compatable. We should define explicitly what should happen here across
+// compatible. We should define explicitly what should happen here across
 // platforms, and convert if necessary (probably to UTF-16).
 
 // static

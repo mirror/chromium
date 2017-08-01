@@ -88,7 +88,7 @@ void SubresourceFilterSafeBrowsingClientRequest::SendCheckResultToClient(
   result.pattern_type = metadata.threat_pattern_type;
   result.check_time = base::TimeTicks::Now() - start_time_;
 
-  // This memeber is separate from |request_completed_|, in that it just
+  // This member is separate from |request_completed_|, in that it just
   // indicates that this request is done processing (due to completion or
   // timeout).
   result.finished = true;

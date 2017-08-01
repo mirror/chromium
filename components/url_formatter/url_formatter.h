@@ -38,7 +38,7 @@ namespace url_formatter {
 typedef uint32_t FormatUrlType;
 typedef uint32_t FormatUrlTypes;
 
-// Nothing is ommitted.
+// Nothing is omitted.
 extern const FormatUrlType kFormatUrlOmitNothing;
 
 // If set, any username and password are removed.
@@ -51,7 +51,7 @@ extern const FormatUrlType kFormatUrlOmitHTTP;
 // meaningful for non-file "standard" URLs.
 extern const FormatUrlType kFormatUrlOmitTrailingSlashOnBareHostname;
 
-// Convenience for omitting all unecessary types. Does not include experimental
+// Convenience for omitting all unnecessary types. Does not include experimental
 // flags below.
 extern const FormatUrlType kFormatUrlOmitAll;
 

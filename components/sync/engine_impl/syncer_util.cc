@@ -188,7 +188,7 @@ UpdateAttemptResponse AttemptToUpdateEntry(
   // conflict, else we try to perform normal conflict resolution prematurely or
   // the syncer may get stuck. As such, we return CONFLICT_ENCRYPTION, which is
   // treated as an unresolvable conflict. See the description in syncer_types.h.
-  // This prevents any unsynced changes from commiting and postpones conflict
+  // This prevents any unsynced changes from committing and postpones conflict
   // resolution until all data can be decrypted.
   if (specifics.has_encrypted() &&
       !cryptographer->CanDecrypt(specifics.encrypted())) {

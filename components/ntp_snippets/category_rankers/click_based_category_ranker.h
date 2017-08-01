@@ -45,7 +45,7 @@ class ClickBasedCategoryRanker : public CategoryRanker {
   void OnSuggestionOpened(Category category) override;
   void OnCategoryDismissed(Category category) override;
 
-  // Returns time when last decay occured. For testing only.
+  // Returns time when last decay occurred. For testing only.
   base::Time GetLastDecayTime() const;
 
   static void RegisterProfilePrefs(PrefRegistrySimple* registry);

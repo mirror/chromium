@@ -125,7 +125,7 @@ class LogoTracker : public net::URLFetcherDelegate {
  private:
 
   // These values must stay in sync with the NewTabPageLogoDownloadOutcome enum
-  // in histograms.xml. And any addtion should be treated as append-only!
+  // in histograms.xml. And any addition should be treated as append-only!
   // Animated doodle is not covered by this enum.
   enum LogoDownloadOutcome {
       DOWNLOAD_OUTCOME_NEW_LOGO_SUCCESS,

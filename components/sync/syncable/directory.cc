@@ -1094,7 +1094,7 @@ void Directory::MarkInitialSyncEndedForType(BaseWriteTransaction* trans,
   // get updated automatically at the end of update cycle when the update gets
   // applied. However if this is a type with client generated root, the root
   // node gets created locally and never goes through the update cycle. In that
-  // case its base version has to be explictly changed from CHANGES_VERSION
+  // case its base version has to be explicitly changed from CHANGES_VERSION
   // at the end of the initial update cycle to mark the type as downloaded.
   // See Directory::InitialSyncEndedForType
   DCHECK(IsTypeWithClientGeneratedRoot(type));

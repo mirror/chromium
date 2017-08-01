@@ -67,7 +67,7 @@ bool TracingManager::GetTraceData(int id, const TraceDataCallback& callback) {
     if (data == trace_data_.end())
       return false;
 
-    // Always return the data asychronously, so the behavior is consistant.
+    // Always return the data asychronously, so the behavior is consistent.
     base::ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE, base::Bind(callback, data->second));
     return true;

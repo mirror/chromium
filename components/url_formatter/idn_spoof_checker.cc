@@ -75,7 +75,7 @@ IDNSpoofChecker::IDNSpoofChecker() {
   // Sets allowed characters in IDN labels and turns on USPOOF_CHAR_LIMIT.
   SetAllowedUnicodeSet(&status);
 
-  // Enable the return of auxillary (non-error) information.
+  // Enable the return of auxiliary (non-error) information.
   // We used to disable WHOLE_SCRIPT_CONFUSABLE check explicitly, but as of
   // ICU 58.1, WSC is a no-op in a single string check API.
   int32_t checks = uspoof_getChecks(checker_, &status) | USPOOF_AUX_INFO;

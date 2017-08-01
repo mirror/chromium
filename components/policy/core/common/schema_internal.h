@@ -91,7 +91,7 @@ union POLICY_EXPORT RestrictionNode {
   } enumeration_restriction;
 
   // For integer type only, represents that all values between |min_value|
-  // and |max_value| can be choosen. Note that integer type in base::Value
+  // and |max_value| can be chosen. Note that integer type in base::Value
   // is bounded, so this can also be used if only one of |min_value| and
   // |max_value| is stated. |max_value| being greater or equal to |min_value|
   // is assumed.

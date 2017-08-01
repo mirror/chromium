@@ -569,7 +569,7 @@ message DataTypeProgressMarker {
   // The opaque semantics of this field are to afford server implementations
   // some flexibility in implementing progress tracking.  For instance,
   // a server implementation built on top of a distributed storage service --
-  // or multiple heterogenous such services -- might need to supply a vector
+  // or multiple heterogeneous such services -- might need to supply a vector
   // of totally ordered monotonic update timestamps, rather than a single
   // monotonically increasing value.  Other optimizations may also be
   // possible if the server is allowed to embed arbitrary information in

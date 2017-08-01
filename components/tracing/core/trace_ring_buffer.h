@@ -75,7 +75,7 @@ class TRACING_EXPORT TraceRingBuffer {
   size_t num_chunks() const { return num_chunks_; }
 
   // Returns the number of chunks taken and not returned, without counting any
-  // bankrupcy chunk obtained when the ring buffer was full.
+  // bankruptcy chunk obtained when the ring buffer was full.
   size_t GetNumChunksTaken() const;
 
   const Chunk* chunks_for_testing() const { return chunks_.get(); }

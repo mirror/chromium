@@ -93,7 +93,7 @@ TEST_F(WebContentsMainFrameObserverTest, DoesNotResetOnInPageNavigation) {
   main_frame_observer_->DocumentLoadedInFrame(main_rfh());
   ASSERT_TRUE(main_frame_observer_->is_document_loaded_in_main_frame());
 
-  // Navigating withing the page should not result in waiting for a page load.
+  // Navigating within the page should not result in waiting for a page load.
   Navigate(true, true);
   ASSERT_TRUE(main_frame_observer_->is_initialized());
   ASSERT_TRUE(main_frame_observer_->is_document_loaded_in_main_frame());

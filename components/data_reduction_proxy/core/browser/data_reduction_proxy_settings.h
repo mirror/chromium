@@ -105,7 +105,7 @@ class DataReductionProxySettings : public DataReductionProxyServiceObserver {
   // used.
   bool CanUseDataReductionProxy(const GURL& url) const;
 
-  // Returns true if the proxy is managed by an adminstrator's policy.
+  // Returns true if the proxy is managed by an administrator's policy.
   bool IsDataReductionProxyManaged();
 
   // Enables or disables the data reduction proxy.

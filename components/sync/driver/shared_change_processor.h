@@ -85,8 +85,8 @@ class SharedChangeProcessor
   // shut down from the point of view of this datatype.
   // Note: Once disconnected, you cannot reconnect without creating a new
   // SharedChangeProcessor.
-  // Returns: true if we were previously succesfully connected, false if we were
-  // already disconnected.
+  // Returns: true if we were previously successfully connected, false if we
+  // were already disconnected.
   virtual bool Disconnect();
 
   // GenericChangeProcessor stubs (with disconnect support).
@@ -130,7 +130,7 @@ class SharedChangeProcessor
   virtual void RecordAssociationTime(base::TimeDelta time);
 
   // Monitor lock for this object. All methods that interact with the change
-  // processor must aquire this lock and check whether we're disconnected or
+  // processor must acquire this lock and check whether we're disconnected or
   // not. Once disconnected, all attempted changes to or loads from the change
   // processor return errors. This enables us to shut down the syncer without
   // having to wait for possibly non-UI thread datatypes to complete work.

@@ -95,7 +95,7 @@ PatternPair ParsePatternString(const std::string& pattern_str) {
   // If the |pattern_str| is an empty string then the |pattern_string_list|
   // contains a single empty string. In this case the empty string will be
   // removed to signal an invalid |pattern_str|. Invalid pattern strings are
-  // handle by the "if"-statment below. So the order of the if statements here
+  // handle by the "if"-statement below. So the order of the if statements here
   // must be preserved.
   if (pattern_str_list.size() == 1) {
     if (pattern_str_list[0].empty()) {

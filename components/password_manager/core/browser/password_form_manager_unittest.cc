@@ -3727,7 +3727,7 @@ TEST_F(PasswordFormManagerTest, SuppressedFormsHistograms) {
 }
 
 // If the frame containing the login form is served over HTTPS, no histograms on
-// supressed HTTPS forms should be recorded. Everything else should still be.
+// suppressed HTTPS forms should be recorded. Everything else should still be.
 TEST_F(PasswordFormManagerTest, SuppressedHTTPSFormsHistogram_NotRecordedFor) {
   base::HistogramTester histogram_tester;
 

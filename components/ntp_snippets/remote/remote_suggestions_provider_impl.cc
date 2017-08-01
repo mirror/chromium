@@ -679,7 +679,7 @@ void RemoteSuggestionsProviderImpl::OnFetchFinished(
     return;
   }
 
-  // Record the fetch time of a successfull background fetch.
+  // Record the fetch time of a successful background fetch.
   if (!interactive_request && status.IsSuccess()) {
     pref_service_->SetInt64(prefs::kLastSuccessfulBackgroundFetchTime,
                             clock_->Now().ToInternalValue());
@@ -736,7 +736,7 @@ void RemoteSuggestionsProviderImpl::OnFetchFinished(
   }
 
   // TODO(tschumann): The suggestions fetcher needs to signal errors so that we
-  // know why we received no data. If an error occured, none of the following
+  // know why we received no data. If an error occurred, none of the following
   // should take place.
 
   // We might have gotten new categories (or updated the titles of existing

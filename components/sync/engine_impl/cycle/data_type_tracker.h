@@ -67,7 +67,7 @@ class DataTypeTracker {
   // Takes note that initial sync is pending for this type.
   void RecordInitialSyncRequired();
 
-  // Takes note that the conflict happended for this type, need to sync to
+  // Takes note that the conflict happened for this type, need to sync to
   // resolve conflict locally.
   void RecordCommitConflict();
 
