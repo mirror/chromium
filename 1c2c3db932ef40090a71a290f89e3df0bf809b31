@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e2a8f75_f1dc231f",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-08-01T07:31:15Z",
+      "side": 1,
+      "message": "Is this a new file you meant to check in?",
+      "range": {
+        "startLine": 24,
+        "startChar": 46,
+        "endLine": 24,
+        "endChar": 47
+      },
+      "revId": "1c2c3db932ef40090a71a290f89e3df0bf809b31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28842f55_a7db7b3e",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSTokenizer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-08-01T07:31:15Z",
+      "side": 1,
+      "message": "Where is this class defined?",
+      "range": {
+        "startLine": 113,
+        "startChar": 15,
+        "endLine": 113,
+        "endChar": 35
+      },
+      "revId": "1c2c3db932ef40090a71a290f89e3df0bf809b31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
