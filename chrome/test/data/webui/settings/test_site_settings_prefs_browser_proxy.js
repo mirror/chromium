@@ -131,6 +131,26 @@ class TestSiteSettingsPrefsBrowserProxy extends TestBrowserProxy {
   }
 
   /**
+   * Sets one exception for a given category, replacing any existing exceptions
+   * for the same origin. Note this ignores embedding origins.
+   * @param {!settings.ContentSettingsTypes} category The category the new
+   *     exception belongs to.
+   * @param {!RawSiteException} newException The new preference to add/replace.
+   */
+  setSinglePref(category, newException) {
+    // Remove entries from the current prefs which have the same origin.
+    this.prefs_.exceptions[category] = /** @type {!Array<RawSiteException>} */
+        (this.prefs_.exceptions[category].filter((categoryException) => {
+          if (categoryException.origin != newException.origin)
+            return true;
+        }));
+    this.prefs_.exceptions[category].push(newException);
+
+    cr.webUIListenerCallback(
+        'contentSettingSitePermissionChanged', category, newException.origin);
+  }
+
+  /**
    * Sets the prefs to use when testing.
    * @param {!Array<ZoomLevelEntry>} list The zoom list to set.
    */
@@ -327,7 +347,7 @@ class TestSiteSettingsPrefsBrowserProxy extends TestBrowserProxy {
 
       var setting;
       var source;
-      this.prefs_.exceptions[contentType].some(function(originPrefs) {
+      this.prefs_.exceptions[contentType].some((originPrefs) => {
         if (originPrefs.origin == origin) {
           setting = originPrefs.setting;
           source = originPrefs.source;
@@ -335,7 +355,7 @@ class TestSiteSettingsPrefsBrowserProxy extends TestBrowserProxy {
         }
       });
       assert(
-          settings !== undefined,
+          setting != undefined,
           'There was no exception set for origin: ' + origin +
               ' and contentType: ' + contentType);
 
