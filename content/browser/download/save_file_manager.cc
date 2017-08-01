@@ -322,7 +322,11 @@ void SaveFileManager::OnSaveURL(const GURL& url,
           setting:
             "This feature cannot be disable by settings. The request is made "
             "only if user chooses 'Save link as...' in context menu."
-          policy_exception_justification: "Not implemented."
+          chrome_policy {
+            AllowFileSelectionDialogs {
+              AllowFileSelectionDialogs: false
+            }
+          }
         })");
   std::unique_ptr<net::URLRequest> request(request_context->CreateRequest(
       url, net::DEFAULT_PRIORITY, NULL, traffic_annotation));
