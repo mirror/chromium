@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8abd57ab_f78c30d2",
+        "filename": "base/run_loop.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-01T21:33:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2fca2f11_e30ed272",
+      "revId": "8e9d7f70feb90e78bf3682fd4dd288ff9be51e6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96f37b0d_1ba6caaf",
         "filename": "base/run_loop.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "8e9d7f70feb90e78bf3682fd4dd288ff9be51e6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20bbca86_393fc294",
+        "filename": "base/run_loop.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-01T21:33:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96f37b0d_1ba6caaf",
+      "revId": "8e9d7f70feb90e78bf3682fd4dd288ff9be51e6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7689fe26_d9e0b317",
+        "filename": "base/run_loop.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-01T21:33:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1b7d556_40b4aec8",
+      "revId": "8e9d7f70feb90e78bf3682fd4dd288ff9be51e6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f2deb64_c1d96604",
         "filename": "base/run_loop_unittest.cc",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "8e9d7f70feb90e78bf3682fd4dd288ff9be51e6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36e20418_dbbf85a5",
+        "filename": "base/run_loop_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-01T21:33:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f2deb64_c1d96604",
+      "revId": "8e9d7f70feb90e78bf3682fd4dd288ff9be51e6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "4b6ce30e_c64c28a7",
+        "filename": "base/run_loop_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-01T21:33:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "045a46be_2a6eec8e",
+      "revId": "8e9d7f70feb90e78bf3682fd4dd288ff9be51e6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "314c36c4_9695a791",
         "filename": "base/run_loop_unittest.cc",
         "patchSetId": 2
@@ -101,6 +191,24 @@
       "revId": "8e9d7f70feb90e78bf3682fd4dd288ff9be51e6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82907cf9_7cc6d36f",
+        "filename": "base/run_loop_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-01T21:33:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "314c36c4_9695a791",
+      "revId": "8e9d7f70feb90e78bf3682fd4dd288ff9be51e6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "6533226d_1c24435a",
+        "filename": "base/run_loop_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-01T21:33:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "585b73fd_1c0a2b51",
+      "revId": "8e9d7f70feb90e78bf3682fd4dd288ff9be51e6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3fa9d57a_38086785",
         "filename": "base/run_loop_unittest.cc",
         "patchSetId": 2
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "de089f89_f15adf47",
+        "filename": "base/run_loop_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-01T21:33:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3fa9d57a_38086785",
+      "revId": "8e9d7f70feb90e78bf3682fd4dd288ff9be51e6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ec4ddb2_1cb0c464",
         "filename": "base/run_loop_unittest.cc",
         "patchSetId": 2
@@ -152,6 +296,24 @@
       "revId": "8e9d7f70feb90e78bf3682fd4dd288ff9be51e6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "717d8cc3_a02913f2",
+        "filename": "base/run_loop_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-01T21:33:21Z",
+      "side": 1,
+      "message": "This doesn\u0027t test the test. It tests that a RunLoop::RegisterDelegateForCurrentThread() must be invoked before RunLoop(). This is a pre-existing DCHECK (highlighted in the latest diff by moving the comment) which is now testable thanks to the mock :).",
+      "parentUuid": "0ec4ddb2_1cb0c464",
+      "revId": "8e9d7f70feb90e78bf3682fd4dd288ff9be51e6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

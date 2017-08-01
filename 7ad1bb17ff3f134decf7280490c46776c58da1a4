@@ -16,6 +16,24 @@
       "revId": "7ad1bb17ff3f134decf7280490c46776c58da1a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed255030_2f2638c3",
+        "filename": "base/run_loop_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-01T21:33:21Z",
+      "side": 0,
+      "message": "Because I want this test to be independent of other base constructs (ref. description of kTestDelegate), in particular MessageLoop and TaskScheduler (in the kTestDelegate mode there is no ScopedTaskEnvironment and therefore no TaskScheduler, adding a TestTaskScheduler is overkill when all we need is a thing that independently runs async tasks).",
+      "parentUuid": "400cc362_6f370d2e",
+      "revId": "7ad1bb17ff3f134decf7280490c46776c58da1a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
