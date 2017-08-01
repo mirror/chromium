@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1bbf1c0b_944e1a58",
+        "filename": "chrome/browser/search/local_ntp_source.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-01T11:46:24Z",
+      "side": 1,
+      "message": "No, there isn\u0027t, and yes, it\u0027s a pre-existing problem.\nI have some vague plans to fix this by serving all the things through a single json file, but I haven\u0027t gotten around to it yet.",
+      "parentUuid": "b373691b_ce51213c",
+      "revId": "9ad07515f70af2b0c0026fb65c71a40298592e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5bae289_72a85897",
         "filename": "chrome/browser/search/local_ntp_source.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-01T11:29:41Z",
       "side": 1,
       "message": "If I understand correctly, if the user is online, and opens an NTP, they get a OGB. If they go offline, and open another NTP, they get the same, cached OGB.\n\nIs this intended? It seems like it isn\u0027t according to the CL description.",
+      "revId": "9ad07515f70af2b0c0026fb65c71a40298592e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a07c6963_73dc2ee3",
+        "filename": "chrome/browser/search/local_ntp_source.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-01T11:46:24Z",
+      "side": 1,
+      "message": "Yeah, that\u0027s intended, even though the CL description didn\u0027t really capture it :)  Updated.\n\nDo you have concerns with that? A possibly-slightly-outdated OGB seems better than no OGB at all. (In practice, changes are rare, and they don\u0027t always propagate fast enough for the next request anyway, so.. eh.)",
+      "parentUuid": "c5bae289_72a85897",
       "revId": "9ad07515f70af2b0c0026fb65c71a40298592e9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "220321b7_925e2a25",
+        "filename": "chrome/browser/search/one_google_bar/one_google_bar_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-01T11:46:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a7c44fc_53e5ea79",
+      "range": {
+        "startLine": 83,
+        "startChar": 26,
+        "endLine": 83,
+        "endChar": 31
+      },
+      "revId": "9ad07515f70af2b0c0026fb65c71a40298592e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4083dc8e_ed771b9f",
         "filename": "chrome/browser/search/one_google_bar/one_google_bar_service.cc",
         "patchSetId": 5
@@ -73,6 +133,24 @@
       "revId": "9ad07515f70af2b0c0026fb65c71a40298592e9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a525889_b08ef701",
+        "filename": "chrome/browser/search/one_google_bar/one_google_bar_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-01T11:46:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4083dc8e_ed771b9f",
+      "revId": "9ad07515f70af2b0c0026fb65c71a40298592e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -96,6 +174,30 @@
       "revId": "9ad07515f70af2b0c0026fb65c71a40298592e9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e1a4721_7e38abfc",
+        "filename": "chrome/browser/search/one_google_bar/one_google_bar_service_observer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-01T11:46:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a367a50a_f39f6503",
+      "range": {
+        "startLine": 11,
+        "startChar": 41,
+        "endLine": 11,
+        "endChar": 48
+      },
+      "revId": "9ad07515f70af2b0c0026fb65c71a40298592e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
