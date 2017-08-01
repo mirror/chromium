@@ -1,0 +1,550 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1eee16ba_6fde41e8",
+        "filename": "components/cryptauth/device_capability_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-01T18:25:55Z",
+      "side": 1,
+      "message": "nit: No newline between these two #includes. The only newlines for #includes should be:\n\nFor .h and .cc files both: Newline between STL #includes and Chromium #includes.\nFor .cc files only: Newline between the #include of the header file you\u0027re implementing and the rest of the #includes.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 1
+      },
+      "revId": "f1f8973ddf57bdfd509efa1a0b02c70f7ce20dba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "122656b8_065fd13d",
+        "filename": "components/cryptauth/device_capability_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-01T18:25:55Z",
+      "side": 1,
+      "message": "nit: No need for these kind of comments. You can ascertain the visibility of a function or field by looking at the header file. Adding comments like these make it easy for your .h and .cc to get out of sync if someone later edits the visibility and forgets to update the .cc file. In general, don\u0027t count on developers touching this code in the future to edit things that aren\u0027t enforced by the compiler.",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 22
+      },
+      "revId": "f1f8973ddf57bdfd509efa1a0b02c70f7ce20dba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d1dcff4_2d273a1f",
+        "filename": "components/cryptauth/device_capability_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-01T18:25:55Z",
+      "side": 1,
+      "message": "For now, this is the only capability. Just DCHECK(capability \u003d\u003d CAPABILITY_UNLOCK_KEY).",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 56
+      },
+      "revId": "f1f8973ddf57bdfd509efa1a0b02c70f7ce20dba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "135defe3_22cb048e",
+        "filename": "components/cryptauth/device_capability_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-01T18:25:55Z",
+      "side": 1,
+      "message": "Use emplace(). emplace() essentially forwards all the arguments you pass to it and uses it within the function to create the data you\u0027re inputting into the container. You don\u0027t need to call the constructor yourself - you just pass the parameters. Read up on std::forward() for more information.\n\nYour function call should look something like:\npending_requests_.emplace(SET_CAPABILITY, CAPABILITY_UNLOCK_KEY, /* ... */);",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 72
+      },
+      "revId": "f1f8973ddf57bdfd509efa1a0b02c70f7ce20dba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e2c10ac_bc8ea2f0",
+        "filename": "components/cryptauth/device_capability_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-01T18:25:55Z",
+      "side": 1,
+      "message": "nit: Avoid trivial comments which don\u0027t explain things. If your comment just re-states what is already implied by the function/variable/class name, it is unnecessary.",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 20
+      },
+      "revId": "f1f8973ddf57bdfd509efa1a0b02c70f7ce20dba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d56fd2f_cfd18cd8",
+        "filename": "components/cryptauth/device_capability_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-01T18:25:55Z",
+      "side": 1,
+      "message": "Same here - just DCHECK().",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 65
+      },
+      "revId": "f1f8973ddf57bdfd509efa1a0b02c70f7ce20dba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83b6f2c6_7994b08d",
+        "filename": "components/cryptauth/device_capability_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-01T18:25:55Z",
+      "side": 1,
+      "message": "Same thing - don\u0027t construct the object before passing it in. Just pass the parameters.",
+      "range": {
+        "startLine": 45,
+        "startChar": 23,
+        "endLine": 45,
+        "endChar": 30
+      },
+      "revId": "f1f8973ddf57bdfd509efa1a0b02c70f7ce20dba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5d4de80_80096659",
+        "filename": "components/cryptauth/device_capability_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-01T18:25:55Z",
+      "side": 1,
+      "message": "Code becomes difficult to read if it\u0027s indented too much. You should return early if there is nothing else to be done in the function instead of indenting the entire function in an if() block. Likewise, if the indentation gets too extreme, you should use helper functions.\n\nSo, this function should look something like:\n\nvoid ProcessRequestQueue() {\n  if (current_request_ || pending_requests_.empty())\n    return;\n\n  current_request_ \u003d std::move(pending_requests_.front());\n  pending_requests_.pop();\n\n  switch (scheduler_.front().request_type_) {\n    case SET_CAPABILITY:\n      ProcessSetCapabilityRequest();\n      return;\n    case FIND_ELIGIBLE_DEVICES:\n      ProcessFindEligibleDevices();\n      return;\n    default:\n      NOTREACHED();\n      return;\n  }\n}\n\nNote: This tip doesn\u0027t apply to the code at hand, but for/while loops can also suffer from too much indenting. Make liberal use of the break/continue keywords to prevent excessive indentation for loops.",
+      "range": {
+        "startLine": 160,
+        "startChar": 30,
+        "endLine": 160,
+        "endChar": 43
+      },
+      "revId": "f1f8973ddf57bdfd509efa1a0b02c70f7ce20dba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "056d3dd8_379d4a61",
+        "filename": "components/cryptauth/device_capability_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-01T18:25:55Z",
+      "side": 1,
+      "message": "Note: Once you convert to using the |current_request_| suggestion, you won\u0027t need to pass the callbacks through any longer since you\u0027ll just be able to reference |current_request_.*|.",
+      "range": {
+        "startLine": 167,
+        "startChar": 0,
+        "endLine": 167,
+        "endChar": 62
+      },
+      "revId": "f1f8973ddf57bdfd509efa1a0b02c70f7ce20dba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "711f8fa5_08c29ccc",
+        "filename": "components/cryptauth/device_capability_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-01T18:25:55Z",
+      "side": 1,
+      "message": "Currently, requests of type FIND_ELIGIBLE_DEVICES only have one possible capability type, so your if() statement here will always cover all possible states. However, this code is very fragile since someday, someone could add another type and forget to update this spot to reflect the new type.\n\nYour current code sets the |in_progress_| boolean to true above, but in this hypothetical scenario where someone added a new capability type, you could skip over the if() and not actually process any request, and |in_progress_| would be forever stuck at true, meaning no more requests could actually be processed.\n\nInstead, always make an effort to program defensively to prevent cases like this. Chromium has the DCHECK() and NOTREACHED() macros which will purposely crash the browser in cases like this to make sure that this is noticed during testing. So, since there is currently only one expected capability type, DCHECK() that type instead of using an if(). And if there were multiple types, you should use a switch() statement with a NOTREACHED() in the default case, like I mentioned above in a previous comment.\n\nYour code should be robust and resilient in the future when other people edit it and don\u0027t have full understanding of the code. Sometimes, you will even edit an old class you wrote a long time ago that you don\u0027t remember fully, and even you won\u0027t remember to edit something small like this. Make sure that you always program defensively to prevent situations like this from causing you bugs in the future.",
+      "range": {
+        "startLine": 172,
+        "startChar": 0,
+        "endLine": 177,
+        "endChar": 7
+      },
+      "revId": "f1f8973ddf57bdfd509efa1a0b02c70f7ce20dba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91cf4df3_75021c0e",
+        "filename": "components/cryptauth/device_capability_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-01T18:25:55Z",
+      "side": 1,
+      "message": "nit: Newline between STL #includes and Chromium #includes.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 1
+      },
+      "revId": "f1f8973ddf57bdfd509efa1a0b02c70f7ce20dba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52dafa88_df4b4b7e",
+        "filename": "components/cryptauth/device_capability_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-01T18:25:55Z",
+      "side": 1,
+      "message": "This comment is trivial (i.e., it doesn\u0027t provide any information that the class name by itself doesn\u0027t provide). Please expand on this.",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 42
+      },
+      "revId": "f1f8973ddf57bdfd509efa1a0b02c70f7ce20dba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d61f35e_0763b386",
+        "filename": "components/cryptauth/device_capability_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-01T18:25:55Z",
+      "side": 1,
+      "message": "What does this mean? I don\u0027t really understand. You should only have one Capability at this point.",
+      "range": {
+        "startLine": 21,
+        "startChar": 4,
+        "endLine": 21,
+        "endChar": 34
+      },
+      "revId": "f1f8973ddf57bdfd509efa1a0b02c70f7ce20dba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7177d56f_f7437b3f",
+        "filename": "components/cryptauth/device_capability_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-01T18:25:55Z",
+      "side": 1,
+      "message": "Both of these functions need documentation.",
+      "range": {
+        "startLine": 28,
+        "startChar": 7,
+        "endLine": 28,
+        "endChar": 29
+      },
+      "revId": "f1f8973ddf57bdfd509efa1a0b02c70f7ce20dba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1596a4a_305e9496",
+        "filename": "components/cryptauth/device_capability_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-01T18:25:55Z",
+      "side": 1,
+      "message": "Remove this. Everything is public by default in a struct.",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 10
+      },
+      "revId": "f1f8973ddf57bdfd509efa1a0b02c70f7ce20dba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a41b8914_2c8cff05",
+        "filename": "components/cryptauth/device_capability_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-01T18:25:55Z",
+      "side": 1,
+      "message": "Add comments about when you\u0027d use one constructor over the other.",
+      "revId": "f1f8973ddf57bdfd509efa1a0b02c70f7ce20dba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71a906b3_cde03ece",
+        "filename": "components/cryptauth/device_capability_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-01T18:25:55Z",
+      "side": 1,
+      "message": "nit: All constructors should come before the destructor.",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 15
+      },
+      "revId": "f1f8973ddf57bdfd509efa1a0b02c70f7ce20dba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33f62557_c33ee7ea",
+        "filename": "components/cryptauth/device_capability_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-01T18:25:55Z",
+      "side": 1,
+      "message": "A copy constructor shouldn\u0027t be necessary here unless I\u0027m missing something.\n\nAlso, nit: Don\u0027t use the \"explicit\" keyword for copy constructors.",
+      "range": {
+        "startLine": 65,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 45
+      },
+      "revId": "f1f8973ddf57bdfd509efa1a0b02c70f7ce20dba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d55f49d_66d75ede",
+        "filename": "components/cryptauth/device_capability_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-01T18:25:55Z",
+      "side": 1,
+      "message": "It\u0027s difficult to understand this struct since some fields are used sometimes and not other times. Some comments here would really be helpful:\n\n// Defined for every request.\nRequestType request_type_;\nCapability capability_;\nstd::string public_key_;\nbase::Callback\u003cvoid(const std::string\u0026)\u003e error_callback_;\n\n// Defined if |request_type_| is SET_CAPABILITY; otherwise, unused.\nbase::Closure success_callback_;\nbool enabled_;\n\n// Defined if |request_type_| is FIND_ELIGIBLE_DEVICES; otherwise, unused.\nbase::Callback\u003cvoid(const std::vector\u003cExternalDeviceInfo\u003e\u0026,\n                    const std::vector\u003cIneligibleDevice\u003e\u0026)\u003e\n        success_callback_vector_arg_;\n\nAlso, rename:\nsuccess_callback_ --\u003e set_capability_callback_\nsuccess_callback_vector_arg_ --\u003e find_eligible_devices_callback_",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 37
+      },
+      "revId": "f1f8973ddf57bdfd509efa1a0b02c70f7ce20dba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61fedc0b_6932d00d",
+        "filename": "components/cryptauth/device_capability_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-01T18:25:55Z",
+      "side": 1,
+      "message": "nit: SetUnlockKeyCapability()",
+      "range": {
+        "startLine": 78,
+        "startChar": 7,
+        "endLine": 78,
+        "endChar": 23
+      },
+      "revId": "f1f8973ddf57bdfd509efa1a0b02c70f7ce20dba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2d1dc0a_0c6db085",
+        "filename": "components/cryptauth/device_capability_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-01T18:25:55Z",
+      "side": 1,
+      "message": "nit: FindEligibleUnlockKeys()",
+      "range": {
+        "startLine": 83,
+        "startChar": 7,
+        "endLine": 83,
+        "endChar": 35
+      },
+      "revId": "f1f8973ddf57bdfd509efa1a0b02c70f7ce20dba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24440434_a5835d4e",
+        "filename": "components/cryptauth/device_capability_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-01T18:25:55Z",
+      "side": 1,
+      "message": "nit: OnFindEligibleUnlockDevicesResponse()",
+      "range": {
+        "startLine": 92,
+        "startChar": 7,
+        "endLine": 92,
+        "endChar": 32
+      },
+      "revId": "f1f8973ddf57bdfd509efa1a0b02c70f7ce20dba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cae1f534_29a81451",
+        "filename": "components/cryptauth/device_capability_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-01T18:25:55Z",
+      "side": 1,
+      "message": "Currently, you keep a queue of all requests and use this extra boolean to describe the state of the queue. This makes it harder to reason about the class since the queue\u0027s contents can mean different things depending on this value.\n\nThis also complicates your state machine. You\u0027re forced to have two functions to process the queue: InvokeNextRequest() and PingScheduler(). It\u0027s difficult to tell which of these functions is the right one to call without reading the whole class. To alleviate this issue, we really should just have one function which continues processing requests - ProcessRequestQueue(). This function can be called when a request is first added and the same function can be called later when a request has been processed - much easier to understand!\n\nInstead, let\u0027s use this pattern:\n\nstd::unique_ptr\u003cRequest\u003e current_request_;\nstd::queue\u003cstd::unique_ptr\u003cRequest\u003e\u003e pending_requests_;\n\nThis way, it\u0027s very clear that if current_request_ is null, we are not actively processing a request, and if it is non-null, we are actively processing one, and it is also clear that pending_requests_ contains unprocessed requests.\n\nThen, our ProcessRequestQueue() function can look something like:\n\nvoid ProcessRequestQueue() {\n  if (current_request_ || pending_requests_.empty())\n    return;\n\n  current_request_ \u003d std::move(pending_requests_.front());\n  pending_requests_.pop();\n\n  // Send |current_request_| to your CryptAuthClient object.\n}\n\nNote that you\u0027ll want to call current_request_.reset() in your callbacks once a request is complete.",
+      "range": {
+        "startLine": 106,
+        "startChar": 0,
+        "endLine": 106,
+        "endChar": 20
+      },
+      "revId": "f1f8973ddf57bdfd509efa1a0b02c70f7ce20dba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9ccf047_1282ae87",
+        "filename": "components/cryptauth/device_capability_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-01T18:25:55Z",
+      "side": 1,
+      "message": "nit: Rename to pending_requests_. \"Scheduler\" implies that this field schedules things, but it\u0027s really this whole class that schedules things. This field just holds requests until they are ready to be processed.",
+      "range": {
+        "startLine": 107,
+        "startChar": 22,
+        "endLine": 107,
+        "endChar": 32
+      },
+      "revId": "f1f8973ddf57bdfd509efa1a0b02c70f7ce20dba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
