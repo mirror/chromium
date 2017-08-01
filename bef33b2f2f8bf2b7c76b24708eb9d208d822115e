@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7123a659_4109af8b",
+        "filename": "components/test/data/payments/render_tests/README",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-01T16:16:58Z",
+      "side": 1,
+      "message": "what if this bot starts running a different device?",
+      "range": {
+        "startLine": 15,
+        "startChar": 42,
+        "endLine": 15,
+        "endChar": 62
+      },
+      "revId": "bef33b2f2f8bf2b7c76b24708eb9d208d822115e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
