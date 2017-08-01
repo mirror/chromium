@@ -56,6 +56,11 @@ class DISPLAY_EXPORT ColorProfileReader {
   // Called on the main thread when the read has completed.
   void ReadProfilesCompleted(DeviceToDataMap device_to_data_map);
 
+  // DXGI provides a different API for querying the device color space. This API
+  // is only used to differentiate between HDR and non-HDR displays.
+  void UpdateDXGIDisplayIdToColorSpaceMap();
+  std::map<int64_t, gfx::ColorSpace> dxgi_display_id_to_color_space_map_;
+
   Client* const client_ = nullptr;
   bool update_in_flight_ = false;
   DeviceToPathMap device_to_path_map_;

@@ -4,14 +4,22 @@
 
 #include "ui/display/win/color_profile_reader.h"
 
+#include <d3d11_1.h>
 #include <stddef.h>
 #include <windows.h>
 
 #include "base/files/file_util.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/threading/sequenced_worker_pool.h"
+#include "base/win/scoped_comptr.h"
 #include "ui/display/win/display_info.h"
 #include "ui/gfx/icc_profile.h"
+
+#if defined(NTDDI_WIN10_RS2)
+#define ENABLE_HDR_DETECTION
+#include <dxgi1_6.h>
+#endif
 
 namespace display {
 namespace win {
@@ -53,6 +61,8 @@ ColorProfileReader::ColorProfileReader(Client* client)
 ColorProfileReader::~ColorProfileReader() {}
 
 void ColorProfileReader::UpdateIfNeeded() {
+  UpdateDXGIDisplayIdToColorSpaceMap();
+
   if (update_in_flight_)
     return;
 
@@ -121,10 +131,64 @@ void ColorProfileReader::ReadProfilesCompleted(
 
 const gfx::ColorSpace& ColorProfileReader::GetDisplayColorSpace(
     int64_t display_id) const {
-  auto found = display_id_to_color_space_map_.find(display_id);
-  if (found == display_id_to_color_space_map_.end())
-    return default_color_space_;
-  return found->second;
+  std::map<int64_t, gfx::ColorSpace>::const_iterator found;
+
+  // The DXGI API takes precedence over the manually read ICC profiles.
+  found = dxgi_display_id_to_color_space_map_.find(display_id);
+  if (found != dxgi_display_id_to_color_space_map_.end())
+    return found->second;
+
+  found = display_id_to_color_space_map_.find(display_id);
+  if (found != display_id_to_color_space_map_.end())
+    return found->second;
+
+  return default_color_space_;
+}
+
+void ColorProfileReader::UpdateDXGIDisplayIdToColorSpaceMap() {
+  dxgi_display_id_to_color_space_map_.clear();
+  bool hdr_monitor_found = false;
+#if defined(ENABLE_HDR_DETECTION)
+  HRESULT hr;
+  base::win::ScopedComPtr<IDXGIFactory> dxgi_factory;
+  CreateDXGIFactory(IID_PPV_ARGS(dxgi_factory.GetAddressOf()));
+  if (!dxgi_factory)
+    return;
+
+  for (UINT adapter_index = 0; true; ++adapter_index) {
+    base::win::ScopedComPtr<IDXGIAdapter> dxgi_adapter;
+    hr = dxgi_factory->EnumAdapters(adapter_index, dxgi_adapter.GetAddressOf());
+    if (FAILED(hr))
+      break;
+
+    unsigned int i = 0;
+    while (true) {
+      base::win::ScopedComPtr<IDXGIOutput> output;
+      if (FAILED(dxgi_adapter->EnumOutputs(i++, output.GetAddressOf())))
+        break;
+      base::win::ScopedComPtr<IDXGIOutput6> output6;
+      if (FAILED(output.CopyTo(output6.GetAddressOf())))
+        continue;
+
+      DXGI_OUTPUT_DESC1 desc;
+      if (FAILED(output6->GetDesc1(&desc)))
+        continue;
+
+      UMA_HISTOGRAM_SPARSE_SLOWLY("GPU.Output.ColorSpace", desc.ColorSpace);
+      UMA_HISTOGRAM_SPARSE_SLOWLY("GPU.Output.MaxLuminance", desc.MaxLuminance);
+
+      const base::string16& device_name = desc.DeviceName;
+      int64_t display_id =
+          DisplayInfo::DeviceIdFromDeviceName(device_name.c_str());
+      if (desc.ColorSpace == DXGI_COLOR_SPACE_RGB_FULL_G2084_NONE_P2020) {
+        dxgi_display_id_to_color_space_map_[display_id] =
+            gfx::ColorSpace::CreateSCRGBLinear();
+        hdr_monitor_found = true;
+      }
+    }
+  }
+  UMA_HISTOGRAM_BOOLEAN("GPU.Output.HDR", hdr_monitor_found);
+#endif
 }
 
 }  // namespace win
