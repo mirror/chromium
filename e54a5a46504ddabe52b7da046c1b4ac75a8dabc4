@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fbc9e306_e6019996",
+        "filename": "chrome/browser/chromeos/arc/fileapi/arc_file_system_operation_runner.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-01T09:11:48Z",
+      "side": 1,
+      "message": "Explanation is in the comment of ArcFileSystemOperationRunner.",
+      "parentUuid": "66a61de5_c5bec704",
+      "range": {
+        "startLine": 234,
+        "startChar": 6,
+        "endLine": 234,
+        "endChar": 19
+      },
+      "revId": "e54a5a46504ddabe52b7da046c1b4ac75a8dabc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e6ae7f9_ecb5a910",
         "filename": "chrome/browser/chromeos/fileapi/recent_model.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "e54a5a46504ddabe52b7da046c1b4ac75a8dabc4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2945dabb_46fe0841",
+        "filename": "chrome/browser/chromeos/fileapi/recent_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-01T09:11:48Z",
+      "side": 1,
+      "message": "Ack. This file was unintentionally included in PS4. I\u0027ll address this comment in CL:588950.",
+      "parentUuid": "7e6ae7f9_ecb5a910",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 61
+      },
+      "revId": "e54a5a46504ddabe52b7da046c1b4ac75a8dabc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4a1ccac9_811a1c98",
+        "filename": "chrome/browser/chromeos/fileapi/recent_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-01T09:11:48Z",
+      "side": 1,
+      "message": "Ack. This file was unintentionally included in PS4.\n\nFYI, this is actually needed because RecentModel::Identity is private. But anyway this struct will be deleted in next PS.",
+      "parentUuid": "79627ef0_e26a5294",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 8
+      },
+      "revId": "e54a5a46504ddabe52b7da046c1b4ac75a8dabc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6ac4014_acb6d130",
         "filename": "chrome/browser/chromeos/fileapi/recent_model.cc",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "e54a5a46504ddabe52b7da046c1b4ac75a8dabc4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce0dcb82_530b3868",
+        "filename": "chrome/browser/chromeos/fileapi/recent_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-01T09:11:48Z",
+      "side": 1,
+      "message": "Ack. This file was unintentionally included in PS4.",
+      "parentUuid": "e6ac4014_acb6d130",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 31
+      },
+      "revId": "e54a5a46504ddabe52b7da046c1b4ac75a8dabc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "ba9613dc_6660cc42",
+        "filename": "chrome/browser/chromeos/fileapi/recent_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-01T09:11:48Z",
+      "side": 1,
+      "message": "Ack. This file was unintentionally included in PS4.\n\nFYI, this file name will be sanitized in RecentSource implementation (e.g. no \"..\").",
+      "parentUuid": "60c2b11e_fb1559a4",
+      "range": {
+        "startLine": 155,
+        "startChar": 4,
+        "endLine": 155,
+        "endChar": 56
+      },
+      "revId": "e54a5a46504ddabe52b7da046c1b4ac75a8dabc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aad544d8_ac02a8c3",
         "filename": "chrome/browser/chromeos/fileapi/recent_model.cc",
         "patchSetId": 4
@@ -137,6 +257,30 @@
       "revId": "e54a5a46504ddabe52b7da046c1b4ac75a8dabc4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f6ef074_8e9e418f",
+        "filename": "chrome/browser/chromeos/fileapi/recent_model.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-01T09:11:48Z",
+      "side": 1,
+      "message": "Ack. This file was unintentionally included in PS4. I\u0027ll address this comment in CL:588950.",
+      "parentUuid": "aad544d8_ac02a8c3",
+      "range": {
+        "startLine": 243,
+        "startChar": 44,
+        "endLine": 243,
+        "endChar": 0
+      },
+      "revId": "e54a5a46504ddabe52b7da046c1b4ac75a8dabc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "729d0f85_74ed5062",
+        "filename": "chrome/browser/chromeos/fileapi/recent_model.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-01T09:11:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53546249_6d29724f",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 16
+      },
+      "revId": "e54a5a46504ddabe52b7da046c1b4ac75a8dabc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96ddc497_596d2ad9",
         "filename": "components/arc/common/file_system.mojom",
         "patchSetId": 4
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "f62c9023_96ed29f8",
+        "filename": "components/arc/common/file_system.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-01T09:11:48Z",
+      "side": 1,
+      "message": "It\u0027s Android VFS path. I\u0027ve updated the comments.",
+      "parentUuid": "96ddc497_596d2ad9",
+      "range": {
+        "startLine": 31,
+        "startChar": 27,
+        "endLine": 31,
+        "endChar": 43
+      },
+      "revId": "e54a5a46504ddabe52b7da046c1b4ac75a8dabc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa255e1d_75dd3ab0",
         "filename": "components/arc/common/file_system.mojom",
         "patchSetId": 4
@@ -206,6 +398,30 @@
       "revId": "e54a5a46504ddabe52b7da046c1b4ac75a8dabc4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed5d8e42_0b360461",
+        "filename": "components/arc/common/file_system.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-01T09:11:48Z",
+      "side": 1,
+      "message": "We already have some explanation about authority, but root ID is new in this CL so I added one. Anyway this file is too short to describe the whole SAF, so I hope the link helps.",
+      "parentUuid": "fa255e1d_75dd3ab0",
+      "range": {
+        "startLine": 120,
+        "startChar": 38,
+        "endLine": 120,
+        "endChar": 70
+      },
+      "revId": "e54a5a46504ddabe52b7da046c1b4ac75a8dabc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
