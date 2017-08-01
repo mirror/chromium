@@ -145,13 +145,15 @@ ImageBitmap::ParsedOptions ParseOptions(const ImageBitmapOptions& options,
 
 // The function dstBufferSizeHasOverflow() is being called at the beginning of
 // each ImageBitmap() constructor, which makes sure that doing
-// width * height * bytesPerPixel will never overflow unsigned.
+// width * height * bytesPerPixel will never overflow unsigned or
+// v8::TypedArray::kMaxSize.
 bool DstBufferSizeHasOverflow(const ImageBitmap::ParsedOptions& options) {
   CheckedNumeric<unsigned> total_bytes = options.crop_rect.Width();
   total_bytes *= options.crop_rect.Height();
   total_bytes *=
       SkColorTypeBytesPerPixel(options.color_params.GetSkColorType());
-  if (!total_bytes.IsValid())
+  if (!total_bytes.IsValid() ||
+      total_bytes.ValueOrDie() > v8::TypedArray::kMaxLength)
     return true;
 
   if (!options.should_scale_input)
@@ -160,7 +162,8 @@ bool DstBufferSizeHasOverflow(const ImageBitmap::ParsedOptions& options) {
   total_bytes *= options.resize_height;
   total_bytes *=
       SkColorTypeBytesPerPixel(options.color_params.GetSkColorType());
-  if (!total_bytes.IsValid())
+  if (!total_bytes.IsValid() ||
+      total_bytes.ValueOrDie() > v8::TypedArray::kMaxLength)
     return true;
 
   return false;

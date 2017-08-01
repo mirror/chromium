@@ -57,6 +57,7 @@
 #include "third_party/skia/include/core/SkSurface.h"
 #include "third_party/skia/include/gpu/GrContext.h"
 #include "third_party/skia/include/gpu/gl/GrGLTypes.h"
+#include "v8/include/v8.h"
 
 namespace blink {
 
@@ -1070,7 +1071,8 @@ bool DrawingBuffer::PaintRenderingResultsToImageData(
   CheckedNumeric<int> data_size = 4;
   data_size *= width;
   data_size *= height;
-  if (!data_size.IsValid())
+  if (!data_size.IsValid() ||
+      data_size.ValueOrDie() > v8::TypedArray::kMaxLength)
     return false;
 
   WTF::ArrayBufferContents pixels(width * height, 4,
