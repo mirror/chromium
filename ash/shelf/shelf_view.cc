@@ -23,6 +23,7 @@
 #include "ash/shelf/shelf_application_menu_model.h"
 #include "ash/shelf/shelf_button.h"
 #include "ash/shelf/shelf_constants.h"
+#include "ash/shelf/shelf_context_menu_model.h"
 #include "ash/shelf/shelf_widget.h"
 #include "ash/shell.h"
 #include "ash/shell_delegate.h"
@@ -463,6 +464,8 @@ void ShelfView::ButtonPressed(views::Button* sender,
 
   const int64_t display_id =
       display::Screen::GetScreen()->GetDisplayNearestWindow(window).id();
+
+  LOG(ERROR) << "MSW ButtonPressed A";
 
   // Notify the item of its selection; handle the result in AfterItemSelected.
   const ShelfItem& item = model_->items()[last_pressed_index_];
@@ -1625,18 +1628,22 @@ void ShelfView::ShelfItemDelegateChanged(const ShelfID& id,
 
 void ShelfView::AfterItemSelected(
     const ShelfItem& item,
-    views::Button* sender,
+    views::View* sender,
     std::unique_ptr<ui::Event> event,
     views::InkDrop* ink_drop,
     ShelfAction action,
     base::Optional<std::vector<mojom::MenuItemPtr>> menu_items) {
+  LOG(ERROR) << "MSW AfterItemSelected A1 event: " << event.get();
   shelf_button_pressed_metric_tracker_.ButtonPressed(*event, sender, action);
+  LOG(ERROR) << "MSW AfterItemSelected A2";
 
   // The app list handles its own ink drop effect state changes.
   if (action != SHELF_ACTION_APP_LIST_SHOWN) {
-    if (action != SHELF_ACTION_NEW_WINDOW_CREATED && menu_items &&
+    LOG(ERROR) << "MSW AfterItemSelected A3";
+    if (action == SHELF_ACTION_SHOW_APPLICATION_MENU && menu_items &&
         menu_items->size() > 1) {
-      // Show the app menu if there are 2 or more items and no window was shown.
+      LOG(ERROR) << "MSW AfterItemSelected B (APPLICATION MENU)";
+      // Show the app menu if instructed and there are 2 or more items.
       ink_drop->AnimateToState(views::InkDropState::ACTIVATED);
       context_menu_id_ = item.id;
       ShowMenu(base::MakeUnique<ShelfApplicationMenuModel>(
@@ -1644,22 +1651,50 @@ void ShelfView::AfterItemSelected(
                    model_->GetShelfItemDelegate(item.id)),
                sender, gfx::Point(), false,
                ui::GetMenuSourceTypeForEvent(*event), ink_drop);
+    } else if (action == SHELF_ACTION_SHOW_CONTEXT_MENU) {
+      LOG(ERROR) << "MSW AfterItemSelected C (CONTEXT MENU) items:"
+                 << (menu_items ? menu_items->size() : 0);
+      // Show the context menu if instructed, append any provided items.
+      if (ink_drop)
+        ink_drop->AnimateToState(views::InkDropState::ACTIVATED);
+      context_menu_id_ = item.id;
+      const int64_t display_id =
+          display::Screen::GetScreen()
+              ->GetDisplayNearestWindow(shelf_widget_->GetNativeWindow())
+              .id();
+      ShowMenu(base::MakeUnique<ShelfContextMenuModel>(
+                   /* shelf_, item, */ std::move(*menu_items),
+                   model_->GetShelfItemDelegate(item.id), display_id),
+               sender, event->AsLocatedEvent()->location(), true,
+               ui::GetMenuSourceTypeForEvent(*event), ink_drop);
     } else {
-      ink_drop->AnimateToState(views::InkDropState::ACTION_TRIGGERED);
+      LOG(ERROR) << "MSW AfterItemSelected D action:" << action;
+      if (ink_drop)
+        ink_drop->AnimateToState(views::InkDropState::ACTION_TRIGGERED);
     }
   }
+  LOG(ERROR) << "MSW AfterItemSelected Z1";
   // The menu clears |scoped_root_window_for_new_windows_| in OnMenuClosed.
   if (!IsShowingMenu())
     scoped_root_window_for_new_windows_.reset();
+  LOG(ERROR) << "MSW AfterItemSelected Z2";
 }
 
 void ShelfView::ShowContextMenuForView(views::View* source,
                                        const gfx::Point& point,
                                        ui::MenuSourceType source_type) {
   gfx::Point context_menu_point = point;
+  aura::Window* shelf_window = shelf_widget_->GetNativeWindow();
+  const bool is_touch =
+      source_type == ui::MenuSourceType::MENU_SOURCE_TOUCH ||
+      source_type == ui::MenuSourceType::MENU_SOURCE_TOUCH_EDIT_MENU ||
+      source_type == ui::MenuSourceType::MENU_SOURCE_LONG_PRESS ||
+      source_type == ui::MenuSourceType::MENU_SOURCE_LONG_TAP ||
+      source_type == ui::MenuSourceType::MENU_SOURCE_TOUCH_HANDLE;
+  LOG(ERROR) << "MSW ShowContextMenuForView A source:" << source_type << " touch: " << is_touch;
+
   // Align the context menu to the edge of the shelf for touch events.
-  if (source_type == ui::MenuSourceType::MENU_SOURCE_TOUCH) {
-    aura::Window* shelf_window = shelf_widget_->GetNativeWindow();
+  if (is_touch) {
     gfx::Rect shelf_bounds =
         is_overflow_mode()
             ? owner_overflow_bubble_->bubble_view()->GetBubbleBounds()
@@ -1683,19 +1718,42 @@ void ShelfView::ShowContextMenuForView(views::View* source,
   last_pressed_index_ = -1;
 
   const ShelfItem* item = ShelfItemForView(source);
+  LOG(ERROR) << "MSW ShowContextMenuForView B item:" << item;
   if (!item) {
     ShellPort::Get()->ShowContextMenu(context_menu_point, source_type);
     return;
   }
 
-  std::unique_ptr<ui::MenuModel> context_menu_model(
-      Shell::Get()->shell_delegate()->CreateContextMenu(shelf_, item));
-  if (!context_menu_model)
-    return;
+  LOG(ERROR) << "MSW ShowContextMenuForView C";
 
-  context_menu_id_ = item ? item->id : ShelfID();
-  ShowMenu(std::move(context_menu_model), source, context_menu_point, true,
-           source_type, nullptr);
+  const int64_t display_id =
+      display::Screen::GetScreen()->GetDisplayNearestWindow(shelf_window).id();
+
+  // Notify the item of its selection; handle the result in AfterItemSelected.
+  // Mojo event struct traits only supports pointer events, not mouse or touch.
+  // ui::PointerEvent event(ui::ET_POINTER_DOWN, context_menu_point, gfx::Point(),
+  //                        ui::EF_RIGHT_MOUSE_BUTTON, ui::EF_RIGHT_MOUSE_BUTTON,
+  //                        ui::PointerDetails(), base::TimeTicks::Now());
+  ui::MouseEvent event(ui::ET_MOUSE_PRESSED, context_menu_point, gfx::Point(),
+                       base::TimeTicks::Now(), ui::EF_RIGHT_MOUSE_BUTTON,
+                       ui::EF_RIGHT_MOUSE_BUTTON);
+  model_->GetShelfItemDelegate(item->id)->ItemSelected(
+      base::MakeUnique<ui::PointerEvent>(event), display_id,
+      LAUNCH_FROM_UNKNOWN,
+      base::Bind(&ShelfView::AfterItemSelected, weak_factory_.GetWeakPtr(),
+                 *item, source, base::Passed(ui::Event::Clone(event)),
+                 nullptr));
+
+  LOG(ERROR) << "MSW ShowContextMenuForView D";
+
+  // std::unique_ptr<ui::MenuModel> context_menu_model(
+  //     Shell::Get()->shell_delegate()->CreateContextMenu(shelf_, item));
+  // if (!context_menu_model)
+  //   return;
+
+  // context_menu_id_ = item ? item->id : ShelfID();
+  // ShowMenu(std::move(context_menu_model), source, context_menu_point, true,
+  //          source_type, nullptr);
 }
 
 void ShelfView::ShowMenu(std::unique_ptr<ui::MenuModel> menu_model,

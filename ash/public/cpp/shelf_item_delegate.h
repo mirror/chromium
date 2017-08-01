@@ -17,6 +17,10 @@
 
 class AppWindowLauncherItemController;
 
+namespace ui {
+class MenuModel;
+}
+
 namespace ash {
 
 using MenuItemList = std::vector<mojom::MenuItemPtr>;
@@ -44,8 +48,32 @@ class ASH_PUBLIC_EXPORT ShelfItemDelegate : public mojom::ShelfItemDelegate {
   // Returns items for the application menu; used for convenience and testing.
   virtual MenuItemList GetAppMenuItems(int event_flags);
 
+  // Returns the context menu; used for convenience and testing.
+  // TODO(msw): Avoid this? Works the same for all Chrome delegates... 
+  virtual std::unique_ptr<ui::MenuModel> GetContextMenu(int64_t display_id);
+
   // Returns nullptr if class is not AppWindowLauncherItemController.
   virtual AppWindowLauncherItemController* AsAppWindowLauncherItemController();
+
+  // Helpers used to override item-specific behavior (beyond context menus).
+  virtual void ItemSelectedImpl(std::unique_ptr<ui::Event> event,
+                                int64_t display_id,
+                                ShelfLaunchSource source,
+                                ItemSelectedCallback callback);
+  virtual void ExecuteCommandImpl(bool from_context_menu,
+                                  int64_t command_id,
+                                  int32_t event_flags,
+                                  int64_t display_id);
+
+  // mojom::ShelfItemDelegate:
+  void ItemSelected(std::unique_ptr<ui::Event> event,
+                    int64_t display_id,
+                    ShelfLaunchSource source,
+                    ItemSelectedCallback callback) override;
+  void ExecuteCommand(bool from_context_menu,
+                      int64_t command_id,
+                      int32_t event_flags,
+                      int64_t display_id) override;
 
  private:
   // The shelf id; empty if there is no app associated with the item.
@@ -60,6 +88,9 @@ class ASH_PUBLIC_EXPORT ShelfItemDelegate : public mojom::ShelfItemDelegate {
 
   // Set to true if the launcher item image has been set by the controller.
   bool image_set_by_controller_;
+
+  // TODO(msw): Maybe keep one menu around elsewhere (CLC?)??? 
+  std::unique_ptr<ui::MenuModel> context_menu_;
 
   DISALLOW_COPY_AND_ASSIGN(ShelfItemDelegate);
 };

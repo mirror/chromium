@@ -5,22 +5,61 @@
 #include "chrome/browser/ui/ash/launcher/extension_app_window_launcher_item_controller.h"
 
 #include "ash/public/cpp/shelf_item_delegate.h"
+#include "ash/public/cpp/shelf_types.h"
+#include "ash/shelf/shelf_context_menu_model.h"
 #include "ash/wm/window_state.h"
 #include "ash/wm/window_util.h"
 #include "base/memory/ptr_util.h"
+#include "chrome/browser/extensions/context_menu_matcher.h"
+#include "chrome/browser/extensions/extension_util.h"
+#include "chrome/browser/extensions/launch_util.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/ui/ash/launcher/browser_shortcut_launcher_item_controller.h"
 #include "chrome/browser/ui/ash/launcher/chrome_launcher_controller.h"
-#include "chrome/browser/ui/ash/launcher/launcher_context_menu.h"
+#include "chrome/browser/ui/ash/launcher/chrome_launcher_controller_util.h"
+#include "chrome/browser/ui/ash/launcher/extension_launcher_context_menu.h"
+#include "chrome/grit/generated_resources.h"
 #include "components/favicon/content/content_favicon_driver.h"
 #include "content/public/browser/web_contents.h"
 #include "extensions/browser/app_window/app_window.h"
 #include "extensions/browser/app_window/app_window_registry.h"
 #include "extensions/browser/app_window/native_app_window.h"
+#include "extensions/browser/extension_prefs.h"
 #include "ui/aura/client/aura_constants.h"
 #include "ui/aura/window.h"
+#include "ui/base/l10n/l10n_util.h"
 #include "ui/events/event.h"
 #include "ui/gfx/image/image.h"
 #include "ui/wm/core/window_animations.h"
+
+// namespace {
+
+// // A helper used to filter which menu items added by the extension are shown.
+// bool MenuItemHasLauncherContext(const extensions::MenuItem* item) {
+//   return item->contexts().Contains(extensions::MenuItem::LAUNCHER);
+// }
+
+// // A helper to get the launch type for the extension item.
+// extensions::LaunchType GetLaunchType(ash::ShelfID shelf_id) {
+//   Profile* profile = ChromeLauncherController::instance()->profile();
+//   const extensions::Extension* extension =
+//       GetExtensionForAppID(shelf_id.app_id, profile);
+
+//   // An extension can be unloaded/updated/unavailable at any time.
+//   if (!extension)
+//     return extensions::LAUNCH_TYPE_DEFAULT;
+
+//   return extensions::GetLaunchType(
+//       extensions::ExtensionPrefs::Get(profile), extension);
+// }
+
+// // A helper to set the launch type for the extension item.
+// void SetLaunchType(ash::ShelfID shelf_id, extensions::LaunchType launch_type) {
+//   Profile* profile = ChromeLauncherController::instance()->profile();
+//   extensions::SetLaunchType(profile, shelf_id.app_id, launch_type);
+// }
+
+// }  // namespace
 
 ExtensionAppWindowLauncherItemController::
     ExtensionAppWindowLauncherItemController(const ash::ShelfID& shelf_id)
@@ -75,9 +114,11 @@ ash::MenuItemList ExtensionAppWindowLauncherItemController::GetAppMenuItems(
   return items;
 }
 
-void ExtensionAppWindowLauncherItemController::ExecuteCommand(
-    uint32_t command_id,
-    int32_t event_flags) {
+void ExtensionAppWindowLauncherItemController::ExecuteCommandImpl(
+    bool from_context_menu,
+    int64_t command_id,
+    int32_t event_flags,
+    int64_t display_id) {
   ChromeLauncherController::instance()->ActivateShellApp(app_id(), command_id);
 }
 

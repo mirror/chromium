@@ -19,7 +19,7 @@ class ArcPlaystoreShortcutLauncherItemController
   ~ArcPlaystoreShortcutLauncherItemController() override;
 
   // AppShortcutLauncherItemController overrides:
-  void ItemSelected(std::unique_ptr<ui::Event> event,
+  void ItemSelectedImpl(std::unique_ptr<ui::Event> event,
                     int64_t display_id,
                     ash::ShelfLaunchSource source,
                     ItemSelectedCallback callback) override;

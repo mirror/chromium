@@ -15,8 +15,8 @@
 ArcLauncherContextMenu::ArcLauncherContextMenu(
     ChromeLauncherController* controller,
     const ash::ShelfItem* item,
-    ash::Shelf* shelf)
-    : LauncherContextMenu(controller, item, shelf) {
+    int64_t display_id)
+    : LauncherContextMenu(controller, item, display_id) {
   Init();
 }
 
