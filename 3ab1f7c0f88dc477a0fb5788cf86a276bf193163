@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2f482fd_0e030018",
+        "filename": "third_party/WebKit/Source/core/leak_detector/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-01T06:18:31Z",
+      "side": 1,
+      "message": "You\u0027re missing the following line:\n\n# Copyright 2017 The Chromium Authors. All rights reserved.",
+      "revId": "3ab1f7c0f88dc477a0fb5788cf86a276bf193163",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b229989_43938314",
+        "filename": "third_party/WebKit/Source/core/leak_detector/LeakDetector.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-01T06:18:31Z",
+      "side": 1,
+      "message": "Platform::Current()-\u003eCurrentThread()-\u003eGetWebTaskRunner() (the default scheduler) is not encouraged.\n\nShall we use TaskRunnerHelper::Get(TaskType::kUnspecedTimer, ...) (a per-frame scheduler)?",
+      "revId": "3ab1f7c0f88dc477a0fb5788cf86a276bf193163",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fea2855e_682af6e9",
+        "filename": "third_party/WebKit/Source/core/leak_detector/LeakDetector.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-01T06:18:31Z",
+      "side": 1,
+      "message": "v8::Isolate::GetCurrent() is deprecated. Use ToIsolate(frame).",
+      "revId": "3ab1f7c0f88dc477a0fb5788cf86a276bf193163",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71041c41_b8712871",
+        "filename": "third_party/WebKit/Source/core/leak_detector/LeakDetector.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-01T06:18:31Z",
+      "side": 1,
+      "message": "Is there any reason you have to implement LeakDetector in core/?\n\nI guess it would make more sense to implement it in controller/. Then LeakDetector can directly use core/ and modules/. So you won\u0027t need to add AbstractAnimationWorkletThreadGCFunction.",
+      "revId": "3ab1f7c0f88dc477a0fb5788cf86a276bf193163",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "472110a7_d07dc934",
+        "filename": "third_party/WebKit/Source/core/leak_detector/LeakDetectorClient.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-01T06:18:31Z",
+      "side": 1,
+      "message": "Add an empty line.",
+      "revId": "3ab1f7c0f88dc477a0fb5788cf86a276bf193163",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0f2b904_25510073",
+        "filename": "third_party/WebKit/Source/core/leak_detector/LeakDetectorClient.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-01T06:18:31Z",
+      "side": 1,
+      "message": "I\u0027d move this class to an internal class of LeakDetector. i.e., LeakDetector::Client",
+      "revId": "3ab1f7c0f88dc477a0fb5788cf86a276bf193163",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87bdef2d_e57cae02",
+        "filename": "third_party/WebKit/Source/modules/exported/WebLeakDetector.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-01T06:18:31Z",
+      "side": 1,
+      "message": "Nit: This method name is a bit confusing since it is not reporting anything. You can fix it in a follow-up CL since this will affect a public API.",
+      "revId": "3ab1f7c0f88dc477a0fb5788cf86a276bf193163",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
