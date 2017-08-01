@@ -16,6 +16,24 @@
       "revId": "eecd7b1fc5a79eb05db0aae872e0685aa5ec55b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9812bc45_f4adefe6",
+        "filename": "ash/system/tray/tray_popup_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1182849
+      },
+      "writtenOn": "2017-08-01T16:46:53Z",
+      "side": 1,
+      "message": "Good catch, fixed in patch set 2",
+      "parentUuid": "f6e98be7_deed1bf8",
+      "revId": "eecd7b1fc5a79eb05db0aae872e0685aa5ec55b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
