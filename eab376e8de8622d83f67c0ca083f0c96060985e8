@@ -45,6 +45,23 @@
       "revId": "eab376e8de8622d83f67c0ca083f0c96060985e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41b490b1_22268149",
+        "filename": "third_party/WebKit/LayoutTests/payments/resources/payment-request-mock.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-01T15:20:28Z",
+      "side": 1,
+      "message": "nit: 4 space indent? (and also line 15)",
+      "revId": "eab376e8de8622d83f67c0ca083f0c96060985e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
