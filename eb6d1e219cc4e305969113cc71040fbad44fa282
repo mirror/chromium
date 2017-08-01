@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "556c6b34_ca17dff7",
+        "filename": "media/mojo/interfaces/mirror_service_remoting.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-01T00:18:50Z",
+      "side": 1,
+      "message": "Never mind on this. The more I think about it, the more I\u0027m being too pedantic here.\n\nFWIW, I believe Mojo would translate (IDL→C++):\n\n  double → double\n  double? → base::Optional\u003cdouble\u003e",
+      "parentUuid": "a2249c22_5c98ae77",
+      "range": {
+        "startLine": 35,
+        "startChar": 37,
+        "endLine": 35,
+        "endChar": 48
+      },
+      "revId": "eb6d1e219cc4e305969113cc71040fbad44fa282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "90639faf_c0f3fa19",
         "filename": "media/remoting/renderer_controller.h",
         "patchSetId": 2
