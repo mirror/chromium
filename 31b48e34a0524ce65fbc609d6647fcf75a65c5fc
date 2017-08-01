@@ -16,6 +16,24 @@
       "revId": "31b48e34a0524ce65fbc609d6647fcf75a65c5fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e8a78f5_69513db2",
+        "filename": "third_party/WebKit/Source/core/loader/BaseFetchContext.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-01T05:18:37Z",
+      "side": 1,
+      "message": "I just mechanically converted these. Given your comment, I reviewed how these are used. It looks they should be replaced with NetworkMessageSource.\n\nRegardless of that, this change improves the code regarding your point. AddConsoleMessage(const String\u0026) was using the default argument which allowed users unconsciously use kJSMessageSource. The new names describe what message source will be used. If it\u0027s not sufficient, we could rename this to AddConsoleMessageAsJSSourceAndWarningLevel().\n\nI\u0027m not sure what you meant by \"by default\". I don\u0027t feel letting the caller specify the source and level as arguments isn\u0027t so different compared to asking them to choose one from these more descriptively named methods in terms of awareness.",
+      "parentUuid": "f3e4f001_ed8126b7",
+      "revId": "31b48e34a0524ce65fbc609d6647fcf75a65c5fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
