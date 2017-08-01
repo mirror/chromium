@@ -1417,17 +1417,29 @@ TEST_P(NavigationManagerTest, RewritingAppSpecificUrls) {
 
 // Tests that GetIndexOfItem() returns the correct values.
 TEST_P(NavigationManagerTest, GetIndexOfItem) {
+  // This test manipuates the WKBackForwardListItems in mock_wk_list_ directly
+  // to retain the NavigationItem association.
+  WKBackForwardListItem* wk_item0 =
+      [CRWTestBackForwardList itemWithURLString:@"http://www.url.com/0"];
+  WKBackForwardListItem* wk_item1 =
+      [CRWTestBackForwardList itemWithURLString:@"http://www.url.com/1"];
+
   // Create two items and add them to the NavigationManagerImpl.
   navigation_manager()->AddPendingItem(
       GURL("http://www.url.com/0"), Referrer(), ui::PAGE_TRANSITION_TYPED,
       web::NavigationInitiationType::USER_INITIATED,
       web::NavigationManager::UserAgentOverrideOption::INHERIT);
+
+  mock_wk_list_.currentItem = wk_item0;
   navigation_manager()->CommitPendingItem();
   web::NavigationItem* item0 = navigation_manager()->GetLastCommittedItem();
   navigation_manager()->AddPendingItem(
       GURL("http://www.url.com/1"), Referrer(), ui::PAGE_TRANSITION_TYPED,
       web::NavigationInitiationType::USER_INITIATED,
       web::NavigationManager::UserAgentOverrideOption::INHERIT);
+
+  mock_wk_list_.currentItem = wk_item1;
+  mock_wk_list_.backList = [NSArray arrayWithObjects:wk_item0, nil];
   navigation_manager()->CommitPendingItem();
   web::NavigationItem* item1 = navigation_manager()->GetLastCommittedItem();
   // Create an item that does not exist in the NavigationManagerImpl.
