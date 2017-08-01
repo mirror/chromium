@@ -143,5 +143,8 @@ class Octane(perf_benchmark.PerfBenchmark):
   def GetExpectations(self):
     class StoryExpectations(story.expectations.StoryExpectations):
       def SetExpectations(self):
-        pass # Octane not disabled.
+        self.DisableStory(
+          'http://chromium.github.io/octane/index.html?auto=1',
+          [story.expectations.ALL],
+          'crbug.com/123123')
     return StoryExpectations()
