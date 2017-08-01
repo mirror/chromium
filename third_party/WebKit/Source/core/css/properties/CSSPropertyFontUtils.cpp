@@ -125,18 +125,52 @@ CSSValue* CSSPropertyFontUtils::ConsumeFontStretch(CSSParserTokenRange& range) {
   return percent;
 }
 
-CSSValue* CSSPropertyFontUtils::ConsumeFontWeight(CSSParserTokenRange& range) {
+CSSValue* CSSPropertyFontUtils::ConsumeFontWeight(
+    CSSParserTokenRange& range,
+    const CSSParserMode& parser_mode) {
   const CSSParserToken& token = range.Peek();
   if (token.Id() >= CSSValueNormal && token.Id() <= CSSValueLighter)
     return CSSPropertyParserHelpers::ConsumeIdent(range);
-  if (token.GetType() != kNumberToken)
+
+  // Avoid consuming the first zero of font: 0/0; e.g. in the Acid3 test.
+  if (token.GetType() == kNumberToken &&
+      (token.NumericValue() < 1 || token.NumericValue() > 1000))
     return nullptr;
-  float weight = token.NumericValue();
-  if (weight < 1 || weight > 1000)
+
+  CSSPrimitiveValue* start_weight = nullptr;
+  start_weight =
+      CSSPropertyParserHelpers::ConsumeNumber(range, kValueRangeNonNegative);
+  if (!start_weight || start_weight->GetFloatValue() < 1 ||
+      start_weight->GetFloatValue() > 1000)
     return nullptr;
-  range.ConsumeIncludingWhitespace();
-  return CSSPrimitiveValue::Create(weight,
-                                   CSSPrimitiveValue::UnitType::kNumber);
+
+  range.ConsumeWhitespace();
+  // In a non-font-face context, more than one number is not allowed.
+  if (parser_mode != kCSSFontFaceRuleMode && !range.AtEnd())
+    return nullptr;
+
+  CSSPrimitiveValue* end_weight = nullptr;
+  if (!range.AtEnd()) {
+    end_weight =
+        CSSPropertyParserHelpers::ConsumeNumber(range, kValueRangeNonNegative);
+    if (!end_weight || end_weight->GetFloatValue() < 1 ||
+        end_weight->GetFloatValue() > 1000)
+      return nullptr;
+  }
+
+  if (start_weight && end_weight) {
+    if (end_weight->GetFloatValue() < start_weight->GetFloatValue())
+      return nullptr;
+    CSSValueList* value_list = CSSValueList::CreateSpaceSeparated();
+    value_list->Append(*start_weight);
+    value_list->Append(*end_weight);
+    return value_list;
+  }
+
+  if (start_weight)
+    return start_weight;
+
+  return nullptr;
 }
 
 // TODO(bugsnash): move this to the FontFeatureSettings API when it is no longer
