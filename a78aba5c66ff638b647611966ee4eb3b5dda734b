@@ -16,6 +16,75 @@
       "revId": "a78aba5c66ff638b647611966ee4eb3b5dda734b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77048b18_c5e238ff",
+        "filename": "media/blink/webmediaplayer_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-01T00:08:46Z",
+      "side": 1,
+      "message": "Nice! I\u0027m always a fan of eliminating booleans! :)",
+      "range": {
+        "startLine": 231,
+        "startChar": 0,
+        "endLine": 233,
+        "endChar": 40
+      },
+      "revId": "a78aba5c66ff638b647611966ee4eb3b5dda734b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32390ba1_5fb57d23",
+        "filename": "media/remoting/renderer_controller_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-01T00:08:46Z",
+      "side": 1,
+      "message": "Thanks for adding these. Far less copy-paste, and more-readable/maintainable code. :)",
+      "range": {
+        "startLine": 140,
+        "startChar": 0,
+        "endLine": 140,
+        "endChar": 37
+      },
+      "revId": "a78aba5c66ff638b647611966ee4eb3b5dda734b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd84f26b_8cdf7c9e",
+        "filename": "media/remoting/shared_session.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-01T00:08:46Z",
+      "side": 1,
+      "message": "nit: Return type should be: const std::string\u0026 (let the caller decide if a copy of the object is necessary)",
+      "range": {
+        "startLine": 86,
+        "startChar": 2,
+        "endLine": 86,
+        "endChar": 13
+      },
+      "revId": "a78aba5c66ff638b647611966ee4eb3b5dda734b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
