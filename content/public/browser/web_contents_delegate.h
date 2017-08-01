@@ -115,6 +115,10 @@ class CONTENT_EXPORT WebContentsDelegate {
   // security state changed and that security UI should be updated.
   virtual void VisibleSecurityStateChanged(WebContents* source) {}
 
+  // Called to make the delegate (Browser) pass the WebContents to its
+  // BrowserWindow.
+  virtual void DisplayWebContentsInTouchbar(WebContents* contents) {}
+
   // Creates a new tab with the already-created WebContents 'new_contents'.
   // The window for the added contents should be reparented correctly when this
   // method returns.  If |disposition| is NEW_POPUP, |initial_rect| should hold
