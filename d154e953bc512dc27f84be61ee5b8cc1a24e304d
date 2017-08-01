@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9dc86601_a76e35e9",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_importer.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-08-01T20:10:18Z",
+      "side": 1,
+      "message": "Baslines for tests with query strings should not be merged. The baseline filename should be the whole test filename with \u0027?\u0027 replaced with \u0027_\u0027 and -expected.txt added:\nhttps://chromium.googlesource.com/chromium/src/+/master/third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/controllers/test_result_writer.py#150",
+      "revId": "d154e953bc512dc27f84be61ee5b8cc1a24e304d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
