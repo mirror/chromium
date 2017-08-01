@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d16d9882_ce1cf37e",
+        "filename": "content/browser/devtools/protocol/page_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-01T21:22:00Z",
+      "side": 1,
+      "message": "DCHECK",
+      "revId": "6cfd4006a3f58908a0db24db5dc35ed33a760d48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

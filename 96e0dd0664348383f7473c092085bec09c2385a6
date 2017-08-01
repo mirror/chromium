@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b10dc63c_247e47d1",
+        "filename": "content/browser/devtools/protocol/devtools_protocol_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1271,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-01T21:22:00Z",
+      "side": 1,
+      "message": "You never set it to non-null. Redundant cleanup?",
+      "range": {
+        "startLine": 1271,
+        "startChar": 6,
+        "endLine": 1271,
+        "endChar": 42
+      },
+      "revId": "96e0dd0664348383f7473c092085bec09c2385a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eeb935f3_830df5b8",
+        "filename": "content/browser/devtools/protocol/page_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-01T21:22:00Z",
+      "side": 1,
+      "message": "DCHECK it instead",
+      "range": {
+        "startLine": 238,
+        "startChar": 7,
+        "endLine": 238,
+        "endChar": 15
+      },
+      "revId": "96e0dd0664348383f7473c092085bec09c2385a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d60afb2_5203bd11",
+        "filename": "content/browser/devtools/protocol/page_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-01T21:22:00Z",
+      "side": 1,
+      "message": "Didn\u0027t you want to make this not invoke callback and simplify code a bit?",
+      "range": {
+        "startLine": 587,
+        "startChar": 13,
+        "endLine": 587,
+        "endChar": 35
+      },
+      "revId": "96e0dd0664348383f7473c092085bec09c2385a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84141044_947f8609",
+        "filename": "content/browser/devtools/protocol_config.json",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-01T21:22:00Z",
+      "side": 1,
+      "message": "I think this is gone now.",
+      "range": {
+        "startLine": 51,
+        "startChar": 21,
+        "endLine": 51,
+        "endChar": 38
+      },
+      "revId": "96e0dd0664348383f7473c092085bec09c2385a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "749b43be_89bdccad",
+        "filename": "content/browser/devtools/protocol_config.json",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-01T21:22:00Z",
+      "side": 1,
+      "message": "And this.",
+      "range": {
+        "startLine": 52,
+        "startChar": 147,
+        "endLine": 52,
+        "endChar": 166
+      },
+      "revId": "96e0dd0664348383f7473c092085bec09c2385a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7b82039_06f0c840",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 4560,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-01T21:22:00Z",
+      "side": 1,
+      "message": "{}",
+      "revId": "96e0dd0664348383f7473c092085bec09c2385a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10c6f30a_d7a7fc33",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 4591,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-01T21:22:00Z",
+      "side": 1,
+      "message": "Might as well bind to false right here, since you always call it with false.",
+      "revId": "96e0dd0664348383f7473c092085bec09c2385a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
