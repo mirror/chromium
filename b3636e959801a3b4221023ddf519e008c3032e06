@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6b9fa62_568f7c37",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-01T11:37:09Z",
+      "side": 1,
+      "message": "I think \"member variable\" or \"flag\" would be better than \"property\".",
+      "revId": "b3636e959801a3b4221023ddf519e008c3032e06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48434bd3_7f273d50",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableCell.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-01T11:37:09Z",
+      "side": 1,
+      "message": "Were you able to submit this without coding style warnings? I thought we were supposed to say \"spanning_collapsed_row\" these days.",
+      "revId": "b3636e959801a3b4221023ddf519e008c3032e06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bdcb687_aac76489",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableCell.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-01T11:37:09Z",
+      "side": 1,
+      "message": "Could pack this better and only use one bit, if you move it next to the other bit-fields that follow absolute_column_index_ (and declare it as \"unsigned is_spanning_collapsed_row_ : 1;\"). Please also note the comment about BITS_OF_ABSOLUTE_COLUMN_INDEX.",
+      "revId": "b3636e959801a3b4221023ddf519e008c3032e06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0811b75_404b0730",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 892,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-01T11:37:09Z",
+      "side": 1,
+      "message": "Please remove the \"_\" suffix, so that nobody thinks that we\u0027re dealing with a member variable here. Or just call cell-\u003eSetIsSpanningCollapsedRow(false) here. Then we won\u0027t even need this local variable...",
+      "revId": "b3636e959801a3b4221023ddf519e008c3032e06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fae5627f_aa265b0d",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 902,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-08-01T11:37:09Z",
+      "side": 1,
+      "message": "... or this code.",
+      "range": {
+        "startLine": 902,
+        "startChar": 0,
+        "endLine": 902,
+        "endChar": 80
+      },
+      "revId": "b3636e959801a3b4221023ddf519e008c3032e06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
