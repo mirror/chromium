@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dfb0fd78_60b12314",
+        "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-08-01T08:07:36Z",
+      "side": 1,
+      "message": "Btw, did you make sure the permissions in the dir and the file are OK, i.e. no public read permission?",
+      "range": {
+        "startLine": 105,
+        "startChar": 2,
+        "endLine": 105,
+        "endChar": 61
+      },
+      "revId": "eddbf4ae49c329323f52122acd995f17524a8d6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4fc025d_a030d351",
+        "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-08-01T08:07:36Z",
+      "side": 1,
+      "message": "LOG(ERROR)",
+      "range": {
+        "startLine": 107,
+        "startChar": 0,
+        "endLine": 107,
+        "endChar": 11
+      },
+      "revId": "eddbf4ae49c329323f52122acd995f17524a8d6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "962b65f1_8913c5c7",
+        "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-08-01T08:07:36Z",
+      "side": 1,
+      "message": "Is it possible that connection fails when authpolicyd hasn\u0027t started up yet? Would it make sense to retry every couple of minutes if we can\u0027t connect?",
+      "range": {
+        "startLine": 142,
+        "startChar": 1,
+        "endLine": 142,
+        "endChar": 77
+      },
+      "revId": "eddbf4ae49c329323f52122acd995f17524a8d6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe7d4d25_6e828ac2",
+        "filename": "chromeos/dbus/fake_auth_policy_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-08-01T08:07:36Z",
+      "side": 1,
+      "message": "Please add function-level comment.",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 50
+      },
+      "revId": "eddbf4ae49c329323f52122acd995f17524a8d6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "554f8df9_cf951bf6",
+        "filename": "chromeos/dbus/fake_auth_policy_client.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-08-01T08:07:36Z",
+      "side": 1,
+      "message": "Please add function-level comment.",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 57
+      },
+      "revId": "eddbf4ae49c329323f52122acd995f17524a8d6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3454dc4_6fff4da4",
+        "filename": "chromeos/dbus/fake_auth_policy_client.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-08-01T08:07:36Z",
+      "side": 1,
+      "message": "Please add comments that roughly explain the behavior, e.g.\n// Fake implementation of authpolicyd\u0027s JoinAdDomain. Just performs basic checks on\n// |machine_name| and |user_principal_name| and returns ERROR_INVALID_MACHINE_NAME resp.\n// ERROR_PARSE_UPN_FAILED if the checks fail. Otherwise, always succeeds.\nvoid JoinAdDomain(...)",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 0
+      },
+      "revId": "eddbf4ae49c329323f52122acd995f17524a8d6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "546a9c15_55781050",
+        "filename": "chromeos/dbus/fake_auth_policy_client.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-08-01T08:07:36Z",
+      "side": 1,
+      "message": "What is that, a 3.5 inch floppy disk? :P",
+      "range": {
+        "startLine": 98,
+        "startChar": 2,
+        "endLine": 98,
+        "endChar": 74
+      },
+      "revId": "eddbf4ae49c329323f52122acd995f17524a8d6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

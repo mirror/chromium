@@ -131,6 +131,24 @@
     },
     {
       "key": {
+        "uuid": "3cfaa635_2a58b93c",
+        "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-08-01T08:07:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e8e8bee0_dbf784d8",
+      "revId": "38e02a6e26091fe7302a43c72e32a53e6310f863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1549ae20_07e362bc",
         "filename": "chromeos/dbus/fake_auth_policy_client.cc",
         "patchSetId": 8
@@ -199,6 +217,30 @@
       "revId": "38e02a6e26091fe7302a43c72e32a53e6310f863",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "697e1aba_407644b0",
+        "filename": "chromeos/dbus/fake_auth_policy_client.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-08-01T08:07:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "24f761bb_dd0c89b6",
+      "range": {
+        "startLine": 236,
+        "startChar": 34,
+        "endLine": 236,
+        "endChar": 64
+      },
+      "revId": "38e02a6e26091fe7302a43c72e32a53e6310f863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
