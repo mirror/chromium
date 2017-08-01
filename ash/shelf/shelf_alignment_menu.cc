@@ -15,7 +15,7 @@ namespace ash {
 
 ShelfAlignmentMenu::ShelfAlignmentMenu(Shelf* shelf)
     : ui::SimpleMenuModel(nullptr), shelf_(shelf) {
-  DCHECK(shelf_);
+  // DCHECK(shelf_); 
   const int align_group_id = 1;
   set_delegate(this);
   AddRadioItemWithStringId(

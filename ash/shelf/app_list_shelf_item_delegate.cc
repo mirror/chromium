@@ -16,18 +16,12 @@ AppListShelfItemDelegate::AppListShelfItemDelegate()
 
 AppListShelfItemDelegate::~AppListShelfItemDelegate() {}
 
-void AppListShelfItemDelegate::ItemSelected(std::unique_ptr<ui::Event> event,
+void AppListShelfItemDelegate::ItemSelectedImpl(std::unique_ptr<ui::Event> event,
                                             int64_t display_id,
                                             ShelfLaunchSource source,
                                             ItemSelectedCallback callback) {
   Shell::Get()->ToggleAppList();
   std::move(callback).Run(SHELF_ACTION_APP_LIST_SHOWN, base::nullopt);
-}
-
-void AppListShelfItemDelegate::ExecuteCommand(uint32_t command_id,
-                                              int32_t event_flags) {
-  // This delegate does not support showing an application menu.
-  NOTIMPLEMENTED();
 }
 
 void AppListShelfItemDelegate::Close() {}

@@ -46,6 +46,9 @@ class LauncherContextMenu : public ui::SimpleMenuModel,
                                      const ash::ShelfItem* item,
                                      ash::Shelf* shelf);
 
+  // TODO(msw): Another idea... 
+  // static ash::MenuItemList GetMenuItemsForMojo(ui::SimpleMenuModel* model);
+
   // ui::SimpleMenuModel::Delegate overrides:
   bool IsItemForCommandIdDynamic(int command_id) const override;
   base::string16 GetLabelForCommandId(int command_id) const override;
@@ -75,7 +78,7 @@ class LauncherContextMenu : public ui::SimpleMenuModel,
 
   ash::ShelfItem item_;
 
-  ash::ShelfAlignmentMenu shelf_alignment_menu_;
+  // ash::ShelfAlignmentMenu shelf_alignment_menu_; 
 
   ash::Shelf* shelf_;
 

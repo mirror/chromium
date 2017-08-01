@@ -74,11 +74,12 @@ AppWindowLauncherItemController::AsAppWindowLauncherItemController() {
   return this;
 }
 
-void AppWindowLauncherItemController::ItemSelected(
+void AppWindowLauncherItemController::ItemSelectedImpl(
     std::unique_ptr<ui::Event> event,
     int64_t display_id,
     ash::ShelfLaunchSource source,
     ItemSelectedCallback callback) {
+  LOG(ERROR) << "MSW AppWindowLauncherItemController::ItemSelected";
   if (windows_.empty()) {
     std::move(callback).Run(ash::SHELF_ACTION_NONE, base::nullopt);
     return;
@@ -96,14 +97,11 @@ void AppWindowLauncherItemController::ItemSelected(
     action = ShowAndActivateOrMinimize(window_to_show);
   }
 
+  // TODO(msw): test:
+  action = ash::SHELF_ACTION_SHOW_APPLICATION_MENU;
+
   std::move(callback).Run(
       action, GetAppMenuItems(event ? event->flags() : ui::EF_NONE));
-}
-
-void AppWindowLauncherItemController::ExecuteCommand(uint32_t command_id,
-                                                     int32_t event_flags) {
-  // This delegate does not support showing an application menu.
-  NOTIMPLEMENTED();
 }
 
 void AppWindowLauncherItemController::Close() {

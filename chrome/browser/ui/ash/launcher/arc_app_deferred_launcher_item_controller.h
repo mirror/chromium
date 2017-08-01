@@ -31,11 +31,10 @@ class ArcAppDeferredLauncherItemController : public ash::ShelfItemDelegate {
   int event_flags() const { return event_flags_; }
 
   // ash::ShelfItemDelegate:
-  void ItemSelected(std::unique_ptr<ui::Event> event,
+  void ItemSelectedImpl(std::unique_ptr<ui::Event> event,
                     int64_t display_id,
                     ash::ShelfLaunchSource source,
                     ItemSelectedCallback callback) override;
-  void ExecuteCommand(uint32_t command_id, int32_t event_flags) override;
   void Close() override;
 
  private:
