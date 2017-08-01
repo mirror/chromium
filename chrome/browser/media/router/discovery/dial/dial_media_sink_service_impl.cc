@@ -130,8 +130,8 @@ void DialMediaSinkServiceImpl::OnDeviceDescriptionError(
 }
 
 void DialMediaSinkServiceImpl::RecordDeviceCounts() {
-  metrics_.RecordDialDeviceCounts(current_sinks_.size(),
-                                  current_devices_.size());
+  metrics_.RecordDeviceCountsPeriodically(current_sinks_.size(),
+                                          current_devices_.size());
 }
 
 }  // namespace media_router

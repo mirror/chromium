@@ -8,7 +8,6 @@
 #include <memory>
 
 #include "base/gtest_prod_util.h"
-#include "base/time/clock.h"
 #include "base/time/time.h"
 #include "chrome/browser/ui/webui/media_router/media_cast_mode.h"
 #include "media/base/container_names.h"
@@ -63,8 +62,6 @@ class MediaRouterMetrics {
   ~MediaRouterMetrics();
 
   // UMA histogram names.
-  static const char kHistogramDialAvailableDeviceCount[];
-  static const char kHistogramDialKnownDeviceCount[];
   static const char kHistogramIconClickLocation[];
   static const char kHistogramMediaRouterCastingSource[];
   static const char kHistogramMediaRouterFileFormat[];
@@ -106,20 +103,6 @@ class MediaRouterMetrics {
 
   // Records the size of a cast file.
   static void RecordMediaRouterFileSize(int64_t size);
-
-  // Records device counts.
-  // TODO(zhaobin): Move device count specific metrics and state into its own
-  // class eventually.
-  void RecordDialDeviceCounts(size_t available_device_count,
-                              size_t known_device_count);
-
-  // Allows tests to swap in a fake clock.
-  void SetClockForTest(std::unique_ptr<base::Clock> clock);
-
- private:
-  base::Time device_count_metrics_record_time_;
-
-  std::unique_ptr<base::Clock> clock_;
 };
 
 }  // namespace media_router
