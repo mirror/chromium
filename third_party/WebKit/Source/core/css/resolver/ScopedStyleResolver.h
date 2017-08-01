@@ -63,6 +63,8 @@ class ScopedStyleResolver final
                                   CascadeOrder = kIgnoreCascadeOrder);
   void CollectMatchingShadowHostRules(ElementRuleCollector&,
                                       CascadeOrder = kIgnoreCascadeOrder);
+  void CollectMatchingSlottedRules(ElementRuleCollector&,
+                                   CascadeOrder = kIgnoreCascadeOrder);
   void CollectMatchingTreeBoundaryCrossingRules(
       ElementRuleCollector&,
       CascadeOrder = kIgnoreCascadeOrder);
@@ -125,6 +127,7 @@ class ScopedStyleResolver final
   using CSSStyleSheetRuleSubSet = HeapVector<Member<RuleSubSet>>;
 
   Member<CSSStyleSheetRuleSubSet> tree_boundary_crossing_rule_set_;
+  Member<CSSStyleSheetRuleSubSet> slotted_rule_set_;
   bool has_deep_or_shadow_selector_ = false;
   bool has_unresolved_keyframes_rule_ = false;
   bool needs_append_all_sheets_ = false;

@@ -119,11 +119,14 @@ void ScopedStyleResolver::CollectFeaturesTo(
       features.Add(contents->GetRuleSet().Features());
   }
 
-  if (!tree_boundary_crossing_rule_set_)
-    return;
-
-  for (const auto& rules : *tree_boundary_crossing_rule_set_)
-    features.Add(rules->rule_set_->Features());
+  if (tree_boundary_crossing_rule_set_) {
+    for (const auto& rules : *tree_boundary_crossing_rule_set_)
+      features.Add(rules->rule_set_->Features());
+  }
+  if (slotted_rule_set_) {
+    for (const auto& rules : *slotted_rule_set_)
+      features.Add(rules->rule_set_->Features());
+  }
 }
 
 void ScopedStyleResolver::ResetAuthorStyle() {
@@ -231,6 +234,19 @@ void ScopedStyleResolver::CollectMatchingShadowHostRules(
   }
 }
 
+void ScopedStyleResolver::CollectMatchingSlottedRules(
+    ElementRuleCollector& collector,
+    CascadeOrder cascade_order) {
+  if (!slotted_rule_set_)
+    return;
+
+  for (const auto& rules : *slotted_rule_set_) {
+    MatchRequest request(rules->rule_set_.Get(), &GetTreeScope().RootNode(),
+                         rules->parent_style_sheet_, rules->parent_index_);
+    collector.CollectMatchingRules(request, cascade_order, true);
+  }
+}
+
 void ScopedStyleResolver::CollectMatchingTreeBoundaryCrossingRules(
     ElementRuleCollector& collector,
     CascadeOrder cascade_order) {
@@ -258,6 +274,7 @@ DEFINE_TRACE(ScopedStyleResolver) {
   visitor->Trace(author_style_sheets_);
   visitor->Trace(keyframes_rule_map_);
   visitor->Trace(tree_boundary_crossing_rule_set_);
+  visitor->Trace(slotted_rule_set_);
 }
 
 static void AddRules(RuleSet* rule_set,
@@ -282,23 +299,36 @@ void ScopedStyleResolver::AddTreeBoundaryCrossingRules(
   if (!author_rules.DeepCombinatorOrShadowPseudoRules().IsEmpty())
     has_deep_or_shadow_selector_ = true;
 
-  RuleSet* rule_set_for_scope = RuleSet::Create();
-  AddRules(rule_set_for_scope,
+  RuleSet* rule_set_for_all_scopes = RuleSet::Create();
+  RuleSet* rule_set_for_ancestor_scopes = RuleSet::Create();
+
+  AddRules(rule_set_for_all_scopes,
            author_rules.DeepCombinatorOrShadowPseudoRules());
 
   if (!is_document_scope) {
-    AddRules(rule_set_for_scope, author_rules.ContentPseudoElementRules());
-    AddRules(rule_set_for_scope, author_rules.SlottedPseudoElementRules());
+    AddRules(rule_set_for_all_scopes, author_rules.ContentPseudoElementRules());
+    AddRules(rule_set_for_ancestor_scopes,
+             author_rules.SlottedPseudoElementRules());
   }
 
-  if (!tree_boundary_crossing_rule_set_) {
-    tree_boundary_crossing_rule_set_ = new CSSStyleSheetRuleSubSet();
-    GetTreeScope().GetDocument().GetStyleEngine().AddTreeBoundaryCrossingScope(
-        GetTreeScope());
+  if (rule_set_for_all_scopes->RuleCount()) {
+    if (!tree_boundary_crossing_rule_set_) {
+      tree_boundary_crossing_rule_set_ = new CSSStyleSheetRuleSubSet();
+      GetTreeScope()
+          .GetDocument()
+          .GetStyleEngine()
+          .AddTreeBoundaryCrossingScope(GetTreeScope());
+    }
+    tree_boundary_crossing_rule_set_->push_back(RuleSubSet::Create(
+        parent_style_sheet, sheet_index, rule_set_for_all_scopes));
   }
 
-  tree_boundary_crossing_rule_set_->push_back(
-      RuleSubSet::Create(parent_style_sheet, sheet_index, rule_set_for_scope));
+  if (rule_set_for_ancestor_scopes->RuleCount()) {
+    if (!slotted_rule_set_)
+      slotted_rule_set_ = new CSSStyleSheetRuleSubSet();
+    slotted_rule_set_->push_back(RuleSubSet::Create(
+        parent_style_sheet, sheet_index, rule_set_for_ancestor_scopes));
+  }
 }
 
 bool ScopedStyleResolver::HaveSameStyles(const ScopedStyleResolver* first,
