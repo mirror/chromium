@@ -107,7 +107,7 @@ TryChromeDialogView::Result TryChromeDialogView::ShowDialog(
 
   ChromeLayoutProvider* provider = ChromeLayoutProvider::Get();
   const int label_spacing =
-      provider->GetDistanceMetric(DISTANCE_RELATED_LABEL_HORIZONTAL);
+      provider->GetDistanceMetric(views::DISTANCE_RELATED_LABEL_HORIZONTAL);
   const int unrelated_space_horiz =
       provider->GetDistanceMetric(DISTANCE_UNRELATED_CONTROL_HORIZONTAL);
   const int unrelated_space_vert =

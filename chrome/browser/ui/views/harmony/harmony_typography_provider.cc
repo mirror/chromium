@@ -13,6 +13,7 @@
 #include "ui/native_theme/native_theme.h"
 
 #if defined(OS_WIN)
+#include "ui/gfx/platform_font_win.h"
 #include "ui/native_theme/native_theme_win.h"
 #endif
 
@@ -178,10 +179,16 @@ int HarmonyTypographyProvider::GetLineHeight(int context, int style) const {
   constexpr int kBodyTextLargePlatformHeight = 16;
   constexpr int kBodyTextSmallPlatformHeight = 15;
 #elif defined(OS_WIN)
-  constexpr int kHeadlinePlatformHeight = 28;
+  // DirectWrite gives different heights than the fallback (GDI). The line
+  // height should be consistent either way.
+  const bool direct_write_enabled =
+      gfx::PlatformFontWin::IsDirectWriteEnabled();
+  static const int kHeadlinePlatformHeight = direct_write_enabled ? 27 : 28;
   constexpr int kTitlePlatformHeight = 20;
-  constexpr int kBodyTextLargePlatformHeight = 17;
-  constexpr int kBodyTextSmallPlatformHeight = 15;
+  static const int kBodyTextLargePlatformHeight =
+      direct_write_enabled ? 18 : 17;
+  static const int kBodyTextSmallPlatformHeight =
+      direct_write_enabled ? 16 : 15;
 #else
   constexpr int kHeadlinePlatformHeight = 24;
   constexpr int kTitlePlatformHeight = 18;
@@ -215,6 +222,7 @@ int HarmonyTypographyProvider::GetLineHeight(int context, int style) const {
     case views::style::CONTEXT_DIALOG_TITLE:
       return title_height;
     case CONTEXT_BODY_TEXT_LARGE:
+    case views::style::CONTEXT_TABLE_ROW:
       return body_large_height;
     case CONTEXT_HEADLINE:
       return headline_height;
