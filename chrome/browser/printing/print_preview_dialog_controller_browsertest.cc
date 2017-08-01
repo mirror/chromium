@@ -127,13 +127,6 @@ void PluginsLoadedCallback(
   quit_closure.Run();
 }
 
-bool GetPdfPluginInfo(content::WebPluginInfo* info) {
-  base::FilePath pdf_plugin_path = base::FilePath::FromUTF8Unsafe(
-      ChromeContentClient::kPDFPluginPath);
-  return content::PluginService::GetInstance()->GetPluginInfoByPath(
-      pdf_plugin_path, info);
-}
-
 const char kDummyPrintUrl[] = "chrome://print/dummy.pdf";
 
 void CountFrames(int* frame_count,
@@ -143,7 +136,7 @@ void CountFrames(int* frame_count,
 
 void CheckPdfPluginForRenderFrame(content::RenderFrameHost* frame) {
   content::WebPluginInfo pdf_plugin_info;
-  ASSERT_TRUE(GetPdfPluginInfo(&pdf_plugin_info));
+  ASSERT_TRUE(ChromePluginServiceFilter::GetPdfPluginInfo(&pdf_plugin_info));
 
   ChromePluginServiceFilter* filter = ChromePluginServiceFilter::GetInstance();
   EXPECT_TRUE(filter->IsPluginAvailable(
@@ -289,7 +282,7 @@ IN_PROC_BROWSER_TEST_F(PrintPreviewDialogControllerBrowserTest,
   }
   // Get the PDF plugin info.
   content::WebPluginInfo pdf_plugin_info;
-  ASSERT_TRUE(GetPdfPluginInfo(&pdf_plugin_info));
+  ASSERT_TRUE(ChromePluginServiceFilter::GetPdfPluginInfo(&pdf_plugin_info));
 
   // Disable the PDF plugin.
   SetAlwaysOpenPdfExternallyForTests(true);
