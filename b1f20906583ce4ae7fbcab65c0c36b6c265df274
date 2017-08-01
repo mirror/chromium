@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "06a98f29_68282820",
+        "filename": "cc/raster/gpu_raster_buffer_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-01T00:50:26Z",
+      "side": 1,
+      "message": "I\u0027m curious if we get a benefit places like this:\nhttps://cs.chromium.org/chromium/src/cc/raster/raster_buffer_provider.cc?sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d91\n\npreviously, we\u0027d also call discard on that but now we won\u0027t. Does that matter?",
+      "revId": "b1f20906583ce4ae7fbcab65c0c36b6c265df274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
