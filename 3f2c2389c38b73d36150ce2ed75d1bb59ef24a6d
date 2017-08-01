@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd6817b8_fb8fa956",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_web_contents_data.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-01T16:29:48Z",
+      "side": 1,
+      "message": "May as well just call SetIsInSessionRestore(false) directly?",
+      "revId": "3f2c2389c38b73d36150ce2ed75d1bb59ef24a6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da6361c8_8b6fbfa4",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_web_contents_data.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-01T16:29:48Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 89,
+        "startChar": 4,
+        "endLine": 89,
+        "endChar": 25
+      },
+      "revId": "3f2c2389c38b73d36150ce2ed75d1bb59ef24a6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
