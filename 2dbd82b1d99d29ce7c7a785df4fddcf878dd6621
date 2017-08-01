@@ -46,6 +46,30 @@
       "revId": "2dbd82b1d99d29ce7c7a785df4fddcf878dd6621",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "156b936d_97628f18",
+        "filename": "components/safe_browsing/browser/threat_details.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-08-01T15:30:41Z",
+      "side": 1,
+      "message": "On second thought, undoing this for now and adding a TODO instead. Will need a bit of refactoring to make this class mockable in trigger_manager.",
+      "parentUuid": "034251cd_ed7db98c",
+      "range": {
+        "startLine": 313,
+        "startChar": 15,
+        "endLine": 313,
+        "endChar": 28
+      },
+      "revId": "2dbd82b1d99d29ce7c7a785df4fddcf878dd6621",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
