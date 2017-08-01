@@ -144,6 +144,24 @@
     },
     {
       "key": {
+        "uuid": "d5ca00c2_e56df068",
+        "filename": "cc/quads/render_pass.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000608
+      },
+      "writtenOn": "2017-08-01T19:37:40Z",
+      "side": 1,
+      "message": "No, if visible_rect is empty then the quad won\u0027t be drawn, which defeats the purpose.",
+      "parentUuid": "83139412_351cc78d",
+      "revId": "d5e9bbddb7b344d33b7efc4c4e1a16f9e292a900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "78d8a619_cf453f7c",
         "filename": "cc/quads/render_pass.cc",
         "patchSetId": 3
