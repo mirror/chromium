@@ -186,7 +186,7 @@ class BlacklistTest : public testing::Test {
 
     // We have to call this exported function every time this test setup runs.
     // If the tests are running in single process mode, the test DLL does not
-    // get reloaded everytime - but we need to make sure it updates
+    // get reloaded every time - but we need to make sure it updates
     // appropriately.
     InitTestDll();
 

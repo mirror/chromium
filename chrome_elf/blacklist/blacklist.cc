@@ -130,7 +130,7 @@ bool LeaveSetupBeacon() {
         success = true;
     }
   } else {
-    // Some part of the blacklist setup failed last time.  If this has occured
+    // Some part of the blacklist setup failed last time.  If this has occurred
     // blacklist::kBeaconMaxAttempts times in a row we switch the state to
     // failed and skip setting up the blacklist.
     DWORD attempt_count = 0;
