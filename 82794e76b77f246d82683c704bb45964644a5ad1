@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b73e7fa9_79d3448b",
+        "filename": "content/browser/geolocation/geolocation_service_impl.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-08-01T01:08:47Z",
+      "side": 1,
+      "message": "nit: may want {}",
+      "revId": "82794e76b77f246d82683c704bb45964644a5ad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
