@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53f22258_c5da343f",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/CronetTestCommon.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-08-01T02:24:23Z",
+      "side": 1,
+      "message": "I don\u0027t think we want to expose this setter.  Can we perhaps move the getter into the class that\u0027s setting this and remove the setter?  Like it was previously.",
+      "range": {
+        "startLine": 125,
+        "startChar": 59,
+        "endLine": 125,
+        "endChar": 0
+      },
+      "revId": "e0c76c36aca4a744a28c268c96829e876f18aed0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2feed1b_7901abb1",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/CronetTestCommon.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-08-01T02:24:23Z",
+      "side": 1,
+      "message": "This function is missing its comment.",
+      "range": {
+        "startLine": 129,
+        "startChar": 46,
+        "endLine": 129,
+        "endChar": 0
+      },
+      "revId": "e0c76c36aca4a744a28c268c96829e876f18aed0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d88d6def_e3607f94",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/CronetTestCommon.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-08-01T02:24:23Z",
+      "side": 1,
+      "message": "This function is missing a comment and seems redundant with the version in CronetTestRule.",
+      "range": {
+        "startLine": 136,
+        "startChar": 31,
+        "endLine": 136,
+        "endChar": 0
+      },
+      "revId": "e0c76c36aca4a744a28c268c96829e876f18aed0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
