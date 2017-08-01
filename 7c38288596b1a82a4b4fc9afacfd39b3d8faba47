@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "764549ae_c789a328",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-allow-async.htm",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-01T11:19:03Z",
+      "side": 1,
+      "message": "Awesome, thanks!",
+      "parentUuid": "e5b805e2_6f2e30be",
+      "revId": "7c38288596b1a82a4b4fc9afacfd39b3d8faba47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c425dd5c_1802c736",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-allow-async.htm",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "7c38288596b1a82a4b4fc9afacfd39b3d8faba47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0413a1e9_062a68cf",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-allow-async.htm",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-01T11:19:03Z",
+      "side": 1,
+      "message": "Good call, thanks!",
+      "parentUuid": "c425dd5c_1802c736",
+      "revId": "7c38288596b1a82a4b4fc9afacfd39b3d8faba47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
