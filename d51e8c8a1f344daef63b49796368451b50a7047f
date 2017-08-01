@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94dc6972_bd120054",
+        "filename": "media/base/android/media_drm_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-01T15:57:00Z",
+      "side": 1,
+      "message": "Change the API back, creating MediaDrmBridge synchronously.",
+      "range": {
+        "startLine": 339,
+        "startChar": 0,
+        "endLine": 339,
+        "endChar": 61
+      },
+      "revId": "d51e8c8a1f344daef63b49796368451b50a7047f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

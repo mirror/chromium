@@ -108,6 +108,30 @@
     },
     {
       "key": {
+        "uuid": "138350f7_9c7231e4",
+        "filename": "components/cdm/browser/media_drm_storage_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-01T15:57:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fbb0edd_2c6e0add",
+      "range": {
+        "startLine": 47,
+        "startChar": 12,
+        "endLine": 47,
+        "endChar": 0
+      },
+      "revId": "4f45297de7c99f11c3298ef2cccc7556e3cbc841",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31e43e0c_17c9ea52",
         "filename": "components/cdm/browser/media_drm_storage_impl.cc",
         "patchSetId": 2
@@ -336,6 +360,24 @@
     },
     {
       "key": {
+        "uuid": "7bf8d01f_f7ee5c3b",
+        "filename": "components/cdm/browser/media_drm_storage_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-01T15:57:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94661ea2_9b3e474e",
+      "revId": "4f45297de7c99f11c3298ef2cccc7556e3cbc841",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1c28418_09386864",
         "filename": "media/base/android/media_drm_storage.h",
         "patchSetId": 2
@@ -453,6 +495,24 @@
       "side": 1,
       "message": "If the mojo pipe is broken, we\u0027ll return an empty origin id. Then in MediaDrmBridge use_origin_isolated_storage will be false and we\u0027ll continue without origin ID. This seems wrong to me.",
       "parentUuid": "6c845f04_69aa1c9a",
+      "revId": "4f45297de7c99f11c3298ef2cccc7556e3cbc841",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80daf554_abf81c4b",
+        "filename": "media/base/android/media_drm_storage_bridge.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-08-01T15:57:00Z",
+      "side": 1,
+      "message": "MediaDrmBridge checks origin id and doesn\u0027t create MediaDrmBridge if empty.",
+      "parentUuid": "356999e7_c1bfe4ef",
       "revId": "4f45297de7c99f11c3298ef2cccc7556e3cbc841",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
