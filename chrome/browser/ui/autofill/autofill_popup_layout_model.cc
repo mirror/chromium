@@ -303,7 +303,7 @@ unsigned int AutofillPopupLayoutModel::GetDropdownItemHeight() const {
 
 bool AutofillPopupLayoutModel::IsIconAtStart(int frontend_id) const {
   return frontend_id == POPUP_ITEM_ID_HTTP_NOT_SECURE_WARNING_MESSAGE ||
-      (is_credit_card_popup_ && IsIconInCreditCardPopupAtStart());
+         (is_credit_card_popup_ && IsIconInCreditCardPopupAtStart());
 }
 
 unsigned int AutofillPopupLayoutModel::GetMargin() const {
