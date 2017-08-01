@@ -36,14 +36,22 @@ Console.ConsoleView = class extends UI.VBox {
     super();
     this.setMinimumSize(0, 35);
     this.registerRequiredCSS('console/consoleView.css');
+    this.element.classList.add('console-view');
 
     this._searchableView = new UI.SearchableView(this);
     this._searchableView.setPlaceholder(Common.UIString('Find string in logs'));
     this._searchableView.setMinimalSearchQuerySize(0);
-    this._searchableView.show(this.element);
+    this._sidebar = new Console.ConsoleSidebar();
+
+    var toolbar = new UI.Toolbar('', this.element);
+    this._splitWidget =
+        new UI.SplitWidget(true /* isVertical */, false /* secondIsSidebar */, 'console.sidebar.width', 100);
+    this._splitWidget.setMainWidget(this._searchableView);
+    this._splitWidget.setSidebarWidget(this._sidebar);
+    this._splitWidget.hideSidebar();
+    this._splitWidget.show(this.element);
 
     this._contentsElement = this._searchableView.element;
-    this._contentsElement.classList.add('console-view');
     /** @type {!Array.<!Console.ConsoleViewMessage>} */
     this._visibleViewMessages = [];
     this._urlToMessageCount = {};
@@ -54,6 +62,7 @@ Console.ConsoleView = class extends UI.VBox {
      */
     this._regexMatchRanges = [];
     this._filter = new Console.ConsoleViewFilter(this._updateMessageList.bind(this));
+    this._contexts = new Set();
 
     this._consoleContextSelector = new Console.ConsoleContextSelector();
 
@@ -64,7 +73,8 @@ Console.ConsoleView = class extends UI.VBox {
         this._showSettingsPaneSetting, 'largeicon-settings-gear', Common.UIString('Console settings'));
     this._progressToolbarItem = new UI.ToolbarItem(createElement('div'));
 
-    var toolbar = new UI.Toolbar('', this._contentsElement);
+    if (Runtime.experiments.isEnabled('logManagement'))
+      toolbar.appendToolbarItem(this._splitWidget.createShowHideSidebarButton('console sidebar'));
     toolbar.appendToolbarItem(UI.Toolbar.createActionButton(
         /** @type {!UI.Action }*/ (UI.actionRegistry.action('console.clear'))));
     toolbar.appendSeparator();
@@ -175,6 +185,10 @@ Console.ConsoleView = class extends UI.VBox {
     this._messagesElement.addEventListener('mouseup', this._updateStickToBottomOnMouseUp.bind(this), false);
     this._messagesElement.addEventListener('mouseleave', this._updateStickToBottomOnMouseUp.bind(this), false);
     this._messagesElement.addEventListener('wheel', this._updateStickToBottomOnWheel.bind(this), false);
+
+    this._sidebar.addEventListener(Console.ConsoleSidebar.Events.ContextSelected, event => {
+      this._filter.setContext(/** @type {string|symbol} */ (event.data));
+    });
 
     ConsoleModel.consoleModel.addEventListener(
         ConsoleModel.ConsoleModel.Events.ConsoleCleared, this._consoleCleared, this);
@@ -357,9 +371,19 @@ Console.ConsoleView = class extends UI.VBox {
       this._updateMessageList();
       delete this._needsFullUpdate;
     } else {
+      this._updateSidebar();
       this._viewport.invalidate();
     }
     return Promise.resolve();
+  }
+
+  _updateSidebar() {
+    if (!Runtime.experiments.isEnabled('logManagement'))
+      return;
+    var newSidebarItems = this._contexts.valuesArray().map(name => {
+      return {context: name, name: name};
+    });
+    this._sidebar.updateGroupItems(newSidebarItems);
   }
 
   _scheduleViewportRefresh() {
@@ -465,6 +489,10 @@ Console.ConsoleView = class extends UI.VBox {
    * @param {!Console.ConsoleViewMessage} viewMessage
    */
   _appendMessageToEnd(viewMessage) {
+    var context = viewMessage.consoleMessage().context;
+    if (context)
+      this._contexts.add(context);
+
     if (!this._filter.shouldBeVisible(viewMessage)) {
       this._hiddenByFilterCount++;
       return;
@@ -636,6 +664,7 @@ Console.ConsoleView = class extends UI.VBox {
     this._topGroup = Console.ConsoleGroup.createTopGroup();
     this._currentGroup = this._topGroup;
     this._regexMatchRanges = [];
+    this._contexts = new Set();
     this._hiddenByFilterCount = 0;
     for (var i = 0; i < this._visibleViewMessages.length; ++i) {
       this._visibleViewMessages[i].resetCloseGroupDecorationCount();
@@ -646,6 +675,7 @@ Console.ConsoleView = class extends UI.VBox {
       this._appendMessageToEnd(this._consoleMessages[i]);
     this._updateFilterStatus();
     this._searchableView.updateSearchMatchesCount(this._regexMatchRanges.length);
+    this._updateSidebar();
     this._viewport.invalidate();
   }
 
@@ -984,6 +1014,7 @@ Console.ConsoleViewFilter = class {
    */
   constructor(filterChangedCallback) {
     this._filterChanged = filterChangedCallback;
+    this._context = Console.Contexts.All;
 
     this._messageURLFiltersSetting = Common.settings.createSetting('messageURLFilters', {});
     this._messageLevelFiltersSetting = Console.ConsoleViewFilter.levelFilterSetting();
@@ -1043,6 +1074,16 @@ Console.ConsoleViewFilter = class {
     var result = Console.ConsoleViewFilter.allLevelsFilterValue();
     result[ConsoleModel.ConsoleMessage.MessageLevel.Verbose] = false;
     return result;
+  }
+
+  /**
+   * @param {string|symbol} context
+   */
+  setContext(context) {
+    if (this._context !== context) {
+      this._context = context;
+      this._filterChanged();
+    }
   }
 
   _updateLevelMenuButtonText() {
@@ -1177,6 +1218,9 @@ Console.ConsoleViewFilter = class {
 
     if (this._filterByConsoleAPISetting.get() &&
         message.source !== ConsoleModel.ConsoleMessage.MessageSource.ConsoleAPI)
+      return false;
+
+    if (this._context !== Console.Contexts.All && message.context !== this._context)
       return false;
 
     return true;
