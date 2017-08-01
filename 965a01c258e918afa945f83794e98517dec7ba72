@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a44da05e_0ee2e3c4",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 5844,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-08-01T12:16:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dae5773e_74cfeb47",
+      "revId": "965a01c258e918afa945f83794e98517dec7ba72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "739086c5_7b070cbd",
         "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "965a01c258e918afa945f83794e98517dec7ba72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c280bc26_308e4f77",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 5932,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-08-01T12:16:44Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "739086c5_7b070cbd",
+      "revId": "965a01c258e918afa945f83794e98517dec7ba72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e6db233c_9abbd6e9",
+        "filename": "third_party/WebKit/Source/core/dom/Document.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 1039,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-08-01T12:16:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "050fb002_e77e6463",
+      "revId": "965a01c258e918afa945f83794e98517dec7ba72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "935653fa_445d09eb",
         "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2017-07-31T10:02:42Z",
       "side": 1,
       "message": "When wouldn\u0027t we have a CSP? Don\u0027t we populate this during resource loading to handle things like `frame-ancestors`?",
+      "revId": "965a01c258e918afa945f83794e98517dec7ba72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aedce90_a683fdc9",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 903,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-08-01T12:16:44Z",
+      "side": 1,
+      "message": "https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/loader/DocumentLoader.cpp?sq\u003dpackage:chromium\u0026l\u003d558\n\nI think it will only get populated when we get a response back which from what I understand (and I could be wrong of course) won\u0027t happen if we don\u0027t actually make a fetch request.\n\nAt the very least while testing with the javascript poc this was null and was overriding the one I was trying to set earlier from the owner.",
+      "parentUuid": "935653fa_445d09eb",
       "revId": "965a01c258e918afa945f83794e98517dec7ba72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
