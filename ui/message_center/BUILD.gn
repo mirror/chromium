@@ -28,6 +28,7 @@ component("message_center") {
   deps = [
     "//base",
     "//ui/base",
+    "//ui/strings",
     "//url",
   ]
 
@@ -47,7 +48,6 @@ component("message_center") {
       "//ui/gfx/geometry",
       "//ui/native_theme",
       "//ui/resources",
-      "//ui/strings",
     ]
 
     configs += [
@@ -67,6 +67,7 @@ component("message_center") {
       "cocoa/popup_controller.mm",
       "message_center.cc",
       "message_center.h",
+      "message_center_delegate.h",
       "message_center_export.h",
       "message_center_impl.cc",
       "message_center_impl.h",

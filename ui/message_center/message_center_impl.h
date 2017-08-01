@@ -84,6 +84,8 @@ class MessageCenterImpl : public MessageCenter,
   void EnterQuietModeWithExpire(const base::TimeDelta& expires_in) override;
   void RestartPopupTimers() override;
   void PausePopupTimers() override;
+  base::string16 GetProductOSName() const override;
+  void SetDelegate(std::unique_ptr<MessageCenterDelegate> delegate) override;
   void ForceNotificationFlush(const std::string& id) override;
 
   // NotificationBlocker::Observer overrides:
@@ -136,6 +138,8 @@ class MessageCenterImpl : public MessageCenter,
   // Queue for the notifications to delay the addition/updates when the message
   // center is visible.
   std::unique_ptr<internal::ChangeQueue> notification_queue_;
+
+  std::unique_ptr<MessageCenterDelegate> delegate_;
 
   DISALLOW_COPY_AND_ASSIGN(MessageCenterImpl);
 };
