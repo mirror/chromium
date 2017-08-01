@@ -3,8 +3,10 @@
 // found in the LICENSE file.
 
 #include "chrome/browser/media/router/discovery/mdns/dns_sd_registry.h"
+#include "base/test/scoped_task_environment.h"
 #include "chrome/browser/media/router/discovery/mdns/dns_sd_delegate.h"
 #include "chrome/browser/media/router/discovery/mdns/dns_sd_device_lister.h"
+#include "net/base/network_change_notifier.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -20,7 +22,8 @@ class MockDnsSdDeviceLister : public DnsSdDeviceLister {
 
 class TestDnsSdRegistry : public DnsSdRegistry {
  public:
-  TestDnsSdRegistry() : DnsSdRegistry(NULL), delegate_(NULL) {}
+  explicit TestDnsSdRegistry(DiscoveryNetworkMonitor* network_monitor)
+      : DnsSdRegistry(network_monitor, NULL), delegate_(NULL) {}
   ~TestDnsSdRegistry() override {}
 
   MockDnsSdDeviceLister* GetListerForService(const std::string& service_type) {
@@ -73,14 +76,37 @@ class DnsSdRegistryTest : public testing::Test {
   ~DnsSdRegistryTest() override {}
 
   void SetUp() override {
-    registry_.reset(new TestDnsSdRegistry());
+    fake_network_info_.clear();
+    registry_.reset(new TestDnsSdRegistry(discovery_network_monitor_.get()));
     registry_->AddObserver(&observer_);
   }
 
  protected:
+  static std::vector<DiscoveryNetworkInfo> FakeGetNetworkInfo() {
+    return fake_network_info_;
+  }
+
+  static std::vector<DiscoveryNetworkInfo> fake_network_info_;
+
+  std::vector<DiscoveryNetworkInfo> fake_ethernet_info_{
+      {{std::string("enp0s2"), std::string("ethernet1")}}};
+  std::vector<DiscoveryNetworkInfo> fake_wifi_info_{
+      {DiscoveryNetworkInfo{std::string("wlp3s0"), std::string("wifi1")},
+       DiscoveryNetworkInfo{std::string("wlp3s1"), std::string("wifi2")}}};
+
+  std::unique_ptr<net::NetworkChangeNotifier> network_change_notifier_ =
+      base::WrapUnique(net::NetworkChangeNotifier::CreateMock());
+
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
+  std::unique_ptr<DiscoveryNetworkMonitor> discovery_network_monitor_ =
+      DiscoveryNetworkMonitor::CreateInstanceForTest(&FakeGetNetworkInfo);
+
   std::unique_ptr<TestDnsSdRegistry> registry_;
   MockDnsSdObserver observer_;
 };
+
+// static
+std::vector<DiscoveryNetworkInfo> DnsSdRegistryTest::fake_network_info_;
 
 // Tests registering 2 listeners and removing one. The device lister should
 // not be destroyed.
@@ -259,6 +285,141 @@ TEST_F(DnsSdRegistryTest, UpdateOnlyIfChanged) {
   registry_->GetDelegate()->ServiceChanged(service_type, false, service);
   // Update with no changes to the service.
   registry_->GetDelegate()->ServiceChanged(service_type, false, service);
+}
+
+TEST_F(DnsSdRegistryTest, CacheServicesByNetwork) {
+  const std::string service_type = "_testing._tcp.local";
+  const std::string ip_address1 = "192.168.0.100";
+  const std::string ip_address2 = "192.168.0.111";
+
+  ::testing::InSequence seq;
+
+  DnsSdService eth_service;
+  DnsSdService wifi_service;
+  eth_service.service_name = "_ethDevice." + service_type;
+  eth_service.ip_address = ip_address1;
+  wifi_service.service_name = "_wifiDevice." + service_type;
+  wifi_service.ip_address = ip_address2;
+
+  DnsSdRegistry::DnsSdServiceList service_list;
+  EXPECT_CALL(observer_, OnDnsSdEvent(service_type, service_list));
+
+  registry_->RegisterDnsSdListener(service_type);
+
+  // Send fake network notifications to trigger caching behavior.  When
+  // switching network types, net::NetworkChangeNotifier will first send
+  // CONNECTION_NONE, so make sure to do that here to ensure it doesn't affect
+  // behavior.
+  fake_network_info_ = fake_ethernet_info_;
+  net::NetworkChangeNotifier::NotifyObserversOfNetworkChangeForTests(
+      net::NetworkChangeNotifier::CONNECTION_ETHERNET);
+  scoped_task_environment_.RunUntilIdle();
+
+  service_list.push_back(eth_service);
+  EXPECT_CALL(observer_, OnDnsSdEvent(service_type, service_list));
+  registry_->GetDelegate()->ServiceChanged(service_type, true, eth_service);
+
+  fake_network_info_.clear();
+  net::NetworkChangeNotifier::NotifyObserversOfNetworkChangeForTests(
+      net::NetworkChangeNotifier::CONNECTION_NONE);
+  scoped_task_environment_.RunUntilIdle();
+
+  fake_network_info_ = fake_wifi_info_;
+  net::NetworkChangeNotifier::NotifyObserversOfNetworkChangeForTests(
+      net::NetworkChangeNotifier::CONNECTION_WIFI);
+  scoped_task_environment_.RunUntilIdle();
+
+  // Swap devices with the ethernet to wifi network change.
+  service_list.clear();
+  EXPECT_CALL(observer_, OnDnsSdEvent(service_type, service_list));
+  registry_->GetDelegate()->ServiceRemoved(service_type,
+                                           eth_service.service_name);
+  service_list.push_back(wifi_service);
+  EXPECT_CALL(observer_, OnDnsSdEvent(service_type, service_list));
+  registry_->GetDelegate()->ServiceChanged(service_type, true, wifi_service);
+
+  fake_network_info_.clear();
+  net::NetworkChangeNotifier::NotifyObserversOfNetworkChangeForTests(
+      net::NetworkChangeNotifier::CONNECTION_NONE);
+  scoped_task_environment_.RunUntilIdle();
+
+  // Connect with no new devices and expect to see cached ethernet device.
+  service_list.push_back(eth_service);
+  EXPECT_CALL(observer_, OnDnsSdEvent(service_type, service_list));
+
+  fake_network_info_ = fake_ethernet_info_;
+  net::NetworkChangeNotifier::NotifyObserversOfNetworkChangeForTests(
+      net::NetworkChangeNotifier::CONNECTION_ETHERNET);
+  scoped_task_environment_.RunUntilIdle();
+}
+
+TEST_F(DnsSdRegistryTest, CacheUpdatesService) {
+  const std::string service_type = "_testing._tcp.local";
+  const std::string ip_address1 = "192.168.0.100";
+  const std::string ip_address2 = "10.0.0.100";
+
+  ::testing::InSequence seq;
+
+  // Same device seen with different IP address on different networks.
+  DnsSdService eth_service;
+  DnsSdService wifi_service;
+  eth_service.service_name = "_myDevice." + service_type;
+  eth_service.ip_address = ip_address1;
+  wifi_service.service_name = "_myDevice." + service_type;
+  wifi_service.ip_address = ip_address2;
+
+  DnsSdRegistry::DnsSdServiceList service_list;
+  EXPECT_CALL(observer_, OnDnsSdEvent(service_type, service_list));
+
+  registry_->RegisterDnsSdListener(service_type);
+
+  // Send fake network notifications to trigger caching behavior.  When
+  // switching network types, net::NetworkChangeNotifier will first send
+  // CONNECTION_NONE, so make sure to do that here to ensure it doesn't affect
+  // behavior.
+  fake_network_info_ = fake_ethernet_info_;
+  net::NetworkChangeNotifier::NotifyObserversOfNetworkChangeForTests(
+      net::NetworkChangeNotifier::CONNECTION_ETHERNET);
+  scoped_task_environment_.RunUntilIdle();
+
+  service_list.push_back(eth_service);
+  EXPECT_CALL(observer_, OnDnsSdEvent(service_type, service_list));
+  registry_->GetDelegate()->ServiceChanged(service_type, true, eth_service);
+
+  fake_network_info_.clear();
+  net::NetworkChangeNotifier::NotifyObserversOfNetworkChangeForTests(
+      net::NetworkChangeNotifier::CONNECTION_NONE);
+  scoped_task_environment_.RunUntilIdle();
+
+  fake_network_info_ = fake_wifi_info_;
+  net::NetworkChangeNotifier::NotifyObserversOfNetworkChangeForTests(
+      net::NetworkChangeNotifier::CONNECTION_WIFI);
+  scoped_task_environment_.RunUntilIdle();
+
+  // Swap devices with the ethernet to wifi network change.
+  service_list.clear();
+  EXPECT_CALL(observer_, OnDnsSdEvent(service_type, service_list));
+  registry_->GetDelegate()->ServiceRemoved(service_type,
+                                           eth_service.service_name);
+  service_list.push_back(wifi_service);
+  EXPECT_CALL(observer_, OnDnsSdEvent(service_type, service_list));
+  registry_->GetDelegate()->ServiceChanged(service_type, true, wifi_service);
+
+  fake_network_info_.clear();
+  net::NetworkChangeNotifier::NotifyObserversOfNetworkChangeForTests(
+      net::NetworkChangeNotifier::CONNECTION_NONE);
+  scoped_task_environment_.RunUntilIdle();
+
+  // Connect with no new devices and expect to see cached ethernet device have
+  // the updated IP address.
+  service_list.clear();
+  service_list.push_back(eth_service);
+  EXPECT_CALL(observer_, OnDnsSdEvent(service_type, service_list));
+
+  fake_network_info_ = fake_ethernet_info_;
+  net::NetworkChangeNotifier::NotifyObserversOfNetworkChangeForTests(
+      net::NetworkChangeNotifier::CONNECTION_ETHERNET);
+  scoped_task_environment_.RunUntilIdle();
 }
 
 }  // namespace media_router

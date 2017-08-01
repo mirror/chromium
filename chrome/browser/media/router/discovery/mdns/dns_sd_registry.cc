@@ -86,6 +86,30 @@ bool DnsSdRegistry::ServiceTypeData::RemoveService(
   return false;
 }
 
+void DnsSdRegistry::ServiceTypeData::MergeCachedServices(
+    DnsSdDelegate* delegate,
+    const std::string& service_type,
+    const DnsSdRegistry::DnsSdServiceList& cached_service_list) {
+  DCHECK(delegate);
+  DnsSdRegistry::DnsSdServiceList added_services;
+  DnsSdRegistry::DnsSdServiceList updated_services;
+  for (const auto& cached_service : cached_service_list) {
+    auto service_it = std::find_if(service_list_.begin(), service_list_.end(),
+                                   IsSameServiceName(cached_service));
+    if (service_it != service_list_.end()) {
+      updated_services.push_back(cached_service);
+    } else {
+      added_services.push_back(cached_service);
+    }
+  }
+  for (const auto& service : updated_services) {
+    delegate->ServiceChanged(service_type, false, service);
+  }
+  for (const auto& service : added_services) {
+    delegate->ServiceChanged(service_type, true, service);
+  }
+}
+
 void DnsSdRegistry::ServiceTypeData::ForceDiscovery() {
   lister_->Discover();
 }
@@ -109,10 +133,15 @@ DnsSdRegistry::DnsSdRegistry() {
 #if BUILDFLAG(ENABLE_SERVICE_DISCOVERY)
   service_discovery_client_ = ServiceDiscoverySharedClient::GetInstance();
 #endif
+  DiscoveryNetworkMonitor::GetInstance()->AddObserver(this);
 }
 
-DnsSdRegistry::DnsSdRegistry(ServiceDiscoverySharedClient* client) {
+DnsSdRegistry::DnsSdRegistry(DiscoveryNetworkMonitor* network_monitor,
+                             ServiceDiscoverySharedClient* client) {
   service_discovery_client_ = client;
+  if (network_monitor) {
+    network_monitor->AddObserver(this);
+  }
 }
 
 DnsSdRegistry::~DnsSdRegistry() {
@@ -238,6 +267,36 @@ void DnsSdRegistry::ServicesFlushed(const std::string& service_type) {
 
   if (is_cleared)
     DispatchApiEvent(service_type);
+}
+
+void DnsSdRegistry::OnNetworksChanged(const std::string& network_id) {
+  VLOG(1) << "OnNetworksChanged: " << network_id;
+  if (network_id == DiscoveryNetworkMonitor::kNetworkIdUnknown ||
+      network_id == DiscoveryNetworkMonitor::kNetworkIdDisconnected) {
+    if (last_seen_network_id_ == DiscoveryNetworkMonitor::kNetworkIdUnknown) {
+      return;
+    }
+    // Cache services from |last_seen_network_id_|.
+    std::map<std::string, DnsSdServiceList> cache_entry;
+    for (const auto& service_data : service_data_map_) {
+      cache_entry[service_data.first] = service_data.second->GetServiceList();
+    }
+    service_list_cache_[last_seen_network_id_] = std::move(cache_entry);
+    return;
+  }
+  last_seen_network_id_ = network_id;
+  auto cache_entry = service_list_cache_.find(network_id);
+  // Check if we have any cached services for this network ID.
+  if (cache_entry == service_list_cache_.end()) {
+    return;
+  }
+  for (const auto& service_type_entry : cache_entry->second) {
+    if (!IsRegistered(service_type_entry.first)) {
+      continue;
+    }
+    service_data_map_[service_type_entry.first]->MergeCachedServices(
+        this, service_type_entry.first, service_type_entry.second);
+  }
 }
 
 void DnsSdRegistry::DispatchApiEvent(const std::string& service_type) {
