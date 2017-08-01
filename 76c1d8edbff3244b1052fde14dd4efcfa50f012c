@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1b6b81c_e2c82791",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_debit_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-01T18:53:05Z",
+      "side": 1,
+      "message": "newline after",
+      "range": {
+        "startLine": 29,
+        "startChar": 11,
+        "endLine": 29,
+        "endChar": 0
+      },
+      "revId": "76c1d8edbff3244b1052fde14dd4efcfa50f012c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
