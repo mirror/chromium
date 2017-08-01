@@ -350,9 +350,9 @@ class WebContents : public PageNavigator,
 
   // Tab navigation state ------------------------------------------------------
 
-  // Returns the current navigation properties, which if a navigation is
-  // pending may be provisional (e.g., the navigation could result in a
-  // download, in which case the URL would revert to what it was previously).
+  // Returns the user visible title for the web contents. Depending on load
+  // state, this may reflect the current NavigationEntry or the last one that
+  // finished loading.
   virtual const base::string16& GetTitle() const = 0;
 
   // Saves the given title to the navigation entry and does associated work. It

@@ -1399,8 +1399,11 @@ class CONTENT_EXPORT WebContentsImpl
 
   // Data for current page -----------------------------------------------------
 
-  // When a title cannot be taken from any entry, this title will be used.
-  base::string16 page_title_when_no_navigation_entry_;
+  // Tracks the last known page title. During a page load when the title has not
+  // yet been loaded, this will still reflect the previous page's title, if any.
+  // When a title cannot be taken from any entry or a new page is not done
+  // loading, this title will be used.
+  mutable base::string16 last_page_title_;
 
   // When a navigation occurs, we record its contents MIME type. It can be
   // used to check whether we can do something for some special contents.

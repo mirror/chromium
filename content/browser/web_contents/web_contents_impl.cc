@@ -1265,13 +1265,19 @@ const base::string16& WebContentsImpl::GetTitle() const {
     entry = controller_.GetVisibleEntry();
   }
 
-  if (entry) {
-    return entry->GetTitleForDisplay();
+  // If the new load has committed but there's no explicit title, and we
+  // haven't gotten a response yet, stick to the old page's title. The
+  // exception is view source mode --- don't mess with that title.
+  if (IsWaitingForResponse() && entry && entry->GetTitle().empty() &&
+      !entry->IsViewSourceMode() && !last_page_title_.empty()) {
+    return last_page_title_;
   }
 
-  // |page_title_when_no_navigation_entry_| is finally used
-  // if no title cannot be retrieved.
-  return page_title_when_no_navigation_entry_;
+  if (entry)
+    last_page_title_ = entry->GetTitleForDisplay();
+
+  // |last_page_title_| is finally used if no title cannot be retrieved.
+  return last_page_title_;
 }
 
 SiteInstanceImpl* WebContentsImpl::GetSiteInstance() const {
@@ -4297,18 +4303,17 @@ void WebContentsImpl::UpdateTitleForEntry(NavigationEntry* entry,
 
   // If a page is created via window.open and never navigated,
   // there will be no navigation entry. In this situation,
-  // |page_title_when_no_navigation_entry_| will be used for page title.
+  // |last_page_title_| will be used for page title.
   if (entry) {
     if (final_title == entry->GetTitle())
       return;  // Nothing changed, don't bother.
 
     entry->SetTitle(final_title);
-  } else {
-    if (page_title_when_no_navigation_entry_ == final_title)
-      return;  // Nothing changed, don't bother.
-
-    page_title_when_no_navigation_entry_ = final_title;
+  } else if (last_page_title_ == final_title) {
+    return;  // Nothing changed, don't bother.
   }
+
+  last_page_title_ = final_title;
 
   // Lastly, set the title for the view.
   view_->SetPageTitle(final_title);
@@ -4357,6 +4362,7 @@ void WebContentsImpl::LoadingStateChanged(bool to_different_document,
 
   GetRenderManager()->SetIsLoading(is_loading);
 
+  const bool was_waiting_for_response = waiting_for_response_;
   waiting_for_response_ = is_loading;
   is_load_to_different_document_ = to_different_document;
 
@@ -4382,9 +4388,17 @@ void WebContentsImpl::LoadingStateChanged(bool to_different_document,
   int type = is_loading ? NOTIFICATION_LOAD_START : NOTIFICATION_LOAD_STOP;
   NotificationDetails det = NotificationService::NoDetails();
   if (details)
-      det = Details<LoadNotificationDetails>(details);
+    det = Details<LoadNotificationDetails>(details);
   NotificationService::current()->Notify(
       type, Source<NavigationController>(&controller_), det);
+
+  // The effective title changes when the contents is no longer waiting for a
+  // response (see GetTitle()).
+  if (was_waiting_for_response && !waiting_for_response_) {
+    NavigationEntry* entry = controller_.GetLastCommittedEntry();
+    for (auto& observer : observers_)
+      observer.TitleWasSet(entry, false);
+  }
 }
 
 void WebContentsImpl::NotifyViewSwapped(RenderViewHost* old_host,
