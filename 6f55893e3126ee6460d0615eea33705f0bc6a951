@@ -46,6 +46,30 @@
       "revId": "6f55893e3126ee6460d0615eea33705f0bc6a951",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "280b0032_eed2a680",
+        "filename": "third_party/WebKit/Source/core/exported/WebWorkerShadowPage.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-01T08:30:09Z",
+      "side": 1,
+      "message": "WebFrameClient::GetInterfaceProvider just returns |interface_provider_| and it assumes |interface_provider_| has already been connected to somewhere.\nI think we need to do something like the following:\n\n```\nservice_manager::mojom::InterfaceProviderPtr provider_ptr;\n// |worker_host_| is an InterfacePtr connected to the worker\u0027s conterpart on the browser process\nworker_host_-\u003eGetInterfaceProvider(mojo::MakeRequest(\u0026provider_ptr));\ninterface_provider_.Bind(std::move(provider_ptr));\n```\n\nSo I imagined this is still in progress and we need some TODO comment here.",
+      "parentUuid": "4c834389_78c1fc58",
+      "range": {
+        "startLine": 37,
+        "startChar": 1,
+        "endLine": 37,
+        "endChar": 30
+      },
+      "revId": "6f55893e3126ee6460d0615eea33705f0bc6a951",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
