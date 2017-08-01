@@ -16,6 +16,24 @@
       "revId": "929774c9e2db144b9b37bfa5d9881742a8d6c887",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df710159_f6e90482",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-08-01T08:36:45Z",
+      "side": 1,
+      "message": "I don\u0027t remember well why this was done such ;(\nAs far as I now understand, for v0/v1 mixed documents, only the affected thing is\ncascading order and once any v1 feature is used, the whole document turns on v1 cascading\norder rule, so I don\u0027t think this breaks anything even for v0/v1 mixed document.\nThough I may be missing something obvious...",
+      "parentUuid": "99458b7a_6e5b4350",
+      "revId": "929774c9e2db144b9b37bfa5d9881742a8d6c887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
