@@ -201,6 +201,24 @@
     },
     {
       "key": {
+        "uuid": "1e5ba2a4_31a9acdd",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/credential-management/credentialscontainer-create-basics.https.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-01T14:27:22Z",
+      "side": 1,
+      "message": "It\u0027s quite weird, but test_runner is technically actually `outside of` Blink.\n\nYou should be able to use the Mojo types without problems, but you will need to include the \"non-Blink\" flavor of the headers, e.g.:\n\nthird_party/WebKit/public/platform/modules/webauth/authenticator.mojom.h\n\ninstead of \n\nthird_party/WebKit/public/platform/modules/webauth/authenticator.mojom-blink.h\n\nAnd then use types without the blink:: namespace, e.g.:\n\nwebauth::mojom::PublicKeyCredentialInfoPtr instead of webauth::mojom::blink::PublicKeyCredentialInfoPtr.\n\nLet me know if you are still hitting issue after that.",
+      "parentUuid": "3cf1a99e_db7ea494",
+      "revId": "01052988ac09e3401ecc28b80eaf48f4a629f5a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0012245c_23d2ff66",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/webauthn/helpers.js",
         "patchSetId": 5
@@ -347,6 +365,24 @@
       "side": 1,
       "message": "I\u0027ve been attempting to do this, but I keep getting \"Uncaught TypeError: Illegal constructor\" for both AuthenticatorAttestationResponse and PublicKeyCredential. Been trying to create them a number of different ways, no luck. How should I be creating them?",
       "parentUuid": "ceed4bd8_05f90afb",
+      "revId": "01052988ac09e3401ecc28b80eaf48f4a629f5a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fbea7b8_97739d08",
+        "filename": "third_party/WebKit/LayoutTests/webauth/idl.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-01T14:27:22Z",
+      "side": 1,
+      "message": "You\u0027d likely need to either specify a `Constructor` annotation on these types and call that like we do here: third_party/WebKit/Source/modules/credentialmanager/FederatedCredential.idl\n\nthird_party/WebKit/LayoutTests/external/wpt/credential-management/idl.https.html\n\nBut if these should be not be JS constructible, maybe we can just call something like navigator.credentials.create() that create something in a synchronous fashion?",
+      "parentUuid": "e0f72b75_bb14dccd",
       "revId": "01052988ac09e3401ecc28b80eaf48f4a629f5a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
