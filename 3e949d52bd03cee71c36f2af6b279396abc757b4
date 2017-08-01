@@ -1,0 +1,221 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c279421_66e04d3f",
+        "filename": "third_party/WebKit/Source/core/exported/WebSharedWorkerImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-01T03:55:14Z",
+      "side": 1,
+      "message": "OnScriptLoaderFinished",
+      "revId": "3e949d52bd03cee71c36f2af6b279396abc757b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bff5350_15025ae0",
+        "filename": "third_party/WebKit/Source/core/exported/WebSharedWorkerImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-01T03:55:14Z",
+      "side": 1,
+      "message": "maybe worth adding a comment like\n// We\u0027ll continue in OnShadowPageInitialized().",
+      "revId": "3e949d52bd03cee71c36f2af6b279396abc757b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0fc98cc_2818d99e",
+        "filename": "third_party/WebKit/Source/core/exported/WebSharedWorkerImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-01T03:55:14Z",
+      "side": 1,
+      "message": "\"now is a\"",
+      "range": {
+        "startLine": 234,
+        "startChar": 9,
+        "endLine": 234,
+        "endChar": 20
+      },
+      "revId": "3e949d52bd03cee71c36f2af6b279396abc757b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d52fbf8a_42759daa",
+        "filename": "third_party/WebKit/Source/core/exported/WebSharedWorkerImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-01T03:55:14Z",
+      "side": 1,
+      "message": "ditto about the comment OnShadowPageInitialized",
+      "revId": "3e949d52bd03cee71c36f2af6b279396abc757b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4e6eeda_053adf1d",
+        "filename": "third_party/WebKit/Source/core/exported/WebWorkerShadowPage.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-01T03:55:14Z",
+      "side": 1,
+      "message": "style guide: TODO(nhiroki) or TODO(bug link)",
+      "range": {
+        "startLine": 28,
+        "startChar": 5,
+        "endLine": 28,
+        "endChar": 9
+      },
+      "revId": "3e949d52bd03cee71c36f2af6b279396abc757b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c96fbffa_b8bb1480",
+        "filename": "third_party/WebKit/Source/core/exported/WebWorkerShadowPage.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-01T03:55:14Z",
+      "side": 1,
+      "message": "style guide: TODO(nhiroki) or TODO(bug link)",
+      "range": {
+        "startLine": 33,
+        "startChar": 5,
+        "endLine": 33,
+        "endChar": 9
+      },
+      "revId": "3e949d52bd03cee71c36f2af6b279396abc757b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ba3caf0_be9c939a",
+        "filename": "third_party/WebKit/Source/core/exported/WebWorkerShadowPage.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-01T03:55:14Z",
+      "side": 1,
+      "message": "don\u0027t need to mention \"for the \u0027shadow page\u0027\" now, it\u0027s obvious",
+      "revId": "3e949d52bd03cee71c36f2af6b279396abc757b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b62bab5a_bd1a5f7d",
+        "filename": "third_party/WebKit/Source/core/exported/WebWorkerShadowPage.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-01T03:55:14Z",
+      "side": 1,
+      "message": "such workers",
+      "range": {
+        "startLine": 25,
+        "startChar": 14,
+        "endLine": 25,
+        "endChar": 30
+      },
+      "revId": "3e949d52bd03cee71c36f2af6b279396abc757b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe3fe5f9_81114e3c",
+        "filename": "third_party/WebKit/Source/core/exported/WebWorkerShadowPage.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-01T03:55:14Z",
+      "side": 1,
+      "message": "calls Client::OnShadowPageInitialized() when complete.",
+      "revId": "3e949d52bd03cee71c36f2af6b279396abc757b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce77501e_4a06939a",
+        "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-01T03:55:14Z",
+      "side": 1,
+      "message": "can delete this TODO. There is no FetchEvent.default().",
+      "range": {
+        "startLine": 149,
+        "startChar": 5,
+        "endLine": 149,
+        "endChar": 10
+      },
+      "revId": "3e949d52bd03cee71c36f2af6b279396abc757b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4477c426_ca4e34b9",
+        "filename": "third_party/WebKit/Source/modules/exported/WebEmbeddedWorkerImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-01T03:55:14Z",
+      "side": 1,
+      "message": "\"now is a\"",
+      "revId": "3e949d52bd03cee71c36f2af6b279396abc757b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
