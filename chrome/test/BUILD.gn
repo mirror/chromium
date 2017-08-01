@@ -2104,6 +2104,7 @@ test("browser_tests") {
           "../browser/ui/views/profiles/profile_chooser_view_browsertest.cc",
         ]
       }
+      deps += [ "//components/feature_engagement/test:test_support" ]
       if (!is_mac || mac_views_browser) {
         sources += [
           # TODO(tapted): Move these to chrome_browser_tests_views_sources when the
@@ -2130,6 +2131,7 @@ test("browser_tests") {
           "../browser/ui/views/page_info/page_info_bubble_view_browsertest.cc",
           "../browser/ui/views/passwords/password_dialog_view_browsertest.cc",
           "../browser/ui/views/session_crashed_bubble_view_browsertest.cc",
+          "../browser/ui/views/tabs/new_tab_promo_browsertest.cc",
           "../browser/ui/views/tabs/new_tab_promo_dialog_browsertest.cc",
           "../browser/ui/views/task_manager_view_browsertest.cc",
           "../browser/ui/views/toolbar/browser_actions_container_browsertest.cc",
@@ -2317,6 +2319,7 @@ test("browser_tests") {
       ]
       sources -= [
         "../../apps/load_and_launch_browsertest.cc",
+        "../browser/feature_engagement/new_tab/new_tab_tracker_browsertest.cc",
         "../browser/policy/policy_startup_browsertest.cc",
 
         # chromeos does not support profile list avatar menu
