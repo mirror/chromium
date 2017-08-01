@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d08d3c98_549beb71",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 8
+      },
+      "lineNbr": 12301,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-01T22:18:20Z",
+      "side": 1,
+      "message": "What about Chromium branded builds?",
+      "range": {
+        "startLine": 12301,
+        "startChar": 83,
+        "endLine": 12301,
+        "endChar": 89
+      },
+      "revId": "57ab630fb35b4d4488e64127616a88a22160699d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77f16c1e_91e0c215",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 8
+      },
+      "lineNbr": 12301,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-01T22:18:20Z",
+      "side": 1,
+      "message": "may?",
+      "range": {
+        "startLine": 12301,
+        "startChar": 12,
+        "endLine": 12301,
+        "endChar": 17
+      },
+      "revId": "57ab630fb35b4d4488e64127616a88a22160699d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0d7dbde_05e56adb",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 8
+      },
+      "lineNbr": 3317,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-01T22:18:20Z",
+      "side": 1,
+      "message": "Not sure if you need to add a note for translators in the desc field.",
+      "revId": "57ab630fb35b4d4488e64127616a88a22160699d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22ddbd94_4b503680",
+        "filename": "components/page_info_strings.grdp",
+        "patchSetId": 8
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-01T22:18:20Z",
+      "side": 1,
+      "message": "Ditto ditto",
+      "revId": "57ab630fb35b4d4488e64127616a88a22160699d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdc931d4_8377a25b",
+        "filename": "components/page_info_strings.grdp",
+        "patchSetId": 8
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-01T22:18:20Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 346,
+        "startChar": 106,
+        "endLine": 346,
+        "endChar": 112
+      },
+      "revId": "57ab630fb35b4d4488e64127616a88a22160699d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
