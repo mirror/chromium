@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "b63b542a_537bbdf0",
+        "filename": "chrome/browser/extensions/api/virtual_keyboard_private/chrome_virtual_keyboard_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-08-01T01:32:13Z",
+      "side": 1,
+      "message": "Sounds fair.",
+      "parentUuid": "fa3b2c67_dc0c2cae",
+      "range": {
+        "startLine": 155,
+        "startChar": 36,
+        "endLine": 155,
+        "endChar": 58
+      },
+      "revId": "0d11f758e83853cf59da9482ac6f10efc25df76f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0cc764f1_533a272a",
         "filename": "ui/keyboard/keyboard_controller.cc",
         "patchSetId": 2
@@ -128,6 +152,24 @@
       "revId": "0d11f758e83853cf59da9482ac6f10efc25df76f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef3d0b7e_8ac131bf",
+        "filename": "ui/keyboard/keyboard_test_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1150179
+      },
+      "writtenOn": "2017-08-01T01:32:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "147026b3_b0d92538",
+      "revId": "0d11f758e83853cf59da9482ac6f10efc25df76f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
