@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fbdbc0d_bf4ec269",
+        "filename": "content/browser/devtools/devtools_url_interceptor_request_job.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-08-01T11:25:01Z",
+      "side": 1,
+      "message": "nit: Agreement between the subject and predicate :)",
+      "range": {
+        "startLine": 681,
+        "startChar": 13,
+        "endLine": 681,
+        "endChar": 27
+      },
+      "revId": "f86a4f756ffb724d5b87212454a6efaca2891b73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
