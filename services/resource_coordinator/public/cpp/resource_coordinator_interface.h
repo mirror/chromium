@@ -40,7 +40,7 @@ class SERVICES_RESOURCE_COORDINATOR_PUBLIC_CPP_EXPORT
 
   void SendEvent(const mojom::EventType& event_type);
   void SetProperty(mojom::PropertyType property_type,
-                   std::unique_ptr<base::Value> value);
+                   int64_t value);
   void AddChild(const ResourceCoordinatorInterface& child);
   void RemoveChild(const ResourceCoordinatorInterface& child);
 
