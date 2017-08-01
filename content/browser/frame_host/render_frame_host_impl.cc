@@ -1304,7 +1304,7 @@ void RenderFrameHostImpl::SetLastCommittedUrl(const GURL& url) {
       GetFrameResourceCoordinator();
   if (coordinator) {
     coordinator->SetProperty(
-        resource_coordinator::mojom::PropertyType::kURL,
+        resource_coordinator::mojom::PropertyType::kUKMSourceId,
         base::MakeUnique<base::Value>(last_committed_url_.spec()));
   }
 }

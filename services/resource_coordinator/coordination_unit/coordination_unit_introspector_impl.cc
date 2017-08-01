@@ -28,16 +28,15 @@ void CoordinationUnitIntrospectorImpl::GetProcessToURLMap(
     process_info->pid = process_cu->id().id;
     DCHECK_NE(base::kNullProcessId, process_info->pid);
 
-    std::vector<std::string> urls;
+    std::vector<int64_t> urls;
     std::set<CoordinationUnitImpl*> frame_cus =
         process_cu->GetAssociatedCoordinationUnitsOfType(
             CoordinationUnitType::kFrame);
     for (CoordinationUnitImpl* frame_cu : frame_cus) {
-      base::Value url_value = frame_cu->GetProperty(
+      int64_t url_value = frame_cu->GetProperty(
           resource_coordinator::mojom::PropertyType::kURL);
-      if (url_value.is_string()) {
-        urls.push_back(url_value.GetString());
-      }
+      urls.push_back(url_value);
+      process_info->urls = std::move(urls);
     }
     process_info->urls = std::move(urls);
     process_infos.push_back(std::move(process_info));

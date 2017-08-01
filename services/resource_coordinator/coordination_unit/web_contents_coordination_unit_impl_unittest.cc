@@ -24,9 +24,9 @@ TEST_F(WebContentsCoordinationUnitImplTest,
   MockSingleTabInSingleProcessCoordinationUnitGraph cu_graph;
 
   cu_graph.process->SetProperty(mojom::PropertyType::kCPUUsage,
-                                base::MakeUnique<base::Value>(40.0));
+                                40);
 
-  EXPECT_EQ(base::Value(40.0),
+  EXPECT_EQ(40,
             cu_graph.tab->GetProperty(mojom::PropertyType::kCPUUsage));
 }
 
@@ -35,11 +35,11 @@ TEST_F(WebContentsCoordinationUnitImplTest,
   MockMultipleTabsInSingleProcessCoordinationUnitGraph cu_graph;
 
   cu_graph.process->SetProperty(mojom::PropertyType::kCPUUsage,
-                                base::MakeUnique<base::Value>(40.0));
+                                40);
 
-  EXPECT_EQ(base::Value(20.0),
+  EXPECT_EQ(20,
             cu_graph.tab->GetProperty(mojom::PropertyType::kCPUUsage));
-  EXPECT_EQ(base::Value(20.0),
+  EXPECT_EQ(20,
             cu_graph.tab->GetProperty(mojom::PropertyType::kCPUUsage));
 }
 
@@ -48,11 +48,11 @@ TEST_F(WebContentsCoordinationUnitImplTest,
   MockSingleTabWithMultipleProcessesCoordinationUnitGraph cu_graph;
 
   cu_graph.process->SetProperty(mojom::PropertyType::kCPUUsage,
-                                base::MakeUnique<base::Value>(40.0));
+                                40);
   cu_graph.other_process->SetProperty(mojom::PropertyType::kCPUUsage,
-                                      base::MakeUnique<base::Value>(30.0));
+                                      30);
 
-  EXPECT_EQ(base::Value(70.0),
+  EXPECT_EQ(70,
             cu_graph.tab->GetProperty(mojom::PropertyType::kCPUUsage));
 }
 
@@ -61,13 +61,13 @@ TEST_F(WebContentsCoordinationUnitImplTest,
   MockMultipleTabsWithMultipleProcessesCoordinationUnitGraph cu_graph;
 
   cu_graph.process->SetProperty(mojom::PropertyType::kCPUUsage,
-                                base::MakeUnique<base::Value>(40.0));
+                                40);
   cu_graph.other_process->SetProperty(mojom::PropertyType::kCPUUsage,
-                                      base::MakeUnique<base::Value>(30.0));
+                                      30);
 
-  EXPECT_EQ(base::Value(20.0),
+  EXPECT_EQ(20,
             cu_graph.tab->GetProperty(mojom::PropertyType::kCPUUsage));
-  EXPECT_EQ(base::Value(50.0),
+  EXPECT_EQ(50,
             cu_graph.other_tab->GetProperty(mojom::PropertyType::kCPUUsage));
 }
 
