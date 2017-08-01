@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5da402d4_692c1227",
+        "filename": "content/browser/appcache/appcache_update_request_base.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-01T18:52:25Z",
+      "side": 1,
+      "message": "Yes. https://cs.chromium.org/chromium/src/content/public/common/resource_request.h?q\u003dresource_request\u0026sq\u003dpackage:chromium\u0026l\u003d72",
+      "parentUuid": "5c94510b_681474dd",
+      "revId": "5673f512394d623945f352d20199813cf337ac49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "de3beef0_240d704d",
         "filename": "content/browser/appcache/appcache_update_request_base.h",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-01T18:40:36Z",
       "side": 1,
       "message": "does the net::URLRequestContext apply to the networkd-serice api?",
+      "revId": "5673f512394d623945f352d20199813cf337ac49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c0de028_04bb2adc",
+        "filename": "content/browser/appcache/appcache_update_request_base.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-01T18:52:25Z",
+      "side": 1,
+      "message": "It eventually will in some form. Will revisit this when I add in the implementation for the urlloader subclass",
+      "parentUuid": "de3beef0_240d704d",
       "revId": "5673f512394d623945f352d20199813cf337ac49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "79cce84e_e3b488f0",
+        "filename": "content/browser/appcache/appcache_update_url_fetcher.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-01T18:52:25Z",
+      "side": 1,
+      "message": "Thanks. done",
+      "parentUuid": "24a86652_a9d7419d",
+      "range": {
+        "startLine": 53,
+        "startChar": 10,
+        "endLine": 53,
+        "endChar": 24
+      },
+      "revId": "5673f512394d623945f352d20199813cf337ac49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "29b297f8_37b1782f",
         "filename": "content/browser/appcache/appcache_update_url_fetcher.cc",
         "patchSetId": 10
@@ -70,6 +130,24 @@
       "writtenOn": "2017-08-01T18:40:36Z",
       "side": 1,
       "message": "is this still the right way to make this test in the network-service\u0027ified world?",
+      "revId": "5673f512394d623945f352d20199813cf337ac49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e31df582_f7eb5ce5",
+        "filename": "content/browser/appcache/appcache_update_url_fetcher.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-01T18:52:25Z",
+      "side": 1,
+      "message": "We can revisit this when the urlloader implementation is coded up.",
+      "parentUuid": "29b297f8_37b1782f",
       "revId": "5673f512394d623945f352d20199813cf337ac49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

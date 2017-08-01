@@ -16,6 +16,24 @@
       "revId": "03b7f77508dff6e594b2c9f7c72c194a219a4f78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fa8fe32_8afa5391",
+        "filename": "content/browser/appcache/appcache_update_url_fetcher.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-01T18:52:25Z",
+      "side": 0,
+      "message": "I don\u0027t think the nullchecks are needed anymore. The urlrequest subclass checks for a null urlrequest anyways. Replaced the nullchecks with dchecks",
+      "parentUuid": "e067088f_4fdd27a2",
+      "revId": "03b7f77508dff6e594b2c9f7c72c194a219a4f78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
