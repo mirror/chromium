@@ -39,6 +39,24 @@
       "revId": "c6dc10febe84f5001ee0838caf0f2eaa9bcd9869",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12177865_e1998f3a",
+        "filename": "ios/chrome/app/application_delegate/url_opener.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-01T09:20:21Z",
+      "side": 1,
+      "message": "No. This is still true.",
+      "parentUuid": "155f8995_87812962",
+      "revId": "c6dc10febe84f5001ee0838caf0f2eaa9bcd9869",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
