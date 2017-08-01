@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "496c2a7b_43392e9e",
+        "filename": "third_party/WebKit/LayoutTests/fast/innerHTML/innerHTML-xml-expected.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-08-01T03:20:46Z",
+      "side": 1,
+      "message": "This CL doesn\u0027t touch this line.",
+      "parentUuid": "68b3b5ac_6db72808",
+      "revId": "39aa99b0414c1da7ecdd3913247956cad5e9aa49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ed104c4d_8e1d80dd",
         "filename": "third_party/WebKit/Source/core/xml/parser/XMLDocumentParser.cpp",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-01T02:44:03Z",
       "side": 1,
       "message": "a namespace information -\u003e either:\na namespace\nor\nnamespace information\n\n\"a ... information\" doesn\u0027t work because information isn\u0027t singular.",
+      "revId": "39aa99b0414c1da7ecdd3913247956cad5e9aa49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d18e212_25e70c13",
+        "filename": "third_party/WebKit/Source/core/xml/parser/XMLDocumentParser.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-08-01T03:20:46Z",
+      "side": 1,
+      "message": "Thanks.  Fixed.",
+      "parentUuid": "ed104c4d_8e1d80dd",
       "revId": "39aa99b0414c1da7ecdd3913247956cad5e9aa49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "cdffcb8f_b1873fef",
+        "filename": "third_party/WebKit/Source/core/xml/parser/XMLDocumentParser.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 821,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-08-01T03:20:46Z",
+      "side": 1,
+      "message": "Do you mean the following XML parsing will modify the DOM tree including |parent_element|?  I thought it\u0027s impossible because innerHTML doesn\u0027t execute \u003cscript\u003e, but is it possible by a callback of a custom element?\n\nAnyway, the specification indicates we should create a snapshot of namespace mapping. So the current code is ok.",
+      "parentUuid": "e0e3cb3e_4cf81374",
+      "revId": "39aa99b0414c1da7ecdd3913247956cad5e9aa49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "971832eb_3e22bdca",
         "filename": "third_party/WebKit/Source/core/xml/parser/XMLDocumentParser.cpp",
         "patchSetId": 5
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-01T02:44:03Z",
       "side": 1,
       "message": "Looks like there\u0027s an extra } here breaking the build.",
+      "revId": "39aa99b0414c1da7ecdd3913247956cad5e9aa49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "735cc94b_3fc3b79c",
+        "filename": "third_party/WebKit/Source/core/xml/parser/XMLDocumentParser.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 824,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-08-01T03:20:46Z",
+      "side": 1,
+      "message": "oops!  Fixed.",
+      "parentUuid": "971832eb_3e22bdca",
       "revId": "39aa99b0414c1da7ecdd3913247956cad5e9aa49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
