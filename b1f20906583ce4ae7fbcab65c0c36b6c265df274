@@ -34,6 +34,24 @@
       "revId": "b1f20906583ce4ae7fbcab65c0c36b6c265df274",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e680e02d_7f90ee7b",
+        "filename": "cc/raster/gpu_raster_buffer_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-01T17:12:35Z",
+      "side": 1,
+      "message": "There is also this code here: https://cs.chromium.org/chromium/src/third_party/skia/src/image/SkSurface.cpp?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d84\n\nBut I don\u0027t think that applies to our raster work.",
+      "parentUuid": "a9788ce0_52b3db6e",
+      "revId": "b1f20906583ce4ae7fbcab65c0c36b6c265df274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
