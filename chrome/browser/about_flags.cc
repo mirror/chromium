@@ -1218,7 +1218,7 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kMediaScreenCaptureDescription, kOsAndroid,
      FEATURE_VALUE_TYPE(chrome::android::kUserMediaScreenCapturing)},
 #endif  // OS_ANDROID
-// Native client is compiled out when DISABLE_NACL is defined.
+        // Native client is compiled out when DISABLE_NACL is defined.
 #if !defined(DISABLE_NACL)
     {"enable-nacl", flag_descriptions::kNaclName,
      flag_descriptions::kNaclDescription, kOsAll,
@@ -2958,6 +2958,9 @@ const FeatureEntry kFeatureEntries[] = {
     {"tab-strip-keyboard-focus", flag_descriptions::kTabStripKeyboardFocusName,
      flag_descriptions::kTabStripKeyboardFocusDescription, kOsMac,
      FEATURE_VALUE_TYPE(features::kTabStripKeyboardFocus)},
+    {"enable-dino-game-touchbar", flag_descriptions::kTouchbarDinoGameName,
+     flag_descriptions::kTouchbarDinoGameDescription, kOsMac,
+     FEATURE_VALUE_TYPE(features::kTouchbarDinoGame)},
 #endif
 
 #if defined(OS_CHROMEOS)
@@ -3373,147 +3376,154 @@ bool SkipConditionalFeatureEntry(const FeatureEntry& entry) {
 #endif  // OS_WIN
 
   return false;
-}
-
-// Records a set of feature switches (prefixed with "--").
-void ReportAboutFlagsHistogramSwitches(const std::string& uma_histogram_name,
-                                       const std::set<std::string>& switches) {
-  for (const std::string& flag : switches) {
-    int uma_id = about_flags::testing::kBadSwitchFormatHistogramId;
-    if (base::StartsWith(flag, "--", base::CompareCase::SENSITIVE)) {
-      // Skip '--' before switch name.
-      std::string switch_name(flag.substr(2));
-
-      // Kill value, if any.
-      const size_t value_pos = switch_name.find('=');
-      if (value_pos != std::string::npos)
-        switch_name.resize(value_pos);
-
-      uma_id = GetSwitchUMAId(switch_name);
-    } else {
-      NOTREACHED() << "ReportAboutFlagsHistogram(): flag '" << flag
-                   << "' has incorrect format.";
     }
-    DVLOG(1) << "ReportAboutFlagsHistogram(): histogram='" << uma_histogram_name
-             << "' '" << flag << "', uma_id=" << uma_id;
 
-    // Sparse histogram macro does not cache the histogram, so it's safe
-    // to use macro with non-static histogram name here.
-    UMA_HISTOGRAM_SPARSE_SLOWLY(uma_histogram_name, uma_id);
+    // Records a set of feature switches (prefixed with "--").
+    void ReportAboutFlagsHistogramSwitches(
+        const std::string& uma_histogram_name,
+        const std::set<std::string>& switches) {
+      for (const std::string& flag : switches) {
+        int uma_id = about_flags::testing::kBadSwitchFormatHistogramId;
+        if (base::StartsWith(flag, "--", base::CompareCase::SENSITIVE)) {
+          // Skip '--' before switch name.
+          std::string switch_name(flag.substr(2));
+
+          // Kill value, if any.
+          const size_t value_pos = switch_name.find('=');
+          if (value_pos != std::string::npos)
+            switch_name.resize(value_pos);
+
+          uma_id = GetSwitchUMAId(switch_name);
+        } else {
+          NOTREACHED() << "ReportAboutFlagsHistogram(): flag '" << flag
+                       << "' has incorrect format.";
+        }
+        DVLOG(1) << "ReportAboutFlagsHistogram(): histogram='"
+                 << uma_histogram_name << "' '" << flag
+                 << "', uma_id=" << uma_id;
+
+        // Sparse histogram macro does not cache the histogram, so it's safe
+        // to use macro with non-static histogram name here.
+        UMA_HISTOGRAM_SPARSE_SLOWLY(uma_histogram_name, uma_id);
+      }
+    }
+
+    // Records a set of FEATURE_VALUE_TYPE features (suffixed with ":enabled" or
+    // "disabled", depending on their state).
+    void ReportAboutFlagsHistogramFeatures(
+        const std::string& uma_histogram_name,
+        const std::set<std::string>& features) {
+      for (const std::string& feature : features) {
+        int uma_id = GetSwitchUMAId(feature);
+        DVLOG(1) << "ReportAboutFlagsHistogram(): histogram='"
+                 << uma_histogram_name << "' '" << feature
+                 << "', uma_id=" << uma_id;
+
+        // Sparse histogram macro does not cache the histogram, so it's safe
+        // to use macro with non-static histogram name here.
+        UMA_HISTOGRAM_SPARSE_SLOWLY(uma_histogram_name, uma_id);
+      }
+    }
+
+    }  // namespace
+
+    void ConvertFlagsToSwitches(flags_ui::FlagsStorage* flags_storage,
+                                base::CommandLine* command_line,
+                                flags_ui::SentinelsMode sentinels) {
+      if (command_line->HasSwitch(switches::kNoExperiments))
+        return;
+
+      FlagsStateSingleton::GetFlagsState()->ConvertFlagsToSwitches(
+          flags_storage, command_line, sentinels, switches::kEnableFeatures,
+          switches::kDisableFeatures);
   }
-}
 
-// Records a set of FEATURE_VALUE_TYPE features (suffixed with ":enabled" or
-// "disabled", depending on their state).
-void ReportAboutFlagsHistogramFeatures(const std::string& uma_histogram_name,
-                                       const std::set<std::string>& features) {
-  for (const std::string& feature : features) {
-    int uma_id = GetSwitchUMAId(feature);
-    DVLOG(1) << "ReportAboutFlagsHistogram(): histogram='" << uma_histogram_name
-             << "' '" << feature << "', uma_id=" << uma_id;
-
-    // Sparse histogram macro does not cache the histogram, so it's safe
-    // to use macro with non-static histogram name here.
-    UMA_HISTOGRAM_SPARSE_SLOWLY(uma_histogram_name, uma_id);
+  std::vector<std::string> RegisterAllFeatureVariationParameters(
+      flags_ui::FlagsStorage* flags_storage,
+      base::FeatureList* feature_list) {
+    return FlagsStateSingleton::GetFlagsState()
+        ->RegisterAllFeatureVariationParameters(flags_storage, feature_list);
   }
-}
 
-}  // namespace
-
-void ConvertFlagsToSwitches(flags_ui::FlagsStorage* flags_storage,
-                            base::CommandLine* command_line,
-                            flags_ui::SentinelsMode sentinels) {
-  if (command_line->HasSwitch(switches::kNoExperiments))
-    return;
-
-  FlagsStateSingleton::GetFlagsState()->ConvertFlagsToSwitches(
-      flags_storage, command_line, sentinels, switches::kEnableFeatures,
-      switches::kDisableFeatures);
-}
-
-std::vector<std::string> RegisterAllFeatureVariationParameters(
-    flags_ui::FlagsStorage* flags_storage,
-    base::FeatureList* feature_list) {
-  return FlagsStateSingleton::GetFlagsState()
-      ->RegisterAllFeatureVariationParameters(flags_storage, feature_list);
-}
-
-bool AreSwitchesIdenticalToCurrentCommandLine(
-    const base::CommandLine& new_cmdline,
-    const base::CommandLine& active_cmdline,
-    std::set<base::CommandLine::StringType>* out_difference) {
-  const char* extra_flag_sentinel_begin_flag_name = nullptr;
-  const char* extra_flag_sentinel_end_flag_name = nullptr;
+  bool AreSwitchesIdenticalToCurrentCommandLine(
+      const base::CommandLine& new_cmdline,
+      const base::CommandLine& active_cmdline,
+      std::set<base::CommandLine::StringType>* out_difference) {
+    const char* extra_flag_sentinel_begin_flag_name = nullptr;
+    const char* extra_flag_sentinel_end_flag_name = nullptr;
 #if defined(OS_CHROMEOS)
-  // Put the flags between --policy-switches--begin and --policy-switches-end on
-  // ChromeOS.
-  extra_flag_sentinel_begin_flag_name =
-      chromeos::switches::kPolicySwitchesBegin;
-  extra_flag_sentinel_end_flag_name = chromeos::switches::kPolicySwitchesEnd;
+    // Put the flags between --policy-switches--begin and --policy-switches-end
+    // on ChromeOS.
+    extra_flag_sentinel_begin_flag_name =
+        chromeos::switches::kPolicySwitchesBegin;
+    extra_flag_sentinel_end_flag_name = chromeos::switches::kPolicySwitchesEnd;
 #endif  // OS_CHROMEOS
-  return flags_ui::FlagsState::AreSwitchesIdenticalToCurrentCommandLine(
-      new_cmdline, active_cmdline, out_difference,
-      extra_flag_sentinel_begin_flag_name, extra_flag_sentinel_end_flag_name);
-}
+    return flags_ui::FlagsState::AreSwitchesIdenticalToCurrentCommandLine(
+        new_cmdline, active_cmdline, out_difference,
+        extra_flag_sentinel_begin_flag_name, extra_flag_sentinel_end_flag_name);
+  }
 
-void GetFlagFeatureEntries(flags_ui::FlagsStorage* flags_storage,
-                           flags_ui::FlagAccess access,
-                           base::ListValue* supported_entries,
-                           base::ListValue* unsupported_entries) {
-  FlagsStateSingleton::GetFlagsState()->GetFlagFeatureEntries(
-      flags_storage, access, supported_entries, unsupported_entries,
-      base::Bind(&SkipConditionalFeatureEntry));
-}
+  void GetFlagFeatureEntries(flags_ui::FlagsStorage* flags_storage,
+                             flags_ui::FlagAccess access,
+                             base::ListValue* supported_entries,
+                             base::ListValue* unsupported_entries) {
+    FlagsStateSingleton::GetFlagsState()->GetFlagFeatureEntries(
+        flags_storage, access, supported_entries, unsupported_entries,
+        base::Bind(&SkipConditionalFeatureEntry));
+  }
 
-bool IsRestartNeededToCommitChanges() {
-  return FlagsStateSingleton::GetFlagsState()->IsRestartNeededToCommitChanges();
-}
+  bool IsRestartNeededToCommitChanges() {
+    return FlagsStateSingleton::GetFlagsState()
+        ->IsRestartNeededToCommitChanges();
+  }
 
-void SetFeatureEntryEnabled(flags_ui::FlagsStorage* flags_storage,
-                            const std::string& internal_name,
-                            bool enable) {
-  FlagsStateSingleton::GetFlagsState()->SetFeatureEntryEnabled(
-      flags_storage, internal_name, enable);
-}
+  void SetFeatureEntryEnabled(flags_ui::FlagsStorage* flags_storage,
+                              const std::string& internal_name,
+                              bool enable) {
+    FlagsStateSingleton::GetFlagsState()->SetFeatureEntryEnabled(
+        flags_storage, internal_name, enable);
+  }
 
-void RemoveFlagsSwitches(
-    std::map<std::string, base::CommandLine::StringType>* switch_list) {
-  FlagsStateSingleton::GetFlagsState()->RemoveFlagsSwitches(switch_list);
-}
+  void RemoveFlagsSwitches(
+      std::map<std::string, base::CommandLine::StringType>* switch_list) {
+    FlagsStateSingleton::GetFlagsState()->RemoveFlagsSwitches(switch_list);
+  }
 
-void ResetAllFlags(flags_ui::FlagsStorage* flags_storage) {
-  FlagsStateSingleton::GetFlagsState()->ResetAllFlags(flags_storage);
-}
+  void ResetAllFlags(flags_ui::FlagsStorage* flags_storage) {
+    FlagsStateSingleton::GetFlagsState()->ResetAllFlags(flags_storage);
+  }
 
-void RecordUMAStatistics(flags_ui::FlagsStorage* flags_storage) {
-  const std::set<std::string> switches =
-      FlagsStateSingleton::GetFlagsState()->GetSwitchesFromFlags(flags_storage);
-  const std::set<std::string> features =
-      FlagsStateSingleton::GetFlagsState()->GetFeaturesFromFlags(flags_storage);
-  ReportAboutFlagsHistogram("Launch.FlagsAtStartup", switches, features);
-}
+  void RecordUMAStatistics(flags_ui::FlagsStorage* flags_storage) {
+    const std::set<std::string> switches =
+        FlagsStateSingleton::GetFlagsState()->GetSwitchesFromFlags(
+            flags_storage);
+    const std::set<std::string> features =
+        FlagsStateSingleton::GetFlagsState()->GetFeaturesFromFlags(
+            flags_storage);
+    ReportAboutFlagsHistogram("Launch.FlagsAtStartup", switches, features);
+  }
 
-base::HistogramBase::Sample GetSwitchUMAId(const std::string& switch_name) {
-  return static_cast<base::HistogramBase::Sample>(
-      base::HashMetricName(switch_name));
-}
+  base::HistogramBase::Sample GetSwitchUMAId(const std::string& switch_name) {
+    return static_cast<base::HistogramBase::Sample>(
+        base::HashMetricName(switch_name));
+  }
 
-void ReportAboutFlagsHistogram(const std::string& uma_histogram_name,
-                               const std::set<std::string>& switches,
-                               const std::set<std::string>& features) {
-  ReportAboutFlagsHistogramSwitches(uma_histogram_name, switches);
-  ReportAboutFlagsHistogramFeatures(uma_histogram_name, features);
-}
+  void ReportAboutFlagsHistogram(const std::string& uma_histogram_name,
+                                 const std::set<std::string>& switches,
+                                 const std::set<std::string>& features) {
+    ReportAboutFlagsHistogramSwitches(uma_histogram_name, switches);
+    ReportAboutFlagsHistogramFeatures(uma_histogram_name, features);
+  }
 
-namespace testing {
+  namespace testing {
 
-const base::HistogramBase::Sample kBadSwitchFormatHistogramId = 0;
+  const base::HistogramBase::Sample kBadSwitchFormatHistogramId = 0;
 
-const FeatureEntry* GetFeatureEntries(size_t* count) {
-  *count = arraysize(kFeatureEntries);
-  return kFeatureEntries;
-}
+  const FeatureEntry* GetFeatureEntries(size_t* count) {
+    *count = arraysize(kFeatureEntries);
+    return kFeatureEntries;
+  }
 
-}  // namespace testing
+  }  // namespace testing
 
-}  // namespace about_flags
+  }  // namespace about_flags

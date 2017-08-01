@@ -898,7 +898,6 @@ class CONTENT_EXPORT WebContentsImpl
                                  const std::vector<gfx::RectF>& rects,
                                  const gfx::RectF& active_rect);
 #endif
-
  private:
   friend class WebContentsObserver;
   friend class WebContents;  // To implement factory methods.

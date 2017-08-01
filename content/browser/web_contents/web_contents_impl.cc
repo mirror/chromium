@@ -115,6 +115,7 @@
 #include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/child_process_host.h"
 #include "content/public/common/content_constants.h"
+#include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/page_zoom.h"
 #include "content/public/common/result_codes.h"
@@ -2426,9 +2427,11 @@ void WebContentsImpl::ShowCreatedWindow(int process_id,
                                         bool user_gesture) {
   WebContentsImpl* popup =
       GetCreatedWindow(process_id, main_frame_widget_route_id);
+
   if (popup) {
     WebContentsDelegate* delegate = GetDelegate();
     popup->is_resume_pending_ = true;
+
     if (!delegate || delegate->ShouldResumeRequestsForCreatedWindow())
       popup->ResumeLoadingCreatedWebContents();
 
@@ -3664,8 +3667,9 @@ void WebContentsImpl::ReadyToCommitNavigation(
 }
 
 void WebContentsImpl::DidFinishNavigation(NavigationHandle* navigation_handle) {
-  for (auto& observer : observers_)
+  for (auto& observer : observers_) {
     observer.DidFinishNavigation(navigation_handle);
+  }
 
   if (navigation_handle->HasCommitted()) {
     BrowserAccessibilityManager* manager =

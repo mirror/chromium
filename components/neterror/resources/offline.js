@@ -492,14 +492,48 @@ Runner.prototype = {
     }
   },
 
+  updatePopupDino: function()
+  {
+    this.popupCanvasCtx.clearRect(0, 0, this.dimensions.WIDTH,
+                                    this.dimensions.HEIGHT);
+    this.popupDino.currentFrame = (this.popupDino.currentFrame + 0.1) % 2;
+    if (this.popupDino.currentFrame < 1)
+    {
+      this.popupDino.frame = 2;
+    }
+    else if (this.popupDino.currentFrame < 2)
+    {
+      this.popupDino.frame = 3;
+    }
+    this.popupDino.draw();
+  },
 
+  displayTest: function(e)
+  {
+    e.preventDefault();
+    console.log("Yay", e);
+  },
   /**
    * Update the game status to started.
    */
   startGame: function() {
+    this.popupWindow = window.open('about:blank', '', 'width=10,height=10');
+    this.popupWindow.document.body.innerHTML='<div class="popup-container" style="margin-left: -8px; margin-top:-11px;"><button type="button" id="dinobutton" style="height: 50px;">Dino Button</button></div>';
+
+    this.dinoButton = this.popupWindow.document.querySelector('#dinobutton');
+    this.dinoButton.addEventListener("click", this.displayTest, true);
+
+    this.popupContainer = this.popupWindow.document.querySelector('.popup-container');
+    this.popupCanvas = createCanvas(this.popupContainer, this.dimensions.WIDTH,
+              this.dimensions.HEIGHT, Runner.classes.PLAYER);
+    this.popupCanvasCtx = this.popupCanvas.getContext("2d");
+    this.popupDino = new PopupDino(this.popupCanvas);
+    this.popupDino.draw();
+
     if (this.isArcadeMode()) {
-      this.setArcadeMode();
+        this.setArcadeMode();
     }
+
     this.runningTime = 0;
     this.playingIntro = false;
     this.tRex.playingIntro = false;
@@ -537,6 +571,10 @@ Runner.prototype = {
 
       if (this.tRex.jumping) {
         this.tRex.updateJump(deltaTime);
+      }
+
+      if (this.popupCanvasCtx) {
+        this.updatePopupDino();
       }
 
       this.runningTime += deltaTime;
@@ -2743,4 +2781,32 @@ Horizon.prototype = {
         this.dimensions.WIDTH));
   }
 };
+
+function PopupDino(canvas)
+{
+  this.sx = 850;
+  this.sy = 0;
+  this.swidth = 44;
+  this.sheight = 50;
+  this.x = 1;
+  this.y = 1;
+  this.width = 29;
+  this.height = 34;
+  this.currentFrame = 0;
+  this.frame = 0;
+  this.canvas = canvas;
+  this.canvasCtx = canvas.getContext("2d");
+};
+
+PopupDino.prototype = {
+  draw: function()
+  {
+    this.canvasCtx.drawImage(Runner.imageSprite,
+                             this.sx  + (this.frame * this.swidth),
+                             this.sy, this.swidth, this.sheight,
+                             this.x, this.y, this.width,
+                             this.height);
+  }
+};
+
 })();
