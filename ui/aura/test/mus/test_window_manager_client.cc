@@ -103,4 +103,7 @@ void TestWindowManagerClient::OnAcceleratorAck(
     ui::mojom::EventResult result,
     const std::unordered_map<std::string, std::vector<uint8_t>>& properties) {}
 
+void TestWindowManagerClient::SetIsTopLevelContainer(uint32_t window_id,
+                                                     bool value) {}
+
 }  // namespace aura
