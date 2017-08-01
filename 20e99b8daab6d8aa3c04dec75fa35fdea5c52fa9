@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c77c6fb7_176ef51f",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8ContextSnapshot.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-08-01T08:14:01Z",
+      "side": 1,
+      "message": "Shall we add a TODO comment to remove this hack once the bug gets fixed?\nI\u0027m okay with TODO(crbug.com/v8/3645):.",
+      "revId": "20e99b8daab6d8aa3c04dec75fa35fdea5c52fa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5af9c3e_2b99cfd1",
+        "filename": "third_party/WebKit/Source/bindings/templates/external_reference_table.cpp.tmpl",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-08-01T08:14:01Z",
+      "side": 1,
+      "message": "Maybe it\u0027s good to have a comment why Android is excluded.",
+      "revId": "20e99b8daab6d8aa3c04dec75fa35fdea5c52fa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
