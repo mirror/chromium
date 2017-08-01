@@ -49,6 +49,54 @@
     },
     {
       "key": {
+        "uuid": "b2db3eae_43ec6111",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 902,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-01T00:00:56Z",
+      "side": 1,
+      "message": "Yes, in daemonize. My eventual hope is to remove that code in favor of always using the user-session wrapper, at which point this can be simplified.",
+      "parentUuid": "2a4845e9_63f39cb0",
+      "range": {
+        "startLine": 902,
+        "startChar": 36,
+        "endLine": 902,
+        "endChar": 0
+      },
+      "revId": "55cb12525046aa41f6d582ad6d989dcdf1142c92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2adee2b1_697d1ae2",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 902,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-01T00:00:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8476533d_9e58e970",
+      "range": {
+        "startLine": 902,
+        "startChar": 36,
+        "endLine": 902,
+        "endChar": 0
+      },
+      "revId": "55cb12525046aa41f6d582ad6d989dcdf1142c92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21323657_819394e2",
         "filename": "remoting/host/linux/linux_me2me_host.py",
         "patchSetId": 2
@@ -72,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "c1359a68_bd57f6b2",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 1510,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-01T00:00:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21323657_819394e2",
+      "range": {
+        "startLine": 1510,
+        "startChar": 28,
+        "endLine": 1510,
+        "endChar": 0
+      },
+      "revId": "55cb12525046aa41f6d582ad6d989dcdf1142c92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "841f4af7_ae2ca48f",
         "filename": "remoting/host/linux/remoting_user_session.cc",
         "patchSetId": 2
@@ -86,6 +158,24 @@
       "revId": "55cb12525046aa41f6d582ad6d989dcdf1142c92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fe786ed_a801fe1b",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-01T00:00:56Z",
+      "side": 1,
+      "message": "Right, of course. I keep forgetting I can use the fancier stuff in the parts of this file that aren\u0027t run as root.",
+      "parentUuid": "841f4af7_ae2ca48f",
+      "revId": "55cb12525046aa41f6d582ad6d989dcdf1142c92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -112,6 +202,30 @@
     },
     {
       "key": {
+        "uuid": "636579e3_141b3455",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-01T00:00:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd977d68_3be3ec31",
+      "range": {
+        "startLine": 481,
+        "startChar": 22,
+        "endLine": 481,
+        "endChar": 0
+      },
+      "revId": "55cb12525046aa41f6d582ad6d989dcdf1142c92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2874895f_7b7a90fd",
         "filename": "remoting/host/linux/remoting_user_session.cc",
         "patchSetId": 2
@@ -123,6 +237,30 @@
       "writtenOn": "2017-07-31T21:17:48Z",
       "side": 1,
       "message": "Doesn\u0027t this introduce a race condition between the this alarm and the error message logged in response to that failure. Would it make sense to add a couple of seconds slack here to make it more likely that the user will see that error message?",
+      "range": {
+        "startLine": 491,
+        "startChar": 24,
+        "endLine": 491,
+        "endChar": 0
+      },
+      "revId": "55cb12525046aa41f6d582ad6d989dcdf1142c92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c0f42ac_e55b2e5e",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-01T00:00:56Z",
+      "side": 1,
+      "message": "So this timeout is taken from the python script, and the above comment is taken directly from there. To make sure I understand, you\u0027re suggesting we wait longer to give the host a chance to exit with \"Host ID not found\" if it exhausts the host-not-found retry count? If so, we\u0027d have to wait for more than just a few seconds longer, since the 120 seconds in heartbeat_sender.cc is just the time spent waiting between retry attempts, and doesn\u0027t count the time taken to start up the X session, launch the host, or make the actual heartbeat attempts. (Thus, if it\u0027s a race, it\u0027s currently one the host will never win.)\n\nI don\u0027t know what the reasoning for picking this specific timeout was, or why it\u0027s based on a host timeout that\u0027s guaranteed not to fire before this one expires. I could dig into the logs and try to find a better answer.",
+      "parentUuid": "2874895f_7b7a90fd",
       "range": {
         "startLine": 491,
         "startChar": 24,
@@ -152,6 +290,24 @@
     },
     {
       "key": {
+        "uuid": "b6aaedce_6219e4ef",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-01T00:00:56Z",
+      "side": 1,
+      "message": "I don\u0027t think so, since stderr is a FILE*, not a file descriptor. I could use it to write directly to STDERR_FILENO, but everything else (including LOG) uses stderr, so I think it would make more sense to stick to that for consistency.",
+      "parentUuid": "2a88a46c_d01a6344",
+      "revId": "55cb12525046aa41f6d582ad6d989dcdf1142c92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3627b6c5_6309cda5",
         "filename": "remoting/host/linux/remoting_user_session.cc",
         "patchSetId": 2
@@ -163,6 +319,30 @@
       "writtenOn": "2017-07-31T21:17:48Z",
       "side": 1,
       "message": "The !feof conditional seems at odds with the comment, which is talking about shells closing the pipe prematurely. In fact, the comment about \"all other shells\" implies that we will wrongly report a problem to the user (I presume the reason we don\u0027t is that the script closes the pipe).\n\nWhy is !feof needed?",
+      "range": {
+        "startLine": 521,
+        "startChar": 48,
+        "endLine": 521,
+        "endChar": 0
+      },
+      "revId": "55cb12525046aa41f6d582ad6d989dcdf1142c92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ea1e9ca_40c39bf0",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-01T00:00:56Z",
+      "side": 1,
+      "message": "getline returns -1 if it can\u0027t read a line for any reason, which may or may not be EOF. If we\u0027re not at EOF, then something else went wrong trying to read from the pipe, and we want to report an error. Alternatively, if we are at EOF, but we haven\u0027t received any messages, it\u0027s probable that the pipe was closed before it got to the Python script, so again we can\u0027t retrieve messages and want to display an error.\n\nI expanded the comment a bit. Let me know if you think it could be clearer.",
+      "parentUuid": "3627b6c5_6309cda5",
       "range": {
         "startLine": 521,
         "startChar": 48,
@@ -198,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "9842f8ce_c4ae63bf",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-01T00:00:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8af65624_f0c8ecf1",
+      "range": {
+        "startLine": 540,
+        "startChar": 38,
+        "endLine": 540,
+        "endChar": 49
+      },
+      "revId": "55cb12525046aa41f6d582ad6d989dcdf1142c92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6dd9160c_df736160",
         "filename": "remoting/host/linux/remoting_user_session.cc",
         "patchSetId": 2
@@ -221,6 +425,30 @@
     },
     {
       "key": {
+        "uuid": "494cd9f2_b9dad2bf",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 550,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-01T00:00:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6dd9160c_df736160",
+      "range": {
+        "startLine": 550,
+        "startChar": 20,
+        "endLine": 550,
+        "endChar": 0
+      },
+      "revId": "55cb12525046aa41f6d582ad6d989dcdf1142c92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6483da3f_11213707",
         "filename": "remoting/host/linux/remoting_user_session.cc",
         "patchSetId": 2
@@ -232,6 +460,30 @@
       "writtenOn": "2017-07-31T21:17:48Z",
       "side": 1,
       "message": "Should this be a more severe error? IIUC, it\u0027s akin to the situation where the shell closes the pipe and so we can\u0027t tell whether or not the host started correctly. It seems like there should be a message here similar to the one we show in that scenario telling the user to check the log file.",
+      "range": {
+        "startLine": 556,
+        "startChar": 47,
+        "endLine": 556,
+        "endChar": 0
+      },
+      "revId": "55cb12525046aa41f6d582ad6d989dcdf1142c92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54111a40_a777787f",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 556,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-01T00:00:56Z",
+      "side": 1,
+      "message": "I changed the two error cases to output similar messages. Let me know what you think.",
+      "parentUuid": "6483da3f_11213707",
       "range": {
         "startLine": 556,
         "startChar": 47,
@@ -264,6 +516,30 @@
       "revId": "55cb12525046aa41f6d582ad6d989dcdf1142c92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "037d50ce_df396a91",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-01T00:00:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a890938_0f594ff4",
+      "range": {
+        "startLine": 604,
+        "startChar": 49,
+        "endLine": 604,
+        "endChar": 57
+      },
+      "revId": "55cb12525046aa41f6d582ad6d989dcdf1142c92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
