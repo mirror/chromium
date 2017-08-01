@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d552f2fa_a79c697f",
+        "filename": "cc/paint/solid_color_analyzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1157921
+      },
+      "writtenOn": "2017-08-01T15:36:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f72ea5bc_1aacd05f",
+      "range": {
+        "startLine": 78,
+        "startChar": 14,
+        "endLine": 78,
+        "endChar": 24
+      },
+      "revId": "ef52204077a39b8e3210355202cafd8d23cfa53b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5bade544_aaf6017e",
         "filename": "cc/paint/solid_color_analyzer.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-31T20:27:54Z",
       "side": 1,
       "message": "Is it possible to use rectStaysRect here? As far as I can tell, the only difference is that it also accepts rotations of multiples of 90 deg",
+      "range": {
+        "startLine": 92,
+        "startChar": 14,
+        "endLine": 92,
+        "endChar": 30
+      },
+      "revId": "ef52204077a39b8e3210355202cafd8d23cfa53b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29f359bd_47da5448",
+        "filename": "cc/paint/solid_color_analyzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1157921
+      },
+      "writtenOn": "2017-08-01T15:36:48Z",
+      "side": 1,
+      "message": "I think we can. It might cost more time as rotation is more complex than scale and translate. But to me it seems fine.",
+      "parentUuid": "5bade544_aaf6017e",
       "range": {
         "startLine": 92,
         "startChar": 14,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d2bd41ff_3bd98f95",
+        "filename": "cc/paint/solid_color_analyzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1157921
+      },
+      "writtenOn": "2017-08-01T15:36:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "03d77c18_f931f188",
+      "range": {
+        "startLine": 99,
+        "startChar": 9,
+        "endLine": 100,
+        "endChar": 28
+      },
+      "revId": "ef52204077a39b8e3210355202cafd8d23cfa53b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8cd949e_ec992c0b",
         "filename": "cc/paint/solid_color_analyzer.cc",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2017-07-31T20:27:54Z",
       "side": 1,
       "message": "Looking at this function, it seems that we can just templatize the other IsFullRect on the second parameter and use that for both rects and rrects. Is that true or are there important subtle differences I\u0027m missing? If there are differences, could you comment on them here. If not, then I would just combine the two functions into one.",
+      "range": {
+        "startLine": 102,
+        "startChar": 2,
+        "endLine": 102,
+        "endChar": 41
+      },
+      "revId": "ef52204077a39b8e3210355202cafd8d23cfa53b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e68f21a7_a8d2bacc",
+        "filename": "cc/paint/solid_color_analyzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1157921
+      },
+      "writtenOn": "2017-08-01T15:36:48Z",
+      "side": 1,
+      "message": "Hmm we can do that if we use rectStaysRect in the above line. The only difference I believe is that this function uses an inverse transform while the other function maps everything to the total matrix space.",
+      "parentUuid": "f8cd949e_ec992c0b",
       "range": {
         "startLine": 102,
         "startChar": 2,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "3041a8b5_8857beff",
+        "filename": "cc/paint/solid_color_analyzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1157921
+      },
+      "writtenOn": "2017-08-01T15:36:48Z",
+      "side": 1,
+      "message": "I think even if we return is_solid_color, we would continue analyzing the following ops. But yes, in this way it\u0027s much clearer.\n\nDone.",
+      "parentUuid": "548c9426_bbed8ae5",
+      "range": {
+        "startLine": 166,
+        "startChar": 4,
+        "endLine": 166,
+        "endChar": 27
+      },
+      "revId": "ef52204077a39b8e3210355202cafd8d23cfa53b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0a0d5bea_45e23773",
         "filename": "cc/paint/solid_color_analyzer.cc",
         "patchSetId": 2
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "2b02595a_d04abe12",
+        "filename": "cc/paint/solid_color_analyzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1157921
+      },
+      "writtenOn": "2017-08-01T15:36:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0a0d5bea_45e23773",
+      "range": {
+        "startLine": 240,
+        "startChar": 6,
+        "endLine": 240,
+        "endChar": 34
+      },
+      "revId": "ef52204077a39b8e3210355202cafd8d23cfa53b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "99b6c3a0_b6567615",
         "filename": "cc/paint/solid_color_analyzer.cc",
         "patchSetId": 2
@@ -154,6 +298,24 @@
       "revId": "ef52204077a39b8e3210355202cafd8d23cfa53b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78ea3f8b_64bf4f4e",
+        "filename": "cc/paint/solid_color_analyzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1157921
+      },
+      "writtenOn": "2017-08-01T15:36:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "99b6c3a0_b6567615",
+      "revId": "ef52204077a39b8e3210355202cafd8d23cfa53b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
