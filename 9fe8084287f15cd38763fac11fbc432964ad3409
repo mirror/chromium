@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a117dcd_d89cdb0b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-01T18:10:23Z",
+      "side": 1,
+      "message": "Please update the CL description to mention either local state prefs, wallpaper prefs, or both. This sounds like it affects all ash-related prefs, most of which still live in chrome.",
+      "revId": "9fe8084287f15cd38763fac11fbc432964ad3409",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c90b4ee2_58efa1d0",
+        "filename": "ash/shell.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-01T18:10:23Z",
+      "side": 1,
+      "message": "nit: Please rename this to RegisterLocalStatePrefs. I think RegisterPrefs is sometimes used in Chrome code to refer to profile prefs. :-(",
+      "revId": "9fe8084287f15cd38763fac11fbc432964ad3409",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3392c03_0fa72ded",
+        "filename": "ash/wallpaper/wallpaper_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-01T18:10:23Z",
+      "side": 1,
+      "message": "Under mash, GetLocalStatePrefService() returns null for an arbitrary amount of time after ash startup, while the ash process is connecting to the pref service.\n\nWhile this CL will fix the crash, there will still be a race condition on startup under mash where the colors sometimes are not loaded from prefs.\n\nI talked to sky@, and local state prefs not being available during ash::Shell init is an architectural problem with mash that I need to fix. For now, please add an explicit check for Config::MASH and skip the pref reading in that case too, file a bug assigned to me to fix this wallpaper code, and cite the bug in a TODO.\n\nSorry this isn\u0027t working quite right -- your code is the first consumer of local state prefs in ash. Thanks for helping discover these sorts of problems. :-)",
+      "revId": "9fe8084287f15cd38763fac11fbc432964ad3409",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd342058_fb2715fd",
+        "filename": "ash/wallpaper/wallpaper_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-01T18:10:23Z",
+      "side": 1,
+      "message": "RegisterLocalStatePrefs here too",
+      "revId": "9fe8084287f15cd38763fac11fbc432964ad3409",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
