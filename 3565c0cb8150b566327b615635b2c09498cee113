@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e3bf426e_faad5db4",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1259,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-01T01:23:40Z",
+      "side": 1,
+      "message": "Yes.",
+      "parentUuid": "ba0086cd_c621992c",
+      "revId": "3565c0cb8150b566327b615635b2c09498cee113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be342476_733abab2",
         "filename": "cc/paint/paint_op_buffer.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-01T01:07:43Z",
       "side": 1,
       "message": "Comment here if that\u0027s the thing that is used when we should skip images",
+      "revId": "3565c0cb8150b566327b615635b2c09498cee113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fc20668_70b2e9ba",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1269,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-01T01:23:40Z",
+      "side": 1,
+      "message": "I don\u0027t know if this code needs to know about skipping all images, if the provider doesn\u0027t return a decoded image for whatever reason, we skip that op.\n\nI added a comment to ImageProvider and specifically for skipping images to PlaybackImageProvider for this.",
+      "parentUuid": "be342476_733abab2",
       "revId": "3565c0cb8150b566327b615635b2c09498cee113",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
