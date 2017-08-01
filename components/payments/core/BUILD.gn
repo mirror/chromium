@@ -53,6 +53,7 @@ static_library("core") {
     "//components/pref_registry",
     "//components/strings:components_strings_grit",
     "//components/ukm",
+    "//components/url_formatter",
     "//net",
     "//third_party/libphonenumber",
     "//ui/base",
