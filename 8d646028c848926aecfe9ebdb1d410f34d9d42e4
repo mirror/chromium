@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52687714_35f056c9",
+        "filename": "third_party/WebKit/Source/modules/encryptedmedia/NavigatorRequestMediaKeySystemAccess.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-08-01T04:54:21Z",
+      "side": 1,
+      "message": "Note that this move will slightly affect the numbers. Probably not noticeably.",
+      "revId": "8d646028c848926aecfe9ebdb1d410f34d9d42e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bd23bf6_1581cdf1",
+        "filename": "third_party/WebKit/Source/modules/encryptedmedia/NavigatorRequestMediaKeySystemAccess.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-08-01T04:54:21Z",
+      "side": 1,
+      "message": "There isn\u0027t a PR for the EME spec yet, so it\u0027s hard to know if this is correct. Notably, this is before any other step in the algorithm. Is this how Feature Policy is being handled for other features.",
+      "revId": "8d646028c848926aecfe9ebdb1d410f34d9d42e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
