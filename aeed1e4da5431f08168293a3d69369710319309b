@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb7d92d5_00e0a74e",
+        "filename": "chrome/installer/zucchini/zucchini_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-01T20:31:36Z",
+      "side": 0,
+      "message": "Fails on 32bit, not 64bit, right?\n\nIf you want to keep it you could put it behind an \"is 64 bit\" ifdef.",
+      "revId": "aeed1e4da5431f08168293a3d69369710319309b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
