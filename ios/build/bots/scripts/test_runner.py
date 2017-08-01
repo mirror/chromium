@@ -462,6 +462,7 @@ class SimulatorTestRunner(TestRunner):
           'iOS Simulator', # Xcode 6
           'Simulator', # Xcode 7+
           'simctl', # https://crbug.com/637429
+          'xcodebuild', # https://crbug.com/684305
       ])
       # If a signal was sent, wait for the simulators to actually be killed.
       time.sleep(5)
