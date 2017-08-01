@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d89e0094_4610ecb5",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerGlobalScope.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-01T04:12:26Z",
+      "side": 1,
+      "message": "WorkerGlobalScope is also used for workers other than ServiceWorker, so I\u0027d like to avoid ServiceWorker-specific code in WorkerGlobalScope as much as possible (we already use InstalledScriptsManager in WorkerThread though). \n\nInstead, how about adding |virtual bool WorkerGlobalScope::LoadScript(url, ...)|? WorkerGlobalScope implements it the existing behavior and ServiceWorkerGlobalScope overrides it for the script streaming. If ServiceWorkerGlobalScope::LoadScript() cannot handle a request, it can fallback to WorkerGlobalScope::LoadScript().\n\nWhat do you think?",
+      "revId": "28ff909569964e9899fbdd5ed9c74fc511ab3e5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c343a1fe_aed65139",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerGlobalScope.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-01T04:12:26Z",
+      "side": 1,
+      "message": "Probably you can remove this arg in favor of GetExecutionContext().",
+      "revId": "28ff909569964e9899fbdd5ed9c74fc511ab3e5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
