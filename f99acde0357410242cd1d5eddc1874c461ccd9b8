@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f1303ee_59f054ce",
+        "filename": "services/resource_coordinator/coordination_unit/process_coordination_unit_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-01T17:15:14Z",
+      "side": 1,
+      "message": "ToFrameCU",
+      "range": {
+        "startLine": 66,
+        "startChar": 13,
+        "endLine": 66,
+        "endChar": 56
+      },
+      "revId": "f99acde0357410242cd1d5eddc1874c461ccd9b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a4bff42_e7a51001",
+        "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-01T17:15:14Z",
+      "side": 1,
+      "message": "no need",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 11
+      },
+      "revId": "f99acde0357410242cd1d5eddc1874c461ccd9b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb730dcf_c4f73a73",
+        "filename": "services/resource_coordinator/coordination_unit/web_contents_coordination_unit_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-01T17:15:14Z",
+      "side": 1,
+      "message": "Could you verify it\u0027s always true?",
+      "range": {
+        "startLine": 83,
+        "startChar": 2,
+        "endLine": 83,
+        "endChar": 45
+      },
+      "revId": "f99acde0357410242cd1d5eddc1874c461ccd9b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f4ea350_83b9e81c",
+        "filename": "services/resource_coordinator/coordination_unit/web_contents_coordination_unit_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-01T17:15:14Z",
+      "side": 1,
+      "message": "ToFrameCU",
+      "range": {
+        "startLine": 116,
+        "startChar": 8,
+        "endLine": 116,
+        "endChar": 47
+      },
+      "revId": "f99acde0357410242cd1d5eddc1874c461ccd9b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9186ecf5_294a645c",
+        "filename": "services/resource_coordinator/coordination_unit/web_contents_coordination_unit_impl.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-01T17:15:14Z",
+      "side": 1,
+      "message": "An API like `bool CalculateExpectedTaskQueueingDuration(double* out)` would be better",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 49
+      },
+      "revId": "f99acde0357410242cd1d5eddc1874c461ccd9b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
