@@ -22,6 +22,30 @@
       "revId": "19af4271de70c7a25d0bf8e9a01f090aedb8f410",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6062ce74_74dd8803",
+        "filename": "components/omnibox/browser/scored_history_match_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-01T17:42:02Z",
+      "side": 1,
+      "message": "Done. Good call. Investigating the git history, this test was originally added to test the can_inline property, which has since been removed. I\u0027ve renamed this test MatchURLComponents, to reflect its current usage.",
+      "parentUuid": "0a16774d_7aae23cb",
+      "range": {
+        "startLine": 281,
+        "startChar": 31,
+        "endLine": 281,
+        "endChar": 39
+      },
+      "revId": "19af4271de70c7a25d0bf8e9a01f090aedb8f410",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
