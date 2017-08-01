@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9152efc3_b165ecfb",
+        "filename": "chrome/browser/chromeos/preferences.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-01T01:14:23Z",
+      "side": 1,
+      "message": "Do you want this to be a per-user pref (which goes here) or a per-device pref (which would go in local_state)?",
+      "revId": "9ec8664415e5b73f9daa94a7ba7c1b43b0dd0dd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
