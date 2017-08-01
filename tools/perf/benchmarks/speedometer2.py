@@ -27,32 +27,19 @@ class Speedometer2Measurement(legacy_page_test.LegacyPageTest):
 
   def ValidateAndMeasurePage(self, page, tab, results):
     tab.WaitForDocumentReadyStateToBeComplete()
-    iterationCount = 10
+    iterationCount = 2
     # A single iteration on android takes ~75 seconds, the benchmark times out
     # when running for 10 iterations.
     if tab.browser.platform.GetOSName() == 'android':
       iterationCount = 3
-
-    enabled_suites = tab.EvaluateJavaScript("""
-      (function() {
-        var suitesNames = [];
-        Suites.forEach(function(s) {
-          if (!s.disabled)
-            suitesNames.push(s.name);
-        });
-        return suitesNames;
-       })();""")
-
     tab.ExecuteJavaScript("""
         // Store all the results in the benchmarkClient
         var testDone = false;
         var iterationCount = {{ count }};
         var benchmarkClient = {};
         var suiteValues = [];
-        var totalValues = [];
         benchmarkClient.didRunSuites = function(measuredValues) {
           suiteValues.push(measuredValues);
-          totalValues.push(measuredValues.total);
         };
         benchmarkClient.didFinishLastIteration = function () {
           testDone = true;
@@ -62,25 +49,55 @@ class Speedometer2Measurement(legacy_page_test.LegacyPageTest):
         """,
         count=iterationCount)
     tab.WaitForJavaScriptCondition('testDone', timeout=600)
-    results.AddValue(list_of_scalar_values.ListOfScalarValues(
-        page, 'Total', 'ms',
-        tab.EvaluateJavaScript('totalValues'),
-        important=True))
 
-    # Extract the timings for each suite
-    for suite_name in enabled_suites:
-      results.AddValue(list_of_scalar_values.ListOfScalarValues(
-          page, suite_name, 'ms',
-          tab.EvaluateJavaScript("""
-              var suite_times = [];
-              for(var i = 0; i < iterationCount; i++) {
-                suite_times.push(
-                    suiteValues[i].tests[{{ key }}].total);
-              };
-              suite_times;
-              """,
-              key=suite_name), important=False))
 
+    # Extract the timings for all suites.
+    # |suite_metrics| will be a dictionary whose keys are concatenate path
+    # name of a metric (e.g: "Vanilla-ES2015-TodoMVC-CompletingAllItems-sync"),
+    # and value is a list of collected results from all iterations.
+    suite_metrics = tab.EvaluateJavaScript("""
+        var suiteMetrics = {};
+
+        function pushValueToSuiteMetrics(metricName, item) {
+          if (metricName in suiteMetrics) {
+            suiteMetrics[metricName].push(item);
+          } else {
+            suiteMetrics[metricName] = [item];
+          }
+        }
+
+        // Recursively traverse the tree of test results & extract the metric
+        // results to |suiteMetrics|.
+        function extractSuiteMetricResults(suiteResults, baseName) {
+          // Leaf node: suiteResults contains only action names & metric
+          // values
+          if (typeof suiteResults === 'number') {
+            pushValueToSuiteMetrics(baseName, suiteResults);
+            return;
+          }
+          // Non-leaf node: suiteResults contains "total" metric &
+          // 'tests' dictionary which contain the children nodes.
+          if (suiteResults.total)
+             pushValueToSuiteMetrics(baseName + '-Total', suiteResults.total);
+          for (var subResult in suiteResults['tests']) {
+            extractSuiteMetricResults(
+                suiteResults['tests'][subResult],
+                baseName + '-' + subResult);
+          }
+        };
+
+        for(var i = 0; i < iterationCount; i++) {
+          pushValueToSuiteMetrics('Total', suiteValues[i].total);
+          for (var subResult in suiteValues[i]['tests'])
+            extractSuiteMetricResults(
+                suiteValues[i]['tests'][subResult], subResult);
+        };
+        suiteMetrics;
+        """)
+
+    for metric_name, values in suite_metrics.iteritems():
+      results.AddSummaryValue(list_of_scalar_values.ListOfScalarValues(
+          None, metric_name, 'ms', values))
 
 @benchmark.Owner(emails=['verwaest@chromium.org, mvstanton@chromium.org'])
 class Speedometer2(perf_benchmark.PerfBenchmark):
