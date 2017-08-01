@@ -198,6 +198,24 @@
     },
     {
       "key": {
+        "uuid": "f194d434_ca362b65",
+        "filename": "cc/quads/render_pass.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1108704
+      },
+      "writtenOn": "2017-08-01T19:46:12Z",
+      "side": 1,
+      "message": "Cool. I\u0027ll make all three rects to quad rect, there won\u0027t be behavior change.\n\nFor unittest, I see two cases checking that overlay quad is replaced by solid color quad, I will add check for the rects there too.",
+      "parentUuid": "c013deeb_df8986b1",
+      "revId": "d5e9bbddb7b344d33b7efc4c4e1a16f9e292a900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "78d8a619_cf453f7c",
         "filename": "cc/quads/render_pass.cc",
         "patchSetId": 3
