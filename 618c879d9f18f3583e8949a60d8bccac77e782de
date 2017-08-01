@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "612dfa93_7f323c86",
+        "filename": "chrome/browser/ui/cocoa/passwords/password_item_views.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-01T14:23:35Z",
+      "side": 1,
+      "message": "nonatomic",
+      "range": {
+        "startLine": 74,
+        "startChar": 10,
+        "endLine": 74,
+        "endChar": 18
+      },
+      "revId": "618c879d9f18f3583e8949a60d8bccac77e782de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "726ffe82_859764ff",
+        "filename": "chrome/browser/ui/cocoa/passwords/password_item_views.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-01T14:23:35Z",
+      "side": 1,
+      "message": "blank line",
+      "range": {
+        "startLine": 75,
+        "startChar": 3,
+        "endLine": 75,
+        "endChar": 5
+      },
+      "revId": "618c879d9f18f3583e8949a60d8bccac77e782de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b68cad29_f2878008",
+        "filename": "chrome/browser/ui/cocoa/passwords/passwords_list_view_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-01T14:23:35Z",
+      "side": 1,
+      "message": "Don\u0027t use GetDisplayUsername here",
+      "range": {
+        "startLine": 225,
+        "startChar": 33,
+        "endLine": 225,
+        "endChar": 51
+      },
+      "revId": "618c879d9f18f3583e8949a60d8bccac77e782de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e639133d_8a3692f8",
+        "filename": "chrome/browser/ui/cocoa/passwords/save_pending_password_view_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-01T14:23:35Z",
+      "side": 1,
+      "message": "Can\u0027t you just declare the proper class and use it here instead of this type?",
+      "range": {
+        "startLine": 19,
+        "startChar": 31,
+        "endLine": 19,
+        "endChar": 56
+      },
+      "revId": "618c879d9f18f3583e8949a60d8bccac77e782de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32d8863a_c64cc383",
+        "filename": "chrome/browser/ui/cocoa/passwords/save_pending_password_view_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-01T14:23:35Z",
+      "side": 1,
+      "message": "Isn\u0027t it default initially? What did you want to do?",
+      "range": {
+        "startLine": 64,
+        "startChar": 28,
+        "endLine": 64,
+        "endChar": 48
+      },
+      "revId": "618c879d9f18f3583e8949a60d8bccac77e782de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5049c2ef_159108aa",
+        "filename": "chrome/browser/ui/cocoa/passwords/save_pending_password_view_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-01T14:23:35Z",
+      "side": 1,
+      "message": "Why do you create it twice??",
+      "range": {
+        "startLine": 75,
+        "startChar": 36,
+        "endLine": 75,
+        "endChar": 59
+      },
+      "revId": "618c879d9f18f3583e8949a60d8bccac77e782de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e9cdb6a_a021864f",
+        "filename": "chrome/browser/ui/cocoa/passwords/save_pending_password_view_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-01T14:23:35Z",
+      "side": 1,
+      "message": "PendingPasswordItemView inside PendingPasswordItemView is very strange. There should be just one PendingPasswordItemView.",
+      "range": {
+        "startLine": 83,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 40
+      },
+      "revId": "618c879d9f18f3583e8949a60d8bccac77e782de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

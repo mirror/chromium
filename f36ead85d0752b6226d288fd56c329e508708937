@@ -472,6 +472,30 @@
     },
     {
       "key": {
+        "uuid": "7c732f21_5f435004",
+        "filename": "chrome/browser/ui/cocoa/passwords/passwords_list_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-01T14:23:35Z",
+      "side": 1,
+      "message": "How about making it a single line only? https://stackoverflow.com/questions/14659185/make-nstextfield-single-line",
+      "parentUuid": "3408213c_b6881952",
+      "range": {
+        "startLine": 337,
+        "startChar": 35,
+        "endLine": 337,
+        "endChar": 48
+      },
+      "revId": "f36ead85d0752b6226d288fd56c329e508708937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e334fe64_b7db5d01",
         "filename": "chrome/browser/ui/cocoa/passwords/passwords_list_view_controller.mm",
         "patchSetId": 1
@@ -507,6 +531,30 @@
       "side": 1,
       "message": "See comment above",
       "parentUuid": "e334fe64_b7db5d01",
+      "range": {
+        "startLine": 338,
+        "startChar": 35,
+        "endLine": 338,
+        "endChar": 44
+      },
+      "revId": "f36ead85d0752b6226d288fd56c329e508708937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4c712143_d47818a1",
+        "filename": "chrome/browser/ui/cocoa/passwords/passwords_list_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-01T14:23:35Z",
+      "side": 1,
+      "message": "Sure? The article https://developer.apple.com/library/content/qa/qa1454/_index.html says that by default those keys aren\u0027t processed.",
+      "parentUuid": "6ebd30a1_c2975685",
       "range": {
         "startLine": 338,
         "startChar": 35,
@@ -601,6 +649,30 @@
       "side": 1,
       "message": "Clicking outside of the bubble closes the bubble.\nClicking inside the bubble and outside of the editable field (except buttons, i am talking about the white space) doesn\u0027t do anything in linux too. We are handling the case with focus manager there(we\u0027re listening to OnDidChangeFocus), so we know clicking to a blank space in bubble doesn\u0027t make any focus change. (Same thing with the focused button. If the save button is focused and I click on a blank space within bubble, button doesn\u0027t lose focus).\n\nAlso we need to handle escape and enter/tab with different responses and I think shouldEndEditing will not help us with this. I can still implement textshouldendediting but i will still need to add the individual operation names inside the case, so it doesn\u0027t sound very effective to me. But again, it sounds more general and if you say do it i will. :)",
       "parentUuid": "2b6b182e_2b7a11ea",
+      "range": {
+        "startLine": 340,
+        "startChar": 15,
+        "endLine": 340,
+        "endChar": 32
+      },
+      "revId": "f36ead85d0752b6226d288fd56c329e508708937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e52f24c_afa08d2c",
+        "filename": "chrome/browser/ui/cocoa/passwords/passwords_list_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-01T14:23:35Z",
+      "side": 1,
+      "message": "I\u0027m not saying you should drop this method. I\u0027m saying it\u0027s not enough. One can remove focus from the fields by long click on the button. On Linux it stops the editing mode. But not here.",
+      "parentUuid": "5cce7073_aef0f7d6",
       "range": {
         "startLine": 340,
         "startChar": 15,
