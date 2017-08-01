@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3239230_a401d79f",
+        "filename": "chrome/browser/renderer_context_menu/render_view_context_menu.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2233,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-08-01T13:24:16Z",
+      "side": 1,
+      "message": "note to owners of code: This is going to be true only if the network request happens *AFTER* the file selection dialog is shown. Because the policy only blocks the file selection dialog and therefore if the request happens beforehand the network request will still be issued and this annotation will be wrong.",
+      "range": {
+        "startLine": 2233,
+        "startChar": 14,
+        "endLine": 2233,
+        "endChar": 46
+      },
+      "revId": "ea6fc4b0dbfdcdd1d416f4856949ce014eb59cd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94bbe402_689072c4",
+        "filename": "content/browser/download/save_file_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-08-01T13:24:16Z",
+      "side": 1,
+      "message": "note to owners of code: This is going to be true only if the network request happens *AFTER* the file selection dialog is shown. Because the policy only blocks the file selection dialog and therefore if the request happens beforehand the network request will still be issued and this annotation will be wrong.",
+      "range": {
+        "startLine": 327,
+        "startChar": 14,
+        "endLine": 327,
+        "endChar": 46
+      },
+      "revId": "ea6fc4b0dbfdcdd1d416f4856949ce014eb59cd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60a01b9c_35790e84",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-08-01T13:24:16Z",
+      "side": 1,
+      "message": "Does this mean setting both policies as specified? Then this is true. \n\nAlternatively only setting the blacklist and omitting the whitelist means the same.",
+      "range": {
+        "startLine": 89,
+        "startChar": 8,
+        "endLine": 93,
+        "endChar": 9
+      },
+      "revId": "ea6fc4b0dbfdcdd1d416f4856949ce014eb59cd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52bae2c4_520ddc21",
+        "filename": "net/proxy/proxy_script_fetcher_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-08-01T13:24:16Z",
+      "side": 1,
+      "message": "please check this claim. Can the system specify pac file mode as well?",
+      "range": {
+        "startLine": 179,
+        "startChar": 19,
+        "endLine": 179,
+        "endChar": 28
+      },
+      "revId": "ea6fc4b0dbfdcdd1d416f4856949ce014eb59cd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
