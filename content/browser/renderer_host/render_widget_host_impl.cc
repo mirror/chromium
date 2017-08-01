@@ -2604,6 +2604,7 @@ void RenderWidgetHostImpl::SubmitCompositorFrame(
     saved_frame_.frame = std::move(frame);
     saved_frame_.local_surface_id = local_surface_id;
     saved_frame_.max_shared_bitmap_sequence_number = max_sequence_number;
+    saved_frame_.hit_test_region_list = std::move(hit_test_region_list);
     TRACE_EVENT_ASYNC_BEGIN2("renderer_host", "PauseCompositorFrameSink", this,
                              "LastRegisteredSequenceNumber",
                              last_registered_sequence_number,
@@ -2715,7 +2716,8 @@ void RenderWidgetHostImpl::DidAllocateSharedBitmap(uint32_t sequence_number) {
   if (saved_frame_.local_surface_id.is_valid() &&
       sequence_number >= saved_frame_.max_shared_bitmap_sequence_number) {
     SubmitCompositorFrame(saved_frame_.local_surface_id,
-                          std::move(saved_frame_.frame), nullptr);
+                          std::move(saved_frame_.frame),
+                          std::move(saved_frame_.hit_test_region_list));
     saved_frame_.local_surface_id = viz::LocalSurfaceId();
     compositor_frame_sink_binding_.ResumeIncomingMethodCallProcessing();
     TRACE_EVENT_ASYNC_END0("renderer_host", "PauseCompositorFrameSink", this);
