@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a524b47_150ec7f6",
+        "filename": "ui/native_theme/common_theme.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-01T11:48:32Z",
+      "side": 1,
+      "message": "Thinking about it some more. I wonder if we should just delete these two \"TextfieldReadOnlyColor\" constants. The cookie view sets the background color, and the omnibox sets foreground colors, so there\u0027s exactly 0 textfields in Chrome that use both colors from the \"readonly textfield theme\"\n\nInstead, the fix would be that readonly textfields are identical to non-readonly textfields by default.\n\nSpecs still have the cookie dialog with grey text on cookie properties - it can use STYLE_DISABLED. (or STYLE_SECONDARY - the spec in http://crbug.com/610428 isn\u0027t clear on that).\n\nI will need to merge a fix to M61 to fix comboboxes though - maybe removing these constants completely is too heavy-handed.",
+      "range": {
+        "startLine": 88,
+        "startChar": 23,
+        "endLine": 88,
+        "endChar": 51
+      },
+      "revId": "20890cac49203026474dc23001b16f9cc91938fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
