@@ -2473,7 +2473,7 @@ const char kEnableNewAppMenuIconDescription[] =
     "Use the new app menu icon with update notification animations.";
 
 #endif  // defined(OS_CHROMEOS) || defined(OS_LINUX) || defined(OS_MACOSX) ||
-        // defined(OS_WIN)
+// defined(OS_WIN)
 
 #if defined(OS_CHROMEOS)
 
