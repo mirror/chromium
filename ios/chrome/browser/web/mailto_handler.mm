@@ -5,6 +5,8 @@
 #import "ios/chrome/browser/web/mailto_handler.h"
 
 #import "base/strings/sys_string_conversions.h"
+#include "net/base/escape.h"
+#include "net/base/url_util.h"
 #include "url/gurl.h"
 #include "url/url_constants.h"
 
@@ -14,7 +16,27 @@
 #error "This file requires ARC support."
 #endif
 
-@implementation MailtoHandler
+namespace {
+
+// Convenience function to add key with unescaped value to input URL.
+GURL AppendQueryParameter(const GURL& input,
+                          const std::string& key,
+                          const std::string& value) {
+  std::string query(input.query());
+  if (!query.empty())
+    query += "&";
+  query += key + "=" + value;
+  GURL::Replacements replacements;
+  replacements.SetQueryStr(query);
+  return input.ReplaceComponents(replacements);
+}
+
+}  // namespace
+
+@implementation MailtoHandler {
+  NSSet<NSString*>* _supportedHeaders;
+}
+
 @synthesize appName = _appName;
 @synthesize appStoreID = _appStoreID;
 
@@ -24,6 +46,8 @@
   if (self) {
     _appName = [appName copy];
     _appStoreID = [appStoreID copy];
+    _supportedHeaders = [NSSet<NSString*>
+        setWithObjects:@"to", @"cc", @"bcc", @"subject", @"body", nil];
   }
   return self;
 }
@@ -41,28 +65,27 @@
 }
 
 - (NSSet<NSString*>*)supportedHeaders {
-  return [NSSet<NSString*>
-      setWithObjects:@"to", @"cc", @"bcc", @"subject", @"body", nil];
+  return _supportedHeaders;
 }
 
 - (NSString*)rewriteMailtoURL:(const GURL&)gURL {
   if (!gURL.SchemeIs(url::kMailToScheme))
     return nil;
-  NSMutableArray* outParams = [NSMutableArray array];
-  NSString* recipient = base::SysUTF8ToNSString(gURL.path());
-  if ([recipient length]) {
-    [outParams addObject:[NSString stringWithFormat:@"to=%@", recipient]];
+  GURL result(base::SysNSStringToUTF8([self beginningScheme]));
+  if (gURL.path().length())
+    result = AppendQueryParameter(result, "to", gURL.path());
+  net::QueryIterator it(gURL);
+  while (!it.IsAtEnd()) {
+    // Normalizes the keys to all lowercase, but keeps the value unchanged.
+    NSString* keyString =
+        [base::SysUTF8ToNSString(it.GetKey()) lowercaseString];
+    if ([[self supportedHeaders] containsObject:keyString]) {
+      result = AppendQueryParameter(result, base::SysNSStringToUTF8(keyString),
+                                    it.GetValue());
+    }
+    it.Advance();
   }
-  NSString* query = base::SysUTF8ToNSString(gURL.query());
-  for (NSString* keyvalue : [query componentsSeparatedByString:@"&"]) {
-    NSArray* pair = [keyvalue componentsSeparatedByString:@"="];
-    if ([pair count] != 2U || ![[self supportedHeaders] containsObject:pair[0]])
-      continue;
-    [outParams
-        addObject:[NSString stringWithFormat:@"%@=%@", pair[0], pair[1]]];
-  }
-  return [NSString stringWithFormat:@"%@%@", [self beginningScheme],
-                                    [outParams componentsJoinedByString:@"&"]];
+  return base::SysUTF8ToNSString(result.spec());
 }
 
 @end
