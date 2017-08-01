@@ -1,0 +1,26 @@
+:host {
+  background-color: #eee;
+  overflow: hidden;
+}
+
+.context-item {
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 6px 6px 6px 16px;
+  height: 28px;
+}
+
+.context-item.selected {
+  background-color: #3c7bd6;
+}
+
+.name {
+  display: inline-block;
+  white-space: nowrap;
+  margin-bottom: 10px;
+}
+
+.context-item.selected .name {
+  color: white;
+}
