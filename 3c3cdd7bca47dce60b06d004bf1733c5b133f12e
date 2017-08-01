@@ -1,0 +1,308 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd7a6789_fff6c429",
+        "filename": "base/task_scheduler/scheduler_worker.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-01T18:26:56Z",
+      "side": 1,
+      "message": "Not used anymore.",
+      "revId": "3c3cdd7bca47dce60b06d004bf1733c5b133f12e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52e1bde6_d8a7eee7",
+        "filename": "base/task_scheduler/scheduler_worker.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-01T18:26:56Z",
+      "side": 1,
+      "message": "This DCHECK can be just after line 213. There is no reason not to run this DCHECK if |thread_| is nullptr.",
+      "revId": "3c3cdd7bca47dce60b06d004bf1733c5b133f12e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d71d154f_4d400d76",
+        "filename": "base/task_scheduler/scheduler_worker.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-01T18:26:56Z",
+      "side": 1,
+      "message": "// Calling WakeUp() after Cleanup() is wrong because the SchedulerWorker cannot run more tasks.",
+      "range": {
+        "startLine": 216,
+        "startChar": 4,
+        "endLine": 218,
+        "endChar": 70
+      },
+      "revId": "3c3cdd7bca47dce60b06d004bf1733c5b133f12e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca9f1301_d680d8e1",
+        "filename": "base/task_scheduler/scheduler_worker.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-01T18:26:56Z",
+      "side": 1,
+      "message": "Check |thread_| only once:\n\nif (thread_) {\n  DCHECK(join_called_for_testing_.IsSet() || should_exit_.IsSet());\n  if (join_called_for_testing_.IsSet())\n    thread_-\u003eDetach();\n}",
+      "range": {
+        "startLine": 247,
+        "startChar": 2,
+        "endLine": 251,
+        "endChar": 22
+      },
+      "revId": "3c3cdd7bca47dce60b06d004bf1733c5b133f12e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "094adc4a_9ec88b91",
+        "filename": "base/task_scheduler/scheduler_worker.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-01T18:26:56Z",
+      "side": 1,
+      "message": "|worker|\u0027s thread\nfor consistency",
+      "range": {
+        "startLine": 53,
+        "startChar": 17,
+        "endLine": 53,
+        "endChar": 47
+      },
+      "revId": "3c3cdd7bca47dce60b06d004bf1733c5b133f12e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c091b364_874ce111",
+        "filename": "base/task_scheduler/scheduler_worker.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-01T18:26:56Z",
+      "side": 1,
+      "message": "the SchedulerWorker\u0027s thread",
+      "range": {
+        "startLine": 69,
+        "startChar": 17,
+        "endLine": 69,
+        "endChar": 25
+      },
+      "revId": "3c3cdd7bca47dce60b06d004bf1733c5b133f12e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ad917b7_964ea2dd",
+        "filename": "base/task_scheduler/scheduler_worker.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-01T18:26:56Z",
+      "side": 1,
+      "message": "DCHECKs if called after Start() has failed or after Cleanup() has been called.",
+      "range": {
+        "startLine": 102,
+        "startChar": 20,
+        "endLine": 102,
+        "endChar": 64
+      },
+      "revId": "3c3cdd7bca47dce60b06d004bf1733c5b133f12e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd98f795_625d55b6",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-01T18:26:56Z",
+      "side": 1,
+      "message": "// Returns true if |worker| is allowed to cleanup and remove itself from the pool. Called from GetWork() when no work is available.",
+      "range": {
+        "startLine": 157,
+        "startChar": 5,
+        "endLine": 158,
+        "endChar": 61
+      },
+      "revId": "3c3cdd7bca47dce60b06d004bf1733c5b133f12e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af107dd6_a97a7225",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-01T18:26:56Z",
+      "side": 1,
+      "message": "I wouldn\u0027t bother having this variable. It adds complexity and we don\u0027t care if we wake up less workers than what we want when thread creation fails.",
+      "range": {
+        "startLine": 240,
+        "startChar": 2,
+        "endLine": 240,
+        "endChar": 38
+      },
+      "revId": "3c3cdd7bca47dce60b06d004bf1733c5b133f12e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78484e95_bdf6006f",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-01T18:26:56Z",
+      "side": 1,
+      "message": "Extract this to a Cleanup() method, since GetWork() is already a complicated method.",
+      "range": {
+        "startLine": 468,
+        "startChar": 8,
+        "endLine": 477,
+        "endChar": 44
+      },
+      "revId": "3c3cdd7bca47dce60b06d004bf1733c5b133f12e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5876f1a9_3c6ec157",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 613,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-01T18:26:56Z",
+      "side": 1,
+      "message": "if (!worker-\u003eStart())\n  return nullptr;\n\nTo avoid having a big if body.",
+      "revId": "3c3cdd7bca47dce60b06d004bf1733c5b133f12e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1f2893c_df35157e",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-01T18:26:56Z",
+      "side": 1,
+      "message": "It should be clear that no invalid SchedulerWorker can be added to the pool. WDYT of:\n\n// Tries to add a new SchedulerWorker to the pool. Returns the new SchedulerWorker on success, nullptr otherwise. Cannot be called before Start(). Must be called under the protection of |lock_|.\n\nI don\u0027t think that a user of this method has to know why a failure could occur.",
+      "range": {
+        "startLine": 138,
+        "startChar": 5,
+        "endLine": 141,
+        "endChar": 27
+      },
+      "revId": "3c3cdd7bca47dce60b06d004bf1733c5b133f12e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c905ed9e_8fcdd2a6",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-01T18:26:56Z",
+      "side": 1,
+      "message": "cleanup_timestamps_",
+      "range": {
+        "startLine": 159,
+        "startChar": 40,
+        "endLine": 159,
+        "endChar": 58
+      },
+      "revId": "3c3cdd7bca47dce60b06d004bf1733c5b133f12e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69e4aadc_c1ad7463",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-01T18:26:56Z",
+      "side": 1,
+      "message": "cleanup_timestamps_",
+      "range": {
+        "startLine": 188,
+        "startChar": 48,
+        "endLine": 188,
+        "endChar": 66
+      },
+      "revId": "3c3cdd7bca47dce60b06d004bf1733c5b133f12e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
