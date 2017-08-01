@@ -16,6 +16,24 @@
       "revId": "82794e76b77f246d82683c704bb45964644a5ad1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c92e1c3_e4128476",
+        "filename": "content/browser/geolocation/geolocation_service_impl.cc",
+        "patchSetId": 25
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-08-01T17:01:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b73e7fa9_79d3448b",
+      "revId": "82794e76b77f246d82683c704bb45964644a5ad1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
