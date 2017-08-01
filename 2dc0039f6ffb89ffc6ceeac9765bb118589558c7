@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "76de5f46_ac5a66e0",
+        "filename": "chrome/browser/net/network_context_configuration_browsertest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-08-01T21:45:55Z",
+      "side": 1,
+      "message": "nit: well, the\u0027re not all DISK ... maybe \"Backing storage types\" ?",
+      "range": {
+        "startLine": 59,
+        "startChar": 5,
+        "endLine": 59,
+        "endChar": 11
+      },
+      "revId": "2dc0039f6ffb89ffc6ceeac9765bb118589558c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b2d204e_c6315e1b",
+        "filename": "chrome/browser/profiles/profile_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 1367,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-08-01T21:45:55Z",
+      "side": 1,
+      "message": "nit: this will segv at 1373 if a null is passed, redundant unless you want to document the API.",
+      "range": {
+        "startLine": 1367,
+        "startChar": 3,
+        "endLine": 1367,
+        "endChar": 19
+      },
+      "revId": "2dc0039f6ffb89ffc6ceeac9765bb118589558c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d328cb7d_bc15370f",
+        "filename": "components/network_session_configurator/browser/network_session_configurator.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-08-01T21:45:55Z",
+      "side": 1,
+      "message": "is one of these a default?  what does --use-simple-cache-backend\u003dfoo mean?",
+      "range": {
+        "startLine": 433,
+        "startChar": 4,
+        "endLine": 433,
+        "endChar": 28
+      },
+      "revId": "2dc0039f6ffb89ffc6ceeac9765bb118589558c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b7e0a379_812303e8",
         "filename": "content/public/common/network_service.mojom",
         "patchSetId": 20
@@ -37,6 +106,30 @@
       "side": 1,
       "message": "This is in signed bytes because that\u0027s exactly what our cache implementation supports.  Also, on the other side of the equation, this comes from prefs, which don\u0027t support unsigned int32s (So we\u0027d need unsigned int + validation, or unsigned int64 + a range check on the caller, in addition to similar logic in the network service).",
       "parentUuid": "b7e0a379_812303e8",
+      "range": {
+        "startLine": 23,
+        "startChar": 2,
+        "endLine": 23,
+        "endChar": 9
+      },
+      "revId": "2dc0039f6ffb89ffc6ceeac9765bb118589558c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24979a04_330750db",
+        "filename": "content/public/common/network_service.mojom",
+        "patchSetId": 20
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-08-01T21:45:55Z",
+      "side": 1,
+      "message": "Ok, presumably the cache handles negative values safely?",
+      "parentUuid": "2da66744_b147a9dc",
       "range": {
         "startLine": 23,
         "startChar": 2,
