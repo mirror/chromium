@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66a6089c_88da4ab1",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-08-01T02:03:03Z",
+      "side": 1,
+      "message": "let\u0027s introduce a symbol ConsoleView.MessageSortingTimestamp and use it to store the timestamp. \n\nBelow, in the upperBound() call, you can use the timestamp to do the sorting.",
+      "revId": "04b6eb36f46b0701788fb130698ad61f762e511c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
