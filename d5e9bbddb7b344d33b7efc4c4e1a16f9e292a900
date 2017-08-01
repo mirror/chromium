@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "4824bde1_382e61b6",
+        "filename": "cc/quads/render_pass.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1108704
+      },
+      "writtenOn": "2017-08-01T19:21:13Z",
+      "side": 1,
+      "message": "Overlay is right before drawing in direct renderer: https://cs.chromium.org/chromium/src/cc/output/direct_renderer.cc?type\u003dcs\u0026q\u003dprocessforoverlay\u0026l\u003d312, yiyix@\u0027s occlusion work would happen before that.\n\nIt is also used in underlay. It could depends on what yiyix@\u0027s occlusion algorithm look at during direct renderer\u0027s draw. Whichever rect that looks at it should be empty.",
+      "parentUuid": "8900e0cf_e3fb10cb",
+      "revId": "d5e9bbddb7b344d33b7efc4c4e1a16f9e292a900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "78d8a619_cf453f7c",
         "filename": "cc/quads/render_pass.cc",
         "patchSetId": 3
