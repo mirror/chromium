@@ -21,9 +21,9 @@ namespace content {
 
 class NavigationData;
 class StreamHandle;
+class SSLStatus;
 struct GlobalRequestID;
 struct ResourceResponse;
-struct SSLStatus;
 
 // PlzNavigate: The delegate interface to NavigationURLLoader.
 class CONTENT_EXPORT NavigationURLLoaderDelegate {

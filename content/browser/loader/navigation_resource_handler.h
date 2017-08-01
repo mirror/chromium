@@ -20,7 +20,7 @@ namespace content {
 class NavigationURLLoaderImplCore;
 class ResourceController;
 class ResourceDispatcherHostDelegate;
-struct SSLStatus;
+class SSLStatus;
 
 // PlzNavigate: The ResourceHandler used with NavigationURLLoaderImplCore to
 // control the flow of navigation requests.
