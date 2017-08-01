@@ -87,6 +87,24 @@
       "revId": "5d5cbed68a6ece3832689c010830989b34d3befe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "295b4878_abf8cdf7",
+        "filename": "tools/clang/traffic_annotation_extractor/tests/tests.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-08-01T07:10:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20f7460c_7a6bf67b",
+      "revId": "5d5cbed68a6ece3832689c010830989b34d3befe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
