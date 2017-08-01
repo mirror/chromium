@@ -21,6 +21,7 @@
 #import "ios/chrome/browser/ui/content_suggestions/content_suggestions_layout.h"
 #import "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller_audience.h"
 #import "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller_delegate.h"
+#import "ios/chrome/browser/ui/ntp/new_tab_page_header_constants.h"
 #import "ios/chrome/browser/ui/overscroll_actions/overscroll_actions_controller.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
 
@@ -450,6 +451,13 @@ BOOL ShouldCellsBeFullWidth(UITraitCollection* collection) {
 
   CGPoint touchLocation =
       [gestureRecognizer locationOfTouch:0 inView:self.collectionView];
+
+  if (!IsIPadIdiom() && (touchLocation.y - self.collectionView.contentOffset.y <
+                         ntp_header::kToolbarHeight)) {
+    // The long press was done on the omnibox.
+    return;
+  }
+
   NSIndexPath* touchedItemIndexPath =
       [self.collectionView indexPathForItemAtPoint:touchLocation];
   if (!touchedItemIndexPath ||
