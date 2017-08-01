@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35678349_7d654457",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-01T22:42:42Z",
+      "side": 1,
+      "message": "It looks like this line should be indented inside the comment (more space between * and !).",
+      "revId": "c2290bf841ec2067fd862b737441ef277ab4deaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8b812db_24c29e2f",
+        "filename": "chrome/test/data/webui/settings/test_site_settings_prefs_browser_proxy.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-01T22:42:42Z",
+      "side": 1,
+      "message": "Please consider building the whole new value for this.prefs_.exceptions[category] (i.e. in a local variable) and setting this.prefs_.exceptions[category] once in this function. As appose to setting it at line 142 and adding to it on line 147. (The code as written would be cool in C++, but JavaScript variable changes can trigger other code to execute).",
+      "revId": "c2290bf841ec2067fd862b737441ef277ab4deaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
