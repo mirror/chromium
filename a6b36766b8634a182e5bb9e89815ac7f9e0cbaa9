@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1f0753bb_c355af3a",
+        "filename": "content/browser/android/app_web_message_port.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-01T16:04:40Z",
+      "side": 1,
+      "message": "Yeah, it felt wrong to use a StringPiece (and at the blink/content boundary I\u0027m already using a pointer+size), so changed it to just have a pointer + size the whole way.",
+      "parentUuid": "af859e6f_1e33a55c",
+      "range": {
+        "startLine": 66,
+        "startChar": 38,
+        "endLine": 66,
+        "endChar": 68
+      },
+      "revId": "a6b36766b8634a182e5bb9e89815ac7f9e0cbaa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9428459_a63b578f",
         "filename": "content/common/message_port.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "a6b36766b8634a182e5bb9e89815ac7f9e0cbaa9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63ff9e5b_4f4e1a13",
+        "filename": "content/common/message_port.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-01T16:04:40Z",
+      "side": 1,
+      "message": "Moved it to a separate file (and added a Read method to satisfy normal conventions for struct traits). Currently I have the struct definition itself in the same file as the struct traits, but if you prefer I can move that to yet another file as well of course.\nAlso didn\u0027t add a typemap, but it might make sense (in a follow up CL?) to add a typemap and use the same struct in BroadcastChannel bindings and other postMessage methods to reduce the number of copies made in those cases as well.",
+      "parentUuid": "e9428459_a63b578f",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 2
+      },
+      "revId": "a6b36766b8634a182e5bb9e89815ac7f9e0cbaa9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
