@@ -34,6 +34,24 @@
       "revId": "929774c9e2db144b9b37bfa5d9881742a8d6c887",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43781d3f_49ac7f8a",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-08-01T09:08:10Z",
+      "side": 1,
+      "message": "My concern is that you\u0027ll will not hit the code path for pure v1 documents in https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp?type\u003dcs\u0026q\u003dMayContainV0Shadow\u0026sq\u003dpackage:chromium\u0026l\u003d316\n\nand that the slotted span below will no longer be green with your changes.\n\n\n\u003c!DOCTYPE html\u003e\n\u003cdiv id\u003d\"v0host\"\u003ev0\u003c/div\u003e\n\u003cdiv id\u003d\"v1host\"\u003e\u003cspan\u003ev1, should be green\u003c/span\u003e\u003c/div\u003e\n\u003cscript\u003e\n  var v0root \u003d v0host.createShadowRoot();\n  v0root.innerHTML \u003d \"\u003ccontent\u003e\";\n  var v1root \u003d v1host.attachShadow({mode:\"open\"});\n  v1root.innerHTML \u003d \"\u003cstyle\u003e::slotted(span) {color:green}\u003c/style\u003e\u003cslot/\u003e\";\n\u003c/script\u003e",
+      "parentUuid": "df710159_f6e90482",
+      "revId": "929774c9e2db144b9b37bfa5d9881742a8d6c887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
