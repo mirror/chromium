@@ -613,6 +613,30 @@
     },
     {
       "key": {
+        "uuid": "89fae767_12c3b125",
+        "filename": "remoting/host/host_attributes_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-01T19:12:17Z",
+      "side": 1,
+      "message": "It is a good idea to add a comment when a string is hard-coded in multiple locations.  If someone modifies it, they will immediately know they should change it elsewhere instead of figuring out they need to change it after a unit test fails (in this instance).",
+      "parentUuid": "7d7040d5_897c24b8",
+      "range": {
+        "startLine": 40,
+        "startChar": 27,
+        "endLine": 40,
+        "endChar": 47
+      },
+      "revId": "f10d382a07a96a29438b38aa5eeb02641c668251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3c484b16_84322aee",
         "filename": "remoting/host/switches.cc",
         "patchSetId": 2
