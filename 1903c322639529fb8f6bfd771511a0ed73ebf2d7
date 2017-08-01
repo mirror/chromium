@@ -464,6 +464,30 @@
     },
     {
       "key": {
+        "uuid": "1ed7ba9f_0bf91e56",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2915,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-01T19:13:38Z",
+      "side": 1,
+      "message": "Isn\u0027t this completely irrelevant because we have already this issue in the code since pen is sending mouse events today?  This new model of sending touch events when the pen is in contact with the display is the same as using a mouse and a touch display.",
+      "parentUuid": "20ca5318_4ac3cc1b",
+      "range": {
+        "startLine": 2915,
+        "startChar": 64,
+        "endLine": 2915,
+        "endChar": 66
+      },
+      "revId": "1903c322639529fb8f6bfd771511a0ed73ebf2d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fdf1088c_96ec3fd2",
         "filename": "ui/views/win/hwnd_message_handler.cc",
         "patchSetId": 7
