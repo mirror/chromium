@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "4753aec9_a76ccde1",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_graph_observer.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-01T21:20:38Z",
+      "side": 1,
+      "message": "Done\n\nComments added",
+      "parentUuid": "a453b160_62282e16",
+      "range": {
+        "startLine": 62,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 34
+      },
+      "revId": "cb6313ce6ddb92cd468a58728681d6f7b3383451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91f63bc6_f997849a",
         "filename": "services/resource_coordinator/coordination_unit/frame_coordination_unit_impl.h",
         "patchSetId": 16
@@ -93,6 +117,30 @@
       "revId": "cb6313ce6ddb92cd468a58728681d6f7b3383451",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a466e95c_c02b9c9f",
+        "filename": "services/resource_coordinator/coordination_unit/frame_coordination_unit_impl.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-01T21:20:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "91f63bc6_f997849a",
+      "range": {
+        "startLine": 16,
+        "startChar": 54,
+        "endLine": 16,
+        "endChar": 55
+      },
+      "revId": "cb6313ce6ddb92cd468a58728681d6f7b3383451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -149,6 +197,24 @@
     },
     {
       "key": {
+        "uuid": "f868c5e6_8f32ea8b",
+        "filename": "services/resource_coordinator/coordination_unit/frame_coordination_unit_impl.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-01T21:20:38Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8d9c6041_f5d963ec",
+      "revId": "cb6313ce6ddb92cd468a58728681d6f7b3383451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e33290b_3a3fd040",
         "filename": "services/resource_coordinator/coordination_unit/metrics_collector.cc",
         "patchSetId": 16
@@ -160,6 +226,30 @@
       "writtenOn": "2017-08-01T18:49:16Z",
       "side": 1,
       "message": "You can just use frame CU\u0027s IsVisible(), which you added in this CL.",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 13
+      },
+      "revId": "cb6313ce6ddb92cd468a58728681d6f7b3383451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32e9ac21_7b058120",
+        "filename": "services/resource_coordinator/coordination_unit/metrics_collector.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-01T21:20:38Z",
+      "side": 1,
+      "message": "you are right. web contents cu is needed either way, so I use it explicitly here. Maybe I should just remove IsVisible from FrameCU until we need it.",
+      "parentUuid": "8e33290b_3a3fd040",
       "range": {
         "startLine": 59,
         "startChar": 0,
@@ -186,6 +276,24 @@
       "revId": "cb6313ce6ddb92cd468a58728681d6f7b3383451",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "365373f9_38211aa8",
+        "filename": "services/resource_coordinator/coordination_unit/metrics_collector.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-01T21:20:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f70e39f_7c73b393",
+      "revId": "cb6313ce6ddb92cd468a58728681d6f7b3383451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
