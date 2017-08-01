@@ -9,6 +9,7 @@
 #include "base/strings/stringprintf.h"
 #include "base/threading/thread.h"
 #include "chrome/profiling/allocation_tracker.h"
+#include "chrome/profiling/json_exporter.h"
 #include "chrome/profiling/memlog_receiver_pipe.h"
 #include "chrome/profiling/memlog_stream_parser.h"
 
@@ -45,6 +46,7 @@ MemlogConnectionManager::~MemlogConnectionManager() {}
 
 void MemlogConnectionManager::OnNewConnection(base::ScopedPlatformFile file,
                                               int sender_id) {
+  LOG(ERROR) << "MemlogConnectionManager::OnNewConnection: " << sender_id;
   DCHECK(connections_.find(sender_id) == connections_.end());
 
   scoped_refptr<MemlogReceiverPipe> new_pipe =
@@ -87,6 +89,38 @@ void MemlogConnectionManager::OnConnectionCompleteThunk(
   main_loop->PostTask(FROM_HERE,
                       base::Bind(&MemlogConnectionManager::OnConnectionComplete,
                                  base::Unretained(this), sender_id));
+}
+
+void RunCallback(std::unique_ptr<std::ostringstream> result, profiling::mojom::Memlog::DumpProcessCallback callback) {
+	std::move(callback).Run(result->str());
+}
+
+void MemlogConnectionManager::DumpProcess(int32_t sender_id, profiling::mojom::Memlog::DumpProcessCallback callback, scoped_refptr<base::SequencedTaskRunner> runner) {
+  if (connections_.empty()) {
+    LOG(ERROR) << "No connections found for process dumping";
+    // Threading issues. Needs to be disaptched onto runner.
+    std::move(callback).Run("");
+    return;
+  }
+
+  LOG(ERROR) << "DumpProcess called for " << sender_id;
+  std::vector<std::unique_ptr<base::AutoLock>> locks;
+  for (auto& it : connections_) {
+    Connection* connection = it.second.get();
+    // Lock all connections to prevent deallocations of atoms from
+    // BacktraceStorage. This only works if no new connections are made.
+    locks.push_back(std::make_unique<base::AutoLock>(connection->parser->lock));
+  }
+  std::unique_ptr<std::ostringstream> oss(new std::ostringstream);
+	int pid = 13;
+  Connection* connection = connections_.begin()->second.get();
+
+  ExportAllocationEventSetToJSON(pid,
+      connection->tracker.live_allocs(),
+      *oss);
+  runner->PostTask(
+      FROM_HERE,
+      base::BindOnce(&RunCallback, std::move(oss), std::move(callback)));
 }
 
 }  // namespace profiling

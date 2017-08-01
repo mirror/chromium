@@ -28,7 +28,7 @@ class MemlogImpl : public mojom::Memlog {
   ~MemlogImpl() override;
 
   void AddSender(mojo::ScopedHandle sender_pipe, int32_t sender_id) override;
-  void DumpProcess(int32_t sender_id) override;
+  void DumpProcess(int32_t sender_id, DumpProcessCallback callback) override;
 
  private:
   // Helper for managing lifetime of MemlogConnectionManager.

@@ -201,7 +201,6 @@ void WriteAllocatorNodes(const UniqueAllocCount& alloc_counts,
 }  // namespace
 
 void ExportAllocationEventSetToJSON(int pid,
-                                    const BacktraceStorage* backtrace_storage,
                                     const AllocationEventSet& event_set,
                                     std::ostream& out) {
   out << "{ \"traceEvents\": [";
@@ -230,8 +229,9 @@ void ExportAllocationEventSetToJSON(int pid,
   // one and share the common nodes.
   std::vector<BacktraceNode> nodes;
   nodes.reserve(backtraces.size() * 10);  // Guesstimate for end size.
-  for (auto& bt : backtraces)
+  for (auto& bt : backtraces) {
     bt.second = AppendBacktraceStrings(*bt.first, &nodes, &string_table);
+  }
 
   // Maps section.
   out << "\"maps\": {\n";

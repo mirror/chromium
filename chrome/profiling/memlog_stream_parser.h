@@ -10,6 +10,7 @@
 #include "base/macros.h"
 #include "chrome/profiling/memlog_receiver.h"
 #include "chrome/profiling/memlog_stream_receiver.h"
+#include "base/synchronization/lock.h"
 
 namespace profiling {
 
@@ -26,6 +27,8 @@ class MemlogStreamParser : public MemlogStreamReceiver {
   // StreamReceiver implementation.
   void OnStreamData(std::unique_ptr<char[]> data, size_t sz) override;
   void OnStreamComplete() override;
+
+  base::Lock lock;
 
  private:
   struct Block {

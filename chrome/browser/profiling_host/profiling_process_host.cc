@@ -6,6 +6,7 @@
 
 #include "base/command_line.h"
 #include "base/strings/string_number_conversions.h"
+#include "base/debug/stack_trace.h"
 #include "build/build_config.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/profiling/constants.mojom.h"
@@ -41,11 +42,14 @@ void BindToBrowserConnector(service_manager::mojom::ConnectorRequest request) {
 }  // namespace
 
 ProfilingProcessHost::ProfilingProcessHost() {
+  LOG(ERROR) << "make pph_singleton";
   pph_singleton = this;
   LaunchAsService();
 }
 
 ProfilingProcessHost::~ProfilingProcessHost() {
+  LOG(ERROR) << "unmake pph_singleton";
+  base::debug::StackTrace().Print();
   pph_singleton = nullptr;
 }
 
@@ -78,6 +82,7 @@ void ProfilingProcessHost::AddSwitchesToChildCmdLine(
 }
 
 void ProfilingProcessHost::RequestProcessDump(base::ProcessId pid) {
+  LOG(ERROR) << "ProfilingProcessHost::RequestProcessDump: " << pid;
   // TODO(brettw) implement process dumping.
 }
 

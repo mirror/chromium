@@ -11,6 +11,7 @@
 #include "base/files/platform_file.h"
 #include "base/macros.h"
 #include "build/build_config.h"
+#include "chrome/common/profiling/memlog.mojom.h"
 #include "chrome/profiling/backtrace_storage.h"
 
 namespace base {
@@ -30,6 +31,7 @@ class MemlogConnectionManager {
   MemlogConnectionManager(scoped_refptr<base::SequencedTaskRunner> io_runner,
                           BacktraceStorage* backtrace_storage);
   ~MemlogConnectionManager();
+  void DumpProcess(int32_t sender_id, profiling::mojom::Memlog::DumpProcessCallback callback, scoped_refptr<base::SequencedTaskRunner> runner);
 
   void OnNewConnection(base::ScopedPlatformFile file, int sender_id);
 

@@ -54,6 +54,7 @@ void InitMemlogSenderIfNecessary(
 }
 
 void StartMemlogSender(base::ScopedPlatformFile file) {
+  LOG(ERROR) << "StartMemlogSender: " << getpid();
   static MemlogSenderPipe pipe(std::move(file));
   memlog_sender_pipe = &pipe;
 

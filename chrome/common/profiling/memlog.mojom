@@ -10,5 +10,5 @@ interface Memlog {
   // to this.
   AddSender(handle sender_pipe, int32 sender_id);
 
-  DumpProcess(int32 sender_id);
+  DumpProcess(int32 sender_id) => (string reply);
 };

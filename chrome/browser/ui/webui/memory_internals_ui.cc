@@ -14,6 +14,8 @@
 #include "base/strings/utf_string_conversions.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiling_host/profiling_process_host.h"
+#include "chrome/common/profiling/constants.mojom.h"
+#include "chrome/common/profiling/memlog.mojom.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/browser_resources.h"
 #include "content/public/browser/browser_child_process_host_iterator.h"
@@ -24,6 +26,11 @@
 #include "content/public/browser/web_ui_data_source.h"
 #include "content/public/browser/web_ui_message_handler.h"
 #include "content/public/common/process_type.h"
+#include "content/public/common/service_manager_connection.h"
+#include "services/service_manager/public/cpp/connector.h"
+
+#include "chrome/common/chrome_paths.h"
+#include "base/path_service.h"
 
 namespace {
 
@@ -81,6 +88,7 @@ MemoryInternalsDOMHandler::MemoryInternalsDOMHandler() : weak_factory_(this) {}
 
 MemoryInternalsDOMHandler::~MemoryInternalsDOMHandler() {}
 
+
 void MemoryInternalsDOMHandler::RegisterMessages() {
   // Unretained should be OK here since this class is bound to the lifetime of
   // the WebUI.
@@ -106,19 +114,53 @@ void MemoryInternalsDOMHandler::HandleRequestProcessList(
       base::Bind(&MemoryInternalsDOMHandler::GetChildProcessesOnIOThread,
                  weak_factory_.GetWeakPtr()));
 }
+class DumpReceiver : public base::RefCountedThreadSafe<DumpReceiver> {
+ public:
+  DumpReceiver(int32_t pid) {
+		service_manager::Connector* connector =
+				content::ServiceManagerConnection::GetForProcess()->GetConnector();
+		connector->BindInterface(profiling::mojom::kServiceName,
+														 mojo::MakeRequest(&memlog_));
+
+		// The callback keeps this object alive until the callback is invoked..
+		auto callback =
+				base::Bind(&DumpReceiver::ReceivedDump, this);
+
+		memlog_->DumpProcess(pid, callback);
+	}
+protected:
+  virtual ~DumpReceiver() = default;
+
+private:
+	friend class base::RefCountedThreadSafe<DumpReceiver>;
+	void ReceivedDumpFileThread(const std::string& reply) {
+		LOG(ERROR) << "ReceivedDump: " << reply.size();
+
+    base::FilePath user_data_dir;
+    PathService::Get(chrome::DIR_USER_DATA, &user_data_dir);
+    base::FilePath output_path = user_data_dir.Append("memlog_dump");
+    base::File f(output_path, base::File::FLAG_CREATE_ALWAYS | base::File::FLAG_WRITE);
+    f.WriteAtCurrentPos(reply.c_str(), reply.size());
+  }
+	void ReceivedDump(const std::string& reply) {
+    content::BrowserThread::PostTask(
+          content::BrowserThread::FILE, FROM_HERE,
+          base::Bind(&DumpReceiver::ReceivedDumpFileThread, this, reply));
+    memlog_.reset();
+	}
+
+	profiling::mojom::MemlogPtr memlog_;
+};
 
 void MemoryInternalsDOMHandler::HandleDumpProcess(const base::ListValue* args) {
-  profiling::ProfilingProcessHost* pph = profiling::ProfilingProcessHost::Get();
-  if (!pph)
-    return;
-
   if (!args->is_list() || args->GetList().size() != 1)
     return;
   const base::Value& pid_value = args->GetList()[0];
   if (!pid_value.is_int())
     return;
 
-  pph->RequestProcessDump(pid_value.GetInt());
+	// Self-owned object will destroy itself after receiving callback.
+	new DumpReceiver(pid_value.GetInt());
 }
 
 void MemoryInternalsDOMHandler::GetChildProcessesOnIOThread(
