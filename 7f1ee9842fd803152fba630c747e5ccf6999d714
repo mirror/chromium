@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "da883c01_27ef3f63",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8MutationCallback.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-08-01T07:31:23Z",
+      "side": 0,
+      "message": "This file is removed.",
+      "parentUuid": "9cc04bc9_1aaf1d3a",
+      "revId": "7f1ee9842fd803152fba630c747e5ccf6999d714",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "23a46aa2_5370c9ef",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8MutationCallback.h",
         "patchSetId": 9

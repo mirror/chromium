@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "17037d2b_1df80672",
+        "filename": "third_party/WebKit/Source/core/dom/MutationObserver.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-08-01T07:31:23Z",
+      "side": 1,
+      "message": "Could be possible, but it may change user-visible behaviors.\nI\u0027m not 100% sure about what is correct/expected here.\n\n\nIssue a)\nIn case of HTMLSelectElement::PopupUpdater, we\u0027re using an owner Document of a HTMLSelectElement as an ExecutionContext.  Technically, this can change when you move the HTMLSelectElement to another Document.\n\nContextClient assumes that the ExecutionContext never changes.\n\n\nIssue b)\nThe realm of MutationObserver\u0027s owner Document may be different from the callback function\u0027s realm.  It\u0027s weird that MutationObserver::(ContextClient::)GetExecutionContext returns the callback function\u0027s creation realm\u0027s Document.  (Although the current implementation of MutationObserver::GetExecutionContext returns the callback function\u0027s realm.)\n\n\nIssue c)\nMutationObserver::GetExecutionContext is only used by its base class ActiveScriptWrappable::IsContextDestroyed.  Maybe, we should remove MutationObserver::GetExecutionContext and directly implement IsContextDestroyed?  In that case, which context do we care about?",
+      "parentUuid": "fb283d16_514536ab",
+      "revId": "e9568e668ab3fa6d52942a34241f12daf8f8414f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3f193d7b_ca4259aa",
         "filename": "third_party/WebKit/Source/core/dom/MutationObserver.h",
         "patchSetId": 9
@@ -48,6 +66,24 @@
       "side": 1,
       "message": "That\u0027s because we want to have different implementation of Deliver(), I guess?\n- User script callback (this delegate)\n- Blink internal implementation (e.g. WebFormElementObserverImpl)\n- Unit testing",
       "parentUuid": "3f193d7b_ca4259aa",
+      "revId": "e9568e668ab3fa6d52942a34241f12daf8f8414f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4389a38_aec7d70f",
+        "filename": "third_party/WebKit/Source/core/dom/MutationObserver.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-08-01T07:31:23Z",
+      "side": 1,
+      "message": "Yes, bashi@ is right.  There are several totally different implementations of Delegate.",
+      "parentUuid": "7628fdcb_806fbdf1",
       "revId": "e9568e668ab3fa6d52942a34241f12daf8f8414f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
