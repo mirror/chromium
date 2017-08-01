@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ca5aff0_aaf26325",
+        "filename": "ash/system/network/network_icon.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-08-01T22:23:49Z",
+      "side": 1,
+      "message": "this one uses a badge, so SignalStrengthImageSource is not enough (we need NetworkIconSource)",
+      "range": {
+        "startLine": 80,
+        "startChar": 26,
+        "endLine": 80,
+        "endChar": 53
+      },
+      "revId": "a1c0cf4a2df5ddc88429511fa9830b41beed3d34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
