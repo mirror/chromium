@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3306b489_0da85962",
+        "filename": "chrome/browser/resources/chromeos/bluetooth_dialog_host.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-01T20:27:19Z",
+      "side": 1,
+      "message": "nit: remove blank line",
+      "revId": "f5195eabf23cda85a69c023ca1aff0ab5125a5aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7ca3687_10589536",
+        "filename": "chrome/browser/resources/chromeos/bluetooth_dialog_host.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-01T20:27:19Z",
+      "side": 1,
+      "message": "fix",
+      "range": {
+        "startLine": 7,
+        "startChar": 4,
+        "endLine": 7,
+        "endChar": 30
+      },
+      "revId": "f5195eabf23cda85a69c023ca1aff0ab5125a5aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
