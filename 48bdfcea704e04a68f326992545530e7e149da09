@@ -33,6 +33,24 @@
       "revId": "48bdfcea704e04a68f326992545530e7e149da09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8ce2c50_67de9cd2",
+        "filename": "third_party/WebKit/Source/core/dom/FirstLetterPseudoElement.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-08-01T07:24:28Z",
+      "side": 1,
+      "message": "Oh, thank you Rune for having a look, and welcome back from the vacation.\n\nI\u0027m not very familiar with display:contents, is it implemented now? This is the same logic as AttachFirstLetterTextLayoutObjects(), so if we need to fix, we need to fix both.\n\nIs LayoutText::Parent() nullptr in that case? How could we compute the style tree parent?",
+      "parentUuid": "3919811e_fa6ac1ea",
+      "revId": "48bdfcea704e04a68f326992545530e7e149da09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
