@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f761ea44_dfc29af3",
+        "filename": "chrome/browser/safe_browsing/download_protection_service.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1002,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-01T21:49:53Z",
+      "side": 1,
+      "message": "Remove commented-out code.",
+      "revId": "8c074cd4c0c7534fcd7cac0b6aed325b7a9b69ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
