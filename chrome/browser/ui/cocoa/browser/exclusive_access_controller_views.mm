@@ -31,13 +31,20 @@ ExclusiveAccessController::ExclusiveAccessController(
                  base::Unretained(this)));
 }
 
-ExclusiveAccessController::~ExclusiveAccessController() {}
+ExclusiveAccessController::~ExclusiveAccessController() {
+  if (bubble_first_hide_callback_) {
+    // The callback was never passed to |ExclusiveAccessBubbleViews|.
+    std::move(bubble_first_hide_callback_)
+        .Run(ExclusiveAccessBubbleHideReason::kNotShown);
+  }
+}
 
 void ExclusiveAccessController::Show() {
   // Hide the backspace shortcut bubble, to avoid overlapping.
   new_back_shortcut_bubble_.reset();
 
-  views_bubble_.reset(new ExclusiveAccessBubbleViews(this, url_, bubble_type_));
+  views_bubble_.reset(new ExclusiveAccessBubbleViews(
+      this, url_, bubble_type_, std::move(bubble_first_hide_callback_)));
 }
 
 void ExclusiveAccessController::MaybeShowNewBackShortcutBubble(bool forward) {
@@ -79,6 +86,11 @@ void ExclusiveAccessController::Destroy() {
   views_bubble_.reset();
   url_ = GURL();
   bubble_type_ = EXCLUSIVE_ACCESS_BUBBLE_TYPE_NONE;
+  if (bubble_first_hide_callback_) {
+    // The callback was never passed to |ExclusiveAccessBubbleViews|.
+    std::move(bubble_first_hide_callback_)
+        .Run(ExclusiveAccessBubbleHideReason::kNotShown);
+  }
 }
 
 Profile* ExclusiveAccessController::GetProfile() {
@@ -107,6 +119,11 @@ void ExclusiveAccessController::EnterFullscreen(
     ExclusiveAccessBubbleType bubble_type) {
   url_ = url;
   bubble_type_ = bubble_type;
+  if (bubble_first_hide_callback_) {
+    // The callback was never passed to |ExclusiveAccessBubbleViews|.
+    std::move(bubble_first_hide_callback_)
+        .Run(ExclusiveAccessBubbleHideReason::kNotShown);
+  }
   if (browser_->exclusive_access_manager()
           ->fullscreen_controller()
           ->IsWindowFullscreenForTabOrPending())
@@ -121,9 +138,16 @@ void ExclusiveAccessController::ExitFullscreen() {
 
 void ExclusiveAccessController::UpdateExclusiveAccessExitBubbleContent(
     const GURL& url,
-    ExclusiveAccessBubbleType bubble_type) {
+    ExclusiveAccessBubbleType bubble_type,
+    ExclusiveAccessBubbleHideCallback bubble_first_hide_callback) {
   url_ = url;
   bubble_type_ = bubble_type;
+  if (bubble_first_hide_callback_) {
+    // The callback was never passed to |ExclusiveAccessBubbleViews|.
+    std::move(bubble_first_hide_callback_)
+        .Run(ExclusiveAccessBubbleHideReason::kNotShown);
+  }
+  bubble_first_hide_callback_ = std::move(bubble_first_hide_callback);
   [controller_ updateFullscreenExitBubble];
 }
 
