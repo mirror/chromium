@@ -24,6 +24,11 @@ class TabManagerStatsCollector {
   // during session restore.
   void RecordSwitchToTab(content::WebContents* contents) const;
 
+  // Record expected task queueing durations of foreground tabs in session
+  // restore.
+  void RecordExpectedTaskQueueingDuration(content::WebContents* contents,
+                                          double value) {}
+
  private:
   TabManager* tab_manager_;
 };
