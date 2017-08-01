@@ -22,8 +22,8 @@ void BeginCompositingDisplayItem::AppendToWebDisplayItemList(
   SkRect bounds = bounds_;
   list->AppendCompositingItem(
       opacity_, xfer_mode_, has_bounds_ ? &bounds : nullptr,
-      GraphicsContext::WebCoreColorFilterToSkiaColorFilter(color_filter_)
-          .get());
+      GraphicsContext::WebCoreColorFilterToSkiaColorFilter(color_filter_).get(),
+      clip_to_bounds_);
 }
 
 #ifndef NDEBUG

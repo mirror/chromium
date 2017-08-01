@@ -22,11 +22,13 @@ class PLATFORM_EXPORT BeginCompositingDisplayItem final
                               const SkBlendMode xfer_mode,
                               const float opacity,
                               const FloatRect* bounds,
-                              ColorFilter color_filter = kColorFilterNone)
+                              ColorFilter color_filter = kColorFilterNone,
+                              bool clip_to_bounds = false)
       : PairedBeginDisplayItem(client, kBeginCompositing, sizeof(*this)),
         xfer_mode_(xfer_mode),
         opacity_(opacity),
         has_bounds_(bounds),
+        clip_to_bounds_(clip_to_bounds),
         color_filter_(color_filter) {
     if (bounds)
       bounds_ = FloatRect(*bounds);
@@ -48,6 +50,9 @@ class PLATFORM_EXPORT BeginCompositingDisplayItem final
                            .opacity_ &&
            has_bounds_ == static_cast<const BeginCompositingDisplayItem&>(other)
                               .has_bounds_ &&
+           clip_to_bounds_ ==
+               static_cast<const BeginCompositingDisplayItem&>(other)
+                   .clip_to_bounds_ &&
            bounds_ ==
                static_cast<const BeginCompositingDisplayItem&>(other).bounds_ &&
            color_filter_ ==
@@ -58,6 +63,7 @@ class PLATFORM_EXPORT BeginCompositingDisplayItem final
   const SkBlendMode xfer_mode_;
   const float opacity_;
   bool has_bounds_;
+  bool clip_to_bounds_;
   FloatRect bounds_;
   ColorFilter color_filter_;
 };

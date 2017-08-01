@@ -52,7 +52,8 @@ class WebDisplayItemList {
   virtual void AppendCompositingItem(float opacity,
                                      SkBlendMode,
                                      SkRect* bounds,
-                                     SkColorFilter*) {}
+                                     SkColorFilter*,
+                                     bool clip_to_bounds) {}
   virtual void AppendEndCompositingItem() {}
 
   // TODO(loyso): This should use CompositorFilterOperation. crbug.com/584551

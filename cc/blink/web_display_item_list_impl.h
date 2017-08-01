@@ -56,7 +56,8 @@ class WebDisplayItemListImpl : public blink::WebDisplayItemList {
   void AppendCompositingItem(float opacity,
                              SkBlendMode,
                              SkRect* bounds,
-                             SkColorFilter*) override;
+                             SkColorFilter*,
+                             bool clip_to_bounds) override;
   void AppendEndCompositingItem() override;
   void AppendFilterItem(const cc::FilterOperations& filters,
                         const blink::WebFloatRect& filter_bounds,

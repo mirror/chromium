@@ -25,7 +25,8 @@ class PLATFORM_EXPORT CompositingRecorder {
                       const SkBlendMode,
                       const float opacity,
                       const FloatRect* bounds = 0,
-                      ColorFilter = kColorFilterNone);
+                      ColorFilter = kColorFilterNone,
+                      bool clip_to_bounds = false);
 
   ~CompositingRecorder();
 
