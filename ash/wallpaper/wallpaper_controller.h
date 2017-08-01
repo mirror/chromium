@@ -22,6 +22,8 @@
 #include "mojo/public/cpp/bindings/interface_ptr_set.h"
 #include "ui/compositor/compositor_lock.h"
 
+class PrefRegistrySimple;
+
 namespace base {
 class SequencedTaskRunner;
 }
@@ -63,6 +65,8 @@ class ASH_EXPORT WallpaperController
 
   WallpaperController();
   ~WallpaperController() override;
+
+  static void RegisterLocalStatePrefs(PrefRegistrySimple* registry);
 
   // Binds the mojom::WallpaperController interface request to this object.
   void BindRequest(mojom::WallpaperControllerRequest request);
