@@ -1,0 +1,326 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e497f9f_58e6721a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1130491
+      },
+      "writtenOn": "2017-08-01T19:57:55Z",
+      "side": 1,
+      "message": "This is no longer WIP, since it\u0027s ready for review.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 3
+      },
+      "revId": "d9da3a3f63d09dee01c1860db82a2c838107dc64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6d6caa0_6d5d855a",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_browsertest_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1130491
+      },
+      "writtenOn": "2017-08-01T19:57:55Z",
+      "side": 1,
+      "message": "This is no longer needed.",
+      "range": {
+        "startLine": 52,
+        "startChar": 53,
+        "endLine": 52,
+        "endChar": 0
+      },
+      "revId": "d9da3a3f63d09dee01c1860db82a2c838107dc64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bdeb9a2_11ff3210",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_browsertest_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1130491
+      },
+      "writtenOn": "2017-08-01T19:57:55Z",
+      "side": 1,
+      "message": "Please group expectations. This could come after line 63.",
+      "range": {
+        "startLine": 68,
+        "startChar": 73,
+        "endLine": 68,
+        "endChar": 0
+      },
+      "revId": "d9da3a3f63d09dee01c1860db82a2c838107dc64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f322693_cd7d9e17",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_browsertest_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1130491
+      },
+      "writtenOn": "2017-08-01T19:57:55Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 81,
+        "startChar": 73,
+        "endLine": 81,
+        "endChar": 0
+      },
+      "revId": "d9da3a3f63d09dee01c1860db82a2c838107dc64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f89a120_daf7fae7",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1130491
+      },
+      "writtenOn": "2017-08-01T19:57:55Z",
+      "side": 1,
+      "message": "This is dangerous. If we for any reason change the order these two member variables are declared, this will set prompt_delegate_ as nullptr. Please move this initialization into the constructor\u0027s body.",
+      "range": {
+        "startLine": 61,
+        "startChar": 6,
+        "endLine": 61,
+        "endChar": 51
+      },
+      "revId": "d9da3a3f63d09dee01c1860db82a2c838107dc64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0c8c257_f002d194",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1130491
+      },
+      "writtenOn": "2017-08-01T19:57:55Z",
+      "side": 1,
+      "message": "Nit: remove {}",
+      "range": {
+        "startLine": 219,
+        "startChar": 3,
+        "endLine": 219,
+        "endChar": 0
+      },
+      "revId": "d9da3a3f63d09dee01c1860db82a2c838107dc64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9064d61_cd0618bd",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_win.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1130491
+      },
+      "writtenOn": "2017-08-01T19:57:55Z",
+      "side": 1,
+      "message": "The \u003d default; will need to be added to the .cc file (you will get an error later on the CQ because of it).",
+      "range": {
+        "startLine": 29,
+        "startChar": 51,
+        "endLine": 29,
+        "endChar": 0
+      },
+      "revId": "d9da3a3f63d09dee01c1860db82a2c838107dc64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70ccfe3e_b9cb75ab",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_win.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1130491
+      },
+      "writtenOn": "2017-08-01T19:57:55Z",
+      "side": 1,
+      "message": "Please add a comment to indicate this is not a chrome::BrowserListObserver override. Maybe something like \"Test specific methods\".",
+      "range": {
+        "startLine": 62,
+        "startChar": 72,
+        "endLine": 62,
+        "endChar": 0
+      },
+      "revId": "d9da3a3f63d09dee01c1860db82a2c838107dc64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da81b83e_07b73e02",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/srt_field_trial_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1130491
+      },
+      "writtenOn": "2017-08-01T19:57:55Z",
+      "side": 1,
+      "message": "RecordPromptShownWithTypeHistogram",
+      "range": {
+        "startLine": 114,
+        "startChar": 5,
+        "endLine": 114,
+        "endChar": 39
+      },
+      "revId": "d9da3a3f63d09dee01c1860db82a2c838107dc64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd8c4f0d_3e3377ab",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/srt_field_trial_win.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1130491
+      },
+      "writtenOn": "2017-08-01T19:57:55Z",
+      "side": 1,
+      "message": "PromptType -\u003e PromptTypeHistogramValue",
+      "range": {
+        "startLine": 47,
+        "startChar": 5,
+        "endLine": 47,
+        "endChar": 16
+      },
+      "revId": "d9da3a3f63d09dee01c1860db82a2c838107dc64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47834d74_773693d7",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/srt_field_trial_win.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1130491
+      },
+      "writtenOn": "2017-08-01T19:57:55Z",
+      "side": 1,
+      "message": "Please prefix each constant with PROMPT_TYPE_",
+      "range": {
+        "startLine": 48,
+        "startChar": 26,
+        "endLine": 48,
+        "endChar": 0
+      },
+      "revId": "d9da3a3f63d09dee01c1860db82a2c838107dc64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc78dfac_76edba75",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 74558,
+      "author": {
+        "id": 1130491
+      },
+      "writtenOn": "2017-08-01T19:57:55Z",
+      "side": 1,
+      "message": "Nits:\n  8/1/2017 -\u003e on 08/01/2017\n  by -\u003e with",
+      "range": {
+        "startLine": 74558,
+        "startChar": 22,
+        "endLine": 74558,
+        "endChar": 25
+      },
+      "revId": "d9da3a3f63d09dee01c1860db82a2c838107dc64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb6cbcf2_5b5b94a4",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 74570,
+      "author": {
+        "id": 1130491
+      },
+      "writtenOn": "2017-08-01T19:57:55Z",
+      "side": 1,
+      "message": "Nitty nit: please remove double space.",
+      "range": {
+        "startLine": 74570,
+        "startChar": 73,
+        "endLine": 74570,
+        "endChar": 75
+      },
+      "revId": "d9da3a3f63d09dee01c1860db82a2c838107dc64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14003f6b_3640b326",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 74571,
+      "author": {
+        "id": 1130491
+      },
+      "writtenOn": "2017-08-01T19:57:55Z",
+      "side": 1,
+      "message": "Nit: please add a period at the end of this sentence.",
+      "range": {
+        "startLine": 74571,
+        "startChar": 33,
+        "endLine": 74571,
+        "endChar": 0
+      },
+      "revId": "d9da3a3f63d09dee01c1860db82a2c838107dc64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
