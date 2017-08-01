@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3541a222_3a83fe11",
+        "filename": "ios/chrome/browser/ui/commands/browser_commands.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-01T19:05:26Z",
+      "side": 1,
+      "message": "Maybe \"asks the active tab\", since there\u0027s no specific tab defined by the command invocation.",
+      "range": {
+        "startLine": 68,
+        "startChar": 12,
+        "endLine": 68,
+        "endChar": 15
+      },
+      "revId": "7e2318d88cca9184b180dbef26a6b83fc40eb819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
