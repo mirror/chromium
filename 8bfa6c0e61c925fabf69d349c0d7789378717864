@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "595a17f4_2d10eb2a",
+        "filename": "ios/build/tools/setup-gn.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-01T14:26:17Z",
+      "side": 1,
+      "message": "If you\u0027re open to making further changes, please change \"need\" to \"needs\".",
+      "revId": "8bfa6c0e61c925fabf69d349c0d7789378717864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecd3c39c_561c9b82",
+        "filename": "ios/chrome/browser/ui/reading_list/reading_list_collection_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-01T14:26:17Z",
+      "side": 1,
+      "message": "\"changed\" -\u003e \"change\"",
+      "revId": "8bfa6c0e61c925fabf69d349c0d7789378717864",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
