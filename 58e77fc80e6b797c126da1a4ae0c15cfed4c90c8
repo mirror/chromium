@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df9e70c5_9e79a344",
+        "filename": "content/browser/renderer_host/input/synthetic_mouse_driver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-01T12:43:14Z",
+      "side": 1,
+      "message": "Do we need to worry about buttons or modifiers here?",
+      "range": {
+        "startLine": 69,
+        "startChar": 27,
+        "endLine": 69,
+        "endChar": 32
+      },
+      "revId": "58e77fc80e6b797c126da1a4ae0c15cfed4c90c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e77cbf0_0a06cff6",
+        "filename": "content/browser/renderer_host/input/synthetic_mouse_driver.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-01T12:43:14Z",
+      "side": 1,
+      "message": "Should these indexes default to 0, like they do for other methods here?",
+      "range": {
+        "startLine": 33,
+        "startChar": 35,
+        "endLine": 33,
+        "endChar": 40
+      },
+      "revId": "58e77fc80e6b797c126da1a4ae0c15cfed4c90c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
