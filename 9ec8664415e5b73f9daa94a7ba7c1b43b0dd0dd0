@@ -16,6 +16,24 @@
       "revId": "9ec8664415e5b73f9daa94a7ba7c1b43b0dd0dd0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b4d989b_0f9e506b",
+        "filename": "chrome/browser/chromeos/preferences.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-01T18:49:50Z",
+      "side": 1,
+      "message": "Yes, it should be a device pref. Done.",
+      "parentUuid": "9152efc3_b165ecfb",
+      "revId": "9ec8664415e5b73f9daa94a7ba7c1b43b0dd0dd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
