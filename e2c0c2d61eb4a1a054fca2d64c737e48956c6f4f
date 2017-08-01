@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "6289dda9_4fa83886",
+        "filename": "ui/aura/mus/hit_test_data_provider_aura.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-01T15:29:41Z",
+      "side": 1,
+      "message": "Oh, I meant \u0027aura:Window* const window_;\u0027",
+      "parentUuid": "1b20606a_eaeff456",
+      "revId": "e2c0c2d61eb4a1a054fca2d64c737e48956c6f4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6fc2576f_c77201e1",
         "filename": "ui/aura/mus/hit_test_data_provider_aura_unittest.cc",
         "patchSetId": 23
