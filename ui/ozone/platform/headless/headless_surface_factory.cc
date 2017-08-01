@@ -108,14 +108,13 @@ HeadlessSurfaceFactory::HeadlessSurfaceFactory()
 
 HeadlessSurfaceFactory::HeadlessSurfaceFactory(
     HeadlessWindowManager* window_manager)
-    : window_manager_(window_manager),
-      osmesa_implementation_(base::MakeUnique<GLOzoneOSMesa>()) {}
+    : window_manager_(window_manager) {}
 
 HeadlessSurfaceFactory::~HeadlessSurfaceFactory() {}
 
 std::vector<gl::GLImplementation>
 HeadlessSurfaceFactory::GetAllowedGLImplementations() {
-  return std::vector<gl::GLImplementation>{gl::kGLImplementationOSMesaGL};
+  return std::vector<gl::GLImplementation>{gl::kGLImplementationStubGL};
 }
 
 GLOzone* HeadlessSurfaceFactory::GetGLOzone(
