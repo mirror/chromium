@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07dff785_3f0f0953",
+        "filename": "chrome/install_static/user_data_dir.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-08-01T20:28:59Z",
+      "side": 1,
+      "message": "Is thread safety important here?",
+      "revId": "e790bf9533b6144178d4d4d6b036e1931f02d9b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6d0d034_d8474c64",
+        "filename": "chrome_elf/chrome_elf_main.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-08-01T20:28:59Z",
+      "side": 1,
+      "message": "Is _TRUNCATE smart or should we tear things down right here if the string won’t fit?",
+      "revId": "e790bf9533b6144178d4d4d6b036e1931f02d9b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8317ad35_fe9f9377",
+        "filename": "components/crash/content/app/crashpad_mac.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-08-01T20:28:59Z",
+      "side": 1,
+      "message": "Having to account for this here in the Mac file is a little dirty.\n\nHow about we provide a PlatformCrashpadInitializationOptions struct out in the header, and define it like\n\nstruct PlatformCrashpadInitializationOptions {\n#if defined(OS_WINDOWS)\n  std::string user_data_dir;\n#endif\n}\n\nand then make PlatformCrashpadInitialization() accept a const PlatformCrashpadInitializationOptions\u0026 in place of accepting user_data_dir everywhere. Or even const PlatformCrashpadInitializationOptions*, so that you can pass it nullptr instead of creating an ignore-me object.",
+      "revId": "e790bf9533b6144178d4d4d6b036e1931f02d9b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
