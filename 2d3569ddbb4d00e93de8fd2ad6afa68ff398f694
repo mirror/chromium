@@ -46,6 +46,30 @@
       "revId": "2d3569ddbb4d00e93de8fd2ad6afa68ff398f694",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87187b8b_8817953c",
+        "filename": "tools/clang/scripts/test_tool.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-01T08:05:02Z",
+      "side": 1,
+      "message": "No one calls them automatically, so it\u0027s OK to break compatibility here.\n\n(translation_unit is the only thing that might do that, but they have their own test script: https://cs.chromium.org/chromium/src/tools/clang/translation_unit/test_translation_unit.py)",
+      "parentUuid": "c56cc5d1_da99138c",
+      "range": {
+        "startLine": 122,
+        "startChar": 0,
+        "endLine": 125,
+        "endChar": 50
+      },
+      "revId": "2d3569ddbb4d00e93de8fd2ad6afa68ff398f694",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
