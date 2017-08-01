@@ -161,6 +161,30 @@
     },
     {
       "key": {
+        "uuid": "2ecab2bc_d55175ca",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-01T11:44:07Z",
+      "side": 1,
+      "message": "Fair enough. I\u0027ve added a TODO.",
+      "parentUuid": "59820885_928cec4b",
+      "range": {
+        "startLine": 603,
+        "startChar": 13,
+        "endLine": 603,
+        "endChar": 14
+      },
+      "revId": "6c1f2d914b0a8e47026a12546eed63c337a0368b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24e8653f_10dcc7f3",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
         "patchSetId": 5
