@@ -1,0 +1,153 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a9fb1ef_59ed00a4",
+        "filename": "content/browser/service_worker/service_worker_content_settings_proxy_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-01T11:24:05Z",
+      "side": 1,
+      "message": "I think it\u0027s better to move between L.36-37 and also put it to L.45-46 with a small rephrasing like the following.\n\n// Pass an empty vector as |render_frames| because ...",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 68
+      },
+      "revId": "a27c8919e8c6dc0ab47482894ca718d353ecc459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57e0667f_af060ea7",
+        "filename": "content/renderer/service_worker/embedded_worker_instance_client_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-01T11:24:05Z",
+      "side": 1,
+      "message": "I\u0027m wondering if scope is good as the security origin of the SWContentSettingsProxy.\nDoes params.script_url seem correct?",
+      "range": {
+        "startLine": 138,
+        "startChar": 40,
+        "endLine": 138,
+        "endChar": 52
+      },
+      "revId": "a27c8919e8c6dc0ab47482894ca718d353ecc459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "172133bf_da22133d",
+        "filename": "content/renderer/service_worker/service_worker_content_settings_proxy.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-01T11:24:05Z",
+      "side": 1,
+      "message": "You might be able to do the similar thing with the shared worker patch (https://crrev.com/c/562854/).\nSo could you send a origin to the browser and check it in the browser?",
+      "range": {
+        "startLine": 29,
+        "startChar": 3,
+        "endLine": 30,
+        "endChar": 17
+      },
+      "revId": "a27c8919e8c6dc0ab47482894ca718d353ecc459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e81232a_d3b684fe",
+        "filename": "content/renderer/service_worker/service_worker_content_settings_proxy.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-01T11:24:05Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "a27c8919e8c6dc0ab47482894ca718d353ecc459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1da23d58_7bf0ae49",
+        "filename": "content/renderer/service_worker/service_worker_content_settings_proxy.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-01T11:24:05Z",
+      "side": 1,
+      "message": "It looks leaky. I\u0027d prefer static base::ThreadLocalPointer\u003c...\u003e s_host \u003d ...;\n\nHowever, I\u0027m wondering if the destructor of mojom::SWContentSettingsProxyPtr could be called correctly. I\u0027m still not sure the behavior of base::ThreadLocalPtr, but according to its comment and implementation, destructor will never be called. \nhttps://cs.chromium.org/chromium/src/base/threading/thread_local.h?type\u003dcs\u0026q\u003dbase::ThreadLocalPointer\u0026sq\u003dpackage:chromium\u0026l\u003d16\n\nBut actually I don\u0027t have good idea which can replace calling Bind() \u0026 PassInterface() every time...\nfalken@, nhiroki@: WDYT about this?",
+      "range": {
+        "startLine": 48,
+        "startChar": 9,
+        "endLine": 49,
+        "endChar": 53
+      },
+      "revId": "a27c8919e8c6dc0ab47482894ca718d353ecc459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c7e60f0_76a3c9aa",
+        "filename": "content/renderer/service_worker/service_worker_content_settings_proxy.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-01T11:24:05Z",
+      "side": 1,
+      "message": "We can use GURL directly here since it\u0027s not in blink.",
+      "range": {
+        "startLine": 23,
+        "startChar": 12,
+        "endLine": 23,
+        "endChar": 25
+      },
+      "revId": "a27c8919e8c6dc0ab47482894ca718d353ecc459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00e1fa97_e8413ebf",
+        "filename": "content/renderer/service_worker/service_worker_content_settings_proxy.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-01T11:24:05Z",
+      "side": 1,
+      "message": "And no need to pass |is_unique_origin| if url::Origin is passed to the browser.",
+      "revId": "a27c8919e8c6dc0ab47482894ca718d353ecc459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
