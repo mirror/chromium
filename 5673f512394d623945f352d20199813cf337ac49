@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c94510b_681474dd",
+        "filename": "content/browser/appcache/appcache_update_request_base.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-01T18:40:36Z",
+      "side": 1,
+      "message": "are the same set of flags defined in the net lib used in the network-service api",
+      "revId": "5673f512394d623945f352d20199813cf337ac49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de3beef0_240d704d",
+        "filename": "content/browser/appcache/appcache_update_request_base.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-01T18:40:36Z",
+      "side": 1,
+      "message": "does the net::URLRequestContext apply to the networkd-serice api?",
+      "revId": "5673f512394d623945f352d20199813cf337ac49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24a86652_a9d7419d",
+        "filename": "content/browser/appcache/appcache_update_url_fetcher.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-01T18:40:36Z",
+      "side": 1,
+      "message": "looks like we don\u0027t need the |defer_redirect| param now that we aren\u0027t inheritting this method from URLRequest::Delegate",
+      "range": {
+        "startLine": 53,
+        "startChar": 10,
+        "endLine": 53,
+        "endChar": 24
+      },
+      "revId": "5673f512394d623945f352d20199813cf337ac49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29b297f8_37b1782f",
+        "filename": "content/browser/appcache/appcache_update_url_fetcher.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-01T18:40:36Z",
+      "side": 1,
+      "message": "is this still the right way to make this test in the network-service\u0027ified world?",
+      "revId": "5673f512394d623945f352d20199813cf337ac49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

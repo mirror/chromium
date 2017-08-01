@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e067088f_4fdd27a2",
+        "filename": "content/browser/appcache/appcache_update_url_fetcher.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-01T18:40:36Z",
+      "side": 0,
+      "message": "Do we still need to zero out the request_ prior to deleting it? i see the nullchecks remain in what were formerly delegate methods which makes me think we may need to null it out.",
+      "revId": "03b7f77508dff6e594b2c9f7c72c194a219a4f78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
