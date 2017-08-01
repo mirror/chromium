@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23088bde_8f757a7c",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerGlobalScope.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-01T06:27:34Z",
+      "side": 0,
+      "message": "Probably DOMTimerCoordinator::HasInstalledTimeout is no longer used. If so, can you remove it?",
+      "range": {
+        "startLine": 252,
+        "startChar": 17,
+        "endLine": 252,
+        "endChar": 36
+      },
+      "revId": "7b48b3e4878624375427d69bf077f1179d17dcd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
