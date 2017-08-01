@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72b86a33_d56c7346",
+        "filename": "content/public/common/network_service.mojom",
+        "patchSetId": 19
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-01T20:52:29Z",
+      "side": 1,
+      "message": "nit, suggestion: Unsigned int?",
+      "range": {
+        "startLine": 23,
+        "startChar": 8,
+        "endLine": 23,
+        "endChar": 27
+      },
+      "revId": "dfc9130c551440f3f613e5dc0b7115d255caa319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39f6e0ff_506c5319",
+        "filename": "content/public/common/network_service.mojom",
+        "patchSetId": 19
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-01T20:52:29Z",
+      "side": 1,
+      "message": "nit: \"cache *is* enabled\"",
+      "range": {
+        "startLine": 25,
+        "startChar": 26,
+        "endLine": 25,
+        "endChar": 27
+      },
+      "revId": "dfc9130c551440f3f613e5dc0b7115d255caa319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
