@@ -9,6 +9,7 @@
 #include "core/layout/LayoutBlockFlow.h"
 #include "core/layout/ng/inline/ng_inline_node_data.h"
 #include "core/layout/ng/ng_block_node.h"
+#include "core/layout/ng/ng_physical_fragment.h"
 
 namespace blink {
 
@@ -33,6 +34,13 @@ class CORE_EXPORT LayoutNGBlockFlow final : public LayoutBlockFlow {
   LayoutUnit FirstLineBoxBaseline() const override;
   LayoutUnit InlineBlockBaseline(LineDirectionMode) const override;
 
+  void PaintObject(const PaintInfo&, const LayoutPoint&) const override;
+
+  NGPhysicalFragment* RootFragment() const { return root_fragment_.Get(); }
+  void SetRootFragment(PassRefPtr<NGPhysicalFragment> fragment) {
+    root_fragment_ = std::move(fragment);
+  }
+
   // Returns the last layout result for this block flow with the given
   // constraint space and break token, or null if it is not up-to-date or
   // otherwise unavailable.
@@ -52,6 +60,7 @@ class CORE_EXPORT LayoutNGBlockFlow final : public LayoutBlockFlow {
 
   RefPtr<NGLayoutResult> cached_result_;
   RefPtr<NGConstraintSpace> cached_constraint_space_;
+  RefPtr<NGPhysicalFragment> root_fragment_;
 };
 
 DEFINE_LAYOUT_OBJECT_TYPE_CASTS(LayoutNGBlockFlow, IsLayoutNGBlockFlow());
