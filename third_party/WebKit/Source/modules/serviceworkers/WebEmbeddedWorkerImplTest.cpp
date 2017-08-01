@@ -79,7 +79,7 @@ class MockServiceWorkerContextClient : public WebServiceWorkerContextClient {
   }
   void PostMessageToClient(const WebString& uuid,
                            const WebString&,
-                           WebMessagePortChannelArray) override {
+                           std::vector<blink_common::MessagePort>) override {
     NOTREACHED();
   }
   void SkipWaiting(

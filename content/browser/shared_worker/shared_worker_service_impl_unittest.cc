@@ -115,13 +115,13 @@ std::vector<uint8_t> StringPieceToVector(base::StringPiece s) {
   return std::vector<uint8_t>(s.begin(), s.end());
 }
 
-void BlockingReadFromMessagePort(MessagePort port,
+void BlockingReadFromMessagePort(blink_common::MessagePort port,
                                  std::vector<uint8_t>* message) {
   base::RunLoop run_loop;
   port.SetCallback(run_loop.QuitClosure());
   run_loop.Run();
 
-  std::vector<MessagePort> should_be_empty;
+  std::vector<blink_common::MessagePort> should_be_empty;
   EXPECT_TRUE(port.GetMessage(message, &should_be_empty));
   EXPECT_TRUE(should_be_empty.empty());
 }
@@ -248,21 +248,21 @@ class MockSharedWorkerConnector {
   }
   void SendConnect() {
     mojo::MessagePipe message_pipe;
-    local_port_ = MessagePort(std::move(message_pipe.handle0));
+    local_port_ = blink_common::MessagePort(std::move(message_pipe.handle0));
 
     EXPECT_TRUE(
         renderer_host_->OnMessageReceived(new ViewHostMsg_ConnectToWorker(
             create_worker_reply_.route_id,
-            MessagePort(std::move(message_pipe.handle1)))));
+            blink_common::MessagePort(std::move(message_pipe.handle1)))));
   }
-  MessagePort local_port() { return local_port_; }
+  blink_common::MessagePort local_port() { return local_port_; }
   int route_id() { return create_worker_reply_.route_id; }
   blink::WebWorkerCreationError creation_error() {
     return create_worker_reply_.error;
   }
  private:
   MockRendererProcessHost* renderer_host_;
-  MessagePort local_port_;
+  blink_common::MessagePort local_port_;
   ViewHostMsg_CreateWorker_Reply create_worker_reply_;
 };
 
@@ -305,7 +305,7 @@ void CheckViewMsgCountFeature(MockRendererProcessHost* renderer_host,
 void CheckWorkerMsgConnect(MockRendererProcessHost* renderer_host,
                            int expected_msg_route_id,
                            int* connection_request_id,
-                           MessagePort* port) {
+                           blink_common::MessagePort* port) {
   std::unique_ptr<IPC::Message> msg(renderer_host->PopMessage());
   EXPECT_EQ(WorkerMsg_Connect::ID, msg->type());
   EXPECT_EQ(expected_msg_route_id, msg->routing_id());
@@ -359,7 +359,7 @@ TEST_F(SharedWorkerServiceImplTest, BasicTest) {
   EXPECT_EQ(1U, renderer_host->QueuedMessageCount());
   // WorkerMsg_Connect should be sent to SharedWorker side.
   int worker_msg_connection_request_id;
-  MessagePort worker_msg_port;
+  blink_common::MessagePort worker_msg_port;
   CheckWorkerMsgConnect(renderer_host.get(), worker_route_id,
                         &worker_msg_connection_request_id, &worker_msg_port);
 
@@ -389,7 +389,7 @@ TEST_F(SharedWorkerServiceImplTest, BasicTest) {
   std::vector<uint8_t> expected_message(StringPieceToVector("test1"));
   connector->local_port().PostMessage(expected_message.data(),
                                       expected_message.size(),
-                                      std::vector<MessagePort>());
+                                      std::vector<blink_common::MessagePort>());
   std::vector<uint8_t> received_message;
   BlockingReadFromMessagePort(worker_msg_port, &received_message);
   EXPECT_EQ(expected_message, received_message);
@@ -451,7 +451,7 @@ TEST_F(SharedWorkerServiceImplTest, TwoRendererTest) {
   EXPECT_EQ(1U, renderer_host0->QueuedMessageCount());
   // WorkerMsg_Connect should be sent to SharedWorker side.
   int worker_msg_connection_request_id1;
-  MessagePort worker_msg_port1;
+  blink_common::MessagePort worker_msg_port1;
   CheckWorkerMsgConnect(renderer_host0.get(), worker_route_id,
                         &worker_msg_connection_request_id1, &worker_msg_port1);
 
@@ -479,9 +479,9 @@ TEST_F(SharedWorkerServiceImplTest, TwoRendererTest) {
 
   // Verify that |worker_msg_port1| corresponds to |connector0->local_port()|.
   std::vector<uint8_t> expected_message1(StringPieceToVector("test1"));
-  connector0->local_port().PostMessage(expected_message1.data(),
-                                       expected_message1.size(),
-                                       std::vector<MessagePort>());
+  connector0->local_port().PostMessage(
+      expected_message1.data(), expected_message1.size(),
+      std::vector<blink_common::MessagePort>());
   std::vector<uint8_t> received_message1;
   BlockingReadFromMessagePort(worker_msg_port1, &received_message1);
   EXPECT_EQ(expected_message1, received_message1);
@@ -536,7 +536,7 @@ TEST_F(SharedWorkerServiceImplTest, TwoRendererTest) {
   EXPECT_EQ(1U, renderer_host0->QueuedMessageCount());
   // WorkerMsg_Connect should be sent to SharedWorker side.
   int worker_msg_connection_request_id2;
-  MessagePort worker_msg_port2;
+  blink_common::MessagePort worker_msg_port2;
   CheckWorkerMsgConnect(renderer_host0.get(), worker_route_id,
                         &worker_msg_connection_request_id2, &worker_msg_port2);
 
@@ -552,9 +552,9 @@ TEST_F(SharedWorkerServiceImplTest, TwoRendererTest) {
 
   // Verify that |worker_msg_port2| corresponds to |connector1->local_port()|.
   std::vector<uint8_t> expected_message2(StringPieceToVector("test2"));
-  connector1->local_port().PostMessage(expected_message2.data(),
-                                       expected_message2.size(),
-                                       std::vector<MessagePort>());
+  connector1->local_port().PostMessage(
+      expected_message2.data(), expected_message2.size(),
+      std::vector<blink_common::MessagePort>());
   std::vector<uint8_t> received_message2;
   BlockingReadFromMessagePort(worker_msg_port2, &received_message2);
   EXPECT_EQ(expected_message2, received_message2);

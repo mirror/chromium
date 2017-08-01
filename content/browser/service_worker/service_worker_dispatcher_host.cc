@@ -857,7 +857,7 @@ void ServiceWorkerDispatcherHost::OnPostMessageToWorker(
     int provider_id,
     const base::string16& message,
     const url::Origin& source_origin,
-    const std::vector<MessagePort>& sent_message_ports) {
+    const std::vector<blink_common::MessagePort>& sent_message_ports) {
   TRACE_EVENT0("ServiceWorker",
                "ServiceWorkerDispatcherHost::OnPostMessageToWorker");
   if (!GetContext())
@@ -887,7 +887,7 @@ void ServiceWorkerDispatcherHost::DispatchExtendableMessageEvent(
     scoped_refptr<ServiceWorkerVersion> worker,
     const base::string16& message,
     const url::Origin& source_origin,
-    const std::vector<MessagePort>& sent_message_ports,
+    const std::vector<blink_common::MessagePort>& sent_message_ports,
     ServiceWorkerProviderHost* sender_provider_host,
     const StatusCallback& callback) {
   switch (sender_provider_host->provider_type()) {
@@ -989,7 +989,7 @@ void ServiceWorkerDispatcherHost::DispatchExtendableMessageEventInternal(
     scoped_refptr<ServiceWorkerVersion> worker,
     const base::string16& message,
     const url::Origin& source_origin,
-    const std::vector<MessagePort>& sent_message_ports,
+    const std::vector<blink_common::MessagePort>& sent_message_ports,
     const base::Optional<base::TimeDelta>& timeout,
     const StatusCallback& callback,
     const SourceInfo& source_info) {
@@ -1025,7 +1025,7 @@ void ServiceWorkerDispatcherHost::
         scoped_refptr<ServiceWorkerVersion> worker,
         const base::string16& message,
         const url::Origin& source_origin,
-        const std::vector<MessagePort>& sent_message_ports,
+        const std::vector<blink_common::MessagePort>& sent_message_ports,
         const ExtendableMessageEventSource& source,
         const base::Optional<base::TimeDelta>& timeout,
         const StatusCallback& callback) {
@@ -1042,7 +1042,8 @@ void ServiceWorkerDispatcherHost::
   mojom::ExtendableMessageEventPtr event = mojom::ExtendableMessageEvent::New();
   event->message = message;
   event->source_origin = source_origin;
-  event->message_ports = MessagePort::ReleaseHandles(sent_message_ports);
+  event->message_ports =
+      blink_common::MessagePort::ReleaseHandles(sent_message_ports);
   event->source = source;
 
   // Hide the client url if the client has a unique origin.
@@ -1059,7 +1060,7 @@ void ServiceWorkerDispatcherHost::
 
 template <typename SourceInfo>
 void ServiceWorkerDispatcherHost::DidFailToDispatchExtendableMessageEvent(
-    const std::vector<MessagePort>& sent_message_ports,
+    const std::vector<blink_common::MessagePort>& sent_message_ports,
     const SourceInfo& source_info,
     const StatusCallback& callback,
     ServiceWorkerStatusCode status) {

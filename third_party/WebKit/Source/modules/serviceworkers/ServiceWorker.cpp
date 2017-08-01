@@ -39,7 +39,6 @@
 #include "modules/EventTargetModules.h"
 #include "modules/serviceworkers/ServiceWorkerContainerClient.h"
 #include "platform/bindings/ScriptState.h"
-#include "public/platform/WebMessagePortChannel.h"
 #include "public/platform/WebSecurityOrigin.h"
 #include "public/platform/WebString.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerState.h"
@@ -75,12 +74,10 @@ void ServiceWorker::postMessage(ScriptState* script_state,
   }
 
   WebString message_string = message->ToWireString();
-  WebMessagePortChannelArray web_channels =
-      MessagePort::ToWebMessagePortChannelArray(std::move(channels));
   handle_->ServiceWorker()->PostMessage(
       client->Provider(), message_string,
       WebSecurityOrigin(GetExecutionContext()->GetSecurityOrigin()),
-      std::move(web_channels));
+      std::move(channels));
 }
 
 void ServiceWorker::InternalsTerminate() {

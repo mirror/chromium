@@ -32,9 +32,6 @@ class PpapiBlinkPlatformImpl : public BlinkPlatformImpl {
   unsigned long long VisitedLinkHash(const char* canonicalURL,
                                      size_t length) override;
   bool IsLinkVisited(unsigned long long linkHash) override;
-  void CreateMessageChannel(
-      std::unique_ptr<blink::WebMessagePortChannel>* channel1,
-      std::unique_ptr<blink::WebMessagePortChannel>* channel2) override;
   virtual void setCookies(const blink::WebURL& url,
                           const blink::WebURL& first_party_for_cookies,
                           const blink::WebString& value);

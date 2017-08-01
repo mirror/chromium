@@ -98,7 +98,7 @@ class CORE_EXPORT WebSharedWorkerImpl final
       WebAddressSpace,
       bool data_saver_enabled,
       mojo::ScopedMessagePipeHandle content_settings_handle) override;
-  void Connect(std::unique_ptr<WebMessagePortChannel>) override;
+  void Connect(blink_common::MessagePort) override;
   void TerminateWorkerContext() override;
 
   void PauseWorkerContextOnStart() override;
@@ -140,7 +140,7 @@ class CORE_EXPORT WebSharedWorkerImpl final
   void DidReceiveScriptLoaderResponse();
   void OnScriptLoaderFinished();
 
-  void ConnectTaskOnWorkerThread(std::unique_ptr<WebMessagePortChannel>);
+  void ConnectTaskOnWorkerThread(blink_common::MessagePort);
 
   // 'shadow page' - created to proxy loading requests from the worker.
   // Will be accessed by worker thread when posting tasks.

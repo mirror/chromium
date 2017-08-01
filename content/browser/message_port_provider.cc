@@ -18,12 +18,11 @@
 namespace content {
 namespace {
 
-void PostMessageToFrameInternal(
-    WebContents* web_contents,
-    const base::string16& source_origin,
-    const base::string16& target_origin,
-    const base::string16& data,
-    std::vector<MessagePort> ports) {
+void PostMessageToFrameInternal(WebContents* web_contents,
+                                const base::string16& source_origin,
+                                const base::string16& target_origin,
+                                const base::string16& data,
+                                std::vector<blink_common::MessagePort> ports) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   FrameMsg_PostMessage_Params params;
@@ -56,7 +55,7 @@ void MessagePortProvider::PostMessageToFrame(
     const base::string16& target_origin,
     const base::string16& data) {
   PostMessageToFrameInternal(web_contents, source_origin, target_origin, data,
-                             std::vector<MessagePort>());
+                             std::vector<blink_common::MessagePort>());
 }
 
 #if defined(OS_ANDROID)

@@ -259,8 +259,6 @@ source_set("blink_headers") {
     "platform/WebMemoryPressureLevel.h",
     "platform/WebMemoryState.h",
     "platform/WebMenuSourceType.h",
-    "platform/WebMessagePortChannel.h",
-    "platform/WebMessagePortChannelClient.h",
     "platform/WebMixedContent.h",
     "platform/WebMixedContentContextType.h",
     "platform/WebMockClipboard.h",

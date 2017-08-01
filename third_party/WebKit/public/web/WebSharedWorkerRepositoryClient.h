@@ -31,14 +31,14 @@
 #ifndef WebSharedWorkerRepositoryClient_h
 #define WebSharedWorkerRepositoryClient_h
 
+#include <memory>
 #include "WebSharedWorkerCreationContextType.h"
 #include "WebSharedWorkerCreationErrors.h"
 #include "public/platform/WebAddressSpace.h"
-#include <memory>
+#include "third_party/WebKit/common/message_port/message_port.h"
 
 namespace blink {
 
-class WebMessagePortChannel;
 class WebSharedWorkerConnectListener;
 class WebString;
 class WebURL;
@@ -58,7 +58,7 @@ class WebSharedWorkerRepositoryClient {
                        WebAddressSpace,
                        WebSharedWorkerCreationContextType,
                        bool data_saver_enabled,
-                       std::unique_ptr<WebMessagePortChannel>,
+                       blink_common::MessagePort,
                        std::unique_ptr<blink::WebSharedWorkerConnectListener>) {
   }
 
