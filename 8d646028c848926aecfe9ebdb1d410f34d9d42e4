@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7d486bde_f8b5b818",
+        "filename": "third_party/WebKit/Source/modules/encryptedmedia/NavigatorRequestMediaKeySystemAccess.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-08-01T05:04:05Z",
+      "side": 1,
+      "message": "Yeah I realized that. But had to move it to wherever we move the check below otherwise it wouldn\u0027t count anything. I don\u0027t think it will be too problematic though.",
+      "parentUuid": "52687714_35f056c9",
+      "revId": "8d646028c848926aecfe9ebdb1d410f34d9d42e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1bd23bf6_1581cdf1",
         "filename": "third_party/WebKit/Source/modules/encryptedmedia/NavigatorRequestMediaKeySystemAccess.cpp",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-01T04:54:21Z",
       "side": 1,
       "message": "There isn\u0027t a PR for the EME spec yet, so it\u0027s hard to know if this is correct. Notably, this is before any other step in the algorithm. Is this how Feature Policy is being handled for other features.",
+      "revId": "8d646028c848926aecfe9ebdb1d410f34d9d42e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0f24c83_08fff6ab",
+        "filename": "third_party/WebKit/Source/modules/encryptedmedia/NavigatorRequestMediaKeySystemAccess.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-08-01T05:04:05Z",
+      "side": 1,
+      "message": "I agree. This isn\u0027t meant to be 100% final. But it\u0027s meant to be a starting point on which we can iterate. I would rather land a sample implementation first though because I think it helps us a more informed conversation on the spec (I\u0027m still blocking release on having a PR written).\n\nI\u0027m flexible with exactly where this goes. It seemed a little better in my mind to bail before checking parameters but I actually don\u0027t feel strongly one way or the other. Other permission features fail at the point where the permission is checked, which differs from feature to feature.",
+      "parentUuid": "1bd23bf6_1581cdf1",
       "revId": "8d646028c848926aecfe9ebdb1d410f34d9d42e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
