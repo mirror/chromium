@@ -28,7 +28,37 @@ SSLStatus::SSLStatus(const net::SSLInfo& ssl_info)
       content_status(NORMAL_CONTENT),
       pkp_bypassed(ssl_info.pkp_bypassed) {}
 
-SSLStatus::SSLStatus(const SSLStatus& other) = default;
+SSLStatus::SSLStatus(const SSLStatus& other)
+    : initialized(other.initialized),
+      certificate(other.certificate),
+      cert_status(other.cert_status),
+      security_bits(other.security_bits),
+      key_exchange_group(other.key_exchange_group),
+      connection_status(other.connection_status),
+      content_status(other.content_status),
+      pkp_bypassed(other.pkp_bypassed),
+      user_data_(other.user_data_ ? other.user_data_->Clone() : nullptr) {}
+
+SSLStatus& SSLStatus::operator=(SSLStatus other) {
+  initialized = other.initialized;
+  certificate = other.certificate;
+  cert_status = other.cert_status;
+  security_bits = other.security_bits;
+  key_exchange_group = other.key_exchange_group;
+  connection_status = other.connection_status;
+  content_status = other.content_status;
+  pkp_bypassed = other.pkp_bypassed;
+  user_data_ = other.user_data_ ? other.user_data_->Clone() : nullptr;
+  return *this;
+}
+
+void SSLStatus::SetUserData(std::unique_ptr<UserData> user_data) {
+  user_data_ = std::move(user_data);
+}
+
+SSLStatus::UserData* SSLStatus::GetUserData() {
+  return user_data_.get();
+}
 
 SSLStatus::~SSLStatus() {}
 
