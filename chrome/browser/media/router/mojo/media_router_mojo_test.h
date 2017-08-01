@@ -242,20 +242,34 @@ class MediaRouterMojoTest : public ::testing::Test {
   void SetUp() override;
   void TearDown() override;
 
+  virtual std::unique_ptr<MediaRouterMojoImpl> CreateMediaRouter() = 0;
+
   void ProcessEventLoop();
 
   void ConnectProviderManagerService();
 
+  void TestCreateRoute();
+  void TestJoinRoute();
+  void TestConnectRouteByRouteId();
+  void TestTerminateRoute();
+  void TestSendRouteMessage();
+  void TestSendRouteBinaryMessage();
+  void TestDetachRoute();
+  void TestSearchSinks();
+  void TestProvideSinks();
+  void TestCreateMediaRouteController();
+
   const std::string& extension_id() const { return extension_->id(); }
 
-  MediaRouterMojoImpl* router() const { return mock_media_router_.get(); }
+  MediaRouterMojoImpl* router() const { return media_router_.get(); }
 
   Profile* profile() { return &profile_; }
 
   // Mock objects.
   MockMediaRouteProvider mock_media_route_provider_;
 
-  // Mojo proxy object for |mock_media_router_|
+  std::unique_ptr<MediaRouterMojoImpl> media_router_;
+  // Mojo proxy object for |media_router_|
   media_router::mojom::MediaRouterPtr media_router_proxy_;
 
   RegisterMediaRouteProviderHandler provide_handler_;
@@ -264,7 +278,6 @@ class MediaRouterMojoTest : public ::testing::Test {
   content::TestBrowserThreadBundle test_thread_bundle_;
   scoped_refptr<extensions::Extension> extension_;
   TestingProfile profile_;
-  std::unique_ptr<MediaRouterMojoImpl> mock_media_router_;
   std::unique_ptr<mojo::Binding<mojom::MediaRouteProvider>> binding_;
 
   DISALLOW_COPY_AND_ASSIGN(MediaRouterMojoTest);
