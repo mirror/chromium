@@ -15,8 +15,6 @@
 
 #if defined(USE_OZONE)
 #include "ash/host/ash_window_tree_host_platform.h"
-#elif defined(USE_X11)
-#include "ash/host/ash_window_tree_host_x11.h"
 #endif
 
 namespace ash {
@@ -65,8 +63,6 @@ std::unique_ptr<AshWindowTreeHost> AshWindowTreeHost::Create(
 #if defined(USE_OZONE)
   return base::MakeUnique<AshWindowTreeHostPlatform>(
       init_params.initial_bounds);
-#elif defined(USE_X11)
-  return base::MakeUnique<AshWindowTreeHostX11>(init_params.initial_bounds);
 #else
 #error Unsupported platform.
 #endif

@@ -49,16 +49,6 @@
 #include "ui/wm/core/coordinate_conversion.h"
 #include "ui/wm/public/activation_client.h"
 
-#if defined(USE_X11)
-#include "ui/base/x/x11_util.h"  // nogncheck
-#include "ui/gfx/x/x11_types.h"  // nogncheck
-
-// Including this at the bottom to avoid other
-// potential conflict with chrome headers.
-#include <X11/extensions/Xrandr.h>
-#undef RootWindow
-#endif  // defined(USE_X11)
-
 namespace ash {
 namespace {
 
@@ -78,41 +68,7 @@ void SetDisplayPropertiesOnHost(AshWindowTreeHost* ash_host,
   display::ManagedDisplayInfo info =
       GetDisplayManager()->GetDisplayInfo(display.id());
   aura::WindowTreeHost* host = ash_host->AsWindowTreeHost();
-#if defined(USE_X11)
-  // Native window property (Atom in X11) that specifies the display's
-  // rotation, scale factor and if it's internal display.  They are
-  // read and used by touchpad/mouse driver directly on X (contact
-  // adlr@ for more details on touchpad/mouse driver side). The value
-  // of the rotation is one of 0 (normal), 1 (90 degrees clockwise), 2
-  // (180 degree) or 3 (270 degrees clockwise).  The value of the
-  // scale factor is in percent (100, 140, 200 etc).
-  const char kRotationProp[] = "_CHROME_DISPLAY_ROTATION";
-  const char kScaleFactorProp[] = "_CHROME_DISPLAY_SCALE_FACTOR";
-  const char kInternalProp[] = "_CHROME_DISPLAY_INTERNAL";
-  const char kCARDINAL[] = "CARDINAL";
-  int xrandr_rotation = RR_Rotate_0;
-  switch (info.GetActiveRotation()) {
-    case display::Display::ROTATE_0:
-      xrandr_rotation = RR_Rotate_0;
-      break;
-    case display::Display::ROTATE_90:
-      xrandr_rotation = RR_Rotate_90;
-      break;
-    case display::Display::ROTATE_180:
-      xrandr_rotation = RR_Rotate_180;
-      break;
-    case display::Display::ROTATE_270:
-      xrandr_rotation = RR_Rotate_270;
-      break;
-  }
-
-  int internal = display.IsInternal() ? 1 : 0;
-  gfx::AcceleratedWidget xwindow = host->GetAcceleratedWidget();
-  ui::SetIntProperty(xwindow, kInternalProp, kCARDINAL, internal);
-  ui::SetIntProperty(xwindow, kRotationProp, kCARDINAL, xrandr_rotation);
-  ui::SetIntProperty(xwindow, kScaleFactorProp, kCARDINAL,
-                     100 * display.device_scale_factor());
-#elif defined(USE_OZONE)
+#if defined(USE_OZONE)
   ash_host->SetCursorConfig(display, info.GetActiveRotation());
 #endif
   std::unique_ptr<RootWindowTransformer> transformer(
@@ -778,11 +734,6 @@ void WindowTreeHostManager::PostDisplayConfigurationChange(
   for (auto& observer : observers_)
     observer.OnDisplayConfigurationChanged();
   UpdateMouseLocationAfterDisplayChange();
-
-#if defined(USE_X11)
-  if (must_clear_window)
-    ui::ClearX11DefaultRootWindow();
-#endif
 }
 
 display::DisplayConfigurator* WindowTreeHostManager::display_configurator() {

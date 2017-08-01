@@ -27,9 +27,7 @@
 #include "ui/events/keycodes/keyboard_codes.h"
 #include "ui/gfx/geometry/vector3d_f.h"
 
-#if defined(USE_X11)
-#include "ash/wm/tablet_mode/scoped_disable_internal_mouse_and_keyboard_x11.h"
-#elif defined(USE_OZONE)
+#if defined(USE_OZONE)
 #include "ash/wm/tablet_mode/scoped_disable_internal_mouse_and_keyboard_ozone.h"
 #endif
 
@@ -112,9 +110,7 @@ TabletModeController::ForceTabletMode GetTabletMode() {
 
 std::unique_ptr<ScopedDisableInternalMouseAndKeyboard>
 CreateScopedDisableInternalMouseAndKeyboard() {
-#if defined(USE_X11)
-  return base::MakeUnique<ScopedDisableInternalMouseAndKeyboardX11>();
-#elif defined(USE_OZONE)
+#if defined(USE_OZONE)
   return base::MakeUnique<ScopedDisableInternalMouseAndKeyboardOzone>();
 #endif
   return nullptr;

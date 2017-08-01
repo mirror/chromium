@@ -182,8 +182,6 @@ component("ash") {
     "host/ash_window_tree_host_platform.h",
     "host/ash_window_tree_host_unified.cc",
     "host/ash_window_tree_host_unified.h",
-    "host/ash_window_tree_host_x11.cc",
-    "host/ash_window_tree_host_x11.h",
     "host/root_window_transformer.h",
     "host/transformer_helper.cc",
     "host/transformer_helper.h",
@@ -746,8 +744,6 @@ component("ash") {
     "wm/system_wallpaper_controller.cc",
     "wm/system_wallpaper_controller.h",
     "wm/tablet_mode/scoped_disable_internal_mouse_and_keyboard.h",
-    "wm/tablet_mode/scoped_disable_internal_mouse_and_keyboard_x11.cc",
-    "wm/tablet_mode/scoped_disable_internal_mouse_and_keyboard_x11.h",
     "wm/tablet_mode/tablet_mode_backdrop_delegate_impl.cc",
     "wm/tablet_mode/tablet_mode_backdrop_delegate_impl.h",
     "wm/tablet_mode/tablet_mode_controller.cc",
@@ -915,25 +911,6 @@ component("ash") {
   data = [
     "display/test_data/",
   ]
-
-  if (use_x11) {
-    configs += [
-      "//build/config/linux:x11",
-      "//build/config/linux:xfixes",
-    ]
-    deps += [
-      "//ui/events/devices/x11",
-      "//ui/events/platform",
-      "//ui/gfx/x",
-    ]
-  } else {
-    sources -= [
-      "host/ash_window_tree_host_x11.cc",
-      "host/ash_window_tree_host_x11.h",
-      "wm/tablet_mode/scoped_disable_internal_mouse_and_keyboard_x11.cc",
-      "wm/tablet_mode/scoped_disable_internal_mouse_and_keyboard_x11.h",
-    ]
-  }
 
   if (use_ozone) {
     deps += [
@@ -1400,9 +1377,6 @@ test("ash_unittests") {
     # TODO: port to mash. http://crbug.com/695570.
     "extended_desktop_unittest.cc",
 
-    # Specific to X11.
-    "host/ash_window_tree_host_x11_unittest.cc",
-
     # TODO: magnifier not supported in mash. http://crbug.com/647438.
     "magnifier/magnification_controller_unittest.cc",
     "magnifier/partial_magnification_controller_unittest.cc",
@@ -1537,10 +1511,6 @@ test("ash_unittests") {
     "//ash/resources:ash_test_resources_200_percent",
     "//testing/buildbot/filters:ash_unittests_filters",
   ]
-
-  if (!use_x11) {
-    sources -= [ "host/ash_window_tree_host_x11_unittest.cc" ]
-  }
 
   # Usage of content should be in ash_with_content.
   assert_no_deps = [
@@ -1775,10 +1745,6 @@ static_library("test_support_common") {
     "//ui/wm",
     "//ui/wm/public",
   ]
-
-  if (use_x11) {
-    deps += [ "//ui/gfx/x" ]
-  }
 }
 
 static_library("interactive_ui_test_support") {
