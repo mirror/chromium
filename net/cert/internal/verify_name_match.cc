@@ -9,6 +9,8 @@
 
 #include "base/logging.h"
 #include "base/strings/string_util.h"
+#include "net/cert/internal/cert_error_params.h"
+#include "net/cert/internal/cert_errors.h"
 #include "net/cert/internal/parse_name.h"
 #include "net/der/input.h"
 #include "net/der/parser.h"
@@ -17,6 +19,19 @@
 #include "third_party/boringssl/src/include/openssl/mem.h"
 
 namespace net {
+
+DEFINE_CERT_ERROR_ID(kFailedConvertingAttributeValue,
+                     "Failed converting AttributeValue to string");
+DEFINE_CERT_ERROR_ID(kFailedNormalizingPrintableString,
+                     "Failed normalizing printable string");
+DEFINE_CERT_ERROR_ID(kFailedNormalizingBmpString,
+                     "Failed normalizing BMP string");
+DEFINE_CERT_ERROR_ID(kFailedNormalizingUniversalString,
+                     "Failed normalizing universal string");
+DEFINE_CERT_ERROR_ID(kFailedNormalizingUtf8String,
+                     "Failed normalizing UTF8 string");
+DEFINE_CERT_ERROR_ID(kFailedNormalizingIa5String,
+                     "Failed normalizing IA5String");
 
 namespace {
 
@@ -123,19 +138,43 @@ WARN_UNUSED_RESULT bool NormalizeDirectoryString(
 // is invalid, returns false.
 // NOTE: |output| will be modified regardless of the return.
 WARN_UNUSED_RESULT bool NormalizeValue(X509NameAttribute attribute,
-                                       std::string* output) {
-  if (!attribute.ValueAsStringUnsafe(output))
+                                       std::string* output,
+                                       CertErrors* errors) {
+  DCHECK(errors);
+
+  if (!attribute.ValueAsStringUnsafe(output)) {
+    errors->AddError(kFailedConvertingAttributeValue);
     return false;
+  }
 
   switch (attribute.value_tag) {
-    case der::kPrintableString:
-      return NormalizeDirectoryString(ENFORCE_PRINTABLE_STRING, output);
+    case der::kPrintableString: {
+      bool success = NormalizeDirectoryString(ENFORCE_PRINTABLE_STRING, output);
+      if (!success)
+        errors->AddError(kFailedNormalizingPrintableString);
+      return success;
+    }
     case der::kBmpString:
     case der::kUniversalString:
-    case der::kUtf8String:
-      return NormalizeDirectoryString(NO_ENFORCEMENT, output);
-    case der::kIA5String:
-      return NormalizeDirectoryString(ENFORCE_ASCII, output);
+    case der::kUtf8String: {
+      bool success = NormalizeDirectoryString(NO_ENFORCEMENT, output);
+      if (!success) {
+        if (attribute.value_tag == der::kBmpString) {
+          errors->AddError(kFailedNormalizingBmpString);
+        } else if (attribute.value_tag == der::kUniversalString) {
+          errors->AddError(kFailedNormalizingUniversalString);
+        } else if (attribute.value_tag == der::kUtf8String) {
+          errors->AddError(kFailedNormalizingUtf8String);
+        }
+      }
+      return success;
+    }
+    case der::kIA5String: {
+      bool success = NormalizeDirectoryString(ENFORCE_ASCII, output);
+      if (!success)
+        errors->AddError(kFailedNormalizingIa5String);
+      return success;
+    }
     default:
       NOTREACHED();
       return false;
@@ -168,7 +207,10 @@ bool VerifyValueMatch(X509NameAttribute a, X509NameAttribute b) {
   if (IsNormalizableDirectoryString(a.value_tag) &&
       IsNormalizableDirectoryString(b.value_tag)) {
     std::string a_normalized, b_normalized;
-    if (!NormalizeValue(a, &a_normalized) || !NormalizeValue(b, &b_normalized))
+    // TODO(eroman): Plumb this down.
+    CertErrors unused_errors;
+    if (!NormalizeValue(a, &a_normalized, &unused_errors) ||
+        !NormalizeValue(b, &b_normalized, &unused_errors))
       return false;
     return a_normalized == b_normalized;
   }
@@ -289,7 +331,10 @@ bool VerifyNameMatchInternal(const der::Input& a,
 }  // namespace
 
 bool NormalizeName(const der::Input& name_rdn_sequence,
-                   std::string* normalized_rdn_sequence) {
+                   std::string* normalized_rdn_sequence,
+                   CertErrors* errors) {
+  DCHECK(errors);
+
   // RFC 5280 section 4.1.2.4
   // RDNSequence ::= SEQUENCE OF RelativeDistinguishedName
   der::Parser rdn_sequence_parser(name_rdn_sequence);
@@ -346,7 +391,7 @@ bool NormalizeName(const der::Input& name_rdn_sequence,
       // AttributeValue ::= ANY -- DEFINED BY AttributeType
       if (IsNormalizableDirectoryString(type_and_value.value_tag)) {
         std::string normalized_value;
-        if (!NormalizeValue(type_and_value, &normalized_value))
+        if (!NormalizeValue(type_and_value, &normalized_value, errors))
           return false;
         if (!CBB_add_asn1(&attribute_type_and_value_cbb, &value_cbb,
                           CBS_ASN1_UTF8STRING) ||
