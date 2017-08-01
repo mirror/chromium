@@ -215,6 +215,24 @@
       "revId": "fff382ebf0ca63c9052321063fcdb8d94bf90b32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5935d20_7eca9f98",
+        "filename": "ui/views/controls/button/md_text_button.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-01T00:24:25Z",
+      "side": 1,
+      "message": "So, for clarity, I was suggesting also hardcoding the text color.  So they\u0027d both match, and they\u0027d ignore the theme.\n\nThe download shelf is indeed a surface that uses MD text buttons and is either themed or pseudo-themed (the story is kinda weird).  My suggestion was that before we ship we re-evaluate how these hardcoded colors look on the various themes and decide what we want to do, but that at least for now hardcoding puts us in a known state, more amenable to refactoring in advance of future behavior changes, which might not actually look all that bad.",
+      "parentUuid": "065ce237_443d1d37",
+      "revId": "fff382ebf0ca63c9052321063fcdb8d94bf90b32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
