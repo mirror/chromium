@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "128390c6_826a7025",
+        "filename": "ash/highlighter/highlighter_controller.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-01T17:29:10Z",
+      "side": 1,
+      "message": "Please add a comment or DCHECK above this line to emphasize that highlighter_view_ is never null here. I had a hard time reasoning about the lifetime of this view when reading this CL.",
+      "revId": "9e852b6c9a99113ea1f46f34585fcb7a98603d57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a2e2dad_e4d991ad",
+        "filename": "ash/highlighter/highlighter_controller_test_api.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-01T17:29:10Z",
+      "side": 1,
+      "message": "nit: prefer base::MakeUnique\u003cDummyHighlighterObserver\u003e()",
+      "revId": "9e852b6c9a99113ea1f46f34585fcb7a98603d57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d59462b6_09a3be2f",
+        "filename": "ash/highlighter/highlighter_controller_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-01T17:29:10Z",
+      "side": 1,
+      "message": "nit: prefer MakeUnique",
+      "revId": "9e852b6c9a99113ea1f46f34585fcb7a98603d57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f816c52_8ec8bd4a",
+        "filename": "ash/highlighter/highlighter_controller_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-01T17:29:10Z",
+      "side": 1,
+      "message": "This bug is closed as fixed. Is there a different problem?",
+      "revId": "9e852b6c9a99113ea1f46f34585fcb7a98603d57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cd69099_4188308a",
+        "filename": "ash/highlighter/highlighter_controller_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-01T17:29:10Z",
+      "side": 1,
+      "message": "Nice tests. Thorough and easy to read.",
+      "revId": "9e852b6c9a99113ea1f46f34585fcb7a98603d57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9ddd2fc_e8200dec",
+        "filename": "ash/highlighter/highlighter_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-01T17:29:10Z",
+      "side": 1,
+      "message": "nit: const",
+      "revId": "9e852b6c9a99113ea1f46f34585fcb7a98603d57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
