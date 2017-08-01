@@ -522,6 +522,9 @@ class WebMediaPlayerMSTest
   blink::WebMediaPlayer::DisplayType DisplayType() const override {
     return blink::WebMediaPlayer::DisplayType::kInline;
   }
+  void ActivateViewportIntersectionMonitoring(bool activate) override {}
+  void MediaRemotingStarted(const WebString& remote_device_friendly_name) {}
+  void MediaRemotingStopped() {}
 
   // Implementation of cc::VideoFrameProvider::Client
   void StopUsingProvider() override;

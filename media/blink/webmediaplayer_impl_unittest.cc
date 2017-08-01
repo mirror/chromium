@@ -109,6 +109,9 @@ class DummyWebMediaPlayerClient : public blink::WebMediaPlayerClient {
   blink::WebMediaPlayer::DisplayType DisplayType() const override {
     return blink::WebMediaPlayer::DisplayType::kInline;
   }
+  void ActivateViewportIntersectionMonitoring(bool activate) override {}
+  void MediaRemotingStarted(const WebString& remote_device_friendly_name) {}
+  void MediaRemotingStopped() {}
 
   void set_is_autoplaying_muted(bool value) { is_autoplaying_muted_ = value; }
 
