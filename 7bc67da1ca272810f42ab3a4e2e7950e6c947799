@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "081daa5d_959d1167",
+        "filename": "ios/chrome/browser/ui/first_run/first_run_util.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-01T23:22:58Z",
+      "side": 1,
+      "message": "I\u0027ve previously gotten feedback about dereferencing a pointer immediately after DCHECKing it.  Since both would crash at essentially the same place and for the same reason, I\u0027ve been told to just leave the DCHECK out and have the dereference act as self-documentation indicating that the pointer is expected to be non-null.",
+      "parentUuid": "f10bc89a_a6a72dea",
+      "revId": "7bc67da1ca272810f42ab3a4e2e7950e6c947799",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "10bf8d9f_0f7c84e1",
         "filename": "ios/chrome/browser/ui/first_run/first_run_util.mm",
         "patchSetId": 2
@@ -47,6 +65,24 @@
       "writtenOn": "2017-07-31T12:15:44Z",
       "side": 1,
       "message": "|success| is on the stack, so it won\u0027t exist anymore after this method returns, right?  We\u0027ll need to make it a global variable, or find a way to pass around a heap-allocated object instead.\n\nDo the task scheduler APIs allow us to pass arguments around by value?",
+      "revId": "7bc67da1ca272810f42ab3a4e2e7950e6c947799",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1612d0f2_4c899d32",
+        "filename": "ios/chrome/browser/ui/first_run/first_run_util.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-01T23:22:58Z",
+      "side": 1,
+      "message": "Yes, it does; I\u0027ve updated to use the correct API.",
+      "parentUuid": "10bf8d9f_0f7c84e1",
       "revId": "7bc67da1ca272810f42ab3a4e2e7950e6c947799",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
