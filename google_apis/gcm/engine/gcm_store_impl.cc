@@ -299,9 +299,8 @@ LoadStatus GCMStoreImpl::Backend::OpenStoreAndLoadData(StoreOpenMode open_mode,
     return STORE_DOES_NOT_EXIST;
   }
 
-  leveldb::Options options;
+  leveldb::Options options = leveldb_env::CreateDefaultOptions();
   options.create_if_missing = open_mode == CREATE_IF_MISSING;
-  options.reuse_logs = leveldb_env::kDefaultLogReuseOptionValue;
   options.paranoid_checks = true;
   leveldb::Status status =
       leveldb_env::OpenDB(options, path_.AsUTF8Unsafe(), &db_);
@@ -413,8 +412,8 @@ void GCMStoreImpl::Backend::Close() {
 void GCMStoreImpl::Backend::Destroy(const UpdateCallback& callback) {
   DVLOG(1) << "Destroying GCM store.";
   db_.reset();
-  const leveldb::Status s =
-      leveldb::DestroyDB(path_.AsUTF8Unsafe(), leveldb::Options());
+  const leveldb::Status s = leveldb::DestroyDB(
+      path_.AsUTF8Unsafe(), leveldb_env::CreateDefaultOptions());
   if (s.ok()) {
     foreground_task_runner_->PostTask(FROM_HERE, base::Bind(callback, true));
     return;

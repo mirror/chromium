@@ -67,16 +67,9 @@ enum LevelDBStatusValue {
 
 LevelDBStatusValue GetLevelDBStatusUMAValue(const leveldb::Status& s);
 
-// The default value for leveldb::Options::reuse_logs. Currently log reuse is an
-// experimental feature in leveldb. More info at:
-// https://github.com/google/leveldb/commit/251ebf5dc70129ad3
-#if defined(OS_CHROMEOS)
-// Reusing logs on Chrome OS resulted in an unacceptably high leveldb corruption
-// rate (at least for Indexed DB). More info at https://crbug.com/460568
-const bool kDefaultLogReuseOptionValue = false;
-#else
-const bool kDefaultLogReuseOptionValue = true;
-#endif
+// Create the default leveldb options object suitable for leveldb operations.
+// Callers should modify the returned object before use if needed.
+leveldb::Options CreateDefaultOptions();
 
 const char* MethodIDToString(MethodID method);
 

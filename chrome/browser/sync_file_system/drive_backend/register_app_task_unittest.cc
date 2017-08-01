@@ -82,7 +82,7 @@ class RegisterAppTaskTest : public testing::Test {
  protected:
   std::unique_ptr<LevelDBWrapper> OpenLevelDB() {
     std::unique_ptr<leveldb::DB> db;
-    leveldb::Options options;
+    leveldb::Options options = leveldb_env::CreateDefaultOptions();
     options.create_if_missing = true;
     options.env = in_memory_env_.get();
     leveldb::Status status = leveldb_env::OpenDB(

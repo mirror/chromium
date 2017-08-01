@@ -105,7 +105,7 @@ class OnDiskAttachmentStoreSpecificTest : public testing::Test {
 
   std::unique_ptr<leveldb::DB> OpenLevelDB() {
     std::unique_ptr<leveldb::DB> db;
-    leveldb::Options options;
+    leveldb::Options options = leveldb_env::CreateDefaultOptions();
     options.create_if_missing = true;
     leveldb::Status s =
         leveldb_env::OpenDB(options, db_path_.AsUTF8Unsafe(), &db);

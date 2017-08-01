@@ -1106,6 +1106,23 @@ LevelDBStatusValue GetLevelDBStatusUMAValue(const leveldb::Status& s) {
   return LEVELDB_STATUS_INVALID_ARGUMENT;
 }
 
+leveldb::Options CreateDefaultOptions() {
+  leveldb::Options options;
+
+// Currently log reuse is an experimental feature in leveldb. More info at:
+// https://github.com/google/leveldb/commit/251ebf5dc70129ad3
+#if defined(OS_CHROMEOS)
+  // Reusing logs on Chrome OS resulted in an unacceptably high leveldb
+  // corruption rate (at least for Indexed DB). More info at
+  // https://crbug.com/460568
+  options.reuse_logs = false;
+#else
+  options.reuse_logs = true;
+#endif
+
+  return options;
+}
+
 // Forwards all calls to the underlying leveldb::DB instance.
 // Adds / removes itself in the DBTracker it's created with.
 class DBTracker::TrackedDBImpl : public base::LinkNode<TrackedDBImpl>,
