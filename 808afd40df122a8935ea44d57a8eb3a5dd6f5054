@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1dcad80e_20859360",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-01T21:59:04Z",
+      "side": 1,
+      "message": "Nit: This is implicit in the changelist description. Remove this line.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 36
+      },
+      "revId": "808afd40df122a8935ea44d57a8eb3a5dd6f5054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c889dca4_94d25a6c",
+        "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-01T21:59:04Z",
+      "side": 1,
+      "message": "Consistency: One-line if statements with single line conditions don\u0027t use braces in this file.",
+      "range": {
+        "startLine": 67,
+        "startChar": 27,
+        "endLine": 67,
+        "endChar": 29
+      },
+      "revId": "808afd40df122a8935ea44d57a8eb3a5dd6f5054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf6158b2_ff4f05a5",
+        "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-01T21:59:04Z",
+      "side": 1,
+      "message": "Have a static helper in new_tab_button() do this work. This way you can avoid including all of chrome/browser/ui/views in DEPS and specifically request chrome/browser/ui/views/tabs/new_tab_button.h.\n\nThis allows this code to be agnostic to the structure of the underlying tree.",
+      "range": {
+        "startLine": 102,
+        "startChar": 2,
+        "endLine": 102,
+        "endChar": 53
+      },
+      "revId": "808afd40df122a8935ea44d57a8eb3a5dd6f5054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13290f84_14ad93e1",
+        "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-01T21:59:04Z",
+      "side": 1,
+      "message": "This is now multiple lines, so you\u0027ll need braces for the return here.\n\nThis also seems like it should be in a separate CL.",
+      "range": {
+        "startLine": 117,
+        "startChar": 2,
+        "endLine": 118,
+        "endChar": 48
+      },
+      "revId": "808afd40df122a8935ea44d57a8eb3a5dd6f5054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "618cab49_5313d9f3",
+        "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-01T21:59:04Z",
+      "side": 1,
+      "message": "Audit these headers. I don\u0027t see RunLoop used here for example.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 0
+      },
+      "revId": "808afd40df122a8935ea44d57a8eb3a5dd6f5054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c10e607b_3d3c44d0",
+        "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-01T21:59:04Z",
+      "side": 1,
+      "message": "Single colon \u0027:\u0027",
+      "range": {
+        "startLine": 46,
+        "startChar": 38,
+        "endLine": 46,
+        "endChar": 40
+      },
+      "revId": "808afd40df122a8935ea44d57a8eb3a5dd6f5054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf910472_2b1761d1",
+        "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-01T21:59:04Z",
+      "side": 1,
+      "message": "Use this in DEPS to isolate ui/views to tests only.\n\nspecific_include_rules \u003d {\n  \".*test.*\": [\n    \"+chrome/browser/ui/views\",\n  ],\n}",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 92,
+        "endChar": 31
+      },
+      "revId": "808afd40df122a8935ea44d57a8eb3a5dd6f5054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d029bafe_f6fe82a1",
+        "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-01T21:59:04Z",
+      "side": 1,
+      "message": "Include file missing for OmniboxView and OmniboxViewViews.",
+      "range": {
+        "startLine": 105,
+        "startChar": 2,
+        "endLine": 105,
+        "endChar": 13
+      },
+      "revId": "808afd40df122a8935ea44d57a8eb3a5dd6f5054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6f0ca5a_33ea91ef",
+        "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-01T21:59:04Z",
+      "side": 1,
+      "message": "Using the clipboard seems pretty fragile. Is there no way to directly set this text in the omnibox?",
+      "range": {
+        "startLine": 108,
+        "startChar": 0,
+        "endLine": 109,
+        "endChar": 62
+      },
+      "revId": "808afd40df122a8935ea44d57a8eb3a5dd6f5054",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
