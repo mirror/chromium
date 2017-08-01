@@ -38,6 +38,7 @@ public class AccountSigninActivity extends AppCompatActivity
     private static final String INTENT_SELECT_ACCOUNT = "AccountSigninActivity.SelectAccount";
     private static final String INTENT_IS_DEFAULT_ACCOUNT =
             "AccountSigninActivity.IsDefaultAccount";
+    private static final String INTENT_ADD_ACCOUNT = "AccountSigninActivity.AddAccount";
 
     private AccountSigninView mView;
 
@@ -93,6 +94,17 @@ public class AccountSigninActivity extends AppCompatActivity
         context.startActivity(intent);
     }
 
+    /**
+     * Starts AccountSigninActivity from "Add account" page.
+     * @param accessPoint {@link AccessPoint} for starting signin flow. Used in metrics.
+     */
+    public static void startFromAddAccountPage(Context context, @AccessPoint int accessPoint) {
+        Intent intent = new Intent(context, AccountSigninActivity.class);
+        intent.putExtra(INTENT_SIGNIN_ACCESS_POINT, accessPoint);
+        intent.putExtra(INTENT_ADD_ACCOUNT, true);
+        context.startActivity(intent);
+    }
+
     @Override
     @SuppressFBWarnings("DM_EXIT")
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,8 +137,12 @@ public class AccountSigninActivity extends AppCompatActivity
         int imageSize = getResources().getDimensionPixelSize(R.dimen.signin_account_image_size);
         ProfileDataCache profileDataCache =
                 new ProfileDataCache(this, Profile.getLastUsedProfile(), imageSize);
+
+        boolean addAccount = getIntent().getBooleanExtra(INTENT_ADD_ACCOUNT, false);
         String selectAccount = getIntent().getStringExtra(INTENT_SELECT_ACCOUNT);
-        if (selectAccount == null) {
+        if (addAccount) {
+            mView.initFromAddAccountPage(profileDataCache, this, this);
+        } else if (selectAccount == null) {
             mView.initFromSelectionPage(profileDataCache, false, this, this);
         } else {
             boolean isDefaultAccount =
