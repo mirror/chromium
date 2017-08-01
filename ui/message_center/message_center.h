@@ -39,6 +39,7 @@ namespace test {
 class MessagePopupCollectionTest;
 }
 
+class MessageCenterDelegate;
 class MessageCenterObserver;
 class MessageCenterImplTest;
 class NotificationBlocker;
@@ -192,6 +193,12 @@ class MESSAGE_CENTER_EXPORT MessageCenter {
   // UI classes should call this when the popup timers should restart (for
   // example, after the mouse leaves the popup.)
   virtual void RestartPopupTimers() = 0;
+
+  // "Chromium OS" or "Chrome OS" in the current locale.
+  // Return empty string if not on these platforms.
+  virtual base::string16 GetProductOSName() const = 0;
+
+  virtual void SetDelegate(std::unique_ptr<MessageCenterDelegate> delegate) = 0;
 
  protected:
   friend class ::DownloadNotification;
