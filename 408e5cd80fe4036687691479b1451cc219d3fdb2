@@ -22,6 +22,30 @@
       "revId": "408e5cd80fe4036687691479b1451cc219d3fdb2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48454772_b7bdd53a",
+        "filename": "testing/buildbot/chromium.linux.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-01T01:30:06Z",
+      "side": 0,
+      "message": "\u003e We still want it being built as well?\n\nNah. Removing build target is fine as well.",
+      "parentUuid": "516d9810_00e47cea",
+      "range": {
+        "startLine": 10,
+        "startChar": 7,
+        "endLine": 10,
+        "endChar": 25
+      },
+      "revId": "408e5cd80fe4036687691479b1451cc219d3fdb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
