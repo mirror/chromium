@@ -5,4 +5,7 @@ include_rules = [
   "+google/protobuf",
   "+third_party/opus",
   "+third_party/webrtc",
+  "+gpu/command_buffer/service",
+  "+media/video",
+  "+media/gpu",
 ]
