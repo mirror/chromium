@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1da0c2ae_e0944828",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Spectrum.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-01T00:24:21Z",
+      "side": 1,
+      "message": "if (contrastInfo.computedFontSize \u0026\u0026 ...)",
+      "revId": "e068245151664a1e5366e0dff7605b56e945a8ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9305e53_12069f2b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Spectrum.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 889,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-01T00:24:21Z",
+      "side": 1,
+      "message": "I feel like we have enough contrast-related code here to split it up into separate file (and class). I imagine that class will have a couple of hooks (e.g. setContrastInfo() or mouseMovedOverSpectrum()) and getters for elements to place into ColorPicker.",
+      "revId": "e068245151664a1e5366e0dff7605b56e945a8ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fe845ed_4b1114d9",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Spectrum.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 970,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-01T00:24:21Z",
+      "side": 1,
+      "message": "We don\u0027t use innerHTML. Please spit into spans and set textContent on them.",
+      "range": {
+        "startLine": 970,
+        "startChar": 29,
+        "endLine": 970,
+        "endChar": 38
+      },
+      "revId": "e068245151664a1e5366e0dff7605b56e945a8ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "589cd386_7d588425",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Spectrum.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 1011,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-01T00:24:21Z",
+      "side": 1,
+      "message": "Use classes for this.",
+      "revId": "e068245151664a1e5366e0dff7605b56e945a8ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6713b90a_cb87e8ab",
+        "filename": "third_party/WebKit/Source/devtools/front_end/color_picker/Spectrum.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 1013,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-01T00:24:21Z",
+      "side": 1,
+      "message": "Don\u0027t use querySelectorAll - instead save elements to variables when creating.",
+      "revId": "e068245151664a1e5366e0dff7605b56e945a8ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
