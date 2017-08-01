@@ -79,6 +79,14 @@ if (__gCrWeb && !__gCrWeb['fillPasswordForm']) {
     return result;
   };
 
+    var getCanonicalActionForForm_ = function(formElement) {
+        debugger;
+        var raw_action = formElement.getAttribute('action') || "";
+        var absolute_url = __gCrWeb.common.absoluteURL(
+                           formElement.ownerDocument, raw_action);
+        return __gCrWeb.common.removeQueryAndReferenceFromURL(absolute_url);
+    }
+
   /**
    * Returns the password form with the given |name| as a JSON string.
    * @param {string} name The name of the form to extract.
@@ -100,19 +108,15 @@ if (__gCrWeb && !__gCrWeb['fillPasswordForm']) {
    * chrome/renderer/autofill/password_autofill_manager.h.
    * @param {Object} formData Form data.
    * @param {Object} doc A document containing formData.
-   * @param {string=} opt_normalizedAction The action URL to compare to.
    * @return {Array.<Element>} Array of forms found.
    */
-  __gCrWeb.findMatchingPasswordForms = function(formData, doc,
-                                                opt_normalizedAction) {
+  __gCrWeb.findMatchingPasswordForms = function(formData, doc) {
     var forms = doc.forms;
     var fields = formData['fields'];
     var matching = [];
     for (var i = 0; i < forms.length; i++) {
       var form = forms[i];
-      var normalizedFormAction = opt_normalizedAction ||
-          __gCrWeb.common.removeQueryAndReferenceFromURL(
-              __gCrWeb.common.absoluteURL(doc, form.action));
+      var normalizedFormAction = getCanonicalActionForForm_(form);
       if (formData.action != normalizedFormAction) {
         continue;
       }
@@ -209,13 +213,12 @@ if (__gCrWeb && !__gCrWeb['fillPasswordForm']) {
    *      'fields': {Array.{Object.<string, string>}} Field name/value pairs;
    * @param {string} username The username to fill.
    * @param {string} password The password to fill.
-   * @param {string=} opt_normalizedOrigin The origin URL to compare to.
    * @return {boolean} Whether a form field has been filled.
    */
-  __gCrWeb['fillPasswordForm'] = function(formData, username, password,
-                                          opt_normalizedOrigin) {
+  __gCrWeb['fillPasswordForm'] = function(formData, username, password) {
+      debugger;
     return fillPasswordFormWithData_(
-        formData, username, password, window, opt_normalizedOrigin);
+        formData, username, password, window);
   };
 
   /**
@@ -254,22 +257,21 @@ if (__gCrWeb && !__gCrWeb['fillPasswordForm']) {
    * @param {string} username The username to fill.
    * @param {string} password The password to fill.
    * @param {Object} win A window or a frame containing formData.
-   * @param {string=} opt_normalizedOrigin The origin URL to compare to.
    * @return {boolean} Whether a form field has been filled.
    */
   var fillPasswordFormWithData_ = function(
-      formData, username, password, win, opt_normalizedOrigin) {
+      formData, username, password, win) {
     var doc = win.document;
     var origin = formData['origin'];
-    var normalizedOrigin = opt_normalizedOrigin ||
-        __gCrWeb.common.removeQueryAndReferenceFromURL(win.location.href);
+    var normalizedOrigin = __gCrWeb.common.removeQueryAndReferenceFromURL(
+         win.location.href);
     if (origin != normalizedOrigin) {
       return false;
     }
 
     var filled = false;
 
-    __gCrWeb.findMatchingPasswordForms(formData, doc, opt_normalizedOrigin).
+    __gCrWeb.findMatchingPasswordForms(formData, doc).
         forEach(function(form) {
       var usernameInput =
           __gCrWeb.getElementByNameWithParent(form, formData.fields[0].name);
@@ -299,7 +301,7 @@ if (__gCrWeb && !__gCrWeb['fillPasswordForm']) {
     var frames = getSameOriginFrames_(win);
     for (var i = 0; i < frames.length; i++) {
       if (fillPasswordFormWithData_(
-          formData, username, password, frames[i], opt_normalizedOrigin)) {
+          formData, username, password, frames[i])) {
         filled = true;
       }
     }
@@ -455,7 +457,7 @@ if (__gCrWeb && !__gCrWeb['fillPasswordForm']) {
         formElement.ownerDocument.location.href);
 
     return {
-      'action': formElement.getAttribute('action'),
+      'action': getCanonicalActionForForm_(formElement),
       'method': formElement.getAttribute('method'),
       'name': __gCrWeb.common.getFormIdentifier(formElement),
       'origin': origin,
