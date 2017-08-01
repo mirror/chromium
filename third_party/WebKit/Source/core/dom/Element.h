@@ -439,6 +439,7 @@ class CORE_EXPORT Element : public ContainerNode {
   virtual LayoutObject* CreateLayoutObject(const ComputedStyle&);
   virtual bool LayoutObjectIsNeeded(const ComputedStyle&);
   void RecalcStyle(StyleRecalcChange);
+  void RecalcStyleForReattach();
   bool NeedsRebuildLayoutTree(
       const WhitespaceAttacher& whitespace_attacher) const {
     return NeedsReattachLayoutTree() || ChildNeedsReattachLayoutTree() ||
@@ -887,6 +888,10 @@ class CORE_EXPORT Element : public ContainerNode {
   RefPtr<ComputedStyle> PropagateInheritedProperties(StyleRecalcChange);
 
   StyleRecalcChange RecalcOwnStyle(StyleRecalcChange);
+  void RecalcOwnStyleForReattach();
+  void RecalcContainedStyleForReattach();
+  void RecalcShadowRootStylesForReattach();
+
   void RebuildPseudoElementLayoutTree(PseudoId, WhitespaceAttacher&);
   void RebuildShadowRootLayoutTree(WhitespaceAttacher&);
   inline void CheckForEmptyStyleChange();
