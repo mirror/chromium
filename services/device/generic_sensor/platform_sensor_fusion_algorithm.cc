@@ -6,6 +6,8 @@
 
 #include <cmath>
 
+#include "services/device/generic_sensor/platform_sensor.h"
+
 namespace device {
 
 PlatformSensorFusionAlgorithm::PlatformSensorFusionAlgorithm() {}
