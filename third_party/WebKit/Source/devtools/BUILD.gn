@@ -143,6 +143,7 @@ all_devtools_files = [
   "front_end/console/ConsoleView.js",
   "front_end/console/ConsoleViewMessage.js",
   "front_end/console/ConsoleViewport.js",
+  "front_end/console/ExpandableText.js",
   "front_end/console/module.json",
   "front_end/console_counters/errorWarningCounter.css",
   "front_end/console_counters/module.json",
