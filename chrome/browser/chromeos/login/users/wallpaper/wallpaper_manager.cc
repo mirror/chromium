@@ -7,6 +7,7 @@
 #include <utility>
 
 #include "ash/ash_constants.h"
+#include "ash/public/cpp/ash_pref_names.h"
 #include "ash/public/cpp/shelf_types.h"
 #include "ash/public/cpp/window_properties.h"
 #include "ash/public/interfaces/constants.mojom.h"
@@ -612,7 +613,7 @@ void WallpaperManager::RemoveUserWallpaperInfo(const AccountId& account_id) {
       account_id.GetUserEmail(), NULL);
   // Remove the color cache of the previous wallpaper if it exists.
   DictionaryPrefUpdate wallpaper_colors_update(prefs,
-                                               wallpaper::kWallpaperColors);
+                                               ash::prefs::kWallpaperColors);
   wallpaper_colors_update->RemoveWithoutPathExpansion(info.location, nullptr);
   DeleteUserWallpapers(account_id, info.location);
 }
@@ -784,7 +785,7 @@ void WallpaperManager::SetUserWallpaperInfo(const AccountId& account_id,
   WallpaperInfo old_info;
   if (GetUserWallpaperInfo(account_id, &old_info)) {
     DictionaryPrefUpdate wallpaper_colors_update(local_state,
-                                                 wallpaper::kWallpaperColors);
+                                                 ash::prefs::kWallpaperColors);
     wallpaper_colors_update->RemoveWithoutPathExpansion(old_info.location,
                                                         nullptr);
   }

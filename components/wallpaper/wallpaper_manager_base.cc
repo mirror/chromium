@@ -160,8 +160,6 @@ const int kWallpaperThumbnailHeight = 68;
 
 const char kUsersWallpaperInfo[] = "user_wallpaper_info";
 
-const char kWallpaperColors[] = "wallpaper_colors";
-
 const base::FilePath&
 WallpaperManagerBase::CustomizedWallpaperRescaledFiles::path_downloaded()
     const {
@@ -284,7 +282,6 @@ base::FilePath WallpaperManagerBase::GetCustomWallpaperDir(
 // static
 void WallpaperManagerBase::RegisterPrefs(PrefRegistrySimple* registry) {
   registry->RegisterDictionaryPref(kUsersWallpaperInfo);
-  registry->RegisterDictionaryPref(kWallpaperColors);
 }
 
 void WallpaperManagerBase::EnsureLoggedInUserWallpaperLoaded() {

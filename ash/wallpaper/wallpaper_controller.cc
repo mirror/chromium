@@ -9,6 +9,8 @@
 
 #include "ash/ash_switches.h"
 #include "ash/display/window_tree_host_manager.h"
+#include "ash/public/cpp/ash_pref_names.h"
+#include "ash/public/cpp/config.h"
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/root_window_controller.h"
 #include "ash/session/session_controller.h"
@@ -23,6 +25,7 @@
 #include "base/sequenced_task_runner.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/values.h"
+#include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/scoped_user_pref_update.h"
 #include "components/wallpaper/wallpaper_color_calculator.h"
 #include "components/wallpaper/wallpaper_color_profile.h"
@@ -53,11 +56,14 @@ constexpr int kCompositorLockTimeoutMs = 750;
 // Caches color calculation results in local state pref service.
 void CacheProminentColors(const std::vector<SkColor>& colors,
                           const std::string& current_location) {
-  // Local state is null in the case of Config::MASH.
-  if (!Shell::Get()->GetLocalStatePrefService())
+  // Local state can be null in tests.
+  // TODO(crbug.com/751191): Remove the check for Mash.
+  if (Shell::GetAshConfig() == Config::MASH ||
+      !Shell::Get()->GetLocalStatePrefService()) {
     return;
+  }
   DictionaryPrefUpdate wallpaper_colors_update(
-      Shell::Get()->GetLocalStatePrefService(), wallpaper::kWallpaperColors);
+      Shell::Get()->GetLocalStatePrefService(), prefs::kWallpaperColors);
   auto wallpaper_colors = base::MakeUnique<base::ListValue>();
   for (SkColor color : colors)
     wallpaper_colors->AppendDouble(static_cast<double>(color));
@@ -71,11 +77,13 @@ base::Optional<std::vector<SkColor>> GetCachedColors(
     const std::string& current_location) {
   base::Optional<std::vector<SkColor>> cached_colors_out;
   const base::ListValue* prominent_colors = nullptr;
-  // Local state is null in the case of Config::MASH.
-  if (!Shell::Get()->GetLocalStatePrefService() ||
+  // Local state can be null in tests.
+  // TODO(crbug.com/751191): Remove the check for Mash.
+  if (Shell::GetAshConfig() == Config::MASH ||
+      !Shell::Get()->GetLocalStatePrefService() ||
       !Shell::Get()
            ->GetLocalStatePrefService()
-           ->GetDictionary(wallpaper::kWallpaperColors)
+           ->GetDictionary(prefs::kWallpaperColors)
            ->GetListWithoutPathExpansion(current_location, &prominent_colors)) {
     return cached_colors_out;
   }
@@ -175,6 +183,12 @@ WallpaperController::~WallpaperController() {
     color_calculator_->RemoveObserver(this);
   Shell::Get()->window_tree_host_manager()->RemoveObserver(this);
   Shell::Get()->RemoveShellObserver(this);
+}
+
+// static
+void WallpaperController::RegisterLocalStatePrefs(
+    PrefRegistrySimple* registry) {
+  registry->RegisterDictionaryPref(prefs::kWallpaperColors);
 }
 
 void WallpaperController::BindRequest(
