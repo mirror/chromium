@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0eab7c63_963f6504",
+        "filename": "ios/chrome/browser/ui/ntp/new_tab_page_toolbar_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-01T18:16:55Z",
+      "side": 1,
+      "message": "I guess this is necessary because we\u0027re changing dispatcher for this class to adhere to additional protocols?",
+      "range": {
+        "startLine": 62,
+        "startChar": 9,
+        "endLine": 62,
+        "endChar": 19
+      },
+      "revId": "2a48e954186bf411517a21b3b1dd336cb23cb45b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
