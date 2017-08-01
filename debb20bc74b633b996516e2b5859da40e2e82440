@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1804d7cc_a116f691",
+        "filename": "cc/resources/resource_provider_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1814,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-08-01T19:37:53Z",
+      "side": 0,
+      "message": "We should be checking returned_to_child still no? That\u0027s the whole point of this test?",
+      "revId": "debb20bc74b633b996516e2b5859da40e2e82440",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7ffd087_3a6f8bbb",
+        "filename": "cc/resources/resource_provider_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1933,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-08-01T19:37:53Z",
+      "side": 0,
+      "message": "same?",
+      "revId": "debb20bc74b633b996516e2b5859da40e2e82440",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
