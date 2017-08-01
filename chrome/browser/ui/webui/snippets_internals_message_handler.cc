@@ -33,18 +33,21 @@
 #include "components/ntp_snippets/category_rankers/category_ranker.h"
 #include "components/ntp_snippets/features.h"
 #include "components/ntp_snippets/pref_names.h"
+#include "components/ntp_snippets/remote/proto/ntp_snippets.pb.h"
+#include "components/ntp_snippets/remote/remote_suggestion_builder.h"
 #include "components/ntp_snippets/remote/remote_suggestions_fetcher.h"
 #include "components/ntp_snippets/remote/remote_suggestions_provider.h"
+#include "components/ntp_snippets/remote/remote_suggestions_provider_impl.h"
 #include "components/ntp_snippets/switches.h"
 #include "components/offline_pages/core/offline_page_feature.h"
 #include "components/prefs/pref_service.h"
 #include "components/variations/variations_associated_data.h"
 #include "content/public/browser/web_ui.h"
 
-using ntp_snippets::ContentSuggestion;
 using ntp_snippets::Category;
 using ntp_snippets::CategoryInfo;
 using ntp_snippets::CategoryStatus;
+using ntp_snippets::ContentSuggestion;
 using ntp_snippets::KnownCategories;
 using ntp_snippets::RemoteSuggestionsProvider;
 using ntp_snippets::UserClassifier;
@@ -191,6 +194,12 @@ void SnippetsInternalsMessageHandler::RegisterMessages() {
       base::Bind(&SnippetsInternalsMessageHandler::
                      FetchRemoteSuggestionsInTheBackground,
                  base::Unretained(this)));
+
+  web_ui()->RegisterMessageCallback(
+      "pushDummySuggestionIn10Seconds",
+      base::Bind(
+          &SnippetsInternalsMessageHandler::PushDummySuggestionIn10Seconds,
+          base::Unretained(this)));
 
   web_ui()->RegisterMessageCallback(
       "refreshContent",
@@ -346,6 +355,35 @@ void SnippetsInternalsMessageHandler::FetchRemoteSuggestionsInTheBackground(
   DCHECK_EQ(0u, args->GetSize());
   remote_suggestions_provider_->RefetchInTheBackground(
       RemoteSuggestionsProvider::FetchStatusCallback());
+}
+
+void SnippetsInternalsMessageHandler::PushDummySuggestionInternal() {
+  static_cast<ntp_snippets::RemoteSuggestionsProviderImpl*>(
+      remote_suggestions_provider_)
+      ->PushArticleSuggestionsToTheFrontForDebugging(
+          ntp_snippets::test::RemoteSuggestionBuilder()
+              .SetTitle("Pushed Dummy Title " +
+                        base::UTF16ToUTF8(
+                            base::TimeFormatTimeOfDay(base::Time::Now())))
+              .SetSnippet("Pushed Dummy Snippet")
+              .SetImageUrl("https://www.google.com/favicon.ico")
+              .SetPublishDate(base::Time::Now())
+              .SetExpiryDate(base::Time::Now() +
+                             base::TimeDelta::FromMinutes(60))
+              .SetScore(1)
+              .SetIsDismissed(false)
+              .SetRemoteCategoryId(1)
+              .SetUrl("http://url.com/")
+              .SetPublisher("Pushed Dummy Publisher")
+              .Build());
+}
+
+void SnippetsInternalsMessageHandler::PushDummySuggestionIn10Seconds(
+    const base::ListValue* args) {
+  suggestion_push_timer_.Start(
+      FROM_HERE, base::TimeDelta::FromSeconds(10),
+      base::Bind(&SnippetsInternalsMessageHandler::PushDummySuggestionInternal,
+                 weak_ptr_factory_.GetWeakPtr()));
 }
 
 void SnippetsInternalsMessageHandler::SendAllContent() {
