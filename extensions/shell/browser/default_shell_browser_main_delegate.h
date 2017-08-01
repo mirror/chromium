@@ -21,7 +21,8 @@ class DefaultShellBrowserMainDelegate : public ShellBrowserMainDelegate {
   // ShellBrowserMainDelegate:
   void Start(content::BrowserContext* context) override;
   void Shutdown() override;
-  DesktopController* CreateDesktopController() override;
+  DesktopController* CreateDesktopController(
+      content::BrowserContext* browser_context) override;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(DefaultShellBrowserMainDelegate);

@@ -181,8 +181,6 @@ void ShellBrowserMainParts::PreMainMessageLoopRun() {
 
   storage_monitor::StorageMonitor::Create();
 
-  desktop_controller_.reset(browser_main_delegate_->CreateDesktopController());
-
   // TODO(jamescook): Initialize user_manager::UserManager.
 
   device_client_.reset(new ShellDeviceClient);
@@ -210,6 +208,9 @@ void ShellBrowserMainParts::PreMainMessageLoopRun() {
 
   BrowserContextDependencyManager::GetInstance()->CreateBrowserContextServices(
       browser_context_.get());
+
+  desktop_controller_.reset(
+      browser_main_delegate_->CreateDesktopController(browser_context_.get()));
 
   // Initialize OAuth2 support from command line.
   base::CommandLine* cmd = base::CommandLine::ForCurrentProcess();

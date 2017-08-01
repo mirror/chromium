@@ -11,6 +11,7 @@
 #include "base/path_service.h"
 #include "base/strings/string_tokenizer.h"
 #include "build/build_config.h"
+#include "content/public/browser/browser_context.h"
 #include "extensions/common/switches.h"
 #include "extensions/shell/browser/shell_extension_system.h"
 
@@ -101,9 +102,10 @@ void DefaultShellBrowserMainDelegate::Start(
 void DefaultShellBrowserMainDelegate::Shutdown() {
 }
 
-DesktopController* DefaultShellBrowserMainDelegate::CreateDesktopController() {
+DesktopController* DefaultShellBrowserMainDelegate::CreateDesktopController(
+    content::BrowserContext* browser_context) {
 #if defined(USE_AURA)
-  return new ShellDesktopControllerAura();
+  return new ShellDesktopControllerAura(browser_context);
 #elif defined(OS_MACOSX)
   return new ShellDesktopControllerMac();
 #else
