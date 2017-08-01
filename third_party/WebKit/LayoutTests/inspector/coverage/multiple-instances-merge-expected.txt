@@ -1,7 +1,7 @@
 
 Tests the coverage list view after finishing recording in the Coverage view.
 
-.../inspector/coverage/resources/coverage.js JS used: 277 unused: 125 total: 402
+.../inspector/coverage/resources/coverage.js JS used: 265 unused: 137 total: 402
 .../inspector/coverage/resources/highlight-in-source.css CSS used: 90 unused: 119 total: 209
 0: + body {
 1: +     background-color: lightblue;
@@ -35,16 +35,16 @@ Tests the coverage list view after finishing recording in the Coverage view.
 5:   
 6: +   function inner2(a) {
 7: +     return a + 2;
-8: +   }
+8: -   }
 9:   
 10: +   function inner3(a) { return a + 3; } function inner4(a) { return a + 4; } function inner5(a) { return a + 5; }
 11:   
 12: +   return [inner1, inner2, inner3, inner4, inner5][index];
-13: + }
+13: - }
 14:   
 15: + function performActions() {
 16: +   return outer(1)(0) + outer(3)(0);
-17: + } function outer2() {
+17: - } function outer2() {
 18: -   return outer(0)(0);
 19: - }
 20:   
