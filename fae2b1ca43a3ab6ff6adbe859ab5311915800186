@@ -22,6 +22,30 @@
       "revId": "fae2b1ca43a3ab6ff6adbe859ab5311915800186",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d5c124f_9b20855f",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-01T15:30:21Z",
+      "side": 1,
+      "message": "This referrer is used to signal that this URL opening comes from ContentSuggestions and thus should not be taken into account when calculating the Most Visited tiles.\nI don\u0027t see the link with Bookmarks as this is only related to ContentSuggestions. The name PAGE_TRANSITION_AUTO_BOOKMARK is misleading as it is the transition used by all UI-trigger transition (i.e. Reading List, Content Suggestions, (probably) recent tabs...)",
+      "parentUuid": "edf0f734_aab6882a",
+      "range": {
+        "startLine": 197,
+        "startChar": 22,
+        "endLine": 197,
+        "endChar": 34
+      },
+      "revId": "fae2b1ca43a3ab6ff6adbe859ab5311915800186",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
