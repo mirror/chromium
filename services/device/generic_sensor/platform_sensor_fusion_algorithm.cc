@@ -6,11 +6,19 @@
 
 #include <cmath>
 
+#include "services/device/generic_sensor/platform_sensor.h"
+
 namespace device {
 
 PlatformSensorFusionAlgorithm::PlatformSensorFusionAlgorithm() {}
 
 PlatformSensorFusionAlgorithm::~PlatformSensorFusionAlgorithm() = default;
+
+void PlatformSensorFusionAlgorithm::set_source_sensors(
+    const std::vector<scoped_refptr<PlatformSensor>>& source_sensors) {
+  source_sensors_ = source_sensors;
+  readings_.resize(source_sensors_.size());
+}
 
 bool PlatformSensorFusionAlgorithm::IsReadingSignificantlyDifferent(
     const SensorReading& reading1,
@@ -24,5 +32,14 @@ bool PlatformSensorFusionAlgorithm::IsReadingSignificantlyDifferent(
 void PlatformSensorFusionAlgorithm::Reset() {}
 
 void PlatformSensorFusionAlgorithm::SetFrequency(double) {}
+
+bool PlatformSensorFusionAlgorithm::UpdateReadings() {
+  for (size_t i = 0; i < source_sensors_.size(); ++i) {
+    if (!source_sensors_[i]->GetLatestReading(&readings_[i]))
+      return false;
+  }
+
+  return true;
+}
 
 }  // namespace device

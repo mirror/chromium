@@ -40,22 +40,27 @@ OrientationQuaternionFusionAlgorithmUsingEulerAngles::
 OrientationQuaternionFusionAlgorithmUsingEulerAngles::
     ~OrientationQuaternionFusionAlgorithmUsingEulerAngles() = default;
 
-void OrientationQuaternionFusionAlgorithmUsingEulerAngles::GetFusedData(
-    const std::vector<SensorReading>& readings,
+bool OrientationQuaternionFusionAlgorithmUsingEulerAngles::GetFusedData(
+    mojom::SensorType which_sensor_changed,
     SensorReading* fused_reading) {
   // Transform the *_ORIENTATION_EULER_ANGLES values to
   // *_ORIENTATION_QUATERNION.
-  DCHECK(readings.size() == 1);
+  DCHECK(readings_.size() == 1);
 
-  double beta = readings[0].values[0].value();
-  double gamma = readings[0].values[1].value();
-  double alpha = readings[0].values[2].value();
+  if (!UpdateReadings())
+    return false;
+
+  double beta = readings_[0].values[0].value();
+  double gamma = readings_[0].values[1].value();
+  double alpha = readings_[0].values[2].value();
   double x, y, z, w;
   ComputeQuaternionFromEulerAngles(alpha, beta, gamma, &x, &y, &z, &w);
   fused_reading->values[0].value() = x;
   fused_reading->values[1].value() = y;
   fused_reading->values[2].value() = z;
   fused_reading->values[3].value() = w;
+
+  return true;
 }
 
 }  // namespace device
