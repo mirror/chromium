@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7ef1533_a387ee37",
+        "filename": "content/browser/web_contents/aura/gesture_nav_simple.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-01T02:36:09Z",
+      "side": 1,
+      "message": "Instead of ArrowLayer is-a ui::Layer, can ArrowLayer has-a ui::Layer instead?",
+      "revId": "bc6e5a174a823085155d7c58f585f06a21118075",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73b0cd81_2e094f81",
+        "filename": "content/browser/web_contents/aura/gesture_nav_simple.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-01T02:36:09Z",
+      "side": 1,
+      "message": "This doesn\u0027t need to be a unique_ptr\u003c\u003e, does it?",
+      "revId": "bc6e5a174a823085155d7c58f585f06a21118075",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9e48bb5_71aa088d",
+        "filename": "content/browser/web_contents/aura/gesture_nav_simple.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-01T02:36:09Z",
+      "side": 1,
+      "message": "Have an UpdateLayers() function that calls both?",
+      "revId": "bc6e5a174a823085155d7c58f585f06a21118075",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
