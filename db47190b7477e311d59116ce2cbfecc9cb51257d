@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "173f6704_cdf450cf",
+        "filename": "services/ui/ws/test_frame_sink_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-01T19:23:04Z",
+      "side": 1,
+      "message": "private: DISALLOW...",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 1
+      },
+      "revId": "db47190b7477e311d59116ce2cbfecc9cb51257d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbf01d75_ba1ff205",
+        "filename": "services/ui/ws/test_gpu_host.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-01T19:23:04Z",
+      "side": 1,
+      "message": "private: DISALLOW...",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 2
+      },
+      "revId": "db47190b7477e311d59116ce2cbfecc9cb51257d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
