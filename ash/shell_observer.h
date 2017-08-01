@@ -87,6 +87,8 @@ class ASH_EXPORT ShellObserver {
   // http://crbug.com/705347
   virtual void OnActiveUserPrefServiceChanged(PrefService* pref_service) {}
 
+  virtual void OnLocalStatePrefServiceChanged(PrefService* pref_service) {}
+
  protected:
   virtual ~ShellObserver() {}
 };

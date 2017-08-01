@@ -76,6 +76,7 @@
 #include "ash/system/network/sms_observer.h"
 #include "ash/system/network/vpn_list.h"
 #include "ash/system/night_light/night_light_controller.h"
+#include "ash/system/palette/palette_tray.h"
 #include "ash/system/power/power_event_observer.h"
 #include "ash/system/power/power_status.h"
 #include "ash/system/power/video_activity_notifier.h"
@@ -324,6 +325,11 @@ bool Shell::ShouldUseIMEService() {
          (Shell::GetAshConfig() == Config::MUS &&
           base::CommandLine::ForCurrentProcess()->HasSwitch(
               switches::kUseIMEService));
+}
+
+// static
+void Shell::RegisterPrefs(PrefRegistrySimple* registry) {
+  PaletteTray::RegisterPrefs(registry);
 }
 
 // static
@@ -847,6 +853,7 @@ void Shell::Init(const ShellInitParams& init_params) {
     // connecting to the profile pref service. The login screen has a temporary
     // user profile that is not associated with a real user.
     auto pref_registry = base::MakeRefCounted<PrefRegistrySimple>();
+    RegisterPrefs(pref_registry.get());
     prefs::ConnectToPrefService(
         shell_delegate_->GetShellConnector(), std::move(pref_registry),
         base::Bind(&Shell::OnLocalStatePrefServiceInitialized,
@@ -1326,6 +1333,9 @@ void Shell::OnLocalStatePrefServiceInitialized(
     std::unique_ptr<::PrefService> pref_service) {
   // |pref_service| is null if can't connect to Chrome (as happens when
   // running mash outside of chrome --mash and chrome isn't built).
+  for (auto& observer : shell_observers_)
+    observer.OnLocalStatePrefServiceChanged(pref_service.get());
+
   local_state_ = std::move(pref_service);
 }
 
