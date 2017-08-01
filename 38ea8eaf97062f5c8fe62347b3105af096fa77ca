@@ -164,6 +164,30 @@
       "revId": "38ea8eaf97062f5c8fe62347b3105af096fa77ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ecd2701a_5218d517",
+        "filename": "chrome/browser/android/ntp/ntp_snippets_bridge.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-08-01T08:08:49Z",
+      "side": 1,
+      "message": "Added to http://crbug.com/750651",
+      "parentUuid": "299ef1ef_72a0992a",
+      "range": {
+        "startLine": 356,
+        "startChar": 8,
+        "endLine": 356,
+        "endChar": 38
+      },
+      "revId": "38ea8eaf97062f5c8fe62347b3105af096fa77ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
