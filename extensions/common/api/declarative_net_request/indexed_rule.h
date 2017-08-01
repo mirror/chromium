@@ -30,6 +30,8 @@ enum class ParseResult;
 struct IndexedRule {
   IndexedRule();
   ~IndexedRule();
+  IndexedRule(IndexedRule&&);
+  IndexedRule& operator=(IndexedRule&&);
 
   // These fields correspond to the attributes of a flatbuffer UrlRule, as
   // specified by the url_pattern_index component.
