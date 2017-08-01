@@ -84,6 +84,8 @@ static_library("test_support") {
     "base/testing_profile_manager.h",
     "base/tracing.cc",
     "base/tracing.h",
+    "chrome/test/base/test_chrome_content_browser_client.cc",
+    "chrome/test/base/test_chrome_content_browser_client.h",
     "logging/win/file_logger.cc",
     "logging/win/file_logger.h",
     "logging/win/log_file_printer.cc",
