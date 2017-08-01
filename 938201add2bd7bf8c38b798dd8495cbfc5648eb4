@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2facfb80_70889179",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_impl.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-08-01T23:53:10Z",
+      "side": 1,
+      "message": "Ack. I will remove this. I needed the non-const version to call GetAssociatedCoordinationUnitsOfType on the main frame of a tab, but it is indeed unnecessary.",
+      "parentUuid": "75a6dc2a_aa2bd1b3",
+      "revId": "938201add2bd7bf8c38b798dd8495cbfc5648eb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d3f3810b_d0149f28",
         "filename": "services/resource_coordinator/coordination_unit/web_contents_coordination_unit_impl.cc",
         "patchSetId": 20
@@ -33,6 +51,24 @@
       "revId": "938201add2bd7bf8c38b798dd8495cbfc5648eb4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db950a4c_6aa8c20a",
+        "filename": "services/resource_coordinator/coordination_unit/web_contents_coordination_unit_impl.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-08-01T23:53:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3f3810b_d0149f28",
+      "revId": "938201add2bd7bf8c38b798dd8495cbfc5648eb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
