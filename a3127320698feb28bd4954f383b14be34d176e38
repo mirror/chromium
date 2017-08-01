@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "8c1d510c_e83569b6",
+        "filename": "net/disk_cache/backend_cleanup_tracker.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-08-01T17:10:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d40d4b6_22e25672",
+      "range": {
+        "startLine": 34,
+        "startChar": 9,
+        "endLine": 34,
+        "endChar": 30
+      },
+      "revId": "a3127320698feb28bd4954f383b14be34d176e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51028a5e_11640d87",
         "filename": "net/disk_cache/backend_cleanup_tracker.h",
         "patchSetId": 10
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "702ee801_0d41b2cf",
+        "filename": "net/disk_cache/backend_cleanup_tracker.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-08-01T17:10:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51028a5e_11640d87",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 23
+      },
+      "revId": "a3127320698feb28bd4954f383b14be34d176e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23beb36a_ed83147f",
         "filename": "net/disk_cache/backend_unittest.cc",
         "patchSetId": 10
@@ -82,6 +130,24 @@
       "writtenOn": "2017-08-01T15:17:00Z",
       "side": 1,
       "message": "Can you add \u0027base::RunLoop().RunUntilIdle();\u0027 above this line to further verify that cb2 isn\u0027t ready yet?",
+      "revId": "a3127320698feb28bd4954f383b14be34d176e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4eda0ec4_f539e352",
+        "filename": "net/disk_cache/backend_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-08-01T17:10:01Z",
+      "side": 1,
+      "message": "That\u0027s what FlushCacheThreadForTesting is for. base::RunLoop().RunUntilIdle seems deprecated by the scheduler work, too.",
+      "parentUuid": "23beb36a_ed83147f",
       "revId": "a3127320698feb28bd4954f383b14be34d176e38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -108,6 +174,30 @@
       "revId": "a3127320698feb28bd4954f383b14be34d176e38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec2f63cc_d1ce2daa",
+        "filename": "net/disk_cache/backend_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-08-01T17:10:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4bb12278_8c1de592",
+      "range": {
+        "startLine": 531,
+        "startChar": 8,
+        "endLine": 531,
+        "endChar": 9
+      },
+      "revId": "a3127320698feb28bd4954f383b14be34d176e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -180,6 +270,78 @@
     },
     {
       "key": {
+        "uuid": "16960ada_747f23af",
+        "filename": "net/disk_cache/backend_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-08-01T17:10:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc85833e_afe45e66",
+      "range": {
+        "startLine": 538,
+        "startChar": 29,
+        "endLine": 538,
+        "endChar": 38
+      },
+      "revId": "a3127320698feb28bd4954f383b14be34d176e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7189e931_d08b52b5",
+        "filename": "net/disk_cache/backend_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-08-01T17:10:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8100f3cc_f651df3d",
+      "range": {
+        "startLine": 538,
+        "startChar": 23,
+        "endLine": 538,
+        "endChar": 28
+      },
+      "revId": "a3127320698feb28bd4954f383b14be34d176e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "acd019a7_8ab5e8bb",
+        "filename": "net/disk_cache/backend_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-08-01T17:10:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8fb4d07c_a25b3d02",
+      "range": {
+        "startLine": 538,
+        "startChar": 10,
+        "endLine": 538,
+        "endChar": 16
+      },
+      "revId": "a3127320698feb28bd4954f383b14be34d176e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "884043cb_97b9ce89",
         "filename": "net/disk_cache/backend_unittest.cc",
         "patchSetId": 10
@@ -191,6 +353,24 @@
       "writtenOn": "2017-08-01T15:17:00Z",
       "side": 1,
       "message": "Similarly, RunUntilIdle here",
+      "revId": "a3127320698feb28bd4954f383b14be34d176e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e750877_3bab35ba",
+        "filename": "net/disk_cache/backend_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-08-01T17:10:01Z",
+      "side": 1,
+      "message": "Likewise, FlushCacheThreadForTesting.",
+      "parentUuid": "884043cb_97b9ce89",
       "revId": "a3127320698feb28bd4954f383b14be34d176e38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -260,6 +440,30 @@
     },
     {
       "key": {
+        "uuid": "ad37271a_e104d55a",
+        "filename": "net/disk_cache/disk_cache.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-08-01T17:10:01Z",
+      "side": 1,
+      "message": "Can\u0027t do that since the types differ, created_cache_ is a unique_ptr\u003cdisk_cache::Backend\u003e, and one needs a pointer to concrete subtype to call Init. (Likewise for block stuff below).",
+      "parentUuid": "c15a06ca_b70e218f",
+      "range": {
+        "startLine": 113,
+        "startChar": 8,
+        "endLine": 113,
+        "endChar": 11
+      },
+      "revId": "a3127320698feb28bd4954f383b14be34d176e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "64f8db85_71e0a029",
         "filename": "net/disk_cache/disk_cache.cc",
         "patchSetId": 10
@@ -280,6 +484,30 @@
       "revId": "a3127320698feb28bd4954f383b14be34d176e38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19934aea_c1474582",
+        "filename": "net/disk_cache/disk_cache.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-08-01T17:10:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64f8db85_71e0a029",
+      "range": {
+        "startLine": 147,
+        "startChar": 73,
+        "endLine": 147,
+        "endChar": 75
+      },
+      "revId": "a3127320698feb28bd4954f383b14be34d176e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -306,6 +534,30 @@
     },
     {
       "key": {
+        "uuid": "1977c189_5a38323c",
+        "filename": "net/disk_cache/disk_cache.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-08-01T17:10:01Z",
+      "side": 1,
+      "message": "Hmm, can\u0027t agree, since this is the rationale for storing the pointer.",
+      "parentUuid": "7587a4fe_579d0122",
+      "range": {
+        "startLine": 151,
+        "startChar": 61,
+        "endLine": 151,
+        "endChar": 70
+      },
+      "revId": "a3127320698feb28bd4954f383b14be34d176e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6ac882c_8dc05ad7",
         "filename": "net/disk_cache/disk_cache.cc",
         "patchSetId": 10
@@ -317,6 +569,30 @@
       "writtenOn": "2017-08-01T15:17:00Z",
       "side": 1,
       "message": "attempts. |post_cleanup_callback_| gets called after ...",
+      "range": {
+        "startLine": 153,
+        "startChar": 30,
+        "endLine": 153,
+        "endChar": 36
+      },
+      "revId": "a3127320698feb28bd4954f383b14be34d176e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0db2eaa_20fa3cbb",
+        "filename": "net/disk_cache/disk_cache.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-08-01T17:10:01Z",
+      "side": 1,
+      "message": "likewise. (Got rid of a bogus comma, though).",
+      "parentUuid": "c6ac882c_8dc05ad7",
       "range": {
         "startLine": 153,
         "startChar": 30,
@@ -421,6 +697,30 @@
     },
     {
       "key": {
+        "uuid": "d19efd74_27cc3423",
+        "filename": "net/disk_cache/simple/simple_index.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-08-01T17:10:01Z",
+      "side": 1,
+      "message": "It\u0027s being shared, though, not moved?\n(the backend needs its own copies since it needs to pass it to entries)",
+      "parentUuid": "11b8c94c_f1917d52",
+      "range": {
+        "startLine": 110,
+        "startChar": 14,
+        "endLine": 110,
+        "endChar": 35
+      },
+      "revId": "a3127320698feb28bd4954f383b14be34d176e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6a09793c_b46e8bf2",
         "filename": "net/disk_cache/simple/simple_index_file_unittest.cc",
         "patchSetId": 10
@@ -432,6 +732,30 @@
       "writtenOn": "2017-08-01T15:17:00Z",
       "side": 1,
       "message": "Can you add /**/ comments on the nullptr arguments so we can tell what they are?",
+      "range": {
+        "startLine": 339,
+        "startChar": 52,
+        "endLine": 339,
+        "endChar": 59
+      },
+      "revId": "a3127320698feb28bd4954f383b14be34d176e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b8c48e9_f040ad16",
+        "filename": "net/disk_cache/simple/simple_index_file_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-08-01T17:10:01Z",
+      "side": 1,
+      "message": "Did that --- and noticed that we were meant to be passing the cache thread here --- though maybe this should be rewritten for the new API instead, WDYT? (See the comment on line 348(",
+      "parentUuid": "6a09793c_b46e8bf2",
       "range": {
         "startLine": 339,
         "startChar": 52,
@@ -467,6 +791,54 @@
     },
     {
       "key": {
+        "uuid": "e8fb0b32_3b30c484",
+        "filename": "net/disk_cache/simple/simple_index_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-08-01T17:10:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f395acf_722fbc96",
+      "range": {
+        "startLine": 115,
+        "startChar": 33,
+        "endLine": 115,
+        "endChar": 50
+      },
+      "revId": "a3127320698feb28bd4954f383b14be34d176e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f4190d86_c3a3b1c7",
+        "filename": "net/disk_cache/simple/simple_index_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-08-01T17:10:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f395acf_722fbc96",
+      "range": {
+        "startLine": 115,
+        "startChar": 33,
+        "endLine": 115,
+        "endChar": 50
+      },
+      "revId": "a3127320698feb28bd4954f383b14be34d176e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c54caeda_56c86702",
         "filename": "net/tools/crash_cache/crash_cache.cc",
         "patchSetId": 10
@@ -481,6 +853,24 @@
       "revId": "a3127320698feb28bd4954f383b14be34d176e38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e50524db_281da0aa",
+        "filename": "net/tools/crash_cache/crash_cache.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-08-01T17:10:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c54caeda_56c86702",
+      "revId": "a3127320698feb28bd4954f383b14be34d176e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
