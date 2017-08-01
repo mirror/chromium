@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3da03ddc_73ed8191",
+        "filename": "ui/file_manager/file_manager/common/js/util.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1182,
+      "author": {
+        "id": 1110159
+      },
+      "writtenOn": "2017-08-01T04:53:24Z",
+      "side": 1,
+      "message": "nit: isTouchModeEnabled might be better as we get an boolean value.",
+      "revId": "1f544fb9621607ecc32a54bb10f1ca8e38817dce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
