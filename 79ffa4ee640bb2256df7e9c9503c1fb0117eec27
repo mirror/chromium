@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73815adb_ebc5b558",
+        "filename": "cc/scheduler/scheduler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-01T03:06:21Z",
+      "side": 1,
+      "message": "Should we consider the fudge factor used above for deciding the deadline here as well?",
+      "range": {
+        "startLine": 384,
+        "startChar": 34,
+        "endLine": 384,
+        "endChar": 54
+      },
+      "revId": "79ffa4ee640bb2256df7e9c9503c1fb0117eec27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
