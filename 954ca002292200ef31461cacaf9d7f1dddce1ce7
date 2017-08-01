@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "191f9ac8_106c2b4e",
+        "filename": "content/renderer/gpu/render_widget_compositor.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-01T18:46:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51741546_31aa795d",
+      "revId": "954ca002292200ef31461cacaf9d7f1dddce1ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd0b47a4_0b6983ad",
         "filename": "third_party/WebKit/Source/core/paint/FirstMeaningfulPaintDetector.cpp",
         "patchSetId": 12
@@ -33,6 +51,24 @@
       "revId": "954ca002292200ef31461cacaf9d7f1dddce1ce7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22dbeec5_1ab8dc73",
+        "filename": "third_party/WebKit/Source/core/paint/FirstMeaningfulPaintDetector.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-01T18:46:45Z",
+      "side": 1,
+      "message": "Thanks for the insight here! I s/GPU // in this comment (and others) as well.",
+      "parentUuid": "dd0b47a4_0b6983ad",
+      "revId": "954ca002292200ef31461cacaf9d7f1dddce1ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5ffb6ee1_09901fc3",
+        "filename": "third_party/WebKit/Source/core/paint/FirstMeaningfulPaintDetector.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-01T18:46:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99b2f6d3_c327436c",
+      "revId": "954ca002292200ef31461cacaf9d7f1dddce1ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6fb78edb_a06d6bc8",
         "filename": "third_party/WebKit/Source/core/paint/PaintTiming.h",
         "patchSetId": 12
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "e629bddb_440549d8",
+        "filename": "third_party/WebKit/Source/core/paint/PaintTiming.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-01T18:46:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6fb78edb_a06d6bc8",
+      "revId": "954ca002292200ef31461cacaf9d7f1dddce1ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce43bb51_9066ce68",
         "filename": "third_party/WebKit/public/platform/WebLayerTreeView.h",
         "patchSetId": 12
@@ -84,6 +156,24 @@
       "revId": "954ca002292200ef31461cacaf9d7f1dddce1ce7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d63e0e1_9aafafab",
+        "filename": "third_party/WebKit/public/platform/WebLayerTreeView.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-01T18:46:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce43bb51_9066ce68",
+      "revId": "954ca002292200ef31461cacaf9d7f1dddce1ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
