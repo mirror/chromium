@@ -251,6 +251,8 @@ source_set("test_support") {
     "mock_content_suggestions_provider_observer.h",
     "offline_pages/offline_pages_test_utils.cc",
     "offline_pages/offline_pages_test_utils.h",
+    "remote/remote_suggestion_builder.cc",
+    "remote/remote_suggestion_builder.h",
   ]
 
   deps = [
