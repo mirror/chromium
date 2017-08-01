@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ea2248fe_0680a055",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-08-01T05:34:43Z",
+      "side": 1,
+      "message": "Yes it will - the old code has separate (re)setCategoryPermissionForPattern() methods, but resetting and setting permissions is now all done through setOriginPermissions in Site Details.",
+      "parentUuid": "78cc9d17_fa020b88",
+      "revId": "c520f196781888668e9a9fb97ea9fa7b5563bbe0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f630ed37_27273ea3",
         "filename": "chrome/browser/ui/webui/settings/site_settings_handler.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "c520f196781888668e9a9fb97ea9fa7b5563bbe0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a730ca16_a228686c",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-08-01T05:34:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f630ed37_27273ea3",
+      "revId": "c520f196781888668e9a9fb97ea9fa7b5563bbe0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c85d02bf_e128b08a",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-08-01T05:34:43Z",
+      "side": 1,
+      "message": ":)",
+      "parentUuid": "e1de0beb_ff7902fb",
+      "revId": "c520f196781888668e9a9fb97ea9fa7b5563bbe0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2abb9df7_68bbc0d6",
         "filename": "chrome/browser/ui/webui/settings/site_settings_handler_unittest.cc",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "c520f196781888668e9a9fb97ea9fa7b5563bbe0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed2941b3_173474e3",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-08-01T05:34:43Z",
+      "side": 1,
+      "message": "Done (origin_path, origin_anchor, origin, and origin_query)",
+      "parentUuid": "2abb9df7_68bbc0d6",
+      "revId": "c520f196781888668e9a9fb97ea9fa7b5563bbe0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "42324804_cb4718b7",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-08-01T05:34:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04fde153_2ad1704b",
+      "revId": "c520f196781888668e9a9fb97ea9fa7b5563bbe0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21adce7c_54d9eefc",
         "filename": "chrome/browser/ui/webui/settings/site_settings_handler_unittest.cc",
         "patchSetId": 1
@@ -101,6 +191,24 @@
       "revId": "c520f196781888668e9a9fb97ea9fa7b5563bbe0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15b7d0ea_7e7338a5",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-08-01T05:34:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21adce7c_54d9eefc",
+      "revId": "c520f196781888668e9a9fb97ea9fa7b5563bbe0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "7acfe38b_a9559575",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-08-01T05:34:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b8217d6_179329f1",
+      "revId": "c520f196781888668e9a9fb97ea9fa7b5563bbe0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d705cfb_fe8a2c9e",
         "filename": "chrome/browser/ui/webui/settings/site_settings_handler_unittest.cc",
         "patchSetId": 1
@@ -135,6 +261,24 @@
       "revId": "c520f196781888668e9a9fb97ea9fa7b5563bbe0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2850e4a2_1e830f94",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-08-01T05:34:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d705cfb_fe8a2c9e",
+      "revId": "c520f196781888668e9a9fb97ea9fa7b5563bbe0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "389f0055_7f07168d",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-08-01T05:34:43Z",
+      "side": 1,
+      "message": "I used origin_path here.",
+      "parentUuid": "c8f62584_dc05e44b",
+      "revId": "c520f196781888668e9a9fb97ea9fa7b5563bbe0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7d0d1a8_68017a94",
         "filename": "chrome/browser/ui/webui/settings/site_settings_handler_unittest.cc",
         "patchSetId": 1
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "e2ea3087_cd54a76e",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-08-01T05:34:43Z",
+      "side": 1,
+      "message": "I think it\u0027s the same as having a else { EXPECT_EQ(0u...) } underneath - changed to that to be more consistent.",
+      "parentUuid": "c7d0d1a8_68017a94",
+      "revId": "c520f196781888668e9a9fb97ea9fa7b5563bbe0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ce7c785_d5a64625",
         "filename": "chrome/browser/ui/webui/settings/site_settings_handler_unittest.cc",
         "patchSetId": 1
@@ -186,6 +366,24 @@
       "revId": "c520f196781888668e9a9fb97ea9fa7b5563bbe0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80a7e6ee_e3e57c54",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 707,
+      "author": {
+        "id": 1160861
+      },
+      "writtenOn": "2017-08-01T05:34:43Z",
+      "side": 1,
+      "message": "I renamed |similar| to |example_without_www| to make it more obvious, but as clarified offline, https://www.example.com and https://example.com are different origins.",
+      "parentUuid": "0ce7c785_d5a64625",
+      "revId": "c520f196781888668e9a9fb97ea9fa7b5563bbe0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
