@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0412f24_e4a2979b",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-01T19:13:36Z",
+      "side": 1,
+      "message": "Nit: Use bool instead of BOOL here, because this is a C++ function.",
+      "revId": "c12c3d5f91dd729bb302883fbdaca322db3c4d18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95904afa_91512921",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-01T19:13:36Z",
+      "side": 1,
+      "message": "bool instead of BOOL.",
+      "revId": "c12c3d5f91dd729bb302883fbdaca322db3c4d18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54054e64_da1fbaf7",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-01T19:13:36Z",
+      "side": 1,
+      "message": "bool instead of BOOL.",
+      "revId": "c12c3d5f91dd729bb302883fbdaca322db3c4d18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7245f64e_7e035852",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-01T19:13:36Z",
+      "side": 1,
+      "message": "If you switch to bool instead of BOOL, all of these tests should use true/false instead of YES/NO.",
+      "revId": "c12c3d5f91dd729bb302883fbdaca322db3c4d18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d77c17a_f53e1100",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-01T19:13:36Z",
+      "side": 1,
+      "message": "Nit: Consider documenting all of these bool parameters with a comment, for example like https://cs.chromium.org/chromium/src/ios/chrome/browser/signin/gaia_auth_fetcher_ios.mm?l\u003d169.\n\nNot particularly important, but it\u0027ll make it a bit easier to read the code, since you won\u0027t have to go look at the header to figure out what that argument is.",
+      "revId": "c12c3d5f91dd729bb302883fbdaca322db3c4d18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
