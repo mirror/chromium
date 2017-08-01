@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e293612_3f2a7a4f",
+        "filename": "third_party/WebKit/LayoutTests/LeakExpectations",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-08-01T11:38:22Z",
+      "side": 0,
+      "message": "Do we really want to remove these sections too?",
+      "range": {
+        "startLine": 23,
+        "startChar": 67,
+        "endLine": 23,
+        "endChar": 0
+      },
+      "revId": "9883ff66a084da1e00e188cd56855dcbcc4bc927",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
