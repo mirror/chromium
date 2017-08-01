@@ -6,6 +6,7 @@ LIBRARY  "chrome_elf.dll"
 
 EXPORTS
   AddDllToBlacklist
+  DumpProcessWithoutCrash
   GetBlacklistIndex
   GetInstallDetailsPayload
   GetUserDataDirectoryThunk
@@ -13,4 +14,3 @@ EXPORTS
   SignalChromeElf
   SignalInitializeCrashReporting
   SuccessfullyBlocked
-  DumpProcessWithoutCrash
