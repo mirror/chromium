@@ -16,6 +16,24 @@
       "revId": "b1f20906583ce4ae7fbcab65c0c36b6c265df274",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9788ce0_52b3db6e",
+        "filename": "cc/raster/gpu_raster_buffer_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-01T17:09:43Z",
+      "side": 1,
+      "message": "No, discard only has an effect for gpu raster.  It\u0027s the only thing that implements onDiscard.\n\nSkCanvas::discard -\u003e SkCanvas::onDiscard -\u003e SkSurface_Base::onDiscard -\u003e SkSurface_Gpu::onDiscard\n\nhttps://cs.chromium.org/chromium/src/third_party/skia/src/image/SkSurface_Gpu.cpp?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d148",
+      "parentUuid": "06a98f29_68282820",
+      "revId": "b1f20906583ce4ae7fbcab65c0c36b6c265df274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
