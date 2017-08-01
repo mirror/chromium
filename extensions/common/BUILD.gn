@@ -305,6 +305,7 @@ if (enable_extensions) {
       "//device/usb/public/cpp",
       "//extensions:extensions_resources",
       "//extensions/common/api",
+      "//extensions/common/api/declarative_net_request/flat:extension_ruleset",
       "//extensions/strings",
       "//net",
       "//third_party/boringssl",
