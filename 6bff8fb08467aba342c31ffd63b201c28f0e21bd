@@ -16,6 +16,24 @@
       "revId": "6bff8fb08467aba342c31ffd63b201c28f0e21bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a19cdf07_47a67a15",
+        "filename": "components/plugins/renderer/webview_plugin.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-01T20:37:13Z",
+      "side": 1,
+      "message": "Yes, it is. This is pretty confusing; I was going to try to remove the need for this boilerplate completely, but it turns out to be quite difficult...",
+      "parentUuid": "eba2cb1d_5bda7b6b",
+      "revId": "6bff8fb08467aba342c31ffd63b201c28f0e21bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
