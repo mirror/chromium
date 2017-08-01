@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14e9cc35_79156180",
+        "filename": "chrome/browser/ui/webui/chromeos/network_element_localized_strings_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-01T16:23:31Z",
+      "side": 1,
+      "message": "\"Declare\" vs \"Add\" is unclear, and the \u0027Signature\u0027 comment I think is just confusing. I would just name this \"AddLocalizedValuesToBuilder\" and modify the comment to something like;\n\n// Same as AddLocalizedStrings but for a LocalizedValuesBuilder.\n\n(And move this after AddLocalizedStrings)",
+      "revId": "dfa799d27b28520df889b4f7fa388524cdd0a3ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
