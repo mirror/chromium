@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "196fca60_2cbc11cb",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_grc_tab_signal_observer.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-08-01T16:17:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0968b2d3_3ce000ef",
+      "range": {
+        "startLine": 66,
+        "startChar": 39,
+        "endLine": 66,
+        "endChar": 55
+      },
+      "revId": "28b3d7a9d10f37ae52cab597a94310cf1b835d74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "961c98b6_a7a22ac1",
         "filename": "services/resource_coordinator/coordination_unit/web_contents_coordination_unit_impl.cc",
         "patchSetId": 16
@@ -39,6 +63,24 @@
       "revId": "28b3d7a9d10f37ae52cab597a94310cf1b835d74",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a30583d6_0830fd61",
+        "filename": "services/resource_coordinator/coordination_unit/web_contents_coordination_unit_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-08-01T16:17:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "961c98b6_a7a22ac1",
+      "revId": "28b3d7a9d10f37ae52cab597a94310cf1b835d74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "49b016fd_23c49382",
+        "filename": "services/resource_coordinator/coordination_unit/web_contents_coordination_unit_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-08-01T16:17:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54316c2b_d43d7840",
+      "range": {
+        "startLine": 106,
+        "startChar": 6,
+        "endLine": 106,
+        "endChar": 11
+      },
+      "revId": "28b3d7a9d10f37ae52cab597a94310cf1b835d74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d728acb2_dd7d6a47",
         "filename": "services/resource_coordinator/coordination_unit/web_contents_coordination_unit_impl.h",
         "patchSetId": 16
@@ -76,6 +142,30 @@
       "writtenOn": "2017-07-31T23:32:55Z",
       "side": 1,
       "message": "Why is 0 invalid? Is EQT defined as alway positive? I thought queueing time can be 0 if a task does not need to wait?",
+      "range": {
+        "startLine": 30,
+        "startChar": 13,
+        "endLine": 30,
+        "endChar": 16
+      },
+      "revId": "28b3d7a9d10f37ae52cab597a94310cf1b835d74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "352459a8_5cfbb8c0",
+        "filename": "services/resource_coordinator/coordination_unit/web_contents_coordination_unit_impl.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-08-01T16:17:01Z",
+      "side": 1,
+      "message": "Ack. I will return -1 as an invalid value. I thought in practice the difference between two times should not be 0 because the execution time of get-time function itself is small (even 1 ns) but not 0.",
+      "parentUuid": "d728acb2_dd7d6a47",
       "range": {
         "startLine": 30,
         "startChar": 13,
