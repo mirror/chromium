@@ -18,13 +18,22 @@
 #include "third_party/WebKit/public/web/window_features.mojom.h"
 #include "url/gurl.h"
 
+#if !defined(OS_ANDROID)
+#include "chrome/common/web_ui_tester.mojom.h"
+#endif
+
 namespace web_cache {
 class WebCacheImpl;
 }
 
 // This class holds the Chrome specific parts of RenderView, and has the same
 // lifetime.
-class ChromeRenderViewObserver : public content::RenderViewObserver {
+class ChromeRenderViewObserver : public content::RenderViewObserver
+#if !defined(OS_ANDROID)
+    ,
+                                 public chrome::mojom::WebUITester
+#endif
+{
  public:
   // translate_helper can be NULL.
   ChromeRenderViewObserver(
@@ -41,7 +50,7 @@ class ChromeRenderViewObserver : public content::RenderViewObserver {
   void OnDestruct() override;
 
 #if !defined(OS_ANDROID)
-  void OnWebUIJavaScript(const base::string16& javascript);
+  void ExecuteWebUIJavaScript(const base::string16& javascript) override;
 #endif
 #if defined(OS_ANDROID)
   void OnUpdateBrowserControlsState(content::BrowserControlsState constraints,
