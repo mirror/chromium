@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "3d58e3c8_111d7bcb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-01T05:55:15Z",
+      "side": 1,
+      "message": "Fair enough, InBrowserServiceWorkerEventDispatcher/BrowserSideServiceWorkerEventDispatcher sounds good.",
+      "parentUuid": "5c403f99_fb7cf5ed",
+      "range": {
+        "startLine": 10,
+        "startChar": 2,
+        "endLine": 11,
+        "endChar": 35
+      },
+      "revId": "8f35c7576127976560aa8d8accf432ac7c15e2eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aa7e19ea_0d6397be",
         "filename": "content/browser/service_worker/service_worker_version_proxy.cc",
         "patchSetId": 7
