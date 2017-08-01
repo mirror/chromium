@@ -92,6 +92,30 @@
       "revId": "18876552edbb3b8c46e48b12462d7d8bcfc29dd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2637ead_922380be",
+        "filename": "build/config/mips.gni",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115956
+      },
+      "writtenOn": "2017-08-01T05:44:07Z",
+      "side": 1,
+      "message": "Please drop the comment as Dirk suggested, then I can submit this for you.",
+      "parentUuid": "32e27745_3bd4f8f2",
+      "range": {
+        "startLine": 11,
+        "startChar": 2,
+        "endLine": 12,
+        "endChar": 53
+      },
+      "revId": "18876552edbb3b8c46e48b12462d7d8bcfc29dd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
