@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "edf0f734_aab6882a",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-01T15:27:08Z",
+      "side": 1,
+      "message": "Do we need non-empty referrer here? Do we pass a referrer for Bookmarks?",
+      "range": {
+        "startLine": 197,
+        "startChar": 22,
+        "endLine": 197,
+        "endChar": 34
+      },
+      "revId": "fae2b1ca43a3ab6ff6adbe859ab5311915800186",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
