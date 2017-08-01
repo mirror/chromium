@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4ab33b9e_1c531b73",
+        "filename": "net/disk_cache/backend_cleanup_tracker.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-08-01T18:32:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c12ddb75_84f4e362",
+      "range": {
+        "startLine": 27,
+        "startChar": 6,
+        "endLine": 27,
+        "endChar": 27
+      },
+      "revId": "a3127320698feb28bd4954f383b14be34d176e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d40d4b6_22e25672",
         "filename": "net/disk_cache/backend_cleanup_tracker.h",
         "patchSetId": 10
@@ -388,6 +412,24 @@
       "writtenOn": "2017-08-01T15:17:00Z",
       "side": 1,
       "message": "Seems like we need a test with a mock backend that does asynchronous cleanup work that we can instrument to verify that it has completed its cleanup before the callback runs.\n\nYou might be able to extend MockHttpCache for this purpose, else make a new one.",
+      "revId": "a3127320698feb28bd4954f383b14be34d176e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3778dc33_e5d69224",
+        "filename": "net/disk_cache/backend_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-08-01T18:32:45Z",
+      "side": 1,
+      "message": "Hmm, what\u0027s annoying is that CreateCacheBackend doesn\u0027t know about the mock backend...\nThis test does fail *for me* if one e.g. comments out line 613, but that\u0027s still rather flimsy.",
+      "parentUuid": "b2d7d792_74d3b0ce",
       "revId": "a3127320698feb28bd4954f383b14be34d176e38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
