@@ -62,6 +62,30 @@
       "revId": "ff4e2e98aba258a2bbbf1d22f6b90a6b5655ae03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1c70f37a_726edc0d",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 62998,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-01T18:45:55Z",
+      "side": 1,
+      "message": "Seems correct to me. Obsoleted RendererMainThreadLoad3. Introduced RendererMainThreadLoad4 as a base histogram. This is suffixed by RendererScheduler.ProcessSplit, which is further suffixed by RendererScheduler.MainThreadLoadSplit.",
+      "parentUuid": "6611ed42_cf3589b8",
+      "range": {
+        "startLine": 62998,
+        "startChar": 4,
+        "endLine": 62998,
+        "endChar": 12
+      },
+      "revId": "ff4e2e98aba258a2bbbf1d22f6b90a6b5655ae03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
