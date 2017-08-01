@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "575b7d07_fc64ca9a",
+        "filename": "base/task_scheduler/priority_queue.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-01T19:59:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55614c09_a50f65d2",
+      "revId": "2d90d32771f39064c8e623ad8bda93ccc11c4c56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "386cd0c5_ab413126",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "2d90d32771f39064c8e623ad8bda93ccc11c4c56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37bdab40_c9487fdb",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-01T19:59:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "386cd0c5_ab413126",
+      "revId": "2d90d32771f39064c8e623ad8bda93ccc11c4c56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "975ab49a_a7276e81",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-01T19:59:31Z",
+      "side": 1,
+      "message": "Sounds good to me.\n\nI picked my original wording to be clear what happens with multiple calls to TaskBlocked(). But my current wording is a bit confusing and it could probably be assumed (or easily observed) that |increased_capacity_since_blocked_| refers to what happened since the last TaskBlocked() call (and not any other call).",
+      "parentUuid": "e97a7a2d_652fbf20",
+      "range": {
+        "startLine": 197,
+        "startChar": 65,
+        "endLine": 198,
+        "endChar": 22
+      },
+      "revId": "2d90d32771f39064c8e623ad8bda93ccc11c4c56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b812c6f4_3d5201d5",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
         "patchSetId": 2
@@ -79,6 +139,30 @@
       "revId": "2d90d32771f39064c8e623ad8bda93ccc11c4c56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74759251_95cc0696",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-01T19:59:31Z",
+      "side": 1,
+      "message": "As discussed, keeping BlockedThreshold() because \n1. it makes it easier to test that if workers unblock early (before BlockedThreshold()), that |worker_capacity_| does not increase.\n\n2. (for a lesser extent) A BlockedThreshold() function will be needed when the BlockedThreshold() increases as the number of blocked threads increase.",
+      "parentUuid": "b812c6f4_3d5201d5",
+      "range": {
+        "startLine": 375,
+        "startChar": 6,
+        "endLine": 376,
+        "endChar": 27
+      },
+      "revId": "2d90d32771f39064c8e623ad8bda93ccc11c4c56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "cdc3ef76_560ad4e3",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-01T19:59:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4efcaeea_04ef0351",
+      "range": {
+        "startLine": 384,
+        "startChar": 17,
+        "endLine": 384,
+        "endChar": 52
+      },
+      "revId": "2d90d32771f39064c8e623ad8bda93ccc11c4c56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b45ea543_3ccb5018",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
         "patchSetId": 2
@@ -119,6 +227,24 @@
       "revId": "2d90d32771f39064c8e623ad8bda93ccc11c4c56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f32ef0a0_db6fbaa0",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-01T19:59:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b45ea543_3ccb5018",
+      "revId": "2d90d32771f39064c8e623ad8bda93ccc11c4c56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -145,6 +271,30 @@
     },
     {
       "key": {
+        "uuid": "b5cd72fa_1f8d5338",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-01T19:59:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "520b8a0d_36ef84b5",
+      "range": {
+        "startLine": 758,
+        "startChar": 2,
+        "endLine": 760,
+        "endChar": 47
+      },
+      "revId": "2d90d32771f39064c8e623ad8bda93ccc11c4c56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76f7aff1_03c8762c",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
         "patchSetId": 2
@@ -165,6 +315,30 @@
       "revId": "2d90d32771f39064c8e623ad8bda93ccc11c4c56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ee2bd80_db7da275",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-01T19:59:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76f7aff1_03c8762c",
+      "range": {
+        "startLine": 123,
+        "startChar": 9,
+        "endLine": 123,
+        "endChar": 33
+      },
+      "revId": "2d90d32771f39064c8e623ad8bda93ccc11c4c56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -191,6 +365,30 @@
     },
     {
       "key": {
+        "uuid": "5d426760_369ed83c",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-01T19:59:31Z",
+      "side": 1,
+      "message": "As discussed, keeping as is because this function better illustrates the intent of how it is used. (It is currently used to verify that if you unblock before the BlockedThreshold(), that |worker_capacity_| does not increase).",
+      "parentUuid": "178d91e3_ec14d825",
+      "range": {
+        "startLine": 128,
+        "startChar": 2,
+        "endLine": 132,
+        "endChar": 3
+      },
+      "revId": "2d90d32771f39064c8e623ad8bda93ccc11c4c56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ecf1c327_73bc46e8",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
         "patchSetId": 2
@@ -211,6 +409,30 @@
       "revId": "2d90d32771f39064c8e623ad8bda93ccc11c4c56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f02ec0c_9b5d3e90",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-01T19:59:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ecf1c327_73bc46e8",
+      "range": {
+        "startLine": 172,
+        "startChar": 21,
+        "endLine": 172,
+        "endChar": 33
+      },
+      "revId": "2d90d32771f39064c8e623ad8bda93ccc11c4c56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -237,6 +459,30 @@
     },
     {
       "key": {
+        "uuid": "0ea43862_036ee079",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-01T19:59:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69993304_d34e7433",
+      "range": {
+        "startLine": 178,
+        "startChar": 2,
+        "endLine": 179,
+        "endChar": 61
+      },
+      "revId": "2d90d32771f39064c8e623ad8bda93ccc11c4c56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9213c71_20e7207e",
         "filename": "base/task_scheduler/scheduler_worker_stack.cc",
         "patchSetId": 2
@@ -257,6 +503,30 @@
       "revId": "2d90d32771f39064c8e623ad8bda93ccc11c4c56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c0e9440_c553219a",
+        "filename": "base/task_scheduler/scheduler_worker_stack.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-01T19:59:31Z",
+      "side": 1,
+      "message": "Done, but changing it to DCHECK_GE(n, 1); since n \u003d 0 is always false.",
+      "parentUuid": "c9213c71_20e7207e",
+      "range": {
+        "startLine": 43,
+        "startChar": 2,
+        "endLine": 43,
+        "endChar": 17
+      },
+      "revId": "2d90d32771f39064c8e623ad8bda93ccc11c4c56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -283,6 +553,30 @@
     },
     {
       "key": {
+        "uuid": "229b154f_f314b205",
+        "filename": "base/task_scheduler/scheduler_worker_stack.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-01T19:59:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c26862a5_869ba905",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 79
+      },
+      "revId": "2d90d32771f39064c8e623ad8bda93ccc11c4c56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44d8c557_ac9c2be2",
         "filename": "base/task_scheduler/scheduler_worker_stack.h",
         "patchSetId": 2
@@ -303,6 +597,30 @@
       "revId": "2d90d32771f39064c8e623ad8bda93ccc11c4c56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c12b416_b6fb4933",
+        "filename": "base/task_scheduler/scheduler_worker_stack.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-01T19:59:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44d8c557_ac9c2be2",
+      "range": {
+        "startLine": 45,
+        "startChar": 24,
+        "endLine": 45,
+        "endChar": 26
+      },
+      "revId": "2d90d32771f39064c8e623ad8bda93ccc11c4c56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -329,6 +647,30 @@
     },
     {
       "key": {
+        "uuid": "ef03b69c_2ec106f3",
+        "filename": "base/task_scheduler/scheduler_worker_stack.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-01T19:59:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2af546f_fb934af1",
+      "range": {
+        "startLine": 46,
+        "startChar": 7,
+        "endLine": 46,
+        "endChar": 25
+      },
+      "revId": "2d90d32771f39064c8e623ad8bda93ccc11c4c56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ce1c797e_ec14491f",
         "filename": "base/task_scheduler/scheduler_worker_stack_unittest.cc",
         "patchSetId": 2
@@ -349,6 +691,30 @@
       "revId": "2d90d32771f39064c8e623ad8bda93ccc11c4c56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3b58828_cb7538fa",
+        "filename": "base/task_scheduler/scheduler_worker_stack_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-01T19:59:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce1c797e_ec14491f",
+      "range": {
+        "startLine": 254,
+        "startChar": 2,
+        "endLine": 254,
+        "endChar": 60
+      },
+      "revId": "2d90d32771f39064c8e623ad8bda93ccc11c4c56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
