@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f06171e4_85c62bcf",
+        "filename": "chrome/browser/ui/omnibox/omnibox_view_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-01T18:54:29Z",
+      "side": 1,
+      "message": "Instead of this loop, what about just content::RunAllBlockingPoolTasksUntilIdle()?\n\nI am leery of runloops, quitclosures, and FlushForTesting(), as those tend to control just the main thread/just the task scheduler in ways you don\u0027t want.  It seems like what we really want is just just keep running everything until it\u0027s all done.",
+      "revId": "c6fb99c03561f3b61e4de5e7c135a1066c5a9f85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
