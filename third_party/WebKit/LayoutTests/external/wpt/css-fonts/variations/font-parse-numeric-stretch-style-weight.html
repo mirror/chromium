@@ -18,12 +18,14 @@ var styleValidTests = {
     '900',
     '850',
     '850.3',
+    'calc(100 + 300)',
+    'calc(0.2 + 205.5)'
   ],
   'stretch': ['51%', '199%', 'calc(10% + 20%)']
 };
 
 var styleInvalidTests = {
-  'weight': ['100 400'],
+  'weight': ['100 400', 'calc(0 - 100)', 'calc(200 + 801)'],
   'stretch': ['100% 110%', '0%', '100% 150%']
 };
 
