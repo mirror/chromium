@@ -1,0 +1,291 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "960a7b05_6397a8d1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 14
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-01T02:23:24Z",
+      "side": 1,
+      "message": "add something like: \"a follow-up patch will change this to result in error instead\" ?",
+      "range": {
+        "startLine": 25,
+        "startChar": 17,
+        "endLine": 25,
+        "endChar": 19
+      },
+      "revId": "bbc20012d2d26c3cc572c0847160f8cd8f0b518c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e48eb36_8f7a3835",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-01T02:23:24Z",
+      "side": 1,
+      "message": "I think it\u0027s \"an equivalent\" or \"the same\"",
+      "range": {
+        "startLine": 41,
+        "startChar": 14,
+        "endLine": 41,
+        "endChar": 30
+      },
+      "revId": "bbc20012d2d26c3cc572c0847160f8cd8f0b518c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "011c32db_5b7bb8c7",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-01T02:23:24Z",
+      "side": 1,
+      "message": "\"It isn\u0027t necessary...\" as above",
+      "range": {
+        "startLine": 174,
+        "startChar": 7,
+        "endLine": 174,
+        "endChar": 33
+      },
+      "revId": "bbc20012d2d26c3cc572c0847160f8cd8f0b518c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "957221f0_2e0467fb",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-01T02:23:24Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 175,
+        "startChar": 7,
+        "endLine": 175,
+        "endChar": 21
+      },
+      "revId": "bbc20012d2d26c3cc572c0847160f8cd8f0b518c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70561960_3cf4f401",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-01T02:23:24Z",
+      "side": 1,
+      "message": "\"Notify the renderer that the error occurred\" ?\n\n\"Notify the error\" means you are talking to the error.",
+      "range": {
+        "startLine": 406,
+        "startChar": 5,
+        "endLine": 406,
+        "endChar": 21
+      },
+      "revId": "bbc20012d2d26c3cc572c0847160f8cd8f0b518c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "635a74a1_5bbf60f3",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-01T02:23:24Z",
+      "side": 1,
+      "message": "is that the case even for import scripts?",
+      "range": {
+        "startLine": 407,
+        "startChar": 45,
+        "endLine": 407,
+        "endChar": 72
+      },
+      "revId": "bbc20012d2d26c3cc572c0847160f8cd8f0b518c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55f36b09_e723138f",
+        "filename": "content/browser/service_worker/service_worker_metrics.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-01T02:23:24Z",
+      "side": 1,
+      "message": "don\u0027t need that anymore",
+      "range": {
+        "startLine": 268,
+        "startChar": 46,
+        "endLine": 270,
+        "endChar": 58
+      },
+      "revId": "bbc20012d2d26c3cc572c0847160f8cd8f0b518c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2792609_26a41ca4",
+        "filename": "content/browser/service_worker/service_worker_metrics.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-01T02:23:24Z",
+      "side": 1,
+      "message": "// Records the result of sending installed scripts to the renderer.",
+      "revId": "bbc20012d2d26c3cc572c0847160f8cd8f0b518c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2daeabb4_bb8e9553",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-01T02:23:24Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 45,
+        "startChar": 16,
+        "endLine": 45,
+        "endChar": 31
+      },
+      "revId": "bbc20012d2d26c3cc572c0847160f8cd8f0b518c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78ed984f_fac8d3ec",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-01T02:23:24Z",
+      "side": 1,
+      "message": "don\u0027t think you need the newline here",
+      "range": {
+        "startLine": 204,
+        "startChar": 34,
+        "endLine": 204,
+        "endChar": 37
+      },
+      "revId": "bbc20012d2d26c3cc572c0847160f8cd8f0b518c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d06f67b6_c7627d39",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-01T02:23:24Z",
+      "side": 1,
+      "message": "Can you explain why we still initialize the global scope even though we know the worker thread will terminate after?",
+      "range": {
+        "startLine": 424,
+        "startChar": 61,
+        "endLine": 424,
+        "endChar": 70
+      },
+      "revId": "bbc20012d2d26c3cc572c0847160f8cd8f0b518c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deb877d0_c020f4d4",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 489,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-01T02:23:24Z",
+      "side": 1,
+      "message": "Perform",
+      "range": {
+        "startLine": 489,
+        "startChar": 15,
+        "endLine": 489,
+        "endChar": 22
+      },
+      "revId": "bbc20012d2d26c3cc572c0847160f8cd8f0b518c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8216ed88_3a2c70b9",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 14
+      },
+      "lineNbr": 70630,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-01T02:23:24Z",
+      "side": 1,
+      "message": "It\u0027s also useful to document when it\u0027s recorded:\n\"This is recorded after every start worker attempt that sent the scripts through...\"",
+      "revId": "bbc20012d2d26c3cc572c0847160f8cd8f0b518c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

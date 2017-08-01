@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9176a1f9_2ed5d492",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-01T02:23:24Z",
+      "side": 1,
+      "message": "I think it\u0027s \"an equivalent error\" or \"the same error\".",
+      "revId": "33ba3304ff98acfe9fa5bfaaaba64e5c0ad56ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8310429_a3843afb",
+        "filename": "content/browser/service_worker/service_worker_installed_scripts_sender.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-01T02:23:24Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "33ba3304ff98acfe9fa5bfaaaba64e5c0ad56ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
