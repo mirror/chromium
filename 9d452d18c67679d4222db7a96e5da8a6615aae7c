@@ -93,6 +93,30 @@
       "revId": "9d452d18c67679d4222db7a96e5da8a6615aae7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8099bf4d_d44d7ee4",
+        "filename": "ios/chrome/browser/web/mailto_handler.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-01T22:44:12Z",
+      "side": 1,
+      "message": "|supportedHeaders| is only used in the implementation and in a unittest. And testing that |supportedHeaders| returns more than one element not particularly useful (because every other test will catch the bug anyway), so maybe removing public method would be a better approach.",
+      "parentUuid": "04ffcde5_57c29c0d",
+      "range": {
+        "startLine": 82,
+        "startChar": 15,
+        "endLine": 82,
+        "endChar": 31
+      },
+      "revId": "9d452d18c67679d4222db7a96e5da8a6615aae7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
