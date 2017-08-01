@@ -76,13 +76,6 @@ component("display") {
       "CoreGraphics.framework",
     ]
   }
-
-  if (is_win) {
-    libs = [
-      "d3d11.lib",
-      "dxgi.lib",
-    ]
-  }
 }
 
 component("display_manager_test_api") {
