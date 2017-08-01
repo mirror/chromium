@@ -569,9 +569,30 @@ bool WindowTree::SetModalType(const ClientWindowId& window_id,
       break;
   }
   if (display_root && modal_type != MODAL_TYPE_NONE) {
-    display_root->window_manager_state()->ReleaseCaptureBlockedByModalWindow(
-        window);
+    display_root->window_manager_state()
+        ->ReleaseCaptureBlockedByAnyModalWindow();
   }
+  return true;
+}
+
+bool WindowTree::SetChildModalParent(
+    const ClientWindowId& window_id,
+    const ClientWindowId& modal_parent_window_id) {
+  ServerWindow* window = GetWindowByClientId(window_id);
+  ServerWindow* modal_parent_window =
+      GetWindowByClientId(modal_parent_window_id);
+  // A value of null for |modal_parent_window| resets the modal parent.
+  if (!window) {
+    DVLOG(1) << "SetChildModalParent failed (invalid id)";
+    return false;
+  }
+
+  if (!access_policy_->CanSetChildModalParent(window, modal_parent_window)) {
+    DVLOG(1) << "SetChildModalParent failed (access denied)";
+    return false;
+  }
+
+  window->SetChildModalParent(modal_parent_window);
   return true;
 }
 
@@ -1533,6 +1554,14 @@ void WindowTree::SetModalType(uint32_t change_id,
       change_id, SetModalType(ClientWindowId(window_id), modal_type));
 }
 
+void WindowTree::SetChildModalParent(uint32_t change_id,
+                                     Id window_id,
+                                     Id parent_window_id) {
+  client()->OnChangeCompleted(
+      change_id, SetChildModalParent(ClientWindowId(window_id),
+                                     ClientWindowId(parent_window_id)));
+}
+
 void WindowTree::ReorderWindow(uint32_t change_id,
                                Id window_id,
                                Id relative_window_id,
@@ -2490,6 +2519,17 @@ void WindowTree::OnAcceleratorAck(uint32_t event_id,
   event_ack_id_ = 0;
   DCHECK(window_manager_state_);
   base::ResetAndReturn(&accelerator_ack_callback_).Run(result, properties);
+}
+
+void WindowTree::SetIsTopLevelContainer(Id transport_window_id, bool value) {
+  ServerWindow* window =
+      GetWindowByClientId(ClientWindowId(transport_window_id));
+  if (!window || window->id().client_id != id_) {
+    DVLOG(1) << "OnWmCreatedTopLevelWindow failed (invalid window id)";
+    window_server_->WindowManagerSentBogusMessage();
+  } else {
+    window->set_is_top_level_container(value);
+  }
 }
 
 bool WindowTree::HasRootForAccessPolicy(const ServerWindow* window) const {
