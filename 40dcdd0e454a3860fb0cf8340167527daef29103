@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "67a3ee1c_d6dd638f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-allow-access-control-origin-header.htm",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-01T08:15:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9f5fe44_05fa8a10",
+      "revId": "40dcdd0e454a3860fb0cf8340167527daef29103",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da3ef3a8_6b33dde9",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-origin-header.py",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "40dcdd0e454a3860fb0cf8340167527daef29103",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f311340_421e3943",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/resources/access-control-origin-header.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1225177
+      },
+      "writtenOn": "2017-08-01T08:15:33Z",
+      "side": 1,
+      "message": "Thanks for noticing that!",
+      "parentUuid": "da3ef3a8_6b33dde9",
+      "revId": "40dcdd0e454a3860fb0cf8340167527daef29103",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
