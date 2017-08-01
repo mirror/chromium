@@ -134,6 +134,29 @@
     },
     {
       "key": {
+        "uuid": "f2eb433c_43e0575a",
+        "filename": "content/browser/accessibility/browser_accessibility_cocoa.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-01T15:26:39Z",
+      "side": 1,
+      "message": "objc methods start with a lowercase letter",
+      "range": {
+        "startLine": 71,
+        "startChar": 23,
+        "endLine": 71,
+        "endChar": 38
+      },
+      "revId": "b9bdf300f075b37192fd0ba9bddae9a9ad588870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c9e2727a_35ce979a",
         "filename": "content/browser/accessibility/browser_accessibility_cocoa.mm",
         "patchSetId": 10
@@ -157,6 +180,52 @@
     },
     {
       "key": {
+        "uuid": "fbe10222_8782ca51",
+        "filename": "content/browser/accessibility/browser_accessibility_cocoa.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 1387,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-01T15:26:39Z",
+      "side": 1,
+      "message": "this method seems to be computing something quite complicated, like finding the delta between two strings but not necessarily in all cases. it probably needs a comment describing what it does and a considerable amount of test coverage. I would honestly factor this out into a C++ utility function like: void ComputeTextEdit(const std::string\u0026 old, const std::string\u0026 new, bool *deleted, std::string* delta), and then write a bunch of unit tests for that function and call it from here.",
+      "range": {
+        "startLine": 1387,
+        "startChar": 23,
+        "endLine": 1387,
+        "endChar": 38
+      },
+      "revId": "b9bdf300f075b37192fd0ba9bddae9a9ad588870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5e84a8c_1b635cd0",
+        "filename": "content/browser/accessibility/browser_accessibility_cocoa.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 1395,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-01T15:26:39Z",
+      "side": 1,
+      "message": "two strings that have the same length are not necessarily equivalent, are they?",
+      "range": {
+        "startLine": 1395,
+        "startChar": 6,
+        "endLine": 1395,
+        "endChar": 44
+      },
+      "revId": "b9bdf300f075b37192fd0ba9bddae9a9ad588870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dde99d80_7ec91b56",
         "filename": "content/browser/accessibility/browser_accessibility_manager_mac.mm",
         "patchSetId": 10
@@ -168,6 +237,52 @@
       "writtenOn": "2017-07-31T21:23:24Z",
       "side": 1,
       "message": "What if the user changes something inside the editable\nsubtree but doesn\u0027t change the editable root itself?\nIt seems that this wouldn\u0027t get called.\n\nI think what you need to do is:\n* For each change, see if it\u0027s editable\n* If it\u0027s editable, find its editable root and add it to\n  a set of editable roots to update\n* At the end of the loop, call ComputeTextEdit on each\n  editable root\n\nOr do we even care if it\u0027s not focused? Maybe you should\njust find the focused node and see if it\u0027s an editable root,\nthen update it once if there were any changes within its\nsubtree?",
+      "revId": "b9bdf300f075b37192fd0ba9bddae9a9ad588870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a8c2f58_b53febbf",
+        "filename": "content/browser/accessibility/browser_accessibility_manager_mac.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-01T15:26:39Z",
+      "side": 1,
+      "message": "what is the actual TODO here? ie what still needs to be done",
+      "range": {
+        "startLine": 571,
+        "startChar": 65,
+        "endLine": 571,
+        "endChar": 68
+      },
+      "revId": "b9bdf300f075b37192fd0ba9bddae9a9ad588870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "beac870a_db415da5",
+        "filename": "content/browser/accessibility/browser_accessibility_manager_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-01T15:26:39Z",
+      "side": 1,
+      "message": "why is this change in this cl? it does not seem related to the purpose of it",
+      "range": {
+        "startLine": 268,
+        "startChar": 19,
+        "endLine": 268,
+        "endChar": 25
+      },
       "revId": "b9bdf300f075b37192fd0ba9bddae9a9ad588870",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
