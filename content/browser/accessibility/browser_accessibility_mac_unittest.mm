@@ -28,14 +28,13 @@ class BrowserAccessibilityTest : public ui::CocoaTest {
 
  protected:
   void RebuildAccessibilityTree() {
-    ui::AXNodeData root;
-    root.id = 1000;
-    root.location.set_width(500);
-    root.location.set_height(100);
-    root.role = ui::AX_ROLE_ROOT_WEB_AREA;
-    root.AddStringAttribute(ui::AX_ATTR_DESCRIPTION, "HelpText");
-    root.child_ids.push_back(1001);
-    root.child_ids.push_back(1002);
+    root_.id = 1000;
+    root_.location.set_width(500);
+    root_.location.set_height(100);
+    root_.role = ui::AX_ROLE_ROOT_WEB_AREA;
+    root_.AddStringAttribute(ui::AX_ATTR_DESCRIPTION, "HelpText");
+    root_.child_ids.push_back(1001);
+    root_.child_ids.push_back(1002);
 
     ui::AXNodeData child1;
     child1.id = 1001;
@@ -51,14 +50,13 @@ class BrowserAccessibilityTest : public ui::CocoaTest {
     child2.location.set_height(100);
     child2.role = ui::AX_ROLE_HEADING;
 
-    manager_.reset(
-        new BrowserAccessibilityManagerMac(
-            MakeAXTreeUpdate(root, child1, child2),
-            NULL));
+    manager_.reset(new BrowserAccessibilityManagerMac(
+        MakeAXTreeUpdate(root, child1, child2), nullptr));
     accessibility_.reset([ToBrowserAccessibilityCocoa(manager_->GetRoot())
         retain]);
   }
 
+  ui::AXNodeData root_;
   base::scoped_nsobject<BrowserAccessibilityCocoa> accessibility_;
   std::unique_ptr<BrowserAccessibilityManager> manager_;
 };
@@ -124,6 +122,51 @@ TEST_F(BrowserAccessibilityTest, RetainedDetachedObjectsReturnNil) {
 
   // Don't leak memory in the test.
   [retainedFirstChild release];
+}
+
+TEST_F(BrowserAccessibilityTest, TestComputeTextEdit) {
+  BrowserAccessibility* wrapper = [accessibility_ browserAccessibility];
+  ASSERT_NE(nullptr, wrapper);
+
+  root_.SetValue("text");
+  AXTextEdit text_edit = [accessibility_ computeTextEdit];
+  EXPECT_EQ(base::UTF8ToUTF16("text"), text_edit.text);
+  EXPECT_FALSE(text_edit.is_deleted);
+
+  root_.SetValue("new text");
+  AXTextEdit text_edit = [accessibility_ computeTextEdit];
+  EXPECT_EQ(base::UTF8ToUTF16("new "), text_edit.text);
+  EXPECT_FALSE(text_edit.is_deleted);
+
+  root_.SetValue("new text hello");
+  AXTextEdit text_edit = [accessibility_ computeTextEdit];
+  EXPECT_EQ(base::UTF8ToUTF16(" hello"), text_edit.text);
+  EXPECT_FALSE(text_edit.is_deleted);
+
+  root_.SetValue("newer text hello");
+  AXTextEdit text_edit = [accessibility_ computeTextEdit];
+  EXPECT_EQ(base::UTF8ToUTF16("er"), text_edit.text);
+  EXPECT_FALSE(text_edit.is_deleted);
+
+  root_.SetValue("new text hello");
+  AXTextEdit text_edit = [accessibility_ computeTextEdit];
+  EXPECT_EQ(base::UTF8ToUTF16("er"), text_edit.text);
+  EXPECT_TRUE(text_edit.is_deleted);
+
+  root_.SetValue("new text");
+  AXTextEdit text_edit = [accessibility_ computeTextEdit];
+  EXPECT_EQ(base::UTF8ToUTF16(" hello"), text_edit.text);
+  EXPECT_TRUE(text_edit.is_deleted);
+
+  root_.SetValue("text");
+  AXTextEdit text_edit = [accessibility_ computeTextEdit];
+  EXPECT_EQ(base::UTF8ToUTF16("new "), text_edit.text);
+  EXPECT_TRUE(text_edit.is_deleted);
+
+  root_.SetValue("");
+  AXTextEdit text_edit = [accessibility_ computeTextEdit];
+  EXPECT_EQ(base::UTF8ToUTF16("text"), text_edit.text);
+  EXPECT_TRUE(text_edit.is_deleted);
 }
 
 }  // namespace content
