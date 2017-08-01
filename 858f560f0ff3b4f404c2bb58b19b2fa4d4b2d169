@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94230dd6_0b70dca1",
+        "filename": "content/renderer/accessibility/render_accessibility_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-08-01T01:23:45Z",
+      "side": 1,
+      "message": "afaict this isn\u0027t used until line 414 - maybe declare it down there?",
+      "range": {
+        "startLine": 384,
+        "startChar": 22,
+        "endLine": 384,
+        "endChar": 28
+      },
+      "revId": "858f560f0ff3b4f404c2bb58b19b2fa4d4b2d169",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
