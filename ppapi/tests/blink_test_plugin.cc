@@ -114,7 +114,7 @@ class BlinkTestInstance : public pp::Instance {
       for (int x = 0; x < view_.GetRect().size().width(); ++x) {
         int x_square = x / kSquareSizePixels;
         int y_square = y / kSquareSizePixels;
-        uint32_t color = ((x_square + y_square) % 2) ? 0xFF0000FF : 0xFF00FF00;
+        uint32_t color = ((x_square + y_square) % 2) ? 0x800000FF : 0x8000FF00;
         *image.GetAddr32(pp::Point(x, y)) = color;
       }
     }
