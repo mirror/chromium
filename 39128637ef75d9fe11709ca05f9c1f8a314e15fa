@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "d90659fe_1b335f7a",
+        "filename": "base/task_scheduler/scheduler_worker.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-01T15:45:14Z",
+      "side": 1,
+      "message": "Yup.\n\nIn my latest CL, I only add to workers_ if Start() is successful. (This is done in SchedulerWorkerPoolImpl::CreateRegisterAndStartSchedulerWorker())",
+      "parentUuid": "49b65aca_40709501",
+      "range": {
+        "startLine": 237,
+        "startChar": 0,
+        "endLine": 238,
+        "endChar": 36
+      },
+      "revId": "39128637ef75d9fe11709ca05f9c1f8a314e15fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1cd57a9_c8d9cc7d",
         "filename": "base/task_scheduler/scheduler_worker.cc",
         "patchSetId": 12
@@ -648,6 +672,30 @@
       "writtenOn": "2017-07-26T21:09:34Z",
       "side": 1,
       "message": "Should we rename detach-\u003ecleanup in this CL or would that be better as a separate CL?",
+      "range": {
+        "startLine": 544,
+        "startChar": 71,
+        "endLine": 544,
+        "endChar": 77
+      },
+      "revId": "39128637ef75d9fe11709ca05f9c1f8a314e15fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0404e65_a1c07f78",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-01T15:45:14Z",
+      "side": 1,
+      "message": "I\u0027ll do it in a different CL (mostly since this CL is already really large w/ so much renaming + \"real\" changes already)",
+      "parentUuid": "bc4cba93_ce8be0db",
       "range": {
         "startLine": 544,
         "startChar": 71,

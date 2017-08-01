@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "9f6342f3_50bc5700",
+        "filename": "base/task_scheduler/scheduler_worker.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-01T15:45:14Z",
+      "side": 1,
+      "message": "The .h file (currently and also in this CL) says for SchedulerWorker::WakeUp that the operation is a \"No-op if Start() wasn\u0027t called.\" (so it is valid to call WakeUp before Start, right?)",
+      "parentUuid": "b4f4d0ab_b5a88b9f",
+      "range": {
+        "startLine": 216,
+        "startChar": 2,
+        "endLine": 216,
+        "endChar": 17
+      },
+      "revId": "bdedaefc7e7b78994cb6a94ab05700f09a3f5831",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1b9b8b03_cfbeb9dc",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
         "patchSetId": 17

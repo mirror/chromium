@@ -22,6 +22,30 @@
       "revId": "b6e53718892977eda9f0a5c6eacadce406f0e34c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0273af6_aee91c2d",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-01T15:45:14Z",
+      "side": 0,
+      "message": "Okay, added this histogram back which tracks times between worker cleanups and worker creations.",
+      "parentUuid": "f9d6a9f5_8873cdd1",
+      "range": {
+        "startLine": 196,
+        "startChar": 0,
+        "endLine": 201,
+        "endChar": 53
+      },
+      "revId": "b6e53718892977eda9f0a5c6eacadce406f0e34c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
