@@ -859,7 +859,7 @@ void CrasAudioHandler::SetupAdditionalActiveAudioNodeState(uint64_t node_id) {
   // but just keep the mute state consistent for the active node in prefs.
   // The output volume should be set to the same value for all active output
   // devices. For input devices, we don't restore their gain value so far.
-  // TODO(jennyz): crbug.com/417418, track the status for the decison if
+  // TODO(jennyz): crbug.com/417418, track the status for the decision if
   // we should persist input gain value in prefs.
   if (!device->is_input) {
     audio_pref_handler_->SetMuteValue(*device, IsOutputMuted());

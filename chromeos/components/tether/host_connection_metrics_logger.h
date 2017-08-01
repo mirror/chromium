@@ -70,7 +70,7 @@ class HostConnectionMetricsLogger {
   //
   // The most top-level metric is
   // InstantTethering.ConnectionToHostResult.ProvisioningFailureRate. Its
-  // breakdown, and the breakdown of its subsquent metrics, is described in
+  // breakdown, and the breakdown of its subsequent metrics, is described in
   // tools/metrics/histograms/histograms.xml.
   enum ConnectionToHostResult_ProvisioningFailureEventType {
     PROVISIONING_FAILED = 0,

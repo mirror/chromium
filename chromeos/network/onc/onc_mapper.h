@@ -70,7 +70,7 @@ class CHROMEOS_EXPORT Mapper {
   // Adds the mapping of each field to |result| using |MapField| and drops
   // unknown fields by default. Sets |found_unknown_field| to true if this
   // dictionary contains any unknown fields. Set |nested_error| to true only if
-  // nested errors occured.
+  // nested errors occurred.
   virtual void MapFields(const OncValueSignature& object_signature,
                          const base::DictionaryValue& onc_object,
                          bool* found_unknown_field,

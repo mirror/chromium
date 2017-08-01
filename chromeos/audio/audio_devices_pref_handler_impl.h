@@ -82,7 +82,7 @@ class CHROMEOS_EXPORT AudioDevicesPrefHandlerImpl
                                const AudioDevice& device);
 
   // Methods to migrate the mute and volume settings for an audio device.
-  // Migration is done in the folowing way:
+  // Migration is done in the following way:
   //   1. If there is a setting for the device under |device_key|, do nothing.
   //      (Note that |device_key| is expected to be the key derived from
   //       |device's| v2 stable device ID).

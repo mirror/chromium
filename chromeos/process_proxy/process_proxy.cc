@@ -72,7 +72,7 @@ bool ProcessProxy::StartWatchingOutput(
 
   // We give ProcessOutputWatcher a copy of master to make life easier during
   // tear down.
-  // TODO(tbarzic): improve fd managment.
+  // TODO(tbarzic): improve fd management.
   int master_copy = HANDLE_EINTR(dup(pt_pair_[PT_MASTER_FD]));
   if (master_copy < 0)
     return false;

@@ -65,7 +65,7 @@ struct TestMountPointInfo {
   chromeos::disks::MountCondition mount_condition;
 };
 
-// List of disks held in DiskMountManager at the begining of the test.
+// List of disks held in DiskMountManager at the beginning of the test.
 const TestDiskInfo kTestDisks[] = {
   {
     kDevice1SourcePath,
@@ -138,7 +138,7 @@ const TestDiskInfo kTestDisks[] = {
   },
 };
 
-// List of mount points  held in DiskMountManager at the begining of the test.
+// List of mount points  held in DiskMountManager at the beginning of the test.
 const TestMountPointInfo kTestMountPoints[] = {
   {
     "/archive/source_path",

@@ -89,17 +89,17 @@ class ProcessProxy : public base::RefCountedThreadSafe<ProcessProxy> {
 
   void StopWatching();
 
-  // Expects array of 2 file descripters.
+  // Expects array of 2 file descriptors.
   void CloseFdPair(int* pipe);
   // Expects pointer to single file descriptor.
   void CloseFd(int* fd);
-  // Expects array of 2 file descripters.
+  // Expects array of 2 file descriptors.
   void ClearFdPair(int* pipe);
 
   bool process_launched_;
 
   bool callback_set_;
-  // Callback used to report process output detected by proces output watcher.
+  // Callback used to report process output detected by process output watcher.
   OutputCallback callback_;
   // Callback received by process output watcher in |OnProcessOutput|.
   // Process output watcher will be paused until this is run.

@@ -308,7 +308,7 @@ TEST_F(SimpleGeolocationTest, InvalidResponse) {
 }
 
 TEST_F(SimpleGeolocationTest, NoWiFi) {
-  // This initializes DBusThreadManager and markes it "for tests only".
+  // This initializes DBusThreadManager and marks it "for tests only".
   DBusThreadManager::GetSetterForTesting();
   NetworkHandler::Initialize();
 
@@ -346,7 +346,7 @@ class SimpleGeolocationWirelessTest : public ::testing::TestWithParam<bool> {
   ~SimpleGeolocationWirelessTest() override {}
 
   void SetUp() override {
-    // This initializes DBusThreadManager and markes it "for tests only".
+    // This initializes DBusThreadManager and marks it "for tests only".
     DBusThreadManager::GetSetterForTesting();
     // Get the test interface for manager / device.
     manager_test_ =

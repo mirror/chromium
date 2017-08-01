@@ -27,7 +27,7 @@ namespace chromeos {
 // returning the most recent available data. A typical usage pattern,
 // assuming a wifi device is enabled, is:
 //   Initialize();  // Makes an initial request
-//   GetWifiAccessPoints();  // returns true + inital data, requests update
+//   GetWifiAccessPoints();  // returns true + initial data, requests update
 //   (Delay some amount of time, ~10s)
 //   GetWifiAccessPoints();  // returns true + updated data, requests update
 //   (Delay some amount of time after data changed, ~10s)

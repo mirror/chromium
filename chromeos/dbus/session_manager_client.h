@@ -154,7 +154,7 @@ class CHROMEOS_EXPORT SessionManagerClient : public DBusClient {
   // The ActiveSessionsCallback is used for the RetrieveActiveSessions()
   // method. It receives |sessions| argument where the keys are cryptohome_ids
   // for all users that are currently active and |success| argument which
-  // indicates whether or not the request succeded.
+  // indicates whether or not the request succeeded.
   using ActiveSessionsCallback =
       base::Callback<void(const ActiveSessionsMap& sessions, bool success)>;
 

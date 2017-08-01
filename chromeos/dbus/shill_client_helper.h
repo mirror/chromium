@@ -138,8 +138,8 @@ class ShillClientHelper {
   const dbus::ObjectProxy* object_proxy() const { return proxy_; }
 
   // Appends the value to the writer as a variant. If |value| is a Dictionary it
-  // will be written as a string -> varient dictionary, a{sv}. If |value| is a
-  // List then it must be a List of String values and is writen as type 'as'.
+  // will be written as a string -> variant dictionary, a{sv}. If |value| is a
+  // List then it must be a List of String values and is written as type 'as'.
   static void AppendValueDataAsVariant(dbus::MessageWriter* writer,
                                        const base::Value& value);
 

@@ -32,7 +32,7 @@ message State {
   enum Status {
     STATUS_UNSPECIFIED = 0;  // Unused required default value for Proto enums.
     UNINITIALIZED = 1;  // Media analytics working on loading configuration.
-    STARTED = 2;        // Analysis process running but not recieving frames.
+    STARTED = 2;        // Analysis process running but not receiving frames.
     RUNNING = 3;        // Analysis process running and injesting frames.
     SUSPENDED = 4;      // Media analytics process waiting to be started.
     RESTARTING = 5;     // Media analytics process should be restarted.

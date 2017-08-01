@@ -18,7 +18,7 @@ class AccountId;
 namespace chromeos {
 
 // AuthPolicyClient is used to communicate with the org.chromium.AuthPolicy
-// sevice. All method should be called from the origin thread (UI thread) which
+// service. All method should be called from the origin thread (UI thread) which
 // initializes the DBusThreadManager instance.
 class CHROMEOS_EXPORT AuthPolicyClient : public DBusClient {
  public:

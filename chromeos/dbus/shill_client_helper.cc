@@ -236,7 +236,7 @@ void ShillClientHelper::AddPropertyChangedObserver(
   if (observer_list_.HasObserver(observer))
     return;
   AddRef();
-  // Excecute all the pending MonitorPropertyChanged calls.
+  // Execute all the pending MonitorPropertyChanged calls.
   for (size_t i = 0; i < interfaces_to_be_monitored_.size(); ++i) {
     MonitorPropertyChangedInternal(interfaces_to_be_monitored_[i]);
   }
@@ -505,7 +505,7 @@ void ShillClientHelper::AppendServicePropertiesDictionary(
     array_writer.OpenDictEntry(&entry_writer);
     entry_writer.AppendString(it.key());
     // Shill expects Cellular.APN to be a string dictionary, a{ss}. All other
-    // properties use a varient dictionary, a{sv}. TODO(stevenjb): Remove this
+    // properties use a variant dictionary, a{sv}. TODO(stevenjb): Remove this
     // hack if/when we change Shill to accept a{sv} for Cellular.APN.
     DictionaryType dictionary_type = (it.key() == shill::kCellularApnProperty)
                                          ? DICTIONARY_TYPE_STRING

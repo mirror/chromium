@@ -207,7 +207,7 @@ TEST_F(BiodClientTest, TestStartEnrollSession) {
   const dbus::ObjectPath kFakeObjectPath(std::string("/fake/object/path"));
   const dbus::ObjectPath kFakeObjectPath2(std::string("/fake/object/path2"));
 
-  // Verify that by sending a empty reponse or a improperly formatted one, the
+  // Verify that by sending a empty response or an improperly formatted one, the
   // response is an empty object path.
   AddMethodExpectation(biod::kBiometricsManagerStartEnrollSessionMethod,
                        nullptr);
@@ -269,7 +269,7 @@ TEST_F(BiodClientTest, TestGetRecordsForUser) {
   base::RunLoop().RunUntilIdle();
   EXPECT_EQ(kFakeObjectPaths, returned_object_paths);
 
-  // Verify that by sending a empty reponse the response is an empty array of
+  // Verify that by sending a empty response the response is an empty array of
   // object paths.
   AddMethodExpectation(biod::kBiometricsManagerGetRecordsForUserMethod,
                        nullptr);
@@ -307,7 +307,7 @@ TEST_F(BiodClientTest, TestDestroyAllRecords) {
 TEST_F(BiodClientTest, TestStartAuthentication) {
   const dbus::ObjectPath kFakeObjectPath(std::string("/fake/object/path"));
 
-  // Verify that by sending a empty reponse or a improperly formatted one, the
+  // Verify that by sending a empty response or an improperly formatted one, the
   // response is an empty object path.
   AddMethodExpectation(biod::kBiometricsManagerStartAuthSessionMethod, nullptr);
   dbus::ObjectPath returned_path(kInvalidTestPath);
@@ -359,7 +359,7 @@ TEST_F(BiodClientTest, TestRequestBiometricType) {
   base::RunLoop().RunUntilIdle();
   EXPECT_EQ(kFakeBiometricType, biometric_type_);
 
-  // Verify that by sending a null reponse, the result is an unknown biometric
+  // Verify that by sending a null response, the result is an unknown biometric
   // type.
   biometric_type_ = biod::BIOMETRIC_TYPE_MAX;
   AddMethodExpectation(dbus::kDBusPropertiesGet, nullptr);
@@ -386,7 +386,7 @@ TEST_F(BiodClientTest, TestRequestRecordLabel) {
   base::RunLoop().RunUntilIdle();
   EXPECT_EQ(kFakeLabel, returned_label);
 
-  // Verify that by sending a null reponse, the result is an empty string.
+  // Verify that by sending a null response, the result is an empty string.
   returned_label = kInvalidString;
   AddMethodExpectation(dbus::kDBusPropertiesGet, nullptr);
   client_->RequestRecordLabel(

@@ -22,7 +22,7 @@ class NetworkState;
 // configuration. Primarily this class caches the "current" requested config
 // and populates UIProxyConfig for convenient UI consumption.
 // NOTE: This class must be rebuilt when the logged in profile changes.
-// ALSO NOTE: The provided PrefService instances are used both to retreive proxy
+// ALSO NOTE: The provided PrefService instances are used both to retrieve proxy
 // configurations set by an extension, and for ONC policy information associated
 // with a network. (Per-network proxy configurations are stored in Shill,
 // but ONC policy configuration is stored in PrefService).

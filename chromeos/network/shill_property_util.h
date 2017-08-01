@@ -91,7 +91,7 @@ bool DoIdentifyingPropertiesMatch(
 bool IsLoggableShillProperty(const std::string& key);
 
 // Parses |value| (which should be a Dictionary). Returns true and sets
-// |home_provider_id| if |value| was succesfully parsed.
+// |home_provider_id| if |value| was successfully parsed.
 bool GetHomeProviderFromProperty(const base::Value& value,
                                  std::string* home_provider_id);
 

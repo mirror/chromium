@@ -92,7 +92,7 @@ class CHROMEOS_EXPORT StatisticsProvider {
 
   // Returns true if the named machine statistic (e.g. "hardware_class") is
   // found and stores it in |result| (if provided). Probing for the existence of
-  // a statistic by setting |result| to nullptr supresses the usual warning in
+  // a statistic by setting |result| to nullptr suppresses the usual warning in
   // case the statistic is not found. Safe to call from any thread except the
   // task runner passed to Initialize() (e.g. FILE). This may block if called
   // early before the statistics are loaded from disk.
@@ -106,7 +106,7 @@ class CHROMEOS_EXPORT StatisticsProvider {
   // Returns the machine serial number after examining a set of well-known
   // keys. In case no serial is found (possibly due to the device having already
   // been enrolled or claimed by a local user), an empty string is returned.
-  // Caveat: For lumpy, the last letter is ommitted from the serial number for
+  // Caveat: For lumpy, the last letter is omitted from the serial number for
   // historical reasons.
   // TODO(tnagel): Drop "Enterprise" from the method name and remove lumpy
   // special casing after lumpy EOL.

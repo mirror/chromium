@@ -128,7 +128,7 @@ class CHROMEOS_EXPORT LoginPerformer : public AuthStatusConsumer {
                                  bool* wildcard_match) = 0;
 
  protected:
-  // Platform-dependant methods to be implemented by concrete class.
+  // Platform-dependent methods to be implemented by concrete class.
 
   // Run trusted check for a platform. If trusted check have to be performed
   // asynchronously, |false| will be returned, and either delegate's

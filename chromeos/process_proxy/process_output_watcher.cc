@@ -120,7 +120,7 @@ size_t ProcessOutputWatcher::OutputSizeWithoutIncompleteUTF8() {
       return read_buffer_size_;
 
     // If there are trailing characters, there must be a leading one in the
-    // buffer for a valid UTF8 character. Getting past the buffer begining
+    // buffer for a valid UTF8 character. Getting past the buffer beginning
     // signals something's wrong, or the buffer is empty. In both cases return
     // the whole current buffer.
     if (last_lead_byte < 0)

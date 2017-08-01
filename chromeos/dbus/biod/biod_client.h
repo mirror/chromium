@@ -39,7 +39,7 @@ class CHROMEOS_EXPORT BiodClient : public DBusClient {
     virtual void BiodServiceRestarted() {}
 
     // Called whenever a user attempts a scan during enrollment. |scan_result|
-    // tells whether the scan was succesful. |enroll_session_complete| tells
+    // tells whether the scan was successful. |enroll_session_complete| tells
     // whether enroll session is complete and is now over.
     // |percent_complete| within [0, 100] represents the percent of enrollment
     // completion and -1 means unknown percentage.

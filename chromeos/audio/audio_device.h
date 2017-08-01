@@ -67,9 +67,9 @@ struct CHROMEOS_EXPORT AudioDevice {
 
   bool is_input = false;
 
-  // Id of this audio device. The legacy |id| is assigned to be unique everytime
-  // when each device got plugged, so that the same physical device will have
-  // a different id after unplug then re-plug.
+  // Id of this audio device. The legacy |id| is assigned to be unique every
+  // time when each device got plugged, so that the same physical device will
+  // have a different id after unplug then re-plug.
   // The |stable_device_id| is designed to be persistent across system reboot
   // and plug/unplug for the same physical device. It is guaranteed that
   // different type of hardware has different |stable_device_id|, but not
