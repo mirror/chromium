@@ -94,6 +94,23 @@
     },
     {
       "key": {
+        "uuid": "14d9262e_1fd4a1d6",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/WebAuthenticationClient.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-01T14:13:51Z",
+      "side": 1,
+      "message": "Could we use WebCryptoAlgorithm::ParamsType() here, or is that something different?",
+      "revId": "d81e6d99df03d8d5f81edb4e75eb133086b77435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b5197fe0_23e2e059",
         "filename": "third_party/WebKit/Source/modules/credentialmanager/WebAuthenticationClient.cpp",
         "patchSetId": 2
@@ -117,6 +134,47 @@
     },
     {
       "key": {
+        "uuid": "1240011a_471496b3",
+        "filename": "third_party/WebKit/Source/modules/credentialmanager/WebAuthenticationClient.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-01T14:13:51Z",
+      "side": 1,
+      "message": "+1, but let\u0027s do that in a separate CL.\n\nEither leave things as they are, and convert everything in a follow-up CL, or convert existing things in a prior CL and add TypeConverters in this CL. Up to you.",
+      "parentUuid": "b5197fe0_23e2e059",
+      "range": {
+        "startLine": 154,
+        "startChar": 0,
+        "endLine": 154,
+        "endChar": 46
+      },
+      "revId": "d81e6d99df03d8d5f81edb4e75eb133086b77435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9177336_7fc38c10",
+        "filename": "third_party/WebKit/public/platform/modules/webauth/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-01T14:13:51Z",
+      "side": 1,
+      "message": "I\u0027m not sure again, but maybe this is not needed either?",
+      "revId": "d81e6d99df03d8d5f81edb4e75eb133086b77435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "52cb764c_5ec14403",
         "filename": "third_party/WebKit/public/platform/modules/webauth/authenticator.mojom",
         "patchSetId": 2
@@ -134,6 +192,40 @@
         "endLine": 88,
         "endChar": 32
       },
+      "revId": "d81e6d99df03d8d5f81edb4e75eb133086b77435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "381b8da0_bd441f46",
+        "filename": "third_party/WebKit/public/platform/modules/webauth/authenticator.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-01T14:13:51Z",
+      "side": 1,
+      "message": "nit: Extra whitespace here too. Could you please run `git cl format --full` on this file?",
+      "revId": "d81e6d99df03d8d5f81edb4e75eb133086b77435",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8fcbf33_859cb265",
+        "filename": "third_party/WebKit/public/platform/modules/webauth/web_crypto_algorithm.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-01T14:13:51Z",
+      "side": 1,
+      "message": "nit: Do we need this?",
       "revId": "d81e6d99df03d8d5f81edb4e75eb133086b77435",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

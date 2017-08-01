@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25a98914_5077da40",
+        "filename": "third_party/WebKit/public/platform/modules/webauth/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-01T14:13:51Z",
+      "side": 0,
+      "message": "I\u0027m not sure, but I think this file is not used anywhere (nor needed).",
+      "revId": "924580cbad3e5577ff6692cadc12007e1bea2432",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
