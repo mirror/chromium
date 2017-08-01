@@ -21,7 +21,7 @@ enum ScanMode {
   // Request no particular scan policy.  Opportunistic listeners will receive
   // notifications when any other listener requests a scan.
   OPPORTUNISTIC = 0,
-  // Request a scan that runs occassionally, even when Chrome is not in the
+  // Request a scan that runs occasionally, even when Chrome is not in the
   // foreground.  Android only.
   BACKGROUND_INTERMITTENT = 1 << 0,
 };

@@ -151,7 +151,7 @@ cr.googleTranslate = (function() {
     },
 
     /**
-     * Whether an error occured initializing the library of translating the
+     * Whether an error occurred initializing the library of translating the
      * page.
      * @type {boolean}
      */

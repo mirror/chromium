@@ -18,7 +18,7 @@ class ObjectIdInvalidationMap;
 }  // namespace syncer
 
 namespace invalidation {
-// This class provides the possibilty to register as an observer for the
+// This class provides the possibility to register as an observer for the
 // InvalidationLogger notifications whenever an InvalidatorService changes
 // its internal state.
 // (i.e. A new registration, a new invalidation, a TICL/GCM state change)

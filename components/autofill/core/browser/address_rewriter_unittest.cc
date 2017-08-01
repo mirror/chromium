@@ -230,7 +230,7 @@ TEST(AddressRewriterTest, RO) {
 
 TEST(AddressRewriterTest, RU) {
   AddressRewriter ru = AddressRewriter::ForCountryCode(UTF8ToUTF16("ru"));
-  // TODO(rogerm): UTF8 matching isnt' working as expected. Fix it!
+  // TODO(rogerm): UTF8 matching isn't' working as expected. Fix it!
   EXPECT_NE(ru.Rewrite(UTF8ToUTF16("россия")),
             ru.Rewrite(UTF8ToUTF16("russia")));
 }
@@ -243,7 +243,7 @@ TEST(AddressRewriterTest, SE) {
 
 TEST(AddressRewriterTest, TH) {
   AddressRewriter th = AddressRewriter::ForCountryCode(UTF8ToUTF16("th"));
-  // TODO(rogerm): UTF8 matching isnt' working as expected. Fix it!
+  // TODO(rogerm): UTF8 matching isn't' working as expected. Fix it!
   EXPECT_NE(th.Rewrite(UTF8ToUTF16("ประเทศไทย")),
             th.Rewrite(UTF8ToUTF16("thailand")));
 }

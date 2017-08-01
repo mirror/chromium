@@ -5694,7 +5694,7 @@ TEST_F(PersonalDataManagerTest, ApplyDedupingRoutine_MergedProfileValues) {
   // The specified company name from profile2 should be kept (no loss of
   // information).
   EXPECT_EQ(base::UTF8ToUTF16("Fox"), profiles[0]->GetRawInfo(COMPANY_NAME));
-  // The specified country from the imported profile shoudl be kept (no loss of
+  // The specified country from the imported profile should be kept (no loss of
   // information).
   EXPECT_EQ(base::UTF8ToUTF16("US"),
             profiles[0]->GetRawInfo(ADDRESS_HOME_COUNTRY));
@@ -6411,7 +6411,7 @@ TEST_F(PersonalDataManagerTest,
   const std::string kServerAddressId("server_address1");
 
   // Add two similar profile, a local and a server one. Set the use stats so
-  // the server card has a higher frecency, to have a predicatble ordering to
+  // the server card has a higher frecency, to have a predictable ordering to
   // validate results.
   // Add a local profile.
   AutofillProfile local_profile(base::GenerateGUID(),
@@ -6575,7 +6575,7 @@ TEST_F(
   const std::string kServerAddressId2("server_address2");
 
   // Add a unique local profile and two similar server profiles. Set the use
-  // stats to have a predicatble ordering to validate results.
+  // stats to have a predictable ordering to validate results.
   // Add a local profile.
   AutofillProfile local_profile(base::GenerateGUID(),
                                 "https://www.example.com");

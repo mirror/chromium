@@ -51,7 +51,7 @@ class BluetoothLowEnergyWeavePacketReceiver {
   //   request/response have extra data since the extra data is treated as a
   //   complete data message. This state is never reentered.
   // WAITING:
-  //   The reciever is ready but doesn't have any data. It's waiting for packet
+  //   The receiver is ready but doesn't have any data. It's waiting for packet
   //   to arrive. Will accept all but connection request/response packets. The
   //   first data packet will move the receiver to the RECEIVING_DATA state. A
   //   connection close packet will move the receiver to the CONNECTION_CLOSED

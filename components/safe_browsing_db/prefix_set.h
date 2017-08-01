@@ -179,7 +179,7 @@ class PrefixSetBuilder {
   // delta, or kMaxRun, whichever comes first.
   void EmitRun();
 
-  // Buffers prefixes until enough are avaliable to emit a run.
+  // Buffers prefixes until enough are available to emit a run.
   std::vector<SBPrefix> buffer_;
 
   // The PrefixSet being built.

@@ -487,7 +487,7 @@ TEST_F(RemoteSuggestionsSchedulerImplTest,
     // The first call to NTPOpened results in a fetch.
     EXPECT_CALL(*provider(), RefetchInTheBackground(_))
         .WillOnce(SaveArg<0>(&signal_fetch_done));
-    // Rescheduling after a succesful fetch.
+    // Rescheduling after a successful fetch.
     EXPECT_CALL(*persistent_scheduler(), Schedule(_, _));
     // The second call to NTPOpened 4hrs later again results in a fetch.
     EXPECT_CALL(*provider(), RefetchInTheBackground(_));
@@ -680,7 +680,7 @@ TEST_F(RemoteSuggestionsSchedulerImplTest, FetchIntervalForShownTriggerOnWifi) {
   EXPECT_CALL(*provider(), RefetchInTheBackground(_))
       .WillOnce(SaveArg<0>(&signal_fetch_done));
   scheduler()->OnSuggestionsSurfaceOpened();
-  // Rescheduling after a succesful fetch.
+  // Rescheduling after a successful fetch.
   EXPECT_CALL(*persistent_scheduler(), Schedule(_, _));
   signal_fetch_done.Run(Status::Success());
 
@@ -716,7 +716,7 @@ TEST_F(RemoteSuggestionsSchedulerImplTest,
   EXPECT_CALL(*provider(), RefetchInTheBackground(_))
       .WillOnce(SaveArg<0>(&signal_fetch_done));
   scheduler()->OnSuggestionsSurfaceOpened();
-  // Rescheduling after a succesful fetch.
+  // Rescheduling after a successful fetch.
   EXPECT_CALL(*persistent_scheduler(), Schedule(_, _));
   signal_fetch_done.Run(Status::Success());
 
@@ -747,7 +747,7 @@ TEST_F(RemoteSuggestionsSchedulerImplTest,
   EXPECT_CALL(*provider(), RefetchInTheBackground(_))
       .WillOnce(SaveArg<0>(&signal_fetch_done));
   scheduler()->OnSuggestionsSurfaceOpened();
-  // Rescheduling after a succesful fetch.
+  // Rescheduling after a successful fetch.
   EXPECT_CALL(*persistent_scheduler(), Schedule(_, _));
   signal_fetch_done.Run(Status::Success());
 
@@ -780,7 +780,7 @@ TEST_F(RemoteSuggestionsSchedulerImplTest,
   EXPECT_CALL(*provider(), RefetchInTheBackground(_))
       .WillOnce(SaveArg<0>(&signal_fetch_done));
   scheduler()->OnSuggestionsSurfaceOpened();
-  // Rescheduling after a succesful fetch.
+  // Rescheduling after a successful fetch.
   EXPECT_CALL(*persistent_scheduler(), Schedule(_, _));
   signal_fetch_done.Run(Status::Success());
 

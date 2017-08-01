@@ -114,7 +114,7 @@ TEST_F(MetricsLogManagerTest, InterjectedLogPreservesType) {
       base::WrapUnique(CreateLog(MetricsLog::INITIAL_STABILITY_LOG)));
   log_manager.FinishCurrentLog(log_store());
   log_manager.ResumePausedLog();
-  // Finishing the interjecting inital log should have stored an initial log.
+  // Finishing the interjecting initial log should have stored an initial log.
   EXPECT_EQ(1U, log_store()->initial_log_count());
   EXPECT_EQ(0U, log_store()->ongoing_log_count());
 

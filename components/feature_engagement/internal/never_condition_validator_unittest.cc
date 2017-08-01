@@ -22,7 +22,7 @@ const base::Feature kTestFeatureFoo{"test_foo",
 const base::Feature kTestFeatureBar{"test_bar",
                                     base::FEATURE_DISABLED_BY_DEFAULT};
 
-// A EventModel that is always postive to show in-product help.
+// A EventModel that is always positive to show in-product help.
 class TestEventModel : public EventModel {
  public:
   TestEventModel() = default;

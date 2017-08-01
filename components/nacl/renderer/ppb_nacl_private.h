@@ -273,7 +273,7 @@ class PPBNaClPrivate {
                             PP_Bool length_is_computable,
                             uint64_t loaded_bytes,
                             uint64_t total_bytes);
-  /* Report an error that occured while attempting to load a nexe. */
+  /* Report an error that occurred while attempting to load a nexe. */
   static void ReportLoadError(PP_Instance instance,
                               PP_NaClError error,
                               const char* error_message);

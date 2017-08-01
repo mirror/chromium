@@ -41,7 +41,7 @@ TraceRingBuffer::Chunk* TraceRingBuffer::TakeChunk(uint32_t writer_id) {
     }
   }
 
-  // Bankrupcy: there are more threads than chunks. All chunks were in flight.
+  // Bankruptcy: there are more threads than chunks. All chunks were in flight.
   if (!bankrupcy_chunk_storage_) {
     bankrupcy_chunk_storage_.reset(new uint8_t[kChunkSize]);
     bankrupcy_chunk_.Initialize(&bankrupcy_chunk_storage_.get()[0]);

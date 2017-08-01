@@ -74,7 +74,7 @@ class RequestSender : public net::URLFetcherDelegate {
                                           const char* header_name);
 
   // Returns the integral value of a header of the server response or -1 if
-  // if the header is not available or a conversion error has occured.
+  // if the header is not available or a conversion error has occurred.
   static int64_t GetInt64HeaderValue(const net::URLFetcher* source,
                                      const char* header_name);
 

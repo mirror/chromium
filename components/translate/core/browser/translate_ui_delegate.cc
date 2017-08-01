@@ -335,8 +335,9 @@ bool TranslateUIDelegate::ShouldAlwaysTranslateBeCheckedByDefault() {
   // We check for == N instead of >= N because if the user translates with the
   // "Always do this?" on, then the next time the bubble won't show up.
   // The only chance the bubble will show up is after the user manually unchecks
-  // "Always do this?". In that case, since it is after user explictly unchecks,
-  // we should show as it as unchecked so we only check == N instead of >= N.
+  // "Always do this?". In that case, since it is after user explicitly
+  // unchecks, we should show as it as unchecked so we only check == N instead
+  // of >= N.
   return prefs_->GetTranslationAcceptedCount(GetOriginalLanguageCode()) ==
          threshold;
 }

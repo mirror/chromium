@@ -984,7 +984,7 @@ TEST_F(ProfileSyncServiceTest, ValidPointersInDTCMap) {
   service()->OnSyncCycleCompleted(syncer::SyncCycleSnapshot());
 }
 
-// The OpenTabsUIDelegate should only be accessable when PROXY_TABS is enabled.
+// The OpenTabsUIDelegate should only be accessible when PROXY_TABS is enabled.
 TEST_F(ProfileSyncServiceTest, GetOpenTabsUIDelegate) {
   CreateService(ProfileSyncService::AUTO_START);
   InitializeForNthSync();

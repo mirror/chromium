@@ -158,7 +158,7 @@ std::string BuildMirrorRequestCookieIfPossible(
 
 // Adds account consistency header to all Gaia requests from a connected
 // profile, with the exception of requests from gaia webview.
-// Removes the header in case it should not be transfered to a redirected url.
+// Removes the header in case it should not be transferred to a redirected url.
 void AppendOrRemoveAccountConsistentyRequestHeader(
     net::URLRequest* request,
     const GURL& redirect_url,

@@ -92,7 +92,7 @@ class HistoryQueryTest : public testing::Test {
 
   // Test paging through results, with a fixed number of results per page.
   // Defined here so code can be shared for the text search and the non-text
-  // seach versions.
+  // search versions.
   void TestPaging(const std::string& query_text,
                   const int* expected_results,
                   int results_length) {

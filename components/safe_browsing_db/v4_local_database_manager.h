@@ -146,7 +146,7 @@ class V4LocalDatabaseManager : public SafeBrowsingDatabaseManager {
     // The SafeBrowsing client that's waiting for the safe/unsafe verdict.
     Client* client;
 
-    // Determines which funtion from the |client| needs to be called once we
+    // Determines which function from the |client| needs to be called once we
     // know whether the URL in |url| is safe or unsafe.
     const ClientCallbackType client_callback_type;
 

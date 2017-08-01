@@ -179,7 +179,7 @@ void MergeCommonMetadata(
   // model was only created, never used. The remote model should always be
   // preferred.
   // This situation can happen for new Chromium instances where there is no data
-  // yet on disk, making the use_date artifically high. Once the metadata sync
+  // yet on disk, making the use_date artificially high. Once the metadata sync
   // kicks in, we should use that value.
   if (local_model->use_count() == 1) {
     local_model->set_use_date(remote_use_date);

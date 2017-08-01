@@ -12,7 +12,7 @@ package leveldb_proto;
 //
 // Next tag: 3
 message TestProto {
-  // Arbitary id.
+  // Arbitrary id.
   optional string id = 1;
 
   // Arbitrary data.

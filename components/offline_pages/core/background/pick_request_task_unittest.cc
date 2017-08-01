@@ -289,7 +289,7 @@ TEST_F(PickRequestTaskTest, ChooseRequestWithSameRetryCountButEarlier) {
 }
 
 TEST_F(PickRequestTaskTest, ChooseEarlierRequest) {
-  // We need a custom policy object prefering recency to retry count.
+  // We need a custom policy object preferring recency to retry count.
   policy_.reset(new OfflinerPolicy(
       kPreferUntried, kPreferEarlier, !kPreferRetryCount, kMaxStartedTries,
       kMaxCompletedTries, kBackgroundProcessingTimeBudgetSeconds));

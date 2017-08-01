@@ -40,7 +40,7 @@ message PostedScreenshot {
 
 // Contains data about possible errors on the client side.
 // Describes number of attempts to send feedback and possible error codes/
-// exceptions which occured.
+// exceptions which occurred.
 message ExtensionErrors {
 
   required int32 number_of_attempts = 1;

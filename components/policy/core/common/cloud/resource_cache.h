@@ -33,7 +33,7 @@ class POLICY_EXPORT ResourceCache {
                          scoped_refptr<base::SequencedTaskRunner> task_runner);
   virtual ~ResourceCache();
 
-  // Stores |data| under (key, subkey). Returns true if the store suceeded, and
+  // Stores |data| under (key, subkey). Returns true if the store succeeded, and
   // false otherwise.
   bool Store(const std::string& key,
              const std::string& subkey,

@@ -22,7 +22,7 @@ struct FeatureConfig;
 class AvailabilityModel;
 class EventModel;
 
-// A ConditionValidator checks the requred conditions for a given feature,
+// A ConditionValidator checks the required conditions for a given feature,
 // and checks if all conditions are met.
 class ConditionValidator {
  public:

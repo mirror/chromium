@@ -43,7 +43,7 @@ namespace {
 
 // This method simulates the actual behavior of the passed in callback, which is
 // validated in other tests. For simplicity, offline, lite page, and server LoFi
-// use the offline previews check. Client LoFi uses a seperate check to verify
+// use the offline previews check. Client LoFi uses a separate check to verify
 // that types are treated differently.
 bool IsPreviewFieldTrialEnabled(PreviewsType type) {
   switch (type) {

@@ -201,7 +201,7 @@ void IOSTranslateDriver::TranslationDidSucceed(
     return;
   std::string actual_source_lang;
   translate::TranslateErrors::Type translate_errors = TranslateErrors::NONE;
-  // Translation was successfull; if it was auto, retrieve the source
+  // Translation was successful; if it was auto, retrieve the source
   // language the Translate Element detected.
   if (source_lang == kAutoDetectionLanguage) {
     actual_source_lang = original_page_language;

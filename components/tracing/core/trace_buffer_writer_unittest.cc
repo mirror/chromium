@@ -268,13 +268,13 @@ TEST_F(TraceBufferWriterTest, ManyWriters) {
     EXPECT_TRUE(GetChunk(i)->is_owned());
 
   // An attempt to write a larger event on another write should cause the ring
-  // buffer to fall in bankrupcy mode.
+  // buffer to fall in bankruptcy mode.
   auto retain_event_3 =
       MockEvent::Add(writer[4].get(), event_size_to_fill_chunk());
   EXPECT_EQ(ring_buffer().num_chunks(), ring_buffer().GetNumChunksTaken());
 
   // A small writer to the writer 0 should cause it to return all chunks but the
-  // last one and leave the bankrupcy chunk.
+  // last one and leave the bankruptcy chunk.
   retain_event = MockEvent::Add(writer[0].get(), 7);
   EXPECT_LT(ring_buffer().GetNumChunksTaken(), ring_buffer().num_chunks());
   EXPECT_EQ(writer[0]->writer_id(), GetChunk(4)->owner());
@@ -300,10 +300,10 @@ TEST_F(TraceBufferWriterTest, ManyWriters) {
   chunk = ReadBackAndTestChunk(7, writer[2]->writer_id(), 1, 2, true, false);
   EXPECT_EQ(5u + 2, chunk.events(1).size());
 
-  // writer[3] did the last write before the bankrupcy and has one extra event.
+  // writer[3] did the last write before the bankruptcy and has one extra event.
   ReadBackAndTestChunk(8, writer[3]->writer_id(), 1, 3, true, true);
 
-  // writer[4] overflew in the bankrupcy chunk and has 3 events as well.
+  // writer[4] overflew in the bankruptcy chunk and has 3 events as well.
   ReadBackAndTestChunk(9, writer[4]->writer_id(), 1, 3, true, true);
 }
 

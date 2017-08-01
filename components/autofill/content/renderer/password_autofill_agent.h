@@ -117,7 +117,7 @@ class PasswordAutofillAgent : public content::RenderFrameObserver,
   // Called when new form controls are inserted.
   void OnDynamicFormsSeen();
 
-  // Called when an AJAX has succesfully completed. Used to determine if
+  // Called when an AJAX has successfully completed. Used to determine if
   // a form has been submitted by AJAX without navigation.
   void AJAXSucceeded();
 

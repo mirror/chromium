@@ -291,7 +291,7 @@ class FakeServerChange {
   void SetNodeMetaInfo(const BookmarkNode::MetaInfoMap& meta_info_map,
                        sync_pb::BookmarkSpecifics* specifics) {
     specifics->clear_meta_info();
-    // Deliberatly set MetaInfoMap entries in opposite order (compared
+    // Deliberately set MetaInfoMap entries in opposite order (compared
     // to the implementation in BookmarkChangeProcessor) to ensure that
     // (a) the implementation isn't sensitive to the order and
     // (b) the original meta info isn't blindly overwritten by
@@ -936,7 +936,7 @@ TEST_F(ProfileSyncServiceBookmarkTest, InitialModelAssociateWithDeleteJournal) {
   EXPECT_EQ(0, folder->child_count());
 }
 
-// Tests that the external ID is used to match the right folder amoung
+// Tests that the external ID is used to match the right folder among
 // multiple folders with the same name during the native model traversal.
 // Also tests that the external ID is used to match the right bookmark
 // among multiple identical bookmarks when dealing with the delete journal.

@@ -179,7 +179,7 @@ class AccountReconcilor : public KeyedService,
   // True iff this is the first time the reconcilor is executing.
   bool first_execution_;
 
-  // True iff an error occured during the last attempt to reconcile.
+  // True iff an error occurred during the last attempt to reconcile.
   bool error_during_last_reconcile_;
 
   // Used during reconcile action.

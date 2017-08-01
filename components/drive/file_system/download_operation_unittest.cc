@@ -63,7 +63,7 @@ TEST_F(DownloadOperationTest,
   ASSERT_TRUE(entry);
   EXPECT_FALSE(entry->file_specific_info().is_hosted_document());
 
-  // The transfered file is cached and the change of "offline available"
+  // The transferred file is cached and the change of "offline available"
   // attribute is notified.
   EXPECT_EQ(1U, delegate()->get_changed_files().size());
   EXPECT_EQ(1U, delegate()->get_changed_files().count(file_in_root));
@@ -138,7 +138,7 @@ TEST_F(DownloadOperationTest,
   ASSERT_TRUE(entry);
   EXPECT_FALSE(entry->file_specific_info().is_hosted_document());
 
-  // The transfered file is cached and the change of "offline available"
+  // The transferred file is cached and the change of "offline available"
   // attribute is notified.
   EXPECT_EQ(2U, delegate()->get_changed_files().size());
   EXPECT_TRUE(delegate()->get_changed_files().count(file_in_root));
@@ -270,7 +270,7 @@ TEST_F(DownloadOperationTest, EnsureFileDownloadedByLocalId) {
   ASSERT_TRUE(entry);
   EXPECT_FALSE(entry->file_specific_info().is_hosted_document());
 
-  // The transfered file is cached and the change of "offline available"
+  // The transferred file is cached and the change of "offline available"
   // attribute is notified.
   EXPECT_EQ(1U, delegate()->get_changed_files().size());
   EXPECT_EQ(1U, delegate()->get_changed_files().count(file_in_root));
@@ -307,7 +307,7 @@ TEST_F(DownloadOperationTest,
               get_content_callback.GetConcatenatedData().size());
     EXPECT_EQ(FILE_ERROR_OK, completion_error);
 
-    // The transfered file is cached and the change of "offline available"
+    // The transferred file is cached and the change of "offline available"
     // attribute is notified.
     EXPECT_EQ(1U, delegate()->get_changed_files().size());
     EXPECT_EQ(1U, delegate()->get_changed_files().count(file_in_root));

@@ -318,7 +318,7 @@ TEST_F(PasswordManagerTest, GeneratedPasswordFormSubmitEmptyStore) {
   // The user should not need to confirm saving as they have already given
   // consent by using the generated password. The form should be saved once
   // navigation occurs. The client will be informed that automatic saving has
-  // occured.
+  // occurred.
   EXPECT_CALL(client_, PromptUserToSaveOrUpdatePasswordPtr(_)).Times(0);
   PasswordForm form_to_save;
   EXPECT_CALL(*store_, UpdateLoginWithPrimaryKey(_, _))

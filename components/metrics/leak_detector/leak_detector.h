@@ -70,7 +70,7 @@ class LeakDetector {
   // - |params| is a set of parameters used by the leak detector. See definition
   //   of MemoryLeakReportProto_Params for info about individual parameters.
   // - |task_runner| is a TaskRunner to which NotifyObservers() should be
-  //   posted, if it is initally called from a different thread than the one on
+  //   posted, if it is initially called from a different thread than the one on
   //   which |task_runner| runs.
   void Init(const MemoryLeakReportProto_Params& params,
             scoped_refptr<base::TaskRunner> task_runner);

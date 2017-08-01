@@ -33,7 +33,7 @@ class DoodleFetcher {
   virtual ~DoodleFetcher() = default;
 
   // Fetches a doodle asynchronously. The |callback| is called with a
-  // DoodleState indicating whether the request succeded in fetching a doodle.
+  // DoodleState indicating whether the request succeeded in fetching a doodle.
   // If a fetch is already running, the callback will be queued and invoked with
   // the result from the next completed request.
   virtual void FetchDoodle(FinishedCallback callback) = 0;

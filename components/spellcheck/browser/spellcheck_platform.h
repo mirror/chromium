@@ -47,7 +47,7 @@ void ShowSpellingPanel(bool show);
 void UpdateSpellingPanelWithMisspelledWord(const base::string16& word);
 
 // Translates the codes used by chrome to the language codes used by os x
-// and checks the given language agains the languages that the current system
+// and checks the given language against the languages that the current system
 // supports. If the platform-specific spellchecker supports the language,
 // then returns true, otherwise false.
 bool PlatformSupportsLanguage(const std::string& current_language);

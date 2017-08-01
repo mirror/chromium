@@ -49,7 +49,7 @@ bool IsDeviceOwner() {
   // Check whether the logged-in Chrome OS user is allowed to add or remove WiFi
   // networks. The user account state changes immediately after boot. There is a
   // small window when this may return an incorrect state. However, after things
-  // settle down this is guranteed to reflect the correct user account state.
+  // settle down this is guaranteed to reflect the correct user account state.
   return user_manager::UserManager::Get()->GetActiveUser()->GetAccountId() ==
          user_manager::UserManager::Get()->GetOwnerAccountId();
 }

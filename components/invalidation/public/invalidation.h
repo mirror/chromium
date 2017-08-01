@@ -108,7 +108,7 @@ class INVALIDATION_EXPORT Invalidation {
   bool is_unknown_version_;
 
   // The version number of this invalidation.  Should not be accessed if this is
-  // an unkown version invalidation.
+  // an unknown version invalidation.
   int64_t version_;
 
   // The payaload associated with this invalidation.  Should not be accessed if

@@ -47,7 +47,7 @@ NSData* WeakMD5FromNSString(NSString* string) {
 // The user defaults from the app group used to optimize the pasteboard change
 // detection.
 @property(nonatomic, strong) NSUserDefaults* sharedUserDefaults;
-// The pasteboard's change count. Increases everytime the pasteboard changes.
+// The pasteboard's change count. Increases every time the pasteboard changes.
 @property(nonatomic) NSInteger lastPasteboardChangeCount;
 // MD5 hash of the last registered pasteboard entry.
 @property(nonatomic, strong) NSData* lastPasteboardEntryMD5;

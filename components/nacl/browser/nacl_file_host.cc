@@ -32,7 +32,7 @@ namespace {
 // Force a prefix to prevent user from opening "magic" files.
 const char* kExpectedFilePrefix = "pnacl_public_";
 
-// Restrict PNaCl file lengths to reduce likelyhood of hitting bugs
+// Restrict PNaCl file lengths to reduce likelihood of hitting bugs
 // in file name limit error-handling-code-paths, etc.
 const size_t kMaxFileLength = 40;
 

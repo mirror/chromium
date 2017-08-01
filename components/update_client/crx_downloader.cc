@@ -186,7 +186,7 @@ void CrxDownloader::HandleDownloadError(
 
   download_metrics_.push_back(download_metrics);
 
-  // If an error has occured, try the next url if there is any,
+  // If an error has occurred, try the next url if there is any,
   // or try the successor in the chain if there is any successor.
   // If this downloader has received a 5xx error for the current url,
   // as indicated by the |is_handled| flag, remove that url from the list of

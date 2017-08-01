@@ -43,9 +43,9 @@ class ReadingListModelStorage : public syncer::ModelTypeSyncBridge {
                                    base::Clock* clock) = 0;
 
   // Starts a transaction. All Save/Remove entry will be delayed until the
-  // transaction is commited.
+  // transaction is committed.
   // Multiple transaction can be started at the same time. Commit will happen
-  // when the last transaction is commited.
+  // when the last transaction is committed.
   // Returns a scoped batch update object that should be retained while the
   // batch update is performed. Deallocating this object will inform model that
   // the batch update has completed.

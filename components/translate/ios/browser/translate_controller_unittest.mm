@@ -77,7 +77,7 @@ TEST_F(TranslateControllerTest, OnJavascriptCommandReceived) {
 }
 
 // Tests that OnTranslateScriptReady() is called when a timeout message is
-// recieved from the JS side.
+// received from the JS side.
 TEST_F(TranslateControllerTest, OnTranslateScriptReadyTimeoutCalled) {
   base::DictionaryValue command;
   command.SetString("command", "translate.ready");
@@ -92,7 +92,7 @@ TEST_F(TranslateControllerTest, OnTranslateScriptReadyTimeoutCalled) {
 }
 
 // Tests that OnTranslateScriptReady() is called with the right parameters when
-// a |translate.ready| message is recieved from the JS side.
+// a |translate.ready| message is received from the JS side.
 TEST_F(TranslateControllerTest, OnTranslateScriptReadyCalled) {
   // Arbitrary values.
   double some_load_time = 23.1;
@@ -113,7 +113,7 @@ TEST_F(TranslateControllerTest, OnTranslateScriptReadyCalled) {
 }
 
 // Tests that OnTranslateComplete() is called with the right parameters when a
-// |translate.status| message is recieved from the JS side.
+// |translate.status| message is received from the JS side.
 TEST_F(TranslateControllerTest, TranslationSuccess) {
   // Arbitrary values.
   std::string some_original_language("en");
@@ -134,7 +134,7 @@ TEST_F(TranslateControllerTest, TranslationSuccess) {
 }
 
 // Tests that OnTranslateComplete() is called with the right parameters when a
-// |translate.status| message is recieved from the JS side.
+// |translate.status| message is received from the JS side.
 TEST_F(TranslateControllerTest, TranslationFailure) {
   base::DictionaryValue command;
   command.SetString("command", "translate.status");

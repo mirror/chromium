@@ -67,7 +67,7 @@ ConvertEffectiveConnectionType(
 
 }  // namespace
 
-// Listens to the changes in the effective conection type.
+// Listens to the changes in the effective connection type.
 class NetworkMetricsProvider::EffectiveConnectionTypeObserver
     : public net::EffectiveConnectionTypeObserver {
  public:

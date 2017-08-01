@@ -420,7 +420,7 @@ TEST_F(ProximityAuthBluetoothConnectionTest, SendMessage_Success) {
   Connect(&connection);
 
   std::unique_ptr<TestWireMessage> wire_message(new TestWireMessage);
-  // Ownership will be transfered below, so grab a reference here.
+  // Ownership will be transferred below, so grab a reference here.
   TestWireMessage* expected_wire_message = wire_message.get();
 
   device::BluetoothSocket::SendCompletionCallback callback;
@@ -442,7 +442,7 @@ TEST_F(ProximityAuthBluetoothConnectionTest, SendMessage_Failure) {
   Connect(&connection);
 
   std::unique_ptr<TestWireMessage> wire_message(new TestWireMessage);
-  // Ownership will be transfered below, so grab a reference here.
+  // Ownership will be transferred below, so grab a reference here.
   TestWireMessage* expected_wire_message = wire_message.get();
 
   device::BluetoothSocket::ErrorCompletionCallback error_callback;

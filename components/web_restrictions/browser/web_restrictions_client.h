@@ -38,7 +38,7 @@ class WebRestrictionsClient {
   static bool Register(JNIEnv* env);
 
   // Verify the content provider and query it for basic information like does it
-  // support handling requests. This should be called everytime the provider
+  // support handling requests. This should be called every time the provider
   // changes. An empty authority can be used to disable this class.
   void SetAuthority(const std::string& content_provider_authority);
 

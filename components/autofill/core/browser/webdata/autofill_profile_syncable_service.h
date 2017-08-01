@@ -101,7 +101,7 @@ class AutofillProfileSyncableService
   virtual bool LoadAutofillData(
       std::vector<std::unique_ptr<AutofillProfile>>* profiles);
 
-  // Helper to persist any changes that occured during model association to
+  // Helper to persist any changes that occurred during model association to
   // the WebDatabase.
   // Made virtual for ease of mocking in unit tests.
   virtual bool SaveChangesToWebData(const DataBundle& bundle);

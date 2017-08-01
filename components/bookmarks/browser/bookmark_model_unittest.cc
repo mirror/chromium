@@ -204,7 +204,7 @@ void VerifyModelMatchesNode(TestNode* expected, const BookmarkNode* actual) {
     ASSERT_EQ(expected_child->GetTitle(), actual_child->GetTitle());
     if (expected_child->value == BookmarkNode::FOLDER) {
       ASSERT_TRUE(actual_child->type() == BookmarkNode::FOLDER);
-      // Recurse throught children.
+      // Recurse through children.
       VerifyModelMatchesNode(expected_child, actual_child);
     } else {
       // No need to check the URL, just the title is enough.

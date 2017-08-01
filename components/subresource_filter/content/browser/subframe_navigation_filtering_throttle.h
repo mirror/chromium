@@ -25,7 +25,7 @@ class AsyncDocumentSubresourceFilter;
 // subresource filtering using the parent frame's
 // AsyncDocumentSubresourceFilter.
 //
-// The throttle should only be instantiated for navigations occuring in
+// The throttle should only be instantiated for navigations occurring in
 // subframes owned by documents which already have filtering activated, and
 // therefore an associated (Async)DocumentSubresourceFilter.
 class SubframeNavigationFilteringThrottle : public content::NavigationThrottle {

@@ -151,7 +151,7 @@ class GCMClient {
     // |registration_info|: the specific information required for the
     //                      registration.
     // |registration_id|: non-empty if the registration completed successfully.
-    // |result|: the type of the error if an error occured, success otherwise.
+    // |result|: the type of the error if an error occurred, success otherwise.
     virtual void OnRegisterFinished(
         const linked_ptr<RegistrationInfo>& registration_info,
         const std::string& registration_id,
@@ -169,7 +169,7 @@ class GCMClient {
     // occurs.
     // |app_id|: application ID.
     // |message_id|: ID of the message being sent.
-    // |result|: the type of the error if an error occured, success otherwise.
+    // |result|: the type of the error if an error occurred, success otherwise.
     virtual void OnSendFinished(const std::string& app_id,
                                 const std::string& message_id,
                                 Result result) = 0;

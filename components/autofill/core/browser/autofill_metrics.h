@@ -543,12 +543,12 @@ class AutofillMetrics {
   enum WalletErrorMetric {
     // Baseline metric: Issued a request to the Wallet server.
     WALLET_ERROR_BASELINE_ISSUED_REQUEST = 0,
-    // A fatal error occured while communicating with the Wallet server. This
+    // A fatal error occurred while communicating with the Wallet server. This
     // value has been deprecated.
     WALLET_FATAL_ERROR_DEPRECATED,
     // Received a malformed response from the Wallet server.
     WALLET_MALFORMED_RESPONSE,
-    // A network error occured while communicating with the Wallet server.
+    // A network error occurred while communicating with the Wallet server.
     WALLET_NETWORK_ERROR,
     // The request was malformed.
     WALLET_BAD_REQUEST,
@@ -883,7 +883,7 @@ class AutofillMetrics {
                                         int developer_engagement_metrics);
 
   // Logs the the |ukm_entry_name| with the specified |url| and the specified
-  // |metrics|. Returns whether the ukm was sucessfully logged.
+  // |metrics|. Returns whether the ukm was successfully logged.
   static bool LogUkm(ukm::UkmRecorder* ukm_recorder,
                      const GURL& url,
                      const std::string& ukm_entry_name,

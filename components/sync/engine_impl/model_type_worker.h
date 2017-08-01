@@ -143,7 +143,7 @@ class ModelTypeWorker : public UpdateHandler,
 
   // Updates the encryption key name stored in |model_type_state_| if it differs
   // from the default encryption key name in |cryptographer_|. Returns whether
-  // an update occured.
+  // an update occurred.
   bool UpdateEncryptionKeyName();
 
   // Iterates through all elements in |entities_| and tries to decrypt anything

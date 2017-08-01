@@ -501,7 +501,7 @@ TEST_P(LogDnsClientTest, AdoptsLatestDnsConfigIfValid) {
   config.attempts = 123;
   mock_dns_.SetDnsConfig(config);
 
-  // Let the DNS config change propogate.
+  // Let the DNS config change propagate.
   base::RunLoop().RunUntilIdle();
   EXPECT_EQ(123, dns_client->GetConfig()->attempts);
 }
@@ -517,7 +517,7 @@ TEST_P(LogDnsClientTest, IgnoresLatestDnsConfigIfInvalid) {
   config.nameservers.clear();  // Makes config invalid
   mock_dns_.SetDnsConfig(config);
 
-  // Let the DNS config change propogate.
+  // Let the DNS config change propagate.
   base::RunLoop().RunUntilIdle();
   EXPECT_THAT(dns_client->GetConfig()->nameservers, Not(IsEmpty()));
 }

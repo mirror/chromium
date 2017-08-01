@@ -316,7 +316,7 @@ class Directory {
   bool InitialSyncEndedForType(ModelType type);
   bool InitialSyncEndedForType(BaseTransaction* trans, ModelType type);
 
-  // Marks the |type| as having its intial sync complete.
+  // Marks the |type| as having its initial sync complete.
   // This applies only to types with implicitly created root folders.
   void MarkInitialSyncEndedForType(BaseWriteTransaction* trans, ModelType type);
 

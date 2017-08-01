@@ -158,7 +158,7 @@ std::unique_ptr<EncodedLogo> GoogleLegacyParseLogoResponse(
   logo_dict->GetString("fingerprint", &logo->metadata.fingerprint);
   logo_dict->GetString("alt", &logo->metadata.alt_text);
 
-  // Existance of url indicates |data| is a call to action image for an
+  // Existence of url indicates |data| is a call to action image for an
   // animated doodle. |url| points to that animated doodle.
   std::string animated_url;
   logo_dict->GetString("url", &animated_url);

@@ -68,7 +68,7 @@ class NudgeTracker {
   // Take note that an initial sync is pending for this type.
   void RecordInitialSyncRequired(ModelType type);
 
-  // Takes note that the conflict happended for this type, need to sync to
+  // Takes note that the conflict happened for this type, need to sync to
   // resolve conflict locally.
   void RecordCommitConflict(ModelType type);
 

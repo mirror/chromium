@@ -26,7 +26,7 @@ class UnlockManager;
 // This is the main entry point to start Proximity Auth, the underlying system
 // for the Smart Lock feature. Given a list of remote devices (i.e. a
 // phone) for each registered user, the system will handle the connection,
-// authentication, and messenging protocol when the screen is locked and the
+// authentication, and messaging protocol when the screen is locked and the
 // registered user is focused.
 class ProximityAuthSystem : public RemoteDeviceLifeCycle::Observer,
                             public ScreenlockBridge::Observer {

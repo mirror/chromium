@@ -123,7 +123,7 @@ class CrxDownloader {
   // this function after each attempt at downloading the urls provided
   // in the StartDownload function.
   // In case of errors, |is_handled| indicates that a server side error has
-  // occured for the current url and the url should not be retried down
+  // occurred for the current url and the url should not be retried down
   // the chain to avoid DDOS of the server. This url will be removed from the
   // list of url and never tried again.
   void OnDownloadComplete(bool is_handled,

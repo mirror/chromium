@@ -139,7 +139,7 @@ std::string FixupHomedir(const std::string& text) {
     // just in case.
     if (file_path.value().empty())
       return text;
-    // Append requires to be a relative path, so we have to cut all preceeding
+    // Append requires to be a relative path, so we have to cut all preceding
     // '/' characters.
     size_t i = 1;
     while (i < text.length() && text[i] == '/')

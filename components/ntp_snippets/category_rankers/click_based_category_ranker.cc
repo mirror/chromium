@@ -594,7 +594,7 @@ bool ClickBasedCategoryRanker::DecayClicksIfNeeded() {
   }
 
   // No matter how many decays were actually executed, all of them are marked
-  // done. Even if some were ignored due to absense of clicks, they would have
+  // done. Even if some were ignored due to absence of clicks, they would have
   // no effect anyway for the same reason.
   StoreLastDecayTimeToPrefs(last_decay +
                             num_pending_decays * GetTimeBetweenDecays());

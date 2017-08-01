@@ -127,7 +127,7 @@ bool WebResourceService::GetFetchScheduled() const {
 // load calls OnURLFetchComplete.
 void WebResourceService::StartFetch() {
   // Set to false so that next fetch can be scheduled after this fetch or
-  // if we recieve notification that resource is allowed.
+  // if we receive notification that resource is allowed.
   fetch_scheduled_ = false;
   // Check whether fetching is allowed.
   if (!resource_request_allowed_notifier_->ResourceRequestsAllowed())

@@ -59,7 +59,7 @@ class CrashDumpManager : public breakpad::CrashDumpObserver::Client {
                               base::TerminationStatus termination_status,
                               base::android::ApplicationState app_state);
 
-  // This map should only be accessed with its lock aquired as it is accessed
+  // This map should only be accessed with its lock acquired as it is accessed
   // from the PROCESS_LAUNCHER and UI threads.
   base::Lock child_process_id_to_minidump_path_lock_;
   ChildProcessIDToMinidumpPath child_process_id_to_minidump_path_;

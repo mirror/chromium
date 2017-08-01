@@ -53,7 +53,7 @@ class MockConnectionManager : public ServerConnectionManager {
   void SetMidCommitObserver(MidCommitObserver* observer);
 
   // Set this if you want commit to perform commit time rename. Will request
-  // that the client renames all commited entries, prepending this string.
+  // that the client renames all committed entries, prepending this string.
   void SetCommitTimeRename(const std::string& prepend);
 
   // Generic versions of AddUpdate functions. Tests using these function should

@@ -164,7 +164,7 @@ const struct QuicErrorMapping {
      "quic_crypto_message_index_not_found"},
     // A demand for an unsupport proof type was received.
     {net::QUIC_UNSUPPORTED_PROOF_DEMAND, "quic.unsupported_proof_demand"},
-    // An internal error occured in crypto processing.
+    // An internal error occurred in crypto processing.
     {net::QUIC_CRYPTO_INTERNAL_ERROR, "quic.crypto.internal_error"},
     // A crypto handshake message specified an unsupported version.
     {net::QUIC_CRYPTO_VERSION_NOT_SUPPORTED,

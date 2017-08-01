@@ -32,7 +32,7 @@ class MockableTime;
 //
 // When everything is working fine, the scheduler will return precisely that
 // interval. If all uploaders have failed, then the beginning or ending points
-// of the interval may be pushed later to accomodate the retry with exponential
+// of the interval may be pushed later to accommodate the retry with exponential
 // backoff.
 //
 // See dispatcher.h for an explanation of what happens with the scheduled

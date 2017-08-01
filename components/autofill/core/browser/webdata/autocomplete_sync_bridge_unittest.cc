@@ -586,7 +586,7 @@ TEST_F(AutocompleteSyncBridgeTest, LoadMetadataCalled) {
 
 TEST_F(AutocompleteSyncBridgeTest, LoadMetadataReportsErrorForMissingDB) {
   backend()->SetWebDatabase(nullptr);
-  // The processor's destructor will verify that an error has occured.
+  // The processor's destructor will verify that an error has occurred.
   ResetBridge(/*expect_error=*/true);
 }
 

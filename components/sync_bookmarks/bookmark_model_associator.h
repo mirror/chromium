@@ -278,7 +278,7 @@ class BookmarkModelAssociator : public syncer::AssociatorInterface {
   // Check whether bookmark model and sync model are synced by comparing
   // their transaction versions.
   // Returns a PERSISTENCE_ERROR if a transaction mismatch was detected where
-  // the native model has a newer transaction verison.
+  // the native model has a newer transaction version.
   syncer::SyncError CheckModelSyncState(Context* context) const;
 
   base::ThreadChecker thread_checker_;

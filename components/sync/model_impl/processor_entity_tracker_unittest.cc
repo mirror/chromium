@@ -146,7 +146,7 @@ TEST_F(ProcessorEntityTrackerTest, DefaultTracker) {
   EXPECT_FALSE(entity->HasCommitData());
 }
 
-// Test creating and commiting a new local item.
+// Test creating and committing a new local item.
 TEST_F(ProcessorEntityTrackerTest, NewLocalItem) {
   std::unique_ptr<ProcessorEntityTracker> entity = CreateNew();
   entity->MakeLocalChange(GenerateEntityData(kHash, kName, kValue1));

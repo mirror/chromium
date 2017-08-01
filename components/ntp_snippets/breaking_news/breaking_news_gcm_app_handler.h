@@ -71,7 +71,7 @@ class BreakingNewsGCMAppHandler : public BreakingNewsListener,
  private:
   // Retrieves a subscription token that allows the content suggestions server
   // to push content via GCM messages. Calling this method multiple times is not
-  // necessary but does not harm since the same token is returned everytime.
+  // necessary but does not harm since the same token is returned every time.
   void Subscribe();
 
   // Called after the subscription is obtained from the GCM server.

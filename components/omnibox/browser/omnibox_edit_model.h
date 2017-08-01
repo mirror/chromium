@@ -325,7 +325,7 @@ class OmniboxEditModel {
       bool is_keyword_hint);
 
   // Called by the OmniboxView after something changes, with details about what
-  // state changes occured.  Updates internal state, updates the popup if
+  // state changes occurred.  Updates internal state, updates the popup if
   // necessary, and returns true if any significant changes occurred.  Note that
   // |text_change.text_differs| may be set even if |text_change.old_text| ==
   // |text_change.new_text|, e.g. if we've just committed an IME composition.

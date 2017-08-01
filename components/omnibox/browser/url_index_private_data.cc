@@ -538,7 +538,7 @@ HistoryIDSet URLIndexPrivateData::HistoryIDsForTerm(
 
   // TODO(mrossetti): Consider optimizing for very common terms such as
   // 'http[s]', 'www', 'com', etc. Or collect the top 100 more frequently
-  // occuring words in the user's searches.
+  // occurring words in the user's searches.
 
   size_t term_length = term.length();
   WordIDSet word_id_set;

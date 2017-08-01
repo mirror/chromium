@@ -20,7 +20,7 @@ namespace syncer {
 class DeviceInfoUtil {
  public:
   // The prefix to be appended before the cache guid when creating tags. This is
-  // needed for backwards compatiblity with all old clients because we need to
+  // needed for backwards compatibility with all old clients because we need to
   // ensure everyone uses the same logic to generate the tag, so that everyone
   // can independently hash the tag to the same value.
   static const char kClientTagPrefix[];

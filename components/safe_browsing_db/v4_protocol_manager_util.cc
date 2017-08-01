@@ -398,7 +398,7 @@ void V4ProtocolManagerUtil::CanonicalizeUrl(const GURL& url,
   // of those :-
   // 1. Remove any tab (0x09), CR (0x0d), and LF (0x0a) chars from url.
   //    (Exclude escaped version of these chars).
-  // 2. Normalize hostname to 4 dot-seperated decimal values.
+  // 2. Normalize hostname to 4 dot-separated decimal values.
   // 3. Lowercase hostname.
   // 4. Resolve path sequences "/../" and "/./".
 

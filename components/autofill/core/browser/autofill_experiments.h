@@ -126,7 +126,7 @@ bool IsAutofillOfferLocalSaveIfServerCardManuallyEnteredExperimentEnabled();
 bool IsAutofillUpstreamRequestCvcIfMissingExperimentEnabled();
 
 // Returns the maximum time that could have elapsed since an address profile's
-// most recent use for the adress profile to be included in the candidate set
+// most recent use for the address profile to be included in the candidate set
 // for card upload. Returns 0 if the experiment is not enabled.
 base::TimeDelta GetMaxTimeSinceAutofillProfileUseForCardUpload();
 

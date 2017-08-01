@@ -58,7 +58,7 @@ void DelegatingProvider::OnAppEnterBackground() {
 bool DelegatingProvider::ProvideIndependentMetrics(
     SystemProfileProto* system_profile_proto,
     base::HistogramSnapshotManager* snapshot_manager) {
-  // These are collected seperately for each provider.
+  // These are collected separately for each provider.
   NOTREACHED();
   return false;
 }

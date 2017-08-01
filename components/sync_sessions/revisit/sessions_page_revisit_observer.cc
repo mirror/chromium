@@ -46,7 +46,7 @@ void SessionsPageRevisitObserver::CheckForRevisit(
 
   // We want to match tabs/navigation entries in two slightly different ways. We
   // value the current url/navigation entry of a tab more highly, and want to
-  // actually seperate metrics from the backwards/forwards entries. And then
+  // actually separate metrics from the backwards/forwards entries. And then
   // to make things a little bit messier, we only have an accurate modified time
   // for the tabs/current entries. So use index offset for forward/back entries.
   PageEquality page_equality(url);

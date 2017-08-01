@@ -310,7 +310,7 @@ base::TimeDelta GetSystemUptimeOnProcessLaunch() {
     return base::TimeDelta();
 
   // base::SysInfo::Uptime returns the time elapsed between system boot and now.
-  // Substract the time elapsed between process launch and now to get the time
+  // Subtract the time elapsed between process launch and now to get the time
   // elapsed between system boot and process launch.
   return base::SysInfo::Uptime() -
          (base::TimeTicks::Now() - g_process_creation_ticks.Get());

@@ -86,7 +86,7 @@ namespace subresource_filter {
       name, time_provider, histogram_exporter, max_value, suffix)
 
 // Creates a static histogram pointer and a scoped object referring to it
-// throught the |histogram_exporter| functor. Both the pointer and the scoped
+// through the |histogram_exporter| functor. Both the pointer and the scoped
 // object are uniquely-named, using the unique |suffix| passed in.
 #define IMPL_SCOPED_UMA_HISTOGRAM_TIMER_UNIQUE(                            \
     name, time_provider, histogram_exporter, max_value, suffix)            \

@@ -59,7 +59,7 @@ class LanguageState {
   bool translation_pending() const { return translation_pending_; }
   void set_translation_pending(bool value) { translation_pending_ = value; }
 
-  // Whether an error occured during translation.
+  // Whether an error occurred during translation.
   bool translation_error() const { return translation_error_; }
   void set_translation_error(bool value) { translation_error_ = value; }
 
@@ -100,7 +100,7 @@ class LanguageState {
   // outlive this object.
   TranslateDriver* translate_driver_;
 
-  // Whether it is OK to offer to translate the page.  Some pages explictly
+  // Whether it is OK to offer to translate the page.  Some pages explicitly
   // specify that they should not be translated by the browser (this is the case
   // for GMail for example, which provides its own translation features).
   bool page_needs_translation_;
@@ -113,7 +113,7 @@ class LanguageState {
   //                then we can get rid of that state.
   bool translation_pending_;
 
-  // Whether an error occured during translation.
+  // Whether an error occurred during translation.
   bool translation_error_;
 
   // Whether the user has declined to translate the page (by closing the infobar

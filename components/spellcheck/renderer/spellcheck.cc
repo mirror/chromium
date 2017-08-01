@@ -117,7 +117,7 @@ std::vector<WebString> FilterReplacementSuggestions(
     const std::vector<base::string16>& replacements) {
   std::vector<WebString> replacements_filtered;
   for (base::string16 replacement : replacements) {
-    // Use the same types of apostrophes as in the mispelled word.
+    // Use the same types of apostrophes as in the misspelled word.
     PreserveOriginalApostropheTypes(misspelled_word, &replacement);
 
     // Ignore suggestions that are just changing the apostrophe type

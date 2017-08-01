@@ -48,7 +48,7 @@ class CppGenerationTest(unittest.TestCase):
     self.assertListEqual([], stmts)
     self.assertIsNone(expr)
 
-    # Arbitary types are not supported.
+    # Arbitrary types are not supported.
     stmts, expr = generate_policy_source._GenerateDefaultValue(object())
     self.assertListEqual([], stmts)
     self.assertIsNone(expr)

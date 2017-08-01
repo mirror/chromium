@@ -49,8 +49,8 @@ bool TriggerThrottler::TriggerCanFire(const TriggerType trigger_type) const {
   if (trigger_quota > timestamps.size())
     return true;
 
-  // Otherwise, we have more events than quota, check which day they occured on.
-  // Newest events are at the end of vector so we can simply look at the
+  // Otherwise, we have more events than quota, check which day they occurred
+  // on. Newest events are at the end of vector so we can simply look at the
   // Nth-from-last entry (where N is the quota) to see if it happened within
   // the current day or earlier.
   base::Time min_timestamp = base::Time::Now() - kOneDayTimeDelta;

@@ -145,7 +145,7 @@ TEST_F(ShellSurfaceTest, Minimize) {
   shell_surface->Minimize();
   EXPECT_TRUE(shell_surface->GetWidget()->IsMinimized());
 
-  // Confirm that attaching and commiting doesn't reset the state.
+  // Confirm that attaching and committing doesn't reset the state.
   surface->Attach(buffer.get());
   surface->Commit();
   EXPECT_TRUE(shell_surface->GetWidget()->IsMinimized());
@@ -754,7 +754,7 @@ TEST_F(ShellSurfaceTest, ShadowWithStateChange) {
       surface.get(), nullptr, ShellSurface::BoundsMode::CLIENT, gfx::Point(),
       true, false, ash::kShellWindowId_DefaultContainer));
 
-  // Postion the widget at 10,10 so that we get non zero offset.
+  // Position the widget at 10,10 so that we get non zero offset.
   const gfx::Size content_size(100, 100);
   const gfx::Rect original_bounds(gfx::Point(10, 10), content_size);
   shell_surface->SetGeometry(original_bounds);
@@ -815,7 +815,7 @@ TEST_F(ShellSurfaceTest, ShadowWithTransform) {
       surface.get(), nullptr, ShellSurface::BoundsMode::CLIENT, gfx::Point(),
       true, false, ash::kShellWindowId_DefaultContainer));
 
-  // Postion the widget at 10,10 so that we get non zero offset.
+  // Position the widget at 10,10 so that we get non zero offset.
   const gfx::Size content_size(100, 100);
   const gfx::Rect original_bounds(gfx::Point(10, 10), content_size);
   shell_surface->SetGeometry(original_bounds);

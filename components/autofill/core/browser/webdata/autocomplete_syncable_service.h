@@ -93,7 +93,7 @@ class AutocompleteSyncableService
   // Made virtual for ease of mocking in the unit-test.
   virtual bool LoadAutofillData(std::vector<AutofillEntry>* entries) const;
 
-  // Helper to persist any changes that occured during model association to
+  // Helper to persist any changes that occurred during model association to
   // the WebDatabase. |entries| will be either added or updated.
   // Made virtual for ease of mocking in the unit-test.
   virtual bool SaveChangesToWebData(const std::vector<AutofillEntry>& entries);

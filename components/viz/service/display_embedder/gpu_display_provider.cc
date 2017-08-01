@@ -94,7 +94,7 @@ std::unique_ptr<Display> GpuDisplayProvider::CreateDisplay(
       max_frames_pending);
 
 
-  // The ownership of the BeginFrameSource is transfered to the caller.
+  // The ownership of the BeginFrameSource is transferred to the caller.
   *begin_frame_source = std::move(synthetic_begin_frame_source);
 
   return base::MakeUnique<Display>(

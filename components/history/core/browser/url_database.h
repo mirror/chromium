@@ -290,7 +290,7 @@ class URLDatabase {
   // kHistoryURLRowFields.
   static void FillURLRow(sql::Statement& s, URLRow* i);
 
-  // Returns the database for the functions in this interface. The decendent of
+  // Returns the database for the functions in this interface. The descendant of
   // this class implements these functions to return its objects.
   virtual sql::Connection& GetDB() = 0;
 

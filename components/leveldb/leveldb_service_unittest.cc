@@ -359,7 +359,7 @@ TEST_F(LevelDBServiceTest, Destroy) {
     filesystem::mojom::DirectoryPtr directory;
     temp_directory->Clone(MakeRequest(&directory));
 
-    // Destroying a non-existant database should still succeed.
+    // Destroying a non-existent database should still succeed.
     base::RunLoop run_loop;
     leveldb()->Destroy(std::move(directory), "test",
                        Capture(&error, run_loop.QuitClosure()));

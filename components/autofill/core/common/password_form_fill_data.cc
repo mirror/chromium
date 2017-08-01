@@ -76,7 +76,7 @@ void InitPasswordFormFillData(
         !it.second->other_possible_usernames.empty()) {
       // Note that there may be overlap between other_possible_usernames and
       // other saved usernames or with other other_possible_usernames. For now
-      // we will ignore this overlap as it should be a rare occurence. We may
+      // we will ignore this overlap as it should be a rare occurrence. We may
       // want to revisit this in the future.
       UsernamesCollectionKey key;
       key.username = it.first;

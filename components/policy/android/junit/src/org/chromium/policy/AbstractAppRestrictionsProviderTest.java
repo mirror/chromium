@@ -38,7 +38,7 @@ public class AbstractAppRestrictionsProviderTest {
     /*
      * Robolectric's AsyncTasks don't do anything to override the underlying executor,
      * which means that the don't reliably run within {@link Robolectric.RunBackgroundTasks()}.
-     * Create a special task executor that is guarenteed to run when expected.
+     * Create a special task executor that is guaranteed to run when expected.
      */
     private class TestExecutor implements Executor {
         @Override

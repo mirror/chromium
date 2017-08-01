@@ -238,7 +238,8 @@ class ContentSuggestionsService : public KeyedService,
   // Returns true if the remote suggestions provider is enabled.
   bool AreRemoteSuggestionsEnabled() const;
 
-  // Returns true if the remote provider is managed by an adminstrator's policy.
+  // Returns true if the remote provider is managed by an administrator's
+  // policy.
   bool AreRemoteSuggestionsManaged() const;
 
   // Returns true if the remote provider is managed by the guardian/parent of a

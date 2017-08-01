@@ -37,7 +37,7 @@
 namespace {
 
 // The TemplateURLRef has any number of terms that need to be replaced. Each of
-// the terms is enclosed in braces. If the character preceeding the final
+// the terms is enclosed in braces. If the character preceding the final
 // brace is a ?, it indicates the term is optional and can be replaced with
 // an empty string.
 const char kStartParameter = '{';

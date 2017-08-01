@@ -260,7 +260,7 @@ INSTANTIATE_TEST_CASE_P(
     testing::Values(
         /* 2-digit year */
         ValidationCase("87", CREDIT_CARD_EXP_2_DIGIT_YEAR, true, 0),
-        // These are considered expired in the context of this millenium.
+        // These are considered expired in the context of this millennium.
         ValidationCase("02",
                        CREDIT_CARD_EXP_2_DIGIT_YEAR,
                        false,

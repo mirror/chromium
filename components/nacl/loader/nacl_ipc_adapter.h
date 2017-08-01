@@ -46,7 +46,7 @@ struct ChannelHandle;
 // we implement that as sending IPC messages on the channel.
 //
 // This object also provides the necessary logic for rewriting IPC messages.
-// NaCl code is platform-independent and runs in a Posix-like enviroment, but
+// NaCl code is platform-independent and runs in a Posix-like environment, but
 // some formatting in the message and the way handles are transferred varies
 // by platform. This class bridges that gap to provide what looks like a
 // normal platform-specific IPC implementation to Chrome, and a Posix-like

@@ -867,7 +867,7 @@ void BookmarkModelAssociator::ApplyDeletesFromSyncJournal(
   }
 
   // Ids of sync nodes not found in bookmark model, meaning the deletions are
-  // persisted and correponding delete journals can be dropped.
+  // persisted and corresponding delete journals can be dropped.
   std::set<int64_t> journals_to_purge;
 
   // Remove empty folders from bottom to top.

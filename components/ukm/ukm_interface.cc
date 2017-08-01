@@ -15,7 +15,7 @@ namespace ukm {
 namespace {
 
 // Map source ids from different instances into unique namespaces, so that
-// clients can create thier own IDs without having them collide.
+// clients can create their own IDs without having them collide.
 // This won't be necessary once we switch to using CoordinationUnitIDs.
 int64_t ConvertSourceId(int64_t source_id, int64_t instance_id) {
   const int64_t low_bits = (INT64_C(1) << 32) - 1;

@@ -1710,7 +1710,7 @@ void HandleCrashDump(const BreakpadInfo& info) {
       writer.AddBoundary();
     }
 #if defined(OS_ANDROID)
-    // Addtional MIME blocks are added for logging on Android devices.
+    // Additional MIME blocks are added for logging on Android devices.
     static const char android_build_id[] = "android_build_id";
     static const char android_build_fp[] = "android_build_fp";
     static const char device[] = "device";

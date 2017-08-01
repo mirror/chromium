@@ -26,7 +26,7 @@ class ImageDecoder {
   virtual ~ImageDecoder() {}
 
   // Decodes the passed |image_data| and runs the given callback. The callback
-  // is run even if decoding the image fails. In case an error occured during
+  // is run even if decoding the image fails. In case an error occurred during
   // decoding the image an empty image is passed to the callback.
   // For images with multiple frames (e.g. ico files), a frame with a size as
   // close as possible to |desired_image_frame_size| is chosen (tries to take

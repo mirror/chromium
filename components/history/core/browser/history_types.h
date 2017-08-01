@@ -270,7 +270,7 @@ struct QueryURLResult {
   QueryURLResult();
   ~QueryURLResult();
 
-  // Indicates whether the call to HistoryBackend::QueryURL was successfull
+  // Indicates whether the call to HistoryBackend::QueryURL was successful
   // or not. If false, then both |row| and |visits| fields are undefined.
   bool success = false;
   URLRow row;

@@ -1267,8 +1267,8 @@ TEST_F(SyncableDirectoryTest, LocalIdReuseTestWithSave) {
   EXPECT_NE(pre_crash_id, post_crash_id);
 }
 
-// Ensure that the unsynced, is_del and server unkown entries that may have been
-// left in the database by old clients will be deleted when we open the old
+// Ensure that the unsynced, is_del and server unknown entries that may have
+// been left in the database by old clients will be deleted when we open the old
 // database.
 TEST_F(SyncableDirectoryTest, OldClientLeftUnsyncedDeletedLocalItem) {
   // We must create an entry with the offending properties.  This is done with

@@ -384,7 +384,7 @@ void AddAttachment(sync_pb::AttachmentMetadata* metadata, bool is_on_server) {
 
 // Creates some unsynced items, pretends to commit them, and hands back a
 // specially crafted response to the syncer in order to test commit response
-// processing.  The response simulates a succesful commit scenario.
+// processing.  The response simulates a successful commit scenario.
 TEST_F(DirectoryCommitContributionTest, ProcessCommitResponse) {
   int64_t pref1_handle;
   int64_t pref2_handle;

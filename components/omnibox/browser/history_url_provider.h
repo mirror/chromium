@@ -304,7 +304,7 @@ class HistoryURLProvider : public HistoryProvider {
                      size_t max_results) const;
 
   // Helper function for CullRedirects, this removes all but the first
-  // occurance of [any of the set of strings in |remove|] from the |matches|
+  // occurrence of [any of the set of strings in |remove|] from the |matches|
   // list.
   //
   // The return value is the index of the item that is after the item in the

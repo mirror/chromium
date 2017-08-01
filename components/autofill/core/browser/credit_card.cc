@@ -484,9 +484,9 @@ void CreditCard::SetExpirationMonth(int expiration_month) {
 }
 
 void CreditCard::SetExpirationYear(int expiration_year) {
-  // If |expiration_year| is beyond this millenium, or more than 2 digits but
-  // before the current millenium (e.g. "545", "1995"), return. What is left are
-  // values like "45" or "2018".
+  // If |expiration_year| is beyond this millennium, or more than 2 digits but
+  // before the current millennium (e.g. "545", "1995"), return. What is left
+  // are values like "45" or "2018".
   if (expiration_year > 2999 ||
       (expiration_year > 99 && expiration_year < 2000))
     return;

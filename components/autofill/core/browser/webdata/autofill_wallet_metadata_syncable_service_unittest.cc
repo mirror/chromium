@@ -1031,7 +1031,7 @@ TEST_F(AutofillWalletMetadataSyncableServiceTest, SaveHigherValues_Mixed2) {
 }
 
 // Verify that if both local and server have a different non empty billing
-// address id refering to a Wallet address, the one with the most recent
+// address id referring to a Wallet address, the one with the most recent
 // (bigger) use date is kept.
 TEST_F(AutofillWalletMetadataSyncableServiceTest,
        DifferentServerBillingAddressId_LocalMostRecent) {
@@ -1051,7 +1051,7 @@ TEST_F(AutofillWalletMetadataSyncableServiceTest,
 }
 
 // Verify that if both local and server have a different non empty billing
-// address id refering to a Wallet address, the one with the most recent
+// address id referring to a Wallet address, the one with the most recent
 // (bigger) use date is kept.
 TEST_F(AutofillWalletMetadataSyncableServiceTest,
        DifferentServerBillingAddressId_RemoteMostRecent) {
@@ -1068,8 +1068,8 @@ TEST_F(AutofillWalletMetadataSyncableServiceTest,
 }
 
 // Verify that if both local and server have a different non empty billing
-// address id refering to a local profile, the one with the most recent (bigger)
-// use date is kept.
+// address id referring to a local profile, the one with the most recent
+// (bigger) use date is kept.
 TEST_F(AutofillWalletMetadataSyncableServiceTest,
        DifferentLocalBillingAddressId_LocalMostRecent) {
   local_.UpdateCardStats(BuildCard(kCard1, 3, 40, kLocalAddr1));
@@ -1088,8 +1088,8 @@ TEST_F(AutofillWalletMetadataSyncableServiceTest,
 }
 
 // Verify that if both local and server have a different non empty billing
-// address id refering to a local profile, the one with the most recent (bigger)
-// use date is kept.
+// address id referring to a local profile, the one with the most recent
+// (bigger) use date is kept.
 TEST_F(AutofillWalletMetadataSyncableServiceTest,
        DifferentLocalBillingAddressId_RemoteMostRecent) {
   local_.UpdateCardStats(BuildCard(kCard1, 3, 4, kLocalAddr1));
@@ -1105,7 +1105,7 @@ TEST_F(AutofillWalletMetadataSyncableServiceTest,
 }
 
 // Verify that if both local and server have a different non empty billing
-// address id, the one refering to a local profile is always kept.
+// address id, the one referring to a local profile is always kept.
 TEST_F(AutofillWalletMetadataSyncableServiceTest,
        DifferentBillingAddressId_KeepLocalId_Local) {
   local_.UpdateCardStats(BuildCard(kCard1, 3, 4, kLocalAddr1));
@@ -1124,7 +1124,7 @@ TEST_F(AutofillWalletMetadataSyncableServiceTest,
 }
 
 // Verify that if both local and server have a different non empty billing
-// address id, the one refering to a local profile is always kept, even id the
+// address id, the one referring to a local profile is always kept, even id the
 // other was used more recently.
 TEST_F(AutofillWalletMetadataSyncableServiceTest,
        DifferentBillingAddressId_KeepLocalId_Remote) {
@@ -1141,7 +1141,7 @@ TEST_F(AutofillWalletMetadataSyncableServiceTest,
 }
 
 // Verify that if both local and server have a different non empty billing
-// address id, the one refering to a local profile is always kept, even id the
+// address id, the one referring to a local profile is always kept, even id the
 // other was used more recently. Also makes sure that for the rest of the fields
 // the highest values are kept.
 TEST_F(AutofillWalletMetadataSyncableServiceTest,
@@ -1164,7 +1164,7 @@ TEST_F(AutofillWalletMetadataSyncableServiceTest,
 }
 
 // Verify that if both local and server have a different non empty billing
-// address id, the one refering to a local profile is always kept. Also makes
+// address id, the one referring to a local profile is always kept. Also makes
 // sure that for the rest of the fields the highest values are kept.
 TEST_F(AutofillWalletMetadataSyncableServiceTest,
        SaveHigherValues_DifferentBillingAddressId_KeepLocalId_Remote) {
@@ -1186,7 +1186,7 @@ TEST_F(AutofillWalletMetadataSyncableServiceTest,
 }
 
 // Verify that if both local and server have a different non empty billing
-// address id refering to a Wallet address with the same timestamp, the remote
+// address id referring to a Wallet address with the same timestamp, the remote
 // one is kept.
 TEST_F(AutofillWalletMetadataSyncableServiceTest,
        DifferentServerBillingAddressId_BothSameTimestamp) {
@@ -1202,7 +1202,7 @@ TEST_F(AutofillWalletMetadataSyncableServiceTest,
 }
 
 // Verify that if both local and server have a different non empty billing
-// address id refering to a local profile with the same timestamp, the remote
+// address id referring to a local profile with the same timestamp, the remote
 // one is kept.
 TEST_F(AutofillWalletMetadataSyncableServiceTest,
        DifferentLocalBillingAddressId_BothSameTimestamp) {

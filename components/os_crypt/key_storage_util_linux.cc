@@ -11,7 +11,7 @@
 namespace {
 
 // OSCrypt has a setting that determines whether a backend will be used.
-// The presense of this file in the file system means that the backend
+// The presence of this file in the file system means that the backend
 // should be ignored. It's absence means we should use the backend.
 constexpr const char kPreferenceFileName[] = "Disable Local Encryption";
 

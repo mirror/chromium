@@ -25,7 +25,7 @@ class MockAutofillClient : public TestAutofillClient {
 };
 
 // Just a stub AutofillDriver implementation which announces its construction
-// and desctruction by updating the passed |instance_counter|. It also records
+// and destruction by updating the passed |instance_counter|. It also records
 // when "user gesture observed" was signalled to it.
 class CountingAutofillDriver : public TestAutofillDriver {
  public:
@@ -56,7 +56,7 @@ class PublicAutofillDriverFactory : public AutofillDriverFactory {
   using AutofillDriverFactory::DeleteForKey;
 };
 
-// Wrapper around an integer, checking that the integer is 0 on desctruction.
+// Wrapper around an integer, checking that the integer is 0 on destruction.
 class CheckedInt {
  public:
   CheckedInt() {}

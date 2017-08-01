@@ -653,7 +653,7 @@ TEST_F(ShortcutsProviderTest, CalculateScore) {
   int score_two_weeks_old = CalculateScore("test", shortcut, max_relevance);
   EXPECT_LT(score_two_weeks_old, score_week_old);
 
-  // But not if it was activly clicked on. 2 hits slow decaying power.
+  // But not if it was actively clicked on. 2 hits slow decaying power.
   shortcut.number_of_hits = 2;
   shortcut.last_access_time = base::Time::Now() - base::TimeDelta::FromDays(14);
   int score_popular_two_weeks_old =

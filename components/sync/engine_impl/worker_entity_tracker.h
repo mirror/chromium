@@ -37,7 +37,7 @@ class WorkerEntityTracker {
 
   ~WorkerEntityTracker();
 
-  // Returns true if this entity should be commited to the server.
+  // Returns true if this entity should be committed to the server.
   bool HasPendingCommit() const;
 
   // Returns true if pending commit contains deleted entity.

@@ -85,7 +85,7 @@ const int kDefaultZeroSuggestRelevance = 100;
 // Used for testing whether zero suggest is ever available.
 constexpr char kArbitraryInsecureUrlString[] = "http://www.google.com/";
 
-// Returns true if the folowing conditions are valid:
+// Returns true if the following conditions are valid:
 // * The |default_provider| is Google.
 // * The user is in the ZeroSuggestRedirectToChrome field trial.
 // * The field trial provides a valid server address where the suggest request
