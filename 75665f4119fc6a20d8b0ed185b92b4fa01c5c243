@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bfab0b35_a57a8ad9",
+        "filename": "chrome/browser/plugins/pdf_iframe_navigation_throttle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-01T21:21:24Z",
+      "side": 1,
+      "message": "This can be inline instead of its own method.",
+      "revId": "75665f4119fc6a20d8b0ed185b92b4fa01c5c243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f8a40aa_da4333b3",
+        "filename": "chrome/browser/plugins/pdf_iframe_navigation_throttle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-01T21:21:24Z",
+      "side": 1,
+      "message": "Looks like this entire block can just be within MaybeCreateThrottleFor, and if the PDF plugin is available, we can just return nullptr instead of creating the throttle.",
+      "revId": "75665f4119fc6a20d8b0ed185b92b4fa01c5c243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bfa810e_7bbadaa1",
+        "filename": "chrome/browser/plugins/pdf_iframe_navigation_throttle.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-01T21:21:24Z",
+      "side": 1,
+      "message": "It would be good to unittest this class, and I think you can write a really good unit test for it.\n\nSee https://cs.chromium.org/chromium/src/chrome/browser/plugins/plugin_prefs.h?dr\u003dCSs\u0026l\u003d77\n\nand https://cs.chromium.org/chromium/src/chrome/browser/plugins/flash_download_interception_unittest.cc?q\u003dFlashDownloadIntercept\u0026dr\u003dCSs\n\nfor a reference on how to do it.",
+      "revId": "75665f4119fc6a20d8b0ed185b92b4fa01c5c243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
