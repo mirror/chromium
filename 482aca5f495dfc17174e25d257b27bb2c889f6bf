@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6794f7f8_1c28843a",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorTextNodeHandler.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-01T03:51:06Z",
+      "side": 1,
+      "message": "I attempt to rewrite to for-statement, but it seems hard...\nDo you have another idea?\n\nfor (auto offset \u003d offset_;\n     offset \u003c end_offset_ \u0026\u0026 !text_state_.PositionNode();\n     offset \u003d Advance(...)) {\n ...\n}\n\nauto TITextNodeHandler::Advane(int offset ...) const {\n  const NGOffsetMappingUnit* const unit \u003d ...;\n  if (!unit || offset \u003d\u003d unit-\u003eDOMEnd())\n   return end_offset_;\n}",
+      "revId": "482aca5f495dfc17174e25d257b27bb2c889f6bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e758401_7bf33038",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorTextNodeHandler.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-01T03:51:06Z",
+      "side": 1,
+      "message": "nit: s/auto/const auto/",
+      "revId": "482aca5f495dfc17174e25d257b27bb2c889f6bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

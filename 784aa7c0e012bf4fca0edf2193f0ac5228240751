@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "19095f9d_67d3d89f",
+        "filename": "third_party/WebKit/LayoutTests/editing/undo/undo-smart-delete-word.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-01T03:51:06Z",
+      "side": 1,
+      "message": "It seems HitTest for LayoutNG is something different to Legacy.\nAnyway, I agree original version points left top pixel of word, it is\na fraggle.\n\nElement#offsetParent affects this?\n\nIn \"assert_selection.js\": For main document |kIFrameBorderSize\u003d\u003d0|\nfunction computeLeft(element) {\n  let left \u003d kIFrameBorderSize + element.ownerDocument.offsetLeft;\n  for (let runner \u003d element; runner; runner \u003d runner.offsetParent)\n    left +\u003d runner.offsetLeft;\n  return left;\n}",
+      "parentUuid": "2b8ea136_506b15a0",
+      "revId": "784aa7c0e012bf4fca0edf2193f0ac5228240751",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2a5f9a8_d57cf30e",
         "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorTextNodeHandler.cpp",
         "patchSetId": 2
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "|inline_node_| is also used in HandleTextNodeWithLayoutNG(). I\u0027m storing it to reduce repeated computation. With |inline_node_| already stored, I don\u0027t think an extra boolean flag is needed.\n\nOr did I misunderstand anything?",
       "parentUuid": "e2a5f9a8_d57cf30e",
+      "revId": "784aa7c0e012bf4fca0edf2193f0ac5228240751",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "64ab0114_ea23353b",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorTextNodeHandler.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-01T03:51:06Z",
+      "side": 1,
+      "message": "My concern is setting of|inline_node_| and using |inline_node_| is too far\nas we need to want to introduce |bool| variable.\n\nI think it is better to have more readable code instead of optimization.\nLayout NG is brand new, all of us want to learn.",
+      "parentUuid": "70a8fd65_dce1ccfe",
       "revId": "784aa7c0e012bf4fca0edf2193f0ac5228240751",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
