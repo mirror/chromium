@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a66cbc58_b59b1567",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-01T22:51:14Z",
+      "side": 1,
+      "message": "Seems that we need SelectionForUndoStep::Builder to build SelectionForUndoStep directly.\n\nCan StartingSelection() be invalid at this time?",
+      "range": {
+        "startLine": 838,
+        "startChar": 53,
+        "endLine": 838,
+        "endChar": 79
+      },
+      "revId": "136b2c6c3ead2f8f297498b5a6c99e3c788158c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67a8915d_f8a9cb52",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 982,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-01T22:51:14Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 982,
+        "startChar": 53,
+        "endLine": 982,
+        "endChar": 79
+      },
+      "revId": "136b2c6c3ead2f8f297498b5a6c99e3c788158c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
