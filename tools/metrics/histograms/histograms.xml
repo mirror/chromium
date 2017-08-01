@@ -30824,19 +30824,19 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="Media.Remoting.PosterDownloadDuration.Fail" units="ms">
+<histogram name="Media.Remoting.CapacityOverMediaBitrate" units="kbps">
   <owner>miu@chromium.org</owner>
   <summary>
-    Measures the amount of time it took to ultimately fail to download a poster
-    image for an HTML5 video while remoting content.
+    The difference between the estimated transmission capacity and the media
+    bitrate when capacity is higher.
   </summary>
 </histogram>
 
-<histogram name="Media.Remoting.PosterDownloadDuration.Success" units="ms">
+<histogram name="Media.Remoting.MediaBitrateOverCapacity" units="kbps">
   <owner>miu@chromium.org</owner>
   <summary>
-    Measures the amount of time it took to successfully download a poster image
-    for an HTML5 video while remoting content.
+    The difference between the media bitrate and the estimated transmission
+    capacity when media bitrate is higher.
   </summary>
 </histogram>
 
@@ -30854,6 +30854,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 <histogram name="Media.Remoting.SessionStopTrigger" enum="RemotingStopTrigger">
   <owner>miu@chromium.org</owner>
   <summary>Tracks the trigger for stopping a remoting session.</summary>
+</histogram>
+
+<histogram name="Media.Remoting.StartMediaBitrate" units="kbps">
+  <owner>miu@chromium.org</owner>
+  <summary>
+    The estimated content bitrate (including both audio and video) when starting
+    a remoting session.
+  </summary>
 </histogram>
 
 <histogram name="Media.Remoting.TimeUntilFirstPlayout" units="ms">
@@ -30876,6 +30884,13 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     enum="RemotingTrackConfiguration">
   <owner>miu@chromium.org</owner>
   <summary>Tracks whether audio or video or both are remoted.</summary>
+</histogram>
+
+<histogram name="Media.Remoting.TransmissionCapacity" units="kbps">
+  <owner>miu@chromium.org</owner>
+  <summary>
+    The estimated transmission capacity when starting a remoting session.
+  </summary>
 </histogram>
 
 <histogram name="Media.Remoting.VideoAspectRatio" units="%">
