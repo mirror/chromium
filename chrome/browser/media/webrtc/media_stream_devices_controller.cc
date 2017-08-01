@@ -102,62 +102,6 @@ void RecordPermissionAction(bool is_asking_for_audio,
   }
 }
 
-// This helper class helps to measure the number of media stream requests that
-// occur. It ensures that only one request will be recorded per navigation, per
-// frame. TODO(raymes): Remove this when https://crbug.com/526324 is fixed.
-class MediaPermissionRequestLogger : content::WebContentsObserver {
-  // Map of <render process id, render frame id> ->
-  // MediaPermissionRequestLogger.
-  using RequestMap = std::map<std::pair<int, int>,
-                              std::unique_ptr<MediaPermissionRequestLogger>>;
-
- public:
-  static void LogRequest(content::WebContents* contents,
-                         int render_process_id,
-                         int render_frame_id,
-                         bool is_secure) {
-    RequestMap::key_type key =
-        std::make_pair(render_process_id, render_frame_id);
-    if (!base::ContainsKey(GetRequestMap(), key)) {
-      UMA_HISTOGRAM_BOOLEAN("Pepper.SecureOrigin.MediaStreamRequest",
-                            is_secure);
-      GetRequestMap()[key] =
-          base::WrapUnique(new MediaPermissionRequestLogger(contents, key));
-    }
-  }
-
- private:
-  MediaPermissionRequestLogger(content::WebContents* contents,
-                               RequestMap::key_type key)
-      : WebContentsObserver(contents), key_(key) {}
-
-  void PageChanged(content::RenderFrameHost* render_frame_host) {
-    if (std::make_pair(render_frame_host->GetProcess()->GetID(),
-                       render_frame_host->GetRoutingID()) == key_) {
-      GetRequestMap().erase(key_);
-    }
-  }
-
-  static RequestMap& GetRequestMap() {
-    CR_DEFINE_STATIC_LOCAL(RequestMap, request_map, ());
-    return request_map;
-  }
-
-  // content::WebContentsObserver overrides
-  void DidFinishNavigation(
-      content::NavigationHandle* navigation_handle) override {
-    if (navigation_handle->HasCommitted())
-      PageChanged(navigation_handle->GetRenderFrameHost());
-  }
-
-  void RenderFrameDeleted(
-      content::RenderFrameHost* render_frame_host) override {
-    PageChanged(render_frame_host);
-  }
-
-  RequestMap::key_type key_;
-};
-
 bool HasAvailableDevices(ContentSettingsType content_type,
                          const std::string& device_id) {
   const content::MediaStreamDevices* devices = nullptr;
@@ -455,12 +399,6 @@ void MediaStreamDevicesController::RequestPermissionsWithDelegate(
   }
   content::WebContents* web_contents =
       content::WebContents::FromRenderFrameHost(rfh);
-  if (request.request_type == content::MEDIA_OPEN_DEVICE_PEPPER_ONLY) {
-    MediaPermissionRequestLogger::LogRequest(
-        web_contents, request.render_process_id, request.render_frame_id,
-        content::IsOriginSecure(request.security_origin));
-  }
-
   std::unique_ptr<MediaStreamDevicesController> controller(
       new MediaStreamDevicesController(web_contents, request, callback));
 
