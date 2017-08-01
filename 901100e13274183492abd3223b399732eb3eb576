@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f1de7fd_4c541398",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_browsertest_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-08-01T22:22:56Z",
+      "side": 1,
+      "message": "nit: please rename this to mock_cleaner_controller_.",
+      "range": {
+        "startLine": 55,
+        "startChar": 30,
+        "endLine": 55,
+        "endChar": 49
+      },
+      "revId": "901100e13274183492abd3223b399732eb3eb576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37cc5b3a_a09262c2",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_browsertest_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-08-01T22:22:56Z",
+      "side": 1,
+      "message": "Since this setup code is used in all the tests, is it possible to move it to the ChromeCleanerPromptUserTest class above?",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 65
+      },
+      "revId": "901100e13274183492abd3223b399732eb3eb576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f79e9c1_c9367b8a",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_browsertest_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-08-01T22:22:56Z",
+      "side": 1,
+      "message": "nit: Please add an empty line before this line.",
+      "revId": "901100e13274183492abd3223b399732eb3eb576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d77852ed_1fe49bd0",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-08-01T22:22:56Z",
+      "side": 1,
+      "message": "nit: remove {}",
+      "range": {
+        "startLine": 151,
+        "startChar": 23,
+        "endLine": 151,
+        "endChar": 0
+      },
+      "revId": "901100e13274183492abd3223b399732eb3eb576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6df56ece_d7c87cf8",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_win.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-08-01T22:22:56Z",
+      "side": 1,
+      "message": "just for a little extra safety in case of future code changes, could you set prompt_pending_ to false after the call to RemoveObserver?",
+      "range": {
+        "startLine": 217,
+        "startChar": 24,
+        "endLine": 217,
+        "endChar": 0
+      },
+      "revId": "901100e13274183492abd3223b399732eb3eb576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2fd63d0_3e2d0379",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_win.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-08-01T22:22:56Z",
+      "side": 1,
+      "message": "Is this include needed?",
+      "range": {
+        "startLine": 10,
+        "startChar": 18,
+        "endLine": 10,
+        "endChar": 0
+      },
+      "revId": "901100e13274183492abd3223b399732eb3eb576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4960eb0d_72cdd2ff",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 74558,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-08-01T22:22:56Z",
+      "side": 1,
+      "message": "Please use the ISO format 2017-08-01. I don\u0027t understand the other formats :).",
+      "range": {
+        "startLine": 74558,
+        "startChar": 13,
+        "endLine": 74558,
+        "endChar": 21
+      },
+      "revId": "901100e13274183492abd3223b399732eb3eb576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cfbc1c8_38911f76",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 74570,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-08-01T22:22:56Z",
+      "side": 1,
+      "message": "nit: remove extra space.",
+      "range": {
+        "startLine": 74570,
+        "startChar": 74,
+        "endLine": 74570,
+        "endChar": 75
+      },
+      "revId": "901100e13274183492abd3223b399732eb3eb576",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

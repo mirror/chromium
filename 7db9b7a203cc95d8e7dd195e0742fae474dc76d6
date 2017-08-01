@@ -718,6 +718,30 @@
     },
     {
       "key": {
+        "uuid": "b594707f_20cf1033",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-08-01T22:22:56Z",
+      "side": 1,
+      "message": "It looked to me like prompt_pending_ was true if and only if the object was an observer of the browser list. If that is still true, then this can be a dcheck. Is it possible to reach this code if prompt_pending_ is false? If so, you should handle check for that case with an if statement.",
+      "parentUuid": "4da30ddc_56a7946f",
+      "range": {
+        "startLine": 188,
+        "startChar": 35,
+        "endLine": 188,
+        "endChar": 0
+      },
+      "revId": "7db9b7a203cc95d8e7dd195e0742fae474dc76d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "53f811e3_1c00ba75",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_win.cc",
         "patchSetId": 3
