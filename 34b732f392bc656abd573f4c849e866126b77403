@@ -34,6 +34,24 @@
       "revId": "34b732f392bc656abd573f4c849e866126b77403",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9da659bd_ec4feeee",
+        "filename": "device/bluetooth/test/fake_peripheral.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-08-01T19:01:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3824ba2e_e701adec",
+      "revId": "34b732f392bc656abd573f4c849e866126b77403",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
