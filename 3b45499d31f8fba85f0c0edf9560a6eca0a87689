@@ -163,6 +163,24 @@
       "revId": "3b45499d31f8fba85f0c0edf9560a6eca0a87689",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b55f755b_48c76cf0",
+        "filename": "ash/highlighter/highlighter_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-01T05:12:59Z",
+      "side": 1,
+      "message": "I case you haven\u0027t figured it out already; Upload the the first patch and then set the upstream for the second to branch of the first change",
+      "parentUuid": "ec5db120_f30fd74d",
+      "revId": "3b45499d31f8fba85f0c0edf9560a6eca0a87689",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
