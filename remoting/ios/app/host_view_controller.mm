@@ -309,6 +309,12 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
   // more options. This is not ideal but it gets us an easy way to make a
   // modal window option selector. Replace this with a real menu later.
 
+  // UIAlertController will become first responder once it's presented, and
+  // gives first responder role back to ClientKeyboard when it is dismissed.
+  // When choosing "Hide Keyboard", the keyboard will be abruptly shown then
+  // immediately hidden. To prevent this jarring UX, we need to manually make
+  // ClientKeyboard resign first responder and restore it only when needed.
+
   UIAlertController* alert = [UIAlertController
       alertControllerWithTitle:nil
                        message:nil
@@ -317,33 +323,31 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
   if (!_clientKeyboard.hasPhysicalKeyboard) {
     // These are only needed for soft keyboard.
     if ([self isKeyboardActive]) {
-      void (^hideKeyboardHandler)(UIAlertAction*) = ^(UIAlertAction*) {
-        [self hideKeyboard];
-        [_actionImageView setActive:NO animated:YES];
-      };
-      [alert addAction:[UIAlertAction actionWithTitle:l10n_util::GetNSString(
-                                                          IDS_HIDE_KEYBOARD)
-                                                style:UIAlertActionStyleDefault
-                                              handler:hideKeyboardHandler]];
+      [self addActionToAlert:alert
+                       title:IDS_HIDE_KEYBOARD
+                     handler:^() {
+                       // This is an empty block since not restoring the state
+                       // is equivalent to hiding the keyboard.
+                     }
+                       style:UIAlertActionStyleDefault
+            restoresKeyboard:NO];
     } else {
-      void (^showKeyboardHandler)(UIAlertAction*) = ^(UIAlertAction*) {
+      void (^showKeyboardHandler)() = ^() {
         [self showKeyboard];
-        [_actionImageView setActive:NO animated:YES];
       };
-      [alert addAction:[UIAlertAction actionWithTitle:l10n_util::GetNSString(
-                                                          IDS_SHOW_KEYBOARD)
-                                                style:UIAlertActionStyleDefault
-                                              handler:showKeyboardHandler]];
+      [self addActionToAlert:alert
+                       title:IDS_SHOW_KEYBOARD
+                     handler:showKeyboardHandler];
     }
   }
 
   remoting::GestureInterpreter::InputMode currentInputMode =
       _client.gestureInterpreter->GetInputMode();
-  NSString* switchInputModeTitle = l10n_util::GetNSString(
+  int switchInputModeTitle =
       currentInputMode == remoting::GestureInterpreter::DIRECT_INPUT_MODE
           ? IDS_SELECT_TRACKPAD_MODE
-          : IDS_SELECT_TOUCH_MODE);
-  void (^switchInputModeHandler)(UIAlertAction*) = ^(UIAlertAction*) {
+          : IDS_SELECT_TOUCH_MODE;
+  void (^switchInputModeHandler)() = ^() {
     switch (currentInputMode) {
       case remoting::GestureInterpreter::DIRECT_INPUT_MODE:
         [self useTrackpadInputMode];
@@ -353,25 +357,23 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
         [self useDirectInputMode];
         break;
     }
-    [_actionImageView setActive:NO animated:YES];
   };
-  [alert addAction:[UIAlertAction actionWithTitle:switchInputModeTitle
-                                            style:UIAlertActionStyleDefault
-                                          handler:switchInputModeHandler]];
+  [self addActionToAlert:alert
+                   title:switchInputModeTitle
+                 handler:switchInputModeHandler];
 
-  void (^disconnectHandler)(UIAlertAction*) = ^(UIAlertAction*) {
+  void (^disconnectHandler)() = ^() {
     [_client disconnectFromHost];
     [self.navigationController popToRootViewControllerAnimated:YES];
-    [_actionImageView setActive:NO animated:YES];
   };
-  [alert
-      addAction:[UIAlertAction actionWithTitle:l10n_util::GetNSString(
-                                                   IDS_DISCONNECT_MYSELF_BUTTON)
-                                         style:UIAlertActionStyleDefault
-                                       handler:disconnectHandler]];
+  [self addActionToAlert:alert
+                   title:IDS_DISCONNECT_MYSELF_BUTTON
+                 handler:disconnectHandler
+                   style:UIAlertActionStyleDefault
+        restoresKeyboard:NO];
 
   __weak HostViewController* weakSelf = self;
-  void (^settingsHandler)(UIAlertAction*) = ^(UIAlertAction*) {
+  void (^settingsHandler)() = ^() {
     RemotingSettingsViewController* settingsViewController =
         [[RemotingSettingsViewController alloc] init];
     settingsViewController.delegate = weakSelf;
@@ -381,32 +383,63 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
     UINavigationController* navController = [[UINavigationController alloc]
         initWithRootViewController:settingsViewController];
     [weakSelf presentViewController:navController animated:YES completion:nil];
-    [_actionImageView setActive:NO animated:YES];
   };
-  [alert addAction:[UIAlertAction actionWithTitle:l10n_util::GetNSString(
-                                                      IDS_SETTINGS_BUTTON)
-                                            style:UIAlertActionStyleDefault
-                                          handler:settingsHandler]];
+  // Don't restore keyboard since the settings view will be show immediately.
+  [self addActionToAlert:alert
+                   title:IDS_SETTINGS_BUTTON
+                 handler:settingsHandler
+                   style:UIAlertActionStyleDefault
+        restoresKeyboard:NO];
 
   __weak UIAlertController* weakAlert = alert;
-  void (^cancelHandler)(UIAlertAction*) = ^(UIAlertAction*) {
+  void (^cancelHandler)() = ^() {
     [weakAlert dismissViewControllerAnimated:YES completion:nil];
-    [_actionImageView setActive:NO animated:YES];
   };
-  [alert addAction:[UIAlertAction
-                       actionWithTitle:l10n_util::GetNSString(IDS_CANCEL)
-                                 style:UIAlertActionStyleCancel
-                               handler:cancelHandler]];
+  [self addActionToAlert:alert
+                   title:IDS_CANCEL
+                 handler:cancelHandler
+                   style:UIAlertActionStyleCancel
+        restoresKeyboard:YES];
 
   alert.popoverPresentationController.sourceView = self.view;
   // Target the alert menu at the top middle of the FAB.
   alert.popoverPresentationController.sourceRect = CGRectMake(
       _floatingButton.center.x, _floatingButton.frame.origin.y, 1.0, 1.0);
 
+  [self hideKeyboard];
+
   alert.popoverPresentationController.permittedArrowDirections =
       UIPopoverArrowDirectionDown;
   [self presentViewController:alert animated:YES completion:nil];
   [_actionImageView setActive:YES animated:YES];
+}
+
+- (void)addActionToAlert:(UIAlertController*)alert
+                   title:(int)titleMessageId
+                 handler:(void (^)())handler
+                   style:(UIAlertActionStyle)style
+        restoresKeyboard:(BOOL)restoresKeyboard {
+  BOOL isKeyboardActive = [self isKeyboardActive];
+  [alert addAction:[UIAlertAction
+                       actionWithTitle:l10n_util::GetNSString(titleMessageId)
+                                 style:style
+                               handler:^(UIAlertAction*) {
+                                 if (isKeyboardActive && restoresKeyboard) {
+                                   [self showKeyboard];
+                                 }
+                                 handler();
+                                 [_actionImageView setActive:NO animated:YES];
+                               }]];
+}
+
+- (void)addActionToAlert:(UIAlertController*)alert
+                   title:(int)titleMessageId
+                 handler:(void (^)())handler {
+  [self addActionToAlert:alert
+                   title:titleMessageId
+                 handler:handler
+                   style:UIAlertActionStyleDefault
+        restoresKeyboard:YES];
 }
 
 @end
