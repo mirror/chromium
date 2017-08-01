@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5856d462_d4f0b2e9",
+        "filename": "third_party/WebKit/Source/core/css/CSSFontSelector.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-08-01T19:28:08Z",
+      "side": 1,
+      "message": "I\u0027ll move later.",
+      "parentUuid": "7d5c3ae1_70e81128",
+      "range": {
+        "startLine": 65,
+        "startChar": 2,
+        "endLine": 65,
+        "endChar": 10
+      },
+      "revId": "887c41e53b3830b0a928e80608f80742d8a5e800",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e02534e_207c00bf",
         "filename": "third_party/WebKit/Source/modules/canvas2d/CanvasRenderingContext2D.cpp",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "887c41e53b3830b0a928e80608f80742d8a5e800",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e207cbb0_8ad6bca1",
+        "filename": "third_party/WebKit/Source/modules/canvas2d/CanvasRenderingContext2D.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-08-01T19:28:08Z",
+      "side": 1,
+      "message": "there\u0027s a up cast somewhere there.",
+      "parentUuid": "9e02534e_207c00bf",
+      "range": {
+        "startLine": 40,
+        "startChar": 19,
+        "endLine": 40,
+        "endChar": 34
+      },
+      "revId": "887c41e53b3830b0a928e80608f80742d8a5e800",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f33241bc_cf7faf86",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontSelector.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-08-01T19:28:08Z",
+      "side": 1,
+      "message": "I\u0027ll do that once I implement the Worker version.",
+      "parentUuid": "970ff181_396ca40c",
+      "range": {
+        "startLine": 61,
+        "startChar": 2,
+        "endLine": 61,
+        "endChar": 9
+      },
+      "revId": "887c41e53b3830b0a928e80608f80742d8a5e800",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4dac9789_c0e86e43",
         "filename": "third_party/WebKit/Source/platform/testing/FontTestHelpers.cpp",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "887c41e53b3830b0a928e80608f80742d8a5e800",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9991f011_1e35103c",
+        "filename": "third_party/WebKit/Source/platform/testing/FontTestHelpers.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-08-01T19:28:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4dac9789_c0e86e43",
+      "range": {
+        "startLine": 52,
+        "startChar": 69,
+        "endLine": 52,
+        "endChar": 70
+      },
+      "revId": "887c41e53b3830b0a928e80608f80742d8a5e800",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
