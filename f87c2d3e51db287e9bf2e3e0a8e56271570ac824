@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b33845ef_58639727",
+        "filename": "chrome/browser/sync/test/integration/two_client_apps_sync_test.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-08-01T17:04:29Z",
+      "side": 1,
+      "message": "The formatting of BookmarkApp_Basic is a bit odd. I\u0027d expect BookmarkAppBasic.",
+      "range": {
+        "startLine": 373,
+        "startChar": 46,
+        "endLine": 373,
+        "endChar": 63
+      },
+      "revId": "f87c2d3e51db287e9bf2e3e0a8e56271570ac824",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec5486e2_59b3911a",
+        "filename": "chrome/browser/sync/test/integration/two_client_apps_sync_test.cc",
+        "patchSetId": 26
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-08-01T17:04:29Z",
+      "side": 1,
+      "message": "Similar to above, I\u0027d drop the \u0027_\u0027",
+      "revId": "f87c2d3e51db287e9bf2e3e0a8e56271570ac824",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc7878b0_dc493faa",
+        "filename": "components/sync/protocol/app_specifics.proto",
+        "patchSetId": 26
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1153420
+      },
+      "writtenOn": "2017-08-01T17:04:29Z",
+      "side": 1,
+      "message": "Can you update https://cs.chromium.org/chromium/src/components/sync/protocol/proto_visitors.h?l\u003d117 to VISIT this field as well?",
+      "range": {
+        "startLine": 96,
+        "startChar": 11,
+        "endLine": 96,
+        "endChar": 17
+      },
+      "revId": "f87c2d3e51db287e9bf2e3e0a8e56271570ac824",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
