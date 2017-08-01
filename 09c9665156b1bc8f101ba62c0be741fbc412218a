@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4826759b_4863626b",
+        "filename": "content/browser/cache_storage/cache_storage_cache.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-01T07:54:00Z",
+      "side": 1,
+      "message": "This is a ridiculously long list of parameters \u003d/",
+      "range": {
+        "startLine": 253,
+        "startChar": 33,
+        "endLine": 253,
+        "endChar": 40
+      },
+      "revId": "09c9665156b1bc8f101ba62c0be741fbc412218a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd605ad7_74f82c8b",
+        "filename": "content/common/service_worker/service_worker_fetch_request_struct_traits.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-01T07:54:00Z",
+      "side": 1,
+      "message": "Out of curiosity, is it possible to return a const ref here and have it magically work?\n\n(I\u0027m assuming it doesn\u0027t work)",
+      "range": {
+        "startLine": 122,
+        "startChar": 9,
+        "endLine": 122,
+        "endChar": 32
+      },
+      "revId": "09c9665156b1bc8f101ba62c0be741fbc412218a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "578d301f_ab993d2c",
+        "filename": "content/renderer/cache_storage/cache_storage_dispatcher.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-01T07:54:00Z",
+      "side": 1,
+      "message": "I\u0027m wondering why ... oh, this is converting from the Chrome to the Blink variant, isn\u0027t it? \u003d(",
+      "range": {
+        "startLine": 657,
+        "startChar": 0,
+        "endLine": 659,
+        "endChar": 78
+      },
+      "revId": "09c9665156b1bc8f101ba62c0be741fbc412218a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f370701_9f862208",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-01T07:54:00Z",
+      "side": 1,
+      "message": "Though is it OK to use blink variants in content? It works here since the type is pretty simple (just a handle), but if there were strings and other containers involved, it wouldn\u0027t work, right?",
+      "range": {
+        "startLine": 223,
+        "startChar": 22,
+        "endLine": 223,
+        "endChar": 56
+      },
+      "revId": "09c9665156b1bc8f101ba62c0be741fbc412218a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ac889f6_b0ddb4d4",
+        "filename": "third_party/WebKit/public/BUILD.gn",
+        "patchSetId": 14
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-01T07:54:00Z",
+      "side": 1,
+      "message": "This is getting pretty messy: something things depend directly on the generated files, some things only depend on the shared sources.\n\nI guess there\u0027s no hope that we can use the data view here because we have to pass it from content down into Blink?",
+      "range": {
+        "startLine": 662,
+        "startChar": 33,
+        "endLine": 662,
+        "endChar": 60
+      },
+      "revId": "09c9665156b1bc8f101ba62c0be741fbc412218a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da689480_167a1585",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerRequest.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-01T07:54:00Z",
+      "side": 1,
+      "message": "That being said, one way we\u0027ve avoided the dependency dance (for now) is to pass a ScopedMessagePipeHandle across the Blink public API, with that expectation that onion soup will remove this.\n\nWDYT of doing that? It means the Blink public API is less typesafe in the short-term, but it avoids (IMO) the potential weirdness of exposing more Blink variant bindings via the public API.",
+      "range": {
+        "startLine": 62,
+        "startChar": 15,
+        "endLine": 62,
+        "endChar": 49
+      },
+      "revId": "09c9665156b1bc8f101ba62c0be741fbc412218a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
