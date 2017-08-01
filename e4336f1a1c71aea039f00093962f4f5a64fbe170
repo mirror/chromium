@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ed890830_7c5ffaa9",
+        "filename": "components/ntp_snippets/contextual_suggestions_source_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-08-01T11:34:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a6139a4_0c5d157e",
+      "range": {
+        "startLine": 49,
+        "startChar": 14,
+        "endLine": 49,
+        "endChar": 37
+      },
+      "revId": "e4336f1a1c71aea039f00093962f4f5a64fbe170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "285ad2ed_c26ccead",
         "filename": "components/ntp_snippets/contextual_suggestions_source_unittest.cc",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "3ab3b2e2_46612823",
+        "filename": "components/ntp_snippets/contextual_suggestions_source_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-08-01T11:34:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "285ad2ed_c26ccead",
+      "range": {
+        "startLine": 50,
+        "startChar": 19,
+        "endLine": 50,
+        "endChar": 27
+      },
+      "revId": "e4336f1a1c71aea039f00093962f4f5a64fbe170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "317e6091_1158f2c3",
         "filename": "components/ntp_snippets/contextual_suggestions_source_unittest.cc",
         "patchSetId": 3
@@ -68,6 +116,30 @@
       "revId": "e4336f1a1c71aea039f00093962f4f5a64fbe170",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f79ebe3_549a83e4",
+        "filename": "components/ntp_snippets/contextual_suggestions_source_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-08-01T11:34:56Z",
+      "side": 1,
+      "message": "Actually, I have to correct myself. The type of the object we are checking here is std::vector\u003cContentSuggestion\u003e*  (the Fetcher was the one that returns optional\u003cvector\u003cRemoteSuggestion\u003e, but this here is the mock callback of the Source).\nSo I would directly check the Pointee.",
+      "parentUuid": "317e6091_1158f2c3",
+      "range": {
+        "startLine": 115,
+        "startChar": 10,
+        "endLine": 115,
+        "endChar": 17
+      },
+      "revId": "e4336f1a1c71aea039f00093962f4f5a64fbe170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
