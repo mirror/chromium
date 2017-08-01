@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "a7b331a9_b3e1b018",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-01T22:03:28Z",
+      "side": 1,
+      "message": "This bug is about Support WebGL overlay on Intel cros. Can you mention in the CL description how this change is related to that bug, and why we need this change?",
+      "revId": "33ff0e9685a226c4ef5ea629d0cc2bf26d246e71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "da9777dd_77539f5b",
         "filename": "gpu/command_buffer/common/gpu_memory_buffer_support.h",
         "patchSetId": 4
