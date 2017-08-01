@@ -16,6 +16,24 @@
       "revId": "e307d442730656f84fbf2106f96b7ca9876d4552",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e649d6b1_ee838c68",
+        "filename": "PRESUBMIT.py",
+        "patchSetId": 11
+      },
+      "lineNbr": 2045,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-01T19:29:04Z",
+      "side": 1,
+      "message": "Because it didn\u0027t get published until just now :) Addressing it now.",
+      "parentUuid": "c66098dd_e2e62bca",
+      "revId": "e307d442730656f84fbf2106f96b7ca9876d4552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
