@@ -2228,7 +2228,11 @@ void RenderViewContextMenu::ExecSaveLinkAs() {
           setting:
             "This feature cannot be disabled by settings. The request is made "
             "only if user chooses 'Save link as...' in the context menu."
-          policy_exception_justification: "Not implemented."
+          chrome_policy {
+            AllowFileSelectionDialogs {
+              AllowFileSelectionDialogs: false
+            }
+          }
         })");
 
   auto dl_params = base::MakeUnique<DownloadUrlParameters>(

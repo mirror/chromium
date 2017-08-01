@@ -169,8 +169,15 @@ int ProxyScriptFetcherImpl::Fetch(
             "This feature cannot be disabled by settings. This request is only "
             "made if the effective proxy settings include either auto-detect, "
             "or specify a PAC script."
-          policy_exception_justification: "Not implemented."
-        })");
+           chrome_policy {
+             ProxyMode {
+               ProxyMode: "system"
+             }
+           }
+        }
+        comments:
+          "Choosing 'system' or 'fixed_servers' values for ProxyMode will also"
+          "disable these requests.")");
   // Use highest priority, so if socket pools are being used for other types of
   // requests, PAC requests are aren't blocked on them.
   cur_request_ = url_request_context_->CreateRequest(url, MAXIMUM_PRIORITY,
