@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df30f56d_9c8d4611",
+        "filename": "chrome/browser/resources/settings/settings_page/settings_section.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-01T21:58:52Z",
+      "side": 1,
+      "message": "Can we delete this empty function call?",
+      "range": {
+        "startLine": 157,
+        "startChar": 58,
+        "endLine": 158,
+        "endChar": 30
+      },
+      "revId": "013b9cb0c1f558216d433ff00462851fa1b5212c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
