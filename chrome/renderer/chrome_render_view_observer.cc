@@ -21,6 +21,7 @@
 #include "chrome/common/url_constants.h"
 #include "chrome/renderer/prerender/prerender_helper.h"
 #include "components/web_cache/renderer/web_cache_impl.h"
+#include "content/public/common/associated_interface_registry.h"
 #include "content/public/common/bindings_policy.h"
 #include "content/public/renderer/content_renderer_client.h"
 #include "content/public/renderer/render_frame.h"
@@ -44,7 +45,17 @@ ChromeRenderViewObserver::ChromeRenderViewObserver(
     content::RenderView* render_view,
     web_cache::WebCacheImpl* web_cache_impl)
     : content::RenderViewObserver(render_view),
-      web_cache_impl_(web_cache_impl) {}
+#if !defined(OS_ANDROID)
+      web_ui_tester_binding_(this),
+#endif
+      web_cache_impl_(web_cache_impl) {
+#if !defined(OS_ANDROID)
+  render_view->GetMainRenderFrame()
+      ->GetAssociatedInterfaceRegistry()
+      ->AddInterface(base::Bind(&ChromeRenderViewObserver::OnWebUITesterRequest,
+                                base::Unretained(this)));
+#endif
+}
 
 ChromeRenderViewObserver::~ChromeRenderViewObserver() {
 }
@@ -52,9 +63,6 @@ ChromeRenderViewObserver::~ChromeRenderViewObserver() {
 bool ChromeRenderViewObserver::OnMessageReceived(const IPC::Message& message) {
   bool handled = true;
   IPC_BEGIN_MESSAGE_MAP(ChromeRenderViewObserver, message)
-#if !defined(OS_ANDROID)
-    IPC_MESSAGE_HANDLER(ChromeViewMsg_WebUIJavaScript, OnWebUIJavaScript)
-#endif
 #if defined(OS_ANDROID)
     IPC_MESSAGE_HANDLER(ChromeViewMsg_UpdateBrowserControlsState,
                         OnUpdateBrowserControlsState)
@@ -67,9 +75,14 @@ bool ChromeRenderViewObserver::OnMessageReceived(const IPC::Message& message) {
 }
 
 #if !defined(OS_ANDROID)
-void ChromeRenderViewObserver::OnWebUIJavaScript(
+void ChromeRenderViewObserver::ExecuteWebUIJavaScript(
     const base::string16& javascript) {
   webui_javascript_.push_back(javascript);
+}
+
+void ChromeRenderViewObserver::OnWebUITesterRequest(
+    chrome::mojom::WebUITesterAssociatedRequest request) {
+  web_ui_tester_binding_.Bind(std::move(request));
 }
 #endif
 
