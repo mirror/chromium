@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f60fd80_1e3fe62d",
+        "filename": "ash/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 915,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-01T20:25:28Z",
+      "side": 1,
+      "message": "We *only* support ozone now, so you can get rid of the use_ozone conditionals too.",
+      "range": {
+        "startLine": 915,
+        "startChar": 5,
+        "endLine": 915,
+        "endChar": 13
+      },
+      "revId": "2c9e2f6d1c3b5542947c115f8bae33f1ca73afa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1bcf0a7_2806ea75",
+        "filename": "ash/display/screen_position_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-01T20:25:28Z",
+      "side": 1,
+      "message": "No need for ifdef anymore.",
+      "range": {
+        "startLine": 31,
+        "startChar": 5,
+        "endLine": 31,
+        "endChar": 17
+      },
+      "revId": "2c9e2f6d1c3b5542947c115f8bae33f1ca73afa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "267fe905_da8e88fa",
+        "filename": "ash/display/window_tree_host_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-01T20:25:28Z",
+      "side": 1,
+      "message": "No need for ifdef.",
+      "range": {
+        "startLine": 71,
+        "startChar": 5,
+        "endLine": 71,
+        "endChar": 22
+      },
+      "revId": "2c9e2f6d1c3b5542947c115f8bae33f1ca73afa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "497915ab_71a11a5e",
+        "filename": "ash/host/ash_window_tree_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-01T20:25:28Z",
+      "side": 1,
+      "message": "remove.",
+      "range": {
+        "startLine": 16,
+        "startChar": 5,
+        "endLine": 16,
+        "endChar": 18
+      },
+      "revId": "2c9e2f6d1c3b5542947c115f8bae33f1ca73afa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "674ac09b_7614bc67",
+        "filename": "ash/host/ash_window_tree_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-01T20:25:28Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 63,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 14
+      },
+      "revId": "2c9e2f6d1c3b5542947c115f8bae33f1ca73afa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b44dadb_b27b0853",
+        "filename": "ash/wm/tablet_mode/tablet_mode_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-01T20:25:28Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 30,
+        "startChar": 3,
+        "endLine": 30,
+        "endChar": 14
+      },
+      "revId": "2c9e2f6d1c3b5542947c115f8bae33f1ca73afa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de7445e7_7dc2dfad",
+        "filename": "ash/wm/tablet_mode/tablet_mode_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-01T20:25:28Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 113,
+        "startChar": 6,
+        "endLine": 113,
+        "endChar": 15
+      },
+      "revId": "2c9e2f6d1c3b5542947c115f8bae33f1ca73afa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
