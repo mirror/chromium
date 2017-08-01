@@ -88,6 +88,24 @@
       "revId": "31b48e34a0524ce65fbc609d6647fcf75a65c5fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7605c5a5_8998f82e",
+        "filename": "third_party/WebKit/Source/core/loader/BaseFetchContext.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-01T08:22:55Z",
+      "side": 1,
+      "message": "I don\u0027t have a strong opinion for the level, I\u0027m fine with it",
+      "parentUuid": "cf0df5f0_58387c5a",
+      "revId": "31b48e34a0524ce65fbc609d6647fcf75a65c5fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
