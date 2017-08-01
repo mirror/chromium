@@ -37,6 +37,26 @@ class BubbleUtilTest : public PlatformTest {
   const CGFloat containerWidth_;
 };
 
+// Test the |AnchorPoint| method when the arrow is pointing upwards, meaning the
+// bubble is below the UI element.
+TEST_F(BubbleUtilTest, AnchorPointUp) {
+  CGPoint anchorPoint =
+      bubble_util::AnchorPoint(centerAlignedTarget_, BubbleArrowDirectionUp);
+  CGPoint expectedPoint = CGPointMake(300.0f, 300.0f);
+  EXPECT_EQ(expectedPoint.x, anchorPoint.x);
+  EXPECT_EQ(expectedPoint.y, anchorPoint.y);
+}
+
+// Test the |AnchorPoint| method when the arrow is pointing downwards, meaning
+// the bubble is above the UI element.
+TEST_F(BubbleUtilTest, AnchorPointDown) {
+  CGPoint anchorPoint =
+      bubble_util::AnchorPoint(centerAlignedTarget_, BubbleArrowDirectionDown);
+  CGPoint expectedPoint = CGPointMake(300.0f, 200.0f);
+  EXPECT_EQ(expectedPoint.x, anchorPoint.x);
+  EXPECT_EQ(expectedPoint.y, anchorPoint.y);
+}
+
 // Test the |MaxWidth| method when the bubble is leading aligned, the target is
 // on the left side of the container, and the language is LTR.
 TEST_F(BubbleUtilTest, MaxWidthLeadingWithTargetOnLeft) {
