@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d098e45_ce4ce58b",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-01T18:16:31Z",
+      "side": 1,
+      "message": "Change the structure of the text fixture so that it has anchor point members rather than rects. The members were used to make the tests more readable.",
+      "revId": "a53b6b2fb8fcc9e089015173cb92cbd7905822ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
