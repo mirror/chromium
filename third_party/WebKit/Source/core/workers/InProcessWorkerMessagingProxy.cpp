@@ -134,8 +134,6 @@ void InProcessWorkerMessagingProxy::PostMessageToWorkerGlobalScope(
     return;
 
   if (GetWorkerThread()) {
-    // A message event is an activity and may initiate another activity.
-    worker_global_scope_has_pending_activity_ = true;
     ++unconfirmed_message_count_;
     std::unique_ptr<WTF::CrossThreadClosure> task = CrossThreadBind(
         &InProcessWorkerObjectProxy::ProcessMessageFromWorkerObject,
@@ -184,9 +182,6 @@ void InProcessWorkerMessagingProxy::WorkerThreadCreated() {
   DCHECK(IsParentContextThread());
   ThreadedMessagingProxyBase::WorkerThreadCreated();
 
-  // Worker initialization means a pending activity.
-  worker_global_scope_has_pending_activity_ = true;
-
   DCHECK_EQ(0u, unconfirmed_message_count_);
   unconfirmed_message_count_ = queued_early_tasks_.size();
   for (auto& queued_task : queued_early_tasks_) {
@@ -206,20 +201,8 @@ void InProcessWorkerMessagingProxy::ConfirmMessageFromWorkerObject() {
   DCHECK(IsParentContextThread());
   if (AskedToTerminate())
     return;
-  DCHECK(worker_global_scope_has_pending_activity_);
   DCHECK_GT(unconfirmed_message_count_, 0u);
   --unconfirmed_message_count_;
-}
-
-void InProcessWorkerMessagingProxy::PendingActivityFinished() {
-  DCHECK(IsParentContextThread());
-  DCHECK(worker_global_scope_has_pending_activity_);
-  if (unconfirmed_message_count_ > 0) {
-    // Ignore the report because an inflight message event may initiate a
-    // new activity.
-    return;
-  }
-  worker_global_scope_has_pending_activity_ = false;
 }
 
 DEFINE_TRACE(InProcessWorkerMessagingProxy) {
@@ -231,7 +214,7 @@ bool InProcessWorkerMessagingProxy::HasPendingActivity() const {
   DCHECK(IsParentContextThread());
   if (AskedToTerminate())
     return false;
-  return worker_global_scope_has_pending_activity_;
+  return true;
 }
 
 }  // namespace blink
