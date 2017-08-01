@@ -259,7 +259,11 @@ NavigationItem* WKBasedNavigationManagerImpl::GetItemAtIndex(
 
 int WKBasedNavigationManagerImpl::GetIndexOfItem(
     const NavigationItem* item) const {
-  DLOG(WARNING) << "Not yet implemented.";
+  for (int index = 0; index < GetItemCount(); index++) {
+    if (GetNavigationItemImplAtIndex(index) == item) {
+      return index;
+    }
+  }
   return -1;
 }
 
