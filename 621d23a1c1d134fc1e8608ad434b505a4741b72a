@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "667a5148_50db96b8",
+        "filename": "chrome/browser/net/profile_network_context_service_browsertest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-01T15:50:14Z",
+      "side": 1,
+      "message": "There\u0027s no other way to wait until HttpCacheTransaction is used, other than making a request and waiting, is there?  It may even be in another process, now.\n\nRegardless, I also don\u0027t think using an HttpCacheTransaction is enough - it\u0027s used on the IO thread, and the path is created on another thread.  And there\u0027s no way to wait on just that off-thread task completing, even on the in-process case, is there?",
+      "parentUuid": "33cb8bef_debe35c8",
+      "range": {
+        "startLine": 76,
+        "startChar": 15,
+        "endLine": 76,
+        "endChar": 0
+      },
+      "revId": "621d23a1c1d134fc1e8608ad434b505a4741b72a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e70a664b_f9e10bd4",
         "filename": "components/network_session_configurator/browser/network_session_configurator_unittest.cc",
         "patchSetId": 16
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "be4e39b6_d4094aa4",
+        "filename": "components/network_session_configurator/browser/network_session_configurator_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-01T15:50:14Z",
+      "side": 1,
+      "message": "Egads, making all kinds of foolish errors on this one.  :(  Brought it back, and moved this test down with the other new ones.",
+      "parentUuid": "e70a664b_f9e10bd4",
+      "revId": "621d23a1c1d134fc1e8608ad434b505a4741b72a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "558848b5_ba8b0447",
         "filename": "content/network/network_context_unittest.cc",
         "patchSetId": 16
@@ -53,6 +95,30 @@
       "writtenOn": "2017-07-31T14:52:48Z",
       "side": 1,
       "message": "Does this get automatically saved/restored between tests?",
+      "range": {
+        "startLine": 215,
+        "startChar": 1,
+        "endLine": 215,
+        "endChar": 2
+      },
+      "revId": "621d23a1c1d134fc1e8608ad434b505a4741b72a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb0677f4_2517a45c",
+        "filename": "content/network/network_context_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-01T15:50:14Z",
+      "side": 1,
+      "message": "Each test resets it.",
+      "parentUuid": "558848b5_ba8b0447",
       "range": {
         "startLine": 215,
         "startChar": 1,
