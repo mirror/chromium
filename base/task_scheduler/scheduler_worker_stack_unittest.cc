@@ -242,5 +242,79 @@ TEST_F(TaskSchedulerWorkerStackTest, PushTwice) {
   EXPECT_DCHECK_DEATH({ stack.Push(worker_a_.get()); });
 }
 
+// Verify that ContainsAtBottom() correctly returns the whether workers
+// are near the bottom of the stack.
+TEST_F(TaskSchedulerWorkerStackTest, ContainsAtBottom) {
+  SchedulerWorkerStack stack;
+  EXPECT_FALSE(stack.ContainsAtBottom(worker_a_.get(), 1));
+  EXPECT_FALSE(stack.ContainsAtBottom(worker_b_.get(), 2));
+  EXPECT_FALSE(stack.ContainsAtBottom(worker_c_.get(), 3));
+
+  stack.Push(worker_a_.get());
+  EXPECT_TRUE(stack.ContainsAtBottom(worker_a_.get(), 1));
+  EXPECT_TRUE(stack.ContainsAtBottom(worker_a_.get(), 2));
+
+  EXPECT_FALSE(stack.ContainsAtBottom(worker_b_.get(), 1));
+  EXPECT_FALSE(stack.ContainsAtBottom(worker_b_.get(), 2));
+  EXPECT_FALSE(stack.ContainsAtBottom(worker_c_.get(), 1));
+  EXPECT_FALSE(stack.ContainsAtBottom(worker_c_.get(), 2));
+
+  stack.Push(worker_b_.get());
+  EXPECT_TRUE(stack.ContainsAtBottom(worker_a_.get(), 1));
+  EXPECT_FALSE(stack.ContainsAtBottom(worker_b_.get(), 1));
+  EXPECT_TRUE(stack.ContainsAtBottom(worker_b_.get(), 2));
+
+  stack.Push(worker_c_.get());
+  EXPECT_TRUE(stack.ContainsAtBottom(worker_a_.get(), 1));
+  EXPECT_TRUE(stack.ContainsAtBottom(worker_a_.get(), 2));
+  EXPECT_TRUE(stack.ContainsAtBottom(worker_a_.get(), 3));
+
+  EXPECT_FALSE(stack.ContainsAtBottom(worker_b_.get(), 1));
+  EXPECT_TRUE(stack.ContainsAtBottom(worker_b_.get(), 2));
+  EXPECT_TRUE(stack.ContainsAtBottom(worker_b_.get(), 3));
+
+  EXPECT_FALSE(stack.ContainsAtBottom(worker_c_.get(), 1));
+  EXPECT_FALSE(stack.ContainsAtBottom(worker_c_.get(), 2));
+  EXPECT_TRUE(stack.ContainsAtBottom(worker_c_.get(), 3));
+
+  stack.Pop();
+  EXPECT_TRUE(stack.ContainsAtBottom(worker_a_.get(), 1));
+  EXPECT_TRUE(stack.ContainsAtBottom(worker_b_.get(), 2));
+  EXPECT_FALSE(stack.ContainsAtBottom(worker_c_.get(), 3));
+
+  stack.Pop();
+  EXPECT_TRUE(stack.ContainsAtBottom(worker_a_.get(), 1));
+  EXPECT_FALSE(stack.ContainsAtBottom(worker_b_.get(), 2));
+  EXPECT_FALSE(stack.ContainsAtBottom(worker_c_.get(), 3));
+
+  stack.Pop();
+  EXPECT_FALSE(stack.ContainsAtBottom(worker_a_.get(), 1));
+  EXPECT_FALSE(stack.ContainsAtBottom(worker_b_.get(), 2));
+  EXPECT_FALSE(stack.ContainsAtBottom(worker_c_.get(), 3));
+}
+
+// Verify that Get() yields the correct worker.
+TEST_F(TaskSchedulerWorkerStackTest, Get) {
+  SchedulerWorkerStack stack;
+  stack.Push(worker_a_.get());
+  EXPECT_EQ(worker_a_.get(), stack.Get(0));
+
+  stack.Push(worker_b_.get());
+  EXPECT_EQ(worker_a_.get(), stack.Get(0));
+  EXPECT_EQ(worker_b_.get(), stack.Get(1));
+
+  stack.Push(worker_c_.get());
+  EXPECT_EQ(worker_a_.get(), stack.Get(0));
+  EXPECT_EQ(worker_b_.get(), stack.Get(1));
+  EXPECT_EQ(worker_c_.get(), stack.Get(2));
+
+  stack.Pop();
+  EXPECT_EQ(worker_a_.get(), stack.Get(0));
+  EXPECT_EQ(worker_b_.get(), stack.Get(1));
+
+  stack.Pop();
+  EXPECT_EQ(worker_a_.get(), stack.Get(0));
+}
+
 }  // namespace internal
 }  // namespace base

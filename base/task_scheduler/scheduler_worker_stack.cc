@@ -38,10 +38,24 @@ bool SchedulerWorkerStack::Contains(const SchedulerWorker* worker) const {
   return std::find(stack_.begin(), stack_.end(), worker) != stack_.end();
 }
 
+bool SchedulerWorkerStack::ContainsAtBottom(const SchedulerWorker* worker,
+                                            int n) const {
+  DCHECK_GE(n, 1);
+  auto end_iter =
+      n < static_cast<int>(Size()) ? stack_.begin() + n : stack_.end();
+  return std::find(stack_.begin(), end_iter, worker) != end_iter;
+}
+
 void SchedulerWorkerStack::Remove(const SchedulerWorker* worker) {
   auto it = std::find(stack_.begin(), stack_.end(), worker);
   if (it != stack_.end())
     stack_.erase(it);
+}
+
+SchedulerWorker* SchedulerWorkerStack::Get(int n) {
+  DCHECK_GE(n, 0);
+  DCHECK_LT(n, static_cast<int>(Size()));
+  return stack_[n];
 }
 
 }  // namespace internal
