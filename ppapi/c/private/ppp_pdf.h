@@ -77,6 +77,9 @@ struct PPP_Pdf_1_1 {
   // is when focus is within an editable form text area (a form text field
   // or user-editable form combobox text field).
   PP_Bool (*CanEditText)(PP_Instance instance);
+
+  // Delete current plugin text selection.
+  void (*DeleteSelectedText)(PP_Instance instance);
 };
 
 typedef PPP_Pdf_1_1 PPP_Pdf;

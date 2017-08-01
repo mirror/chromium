@@ -421,6 +421,7 @@ class CONTENT_EXPORT PepperPluginInstanceImpl
   void SetSelectionBounds(const gfx::PointF& base,
                           const gfx::PointF& extent) override;
   bool CanEditText();
+  void DeleteSelectedText();
 
   // PPB_Instance_API implementation.
   PP_Bool BindGraphics(PP_Instance instance, PP_Resource device) override;
