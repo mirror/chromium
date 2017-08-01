@@ -63,7 +63,12 @@ public class PaymentManifestParserTest implements ManifestParseCallback {
     }
 
     @Override
-    public void onManifestParseFailure() {
+    public void onPaymentMethodManifestParseFailure() {
+        mParseFailure = true;
+    }
+
+    @Override
+    public void onWebAppManifestParseFailure() {
         mParseFailure = true;
     }
 

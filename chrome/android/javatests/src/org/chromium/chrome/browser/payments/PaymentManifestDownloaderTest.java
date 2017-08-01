@@ -84,7 +84,13 @@ public class PaymentManifestDownloaderTest implements ManifestDownloadCallback {
     }
 
     @Override
-    public void onManifestDownloadFailure() {
+    public void onPaymentMethodManifestDownloadFailure() {
+        mDownloadComplete = true;
+        mDownloadFailure = true;
+    }
+
+    @Override
+    public void onWebAppManifestDownloadFailure() {
         mDownloadComplete = true;
         mDownloadFailure = true;
     }

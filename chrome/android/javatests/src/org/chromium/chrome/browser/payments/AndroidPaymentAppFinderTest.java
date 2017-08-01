@@ -81,8 +81,13 @@ public class AndroidPaymentAppFinderTest implements PaymentAppCreatedCallback {
                 }
 
                 @Override
-                public void onManifestParseFailure() {
-                    callback.onManifestParseFailure();
+                public void onPaymentMethodManifestParseFailure() {
+                    callback.onPaymentMethodManifestParseFailure();
+                }
+
+                @Override
+                public void onWebAppManifestParseFailure() {
+                    callback.onWebAppManifestParseFailure();
                 }
             });
         }
@@ -106,7 +111,9 @@ public class AndroidPaymentAppFinderTest implements PaymentAppCreatedCallback {
                                               .replaceAll("https://henrypay.com",
                                                       mTestServerUri.toString() + "/henrypay.com")
                                               .replaceAll("https://ikepay.com",
-                                                      mTestServerUri.toString() + "/ikepay.com"));
+                                                      mTestServerUri.toString() + "/ikepay.com")
+                                              .replaceAll("https://joepay.com",
+                                                      mTestServerUri.toString() + "/joepay.com"));
                 } catch (URISyntaxException e) {
                     assert false : "URI should be valid";
                 }
@@ -1002,6 +1009,34 @@ public class AndroidPaymentAppFinderTest implements PaymentAppCreatedCallback {
         appIdentifiers.add(mPaymentApps.get(1).getAppIdentifier());
         Assert.assertTrue(appIdentifiers.contains("com.ikepay"));
         Assert.assertTrue(appIdentifiers.contains("com.alicepay"));
+    }
+
+    /**
+     * Verify that Chrome recognizes that JoePay can work with https://joepay.com/webpay payment
+     * method, even if its "default_applications" has one web app manifest that's intended for
+     * iOS instead of Android. Repeated app look ups should succeed.
+     */
+    @Test
+    @Feature({"Payments"})
+    public void testOneAndroidAndOneIosPaymentAppManifest() throws Throwable {
+        Set<String> methods = new HashSet<>();
+        methods.add(mServer.getURL("/components/test/data/payments/joepay.com/webpay"));
+        mPackageManager.installPaymentApp("JoePay", "com.joepay",
+                mServer.getURL("/components/test/data/payments/joepay.com/webpay"),
+                "77777777771111111111");
+
+        findApps(methods);
+
+        Assert.assertEquals("1 app should match the query", 1, mPaymentApps.size());
+        Assert.assertEquals("com.joepay", mPaymentApps.get(0).getAppIdentifier());
+
+        mPaymentApps.clear();
+        mAllPaymentAppsCreated = false;
+
+        findApps(methods);
+
+        Assert.assertEquals("1 app should still match the query", 1, mPaymentApps.size());
+        Assert.assertEquals("com.joepay", mPaymentApps.get(0).getAppIdentifier());
     }
 
     private void findApps(final Set<String> methodNames) throws Throwable {
