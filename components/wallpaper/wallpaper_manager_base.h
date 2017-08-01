@@ -96,9 +96,6 @@ WALLPAPER_EXPORT extern const int kWallpaperThumbnailHeight;
 // A dictionary pref that maps usernames to wallpaper info.
 WALLPAPER_EXPORT extern const char kUsersWallpaperInfo[];
 
-// A dictionary pref that maps wallpaper file paths to their prominent colors.
-WALLPAPER_EXPORT extern const char kWallpaperColors[];
-
 class WallpaperFilesId;
 
 // This singleton class maintains wallpapers for users.
