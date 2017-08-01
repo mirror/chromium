@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "58fc8b38_b55c6b73",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-01T02:08:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7e7b7e0e_3b33ca16",
+      "revId": "40cdc81197b833e76d1327ca48de4496e04ac314",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a82ec5b_69ee6986",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
         "patchSetId": 4
@@ -209,6 +227,24 @@
       "revId": "40cdc81197b833e76d1327ca48de4496e04ac314",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b24ec89d_7e850012",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-01T02:08:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01287e03_64ca9a2a",
+      "revId": "40cdc81197b833e76d1327ca48de4496e04ac314",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -349,6 +385,24 @@
       "revId": "40cdc81197b833e76d1327ca48de4496e04ac314",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f61b6976_289e3119",
+        "filename": "chrome/common/media_router/discovery/media_sink_internal.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-01T02:08:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fb1d40aa_c78afa89",
+      "revId": "40cdc81197b833e76d1327ca48de4496e04ac314",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
