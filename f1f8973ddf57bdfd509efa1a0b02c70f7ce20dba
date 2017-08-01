@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "7cfeb354_c3d75664",
+        "filename": "components/cryptauth/device_capability_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-01T23:06:19Z",
+      "side": 1,
+      "message": "Oops...this comment would have been correct if were holding a list of Requests instead of a list of unique_ptr\u003cRequests\u003e. Your implementation here is fine.",
+      "parentUuid": "dd317e30_dcc0f461",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 72
+      },
+      "revId": "f1f8973ddf57bdfd509efa1a0b02c70f7ce20dba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0e2c10ac_bc8ea2f0",
         "filename": "components/cryptauth/device_capability_manager.cc",
         "patchSetId": 9
