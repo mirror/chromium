@@ -6,6 +6,7 @@
 #define COMPONENTS_CDM_BROWSER_MEDIA_DRM_STORAGE_IMPL_H_
 
 #include "base/threading/thread_checker.h"
+#include "base/unguessable_token.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "media/mojo/interfaces/media_drm_storage.mojom.h"
@@ -36,7 +37,7 @@ class MediaDrmStorageImpl final : public media::mojom::MediaDrmStorage,
   ~MediaDrmStorageImpl() final;
 
   // media::mojom::MediaDrmStorage implementation.
-  void Initialize(const url::Origin& origin) final;
+  void Initialize(InitializeCallback callback) final;
   void OnProvisioned(OnProvisionedCallback callback) final;
   void SavePersistentSession(const std::string& session_id,
                              media::mojom::SessionDataPtr session_data,
@@ -50,6 +51,8 @@ class MediaDrmStorageImpl final : public media::mojom::MediaDrmStorage,
   void RenderFrameDeleted(content::RenderFrameHost* render_frame_host) final;
   void DidFinishNavigation(content::NavigationHandle* navigation_handle) final;
 
+  bool IsInitialized() const { return !!origin_id_; }
+
  private:
   base::ThreadChecker thread_checker_;
 
@@ -60,7 +63,7 @@ class MediaDrmStorageImpl final : public media::mojom::MediaDrmStorage,
   PrefService* const pref_service_ = nullptr;
   const url::Origin origin_;
   const std::string origin_string_;
-  bool initialized_ = false;
+  base::UnguessableToken origin_id_;
 
   mojo::Binding<media::mojom::MediaDrmStorage> binding_;
 };
