@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d314052a_321904da",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-01T20:00:55Z",
+      "side": 1,
+      "message": "Why does being a multi texture mask change the draw transform here? Is it wrong in both cases?\n\nAdditionally, the draw transform includes the scale of the layer itself.  This definitely needs a test where the PictureLayerImpl::MaximumContentsScale differs between the mask and the layer it\u0027s masking.",
+      "revId": "3a80215b3245aec92eb962f15cc86cb761a7a632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
