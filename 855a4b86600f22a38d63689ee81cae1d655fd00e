@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee66378d_fc0af0f2",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/budget/budget-service-mock.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-01T15:37:29Z",
+      "side": 1,
+      "message": "Btw, I feel that we could probably do something in the bindings-internal code to remove the need of either \"async\" or \"Promise.resove\" in this case, if it is not already working.",
+      "revId": "855a4b86600f22a38d63689ee81cae1d655fd00e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
