@@ -21,7 +21,10 @@ class Profile;
 
 namespace chromeos {
 
-RecentAsyncFileUtil::RecentAsyncFileUtil() : weak_ptr_factory_(this) {}
+RecentAsyncFileUtil::RecentAsyncFileUtil(RecentModel* model)
+    : model_(model), weak_ptr_factory_(this) {
+  (void)model_;  // Not used for now.
+}
 
 RecentAsyncFileUtil::~RecentAsyncFileUtil() {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
