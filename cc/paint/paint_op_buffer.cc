@@ -24,13 +24,11 @@ bool IsImageShader(const PaintFlags& flags) {
 }
 
 bool IsImageOp(const PaintOp* op) {
-  PaintOpType type = static_cast<PaintOpType>(op->type);
-
   if (!op->IsDrawOp())
     return false;
-  else if (type == PaintOpType::DrawImage)
+  else if (op->GetType() == PaintOpType::DrawImage)
     return true;
-  else if (type == PaintOpType::DrawImageRect)
+  else if (op->GetType() == PaintOpType::DrawImageRect)
     return true;
   else if (op->IsPaintOpWithFlags())
     return IsImageShader(static_cast<const PaintOpWithFlags*>(op)->flags);
@@ -118,7 +116,7 @@ void RasterWithAlpha(const PaintOp* op,
                      const SkRect& bounds,
                      uint8_t alpha) {
   DCHECK(op->IsDrawOp());
-  DCHECK_NE(static_cast<PaintOpType>(op->type), PaintOpType::DrawRecord);
+  DCHECK_NE(op->GetType(), PaintOpType::DrawRecord);
 
   // TODO(enne): partially specialize RasterWithAlpha for draw color?
   if (op->IsPaintOpWithFlags()) {
@@ -153,6 +151,17 @@ void RasterWithAlpha(const PaintOp* op,
         flags_op->RasterWithFlags(canvas, &alpha_flags, params);
       }
     }
+  } else if (op->GetType() == PaintOpType::DrawColor &&
+             static_cast<const DrawColorOp*>(op)->mode ==
+                 SkBlendMode::kSrcOver) {
+    auto* draw_color_op = static_cast<const DrawColorOp*>(op);
+
+    SkColor color = draw_color_op->color;
+    canvas->drawColor(
+        SkColorSetARGB(SkMulDiv255Round(alpha, SkColorGetA(color)),
+                       SkColorGetR(color), SkColorGetG(color),
+                       SkColorGetB(color)),
+        draw_color_op->mode);
   } else {
     bool unset = bounds.x() == PaintOp::kUnsetRect.x();
     canvas->saveLayerAlpha(unset ? nullptr : &bounds, alpha);
