@@ -48,8 +48,8 @@
                 "domain": "Page",
                 "include": ["enable", "disable", "reload", "navigate", "stopLoading", "getNavigationHistory", "navigateToHistoryEntry", "captureScreenshot",
                     "startScreencast", "stopScreencast", "screencastFrameAck", "handleJavaScriptDialog", "setColorPickerEnabled", "requestAppBanner",
-                    "printToPDF", "bringToFront"],
-                "include_events": ["interstitialShown", "interstitialHidden", "screencastVisibilityChanged", "screencastFrame", "colorPicked"],
+                    "processNavigation", "printToPDF", "bringToFront"],
+                "include_events": ["colorPicked", "interstitialShown", "interstitialHidden", "javascriptDialogOpening", "javascriptDialogClosed", "navigationRequested", "screencastVisibilityChanged", "screencastFrame"],
                 "async": ["captureScreenshot", "printToPDF"]
             },
             {
