@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68b3b5ac_6db72808",
+        "filename": "third_party/WebKit/LayoutTests/fast/innerHTML/innerHTML-xml-expected.txt",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1106664
+      },
+      "writtenOn": "2017-08-01T02:44:03Z",
+      "side": 1,
+      "message": "If this file just differs by trailing whitespace, do we need it?",
+      "revId": "39aa99b0414c1da7ecdd3913247956cad5e9aa49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed104c4d_8e1d80dd",
+        "filename": "third_party/WebKit/Source/core/xml/parser/XMLDocumentParser.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 1106664
+      },
+      "writtenOn": "2017-08-01T02:44:03Z",
+      "side": 1,
+      "message": "a namespace information -\u003e either:\na namespace\nor\nnamespace information\n\n\"a ... information\" doesn\u0027t work because information isn\u0027t singular.",
+      "revId": "39aa99b0414c1da7ecdd3913247956cad5e9aa49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0e3cb3e_4cf81374",
+        "filename": "third_party/WebKit/Source/core/xml/parser/XMLDocumentParser.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 821,
+      "author": {
+        "id": 1106664
+      },
+      "writtenOn": "2017-08-01T02:44:03Z",
+      "side": 1,
+      "message": "I\u0027m fine with this as-is because it\u0027s in the existing code, but I\u0027m curious when this matters: I guess this can override the default namespace we\u0027d find deeper in the stack if DOM modification has moved an element with a different namespace URI in here? Is there a test for this?",
+      "revId": "39aa99b0414c1da7ecdd3913247956cad5e9aa49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "971832eb_3e22bdca",
+        "filename": "third_party/WebKit/Source/core/xml/parser/XMLDocumentParser.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 824,
+      "author": {
+        "id": 1106664
+      },
+      "writtenOn": "2017-08-01T02:44:03Z",
+      "side": 1,
+      "message": "Looks like there\u0027s an extra } here breaking the build.",
+      "revId": "39aa99b0414c1da7ecdd3913247956cad5e9aa49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
