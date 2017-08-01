@@ -52,7 +52,8 @@ GpuMemoryBufferConfigurationSet GetNativeGpuMemoryBufferConfigurations() {
     const gfx::BufferUsage kNativeUsages[] = {
         gfx::BufferUsage::GPU_READ, gfx::BufferUsage::SCANOUT,
         gfx::BufferUsage::GPU_READ_CPU_READ_WRITE,
-        gfx::BufferUsage::GPU_READ_CPU_READ_WRITE_PERSISTENT};
+        gfx::BufferUsage::GPU_READ_CPU_READ_WRITE_PERSISTENT,
+        gfx::BufferUsage::CAMERA_WRITE_CPU_READ_WRITE};
     for (auto format : kNativeFormats) {
       for (auto usage : kNativeUsages) {
         if (IsNativeGpuMemoryBufferConfigurationSupported(format, usage))

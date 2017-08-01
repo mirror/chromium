@@ -52,10 +52,12 @@ TYPED_TEST_P(GpuMemoryBufferImplTest, CreateFromHandle) {
 
   for (auto format : gfx::GetBufferFormatsForTesting()) {
     gfx::BufferUsage usages[] = {
-        gfx::BufferUsage::GPU_READ, gfx::BufferUsage::SCANOUT,
+        gfx::BufferUsage::GPU_READ,
+        gfx::BufferUsage::SCANOUT,
         gfx::BufferUsage::SCANOUT_CPU_READ_WRITE,
         gfx::BufferUsage::GPU_READ_CPU_READ_WRITE,
-        gfx::BufferUsage::GPU_READ_CPU_READ_WRITE_PERSISTENT};
+        gfx::BufferUsage::GPU_READ_CPU_READ_WRITE_PERSISTENT,
+        gfx::BufferUsage::CAMERA_WRITE_CPU_READ_WRITE};
     for (auto usage : usages) {
       if (!TypeParam::IsConfigurationSupported(format, usage))
         continue;

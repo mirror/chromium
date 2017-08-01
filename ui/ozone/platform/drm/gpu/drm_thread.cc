@@ -129,6 +129,9 @@ void DrmThread::CreateBuffer(gfx::AcceleratedWidget widget,
     case gfx::BufferUsage::GPU_READ_CPU_READ_WRITE_PERSISTENT:
       flags = GBM_BO_USE_LINEAR | GBM_BO_USE_TEXTURING;
       break;
+    case gfx::BufferUsage::CAMERA_WRITE_CPU_READ_WRITE:
+      flags = GBM_BO_USE_LINEAR | GBM_BO_USE_CAMERA_WRITE;
+      break;
   }
 
   DrmWindow* window = screen_manager_->GetWindow(widget);
