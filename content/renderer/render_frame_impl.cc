@@ -3161,13 +3161,7 @@ void RenderFrameImpl::DidChangeOpener(blink::WebFrame* opener) {
   Send(new FrameHostMsg_DidChangeOpener(routing_id_, opener_routing_id));
 }
 
-void RenderFrameImpl::FrameDetached(blink::WebLocalFrame* frame,
-                                    DetachType type) {
-  // NOTE: This function is called on the frame that is being detached and not
-  // the parent frame.  This is different from createChildFrame() which is
-  // called on the parent frame.
-  DCHECK_EQ(frame_, frame);
-
+void RenderFrameImpl::FrameDetached(DetachType type) {
 #if BUILDFLAG(ENABLE_PLUGINS)
   if (focused_pepper_plugin_)
     GetRenderWidget()->set_focused_pepper_plugin(nullptr);
@@ -3194,15 +3188,15 @@ void RenderFrameImpl::FrameDetached(blink::WebLocalFrame* frame,
   // the RenderFrameImpl.  In contrast, the main frame is owned by its
   // containing RenderViewHost (so that they have the same lifetime), so only
   // removal from the map is needed and no deletion.
-  FrameMap::iterator it = g_frame_map.Get().find(frame);
+  FrameMap::iterator it = g_frame_map.Get().find(frame_);
   CHECK(it != g_frame_map.Get().end());
   CHECK_EQ(it->second, this);
   g_frame_map.Get().erase(it);
 
-  // |frame| is invalid after here.  Be sure to clear frame_ as well, since this
-  // object may not be deleted immediately and other methods may try to access
-  // it.
-  frame->Close();
+  // |frame_| may not be referenced after this, so clear the pointer since
+  // the actual WebLocalFrame may not be deleted immediately and other methods
+  // may try to access it.
+  frame_->Close();
   frame_ = nullptr;
 
   // If this was a provisional frame with an associated proxy, tell the proxy
@@ -3404,10 +3398,7 @@ void RenderFrameImpl::WillSubmitForm(const blink::WebFormElement& form) {
     observer.WillSubmitForm(form);
 }
 
-void RenderFrameImpl::DidCreateDataSource(blink::WebLocalFrame* frame,
-                                          blink::WebDataSource* datasource) {
-  DCHECK(!frame_ || frame_ == frame);
-
+void RenderFrameImpl::DidCreateDataSource(blink::WebDataSource* datasource) {
   bool content_initiated = !pending_navigation_params_.get();
 
   // Make sure any previous redirect URLs end up in our new data source.
@@ -3498,7 +3489,7 @@ void RenderFrameImpl::DidCreateDataSource(blink::WebLocalFrame* frame,
 
   datasource->SetServiceWorkerNetworkProvider(
       ServiceWorkerNetworkProvider::CreateForNavigation(
-          routing_id_, navigation_state->request_params(), frame,
+          routing_id_, navigation_state->request_params(), frame_,
           content_initiated));
 }
 
@@ -3783,9 +3774,7 @@ void RenderFrameImpl::DidCommitProvisionalLoad(
   UpdateEncoding(frame_, frame_->View()->PageEncoding().Utf8());
 }
 
-void RenderFrameImpl::DidCreateNewDocument(blink::WebLocalFrame* frame) {
-  DCHECK(!frame_ || frame_ == frame);
-
+void RenderFrameImpl::DidCreateNewDocument() {
   for (auto& observer : observers_)
     observer.DidCreateNewDocument();
 }
@@ -3815,22 +3804,20 @@ void RenderFrameImpl::DidClearWindowObject() {
     observer.DidClearWindowObject();
 }
 
-void RenderFrameImpl::DidCreateDocumentElement(blink::WebLocalFrame* frame) {
-  DCHECK(!frame_ || frame_ == frame);
-
+void RenderFrameImpl::DidCreateDocumentElement() {
   // Notify the browser about non-blank documents loading in the top frame.
-  GURL url = frame->GetDocument().Url();
+  GURL url = frame_->GetDocument().Url();
   if (url.is_valid() && url.spec() != url::kAboutBlankURL) {
     // TODO(nasko): Check if webview()->mainFrame() is the same as the
-    // frame->tree()->top().
+    // frame_->tree()->top().
     blink::WebFrame* main_frame = render_view_->webview()->MainFrame();
-    if (frame == main_frame) {
+    if (frame_ == main_frame) {
       // For now, don't remember plugin zoom values.  We don't want to mix them
       // with normal web content (i.e. a fixed layout plugin would usually want
       // them different).
       render_view_->Send(new ViewHostMsg_DocumentAvailableInMainFrame(
           render_view_->GetRoutingID(),
-          frame->GetDocument().IsPluginDocument()));
+          frame_->GetDocument().IsPluginDocument()));
     }
   }
 
@@ -3838,9 +3825,7 @@ void RenderFrameImpl::DidCreateDocumentElement(blink::WebLocalFrame* frame) {
     observer.DidCreateDocumentElement();
 }
 
-void RenderFrameImpl::RunScriptsAtDocumentElementAvailable(
-    blink::WebLocalFrame* frame) {
-  DCHECK(!frame_ || frame_ == frame);
+void RenderFrameImpl::RunScriptsAtDocumentElementAvailable() {
   base::WeakPtr<RenderFrameImpl> weak_self = weak_factory_.GetWeakPtr();
 
   MojoBindingsController* mojo_bindings_controller =
@@ -3852,7 +3837,7 @@ void RenderFrameImpl::RunScriptsAtDocumentElementAvailable(
     return;
 
   GetContentClient()->renderer()->RunScriptsAtDocumentStart(this);
-  // Do not use |this| or |frame|! ContentClient might have deleted them by now!
+  // Do not use |this|! ContentClient might have deleted them by now!
 }
 
 void RenderFrameImpl::DidReceiveTitle(const blink::WebString& title,
@@ -4581,8 +4566,7 @@ void RenderFrameImpl::DidChangeScrollOffset() {
     observer.DidChangeScrollOffset();
 }
 
-void RenderFrameImpl::WillInsertBody(blink::WebLocalFrame* frame) {
-  DCHECK(!frame_ || frame_ == frame);
+void RenderFrameImpl::WillInsertBody() {
   Send(new FrameHostMsg_WillInsertBody(routing_id_,
                                        render_view_->GetRoutingID()));
 }
