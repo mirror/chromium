@@ -651,6 +651,24 @@
     },
     {
       "key": {
+        "uuid": "ac981aef_7f0463e3",
+        "filename": "base/containers/vector_buffer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-08-01T01:13:05Z",
+      "side": 1,
+      "message": "I considered the alignment. My reading is that neither MS\u0027s VC nor libc++ implement alignment on top of what malloc provides and I wanted to match that. Malloc provides \"suitably aligned for any scalar type\" (8 bytes on current platforms). Getting more aligned memory than that is relatively heavyweight. If we wanted that we could provide templatized allocator support although I think this is generally overkill.",
+      "parentUuid": "30184ae8_2d576552",
+      "revId": "564a6087290003c9ba5d6d3d03a251b06ff290dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d4b9267_b48123e4",
         "filename": "base/containers/vector_buffer.h",
         "patchSetId": 12
@@ -680,6 +698,24 @@
       "side": 1,
       "message": "\u003e Should this call dtors where appropriate? Or should circular_queue dtor call DestructRange?\n\nping",
       "parentUuid": "8d4b9267_b48123e4",
+      "revId": "564a6087290003c9ba5d6d3d03a251b06ff290dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3ef9612_db58ef2a",
+        "filename": "base/containers/vector_buffer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-08-01T01:13:05Z",
+      "side": 1,
+      "message": "No, the VectorBuffer doesn\u0027t know what\u0027s alive and what\u0027s not. The caller must call DestructRange. This is discussed some in the class-level comment.",
+      "parentUuid": "dcf7d482_db55fe6e",
       "revId": "564a6087290003c9ba5d6d3d03a251b06ff290dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
