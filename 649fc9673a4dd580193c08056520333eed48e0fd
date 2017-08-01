@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "82c5016b_21bde6c9",
+        "filename": "ui/views/controls/button/toggle_button.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-01T23:21:43Z",
+      "side": 1,
+      "message": "Does this handle the case of pressing a space bar while the button is focused and locked? How about a test for both mouse and keyboard input?",
+      "range": {
+        "startLine": 187,
+        "startChar": 9,
+        "endLine": 187,
+        "endChar": 22
+      },
+      "revId": "649fc9673a4dd580193c08056520333eed48e0fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9320c032_3ddb6a8c",
         "filename": "ui/views/controls/button/toggle_button.cc",
         "patchSetId": 4
@@ -90,6 +113,76 @@
         "startChar": 8,
         "endLine": 222,
         "endChar": 16
+      },
+      "revId": "649fc9673a4dd580193c08056520333eed48e0fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "918dd2a7_a3dc5f0f",
+        "filename": "ui/views/controls/button/toggle_button.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-01T23:21:43Z",
+      "side": 1,
+      "message": "\u003e And that\u0027s pretty normal behavior --- we typically don\u0027t show focus\n\u003e indicators when someone is using the mouse to interact.\n\nI\u0027m not sure I would say it like that, it\u0027s more that many controls don\u0027t get focus when you click on them.",
+      "parentUuid": "ae13306b_7565180a",
+      "range": {
+        "startLine": 222,
+        "startChar": 8,
+        "endLine": 222,
+        "endChar": 16
+      },
+      "revId": "649fc9673a4dd580193c08056520333eed48e0fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52c8331b_858818d9",
+        "filename": "ui/views/controls/button/toggle_button.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-01T23:21:43Z",
+      "side": 1,
+      "message": "optional: !foo || !bar is easier to read, but I realize this is subjective, so I leave it to you.",
+      "range": {
+        "startLine": 222,
+        "startChar": 10,
+        "endLine": 222,
+        "endChar": 24
+      },
+      "revId": "649fc9673a4dd580193c08056520333eed48e0fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53577ce9_b6ea9ed2",
+        "filename": "ui/views/controls/button/toggle_button.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-01T23:21:43Z",
+      "side": 1,
+      "message": "This name is rather confusing. How about can_accept_events_ which better mirrors what this is intended for. I would also document when it might be used.",
+      "range": {
+        "startLine": 74,
+        "startChar": 4,
+        "endLine": 74,
+        "endChar": 17
       },
       "revId": "649fc9673a4dd580193c08056520333eed48e0fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
