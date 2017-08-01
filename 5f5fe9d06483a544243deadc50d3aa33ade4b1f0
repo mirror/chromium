@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "236aaf08_2126ab32",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-01T17:53:14Z",
+      "side": 1,
+      "message": "queueing",
+      "range": {
+        "startLine": 161,
+        "startChar": 3,
+        "endLine": 161,
+        "endChar": 12
+      },
+      "revId": "5f5fe9d06483a544243deadc50d3aa33ade4b1f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45f543d3_92424f8c",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-01T17:53:14Z",
+      "side": 1,
+      "message": "Should this be named AdvanceToNextVisibleStep?",
+      "range": {
+        "startLine": 164,
+        "startChar": 35,
+        "endLine": 164,
+        "endChar": 44
+      },
+      "revId": "5f5fe9d06483a544243deadc50d3aa33ade4b1f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e99ae30_dcdb01b0",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-01T17:53:14Z",
+      "side": 1,
+      "message": "I\u0027d move this into the condition of the while loop, as it makes it a bit clearer what the loop is doing.",
+      "range": {
+        "startLine": 169,
+        "startChar": 8,
+        "endLine": 169,
+        "endChar": 44
+      },
+      "revId": "5f5fe9d06483a544243deadc50d3aa33ade4b1f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "653286e7_4849c543",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-01T17:53:14Z",
+      "side": 1,
+      "message": "(optional) This might be a good place to use std::tie.",
+      "range": {
+        "startLine": 173,
+        "startChar": 8,
+        "endLine": 173,
+        "endChar": 34
+      },
+      "revId": "5f5fe9d06483a544243deadc50d3aa33ade4b1f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8383f30_abffe1e4",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-01T17:53:14Z",
+      "side": 1,
+      "message": "This feels very similar to the segment above looking at the current change.\nI haven\u0027t thought through this very thoroughly, but can we dedupe this somehow?",
+      "range": {
+        "startLine": 208,
+        "startChar": 6,
+        "endLine": 210,
+        "endChar": 51
+      },
+      "revId": "5f5fe9d06483a544243deadc50d3aa33ade4b1f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da4b4794_78e6ebab",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-01T17:53:14Z",
+      "side": 1,
+      "message": "current",
+      "range": {
+        "startLine": 212,
+        "startChar": 41,
+        "endLine": 212,
+        "endChar": 47
+      },
+      "revId": "5f5fe9d06483a544243deadc50d3aa33ade4b1f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "904543ea_ff9cdaeb",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-01T17:53:14Z",
+      "side": 1,
+      "message": "The name of this method implies this is only called when the renderer is backgrounded.\n\nTwo options:\n1: have two methods, OnRendererBackgrounded, OnRendererForegrounded\n2: rename to something like OnRendererForegroundedOrBackgrounded, or OnRendererStateChanged, etc.",
+      "range": {
+        "startLine": 53,
+        "startChar": 9,
+        "endLine": 53,
+        "endChar": 31
+      },
+      "revId": "5f5fe9d06483a544243deadc50d3aa33ade4b1f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1958751_474fa92a",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-01T17:53:14Z",
+      "side": 1,
+      "message": "This name doesn\u0027t make sense if |backgrounded| is false.\n\nMaybe transition_time?",
+      "range": {
+        "startLine": 54,
+        "startChar": 48,
+        "endLine": 54,
+        "endChar": 63
+      },
+      "revId": "5f5fe9d06483a544243deadc50d3aa33ade4b1f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "370aeb1f_e92c02fe",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-01T17:53:14Z",
+      "side": 1,
+      "message": "The |word| syntax generally implies that you\u0027re referring to a variable, but there\u0027s no variable with that name here.\n\nPerhaps \"Vector of times when the renderer switched between being in the foreground, and being in the background\"?",
+      "range": {
+        "startLine": 92,
+        "startChar": 29,
+        "endLine": 92,
+        "endChar": 50
+      },
+      "revId": "5f5fe9d06483a544243deadc50d3aa33ade4b1f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93a8ec76_0a53f6c8",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-01T17:53:14Z",
+      "side": 1,
+      "message": "I\u0027m not sure this is needed. This should be fairly evident from the body of the test, right?",
+      "range": {
+        "startLine": 508,
+        "startChar": 0,
+        "endLine": 512,
+        "endChar": 20
+      },
+      "revId": "5f5fe9d06483a544243deadc50d3aa33ade4b1f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c111b58_b0e0e67d",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-01T17:53:14Z",
+      "side": 1,
+      "message": "Maybe add some whitespace between task completions - this is pretty hard to parse right now.",
+      "range": {
+        "startLine": 546,
+        "startChar": 12,
+        "endLine": 546,
+        "endChar": 35
+      },
+      "revId": "5f5fe9d06483a544243deadc50d3aa33ade4b1f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
