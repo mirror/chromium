@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7b50e5c5_98e66f8d",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-01T18:28:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "61e29b04_1cc0b134",
+      "revId": "d9cc48fbc8c05c0ee1833af50df681fd51b669c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec2f1227_b90fa0d6",
         "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
         "patchSetId": 11
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "42e633ee_0054f978",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-01T18:28:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec2f1227_b90fa0d6",
+      "revId": "d9cc48fbc8c05c0ee1833af50df681fd51b669c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3aafc289_85409849",
         "filename": "chrome/browser/ui/views/content_setting_bubble_contents.h",
         "patchSetId": 11
@@ -50,6 +86,24 @@
       "revId": "d9cc48fbc8c05c0ee1833af50df681fd51b669c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cae177d7_e69cbc00",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-01T18:28:14Z",
+      "side": 1,
+      "message": "Done, since only CalculatePreferredSize needs to be exposed I moved OnNativeThemeChanged to be protected.",
+      "parentUuid": "3aafc289_85409849",
+      "revId": "d9cc48fbc8c05c0ee1833af50df681fd51b669c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
