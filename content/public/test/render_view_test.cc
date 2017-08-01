@@ -344,7 +344,7 @@ void RenderViewTest::TearDown() {
   autorelease_pool_.reset(NULL);
 #endif
 
-  leak_detector->CollectGarbageAndReport();
+  leak_detector->CollectGarbage();
 
   blink_platform_impl_.Shutdown();
   platform_->PlatformUninitialize();

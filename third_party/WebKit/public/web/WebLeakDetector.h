@@ -86,7 +86,7 @@ class WebLeakDetector {
   // Garbage collect Blink's heaps and report leak counts.
   // |WebLeakDetectorClient::onLeakDetectionComplete()| is called
   // upon completion.
-  virtual void CollectGarbageAndReport() = 0;
+  virtual void CollectGarbage() = 0;
 };
 
 }  // namespace blink
