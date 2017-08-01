@@ -94,8 +94,8 @@ class MEDIA_BLINK_EXPORT UrlData : public base::RefCounted<UrlData> {
   // Returns true if this resource is fully cached in memory.
   bool FullyCached();
 
-  // Returns our url_index, or nullptr if it's been destroyed.
-  UrlIndex* url_index() const { return url_index_.get(); }
+  // Returns our url_index.
+  UrlIndex* url_index() const { return url_index_; }
 
   // Notifies the url index that this is currently used.
   // The url <-> URLData mapping will be eventually be invalidated if
@@ -148,9 +148,7 @@ class MEDIA_BLINK_EXPORT UrlData : public base::RefCounted<UrlData> {
   int64_t BytesReadFromNetwork() const { return bytes_read_from_network_; }
 
  protected:
-  UrlData(const GURL& url,
-          CORSMode cors_mode,
-          const base::WeakPtr<UrlIndex>& url_index);
+  UrlData(const GURL& url, CORSMode cors_mode, UrlIndex* url_index);
   virtual ~UrlData();
 
  private:
@@ -173,7 +171,7 @@ class MEDIA_BLINK_EXPORT UrlData : public base::RefCounted<UrlData> {
   // Cross-origin access mode.
   const CORSMode cors_mode_;
 
-  base::WeakPtr<UrlIndex> url_index_;
+  UrlIndex* const url_index_;
 
   // Length of resource this url points to. (in bytes)
   int64_t length_;
@@ -253,7 +251,7 @@ class MEDIA_BLINK_EXPORT UrlIndex {
  private:
   friend class UrlData;
   friend class ResourceMultiBuffer;
-  void RemoveUrlDataIfEmpty(const scoped_refptr<UrlData>& url_data);
+  void RemoveUrlData(const scoped_refptr<UrlData>& url_data);
 
   // Virtual so we can override it in tests.
   virtual scoped_refptr<UrlData> NewUrlData(const GURL& url,
@@ -266,9 +264,6 @@ class MEDIA_BLINK_EXPORT UrlIndex {
   // log2 of block size in multibuffer cache. Defaults to kBlockSizeShift.
   // Currently only changed for testing purposes.
   const int block_shift_;
-
- protected:
-  base::WeakPtrFactory<UrlIndex> weak_factory_;
 };
 
 }  // namespace media

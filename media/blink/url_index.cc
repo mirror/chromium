@@ -41,9 +41,7 @@ void ResourceMultiBuffer::OnEmpty() {
   url_data_->OnEmpty();
 }
 
-UrlData::UrlData(const GURL& url,
-                 CORSMode cors_mode,
-                 const base::WeakPtr<UrlIndex>& url_index)
+UrlData::UrlData(const GURL& url, CORSMode cors_mode, UrlIndex* url_index)
     : url_(url),
       have_data_origin_(false),
       cors_mode_(cors_mode),
@@ -150,9 +148,7 @@ bool UrlData::ValidateDataOrigin(const GURL& origin) {
 
 void UrlData::OnEmpty() {
   DCHECK(thread_checker_.CalledOnValidThread());
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::Bind(&UrlIndex::RemoveUrlDataIfEmpty, url_index_,
-                            scoped_refptr<UrlData>(this)));
+  url_index_->RemoveUrlData(this);
 }
 
 bool UrlData::FullyCached() {
@@ -209,14 +205,12 @@ UrlIndex::UrlIndex(blink::WebLocalFrame* frame)
 UrlIndex::UrlIndex(blink::WebLocalFrame* frame, int block_shift)
     : frame_(frame),
       lru_(new MultiBuffer::GlobalLRU(base::ThreadTaskRunnerHandle::Get())),
-      block_shift_(block_shift),
-      weak_factory_(this) {}
+      block_shift_(block_shift) {}
 
 UrlIndex::~UrlIndex() {}
 
-void UrlIndex::RemoveUrlDataIfEmpty(const scoped_refptr<UrlData>& url_data) {
-  if (!url_data->multibuffer()->map().empty())
-    return;
+void UrlIndex::RemoveUrlData(const scoped_refptr<UrlData>& url_data) {
+  DCHECK(url_data->multibuffer()->map().empty());
 
   auto i = by_url_.find(url_data->key());
   if (i != by_url_.end() && i->second == url_data)
@@ -234,7 +228,7 @@ scoped_refptr<UrlData> UrlIndex::GetByUrl(const GURL& gurl,
 
 scoped_refptr<UrlData> UrlIndex::NewUrlData(const GURL& url,
                                             UrlData::CORSMode cors_mode) {
-  return new UrlData(url, cors_mode, weak_factory_.GetWeakPtr());
+  return new UrlData(url, cors_mode, this);
 }
 
 namespace {
