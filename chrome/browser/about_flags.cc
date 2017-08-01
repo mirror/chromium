@@ -1927,10 +1927,6 @@ const FeatureEntry kFeatureEntries[] = {
          switches::kEnableMessageCenterNewStyleNotification,
          switches::kDisableMessageCenterNewStyleNotification)},
 #endif  // !OS_ANDROID
-    {"enable-md-policy-page",
-     flag_descriptions::kEnableMaterialDesignPolicyPageName,
-     flag_descriptions::kEnableMaterialDesignPolicyPageDescription, kOsDesktop,
-     SINGLE_VALUE_TYPE(switches::kEnableMaterialDesignPolicyPage)},
 #if defined(OS_CHROMEOS)
     {"memory-pressure-thresholds",
      flag_descriptions::kMemoryPressureThresholdName,
