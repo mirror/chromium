@@ -22,6 +22,30 @@
       "revId": "177721702e0c4ee2397188c6034596ce915d59fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5dc2d4c_4e87f4e3",
+        "filename": "ios/chrome/browser/ui/ntp/new_tab_page_toolbar_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-01T08:01:27Z",
+      "side": 1,
+      "message": "I always forgot about @dynamic...\nDone.",
+      "parentUuid": "48a99c91_7897025a",
+      "range": {
+        "startLine": 61,
+        "startChar": 12,
+        "endLine": 61,
+        "endChar": 22
+      },
+      "revId": "177721702e0c4ee2397188c6034596ce915d59fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
