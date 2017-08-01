@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9daf2c61_cb788d0a",
+        "filename": "tools/perf/convert_legacy_wpr_archive",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-08-01T18:34:52Z",
+      "side": 1,
+      "message": "These fixes are needed for the script to recognize names like \"dromaeo.cssqueryjquery_000.wpr\" :-)",
+      "revId": "a09e20ff1b5a0bbf37858d733cf280c7be07f92f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70c068bf_3bc4c2ed",
+        "filename": "tools/perf/convert_legacy_wpr_archive",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-08-01T18:34:52Z",
+      "side": 1,
+      "message": "Remind myself: remove this stray debug print",
+      "revId": "a09e20ff1b5a0bbf37858d733cf280c7be07f92f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
