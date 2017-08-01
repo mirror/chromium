@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "97681253_de29c3d5",
+        "filename": "content/browser/loader/async_resource_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-01T19:31:56Z",
+      "side": 1,
+      "message": "to prevent what?",
+      "revId": "a49cb39badde5b92f0d3255987b143638becc381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af74f7cb_5f08a01a",
+        "filename": "content/browser/loader/async_resource_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-01T19:31:56Z",
+      "side": 1,
+      "message": "It\u0027s unfortunate that we need to add a dependency on ChromeBlobStorageContext rather than just directly BlobStorageContext itself. Not sure what alternatives there would be though, as without a reference to the ChromeBlobStorageContext there would be no guarantee the BlobStorageContext would be kept alive. Maybe a WeakPtr\u003cBlobStorageContext\u003e could work?\n\nOf course once mojo blobs are turned on we wouldn\u0027t need either of those anymore, so probably fine to leave like this for now.",
+      "revId": "a49cb39badde5b92f0d3255987b143638becc381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12360a33_8bcf898f",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1585,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-01T19:31:56Z",
+      "side": 1,
+      "message": "Does this branch somehow need the blob_context as well?",
+      "revId": "a49cb39badde5b92f0d3255987b143638becc381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "888a56fe_1de778a2",
         "filename": "content/public/common/resource_request.h",
         "patchSetId": 1
@@ -19,6 +70,23 @@
         "endLine": 137,
         "endChar": 51
       },
+      "revId": "a49cb39badde5b92f0d3255987b143638becc381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10059210_1e7eeeb8",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceResponse.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-01T19:31:56Z",
+      "side": 1,
+      "message": "unused?",
       "revId": "a49cb39badde5b92f0d3255987b143638becc381",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
