@@ -597,6 +597,10 @@ void RendererSchedulerImpl::SetRendererBackgrounded(bool backgrounded) {
     main_thread_only().renderer_suspended = false;
 
   main_thread_only().background_status_changed_at = tick_clock()->NowTicks();
+  seqlock_queueing_time_estimator_.seqlock.WriteBegin();
+  seqlock_queueing_time_estimator_.data.OnRendererBackgrounded(
+      backgrounded, main_thread_only().background_status_changed_at);
+  seqlock_queueing_time_estimator_.seqlock.WriteEnd();
 
   UpdatePolicy();
 
