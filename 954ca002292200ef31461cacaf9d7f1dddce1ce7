@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51741546_31aa795d",
+        "filename": "content/renderer/gpu/render_widget_compositor.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-01T17:42:01Z",
+      "side": 1,
+      "message": "style nit: if you\u0027re handling all the enum cases, don\u0027t put a default case so that the compiler will complain when more enums are added.",
+      "revId": "954ca002292200ef31461cacaf9d7f1dddce1ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd0b47a4_0b6983ad",
+        "filename": "third_party/WebKit/Source/core/paint/FirstMeaningfulPaintDetector.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-01T17:42:01Z",
+      "side": 1,
+      "message": "This is a tiny nit, but it\u0027s not really gpu swap.  The renderer\u0027s \"swap\" (which danakj keeps saying we should rename for exactly this reason) is when the renderer submits the completed compositor frame to the browser via its compositor frame sink.  After that, the compositor frame gets picked up by the cc::Display/cc::SurfaceAggregator, merged together with other compositor frames, and then sent as gl commands to the gpu process, and then some time later the gpu process actually sends those commands along and some time later swaps. The \"swap promise\" event in the renderer captures the raster work that was done, but it\u0027s not really gpu swap per se.",
+      "revId": "954ca002292200ef31461cacaf9d7f1dddce1ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99b2f6d3_c327436c",
+        "filename": "third_party/WebKit/Source/core/paint/FirstMeaningfulPaintDetector.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-01T17:42:01Z",
+      "side": 1,
+      "message": "typo",
+      "revId": "954ca002292200ef31461cacaf9d7f1dddce1ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fb78edb_a06d6bc8",
+        "filename": "third_party/WebKit/Source/core/paint/PaintTiming.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-01T17:42:01Z",
+      "side": 1,
+      "message": "s/GPU //",
+      "revId": "954ca002292200ef31461cacaf9d7f1dddce1ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce43bb51_9066ce68",
+        "filename": "third_party/WebKit/public/platform/WebLayerTreeView.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-01T17:42:01Z",
+      "side": 1,
+      "message": "typo",
+      "revId": "954ca002292200ef31461cacaf9d7f1dddce1ce7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
