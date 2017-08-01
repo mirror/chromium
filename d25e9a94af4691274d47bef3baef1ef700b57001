@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66a81b05_adcbab23",
+        "filename": "ui/views/widget/native_widget_mac_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 928,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-01T21:33:27Z",
+      "side": 1,
+      "message": "\u003d true;\n\n(so the default behavior for other tests doesn\u0027t change)",
+      "range": {
+        "startLine": 928,
+        "startChar": 20,
+        "endLine": 928,
+        "endChar": 25
+      },
+      "revId": "d25e9a94af4691274d47bef3baef1ef700b57001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97e96579_52e5337c",
+        "filename": "ui/views/widget/native_widget_mac_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 1891,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-01T21:33:27Z",
+      "side": 1,
+      "message": "this is probably from my code fragment, but it\u0027s unused and can be removed. (it would be helpful for testing performClose: but not otherwise)",
+      "revId": "d25e9a94af4691274d47bef3baef1ef700b57001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
