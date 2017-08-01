@@ -22,6 +22,30 @@
       "revId": "2d3569ddbb4d00e93de8fd2ad6afa68ff398f694",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c56cc5d1_da99138c",
+        "filename": "tools/clang/scripts/test_tool.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-08-01T07:24:57Z",
+      "side": 1,
+      "message": "Yes, that\u0027s more logical, but I thought I keep downward compatibility.\nWhere are these tests called? If I change that, I would need to updated all its current use cases, but I couldn\u0027t find any. Is it now part of any automatic testing?",
+      "parentUuid": "9682e650_c99d5df9",
+      "range": {
+        "startLine": 122,
+        "startChar": 0,
+        "endLine": 125,
+        "endChar": 50
+      },
+      "revId": "2d3569ddbb4d00e93de8fd2ad6afa68ff398f694",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
