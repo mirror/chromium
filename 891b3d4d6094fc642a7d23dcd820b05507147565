@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f2ff3bf_27a968e7",
+        "filename": "third_party/WebKit/Source/core/timing/Performance.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2017-08-01T19:14:04Z",
+      "side": 1,
+      "message": "Looks like this is not the right place to subscribe long task, since this function is called only when there is an observer.",
+      "revId": "891b3d4d6094fc642a7d23dcd820b05507147565",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
