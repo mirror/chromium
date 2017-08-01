@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0aea166_b26d8403",
+        "filename": "headless/lib/browser/headless_browser_context_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-08-01T06:46:22Z",
+      "side": 1,
+      "message": "nit: Can we make HeadlessBrowserContextImpl::GetDownloadManagerDelegate() return a HeadlessDownloadManagerDelegate*, so that we don\u0027t have to do the casts in HeadlessBrowserImpl?",
+      "range": {
+        "startLine": 217,
+        "startChar": 9,
+        "endLine": 217,
+        "endChar": 32
+      },
+      "revId": "ead80478461edccbe6ce960e8f1f3e64091476cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cd958f6_2742d712",
+        "filename": "headless/lib/browser/headless_browser_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-08-01T06:46:22Z",
+      "side": 1,
+      "message": "nit: doesn\u0027t look like we need this here, let\u0027s remove this line :)",
+      "range": {
+        "startLine": 154,
+        "startChar": 0,
+        "endLine": 154,
+        "endChar": 48
+      },
+      "revId": "ead80478461edccbe6ce960e8f1f3e64091476cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56242b0b_1feb31c2",
+        "filename": "headless/lib/headless_download_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-08-01T06:46:22Z",
+      "side": 1,
+      "message": "nit: Test comment here and for DeniedDefaultDownload below need updating.",
+      "range": {
+        "startLine": 359,
+        "startChar": 3,
+        "endLine": 359,
+        "endChar": 46
+      },
+      "revId": "ead80478461edccbe6ce960e8f1f3e64091476cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
