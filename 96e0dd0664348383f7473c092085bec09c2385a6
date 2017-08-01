@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "d06cee9a_00c06d13",
+        "filename": "content/browser/devtools/protocol/page_handler.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-01T21:46:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4d60afb2_5203bd11",
+      "range": {
+        "startLine": 587,
+        "startChar": 13,
+        "endLine": 587,
+        "endChar": 35
+      },
+      "revId": "96e0dd0664348383f7473c092085bec09c2385a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84141044_947f8609",
         "filename": "content/browser/devtools/protocol_config.json",
         "patchSetId": 8
@@ -91,6 +115,30 @@
       "revId": "96e0dd0664348383f7473c092085bec09c2385a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c6fd57f_a5e1aeb5",
+        "filename": "content/browser/devtools/protocol_config.json",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-01T21:46:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84141044_947f8609",
+      "range": {
+        "startLine": 51,
+        "startChar": 21,
+        "endLine": 51,
+        "endChar": 38
+      },
+      "revId": "96e0dd0664348383f7473c092085bec09c2385a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "177ec501_0cbf0274",
+        "filename": "content/browser/devtools/protocol_config.json",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-01T21:46:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "749b43be_89bdccad",
+      "range": {
+        "startLine": 52,
+        "startChar": 147,
+        "endLine": 52,
+        "endChar": 166
+      },
+      "revId": "96e0dd0664348383f7473c092085bec09c2385a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7b82039_06f0c840",
         "filename": "content/browser/web_contents/web_contents_impl.cc",
         "patchSetId": 8
@@ -134,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "dbd3ac24_c7970f44",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 4560,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-01T21:46:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7b82039_06f0c840",
+      "revId": "96e0dd0664348383f7473c092085bec09c2385a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10c6f30a_d7a7fc33",
         "filename": "content/browser/web_contents/web_contents_impl.cc",
         "patchSetId": 8
@@ -145,6 +235,24 @@
       "writtenOn": "2017-08-01T21:22:00Z",
       "side": 1,
       "message": "Might as well bind to false right here, since you always call it with false.",
+      "revId": "96e0dd0664348383f7473c092085bec09c2385a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "243eed26_51b910c1",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 4591,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-08-01T21:46:01Z",
+      "side": 1,
+      "message": "I wish - I\u0027m reusing Wrapper and it requires certain number of args.",
+      "parentUuid": "10c6f30a_d7a7fc33",
       "revId": "96e0dd0664348383f7473c092085bec09c2385a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
