@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fdcf6705_dc3b843e",
+        "filename": "cc/quads/render_pass.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-08-01T20:41:57Z",
+      "side": 1,
+      "message": "with",
+      "revId": "6104207675bdce09308ad1920a65a1cf90c82691",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9993b7d2_c843a739",
+        "filename": "cc/quads/render_pass.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-08-01T20:41:57Z",
+      "side": 1,
+      "message": "\"so it is drawn without blending\"?",
+      "revId": "6104207675bdce09308ad1920a65a1cf90c82691",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d342ecf6_390f6c76",
+        "filename": "cc/quads/render_pass.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-08-01T20:41:57Z",
+      "side": 1,
+      "message": "const\u0026 for each of these, no need to copy",
+      "revId": "6104207675bdce09308ad1920a65a1cf90c82691",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
