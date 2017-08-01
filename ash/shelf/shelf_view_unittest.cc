@@ -2608,10 +2608,11 @@ TEST_P(AppListButtonInkDropTest, AppListButtonInTabletMode) {
   EXPECT_EQ(new_bounds.height(), old_bounds.height());
   EXPECT_GT(new_bounds.width(), old_bounds.width());
 
-  gfx::Point point_on_circle = app_list_button_->GetAppListButtonCenterPoint();
+  gfx::Point point_on_circle = app_list_button_->GetAppListButtonCenterPoint(
+      false /* called_by_draw_function */);
   views::View::ConvertPointToScreen(app_list_button_, &point_on_circle);
-  gfx::Point point_on_back_button =
-      app_list_button_->GetBackButtonCenterPoint();
+  gfx::Point point_on_back_button = app_list_button_->GetBackButtonCenterPoint(
+      false /* called_by_draw_function */);
   views::View::ConvertPointToScreen(app_list_button_, &point_on_back_button);
 
   // Verify the ink drop state transitions as expected when we press and

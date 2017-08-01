@@ -8,7 +8,9 @@
 #include "ash/shelf/shelf_view.h"
 #include "ash/shell.h"
 #include "ash/test/ash_test_base.h"
+#include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "base/command_line.h"
+#include "base/i18n/rtl.h"
 #include "base/test/scoped_command_line.h"
 #include "chromeos/chromeos_switches.h"
 #include "ui/app_list/presenter/app_list.h"
@@ -40,8 +42,9 @@ class AppListButtonTest : public AshTestBase {
     app_list_button_->OnGestureEvent(event);
   }
 
- private:
   AppListButton* app_list_button_;
+
+ private:
   std::unique_ptr<base::test::ScopedCommandLine> command_line_;
 
   DISALLOW_COPY_AND_ASSIGN(AppListButtonTest);
@@ -84,6 +87,73 @@ TEST_F(VoiceInteractionAppListButtonTest,
   SendGestureEvent(&long_press);
   RunAllPendingInMessageLoop();
   EXPECT_EQ(1u, test_app_list_presenter.voice_session_count());
+}
+
+namespace {
+
+class BackButtonAppListButtonTest : public AppListButtonTest,
+                                    public testing::WithParamInterface<bool> {
+ public:
+  BackButtonAppListButtonTest() : is_rtl_(GetParam()) {}
+  ~BackButtonAppListButtonTest() override {}
+
+  void SetUp() override {
+    original_locale_ = base::i18n::GetConfiguredLocale();
+    if (is_rtl_)
+      base::i18n::SetICUDefaultLocale("he");
+    AppListButtonTest::SetUp();
+    ASSERT_EQ(is_rtl_, base::i18n::IsRTL());
+  }
+
+  void TearDown() override {
+    if (is_rtl_)
+      base::i18n::SetICUDefaultLocale(original_locale_);
+    AppListButtonTest::TearDown();
+  }
+
+ private:
+  bool is_rtl_ = false;
+  std::string original_locale_;
+
+  DISALLOW_COPY_AND_ASSIGN(BackButtonAppListButtonTest);
+};
+
+INSTANTIATE_TEST_CASE_P(
+    /* prefix intentionally left blank due to only one parameterization */,
+    BackButtonAppListButtonTest,
+    testing::Bool());
+
+}  // namespace
+
+// Verify the locations of the back button and app list button.
+TEST_P(BackButtonAppListButtonTest, BackButtonAppListButtonLocation) {
+  Shell::Get()->tablet_mode_controller()->EnableTabletModeWindowManager(true);
+
+  bool called_by_draw_function = false;
+  gfx::Point back_button_centre =
+      app_list_button_->GetBackButtonCenterPoint(called_by_draw_function);
+  gfx::Point app_list_button_centre =
+      app_list_button_->GetAppListButtonCenterPoint(called_by_draw_function);
+
+  // Verify that in rtl, the app list button centre has a smaller x value than
+  // the back button centre and in ltr, the app list button centre has a larger
+  // x value than the back button centre.
+  if (base::i18n::IsRTL())
+    EXPECT_LT(app_list_button_centre.x(), back_button_centre.x());
+  else
+    EXPECT_GT(app_list_button_centre.x(), back_button_centre.x());
+
+  // Verify that when called by the draw function, the app list button centre x
+  // value is always larger than the back button centre x value, regardless of
+  // ltr or rtl.
+  called_by_draw_function = true;
+  back_button_centre =
+      app_list_button_->GetBackButtonCenterPoint(called_by_draw_function);
+  app_list_button_centre =
+      app_list_button_->GetAppListButtonCenterPoint(called_by_draw_function);
+  EXPECT_GT(app_list_button_centre.x(), back_button_centre.x());
+
+  Shell::Get()->tablet_mode_controller()->EnableTabletModeWindowManager(false);
 }
 
 }  // namespace ash
