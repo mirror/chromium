@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "bf7bad6e_3bb1764d",
+        "filename": "components/cdm/browser/media_drm_storage_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-08-01T16:31:02Z",
+      "side": 1,
+      "message": "We need to also test the case where after clearing the origin in the storage, a new origin ID is generated. But this can be done in the next CL when you clear media licenses.",
+      "revId": "d51e8c8a1f344daef63b49796368451b50a7047f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d8258a5_2ab82f15",
+        "filename": "media/base/android/media_drm_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-08-01T16:31:02Z",
+      "side": 1,
+      "message": "It\u0027s a bit confusing looking at this function given we have two create/created callbacks. Add a comment?",
+      "revId": "d51e8c8a1f344daef63b49796368451b50a7047f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "94dc6972_bd120054",
         "filename": "media/base/android/media_drm_bridge.cc",
         "patchSetId": 6
@@ -19,6 +53,23 @@
         "endLine": 339,
         "endChar": 61
       },
+      "revId": "d51e8c8a1f344daef63b49796368451b50a7047f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "666b723f_21d64619",
+        "filename": "media/mojo/interfaces/media_drm_storage.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-08-01T16:31:02Z",
+      "side": 1,
+      "message": "ditto about \"origin\" is not a parameter in this method.",
       "revId": "d51e8c8a1f344daef63b49796368451b50a7047f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
