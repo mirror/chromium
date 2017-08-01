@@ -69,6 +69,24 @@
       "revId": "967f4cebb77ab1b0c429fa74eeb5de9e5bcc09a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b121fcdc_68b913a3",
+        "filename": "extensions/browser/api/networking_private/networking_private_service_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-01T13:01:15Z",
+      "side": 1,
+      "message": "Well IMO it\u0027s just a pointer to a pointer so redundancy is the reason. But you\u0027re the owner of this code and may decide what you find cleaner; I won\u0027t object :)",
+      "parentUuid": "fd76d0c1_b21126a6",
+      "revId": "967f4cebb77ab1b0c429fa74eeb5de9e5bcc09a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
