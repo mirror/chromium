@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d86803c4_b38743cb",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-08-01T15:13:49Z",
+      "side": 1,
+      "message": "just curious, why do you need GetOrigin()?",
+      "range": {
+        "startLine": 585,
+        "startChar": 61,
+        "endLine": 585,
+        "endChar": 72
+      },
+      "revId": "c05098db48a1663fe7aeff8b1ad04982eeef773f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
