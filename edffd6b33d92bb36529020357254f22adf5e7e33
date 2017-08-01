@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e9a599c5_82e065e2",
+        "filename": "components/omnibox/browser/contextual_suggestions_service.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-08-01T02:14:22Z",
+      "side": 1,
+      "message": "I added a comment explaining what |current_url| is and the reasoning for being used by ZeroSuggestProvider.",
+      "parentUuid": "f36970ba_9b6d9931",
+      "range": {
+        "startLine": 69,
+        "startChar": 25,
+        "endLine": 69,
+        "endChar": 0
+      },
+      "revId": "edffd6b33d92bb36529020357254f22adf5e7e33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "653e4bef_81750451",
         "filename": "components/omnibox/browser/omnibox_field_trial.cc",
         "patchSetId": 18
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "8fdccd20_f1dc94fb",
+        "filename": "components/omnibox/browser/omnibox_field_trial.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-08-01T02:14:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "653e4bef_81750451",
+      "range": {
+        "startLine": 160,
+        "startChar": 11,
+        "endLine": 160,
+        "endChar": 56
+      },
+      "revId": "edffd6b33d92bb36529020357254f22adf5e7e33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e95f6e73_f367772f",
         "filename": "components/omnibox/browser/omnibox_field_trial.h",
         "patchSetId": 18
@@ -68,6 +116,30 @@
       "revId": "edffd6b33d92bb36529020357254f22adf5e7e33",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16668cfd_d33256dd",
+        "filename": "components/omnibox/browser/omnibox_field_trial.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-08-01T02:14:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e95f6e73_f367772f",
+      "range": {
+        "startLine": 205,
+        "startChar": 13,
+        "endLine": 205,
+        "endChar": 55
+      },
+      "revId": "edffd6b33d92bb36529020357254f22adf5e7e33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
