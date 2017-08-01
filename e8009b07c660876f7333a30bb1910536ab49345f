@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c99586e_d33e943a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/TargetManager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-01T21:42:17Z",
+      "side": 1,
+      "message": "Let\u0027s just enable network capability in worker unconditionally. Since you are ready to experiment with it, it should be safe enough.",
+      "revId": "e8009b07c660876f7333a30bb1910536ab49345f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
