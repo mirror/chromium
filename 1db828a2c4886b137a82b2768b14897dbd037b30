@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "457b96c2_21c86438",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-01T01:45:26Z",
+      "side": 1,
+      "message": "Should update this comment.\n\n\"using bubble_util\" is odd here, since it now is in bubble util. This comment should also address when this function should be used over others. \n\n\nMore generally, are any of the other functions still useful now that this is public?",
+      "revId": "1db828a2c4886b137a82b2768b14897dbd037b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "121ca614_75a38593",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-01T01:45:26Z",
+      "side": 1,
+      "message": "Should add unit test for this. If it turns out that the other functions are no longer useful, then those should go private, and the existing unit tests should be adapted to use this API.",
+      "revId": "1db828a2c4886b137a82b2768b14897dbd037b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6bf5b3e_e4960aeb",
+        "filename": "ios/showcase/bubble/sc_bubble_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-01T01:45:26Z",
+      "side": 1,
+      "message": "Do we still need this import (and its corresponding build.gn dep)?",
+      "revId": "1db828a2c4886b137a82b2768b14897dbd037b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
