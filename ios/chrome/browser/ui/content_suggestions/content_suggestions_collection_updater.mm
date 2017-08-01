@@ -119,6 +119,11 @@ SectionIdentifier SectionIdentifierForInfo(
   }
 }
 
+BOOL IsFromContentSuggestions(NSInteger sectionIdentifier) {
+  return sectionIdentifier == SectionIdentifierArticles ||
+         sectionIdentifier == SectionIdentifierReadingList;
+}
+
 const CGFloat kNumberOfMostVisitedLines = 2;
 
 }  // namespace
@@ -133,6 +138,9 @@ const CGFloat kNumberOfMostVisitedLines = 2;
 @property(nonatomic, assign) CGFloat collectionWidth;
 // Whether an item of type ItemTypePromo has already been added to the model.
 @property(nonatomic, assign) BOOL promoAdded;
+// All SectionIdentifier from ContentSuggestions.
+@property(nonatomic, strong)
+    NSMutableSet<NSNumber*>* sectionIdentifiersFromContentSuggestions;
 
 @end
 
@@ -143,6 +151,8 @@ const CGFloat kNumberOfMostVisitedLines = 2;
 @synthesize sectionInfoBySectionIdentifier = _sectionInfoBySectionIdentifier;
 @synthesize collectionWidth = _collectionWidth;
 @synthesize promoAdded = _promoAdded;
+@synthesize sectionIdentifiersFromContentSuggestions =
+    _sectionIdentifiersFromContentSuggestions;
 
 - (instancetype)initWithDataSource:
     (id<ContentSuggestionsDataSource>)dataSource {
@@ -151,6 +161,7 @@ const CGFloat kNumberOfMostVisitedLines = 2;
     _promoAdded = NO;
     _dataSource = dataSource;
     _dataSource.dataSink = self;
+    _sectionIdentifiersFromContentSuggestions = [[NSMutableSet alloc] init];
   }
   return self;
 }
@@ -503,17 +514,50 @@ addSuggestionsToModel:(NSArray<CSCollectionViewItem*>*)suggestions
 - (void)addHeaderIfNeeded:(ContentSuggestionsSectionInformation*)sectionInfo {
   NSInteger sectionIdentifier = SectionIdentifierForInfo(sectionInfo);
 
-  if (![self.collectionViewController.collectionViewModel
-          headerForSectionWithIdentifier:sectionIdentifier] &&
+  CSCollectionViewModel* model =
+      self.collectionViewController.collectionViewModel;
+
+  if (![model headerForSectionWithIdentifier:sectionIdentifier] &&
       sectionInfo.title) {
-    CollectionViewTextItem* header =
-        [[CollectionViewTextItem alloc] initWithType:ItemTypeHeader];
-    header.text = sectionInfo.title;
-    header.textColor = [[MDCPalette greyPalette] tint500];
-    [self.collectionViewController.collectionViewModel
-                       setHeader:header
-        forSectionWithIdentifier:sectionIdentifier];
+    BOOL addHeader = YES;
+
+    if (IsFromContentSuggestions(sectionIdentifier)) {
+      addHeader = NO;
+
+      if ([self.sectionIdentifiersFromContentSuggestions
+              containsObject:@(sectionIdentifier)]) {
+        return;
+      }
+      if ([self.sectionIdentifiersFromContentSuggestions count] == 1) {
+        NSNumber* existingSectionIdentifier =
+            [self.sectionIdentifiersFromContentSuggestions anyObject];
+        ContentSuggestionsSectionInformation* existingSectionInfo =
+            self.sectionInfoBySectionIdentifier[existingSectionIdentifier];
+        [model setHeader:[self headerForSectionInfo:existingSectionInfo]
+            forSectionWithIdentifier:[existingSectionIdentifier integerValue]];
+        addHeader = YES;
+      } else if ([self.sectionIdentifiersFromContentSuggestions count] > 1) {
+        addHeader = YES;
+      }
+
+      [self.sectionIdentifiersFromContentSuggestions
+          addObject:@(sectionIdentifier)];
+    }
+
+    if (addHeader) {
+      [model setHeader:[self headerForSectionInfo:sectionInfo]
+          forSectionWithIdentifier:sectionIdentifier];
+    }
   }
+}
+
+- (CollectionViewItem*)headerForSectionInfo:
+    (ContentSuggestionsSectionInformation*)sectionInfo {
+  CollectionViewTextItem* header =
+      [[CollectionViewTextItem alloc] initWithType:ItemTypeHeader];
+  header.text = sectionInfo.title;
+  header.textColor = [[MDCPalette greyPalette] tint500];
+  return header;
 }
 
 // Adds the header for the first section, containing the logo and the omnibox,
