@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26464be7_d701bd8b",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-01T22:08:32Z",
+      "side": 1,
+      "message": "This for loop will force create all NavigationItemImpl objects, which may be too heavy operation for long sessions. Would it make sense to use the following code?:\n\nWKBackForwardListItem* wk_item \u003d GetWKItemAtIndex(index);\nif (GetNavigationItemFromWKItem(wk_item) \u003d\u003d item) {\n  return index;\n}",
+      "range": {
+        "startLine": 262,
+        "startChar": 11,
+        "endLine": 262,
+        "endChar": 16
+      },
+      "revId": "0a46f5a73387782c13c4029cfc751d23fcc156af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
