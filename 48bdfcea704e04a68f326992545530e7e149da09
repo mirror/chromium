@@ -87,6 +87,24 @@
       "revId": "48bdfcea704e04a68f326992545530e7e149da09",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a09720db_d50bfea0",
+        "filename": "third_party/WebKit/Source/core/dom/FirstLetterPseudoElement.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-08-01T08:58:44Z",
+      "side": 1,
+      "message": "Found that we actually have an issue [1] already which is blocking the display:contents issue, so we\u0027re fine :-)\n\n[1] https://crbug.com/717460",
+      "parentUuid": "49999096_1223e5f8",
+      "revId": "48bdfcea704e04a68f326992545530e7e149da09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
