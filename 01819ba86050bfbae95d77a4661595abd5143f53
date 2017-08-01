@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c02041a_ffd3c3ff",
+        "filename": "ios/chrome/browser/ui/favicon/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-01T08:37:16Z",
+      "side": 1,
+      "message": "I am moving it to \"//ios/chrome/browser/ui/util:constraints_ui\" in a CL in CQ. Please be careful when sending this CL to CQ :)",
+      "range": {
+        "startLine": 30,
+        "startChar": 4,
+        "endLine": 30,
+        "endChar": 45
+      },
+      "revId": "01819ba86050bfbae95d77a4661595abd5143f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d9e71ff_272c15bb",
+        "filename": "ios/chrome/content_widget_extension/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-01T08:37:16Z",
+      "side": 1,
+      "message": "Don\u0027t you only need :constraints_ui_util?",
+      "range": {
+        "startLine": 2,
+        "startChar": 9,
+        "endLine": 3,
+        "endChar": 25
+      },
+      "revId": "01819ba86050bfbae95d77a4661595abd5143f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76d8225f_734c79c8",
+        "filename": "ios/chrome/content_widget_extension/content_widget_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-01T08:37:16Z",
+      "side": 1,
+      "message": "You kept the -init. Is it on purpose?",
+      "revId": "01819ba86050bfbae95d77a4661595abd5143f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57309475_22a42096",
+        "filename": "ios/chrome/content_widget_extension/content_widget_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-01T08:37:16Z",
+      "side": 1,
+      "message": "Here and everywhere you use the assumption that there will always have two rows of tiles. Is it something you plan to address when using real data?",
+      "range": {
+        "startLine": 70,
+        "startChar": 13,
+        "endLine": 70,
+        "endChar": 16
+      },
+      "revId": "01819ba86050bfbae95d77a4661595abd5143f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55acf107_24f945ff",
+        "filename": "ios/chrome/content_widget_extension/content_widget_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-01T08:37:16Z",
+      "side": 1,
+      "message": "Nit: add newline.",
+      "revId": "01819ba86050bfbae95d77a4661595abd5143f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
