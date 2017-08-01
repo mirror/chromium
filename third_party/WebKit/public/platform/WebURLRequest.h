@@ -356,6 +356,9 @@ class WebURLRequest {
 
   // https://wicg.github.io/cors-rfc1918/#external-request
   BLINK_PLATFORM_EXPORT bool IsExternalRequest() const;
+  BLINK_PLATFORM_EXPORT WebURL GetCORSPreflightReferrer() const;
+  BLINK_PLATFORM_EXPORT WebReferrerPolicy
+  GetCORSPreflightReferrerPolicy() const;
 
   BLINK_PLATFORM_EXPORT LoadingIPCType GetLoadingIPCType() const;
 

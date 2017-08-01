@@ -207,6 +207,8 @@ class CORE_EXPORT DocumentThreadableLoader final : public ThreadableLoader,
   // up-to-date values from them and this variable, and use it.
   const ResourceLoaderOptions resource_loader_options_;
 
+  bool out_of_blink_cors_;
+
   // Corresponds to the CORS flag in the Fetch spec.
   bool cors_flag_;
   bool suborigin_force_credentials_;
