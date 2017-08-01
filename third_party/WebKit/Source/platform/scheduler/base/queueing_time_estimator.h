@@ -8,6 +8,7 @@
 #include "base/macros.h"
 #include "base/time/time.h"
 #include "platform/PlatformExport.h"
+#include "platform/wtf/Deque.h"
 
 #include <vector>
 
@@ -49,6 +50,8 @@ class PLATFORM_EXPORT QueueingTimeEstimator {
     void OnTopLevelTaskStarted(base::TimeTicks task_start_time);
     void OnTopLevelTaskCompleted(Client* client, base::TimeTicks task_end_time);
     void OnBeginNestedRunLoop();
+    void OnRendererBackgrounded(bool backgrounded,
+                                base::TimeTicks background_time);
 
     // |step_expected_queueing_time| is the expected queuing time of a
     // smaller window of a step's width. By combining these step EQTs through a
@@ -83,12 +86,17 @@ class PLATFORM_EXPORT QueueingTimeEstimator {
     // sliding window's step width, and the number of bins of the circular
     // buffer.
     int steps_per_window;
-    base::TimeTicks window_start_time;
+    base::TimeTicks step_start_time;
     base::TimeTicks current_task_start_time;
     RunningAverage step_queueing_times;
+    // Vector of times when |renderer_backgrounded| changes. The vector contains
+    // a pair where the first element is the time when the change occurred, and
+    // the second element says what the |renderer_backgrounded| changed to.
+    Deque<std::pair<base::TimeTicks, bool>> background_status_changes_;
 
    private:
-    bool TimePastWindowEnd(base::TimeTicks task_end_time);
+    bool CalculateNextVisibleStep();
+    bool TimePastStepEnd(base::TimeTicks task_end_time);
     bool in_nested_message_loop_ = false;
   };
 
@@ -100,6 +108,8 @@ class PLATFORM_EXPORT QueueingTimeEstimator {
   void OnTopLevelTaskStarted(base::TimeTicks task_start_time);
   void OnTopLevelTaskCompleted(base::TimeTicks task_end_time);
   void OnBeginNestedRunLoop();
+  void OnRendererBackgrounded(bool backgrounded,
+                              base::TimeTicks background_time);
 
   // Returns all state except for the current |client_|.
   const State& GetState() const { return state_; }
