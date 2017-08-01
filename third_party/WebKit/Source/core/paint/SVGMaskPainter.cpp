@@ -29,7 +29,8 @@ bool SVGMaskPainter::PrepareEffect(const LayoutObject& object,
 
   if (!RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     context.GetPaintController().CreateAndAppend<BeginCompositingDisplayItem>(
-        object, SkBlendMode::kSrcOver, 1, &visual_rect);
+        object, SkBlendMode::kSrcOver, 1, &visual_rect,
+        ColorFilter::kColorFilterNone, true);
   }
   return true;
 }

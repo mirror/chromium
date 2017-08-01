@@ -108,11 +108,11 @@ void WebDisplayItemListImpl::AppendEndTransformItem() {
   AppendRestore();
 }
 
-void WebDisplayItemListImpl::AppendCompositingItem(
-    float opacity,
-    SkBlendMode xfermode,
-    SkRect* bounds,
-    SkColorFilter* color_filter) {
+void WebDisplayItemListImpl::AppendCompositingItem(float opacity,
+                                                   SkBlendMode xfermode,
+                                                   SkRect* bounds,
+                                                   SkColorFilter* color_filter,
+                                                   bool clip_to_bounds) {
   DCHECK_GE(opacity, 0.f);
   DCHECK_LE(opacity, 1.f);
 
@@ -123,6 +123,10 @@ void WebDisplayItemListImpl::AppendCompositingItem(
   if (xfermode == SkBlendMode::kSrcOver && !color_filter) {
     display_item_list_->StartPaint();
     display_item_list_->push<cc::SaveLayerAlphaOp>(bounds, alpha, false);
+    if (clip_to_bounds && bounds) {
+      display_item_list_->push<cc::ClipRectOp>(*bounds, SkClipOp::kIntersect,
+                                               false);
+    }
     display_item_list_->EndPaintOfPairedBegin();
     return;
   }
@@ -134,6 +138,10 @@ void WebDisplayItemListImpl::AppendCompositingItem(
 
   display_item_list_->StartPaint();
   display_item_list_->push<cc::SaveLayerOp>(bounds, &flags);
+  if (clip_to_bounds && bounds) {
+    display_item_list_->push<cc::ClipRectOp>(*bounds, SkClipOp::kIntersect,
+                                             false);
+  }
   display_item_list_->EndPaintOfPairedBegin();
 }
 
