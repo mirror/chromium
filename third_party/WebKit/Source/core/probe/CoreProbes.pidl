@@ -159,5 +159,5 @@ interface CoreProbes {
   void forcePseudoState([Keep] Element* element, CSSSelector::PseudoType pseudoState, bool* result);
   void shouldWaitForDebuggerOnWorkerStart(ExecutionContext* context, bool* result);
   void shouldForceCORSPreflight(Document*, bool* result);
-  void shouldBlockRequest(ExecutionContext*, const ResourceRequest&, bool* result);
+  void shouldBlockRequest(ExecutionContext*, const KURL&, bool* result);
 }
