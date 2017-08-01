@@ -284,7 +284,7 @@ TEST_F(PasswordControllerJsTest, GetPasswordFormData) {
   NSString* parameter = @"window.document.getElementsByTagName('form')[0]";
   NSString* result = [NSString
       stringWithFormat:
-          @"{\"action\":\"/generic_submit\","
+          @"{\"action\":\"https://chromium.test/generic_submit\","
            "\"method\":\"post\","
            "\"name\":\"np\","
            "\"origin\":\"%s\","
