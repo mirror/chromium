@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "bc035828_a62e9d17",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2207,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-08-01T21:15:03Z",
+      "side": 1,
+      "message": "For the future: please don\u0027t use base::StringPrintf in UMA_HISTOGRAM — strings should be runtime constants (there is a static variable behind all this macros magic. Most probably it won\u0027t work as you expect and in best case it will be very slow).\n\nHere it\u0027ll come naturally when you switch process type to an enum.",
+      "range": {
+        "startLine": 2207,
+        "startChar": 12,
+        "endLine": 2207,
+        "endChar": 24
+      },
+      "revId": "ff4e2e98aba258a2bbbf1d22f6b90a6b5655ae03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1b7c9aab_d187cb43",
         "filename": "third_party/WebKit/public/platform/scheduler/renderer/renderer_scheduler.h",
         "patchSetId": 3
@@ -86,6 +109,53 @@
       "revId": "ff4e2e98aba258a2bbbf1d22f6b90a6b5655ae03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1f8f54af_dc4578f8",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 62998,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-08-01T21:15:03Z",
+      "side": 1,
+      "message": "Sorry, my fault — I have a different CL to increase metric version to 4, but I forgot that I haven\u0027t landed it yet.",
+      "parentUuid": "1c70f37a_726edc0d",
+      "range": {
+        "startLine": 62998,
+        "startChar": 4,
+        "endLine": 62998,
+        "endChar": 12
+      },
+      "revId": "ff4e2e98aba258a2bbbf1d22f6b90a6b5655ae03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "970a0989_5eeb5880",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 97643,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-08-01T21:15:03Z",
+      "side": 1,
+      "message": "Let\u0027s avoid multiplying histograms for no reason — we don\u0027t want full instrumentation (per-minute) for extension renderers, I guess.\n\nLet\u0027s have this following this of suffixes:\n\n- (overall, including extensions)\n- Extension (all extensions)\n- Extension.Foreground\n- Extension.Background\n(the following metrics do not include extensions, we should add a comment for that).\n- Foreground\n- Foreground.AfterFirstMinute\n- Background\n- Background.AfterFirstMinute",
+      "range": {
+        "startLine": 97643,
+        "startChar": 26,
+        "endLine": 97643,
+        "endChar": 43
+      },
+      "revId": "ff4e2e98aba258a2bbbf1d22f6b90a6b5655ae03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
