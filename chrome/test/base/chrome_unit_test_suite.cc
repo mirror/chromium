@@ -9,11 +9,11 @@
 #include "base/path_service.h"
 #include "base/process/process_handle.h"
 #include "build/build_config.h"
-#include "chrome/browser/chrome_content_browser_client.h"
 #include "chrome/browser/ui/webui/chrome_web_ui_controller_factory.h"
 #include "chrome/browser/update_client/chrome_update_query_params_delegate.h"
 #include "chrome/common/chrome_content_client.h"
 #include "chrome/common/chrome_paths.h"
+#include "chrome/test/base/test_chrome_content_browser_client.h"
 #include "chrome/test/base/testing_browser_process.h"
 #include "chrome/utility/chrome_content_utility_client.h"
 #include "components/component_updater/component_updater_paths.h"
@@ -45,9 +45,9 @@ class ChromeUnitTestSuiteInitializer : public testing::EmptyTestEventListener {
   virtual ~ChromeUnitTestSuiteInitializer() {}
 
   void OnTestStart(const testing::TestInfo& test_info) override {
-    content_client_.reset(new ChromeContentClient);
+    content_client_.reset(new ChromeContentClient());
     content::SetContentClient(content_client_.get());
-    browser_content_client_.reset(new ChromeContentBrowserClient());
+    browser_content_client_.reset(new TestChromeContentBrowserClient());
     content::SetBrowserClientForTesting(browser_content_client_.get());
     utility_content_client_.reset(new ChromeContentUtilityClient());
     content::SetUtilityClientForTesting(utility_content_client_.get());
