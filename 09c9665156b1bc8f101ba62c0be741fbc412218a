@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cbd20b69_a7e1c152",
+        "filename": "content/browser/cache_storage/cache_storage_cache.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-01T17:23:22Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4826759b_4863626b",
+      "range": {
+        "startLine": 253,
+        "startChar": 33,
+        "endLine": 253,
+        "endChar": 40
+      },
+      "revId": "09c9665156b1bc8f101ba62c0be741fbc412218a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5a56711_4074b068",
         "filename": "content/browser/cache_storage/cache_storage_cache_unittest.cc",
         "patchSetId": 14
@@ -39,6 +63,24 @@
       "revId": "09c9665156b1bc8f101ba62c0be741fbc412218a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f7416ac_076dd246",
+        "filename": "content/browser/cache_storage/cache_storage_cache_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-01T17:23:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f5a56711_4074b068",
+      "revId": "09c9665156b1bc8f101ba62c0be741fbc412218a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "d19ec5a8_738bc39c",
+        "filename": "content/common/service_worker/service_worker_fetch_request_struct_traits.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-01T17:23:22Z",
+      "side": 1,
+      "message": "I\u0027m not sure how it could work. We can\u0027t serialize a message pipe while keeping that same message pipe in the content::ServiceWorkerFetchRequest, so either this needs to be able to modify the |request| (which it can\u0027t because currently all over the place SWFetchRequest is passed around as const-ref), or as is done now we create a new message pipe by calling Clone on the Blob and return that pipe.",
+      "parentUuid": "dd605ad7_74f82c8b",
+      "range": {
+        "startLine": 122,
+        "startChar": 9,
+        "endLine": 122,
+        "endChar": 32
+      },
+      "revId": "09c9665156b1bc8f101ba62c0be741fbc412218a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "578d301f_ab993d2c",
         "filename": "content/renderer/cache_storage/cache_storage_dispatcher.cc",
         "patchSetId": 14
@@ -85,6 +151,30 @@
       "revId": "09c9665156b1bc8f101ba62c0be741fbc412218a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad783f34_a856304b",
+        "filename": "content/renderer/cache_storage/cache_storage_dispatcher.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 659,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-01T17:23:22Z",
+      "side": 1,
+      "message": "Yeah... Even though InterfacePtrInfo\u003cT\u003e doesn\u0027t actually depend on T in any way this is currently the simplest way to convert between chrome and blink variants. If we weren\u0027t going to (hopefully) onion-soup everything it might make sense to change the binding so that the blink and chromium versions use the same InterfacePtrInfo types, making these conversions a bit simpler, but not sure if that is worth it.",
+      "parentUuid": "578d301f_ab993d2c",
+      "range": {
+        "startLine": 657,
+        "startChar": 0,
+        "endLine": 659,
+        "endChar": 78
+      },
+      "revId": "09c9665156b1bc8f101ba62c0be741fbc412218a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "7e773235_85edb592",
+        "filename": "content/renderer/service_worker/service_worker_context_client.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-01T17:23:22Z",
+      "side": 1,
+      "message": "Yeah, as I found out in a later CL I got really lucky in that this here compiled at all. In general it is certainly not safe to include blink bindings in content or vice versa. So unless we do change the bindings code to have a shared InterfacePtrInfo for both variants probably changing the blink public API to deal with raw ScopedMessagePipeHandles is the only way this will really work.",
+      "parentUuid": "2f370701_9f862208",
+      "range": {
+        "startLine": 223,
+        "startChar": 22,
+        "endLine": 223,
+        "endChar": 56
+      },
+      "revId": "09c9665156b1bc8f101ba62c0be741fbc412218a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ac889f6_b0ddb4d4",
         "filename": "third_party/WebKit/public/BUILD.gn",
         "patchSetId": 14
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "8fc4ed6f_25bfaffd",
+        "filename": "third_party/WebKit/public/BUILD.gn",
+        "patchSetId": 14
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-01T17:23:22Z",
+      "side": 1,
+      "message": "Yeah, the only reason this was here was to make gn check happy. But now I changed the blink public API to just deal with raw ScopedMessagePipeHandle of course this dep isn\u0027t needed anymore either.\n\nAlthough, if I want to still use the bindings in #if INSIDE_BLINK for some of the public classes, I still need either this dependency or use // nogncheck on the include. Not sure what is worse...",
+      "parentUuid": "9ac889f6_b0ddb4d4",
+      "range": {
+        "startLine": 662,
+        "startChar": 33,
+        "endLine": 662,
+        "endChar": 60
+      },
+      "revId": "09c9665156b1bc8f101ba62c0be741fbc412218a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da689480_167a1585",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerRequest.h",
         "patchSetId": 14
@@ -154,6 +292,30 @@
       "revId": "09c9665156b1bc8f101ba62c0be741fbc412218a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f52c4e4_c870d609",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerRequest.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-01T17:23:22Z",
+      "side": 1,
+      "message": "Yeah, that seems like the only sensible approach, so I\u0027ve done that now.",
+      "parentUuid": "da689480_167a1585",
+      "range": {
+        "startLine": 62,
+        "startChar": 15,
+        "endLine": 62,
+        "endChar": 49
+      },
+      "revId": "09c9665156b1bc8f101ba62c0be741fbc412218a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
