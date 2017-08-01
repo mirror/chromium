@@ -84,6 +84,7 @@
 #include "core/probe/CoreProbes.h"
 #include "core/timing/DOMWindowPerformance.h"
 #include "core/timing/Performance.h"
+#include "core/timing/PerformanceObserver.h"
 #include "platform/EventDispatchForbiddenScope.h"
 #include "platform/Histogram.h"
 #include "platform/WebFrameScheduler.h"
@@ -474,6 +475,15 @@ void LocalDOMWindow::FrameDestroyed() {
 void LocalDOMWindow::RegisterEventListenerObserver(
     EventListenerObserver* event_listener_observer) {
   event_listener_observers_.insert(event_listener_observer);
+}
+
+void LocalDOMWindow::AddPerformanceObserver(PerformanceObserver* observer) {
+  performance_observers_.insert(
+      TraceWrapperMember<PerformanceObserver>(this, observer));
+}
+
+void LocalDOMWindow::RemovePerformanceObserver(PerformanceObserver* observer) {
+  performance_observers_.erase(observer);
 }
 
 void LocalDOMWindow::Reset() {
@@ -1640,6 +1650,7 @@ DEFINE_TRACE(LocalDOMWindow) {
   visitor->Trace(post_message_timers_);
   visitor->Trace(visualViewport_);
   visitor->Trace(event_listener_observers_);
+  visitor->Trace(performance_observers_);
   DOMWindow::Trace(visitor);
   Supplementable<LocalDOMWindow>::Trace(visitor);
 }
@@ -1647,6 +1658,8 @@ DEFINE_TRACE(LocalDOMWindow) {
 DEFINE_TRACE_WRAPPERS(LocalDOMWindow) {
   visitor->TraceWrappers(custom_elements_);
   visitor->TraceWrappers(modulator_);
+  for (const auto& observer : performance_observers_)
+    visitor->TraceWrappers(observer);
   DOMWindow::TraceWrappers(visitor);
 }
 
