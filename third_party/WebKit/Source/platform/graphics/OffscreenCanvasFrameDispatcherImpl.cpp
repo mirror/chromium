@@ -454,9 +454,16 @@ void OffscreenCanvasFrameDispatcherImpl::DispatchFrame(
     change_size_for_next_commit_ = false;
   }
 
+  auto hit_test_region_list = viz::mojom::blink::HitTestRegionList::New();
+  hit_test_region_list->surface_id =
+      viz::SurfaceId(frame_sink_id_, current_local_surface_id_);
+  hit_test_region_list->flags = viz::mojom::blink::kHitTestMine;
+  hit_test_region_list->bounds->width = width_;
+  hit_test_region_list->bounds->height = height_;
+
   pending_compositor_frames_++;
   sink_->SubmitCompositorFrame(current_local_surface_id_, std::move(frame),
-                               nullptr);
+                               std::move(hit_test_region_list));
 }
 
 void OffscreenCanvasFrameDispatcherImpl::DidReceiveCompositorFrameAck(
