@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a3994fd_59fa7c26",
+        "filename": "content/common/feature_policy/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-01T18:39:16Z",
+      "side": 1,
+      "message": "I missed this the first time -- the usual way to code-format a whole block in markdown syntax is to indent every line with four spaces, like\n\n    Feature-Policy: {“vibrate”: [],\n                     “geolocation”: [“self”, “https://example.com”],\n                     “camera”: [“*”]}\n\nAlso we should mention here that this is broken into multiple lines for clarity, the actual header should be all on one line.\n\n(And also, can you replace the “ and ” characters with plain double-quotes (\")? The UTF-8 characters aren\u0027t valid for the actual header syntax.)",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 3
+      },
+      "revId": "d68b8aed688944c3bed468460136de959aadd09c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6403445_a5a9e355",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/feature-policy/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-01T18:39:16Z",
+      "side": 1,
+      "message": "I think this should be /content/common/feature_policy/README.md here",
+      "range": {
+        "startLine": 5,
+        "startChar": 26,
+        "endLine": 5,
+        "endChar": 50
+      },
+      "revId": "d68b8aed688944c3bed468460136de959aadd09c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
