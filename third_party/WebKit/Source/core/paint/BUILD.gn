@@ -218,6 +218,14 @@ blink_core_sources("paint") {
     "ViewPaintInvalidator.h",
     "ViewPainter.cpp",
     "ViewPainter.h",
+    "ng/NGBlockFlowPainter.cpp",
+    "ng/NGBlockFlowPainter.h",
+    "ng/NGBoxFragmentPainter.cpp",
+    "ng/NGBoxFragmentPainter.h",
+    "ng/NGTextFragmentPainter.cpp",
+    "ng/NGTextFragmentPainter.h",
+    "ng/NGTextPainter.cpp",
+    "ng/NGTextPainter.h",
   ]
 
   configs += [
