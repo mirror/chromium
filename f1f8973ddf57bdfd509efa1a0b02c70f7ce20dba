@@ -449,6 +449,30 @@
     },
     {
       "key": {
+        "uuid": "15469976_3278d339",
+        "filename": "components/cryptauth/device_capability_manager.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-01T23:31:34Z",
+      "side": 1,
+      "message": "I think you forgot to complete this one.",
+      "parentUuid": "55aab33e_4e3b6896",
+      "range": {
+        "startLine": 167,
+        "startChar": 0,
+        "endLine": 167,
+        "endChar": 62
+      },
+      "revId": "f1f8973ddf57bdfd509efa1a0b02c70f7ce20dba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "711f8fa5_08c29ccc",
         "filename": "components/cryptauth/device_capability_manager.cc",
         "patchSetId": 9
