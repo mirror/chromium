@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ccf84c30_cc592564",
+        "filename": "remoting/host/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-08-01T00:29:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8937073d_b862a0c5",
+      "range": {
+        "startLine": 140,
+        "startChar": 5,
+        "endLine": 140,
+        "endChar": 26
+      },
+      "revId": "f10d382a07a96a29438b38aa5eeb02641c668251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d86a0e69_0d655e02",
         "filename": "remoting/host/desktop_environment_options.cc",
         "patchSetId": 2
@@ -71,6 +95,54 @@
     },
     {
       "key": {
+        "uuid": "d1fe78a0_1ec31460",
+        "filename": "remoting/host/desktop_environment_options.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-08-01T00:29:13Z",
+      "side": 1,
+      "message": "Yes, whether DX capturer is enabled or not depends on various facts, include also how many applications are using related APIs. WebRTC/DesktopCapturer will take care of all the details. But here the check only ensures it won\u0027t crash the binary.",
+      "parentUuid": "d86a0e69_0d655e02",
+      "range": {
+        "startLine": 48,
+        "startChar": 6,
+        "endLine": 48,
+        "endChar": 24
+      },
+      "revId": "f10d382a07a96a29438b38aa5eeb02641c668251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d5d9cd44_672c74af",
+        "filename": "remoting/host/desktop_environment_options.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-08-01T00:29:13Z",
+      "side": 1,
+      "message": "I think return value is sufficient: a string matching seems not straightforward.",
+      "parentUuid": "304ab4f3_11278a5a",
+      "range": {
+        "startLine": 48,
+        "startChar": 22,
+        "endLine": 48,
+        "endChar": 24
+      },
+      "revId": "f10d382a07a96a29438b38aa5eeb02641c668251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "78f54c18_2e525967",
         "filename": "remoting/host/evaluate_d3d_win.cc",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "c41f015c_33ad550b",
+        "filename": "remoting/host/evaluate_d3d_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-08-01T00:29:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78f54c18_2e525967",
+      "range": {
+        "startLine": 29,
+        "startChar": 39,
+        "endLine": 29,
+        "endChar": 52
+      },
+      "revId": "f10d382a07a96a29438b38aa5eeb02641c668251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6c3cdaa_6c5cd1db",
         "filename": "remoting/host/evaluate_d3d_win.cc",
         "patchSetId": 2
@@ -105,6 +201,30 @@
       "writtenOn": "2017-07-31T19:17:12Z",
       "side": 1,
       "message": "Any reason not to make this (and other strings) a constexpr string in the file-scoped namespace ?",
+      "range": {
+        "startLine": 34,
+        "startChar": 17,
+        "endLine": 34,
+        "endChar": 35
+      },
+      "revId": "f10d382a07a96a29438b38aa5eeb02641c668251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "673122a6_58b70c45",
+        "filename": "remoting/host/evaluate_d3d_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-08-01T00:29:13Z",
+      "side": 1,
+      "message": "I believe this string will be used only once in the host binary.",
+      "parentUuid": "e6c3cdaa_6c5cd1db",
       "range": {
         "startLine": 34,
         "startChar": 17,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "99659538_7893a25e",
+        "filename": "remoting/host/evaluate_d3d_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-08-01T00:29:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc19f541_1e10848c",
+      "range": {
+        "startLine": 46,
+        "startChar": 18,
+        "endLine": 46,
+        "endChar": 28
+      },
+      "revId": "f10d382a07a96a29438b38aa5eeb02641c668251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "416e25ea_13a6439e",
         "filename": "remoting/host/evaluate_d3d_win.cc",
         "patchSetId": 2
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "245f98dc_94110898",
+        "filename": "remoting/host/evaluate_d3d_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-08-01T00:29:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "416e25ea_13a6439e",
+      "range": {
+        "startLine": 49,
+        "startChar": 18,
+        "endLine": 49,
+        "endChar": 28
+      },
+      "revId": "f10d382a07a96a29438b38aa5eeb02641c668251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d67abc2e_663a03c7",
         "filename": "remoting/host/evaluate_d3d_win.cc",
         "patchSetId": 2
@@ -174,6 +342,30 @@
       "writtenOn": "2017-07-31T19:17:12Z",
       "side": 1,
       "message": "If I am reading this correctly, the output string for a machine which supports DX 12.0 will look like:\n\"\nMinD3DGT10\nMinD3DGT11\nMinD3DGT12\n\"\n\nWhy not just include the actual minimum (flip the checks above and convert to an if / else if check)?\n\nThis is probably not something to change in this C, but I saw the same pattern for the OS version and it seems odd to include the additional levels.",
+      "range": {
+        "startLine": 51,
+        "startChar": 29,
+        "endLine": 51,
+        "endChar": 31
+      },
+      "revId": "f10d382a07a96a29438b38aa5eeb02641c668251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a8c9b6d_2dea8c9b",
+        "filename": "remoting/host/evaluate_d3d_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-08-01T00:29:13Z",
+      "side": 1,
+      "message": "Discussed offline: host attributes are a set of strings only to reduce the complexity (different matching approaches) and specification (to understand version in major and minor format) in client side. I.e. client only matches these strings with the ones in experiment configuration file without needing to understand the meaning. We may discuss a better approach, e.g. define attribute matchers in the configuration. But it\u0027s out of the scope of this change.",
+      "parentUuid": "d67abc2e_663a03c7",
       "range": {
         "startLine": 51,
         "startChar": 29,
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "bcaab66d_8cc5881d",
+        "filename": "remoting/host/evaluate_d3d_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-08-01T00:29:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "915ab033_010d7519",
+      "range": {
+        "startLine": 14,
+        "startChar": 11,
+        "endLine": 15,
+        "endChar": 8
+      },
+      "revId": "f10d382a07a96a29438b38aa5eeb02641c668251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f219e3c9_d2238293",
         "filename": "remoting/host/evaluate_d3d_win.h",
         "patchSetId": 2
@@ -229,6 +445,30 @@
       "revId": "f10d382a07a96a29438b38aa5eeb02641c668251",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32261d09_d3917214",
+        "filename": "remoting/host/evaluate_d3d_win.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-08-01T00:29:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f219e3c9_d2238293",
+      "range": {
+        "startLine": 18,
+        "startChar": 51,
+        "endLine": 18,
+        "endChar": 60
+      },
+      "revId": "f10d382a07a96a29438b38aa5eeb02641c668251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "383bb20b_e6e3a13b",
+        "filename": "remoting/host/host_attributes.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-08-01T00:29:13Z",
+      "side": 1,
+      "message": "StringPiece won\u0027t copy the data, i.e.\n------------------------\nstd::string combined;\nfor (const auto\u0026 single : base::SplitString(results ... ) {\n  result.push_back(single);\n}\n------------------------\nwill silently fail.\n\nThe comment has been removed (as long as you have seen it already to explain the change of the type of |result|): changing its type will trigger test failures anyway.",
+      "parentUuid": "ce96c4c3_b8dc575b",
+      "range": {
+        "startLine": 91,
+        "startChar": 2,
+        "endLine": 91,
+        "endChar": 75
+      },
+      "revId": "f10d382a07a96a29438b38aa5eeb02641c668251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d3b07d0_25a3a04f",
         "filename": "remoting/host/host_attributes.cc",
         "patchSetId": 2
@@ -278,6 +542,30 @@
     },
     {
       "key": {
+        "uuid": "959ce220_4deb6d8b",
+        "filename": "remoting/host/host_attributes.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-08-01T00:29:13Z",
+      "side": 1,
+      "message": "I have added comments in both GetD3DCapability() and GetHostAttributes().",
+      "parentUuid": "8d3b07d0_25a3a04f",
+      "range": {
+        "startLine": 105,
+        "startChar": 4,
+        "endLine": 105,
+        "endChar": 20
+      },
+      "revId": "f10d382a07a96a29438b38aa5eeb02641c668251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6511680_198bdd3a",
         "filename": "remoting/host/host_attributes_unittest.cc",
         "patchSetId": 2
@@ -289,6 +577,30 @@
       "writtenOn": "2017-07-31T19:17:12Z",
       "side": 1,
       "message": "Should \u0027kNoDirectXCapturer\u0027 be exposed via evaluate_d3d.h?\n\nIf not, then we should add a comment in evaluate_d3d.cc to indicate that this string is used in unit tests w/o compilation guarantees (i.e. must be updated in both places).",
+      "range": {
+        "startLine": 40,
+        "startChar": 27,
+        "endLine": 40,
+        "endChar": 47
+      },
+      "revId": "f10d382a07a96a29438b38aa5eeb02641c668251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d7040d5_897c24b8",
+        "filename": "remoting/host/host_attributes_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-08-01T00:29:13Z",
+      "side": 1,
+      "message": "I think exporting the string for test purpose seems not really necessary: as long as the test would fail if the string has been unexpectedly changed, it should be fine.",
+      "parentUuid": "c6511680_198bdd3a",
       "range": {
         "startLine": 40,
         "startChar": 27,
@@ -321,6 +633,30 @@
       "revId": "f10d382a07a96a29438b38aa5eeb02641c668251",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f4647cf_fd50ff95",
+        "filename": "remoting/host/switches.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-08-01T00:29:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c484b16_84322aee",
+      "range": {
+        "startLine": 31,
+        "startChar": 29,
+        "endLine": 31,
+        "endChar": 32
+      },
+      "revId": "f10d382a07a96a29438b38aa5eeb02641c668251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
