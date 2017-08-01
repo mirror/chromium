@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b818fa2c_72e9fdaf",
+        "filename": "services/resource_coordinator/coordination_unit/process_coordination_unit_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-08-01T22:54:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f1303ee_59f054ce",
+      "range": {
+        "startLine": 66,
+        "startChar": 13,
+        "endLine": 66,
+        "endChar": 56
+      },
+      "revId": "f99acde0357410242cd1d5eddc1874c461ccd9b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a4bff42_e7a51001",
         "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl_unittest.cc",
         "patchSetId": 17
@@ -45,6 +69,30 @@
       "revId": "f99acde0357410242cd1d5eddc1874c461ccd9b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2146d7e_508c4e47",
+        "filename": "services/resource_coordinator/coordination_unit/tab_signal_generator_impl_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-08-01T22:54:07Z",
+      "side": 1,
+      "message": "Done. I copied this namespace from web_contents_coordination_unit_impl_unittest.cc which I assumed a preferred style.",
+      "parentUuid": "7a4bff42_e7a51001",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 11
+      },
+      "revId": "f99acde0357410242cd1d5eddc1874c461ccd9b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b0f1afce_c9a926bf",
+        "filename": "services/resource_coordinator/coordination_unit/web_contents_coordination_unit_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-08-01T22:54:07Z",
+      "side": 1,
+      "message": "Ack. I will change this to DCHECK_LE(num_processes_per_frame, 1u), i.e., a frame should not belong to more than 1 process. After a frame CU is created, it might have no associated processes until AddChild is called in ResourceCoordinatorWebContentsObserver::DidFinishNavigation(). Moreover, a frame CU is bound to a RenderFrameHost which belongs to at most one RenderProcessHost because RenderFrameHost has a const RenderProcessHost*.",
+      "parentUuid": "fb730dcf_c4f73a73",
+      "range": {
+        "startLine": 83,
+        "startChar": 2,
+        "endLine": 83,
+        "endChar": 45
+      },
+      "revId": "f99acde0357410242cd1d5eddc1874c461ccd9b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f4ea350_83b9e81c",
         "filename": "services/resource_coordinator/coordination_unit/web_contents_coordination_unit_impl.cc",
         "patchSetId": 17
@@ -91,6 +163,30 @@
       "revId": "f99acde0357410242cd1d5eddc1874c461ccd9b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f770b3ed_1fbaf79b",
+        "filename": "services/resource_coordinator/coordination_unit/web_contents_coordination_unit_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-08-01T22:54:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f4ea350_83b9e81c",
+      "range": {
+        "startLine": 116,
+        "startChar": 8,
+        "endLine": 116,
+        "endChar": 47
+      },
+      "revId": "f99acde0357410242cd1d5eddc1874c461ccd9b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -129,6 +225,30 @@
       "side": 1,
       "message": "+1",
       "parentUuid": "9186ecf5_294a645c",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 49
+      },
+      "revId": "f99acde0357410242cd1d5eddc1874c461ccd9b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4e7fe19_60e376d4",
+        "filename": "services/resource_coordinator/coordination_unit/web_contents_coordination_unit_impl.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-08-01T22:54:07Z",
+      "side": 1,
+      "message": "Done. I did think about return bool but I felt this style was not preferred in Chrome after reading some changes in resource_handler.h.",
+      "parentUuid": "cc64a590_583fd427",
       "range": {
         "startLine": 31,
         "startChar": 2,
