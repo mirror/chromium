@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfe8d13b_ef4979d9",
+        "filename": "net/url_request/url_request.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 947,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-01T12:30:56Z",
+      "side": 1,
+      "message": "I\u0027m not sure if we should keep this branch any more. It was introduced before the cross origin redirect handling below was introduced. If you are fine with removing it, I\u0027ll happily do that.\n\nSee also: https://codereview.chromium.org/1017583002/",
+      "range": {
+        "startLine": 947,
+        "startChar": 20,
+        "endLine": 947,
+        "endChar": 24
+      },
+      "revId": "c2f3054dca958ecd8ec96f0d1892e9a88530741d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
