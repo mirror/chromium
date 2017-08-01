@@ -15,7 +15,7 @@ namespace payments {
 
 // URL payment method identifiers for iOS payment apps.
 const char kBobpayPaymentMethodIdentifier[] =
-    "https://emerald-eon.appspot.com/bobpay";
+    "https://emerald-eon.appspot.com/alicepay";
 
 // Scheme names for iOS payment apps.
 const char kBobpaySchemeName[] = "bobpay://";
