@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "cd88c3e1_261b943d",
+        "filename": "third_party/WebKit/Source/core/editing/FrameSelection.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-08-01T01:56:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4ffe640_4715949f",
+      "revId": "bb18c20033199688ef4f6fc73dcd2b36f69c2191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf6e068b_b60b201e",
         "filename": "third_party/WebKit/Source/core/layout/LayoutObject.cpp",
         "patchSetId": 6
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "024c9076_ab1afb96",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObject.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2622,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-08-01T01:56:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf6e068b_b60b201e",
+      "revId": "bb18c20033199688ef4f6fc73dcd2b36f69c2191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d48a7d0_10515bf2",
         "filename": "third_party/WebKit/Source/core/layout/LayoutObject.cpp",
         "patchSetId": 6
@@ -64,6 +100,24 @@
       "writtenOn": "2017-07-31T09:50:22Z",
       "side": 1,
       "message": "Can we use |SelectionState() \u003d\u003d SelectionState::kEnd || SelectionStart() \u003d\u003d kStartAndEnd || SetSeletionState() \u003d\u003d kStart|?",
+      "revId": "bb18c20033199688ef4f6fc73dcd2b36f69c2191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1506e719_8b74cab4",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObject.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2625,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-08-01T01:56:36Z",
+      "side": 1,
+      "message": "|LayoutObject::IsSelectionBorder()| just does that but it was introduced to release start/end\n LayoutObject in LayoutSelection. Since |setSelectionState()| is overrided(see LayoutText), it\n is not guaranteed that |selectionState() \u003d\u003d SelectionState::kEnd| is always referred by \nLayoutSelection.\nThus asking LayoutSelection directly is more straightforward.",
+      "parentUuid": "8d48a7d0_10515bf2",
       "revId": "bb18c20033199688ef4f6fc73dcd2b36f69c2191",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
