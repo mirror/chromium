@@ -1,3 +1,4 @@
+
 /*
  * Copyright (c) 2008, Google Inc. All rights reserved.
  * Copyright (C) 2009 Dirk Schulze <krit@webkit.org>
@@ -65,6 +66,7 @@
 #include "third_party/skia/include/encode/SkJpegEncoder.h"
 #include "third_party/skia/include/gpu/GrContext.h"
 #include "third_party/skia/include/gpu/gl/GrGLTypes.h"
+#include "v8/include/v8.h"
 
 namespace blink {
 
@@ -337,7 +339,8 @@ bool ImageBuffer::GetImageData(Multiply multiplied,
   CheckedNumeric<int> data_size = bytes_per_pixel;
   data_size *= rect.Width();
   data_size *= rect.Height();
-  if (!data_size.IsValid())
+  if (!data_size.IsValid() ||
+      data_size.ValueOrDie() > v8::TypedArray::kMaxLength)
     return false;
 
   if (!IsSurfaceValid()) {
