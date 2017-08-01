@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ad788ea_fa105461",
+        "filename": "components/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1104794
+      },
+      "writtenOn": "2017-08-01T18:33:57Z",
+      "side": 1,
+      "message": "nit: may be remote not and reverse the condition",
+      "range": {
+        "startLine": 400,
+        "startChar": 6,
+        "endLine": 400,
+        "endChar": 7
+      },
+      "revId": "41335c1e8ca6e954fe1358d85b50730dd619b159",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
