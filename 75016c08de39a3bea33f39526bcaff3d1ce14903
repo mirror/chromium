@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0bf53c7e_516b2482",
+        "filename": "components/autofill/content/common/autofill_driver.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-01T15:04:17Z",
+      "side": 1,
+      "message": "Please return back comment to this method.",
+      "range": {
+        "startLine": 117,
+        "startChar": 2,
+        "endLine": 117,
+        "endChar": 26
+      },
+      "revId": "75016c08de39a3bea33f39526bcaff3d1ce14903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a4d29c8_c2ab5f55",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1746,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-01T15:04:17Z",
+      "side": 1,
+      "message": "It looks like simple \"return Can...\" is better.",
+      "range": {
+        "startLine": 1746,
+        "startChar": 7,
+        "endLine": 1746,
+        "endChar": 10
+      },
+      "revId": "75016c08de39a3bea33f39526bcaff3d1ce14903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6c12789_c98fcc11",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-01T15:04:17Z",
+      "side": 1,
+      "message": "Can you write some comment?",
+      "range": {
+        "startLine": 117,
+        "startChar": 7,
+        "endLine": 117,
+        "endChar": 31
+      },
+      "revId": "75016c08de39a3bea33f39526bcaff3d1ce14903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ee53cd7_56c8202d",
+        "filename": "components/password_manager/core/browser/password_autofill_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-01T15:04:17Z",
+      "side": 1,
+      "message": "Could you please write some comment?",
+      "range": {
+        "startLine": 68,
+        "startChar": 7,
+        "endLine": 68,
+        "endChar": 33
+      },
+      "revId": "75016c08de39a3bea33f39526bcaff3d1ce14903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "345589bd_f3f95ea9",
+        "filename": "components/password_manager/core/browser/password_autofill_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 963,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-01T15:04:17Z",
+      "side": 1,
+      "message": "Why do you need to add dummy password form mapping. It looks that it\u0027s not needed for Manual fallbacks.",
+      "range": {
+        "startLine": 963,
+        "startChar": 30,
+        "endLine": 963,
+        "endChar": 54
+      },
+      "revId": "75016c08de39a3bea33f39526bcaff3d1ce14903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdead0ce_c06ef871",
+        "filename": "components/password_manager/core/browser/password_autofill_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1013,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-01T15:04:17Z",
+      "side": 1,
+      "message": "ditto as line 963",
+      "range": {
+        "startLine": 1013,
+        "startChar": 30,
+        "endLine": 1013,
+        "endChar": 54
+      },
+      "revId": "75016c08de39a3bea33f39526bcaff3d1ce14903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
