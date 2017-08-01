@@ -16,6 +16,24 @@
       "revId": "fae5137b1f8cc1f5945f506d0ef5f7f396d45fe4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5235a874_3400e495",
+        "filename": "third_party/WebKit/LayoutTests/inspector/coverage/gutter-js-expected.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1162439
+      },
+      "writtenOn": "2017-08-01T17:56:40Z",
+      "side": 1,
+      "message": "The execution counter created for beyond the return statement inherits its end position from its parent range - i.e. in this case the end of the function.\n\nThe count itself is 0 (since execution cannot reach the point beyond the return statement), and therefore the closing brace is shown as uncovered.\n\nI\u0027ve been thinking about this myself, and I suppose it\u0027d make the display less noisy if closing braces would be shown as covered in such cases. I\u0027ll cook something up tomorrow.",
+      "parentUuid": "2a5e3483_ca1fd167",
+      "revId": "fae5137b1f8cc1f5945f506d0ef5f7f396d45fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
