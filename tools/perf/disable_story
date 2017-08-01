@@ -1,0 +1,112 @@
+#!/usr/bin/env python
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+"""Generates perf benchmark sharding map.
+"""
+
+import argparse
+import inspect
+import os
+import string
+import sys
+import subprocess
+
+from core import perf_data_generator
+
+PER_FILE_PREFIXES = {
+    None: 'story.expectations',
+    ('page_sets', 'system_health', 'expectations.py'): 'expectations',
+    ('benchmarks', 'smoothness.py'): 'story_module',
+}
+
+class ExpectationInfo(object):
+  def __init__(self, cls):
+    self.lines, self.starting_line = inspect.getsourcelines(cls)
+    self.start_offset = -1
+    for i, line in enumerate(self.lines):
+      if 'def SetExpectations' in line:
+        self.start_offset = i
+        break
+    if self.start_offset < 0:
+      raise ValueError()
+
+    for i, char in enumerate(self.lines[self.start_offset+1]):
+      if char in string.ascii_letters:
+        self.indentation = self.lines[self.start_offset+1][:i]
+        break
+    self.filename = inspect.getsourcefile(cls)
+
+    path = ()
+    filepath = self.filename
+    while not (
+        filepath.endswith('tools/perf') or filepath.endswith(
+            'third_party/catapult')):
+      filepath, rest = os.path.split(filepath)
+      path = (rest,) + path
+    self.path = path
+
+  @property
+  def offset_to_insert(self):
+    return self.start_offset + self.starting_line
+
+  def disable_story_text(self, story, bug):
+    story_prefix = PER_FILE_PREFIXES.get(self.path, PER_FILE_PREFIXES[None])
+    return [
+        'self.DisableStory(',
+        '%r,' % story,
+        '%s,' % ('[%s.ALL]' % (story_prefix)),
+        '%r)' % bug
+    ]
+
+def main():
+  parser = argparse.ArgumentParser(description=('Disable tests'))
+  parser.add_argument('benchmark')
+  parser.add_argument('story')
+  parser.add_argument('bug')
+  parser.add_argument('--upload-cl', '-u', action='store_true')
+  options = parser.parse_args()
+
+  benchmarks = perf_data_generator.current_benchmarks()
+  name_lst = [b for b in benchmarks if b.Name() == options.benchmark]
+  if not name_lst:
+    raise ValueError('benchmark %r is not a valid benchmark. Run '
+                     'list_benchmarks to see a list of all benchmarks' % (
+                     options.benchmark))
+  assert len(name_lst) == 1, (
+      'Two benchmarks with duplicate names should be impossible')
+  bench = name_lst[0]
+  exp_info = ExpectationInfo(bench().GetExpectations().__class__)
+
+  with open(exp_info.filename) as f:
+    current_lines = f.readlines()
+
+  to_insert = [
+      exp_info.indentation + line + '\n'
+      for line in exp_info.disable_story_text(options.story, options.bug)]
+  # Indent everything past first line, to have proper python indentation
+  for i in range(1, len(to_insert)):
+    to_insert[i] = '  ' + to_insert[i]
+
+  if 'pass' in current_lines[exp_info.offset_to_insert]:
+    current_lines.pop(exp_info.offset_to_insert)
+  current_lines = current_lines[
+      :exp_info.offset_to_insert] + to_insert + current_lines[
+          exp_info.offset_to_insert:]
+
+  with open(exp_info.filename, 'w') as f:
+    f.writelines(current_lines)
+
+  if options.upload_cl:
+    subprocess.call(['git', 'checkout', '-b', 'disable_story', 'origin/master'])
+    subprocess.call(['git', 'add', '.'])
+    subprocess.call(['git', 'commit', '-m', '//tools/perf: Disable %s on %s' % (
+        options.story, options.benchmark)])
+    subprocess.call(['git', 'cl', 'upload'])
+
+  return 0
+
+if __name__ == '__main__':
+  sys.exit(main())
+
