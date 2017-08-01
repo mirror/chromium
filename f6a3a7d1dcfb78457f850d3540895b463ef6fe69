@@ -22,6 +22,30 @@
       "revId": "f6a3a7d1dcfb78457f850d3540895b463ef6fe69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c98bb66_0d02a8ae",
+        "filename": "extensions/common/api/declarative_net_request/flat/extension_ruleset.fbs",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1236730
+      },
+      "writtenOn": "2017-08-01T15:43:52Z",
+      "side": 1,
+      "message": "Normally a FlatBuffer\u0027s type cannot be identified from the buffer data, you must already know what type it is. As such, a file_identifier should be used whenever you want to be able to check that you really have the right buffer type, such as when using a FlatBuffer as a file format. It is not necessary when used entirely in memory, or networking between two fixed endpoints, etc. It only costs 4 bytes, so in case of doubt, add it :)",
+      "parentUuid": "e68d368f_303bfaf7",
+      "range": {
+        "startLine": 39,
+        "startChar": 12,
+        "endLine": 39,
+        "endChar": 27
+      },
+      "revId": "f6a3a7d1dcfb78457f850d3540895b463ef6fe69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
