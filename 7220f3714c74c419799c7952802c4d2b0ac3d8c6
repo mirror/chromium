@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6779a610_216f8bd4",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/internals/cycle-connection-gc.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-08-01T16:12:58Z",
+      "side": 1,
+      "message": "Because default delay nodes have a tail time which keeps the handler alive longer.  This prevents this test from passing.  So I used gain nodes for the cycle since gain nodes have no tail time.\n\nHmm. Strictly speaking, it isn\u0027t legal to have a cycle without a delay node in the loop.  We don\u0027t enforce this yet.",
+      "parentUuid": "d5a9f299_f450e7be",
+      "range": {
+        "startLine": 23,
+        "startChar": 8,
+        "endLine": 29,
+        "endChar": 43
+      },
+      "revId": "7220f3714c74c419799c7952802c4d2b0ac3d8c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "970834d0_854af9bb",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioNode.cpp",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-01T16:01:23Z",
       "side": 1,
       "message": "I am sure that you already checked, but just want to make sure this doesn\u0027t break on any real-world example with the debug build.",
+      "range": {
+        "startLine": 408,
+        "startChar": 2,
+        "endLine": 408,
+        "endChar": 36
+      },
+      "revId": "7220f3714c74c419799c7952802c4d2b0ac3d8c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a699c4f9_4a39d10f",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioNode.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-08-01T16:12:58Z",
+      "side": 1,
+      "message": "I have quite a while ago, but I\u0027ll run through a bunch of web audio samples to be sure.",
+      "parentUuid": "970834d0_854af9bb",
       "range": {
         "startLine": 408,
         "startChar": 2,
