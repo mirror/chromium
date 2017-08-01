@@ -241,12 +241,7 @@ void BbrSender::OnCongestionEvent(bool /*rtt_updated*/,
         sampler_->total_bytes_acked() - total_bytes_acked_before;
 
     UpdateAckAggregationBytes(event_time, bytes_acked);
-    if (FLAGS_quic_reloadable_flag_quic_bbr_ack_aggregation_bytes2 ||
-        FLAGS_quic_reloadable_flag_quic_bbr_ack_aggregation_bytes3) {
-      if (FLAGS_quic_reloadable_flag_quic_bbr_ack_aggregation_bytes2) {
-        QUIC_FLAG_COUNT_N(quic_reloadable_flag_quic_bbr_ack_aggregation_bytes2,
-                          1, 2);
-      }
+    if (FLAGS_quic_reloadable_flag_quic_bbr_ack_aggregation_bytes3) {
       if (FLAGS_quic_reloadable_flag_quic_bbr_ack_aggregation_bytes3) {
         QUIC_FLAG_COUNT_N(quic_reloadable_flag_quic_bbr_ack_aggregation_bytes3,
                           1, 2);
@@ -593,14 +588,6 @@ void BbrSender::CalculateCongestionWindow(QuicByteCount bytes_acked) {
   if (rtt_variance_weight_ > 0.f && !BandwidthEstimate().IsZero()) {
     target_window += rtt_variance_weight_ * rtt_stats_->mean_deviation() *
                      BandwidthEstimate();
-  } else if (FLAGS_quic_reloadable_flag_quic_bbr_ack_aggregation_bytes2 &&
-             is_at_full_bandwidth_) {
-    QUIC_FLAG_COUNT_N(quic_reloadable_flag_quic_bbr_ack_aggregation_bytes2, 2,
-                      2);
-    if (2 * max_ack_height_.GetBest() > bytes_acked_since_queue_drained_) {
-      target_window +=
-          2 * max_ack_height_.GetBest() - bytes_acked_since_queue_drained_;
-    }
   } else if (FLAGS_quic_reloadable_flag_quic_bbr_ack_aggregation_bytes3 &&
              is_at_full_bandwidth_) {
     QUIC_FLAG_COUNT_N(quic_reloadable_flag_quic_bbr_ack_aggregation_bytes3, 2,
