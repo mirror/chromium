@@ -5,6 +5,7 @@
 #include "chrome/browser/ui/webui/snippets_internals_ui.h"
 
 #include "base/memory/ptr_util.h"
+#include "chrome/browser/android/chrome_feature_list.h"
 #include "chrome/browser/ntp_snippets/content_suggestions_service_factory.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/webui/snippets_internals_message_handler.h"
@@ -19,6 +20,10 @@ content::WebUIDataSource* CreateSnippetsInternalsHTMLSource() {
   content::WebUIDataSource* source =
       content::WebUIDataSource::Create(chrome::kChromeUISnippetsInternalsHost);
 
+  source->AddBoolean("contextualSuggestionsEnabled",
+                     base::FeatureList::IsEnabled(
+                         chrome::android::kContextualSuggestionsCarousel));
+  source->SetJsonPath("strings.js");
   source->AddResourcePath("snippets_internals.js", IDR_SNIPPETS_INTERNALS_JS);
   source->AddResourcePath("snippets_internals.css", IDR_SNIPPETS_INTERNALS_CSS);
   source->SetDefaultResource(IDR_SNIPPETS_INTERNALS_HTML);

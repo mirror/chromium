@@ -38,6 +38,21 @@ cr.define('chrome.SnippetsInternals', function() {
       event.preventDefault();
     });
 
+    if (loadTimeData.getBoolean('contextualSuggestionsEnabled')) {
+      $('contextual-suggestions-section-id').classList.remove('hidden');
+    }
+
+    $('fetch-contextual-suggestions-button')
+        .addEventListener('click', function(event) {
+          let url = $('contextual-url').value;
+          $('contextual-suggestions-request-result-id').innerHTML =
+              'Waiting for response ...';
+          $('contextual-suggestions').innerHTML =
+              'Fetching contextual suggestions for ' + url;
+          chrome.send('fetchContextualSuggestions', [url]);
+          event.preventDefault();
+        });
+
     window.addEventListener('focus', refreshContent);
     window.setInterval(refreshContent, 1000);
 
@@ -46,6 +61,18 @@ cr.define('chrome.SnippetsInternals', function() {
 
   function receiveProperty(propertyId, value) {
     $(propertyId).textContent = value;
+  }
+
+  function receiveContextualSuggestions(suggestions, status_msg) {
+    $('contextual-suggestions-request-result-id').innerHTML = status_msg;
+
+    let el = $('contextual-suggestions');
+    el.innerHTML = '';
+    for (var suggestion of suggestions) {
+      var d = document.createElement('div');
+      d.innerHTML = suggestion.title;
+      el.appendChild(d);
+    }
   }
 
   function receiveContentSuggestions(categoriesList) {
@@ -178,6 +205,7 @@ cr.define('chrome.SnippetsInternals', function() {
     receiveRankerDebugData: receiveRankerDebugData,
     receiveLastRemoteSuggestionsBackgroundFetchTime:
         receiveLastRemoteSuggestionsBackgroundFetchTime,
+    receiveContextualSuggestions: receiveContextualSuggestions,
   };
 });
 
