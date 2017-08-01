@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "583040ae_6eb5b55d",
+        "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-01T22:30:35Z",
+      "side": 0,
+      "message": "This should remain NewTabTracker as that\u0027s the immediate superclass.",
+      "range": {
+        "startLine": 52,
+        "startChar": 5,
+        "endLine": 52,
+        "endChar": 38
+      },
+      "revId": "a3cf4d27ce27706c9cb253216a98f0bafd20096e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

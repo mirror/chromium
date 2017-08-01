@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8e14300_705ed2ea",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-01T22:30:35Z",
+      "side": 1,
+      "message": "Use ScopedObserver",
+      "range": {
+        "startLine": 20,
+        "startChar": 2,
+        "endLine": 20,
+        "endChar": 39
+      },
+      "revId": "b138e0beb6be54ce328b05019192a43bef0e1b53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5230810_b45f1a8d",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-01T22:30:35Z",
+      "side": 1,
+      "message": ": FeatureTracker(nullptr) {}",
+      "range": {
+        "startLine": 28,
+        "startChar": 6,
+        "endLine": 30,
+        "endChar": 0
+      },
+      "revId": "b138e0beb6be54ce328b05019192a43bef0e1b53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a19fbb6_9fc73507",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-01T22:30:35Z",
+      "side": 1,
+      "message": "The concrete implementation should handle these. This class should not be opinionated about what gets used in tests since it doesn\u0027t have tests.",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 34
+      },
+      "revId": "b138e0beb6be54ce328b05019192a43bef0e1b53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87d9412a_74a6fd4c",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-01T22:30:35Z",
+      "side": 1,
+      "message": "Single colon \":\"",
+      "range": {
+        "startLine": 42,
+        "startChar": 53,
+        "endLine": 42,
+        "endChar": 55
+      },
+      "revId": "b138e0beb6be54ce328b05019192a43bef0e1b53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ad47a1c_8e207f8a",
+        "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-01T22:30:35Z",
+      "side": 1,
+      "message": "This is not part of the Feature Tracker",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 79
+      },
+      "revId": "b138e0beb6be54ce328b05019192a43bef0e1b53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23f7dda8_dbf05f6a",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-01T22:30:35Z",
+      "side": 1,
+      "message": "Document why this class is needed.",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 8
+      },
+      "revId": "b138e0beb6be54ce328b05019192a43bef0e1b53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55a3f878_0ff856ee",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-01T22:30:35Z",
+      "side": 1,
+      "message": "We don\u0027t expect anyone to subclass SessionDurationUpdater, right? Make this section private.",
+      "range": {
+        "startLine": 28,
+        "startChar": 1,
+        "endLine": 28,
+        "endChar": 10
+      },
+      "revId": "b138e0beb6be54ce328b05019192a43bef0e1b53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f74b9ef_b7ed2a77",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-01T22:30:35Z",
+      "side": 1,
+      "message": "Single colon \";\"",
+      "range": {
+        "startLine": 35,
+        "startChar": 53,
+        "endLine": 35,
+        "endChar": 55
+      },
+      "revId": "b138e0beb6be54ce328b05019192a43bef0e1b53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36cb09cb_fd72f1ee",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater_factory.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-01T22:30:35Z",
+      "side": 1,
+      "message": "Nit: Linebreak before this line to make this symmetric with the bottom.",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 29
+      },
+      "revId": "b138e0beb6be54ce328b05019192a43bef0e1b53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a7ec8ab_eecbc957",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater_unittests.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-01T22:30:35Z",
+      "side": 1,
+      "message": "Is this file supposed to be here?",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 46
+      },
+      "revId": "b138e0beb6be54ce328b05019192a43bef0e1b53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b43d0393_930d64f4",
+        "filename": "components/feature_engagement/public/event_constants.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-01T22:30:35Z",
+      "side": 1,
+      "message": "This deltashould be in a separate CL.",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 21
+      },
+      "revId": "b138e0beb6be54ce328b05019192a43bef0e1b53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
