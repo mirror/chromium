@@ -16,6 +16,24 @@
       "revId": "a0d09a51abb9b43677972c0c4160a586a88fe6dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "143a9b67_bea07641",
+        "filename": "chrome/browser/chromeos/note_taking_helper_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 883,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-01T10:26:48Z",
+      "side": 1,
+      "message": "Although it is named \"second_profile\", it should work as if PrimaryProfile because ARC should be enable-able for it (ARC can be usable only by PrimaryProfile)?\nIf so, does ArcServiceLauncher::Get()-\u003eResetForTesting() work?\n(Could you refer chrome/browser/chromeos/arc/arc_session_manager_browsertest.cc)?",
+      "parentUuid": "1966f913_73e08ebd",
+      "revId": "a0d09a51abb9b43677972c0c4160a586a88fe6dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
