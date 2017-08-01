@@ -50,7 +50,8 @@ void ResourceCoordinatorInterface::ConnectToService(
     service_manager::Connector* connector,
     const CoordinationUnitID& cu_id) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  DCHECK(connector);
+  if (!connector)
+    return;
   cu_id_ = cu_id;
   mojom::CoordinationUnitProviderPtr provider;
   connector->BindInterface(mojom::kServiceName, mojo::MakeRequest(&provider));

@@ -2113,10 +2113,18 @@ mojom::Renderer* RenderProcessHostImpl::GetRendererInterface() {
 
 resource_coordinator::ResourceCoordinatorInterface*
 RenderProcessHostImpl::GetProcessResourceCoordinator() {
-  if (!process_resource_coordinator_) {
+  if (process_resource_coordinator_)
+    return process_resource_coordinator_.get();
+
+  if (!resource_coordinator::IsResourceCoordinatorEnabled()) {
     process_resource_coordinator_ =
         base::MakeUnique<resource_coordinator::ResourceCoordinatorInterface>(
-            ServiceManagerConnection::GetForProcess()->GetConnector(),
+            nullptr, resource_coordinator::CoordinationUnitType::kProcess);
+  } else {
+    auto* connection = ServiceManagerConnection::GetForProcess();
+    process_resource_coordinator_ =
+        base::MakeUnique<resource_coordinator::ResourceCoordinatorInterface>(
+            connection ? connection->GetConnector() : nullptr,
             resource_coordinator::CoordinationUnitType::kProcess,
             base::GetProcId(GetHandle()));
   }
