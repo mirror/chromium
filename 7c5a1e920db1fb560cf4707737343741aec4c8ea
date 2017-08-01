@@ -16,6 +16,24 @@
       "revId": "7c5a1e920db1fb560cf4707737343741aec4c8ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87adc80a_97a9551e",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSShorthandPropertyAPIFont.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-01T02:33:11Z",
+      "side": 1,
+      "message": "Ack, good work",
+      "parentUuid": "fa19dbd1_d3c55bc8",
+      "revId": "7c5a1e920db1fb560cf4707737343741aec4c8ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
