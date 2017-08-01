@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "cb538a22_5df1f55b",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-01T20:58:20Z",
+      "side": 1,
+      "message": "Does CoreGraphics need to be added as a dependency in BUILD.gn? \nHere\u0027s an example:\nhttps://cs.chromium.org/chromium/src/ui/gfx/BUILD.gn?q\u003dBUILD.gn+CoreGraphics\u0026dr\u003dC\u0026l\u003d416",
+      "revId": "9a3bfe8b4ad03c894df31ce75961164c92c0caab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5a04b5da_50b92ddc",
         "filename": "ios/chrome/browser/ui/bubble/bubble_util_unittest.mm",
         "patchSetId": 3
