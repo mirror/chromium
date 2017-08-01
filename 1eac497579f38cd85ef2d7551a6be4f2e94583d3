@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dd1cc6dd_df14aa28",
+        "filename": "ui/webui/resources/chromeos/network/network_shared_css.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-01T21:16:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69e28b03_00c710e6",
+      "revId": "1eac497579f38cd85ef2d7551a6be4f2e94583d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "708ea9d0_01b666db",
         "filename": "ui/webui/resources/chromeos/network/network_shared_css.html",
         "patchSetId": 3
@@ -30,6 +48,30 @@
       "writtenOn": "2017-08-01T20:30:57Z",
       "side": 1,
       "message": "Ideally these dependencies would be reversed, i.e. the variables are defined in cr_elements and Settings uses them. Then we wouldn\u0027t need these comments or hard-coded values to manually keep up to date. Is that feasible here?",
+      "range": {
+        "startLine": 13,
+        "startChar": 30,
+        "endLine": 13,
+        "endChar": 72
+      },
+      "revId": "1eac497579f38cd85ef2d7551a6be4f2e94583d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b89b5e0d_852a584f",
+        "filename": "ui/webui/resources/chromeos/network/network_shared_css.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-01T21:16:35Z",
+      "side": 1,
+      "message": "I\u0027m not sure we want the dependency. If Dave decides to make settings-box something more generic that\u0027s fine, but until then I think a comment here is fine.",
+      "parentUuid": "708ea9d0_01b666db",
       "range": {
         "startLine": 13,
         "startChar": 30,
