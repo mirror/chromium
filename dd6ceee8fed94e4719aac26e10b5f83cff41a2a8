@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "76070f20_9bdbd0b9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-01T21:08:55Z",
+      "side": 1,
+      "message": "Also, reminder to update the commit message like we talked about:\n- First line should be the subject.\n- Blank line between the first line and anything else.",
+      "revId": "dd6ceee8fed94e4719aac26e10b5f83cff41a2a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9f62803_72e196dd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-08-01T21:08:55Z",
+      "side": 1,
+      "message": "Add the crbug.",
+      "revId": "dd6ceee8fed94e4719aac26e10b5f83cff41a2a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "98887ffd_f4cd57ee",
         "filename": "chrome/browser/about_flags.cc",
         "patchSetId": 2
