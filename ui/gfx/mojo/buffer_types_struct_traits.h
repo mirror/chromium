@@ -132,6 +132,8 @@ struct EnumTraits<gfx::mojom::BufferUsage, gfx::BufferUsage> {
         return gfx::mojom::BufferUsage::GPU_READ_CPU_READ_WRITE;
       case gfx::BufferUsage::GPU_READ_CPU_READ_WRITE_PERSISTENT:
         return gfx::mojom::BufferUsage::GPU_READ_CPU_READ_WRITE_PERSISTENT;
+      case gfx::BufferUsage::CAMERA_WRITE_CPU_READ_WRITE:
+        return gfx::mojom::BufferUsage::CAMERA_WRITE_CPU_READ_WRITE;
     }
     NOTREACHED();
     return gfx::mojom::BufferUsage::LAST;
@@ -153,6 +155,9 @@ struct EnumTraits<gfx::mojom::BufferUsage, gfx::BufferUsage> {
         return true;
       case gfx::mojom::BufferUsage::GPU_READ_CPU_READ_WRITE_PERSISTENT:
         *out = gfx::BufferUsage::GPU_READ_CPU_READ_WRITE_PERSISTENT;
+        return true;
+      case gfx::mojom::BufferUsage::CAMERA_WRITE_CPU_READ_WRITE:
+        *out = gfx::BufferUsage::CAMERA_WRITE_CPU_READ_WRITE;
         return true;
     }
     NOTREACHED();
