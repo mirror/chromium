@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e0926a3_704e1cb7",
+        "filename": "third_party/WebKit/Source/core/workers/InProcessWorkerMessagingProxy.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-08-01T13:57:15Z",
+      "side": 1,
+      "message": "I think this one can also be removed as I didn\u0027t see any users except the unit tests. WDYT?",
+      "range": {
+        "startLine": 200,
+        "startChar": 36,
+        "endLine": 200,
+        "endChar": 66
+      },
+      "revId": "79e036e6786202821d687ef15f82cc4d873c3eee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
