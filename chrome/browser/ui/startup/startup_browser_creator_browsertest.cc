@@ -9,6 +9,7 @@
 
 #include "base/command_line.h"
 #include "base/files/file_path.h"
+#include "base/files/file_util.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
@@ -40,6 +41,7 @@
 #include "chrome/browser/ui/startup/startup_browser_creator.h"
 #include "chrome/browser/ui/startup/startup_browser_creator_impl.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
+#include "chrome/browser/web_applications/web_app.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/extensions/extension_constants.h"
 #include "chrome/common/features.h"
@@ -51,6 +53,7 @@
 #include "components/prefs/pref_service.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/content_switches.h"
+#include "content/public/test/test_navigation_observer.h"
 #include "content/public/test/test_utils.h"
 #include "extensions/browser/extension_system.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
@@ -322,6 +325,58 @@ IN_PROC_BROWSER_TEST_F(StartupBrowserCreatorTest,
   ASSERT_EQ(1, tab_strip->count());
   EXPECT_EQ("chrome://newtab/",
             tab_strip->GetWebContentsAt(0)->GetURL().possibly_invalid_spec());
+}
+
+IN_PROC_BROWSER_TEST_F(StartupBrowserCreatorTest, OpenAppUrlShortcut) {
+  // Add --app=<url> to the command line.
+  // This is a regression test for https://crbug.com/596348 as well as a general
+  // test of the feature.
+  base::CommandLine command_line(base::CommandLine::NO_PROGRAM);
+  GURL url = ui_test_utils::GetTestUrl(
+      base::FilePath(base::FilePath::kCurrentDirectory),
+      base::FilePath(FILE_PATH_LITERAL("title2.html")));
+  command_line.AppendSwitchASCII(switches::kApp, url.spec());
+
+#if defined(OS_WIN)
+  // Delete the icon that we expect this test to create, to ensure it wasn't
+  // just lying around from a previous run.
+  base::FilePath profile_path = browser()->profile()->GetPath();
+  base::FilePath web_app_path =
+      web_app::GetWebAppDataDirectory(profile_path, "", url);
+  base::FilePath icon_path =
+      web_app_path.Append(FILE_PATH_LITERAL("Title Of Awesomeness.ico"));
+  base::FilePath icon_hash_path =
+      web_app_path.Append(FILE_PATH_LITERAL("Title Of Awesomeness.ico.md5"));
+  EXPECT_TRUE(base::DeleteFile(icon_path, false));
+  EXPECT_TRUE(base::DeleteFile(icon_hash_path, false));
+#endif  // defined(OS_WIN)
+
+  chrome::startup::IsFirstRun first_run =
+      first_run::IsChromeFirstRun() ? chrome::startup::IS_FIRST_RUN
+                                    : chrome::startup::IS_NOT_FIRST_RUN;
+  StartupBrowserCreatorImpl launch(base::FilePath(), command_line, first_run);
+  ASSERT_TRUE(launch.Launch(browser()->profile(), std::vector<GURL>(), false));
+
+  Browser* new_browser = FindOneOtherBrowser(browser());
+  ASSERT_TRUE(new_browser);
+
+  // The new window should be an app window.
+  EXPECT_TRUE(new_browser->is_app());
+
+  TabStripModel* tab_strip = new_browser->tab_strip_model();
+  ASSERT_EQ(1, tab_strip->count());
+  content::WebContents* web_contents = tab_strip->GetWebContentsAt(0);
+  // At this stage, the web contents' URL should be the one passed in to --app
+  // (but it will not yet be committed into the navigation controller).
+  EXPECT_EQ("title2.html", web_contents->GetVisibleURL().ExtractFileName());
+
+  // Wait until the navigation is complete. Then the URL will be committed to
+  // the navigation controller. (This wait is also necessary to kick off the
+  // shortcut updating code on Windows, tested below.)
+  content::TestNavigationObserver observer(web_contents, 1);
+  observer.Wait();
+  EXPECT_EQ("title2.html",
+            web_contents->GetLastCommittedURL().ExtractFileName());
 }
 
 // App shortcuts are not implemented on mac os.
