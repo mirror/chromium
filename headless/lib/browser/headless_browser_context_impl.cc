@@ -19,6 +19,7 @@
 #include "headless/lib/browser/headless_browser_context_options.h"
 #include "headless/lib/browser/headless_browser_impl.h"
 #include "headless/lib/browser/headless_browser_main_parts.h"
+#include "headless/lib/browser/headless_download_manager_delegate.h"
 #include "headless/lib/browser/headless_net_log.h"
 #include "headless/lib/browser/headless_permission_manager.h"
 #include "headless/lib/browser/headless_url_request_context_getter.h"
@@ -215,7 +216,13 @@ content::ResourceContext* HeadlessBrowserContextImpl::GetResourceContext() {
 
 content::DownloadManagerDelegate*
 HeadlessBrowserContextImpl::GetDownloadManagerDelegate() {
-  return nullptr;
+  if (!download_manager_delegate_.get()) {
+    download_manager_delegate_.reset(new HeadlessDownloadManagerDelegate());
+    download_manager_delegate_->SetDownloadManager(
+        BrowserContext::GetDownloadManager(this));
+  }
+
+  return download_manager_delegate_.get();
 }
 
 content::BrowserPluginGuestManager*

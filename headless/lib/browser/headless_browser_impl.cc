@@ -151,6 +151,17 @@ HeadlessBrowserContext* HeadlessBrowserImpl::CreateBrowserContext(
     return nullptr;
   }
 
+  browser_context->GetDownloadManagerDelegate();
+  HeadlessDownloadManagerDelegate* download_delegate =
+      static_cast<HeadlessDownloadManagerDelegate*>(
+          browser_context->GetDownloadManagerDelegate());
+
+  if (download_behavior_ && download_behavior_.has_value())
+    download_delegate->SetDownloadBehavior(download_behavior_.value());
+
+  if (download_path_ && download_path_.has_value())
+    download_delegate->SetDownloadDirectory(download_path_.value());
+
   HeadlessBrowserContext* result = browser_context.get();
 
   browser_contexts_[browser_context->Id()] = std::move(browser_context);
@@ -181,6 +192,37 @@ HeadlessBrowserContext* HeadlessBrowserImpl::GetDefaultBrowserContext() {
 base::WeakPtr<HeadlessBrowserImpl> HeadlessBrowserImpl::GetWeakPtr() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   return weak_ptr_factory_.GetWeakPtr();
+}
+
+void HeadlessBrowserImpl::SetDownloadBehavior(
+    HeadlessDownloadManagerDelegate::DownloadBehavior behavior) {
+  download_behavior_ = behavior;
+
+  for (HeadlessBrowserContext* hbc : GetAllBrowserContexts()) {
+    HeadlessBrowserContextImpl* hbci =
+        static_cast<HeadlessBrowserContextImpl*>(hbc);
+
+    HeadlessDownloadManagerDelegate* download_delegate =
+        static_cast<HeadlessDownloadManagerDelegate*>(
+            hbci->GetDownloadManagerDelegate());
+
+    download_delegate->SetDownloadBehavior(behavior);
+  }
+}
+
+void HeadlessBrowserImpl::SetDownloadDirectory(const base::FilePath& path) {
+  download_path_ = path;
+
+  for (HeadlessBrowserContext* hbc : GetAllBrowserContexts()) {
+    HeadlessBrowserContextImpl* hbci =
+        static_cast<HeadlessBrowserContextImpl*>(hbc);
+
+    HeadlessDownloadManagerDelegate* download_delegate =
+        static_cast<HeadlessDownloadManagerDelegate*>(
+            hbci->GetDownloadManagerDelegate());
+
+    download_delegate->SetDownloadDirectory(path);
+  }
 }
 
 HeadlessWebContents* HeadlessBrowserImpl::GetWebContentsForDevToolsAgentHostId(

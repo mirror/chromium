@@ -1,4 +1,7 @@
 specific_include_rules = {
+  "headless_download_browsertest.cc": [
+    "+content/browser",
+  ],
   "headless_web_contents_browsertest.cc": [
     "+pdf",
     "+printing",
