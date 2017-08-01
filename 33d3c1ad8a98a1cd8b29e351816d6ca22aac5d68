@@ -16,6 +16,24 @@
       "revId": "33d3c1ad8a98a1cd8b29e351816d6ca22aac5d68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2eb74fee_2f58ee28",
+        "filename": "content/public/test/test_browser_thread_bundle.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-01T14:53:40Z",
+      "side": 1,
+      "message": "New patch should be clearer.\n\nThe comment was trying to explain when the steps performed below (creating main MessageLoop and TaskScheduler) happen in production.",
+      "parentUuid": "4538bc6a_e0ee3529",
+      "revId": "33d3c1ad8a98a1cd8b29e351816d6ca22aac5d68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
