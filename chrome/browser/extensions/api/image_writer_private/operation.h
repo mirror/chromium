@@ -15,11 +15,13 @@
 #include "base/md5.h"
 #include "base/memory/ref_counted_memory.h"
 #include "base/memory/weak_ptr.h"
-#include "base/task/cancelable_task_tracker.h"
+#include "base/sequenced_task_runner.h"
+#include "base/task_scheduler/task_traits.h"
 #include "build/build_config.h"
 #include "chrome/browser/extensions/api/image_writer_private/image_writer_utility_client.h"
 #include "chrome/common/extensions/api/image_writer_private.h"
 #include "extensions/common/extension_id.h"
+#include "chrome/browser/extensions/api/image_writer_private/unzip_helper.h"
 
 namespace image_writer_api = extensions::api::image_writer_private;
 
@@ -45,18 +47,21 @@ class OperationManager;
 // OperationManager periodically or on any significant event.
 //
 // Each stage of the operation is generally divided into three phases: Start,
-// Run, Complete.  Start and Complete run on the UI thread and are responsible
-// for advancing to the next stage and other UI interaction.  The Run phase does
-// the work on the FILE thread and calls SendProgress or Error as appropriate.
+// Run, Complete.  Start and Run runs on blocking thread, and Complete runs on
+// the UI thread.  Start and and Run are responsible for advancing to the next
+// stage and other UI interaction.
+// The Run phase calls SendProgress or Error as appropriate.
 //
 // TODO(haven): This class is current refcounted because it is owned by the
-// OperationManager on the UI thread but needs to do work on the FILE thread.
+// OperationManager on the UI thread but needs to do work on blocking threads.
 // There is probably a better way to organize this so that it can be represented
 // by a WeakPtr, but those are not thread-safe.  Additionally, if destruction is
 // done on the UI thread then that causes problems if any of the fields were
-// allocated/accessed on the FILE thread.  http://crbug.com/344713
-class Operation : public base::RefCountedThreadSafe<Operation> {
+// allocated/accessed on the blocking thread.  http://crbug.com/344713
+class Operation : //public UnzipHelper::Observer,
+                  public base::RefCountedThreadSafe<Operation> {
  public:
+  // TODO(lazyboy): Turn these into base::OnceCallback. http://crbug.com/749865.
   typedef base::Callback<void(bool, const std::string&)> StartWriteCallback;
   typedef base::Callback<void(bool, const std::string&)> CancelWriteCallback;
 
@@ -67,6 +72,7 @@ class Operation : public base::RefCountedThreadSafe<Operation> {
 
   // Starts the operation.
   void Start();
+  void StartOnUI();
 
   // Cancel the operation. This must be called to clean up internal state and
   // cause the the operation to actually stop.  It will not be destroyed until
@@ -86,10 +92,26 @@ class Operation : public base::RefCountedThreadSafe<Operation> {
   // manually.
   static void SetUtilityClientForTesting(
       scoped_refptr<ImageWriterUtilityClient> client);
+  ImageWriterUtilityClient* StartAndGetUtilityClientForTest();
+
+#endif
+
+  void PostTask(base::OnceClosure task);
+
+#if !defined(OS_CHROMEOS)
+  void StartUtilityClientForTesting();
+#endif
+
+#if !defined(OS_CHROMEOS)
+  ImageWriterUtilityClient* GetClientForTesting() { return image_writer_client_.get(); }
 #endif
 
  protected:
   virtual ~Operation();
+
+  scoped_refptr<base::SequencedTaskRunner> task_runner() {
+    return task_runner_;
+  }
 
   // This function should be overriden by subclasses to set up the work of the
   // operation.  It will be called from Start().
@@ -98,11 +120,14 @@ class Operation : public base::RefCountedThreadSafe<Operation> {
   // Unzips the current file if it ends in ".zip".  The current_file will be set
   // to the unzipped file.
   void Unzip(const base::Closure& continuation);
+  //void Unzip(base::OnceClosure continuation);
 
   // Writes the current file to device_path.
+  //void Write(base::OnceClosure continuation);
   void Write(const base::Closure& continuation);
 
   // Verifies that the current file and device_path contents match.
+  //void VerifyWrite(base::OnceClosure continuation);
   void VerifyWrite(const base::Closure& continuation);
 
   // Completes the operation.
@@ -111,7 +136,7 @@ class Operation : public base::RefCountedThreadSafe<Operation> {
   // Generates an error.
   // |error_message| is used to create an OnWriteError event which is
   // sent to the extension
-  virtual void Error(const std::string& error_message);
+  void Error(const std::string& error_message);
 
   // Set |progress_| and send an event.  Progress should be in the interval
   // [0,100]
@@ -126,11 +151,16 @@ class Operation : public base::RefCountedThreadSafe<Operation> {
   // Adds a callback that will be called during clean-up, whether the operation
   // is aborted, encounters and error, or finishes successfully.  These
   // functions will be run on the FILE thread.
-  void AddCleanUpFunction(const base::Closure& callback);
+  void AddCleanUpFunction(base::OnceClosure callback);
 
-  // Completes the current operation (progress set to 100) and runs the
-  // continuation.
+  // Completes the current operation (progress set to 100) and runs
+  // |zip_reader_continuation_|.
+  //void CompleteAndContinue();
   void CompleteAndContinue(const base::Closure& continuation);
+
+  // Stores |closure| to be called on blocking thread during
+  // CompleteAndContinue().
+//  void StoreCompletionClosure(base::OnceClosure closure);
 
   // If |file_size| is non-zero, only |file_size| bytes will be read from file,
   // otherwise the entire file will be read.
@@ -143,7 +173,9 @@ class Operation : public base::RefCountedThreadSafe<Operation> {
       int64_t file_size,
       int progress_offset,
       int progress_scale,
-      const base::Callback<void(const std::string&)>& callback);
+      base::OnceCallback<void(const std::string&)> callback);
+
+  bool IsRunningInCorrectSequence() const;
 
   base::WeakPtr<OperationManager> manager_;
   const ExtensionId extension_id_;
@@ -153,14 +185,15 @@ class Operation : public base::RefCountedThreadSafe<Operation> {
 
   // Temporary directory to store files as we go.
   base::ScopedTempDir temp_dir_;
-
  private:
   friend class base::RefCountedThreadSafe<Operation>;
+  friend class OperationForTest;
+  friend class WriteFromUrlOperationForTest;
+  //class UnzipHelper;
 
 #if !defined(OS_CHROMEOS)
   // Ensures the client is started.  This may be called many times but will only
-  // instantiate one client which should exist for the lifetime of the
-  // Operation.
+  // instantiate one client which should exist for the lifetime of the // Operation.
   void StartUtilityClient();
 
   // Stops the client.  This must be called to ensure the utility process can
@@ -198,11 +231,14 @@ class Operation : public base::RefCountedThreadSafe<Operation> {
                 int64_t bytes_total,
                 int progress_offset,
                 int progress_scale,
-                const base::Callback<void(const std::string&)>& callback);
+                const base::OnceCallback<void(const std::string&)> callback);
 
   // Callbacks for zip::ZipReader.
-  void OnUnzipFailure();
+  // Callbacks for UnzipHelper.
+  void OnUnzipOpenComplete(const base::FilePath& image_path);
   void OnUnzipProgress(int64_t total_bytes, int64_t progress_bytes);
+  void OnUnzipFailure(const std::string& error);
+  //void OnUnzipComplete();
 
   // Runs all cleanup functions.
   void CleanUp();
@@ -219,14 +255,29 @@ class Operation : public base::RefCountedThreadSafe<Operation> {
   // Zip reader for unzip operations. The reason for using a pointer is that we
   // don't want to include zip_reader.h here which can mangle definitions in
   // jni.h when included in the same file. See crbug.com/554199.
-  std::unique_ptr<zip::ZipReader> zip_reader_;
+  //std::unique_ptr<zip::ZipReader> zip_reader_;
+  //scoped_refptr<UnzipHelper> unzip_helper_;
 
   // CleanUp operations that must be run.  All these functions are run on the
   // FILE thread.
-  std::vector<base::Closure> cleanup_functions_;
+  std::vector<base::OnceClosure> cleanup_functions_;
+
+  static constexpr base::TaskTraits kBlockingTaskTraits = {
+    // Requires I/O.
+    base::MayBlock(),
+    // Apps (e.g. Chromebook Recovery Utility) present UI feedback based on an
+    // operation, but it's not on critical path.
+    base::TaskPriority::USER_VISIBLE,
+    base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN,
+  };
 
   // The download folder on Chrome OS.
   const base::FilePath download_folder_;
+
+  //base::OnceClosure completion_closure_;
+
+  // Sequenced task runner where all I/O operation will be performed.
+  scoped_refptr<base::SequencedTaskRunner> task_runner_;
 
   DISALLOW_COPY_AND_ASSIGN(Operation);
 };

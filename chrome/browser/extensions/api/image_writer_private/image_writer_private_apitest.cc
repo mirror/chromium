@@ -67,31 +67,20 @@ class ImageWriterPrivateApiTest : public ExtensionApiTest {
     FileSystemChooseEntryFunction::StopSkippingPickerForTest();
   }
 
-#if !defined(OS_CHROMEOS)
-  void ImageWriterUtilityClientCall() {
-    content::BrowserThread::PostTask(
-        content::BrowserThread::FILE, FROM_HERE,
-        base::BindOnce(&FakeImageWriterClient::Progress,
-                       test_utils_.GetUtilityClient(), 0));
-    content::BrowserThread::PostTask(
-        content::BrowserThread::FILE, FROM_HERE,
-        base::BindOnce(&FakeImageWriterClient::Progress,
-                       test_utils_.GetUtilityClient(), 50));
-    content::BrowserThread::PostTask(
-        content::BrowserThread::FILE, FROM_HERE,
-        base::BindOnce(&FakeImageWriterClient::Progress,
-                       test_utils_.GetUtilityClient(), 100));
-    content::BrowserThread::PostTask(
-        content::BrowserThread::FILE, FROM_HERE,
-        base::BindOnce(&FakeImageWriterClient::Success,
-                       test_utils_.GetUtilityClient()));
-  }
-#endif
 
  protected:
   base::MessageLoopForUI message_loop_;
   image_writer::ImageWriterTestUtils test_utils_;
 };
+
+#if !defined(OS_CHROMEOS)
+void SetUpUtilityClientCallbacks(
+    FakeImageWriterClient* client) {
+  std::vector<int> progress_list{0, 50, 100};
+  client->SimulateProgressOnWrite(progress_list, true);
+  client->SimulateProgressOnVerifyWrite(progress_list, true);
+}
+#endif
 
 IN_PROC_BROWSER_TEST_F(ImageWriterPrivateApiTest, TestListDevices) {
   ASSERT_TRUE(RunExtensionTest("image_writer_private/list_devices"))
@@ -107,12 +96,8 @@ IN_PROC_BROWSER_TEST_F(ImageWriterPrivateApiTest, TestWriteFromFile) {
       &selected_image);
 
 #if !defined(OS_CHROMEOS)
-  test_utils_.GetUtilityClient()->SetWriteCallback(base::Bind(
-      &ImageWriterPrivateApiTest::ImageWriterUtilityClientCall,
-      base::Unretained(this)));
-  test_utils_.GetUtilityClient()->SetVerifyCallback(base::Bind(
-      &ImageWriterPrivateApiTest::ImageWriterUtilityClientCall,
-      base::Unretained(this)));
+  test_utils_.RunOnUtilityClientCreation(
+      base::BindOnce(&SetUpUtilityClientCallbacks));
 #endif
 
   ASSERT_TRUE(RunPlatformAppTest("image_writer_private/write_from_file"))

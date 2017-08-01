@@ -41,6 +41,7 @@ class NET_EXPORT URLFetcherDelegate {
                                         int64_t total);
 
  protected:
+  URLFetcherDelegate();
   virtual ~URLFetcherDelegate();
 };
 

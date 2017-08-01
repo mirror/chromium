@@ -37,6 +37,7 @@ int URLFetcherStringWriter::Initialize(const CompletionCallback& callback) {
 int URLFetcherStringWriter::Write(IOBuffer* buffer,
                                   int num_bytes,
                                   const CompletionCallback& callback) {
+  printf("::Write\n");
   data_.append(buffer->data(), num_bytes);
   return num_bytes;
 }

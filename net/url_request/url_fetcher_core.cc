@@ -291,6 +291,7 @@ void URLFetcherCore::SetAutomaticallyRetryOnNetworkChanges(int max_retries) {
 void URLFetcherCore::SaveResponseToFileAtPath(
     const base::FilePath& file_path,
     scoped_refptr<base::SequencedTaskRunner> file_task_runner) {
+  printf("SaveResponseToFileAtPath\n");
   DCHECK(delegate_task_runner_->RunsTasksInCurrentSequence());
   SaveResponseWithWriter(std::unique_ptr<URLFetcherResponseWriter>(
       new URLFetcherFileWriter(file_task_runner, file_path)));
@@ -451,22 +452,31 @@ void URLFetcherCore::OnCertificateRequested(
 
 void URLFetcherCore::OnReadCompleted(URLRequest* request,
                                      int bytes_read) {
+  printf("URLFetcherCore::OnReadCompleted\n");
   DCHECK_EQ(request, request_.get());
   DCHECK(network_task_runner_->BelongsToCurrentThread());
 
+  printf("stopped_on_redirect_: %d\n",
+         stopped_on_redirect_);
   if (!stopped_on_redirect_)
     url_ = request->url();
   URLRequestThrottlerManager* throttler_manager =
       request->context()->throttler_manager();
+  printf("throttler_manager: [%p]\n",
+         throttler_manager);
   if (throttler_manager)
     url_throttler_entry_ = throttler_manager->RegisterRequestUrl(url_);
 
   while (bytes_read > 0) {
     current_response_bytes_ += bytes_read;
+    printf("current_response_bytes_: %ld\n",
+           current_response_bytes_);
     InformDelegateDownloadProgress();
+    printf("Done InformDelegateDownloadProgress\n");
 
     const int result =
         WriteBuffer(new DrainableIOBuffer(buffer_.get(), bytes_read));
+    printf("WriteBuffer: result = %d\n", result);
     if (result < 0) {
       // Write failed or waiting for write completion.
       return;
@@ -476,6 +486,7 @@ void URLFetcherCore::OnReadCompleted(URLRequest* request,
 
   // See comments re: HEAD requests in ReadResponse().
   if (bytes_read != ERR_IO_PENDING || request_type_ == URLFetcher::HEAD) {
+    printf("T1\n");
     status_ = URLRequestStatus::FromError(bytes_read);
     received_response_content_length_ =
         request_->received_response_content_length();
@@ -486,6 +497,8 @@ void URLFetcherCore::OnReadCompleted(URLRequest* request,
     const int result = response_writer_->Finish(
         bytes_read > 0 ? OK : bytes_read,
         base::Bind(&URLFetcherCore::DidFinishWriting, this));
+    printf("result: %d, ERR_IO_PENDING: %d\n",
+           result, ERR_IO_PENDING);
     if (result != ERR_IO_PENDING)
       DidFinishWriting(result);
   }
@@ -725,6 +738,7 @@ void URLFetcherCore::OnCompletedURLRequest(
 }
 
 void URLFetcherCore::InformDelegateFetchIsComplete() {
+  printf("InformDelegateFetchIsComplete\n");
   DCHECK(delegate_task_runner_->RunsTasksInCurrentSequence());
   if (delegate_)
     delegate_->OnURLFetchComplete(fetcher_);
@@ -951,10 +965,13 @@ void URLFetcherCore::InformDelegateDownloadProgressInDelegateSequence(
     int64_t current,
     int64_t total,
     int64_t current_network_bytes) {
+  printf("InformDelegateDownloadProgressInDelegateSequence, delegate_: [%p]\n", delegate_);
   DCHECK(delegate_task_runner_->RunsTasksInCurrentSequence());
+  printf("^^^ DCHECK complete?\n");
   if (delegate_)
     delegate_->OnURLFetchDownloadProgress(fetcher_, current, total,
                                           current_network_bytes);
+  printf("^^^ Done\n");
 }
 
 void URLFetcherCore::AssertHasNoUploadData() const {

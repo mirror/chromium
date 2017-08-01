@@ -77,6 +77,9 @@ class TestURLRequestInterceptor::Delegate : public URLRequestInterceptor {
   void SetResponse(const GURL& url,
                    const base::FilePath& path,
                    bool ignore_query) {
+    printf("** SetResponse: %s, path = %s\n",
+           url.possibly_invalid_spec().c_str(),
+           path.value().c_str());
     DCHECK(network_task_runner_->RunsTasksInCurrentSequence());
     if (ignore_query) {
       ignore_query_responses_[url] = path;
@@ -99,6 +102,7 @@ class TestURLRequestInterceptor::Delegate : public URLRequestInterceptor {
       URLRequest* request,
       NetworkDelegate* network_delegate) const override {
     DCHECK(network_task_runner_->RunsTasksInCurrentSequence());
+    printf("MaybeInterceptRequest: %s\n", request->url().possibly_invalid_spec().c_str());
     if (request->url().scheme() != scheme_ ||
         request->url().host() != hostname_) {
       return NULL;
@@ -122,6 +126,7 @@ class TestURLRequestInterceptor::Delegate : public URLRequestInterceptor {
       ++hit_count_;
     }
 
+    printf("Will intercept\n");
     return new TestURLRequestJob(
         request, network_delegate, it->second, worker_task_runner_);
   }

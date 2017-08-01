@@ -23,6 +23,9 @@ bool OnMessageLoopForInterceptorAddition() {
   // MessageLoop is required for some tests where there is no chance to insert
   // an interceptor between a networking thread being started and a resource
   // request being issued.
+  if (message_loop && message_loop->type() != base::MessageLoop::TYPE_IO) {
+    printf("incorrect: %d\n", message_loop->type());
+  }
   return message_loop == nullptr ||
          message_loop->type() == base::MessageLoop::TYPE_IO;
 }

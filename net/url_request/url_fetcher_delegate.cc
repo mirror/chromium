@@ -17,5 +17,8 @@ void URLFetcherDelegate::OnURLFetchUploadProgress(const URLFetcher* source,
                                                   int64_t total) {}
 
 URLFetcherDelegate::~URLFetcherDelegate() {}
+URLFetcherDelegate::URLFetcherDelegate() {
+  printf("+URLFetcherDelegate: [%p]\n", this);
+}
 
 }  // namespace net

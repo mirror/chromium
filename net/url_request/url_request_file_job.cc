@@ -67,6 +67,7 @@ URLRequestFileJob::URLRequestFileJob(
       weak_ptr_factory_(this) {}
 
 void URLRequestFileJob::Start() {
+  printf("URLRequestFileJob::Start\n");
   FileMetaInfo* meta_info = new FileMetaInfo();
   file_task_runner_->PostTaskAndReply(
       FROM_HERE,
@@ -157,6 +158,7 @@ bool URLRequestFileJob::GetMimeType(std::string* mime_type) const {
 
 void URLRequestFileJob::SetExtraRequestHeaders(
     const HttpRequestHeaders& headers) {
+  printf("SetExtraRequestHeaders\n");
   std::string range_header;
   if (headers.GetHeader(HttpRequestHeaders::kRange, &range_header)) {
     // This job only cares about the Range header. This method stashes the value
@@ -166,6 +168,7 @@ void URLRequestFileJob::SetExtraRequestHeaders(
     std::vector<HttpByteRange> ranges;
     if (HttpUtil::ParseRangeHeader(range_header, &ranges)) {
       if (ranges.size() == 1) {
+        printf("ranges.size() == 1\n");
         byte_range_ = ranges[0];
       } else {
         // We don't support multiple range requests in one single URL request,
@@ -204,6 +207,7 @@ bool URLRequestFileJob::CanAccessFile(const base::FilePath& original_path,
 
 void URLRequestFileJob::FetchMetaInfo(const base::FilePath& file_path,
                                       FileMetaInfo* meta_info) {
+  printf("URLRequestFileJob::FetchMetaInfo: meta_info = [%p]\n", meta_info);
   base::File::Info file_info;
   meta_info->file_exists = base::GetFileInfo(file_path, &file_info);
   if (meta_info->file_exists) {
@@ -215,9 +219,11 @@ void URLRequestFileJob::FetchMetaInfo(const base::FilePath& file_path,
   meta_info->mime_type_result = GetMimeTypeFromFile(file_path,
                                                     &meta_info->mime_type);
   meta_info->absolute_path = base::MakeAbsoluteFilePath(file_path);
+  printf("absolute_path: %s\n", meta_info->absolute_path.value().c_str());
 }
 
 void URLRequestFileJob::DidFetchMetaInfo(const FileMetaInfo* meta_info) {
+  printf("URLRequestFileJob::DidFetchMetaInfo\n");
   meta_info_ = *meta_info;
 
   // We use URLRequestFileJob to handle files as well as directories without
@@ -229,15 +235,18 @@ void URLRequestFileJob::DidFetchMetaInfo(const FileMetaInfo* meta_info) {
   // So what happens is we append it with trailing slash and redirect it to
   // FileDirJob where it is resolved as invalid.
   if (!meta_info_.file_exists) {
+    printf("-B1\n");
     DidOpen(ERR_FILE_NOT_FOUND);
     return;
   }
   if (meta_info_.is_directory) {
+    printf("-B2\n");
     DidOpen(OK);
     return;
   }
 
   if (!CanAccessFile(file_path_, meta_info->absolute_path)) {
+    printf("-B3\n");
     DidOpen(ERR_ACCESS_DENIED);
     return;
   }
@@ -248,25 +257,47 @@ void URLRequestFileJob::DidFetchMetaInfo(const FileMetaInfo* meta_info) {
   int rv = stream_->Open(file_path_, flags,
                          base::Bind(&URLRequestFileJob::DidOpen,
                                     weak_ptr_factory_.GetWeakPtr()));
-  if (rv != ERR_IO_PENDING)
+  printf("-BB1\n");
+  if (rv != ERR_IO_PENDING) {
+    printf("-BB2\n");
     DidOpen(rv);
+  }
 }
 
 void URLRequestFileJob::DidOpen(int result) {
+  printf("URLRequestFileJob::DidOpen: %d\n", result);
   OnOpenComplete(result);
+  printf("1\n");
   if (result != OK) {
     NotifyStartError(URLRequestStatus(URLRequestStatus::FAILED, result));
     return;
   }
 
+  printf("3\n");
   if (range_parse_result_ != OK ||
       !byte_range_.ComputeBounds(meta_info_.file_size)) {
+    printf("4\n");
     DidSeek(ERR_REQUEST_RANGE_NOT_SATISFIABLE);
+    printf("5\n");
     return;
   }
 
-  remaining_bytes_ = byte_range_.last_byte_position() -
+  printf("6\n");
+  printf("last_byte_position: %ld\n", byte_range_.last_byte_position());
+  printf("first_byte_position: %ld\n", byte_range_.first_byte_position());
+  printf("remaining_bytes_ [old] = %ld\n", remaining_bytes_);
+  printf("remaining_bytes_: [%p]\n", &remaining_bytes_);
+  remaining_bytes_ = 1;
+  printf("remaining_bytes_ [old2] = %ld\n", remaining_bytes_);
+  int64_t x = byte_range_.last_byte_position() -
                      byte_range_.first_byte_position() + 1;
+  printf("test x = %ld\n", x);
+  remaining_bytes_ = x;
+  printf("test 2\n");
+//  remaining_bytes_ = x;
+//  remaining_bytes_ = byte_range_.last_byte_position() -
+//                     byte_range_.first_byte_position() + 1;
+  printf("remaining_bytes_: %ld\n", remaining_bytes_);
   DCHECK_GE(remaining_bytes_, 0);
 
   if (remaining_bytes_ > 0 && byte_range_.first_byte_position() != 0) {
@@ -301,12 +332,17 @@ void URLRequestFileJob::DidRead(scoped_refptr<IOBuffer> buf, int result) {
   if (result >= 0) {
     remaining_bytes_ -= result;
     DCHECK_GE(remaining_bytes_, 0);
+    printf("URLRequestFileJob::DidRead: remaining_bytes_: %ld\n", remaining_bytes_);
   }
 
+  printf("Will call OnReadComplete\n");
   OnReadComplete(buf.get(), result);
+  printf("Called OnReadComplete\n");
   buf = NULL;
 
+  printf("Will call ReadRawDataComplete\n");
   ReadRawDataComplete(result);
+  printf("Called ReadRawDataComplete\n");
 }
 
 }  // namespace net

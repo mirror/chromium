@@ -6,6 +6,7 @@
 
 #include <utility>
 
+#include "base/debug/stack_trace.h"
 #include "base/command_line.h"
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
@@ -77,6 +78,8 @@ DBusThreadManager::DBusThreadManager(ProcessMask process_mask,
 }
 
 DBusThreadManager::~DBusThreadManager() {
+  printf("~DBusThreadManager\n");
+  base::debug::StackTrace().Print();
   // Delete all D-Bus clients before shutting down the system bus.
   clients_browser_.reset();
   clients_common_.reset();
