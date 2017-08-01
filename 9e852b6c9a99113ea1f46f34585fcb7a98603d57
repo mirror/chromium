@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "78f10c72_3c81b5c7",
+        "filename": "ash/highlighter/highlighter_controller.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-08-01T17:59:18Z",
+      "side": 1,
+      "message": "Done. \nThis class has been copied from LaserPointerController which is somewhat confusing to read. This CL actually used to contain a refactoring that removed the duplication and generally streamlined the structure (see the patch set #1), but I have split that out at @reveman\u0027s request, leaving only the prediction related code.",
+      "parentUuid": "128390c6_826a7025",
+      "revId": "9e852b6c9a99113ea1f46f34585fcb7a98603d57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2a2e2dad_e4d991ad",
         "filename": "ash/highlighter/highlighter_controller_test_api.cc",
         "patchSetId": 12
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "bcba42f3_b42f86b6",
+        "filename": "ash/highlighter/highlighter_controller_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-08-01T17:59:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d59462b6_09a3be2f",
+      "revId": "9e852b6c9a99113ea1f46f34585fcb7a98603d57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f816c52_8ec8bd4a",
         "filename": "ash/highlighter/highlighter_controller_unittest.cc",
         "patchSetId": 12
@@ -64,6 +100,24 @@
       "writtenOn": "2017-08-01T17:29:10Z",
       "side": 1,
       "message": "This bug is closed as fixed. Is there a different problem?",
+      "revId": "9e852b6c9a99113ea1f46f34585fcb7a98603d57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2aba00e_289954f6",
+        "filename": "ash/highlighter/highlighter_controller_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-08-01T17:59:18Z",
+      "side": 1,
+      "message": "Removed the check, these tests pass both with and without --mash",
+      "parentUuid": "0f816c52_8ec8bd4a",
       "revId": "9e852b6c9a99113ea1f46f34585fcb7a98603d57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "7faf7ef2_ac71e387",
+        "filename": "ash/highlighter/highlighter_controller_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-08-01T17:59:18Z",
+      "side": 1,
+      "message": "The praise belongs to sammiequon@ who authored laser_pointer_controller_test.cc of which this is a copy. However I am planning to add more tests here.",
+      "parentUuid": "8cd69099_4188308a",
+      "revId": "9e852b6c9a99113ea1f46f34585fcb7a98603d57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a9ddd2fc_e8200dec",
         "filename": "ash/highlighter/highlighter_view.cc",
         "patchSetId": 12
@@ -101,6 +173,24 @@
       "revId": "9e852b6c9a99113ea1f46f34585fcb7a98603d57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1345fd1_a45c88d3",
+        "filename": "ash/highlighter/highlighter_view.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-08-01T17:59:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9ddd2fc_e8200dec",
+      "revId": "9e852b6c9a99113ea1f46f34585fcb7a98603d57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
