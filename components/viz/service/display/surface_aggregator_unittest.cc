@@ -230,12 +230,13 @@ class SurfaceAggregatorTest : public testing::Test {
     gfx::Rect visible_layer_rect = gfx::Rect(surface_size);
     gfx::Rect clip_rect = gfx::Rect(surface_size);
     bool is_clipped = false;
+    bool is_opaque = false;
     SkBlendMode blend_mode = SkBlendMode::kSrcOver;
 
     auto* shared_quad_state = pass->CreateAndAppendSharedQuadState();
-    shared_quad_state->SetAll(layer_to_target_transform,
-                              gfx::Rect(layer_bounds), visible_layer_rect,
-                              clip_rect, is_clipped, opacity, blend_mode, 0);
+    shared_quad_state->SetAll(
+        layer_to_target_transform, gfx::Rect(layer_bounds), visible_layer_rect,
+        clip_rect, is_clipped, is_opaque, opacity, blend_mode, 0);
 
     cc::SurfaceDrawQuad* surface_quad =
         pass->CreateAndAppendDrawQuad<cc::SurfaceDrawQuad>();
@@ -262,7 +263,8 @@ class SurfaceAggregatorTest : public testing::Test {
     gfx::Rect output_rect = gfx::Rect(0, 0, 5, 5);
     auto* shared_state = pass->CreateAndAppendSharedQuadState();
     shared_state->SetAll(gfx::Transform(), output_rect, output_rect,
-                         output_rect, false, 1, SkBlendMode::kSrcOver, 0);
+                         output_rect, false, false, 1, SkBlendMode::kSrcOver,
+                         0);
     auto* quad = pass->CreateAndAppendDrawQuad<cc::RenderPassDrawQuad>();
     quad->SetNew(shared_state, output_rect, output_rect, render_pass_id, 0,
                  gfx::RectF(), gfx::Size(), gfx::Vector2dF(), gfx::PointF(),
@@ -1212,12 +1214,13 @@ void AddSolidColorQuadWithBlendMode(const gfx::Size& size,
   const gfx::Rect clip_rect(size);
 
   bool is_clipped = false;
+  bool is_opaque = false;
   float opacity = 1.f;
 
   bool force_anti_aliasing_off = false;
   auto* sqs = pass->CreateAndAppendSharedQuadState();
   sqs->SetAll(layer_to_target_transform, layer_rect, visible_layer_rect,
-              clip_rect, is_clipped, opacity, blend_mode, 0);
+              clip_rect, is_clipped, is_opaque, opacity, blend_mode, 0);
 
   auto* color_quad = pass->CreateAndAppendDrawQuad<cc::SolidColorDrawQuad>();
   color_quad->SetNew(pass->shared_quad_state_list.back(), visible_layer_rect,
