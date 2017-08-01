@@ -204,6 +204,8 @@ extern const base::Feature kEHVInputOnImeMenu;
 extern const base::Feature kCrosCompUpdates;
 
 extern const base::Feature kCrOSComponent;
+
+extern const base::Feature kTPMFirmwareUpdate;
 #endif  // defined(OS_CHROMEOS)
 
 extern const base::Feature kPageLoadMetricsMojofication;
