@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a4d8fce5_5b7b80ee",
+        "filename": "ui/aura/mus/hit_test_data_provider_aura.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-08-01T15:17:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ea67479_6b70bd87",
+      "revId": "e2c0c2d61eb4a1a054fca2d64c737e48956c6f4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b0d04a6_1a7cfd13",
         "filename": "ui/aura/mus/hit_test_data_provider_aura.h",
         "patchSetId": 23
@@ -33,6 +51,24 @@
       "revId": "e2c0c2d61eb4a1a054fca2d64c737e48956c6f4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b20606a_eaeff456",
+        "filename": "ui/aura/mus/hit_test_data_provider_aura.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-08-01T15:17:48Z",
+      "side": 1,
+      "message": "aura::Window::GetEventTargeter() is unfortunately not const and so I cannot easily use const aura::Window* window_.",
+      "parentUuid": "2b0d04a6_1a7cfd13",
+      "revId": "e2c0c2d61eb4a1a054fca2d64c737e48956c6f4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "12494144_afeb7e2d",
+        "filename": "ui/aura/mus/hit_test_data_provider_aura_unittest.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-08-01T15:17:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6fc2576f_c77201e1",
+      "revId": "e2c0c2d61eb4a1a054fca2d64c737e48956c6f4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9750020d_df2c1530",
         "filename": "ui/aura/mus/window_port_mus.h",
         "patchSetId": 23
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "ae58ab78_2f8cf35b",
+        "filename": "ui/aura/mus/window_port_mus.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-08-01T15:17:48Z",
+      "side": 1,
+      "message": "Also needed for to be able to use |WindowPortMus::local_layer_tree_frame_sink_| and get access to a hit_test_data_provider.",
+      "parentUuid": "9750020d_df2c1530",
+      "revId": "e2c0c2d61eb4a1a054fca2d64c737e48956c6f4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5bab4982_ca03c835",
         "filename": "ui/aura/window.h",
         "patchSetId": 23
@@ -81,6 +153,24 @@
       "writtenOn": "2017-08-01T02:21:03Z",
       "side": 1,
       "message": "Why is this needed?",
+      "revId": "e2c0c2d61eb4a1a054fca2d64c737e48956c6f4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cf2646a_f211f0c1",
+        "filename": "ui/aura/window.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1002647
+      },
+      "writtenOn": "2017-08-01T15:17:48Z",
+      "side": 1,
+      "message": "This is to be able to call GetEventTargeter (which is unfortunately not const and so I cannot easily use const aura::Window* window_ in the HitTestDataProviderAura). We may be able to refactor it to allow making GetEventTargeter const but that requires fixing a long chain at the moment so probably outside of scope of this CL.",
+      "parentUuid": "5bab4982_ca03c835",
       "revId": "e2c0c2d61eb4a1a054fca2d64c737e48956c6f4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
