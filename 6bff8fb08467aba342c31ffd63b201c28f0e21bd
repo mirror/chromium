@@ -51,6 +51,24 @@
       "revId": "6bff8fb08467aba342c31ffd63b201c28f0e21bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "426171d6_b24a0676",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 594,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-01T20:47:51Z",
+      "side": 1,
+      "message": "This is a raw pointer. It\u0027s not needed, but I uploaded a new patchset to set this to nullptr to avoid a dangling (even if unused) pointer.",
+      "parentUuid": "f703bac8_668a757f",
+      "revId": "6bff8fb08467aba342c31ffd63b201c28f0e21bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
