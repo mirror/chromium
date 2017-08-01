@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5becefb3_a6d58026",
+        "filename": "ui/message_center/message_center_tray.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-08-01T05:38:35Z",
+      "side": 1,
+      "message": "N/A (Removed MessageCenterTray modification)",
+      "parentUuid": "a59f5ef7_fd6d9fa7",
+      "range": {
+        "startLine": 107,
+        "startChar": 1,
+        "endLine": 107,
+        "endChar": 18
+      },
+      "revId": "41925e7e9d2256a83ab411e4bddb3a3af3d0244c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d263036e_c8e58ca5",
         "filename": "ui/message_center/message_center_tray_delegate.h",
         "patchSetId": 23
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-01T05:12:35Z",
       "side": 1,
       "message": "please add a description and the sample return value for example.",
+      "range": {
+        "startLine": 50,
+        "startChar": 2,
+        "endLine": 50,
+        "endChar": 48
+      },
+      "revId": "41925e7e9d2256a83ab411e4bddb3a3af3d0244c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dba64960_47509382",
+        "filename": "ui/message_center/message_center_tray_delegate.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-08-01T05:38:35Z",
+      "side": 1,
+      "message": "N/A (Removed MessageCenterTray modification)",
+      "parentUuid": "d263036e_c8e58ca5",
       "range": {
         "startLine": 50,
         "startChar": 2,
