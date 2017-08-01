@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5b805e2_6f2e30be",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/XMLHttpRequest/access-control-basic-allow-async.htm",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-08-01T09:51:23Z",
+      "side": 1,
+      "message": "You may use test.unreached_func.",
+      "revId": "7c38288596b1a82a4b4fc9afacfd39b3d8faba47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
