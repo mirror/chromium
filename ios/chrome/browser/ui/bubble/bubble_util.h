@@ -15,11 +15,12 @@ namespace bubble_util {
 CGPoint AnchorPoint(CGRect targetFrame, BubbleArrowDirection arrowDirection);
 
 // Calculate the maximum width of the bubble such that it stays within its
-// bounding coordinate space. |targetFrame| is the frame the target UI element
-// in the coordinate system in which the bubble is drawn. |alignment| is the
-// bubble's alignment, and |boundingWidth| is the width of the coordinate space
-// in which the bubble is drawn.
-CGFloat MaxWidth(CGRect targetFrame,
+// bounding coordinate space. |anchorPoint| is the point of the target UI
+// element at which the bubble is anchored. It is in the coordinate system in
+// which the bubble is drawn. |alignment| is the bubble's alignment, and
+// |boundingWidth| is the width of the coordinate space in which the bubble is
+// drawn.
+CGFloat MaxWidth(CGPoint anchorPoint,
                  BubbleAlignment alignment,
                  CGFloat boundingWidth);
 
@@ -28,7 +29,7 @@ CGFloat MaxWidth(CGRect targetFrame,
 // the direction the bubble's arrow is pointing. |alignment| is the alignment of
 // the anchor (either leading, centered, or trailing). |boundingWidth| is the
 // width of the bubble's superview.
-CGRect BubbleFrame(CGRect targetFrame,
+CGRect BubbleFrame(CGPoint anchorPoint,
                    CGSize size,
                    BubbleArrowDirection direction,
                    BubbleAlignment alignment,
