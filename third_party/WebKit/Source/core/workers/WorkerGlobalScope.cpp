@@ -249,7 +249,7 @@ v8::Local<v8::Object> WorkerGlobalScope::AssociateWithWrapper(
 }
 
 bool WorkerGlobalScope::HasPendingActivity() const {
-  return timers_.HasInstalledTimeout();
+  return !ExecutionContext::IsContextDestroyed();
 }
 
 bool WorkerGlobalScope::IsContextThread() const {
