@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "26ef2154_de70563d",
+        "filename": "media/mojo/interfaces/mirror_service_remoting.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1157930
+      },
+      "writtenOn": "2017-08-01T00:44:32Z",
+      "side": 1,
+      "message": "Ack\nI got the following compiling error when changing to (double? rate):\nException: A type (spec \"d\") cannot be made nullable",
+      "parentUuid": "556c6b34_ca17dff7",
+      "range": {
+        "startLine": 35,
+        "startChar": 37,
+        "endLine": 35,
+        "endChar": 48
+      },
+      "revId": "eb6d1e219cc4e305969113cc71040fbad44fa282",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90639faf_c0f3fa19",
         "filename": "media/remoting/renderer_controller.h",
         "patchSetId": 2
