@@ -16,6 +16,24 @@
       "revId": "3ce948ad929f4598ac00f0164f6a2c744c0ab15f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e15b092_9148e376",
+        "filename": "build/config/compiler/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 916,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-08-01T00:08:07Z",
+      "side": 1,
+      "message": "\u003e You actually mean posix:runtime_library, right?\n\nYes, will update that\n\n\u003e It looks like this config is the only user of :c++flags; does\n\u003e it make sense to make c++flags a nested config of posix:runtime_library\n\u003e instead of this target? It doesn\u0027t look like we need it elsewhere\n\u003e and that\u0027s actually closer to what I had in mind (which was that\n\u003e we\u0027d actually merge the c++flags definitions *into* the posix:runtime_library\n\u003e target.\n\nThat would work only if we\u0027re positive we\u0027ll never use libc++ on windows.  thakis@ is this the case?",
+      "parentUuid": "9c78a678_f6effb21",
+      "revId": "3ce948ad929f4598ac00f0164f6a2c744c0ab15f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
