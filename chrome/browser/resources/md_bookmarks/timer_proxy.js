@@ -28,10 +28,10 @@ cr.define('bookmarks', function() {
   };
 
   /**
-   * A one-shot debouncer which fires the given callback after a delay. The
-   * delay can be refreshed by calling resetTimer. Resetting with no delay moves
+   * A debouncer which fires the given callback after a delay. The delay can be
+   * refreshed by calling resetTimer. Resetting the timeout with no delay moves
    * the callback to the end of the task queue.
-   * @param {!function()} callback
+   * @param {?function()} callback
    * @constructor
    */
   function Debouncer(callback) {
@@ -51,11 +51,15 @@ cr.define('bookmarks', function() {
 
   Debouncer.prototype = {
     /**
+     * Starts the timer for the callback, cancelling the old timer if there is
+     * one.
      * @param {number=} delay
      */
     resetTimeout: function(delay) {
-      if (this.timer_)
-        this.timerProxy_.clearTimeout(this.timer_);
+      if (!this.callback_)
+        return;
+
+      this.cancelTimeout();
       this.timer_ =
           this.timerProxy_.setTimeout(this.boundTimerCallback_, delay);
     },
@@ -72,6 +76,28 @@ cr.define('bookmarks', function() {
      */
     get promise() {
       return this.promiseResolver_.promise;
+    },
+
+    /**
+     * Resets the debouncer as if it had been newly instantiated.
+     * @param {=function()} callback
+     */
+    reset: function(callback) {
+      if (callback)
+        this.callback_ = callback;
+
+      this.isDone_ = false;
+      this.promiseResolver_ = new PromiseResolver();
+      this.cancelTimeout();
+    },
+
+    /**
+     * Cancel the timer callback, which can be restarted by calling
+     * resetTimeout().
+     */
+    cancelTimeout: function() {
+      if (this.timer_)
+        this.timerProxy_.clearTimeout(this.timer_);
     },
 
     /** @private */
