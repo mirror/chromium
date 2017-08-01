@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "47709141_3abbf512",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-08-01T20:57:03Z",
+      "side": 1,
+      "message": "nit: DCHECK_LE",
+      "range": {
+        "startLine": 34,
+        "startChar": 2,
+        "endLine": 34,
+        "endChar": 8
+      },
+      "revId": "f6564a9cc14e99f28d1a1a66ce7f7139852c80b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04454c50_fa054679",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-08-01T20:57:03Z",
+      "side": 1,
+      "message": "I\u0027d recommend having something similar to ThreadLoadTracker here:\n- We store visibility status, if are we running the task, current window boundaries, expected queueing time inside current window and current timestamp. \n- We have Advance(timestamp) method, which advances current timestamp to the given value. During this process we update values inside window and report values inside window if we\u0027re past the window boundary.\n- In task start/end handlers and visibility change handlers we just update the state and call Advance method.",
+      "range": {
+        "startLine": 164,
+        "startChar": 35,
+        "endLine": 164,
+        "endChar": 59
+      },
+      "revId": "f6564a9cc14e99f28d1a1a66ce7f7139852c80b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e5f01d78_8ef91d78",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator.h",
         "patchSetId": 10
@@ -17,6 +63,29 @@
         "startLine": 92,
         "startChar": 7,
         "endLine": 92,
+        "endChar": 13
+      },
+      "revId": "f6564a9cc14e99f28d1a1a66ce7f7139852c80b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce69502b_809d91a6",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-08-01T20:57:03Z",
+      "side": 1,
+      "message": "Do we really need a deque here? Just having the last status change time should be enough. Note that background status changes are coming from IPC, so the status can\u0027t change inside a task. This should simplify relevant code, which will be important for implementing per-frame EQT.\n\n* This might not be true for frame visibility, but we still can act on approximation that frame status does not change during a task.",
+      "range": {
+        "startLine": 96,
+        "startChar": 10,
+        "endLine": 96,
         "endChar": 13
       },
       "revId": "f6564a9cc14e99f28d1a1a66ce7f7139852c80b9",
