@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "45a0f5e5_4e5e71c2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-01T00:18:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1bc8ee18_fef3f4d6",
+      "revId": "014d817bfdb48c49b4ed12cc4e813306ca2febb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "89c2a580_98f415eb",
         "filename": "/COMMIT_MSG",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-01T00:10:31Z",
       "side": 1,
       "message": "I think you mean \"...is called with...\", though it\u0027d be good to give an example of why that would ever make sense - why does MemoryDataSourceTest do that..?",
+      "revId": "014d817bfdb48c49b4ed12cc4e813306ca2febb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8df243e3_87d34220",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-01T00:18:34Z",
+      "side": 1,
+      "message": "Done.\nIt\u0027s mostly about consistency across supported platforms. base::RandBytes(nullptr, 0) works on all platforms, except fuchsia. Updated the description to make it clear.",
+      "parentUuid": "89c2a580_98f415eb",
       "revId": "014d817bfdb48c49b4ed12cc4e813306ca2febb1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -56,6 +92,30 @@
       "revId": "014d817bfdb48c49b4ed12cc4e813306ca2febb1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5f51401_3296b62d",
+        "filename": "base/rand_util_fuchsia.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-01T00:18:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1b67c76_210d6f7b",
+      "range": {
+        "startLine": 36,
+        "startChar": 3,
+        "endLine": 36,
+        "endChar": 4
+      },
+      "revId": "014d817bfdb48c49b4ed12cc4e813306ca2febb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
