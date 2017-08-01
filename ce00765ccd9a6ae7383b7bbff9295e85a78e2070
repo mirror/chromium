@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9645d21_dc7b257b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-01T07:12:27Z",
+      "side": 1,
+      "message": "Please add a bug. I just made http://crbug.com/751018 if there\u0027s nothing more specific.\n\n(E.g. does this fix http://crbug.com/712267 ?)",
+      "revId": "ce00765ccd9a6ae7383b7bbff9295e85a78e2070",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71405810_6d064f68",
+        "filename": "ui/views/cocoa/views_nswindow_delegate.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-01T07:12:27Z",
+      "side": 1,
+      "message": "I don\u0027t think we need the extra plumbing.\n\n- (BOOL)windowShouldClose:(id)sender {\n  views::NonClientView* nonClientView \u003d\n      [self nativeWidgetMac]-\u003eGetWidget()-\u003enon_client_view();\n  return !nonClientView || nonClientView-\u003eCanClose();\n}\n\nshould work. Changes to the other files can all be reverted.",
+      "revId": "ce00765ccd9a6ae7383b7bbff9295e85a78e2070",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
