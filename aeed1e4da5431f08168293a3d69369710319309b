@@ -34,6 +34,24 @@
       "revId": "aeed1e4da5431f08168293a3d69369710319309b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f46b32b_fde44077",
+        "filename": "chrome/installer/zucchini/zucchini_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-01T20:59:50Z",
+      "side": 0,
+      "message": "Correct, fails on 32bit, AKA when size_t \u003d unsigned int.\nConverting both sides to uint64_t relies on the compiler being dump enough.. I\u0027ll stick with removing the check.",
+      "parentUuid": "36350781_61732979",
+      "revId": "aeed1e4da5431f08168293a3d69369710319309b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
