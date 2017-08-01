@@ -801,6 +801,30 @@
     },
     {
       "key": {
+        "uuid": "956ac142_e3b7225a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentManifestVerifier.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-08-01T16:33:32Z",
+      "side": 1,
+      "message": "mSupportedOrigins.isEmpty() and mDefaultApplications.isEmpty() can not be true at the same time, right? otherwise we should not create this class?\n\nanyway, it\u0027s a nit suggestion,",
+      "parentUuid": "263c96d2_e475d49a",
+      "range": {
+        "startLine": 238,
+        "startChar": 20,
+        "endLine": 238,
+        "endChar": 44
+      },
+      "revId": "1577ff88d0eeca39526e222b1368a5cab7de0ce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a756cd4_74bc8345",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentManifestVerifier.java",
         "patchSetId": 6
