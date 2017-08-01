@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b1026ecb_4e02a23d",
+        "filename": "base/synchronization/waitable_event.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-08-01T17:31:11Z",
+      "side": 1,
+      "message": "Say that it’s gotta be a receive right?",
+      "range": {
+        "startLine": 162,
+        "startChar": 39,
+        "endLine": 162,
+        "endChar": 43
+      },
+      "revId": "0629cd747ab525a785e419109e15dcefcf62b614",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac8f55d8_068ce4e9",
+        "filename": "base/synchronization/waitable_event.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-08-01T17:31:11Z",
+      "side": 1,
+      "message": "🚫n",
+      "range": {
+        "startLine": 170,
+        "startChar": 6,
+        "endLine": 170,
+        "endChar": 7
+      },
+      "revId": "0629cd747ab525a785e419109e15dcefcf62b614",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4bb140c_4eb512ae",
+        "filename": "base/synchronization/waitable_event.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-08-01T17:31:11Z",
+      "side": 1,
+      "message": "covfefe",
+      "range": {
+        "startLine": 171,
+        "startChar": 43,
+        "endLine": 171,
+        "endChar": 44
+      },
+      "revId": "0629cd747ab525a785e419109e15dcefcf62b614",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7b2786c_1e832604",
+        "filename": "base/synchronization/waitable_event_mac.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-08-01T17:31:11Z",
+      "side": 1,
+      "message": "I don‘t see the context being used anywhere, so you might as well use a constant 0.",
+      "range": {
+        "startLine": 24,
+        "startChar": 34,
+        "endLine": 24,
+        "endChar": 66
+      },
+      "revId": "0629cd747ab525a785e419109e15dcefcf62b614",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebcd9943_48cca9c2",
+        "filename": "base/synchronization/waitable_event_mac.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-08-01T17:31:11Z",
+      "side": 1,
+      "message": "This is crafty. I like it.",
+      "revId": "0629cd747ab525a785e419109e15dcefcf62b614",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
