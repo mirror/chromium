@@ -49,6 +49,53 @@
     },
     {
       "key": {
+        "uuid": "a453b160_62282e16",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_graph_observer.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-01T18:49:16Z",
+      "side": 1,
+      "message": "I see. Sorry that I didn\u0027t notice. Adding some comments sounds good.\n\nOr we can just remove OnPropertyChanged (as you mentioned in earlier comments). IMO, it is more clear to either just have specific APIs or one generic API. We just need another OnProcessPropertyChanged. This can be in followup if you prefer.",
+      "parentUuid": "174c4f4d_67bade59",
+      "range": {
+        "startLine": 62,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 34
+      },
+      "revId": "cb6313ce6ddb92cd468a58728681d6f7b3383451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91f63bc6_f997849a",
+        "filename": "services/resource_coordinator/coordination_unit/frame_coordination_unit_impl.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-01T18:49:16Z",
+      "side": 1,
+      "message": "nit: I think usually we will just continue the next sentence here instead of starting a new line.",
+      "range": {
+        "startLine": 16,
+        "startChar": 54,
+        "endLine": 16,
+        "endChar": 55
+      },
+      "revId": "cb6313ce6ddb92cd468a58728681d6f7b3383451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ada9724c_c61a06d8",
         "filename": "services/resource_coordinator/coordination_unit/frame_coordination_unit_impl.h",
         "patchSetId": 16
@@ -78,6 +125,64 @@
       "side": 1,
       "message": "Please see the comment at the declaration of FrameCoordinationUnitImpl.",
       "parentUuid": "ada9724c_c61a06d8",
+      "revId": "cb6313ce6ddb92cd468a58728681d6f7b3383451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d9c6041_f5d963ec",
+        "filename": "services/resource_coordinator/coordination_unit/frame_coordination_unit_impl.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-01T18:49:16Z",
+      "side": 1,
+      "message": "Clearly I am blind. :)",
+      "parentUuid": "e00c4910_babbda17",
+      "revId": "cb6313ce6ddb92cd468a58728681d6f7b3383451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8e33290b_3a3fd040",
+        "filename": "services/resource_coordinator/coordination_unit/metrics_collector.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-01T18:49:16Z",
+      "side": 1,
+      "message": "You can just use frame CU\u0027s IsVisible(), which you added in this CL.",
+      "range": {
+        "startLine": 59,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 13
+      },
+      "revId": "cb6313ce6ddb92cd468a58728681d6f7b3383451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f70e39f_7c73b393",
+        "filename": "services/resource_coordinator/coordination_unit/metrics_collector.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-01T18:49:16Z",
+      "side": 1,
+      "message": "nit: use initialization list?",
       "revId": "cb6313ce6ddb92cd468a58728681d6f7b3383451",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
