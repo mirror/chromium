@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc3264b2_1a63c997",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-01T20:50:53Z",
+      "side": 1,
+      "message": "Directly use anchorPoint.x on line 43 and remove this line.",
+      "revId": "ff59e52a093d751651f0e91ba7d8d2ba04e48105",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "003368f0_1881c0e6",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-01T20:50:53Z",
+      "side": 1,
+      "message": "Directly use anchorPoint.x where needed.",
+      "revId": "ff59e52a093d751651f0e91ba7d8d2ba04e48105",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
