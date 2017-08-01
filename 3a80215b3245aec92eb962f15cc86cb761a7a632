@@ -16,6 +16,24 @@
       "revId": "3a80215b3245aec92eb962f15cc86cb761a7a632",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de1b023d_cb6bb1eb",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1157921
+      },
+      "writtenOn": "2017-08-01T20:14:40Z",
+      "side": 1,
+      "message": "It\u0027s wrong in any mask case, but in the single texture case, it never bother tiling the mask, so the bug does not trigger. The original code is only correct when the picture layer is not a mask.",
+      "parentUuid": "d314052a_321904da",
+      "revId": "3a80215b3245aec92eb962f15cc86cb761a7a632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
