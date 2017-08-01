@@ -462,12 +462,13 @@ SDK.ChildTargetManager = class {
   }
 
   /**
-   * @param {string} type
+   * @param {!Protocol.Target.TargetInfo} targetInfo
    * @return {number}
    */
-  _capabilitiesForType(type) {
+  _capabilitiesForTarget(targetInfo) {
+    var type = targetInfo.type;
     if (type === 'worker') {
-      if (Runtime.experiments.isEnabled('networkInWorkers'))
+      if (targetInfo.isExperimentalNetworkCapableWorker)
         return SDK.Target.Capability.JS | SDK.Target.Capability.Log | SDK.Target.Capability.Network;
       else
         return SDK.Target.Capability.JS | SDK.Target.Capability.Log;
@@ -546,7 +547,7 @@ SDK.ChildTargetManager = class {
           parsedURL ? parsedURL.lastPathComponentWithFragment() : '#' + (++this._targetManager._lastAnonymousTargetId);
     }
     var target = this._targetManager.createTarget(
-        targetInfo.targetId, targetName, this._capabilitiesForType(targetInfo.type),
+        targetInfo.targetId, targetName, this._capabilitiesForTarget(targetInfo),
         this._createChildConnection.bind(this, this._targetAgent, sessionId), this._parentTarget);
 
     // Only pause the new worker if debugging SW - we are going through the pause on start checkbox.
