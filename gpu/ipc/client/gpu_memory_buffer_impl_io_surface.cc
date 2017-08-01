@@ -23,6 +23,7 @@ uint32_t LockFlags(gfx::BufferUsage usage) {
     case gfx::BufferUsage::SCANOUT:
     case gfx::BufferUsage::SCANOUT_CPU_READ_WRITE:
     case gfx::BufferUsage::GPU_READ_CPU_READ_WRITE_PERSISTENT:
+    case gfx::BufferUsage::CAMERA_WRITE_CPU_READ_WRITE:
       return 0;
   }
   NOTREACHED();
