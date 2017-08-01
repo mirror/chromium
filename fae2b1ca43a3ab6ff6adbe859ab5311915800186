@@ -46,6 +46,30 @@
       "revId": "fae2b1ca43a3ab6ff6adbe859ab5311915800186",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab7504a2_fef38052",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-01T15:53:35Z",
+      "side": 1,
+      "message": "Is this something that Chrome does on other platforms? If so, please explain the reason for passing non-default referrer in the code comments.\n\nIf no, then why iOS is different?",
+      "parentUuid": "6d5c124f_9b20855f",
+      "range": {
+        "startLine": 197,
+        "startChar": 22,
+        "endLine": 197,
+        "endChar": 34
+      },
+      "revId": "fae2b1ca43a3ab6ff6adbe859ab5311915800186",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
