@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8324234e_a0594e1e",
+        "filename": "content/common/dom_storage/dom_storage_map.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-01T01:01:38Z",
+      "side": 1,
+      "message": "Don\u0027t we need to count the size of the key here? Also, fyi, i don\u0027t think we expect any is_null() values given how this is used?\n\nI\u0027d vote to retain the old code which did this:\n\nreturn (key.length() + value.string().length()) * sizeof(base::char16);\n\nIf if the value.is_null(), this is correct because value.string() returns a reference to an empty string in that case.",
+      "revId": "2d15ff53c04a31e21ff3fb07f7c72e1d2c2fa278",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a67aa72_aa07157e",
+        "filename": "content/common/dom_storage/dom_storage_map.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-01T01:01:38Z",
+      "side": 1,
+      "message": "please put the methods in the .cc file in the same order as they are in the .h file",
+      "revId": "2d15ff53c04a31e21ff3fb07f7c72e1d2c2fa278",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c88c023_942133df",
+        "filename": "content/common/dom_storage/dom_storage_map_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-01T01:01:38Z",
+      "side": 1,
+      "message": "nice!",
+      "revId": "2d15ff53c04a31e21ff3fb07f7c72e1d2c2fa278",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
