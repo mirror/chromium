@@ -77,8 +77,8 @@ class ShellBrowserMainParts : public content::BrowserMainParts {
   std::unique_ptr<ShellNetworkController> network_controller_;
   std::unique_ptr<ShellAudioController> audio_controller_;
 #endif
-  std::unique_ptr<DesktopController> desktop_controller_;
   std::unique_ptr<ShellBrowserContext> browser_context_;
+  std::unique_ptr<DesktopController> desktop_controller_;
   std::unique_ptr<PrefService> local_state_;
   std::unique_ptr<PrefService> user_pref_service_;
   std::unique_ptr<ShellDeviceClient> device_client_;
