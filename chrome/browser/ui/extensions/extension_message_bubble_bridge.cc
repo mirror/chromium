@@ -50,7 +50,12 @@ base::string16 ExtensionMessageBubbleBridge::GetItemListText() {
 
 base::string16 ExtensionMessageBubbleBridge::GetActionButtonText() {
   const extensions::ExtensionIdList& list = controller_->GetExtensionIdList();
-  DCHECK(!list.empty());
+  // Since the bubble is shown asynchronously, it is possible that, at any
+  // point, the bubble's corresponding extension can be disabled or unloaded. In
+  // such case, |list| will be empty.
+  if (list.empty())
+    return base::string16();
+
   // Normally, the extension is enabled, but this might not be the case (such as
   // for the SuspiciousExtensionBubbleDelegate, which warns the user about
   // disabled extensions).
@@ -58,8 +63,9 @@ base::string16 ExtensionMessageBubbleBridge::GetActionButtonText() {
       extensions::ExtensionRegistry::Get(controller_->profile())
           ->GetExtensionById(list[0],
                              extensions::ExtensionRegistry::EVERYTHING);
+  if (!extension)
+    return base::string16();
 
-  DCHECK(extension);
   // An empty string is returned so that we don't display the button prompting
   // to remove policy-installed extensions.
   if (IsPolicyIndicationNeeded(extension))
@@ -105,14 +111,19 @@ void ExtensionMessageBubbleBridge::OnBubbleClosed(CloseAction action) {
 std::unique_ptr<ToolbarActionsBarBubbleDelegate::ExtraViewInfo>
 ExtensionMessageBubbleBridge::GetExtraViewInfo() {
   const extensions::ExtensionIdList& list = controller_->GetExtensionIdList();
+  // Since the bubble is shown asynchronously, it is possible that, at any
+  // point, the bubble's corresponding extension can be disabled or unloaded. In
+  // such case, |list| will be empty.
+  if (list.empty())
+    return nullptr;
   int include_mask = controller_->delegate()->ShouldLimitToEnabledExtensions() ?
       extensions::ExtensionRegistry::ENABLED :
       extensions::ExtensionRegistry::EVERYTHING;
   const extensions::Extension* extension =
       extensions::ExtensionRegistry::Get(controller_->profile())
           ->GetExtensionById(list[0], include_mask);
-
-  DCHECK(extension);
+  if (!extension)
+    return nullptr;
 
   std::unique_ptr<ExtraViewInfo> extra_view_info =
       base::MakeUnique<ExtraViewInfo>();

@@ -116,6 +116,65 @@ TEST_F(ExtensionMessageBubbleBridgeUnitTest,
       bridge->GetActionButtonText());
 }
 
+// Regression test for crbug.com/748952 when an extension is unloaded in the
+// midst of bubble creation and GetActionButtonText() is called. This test
+// ensures that we properly handle a nullptr extension before trying to
+// dereference it.
+TEST_F(ExtensionMessageBubbleBridgeUnitTest,
+       TestGetActionButtonTextMethodWithUninstalledExtension) {
+  base::FilePath path(data_dir().AppendASCII("api_test/override/newtab/"));
+  const extensions::Extension* extension = PackAndInstallCRX(path, INSTALL_NEW);
+
+  std::unique_ptr<extensions::ExtensionMessageBubbleController>
+      ntp_bubble_controller(new extensions::ExtensionMessageBubbleController(
+          new extensions::NtpOverriddenBubbleDelegate(browser()->profile()),
+          browser()));
+
+  EXPECT_TRUE(ntp_bubble_controller->ShouldShow());
+  ASSERT_EQ(1U, ntp_bubble_controller->GetExtensionList().size());
+
+  const std::string extension_id = extension->id();
+  UninstallExtension(extension_id, false);
+
+  EXPECT_FALSE(ntp_bubble_controller->ShouldShow());
+  ASSERT_EQ(0U, ntp_bubble_controller->GetExtensionList().size());
+
+  std::unique_ptr<ToolbarActionsBarBubbleDelegate> bridge(
+      new ExtensionMessageBubbleBridge(std::move(ntp_bubble_controller)));
+
+  // Since there is no extension installed, there should be no text.
+  EXPECT_TRUE(bridge->GetActionButtonText().empty());
+}
+
+// Regression test for crbug.com/748952 when an extension is unloaded in the
+// midst of bubble creation and GetExtraViewInfo() is called. This test ensures
+// that we properly handle a nullptr extension before trying to dereference it.
+TEST_F(ExtensionMessageBubbleBridgeUnitTest,
+       TestGetExtraViewInfoMethodWithUninstalledExtension) {
+  base::FilePath path(data_dir().AppendASCII("api_test/override/newtab/"));
+  const extensions::Extension* extension = PackAndInstallCRX(path, INSTALL_NEW);
+
+  std::unique_ptr<extensions::ExtensionMessageBubbleController>
+      ntp_bubble_controller(new extensions::ExtensionMessageBubbleController(
+          new extensions::NtpOverriddenBubbleDelegate(browser()->profile()),
+          browser()));
+
+  EXPECT_TRUE(ntp_bubble_controller->ShouldShow());
+  ASSERT_EQ(1U, ntp_bubble_controller->GetExtensionList().size());
+
+  const std::string extension_id = extension->id();
+  UninstallExtension(extension_id, false);
+
+  EXPECT_FALSE(ntp_bubble_controller->ShouldShow());
+  ASSERT_EQ(0U, ntp_bubble_controller->GetExtensionList().size());
+
+  std::unique_ptr<ToolbarActionsBarBubbleDelegate> bridge(
+      new ExtensionMessageBubbleBridge(std::move(ntp_bubble_controller)));
+
+  // Since there is no extension installed, there should be no extra view info.
+  EXPECT_FALSE(bridge->GetExtraViewInfo());
+}
+
 TEST_F(ExtensionMessageBubbleBridgeUnitTest,
        TestGetExtraViewInfoMethodWithPolicyInstalledSettingsOverrideExtension) {
   base::FilePath path(data_dir().AppendASCII("api_test/override/newtab/"));
