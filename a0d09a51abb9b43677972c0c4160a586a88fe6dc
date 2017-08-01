@@ -34,6 +34,24 @@
       "revId": "a0d09a51abb9b43677972c0c4160a586a88fe6dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53617aa2_6a998841",
+        "filename": "chrome/browser/chromeos/note_taking_helper_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 883,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-01T15:12:10Z",
+      "side": 1,
+      "message": "hmm, are you suggesting duplicating all of the code within SetUpOnMainThread in that file, or something else? i tried calling ArcServiceLauncher::Get()-\u003eResetForTesting() just before this CreateTestingProfile call, but i get a segfault (i didn\u0027t investigate further).\n\nregarding profiles, yes, i think that this needs to function as the primary profile. i\u0027m not sure exactly how profile management works when logging in on chrome os (somehow the newly-added user profile replaces the login-screen profile as the primary profile, right?).\n\ni think the main issue here is that the CreateTestingProfile call above calls Observe, so the ArcIntentHelperBridge needs to already exist for the new profile at that point. i\u0027d like to have a test for this, but if it\u0027s going to add a lot of complexity and won\u0027t be likely to catch regressions, i\u0027m okay with leaving it out.",
+      "parentUuid": "143a9b67_bea07641",
+      "revId": "a0d09a51abb9b43677972c0c4160a586a88fe6dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
