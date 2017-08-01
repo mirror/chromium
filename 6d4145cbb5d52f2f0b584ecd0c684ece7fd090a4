@@ -294,6 +294,24 @@
     },
     {
       "key": {
+        "uuid": "c075813f_e59f0bcc",
+        "filename": "chrome/browser/ui/views/harmony/layout_provider_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-01T00:50:44Z",
+      "side": 1,
+      "message": "This seems reasonable. I had thoughts:\n - it would be nice to avoid the extra `static const int`s (they take up space, but are only used to initialize other statics), and\n - the test could be parameterized, so that we always the test both with GDI and with DirectWrite each run on Windows.\n\nBut I don\u0027t think there\u0027s much to be gained from addressing these. Maybe the compiler is smart enough to optimize out the first one (although I suspect it can\u0027t assume there are no side effects from the IsDirectWriteEnabled call :/)",
+      "parentUuid": "e0f6fb31_0f929c46",
+      "revId": "6d4145cbb5d52f2f0b584ecd0c684ece7fd090a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79b8db02_b222dbf3",
         "filename": "ui/views/layout/layout_provider.cc",
         "patchSetId": 11
