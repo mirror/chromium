@@ -154,12 +154,12 @@ var SettingsSectionElement = Polymer({
 
     var animation =
         this.animateCard_('fixed', startTop, endTop, startHeight, endHeight);
-    animation.finished.then(this.setExpanded_.bind(this), function() {
-                      }).then(() => {
-      // Unset these changes whether the animation finished or canceled.
-      this.classList.remove('expanding');
-      this.style.height = '';
-    });
+    animation.finished.then(this.setExpanded_.bind(this), function() {})
+        .then(() => {
+          // Unset these changes whether the animation finished or canceled.
+          this.classList.remove('expanding');
+          this.style.height = '';
+        });
     return animation;
   },
 

@@ -13,6 +13,7 @@ var ROOT_PATH = '../../../../../';
 // Polymer BrowserTest fixture and aXe-core accessibility audit.
 GEN_INCLUDE([
   ROOT_PATH + 'chrome/test/data/webui/polymer_browser_test_base.js',
+  ROOT_PATH + 'chrome/test/data/webui/settings/accessibility_audit_rules.js',
   ROOT_PATH + 'third_party/axe-core/axe.js',
 ]);
 
@@ -36,22 +37,23 @@ function SettingsAccessibilityTest() {}
 
 /**
  * Run aXe-core accessibility audit, print console-friendly representation
- * of violations to console, and fail the test if there are audit failures.
+ * of violations to console, and fail the test.
  * @param {AccessibilityAuditConfig} options Dictionary disabling specific
  *    audit rules.
- * @return {Promise} A promise resolved if the accessibility audit completes
- *    with no issues, or rejected if the audit finds any accessibility issues.
+ * @return {Promise} A promise that will be resolved with the accessibility
+ *    audit is complete.
  */
 SettingsAccessibilityTest.runAudit = function(options) {
   // Ignore iron-iconset-svg elements that have duplicate ids and result in
   // false postives from the audit.
-  var context = {exclude: ['iron-iconset-svg']};
+  var context = {
+    exclude: ['iron-iconset-svg']
+  };
   options = options || {};
 
   return new Promise(function(resolve, reject) {
     axe.run(context, options, function(err, results) {
-      if (err)
-        reject(err);
+      if (err) reject(err);
 
       var violationCount = results.violations.length;
       if (violationCount) {
@@ -73,7 +75,8 @@ SettingsAccessibilityTest.prototype = {
 
   // Include files that define the mocha tests.
   extraLibraries: PolymerTest.getLibraries(ROOT_PATH).concat([
-    'ensure_lazy_loaded.js', 'passwords_and_autofill_fake_data.js',
+    'ensure_lazy_loaded.js',
+    'passwords_and_autofill_fake_data.js',
     'passwords_a11y_test.js'
   ]),
 
@@ -86,10 +89,20 @@ SettingsAccessibilityTest.prototype = {
   },
 };
 
-// TODO(quacht): Enable in separate CL.
-// Test disabled since it doesn't work on all platforms.
-// TEST_F('SettingsAccessibilityTest', 'All', function() {
-//   mocha.run();
-// });
+// TODO(quacht): Enable the audit rules failed in a separate CL after
+// resolving the violation or after adding the violation exception framework.
+var rulesToSkip = ['aria-valid-attr', 'color-contrast', 'region', 'skip-link'];
+
+// Define a unit test for every audit rule.
+AccessibilityAudit.ruleIds.forEach(function(ruleId) {
+  if (rulesToSkip.indexOf(ruleId) == -1) {
+    // Replace hyphens, which break the build.
+    var ruleName = ruleId.replace(new RegExp('-', 'g'), '_');
+    TEST_F('SettingsAccessibilityTest', 'MANAGE_PASSWORDS_' + ruleName,
+        function() {
+          mocha.grep('MANAGE_PASSWORDS_' + ruleId).run();
+        });
+  }
+})
 
 GEN('#endif  // defined(NDEBUG)');
