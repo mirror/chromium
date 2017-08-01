@@ -94,6 +94,30 @@
       "revId": "bd9061600b6b3386be722b53b64a6a04144bdb7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d84fa442_5733548d",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2223,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-01T23:33:59Z",
+      "side": 1,
+      "message": "And again, I think the more likely path we\u0027re hitting is there was a bookmark bar and the active webcontents is now null.",
+      "parentUuid": "71805d99_06e5abf8",
+      "range": {
+        "startLine": 2223,
+        "startChar": 17,
+        "endLine": 2223,
+        "endChar": 37
+      },
+      "revId": "bd9061600b6b3386be722b53b64a6a04144bdb7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
