@@ -45,7 +45,7 @@ class TracingHandler : public DevToolsDomainHandler,
   void Wire(UberDispatcher* dispatcher) override;
   Response Disable() override;
 
-  void OnTraceDataCollected(const std::string& trace_fragment);
+  void OnTraceDataCollected(std::unique_ptr<std::string> trace_fragment);
   void OnTraceComplete();
   void OnTraceToStreamComplete(const std::string& stream_handle);
 
@@ -72,10 +72,11 @@ class TracingHandler : public DevToolsDomainHandler,
   void OnMemoryDumpFinished(std::unique_ptr<RequestMemoryDumpCallback> callback,
                             bool success,
                             uint64_t dump_id);
-
+  std::string UpdateTraceCache(std::unique_ptr<std::string> trace_fragment);
   void SetupTimer(double usage_reporting_interval);
   void StopTracing(
-      const scoped_refptr<TracingController::TraceDataSink>& trace_data_sink);
+      const scoped_refptr<TracingController::TraceDataEndpoint>& endpoint,
+      const std::string& agent_label);
   bool IsTracing() const;
   static bool IsStartupTracingActive();
   CONTENT_EXPORT static base::trace_event::TraceConfig
@@ -90,6 +91,7 @@ class TracingHandler : public DevToolsDomainHandler,
   int frame_tree_node_id_;
   bool did_initiate_recording_;
   bool return_as_stream_;
+  std::string trace_cache_;
   base::WeakPtrFactory<TracingHandler> weak_factory_;
 
   FRIEND_TEST_ALL_PREFIXES(TracingHandlerTest,
