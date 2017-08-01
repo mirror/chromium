@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "816f14c7_719b810e",
+        "filename": "content/app/strings/content_strings.grd",
+        "patchSetId": 4
+      },
+      "lineNbr": 827,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-08-01T08:45:23Z",
+      "side": 1,
+      "message": "can you please add more descriptive descriptions, something like \"text message that is shown to the user when casting a video to a remote device\" and \".. unknown remote device\"",
+      "revId": "7f721829d881d4ee3d71413689432bc1ad77228c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c88edbfb_a948a5ad",
+        "filename": "third_party/WebKit/public/platform/WebMediaPlayerClient.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-08-01T08:45:23Z",
+      "side": 1,
+      "message": "why not pure virtual?",
+      "revId": "7f721829d881d4ee3d71413689432bc1ad77228c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
