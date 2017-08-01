@@ -963,6 +963,13 @@ void LocalFrameClientImpl::DispatchDidChangeManifest() {
     web_frame_->Client()->DidChangeManifest();
 }
 
+unsigned LocalFrameClientImpl::BackForwardIndex() {
+  WebViewBase* webview = web_frame_->ViewImpl();
+  if (!webview || !webview->Client())
+    return 0;
+  return webview->Client()->HistoryBackListCount();
+}
+
 unsigned LocalFrameClientImpl::BackForwardLength() {
   WebViewBase* webview = web_frame_->ViewImpl();
   if (!webview || !webview->Client())
