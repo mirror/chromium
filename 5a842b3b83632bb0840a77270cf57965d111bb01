@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "204f6c0f_36d4ac22",
+        "filename": "remoting/client/display/gl_renderer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-08-01T23:14:58Z",
+      "side": 1,
+      "message": "How do you know if the Changed call will happen before Created?",
+      "range": {
+        "startLine": 117,
+        "startChar": 17,
+        "endLine": 117,
+        "endChar": 33
+      },
+      "revId": "5a842b3b83632bb0840a77270cf57965d111bb01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd8ebc66_79039de4",
+        "filename": "remoting/ios/app/host_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1163631
+      },
+      "writtenOn": "2017-08-01T23:14:58Z",
+      "side": 1,
+      "message": "Why do you need to do this change?",
+      "range": {
+        "startLine": 48,
+        "startChar": 2,
+        "endLine": 48,
+        "endChar": 22
+      },
+      "revId": "5a842b3b83632bb0840a77270cf57965d111bb01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
