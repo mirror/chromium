@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1283fb72_b6900c1c",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion_algorithm.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-08-01T21:57:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "010836a3_812203f0",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 72
+      },
+      "revId": "007df0a933cb76a9242cea2512c246445bf235c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6446bb81_4e7d1e44",
         "filename": "services/device/generic_sensor/relative_orientation_euler_angles_fusion_algorithm_using_accelerometer.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "007df0a933cb76a9242cea2512c246445bf235c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5a87a88_7fa73540",
+        "filename": "services/device/generic_sensor/relative_orientation_euler_angles_fusion_algorithm_using_accelerometer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-08-01T21:57:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6446bb81_4e7d1e44",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 50,
+        "endChar": 57
+      },
+      "revId": "007df0a933cb76a9242cea2512c246445bf235c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
