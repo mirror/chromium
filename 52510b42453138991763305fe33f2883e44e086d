@@ -22,6 +22,30 @@
       "revId": "52510b42453138991763305fe33f2883e44e086d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2369d362_cc565e69",
+        "filename": "chrome/browser/sessions/session_restore.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1229504
+      },
+      "writtenOn": "2017-08-01T23:59:46Z",
+      "side": 1,
+      "message": "Done. I add this to RestoreForeignTab.",
+      "parentUuid": "d20460d4_01c58cdf",
+      "range": {
+        "startLine": 607,
+        "startChar": 12,
+        "endLine": 607,
+        "endChar": 38
+      },
+      "revId": "52510b42453138991763305fe33f2883e44e086d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
