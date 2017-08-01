@@ -15,7 +15,7 @@
 #include "base/observer_list.h"
 #include "base/optional.h"
 #include "components/viz/common/surfaces/frame_sink_id.h"
-#include "components/viz/host/frame_sink_observer.h"
+#include "components/viz/host/host_frame_sink_client.h"
 #include "components/viz/host/viz_host_export.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_support_manager.h"
 #include "mojo/public/cpp/bindings/binding.h"
@@ -57,19 +57,16 @@ class VIZ_HOST_EXPORT HostFrameSinkManager
       scoped_refptr<base::SingleThreadTaskRunner> task_runner,
       mojom::FrameSinkManagerPtr ptr);
 
-  void AddObserver(FrameSinkObserver* observer);
-  void RemoveObserver(FrameSinkObserver* observer);
+  void RegisterFrameSinkId(const FrameSinkId& frame_sink_id,
+                           HostFrameSinkClient* client);
+  void InvalidateFrameSinkId(const FrameSinkId& frame_sink_id);
 
   // Creates a connection between client to viz, using |request| and |client|,
   // that allows the client to submit CompositorFrames. When no longer needed,
-  // call DestroyCompositorFrameSink().
+  // call InvalidateFrameSinkId().
   void CreateCompositorFrameSink(const FrameSinkId& frame_sink_id,
                                  mojom::CompositorFrameSinkRequest request,
                                  mojom::CompositorFrameSinkClientPtr client);
-
-  // Destroys a client connection. Will call UnregisterFrameSinkHierarchy() with
-  // the registered parent if there is one.
-  void DestroyCompositorFrameSink(const FrameSinkId& frame_sink_id);
 
   // Registers FrameSink hierarchy. Clients can call this multiple times to
   // reparent without calling UnregisterFrameSinkHierarchy().
@@ -104,8 +101,11 @@ class VIZ_HOST_EXPORT HostFrameSinkManager
 
     // Returns true if there is nothing in FrameSinkData and it can be deleted.
     bool IsEmpty() const {
-      return !HasCompositorFrameSinkData() && !parent.has_value();
+      return !HasCompositorFrameSinkData() && !parent.has_value() && !client;
     }
+
+    // The client to be notified of changes to this FrameSink.
+    HostFrameSinkClient* client = nullptr;
 
     // If the frame sink is a root that corresponds to a Display.
     bool is_root = false;
@@ -123,6 +123,10 @@ class VIZ_HOST_EXPORT HostFrameSinkManager
    private:
     DISALLOW_COPY_AND_ASSIGN(FrameSinkData);
   };
+
+  // Destroys a client connection. Will call UnregisterFrameSinkHierarchy() with
+  // the registered parent if there is one.
+  void DestroyCompositorFrameSink(const FrameSinkId& frame_sink_id);
 
   // Assigns the temporary reference to the frame sink that is expected to
   // embeded |surface_id|, otherwise drops the temporary reference.
@@ -151,9 +155,6 @@ class VIZ_HOST_EXPORT HostFrameSinkManager
 
   // Per CompositorFrameSink data.
   base::flat_map<FrameSinkId, FrameSinkData> frame_sink_data_map_;
-
-  // Local observers to that receive OnSurfaceCreated() messages from IPC.
-  base::ObserverList<FrameSinkObserver> observers_;
 
   base::WeakPtrFactory<HostFrameSinkManager> weak_ptr_factory_;
 
