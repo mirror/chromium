@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c132c6f_81fe6d7e",
+        "filename": "components/omnibox/browser/scored_history_match.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-01T00:51:49Z",
+      "side": 1,
+      "message": "Nit: Not totally clear how this is different from the immediately previous case.  If you\u0027re trying to illustrate something distinct from that one I\u0027d be sure to call it out, otherwise I\u0027d remove this.",
+      "revId": "0c47f9b0719d945d84261ad26738d5813b164cbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9019728d_3a9e5943",
+        "filename": "components/omnibox/browser/scored_history_match.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 691,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-01T00:51:49Z",
+      "side": 1,
+      "message": "Nit: The first sentence is confusing because it\u0027s saying two things (what the intermediate score is and how it\u0027s mapped), with one inserted somewhat parenthetically.  Maybe more like: \"Compute an intermediate score by multiplying the topicality, specificity, and frequency scores, then map it to the range [0, 1399].\"",
+      "revId": "0c47f9b0719d945d84261ad26738d5813b164cbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
