@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94f58cbf_70a3278c",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionModifier.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1170229
+      },
+      "writtenOn": "2017-08-01T09:39:46Z",
+      "side": 1,
+      "message": "It is better to calculate , instead of storing it.\nIt might be increasing the object memory.",
+      "revId": "f248d0e8d493c5242957f29ce69d6fd22127ee9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
