@@ -557,7 +557,7 @@ std::unique_ptr<URLRequestContext> URLRequestContextBuilder::Build() {
         base::MakeUnique<HttpNetworkLayer>(storage->http_network_session());
   }
 
-  if (http_cache_enabled_) {
+  if (http_cache_enabled_ && http_cache_params_.max_size >= 0) {
     std::unique_ptr<HttpCache::BackendFactory> http_cache_backend;
     if (http_cache_params_.type != HttpCacheParams::IN_MEMORY) {
       // TODO(mmenke): Maybe merge BackendType and HttpCacheParams::Type? The

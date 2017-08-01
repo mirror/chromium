@@ -107,7 +107,7 @@ class NET_EXPORT URLRequestContextBuilder {
     Type type;
 
     // The max size of the cache in bytes. Default is algorithmically determined
-    // based off available disk space.
+    // based off available disk space. If it's negative, no cache is created.
     int max_size;
 
     // The cache path (when type is DISK).
