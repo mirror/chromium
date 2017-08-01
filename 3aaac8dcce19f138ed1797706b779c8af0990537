@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88c9cf6a_e16210d4",
+        "filename": "cc/paint/paint_op_buffer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1158,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-01T18:57:29Z",
+      "side": 1,
+      "message": "Can you put this (or another shader) into one of the above? I\u0027d like to have one paint flags that has the whole kitchen sink.",
+      "revId": "3aaac8dcce19f138ed1797706b779c8af0990537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7aafed75_30ccb961",
+        "filename": "cc/paint/paint_op_buffer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2395,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-01T18:57:29Z",
+      "side": 1,
+      "message": "I\u0027m not sure that this needs a separate test.  The PaintOpSerializationTest.SmokeTest covers all of this just by adding it to test_flags.  It will serialize every paint flags in that list and verify that it comes out the same on the other end.  The \"fill arbitrary values\" could just be an entry in the test_flags array as well.\n\nYou do also need to modify ExpectPaintFlagsEqual, which currently doesn\u0027t compare paint shaders.",
+      "revId": "3aaac8dcce19f138ed1797706b779c8af0990537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d837681a_907d82d6",
+        "filename": "cc/paint/paint_op_writer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-01T18:57:29Z",
+      "side": 1,
+      "message": "Can PaintOpReader get this as well?",
+      "revId": "3aaac8dcce19f138ed1797706b779c8af0990537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bfb4cd6_91e21580",
+        "filename": "cc/paint/paint_op_writer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-01T18:57:29Z",
+      "side": 1,
+      "message": "Can you do this with math and not a while loop?\n\nAlternatively, maybe put the shader last after the flattenables and then you get it for free?",
+      "revId": "3aaac8dcce19f138ed1797706b779c8af0990537",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
