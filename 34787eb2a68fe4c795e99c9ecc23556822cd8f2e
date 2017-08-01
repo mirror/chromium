@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3b2fee9a_4a6095a1",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util_unittest.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-01T21:00:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1347c7f6_8fda0341",
+      "revId": "34787eb2a68fe4c795e99c9ecc23556822cd8f2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ee84761_8483d445",
         "filename": "ios/chrome/browser/ui/bubble/bubble_view_anchor_point_provider.h",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "34787eb2a68fe4c795e99c9ecc23556822cd8f2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d42a992_55191162",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_anchor_point_provider.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-01T21:00:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ee84761_8483d445",
+      "revId": "34787eb2a68fe4c795e99c9ecc23556822cd8f2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
