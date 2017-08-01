@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "3e12a3a2_49c51b7d",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerGlobalScope.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-01T04:27:53Z",
+      "side": 1,
+      "message": "IMHO, returning valid data but it has a failure flag looks a bit strange to me. How about making GetScriptData take WTF::Optional\u003cRawScriptData\u003e* as an arg and return bool that indicates success/failure as follows?\n\nWTF::Optional\u003cRawScriptData\u003e data;\nbool success \u003d GetScriptData(script_url, \u0026data);\nif (!success)  // Failed during loading a installed script.\n  return Load::Result::kFailed;\nif (!data)     // Didn\u0027t fail but there is no installed script.\n  return Load::Result::kNotHandled;\n\nIf we keep the current behavior (returning data w/ the failure flag), can you update the comment on InstalledScriptsManager::GetScriptData()?",
+      "revId": "28ff909569964e9899fbdd5ed9c74fc511ab3e5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c343a1fe_aed65139",
         "filename": "third_party/WebKit/Source/core/workers/WorkerGlobalScope.cpp",
         "patchSetId": 6
