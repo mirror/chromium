@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "83eb8d87_b1866845",
+        "filename": "chrome/profiling/memlog_connection_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-08-01T00:10:07Z",
+      "side": 1,
+      "message": "Then can you comment in the constructor that the pointer must outlive it? With that, I\u0027m fine with \"not owned\" here.",
+      "parentUuid": "eba585a4_2a96205a",
+      "range": {
+        "startLine": 50,
+        "startChar": 48,
+        "endLine": 50,
+        "endChar": 53
+      },
+      "revId": "9c579d2c2114b4ad00b9394e65ddfc40903df2c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2a09530c_05d3db5a",
         "filename": "chrome/profiling/profiling_service.cc",
         "patchSetId": 7
