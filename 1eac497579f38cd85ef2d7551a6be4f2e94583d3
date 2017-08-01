@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69e28b03_00c710e6",
+        "filename": "ui/webui/resources/chromeos/network/network_shared_css.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-01T20:30:57Z",
+      "side": 1,
+      "message": "\u003c!-- --\u003e style comment, since this is HTML (and imported as HTML even though it\u0027s only used for the style sheet)",
+      "revId": "1eac497579f38cd85ef2d7551a6be4f2e94583d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "708ea9d0_01b666db",
+        "filename": "ui/webui/resources/chromeos/network/network_shared_css.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-01T20:30:57Z",
+      "side": 1,
+      "message": "Ideally these dependencies would be reversed, i.e. the variables are defined in cr_elements and Settings uses them. Then we wouldn\u0027t need these comments or hard-coded values to manually keep up to date. Is that feasible here?",
+      "range": {
+        "startLine": 13,
+        "startChar": 30,
+        "endLine": 13,
+        "endChar": 72
+      },
+      "revId": "1eac497579f38cd85ef2d7551a6be4f2e94583d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
