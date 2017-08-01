@@ -105,6 +105,30 @@
       "revId": "1eac497579f38cd85ef2d7551a6be4f2e94583d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "942844e4_e4303626",
+        "filename": "ui/webui/resources/chromeos/network/network_shared_css.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-01T21:36:17Z",
+      "side": 1,
+      "message": "Depending on cr-shared-style is fine (this already depends on that). I\u0027m just not sure that settings-box or the 64px min height should be shared outside of Settings.\n\nIf we really wanted to be \"correct\" we could define a variable here for this but I\u0027m not sure that really improves readability.",
+      "parentUuid": "e606546b_718bfb18",
+      "range": {
+        "startLine": 13,
+        "startChar": 30,
+        "endLine": 13,
+        "endChar": 72
+      },
+      "revId": "1eac497579f38cd85ef2d7551a6be4f2e94583d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
