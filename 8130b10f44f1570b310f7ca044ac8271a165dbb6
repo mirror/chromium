@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "de7b2be8_411dbc80",
+        "filename": "components/autofill/core/browser/autofill_address_validator.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-08-01T18:15:30Z",
+      "side": 1,
+      "message": "Is it still necessary?",
+      "parentUuid": "f2672b93_5afb971b",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 23
+      },
+      "revId": "8130b10f44f1570b310f7ca044ac8271a165dbb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ad3b8da_6f3f2eda",
         "filename": "components/autofill/core/browser/autofill_address_validator.cc",
         "patchSetId": 17
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "6f1afa7c_7aaf8869",
+        "filename": "components/autofill/core/browser/autofill_address_validator.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-08-01T18:15:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ad3b8da_6f3f2eda",
+      "range": {
+        "startLine": 21,
+        "startChar": 26,
+        "endLine": 21,
+        "endChar": 50
+      },
+      "revId": "8130b10f44f1570b310f7ca044ac8271a165dbb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef6e10bf_038ff1b8",
         "filename": "components/autofill/core/browser/autofill_address_validator.cc",
         "patchSetId": 17
@@ -59,6 +107,30 @@
       "writtenOn": "2017-07-31T13:48:20Z",
       "side": 1,
       "message": "Also DCHECK that the rules are loaded for the region of the address?",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 29,
+        "endChar": 8
+      },
+      "revId": "8130b10f44f1570b310f7ca044ac8271a165dbb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e83e3867_2bb557bf",
+        "filename": "components/autofill/core/browser/autofill_address_validator.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-08-01T18:15:30Z",
+      "side": 1,
+      "message": "That\u0027s not necessary. If the rules are not loaded for any reason, we can still Validate partly. (~~ The case where success \u003d 0).",
+      "parentUuid": "ef6e10bf_038ff1b8",
       "range": {
         "startLine": 29,
         "startChar": 2,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "9f47fc72_f3c742d4",
+        "filename": "components/autofill/core/browser/autofill_address_validator.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-08-01T18:15:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e700433_04ea0aec",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 42
+      },
+      "revId": "8130b10f44f1570b310f7ca044ac8271a165dbb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "58143001_9a09d6a8",
         "filename": "components/autofill/core/browser/autofill_address_validator.h",
         "patchSetId": 17
@@ -108,6 +204,24 @@
       "revId": "8130b10f44f1570b310f7ca044ac8271a165dbb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92245d56_9ecbc950",
+        "filename": "components/autofill/core/browser/autofill_address_validator.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-08-01T18:15:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58143001_9a09d6a8",
+      "revId": "8130b10f44f1570b310f7ca044ac8271a165dbb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "6af337e9_4e300587",
+        "filename": "components/autofill/core/browser/autofill_address_validator.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-08-01T18:15:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "323ae2b6_b87ead9a",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 57,
+        "endChar": 38
+      },
+      "revId": "8130b10f44f1570b310f7ca044ac8271a165dbb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b94dfc71_1dadbcd8",
         "filename": "components/autofill/core/browser/autofill_address_validator.h",
         "patchSetId": 17
@@ -151,6 +289,24 @@
     },
     {
       "key": {
+        "uuid": "39292ac2_d8ea508e",
+        "filename": "components/autofill/core/browser/autofill_address_validator.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-08-01T18:15:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b94dfc71_1dadbcd8",
+      "revId": "8130b10f44f1570b310f7ca044ac8271a165dbb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc8a9a16_080cc4c9",
         "filename": "components/autofill/core/browser/autofill_address_validator_unittest.cc",
         "patchSetId": 17
@@ -162,6 +318,30 @@
       "writtenOn": "2017-07-31T13:48:20Z",
       "side": 1,
       "message": "Nit: I think we only need to know that the profile is valid :)",
+      "range": {
+        "startLine": 111,
+        "startChar": 2,
+        "endLine": 115,
+        "endChar": 25
+      },
+      "revId": "8130b10f44f1570b310f7ca044ac8271a165dbb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c080841_9b75d2dd",
+        "filename": "components/autofill/core/browser/autofill_address_validator_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-08-01T18:15:30Z",
+      "side": 1,
+      "message": "And that it is available in the rules sources: Quebec and Canada.",
+      "parentUuid": "bc8a9a16_080cc4c9",
       "range": {
         "startLine": 111,
         "startChar": 2,
@@ -197,6 +377,30 @@
     },
     {
       "key": {
+        "uuid": "14d55a60_832a4e9b",
+        "filename": "components/autofill/core/browser/autofill_address_validator_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-08-01T18:15:30Z",
+      "side": 1,
+      "message": "US is an invalid country according to Source. I\u0027ll add a comment.",
+      "parentUuid": "5a17798f_65f65abe",
+      "range": {
+        "startLine": 125,
+        "startChar": 37,
+        "endLine": 125,
+        "endChar": 71
+      },
+      "revId": "8130b10f44f1570b310f7ca044ac8271a165dbb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3929d51a_33a358fd",
         "filename": "components/autofill/core/browser/autofill_address_validator_unittest.cc",
         "patchSetId": 17
@@ -220,6 +424,30 @@
     },
     {
       "key": {
+        "uuid": "a2ef81b8_bf759afe",
+        "filename": "components/autofill/core/browser/autofill_address_validator_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-08-01T18:15:30Z",
+      "side": 1,
+      "message": "QC is the valid one (Full profile..). I added Québec and qc.",
+      "parentUuid": "3929d51a_33a358fd",
+      "range": {
+        "startLine": 153,
+        "startChar": 34,
+        "endLine": 153,
+        "endChar": 40
+      },
+      "revId": "8130b10f44f1570b310f7ca044ac8271a165dbb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ce2fb09_af326331",
         "filename": "components/autofill/core/browser/autofill_profile_validator.cc",
         "patchSetId": 17
@@ -231,6 +459,30 @@
       "writtenOn": "2017-07-31T13:48:20Z",
       "side": 1,
       "message": "Let\u0027s make this a constant for easier modification.",
+      "range": {
+        "startLine": 38,
+        "startChar": 72,
+        "endLine": 38,
+        "endChar": 73
+      },
+      "revId": "8130b10f44f1570b310f7ca044ac8271a165dbb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbbd1285_1c7c9368",
+        "filename": "components/autofill/core/browser/autofill_profile_validator.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-08-01T18:15:30Z",
+      "side": 1,
+      "message": "That was temp, then missed it, sorry!",
+      "parentUuid": "3ce2fb09_af326331",
       "range": {
         "startLine": 38,
         "startChar": 72,
@@ -280,6 +532,24 @@
       "revId": "8130b10f44f1570b310f7ca044ac8271a165dbb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ecfffa3_01b7be74",
+        "filename": "components/autofill/core/browser/autofill_profile_validator_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1171077
+      },
+      "writtenOn": "2017-08-01T18:15:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30cc44da_c3a72397",
+      "revId": "8130b10f44f1570b310f7ca044ac8271a165dbb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
