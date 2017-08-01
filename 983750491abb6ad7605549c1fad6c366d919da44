@@ -22,6 +22,30 @@
       "revId": "983750491abb6ad7605549c1fad6c366d919da44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a547cb1_51de6ad1",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-01T11:21:03Z",
+      "side": 1,
+      "message": "The gesture recognizer is on the UICollectionView. The omnibox is part of the collection. The collection returns the index path of the cell below the omnibox. I don\u0027t see a way to prevent it.",
+      "parentUuid": "d233fef0_bcca6a7e",
+      "range": {
+        "startLine": 455,
+        "startChar": 25,
+        "endLine": 455,
+        "endChar": 38
+      },
+      "revId": "983750491abb6ad7605549c1fad6c366d919da44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
