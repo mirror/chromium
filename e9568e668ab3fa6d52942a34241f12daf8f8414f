@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "67972d5e_0bb85dd8",
+        "filename": "third_party/WebKit/Source/core/dom/MutationObserver.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-01T09:02:30Z",
+      "side": 1,
+      "message": "Regarding a), you need to call SetContext(new_context) when the associated document changes.\n\nRegarding b), as discussed offline, it\u0027s not clear what ExecutionContext we should use. I\u0027d use the ExecuionContext that is passed by [CallWith\u003dExecuitonContext] (because we normally use it in other DOM classes), although I agree that it\u0027s somewhat arbitrary. At least this is what we\u0027re doing in other DOM classes.\n\nI\u0027d prefer doing the same thing as other DOM code until we figure out how the ExecutionContext / v8::Context should be used throughout the code base. What do you think?\n\nThis will only affect a case where MutationObserver\u0027s expando is accessed after the associated ExecutionContext is detached. Given that many things are already broken after a context gets detached, I\u0027m not sure how much we need to worry about the case at the moment.",
+      "parentUuid": "17037d2b_1df80672",
+      "revId": "e9568e668ab3fa6d52942a34241f12daf8f8414f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3f193d7b_ca4259aa",
         "filename": "third_party/WebKit/Source/core/dom/MutationObserver.h",
         "patchSetId": 9
