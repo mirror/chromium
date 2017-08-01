@@ -14,6 +14,7 @@
 #import "chrome/browser/ui/cocoa/passwords/base_passwords_content_view_controller.h"
 #import "chrome/browser/ui/cocoa/passwords/password_item_views.h"
 #import "chrome/browser/ui/cocoa/passwords/passwords_bubble_utils.h"
+#import "chrome/browser/ui/cocoa/passwords/save_pending_password_view_controller.h"
 #include "chrome/browser/ui/passwords/manage_passwords_bubble_model.h"
 #include "chrome/browser/ui/passwords/manage_passwords_view_utils.h"
 #include "chrome/grit/generated_resources.h"
@@ -33,6 +34,15 @@ CGFloat ManagePasswordItemWidth() {
   const CGFloat undoLinkWidth = LabelSize(IDS_MANAGE_PASSWORDS_UNDO).width;
   return std::max(kDesiredRowWidth,
                   undoExplanationWidth + kItemLabelSpacing + undoLinkWidth);
+}
+
+NSTextField* EditableUsernameField(const base::string16& text) {
+  base::scoped_nsobject<NSTextField> textField(
+      [[NSTextField alloc] initWithFrame:NSZeroRect]);
+  InitLabel(textField, text);
+  [textField setEditable:YES];
+  [textField setSelectable:YES];
+  return textField.autorelease();
 }
 
 NSTextField* Label(const base::string16& text) {
@@ -204,12 +214,20 @@ NSTextField* FederationLabel(const base::string16& text) {
 
 @implementation PendingPasswordItemView
 
-- (id)initWithForm:(const autofill::PasswordForm&)form {
+- (NSTextField*)usernameField {
+  return usernameField_.get();
+}
+
+- (id)initWithForm:(const autofill::PasswordForm&)form editMode:(BOOL)editMode {
   if ((self = [super initWithFrame:NSZeroRect])) {
     // Add the username.
-    usernameField_.reset([UsernameLabel(GetDisplayUsername(form)) retain]);
+    if (editMode) {
+      usernameField_.reset(
+          [EditableUsernameField(GetDisplayUsername(form)) retain]);
+    } else {
+      usernameField_.reset([UsernameLabel(GetDisplayUsername(form)) retain]);
+    }
     [self addSubview:usernameField_];
-
     if (form.federation_origin.unique()) {
       passwordField_.reset([PasswordLabel(form.password_value) retain]);
     } else {
@@ -268,7 +286,7 @@ NSTextField* FederationLabel(const base::string16& text) {
 
 @end
 
-@interface ManagePasswordItemViewController ()
+@interface ManagePasswordItemViewController ()<NSTextFieldDelegate>
 - (void)onDeleteClicked:(id)sender;
 - (void)onUndoClicked:(id)sender;
 
@@ -322,10 +340,13 @@ NSTextField* FederationLabel(const base::string16& text) {
 
 - (void)updateContent {
   switch (state_) {
-    case MANAGE_PASSWORD_ITEM_STATE_PENDING:
-      contentView_.reset(
-          [[PendingPasswordItemView alloc] initWithForm:*passwordForm_]);
+    case MANAGE_PASSWORD_ITEM_STATE_PENDING: {
+      PendingPasswordItemView* item =
+          [[PendingPasswordItemView alloc] initWithForm:*passwordForm_
+                                               editMode:FALSE];
+      contentView_.reset(item);
       return;
+    }
     case MANAGE_PASSWORD_ITEM_STATE_MANAGE:
       contentView_.reset([[ManagePasswordItemView alloc]
           initWithForm:*passwordForm_

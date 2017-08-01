@@ -19,6 +19,8 @@ class ManagePasswordsBubbleModel;
 
 typedef std::vector<autofill::PasswordForm> PasswordFormsVector;
 
+// Handles enabling of the edit button when edit mode is switched off.
+@class SavePendingPasswordViewController;
 // Handles callbacks from ManagePasswordItemViewController.
 @protocol PasswordItemDelegate<NSObject>
 // Retrieves the model
@@ -26,6 +28,7 @@ typedef std::vector<autofill::PasswordForm> PasswordFormsVector;
 
 @property(readonly, nonatomic) CGFloat firstColumnMaxWidth;
 @property(readonly, nonatomic) CGFloat secondColumnMaxWidth;
+
 @end
 
 // Shows a list of usernames/passwords.
@@ -39,6 +42,7 @@ typedef std::vector<autofill::PasswordForm> PasswordFormsVector;
   CGFloat firstColumnMaxWidth_;
   CGFloat secondColumnMaxWidth_;
 }
+
 - (id)initWithModelAndForms:(ManagePasswordsBubbleModel*)model
                       forms:(const PasswordFormsVector*)password_forms;
 - (id)initWithModelAndForm:(ManagePasswordsBubbleModel*)model
