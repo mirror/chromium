@@ -88,11 +88,14 @@ int InitSocketPoolHelper(ClientSocketPoolManager::SocketGroupType group_type,
   bool using_ssl = group_type == ClientSocketPoolManager::SSL_GROUP;
   HostPortPair origin_host_port = endpoint;
 
+  LOG(WARNING) << origin_host_port.port();
   if (!using_ssl && session->params().testing_fixed_http_port != 0) {
     origin_host_port.set_port(session->params().testing_fixed_http_port);
+    LOG(WARNING) << origin_host_port.port();
   } else if (using_ssl && session->params().testing_fixed_https_port != 0) {
     origin_host_port.set_port(session->params().testing_fixed_https_port);
   }
+  LOG(WARNING) << origin_host_port.port();
 
   bool disable_resolver_cache =
       request_load_flags & LOAD_BYPASS_CACHE ||
