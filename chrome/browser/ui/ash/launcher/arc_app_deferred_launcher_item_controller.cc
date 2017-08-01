@@ -37,11 +37,11 @@ void ArcAppDeferredLauncherItemController::ItemSelected(
     int64_t display_id,
     ash::ShelfLaunchSource source,
     ItemSelectedCallback callback) {
+  LOG(ERROR) << "MSW ArcAppDeferredLauncherItemController::ItemSelected";
   std::move(callback).Run(ash::SHELF_ACTION_NONE, base::nullopt);
 }
 
-void ArcAppDeferredLauncherItemController::ExecuteCommand(uint32_t command_id,
-                                                          int32_t event_flags) {
+void ArcAppDeferredLauncherItemController::ExecuteCommand(bool from_context_menu, int64_t command_id, int32_t event_flags, int64_t display_id) {
   // This delegate does not support showing an application menu.
   NOTIMPLEMENTED();
 }

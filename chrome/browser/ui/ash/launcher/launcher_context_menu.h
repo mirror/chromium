@@ -6,15 +6,10 @@
 #define CHROME_BROWSER_UI_ASH_LAUNCHER_LAUNCHER_CONTEXT_MENU_H_
 
 #include "ash/public/cpp/shelf_item.h"
-#include "ash/shelf/shelf_alignment_menu.h"
 #include "base/macros.h"
 #include "ui/base/models/simple_menu_model.h"
 
 class ChromeLauncherController;
-
-namespace ash {
-class Shelf;
-}
 
 // Base class for context menu which is shown for a regular extension item in
 // the shelf, or for an ARC app item in the shelf, or shown when right click
@@ -41,24 +36,23 @@ class LauncherContextMenu : public ui::SimpleMenuModel,
 
   ~LauncherContextMenu() override;
 
-  // Static function to create contextmenu instance.
+  // Static function to create a context menu instance.
   static LauncherContextMenu* Create(ChromeLauncherController* controller,
                                      const ash::ShelfItem* item,
-                                     ash::Shelf* shelf);
+                                     int64_t display_id);
 
   // ui::SimpleMenuModel::Delegate overrides:
-  bool IsItemForCommandIdDynamic(int command_id) const override;
-  base::string16 GetLabelForCommandId(int command_id) const override;
   bool IsCommandIdChecked(int command_id) const override;
   bool IsCommandIdEnabled(int command_id) const override;
   void ExecuteCommand(int command_id, int event_flags) override;
 
  protected:
+  // TODO(msw): Remove controller arg/member? 
   LauncherContextMenu(ChromeLauncherController* controller,
                       const ash::ShelfItem* item,
-                      ash::Shelf* shelf);
-  ChromeLauncherController* controller() const { return controller_; }
+                      int64_t display_id);
 
+  ChromeLauncherController* controller() const { return controller_; }
   const ash::ShelfItem& item() const { return item_; }
 
   // Add menu item for pin/unpin.
@@ -75,9 +69,9 @@ class LauncherContextMenu : public ui::SimpleMenuModel,
 
   ash::ShelfItem item_;
 
-  ash::ShelfAlignmentMenu shelf_alignment_menu_;
+  std::unique_ptr<ui::SimpleMenuModel> shelf_alignment_menu_;
 
-  ash::Shelf* shelf_;
+  int64_t display_id_;
 
   DISALLOW_COPY_AND_ASSIGN(LauncherContextMenu);
 };
