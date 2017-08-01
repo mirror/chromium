@@ -34,6 +34,24 @@
       "revId": "cc90f7e8378e3304d09706edd506336d36b0ec80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b9abebe_800b6cb6",
+        "filename": "components/viz/service/display/surface_aggregator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-08-01T19:58:32Z",
+      "side": 1,
+      "message": "Huh, that\u0027s new to me. I see this is used in chromium too. OK!",
+      "parentUuid": "0c3543a2_7d7143d1",
+      "revId": "cc90f7e8378e3304d09706edd506336d36b0ec80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
