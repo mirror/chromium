@@ -33,6 +33,24 @@
       "revId": "7f1ee9842fd803152fba630c747e5ccf6999d714",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e046de7b_872b76b5",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8MutationCallback.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-08-01T02:19:50Z",
+      "side": 0,
+      "message": "This is a deleted file and IIUC yukishiino@ is basically doing what you are suggesting (Using ContextClient) ?",
+      "parentUuid": "23a46aa2_5370c9ef",
+      "revId": "7f1ee9842fd803152fba630c747e5ccf6999d714",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
