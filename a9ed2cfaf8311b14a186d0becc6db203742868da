@@ -1,0 +1,135 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da398151_e5a91e63",
+        "filename": "BUILD.gn",
+        "patchSetId": 14
+      },
+      "lineNbr": 1089,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-01T01:41:31Z",
+      "side": 1,
+      "message": "O_O",
+      "revId": "a9ed2cfaf8311b14a186d0becc6db203742868da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28763e63_046b9e38",
+        "filename": "base/containers/circular_deque.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-01T01:41:31Z",
+      "side": 1,
+      "message": "nit: size",
+      "range": {
+        "startLine": 455,
+        "startChar": 12,
+        "endLine": 455,
+        "endChar": 53
+      },
+      "revId": "a9ed2cfaf8311b14a186d0becc6db203742868da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a6aa4da_4e63c6ec",
+        "filename": "base/containers/circular_deque.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-01T01:41:31Z",
+      "side": 1,
+      "message": "nit: Might be nice to just say why it\u0027s not the same with the default parameters (like you did in the reply to my initial comment)",
+      "revId": "a9ed2cfaf8311b14a186d0becc6db203742868da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e0da8c4_9e30943c",
+        "filename": "base/containers/circular_deque.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 682,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-01T01:41:31Z",
+      "side": 1,
+      "message": "This is fine and matches std::deque, but it\u0027s unclear to me whether we\u0027re supposed to get style owners to OK the use of non const ref as a parameter. Just pointing it out :P",
+      "revId": "a9ed2cfaf8311b14a186d0becc6db203742868da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dd8d37d_6156fa60",
+        "filename": "base/containers/circular_deque_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-01T01:41:31Z",
+      "side": 1,
+      "message": "I just want to say that your test coverage here is amazing: it\u0027s comprehensive and each test is simple and readable. All tests should be like this :P",
+      "revId": "a9ed2cfaf8311b14a186d0becc6db203742868da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9716a10b_34fe2ba5",
+        "filename": "base/containers/circular_deque_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 587,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-01T01:41:31Z",
+      "side": 1,
+      "message": "EXPECT_DCHECK_DEATH(*old_begin);? I don\u0027t know how widespread that is, but should work maybe",
+      "revId": "a9ed2cfaf8311b14a186d0becc6db203742868da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d63b0b8_d9bc24ab",
+        "filename": "base/template_util.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-01T01:41:31Z",
+      "side": 1,
+      "message": "detect",
+      "range": {
+        "startLine": 74,
+        "startChar": 11,
+        "endLine": 74,
+        "endChar": 17
+      },
+      "revId": "a9ed2cfaf8311b14a186d0becc6db203742868da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
