@@ -16,6 +16,24 @@
       "revId": "274e98e48d976cb5382a8a6b8594894bd17c42c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfe78d87_3bca5856",
+        "filename": "third_party/WebKit/Source/platform/wtf/Functional.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-08-01T08:14:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "364a56e7_dc47e5a3",
+      "revId": "274e98e48d976cb5382a8a6b8594894bd17c42c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
