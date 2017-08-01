@@ -137,6 +137,30 @@
     },
     {
       "key": {
+        "uuid": "59820885_928cec4b",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-08-01T11:37:31Z",
+      "side": 1,
+      "message": "keeping this CL focused sounds good to me. I\u0027d add a TODO() for the case that we keep this code around for longer. Everybody agrees the remotesuggetsionsprovider is doing too much work -- and that\u0027s a clear candidate to improve that situation. So if at some point we want to get back and cut out functionality from the provider, we know where to start.\n(IMO, the database\u0027s interface is very low-level and it could actually provide a higher and better level of abstraction).\nThat said, I agree it\u0027s probably taking us to far from here, especially as we have no idea about the future of this code.",
+      "parentUuid": "6feb8965_eb08bf9f",
+      "range": {
+        "startLine": 603,
+        "startChar": 13,
+        "endLine": 603,
+        "endChar": 14
+      },
+      "revId": "6c1f2d914b0a8e47026a12546eed63c337a0368b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24e8653f_10dcc7f3",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
         "patchSetId": 5
