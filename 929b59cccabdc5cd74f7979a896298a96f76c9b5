@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbf62a18_0c7ba222",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-01T00:57:48Z",
+      "side": 1,
+      "message": "Maybe\n\\n\nClarifies the logic around selecting the stroke color and ensures the\nnon-Harmony disabled color is appropriately lightened.\n\n(or something like that - I think that\u0027s the main behavioural change since there isn\u0027t a bug jump from 0x4e to 0x43 for harmony disabled strokes).",
+      "range": {
+        "startLine": 8,
+        "startChar": 8,
+        "endLine": 8,
+        "endChar": 0
+      },
+      "revId": "929b59cccabdc5cd74f7979a896298a96f76c9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5771b0f1_c9005a4c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-01T00:57:48Z",
+      "side": 1,
+      "message": "you can remove this too :). (Gerrit seems to spam out an extra email on any CL update while this is present :/)",
+      "revId": "929b59cccabdc5cd74f7979a896298a96f76c9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f12af83_eebc39b5",
+        "filename": "ui/views/controls/button/md_text_button.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-01T00:57:48Z",
+      "side": 1,
+      "message": "nit: needs curlies",
+      "revId": "929b59cccabdc5cd74f7979a896298a96f76c9b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
