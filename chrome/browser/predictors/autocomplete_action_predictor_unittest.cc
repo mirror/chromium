@@ -6,6 +6,8 @@
 
 #include <stddef.h>
 
+#include <string>
+
 #include "base/auto_reset.h"
 #include "base/command_line.h"
 #include "base/guid.h"
@@ -107,11 +109,6 @@ class AutocompleteActionPredictorTest : public testing::Test {
     ASSERT_TRUE(predictor_->initialized_);
     ASSERT_TRUE(db_cache()->empty());
     ASSERT_TRUE(db_id_cache()->empty());
-  }
-
-  void TearDown() override {
-    predictor_->Shutdown();
-    profile_->DestroyHistoryService();
   }
 
  protected:
