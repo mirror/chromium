@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "3c646b98_b0b4952e",
+        "filename": "chrome/installer/zucchini/image_index.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-01T04:07:53Z",
+      "side": 1,
+      "message": "Still don\u0027t see \"_\" for this line?",
+      "parentUuid": "2fec951b_c38e3ea7",
+      "range": {
+        "startLine": 59,
+        "startChar": 22,
+        "endLine": 59,
+        "endChar": 31
+      },
+      "revId": "60b74ecc7211c8678d5e1675095ce17b55f5f893",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f89c8850_9e52a851",
         "filename": "chrome/installer/zucchini/image_index.h",
         "patchSetId": 5
@@ -234,6 +258,30 @@
       "revId": "60b74ecc7211c8678d5e1675095ce17b55f5f893",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "364043f9_36dd1aae",
+        "filename": "chrome/installer/zucchini/image_utils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-01T04:07:53Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bef4976c_fafbbc6b",
+      "range": {
+        "startLine": 68,
+        "startChar": 2,
+        "endLine": 68,
+        "endChar": 20
+      },
+      "revId": "60b74ecc7211c8678d5e1675095ce17b55f5f893",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

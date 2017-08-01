@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b0e445b_40154184",
+        "filename": "chrome/installer/zucchini/image_index.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-01T04:07:53Z",
+      "side": 1,
+      "message": "Should this value be less, since the need to check |reference_label_manager| might lead to fewer marking?",
+      "range": {
+        "startLine": 110,
+        "startChar": 37,
+        "endLine": 110,
+        "endChar": 57
+      },
+      "revId": "92204b82b4237b8122b9f67b5157fb477b6ba94a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00ea8813_16c3404c",
+        "filename": "chrome/installer/zucchini/image_index.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-01T04:07:53Z",
+      "side": 1,
+      "message": "between",
+      "range": {
+        "startLine": 32,
+        "startChar": 13,
+        "endLine": 32,
+        "endChar": 20
+      },
+      "revId": "92204b82b4237b8122b9f67b5157fb477b6ba94a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41b4ffe4_f69183f7",
+        "filename": "chrome/installer/zucchini/image_index.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-01T04:07:53Z",
+      "side": 1,
+      "message": "This function is misleading: We\u0027re not counting the number of Labels used by the type, but the number of Labels of the pool containing type! Here is where caller should do some work. Maybe you can help by having helper function PoolOfType(type) or something.",
+      "range": {
+        "startLine": 47,
+        "startChar": 9,
+        "endLine": 47,
+        "endChar": 19
+      },
+      "revId": "92204b82b4237b8122b9f67b5157fb477b6ba94a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2eee8910_35f86e61",
+        "filename": "chrome/installer/zucchini/image_index.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-01T04:07:53Z",
+      "side": 1,
+      "message": "Exposed for testing?",
+      "range": {
+        "startLine": 92,
+        "startChar": 18,
+        "endLine": 92,
+        "endChar": 27
+      },
+      "revId": "92204b82b4237b8122b9f67b5157fb477b6ba94a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "960d8e87_c1b90769",
+        "filename": "chrome/installer/zucchini/image_index.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-01T04:07:53Z",
+      "side": 1,
+      "message": "NIT: Period at end.",
+      "range": {
+        "startLine": 103,
+        "startChar": 57,
+        "endLine": 103,
+        "endChar": 58
+      },
+      "revId": "92204b82b4237b8122b9f67b5157fb477b6ba94a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed5acdb8_c77c6884",
+        "filename": "chrome/installer/zucchini/image_index.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-01T04:07:53Z",
+      "side": 1,
+      "message": "Check style guide, but I think all structs should appear before variables (within private:).",
+      "range": {
+        "startLine": 121,
+        "startChar": 2,
+        "endLine": 121,
+        "endChar": 8
+      },
+      "revId": "92204b82b4237b8122b9f67b5157fb477b6ba94a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3be509b_e1f90d9f",
+        "filename": "chrome/installer/zucchini/image_index_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-01T04:07:53Z",
+      "side": 1,
+      "message": "This is not tested for non-empty image_index_.",
+      "range": {
+        "startLine": 55,
+        "startChar": 28,
+        "endLine": 55,
+        "endChar": 38
+      },
+      "revId": "92204b82b4237b8122b9f67b5157fb477b6ba94a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5cec0dc_eb7c3d00",
+        "filename": "chrome/installer/zucchini/image_utils.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-01T04:07:53Z",
+      "side": 1,
+      "message": "Typically",
+      "range": {
+        "startLine": 66,
+        "startChar": 3,
+        "endLine": 66,
+        "endChar": 12
+      },
+      "revId": "92204b82b4237b8122b9f67b5157fb477b6ba94a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bc6a36b_df163a8b",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-01T04:07:53Z",
+      "side": 1,
+      "message": "Create",
+      "range": {
+        "startLine": 21,
+        "startChar": 5,
+        "endLine": 21,
+        "endChar": 12
+      },
+      "revId": "92204b82b4237b8122b9f67b5157fb477b6ba94a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0889782_2f1b09f2",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-01T04:07:53Z",
+      "side": 1,
+      "message": "associated",
+      "range": {
+        "startLine": 23,
+        "startChar": 30,
+        "endLine": 23,
+        "endChar": 40
+      },
+      "revId": "92204b82b4237b8122b9f67b5157fb477b6ba94a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82cac4f2_a5c6917d",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-01T04:07:53Z",
+      "side": 1,
+      "message": "Comment obsolete.",
+      "range": {
+        "startLine": 38,
+        "startChar": 65,
+        "endLine": 40,
+        "endChar": 47
+      },
+      "revId": "92204b82b4237b8122b9f67b5157fb477b6ba94a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
