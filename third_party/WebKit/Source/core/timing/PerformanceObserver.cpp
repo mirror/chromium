@@ -72,6 +72,7 @@ void PerformanceObserver::observe(const PerformanceObserverInit& observer_init,
     performance_->UpdatePerformanceObserverFilterOptions();
   else
     performance_->RegisterPerformanceObserver(*this);
+  buffered_ = observer_init.buffered();
   is_registered_ = true;
 }
 
@@ -102,6 +103,10 @@ void PerformanceObserver::Deliver() {
 
   PerformanceEntryVector performance_entries;
   performance_entries.swap(performance_entries_);
+  if (buffered_) {
+    performance_entries.AppendVector(
+        performance_->getLongTaskTimingsBufferedEntries());
+  }
   PerformanceObserverEntryList* entry_list =
       new PerformanceObserverEntryList(performance_entries);
   callback_->call(this, entry_list, this);

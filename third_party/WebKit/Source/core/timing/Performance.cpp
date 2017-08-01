@@ -163,9 +163,13 @@ void Performance::UpdateLongTaskInstrumentation() {
                       WebFeature::kLongTaskObserver);
     GetFrame()->GetPerformanceMonitor()->Subscribe(
         PerformanceMonitor::kLongTask, kLongTaskObserverThreshold, this);
-  } else {
+  } else if (!GetFrame()->GetDocument()->LoadEventFinished()) {
+    // PerformanceMonitor needs to subscribe to long task before OnLoad in order
+    // to buffer the long tasks happening before OnLoad.
+    GetFrame()->GetPerformanceMonitor()->Subscribe(
+        PerformanceMonitor::kLongTask, kLongTaskObserverThreshold, this);
+  } else
     GetFrame()->GetPerformanceMonitor()->UnsubscribeAll(this);
-  }
 }
 
 ScriptValue Performance::toJSONForBinding(ScriptState* script_state) const {
