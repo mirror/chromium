@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6efeb5c5_9780e850",
+        "filename": "components/password_manager/core/browser/mock_password_store.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-08-01T14:26:46Z",
+      "side": 1,
+      "message": "Same question",
+      "range": {
+        "startLine": 14,
+        "startChar": 5,
+        "endLine": 14,
+        "endChar": 22
+      },
+      "revId": "0339290b2bdecb76a47de50d4dbe0e8ad1556623",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "444fdd22_a0e50100",
+        "filename": "components/password_manager/core/browser/mock_password_store.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-08-01T14:26:46Z",
+      "side": 1,
+      "message": "Do you mean to delete this?",
+      "range": {
+        "startLine": 24,
+        "startChar": 4,
+        "endLine": 24,
+        "endChar": 8
+      },
+      "revId": "0339290b2bdecb76a47de50d4dbe0e8ad1556623",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "727ddd36_3be7a641",
+        "filename": "components/password_manager/core/browser/password_store_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1168044
+      },
+      "writtenOn": "2017-08-01T14:26:46Z",
+      "side": 1,
+      "message": "The call is triggered by AddLogin, right? Why set the expectation after the cause?",
+      "range": {
+        "startLine": 245,
+        "startChar": 2,
+        "endLine": 245,
+        "endChar": 13
+      },
+      "revId": "0339290b2bdecb76a47de50d4dbe0e8ad1556623",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
