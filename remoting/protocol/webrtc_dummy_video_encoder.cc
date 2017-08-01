@@ -14,6 +14,7 @@
 #include "base/synchronization/lock.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "remoting/protocol/video_channel_state_observer.h"
+#include "third_party/webrtc/modules/video_coding/codecs/h264/include/h264_globals.h"
 
 namespace remoting {
 namespace protocol {
@@ -150,6 +151,13 @@ webrtc::EncodedImageCallback::Result WebrtcDummyVideoEncoder::SendEncodedFrame(
     vp9_info->spatial_idx = webrtc::kNoSpatialIdx;
     vp9_info->tl0_pic_idx = webrtc::kNoTl0PicIdx;
     vp9_info->picture_id = webrtc::kNoPictureId;
+  } else if (codec_type_ == webrtc::kVideoCodecH264) {
+    webrtc::CodecSpecificInfoH264* h264_info =
+        &codec_specific_info.codecSpecific.H264;
+    // TODO(gusss): what's right, here?
+    h264_info->packetization_mode =
+        webrtc::H264PacketizationMode::NonInterleaved;
+
   } else {
     NOTREACHED();
   }
