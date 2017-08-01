@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "54659fcc_f5f50ffd",
+        "filename": "content/browser/frame_host/render_widget_host_view_child_frame.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 796,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-08-01T19:39:52Z",
+      "side": 1,
+      "message": "nit: You should make it a bit clearer that the root RWHV gets *a chance* to consume the events, and doesn\u0027t necessarily do so.",
+      "revId": "476a05b2013e7dbb1a4b74f7c2a85e8ffd11e458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a3e15ca_bf1b16d1",
+        "filename": "content/browser/frame_host/render_widget_host_view_child_frame.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 799,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-08-01T19:39:52Z",
+      "side": 1,
+      "message": "Do you want to file as separate bug for that, and make it blocked on 533069?",
+      "revId": "476a05b2013e7dbb1a4b74f7c2a85e8ffd11e458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f04bda3_e08758b0",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1802,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-08-01T19:39:52Z",
+      "side": 1,
+      "message": "I\u0027m curious: Do we know if any of the other checks in RWHVAndroid::FilterInputEvent should be applied to events that are being sent to child frames? I\u0027m wondering if it would be feasible to just have RWHVChildFrame::FilterInputEvent proxy to the root\u0027s FilterInputEvent.",
+      "revId": "476a05b2013e7dbb1a4b74f7c2a85e8ffd11e458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e84ec5a2_5a0c7fb8",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1433,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-08-01T19:39:52Z",
+      "side": 1,
+      "message": "With this much conditional code, I wonder if it might be time to start splitting out more platform-specific test files. There is already a site_per_process_browsertests_mac.mm.",
+      "revId": "476a05b2013e7dbb1a4b74f7c2a85e8ffd11e458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a7e3051_9687b73b",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1619,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-08-01T19:39:52Z",
+      "side": 1,
+      "message": "Do you need this? You could just send the gesture events directly to each intended RenderWidgetHostView, bypassing the router.",
+      "revId": "476a05b2013e7dbb1a4b74f7c2a85e8ffd11e458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
