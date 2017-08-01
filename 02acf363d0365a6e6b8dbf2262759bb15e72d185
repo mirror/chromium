@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d35aae32_bc69a5a0",
+        "filename": "components/exo/gaming_seat.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-01T05:47:51Z",
+      "side": 1,
+      "message": "not: short description that explains when this is true",
+      "revId": "02acf363d0365a6e6b8dbf2262759bb15e72d185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
