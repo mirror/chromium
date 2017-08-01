@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "51bb2eb4_2afc5664",
+        "filename": "third_party/WebKit/LayoutTests/editing/undo/undo-smart-delete-word.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-01T06:53:26Z",
+      "side": 1,
+      "message": "\u003e It seems HitTest for LayoutNG is something different to Legacy.\n\u003e Anyway, I agree original version points left top pixel of word, it is\n\u003e a fraggle.\n\nMakes sense. It might be due to the lack of proper support of HitTest in LayoutNG.\n\n\u003e \n\u003e Element#offsetParent affects this?\n\nNot in this test. There\u0027s no positioned element.\n\n\u003e \n\u003e In \"assert_selection.js\": For main document |kIFrameBorderSize\u003d\u003d0|\n\u003e function computeLeft(element) {\n\u003e   let left \u003d kIFrameBorderSize + element.ownerDocument.offsetLeft;\n\u003e   for (let runner \u003d element; runner; runner \u003d runner.offsetParent)\n\u003e     left +\u003d runner.offsetLeft;\n\u003e   return left;\n\u003e }\n\nMaybe we should introduce some helper JS functions to perform mouse actions easier. It might also help the migration from eventSender to pointerActionSequence.",
+      "parentUuid": "19095f9d_67d3d89f",
+      "revId": "784aa7c0e012bf4fca0edf2193f0ac5228240751",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e2a5f9a8_d57cf30e",
         "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorTextNodeHandler.cpp",
         "patchSetId": 2
@@ -105,6 +123,24 @@
       "revId": "784aa7c0e012bf4fca0edf2193f0ac5228240751",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8f5eeb13_790815dc",
+        "filename": "third_party/WebKit/Source/core/editing/iterators/TextIteratorTextNodeHandler.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-01T06:53:26Z",
+      "side": 1,
+      "message": "\u003e My concern is setting of|inline_node_| and using |inline_node_| is too far\n\u003e as we need to want to introduce |bool| variable.\n\nSorry, I still don\u0027t follow.\n\nCould you give more details? For example, what\u0027s the pattern in your mind?\n\n\u003e \n\u003e I think it is better to have more readable code instead of optimization.\n\u003e Layout NG is brand new, all of us want to learn.",
+      "parentUuid": "64ab0114_ea23353b",
+      "revId": "784aa7c0e012bf4fca0edf2193f0ac5228240751",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
