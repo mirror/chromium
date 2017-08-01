@@ -422,7 +422,12 @@ Console.ConsoleViewport = class {
     var textLines = [];
     for (var i = startSelection.item; i <= endSelection.item; ++i) {
       var element = this._providerElement(i).element();
-      var lineContent = element.childTextNodes().map(Components.Linkifier.untruncatedNodeText).join('');
+      var lineContent = element.childTextNodes()
+                            .map(node => {
+                              return Components.Linkifier.untruncatedNodeText(node) ||
+                                  Console.ExpandableText.untruncatedNodeText(node) || node.textContent;
+                            })
+                            .join('');
       textLines.push(lineContent);
     }
 
@@ -464,13 +469,22 @@ Console.ConsoleViewport = class {
       if (node.nodeType !== Node.TEXT_NODE || node.parentElement.nodeName === 'STYLE' ||
           node.parentElement.nodeName === 'SCRIPT')
         continue;
-      chars += Components.Linkifier.untruncatedNodeText(node).length;
+      chars += untruncatedNodeText(node).length;
     }
     // If the selected node text was truncated, treat any non-zero offset as the full length.
-    var untruncatedContainerLength = Components.Linkifier.untruncatedNodeText(selectionNode).length;
+    var untruncatedContainerLength = untruncatedNodeText(selectionNode).length;
     if (offset > 0 && untruncatedContainerLength !== selectionNode.textContent.length)
       offset = untruncatedContainerLength;
     return chars + offset;
+
+    /**
+     * @param {!Node} node
+     * @return {string}
+     */
+    function untruncatedNodeText(node) {
+      return Components.Linkifier.untruncatedNodeText(node) || Console.ExpandableText.untruncatedNodeText(node) ||
+          node.textContent;
+    }
   }
 
   /**

@@ -470,10 +470,10 @@ Components.Linkifier = class {
 
   /**
    * @param {!Node} node
-   * @return {string}
+   * @return {?string}
    */
   static untruncatedNodeText(node) {
-    return node[Components.Linkifier._untruncatedNodeTextSymbol] || node.textContent;
+    return node[Components.Linkifier._untruncatedNodeTextSymbol] || null;
   }
 
   /**

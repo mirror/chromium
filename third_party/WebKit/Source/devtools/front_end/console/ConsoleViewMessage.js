@@ -475,9 +475,14 @@ Console.ConsoleViewMessage = class {
 
     // Multiple parameters with the first being a format string. Save unused substitutions.
     if (shouldFormatMessage) {
-      var result = this._formatWithSubstitutionString(
-          /** @type {string} **/ (parameters[0].description), parameters.slice(1), formattedResult);
-      parameters = result.unusedSubstitutions;
+      var firstDescription = /** @type {string} */ (parameters[0].description);
+      if (firstDescription.length > Console.ExpandableText.MaxLength) {
+        formattedResult.appendChild(Console.ExpandableText.createFragment(firstDescription));
+        parameters = parameters.slice(1);
+      } else {
+        var result = this._formatWithSubstitutionString(firstDescription, parameters.slice(1), formattedResult);
+        parameters = result.unusedSubstitutions;
+      }
       if (parameters.length)
         formattedResult.createTextChild(' ');
     }
@@ -675,7 +680,11 @@ Console.ConsoleViewMessage = class {
    */
   _formatParameterAsString(output) {
     var span = createElement('span');
-    span.appendChild(Console.ConsoleViewMessage._linkifyStringAsFragment(output.description || ''));
+    var description = output.description || '';
+    if (description.length > Console.ExpandableText.MaxLength)
+      span.appendChild(Console.ExpandableText.createFragment(description));
+    else
+      span.appendChild(Console.ConsoleViewMessage._linkifyStringAsFragment(description));
 
     var result = createElement('span');
     result.createChild('span', 'object-value-string-quote').textContent = '"';
@@ -1108,7 +1117,12 @@ Console.ConsoleViewMessage = class {
   toExportString() {
     var lines = [];
     var nodes = this.contentElement().childTextNodes();
-    var messageContent = nodes.map(Components.Linkifier.untruncatedNodeText).join('');
+    var messageContent = nodes
+                             .map(node => {
+                               return Components.Linkifier.untruncatedNodeText(node) ||
+                                   Console.ExpandableText.untruncatedNodeText(node) || node.textContent;
+                             })
+                             .join('');
     for (var i = 0; i < this.repeatCount(); ++i)
       lines.push(messageContent);
     return lines.join('\n');
