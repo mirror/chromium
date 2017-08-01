@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "00b6b792_5edcee43",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/cookies/resources/testharness-helpers.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-08-01T01:35:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c871f3d_586c6de7",
+      "revId": "d599b33668a983c68d243ad148fa73dd404802f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a1da954_2b725668",
         "filename": "third_party/WebKit/LayoutTests/http/tests/cookies/resources/testharness-helpers.js",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "9f75771b_985699fa",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/cookies/resources/testharness-helpers.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-08-01T01:35:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a1da954_2b725668",
+      "revId": "d599b33668a983c68d243ad148fa73dd404802f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e40a3dde_473bc6d9",
         "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/cookies.js",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-07-31T22:14:12Z",
       "side": 1,
       "message": "This won\u0027t be part of the final CL, so consider this an optional nit -- can you do \"use strict\" at the top of the file?",
+      "revId": "d599b33668a983c68d243ad148fa73dd404802f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48e4f2a0_a4a17221",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/cookies.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-08-01T01:35:32Z",
+      "side": 1,
+      "message": "No, because the polyfill is intended to work correctly even when inlined into a larger script HTTP response or a larger \u003cscript\u003e body via syntax-unaware inclusion, e.g. ASP \u003c!--#include ... --!\u003e",
+      "parentUuid": "e40a3dde_473bc6d9",
       "revId": "d599b33668a983c68d243ad148fa73dd404802f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "5bd576fc_cd4f937f",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/dom_interop.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-08-01T01:35:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d29dc01_587eea61",
+      "revId": "d599b33668a983c68d243ad148fa73dd404802f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "efbd91eb_60bd5a03",
         "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/dom_interop.html",
         "patchSetId": 1
@@ -84,6 +156,24 @@
       "revId": "d599b33668a983c68d243ad148fa73dd404802f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e8e03ec_ad43c685",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/dom_interop.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-08-01T01:35:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efbd91eb_60bd5a03",
+      "revId": "d599b33668a983c68d243ad148fa73dd404802f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "f2cb2135_e62b36a0",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/dom_interop.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-08-01T01:35:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38db377d_3e081038",
+      "revId": "d599b33668a983c68d243ad148fa73dd404802f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c75c65f_9f3637eb",
         "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/dom_interop.html",
         "patchSetId": 1
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "65684de9_984aeb4d",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/dom_interop.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-08-01T01:35:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c75c65f_9f3637eb",
+      "revId": "d599b33668a983c68d243ad148fa73dd404802f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "effd3aaf_cbe96087",
         "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/dom_interop.html",
         "patchSetId": 1
@@ -132,6 +258,24 @@
       "writtenOn": "2017-07-31T22:14:12Z",
       "side": 1,
       "message": "Can you please expand the comment to explain what cookies get set where, and what their meaning is?",
+      "revId": "d599b33668a983c68d243ad148fa73dd404802f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d21eb82_4828571f",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/dom_interop.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-08-01T01:35:32Z",
+      "side": 1,
+      "message": "Is this still needed, or is the test clear enough now to make it unnecessary?",
+      "parentUuid": "effd3aaf_cbe96087",
       "revId": "d599b33668a983c68d243ad148fa73dd404802f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "128650c3_165ab3a5",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/dom_interop.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-08-01T01:35:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34cfeef8_518bbe47",
+      "revId": "d599b33668a983c68d243ad148fa73dd404802f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2eba8e07_b2b41061",
         "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/dom_interop.html",
         "patchSetId": 1
@@ -169,6 +331,24 @@
       "revId": "d599b33668a983c68d243ad148fa73dd404802f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7d4cb42_2d012279",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/dom_interop.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-08-01T01:35:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2eba8e07_b2b41061",
+      "revId": "d599b33668a983c68d243ad148fa73dd404802f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "ab58d294_14988f16",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/dom_interop.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-08-01T01:35:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "426aec25_a19bea9d",
+      "revId": "d599b33668a983c68d243ad148fa73dd404802f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7321f3cc_42c67dbf",
         "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/dom_interop.html",
         "patchSetId": 1
@@ -203,6 +401,24 @@
       "revId": "d599b33668a983c68d243ad148fa73dd404802f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7258139_e01da2a3",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/dom_interop.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-08-01T01:35:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7321f3cc_42c67dbf",
+      "revId": "d599b33668a983c68d243ad148fa73dd404802f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "3fffc0fd_3acc538a",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/dom_interop.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-08-01T01:35:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c82ffa5a_3820c3d6",
+      "revId": "d599b33668a983c68d243ad148fa73dd404802f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a24327c5_f57929bd",
         "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/dom_interop.html",
         "patchSetId": 1
@@ -237,6 +471,24 @@
       "revId": "d599b33668a983c68d243ad148fa73dd404802f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11a11d1b_4f803527",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/dom_interop.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1204072
+      },
+      "writtenOn": "2017-08-01T01:35:32Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "a24327c5_f57929bd",
+      "revId": "d599b33668a983c68d243ad148fa73dd404802f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
