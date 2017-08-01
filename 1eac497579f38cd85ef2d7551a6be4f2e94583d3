@@ -81,6 +81,30 @@
       "revId": "1eac497579f38cd85ef2d7551a6be4f2e94583d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e606546b_718bfb18",
+        "filename": "ui/webui/resources/chromeos/network/network_shared_css.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-01T21:29:26Z",
+      "side": 1,
+      "message": "\u003e I\u0027m not sure we want the dependency.\n\nWe\u0027re referring to a dependency from this file on cr_elements styles? (Just verifying we\u0027re talking about the same thing.)\n\n\u003e If Dave decides to make settings-box something more generic that\u0027s fine, but until then I think a comment here is fine.\n\nI\u0027m OK with that.",
+      "parentUuid": "b89b5e0d_852a584f",
+      "range": {
+        "startLine": 13,
+        "startChar": 30,
+        "endLine": 13,
+        "endChar": 72
+      },
+      "revId": "1eac497579f38cd85ef2d7551a6be4f2e94583d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
