@@ -69,6 +69,24 @@
       "revId": "9940a9057723d7f5ef918f9b3a85cad618c18194",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44757c28_42dcb10c",
+        "filename": "content/renderer/net/cors_url_loader.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 597,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-08-01T13:34:25Z",
+      "side": 1,
+      "message": "It\u0027s very old CL, sorry! https://codereview.chromium.org/2538073002/\n\nI also added you to a doc about revising the CL.",
+      "parentUuid": "d4999d4a_11bce0db",
+      "revId": "9940a9057723d7f5ef918f9b3a85cad618c18194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
