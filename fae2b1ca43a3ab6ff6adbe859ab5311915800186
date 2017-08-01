@@ -70,6 +70,30 @@
       "revId": "fae2b1ca43a3ab6ff6adbe859ab5311915800186",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "857fa155_1e131f2b",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-01T16:32:12Z",
+      "side": 1,
+      "message": "This is done on Android for the same reason: knowing the page comes from ContentSuggestions.\nI have added a comment.",
+      "parentUuid": "ab7504a2_fef38052",
+      "range": {
+        "startLine": 197,
+        "startChar": 22,
+        "endLine": 197,
+        "endChar": 34
+      },
+      "revId": "fae2b1ca43a3ab6ff6adbe859ab5311915800186",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
