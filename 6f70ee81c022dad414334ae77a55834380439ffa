@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f1b021b_81ba6bf9",
+        "filename": "chrome/test/data/webui/settings/accessibility_audit_rules.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-01T01:11:00Z",
+      "side": 1,
+      "message": "Can we add some info on how to generate this file?\nEither add steps here, or if you ran a script add info on how to run it.",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 71
+      },
+      "revId": "6f70ee81c022dad414334ae77a55834380439ffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "052f30ad_6e513b1c",
+        "filename": "chrome/test/data/webui/settings/accessibility_browsertest.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-01T01:11:00Z",
+      "side": 1,
+      "message": "Alphabetize?",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 77
+      },
+      "revId": "6f70ee81c022dad414334ae77a55834380439ffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e68805d4_637ee6f2",
+        "filename": "chrome/test/data/webui/settings/accessibility_browsertest.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-01T01:11:00Z",
+      "side": 1,
+      "message": "Nit: Should this constant be outside the forEach to avoid re-declaring?",
+      "range": {
+        "startLine": 96,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 67
+      },
+      "revId": "6f70ee81c022dad414334ae77a55834380439ffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fe0a195_45facdb0",
+        "filename": "chrome/test/data/webui/settings/accessibility_browsertest.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-01T01:11:00Z",
+      "side": 1,
+      "message": "nit:\n    // Replace hyphens, which break the build.",
+      "range": {
+        "startLine": 99,
+        "startChar": 0,
+        "endLine": 100,
+        "endChar": 12
+      },
+      "revId": "6f70ee81c022dad414334ae77a55834380439ffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b7fb808_c64b2257",
+        "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-01T01:11:00Z",
+      "side": 1,
+      "message": "What does this do?",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 40
+      },
+      "revId": "6f70ee81c022dad414334ae77a55834380439ffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5be2ada1_eebb4661",
+        "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-01T01:11:00Z",
+      "side": 1,
+      "message": "I mentioned this in person, but lets try to abstract away this detail from people writing tests.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 48
+      },
+      "revId": "6f70ee81c022dad414334ae77a55834380439ffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
