@@ -123,9 +123,6 @@ class BASE_EXPORT MessageLoop : public MessagePump::Delegate,
   // Normally, it is not necessary to instantiate a MessageLoop.  Instead, it
   // is typical to make use of the current thread's MessageLoop instance.
   explicit MessageLoop(Type type = TYPE_DEFAULT);
-  // Creates a TYPE_CUSTOM MessageLoop with the supplied MessagePump, which must
-  // be non-NULL.
-  explicit MessageLoop(std::unique_ptr<MessagePump> pump);
 
   ~MessageLoop() override;
 
@@ -311,6 +308,10 @@ class BASE_EXPORT MessageLoop : public MessagePump::Delegate,
   friend struct PendingTask;
   FRIEND_TEST_ALL_PREFIXES(MessageLoopTest, DeleteUnboundLoop);
   friend class PendingTaskTest;
+
+  // Creates a TYPE_CUSTOM MessageLoop with the supplied MessagePump, which must
+  // be non-NULL.
+  explicit MessageLoop(std::unique_ptr<MessagePump> pump);
 
   // Creates a MessageLoop without binding to a thread.
   // If |type| is TYPE_CUSTOM non-null |pump_factory| must be also given
