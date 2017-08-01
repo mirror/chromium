@@ -22,6 +22,30 @@
       "revId": "6f55893e3126ee6460d0615eea33705f0bc6a951",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c834389_78c1fc58",
+        "filename": "third_party/WebKit/Source/core/exported/WebWorkerShadowPage.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-01T06:23:41Z",
+      "side": 1,
+      "message": "I\u0027m not familiar with InterfaceProvider things. Is the comment on the parent class (WebFrameClient::GetInterfaceProvider) insufficient?",
+      "parentUuid": "859918b7_db9619a5",
+      "range": {
+        "startLine": 37,
+        "startChar": 1,
+        "endLine": 37,
+        "endChar": 30
+      },
+      "revId": "6f55893e3126ee6460d0615eea33705f0bc6a951",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
