@@ -119,6 +119,12 @@ SectionIdentifier SectionIdentifierForInfo(
   }
 }
 
+BOOL SectionIdentifierHasContentTitle(NSInteger sectionIdentifier) {
+  return sectionIdentifier != SectionIdentifierLogo &&
+         sectionIdentifier != SectionIdentifierLearnMore &&
+         sectionIdentifier != SectionIdentifierMostVisited;
+}
+
 const CGFloat kNumberOfMostVisitedLines = 2;
 
 }  // namespace
@@ -503,17 +509,58 @@ addSuggestionsToModel:(NSArray<CSCollectionViewItem*>*)suggestions
 - (void)addHeaderIfNeeded:(ContentSuggestionsSectionInformation*)sectionInfo {
   NSInteger sectionIdentifier = SectionIdentifierForInfo(sectionInfo);
 
-  if (![self.collectionViewController.collectionViewModel
-          headerForSectionWithIdentifier:sectionIdentifier] &&
+  CSCollectionViewModel* model =
+      self.collectionViewController.collectionViewModel;
+
+  if (![model headerForSectionWithIdentifier:sectionIdentifier] &&
       sectionInfo.title) {
-    CollectionViewTextItem* header =
-        [[CollectionViewTextItem alloc] initWithType:ItemTypeHeader];
-    header.text = sectionInfo.title;
-    header.textColor = [[MDCPalette greyPalette] tint500];
-    [self.collectionViewController.collectionViewModel
-                       setHeader:header
-        forSectionWithIdentifier:sectionIdentifier];
+    BOOL addHeader = YES;
+
+    if (SectionIdentifierHasContentTitle(sectionIdentifier)) {
+      BOOL hasOtherContentSection = NO;
+      addHeader = NO;
+
+      for (NSInteger existingSection = 0;
+           existingSection < [model numberOfSections]; existingSection++) {
+        NSInteger existingSectionIdentifier =
+            [model sectionIdentifierForSection:existingSection];
+
+        if (existingSectionIdentifier == sectionIdentifier)
+          continue;
+
+        if (SectionIdentifierHasContentTitle(existingSectionIdentifier)) {
+          hasOtherContentSection = YES;
+
+          if (![model
+                  headerForSectionWithIdentifier:existingSectionIdentifier]) {
+            ContentSuggestionsSectionInformation* existingSectionInfo =
+                self.sectionInfoBySectionIdentifier[
+                    @(existingSectionIdentifier)];
+            [model setHeader:[self headerForSectionInfo:existingSectionInfo]
+                forSectionWithIdentifier:existingSectionIdentifier];
+          }
+        }
+      }
+
+      if (hasOtherContentSection) {
+        addHeader = YES;
+      }
+    }
+
+    if (addHeader) {
+      [model setHeader:[self headerForSectionInfo:sectionInfo]
+          forSectionWithIdentifier:sectionIdentifier];
+    }
   }
+}
+
+- (CollectionViewItem*)headerForSectionInfo:
+    (ContentSuggestionsSectionInformation*)sectionInfo {
+  CollectionViewTextItem* header =
+      [[CollectionViewTextItem alloc] initWithType:ItemTypeHeader];
+  header.text = sectionInfo.title;
+  header.textColor = [[MDCPalette greyPalette] tint500];
+  return header;
 }
 
 // Adds the header for the first section, containing the logo and the omnibox,
