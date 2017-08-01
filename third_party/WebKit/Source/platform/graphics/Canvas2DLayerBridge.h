@@ -79,7 +79,7 @@ class SharedContextRateLimiter;
 
 class PLATFORM_EXPORT Canvas2DLayerBridge
     : public NON_EXPORTED_BASE(cc::TextureLayerClient),
-      public RefCounted<Canvas2DLayerBridge> {
+      public ImageBufferSurface {
   WTF_MAKE_NONCOPYABLE(Canvas2DLayerBridge);
 
  public:
@@ -103,26 +103,26 @@ class PLATFORM_EXPORT Canvas2DLayerBridge
                                  out_release_callback) override;
 
   // ImageBufferSurface implementation
-  void FinalizeFrame();
-  void DoPaintInvalidation(const FloatRect& dirty_rect);
-  void WillOverwriteCanvas();
-  PaintCanvas* Canvas();
-  void DisableDeferral(DisableDeferralReason);
-  bool CheckSurfaceValid();
-  bool RestoreSurface();
-  WebLayer* Layer() const;
-  bool IsAccelerated() const;
-  void SetFilterQuality(SkFilterQuality);
-  void SetIsHidden(bool);
-  void SetImageBuffer(ImageBuffer*);
-  void DidDraw(const FloatRect&);
+  void FinalizeFrame() override;
+  void DoPaintInvalidation(const FloatRect& dirty_rect) override;
+  void WillOverwriteCanvas() override;
+  PaintCanvas* Canvas() override;
+  void DisableDeferral(DisableDeferralReason) override;
+  bool IsValid() const override;
+  bool Restore() override;
+  WebLayer* Layer() const override;
+  bool IsAccelerated() const override;
+  void SetFilterQuality(SkFilterQuality) override;
+  void SetIsHidden(bool) override;
+  void SetImageBuffer(ImageBuffer*) override;
+  void DidDraw(const FloatRect&) override;
   bool WritePixels(const SkImageInfo&,
                    const void* pixels,
                    size_t row_bytes,
                    int x,
-                   int y);
-  void Flush();
-  void FlushGpu();
+                   int y) override;
+  void Flush(FlushReason) override;
+  void FlushGpu(FlushReason) override;
   OpacityMode GetOpacityMode() { return opacity_mode_; }
   void DontUseIdleSchedulingForTesting() {
     dont_use_idle_scheduling_for_testing_ = true;
@@ -167,12 +167,8 @@ class PLATFORM_EXPORT Canvas2DLayerBridge
 
  private:
   void ResetSurface();
-
-  // Callback for mailboxes given to the compositor from PrepareTextureMailbox.
-  void MailboxReleased(const gpu::Mailbox&,
-                       const gpu::SyncToken&,
-                       bool lost_resource);
   bool IsHidden() { return is_hidden_; }
+  bool CheckSurfaceValid();
 
 #if USE_IOSURFACE_FOR_2D_CANVAS
   // All information associated with a CHROMIUM image.
@@ -180,10 +176,9 @@ class PLATFORM_EXPORT Canvas2DLayerBridge
 #endif  // USE_IOSURFACE_FOR_2D_CANVAS
 
   struct MailboxInfo {
-    DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
     gpu::Mailbox mailbox_;
     sk_sp<SkImage> image_;
-    RefPtr<Canvas2DLayerBridge> parent_layer_bridge_;
+    WeakPtr<Canvas2DLayerBridge> parent_layer_bridge_;
 
 #if USE_IOSURFACE_FOR_2D_CANVAS
     // If this mailbox wraps an IOSurface-backed texture, the ids of the
@@ -194,6 +189,15 @@ class PLATFORM_EXPORT Canvas2DLayerBridge
     MailboxInfo(const MailboxInfo&);
     MailboxInfo();
   };
+
+  // Callback for mailboxes given to the compositor from PrepareTextureMailbox.
+  static void ReleaseFrameResources(
+      WeakPtr<Canvas2DLayerBridge>,
+      WeakPtr<WebGraphicsContext3DProviderWrapper>,
+      std::unique_ptr<MailboxInfo>,
+      const gpu::Mailbox&,
+      const gpu::SyncToken&,
+      bool lost_resource);
 
   gpu::gles2::GLES2Interface* ContextGL();
   void StartRecording();
@@ -213,14 +217,13 @@ class PLATFORM_EXPORT Canvas2DLayerBridge
   // MailboxInfo, and prepended it to |m_mailboxs|. Returns whether the
   // mailbox was successfully prepared. |mailbox| is an out parameter only
   // populated on success.
-  bool PrepareIOSurfaceMailboxFromImage(SkImage*, viz::TextureMailbox*);
+  bool PrepareIOSurfaceMailboxFromImage(SkImage*,
+                                        MailboxInfo*,
+                                        viz::TextureMailbox*);
 
   // Creates an IOSurface-backed texture. Returns an ImageInfo, which is empty
   // on failure. The caller takes ownership of both the texture and the image.
   RefPtr<ImageInfo> CreateIOSurfaceBackedTexture();
-
-  // Releases all resources associated with a CHROMIUM image.
-  void DeleteCHROMIUMImage(RefPtr<ImageInfo>);
 
   // Releases all resources in the CHROMIUM image cache.
   void ClearCHROMIUMImageCache();
@@ -231,11 +234,9 @@ class PLATFORM_EXPORT Canvas2DLayerBridge
 
   // Returns whether the mailbox was successfully prepared from the SkImage.
   // The mailbox is an out parameter only populated on success.
-  bool PrepareMailboxFromImage(sk_sp<SkImage>, viz::TextureMailbox*);
-
-  // Resets Skia's texture bindings. This method should be called after
-  // changing texture bindings.
-  void ResetSkiaTextureBinding();
+  bool PrepareMailboxFromImage(sk_sp<SkImage>,
+                               MailboxInfo*,
+                               viz::TextureMailbox*);
 
   // Used for cloning context_provider_wrapper_ into an rvalue
   WeakPtr<WebGraphicsContext3DProviderWrapper> ContextProviderWrapper() const {
@@ -274,14 +275,6 @@ class PLATFORM_EXPORT Canvas2DLayerBridge
 
   uint32_t last_image_id_;
 
-  enum {
-    // We should normally not have more that two active mailboxes at a time,
-    // but sometimes we may have three due to the async nature of mailbox
-    // handling.
-    kMaxActiveMailboxes = 3,
-  };
-
-  Deque<MailboxInfo, kMaxActiveMailboxes> mailboxes_;
   GLenum last_filter_;
   AccelerationMode acceleration_mode_;
   OpacityMode opacity_mode_;
