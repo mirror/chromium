@@ -328,13 +328,12 @@ class OmniboxViewTest : public InProcessBrowserTest,
       ScopedObserver<history::HistoryService, history::HistoryServiceObserver>
           observer(this);
       observer.Add(history_service);
-      content::RunMessageLoop();
       // We don't want to return until all observers have processed this
       // notification, because some (e.g. the in-memory history database) may do
-      // something important.  Since we don't know where in the observer list we
-      // stand, just spin the message loop once more to allow the current
-      // callstack to complete.
-      content::RunAllPendingInMessageLoop();
+      // something important.
+      base::RunLoop run_loop;
+      history_service->FlushForTest(run_loop.QuitClosure());
+      run_loop.Run();
     }
   }
 
