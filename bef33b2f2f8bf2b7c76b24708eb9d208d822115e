@@ -22,6 +22,30 @@
       "revId": "bef33b2f2f8bf2b7c76b24708eb9d208d822115e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9711bfc_c6d35610",
+        "filename": "components/test/data/payments/render_tests/README",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-01T16:26:11Z",
+      "side": 1,
+      "message": "Then we\u0027ll update the docs.",
+      "parentUuid": "7123a659_4109af8b",
+      "range": {
+        "startLine": 15,
+        "startChar": 42,
+        "endLine": 15,
+        "endChar": 62
+      },
+      "revId": "bef33b2f2f8bf2b7c76b24708eb9d208d822115e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
