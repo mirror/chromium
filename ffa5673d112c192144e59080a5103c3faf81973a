@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f62030a_818a8984",
+        "filename": "android_webview/browser/net/aw_web_resource_request.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-01T18:47:24Z",
+      "side": 1,
+      "message": "It might be useful to add a comment that these parameters are ultimately guided by https://developer.android.com/reference/android/webkit/WebResourceRequest.html",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 66
+      },
+      "revId": "ffa5673d112c192144e59080a5103c3faf81973a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
