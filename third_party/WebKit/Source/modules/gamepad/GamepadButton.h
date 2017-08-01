@@ -9,6 +9,12 @@
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Vector.h"
 
+namespace device {
+
+class GamepadButton;
+
+}  // namespace device
+
 namespace blink {
 
 class GamepadButton final : public GarbageCollected<GamepadButton>,
@@ -26,6 +32,9 @@ class GamepadButton final : public GarbageCollected<GamepadButton>,
 
   bool touched() const { return touched_; }
   void SetTouched(bool val) { touched_ = val; }
+
+  void UpdateValuesFrom(const device::GamepadButton&);
+  bool operator==(const device::GamepadButton&) const;
 
   DEFINE_INLINE_TRACE() {}
 

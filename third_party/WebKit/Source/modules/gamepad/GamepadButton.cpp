@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "device/gamepad/public/cpp/gamepad.h"
 #include "modules/gamepad/Gamepad.h"
 
 namespace blink {
@@ -11,5 +12,20 @@ GamepadButton* GamepadButton::Create() {
 }
 
 GamepadButton::GamepadButton() : value_(0.), pressed_(false), touched_(false) {}
+
+void GamepadButton::UpdateValuesFrom(
+    const device::GamepadButton& device_button) {
+  value_ = device_button.value;
+  pressed_ = device_button.pressed;
+  touched_ = (device_button.touched || device_button.pressed ||
+              (device_button.value > 0.0f));
+}
+
+bool GamepadButton::operator==(
+    const device::GamepadButton& device_button) const {
+  return value_ == device_button.value && pressed_ == device_button.pressed &&
+         touched_ == (device_button.touched || device_button.pressed ||
+                      (device_button.value > 0.0f));
+}
 
 }  // namespace blink
