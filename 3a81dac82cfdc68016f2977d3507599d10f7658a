@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5335ef41_e645d2f5",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-01T17:53:43Z",
+      "side": 1,
+      "message": "Remove the blank line above.",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 60
+      },
+      "revId": "3a81dac82cfdc68016f2977d3507599d10f7658a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22bd3eff_6dd03f0b",
+        "filename": "third_party/WebKit/Source/platform/graphics/ImageBuffer.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-01T17:53:43Z",
+      "side": 1,
+      "message": "Remove the blank line above.",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 2
+      },
+      "revId": "3a81dac82cfdc68016f2977d3507599d10f7658a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
