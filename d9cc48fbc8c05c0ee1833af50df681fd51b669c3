@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61e29b04_1cc0b134",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-01T18:17:05Z",
+      "side": 1,
+      "message": "Nit: Could just inline:\n\n  if (content_setting_bubble_model_-\u003ebubble_content().show_learn_more) {\n\nCould also reduce {} and indenting by reversing this conditional and early-returning.",
+      "revId": "d9cc48fbc8c05c0ee1833af50df681fd51b669c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec2f1227_b90fa0d6",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-01T18:17:05Z",
+      "side": 1,
+      "message": "Nit: While here, fix this and the conditional above to check \"sender \u003d\u003d learn_more_button_\" and the like; the existing reads a bit like \"0 \u003d\u003d foo\", which the style guide says not to do (see https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#Code-formatting ).",
+      "revId": "d9cc48fbc8c05c0ee1833af50df681fd51b669c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aafc289_85409849",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-01T18:17:05Z",
+      "side": 1,
+      "message": "Nit: You don\u0027t directly subclass View; I think you get these via view::BubbleDialogDelegateView.\n\nAdd trailing colon.",
+      "revId": "d9cc48fbc8c05c0ee1833af50df681fd51b669c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
