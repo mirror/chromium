@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78376cc7_aa856174",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-01T02:30:18Z",
+      "side": 1,
+      "message": "Can you link to where this code lives that depend on the target being set?",
+      "revId": "ae721a4d9899a1f110ab1a3d23b6296df81f447c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
