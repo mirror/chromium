@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e93ddaea_8e87a7d7",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-01T00:25:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa0e31ec_1a519b5f",
+      "revId": "fd4cb9cac8ef21b67b252cb25068ab3110932e37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18ddf7e5_8ecb4928",
         "filename": "cc/paint/paint_op_buffer.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-31T23:07:07Z",
       "side": 1,
       "message": "I think mode is important here.  If it\u0027s kSrcOver, then instead of using alpha, I think you need to use SkMulDiv255Round(alpha, SkColorGetA(color)) instead of just alpha? You could ignore other modes (like SupportsFoldingAlpha does) or support them differently.",
+      "revId": "fd4cb9cac8ef21b67b252cb25068ab3110932e37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dedc2796_5842eb0d",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-01T00:25:56Z",
+      "side": 1,
+      "message": "Thanks for pointing this out. This was completely ignoring the alpha component in the original color. :P I restricted this to only the kSrcOver mode, similar to what we do with PaintFlags.",
+      "parentUuid": "18ddf7e5_8ecb4928",
       "revId": "fd4cb9cac8ef21b67b252cb25068ab3110932e37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
