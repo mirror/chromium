@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae8f0e23_29cd5bcf",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/service/reconnect-during.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-08-01T20:02:15Z",
+      "side": 1,
+      "message": "The services and characteristics created in \ngetHealthThermometerDeviceWithServicesDiscovered\nshould be sufficient, no need to add more.",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 80
+      },
+      "revId": "3535a8a5a248d59a95320af2e2fa21b2e0b31257",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc2fed24_159d312b",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/service/reconnect-during.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-08-01T20:02:15Z",
+      "side": 1,
+      "message": "Use the HealthThermometer characteristics, e.g. temperature_measurement",
+      "range": {
+        "startLine": 14,
+        "startChar": 27,
+        "endLine": 14,
+        "endChar": 49
+      },
+      "revId": "3535a8a5a248d59a95320af2e2fa21b2e0b31257",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e52d2a64_6c4ff9de",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/service/reconnect-during.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-08-01T20:02:15Z",
+      "side": 1,
+      "message": "Explain how a disconnect and connect are certain to reconnect, because getHealthThermometerDeviceWithServicesDiscovered holds another connection  in an iframe. But, that the disconnect will invalidate the service object and so the pending calls to it held in |promise| must fail.",
+      "range": {
+        "startLine": 21,
+        "startChar": 6,
+        "endLine": 22,
+        "endChar": 34
+      },
+      "revId": "3535a8a5a248d59a95320af2e2fa21b2e0b31257",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
