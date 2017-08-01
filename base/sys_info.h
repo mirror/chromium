@@ -68,7 +68,7 @@ class BASE_EXPORT SysInfo {
   static TimeDelta Uptime();
 
   // Returns a descriptive string for the current machine model or an empty
-  // string if the machine model is unknown or an error occured.
+  // string if the machine model is unknown or an error occurred.
   // e.g. "MacPro1,1" on Mac, "iPhone9,3" on iOS or "Nexus 5" on Android. Only
   // implemented on OS X, iOS, Android, and Chrome OS. This returns an empty
   // string on other platforms.

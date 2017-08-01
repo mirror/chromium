@@ -1235,7 +1235,7 @@ bool CustomHistogram::SerializeInfoImpl(Pickle* pickle) const {
   if (!Histogram::SerializeInfoImpl(pickle))
     return false;
 
-  // Serialize ranges. First and last ranges are alwasy 0 and INT_MAX, so don't
+  // Serialize ranges. First and last ranges are always 0 and INT_MAX, so don't
   // write them.
   for (uint32_t i = 1; i < bucket_ranges()->bucket_count(); ++i) {
     if (!pickle->WriteInt(bucket_ranges()->range(i)))

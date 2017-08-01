@@ -159,7 +159,7 @@ TEST(SecurityTest, MALLOC_OVERFLOW_TEST(RandomMemoryAllocations)) {
   // If two pointers are separated by less than 512MB, they are considered
   // to be in the same area.
   // Our random pointer could be anywhere within 0x3fffffffffff (46bits),
-  // and we are checking that it's not withing 1GB (30 bits) from two
+  // and we are checking that it's not within 1GB (30 bits) from two
   // addresses (brk and mmap heap). We have roughly one chance out of
   // 2^15 to flake.
   const size_t kAreaRadius = 1<<29;

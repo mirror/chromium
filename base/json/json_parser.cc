@@ -530,7 +530,7 @@ bool JSONParser::ConsumeStringRaw(StringBuilder* out) {
         // Allowed esape sequences:
         case 'x': {  // UTF-8 sequence.
           // UTF-8 \x escape sequences are not allowed in the spec, but they
-          // are supported here for backwards-compatiblity with the old parser.
+          // are supported here for backwards-compatibility with the old parser.
           if (!CanConsume(3)) {
             ReportError(JSONReader::JSON_INVALID_ESCAPE, 1);
             return false;

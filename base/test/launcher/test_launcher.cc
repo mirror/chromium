@@ -510,7 +510,7 @@ bool TestLauncher::Run() {
   // original value.
   int requested_cycles = cycles_;
 
-// TODO(fuchsia): Fuchsia does not have POSIX signals. Something similiar to
+// TODO(fuchsia): Fuchsia does not have POSIX signals. Something similar to
 // this will likely need to be implemented. See https://crbug.com/706592.
 #if defined(OS_POSIX) && !defined(OS_FUCHSIA)
   CHECK_EQ(0, pipe(g_shutdown_pipe));

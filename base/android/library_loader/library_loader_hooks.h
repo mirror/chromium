@@ -66,7 +66,7 @@ BASE_EXPORT void LibraryLoaderExitHook();
 // Return the process type the shared library is loaded in.
 BASE_EXPORT LibraryProcessType GetLibraryProcessType(JNIEnv* env);
 
-// Initialize AtExitManager, this must be done at the begining of loading
+// Initialize AtExitManager, this must be done at the beginning of loading
 // shared library.
 void InitAtExitManager();
 

@@ -5,7 +5,7 @@ $$
 $$ https://github.com/google/googletest/blob/master/googletest/docs/PumpManual.md
 $$
 $$ MAX_ARITY controls the number of arguments that MockCallback supports.
-$$ It is choosen to match the number GMock supports.
+$$ It is chosen to match the number GMock supports.
 $var MAX_ARITY = 10
 $$
 // Copyright 2017 The Chromium Authors. All rights reserved.

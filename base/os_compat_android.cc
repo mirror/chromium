@@ -161,11 +161,11 @@ char* mkdtemp(char* path) {
       path[path_len - kSuffixLen + pos] = rand_char;
     }
     if (mkdir(path, 0700) == 0) {
-      // We just created the directory succesfully.
+      // We just created the directory successfully.
       return path;
     }
     if (errno != EEXIST) {
-      // The directory doesn't exist, but an error occured
+      // The directory doesn't exist, but an error occurred
       return NULL;
     }
   }

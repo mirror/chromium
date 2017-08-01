@@ -32,7 +32,7 @@ class BASE_EXPORT TaskAnnotator {
 
  private:
   // Creates a process-wide unique ID to represent this task in trace events.
-  // This will be mangled with a Process ID hash to reduce the likelyhood of
+  // This will be mangled with a Process ID hash to reduce the likelihood of
   // colliding with TaskAnnotator pointers on other processes.
   uint64_t GetTaskTraceID(const PendingTask& task) const;
 

@@ -285,7 +285,7 @@ struct Activity {
     ACT_PROCESS_START = ACT_PROCESS,
     ACT_PROCESS_WAIT,
 
-    // Exception activities indicate the occurence of something unexpected.
+    // Exception activities indicate the occurrence of something unexpected.
     ACT_EXCEPTION = 14 << 4,
 
     // Generic activities are user defined and can be anything.
@@ -448,7 +448,7 @@ class BASE_EXPORT ActivityUserData {
 
   // These function as above but don't actually copy the data into the
   // persistent memory. They store unaltered pointers along with a size. These
-  // can be used in conjuction with a memory dump to find certain large pieces
+  // can be used in conjunction with a memory dump to find certain large pieces
   // of information.
   void SetReference(StringPiece name, const void* memory, size_t size) {
     SetReference(name, RAW_VALUE_REFERENCE, memory, size);
@@ -670,7 +670,7 @@ class BASE_EXPORT ThreadActivityTracker {
   }
 
   // Changes the activity |type| and |data| of the top-most entry on the stack.
-  // This is useful if the information has changed and it is desireable to
+  // This is useful if the information has changed and it is desirable to
   // track that change without creating a new stack entry. If the type is
   // ACT_NULL or the data is kNullActivityData then that value will remain
   // unchanged. The type, if changed, must remain in the same category.

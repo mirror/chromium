@@ -142,7 +142,7 @@ class BASE_EXPORT CancelableTaskTracker {
   void Track(TaskId id, CancellationFlag* flag);
   void Untrack(TaskId id);
 
-  // Typically the number of tasks are 0-2 and occationally 3-4. But since
+  // Typically the number of tasks are 0-2 and occasionally 3-4. But since
   // this is a general API that could be used in unexpected ways, use a
   // small_map instead of a flat_map to avoid falling over if there are many
   // tasks.

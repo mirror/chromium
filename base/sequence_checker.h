@@ -16,7 +16,7 @@
 // unused member doesn't result in an extra byte (four when padded) per
 // instance in production.
 //
-// This class is much prefered to ThreadChecker for thread-safety checks.
+// This class is much preferred to ThreadChecker for thread-safety checks.
 // ThreadChecker should only be used for classes that are truly thread-affine
 // (use thread-local-storage or a third-party API that does).
 //

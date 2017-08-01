@@ -214,7 +214,7 @@ public class ChildProcessConnection {
     // Process ID of the corresponding child process.
     private int mPid;
 
-    // Inital moderate binding.
+    // Initial moderate binding.
     private final ChildServiceConnection mInitialBinding;
 
     // Strong binding will make the service priority equal to the priority of the activity.

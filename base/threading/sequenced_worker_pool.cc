@@ -121,7 +121,7 @@ struct SequencedTaskLessThan {
 };
 
 // Create a process-wide unique ID to represent this task in trace events. This
-// will be mangled with a Process ID hash to reduce the likelyhood of colliding
+// will be mangled with a Process ID hash to reduce the likelihood of colliding
 // with MessageLoop pointers on other processes.
 uint64_t GetTaskTraceID(const SequencedTask& task, void* pool) {
   return (static_cast<uint64_t>(task.trace_id) << 32) |

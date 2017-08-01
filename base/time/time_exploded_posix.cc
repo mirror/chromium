@@ -40,7 +40,7 @@ base::Lock* GetSysTimeToTimeStructLock() {
 }
 
 // Define a system-specific SysTime that wraps either to a time_t or
-// a time64_t depending on the host system, and associated convertion.
+// a time64_t depending on the host system, and associated conversion.
 // See crbug.com/162007
 #if defined(OS_ANDROID) && !defined(__LP64__)
 typedef time64_t SysTime;

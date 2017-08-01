@@ -379,7 +379,7 @@ TEST_F(BindTest, CurryingRvalueResultOfBind) {
 
   // If we implement Bind() such that the return value has auto_ptr-like
   // semantics, the second call here will fail because ownership of
-  // the internal BindState<> would have been transfered to a *temporary*
+  // the internal BindState<> would have been transferred to a *temporary*
   // constructon of a Callback object on the first call.
   cb.Run();
   EXPECT_EQ(2, n);

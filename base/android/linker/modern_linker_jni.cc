@@ -548,7 +548,7 @@ jboolean CreateSharedRelro(JNIEnv* env,
   // For https://crbug.com/568880.
   //
   // Unload the library from this address. Calling dlclose() will unmap the
-  // part of the reservation occupied by the libary, but will leave the
+  // part of the reservation occupied by the library, but will leave the
   // remainder of the reservation mapped, and we have no effective way of
   // unmapping the leftover portions because we don't know where dlclose's
   // unmap ended.

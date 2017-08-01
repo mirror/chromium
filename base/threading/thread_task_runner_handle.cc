@@ -46,7 +46,7 @@ ScopedClosureRunner ThreadTaskRunnerHandle::OverrideForTesting(
   // OverrideForTesting() when running their tasks from said main thread). To
   // solve this: sequence_task_runner_handle.cc and thread_task_runner_handle.cc
   // would have to be merged into a single impl file and share TLS state. This
-  // was deemed unecessary for now as most tests should use higher level
+  // was deemed unnecessary for now as most tests should use higher level
   // constructs and not have to instantiate task runner handles on their own.
   DCHECK(!SequencedTaskRunnerHandle::IsSet() || IsSet());
 

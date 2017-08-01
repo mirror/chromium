@@ -277,7 +277,7 @@ PersistentHistogramAllocator::~PersistentHistogramAllocator() {}
 std::unique_ptr<HistogramBase> PersistentHistogramAllocator::GetHistogram(
     Reference ref) {
   // Unfortunately, the histogram "pickle" methods cannot be used as part of
-  // the persistance because the deserialization methods always create local
+  // the persistence because the deserialization methods always create local
   // count data (while these must reference the persistent counts) and always
   // add it to the local list of known histograms (while these may be simple
   // references to histograms in other processes).
@@ -407,7 +407,7 @@ std::unique_ptr<HistogramBase> PersistentHistogramAllocator::AllocateHistogram(
     // resolving the "ref" values stored in histogram_data instad of just
     // using what is already known above but avoids duplicating the switch
     // statement here and serves as a double-check that everything is
-    // correct before commiting the new histogram to persistent space.
+    // correct before committing the new histogram to persistent space.
     std::unique_ptr<HistogramBase> histogram = CreateHistogram(histogram_data);
     DCHECK(histogram);
     DCHECK_NE(0U, histogram_data->samples_metadata.id);
@@ -521,7 +521,7 @@ HistogramBase*
 PersistentHistogramAllocator::GetCreateHistogramResultHistogram() {
   // Get the histogram in which create-results are stored. This is copied
   // almost exactly from the STATIC_HISTOGRAM_POINTER_BLOCK macro but with
-  // added code to prevent recursion (a likely occurance because the creation
+  // added code to prevent recursion (a likely occurrence because the creation
   // of a new a histogram can end up calling this.)
   static base::subtle::AtomicWord atomic_histogram_pointer = 0;
   HistogramBase* histogram_pointer =

@@ -311,7 +311,7 @@ class BASE_EXPORT PersistentMemoryAllocator {
 
   // Create internal histograms for tracking memory use and allocation sizes
   // for allocator of |name| (which can simply be the result of Name()). This
-  // is done seperately from construction for situations such as when the
+  // is done separately from construction for situations such as when the
   // histograms will be backed by memory provided by this very allocator.
   //
   // IMPORTANT: Callers must update tools/metrics/histograms/histograms.xml

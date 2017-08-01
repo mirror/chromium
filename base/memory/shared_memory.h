@@ -91,7 +91,7 @@ class BASE_EXPORT SharedMemory {
   // Closes any open files.
   ~SharedMemory();
 
-  // Return true iff the given handle is valid (i.e. not the distingished
+  // Return true iff the given handle is valid (i.e. not the distinguished
   // invalid value; NULL for a HANDLE and -1 for a file descriptor)
   static bool IsHandleValid(const SharedMemoryHandle& handle);
 
@@ -163,7 +163,7 @@ class BASE_EXPORT SharedMemory {
     return MapAt(0, bytes);
   }
 
-  // Same as above, but with |offset| to specify from begining of the shared
+  // Same as above, but with |offset| to specify from beginning of the shared
   // memory block to map.
   // |offset| must be alignent to value of |SysInfo::VMAllocationGranularity()|.
   bool MapAt(off_t offset, size_t bytes);

@@ -71,7 +71,7 @@ class BASE_EXPORT RunLoop {
   // RunLoop has already finished running has no effect.
   //
   // WARNING: You must NEVER assume that a call to Quit() or QuitWhenIdle() will
-  // terminate the targetted message loop. If a nested run loop continues
+  // terminate the targeted message loop. If a nested run loop continues
   // running, the target may NEVER terminate. It is very easy to livelock (run
   // forever) in such a case.
   void Quit();
@@ -198,7 +198,7 @@ class BASE_EXPORT RunLoop {
   static Delegate::Client* RegisterDelegateForCurrentThread(Delegate* delegate);
 
   // Quits the active RunLoop (when idle) -- there must be one. These were
-  // introduced as prefered temporary replacements to the long deprecated
+  // introduced as preferred temporary replacements to the long deprecated
   // MessageLoop::Quit(WhenIdle) methods. Callers should properly plumb a
   // reference to the appropriate RunLoop instance (or its QuitClosure) instead
   // of using these in order to link Run()/Quit() to a single RunLoop instance

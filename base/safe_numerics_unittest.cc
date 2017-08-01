@@ -33,7 +33,7 @@ using std::numeric_limits;
 #endif
 
 // This is a helper function for finding the maximum value in Src that can be
-// wholy represented as the destination floating-point type.
+// wholly represented as the destination floating-point type.
 template <typename Dst, typename Src>
 Dst GetMaxConvertibleToFloat() {
   using DstLimits = numeric_limits<Dst>;

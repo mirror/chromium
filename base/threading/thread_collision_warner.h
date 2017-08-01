@@ -20,7 +20,7 @@
 //
 //          In this case the macro DFAKE_SCOPED_LOCK has to be
 //          used, it checks that if a thread is inside the push/pop then
-//          noone else is still inside the pop/push
+//          no one else is still inside the pop/push
 //
 // class NonThreadSafeQueue {
 //  public:
@@ -39,7 +39,7 @@
 //
 //          In this case the macro DFAKE_SCOPED_RECURSIVE_LOCK
 //          has to be used, it checks that if a thread is inside the push/pop
-//          then noone else is still inside the pop/push
+//          then no one else is still inside the pop/push
 //
 // class NonThreadSafeQueue {
 //  public:
@@ -97,7 +97,6 @@
 //   DFAKE_MUTEX(ctor_dtor_);
 //   DFAKE_MUTEX(shareable_section_);
 // };
-
 
 #if !defined(NDEBUG)
 

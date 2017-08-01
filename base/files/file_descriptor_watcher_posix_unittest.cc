@@ -140,7 +140,7 @@ class FileDescriptorWatcherTest
     ASSERT_TRUE(ReadFromFD(read_file_descriptor(), &buffer, sizeof(buffer)));
   }
 
-  // Mock on wich callbacks are invoked.
+  // Mock on which callbacks are invoked.
   testing::StrictMock<Mock> mock_;
 
   // MessageLoop bound to the main thread.

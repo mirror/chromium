@@ -255,7 +255,7 @@ void PlatformThread::SetCurrentThreadPriority(ThreadPriority priority) {
   // priority. However, as stated in the bugs section of
   // http://man7.org/linux/man-pages/man2/getpriority.2.html: "under the current
   // Linux/NPTL implementation of POSIX threads, the nice value is a per-thread
-  // attribute". Also, 0 is prefered to the current thread id since it is
+  // attribute". Also, 0 is preferred to the current thread id since it is
   // equivalent but makes sandboxing easier (https://crbug.com/399473).
   const int nice_setting = internal::ThreadPriorityToNiceValue(priority);
   if (setpriority(PRIO_PROCESS, 0, nice_setting)) {

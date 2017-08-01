@@ -166,7 +166,7 @@ TEST_P(WaitableEventWatcherDeletionTest, DeleteUnder) {
   bool delay_after_delete;
   std::tie(message_loop_type, delay_after_delete) = GetParam();
 
-  // Delete the WaitableEvent out from under the Watcher. This is explictly
+  // Delete the WaitableEvent out from under the Watcher. This is explicitly
   // allowed by the interface.
 
   MessageLoop message_loop(message_loop_type);

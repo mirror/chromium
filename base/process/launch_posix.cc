@@ -594,7 +594,7 @@ static bool GetAppOutputInternal(
       fd_shuffle1.push_back(InjectionArc(include_stderr ? pipe_fd[1] : dev_null,
                                          STDERR_FILENO, true));
       fd_shuffle1.push_back(InjectionArc(dev_null, STDIN_FILENO, true));
-      // Adding another element here? Remeber to increase the argument to
+      // Adding another element here? Remember to increase the argument to
       // reserve(), above.
 
       for (size_t i = 0; i < fd_shuffle1.size(); ++i)
@@ -745,7 +745,7 @@ pid_t ForkWithFlags(unsigned long flags, pid_t* ptid, pid_t* ctid) {
     RAW_LOG(FATAL, "Invalid usage of ForkWithFlags");
   }
 
-  // Valgrind's clone implementation does not support specifiying a child_stack
+  // Valgrind's clone implementation does not support specifying a child_stack
   // without CLONE_VM, so we cannot use libc's clone wrapper when running under
   // Valgrind. As a result, the libc pid cache may be incorrect under Valgrind.
   // See crbug.com/442817 for more details.

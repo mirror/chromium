@@ -283,7 +283,7 @@ TEST_F(ConditionVariableTest, MAYBE_MultiThreadConsumerTest) {
     EXPECT_EQ(0, queue.GetNumberOfCompletedTasks());
 
     // Set up to make each task include getting help from another worker, so
-    // so that the work gets done in paralell.
+    // so that the work gets done in parallel.
     queue.ResetHistory();
     queue.SetTaskCount(kTaskCount);
     queue.SetWorkTime(kThirtyMs);
@@ -582,7 +582,7 @@ bool WorkQueue::ThreadSafeCheckShutdown(int thread_count) {
   bool all_shutdown;
   base::AutoLock auto_lock(lock_);
   {
-    // Declare in scope so DFAKE is guranteed to be destroyed before AutoLock.
+    // Declare in scope so DFAKE is guaranteed to be destroyed before AutoLock.
     DFAKE_SCOPED_RECURSIVE_LOCK(locked_methods_);
     all_shutdown = (shutdown_task_count_ == thread_count);
   }
@@ -619,10 +619,10 @@ void WorkQueue::ResetHistory() {
 }
 
 int WorkQueue::GetMinCompletionsByWorkerThread() const {
-  int minumum = completion_history_[0];
+  int minimum = completion_history_[0];
   for (int i = 0; i < thread_count_; ++i)
-    minumum = std::min(minumum, completion_history_[i]);
-  return minumum;
+    minimum = std::min(minimum, completion_history_[i]);
+  return minimum;
 }
 
 int WorkQueue::GetMaxCompletionsByWorkerThread() const {

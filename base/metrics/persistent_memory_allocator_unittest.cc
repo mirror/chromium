@@ -194,7 +194,7 @@ TEST_F(PersistentMemoryAllocatorTest, AllocateAndIterate) {
   EXPECT_EQ(block2, iter1b.GetNext(&type));
   EXPECT_EQ(0U, iter1b.GetNext(&type));
 
-  // Ensure nothing has gone noticably wrong.
+  // Ensure nothing has gone noticeably wrong.
   EXPECT_FALSE(allocator_->IsFull());
   EXPECT_FALSE(allocator_->IsCorrupt());
 

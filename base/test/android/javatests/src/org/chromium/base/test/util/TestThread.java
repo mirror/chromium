@@ -10,7 +10,7 @@ import android.os.Looper;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * This class is usefull when writing instrumentation tests that exercise code that posts tasks
+ * This class is useful when writing instrumentation tests that exercise code that posts tasks
  * (to the same thread).
  * Since the test code is run in a single thread, the posted tasks are never executed.
  * The TestThread class lets you run that code on a specific thread synchronously and flush the

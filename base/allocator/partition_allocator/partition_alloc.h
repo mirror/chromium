@@ -7,7 +7,7 @@
 
 // DESCRIPTION
 // partitionAlloc() / PartitionAllocGeneric() and PartitionFree() /
-// PartitionFreeGeneric() are approximately analagous to malloc() and free().
+// PartitionFreeGeneric() are approximately analogous to malloc() and free().
 //
 // The main difference is that a PartitionRoot / PartitionRootGeneric object
 // must be supplied to these functions, representing a specific "heap partition"

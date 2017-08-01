@@ -17,7 +17,7 @@
 // version will never fail with EINTR before the FD is actually closed. With
 // this version, it is thus safe to call close without checking for EINTR (as
 // the HANDLE_EINTR macro does) and not risk leaking the FD. In fact, mixing
-// this verison of close with HANDLE_EINTR is hazardous.
+// this version of close with HANDLE_EINTR is hazardous.
 //
 // The $NOCANCEL variants of various system calls are activated by compiling
 // with __DARWIN_NON_CANCELABLE, which prevents them from being pthread

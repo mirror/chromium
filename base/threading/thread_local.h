@@ -24,7 +24,7 @@
 // Thread Safety: An instance of ThreadLocalStorage is completely thread safe
 // once it has been created. If you want to dynamically create an instance, you
 // must of course properly deal with safety and race conditions. This means a
-// function-level static initializer is generally inappropiate.
+// function-level static initializer is generally inappropriate.
 //
 // In Android, the system TLS is limited.
 //

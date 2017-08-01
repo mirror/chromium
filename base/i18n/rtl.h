@@ -47,7 +47,7 @@ BASE_I18N_EXPORT std::string GetCanonicalLocale(const std::string& locale);
 // the default locale of ICU need to be changed to match the application locale
 // so that ICU functions work correctly in a locale-dependent manner.
 // This is handy in that we don't have to call GetApplicationLocale()
-// everytime we call locale-dependent ICU APIs as long as we make sure
+// every time we call locale-dependent ICU APIs as long as we make sure
 // that this is called before any locale-dependent API is called.
 BASE_I18N_EXPORT void SetICUDefaultLocale(const std::string& locale_string);
 
@@ -121,12 +121,12 @@ BASE_I18N_EXPORT bool UnadjustStringForLocaleDirection(string16* text);
 // BiDi character type.
 BASE_I18N_EXPORT bool StringContainsStrongRTLChars(const string16& text);
 
-// Wraps a string with an LRE-PDF pair which essentialy marks the string as a
+// Wraps a string with an LRE-PDF pair which essentially marks the string as a
 // Left-To-Right string. Doing this is useful in order to make sure LTR
 // strings are rendered properly in an RTL context.
 BASE_I18N_EXPORT void WrapStringWithLTRFormatting(string16* text);
 
-// Wraps a string with an RLE-PDF pair which essentialy marks the string as a
+// Wraps a string with an RLE-PDF pair which essentially marks the string as a
 // Right-To-Left string. Doing this is useful in order to make sure RTL
 // strings are rendered properly in an LTR context.
 BASE_I18N_EXPORT void WrapStringWithRTLFormatting(string16* text);

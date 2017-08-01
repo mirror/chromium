@@ -154,7 +154,7 @@ void RemoveAllocatorDispatchForTesting(AllocatorDispatch* dispatch) {
 extern "C" {
 
 // The general pattern for allocations is:
-// - Try to allocate, if succeded return the pointer.
+// - Try to allocate, if succeeded return the pointer.
 // - If the allocation failed:
 //   - Call the std::new_handler if it was a C++ allocation.
 //   - Call the std::new_handler if it was a malloc() (or calloc() or similar)

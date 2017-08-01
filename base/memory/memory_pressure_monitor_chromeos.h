@@ -98,7 +98,7 @@ class BASE_EXPORT MemoryPressureMonitor : public base::MemoryPressureMonitor {
   base::RepeatingTimer timer_;
 
   // To slow down the amount of moderate pressure event calls, this counter
-  // gets used to count the number of events since the last event occured.
+  // gets used to count the number of events since the last event occurred.
   int moderate_pressure_repeat_count_;
 
   // The "Memory.PressureLevel" statistic is recorded every

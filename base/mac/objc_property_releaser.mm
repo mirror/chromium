@@ -49,7 +49,7 @@ std::string ReleasableInstanceName(objc_property_t property) {
     switch (name) {
       // It might seem intelligent to check the type ('T') attribute to verify
       // that it identifies an NSObject-derived type (the attribute value
-      // begins with '@'.) This is a bad idea beacuse it fails to identify
+      // begins with '@'.) This is a bad idea because it fails to identify
       // CFTypeRef-based properties declared as __attribute__((NSObject)),
       // which just show up as pointers to their underlying CFType structs.
       //

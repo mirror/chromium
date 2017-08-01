@@ -231,7 +231,7 @@ bool FilePathWatcherImpl::UpdateWatch() {
   if (handle_ != INVALID_HANDLE_VALUE)
     DestroyWatch();
 
-  // Start at the target and walk up the directory chain until we succesfully
+  // Start at the target and walk up the directory chain until we successfully
   // create a watch handle in |handle_|. |child_dirs| keeps a stack of child
   // directories stripped from target, in reverse order.
   std::vector<FilePath> child_dirs;

@@ -367,7 +367,7 @@ TEST_F(FileUtilTest, NormalizeFilePathBasic) {
   ASSERT_TRUE(PathExists(file_b_path));
   ASSERT_TRUE(NormalizeFilePath(file_b_path, &normalized_file_b_path));
 
-  // Beacuse this test created |dir_path|, we know it is not a link
+  // Because this test created |dir_path|, we know it is not a link
   // or junction.  So, the real path of the directory holding file a
   // must be the parent of the path holding file b.
   ASSERT_TRUE(normalized_file_a_path.DirName()

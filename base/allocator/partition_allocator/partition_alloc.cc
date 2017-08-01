@@ -205,7 +205,7 @@ void PartitionAllocGenericInit(PartitionRootGeneric* root) {
     for (j = 0; j < kGenericNumBucketsPerOrder; ++j) {
       bucket->slot_size = current_size;
       PartitionBucketInitBase(bucket, root);
-      // Disable psuedo buckets so that touching them faults.
+      // Disable pseudo buckets so that touching them faults.
       if (current_size % kGenericSmallestBucket)
         bucket->active_pages_head = 0;
       current_size += currentIncrement;
@@ -241,7 +241,7 @@ void PartitionAllocGenericInit(PartitionRootGeneric* root) {
          &root->bucket_lookups[0] +
              ((kBitsPerSizeT + 1) * kGenericNumBucketsPerOrder));
   // And there's one last bucket lookup that will be hit for e.g. malloc(-1),
-  // which tries to overflow to a non-existant order.
+  // which tries to overflow to a non-existent order.
   *bucketPtr = &PartitionRootGeneric::gPagedBucket;
 }
 
@@ -527,7 +527,7 @@ static ALWAYS_INLINE char* PartitionPageAllocAndFillFreelist(
   }
 
   // We always return an object slot -- that's the +1 below.
-  // We do not neccessarily create any new freelist entries, because we cross
+  // We do not necessarily create any new freelist entries, because we cross
   // sub page boundaries frequently for large bucket sizes.
   DCHECK(num_new_freelist_entries + 1 <= num_slots);
   num_slots -= (num_new_freelist_entries + 1);
@@ -721,7 +721,7 @@ static ALWAYS_INLINE void PartitionDirectUnmap(PartitionPage* page) {
     extent->next_extent->prev_extent = extent->prev_extent;
   }
 
-  // Add on the size of the trailing guard page and preceeding partition
+  // Add on the size of the trailing guard page and preceding partition
   // page.
   unmap_size += kPartitionPageSize + kSystemPageSize;
 

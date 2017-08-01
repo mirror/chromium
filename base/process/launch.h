@@ -311,7 +311,7 @@ BASE_EXPORT bool GetAppOutputAndError(const std::vector<std::string>& argv,
                                       std::string* output);
 #endif  // defined(OS_POSIX)
 
-// If supported on the platform, and the user has sufficent rights, increase
+// If supported on the platform, and the user has sufficient rights, increase
 // the current process's scheduling priority to a high priority.
 BASE_EXPORT void RaiseProcessToHighPriority();
 

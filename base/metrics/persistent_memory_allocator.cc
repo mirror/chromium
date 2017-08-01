@@ -24,7 +24,7 @@
 namespace {
 
 // Limit of memory segment size. It has to fit in an unsigned 32-bit number
-// and should be a power of 2 in order to accomodate almost any page size.
+// and should be a power of 2 in order to accommodate almost any page size.
 const uint32_t kSegmentMaxSize = 1 << 30;  // 1 GiB
 
 // A constant (random) value placed in the shared metadata to identify
@@ -701,7 +701,7 @@ PersistentMemoryAllocator::Reference PersistentMemoryAllocator::AllocateImpl(
     }
 
     // Save our work. Try again if another thread has completed an allocation
-    // while we were processing. A "weak" exchange would be permissable here
+    // while we were processing. A "weak" exchange would be permissible here
     // because the code will just loop and try again but the above processing
     // is significant so make the extra effort of a "strong" exchange.
     if (!shared_meta()->freeptr.compare_exchange_strong(

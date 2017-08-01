@@ -81,7 +81,7 @@ public class Promise<T> {
     /**
      * Convenience method that calls {@link #then(Callback, Callback)} providing a rejection
      * {@link Callback} that throws a {@link UnhandledRejectionException}. Only use this on
-     * Promises that do not have rejection handlers or dependant Promises.
+     * Promises that do not have rejection handlers or dependent Promises.
      */
     public void then(Callback<T> onFulfill) {
         checkThread();

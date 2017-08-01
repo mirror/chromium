@@ -125,7 +125,7 @@ class BASE_EXPORT MemoryPressureMonitor : public base::MemoryPressureMonitor {
   MemoryPressureLevel current_memory_pressure_level_;
 
   // To slow down the amount of moderate pressure event calls, this gets used to
-  // count the number of events since the last event occured. This is used by
+  // count the number of events since the last event occurred. This is used by
   // |CheckMemoryPressure| to apply hysteresis on the raw results of
   // |CalculateCurrentPressureLevel|.
   int moderate_pressure_repeat_count_;

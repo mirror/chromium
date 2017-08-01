@@ -112,7 +112,7 @@ default to using unordered maps because "they're faster."
 
 ### base::flat\_map and base::flat\_set
 
-A sorted std::vector. Seached via binary search, inserts in the middle require
+A sorted std::vector. Searched via binary search, inserts in the middle require
 moving elements to make room. Good cache locality. For large objects and large
 set sizes, std::vector's doubling-when-full strategy can waste memory.
 

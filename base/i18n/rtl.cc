@@ -420,7 +420,7 @@ void WrapStringWithRTLFormatting(string16* text) {
 
 void WrapPathWithLTRFormatting(const FilePath& path,
                                string16* rtl_safe_path) {
-  // Wrap the overall path with LRE-PDF pair which essentialy marks the
+  // Wrap the overall path with LRE-PDF pair which essentially marks the
   // string as a Left-To-Right string.
   // Inserting an LRE (Left-To-Right Embedding) mark as the first character.
   rtl_safe_path->push_back(kLeftToRightEmbeddingMark);

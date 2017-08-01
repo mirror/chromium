@@ -540,7 +540,7 @@ public abstract class Linker {
         // although highly unlikely, there is no guarantee that something else does not
         // map into the area we are going to use between here and when we try to map into it.
         //
-        // The above notes mean that all of this is probablistic. It is however okay to do
+        // The above notes mean that all of this is probabilistic. It is however okay to do
         // because if, worst case and unlikely, we get unlucky in our choice of address,
         // the back-out and retry without the shared RELRO in the ChildProcessService will
         // keep things running.
