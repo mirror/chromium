@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7a9b41f0_24b464f2",
+        "filename": "chrome/test/data/webui/settings/accessibility_audit_rules.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-08-01T21:45:31Z",
+      "side": 1,
+      "message": "Done!",
+      "parentUuid": "5f1b021b_81ba6bf9",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 71
+      },
+      "revId": "6f70ee81c022dad414334ae77a55834380439ffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "052f30ad_6e513b1c",
         "filename": "chrome/test/data/webui/settings/accessibility_browsertest.js",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "6f70ee81c022dad414334ae77a55834380439ffa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87165501_c3dc8fa6",
+        "filename": "chrome/test/data/webui/settings/accessibility_browsertest.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-08-01T21:45:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "052f30ad_6e513b1c",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 77
+      },
+      "revId": "6f70ee81c022dad414334ae77a55834380439ffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "8ec368d7_9a35919c",
+        "filename": "chrome/test/data/webui/settings/accessibility_browsertest.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-08-01T21:45:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e68805d4_637ee6f2",
+      "range": {
+        "startLine": 96,
+        "startChar": 0,
+        "endLine": 97,
+        "endChar": 67
+      },
+      "revId": "6f70ee81c022dad414334ae77a55834380439ffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1fe0a195_45facdb0",
         "filename": "chrome/test/data/webui/settings/accessibility_browsertest.js",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "6f70ee81c022dad414334ae77a55834380439ffa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cdaa8f6_0f1871db",
+        "filename": "chrome/test/data/webui/settings/accessibility_browsertest.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-08-01T21:45:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fe0a195_45facdb0",
+      "range": {
+        "startLine": 99,
+        "startChar": 0,
+        "endLine": 100,
+        "endChar": 12
+      },
+      "revId": "6f70ee81c022dad414334ae77a55834380439ffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "a47637f0_4f5615f5",
+        "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-08-01T21:45:31Z",
+      "side": 1,
+      "message": "The comment got misplaced while shuffling code around. Thanks for the catch--it has been moved",
+      "parentUuid": "6b7fb808_c64b2257",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 40
+      },
+      "revId": "6f70ee81c022dad414334ae77a55834380439ffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5be2ada1_eebb4661",
         "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
         "patchSetId": 5
@@ -128,6 +248,30 @@
       "writtenOn": "2017-08-01T01:11:00Z",
       "side": 1,
       "message": "I mentioned this in person, but lets try to abstract away this detail from people writing tests.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 48
+      },
+      "revId": "6f70ee81c022dad414334ae77a55834380439ffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d31da6e0_f19919d1",
+        "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-08-01T21:45:31Z",
+      "side": 1,
+      "message": "Should that be a separate CL?",
+      "parentUuid": "5be2ada1_eebb4661",
       "range": {
         "startLine": 10,
         "startChar": 0,
