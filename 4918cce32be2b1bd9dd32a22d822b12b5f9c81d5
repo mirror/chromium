@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99c6fe42_1bbb55c0",
+        "filename": "ui/app_list/views/apps_grid_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1742,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-01T16:48:18Z",
+      "side": 1,
+      "message": "Update comment",
+      "revId": "4918cce32be2b1bd9dd32a22d822b12b5f9c81d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
