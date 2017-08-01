@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f5ddc3ca_0377721a",
+        "filename": "chrome/browser/ui/ash/chrome_screenshot_grabber.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-08-01T08:40:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68ad32e9_fcfd3189",
+      "revId": "81c676a8969137341388b35e3f6e2dbe3b6eb74d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a624224_df022762",
         "filename": "chrome/browser/ui/ash/chrome_screenshot_grabber.h",
         "patchSetId": 7
@@ -39,6 +57,30 @@
       "revId": "81c676a8969137341388b35e3f6e2dbe3b6eb74d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47d553fa_368af01a",
+        "filename": "chrome/browser/ui/ash/chrome_screenshot_grabber.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-08-01T08:40:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9a624224_df022762",
+      "range": {
+        "startLine": 54,
+        "startChar": 44,
+        "endLine": 54,
+        "endChar": 50
+      },
+      "revId": "81c676a8969137341388b35e3f6e2dbe3b6eb74d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "ffa34e3a_a68a6dd3",
+        "filename": "chrome/browser/ui/ash/chrome_screenshot_grabber.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-08-01T08:40:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2886fc9c_dd4192a4",
+      "range": {
+        "startLine": 61,
+        "startChar": 44,
+        "endLine": 61,
+        "endChar": 50
+      },
+      "revId": "81c676a8969137341388b35e3f6e2dbe3b6eb74d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0fbf9125_9278ca80",
         "filename": "chrome/browser/ui/ash/chrome_screenshot_grabber.h",
         "patchSetId": 7
@@ -85,6 +151,30 @@
       "revId": "81c676a8969137341388b35e3f6e2dbe3b6eb74d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aee34819_4dfee12b",
+        "filename": "chrome/browser/ui/ash/chrome_screenshot_grabber.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-08-01T08:40:25Z",
+      "side": 1,
+      "message": "Even before this CL, it shows notification when the screenshot operation is failed, so we cannot eliminate result here in order to keep the behavior unchanged.",
+      "parentUuid": "0fbf9125_9278ca80",
+      "range": {
+        "startLine": 66,
+        "startChar": 44,
+        "endLine": 66,
+        "endChar": 50
+      },
+      "revId": "81c676a8969137341388b35e3f6e2dbe3b6eb74d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
