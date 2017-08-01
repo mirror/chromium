@@ -244,6 +244,8 @@ void LayoutText::WillBeDestroyed() {
   if (SecureTextTimer* secure_text_timer =
           g_secure_text_timers ? g_secure_text_timers->Take(this) : 0)
     delete secure_text_timer;
+  if (!DocumentBeingDestroyed() && IsSelectionBorder())
+    View()->ClearSelection();
 
   RemoveAndDestroyTextBoxes();
   LayoutObject::WillBeDestroyed();
