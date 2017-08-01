@@ -117,6 +117,8 @@ class RemoteSuggestion {
   bool is_dismissed() const { return is_dismissed_; }
   void set_dismissed(bool dismissed) { is_dismissed_ = dismissed; }
 
+  bool is_pushed() const { return is_pushed_; }
+
   // The ID of the remote category this suggestion belongs to, for use with
   // Category::FromRemoteCategory.
   int remote_category_id() const { return remote_category_id_; }
@@ -158,6 +160,8 @@ class RemoteSuggestion {
 
   bool should_notify_;
   base::Time notification_deadline_;
+
+  bool is_pushed_;
 
   ContentType content_type_;
 
