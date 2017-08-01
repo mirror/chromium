@@ -1300,6 +1300,7 @@ component("platform") {
     "scroll/ScrollAnimatorBase.h",
     "scroll/ScrollAnimatorCompositorCoordinator.cpp",
     "scroll/ScrollAnimatorCompositorCoordinator.h",
+    "scroll/ScrollCustomization.h",
     "scroll/ScrollStateData.h",
     "scroll/ScrollTypes.h",
     "scroll/ScrollableArea.cpp",
