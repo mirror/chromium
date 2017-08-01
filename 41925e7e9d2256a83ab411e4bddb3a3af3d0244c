@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a59f5ef7_fd6d9fa7",
+        "filename": "ui/message_center/message_center_tray.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-08-01T05:12:35Z",
+      "side": 1,
+      "message": "please use if defined(OS_CHROMEOS) since it\u0027s more common.",
+      "range": {
+        "startLine": 107,
+        "startChar": 1,
+        "endLine": 107,
+        "endChar": 18
+      },
+      "revId": "41925e7e9d2256a83ab411e4bddb3a3af3d0244c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d263036e_c8e58ca5",
+        "filename": "ui/message_center/message_center_tray_delegate.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-08-01T05:12:35Z",
+      "side": 1,
+      "message": "please add a description and the sample return value for example.",
+      "range": {
+        "startLine": 50,
+        "startChar": 2,
+        "endLine": 50,
+        "endChar": 48
+      },
+      "revId": "41925e7e9d2256a83ab411e4bddb3a3af3d0244c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
