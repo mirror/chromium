@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff9feb90_27b939d0",
+        "filename": "cc/paint/solid_color_analyzer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-01T19:12:27Z",
+      "side": 1,
+      "message": "drawn_rounded_rect -\u003e |drawn_shape| and fix param name and code refs as well.",
+      "range": {
+        "startLine": 48,
+        "startChar": 33,
+        "endLine": 48,
+        "endChar": 51
+      },
+      "revId": "21b5f151026f3b67716ab4034a92c9a6644dcde3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faf31417_fc987034",
+        "filename": "cc/paint/solid_color_analyzer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-01T19:12:27Z",
+      "side": 1,
+      "message": "nit: rename to T as standard",
+      "range": {
+        "startLine": 50,
+        "startChar": 19,
+        "endLine": 50,
+        "endChar": 29
+      },
+      "revId": "21b5f151026f3b67716ab4034a92c9a6644dcde3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1282575c_67761696",
+        "filename": "cc/paint/solid_color_analyzer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-01T19:12:27Z",
+      "side": 1,
+      "message": "nit: can we rename this to num_draw_ops while here? It would make it clearer when folks are reading just down below. Feel free to leave as is since it\u0027s not part of your change.",
+      "range": {
+        "startLine": 177,
+        "startChar": 6,
+        "endLine": 177,
+        "endChar": 13
+      },
+      "revId": "21b5f151026f3b67716ab4034a92c9a6644dcde3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfe89bb3_0d197603",
+        "filename": "cc/paint/solid_color_analyzer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-01T19:12:27Z",
+      "side": 1,
+      "message": "Please add TODO(vmpstr) to add more tests around exceeding max_ops, since that logic is specific to each case statement. There\u0027s one test currently but it only hits DrawColor, see TwoOpsNotSolid.",
+      "range": {
+        "startLine": 212,
+        "startChar": 11,
+        "endLine": 212,
+        "endChar": 43
+      },
+      "revId": "21b5f151026f3b67716ab4034a92c9a6644dcde3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b44986ad_39540416",
+        "filename": "cc/paint/solid_color_analyzer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-01T19:12:27Z",
+      "side": 1,
+      "message": "Please add TODO(vmpstr) to generalize the DrawRect test cases so that we can test across both Rect and RRect.",
+      "range": {
+        "startLine": 130,
+        "startChar": 31,
+        "endLine": 130,
+        "endChar": 40
+      },
+      "revId": "21b5f151026f3b67716ab4034a92c9a6644dcde3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3549a540_b93bf33c",
+        "filename": "cc/paint/solid_color_analyzer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-01T19:12:27Z",
+      "side": 1,
+      "message": "Please add a test with a scale.",
+      "range": {
+        "startLine": 295,
+        "startChar": 11,
+        "endLine": 295,
+        "endChar": 19
+      },
+      "revId": "21b5f151026f3b67716ab4034a92c9a6644dcde3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51cdb17a_7f175470",
+        "filename": "cc/paint/solid_color_analyzer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-01T19:12:27Z",
+      "side": 1,
+      "message": "This is totally cool syntax wise!",
+      "range": {
+        "startLine": 306,
+        "startChar": 2,
+        "endLine": 309,
+        "endChar": 15
+      },
+      "revId": "21b5f151026f3b67716ab4034a92c9a6644dcde3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
