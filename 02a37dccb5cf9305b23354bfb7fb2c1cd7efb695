@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d9edf40_7903986e",
+        "filename": "components/ntp_tiles/popular_sites_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-08-01T11:25:18Z",
+      "side": 1,
+      "message": "Didn\u0027t we agree version 6 and above would be the ones with sections?",
+      "range": {
+        "startLine": 59,
+        "startChar": 44,
+        "endLine": 59,
+        "endChar": 0
+      },
+      "revId": "02a37dccb5cf9305b23354bfb7fb2c1cd7efb695",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34a8e6b3_41ccfa2d",
+        "filename": "components/ntp_tiles/popular_sites_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-08-01T11:25:18Z",
+      "side": 1,
+      "message": "As per maria\u0027s comment, 0 above will likely be replaced with an UNKNOWN or INVALID and cover the equality case.",
+      "range": {
+        "startLine": 176,
+        "startChar": 64,
+        "endLine": 176,
+        "endChar": 0
+      },
+      "revId": "02a37dccb5cf9305b23354bfb7fb2c1cd7efb695",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d0b3fae_74cb8ab0",
+        "filename": "components/ntp_tiles/popular_sites_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-08-01T11:25:18Z",
+      "side": 1,
+      "message": "Please discuss this through with maria. I suspect you\u0027d like to propagate even empty sections to upper layers and let the server decide.",
+      "range": {
+        "startLine": 187,
+        "startChar": 24,
+        "endLine": 187,
+        "endChar": 0
+      },
+      "revId": "02a37dccb5cf9305b23354bfb7fb2c1cd7efb695",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "065c72d3_bbb5b5df",
+        "filename": "components/ntp_tiles/popular_sites_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-08-01T11:25:18Z",
+      "side": 1,
+      "message": "The handling of the failure case (i.e. warn and fall back to older parsing logic) seems unnecessary to me and could hide issues in tests. How about simply:\n   return ParseVersion6OrAbove(list);",
+      "range": {
+        "startLine": 211,
+        "startChar": 48,
+        "endLine": 211,
+        "endChar": 0
+      },
+      "revId": "02a37dccb5cf9305b23354bfb7fb2c1cd7efb695",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d704e0ad_e99636d8",
+        "filename": "components/ntp_tiles/section_type.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-08-01T11:25:18Z",
+      "side": 1,
+      "message": "How about replacing LAST with COUNT, such that there\u0027s no need to make it equal with TRAVEL? Less redundancy, less code changes in the future.",
+      "range": {
+        "startLine": 24,
+        "startChar": 15,
+        "endLine": 24,
+        "endChar": 0
+      },
+      "revId": "02a37dccb5cf9305b23354bfb7fb2c1cd7efb695",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
