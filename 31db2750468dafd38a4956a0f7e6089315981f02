@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "65e8566d_bd88b1b2",
+        "filename": "extensions/browser/api/serial/serial_api.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-01T10:05:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10c393ef_d85a75e9",
+      "range": {
+        "startLine": 87,
+        "startChar": 2,
+        "endLine": 87,
+        "endChar": 21
+      },
+      "revId": "31db2750468dafd38a4956a0f7e6089315981f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "827884c8_41ac4ec5",
         "filename": "services/device/serial/serial_device_enumerator_impl_unittest.cc",
         "patchSetId": 14
@@ -39,6 +63,24 @@
       "revId": "31db2750468dafd38a4956a0f7e6089315981f02",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e286b70_18f3520c",
+        "filename": "services/device/serial/serial_device_enumerator_impl_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-01T10:05:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "827884c8_41ac4ec5",
+      "revId": "31db2750468dafd38a4956a0f7e6089315981f02",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
