@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9682e650_c99d5df9",
+        "filename": "tools/clang/scripts/test_tool.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-01T07:19:39Z",
+      "side": 1,
+      "message": "Nit: I would probably rename this to --apply-edits and have the default workflow be to just emit the raw file.\n\nAlso, do you mind updating the markdown docs at https://chromium.googlesource.com/chromium/src/+/master/docs/clang_tool_refactoring.md#Testing to mention the updated option in a followup?",
+      "range": {
+        "startLine": 122,
+        "startChar": 0,
+        "endLine": 125,
+        "endChar": 50
+      },
+      "revId": "2d3569ddbb4d00e93de8fd2ad6afa68ff398f694",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
