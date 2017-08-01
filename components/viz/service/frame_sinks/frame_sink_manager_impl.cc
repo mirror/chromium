@@ -355,4 +355,22 @@ void FrameSinkManagerImpl::OnClientConnectionLost(
     client_->OnClientConnectionClosed(frame_sink_id);
 }
 
+void FrameSinkManagerImpl::OnAggregatedHitTestRegionListUpdated(
+    const FrameSinkId& frame_sink_id,
+    mojo::ScopedSharedBufferHandle handle_one,
+    uint32_t handle_one_size,
+    mojo::ScopedSharedBufferHandle handle_two,
+    uint32_t handle_two_size,
+    bool use_handle_one) {
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  if (client_) {
+    client_->OnAggregatedHitTestRegionListUpdated(
+        frame_sink_id,
+        handle_one->Clone(mojo::SharedBufferHandle::AccessMode::READ_ONLY),
+        handle_one_size,
+        handle_two->Clone(mojo::SharedBufferHandle::AccessMode::READ_ONLY),
+        handle_two_size, use_handle_one);
+  }
+}
+
 }  // namespace viz

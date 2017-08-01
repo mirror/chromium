@@ -174,6 +174,17 @@ void HostFrameSinkManager::OnClientConnectionClosed(
   // TODO(kylechar): Notify observers.
 }
 
+void HostFrameSinkManager::OnAggregatedHitTestRegionListUpdated(
+    const FrameSinkId& frame_sink_id,
+    mojo::ScopedSharedBufferHandle handle_one,
+    uint32_t handle_one_size,
+    mojo::ScopedSharedBufferHandle handle_two,
+    uint32_t handle_two_size,
+    bool use_handle_one) {
+  // TODO(riajiang): Refactor content to use the hit test component.
+  // http://crbug.com/750755.
+}
+
 HostFrameSinkManager::FrameSinkData::FrameSinkData() = default;
 
 HostFrameSinkManager::FrameSinkData::FrameSinkData(FrameSinkData&& other) =

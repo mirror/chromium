@@ -32,7 +32,8 @@ GpuRootCompositorFrameSink::GpuRootCompositorFrameSink(
       display_(std::move(display)),
       client_(std::move(client)),
       compositor_frame_sink_binding_(this, std::move(request)),
-      display_private_binding_(this, std::move(display_private_request)) {
+      display_private_binding_(this, std::move(display_private_request)),
+      hit_test_aggregator_(base::MakeUnique<HitTestAggregator>(this)) {
   DCHECK(display_begin_frame_source_);
   compositor_frame_sink_binding_.set_connection_error_handler(
       base::Bind(&GpuRootCompositorFrameSink::OnClientConnectionLost,
@@ -92,6 +93,20 @@ void GpuRootCompositorFrameSink::DidNotProduceFrame(
   support_->DidNotProduceFrame(begin_frame_ack);
 }
 
+void GpuRootCompositorFrameSink::OnAggregatedHitTestRegionListUpdated(
+    mojo::ScopedSharedBufferHandle handle_one,
+    uint32_t handle_one_size,
+    mojo::ScopedSharedBufferHandle handle_two,
+    uint32_t handle_two_size,
+    bool use_handle_one) {
+  support_->frame_sink_manager()->OnAggregatedHitTestRegionListUpdated(
+      support_->frame_sink_id(),
+      handle_one->Clone(mojo::SharedBufferHandle::AccessMode::READ_ONLY),
+      handle_one_size,
+      handle_two->Clone(mojo::SharedBufferHandle::AccessMode::READ_ONLY),
+      handle_two_size, use_handle_one);
+}
+
 void GpuRootCompositorFrameSink::DisplayOutputSurfaceLost() {
   // TODO(staraz): Implement this. Client should hear about context/output
   // surface lost.
@@ -100,7 +115,7 @@ void GpuRootCompositorFrameSink::DisplayOutputSurfaceLost() {
 void GpuRootCompositorFrameSink::DisplayWillDrawAndSwap(
     bool will_draw_and_swap,
     const cc::RenderPassList& render_pass) {
-  hit_test_aggregator_.PostTaskAggregate(display_->CurrentSurfaceId());
+  hit_test_aggregator_->PostTaskAggregate(display_->CurrentSurfaceId());
 }
 
 void GpuRootCompositorFrameSink::DisplayDidDrawAndSwap() {}
@@ -112,7 +127,7 @@ void GpuRootCompositorFrameSink::DidReceiveCompositorFrameAck(
 }
 
 void GpuRootCompositorFrameSink::OnBeginFrame(const BeginFrameArgs& args) {
-  hit_test_aggregator_.Swap();
+  hit_test_aggregator_->Swap();
   if (client_)
     client_->OnBeginFrame(args);
 }
