@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1347c7f6_8fda0341",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util_unittest.mm",
+        "patchSetId": 10
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-01T19:16:15Z",
+      "side": 1,
+      "message": "It\u0027s easier to read if you in-line the expected literal of 300.0f.",
+      "revId": "34787eb2a68fe4c795e99c9ecc23556822cd8f2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ee84761_8483d445",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_anchor_point_provider.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-01T19:16:15Z",
+      "side": 1,
+      "message": "Remove \"Defines\"... start with \"An interface..\"",
+      "revId": "34787eb2a68fe4c795e99c9ecc23556822cd8f2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
