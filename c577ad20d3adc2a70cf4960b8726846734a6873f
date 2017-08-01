@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8293b9c4_f6607f97",
+        "filename": "ui/message_center/fake_message_center.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-08-01T06:39:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a332e0f5_ac66b3bf",
+      "range": {
+        "startLine": 147,
+        "startChar": 15,
+        "endLine": 147,
+        "endChar": 25
+      },
+      "revId": "c577ad20d3adc2a70cf4960b8726846734a6873f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5517db5f_d6ada6fd",
         "filename": "ui/message_center/message_center.h",
         "patchSetId": 27
@@ -45,6 +69,30 @@
       "revId": "c577ad20d3adc2a70cf4960b8726846734a6873f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a7c1908_83786c24",
+        "filename": "ui/message_center/message_center.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-08-01T06:39:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5517db5f_d6ada6fd",
+      "range": {
+        "startLine": 199,
+        "startChar": 25,
+        "endLine": 199,
+        "endChar": 43
+      },
+      "revId": "c577ad20d3adc2a70cf4960b8726846734a6873f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "369358ce_63cc453c",
+        "filename": "ui/message_center/message_center_delegate.h",
+        "patchSetId": 27
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-08-01T06:39:22Z",
+      "side": 1,
+      "message": "Done. I don\u0027t think we can make return value const base::string16\u0026 because return value of l10n_util::GetStringUTF16 is plain base::string16.",
+      "parentUuid": "d5f7d652_f1eafed6",
+      "range": {
+        "startLine": 18,
+        "startChar": 25,
+        "endLine": 18,
+        "endChar": 43
+      },
+      "revId": "c577ad20d3adc2a70cf4960b8726846734a6873f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b23fdec8_69e364f6",
         "filename": "ui/message_center/message_center_impl.cc",
         "patchSetId": 27
@@ -91,6 +163,30 @@
       "revId": "c577ad20d3adc2a70cf4960b8726846734a6873f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d61a4cee_f08be6c4",
+        "filename": "ui/message_center/message_center_impl.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 948,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-08-01T06:39:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b23fdec8_69e364f6",
+      "range": {
+        "startLine": 948,
+        "startChar": 53,
+        "endLine": 948,
+        "endChar": 69
+      },
+      "revId": "c577ad20d3adc2a70cf4960b8726846734a6873f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "f288d35a_cfaab19d",
+        "filename": "ui/message_center/notification.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-08-01T06:39:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "734889e0_9cbdf807",
+      "range": {
+        "startLine": 207,
+        "startChar": 18,
+        "endLine": 207,
+        "endChar": 44
+      },
+      "revId": "c577ad20d3adc2a70cf4960b8726846734a6873f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5bb688d0_495b9f5a",
         "filename": "ui/message_center/notification.cc",
         "patchSetId": 27
@@ -137,6 +257,30 @@
       "revId": "c577ad20d3adc2a70cf4960b8726846734a6873f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d671e179_824dd338",
+        "filename": "ui/message_center/notification.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-08-01T06:39:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5bb688d0_495b9f5a",
+      "range": {
+        "startLine": 218,
+        "startChar": 4,
+        "endLine": 218,
+        "endChar": 12
+      },
+      "revId": "c577ad20d3adc2a70cf4960b8726846734a6873f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "0d18f728_380d7c19",
+        "filename": "ui/message_center/views/notification_header_view.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-08-01T06:39:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37081fb6_821c6fe2",
+      "range": {
+        "startLine": 133,
+        "startChar": 2,
+        "endLine": 133,
+        "endChar": 39
+      },
+      "revId": "c577ad20d3adc2a70cf4960b8726846734a6873f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3661c5f6_c389f041",
         "filename": "ui/message_center/views/notification_view_md.cc",
         "patchSetId": 27
@@ -183,6 +351,30 @@
       "revId": "c577ad20d3adc2a70cf4960b8726846734a6873f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a0cfc45_d1693a68",
+        "filename": "ui/message_center/views/notification_view_md.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 729,
+      "author": {
+        "id": 1195459
+      },
+      "writtenOn": "2017-08-01T06:39:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3661c5f6_c389f041",
+      "range": {
+        "startLine": 729,
+        "startChar": 39,
+        "endLine": 729,
+        "endChar": 65
+      },
+      "revId": "c577ad20d3adc2a70cf4960b8726846734a6873f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
