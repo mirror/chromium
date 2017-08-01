@@ -488,20 +488,22 @@ TEST_F(NetworkSessionConfiguratorTest, EnableUserAlternateProtocolPorts) {
   EXPECT_TRUE(params_.enable_user_alternate_protocol_ports);
 }
 
-TEST_F(NetworkSessionConfiguratorTest, TestingFixedPorts) {
-  base::CommandLine command_line(base::CommandLine::NO_PROGRAM);
-  command_line.AppendSwitchASCII(switches::kTestingFixedHttpPort, "800");
-  command_line.AppendSwitchASCII(switches::kTestingFixedHttpsPort, "801");
-  ParseCommandLineAndFieldTrials(command_line);
-  EXPECT_EQ(800, params_.testing_fixed_http_port);
-  EXPECT_EQ(801, params_.testing_fixed_https_port);
-}
-
 TEST_F(NetworkSessionConfiguratorTest, IgnoreCertificateErrors) {
   base::CommandLine command_line(base::CommandLine::NO_PROGRAM);
   command_line.AppendSwitch(switches::kIgnoreCertificateErrors);
   ParseCommandLineAndFieldTrials(command_line);
   EXPECT_TRUE(params_.ignore_certificate_errors);
+}
+
+TEST_F(NetworkSessionConfiguratorTest, Default) {
+  base::CommandLine command_line(base::CommandLine::NO_PROGRAM);
+#if defined(OS_ANDROID) || defined(OS_LINUX) || defined(OS_CHROMEOS)
+  EXPECT_EQ(net::URLRequestContextBuilder::HttpCacheParams::DISK_SIMPLE,
+            ChooseCacheType(command_line));
+#else
+  EXPECT_EQ(net::URLRequestContextBuilder::HttpCacheParams::DISK_BLOCKFILE,
+            ChooseCacheType(command_line));
+#endif
 }
 
 TEST_F(NetworkSessionConfiguratorTest, HostRules) {
@@ -536,17 +538,6 @@ TEST_F(NetworkSessionConfiguratorTest, TokenBindingEnabled) {
   ParseCommandLineAndFieldTrials(command_line);
 
   EXPECT_TRUE(params_.enable_token_binding);
-}
-
-TEST_F(NetworkSessionConfiguratorTest, DefaultCacheBackend) {
-  base::CommandLine command_line(base::CommandLine::NO_PROGRAM);
-#if defined(OS_ANDROID) || defined(OS_LINUX) || defined(OS_CHROMEOS)
-  EXPECT_EQ(net::URLRequestContextBuilder::HttpCacheParams::DISK_SIMPLE,
-            ChooseCacheType(command_line));
-#else
-  EXPECT_EQ(net::URLRequestContextBuilder::HttpCacheParams::DISK_BLOCKFILE,
-            ChooseCacheType(command_line));
-#endif
 }
 
 TEST_F(NetworkSessionConfiguratorTest, UseSimpleCacheBackendOn) {
