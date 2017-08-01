@@ -52,6 +52,24 @@
       "revId": "b1f20906583ce4ae7fbcab65c0c36b6c265df274",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fec44e4_a78bbc92",
+        "filename": "cc/raster/gpu_raster_buffer_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-01T22:10:08Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e680e02d_7f90ee7b",
+      "revId": "b1f20906583ce4ae7fbcab65c0c36b6c265df274",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
