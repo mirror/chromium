@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c0bf562a_2db8e4bc",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-08-01T22:26:29Z",
+      "side": 1,
+      "message": "This was copy-pasta code, but let me try.",
+      "parentUuid": "6694e19a_9f501197",
+      "range": {
+        "startLine": 33,
+        "startChar": 48,
+        "endLine": 33,
+        "endChar": 62
+      },
+      "revId": "e748a9de1a75726f7d72c775d4985f00c7da0030",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "39b85673_cf035bf7",
         "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "e748a9de1a75726f7d72c775d4985f00c7da0030",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f459507_7e543ac3",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-08-01T22:26:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39b85673_cf035bf7",
+      "range": {
+        "startLine": 75,
+        "startChar": 8,
+        "endLine": 75,
+        "endChar": 67
+      },
+      "revId": "e748a9de1a75726f7d72c775d4985f00c7da0030",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "21077827_057180e4",
+        "filename": "chrome/browser/profiling_host/profiling_process_host.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-08-01T22:26:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b43b2144_2bfbcd91",
+      "range": {
+        "startLine": 102,
+        "startChar": 19,
+        "endLine": 102,
+        "endChar": 33
+      },
+      "revId": "e748a9de1a75726f7d72c775d4985f00c7da0030",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b60e515f_918d0fb3",
         "filename": "chrome/profiling/memlog_connection_manager.cc",
         "patchSetId": 8
@@ -91,6 +163,30 @@
       "revId": "e748a9de1a75726f7d72c775d4985f00c7da0030",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e4429ce_d7819b4e",
+        "filename": "chrome/profiling/memlog_connection_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-08-01T22:26:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b60e515f_918d0fb3",
+      "range": {
+        "startLine": 42,
+        "startChar": 17,
+        "endLine": 42,
+        "endChar": 26
+      },
+      "revId": "e748a9de1a75726f7d72c775d4985f00c7da0030",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "f6dd0cff_8f05fb3c",
+        "filename": "chrome/profiling/memlog_connection_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-08-01T22:26:29Z",
+      "side": 1,
+      "message": "I hate auto. :(",
+      "parentUuid": "3c2fc4ed_5311a7cc",
+      "range": {
+        "startLine": 50,
+        "startChar": 2,
+        "endLine": 51,
+        "endChar": 28
+      },
+      "revId": "e748a9de1a75726f7d72c775d4985f00c7da0030",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a3c1c282_e3c8abb3",
         "filename": "chrome/profiling/memlog_impl.h",
         "patchSetId": 8
@@ -128,6 +248,30 @@
       "writtenOn": "2017-08-01T22:16:58Z",
       "side": 1,
       "message": "I suppose it\u0027s OK in the current implementation, but it seems like in the general case we should be retaining a reference to the TaskRunner. WDYT?",
+      "range": {
+        "startLine": 37,
+        "startChar": 19,
+        "endLine": 37,
+        "endChar": 45
+      },
+      "revId": "e748a9de1a75726f7d72c775d4985f00c7da0030",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3502784d_3a7667ec",
+        "filename": "chrome/profiling/memlog_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-08-01T22:26:29Z",
+      "side": 1,
+      "message": "seemed overkill for a deleter...",
+      "parentUuid": "a3c1c282_e3c8abb3",
       "range": {
         "startLine": 37,
         "startChar": 19,
