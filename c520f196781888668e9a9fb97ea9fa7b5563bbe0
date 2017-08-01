@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78cc9d17_fa020b88",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-08-01T00:41:19Z",
+      "side": 1,
+      "message": "I can\u0027t remember properly, but will this also get called when the \"Reset\" button is called?",
+      "revId": "c520f196781888668e9a9fb97ea9fa7b5563bbe0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f630ed37_27273ea3",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-08-01T00:41:19Z",
+      "side": 1,
+      "message": "There is also url::IsSameOriginWith (https://cs.chromium.org/chromium/src/url/origin.h?l\u003d185\u0026gs\u003dcpp%253Aurl%253A%253AIsSameOriginWith(const%2BGURL%2B%2526%252C%2Bconst%2BGURL%2B%2526)%2540chromium%252F..%252F..%252Furl%252Forigin.h%257Cdecl\u0026gsn\u003dIsSameOriginWith\u0026ct\u003dxref_usages) which would avoid explicit conversion to url::Origin",
+      "revId": "c520f196781888668e9a9fb97ea9fa7b5563bbe0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1de0beb_ff7902fb",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 612,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-08-01T00:41:19Z",
+      "side": 1,
+      "message": "Thanks for the helpful diagram :)",
+      "revId": "c520f196781888668e9a9fb97ea9fa7b5563bbe0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2abb9df7_68bbc0d6",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 624,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-08-01T00:41:19Z",
+      "side": 1,
+      "message": "It\u0027s a little confusing to call these origin_1, origin_2 and origin_3 since they are all the same origin. Maybe example_origin, example_origin_with_path, example_origin_with_query (or something)?",
+      "revId": "c520f196781888668e9a9fb97ea9fa7b5563bbe0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04fde153_2ad1704b",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-08-01T00:41:19Z",
+      "side": 1,
+      "message": "nit: example_subdomain?",
+      "revId": "c520f196781888668e9a9fb97ea9fa7b5563bbe0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21adce7c_54d9eefc",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 634,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-08-01T00:41:19Z",
+      "side": 1,
+      "message": "nit: it\u0027s not ideal to use the constant here. Can we get the number of tabs from the tab strip model?",
+      "revId": "c520f196781888668e9a9fb97ea9fa7b5563bbe0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b8217d6_179329f1",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 660,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-08-01T00:41:19Z",
+      "side": 1,
+      "message": "nit: same here",
+      "revId": "c520f196781888668e9a9fb97ea9fa7b5563bbe0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d705cfb_fe8a2c9e",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 670,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-08-01T00:41:19Z",
+      "side": 1,
+      "message": "nit: these loops are ok, but you may want to add EXPECTs that ensure that the origin of the tab being checked matches example.com (or not in the cases where the infobar isn\u0027t shown)",
+      "revId": "c520f196781888668e9a9fb97ea9fa7b5563bbe0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8f62584_dc05e44b",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-08-01T00:41:19Z",
+      "side": 1,
+      "message": "example_origin_with_path_2 (or something?)",
+      "revId": "c520f196781888668e9a9fb97ea9fa7b5563bbe0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7d0d1a8_68017a94",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-08-01T00:41:19Z",
+      "side": 1,
+      "message": "nit: why the break here? Won\u0027t this avoid checking all the tabs?",
+      "revId": "c520f196781888668e9a9fb97ea9fa7b5563bbe0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ce7c785_d5a64625",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 707,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-08-01T00:41:19Z",
+      "side": 1,
+      "message": "I\u0027m not sure I understand why the infobar disappeared here? Shouldn\u0027t it show up as a result of clearing the settings above?",
+      "revId": "c520f196781888668e9a9fb97ea9fa7b5563bbe0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
