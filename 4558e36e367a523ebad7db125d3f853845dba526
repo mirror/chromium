@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc96ba51_d6a3bbc5",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-01T20:59:57Z",
+      "side": 1,
+      "message": "khorimoto@ I believe you added this explicit reset. Is it really even necessary (or helpful)?",
+      "range": {
+        "startLine": 152,
+        "startChar": 2,
+        "endLine": 152,
+        "endChar": 25
+      },
+      "revId": "4558e36e367a523ebad7db125d3f853845dba526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7425d528_71a89ca3",
+        "filename": "chromeos/components/tether/notification_remover.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-01T20:59:57Z",
+      "side": 1,
+      "message": "NotificationPresenter is supposed to live beyond the lifetime of NotificationRemover. This paradigm exists across almost all of our classes, and we don\u0027t do a check like this in them. IMO, this DCHECK isn\u0027t appropriate. khorimoto@ what are your thoughts?",
+      "range": {
+        "startLine": 37,
+        "startChar": 9,
+        "endLine": 37,
+        "endChar": 32
+      },
+      "revId": "4558e36e367a523ebad7db125d3f853845dba526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
