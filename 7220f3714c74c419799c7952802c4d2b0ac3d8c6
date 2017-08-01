@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "a165c2dc_b16b85e3",
+        "filename": "third_party/WebKit/LayoutTests/webaudio/internals/cycle-connection-gc.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-08-01T16:40:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4be176ab_9fdf3a4b",
+      "range": {
+        "startLine": 23,
+        "startChar": 8,
+        "endLine": 29,
+        "endChar": 43
+      },
+      "revId": "7220f3714c74c419799c7952802c4d2b0ac3d8c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "970834d0_854af9bb",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioNode.cpp",
         "patchSetId": 6
