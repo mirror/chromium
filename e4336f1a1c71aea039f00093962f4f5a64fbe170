@@ -140,6 +140,30 @@
       "revId": "e4336f1a1c71aea039f00093962f4f5a64fbe170",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9658033d_81583008",
+        "filename": "components/ntp_snippets/contextual_suggestions_source_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-01T11:48:38Z",
+      "side": 1,
+      "message": "Ack. Pointee is obviously fine.",
+      "parentUuid": "5f79ebe3_549a83e4",
+      "range": {
+        "startLine": 115,
+        "startChar": 10,
+        "endLine": 115,
+        "endChar": 17
+      },
+      "revId": "e4336f1a1c71aea039f00093962f4f5a64fbe170",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
