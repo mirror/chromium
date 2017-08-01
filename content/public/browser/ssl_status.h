@@ -21,7 +21,18 @@ class SSLInfo;
 namespace content {
 
 // Collects the SSL information for this NavigationEntry.
-struct CONTENT_EXPORT SSLStatus {
+class CONTENT_EXPORT SSLStatus {
+ public:
+  class UserData {
+   public:
+    UserData() {}
+    virtual ~UserData() = default;
+    virtual std::unique_ptr<UserData> Clone() = 0;
+
+   private:
+    DISALLOW_COPY_AND_ASSIGN(UserData);
+  };
+
   // Flags used for the page security content status.
   enum ContentStatusFlags {
     // HTTP page, or HTTPS page with no insecure content.
@@ -56,6 +67,7 @@ struct CONTENT_EXPORT SSLStatus {
   SSLStatus();
   SSLStatus(const net::SSLInfo& ssl_info);
   SSLStatus(const SSLStatus& other);
+  SSLStatus& operator=(SSLStatus other);
   ~SSLStatus();
 
   bool Equals(const SSLStatus& status) const {
@@ -71,6 +83,9 @@ struct CONTENT_EXPORT SSLStatus {
            pkp_bypassed == status.pkp_bypassed;
   }
 
+  void SetUserData(std::unique_ptr<UserData> data);
+  UserData* GetUserData();
+
   bool initialized;
   scoped_refptr<net::X509Certificate> certificate;
   net::CertStatus cert_status;
@@ -81,6 +96,9 @@ struct CONTENT_EXPORT SSLStatus {
   int content_status;
   // True if PKP was bypassed due to a local trust anchor.
   bool pkp_bypassed;
+
+ private:
+  std::unique_ptr<UserData> user_data_;
 };
 
 }  // namespace content
