@@ -83699,25 +83699,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>Time spent in IdleNotifications.</summary>
 </histogram>
 
-<histogram name="V8.GCIdleTimeAllottedInMS" units="ms">
-  <owner>hpayer@chromium.org</owner>
-  <summary>Idle time passed to V8 via IdleNotifications.</summary>
-</histogram>
-
-<histogram name="V8.GCIdleTimeLimit.Overshot" units="ms">
-  <owner>hpayer@chromium.org</owner>
-  <summary>
-    Milliseconds the idle time limit was overshot by the IdleNotification.
-  </summary>
-</histogram>
-
-<histogram name="V8.GCIdleTimeLimit.Undershot" units="ms">
-  <owner>hpayer@chromium.org</owner>
-  <summary>
-    Milliseconds the idle time limit was undershot by the IdleNotification.
-  </summary>
-</histogram>
-
 <histogram name="V8.GCIncrementalMarking" units="ms">
   <owner>hpayer@chromium.org</owner>
   <summary>Time spent doing incremental marking steps during GC.</summary>
