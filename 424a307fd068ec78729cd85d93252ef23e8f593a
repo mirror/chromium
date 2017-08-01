@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85962ab7_60850007",
+        "filename": "media/remoting/fake_remoter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-01T00:01:27Z",
+      "side": 1,
+      "message": "nit (since it\u0027s so many LOC in-between): #endif  // defined(OS_ANDROID)",
+      "range": {
+        "startLine": 93,
+        "startChar": 0,
+        "endLine": 93,
+        "endChar": 6
+      },
+      "revId": "424a307fd068ec78729cd85d93252ef23e8f593a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d4345cc_c8465dca",
+        "filename": "media/remoting/renderer_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-01T00:01:27Z",
+      "side": 1,
+      "message": "Per my last round of comments, is it possible to use a more-readable build flag for all of these? Meaning, here you would:\n\n  #if !defined(ENABLE_MEDIA_REMOTING_RPC)\n    base::WeakPtr\u003cRpcBroker\u003e GetRpcBroker() const;\n  #endif\n\nAnd, the BUILD.gn would simply:\n\n  source_set(\"remoting\") {\n    sources \u003d [\n      ...all common ones...\n    ]\n    deps \u003d [\n      ...all deps except \":rpc\"...\n    ]\n\n    # For non-mobile, include full RPC implementation.\n    if (!is_android \u0026\u0026 !is_ios) {\n      defines +\u003d [ \"MEDIA_REMOTING_ENABLE_RPC\" ]\n      sources +\u003d [\n        ...all other files...\n      ]\n      deps +\u003d [ \":rpc:\" ]\n    }\n  }\n\nThat way, the code is more self-documenting as to why we\u0027re conditionally compiling in a bunch of places (to eliminate the RPC stuff, regardless of why we do/don\u0027t want to include it in a build).",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 68,
+        "endChar": 24
+      },
+      "revId": "424a307fd068ec78729cd85d93252ef23e8f593a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
