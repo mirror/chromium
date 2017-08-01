@@ -9,6 +9,11 @@
 
 namespace bubble_util {
 
+// Calculate the coordinates of the point of the speech bubble's triangle based
+// on the |frame| of the target UI element and the bubble's |arrowDirection|.
+// The returned point is in the same coordinate system as |frame|.
+CGPoint AnchorPoint(CGRect targetFrame, BubbleArrowDirection arrowDirection);
+
 // Calculate the maximum width of the bubble such that it stays within its
 // bounding coordinate space. |targetFrame| is the frame the target UI element
 // in the coordinate system in which the bubble is drawn. |alignment| is the

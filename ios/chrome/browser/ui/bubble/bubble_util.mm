@@ -12,21 +12,6 @@
 namespace bubble_util {
 
 namespace {
-// Calculate the coordinates of the point of the speech bubble's triangle based
-// on the |frame| of the target UI element and the bubble's |arrowDirection|.
-// The returned point is in the same coordinate system as |frame|.
-CGPoint AnchorPoint(CGRect targetFrame, BubbleArrowDirection arrowDirection) {
-  CGPoint anchorPoint;
-  anchorPoint.x = CGRectGetMidX(targetFrame);
-  if (arrowDirection == BubbleArrowDirectionUp) {
-    anchorPoint.y = CGRectGetMaxY(targetFrame);
-  } else {
-    DCHECK_EQ(arrowDirection, BubbleArrowDirectionDown);
-    anchorPoint.y = CGRectGetMinY(targetFrame);
-  }
-  return anchorPoint;
-}
-
 // Calculate the distance from the bubble's leading edge to the leading edge of
 // its bounding coordinate system. In LTR contexts, the returned float is the
 // x-coordinate of the bubble's origin. This calculation is based on
@@ -76,6 +61,18 @@ CGFloat OriginY(CGRect targetFrame,
   return originY;
 }
 }  // namespace
+
+CGPoint AnchorPoint(CGRect targetFrame, BubbleArrowDirection arrowDirection) {
+  CGPoint anchorPoint;
+  anchorPoint.x = CGRectGetMidX(targetFrame);
+  if (arrowDirection == BubbleArrowDirectionUp) {
+    anchorPoint.y = CGRectGetMaxY(targetFrame);
+  } else {
+    DCHECK_EQ(arrowDirection, BubbleArrowDirectionDown);
+    anchorPoint.y = CGRectGetMinY(targetFrame);
+  }
+  return anchorPoint;
+}
 
 CGFloat MaxWidth(CGRect targetFrame,
                  BubbleAlignment alignment,
