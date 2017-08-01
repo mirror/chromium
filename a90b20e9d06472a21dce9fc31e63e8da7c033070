@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5f16ed8_7a23e3d2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1197619
+      },
+      "writtenOn": "2017-08-01T21:21:25Z",
+      "side": 1,
+      "message": "The Blink project does not follow W3C HTML, but instead the WHATWG HTML Standard. Section numbers are also fragile. I\u0027d suggest linking to https://html.spec.whatwg.org/multipage/system-state.html#language-preferences",
+      "revId": "a90b20e9d06472a21dce9fc31e63e8da7c033070",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
