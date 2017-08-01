@@ -21,6 +21,7 @@
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/search/instant_search_prerenderer.h"
 #include "chrome/common/render_messages.h"
+#include "chrome/common/search.mojom.h"
 #include "components/variations/entropy_provider.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/notification_types.h"
@@ -98,25 +99,26 @@ TEST_F(InstantServiceTest, DispatchGoogleURLUpdated) {
   NotifyGoogleBaseURLUpdate(new_base_url);
 }
 
+class MockSearchBouncer : public chrome::mojom::SearchBouncer {
+ public:
+  MOCK_METHOD2(SetSearchURLs,
+               void(const std::vector<GURL>& search_urls,
+                    const GURL& new_tab_page_url));
+};
+
 TEST_F(InstantServiceEnabledTest, SendsSearchURLsToRenderer) {
+  MockSearchBouncer mock_search_bouncer;
   std::unique_ptr<content::MockRenderProcessHost> rph(
       new content::MockRenderProcessHost(profile()));
-  rph->sink().ClearMessages();
   instant_service_->Observe(
       content::NOTIFICATION_RENDERER_PROCESS_CREATED,
       content::Source<content::MockRenderProcessHost>(rph.get()),
       content::NotificationService::NoDetails());
-  EXPECT_EQ(1U, rph->sink().message_count());
-  const IPC::Message* msg = rph->sink().GetMessageAt(0);
-  ASSERT_TRUE(msg);
-  ChromeViewMsg_SetSearchURLs::Param params;
-  ChromeViewMsg_SetSearchURLs::Read(msg, &params);
-  std::vector<GURL> search_urls = std::get<0>(params);
-  GURL new_tab_page_url = std::get<1>(params);
-  ASSERT_EQ(2U, search_urls.size());
-  EXPECT_EQ("https://www.google.com/alt#quux=", search_urls[0].spec());
-  EXPECT_EQ("https://www.google.com/url?bar=", search_urls[1].spec());
-  EXPECT_EQ("https://www.google.com/newtab", new_tab_page_url.spec());
+  std::vector<GURL> search_urls = {GURL("https://www.google.com/alt#quux="),
+                                   GURL("https://www.google.com/url?bar=")};
+  GURL new_tab_page_url("https://www.google.com/newtab");
+  EXPECT_CALL(mock_search_bouncer,
+              SetSearchURLs(search_urls, new_tab_page_url));
 }
 
 TEST_F(InstantServiceTest, InstantSearchEnabled) {
