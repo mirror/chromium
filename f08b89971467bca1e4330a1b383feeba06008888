@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b96e100_b70b1463",
+        "filename": "chrome/browser/chromeos/printing/printer_event_tracker.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-01T19:14:50Z",
+      "side": 1,
+      "message": "Combine these as just set_logging() (or rename the variable and name the method set_recording if you prefer)",
+      "revId": "f08b89971467bca1e4330a1b383feeba06008888",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
