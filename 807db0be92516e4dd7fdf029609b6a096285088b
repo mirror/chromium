@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9f7129a_64263734",
+        "filename": "tools/clang/traffic_annotation_extractor/tests/dummy_classes.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-08-01T12:54:20Z",
+      "side": 1,
+      "message": "nit: Empty line",
+      "range": {
+        "startLine": 66,
+        "startChar": 2,
+        "endLine": 66,
+        "endChar": 0
+      },
+      "revId": "807db0be92516e4dd7fdf029609b6a096285088b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
