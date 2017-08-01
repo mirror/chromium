@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c50a5cb_3bfd5eb7",
+        "filename": "third_party/WebKit/Source/core/leak_detector/LeakDetector.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-08-01T02:49:05Z",
+      "side": 1,
+      "message": "Class comments are written above the class.\nMaybe mention that this stabilizes the InstanceCounter values.",
+      "range": {
+        "startLine": 17,
+        "startChar": 10,
+        "endLine": 17,
+        "endChar": 15
+      },
+      "revId": "ed308670f8891dc7b71bc021b01e16da4d390ed0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3a9f36d_86a2d9ca",
+        "filename": "third_party/WebKit/public/web/WebLeakDetector.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-08-01T02:49:05Z",
+      "side": 1,
+      "message": "nit: We don\u0027t do reporting in LeakDetector but we do do reporting here, so I think we should keep the name.",
+      "range": {
+        "startLine": 89,
+        "startChar": 15,
+        "endLine": 89,
+        "endChar": 29
+      },
+      "revId": "ed308670f8891dc7b71bc021b01e16da4d390ed0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
