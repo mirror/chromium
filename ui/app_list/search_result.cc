@@ -7,6 +7,7 @@
 #include <map>
 
 #include "ui/app_list/app_list_constants.h"
+#include "ui/app_list/app_list_features.h"
 #include "ui/app_list/search/tokenized_string.h"
 #include "ui/app_list/search/tokenized_string_match.h"
 #include "ui/app_list/search_result_observer.h"
@@ -30,7 +31,8 @@ SearchResult::Action::Action(const Action& other) = default;
 
 SearchResult::Action::~Action() = default;
 
-SearchResult::SearchResult() = default;
+SearchResult::SearchResult()
+    : is_fullscreen_app_list_enabled_(features::IsFullscreenAppListEnabled()) {}
 
 SearchResult::~SearchResult() {
   for (auto& observer : observers_)
@@ -97,7 +99,8 @@ int SearchResult::GetPreferredIconDimension() const {
     case DISPLAY_TILE:
       return kTileIconSize;
     case DISPLAY_LIST:
-      return kListIconSize;
+      return is_fullscreen_app_list_enabled_ ? kListIconSizeFullscreen
+                                             : kListIconSize;
     case DISPLAY_NONE:
     case DISPLAY_CARD:
       return 0;
