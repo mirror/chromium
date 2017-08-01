@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "239e903c_541d819c",
+        "filename": "third_party/WebKit/Source/core/leak_detector/LeakDetector.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1151889
+      },
+      "writtenOn": "2017-08-01T02:06:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ed886fd_18f73592",
+      "range": {
+        "startLine": 9,
+        "startChar": 21,
+        "endLine": 9,
+        "endChar": 26
+      },
+      "revId": "706b95626698e7c1c82020000538b8b451eff3d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "074b01c7_c1af87b1",
         "filename": "third_party/WebKit/Source/core/leak_detector/LeakDetector.cpp",
         "patchSetId": 5
@@ -39,6 +63,24 @@
       "revId": "706b95626698e7c1c82020000538b8b451eff3d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "257134ae_8a0946f2",
+        "filename": "third_party/WebKit/Source/core/leak_detector/LeakDetector.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1151889
+      },
+      "writtenOn": "2017-08-01T02:06:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "074b01c7_c1af87b1",
+      "revId": "706b95626698e7c1c82020000538b8b451eff3d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "4c051e4f_a1b75302",
+        "filename": "third_party/WebKit/Source/core/leak_detector/LeakDetector.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1151889
+      },
+      "writtenOn": "2017-08-01T02:06:14Z",
+      "side": 1,
+      "message": "Makes sense! Done",
+      "parentUuid": "1b08280d_1c18eed6",
+      "range": {
+        "startLine": 93,
+        "startChar": 0,
+        "endLine": 109,
+        "endChar": 3
+      },
+      "revId": "706b95626698e7c1c82020000538b8b451eff3d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd9b2449_72f0d2a5",
         "filename": "third_party/WebKit/Source/core/leak_detector/LeakDetector.h",
         "patchSetId": 5
@@ -85,6 +151,30 @@
       "revId": "706b95626698e7c1c82020000538b8b451eff3d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a056223_9140a141",
+        "filename": "third_party/WebKit/Source/core/leak_detector/LeakDetector.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1151889
+      },
+      "writtenOn": "2017-08-01T02:06:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd9b2449_72f0d2a5",
+      "range": {
+        "startLine": 9,
+        "startChar": 21,
+        "endLine": 9,
+        "endChar": 26
+      },
+      "revId": "706b95626698e7c1c82020000538b8b451eff3d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "b8a7a62d_8186d1bc",
+        "filename": "third_party/WebKit/Source/core/leak_detector/LeakDetector.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1151889
+      },
+      "writtenOn": "2017-08-01T02:06:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d081d48_4577dd19",
+      "range": {
+        "startLine": 14,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 24
+      },
+      "revId": "706b95626698e7c1c82020000538b8b451eff3d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a540f87_62a60084",
         "filename": "third_party/WebKit/Source/core/leak_detector/LeakDetector.h",
         "patchSetId": 5
@@ -128,6 +242,24 @@
     },
     {
       "key": {
+        "uuid": "5ede2200_7ac0eb86",
+        "filename": "third_party/WebKit/Source/core/leak_detector/LeakDetector.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1151889
+      },
+      "writtenOn": "2017-08-01T02:06:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a540f87_62a60084",
+      "revId": "706b95626698e7c1c82020000538b8b451eff3d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "44594ee2_8f4f5008",
         "filename": "third_party/WebKit/Source/modules/ModulesInitializer.cpp",
         "patchSetId": 5
@@ -139,6 +271,24 @@
       "writtenOn": "2017-07-31T05:42:53Z",
       "side": 1,
       "message": "This doesn\u0027t sound a refactoring but a feature change (sorry if I\u0027m missing something).\n\nIf so, how about doing this in another CL?",
+      "revId": "706b95626698e7c1c82020000538b8b451eff3d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "939a1e6f_c17e6e59",
+        "filename": "third_party/WebKit/Source/modules/ModulesInitializer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1151889
+      },
+      "writtenOn": "2017-08-01T02:06:14Z",
+      "side": 1,
+      "message": "This code is here to enable LeakDetector to call a method in modules/, because this CL moves LeakDetector to core/ and now it cannot depend on modules/. So it is not a feature change :)",
+      "parentUuid": "44594ee2_8f4f5008",
       "revId": "706b95626698e7c1c82020000538b8b451eff3d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -165,6 +315,30 @@
       "revId": "706b95626698e7c1c82020000538b8b451eff3d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ea99d01_81d0c044",
+        "filename": "third_party/WebKit/public/web/WebLeakDetector.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1151889
+      },
+      "writtenOn": "2017-08-01T02:06:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83bbe184_4137db59",
+      "range": {
+        "startLine": 55,
+        "startChar": 15,
+        "endLine": 55,
+        "endChar": 42
+      },
+      "revId": "706b95626698e7c1c82020000538b8b451eff3d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
