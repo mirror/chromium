@@ -722,4 +722,18 @@ TEST_F(ImageBitmapTest, ImageBitmapColorSpaceConversionImageData) {
   }
 }
 
+TEST_F(ImageBitmapTest, ImageBitmapTooBigToAllocateDoesNotCrash) {
+  ImageData* image_data = ImageData::CreateForTest(IntSize(1, 1));
+  IntRect crop_rect(0, 0, 1, 1);
+  ImageBitmap* image_bitmap = ImageBitmap::Create(image_data, crop_rect);
+  ImageBitmapOptions bitmap_options;
+  bitmap_options.setResizeHeight(1);
+  bitmap_options.setResizeWidth((v8::TypedArray::kMaxLength / 4) + 1);
+  // We expect this request to create a new and enlarged ImageBitmap to fail,
+  // leaving image_bitmap_too_big pointer untouched.
+  ImageBitmap* image_bitmap_too_big =
+      ImageBitmap::Create(image_bitmap, crop_rect, bitmap_options);
+  ASSERT_EQ(image_bitmap_too_big->BitmapImage(), nullptr);
+}
+
 }  // namespace blink
