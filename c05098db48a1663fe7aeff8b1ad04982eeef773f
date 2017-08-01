@@ -22,6 +22,30 @@
       "revId": "c05098db48a1663fe7aeff8b1ad04982eeef773f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d4a1892_188214ae",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-01T15:18:30Z",
+      "side": 1,
+      "message": "This is to throttle canMakePayment() queries per origin (e.g., https://some.origin) instead of per URL (e.g., https://some.origin/plus/some/path).",
+      "parentUuid": "d86803c4_b38743cb",
+      "range": {
+        "startLine": 585,
+        "startChar": 61,
+        "endLine": 585,
+        "endChar": 72
+      },
+      "revId": "c05098db48a1663fe7aeff8b1ad04982eeef773f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
