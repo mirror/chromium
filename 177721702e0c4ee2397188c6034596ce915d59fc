@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48a99c91_7897025a",
+        "filename": "ios/chrome/browser/ui/ntp/new_tab_page_toolbar_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-08-01T02:48:18Z",
+      "side": 1,
+      "message": "I think the fix is to delete this line, not add the one below. The problem is that the superclass dispatcher is being set, but this line synthesizes a getter that shadows the superclass method, and refers to the ivar for this class implementation (not the superclass ivar, which is inside the ISA struct of this object).",
+      "range": {
+        "startLine": 61,
+        "startChar": 12,
+        "endLine": 61,
+        "endChar": 22
+      },
+      "revId": "177721702e0c4ee2397188c6034596ce915d59fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
