@@ -51,6 +51,24 @@
       "revId": "1f990277a5665d082cb02bca097a06165e73debc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa0417e7_dd3523ce",
+        "filename": "content/public/browser/navigation_handle.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-08-01T19:26:00Z",
+      "side": 1,
+      "message": "Added code for Navigation to assign its own IDs, and exposed a function from services to convert them.\n\nI\u0027ve left the GetUkmSourceId() accessor for lack of a better place, though it could presumably be made into a ukm::SourceId (Navigation*) helper somewhere.\n\nIs there any better place for UpdateUkmUrl()?  The main requirement for it is the timing of the calls, everything else could be gotten from Navigation*.\n\nIdeally, most things should be able to depend on UKM, since we tend to want to be able to record metrics from everywhere.",
+      "parentUuid": "8242e323_7f6ae826",
+      "revId": "1f990277a5665d082cb02bca097a06165e73debc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
