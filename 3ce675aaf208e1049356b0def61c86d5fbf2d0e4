@@ -22,6 +22,30 @@
       "revId": "3ce675aaf208e1049356b0def61c86d5fbf2d0e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4782d90_462345e3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/translate/TranslateTabLayout.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1212314
+      },
+      "writtenOn": "2017-08-01T15:37:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6605b052_d46e4956",
+      "range": {
+        "startLine": 35,
+        "startChar": 11,
+        "endLine": 35,
+        "endChar": 18
+      },
+      "revId": "3ce675aaf208e1049356b0def61c86d5fbf2d0e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
