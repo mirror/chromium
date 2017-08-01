@@ -15,6 +15,15 @@ class MIDI_EXPORT MidiManagerCros final : public MidiManager {
   explicit MidiManagerCros(MidiService* service);
   ~MidiManagerCros() override;
 
+  // MidiManager implementation
+  void StartInitialization() override;
+
+  // Send an FD via DBUS to midis, and set up a mojo IPC channel.
+  // This function should be called during Browser startup, and should be called
+  // precisely *once* by the browser. It can be assumed that the midis DBUS
+  // service will start up along with the browser.
+  static bool SetupMojoChannel();
+
   DISALLOW_COPY_AND_ASSIGN(MidiManagerCros);
 };
 
