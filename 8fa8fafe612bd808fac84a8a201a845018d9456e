@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da3456a9_e111ac11",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-01T21:08:41Z",
+      "side": 1,
+      "message": "Move back to the top.",
+      "range": {
+        "startLine": 227,
+        "startChar": 0,
+        "endLine": 259,
+        "endChar": 1
+      },
+      "revId": "8fa8fafe612bd808fac84a8a201a845018d9456e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0782dea_af3fefa1",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-01T21:08:41Z",
+      "side": 1,
+      "message": "Please keep these as static functions. Any function which doesn\u0027t touch an instance field should be static.",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 27
+      },
+      "revId": "8fa8fafe612bd808fac84a8a201a845018d9456e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
