@@ -70,6 +70,64 @@
       "revId": "6f55893e3126ee6460d0615eea33705f0bc6a951",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "063ee472_fd86f47b",
+        "filename": "third_party/WebKit/Source/core/exported/WebWorkerShadowPage.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-01T10:58:29Z",
+      "side": 1,
+      "message": "This is for a shadow page part and we don\u0027t expext any real plumbing (at least atm), but if we need any real interface there we\u0027d need to do something like that. having a TODO sgtm (e.g. get the provider for the worker or deprecate the shadow page concept...)",
+      "parentUuid": "280b0032_eed2a680",
+      "range": {
+        "startLine": 37,
+        "startChar": 1,
+        "endLine": 37,
+        "endChar": 30
+      },
+      "revId": "6f55893e3126ee6460d0615eea33705f0bc6a951",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97e886ba_e03789ce",
+        "filename": "third_party/WebKit/Source/core/exported/WebWorkerShadowPage.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-01T10:58:29Z",
+      "side": 1,
+      "message": "nit: can you also link to crbug.com/538751 with a TODO(kinuko) to make this go away?",
+      "revId": "6f55893e3126ee6460d0615eea33705f0bc6a951",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f34f73c_32de5c29",
+        "filename": "third_party/WebKit/Source/core/exported/WebWorkerShadowPage.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-01T10:58:29Z",
+      "side": 1,
+      "message": "Hm, having data_saver_enabled here alone feels a bit weird... should the clients of this class set it via GetSettings() maybe?",
+      "revId": "6f55893e3126ee6460d0615eea33705f0bc6a951",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
