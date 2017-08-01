@@ -23,6 +23,8 @@
 #include "platform/weborigin/SecurityPolicy.h"
 #include "public/platform/WebLayer.h"
 
+#include "cc/layers/surface_layer.h"
+
 namespace blink {
 
 inline RemoteFrame::RemoteFrame(RemoteFrameClient* client,
@@ -48,6 +50,15 @@ DEFINE_TRACE(RemoteFrame) {
   visitor->Trace(view_);
   visitor->Trace(security_context_);
   Frame::Trace(visitor);
+}
+
+viz::SurfaceId RemoteFrame::surface_id() const {
+  if (web_layer_) {
+    const cc::Layer* layer = web_layer_->CcLayer();
+    DCHECK(layer);
+    return layer->surface_id();
+  }
+  return viz::SurfaceId();
 }
 
 void RemoteFrame::Navigate(Document& origin_document,
@@ -156,8 +167,13 @@ void RemoteFrame::SetWebLayer(WebLayer* web_layer) {
   if (web_layer_)
     GraphicsLayer::UnregisterContentsLayer(web_layer_);
   web_layer_ = web_layer;
-  if (web_layer_)
+  if (web_layer_) {
     GraphicsLayer::RegisterContentsLayer(web_layer_);
+    const cc::Layer* layer = web_layer_->CcLayer();
+    DCHECK(layer);
+    fprintf(stderr, "RemoteFrame::SetWebLayer: %d\n",
+            (int)layer->surface_id().hash());
+  }
 
   DCHECK(Owner());
   ToHTMLFrameOwnerElement(Owner())->SetNeedsCompositingUpdate();

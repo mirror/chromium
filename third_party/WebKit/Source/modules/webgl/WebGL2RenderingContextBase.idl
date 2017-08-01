@@ -306,6 +306,7 @@ typedef unsigned long long GLuint64;
     [CallWith=ExecutionContext, RaisesException] void texSubImage2D(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLenum type, HTMLImageElement image);
     [CallWith=ExecutionContext, RaisesException] void texSubImage2D(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLenum type, HTMLCanvasElement canvas);
     [CallWith=ExecutionContext, RaisesException] void texSubImage2D(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLenum type, HTMLVideoElement video);
+    [CallWith=ExecutionContext, RaisesException] void bindTexSource(GLenum target, GLint level, GLenum format, GLenum type, HTMLIFrameElement iframe);
     [RaisesException] void texSubImage2D(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLenum type, ImageBitmap bitmap);
     void texSubImage2D(GLenum target, GLint level, GLint xoffset, GLint yoffset, GLsizei width, GLsizei height, GLenum format, GLenum type, [AllowShared] ArrayBufferView srcData, GLuint srcOffset);
     void texStorage2D(GLenum target, GLsizei levels, GLenum internalformat, GLsizei width, GLsizei height);

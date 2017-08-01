@@ -550,4 +550,17 @@ void RenderFrameProxy::FrameFocused() {
   Send(new FrameHostMsg_FrameFocused(routing_id_));
 }
 
+void RenderFrameProxy::SetRenderingTargetTexture(
+    const viz::SurfaceId& surface_id,
+    const gpu::Mailbox& mailbox,
+    int level,
+    unsigned int format,
+    unsigned int type) {
+  std::vector<int8_t> data(GL_MAILBOX_SIZE_CHROMIUM);
+  for (int ii = 0; ii < GL_MAILBOX_SIZE_CHROMIUM; ++ii)
+    data[ii] = mailbox.name[ii];
+  Send(new FrameHostMsg_SetRenderingTargetTexture(routing_id_, surface_id, data,
+                                                  level, format, type));
+}
+
 }  // namespace

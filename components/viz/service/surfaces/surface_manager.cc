@@ -517,4 +517,18 @@ bool SurfaceManager::IsMarkedForDestruction(const SurfaceId& surface_id) {
   return surfaces_to_destroy_.count(surface_id) != 0;
 }
 
+void SurfaceManager::SetRenderingTargetTexture(const viz::SurfaceId& surface_id,
+                                               const gpu::Mailbox& mailbox,
+                                               int level,
+                                               unsigned int format,
+                                               unsigned int type) {
+  Surface* surface = GetSurfaceForId(surface_id);
+  if (surface) {
+    fprintf(stderr, "SurfaceManager::SetRenderingTargetTexture: %d\n",
+            (int)surface_id.hash());
+  } else {
+    fprintf(stderr, "SurfaceManager::SetRenderingTargetTexture: FAILED\n");
+  }
+}
+
 }  // namespace viz

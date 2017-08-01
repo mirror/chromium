@@ -48,6 +48,9 @@ bool CrossProcessFrameConnector::OnMessageReceived(const IPC::Message& msg) {
     IPC_MESSAGE_HANDLER(FrameHostMsg_SetIsInert, OnSetIsInert)
     IPC_MESSAGE_HANDLER(FrameHostMsg_SatisfySequence, OnSatisfySequence)
     IPC_MESSAGE_HANDLER(FrameHostMsg_RequireSequence, OnRequireSequence)
+    IPC_MESSAGE_HANDLER(FrameHostMsg_SetRenderingTargetTexture,
+                        OnSetRenderingTargetTexture)
+
     IPC_MESSAGE_UNHANDLED(handled = false)
   IPC_END_MESSAGE_MAP()
 
@@ -109,6 +112,18 @@ void CrossProcessFrameConnector::OnRequireSequence(
     const viz::SurfaceId& id,
     const viz::SurfaceSequence& sequence) {
   GetFrameSinkManager()->surface_manager()->RequireSequence(id, sequence);
+}
+
+void CrossProcessFrameConnector::OnSetRenderingTargetTexture(
+    const viz::SurfaceId& surface_id,
+    const std::vector<int8_t>& mailbox_data,
+    int level,
+    unsigned int format,
+    unsigned int type) {
+  gpu::Mailbox mailbox;
+  mailbox.SetName(mailbox_data.data());
+  GetFrameSinkManager()->surface_manager()->SetRenderingTargetTexture(
+      surface_id, mailbox, level, format, type);
 }
 
 gfx::Rect CrossProcessFrameConnector::ChildFrameRect() {

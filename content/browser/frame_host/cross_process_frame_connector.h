@@ -155,6 +155,11 @@ class CONTENT_EXPORT CrossProcessFrameConnector {
   void OnSatisfySequence(const viz::SurfaceSequence& sequence);
   void OnRequireSequence(const viz::SurfaceId& id,
                          const viz::SurfaceSequence& sequence);
+  void OnSetRenderingTargetTexture(const viz::SurfaceId& surface_id,
+                                   const std::vector<int8_t>& mailbox_data,
+                                   int level,
+                                   unsigned int format,
+                                   unsigned int type);
 
   void SetRect(const gfx::Rect& frame_rect);
 
