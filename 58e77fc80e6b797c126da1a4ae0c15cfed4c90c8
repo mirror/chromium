@@ -25,6 +25,40 @@
     },
     {
       "key": {
+        "uuid": "9f200080_f7110a2a",
+        "filename": "content/browser/renderer_host/input/synthetic_mouse_driver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-08-01T17:17:32Z",
+      "side": 1,
+      "message": "I don\u0027t think we need the enter function at all at this point. Basically since we are sending these events as mouse only sending a move event to that coordinates will have the same effect.",
+      "revId": "58e77fc80e6b797c126da1a4ae0c15cfed4c90c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f6860c2_617f36b0",
+        "filename": "content/browser/renderer_host/input/synthetic_mouse_driver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1163594
+      },
+      "writtenOn": "2017-08-01T17:17:32Z",
+      "side": 1,
+      "message": "We probably can use the same pattern as release here. So basically just Leave(int index) as we can use the same coordinates and modifiers that we already have set.",
+      "revId": "58e77fc80e6b797c126da1a4ae0c15cfed4c90c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4e77cbf0_0a06cff6",
         "filename": "content/browser/renderer_host/input/synthetic_mouse_driver.h",
         "patchSetId": 3
