@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37fcc90c_b06f17eb",
+        "filename": "extensions/renderer/native_extension_bindings_system.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-01T20:36:09Z",
+      "side": 1,
+      "message": "nit: Can you reword the comment a bit to say which \"check\" are you referring to here?",
+      "range": {
+        "startLine": 176,
+        "startChar": 22,
+        "endLine": 176,
+        "endChar": 26
+      },
+      "revId": "d2b233065faa0240e2bb856af38b2d466ab44ea6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
