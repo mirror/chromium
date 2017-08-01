@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "466bd8d1_3750096b",
+        "filename": "chrome/browser/io_thread_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-01T17:45:24Z",
+      "side": 1,
+      "message": "These tests are all going away in my next CL (Since everything will be configured in NetworkContext.  I\u0027ll add a test or two for that, but plan to mostly rely on the Configurator tests)",
+      "range": {
+        "startLine": 70,
+        "startChar": 6,
+        "endLine": 70,
+        "endChar": 37
+      },
+      "revId": "2355fa7213ceb46717b52e49ecda89d753d0ce61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91f161cf_3ca43588",
+        "filename": "content/network/network_context.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-01T17:45:24Z",
+      "side": 1,
+      "message": "In a followup CL, I\u0027ll remove all this stuff modifying params, and use the configurator instead (And remove its use in IOThread).",
+      "range": {
+        "startLine": 61,
+        "startChar": 30,
+        "endLine": 61,
+        "endChar": 0
+      },
+      "revId": "2355fa7213ceb46717b52e49ecda89d753d0ce61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "133278bf_a734cd65",
+        "filename": "net/url_request/url_request_context_builder.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-01T17:45:24Z",
+      "side": 1,
+      "message": "I\u0027ll remove this in the aforementioned followup CL.",
+      "range": {
+        "startLine": 295,
+        "startChar": 31,
+        "endLine": 295,
+        "endChar": 0
+      },
+      "revId": "2355fa7213ceb46717b52e49ecda89d753d0ce61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
