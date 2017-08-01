@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f17a0c73_309f550e",
+        "filename": "components/safe_browsing/csd.proto",
+        "patchSetId": 5
+      },
+      "lineNbr": 932,
+      "author": {
+        "id": 1230988
+      },
+      "writtenOn": "2017-08-01T18:02:18Z",
+      "side": 1,
+      "message": "Optional: I maybe would have named this DANGEROUS_DOWNLOAD_OPENED, to mirror the fact that this is set whenever OpenDownload()/ShowDownloadInShell() is called, and technically downloads (e.g. DMGs, ZIPs) on Mac can be opened without being executed.",
+      "revId": "8e2c739172b22778f5c4aadcea1216e24ad48819",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
