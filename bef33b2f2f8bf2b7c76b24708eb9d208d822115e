@@ -46,6 +46,30 @@
       "revId": "bef33b2f2f8bf2b7c76b24708eb9d208d822115e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f49ccf41_dd47f455",
+        "filename": "components/test/data/payments/render_tests/README",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-01T16:30:48Z",
+      "side": 1,
+      "message": "Will the tests break?",
+      "parentUuid": "a9711bfc_c6d35610",
+      "range": {
+        "startLine": 15,
+        "startChar": 42,
+        "endLine": 15,
+        "endChar": 62
+      },
+      "revId": "bef33b2f2f8bf2b7c76b24708eb9d208d822115e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
