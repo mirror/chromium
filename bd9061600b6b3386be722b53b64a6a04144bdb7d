@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c4e0f27_18a7799a",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2223,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-01T15:33:42Z",
+      "side": 1,
+      "message": "I think this is problematic. If contents was null previously then show_bookmark_bar would be false and we would fallthrough to set PageNavigator to the active webcontents below. That isn\u0027t the case in this patch.",
+      "range": {
+        "startLine": 2223,
+        "startChar": 17,
+        "endLine": 2223,
+        "endChar": 37
+      },
+      "revId": "bd9061600b6b3386be722b53b64a6a04144bdb7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
