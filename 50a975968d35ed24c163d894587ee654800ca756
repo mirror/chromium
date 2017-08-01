@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50a68b94_7500dbad",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_payment_method_identifier_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-08-01T11:14:33Z",
+      "side": 1,
+      "message": "nit/question: is there a reason the unsigned suffixes are sometimes uppercase and sometimes lowercase?",
+      "revId": "50a975968d35ed24c163d894587ee654800ca756",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b6e6c3c_973497c2",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_payment_method_identifier_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-08-01T11:14:33Z",
+      "side": 1,
+      "message": "This file has a lot of integration tests for this API, I just wanted to see if some of this is (or could be) handled in unit tests, and not need this many integration tests.\n\nThese tests do seem pretty lightweight, so if this is the best way to test it then I think it\u0027s okay.",
+      "revId": "50a975968d35ed24c163d894587ee654800ca756",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9829b764_991870fd",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_payment_response_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-08-01T11:14:33Z",
+      "side": 1,
+      "message": "nit: s/defautl/default",
+      "range": {
+        "startLine": 132,
+        "startChar": 28,
+        "endLine": 132,
+        "endChar": 29
+      },
+      "revId": "50a975968d35ed24c163d894587ee654800ca756",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
