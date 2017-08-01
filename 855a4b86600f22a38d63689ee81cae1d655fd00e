@@ -16,6 +16,24 @@
       "revId": "855a4b86600f22a38d63689ee81cae1d655fd00e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdcd90f1_d936d4d6",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/budget/budget-service-mock.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-01T17:18:13Z",
+      "side": 1,
+      "message": "It won\u0027t work with the current bindings code but it would be trivial to fix. In general I think these functions should be declared async but in trivial cases like this perhaps supporting just returning a value would be nice.",
+      "parentUuid": "ee66378d_fc0af0f2",
+      "revId": "855a4b86600f22a38d63689ee81cae1d655fd00e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
