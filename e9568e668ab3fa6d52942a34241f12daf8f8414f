@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb283d16_514536ab",
+        "filename": "third_party/WebKit/Source/core/dom/MutationObserver.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-01T01:51:19Z",
+      "side": 1,
+      "message": "Can we make MutationObserver ContextClient instead?",
+      "revId": "e9568e668ab3fa6d52942a34241f12daf8f8414f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f193d7b_ca4259aa",
+        "filename": "third_party/WebKit/Source/core/dom/MutationObserver.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-01T01:51:19Z",
+      "side": 1,
+      "message": "Why do we need to use the delegation pattern?\n\nCan we probably inline the Delegate object here?",
+      "revId": "e9568e668ab3fa6d52942a34241f12daf8f8414f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

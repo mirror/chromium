@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9cc04bc9_1aaf1d3a",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8MutationCallback.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-01T01:51:19Z",
+      "side": 0,
+      "message": "Use [ConstructorCallWith\u003dExecutionContext] instead.\n\nSaving script_state_ in constructor may lead to a wrong use of the script state. See https://chromium.googlesource.com/chromium/src/+/master/third_party/WebKit/Source/bindings/IDLExtendedAttributes.md#CallWith_m_a_SetterCallWith_a_ConstructorCallWith_i",
+      "revId": "7f1ee9842fd803152fba630c747e5ccf6999d714",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23a46aa2_5370c9ef",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8MutationCallback.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-01T01:51:19Z",
+      "side": 0,
+      "message": "Can we do this in this CL? I think we should make MutationObserver inherit from ContextClient.\n\nI\u0027m not really happy about increasing the usage of the \u0027script_state_-\u003eGetContext().IsEmpty()\u0027 pattern.",
+      "revId": "7f1ee9842fd803152fba630c747e5ccf6999d714",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
