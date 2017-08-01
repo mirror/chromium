@@ -70,6 +70,30 @@
       "revId": "983750491abb6ad7605549c1fad6c366d919da44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ffc4b711_4e5c9a2c",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 455,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-01T11:41:17Z",
+      "side": 1,
+      "message": "The omnibox is a section header. It cannot be displayed outside the collection.",
+      "parentUuid": "535f59c6_fd316e51",
+      "range": {
+        "startLine": 455,
+        "startChar": 25,
+        "endLine": 455,
+        "endChar": 38
+      },
+      "revId": "983750491abb6ad7605549c1fad6c366d919da44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
