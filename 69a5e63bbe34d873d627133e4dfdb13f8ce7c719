@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c28b50b4_b55cf5be",
+        "filename": "chrome/browser/ui/cocoa/browser/exclusive_access_controller_views.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-08-01T20:31:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29b210fb_71b814bf",
+      "range": {
+        "startLine": 27,
+        "startChar": 11,
+        "endLine": 27,
+        "endChar": 24
+      },
+      "revId": "69a5e63bbe34d873d627133e4dfdb13f8ce7c719",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d05c5d7d_4e52609b",
         "filename": "chrome/browser/ui/cocoa/browser/exclusive_access_controller_views.mm",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-01T20:02:04Z",
       "side": 1,
       "message": "Do you need this in the destructor too?",
+      "range": {
+        "startLine": 86,
+        "startChar": 4,
+        "endLine": 86,
+        "endChar": 25
+      },
+      "revId": "69a5e63bbe34d873d627133e4dfdb13f8ce7c719",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d56a747_744208b9",
+        "filename": "chrome/browser/ui/cocoa/browser/exclusive_access_controller_views.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-08-01T20:31:35Z",
+      "side": 1,
+      "message": "Added, thanks for the catch!\nI\u0027m wondering if there is a convenient way of clearing unused |OnceCallback| other than repeating the pattern 4 times...",
+      "parentUuid": "d05c5d7d_4e52609b",
       "range": {
         "startLine": 86,
         "startChar": 4,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4972b1b2_90523b17",
+        "filename": "chrome/browser/ui/exclusive_access/exclusive_access_bubble_hide_callback.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-08-01T20:31:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e206689_9ef2f4fb",
+      "range": {
+        "startLine": 1,
+        "startChar": 14,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "69a5e63bbe34d873d627133e4dfdb13f8ce7c719",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f69830d_88ee2926",
         "filename": "chrome/browser/ui/exclusive_access/exclusive_access_bubble_hide_callback.h",
         "patchSetId": 8
@@ -91,6 +163,30 @@
       "revId": "69a5e63bbe34d873d627133e4dfdb13f8ce7c719",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddfe59cb_8461af2c",
+        "filename": "chrome/browser/ui/exclusive_access/exclusive_access_bubble_hide_callback.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-08-01T20:31:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f69830d_88ee2926",
+      "range": {
+        "startLine": 17,
+        "startChar": 4,
+        "endLine": 17,
+        "endChar": 8
+      },
+      "revId": "69a5e63bbe34d873d627133e4dfdb13f8ce7c719",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
