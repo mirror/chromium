@@ -186,6 +186,12 @@ var SerializedPaymentResponse;
   __gCrWeb['paymentRequestManager'] = __gCrWeb.paymentRequestManager;
 
   /**
+   * Wether the origin is secure. The default is true unless it is set to false.
+   * @type {boolean}
+   */
+  __gCrWeb['paymentRequestManager'].isContextSecure = true;
+
+  /**
    * The PaymentRequest object, if any. This object is provided by the page and
    * only updated by the app side.
    * @type {window.PaymentRequest}
@@ -507,6 +513,12 @@ var SerializedPaymentResponse;
  */
 window.PaymentRequest = function(methodData, details, opt_options) {
   __gCrWeb.EventTarget.call(this);
+
+  if (!__gCrWeb['paymentRequestManager'].isContextSecure) {
+    throw new DOMException(
+        'Failed to construct \'PaymentRequest\': Must be in a secure context',
+        'SecurityError');
+  }
 
   if (window.top != window.self) {
     throw new Error(
