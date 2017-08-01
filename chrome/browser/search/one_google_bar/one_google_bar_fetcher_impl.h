@@ -15,8 +15,6 @@
 #include "chrome/browser/search/one_google_bar/one_google_bar_fetcher.h"
 
 class GoogleURLTracker;
-class OAuth2TokenService;
-class SigninManagerBase;
 
 namespace base {
 class Value;
@@ -31,9 +29,7 @@ struct OneGoogleBarData;
 
 class OneGoogleBarFetcherImpl : public OneGoogleBarFetcher {
  public:
-  OneGoogleBarFetcherImpl(SigninManagerBase* signin_manager,
-                          OAuth2TokenService* token_service,
-                          net::URLRequestContextGetter* request_context,
+  OneGoogleBarFetcherImpl(net::URLRequestContextGetter* request_context,
                           GoogleURLTracker* google_url_tracker);
   ~OneGoogleBarFetcherImpl() override;
 
@@ -51,8 +47,6 @@ class OneGoogleBarFetcherImpl : public OneGoogleBarFetcher {
 
   void Respond(Status status, const base::Optional<OneGoogleBarData>& data);
 
-  SigninManagerBase* signin_manager_;
-  OAuth2TokenService* token_service_;
   net::URLRequestContextGetter* request_context_;
   GoogleURLTracker* google_url_tracker_;
 
