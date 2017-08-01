@@ -47,6 +47,10 @@ const char kCertDateErrorHistogram[] =
 
 const net::SHA256HashValue kCertPublicKeyHashValue = {{0x01, 0x02}};
 
+const std::string kOkayCertName = "ok_cert.pem";
+const std::string kMcAfeeCertName = "mcafee_test_cert.pem";
+const std::string kCyberoamCertName = "cyberoam_test_cert.pem";
+
 // Runs |quit_closure| on the UI thread once a URL request has been
 // seen. Returns a request that hangs.
 std::unique_ptr<net::test_server::HttpResponse> WaitForRequest(
@@ -91,6 +95,7 @@ class TestSSLErrorHandlerDelegate : public SSLErrorHandler::Delegate {
         ssl_interstitial_shown_(false),
         bad_clock_interstitial_shown_(false),
         captive_portal_interstitial_shown_(false),
+        content_filter_interstitial_shown_(false),
         redirected_to_suggested_url_(false),
         is_overridable_error_(true) {}
 
@@ -116,6 +121,9 @@ class TestSSLErrorHandlerDelegate : public SSLErrorHandler::Delegate {
   int captive_portal_interstitial_shown() const {
     return captive_portal_interstitial_shown_;
   }
+  int content_filter_interstitial_shown() const {
+    return content_filter_interstitial_shown_;
+  }
   bool bad_clock_interstitial_shown() const {
     return bad_clock_interstitial_shown_;
   }
@@ -134,6 +142,7 @@ class TestSSLErrorHandlerDelegate : public SSLErrorHandler::Delegate {
     ssl_interstitial_shown_ = false;
     bad_clock_interstitial_shown_ = false;
     captive_portal_interstitial_shown_ = false;
+    content_filter_interstitial_shown_ = false;
     redirected_to_suggested_url_ = false;
   }
 
@@ -161,6 +170,10 @@ class TestSSLErrorHandlerDelegate : public SSLErrorHandler::Delegate {
     captive_portal_interstitial_shown_ = true;
   }
 
+  void ShowContentFilterInterstitial() override {
+    content_filter_interstitial_shown_ = true;
+  }
+
   void CheckSuggestedUrl(
       const GURL& suggested_url,
       const CommonNameMismatchHandler::CheckUrlCallback& callback) override {
@@ -182,6 +195,7 @@ class TestSSLErrorHandlerDelegate : public SSLErrorHandler::Delegate {
   bool ssl_interstitial_shown_;
   bool bad_clock_interstitial_shown_;
   bool captive_portal_interstitial_shown_;
+  bool content_filter_interstitial_shown_;
   bool redirected_to_suggested_url_;
   bool is_overridable_error_;
   CommonNameMismatchHandler::CheckUrlCallback suggested_url_callback_;
@@ -263,17 +277,17 @@ class SSLErrorHandlerNameMismatchNoSANTest
 
 // A class to test the captive portal certificate list feature. Creates an error
 // handler with a name mismatch error by default. The error handler can be
-// recreated by calling ResetErrorHandler() with an appropriate cert status.
-class SSLErrorHandlerCaptivePortalCertListTest
-    : public ChromeRenderViewHostTestHarness {
+// recreated by calling ResetErrorHandlerForCaptivePortalTest() with an
+// appropriate cert status.
+class SSLErrorAssistantTest : public ChromeRenderViewHostTestHarness {
  public:
-  SSLErrorHandlerCaptivePortalCertListTest() : field_trial_list_(nullptr) {}
+  SSLErrorAssistantTest() : field_trial_list_(nullptr) {}
 
   void SetUp() override {
     ChromeRenderViewHostTestHarness::SetUp();
     SSLErrorHandler::ResetConfigForTesting();
     SSLErrorHandler::SetInterstitialDelayForTesting(base::TimeDelta());
-    ResetErrorHandler(net::CERT_STATUS_COMMON_NAME_INVALID);
+    ResetErrorHandler(kOkayCertName, net::CERT_STATUS_COMMON_NAME_INVALID);
   }
 
   void TearDown() override {
@@ -289,7 +303,7 @@ class SSLErrorHandlerCaptivePortalCertListTest
   const net::SSLInfo& ssl_info() { return ssl_info_; }
 
  protected:
-  void SetFeatureEnabled(bool enabled) {
+  void SetCaptivePortalFeatureEnabled(bool enabled) {
     if (enabled) {
       scoped_feature_list_.InitFromCommandLine(
           "CaptivePortalCertificateList" /* enabled */,
@@ -300,12 +314,10 @@ class SSLErrorHandlerCaptivePortalCertListTest
     }
   }
 
-  // Deletes the current error handler and creates a new one with the given
-  // |cert_status|.
-  void ResetErrorHandler(net::CertStatus cert_status) {
+  void ResetErrorHandler(std::string cert_name, net::CertStatus cert_status) {
     ssl_info_.Reset();
     ssl_info_.cert =
-        net::ImportCertFromFile(net::GetTestCertsDirectory(), "ok_cert.pem");
+        net::ImportCertFromFile(net::GetTestCertsDirectory(), cert_name);
     ssl_info_.cert_status = cert_status;
     ssl_info_.public_key_hashes.push_back(
         net::HashValue(kCertPublicKeyHashValue));
@@ -318,6 +330,12 @@ class SSLErrorHandlerCaptivePortalCertListTest
         ssl_info_,
         GURL(),  // request_url
         base::Callback<void(content::CertificateRequestResultType)>()));
+  }
+
+  // Deletes the current error handler and creates a new one with the given
+  // |cert_status|.
+  void ResetErrorHandlerForCaptivePortalTest(net::CertStatus cert_status) {
+    ResetErrorHandler(kOkayCertName, cert_status);
 
     // Enable finch experiment for captive portal interstitials.
     ASSERT_TRUE(base::FieldTrialList::CreateFieldTrial(
@@ -370,6 +388,26 @@ class SSLErrorHandlerCaptivePortalCertListTest
         SSLErrorHandler::SHOW_SSL_INTERSTITIAL_OVERRIDABLE, 1);
   }
 
+  // Sets up a mock SSL Error Assistant config with regexes that match a
+  // McAfee Web Gateway certificate or a Cyberoam certificate and starts
+  // handling certificate errors.
+  void RunContentFilterTest() {
+    auto config_proto =
+        base::MakeUnique<chrome_browser_ssl::SSLErrorAssistantConfig>();
+    chrome_browser_ssl::ContentFilterEntry* filter1 =
+        config_proto->add_content_filter();
+    filter1->set_name("McAfee Web Gateway");
+    filter1->set_regex("McAfee Web Gateway");
+    chrome_browser_ssl::ContentFilterEntry* filter2 =
+        config_proto->add_content_filter();
+    filter2->set_name("Cyberoam");
+    filter2->set_regex("Cyberoam SSL CA_[A-Z0-9]+");
+    SSLErrorHandler::SetErrorAssistantProto(std::move(config_proto));
+
+    error_handler()->StartHandlingError();
+    base::RunLoop().RunUntilIdle();
+  }
+
  private:
   net::SSLInfo ssl_info_;
   std::unique_ptr<TestSSLErrorHandler> error_handler_;
@@ -377,9 +415,8 @@ class SSLErrorHandlerCaptivePortalCertListTest
   base::FieldTrialList field_trial_list_;
   base::test::ScopedFeatureList scoped_feature_list_;
 
-  DISALLOW_COPY_AND_ASSIGN(SSLErrorHandlerCaptivePortalCertListTest);
+  DISALLOW_COPY_AND_ASSIGN(SSLErrorAssistantTest);
 };
-
 
 class SSLErrorHandlerDateInvalidTest : public ChromeRenderViewHostTestHarness {
  public:
@@ -858,8 +895,8 @@ TEST_F(SSLErrorHandlerDateInvalidTest, TimeQueryHangs) {
 
 // Tests that a certificate marked as a known captive portal certificate causes
 // the captive portal interstitial to be shown.
-TEST_F(SSLErrorHandlerCaptivePortalCertListTest, Enabled) {
-  SetFeatureEnabled(true);
+TEST_F(SSLErrorAssistantTest, TestCaptivePortalInterstitialWithFeatureEnabled) {
+  SetCaptivePortalFeatureEnabled(true);
 
   EXPECT_FALSE(error_handler()->IsTimerRunningForTesting());
   EXPECT_EQ(1u, ssl_info().public_key_hashes.size());
@@ -908,8 +945,9 @@ TEST_F(SSLErrorHandlerCaptivePortalCertListTest, Enabled) {
 // Tests that a certificate marked as a known captive portal certificate does
 // not cause the captive portal interstitial to be shown, if the feature is
 // disabled.
-TEST_F(SSLErrorHandlerCaptivePortalCertListTest, Disabled) {
-  SetFeatureEnabled(false);
+TEST_F(SSLErrorAssistantTest,
+       TestNoCaptivePortalInterstitialWithFeatureDisabled) {
+  SetCaptivePortalFeatureEnabled(false);
 
   // Default error for SSLErrorHandlerNameMismatchTest tests is name mismatch.
   TestNoCaptivePortalInterstitial();
@@ -918,10 +956,11 @@ TEST_F(SSLErrorHandlerCaptivePortalCertListTest, Disabled) {
 // Tests that an error other than name mismatch does not cause a captive portal
 // interstitial to be shown, even if the certificate is marked as a known
 // captive portal certificate.
-TEST_F(SSLErrorHandlerCaptivePortalCertListTest, AuthorityInvalid) {
-  SetFeatureEnabled(true);
+TEST_F(SSLErrorAssistantTest,
+       TestNoCaptivePortalInterstitialWithAuthorityInvalidError) {
+  SetCaptivePortalFeatureEnabled(true);
 
-  ResetErrorHandler(net::CERT_STATUS_AUTHORITY_INVALID);
+  ResetErrorHandlerForCaptivePortalTest(net::CERT_STATUS_AUTHORITY_INVALID);
   TestNoCaptivePortalInterstitial();
 }
 
@@ -929,16 +968,17 @@ TEST_F(SSLErrorHandlerCaptivePortalCertListTest, AuthorityInvalid) {
 // not cause a captive portal interstitial to be shown, even if the certificate
 // is marked as a known captive portal certificate. The resulting error is
 // authority-invalid.
-TEST_F(SSLErrorHandlerCaptivePortalCertListTest,
-       NameMismatchAndAuthorityInvalid) {
-  SetFeatureEnabled(true);
+TEST_F(
+    SSLErrorAssistantTest,
+    TestNoCaptivePortalInterstitialWithNameMismatchAndAuthorityInvalidErrors) {
+  SetCaptivePortalFeatureEnabled(true);
 
   const net::CertStatus cert_status =
       net::CERT_STATUS_COMMON_NAME_INVALID | net::CERT_STATUS_AUTHORITY_INVALID;
   // Sanity check that AUTHORITY_INVALID is seen as the net error.
   ASSERT_EQ(net::ERR_CERT_AUTHORITY_INVALID,
             net::MapCertStatusToNetError(cert_status));
-  ResetErrorHandler(cert_status);
+  ResetErrorHandlerForCaptivePortalTest(cert_status);
   TestNoCaptivePortalInterstitial();
 }
 
@@ -946,8 +986,9 @@ TEST_F(SSLErrorHandlerCaptivePortalCertListTest,
 // captive portal interstitial to be shown, even if the certificate is marked as
 // a known captive portal certificate. Similar to
 // NameMismatchAndAuthorityInvalid, except the resulting error is name mismatch.
-TEST_F(SSLErrorHandlerCaptivePortalCertListTest, NameMismatchAndWeakKey) {
-  SetFeatureEnabled(true);
+TEST_F(SSLErrorAssistantTest,
+       TestNoCaptivePortalInterstitialWithNameMismatchAndWeakKeyErrors) {
+  SetCaptivePortalFeatureEnabled(true);
 
   const net::CertStatus cert_status =
       net::CERT_STATUS_COMMON_NAME_INVALID | net::CERT_STATUS_WEAK_KEY;
@@ -956,14 +997,15 @@ TEST_F(SSLErrorHandlerCaptivePortalCertListTest, NameMismatchAndWeakKey) {
   // CertStatus even when COMMON_NAME_INVALID is the net error.
   ASSERT_EQ(net::ERR_CERT_COMMON_NAME_INVALID,
             net::MapCertStatusToNetError(cert_status));
-  ResetErrorHandler(cert_status);
+  ResetErrorHandlerForCaptivePortalTest(cert_status);
   TestNoCaptivePortalInterstitial();
 }
 
 #else
 
-TEST_F(SSLErrorHandlerCaptivePortalCertListTest, DisabledByBuild) {
-  SetFeatureEnabled(true);
+TEST_F(SSLErrorAssistantTest,
+       TestGenericSSLInterstitialWhenCaptivePortalDisabledByBuild) {
+  SetCaptivePortalFeatureEnabled(true);
 
   // Default error for SSLErrorHandlerNameMismatchTest tests is name mismatch,
   // but the feature is disabled by build so a generic SSL interstitial will be
@@ -1008,3 +1050,67 @@ TEST_F(SSLErrorHandlerCaptivePortalCertListTest, DisabledByBuild) {
 }
 
 #endif  // BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
+
+TEST_F(SSLErrorAssistantTest, TestContentFilterTriggerOnMatchingCertificate) {
+  // Resets the error handler with a mock McAfee Web Gateway certificate and
+  // net::CERT_STATUS_AUTHORITY_INVALID status error.
+  ResetErrorHandler(kMcAfeeCertName, net::CERT_STATUS_AUTHORITY_INVALID);
+  RunContentFilterTest();
+
+  EXPECT_FALSE(delegate()->ssl_interstitial_shown());
+  EXPECT_TRUE(delegate()->content_filter_interstitial_shown());
+  EXPECT_FALSE(delegate()->suggested_url_checked());
+
+  ResetErrorHandler(kCyberoamCertName, net::CERT_STATUS_AUTHORITY_INVALID);
+  RunContentFilterTest();
+
+  EXPECT_FALSE(delegate()->ssl_interstitial_shown());
+  EXPECT_TRUE(delegate()->content_filter_interstitial_shown());
+  EXPECT_FALSE(delegate()->suggested_url_checked());
+}
+
+TEST_F(SSLErrorAssistantTest,
+       TestNoContentFilterTriggerOnMiscellaneousCertificate) {
+  // Resets the error handler with a certificate that does not match any
+  // content filter.
+  ResetErrorHandler(kOkayCertName, net::CERT_STATUS_AUTHORITY_INVALID);
+  RunContentFilterTest();
+
+  EXPECT_TRUE(delegate()->ssl_interstitial_shown());
+  EXPECT_FALSE(delegate()->content_filter_interstitial_shown());
+  EXPECT_FALSE(delegate()->suggested_url_checked());
+}
+
+TEST_F(SSLErrorAssistantTest, TestNoContentFilterWithoutAuthorityInvalidError) {
+  ResetErrorHandler(kMcAfeeCertName, net::CERT_STATUS_COMMON_NAME_INVALID);
+  RunContentFilterTest();
+
+  EXPECT_TRUE(delegate()->ssl_interstitial_shown());
+  EXPECT_FALSE(delegate()->content_filter_interstitial_shown());
+  EXPECT_FALSE(delegate()->suggested_url_checked());
+
+  ResetErrorHandler(kMcAfeeCertName, net::CERT_STATUS_COMMON_NAME_INVALID);
+  RunContentFilterTest();
+
+  EXPECT_TRUE(delegate()->ssl_interstitial_shown());
+  EXPECT_FALSE(delegate()->content_filter_interstitial_shown());
+  EXPECT_FALSE(delegate()->suggested_url_checked());
+}
+
+TEST_F(SSLErrorAssistantTest, TestNoContentFilterWithTwoErrors) {
+  ResetErrorHandler(kCyberoamCertName,
+                    net::CERT_STATUS_AUTHORITY_INVALID |
+                        net::CERT_STATUS_COMMON_NAME_INVALID);
+  RunContentFilterTest();
+
+  EXPECT_TRUE(delegate()->ssl_interstitial_shown());
+  EXPECT_FALSE(delegate()->content_filter_interstitial_shown());
+  EXPECT_FALSE(delegate()->suggested_url_checked());
+
+  ResetErrorHandler(kCyberoamCertName, net::CERT_STATUS_COMMON_NAME_INVALID);
+  RunContentFilterTest();
+
+  EXPECT_TRUE(delegate()->ssl_interstitial_shown());
+  EXPECT_FALSE(delegate()->content_filter_interstitial_shown());
+  EXPECT_FALSE(delegate()->suggested_url_checked());
+}
