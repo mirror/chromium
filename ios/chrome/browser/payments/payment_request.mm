@@ -384,6 +384,9 @@ void PaymentRequest::PopulatePaymentMethodCache() {
       web_payment_request_.method_data, &supported_card_networks_,
       &basic_card_specified_networks_, &url_payment_method_identifiers_);
 
+  // REMOVE!!!
+  url_payment_method_identifiers_.clear();
+
   data_util::ParseSupportedCardTypes(web_payment_request_.method_data,
                                      &supported_card_types_set_);
 
