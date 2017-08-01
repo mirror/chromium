@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f92bb60f_0c5a6fe7",
+        "filename": "remoting/client/display/gl_renderer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-08-01T23:43:29Z",
+      "side": 1,
+      "message": "For some reason viewDidLayoutSubView used to be called before viewDidAppear so we used to have nasty logic in HostViewController to delay the call to viewDidAppear...\n\nAfter my change viewDidLayoutSubView starts being called after viewDidAppear and all the assumptions broke and segfault...\n\nI just don\u0027t want to deal with that anymore and cache the view size here...",
+      "parentUuid": "204f6c0f_36d4ac22",
+      "range": {
+        "startLine": 117,
+        "startChar": 17,
+        "endLine": 117,
+        "endChar": 33
+      },
+      "revId": "5a842b3b83632bb0840a77270cf57965d111bb01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd8ebc66_79039de4",
         "filename": "remoting/ios/app/host_view_controller.mm",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-01T23:14:58Z",
       "side": 1,
       "message": "Why do you need to do this change?",
+      "range": {
+        "startLine": 48,
+        "startChar": 2,
+        "endLine": 48,
+        "endChar": 22
+      },
+      "revId": "5a842b3b83632bb0840a77270cf57965d111bb01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3753b73d_8a672aea",
+        "filename": "remoting/ios/app/host_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-08-01T23:43:29Z",
+      "side": 1,
+      "message": "I made this a subview of self.view so that it can have a parent view to anchor onto.\n\nThe deltaHeight calculation seems to be inconsistent when rotating screen on iPad. I didn\u0027t spend time to figure that out though...",
+      "parentUuid": "dd8ebc66_79039de4",
       "range": {
         "startLine": 48,
         "startChar": 2,
