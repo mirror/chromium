@@ -10,24 +10,14 @@
 Polymer({
   is: 'password-list-item',
 
-  behaviors: [FocusRowBehavior],
-
-  properties: {
-    /**
-     * The password whose info should be displayed.
-     * @type {!chrome.passwordsPrivate.PasswordUiEntry}
-     */
-    item: Array,
-  },
+  behaviors: [FocusRowBehavior, ShowPasswordBehavior],
 
   /**
-   * Creates an empty password of specified length.
-   * @param {number} length
-   * @return {string} password
+   * Selects the password on tap.
    * @private
    */
-  getEmptyPassword_: function(length) {
-    return ' '.repeat(length);
+  onReadonlyInputTap_: function() {
+    this.$$('#password').select();
   },
 
   /**
