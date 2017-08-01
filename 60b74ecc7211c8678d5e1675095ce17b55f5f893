@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "5fca132f_c394f243",
+        "filename": "chrome/installer/zucchini/image_index.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-01T21:01:00Z",
+      "side": 1,
+      "message": "I fixed the wrong one.",
+      "parentUuid": "3c646b98_b0b4952e",
+      "range": {
+        "startLine": 59,
+        "startChar": 22,
+        "endLine": 59,
+        "endChar": 31
+      },
+      "revId": "60b74ecc7211c8678d5e1675095ce17b55f5f893",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f89c8850_9e52a851",
         "filename": "chrome/installer/zucchini/image_index.h",
         "patchSetId": 5
