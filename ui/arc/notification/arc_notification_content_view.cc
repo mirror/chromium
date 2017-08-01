@@ -28,6 +28,8 @@
 #include "ui/views/widget/widget.h"
 #include "ui/wm/core/window_util.h"
 
+#include "base/debug/stack_trace.h"
+
 namespace arc {
 
 namespace {
@@ -313,7 +315,7 @@ void ArcNotificationContentView::SetSurface(ArcNotificationSurface* surface) {
     surface_->GetWindow()->RemoveObserver(this);
     surface_->GetWindow()->RemovePreTargetHandler(event_forwarder_.get());
 
-    if (surface_->IsAttached()) {
+    if (surface_->GetAttachedHost() == this) {
       DCHECK_EQ(this, surface_->GetAttachedHost());
       surface_->Detach();
     }
@@ -325,8 +327,16 @@ void ArcNotificationContentView::SetSurface(ArcNotificationSurface* surface) {
     surface_->GetWindow()->AddObserver(this);
     surface_->GetWindow()->AddPreTargetHandler(event_forwarder_.get());
 
-    if (GetWidget())
+    if (GetWidget()) {
+      // Force to detach the surface.
+      if (surface_->IsAttached()) {
+        // The attached host must not be this. Since if it is, this should
+        // already be detached above.
+        DCHECK_NE(this, surface_->GetAttachedHost());
+        surface_->Detach();
+      }
       AttachSurface();
+    }
   }
 }
 
