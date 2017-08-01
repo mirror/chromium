@@ -15,7 +15,7 @@
 namespace content {
 
 MediaInterfaceProvider::MediaInterfaceProvider(
-    service_manager::InterfaceProvider* remote_interfaces)
+    service_manager::mojom::InterfaceProvider* remote_interfaces)
     : remote_interfaces_(remote_interfaces), weak_factory_(this) {
   task_runner_ = base::ThreadTaskRunnerHandle::Get();
   weak_this_ = weak_factory_.GetWeakPtr();
@@ -60,7 +60,9 @@ MediaInterfaceProvider::GetMediaInterfaceFactory() {
   DCHECK(task_runner_->BelongsToCurrentThread());
 
   if (!media_interface_factory_) {
-    remote_interfaces_->GetInterface(&media_interface_factory_);
+    remote_interfaces_->GetInterface(
+        decltype(media_interface_factory_)::InterfaceType::Name_,
+        mojo::MakeRequest(&media_interface_factory_).PassMessagePipe());
     media_interface_factory_.set_connection_error_handler(base::Bind(
         &MediaInterfaceProvider::OnConnectionError, base::Unretained(this)));
   }

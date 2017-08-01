@@ -11,6 +11,11 @@
       "requires": {
         "file": [ "file:filesystem", "file:leveldb" ]
       }
+    },
+    "navigation:frame": {
+      "requires": {
+        "content_browser": ["renderer"]
+      }
     }
   }
 }
