@@ -22,6 +22,30 @@
       "revId": "1058a29fd11ed77423a850d16eabd3ec3a614643",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4464455f_2d494717",
+        "filename": "media/midi/midi_manager_mac.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-08-01T07:20:06Z",
+      "side": 1,
+      "message": "Sorry, I didn\u0027t understand uintptr_t correctly. It seems using uintptr_t is better.",
+      "parentUuid": "e7cb4ef2_92bd63a1",
+      "range": {
+        "startLine": 295,
+        "startChar": 41,
+        "endLine": 295,
+        "endChar": 49
+      },
+      "revId": "1058a29fd11ed77423a850d16eabd3ec3a614643",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
