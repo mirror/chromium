@@ -20,9 +20,30 @@ using testing::AtLeast;
 class ImageWriterDestroyPartitionsOperationTest
     : public ImageWriterUnitTestBase {};
 
+#if !defined(OS_CHROMEOS)
+void SetUpImageWriteClientProgressSimulation(
+    FakeImageWriterClient* client) {
+  std::vector<int> progress_list{0, 50, 100};
+  bool will_succeed = true;
+  client->SimulateProgressOnWrite(progress_list, will_succeed);
+  client->SimulateProgressOnVerifyWrite(progress_list, will_succeed);
+}
+#endif
+
 TEST_F(ImageWriterDestroyPartitionsOperationTest, EndToEnd) {
   TestingProfile profile;
   MockOperationManager manager(&profile);
+
+#if !defined(OS_CHROMEOS)
+  //std::vector<int> progress_list{0, 50, 100};
+  //auto set_up_progress_simulation = [&progress_list](FakeImageWriterClient* client) {
+  //  bool will_succeed = true;
+  //  client->SimulateProgressOnWrite(progress_list, will_succeed);
+  //};
+  test_utils_.RunOnUtilityClientCreation(
+      base::BindOnce(&SetUpImageWriteClientProgressSimulation));
+      //base::Bind(&set_up_progress_simulation);
+#endif
 
   scoped_refptr<DestroyPartitionsOperation> operation(
       new DestroyPartitionsOperation(
@@ -47,18 +68,15 @@ TEST_F(ImageWriterDestroyPartitionsOperationTest, EndToEnd) {
   EXPECT_CALL(manager, OnComplete(kDummyExtensionId)).Times(1);
   EXPECT_CALL(manager, OnError(kDummyExtensionId, _, _, _)).Times(0);
 
-  operation->Start();
+//#if !defined(OS_CHROMEOS)
+//  std::vector<int> progress_list{0, 50, 100};
+//  operation->PostTask(base::BindOnce(
+//      &ImageWriterTestUtils::SimulateProgressOnWrite,
+//      operation, progress_list, true));
+//#endif
 
-  base::RunLoop().RunUntilIdle();
-
-#if !defined(OS_CHROMEOS)
-  test_utils_.GetUtilityClient()->Progress(0);
-  test_utils_.GetUtilityClient()->Progress(50);
-  test_utils_.GetUtilityClient()->Progress(100);
-  test_utils_.GetUtilityClient()->Success();
-
-  base::RunLoop().RunUntilIdle();
-#endif
+  operation->PostTask(base::Bind(&Operation::Start, operation));
+  content::RunAllBlockingPoolTasksUntilIdle();
 }
 
 } // namespace

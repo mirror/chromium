@@ -230,6 +230,8 @@ static_library("extensions") {
     "api/identity/web_auth_flow.h",
     "api/idltest/idltest_api.cc",
     "api/idltest/idltest_api.h",
+    "api/image_writer_private/unzip_helper.cc",
+    "api/image_writer_private/unzip_helper.h",
     "api/image_writer_private/destroy_partitions_operation.cc",
     "api/image_writer_private/destroy_partitions_operation.h",
     "api/image_writer_private/error_messages.cc",

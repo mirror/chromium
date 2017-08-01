@@ -27,6 +27,7 @@ DestroyPartitionsOperation::DestroyPartitionsOperation(
 DestroyPartitionsOperation::~DestroyPartitionsOperation() {}
 
 void DestroyPartitionsOperation::StartImpl() {
+  DCHECK(IsRunningInCorrectSequence());
   if (!base::CreateTemporaryFileInDir(temp_dir_.GetPath(), &image_path_)) {
     Error(error::kTempFileError);
     return;
@@ -41,9 +42,8 @@ void DestroyPartitionsOperation::StartImpl() {
     return;
   }
 
-  content::BrowserThread::PostTask(
-      content::BrowserThread::FILE, FROM_HERE,
-      base::BindOnce(&DestroyPartitionsOperation::Write, this,
+  // TODO(lazyboy): We should not need to PostTask here.
+  PostTask(base::BindOnce(&DestroyPartitionsOperation::Write, this,
                      base::Bind(&DestroyPartitionsOperation::Finish, this)));
 }
 

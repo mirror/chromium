@@ -11,7 +11,9 @@
 #include "base/files/scoped_temp_dir.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
+#include "base/test/scoped_task_environment.h"
 #include "build/build_config.h"
+#include "chrome/browser/extensions/api/image_writer_private/error_messages.h"
 #include "chrome/browser/extensions/api/image_writer_private/image_writer_utility_client.h"
 #include "chrome/browser/extensions/api/image_writer_private/operation_manager.h"
 #include "content/public/test/test_browser_thread_bundle.h"
@@ -23,6 +25,8 @@
 #include "chromeos/disks/disk_mount_manager.h"
 #include "chromeos/disks/mock_disk_mount_manager.h"
 #endif
+
+class ImageWriterUtilityClientFactory;
 
 namespace extensions {
 namespace image_writer {
@@ -74,6 +78,15 @@ class FakeDiskMountManager : public chromeos::disks::MockDiskMountManager {
 };
 #endif
 
+struct SimulateProgressInfo {
+  SimulateProgressInfo(
+      const std::vector<int>& progress_list, bool will_succeed);
+  ~SimulateProgressInfo();
+  SimulateProgressInfo(const SimulateProgressInfo&);
+  std::vector<int> progress_list;
+  bool will_succeed;
+};
+
 class FakeImageWriterClient : public ImageWriterUtilityClient {
  public:
   FakeImageWriterClient();
@@ -94,10 +107,10 @@ class FakeImageWriterClient : public ImageWriterUtilityClient {
 
   void Shutdown() override;
 
-  // Sets a callback for when a Write call is made.
-  void SetWriteCallback(const base::Closure& write_callback);
-  // Sets a callback for when a Verify call is made.
-  void SetVerifyCallback(const base::Closure& verify_callback);
+  void SimulateProgressOnWrite(
+      std::vector<int> progress_list, bool will_succeed);
+  void SimulateProgressOnVerifyWrite(
+      std::vector<int> progress_list, bool will_succeed);
 
   // Triggers the progress callback.
   void Progress(int64_t progress);
@@ -108,22 +121,47 @@ class FakeImageWriterClient : public ImageWriterUtilityClient {
   // Triggers the cancel callback.
   void Cancel();
 
- private:
+  void MockStuff(const std::vector<int>& progress_list, bool succeed);
+
+ protected:
   ~FakeImageWriterClient() override;
+
+ private:
+  void SimulateProgressAndCompletion(const SimulateProgressInfo& info);
 
   ProgressCallback progress_callback_;
   SuccessCallback success_callback_;
   ErrorCallback error_callback_;
   CancelCallback cancel_callback_;
 
-  base::Closure write_callback_;
-  base::Closure verify_callback_;
+  base::Optional<std::vector<int>> progress_list_;
+  base::Optional<SimulateProgressInfo> simulate_on_write_;
+  base::Optional<SimulateProgressInfo> simulate_on_verify_;
+};
+
+class ImageWriterTestUtils;
+class FakeImageWriterUtilityClientFactory : public ImageWriterUtilityClientFactory {
+ public:
+  FakeImageWriterUtilityClientFactory(ImageWriterTestUtils* utils)
+      : utils_(utils) {
+  }
+  scoped_refptr<ImageWriterUtilityClient> Create() override;
+ private:
+  ImageWriterTestUtils* utils_;
 };
 
 class ImageWriterTestUtils {
  public:
   ImageWriterTestUtils();
   virtual ~ImageWriterTestUtils();
+
+#if !defined(OS_CHROMEOS)
+  using UtilityClientCreationCallback =
+      base::OnceCallback<void(FakeImageWriterClient*)>;
+  void RunOnUtilityClientCreation(UtilityClientCreationCallback callback);
+  base::OnceCallback<void(FakeImageWriterClient*)> client_creation_callback_;
+  void OnUtilityClientCreated(FakeImageWriterClient* client);
+#endif
 
   // Verifies that the data in image_path was written to the file at
   // device_path.  This is different from base::ContentsEqual because the device
@@ -152,17 +190,14 @@ class ImageWriterTestUtils {
   const base::FilePath& GetImagePath();
   const base::FilePath& GetDevicePath();
 
-#if !defined(OS_CHROMEOS)
-  FakeImageWriterClient* GetUtilityClient();
-#endif
-
  protected:
   base::ScopedTempDir temp_dir_;
   base::FilePath test_image_path_;
   base::FilePath test_device_path_;
 
 #if !defined(OS_CHROMEOS)
-  scoped_refptr<FakeImageWriterClient> client_;
+  //scoped_refptr<FakeImageWriterClient> client_;
+  FakeImageWriterUtilityClientFactory image_writer_client_factory_;
 #endif
 };
 
@@ -176,6 +211,8 @@ class ImageWriterUnitTestBase : public testing::Test {
   void TearDown() override;
 
   ImageWriterTestUtils test_utils_;
+
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
 
  private:
   content::TestBrowserThreadBundle thread_bundle_;
