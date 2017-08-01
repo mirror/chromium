@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "c72642f4_94ffeda7",
+        "filename": "chrome/test/mini_installer/test_installer.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1109829
+      },
+      "writtenOn": "2017-08-01T14:22:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1b9e7298_12123df7",
+      "range": {
+        "startLine": 357,
+        "startChar": 10,
+        "endLine": 359,
+        "endChar": 24
+      },
+      "revId": "868a0b25ba7ae76bee01b57419684b6d9759733e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee558cbc_c4c93225",
         "filename": "chrome/test/mini_installer/test_installer.py",
         "patchSetId": 6
@@ -225,6 +249,30 @@
       "side": 1,
       "message": "This is an interesting suggestion, but I think it\u0027s going into the territory of making perfect the enemy of the good. In all likelihood, the very first probe in LOCALAPPDATA will succeed. Failing that (and the check for the system temp dir), this test must be run at high integrity, so creation of a temp dir at the root of the volume will succeed. I propose landing this as-is and revisiting if needed down the road.",
       "parentUuid": "ee558cbc_c4c93225",
+      "range": {
+        "startLine": 363,
+        "startChar": 6,
+        "endLine": 366,
+        "endChar": 26
+      },
+      "revId": "868a0b25ba7ae76bee01b57419684b6d9759733e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13bc2582_d682d09f",
+        "filename": "chrome/test/mini_installer/test_installer.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1109829
+      },
+      "writtenOn": "2017-08-01T14:22:02Z",
+      "side": 1,
+      "message": "Yeah, I don\u0027t disagree. SGTM.",
+      "parentUuid": "da8bd69b_73e284a9",
       "range": {
         "startLine": 363,
         "startChar": 6,
