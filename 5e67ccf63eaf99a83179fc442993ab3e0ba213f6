@@ -179,6 +179,24 @@
     },
     {
       "key": {
+        "uuid": "45fd995c_f19e529c",
+        "filename": "media/blink/resource_multibuffer_data_provider.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1216499
+      },
+      "writtenOn": "2017-08-01T04:19:41Z",
+      "side": 1,
+      "message": "Would simply returning be OK?\n\nThat said, I do not understand how UrlIndex instance can get destroyed before URLData instances. It looks like all URLData instances will be destroyed when MediaPlayerImpl instances are destroyed, which happens before MediaFactory and hence UrlIndex instances will be destroyed.",
+      "parentUuid": "881e12e8_f65a5987",
+      "revId": "5e67ccf63eaf99a83179fc442993ab3e0ba213f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0b19edde_4e61f73f",
         "filename": "media/blink/resource_multibuffer_data_provider.cc",
         "patchSetId": 9
@@ -309,6 +327,30 @@
       "side": 1,
       "message": "Well, I guess I\u0027m not going to complain about it then, but it\u0027s my opinion that using auto in this way hurts readability.",
       "parentUuid": "242fd9d4_43dcdd88",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 6
+      },
+      "revId": "5e67ccf63eaf99a83179fc442993ab3e0ba213f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00810350_5c3d5bad",
+        "filename": "media/blink/url_index.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1216499
+      },
+      "writtenOn": "2017-08-01T04:19:41Z",
+      "side": 1,
+      "message": "In general I agree with you, but in this particular case, the type is explicitly specified as MakeUnique template parameter, so I do not think it is that bad.",
+      "parentUuid": "734c77f2_e4b407fc",
       "range": {
         "startLine": 31,
         "startChar": 2,
