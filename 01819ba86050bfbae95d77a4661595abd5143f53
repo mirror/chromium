@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "87028729_8f7e51bd",
+        "filename": "ios/chrome/browser/ui/favicon/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-08-01T13:42:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1c02041a_ffd3c3ff",
+      "range": {
+        "startLine": 30,
+        "startChar": 4,
+        "endLine": 30,
+        "endChar": 45
+      },
+      "revId": "01819ba86050bfbae95d77a4661595abd5143f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d9e71ff_272c15bb",
         "filename": "ios/chrome/content_widget_extension/DEPS",
         "patchSetId": 2
@@ -65,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ffe52f10_4bb71bd8",
+        "filename": "ios/chrome/content_widget_extension/content_widget_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-08-01T13:42:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76d8225f_734c79c8",
+      "revId": "01819ba86050bfbae95d77a4661595abd5143f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57309475_22a42096",
         "filename": "ios/chrome/content_widget_extension/content_widget_view.mm",
         "patchSetId": 2
@@ -76,6 +118,30 @@
       "writtenOn": "2017-08-01T08:37:16Z",
       "side": 1,
       "message": "Here and everywhere you use the assumption that there will always have two rows of tiles. Is it something you plan to address when using real data?",
+      "range": {
+        "startLine": 70,
+        "startChar": 13,
+        "endLine": 70,
+        "endChar": 16
+      },
+      "revId": "01819ba86050bfbae95d77a4661595abd5143f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4885bfaa_1ca92820",
+        "filename": "ios/chrome/content_widget_extension/content_widget_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-08-01T13:42:39Z",
+      "side": 1,
+      "message": "I\u0027ve added functionality to hide the second row. Hiding individual tiles will be done along with using real data.",
+      "parentUuid": "57309475_22a42096",
       "range": {
         "startLine": 70,
         "startChar": 13,
@@ -102,6 +168,24 @@
       "revId": "01819ba86050bfbae95d77a4661595abd5143f53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba34d3db_992e35dd",
+        "filename": "ios/chrome/content_widget_extension/content_widget_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-08-01T13:42:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55acf107_24f945ff",
+      "revId": "01819ba86050bfbae95d77a4661595abd5143f53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
