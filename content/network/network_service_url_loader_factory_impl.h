@@ -11,14 +11,14 @@
 
 namespace content {
 
-class NetworkContext;
+class NetworkContextImpl;
 
 // This class is an implementation of mojom::URLLoaderFactory that creates
 // a mojom::URLLoader.
 class NetworkServiceURLLoaderFactoryImpl : public mojom::URLLoaderFactory {
  public:
   // NOTE: |context| must outlive this instance.
-  NetworkServiceURLLoaderFactoryImpl(NetworkContext* context,
+  NetworkServiceURLLoaderFactoryImpl(NetworkContextImpl* context,
                                      uint32_t process_id);
 
   ~NetworkServiceURLLoaderFactoryImpl() override;
@@ -39,7 +39,7 @@ class NetworkServiceURLLoaderFactoryImpl : public mojom::URLLoaderFactory {
 
  private:
   // Not owned.
-  NetworkContext* context_;
+  NetworkContextImpl* context_;
   int process_id_;
 
   DISALLOW_COPY_AND_ASSIGN(NetworkServiceURLLoaderFactoryImpl);
