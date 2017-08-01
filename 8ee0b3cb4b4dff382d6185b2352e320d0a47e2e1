@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e85b23a7_b701d699",
+        "filename": "third_party/WebKit/Source/core/editing/Editor.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 914,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-01T07:44:39Z",
+      "side": 1,
+      "message": "AsValidSelectionFor() hides whether SelectionForUndoStep holds valid\nselection or not. We can not distinguish empty selection or invalid\nselection in SelectionForUndoStep.\n\nCallers must care about in case of invalid selection, e.g.\nnot calling FrameSelection::SetSelection() instead of calling it with\nempty selection.",
+      "parentUuid": "dca57df6_770ae7f6",
+      "revId": "8ee0b3cb4b4dff382d6185b2352e320d0a47e2e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "92f0218e_4f5b9f2d",
         "filename": "third_party/WebKit/Source/core/editing/commands/CompositeEditCommand.h",
         "patchSetId": 11
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "4e95674a_1a398d7c",
+        "filename": "third_party/WebKit/Source/core/editing/commands/CompositeEditCommand.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-01T07:44:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92f0218e_4f5b9f2d",
+      "range": {
+        "startLine": 65,
+        "startChar": 19,
+        "endLine": 65,
+        "endChar": 20
+      },
+      "revId": "8ee0b3cb4b4dff382d6185b2352e320d0a47e2e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a206727_a0eea3b4",
         "filename": "third_party/WebKit/Source/core/editing/commands/SelectionForUndoStep.h",
         "patchSetId": 11
@@ -53,6 +95,24 @@
       "writtenOn": "2017-07-29T23:18:37Z",
       "side": 1,
       "message": "Can we add another (shorthand) function?\n\nSelectionInDOMTree AsValidSelectionFor(const Document\u0026 document) const {\n  return IsValidFor(document) ? AsSelection() : SelectionInDOMTree();\n}",
+      "revId": "8ee0b3cb4b4dff382d6185b2352e320d0a47e2e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35e4ec4d_07cda6ca",
+        "filename": "third_party/WebKit/Source/core/editing/commands/SelectionForUndoStep.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-01T07:44:39Z",
+      "side": 1,
+      "message": "TL;DR: It is too early to introduce.\n\nI\u0027m not fan of this, with following reasons:\n - Callers may want to distinguish invalid selection and empty selection\n - There is only one call site.\n\nOnce we have more call sites to treat invalid selection as empty selection,\nwe may introduce another shorthand.",
+      "parentUuid": "7a206727_a0eea3b4",
       "revId": "8ee0b3cb4b4dff382d6185b2352e320d0a47e2e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "862e7c4e_a337a470",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 841,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-01T07:44:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0efb44a_b385d0e8",
+      "range": {
+        "startLine": 838,
+        "startChar": 5,
+        "endLine": 841,
+        "endChar": 66
+      },
+      "revId": "8ee0b3cb4b4dff382d6185b2352e320d0a47e2e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "837b0e9c_59f1922d",
         "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
         "patchSetId": 11
@@ -102,6 +186,30 @@
       "revId": "8ee0b3cb4b4dff382d6185b2352e320d0a47e2e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d6e2d8d_dd163a9e",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 989,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-01T07:44:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "837b0e9c_59f1922d",
+      "range": {
+        "startLine": 986,
+        "startChar": 0,
+        "endLine": 989,
+        "endChar": 66
+      },
+      "revId": "8ee0b3cb4b4dff382d6185b2352e320d0a47e2e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
