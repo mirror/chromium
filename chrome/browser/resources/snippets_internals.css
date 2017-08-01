@@ -89,3 +89,11 @@ button {
   max-width: 100px;
   min-height: 40px;
 }
+
+#contextual-suggestions-section-id button,
+#contextual-suggestions-section-id input {
+  display: block;
+  margin-top: 1em;
+  max-width: 30em;
+  width: 95%;
+}

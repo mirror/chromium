@@ -31,6 +31,7 @@
 #include "components/ntp_snippets/category.h"
 #include "components/ntp_snippets/category_info.h"
 #include "components/ntp_snippets/category_rankers/category_ranker.h"
+#include "components/ntp_snippets/contextual_suggestions_source.h"
 #include "components/ntp_snippets/features.h"
 #include "components/ntp_snippets/pref_names.h"
 #include "components/ntp_snippets/remote/remote_suggestions_fetcher.h"
@@ -40,6 +41,7 @@
 #include "components/prefs/pref_service.h"
 #include "components/variations/variations_associated_data.h"
 #include "content/public/browser/web_ui.h"
+#include "url/gurl.h"
 
 using ntp_snippets::ContentSuggestion;
 using ntp_snippets::Category;
@@ -190,6 +192,11 @@ void SnippetsInternalsMessageHandler::RegisterMessages() {
       "fetchRemoteSuggestionsInTheBackground",
       base::Bind(&SnippetsInternalsMessageHandler::
                      FetchRemoteSuggestionsInTheBackground,
+                 base::Unretained(this)));
+
+  web_ui()->RegisterMessageCallback(
+      "fetchContextualSuggestions",
+      base::Bind(&SnippetsInternalsMessageHandler::FetchContextualSuggestions,
                  base::Unretained(this)));
 
   web_ui()->RegisterMessageCallback(
@@ -346,6 +353,35 @@ void SnippetsInternalsMessageHandler::FetchRemoteSuggestionsInTheBackground(
   DCHECK_EQ(0u, args->GetSize());
   remote_suggestions_provider_->RefetchInTheBackground(
       RemoteSuggestionsProvider::FetchStatusCallback());
+}
+
+void SnippetsInternalsMessageHandler::FetchContextualSuggestions(
+    const base::ListValue* args) {
+  DCHECK_EQ(1u, args->GetSize());
+  std::string url_str;
+  args->GetString(0, &url_str);
+  GURL url(url_str);
+  content_suggestions_service_->contextual_suggestions_source()
+      ->FetchContextualSuggestions(
+          url,
+          base::BindOnce(
+              &SnippetsInternalsMessageHandler::OnContextualSuggestionsFetched,
+              weak_ptr_factory_.GetWeakPtr()));
+}
+
+void SnippetsInternalsMessageHandler::OnContextualSuggestionsFetched(
+    ntp_snippets::Status status,
+    const GURL& url,
+    std::vector<ntp_snippets::ContentSuggestion> suggestions) {
+  int index = 0;
+  base::ListValue suggestions_list;
+  for (const ContentSuggestion& suggestion : suggestions) {
+    suggestions_list.Append(PrepareSuggestion(suggestion, index++));
+  }
+
+  web_ui()->CallJavascriptFunctionUnsafe(
+      "chrome.SnippetsInternals.receiveContextualSuggestions", suggestions_list,
+      base::Value(static_cast<int>(status.code)));
 }
 
 void SnippetsInternalsMessageHandler::SendAllContent() {
