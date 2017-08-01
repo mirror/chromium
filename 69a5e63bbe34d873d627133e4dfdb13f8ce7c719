@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29b210fb_71b814bf",
+        "filename": "chrome/browser/ui/cocoa/browser/exclusive_access_controller_views.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-01T20:02:04Z",
+      "side": 1,
+      "message": "Generally we don\u0027t initialize values in the member initialize list whose no-arg constructor gives you what you want. For example, you don\u0027t see url_() here. So, remove this.",
+      "range": {
+        "startLine": 27,
+        "startChar": 11,
+        "endLine": 27,
+        "endChar": 24
+      },
+      "revId": "69a5e63bbe34d873d627133e4dfdb13f8ce7c719",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d05c5d7d_4e52609b",
+        "filename": "chrome/browser/ui/cocoa/browser/exclusive_access_controller_views.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-01T20:02:04Z",
+      "side": 1,
+      "message": "Do you need this in the destructor too?",
+      "range": {
+        "startLine": 86,
+        "startChar": 4,
+        "endLine": 86,
+        "endChar": 25
+      },
+      "revId": "69a5e63bbe34d873d627133e4dfdb13f8ce7c719",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e206689_9ef2f4fb",
+        "filename": "chrome/browser/ui/exclusive_access/exclusive_access_bubble_hide_callback.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-01T20:02:04Z",
+      "side": 1,
+      "message": "no (c) (see chromium style guide).",
+      "range": {
+        "startLine": 1,
+        "startChar": 14,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "69a5e63bbe34d873d627133e4dfdb13f8ce7c719",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f69830d_88ee2926",
+        "filename": "chrome/browser/ui/exclusive_access/exclusive_access_bubble_hide_callback.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-01T20:02:04Z",
+      "side": 1,
+      "message": "optional: At first I thought you mispelled unknown. How about kNotShown?",
+      "range": {
+        "startLine": 17,
+        "startChar": 4,
+        "endLine": 17,
+        "endChar": 8
+      },
+      "revId": "69a5e63bbe34d873d627133e4dfdb13f8ce7c719",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
