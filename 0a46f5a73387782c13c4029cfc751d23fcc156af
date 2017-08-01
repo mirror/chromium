@@ -22,6 +22,30 @@
       "revId": "0a46f5a73387782c13c4029cfc751d23fcc156af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8c0091f_722fb076",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-01T22:40:31Z",
+      "side": 1,
+      "message": "I agree with Eugene\u0027s suggestion here.  We want to be mindful of O(n) operations in NavigationManager, as it has previously led to huge performance issues for a small subset of users with extremely long session history.",
+      "parentUuid": "26464be7_d701bd8b",
+      "range": {
+        "startLine": 262,
+        "startChar": 11,
+        "endLine": 262,
+        "endChar": 16
+      },
+      "revId": "0a46f5a73387782c13c4029cfc751d23fcc156af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
