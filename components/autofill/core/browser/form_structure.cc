@@ -601,6 +601,29 @@ bool FormStructure::IsCompleteCreditCardForm() const {
   return false;
 }
 
+bool FormStructure::ShouldFillCreditCardForm() const {
+  int number_of_cc_fields = 0;
+  bool has_exp_month_or_year = false;
+  for (const auto& field : fields_) {
+    if (field->Type().group() == CREDIT_CARD) {
+      ++number_of_cc_fields;
+      if (field->Type().GetStorableType() == CREDIT_CARD_EXP_MONTH ||
+          field->Type().GetStorableType() == CREDIT_CARD_EXP_2_DIGIT_YEAR ||
+          field->Type().GetStorableType() == CREDIT_CARD_EXP_4_DIGIT_YEAR) {
+        has_exp_month_or_year = true;
+      }
+    }
+  }
+
+  // If there is only one field and it's an expiration month or year, it should
+  // not be filled.
+  if (fields_.size() == 1)
+    return !has_exp_month_or_year;
+
+  // Otherwise, fill if there is more than one credit card field.
+  return number_of_cc_fields > 1;
+}
+
 void FormStructure::UpdateAutofillCount() {
   autofill_count_ = 0;
   for (const auto& field : *this) {
