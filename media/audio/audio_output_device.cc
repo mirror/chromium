@@ -463,6 +463,7 @@ void AudioOutputDevice::AudioThreadCallback::MapSharedMemory() {
   AudioOutputBuffer* buffer =
       reinterpret_cast<AudioOutputBuffer*>(shared_memory_.memory());
   output_bus_ = AudioBus::WrapMemory(audio_parameters_, buffer->audio);
+  output_bus_->set_is_bitstream_format(audio_parameters_.IsBitstreamFormat());
 }
 
 // Called whenever we receive notifications about pending data.
@@ -494,12 +495,25 @@ void AudioOutputDevice::AudioThreadCallback::Process(uint32_t control_signal) {
   DVLOG(4) << __func__ << " delay:" << delay << " delay_timestamp:" << delay
            << " frames_skipped:" << frames_skipped;
 
+  if (audio_parameters_.IsBitstreamFormat()) {
+    // Reset the data size and frame count.
+    // For compressed audio formats, the data size and frame count will be
+    // updated by |render_callback_|.
+    output_bus_->SetBitstreamDataSize(0);
+    output_bus_->SetBitstreamFrames(0);
+  }
+
   // Update the audio-delay measurement, inform about the number of skipped
   // frames, and ask client to render audio.  Since |output_bus_| is wrapping
   // the shared memory the Render() call is writing directly into the shared
   // memory.
   render_callback_->Render(delay, delay_timestamp, frames_skipped,
                            output_bus_.get());
+
+  if (audio_parameters_.IsBitstreamFormat()) {
+    buffer->params.bitstream_data_size = output_bus_->GetBitstreamDataSize();
+    buffer->params.bitstream_frames = output_bus_->GetBitstreamFrames();
+  }
 }
 
 bool AudioOutputDevice::AudioThreadCallback::

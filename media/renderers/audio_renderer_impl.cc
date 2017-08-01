@@ -21,9 +21,11 @@
 #include "media/base/audio_buffer.h"
 #include "media/base/audio_buffer_converter.h"
 #include "media/base/audio_latency.h"
+#include "media/base/audio_parameters.h"
 #include "media/base/bind_to_current_loop.h"
 #include "media/base/channel_mixing_matrix.h"
 #include "media/base/demuxer_stream.h"
+#include "media/base/media_client.h"
 #include "media/base/media_log.h"
 #include "media/base/renderer_client.h"
 #include "media/base/timestamp_constants.h"
@@ -62,6 +64,8 @@ AudioRendererImpl::AudioRendererImpl(
       received_end_of_stream_(false),
       rendered_end_of_stream_(false),
       is_suspending_(false),
+      is_passthrough_(false),
+      last_reported_media_time_(kNoTimestamp),
       weak_factory_(this) {
   DCHECK(create_audio_decoders_cb_);
   // Tests may not have a power monitor.
@@ -182,6 +186,7 @@ void AudioRendererImpl::SetMediaTime(base::TimeDelta time) {
   last_render_time_ = stop_rendering_time_ = base::TimeTicks();
   first_packet_timestamp_ = kNoTimestamp;
   audio_clock_.reset(new AudioClock(time, audio_parameters_.sample_rate()));
+  last_reported_media_time_ = kNoTimestamp;
 }
 
 base::TimeDelta AudioRendererImpl::CurrentMediaTime() {
@@ -197,7 +202,14 @@ base::TimeDelta AudioRendererImpl::CurrentMediaTime() {
       current_media_time = audio_clock_->back_timestamp();
   }
 
-  return current_media_time;
+  // Clamp current media time to the last reported value, this prevents higher
+  // level clients from seeing time go backwards. This may happen when seeking
+  // a passthrough audio stream, since we are unable to trim a compressed audio
+  // buffer.
+  if (last_reported_media_time_ < current_media_time)
+    last_reported_media_time_ = current_media_time;
+
+  return last_reported_media_time_;
 }
 
 bool AudioRendererImpl::GetWallClockTimes(
@@ -382,6 +394,11 @@ void AudioRendererImpl::Initialize(DemuxerStream* stream,
 
   auto output_device_info = sink_->GetOutputDeviceInfo();
   const AudioParameters& hw_params = output_device_info.output_params();
+  AudioCodec codec = stream->audio_decoder_config().codec();
+  if (auto* mc = GetMediaClient())
+    is_passthrough_ = mc->IsSupportedBitstreamAudioCodec(codec);
+  else
+    is_passthrough_ = false;
   expecting_config_changes_ = stream->SupportsConfigChanges();
 
   bool use_stream_params = !expecting_config_changes_ || !hw_params.IsValid() ||
@@ -394,7 +411,26 @@ void AudioRendererImpl::Initialize(DemuxerStream* stream,
     use_stream_params = false;
   }
 
-  if (use_stream_params) {
+  if (is_passthrough_) {
+    AudioParameters::Format format = AudioParameters::AUDIO_FAKE;
+    if (codec == kCodecAC3) {
+      format = AudioParameters::AUDIO_BITSTREAM_AC3;
+    } else if (codec == kCodecEAC3) {
+      format = AudioParameters::AUDIO_BITSTREAM_EAC3;
+    } else {
+      NOTREACHED();
+    }
+
+    const int buffer_size =
+        AudioParameters::kMaxFramesPerCompressedAudioBuffer *
+        stream->audio_decoder_config().bytes_per_frame();
+
+    audio_parameters_.Reset(
+        format, stream->audio_decoder_config().channel_layout(),
+        stream->audio_decoder_config().samples_per_second(),
+        stream->audio_decoder_config().bits_per_channel(), buffer_size);
+    buffer_converter_.reset();
+  } else if (use_stream_params) {
     // The actual buffer size is controlled via the size of the AudioBus
     // provided to Render(), but we should choose a value here based on hardware
     // parameters if possible since it affects the initial buffer size used by
@@ -685,7 +721,14 @@ bool AudioRendererImpl::HandleDecodedBuffer_Locked(
   if (buffer->end_of_stream()) {
     received_end_of_stream_ = true;
   } else {
-    if (state_ == kPlaying) {
+    if (buffer->IsBitstreamFormat() && state_ == kPlaying) {
+      if (IsBeforeStartTime(buffer))
+        return true;
+
+      // Skip the buffer since we are unable to trim a compressed audio buffer.
+      if (buffer->timestamp() + buffer->duration() / 2 < start_timestamp_)
+        return true;
+    } else if (state_ == kPlaying) {
       if (IsBeforeStartTime(buffer))
         return true;
 
@@ -784,6 +827,13 @@ void AudioRendererImpl::SetPlaybackRate(double playback_rate) {
 
   base::AutoLock auto_lock(lock_);
 
+  if (is_passthrough_ && playback_rate != 0 && playback_rate != 1) {
+    MEDIA_LOG(INFO, media_log_)
+        << "Unsupported playback rate when outputing compressed bitstream."
+        << " Playback Rate: " << playback_rate;
+    return;
+  }
+
   // We have two cases here:
   // Play: current_playback_rate == 0 && playback_rate != 0
   // Pause: current_playback_rate != 0 && playback_rate == 0
@@ -815,7 +865,7 @@ int AudioRendererImpl::Render(base::TimeDelta delay,
                               base::TimeTicks delay_timestamp,
                               int prior_frames_skipped,
                               AudioBus* audio_bus) {
-  const int frames_requested = audio_bus->frames();
+  int frames_requested = audio_bus->frames();
   DVLOG(4) << __func__ << " delay:" << delay
            << " prior_frames_skipped:" << prior_frames_skipped
            << " frames_requested:" << frames_requested;
@@ -854,9 +904,24 @@ int AudioRendererImpl::Render(base::TimeDelta delay,
       return 0;
     }
 
-    // Delay playback by writing silence if we haven't reached the first
-    // timestamp yet; this can occur if the video starts before the audio.
-    if (algorithm_->frames_buffered() > 0) {
+    if (is_passthrough_ && algorithm_->frames_buffered() > 0) {
+      // TODO(tsunghung): For compressed bitstream formats, play zeroed buffer
+      // won't generate delay. It could be discarded immediately. Need another
+      // way to generate audio delay.
+      const base::TimeDelta play_delay =
+          first_packet_timestamp_ - audio_clock_->back_timestamp();
+      if (play_delay > base::TimeDelta()) {
+        MEDIA_LOG(INFO, media_log_)
+            << "Delay is required for a compressed audio bitstream format!"
+            << " Play Delay: " << play_delay;
+      }
+
+      frames_written += algorithm_->FillBuffer(audio_bus, 0, frames_requested,
+                                               playback_rate_);
+      frames_requested = frames_written;
+    } else if (algorithm_->frames_buffered() > 0) {
+      // Delay playback by writing silence if we haven't reached the first
+      // timestamp yet; this can occur if the video starts before the audio.
       CHECK_NE(first_packet_timestamp_, kNoTimestamp);
       CHECK_GE(first_packet_timestamp_, base::TimeDelta());
       const base::TimeDelta play_delay =

@@ -163,6 +163,26 @@ void AudioBus::set_frames(int frames) {
   frames_ = frames;
 }
 
+int AudioBus::GetBitstreamDataSize() const {
+  DCHECK(is_bitstream_format_);
+  return bitstream_data_size_;
+}
+
+void AudioBus::SetBitstreamDataSize(int data_size) {
+  DCHECK(is_bitstream_format_);
+  bitstream_data_size_ = data_size;
+}
+
+int AudioBus::GetBitstreamFrames() const {
+  DCHECK(is_bitstream_format_);
+  return bitstream_frames_;
+}
+
+void AudioBus::SetBitstreamFrames(int frames) {
+  DCHECK(is_bitstream_format_);
+  bitstream_frames_ = frames;
+}
+
 void AudioBus::ZeroFramesPartial(int start_frame, int frames) {
   CheckOverflow(start_frame, frames, frames_);
 
@@ -308,6 +328,14 @@ void AudioBus::ToInterleavedPartial(int start_frame,
 }
 
 void AudioBus::CopyTo(AudioBus* dest) const {
+  dest->set_is_bitstream_format(is_bitstream_format());
+  if (is_bitstream_format()) {
+    dest->SetBitstreamDataSize(GetBitstreamDataSize());
+    dest->SetBitstreamFrames(GetBitstreamFrames());
+    memcpy(dest->channel(0), channel(0), GetBitstreamDataSize());
+    return;
+  }
+
   CopyPartialFramesTo(0, frames(), 0, dest);
 }
 
