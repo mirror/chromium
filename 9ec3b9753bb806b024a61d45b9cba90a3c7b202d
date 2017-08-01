@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38d78390_7359ffc8",
+        "filename": "content/browser/geolocation/geolocation_service_impl_unittest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-01T22:18:30Z",
+      "side": 1,
+      "message": "We shouldn\u0027t be expecting a connection error here.",
+      "revId": "9ec3b9753bb806b024a61d45b9cba90a3c7b202d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
