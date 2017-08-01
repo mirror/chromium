@@ -1,0 +1,152 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f36f684f_7781137d",
+        "filename": "chrome/browser/resources/snippets_internals.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-01T15:37:58Z",
+      "side": 1,
+      "message": "Do you have a screenshot of what it\u0027ll look like? It\u0027s hard for me to tell what this CSS does.",
+      "revId": "2c1b583ff66a8cbb149c10af6eeb099eddbffc3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "875731e9_f7233169",
+        "filename": "chrome/browser/resources/snippets_internals.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-01T15:37:58Z",
+      "side": 1,
+      "message": "Is this required? What does it do?",
+      "revId": "2c1b583ff66a8cbb149c10af6eeb099eddbffc3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3452471e_497e6db0",
+        "filename": "chrome/browser/resources/snippets_internals.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-01T15:37:58Z",
+      "side": 1,
+      "message": "nit: Why the \"-id\" suffix in the id value?",
+      "range": {
+        "startLine": 227,
+        "startChar": 61,
+        "endLine": 227,
+        "endChar": 0
+      },
+      "revId": "2c1b583ff66a8cbb149c10af6eeb099eddbffc3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee8e480f_d5848688",
+        "filename": "chrome/browser/resources/snippets_internals.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-01T15:37:58Z",
+      "side": 1,
+      "message": "Would .textContent also work? I think HTML parsing isn\u0027t needed (or wanted) here.",
+      "revId": "2c1b583ff66a8cbb149c10af6eeb099eddbffc3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad48670b_cedba5f3",
+        "filename": "chrome/browser/resources/snippets_internals.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-01T15:37:58Z",
+      "side": 1,
+      "message": "Hm, IIRC, for other sections we have quite a lot of detail in the UI. Is there any way to reuse that here? Only the title seems a bit thin. At the very least, this should include the URL.",
+      "revId": "2c1b583ff66a8cbb149c10af6eeb099eddbffc3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95444371_84ac67a8",
+        "filename": "chrome/browser/ui/webui/snippets_internals_message_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-01T15:37:58Z",
+      "side": 1,
+      "message": "I was gonna say this should be called \"HandleFetchContextualSuggestions\" to be consistent, but things are already inconsistent :-/\nIf you want, you can add the \"Handle\" to all the handlers that are missing it. Optional, of course",
+      "range": {
+        "startLine": 199,
+        "startChar": 51,
+        "endLine": 199,
+        "endChar": 77
+      },
+      "revId": "2c1b583ff66a8cbb149c10af6eeb099eddbffc3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0050ed50_a99628f2",
+        "filename": "chrome/browser/ui/webui/snippets_internals_message_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-01T15:37:58Z",
+      "side": 1,
+      "message": "nit: Inline below?",
+      "revId": "2c1b583ff66a8cbb149c10af6eeb099eddbffc3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c8c6000_a5b8cb2d",
+        "filename": "chrome/browser/ui/webui/snippets_internals_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-01T15:37:58Z",
+      "side": 1,
+      "message": "This should go into an #if defined(OS_ANDROID)",
+      "revId": "2c1b583ff66a8cbb149c10af6eeb099eddbffc3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
