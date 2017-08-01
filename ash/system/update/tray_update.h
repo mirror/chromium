@@ -7,6 +7,7 @@
 
 #include "ash/ash_export.h"
 #include "ash/system/tray/tray_image_item.h"
+#include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "base/strings/string16.h"
 
@@ -48,6 +49,10 @@ class ASH_EXPORT TrayUpdate : public TrayImageItem {
   views::Label* GetLabelForTesting();
 
  private:
+  FRIEND_TEST_ALL_PREFIXES(TrayUpdateTest, VisibilityAfterUpdate);
+  FRIEND_TEST_ALL_PREFIXES(TrayUpdateTest, VisibilityAfterFlashUpdate);
+  FRIEND_TEST_ALL_PREFIXES(TrayUpdateTest,
+                           VisibilityAfterUpdateOverCellularAvailable);
 
   class UpdateView;
 
@@ -55,6 +60,9 @@ class ASH_EXPORT TrayUpdate : public TrayImageItem {
   bool GetInitialVisibility() override;
   views::View* CreateDefaultView(LoginStatus status) override;
   void OnDefaultViewDestroyed() override;
+
+  // Resets everything for testing.
+  void ResetForTesting();
 
   UpdateView* update_view_;
 

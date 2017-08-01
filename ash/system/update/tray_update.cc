@@ -188,4 +188,14 @@ void TrayUpdate::SetUpdateOverCellularAvailableIconVisible(bool visible) {
   tray_view()->SetVisible(visible);
 }
 
+void TrayUpdate::ResetForTesting() {
+  update_required_ = false;
+  severity_ = mojom::UpdateSeverity::NONE;
+  factory_reset_required_ = false;
+  update_over_cellular_available_ = false;
+  update_type_ = mojom::UpdateType::SYSTEM;
+  tray_view()->SetVisible(false);
+  delete update_view_;
+}
+
 }  // namespace ash

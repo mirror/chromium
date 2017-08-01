@@ -22,6 +22,7 @@ using TrayUpdateTest = AshTestBase;
 TEST_F(TrayUpdateTest, VisibilityAfterUpdate) {
   SystemTray* tray = GetPrimarySystemTray();
   TrayUpdate* tray_update = tray->tray_update();
+  tray_update->ResetForTesting();
 
   // The system starts with no update pending, so the icon isn't visible.
   EXPECT_FALSE(tray_update->tray_view()->visible());
@@ -41,6 +42,10 @@ TEST_F(TrayUpdateTest, VisibilityAfterUpdate) {
 TEST_F(TrayUpdateTest, VisibilityAfterFlashUpdate) {
   SystemTray* tray = GetPrimarySystemTray();
   TrayUpdate* tray_update = tray->tray_update();
+  tray_update->ResetForTesting();
+
+  // The system starts with no update pending, so the icon isn't visible.
+  EXPECT_FALSE(tray_update->tray_view()->visible());
 
   // Simulate an update.
   Shell::Get()->system_tray_controller()->ShowUpdateIcon(
@@ -59,6 +64,7 @@ TEST_F(TrayUpdateTest, VisibilityAfterFlashUpdate) {
 TEST_F(TrayUpdateTest, VisibilityAfterUpdateOverCellularAvailable) {
   SystemTray* tray = GetPrimarySystemTray();
   TrayUpdate* tray_update = tray->tray_update();
+  tray_update->ResetForTesting();
 
   // The system starts with no update pending, so the icon isn't visible.
   EXPECT_FALSE(tray_update->tray_view()->visible());
