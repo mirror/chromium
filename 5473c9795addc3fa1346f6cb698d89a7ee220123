@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77f53015_e702159e",
+        "filename": "media/base/media_observer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-01T00:55:43Z",
+      "side": 1,
+      "message": "Since it\u0027s this easy, how about AudioDecodedByteCount() too?",
+      "range": {
+        "startLine": 33,
+        "startChar": 2,
+        "endLine": 33,
+        "endChar": 51
+      },
+      "revId": "5473c9795addc3fa1346f6cb698d89a7ee220123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef18b8f0_29d460be",
+        "filename": "media/remoting/metrics.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-01T00:55:43Z",
+      "side": 1,
+      "message": "Let\u0027s make the buckets consistent with OnVideoBitrateEstimate() as well (see L231).",
+      "range": {
+        "startLine": 144,
+        "startChar": 29,
+        "endLine": 144,
+        "endChar": 44
+      },
+      "revId": "5473c9795addc3fa1346f6cb698d89a7ee220123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb59a5fd_89fef808",
+        "filename": "media/remoting/metrics.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-01T00:55:43Z",
+      "side": 1,
+      "message": "Idea: I think it might help to add a 3rd UMA that records the difference between the two:\n\n  int kbps \u003d capacity_kbps - media_kbps;\n  UMA_HISTOGRAM_...(\"Media.Remoting.CapacityOverMediaBitrate\", kbps, ...);\n\nThe buckets will have to take into account negative numbers, though. IIRC, the above won\u0027t work. You might have to do this instead:\n\n  int kbps \u003d capacity_kbps - media_kbps;\n  if (kbps \u003e\u003d 0) {\n    UMA_HISTOGRAM_...(\"Media.Remoting.CapacityOverMediaBitrate\", kbps, ...);\n  } else {\n    UMA_HISTOGRAM_...(\"Media.Remoting.MediaBitrateOverCapacity\", -kbps, ...);\n  }",
+      "range": {
+        "startLine": 145,
+        "startChar": 2,
+        "endLine": 145,
+        "endChar": 68
+      },
+      "revId": "5473c9795addc3fa1346f6cb698d89a7ee220123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "246b3f5a_a1834c6f",
+        "filename": "media/remoting/metrics.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-01T00:55:43Z",
+      "side": 1,
+      "message": "To help ease our analysis, can you make the arguments consistent with OnVideoRateEstimate() (see L94)? (With UMAs having same units?)",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 79
+      },
+      "revId": "5473c9795addc3fa1346f6cb698d89a7ee220123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe83b8af_535d1688",
+        "filename": "media/remoting/metrics.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-01T00:55:43Z",
+      "side": 1,
+      "message": "nit: Instead of just Video, should we include audio+video? I realize video dominates, but audio is not insignificant, either. Perhaps this should be a RecordMediaBitrateVersusCapacity()?",
+      "range": {
+        "startLine": 34,
+        "startChar": 13,
+        "endLine": 34,
+        "endChar": 25
+      },
+      "revId": "5473c9795addc3fa1346f6cb698d89a7ee220123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7fd1246_b08e0cfd",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-01T00:55:43Z",
+      "side": 1,
+      "message": "Since this is very temporary, let\u0027s just put this inside the method (OnDelayedStartTimerFired()), with the \"TODO(xjz): This is a stub.\" comment there.",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 58
+      },
+      "revId": "5473c9795addc3fa1346f6cb698d89a7ee220123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0d7ad0f_a211decf",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-01T00:55:43Z",
+      "side": 1,
+      "message": "BindOnce",
+      "range": {
+        "startLine": 411,
+        "startChar": 12,
+        "endLine": 411,
+        "endChar": 17
+      },
+      "revId": "5473c9795addc3fa1346f6cb698d89a7ee220123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8aa435fb_cd0d9b13",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-01T00:55:43Z",
+      "side": 1,
+      "message": "naming nit: How about decoded_bytes_before_delay?",
+      "range": {
+        "startLine": 421,
+        "startChar": 57,
+        "endLine": 421,
+        "endChar": 70
+      },
+      "revId": "5473c9795addc3fa1346f6cb698d89a7ee220123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6933b5d5_ebbce444",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-01T00:55:43Z",
+      "side": 1,
+      "message": "The task runners don\u0027t guarantee exact delay times. (Especially considering current discussion on chromium-dev@.) So, just to make sure we\u0027re being accurate and precise, let\u0027s track the timestamps ourselves:\n\n  void RendererController::OnDelayedStartTimerFired(StartTrigger start_trigger,\n                                                    size_t decoded_bytes_before_delay,\n                                                    base::TimeTicks delayed_start_time) {\n    ...\n    const base::TimeDelta elapsed \u003d base::TimeTicks::Now() - delayed_start_time;\n    DCHECK(!elapsed.is_zero());\n    const double rate \u003d (...) / elapsed.InSecondsF();",
+      "range": {
+        "startLine": 427,
+        "startChar": 16,
+        "endLine": 427,
+        "endChar": 29
+      },
+      "revId": "5473c9795addc3fa1346f6cb698d89a7ee220123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36f15f54_40d06258",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-01T00:55:43Z",
+      "side": 1,
+      "message": "I\u0027m wondering if this should be: rate \u003c\u003d (0.9 * capacity). Meaning, leave a little wiggle room to be extra-certain remoting will run smoothly? Though, I do realize our capacity measurement isn\u0027t perfect, and could have more than 10% error...Hopefully, it\u0027ll be good enough in-the-wild.",
+      "range": {
+        "startLine": 432,
+        "startChar": 14,
+        "endLine": 432,
+        "endChar": 22
+      },
+      "revId": "5473c9795addc3fa1346f6cb698d89a7ee220123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d74fde5_374df3b3",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 30843,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-01T00:55:43Z",
+      "side": 1,
+      "message": "Units should be kbps, for consistency.",
+      "range": {
+        "startLine": 30843,
+        "startChar": 58,
+        "endLine": 30843,
+        "endChar": 65
+      },
+      "revId": "5473c9795addc3fa1346f6cb698d89a7ee220123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc239399_b482865f",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 30872,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-01T00:55:43Z",
+      "side": 1,
+      "message": "Units should be kbps, for consistency.",
+      "range": {
+        "startLine": 30872,
+        "startChar": 61,
+        "endLine": 30872,
+        "endChar": 68
+      },
+      "revId": "5473c9795addc3fa1346f6cb698d89a7ee220123",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
