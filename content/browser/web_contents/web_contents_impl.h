@@ -1038,7 +1038,7 @@ class CONTENT_EXPORT WebContentsImpl
                           const std::vector<SkBitmap>& images,
                           const std::vector<gfx::Size>& original_image_sizes);
 
-  // Callback function when showing JavaScript dialogs.  Takes in a routing ID
+  // Callback function when showing JavaScript dialogs. Takes in a routing ID
   // pair to identify the RenderFrameHost that opened the dialog, because it's
   // possible for the RenderFrameHost to be deleted by the time this is called.
   void OnDialogClosed(int render_process_id,
