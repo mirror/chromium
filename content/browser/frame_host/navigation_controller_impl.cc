@@ -887,7 +887,10 @@ bool NavigationControllerImpl::RendererDidNavigate(
                                    navigation_handle);
       break;
     case NAVIGATION_TYPE_EXISTING_PAGE:
+      // TODO(creis): This line is incorrect. Update the history logic to not
+      // depend on it for keeping client redirect URLs in history.
       details->did_replace_entry = details->is_same_document;
+
       RendererDidNavigateToExistingPage(rfh, params, details->is_same_document,
                                         was_restored, navigation_handle);
       break;
