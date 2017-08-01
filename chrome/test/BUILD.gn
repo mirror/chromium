@@ -68,6 +68,8 @@ static_library("test_support") {
     "base/search_test_utils.h",
     "base/test_browser_window.cc",
     "base/test_browser_window.h",
+    "base/test_chrome_content_browser_client.cc",
+    "base/test_chrome_content_browser_client.h",
     "base/test_launcher_utils.cc",
     "base/test_launcher_utils.h",
     "base/test_switches.cc",

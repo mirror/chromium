@@ -21,6 +21,7 @@ target("source_set", "network_sources") {
   configs += [ "//content:content_implementation" ]
 
   sources = [
+    "network_context.h",
     "network_service.h",
   ]
 
