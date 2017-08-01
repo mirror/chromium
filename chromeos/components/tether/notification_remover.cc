@@ -34,6 +34,7 @@ NotificationRemover::~NotificationRemover() {
   // Required", and "Connection Failed" notifications should be removed. The
   // "Enable Bluetooth" notification should not be removed, because it is
   // informative when Tether is disabled due to Bluetooth being disabled.
+  DCHECK(notification_presenter_);
   notification_presenter_->RemovePotentialHotspotNotification();
   notification_presenter_->RemoveSetupRequiredNotification();
   notification_presenter_->RemoveConnectionToHostFailedNotification();
