@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e68d368f_303bfaf7",
+        "filename": "extensions/common/api/declarative_net_request/flat/extension_ruleset.fbs",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-01T01:17:13Z",
+      "side": 1,
+      "message": "wvo@: Can you comment regarding when should the file_identifier property be used? It\u0027s not clear to me from the docs.",
+      "range": {
+        "startLine": 39,
+        "startChar": 12,
+        "endLine": 39,
+        "endChar": 27
+      },
+      "revId": "f6a3a7d1dcfb78457f850d3540895b463ef6fe69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
