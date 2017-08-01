@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da9777dd_77539f5b",
+        "filename": "gpu/command_buffer/common/gpu_memory_buffer_support.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-01T21:33:05Z",
+      "side": 1,
+      "message": "Multiple internalformats can be used with the same gfx::BufferFormat. Adding this function gives the impression that this is not the case.",
+      "revId": "33ff0e9685a226c4ef5ea629d0cc2bf26d246e71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
