@@ -1,0 +1,11 @@
+{
+  "short_name": "JoePay",
+  "icons": [{
+    "src": "joe.png",
+    "sizes": "32x32"
+  }],
+  "related_applications": [{
+    "platform": "itunes",
+    "url": "https://joepay.com/webpay"
+  }]
+}

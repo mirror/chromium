@@ -36,9 +36,13 @@ public class PaymentManifestDownloader {
         @CalledByNative("ManifestDownloadCallback")
         void onWebAppManifestDownloadSuccess(String content);
 
-        /** Called on failed download. */
+        /** Called on failed download of a payment method manifest. */
         @CalledByNative("ManifestDownloadCallback")
-        void onManifestDownloadFailure();
+        void onPaymentMethodManifestDownloadFailure();
+
+        /** Called on failed download of a web app manifest. */
+        @CalledByNative("ManifestDownloadCallback")
+        void onWebAppManifestDownloadFailure();
     }
 
     private long mNativeObject;
