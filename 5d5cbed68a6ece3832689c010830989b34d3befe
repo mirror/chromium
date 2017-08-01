@@ -69,6 +69,24 @@
       "revId": "5d5cbed68a6ece3832689c010830989b34d3befe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20f7460c_7a6bf67b",
+        "filename": "tools/clang/traffic_annotation_extractor/tests/tests.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-01T00:20:06Z",
+      "side": 1,
+      "message": "Oh, sorry for missing that. It\u0027s pretty common to duplicate definitions for testing. For example, see https://cs.chromium.org/chromium/src/tools/clang/value_cleanup/tests/values.h\n\nThere are, of course, downsides to either approach. I would do whatever is easiest/makes you the least sad.",
+      "parentUuid": "4c40e7af_b3b0fd6d",
+      "revId": "5d5cbed68a6ece3832689c010830989b34d3befe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

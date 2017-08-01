@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e89e352a_a35c3432",
+        "filename": "tools/clang/scripts/test_tool.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-01T00:20:06Z",
+      "side": 1,
+      "message": "Also, I messed this up originally: mind changing this to single quotes for consistency?",
+      "range": {
+        "startLine": 107,
+        "startChar": 16,
+        "endLine": 107,
+        "endChar": 17
+      },
+      "revId": "45024ec1181d992cb4e7933006306e06fcc094f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77472b72_40bbd67e",
+        "filename": "tools/clang/scripts/test_tool.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-01T00:20:06Z",
+      "side": 1,
+      "message": "WDYT of trying to share code by doing something like this:\n\nprocesses \u003d []\nprocesses .append(subprocess.Popen(args, stdout\u003dsubprocess.PIPE))\nif apply_tool_edits:\n  # Build args\n  processes .append(subprocess.Popen(args, stdin\u003dcmds[-1].stdout, stdout\u003dsubprocess.PIPE))\n  # Build more args\n  processes .append(subprocess.Popen(args, stdin\u003dcmds[-1].stdout, stdout\u003dsubprocess.PIPE))\n\nstdout, _ \u003d processes[-1].communicate()\nfor process in processes:\n  process.wait()\n  if process.returncode !\u003d 0:\n    print \u0027Failure while running tool\u0027\n    return process.returncode\n\nif apply_tool_edits:\n  # apply_edits.py writes out edits, so just format the result\nelse:\n  # Write out the actual results",
+      "range": {
+        "startLine": 75,
+        "startChar": 0,
+        "endLine": 110,
+        "endChar": 33
+      },
+      "revId": "45024ec1181d992cb4e7933006306e06fcc094f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
