@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4fe8da5_80c82953",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-01T15:17:14Z",
+      "side": 1,
+      "message": "It\u0027d be much nicer if we could actually load a json file directly instead of this global variable hackery, but I haven\u0027t figured out a way to do it - Chrome doesn\u0027t seem to load script tags with \"type\u003d\u0027application/json\u0027\". Any ideas?",
+      "range": {
+        "startLine": 619,
+        "startChar": 73,
+        "endLine": 619,
+        "endChar": 0
+      },
+      "revId": "697920d28c50062b7a63422181696ce02711e40b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
