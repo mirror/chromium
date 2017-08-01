@@ -17,13 +17,14 @@ CompositingRecorder::CompositingRecorder(GraphicsContext& graphics_context,
                                          const SkBlendMode xfer_mode,
                                          const float opacity,
                                          const FloatRect* bounds,
-                                         ColorFilter color_filter)
+                                         ColorFilter color_filter,
+                                         bool clip_to_bounds)
     : client_(client), graphics_context_(graphics_context) {
   if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled())
     return;
   graphics_context.GetPaintController()
-      .CreateAndAppend<BeginCompositingDisplayItem>(client_, xfer_mode, opacity,
-                                                    bounds, color_filter);
+      .CreateAndAppend<BeginCompositingDisplayItem>(
+          client_, xfer_mode, opacity, bounds, color_filter, clip_to_bounds);
 }
 
 CompositingRecorder::~CompositingRecorder() {
