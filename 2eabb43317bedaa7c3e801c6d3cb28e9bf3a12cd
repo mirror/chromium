@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a356475a_cfffc658",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 628,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-01T19:42:22Z",
+      "side": 1,
+      "message": "will this work here?\n\nfor (const auto\u0026 it : *BrowserList::GetInstance()) {\n  ...\n}",
+      "revId": "2eabb43317bedaa7c3e801c6d3cb28e9bf3a12cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f09df68_d998effb",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-01T19:42:22Z",
+      "side": 1,
+      "message": "Consider wrapping the body to the next line. The reason is that it\u0027s easier to set a break-point on a line than mid-line in some debuggers. No trouble either way though, it\u0027s up to you, just a suggestion.",
+      "revId": "2eabb43317bedaa7c3e801c6d3cb28e9bf3a12cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14f57e2c_2dfa79f3",
+        "filename": "chrome/browser/ui/webui/settings/site_settings_handler_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-01T19:42:22Z",
+      "side": 1,
+      "message": "The Google c++ style guide (under \"Function Argument Comments\") says to use this style of argument comments:\n\nGetInfobarServiceForTab(browser(), /*origin_path\u003d*/0, \u0026tab_url)\n\nThis is a nice way to comment arguments because it\u0027s clearer that there are three arguments being passed (which can really help when there are move parameters needed).",
+      "revId": "2eabb43317bedaa7c3e801c6d3cb28e9bf3a12cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
