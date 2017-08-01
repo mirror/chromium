@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "f230787d_46060b4e",
+        "filename": "chrome/test/mini_installer/test_installer.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-01T09:36:53Z",
+      "side": 1,
+      "message": "the docs say it\u0027s true and my simple experiment confirms:\n\u003e\u003e\u003e import win32api\n\u003e\u003e\u003e import os\n\u003e\u003e\u003e win32api.GetTempPath()\n\u0027C:\\\\Users\\\\grt\\\\AppData\\\\Local\\\\Temp\\\\\u0027\n\u003e\u003e\u003e os.environ[\u0027TMP\u0027] \u003d \u0027c:\\\\users\\\\grt\u0027\n\u003e\u003e\u003e win32api.GetTempPath()\n\u0027c:\\\\users\\\\grt\\\\\u0027",
+      "parentUuid": "59e60e04_de96c158",
+      "range": {
+        "startLine": 347,
+        "startChar": 4,
+        "endLine": 347,
+        "endChar": 73
+      },
+      "revId": "868a0b25ba7ae76bee01b57419684b6d9759733e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cbc5207_d9e9c61e",
+        "filename": "chrome/test/mini_installer/test_installer.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-01T09:36:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df08c633_91015c2d",
+      "range": {
+        "startLine": 347,
+        "startChar": 56,
+        "endLine": 347,
+        "endChar": 67
+      },
+      "revId": "868a0b25ba7ae76bee01b57419684b6d9759733e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8ca0aca_e23ab139",
         "filename": "chrome/test/mini_installer/test_installer.py",
         "patchSetId": 6
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "5029a0c1_5f2d5e55",
+        "filename": "chrome/test/mini_installer/test_installer.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-01T09:36:53Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "b8ca0aca_e23ab139",
+      "range": {
+        "startLine": 348,
+        "startChar": 4,
+        "endLine": 349,
+        "endChar": 53
+      },
+      "revId": "868a0b25ba7ae76bee01b57419684b6d9759733e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11b5b053_3c2651ef",
         "filename": "chrome/test/mini_installer/test_installer.py",
         "patchSetId": 6
@@ -82,6 +154,30 @@
       "writtenOn": "2017-07-29T12:50:28Z",
       "side": 1,
       "message": "WDYT about just always setting \"old_tmp\", and then always restoring it. That\u0027d save you from having to track \"tmp_set\" and simplify a few blocks.",
+      "range": {
+        "startLine": 357,
+        "startChar": 10,
+        "endLine": 359,
+        "endChar": 24
+      },
+      "revId": "868a0b25ba7ae76bee01b57419684b6d9759733e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b9e7298_12123df7",
+        "filename": "chrome/test/mini_installer/test_installer.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-01T09:36:53Z",
+      "side": 1,
+      "message": "I\u0027d considered that, but it\u0027s possible that TMP is not set in the environment, in which case old_tmp is None.",
+      "parentUuid": "11b5b053_3c2651ef",
       "range": {
         "startLine": 357,
         "startChar": 10,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "da8bd69b_73e284a9",
+        "filename": "chrome/test/mini_installer/test_installer.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-01T09:36:53Z",
+      "side": 1,
+      "message": "This is an interesting suggestion, but I think it\u0027s going into the territory of making perfect the enemy of the good. In all likelihood, the very first probe in LOCALAPPDATA will succeed. Failing that (and the check for the system temp dir), this test must be run at high integrity, so creation of a temp dir at the root of the volume will succeed. I propose landing this as-is and revisiting if needed down the road.",
+      "parentUuid": "ee558cbc_c4c93225",
+      "range": {
+        "startLine": 363,
+        "startChar": 6,
+        "endLine": 366,
+        "endChar": 26
+      },
+      "revId": "868a0b25ba7ae76bee01b57419684b6d9759733e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c7ec834d_13a6c422",
         "filename": "chrome/test/mini_installer/test_installer.py",
         "patchSetId": 6
@@ -128,6 +248,30 @@
       "writtenOn": "2017-07-29T12:50:28Z",
       "side": 1,
       "message": "Just a note: in infrastructure, we\u0027ve observed some flakes recursively deleting directories. Apparently Windows can occasionally index/use/scan (even though we\u0027ve generally disabled it) files, and so deletion fails. It\u0027s recommended to surround this with try/catch at minimum.",
+      "range": {
+        "startLine": 381,
+        "startChar": 6,
+        "endLine": 381,
+        "endChar": 32
+      },
+      "revId": "868a0b25ba7ae76bee01b57419684b6d9759733e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8839de99_42daab33",
+        "filename": "chrome/test/mini_installer/test_installer.py",
+        "patchSetId": 6
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-01T09:36:53Z",
+      "side": 1,
+      "message": "Changed to ignore errors during deletion and then raise an exception if anything was left behind.",
+      "parentUuid": "c7ec834d_13a6c422",
       "range": {
         "startLine": 381,
         "startChar": 6,

@@ -211,6 +211,30 @@
       "revId": "46d689032b37dcb20b923ebda2e7785db169c2b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f6df749_5b4aab34",
+        "filename": "chrome/test/mini_installer/test_installer.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-01T09:36:53Z",
+      "side": 1,
+      "message": "Changes to TMP via either setenv or os.environ are visible immediately to the next call to the Win32 ::GetTempPath func (and therefore to win32api.GetTempPath()) in this process. I\u0027ll add a comment that this isn\u0027t meant to impact the python tempdir value for the current process.",
+      "parentUuid": "f0a2283a_b17ea86d",
+      "range": {
+        "startLine": 359,
+        "startChar": 2,
+        "endLine": 359,
+        "endChar": 11
+      },
+      "revId": "46d689032b37dcb20b923ebda2e7785db169c2b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
