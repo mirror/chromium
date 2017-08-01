@@ -261,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "32909786_f1e24d7c",
+        "filename": "base/task_scheduler/scheduler_worker.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-01T19:58:22Z",
+      "side": 1,
+      "message": "Marking resolved.",
+      "parentUuid": "cef65fd4_c3b23327",
+      "range": {
+        "startLine": 123,
+        "startChar": 30,
+        "endLine": 123,
+        "endChar": 73
+      },
+      "revId": "356183a3f81c45ef2827305a5a4d468f5fa8aaaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c39f246b_8fa157a0",
         "filename": "base/task_scheduler/scheduler_worker.h",
         "patchSetId": 8
@@ -308,6 +332,30 @@
     },
     {
       "key": {
+        "uuid": "1abb5b82_3dea45ee",
+        "filename": "base/task_scheduler/scheduler_worker.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-01T19:58:22Z",
+      "side": 1,
+      "message": "Marking resolved.",
+      "parentUuid": "ac77e6a7_31b9197f",
+      "range": {
+        "startLine": 88,
+        "startChar": 4,
+        "endLine": 89,
+        "endChar": 59
+      },
+      "revId": "356183a3f81c45ef2827305a5a4d468f5fa8aaaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ba5ed10_65594855",
         "filename": "base/task_scheduler/scheduler_worker.h",
         "patchSetId": 8
@@ -352,6 +400,30 @@
       "revId": "356183a3f81c45ef2827305a5a4d468f5fa8aaaf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f6b13da_0f19eafd",
+        "filename": "base/task_scheduler/scheduler_worker.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-01T19:58:22Z",
+      "side": 1,
+      "message": "Marking resolved.",
+      "parentUuid": "1f915914_6cb97753",
+      "range": {
+        "startLine": 182,
+        "startChar": 2,
+        "endLine": 182,
+        "endChar": 35
+      },
+      "revId": "356183a3f81c45ef2827305a5a4d468f5fa8aaaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
