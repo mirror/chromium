@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f8dba3c8_d9b3e6ad",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-01T18:17:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "457b96c2_21c86438",
+      "revId": "1db828a2c4886b137a82b2768b14897dbd037b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "121ca614_75a38593",
         "filename": "ios/chrome/browser/ui/bubble/bubble_util.mm",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "906ee48f_b802eab4",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-01T18:17:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "121ca614_75a38593",
+      "revId": "1db828a2c4886b137a82b2768b14897dbd037b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6bf5b3e_e4960aeb",
         "filename": "ios/showcase/bubble/sc_bubble_coordinator.mm",
         "patchSetId": 3
@@ -50,6 +86,24 @@
       "revId": "1db828a2c4886b137a82b2768b14897dbd037b30",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75ae5e8b_6cc39cb5",
+        "filename": "ios/showcase/bubble/sc_bubble_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-01T18:17:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6bf5b3e_e4960aeb",
+      "revId": "1db828a2c4886b137a82b2768b14897dbd037b30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
