@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a52f19eb_5e365d09",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1756,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-08-01T09:06:50Z",
+      "side": 1,
+      "message": "I doubt it makes sense for the queueing time metrics to be reset for same document navigation (or history inert navigation).\n\nMaybe these should be moved? We should probably ask tdresser@ for advice.",
+      "range": {
+        "startLine": 1756,
+        "startChar": 26,
+        "endLine": 1756,
+        "endChar": 50
+      },
+      "revId": "d5b4a8fcde917312245a973b8db1c47644edd6f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd188063_1fca3be7",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1761,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-08-01T09:06:50Z",
+      "side": 1,
+      "message": "While you\u0027re here could you please move this to the top?",
+      "range": {
+        "startLine": 1761,
+        "startChar": 21,
+        "endLine": 1761,
+        "endChar": 34
+      },
+      "revId": "d5b4a8fcde917312245a973b8db1c47644edd6f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cf4cd51_487e146a",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-08-01T09:06:50Z",
+      "side": 1,
+      "message": "Optional:  I was lazy before, these should probably be enums.",
+      "range": {
+        "startLine": 207,
+        "startChar": 37,
+        "endLine": 207,
+        "endChar": 53
+      },
+      "revId": "d5b4a8fcde917312245a973b8db1c47644edd6f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb02b2e9_6e47056a",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 4087,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-08-01T09:06:50Z",
+      "side": 1,
+      "message": "That looks nice.",
+      "range": {
+        "startLine": 4087,
+        "startChar": 34,
+        "endLine": 4087,
+        "endChar": 71
+      },
+      "revId": "d5b4a8fcde917312245a973b8db1c47644edd6f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
