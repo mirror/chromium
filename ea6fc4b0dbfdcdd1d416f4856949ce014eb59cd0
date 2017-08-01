@@ -25,6 +25,23 @@
     },
     {
       "key": {
+        "uuid": "5db89b0e_f503c56a",
+        "filename": "components/google/core/browser/google_url_tracker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-01T18:00:29Z",
+      "side": 1,
+      "message": "Disabling the default search provider alone will not disable this network request (although it will suffice as an alternate to \"change the default search engine to something other than Google\" in the paragraph above, so it\u0027s a partial control?).\n\nDoes that mean we should just modify the comment, but not the actual policy list here?  (That\u0027s what I\u0027d expect.)",
+      "revId": "ea6fc4b0dbfdcdd1d416f4856949ce014eb59cd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "94bbe402_689072c4",
         "filename": "content/browser/download/save_file_manager.cc",
         "patchSetId": 2
