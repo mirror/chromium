@@ -52,6 +52,24 @@
       "revId": "929774c9e2db144b9b37bfa5d9881742a8d6c887",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d38a7ba8_2dbf2cf3",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-08-01T10:05:30Z",
+      "side": 1,
+      "message": "Thanks!  I see what you mean now.\nI\u0027ll work on it, will ping once the change is ready.",
+      "parentUuid": "43781d3f_49ac7f8a",
+      "revId": "929774c9e2db144b9b37bfa5d9881742a8d6c887",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
