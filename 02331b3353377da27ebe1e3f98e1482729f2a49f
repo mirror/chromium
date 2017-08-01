@@ -63,6 +63,24 @@
       "revId": "02331b3353377da27ebe1e3f98e1482729f2a49f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa3b0f6a_293309e1",
+        "filename": "chrome/browser/metrics/tab_stats_tracker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-08-01T17:43:19Z",
+      "side": 1,
+      "message": "In that case, feel free to ignore me. (I had a similar CL last year where I was hounded to add a leak annotation... apparently it wasn\u0027t needed.)",
+      "parentUuid": "3d1e81df_af28f14a",
+      "revId": "02331b3353377da27ebe1e3f98e1482729f2a49f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
