@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b75fadf0_daa8364c",
+        "filename": "content/browser/web_contents/aura/gesture_nav_simple.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2017-08-01T20:40:22Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "e7ef1533_a387ee37",
+      "revId": "bc6e5a174a823085155d7c58f585f06a21118075",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "73b0cd81_2e094f81",
         "filename": "content/browser/web_contents/aura/gesture_nav_simple.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-01T02:36:09Z",
       "side": 1,
       "message": "This doesn\u0027t need to be a unique_ptr\u003c\u003e, does it?",
+      "revId": "bc6e5a174a823085155d7c58f585f06a21118075",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a1d19fa_392597de",
+        "filename": "content/browser/web_contents/aura/gesture_nav_simple.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2017-08-01T20:40:22Z",
+      "side": 1,
+      "message": "No. Fixed. Also for |root_layer_| and |painted_layer_|.",
+      "parentUuid": "73b0cd81_2e094f81",
       "revId": "bc6e5a174a823085155d7c58f585f06a21118075",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "bc6e5a174a823085155d7c58f585f06a21118075",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4b769af_a114702b",
+        "filename": "content/browser/web_contents/aura/gesture_nav_simple.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2017-08-01T20:40:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9e48bb5_71aa088d",
+      "revId": "bc6e5a174a823085155d7c58f585f06a21118075",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
