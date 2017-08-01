@@ -70,6 +70,30 @@
       "revId": "bd9061600b6b3386be722b53b64a6a04144bdb7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71805d99_06e5abf8",
+        "filename": "chrome/browser/ui/views/frame/browser_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2223,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-08-01T20:43:26Z",
+      "side": 1,
+      "message": "In this patch, the bookmarkbar would not be hidden as well, because |show_bookmark_bar| is still decided by Browser::FEATURE_BOOKMARKBAR only in L2222. This patch only changes one path: \"there\u0027s not active web contents, bookmarkbar was not created and FEATURE_BOOKMARKBAR is enabled\". This path is blocked in L2223 in this patch.\nThe crash didn\u0027t happen before CL 2946813002, after I let the path fall through L2223, it may cause crashes after nullptr is set to bookmarkbar\u0027s navigator in L2238. So it seems the speculative fix should block the path.",
+      "parentUuid": "81602bee_0a603fcf",
+      "range": {
+        "startLine": 2223,
+        "startChar": 17,
+        "endLine": 2223,
+        "endChar": 37
+      },
+      "revId": "bd9061600b6b3386be722b53b64a6a04144bdb7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
