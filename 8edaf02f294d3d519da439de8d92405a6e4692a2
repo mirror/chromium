@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1165b752_a9fee20d",
+        "filename": "components/offline_pages/core/renovations/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-01T23:28:23Z",
+      "side": 1,
+      "message": "Why do you need to add this DEP? I don\u0027t see any includes using it anywhere.",
+      "range": {
+        "startLine": 23,
+        "startChar": 6,
+        "endLine": 23,
+        "endChar": 13
+      },
+      "revId": "8edaf02f294d3d519da439de8d92405a6e4692a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
