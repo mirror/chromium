@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21ca8aca_eb9e9fe4",
+        "filename": "media/blink/url_index.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1115926
+      },
+      "writtenOn": "2017-08-01T23:51:36Z",
+      "side": 1,
+      "message": "If UrlData must be destroyed before the UrlIndex, then we should document that.\n(Here, also in TryInsert, and probably in the UrlData class.)",
+      "range": {
+        "startLine": 256,
+        "startChar": 16,
+        "endLine": 256,
+        "endChar": 18
+      },
+      "revId": "6994633b8b1f9a397d60859c468b888e9900d9a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
