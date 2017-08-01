@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "ac2bed0e_674597c6",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-01T15:44:59Z",
+      "side": 1,
+      "message": "Ugh. If there\u0027s no way to do it with pure JS, then I guess this is about as good as it gets. Oh well.",
+      "parentUuid": "aa227465_10e787ac",
+      "range": {
+        "startLine": 619,
+        "startChar": 73,
+        "endLine": 619,
+        "endChar": 0
+      },
+      "revId": "697920d28c50062b7a63422181696ce02711e40b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea019db0_8efe9d53",
         "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
         "patchSetId": 2
@@ -66,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "9ed6ba7e_061752d3",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 685,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-01T15:44:59Z",
+      "side": 1,
+      "message": "No - I also thought so, hence the whole thing with the separate script files, but the particular kind of CSP we ended up using (strict-dynamic) is fine with this. It\u0027s just parser-inserted script tags that it doesn\u0027t like.",
+      "parentUuid": "ea019db0_8efe9d53",
+      "revId": "697920d28c50062b7a63422181696ce02711e40b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "54a06d68_98eeee09",
         "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
         "patchSetId": 2
@@ -77,6 +119,24 @@
       "writtenOn": "2017-08-01T15:27:06Z",
       "side": 1,
       "message": "Are we ready to unhide the element before the scripts load?",
+      "revId": "697920d28c50062b7a63422181696ce02711e40b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d50aeb36_6dbc21ff",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-01T15:44:59Z",
+      "side": 1,
+      "message": "You mean the scripts below? Yes, I think so. This is also the previous behavior.\n\n(IIUC, the inHeadScript above gets executed immediately.)",
+      "parentUuid": "54a06d68_98eeee09",
       "revId": "697920d28c50062b7a63422181696ce02711e40b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
