@@ -93,6 +93,30 @@
       "revId": "79528e1dba5a81d3488ba9541effeb62a9e84eef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49327b72_a71f5eef",
+        "filename": "third_party/WebKit/LayoutTests/plugins/iframe-plugin-bgcolor.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-08-01T06:06:26Z",
+      "side": 1,
+      "message": "I agree that there isn\u0027t a way to guarantee a pause to see the background painted, but before the plugin loads.  I think transparent plugin painting is the solution.",
+      "parentUuid": "2618b2c9_ea528135",
+      "range": {
+        "startLine": 8,
+        "startChar": 7,
+        "endLine": 8,
+        "endChar": 0
+      },
+      "revId": "79528e1dba5a81d3488ba9541effeb62a9e84eef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
