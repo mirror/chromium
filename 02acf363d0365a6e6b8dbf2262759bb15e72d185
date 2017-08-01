@@ -16,6 +16,24 @@
       "revId": "02acf363d0365a6e6b8dbf2262759bb15e72d185",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12b80d81_e995a82d",
+        "filename": "components/exo/gaming_seat.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-08-01T11:22:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d35aae32_bc69a5a0",
+      "revId": "02acf363d0365a6e6b8dbf2262759bb15e72d185",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
