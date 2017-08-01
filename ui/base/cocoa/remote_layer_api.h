@@ -46,6 +46,7 @@ typedef uint32_t CAContextID;
 // sharing process.
 @interface CALayerHost : CALayer
 @property CAContextID contextId;
+@property BOOL allowsHitTesting;
 @end
 
 #endif // __OBJC__
