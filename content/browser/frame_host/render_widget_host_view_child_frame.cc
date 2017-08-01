@@ -490,6 +490,8 @@ void RenderWidgetHostViewChildFrame::SendSurfaceInfoToEmbedder() {
   // SurfaceLayer.
   if (!manager->using_surface_references())
     manager->RequireSequence(surface_id, sequence);
+  // fprintf(stderr, "RWHVChildFrame::SendSurfaceInfoToEmbedder: %d\n",
+  //        (int)surface_id.hash());
   viz::SurfaceInfo surface_info(surface_id, current_surface_scale_factor_,
                                 current_surface_size_);
   SendSurfaceInfoToEmbedderImpl(surface_info, sequence);

@@ -517,4 +517,20 @@ bool SurfaceManager::IsMarkedForDestruction(const SurfaceId& surface_id) {
   return surfaces_to_destroy_.count(surface_id) != 0;
 }
 
+void SurfaceManager::SetRenderingTargetTexture(const viz::SurfaceId& surface_id,
+                                               const gpu::Mailbox& mailbox) {
+  Surface* surface = GetSurfaceForId(surface_id);
+  if (surface) {
+    // fprintf(stderr, "SurfaceManager::SetRenderingTargetTexture: %d\n",
+    //        (int)surface_id.hash());
+    std::unique_ptr<CopyOutputRequest> copy_request =
+        viz::CopyOutputRequest::CreateTextureRequest();
+    copy_request->SetTextureMailbox(
+        TextureMailbox(mailbox, gpu::SyncToken(), 0x0DE1 /* GL_TEXTURE_2D */));
+    surface->RequestCopyOfOutput(std::move(copy_request));
+  } else {
+    // fprintf(stderr, "SurfaceManager::SetRenderingTargetTexture: FAILED\n");
+  }
+}
+
 }  // namespace viz

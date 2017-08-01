@@ -220,6 +220,14 @@ class WebGL2RenderingContextBase : public WebGLRenderingContextBase {
                      GLenum,
                      HTMLVideoElement*,
                      ExceptionState&);
+  void bindTexSource(ExecutionContext*,
+                     GLenum target,
+                     HTMLIFrameElement* iframe,
+                     ExceptionState&);
+  void requestFrame(ExecutionContext*,
+                    GLenum target,
+                    HTMLIFrameElement* iframe,
+                    ExceptionState&);
   void texSubImage2D(GLenum,
                      GLint,
                      GLint,

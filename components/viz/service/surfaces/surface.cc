@@ -31,6 +31,7 @@ Surface::Surface(const SurfaceInfo& surface_info,
       deadline_(begin_frame_source),
       needs_sync_tokens_(needs_sync_tokens) {
   deadline_.AddObserver(this);
+  // fprintf(stderr, "Surface::Surface: %d\n", (int)surface_id().hash());
 }
 
 Surface::~Surface() {

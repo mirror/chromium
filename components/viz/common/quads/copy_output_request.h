@@ -7,11 +7,13 @@
 
 #include <memory>
 
+#include "base/bind.h"
 #include "base/callback.h"
 #include "base/memory/ptr_util.h"
 #include "base/optional.h"
 #include "base/task_runner.h"
 #include "base/unguessable_token.h"
+#include "components/viz/common/quads/copy_output_result.h"
 #include "components/viz/common/quads/single_release_callback.h"
 #include "components/viz/common/quads/texture_mailbox.h"
 #include "components/viz/common/viz_common_export.h"
@@ -28,7 +30,11 @@ class CopyOutputRequestDataView;
 
 namespace viz {
 
-class CopyOutputResult;
+namespace {
+void DoNothing(std::unique_ptr<CopyOutputResult> result) {
+  // fprintf(stderr, "DoNothing() callback is called\n");
+}
+}  // namespace
 
 class VIZ_COMMON_EXPORT CopyOutputRequest {
  public:
@@ -47,6 +53,10 @@ class VIZ_COMMON_EXPORT CopyOutputRequest {
       CopyOutputRequestCallback result_callback) {
     return base::WrapUnique(
         new CopyOutputRequest(true, std::move(result_callback)));
+  }
+  static std::unique_ptr<CopyOutputRequest> CreateTextureRequest() {
+    return base::WrapUnique(
+        new CopyOutputRequest(false, base::BindOnce(DoNothing)));
   }
 
   ~CopyOutputRequest();

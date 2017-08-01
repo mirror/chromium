@@ -53,7 +53,7 @@ void CopyOutputRequest::SendTextureResult(
     const gfx::Size& size,
     const TextureMailbox& texture_mailbox,
     std::unique_ptr<SingleReleaseCallback> release_callback) {
-  DCHECK(texture_mailbox.IsTexture());
+  // DCHECK(texture_mailbox.IsTexture());
   SendResult(CopyOutputResult::CreateTextureResult(
       size, texture_mailbox, std::move(release_callback)));
 }
@@ -61,7 +61,7 @@ void CopyOutputRequest::SendTextureResult(
 void CopyOutputRequest::SetTextureMailbox(
     const TextureMailbox& texture_mailbox) {
   DCHECK(!force_bitmap_result_);
-  DCHECK(texture_mailbox.IsTexture());
+  // DCHECK(texture_mailbox.IsTexture());
   texture_mailbox_ = texture_mailbox;
 }
 

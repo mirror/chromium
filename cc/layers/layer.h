@@ -38,6 +38,8 @@
 #include "ui/gfx/geometry/scroll_offset.h"
 #include "ui/gfx/transform.h"
 
+#include "components/viz/common/surfaces/surface_id.h"
+
 namespace base {
 namespace trace_event {
 class ConvertableToTraceFormat;
@@ -77,6 +79,8 @@ class CC_EXPORT Layer : public base::RefCounted<Layer> {
   static scoped_refptr<Layer> Create();
 
   int id() const { return inputs_.layer_id; }
+
+  virtual viz::SurfaceId surface_id() const;
 
   Layer* RootLayer();
   Layer* parent() { return parent_; }
