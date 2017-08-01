@@ -8,6 +8,7 @@
 #include "base/command_line.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "chrome/browser/chromeos/net/tether_notification_presenter.h"
 #include "chrome/browser/chromeos/tether/tether_service_factory.h"
@@ -277,25 +278,30 @@ void TetherService::UpdateTetherTechnologyState() {
 
 chromeos::NetworkStateHandler::TechnologyState
 TetherService::GetTetherTechnologyState() {
-  if (shut_down_ || suspended_ || !is_ble_advertising_supported_ ||
-      session_manager_client_->IsScreenLocked() || !HasSyncedTetherHosts() ||
-      IsCellularAvailableButNotEnabled()) {
-    // If Cellular technology is available, then Tether technology is treated
-    // as a subset of Cellular, and it should only be enabled when Cellular
-    // technology is enabled.
-    return chromeos::NetworkStateHandler::TechnologyState::
-        TECHNOLOGY_UNAVAILABLE;
-  } else if (!IsAllowedByPolicy()) {
-    return chromeos::NetworkStateHandler::TechnologyState::
-        TECHNOLOGY_PROHIBITED;
-  } else if (!IsBluetoothAvailable()) {
-    return chromeos::NetworkStateHandler::TechnologyState::
-        TECHNOLOGY_UNINITIALIZED;
-  } else if (!IsEnabledbyPreference()) {
-    return chromeos::NetworkStateHandler::TechnologyState::TECHNOLOGY_AVAILABLE;
+  switch (GetTetherTechnologyStateAndReason()) {
+    case TetherTechnologyStateAndReason::OTHER_OR_UNKNOWN:
+    case TetherTechnologyStateAndReason::
+        UNAVAILABLE_BLE_ADVERTISING_NOT_SUPPORTED:
+    case TetherTechnologyStateAndReason::UNAVAILABLE_SCREEN_LOCKED:
+    case TetherTechnologyStateAndReason::UNAVAILABLE_NO_AVAILABLE_HOSTS:
+    case TetherTechnologyStateAndReason::UNAVAILABLE_CELLULAR_DISABLED:
+      return chromeos::NetworkStateHandler::TechnologyState::
+          TECHNOLOGY_UNAVAILABLE;
+    case TetherTechnologyStateAndReason::PROHIBITED:
+      return chromeos::NetworkStateHandler::TechnologyState::
+          TECHNOLOGY_PROHIBITED;
+    case TetherTechnologyStateAndReason::UNINITIALIZED_BLUETOOTH_DISABLED:
+      return chromeos::NetworkStateHandler::TechnologyState::
+          TECHNOLOGY_UNINITIALIZED;
+    case TetherTechnologyStateAndReason::AVAILABLE_USER_PREFERENCE_DISABLED:
+      return chromeos::NetworkStateHandler::TechnologyState::
+          TECHNOLOGY_AVAILABLE;
+    case TetherTechnologyStateAndReason::ENABLED:
+      return chromeos::NetworkStateHandler::TechnologyState::TECHNOLOGY_ENABLED;
+    default:
+      return chromeos::NetworkStateHandler::TechnologyState::
+          TECHNOLOGY_UNAVAILABLE;
   }
-
-  return chromeos::NetworkStateHandler::TechnologyState::TECHNOLOGY_ENABLED;
 }
 
 void TetherService::OnBluetoothAdapterFetched(
@@ -375,8 +381,43 @@ bool TetherService::CanEnableBluetoothNotificationBeShown() {
   return true;
 }
 
+TetherService::TetherTechnologyStateAndReason
+TetherService::GetTetherTechnologyStateAndReason() {
+  if (shut_down_ || suspended_) {
+    return TetherTechnologyStateAndReason::OTHER_OR_UNKNOWN;
+  } else if (!is_ble_advertising_supported_) {
+    return TetherTechnologyStateAndReason::
+        UNAVAILABLE_BLE_ADVERTISING_NOT_SUPPORTED;
+  } else if (session_manager_client_->IsScreenLocked()) {
+    return TetherTechnologyStateAndReason::UNAVAILABLE_SCREEN_LOCKED;
+  } else if (!HasSyncedTetherHosts()) {
+    return TetherTechnologyStateAndReason::UNAVAILABLE_NO_AVAILABLE_HOSTS;
+  } else if (IsCellularAvailableButNotEnabled()) {
+    // If Cellular technology is available, then Tether technology is treated
+    // as a subset of Cellular, and it should only be enabled when Cellular
+    // technology is enabled.
+    return TetherTechnologyStateAndReason::UNAVAILABLE_CELLULAR_DISABLED;
+  } else if (!IsAllowedByPolicy()) {
+    return TetherTechnologyStateAndReason::PROHIBITED;
+  } else if (!IsBluetoothAvailable()) {
+    return TetherTechnologyStateAndReason::UNINITIALIZED_BLUETOOTH_DISABLED;
+  } else if (!IsEnabledbyPreference()) {
+    return TetherTechnologyStateAndReason::AVAILABLE_USER_PREFERENCE_DISABLED;
+  }
+
+  return TetherTechnologyStateAndReason::ENABLED;
+}
+
 void TetherService::RecordFinalTetherTechnologyState() {
-  // TODO (hansberry): Implement.
+  TetherTechnologyStateAndReason technology_state_and_reason =
+      GetTetherTechnologyStateAndReason();
+  DCHECK(
+      technology_state_and_reason !=
+      TetherTechnologyStateAndReason::TETHER_TECHNOLOGY_STATE_AND_REASON_MAX);
+  UMA_HISTOGRAM_ENUMERATION(
+      "InstantTethering.FinalTechnologyStateAndReason",
+      technology_state_and_reason,
+      TetherTechnologyStateAndReason::TETHER_TECHNOLOGY_STATE_AND_REASON_MAX);
 }
 
 void TetherService::SetInitializerDelegateForTest(
