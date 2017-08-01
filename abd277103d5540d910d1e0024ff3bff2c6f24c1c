@@ -52,6 +52,24 @@
       "revId": "abd277103d5540d910d1e0024ff3bff2c6f24c1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "671e81b9_1294ffb4",
+        "filename": "ui/display/win/screen_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002358
+      },
+      "writtenOn": "2017-08-01T00:51:43Z",
+      "side": 1,
+      "message": "This patch shouldn\u0027t be changing any behaviors -- kHighDynamicRange still controls whether or not we have HDR mode enabled.\n\nI agree about the end state of \"have 1 flag which specifies if we\u0027re auto-detecting HDR on Windows\". Until we kill of those 2 instances that need fixing, I think we should stick with just using kHighDynamicRange for that. Once those 2 instances are gone, we can rename it to kDetectWindowsHDR or something like that (and enable it by default!).",
+      "parentUuid": "17a38cdc_767bffd2",
+      "revId": "abd277103d5540d910d1e0024ff3bff2c6f24c1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
