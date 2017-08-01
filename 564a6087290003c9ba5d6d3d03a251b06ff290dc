@@ -687,6 +687,24 @@
     },
     {
       "key": {
+        "uuid": "85ecef7d_0d83a0cd",
+        "filename": "base/containers/vector_buffer.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-01T16:43:07Z",
+      "side": 1,
+      "message": "Even new doesn\u0027t guarantee sufficient alignment. From [expr.new]/10:\nNote: Because allocation functions are assumed to return pointers to storage that is appropriately aligned for objects of any type with fundamental alignment, this constraint on array allocation overhead permits the common idiom of allocating character arrays into which objects of other types will later be placed.",
+      "parentUuid": "d59d71bc_683d31c6",
+      "revId": "564a6087290003c9ba5d6d3d03a251b06ff290dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d4b9267_b48123e4",
         "filename": "base/containers/vector_buffer.h",
         "patchSetId": 12
