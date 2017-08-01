@@ -300,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "0058e1bf_0ad8d36a",
+        "filename": "components/viz/service/hit_test/DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-01T14:53:13Z",
+      "side": 1,
+      "message": "Ack, thanks!",
+      "parentUuid": "48195938_98e94ef0",
+      "revId": "bd1ef1de9d5fd4ca4be508007630fb0469b9823d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db75741b_b33856d6",
         "filename": "services/viz/compositing/privileged/interfaces/frame_sink_manager.mojom",
         "patchSetId": 3
@@ -359,6 +377,30 @@
       "side": 1,
       "message": "What is the FrameSinKId? Do we need one if this is the aggregated list?",
       "parentUuid": "2ce43b11_764647a9",
+      "range": {
+        "startLine": 110,
+        "startChar": 2,
+        "endLine": 114,
+        "endChar": 51
+      },
+      "revId": "bd1ef1de9d5fd4ca4be508007630fb0469b9823d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c5c95d6_a13bd060",
+        "filename": "services/viz/compositing/privileged/interfaces/frame_sink_manager.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-01T14:53:13Z",
+      "side": 1,
+      "message": "This FrameSinkId is the one associated with the root of a ws::Display. There\u0027s one HitTestQuery-HitTestAggregator for each ws::Display/ viz::Display so this is needed to know which HitTestQuery to send this msg to.",
+      "parentUuid": "2e2a0a80_c07883b3",
       "range": {
         "startLine": 110,
         "startChar": 2,
