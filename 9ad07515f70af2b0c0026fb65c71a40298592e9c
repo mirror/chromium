@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b373691b_ce51213c",
+        "filename": "chrome/browser/search/local_ntp_source.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-01T11:29:41Z",
+      "side": 1,
+      "message": "Hmm. Is there any guarantee that the different resources we\u0027re serving come from the same server result?\n\n(If not, I guess this problem existed before)",
+      "revId": "9ad07515f70af2b0c0026fb65c71a40298592e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5bae289_72a85897",
+        "filename": "chrome/browser/search/local_ntp_source.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-01T11:29:41Z",
+      "side": 1,
+      "message": "If I understand correctly, if the user is online, and opens an NTP, they get a OGB. If they go offline, and open another NTP, they get the same, cached OGB.\n\nIs this intended? It seems like it isn\u0027t according to the CL description.",
+      "revId": "9ad07515f70af2b0c0026fb65c71a40298592e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a7c44fc_53e5ea79",
+        "filename": "chrome/browser/search/one_google_bar/one_google_bar_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-01T11:29:41Z",
+      "side": 1,
+      "message": "errors",
+      "range": {
+        "startLine": 83,
+        "startChar": 26,
+        "endLine": 83,
+        "endChar": 31
+      },
+      "revId": "9ad07515f70af2b0c0026fb65c71a40298592e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4083dc8e_ed771b9f",
+        "filename": "chrome/browser/search/one_google_bar/one_google_bar_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-01T11:29:41Z",
+      "side": 1,
+      "message": "SetOneGoogleBarData() is simpler and would be a good candidate for inlining now; it\u0027s not obvious reading this method that both branches call NotifyObservers().",
+      "revId": "9ad07515f70af2b0c0026fb65c71a40298592e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a367a50a_f39f6503",
+        "filename": "chrome/browser/search/one_google_bar/one_google_bar_service_observer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-01T11:29:41Z",
+      "side": 1,
+      "message": "Clarify \"updated\" re: successful vs. failed fetch?",
+      "range": {
+        "startLine": 11,
+        "startChar": 41,
+        "endLine": 11,
+        "endChar": 48
+      },
+      "revId": "9ad07515f70af2b0c0026fb65c71a40298592e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
