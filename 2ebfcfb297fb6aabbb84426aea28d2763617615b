@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fdc98aad_990daccd",
+        "filename": "ios/chrome/app/main_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 909,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-02T18:37:17Z",
+      "side": 1,
+      "message": "I\u0027m unhappy that this needs to be public API on the ApplicationContext, and that we need to explicitly set it here instead of in ~ChromeMain().  I don\u0027t have good alternatives that solve either of these issues, but I\u0027ll think about it.",
+      "revId": "2ebfcfb297fb6aabbb84426aea28d2763617615b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
