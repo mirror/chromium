@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "19011088_b3dc2610",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-02T23:14:07Z",
+      "side": 1,
+      "message": "I\u0027m not sure about this.\n\nAs the code currently stands, there is a strong bias towards people with short sessions. For example, if a user without tether hosts logs in and out twice in 10 seconds, we\u0027ll log that twice, but if a user stays logged in for an entire day with the same state, we\u0027ll see only one log for that case.\n\nIs there a way to normalize this?",
+      "parentUuid": "70cdbc6f_4f04dc14",
+      "range": {
+        "startLine": 145,
+        "startChar": 0,
+        "endLine": 145,
+        "endChar": 37
+      },
+      "revId": "0a5a71a80b8021518f0937e329f2ed240c53d32c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "abbcbf75_cd95ffe1",
         "filename": "chrome/browser/chromeos/tether/tether_service.cc",
         "patchSetId": 3
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Good catch, done.",
       "parentUuid": "abbcbf75_cd95ffe1",
+      "range": {
+        "startLine": 301,
+        "startChar": 0,
+        "endLine": 316,
+        "endChar": 1
+      },
+      "revId": "0a5a71a80b8021518f0937e329f2ed240c53d32c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4fb4b1a3_d0dcd8f0",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-02T23:14:07Z",
+      "side": 1,
+      "message": "I don\u0027t see a fix for this.",
+      "parentUuid": "09e44ac9_43a8f2af",
       "range": {
         "startLine": 301,
         "startChar": 0,
