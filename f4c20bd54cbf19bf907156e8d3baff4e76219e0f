@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6390fa6_cdf3df35",
+        "filename": "ash/highlighter/highlighter_controller_test_api.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-02T17:45:13Z",
+      "side": 1,
+      "message": "nit: Can you add a comment about why this is an observer, even though there are no AddObserver calls in the implementation? It took me a minute to figure out that SetEnabled() adds it as an observer.",
+      "revId": "f4c20bd54cbf19bf907156e8d3baff4e76219e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45c6b8d0_1e08bfe3",
+        "filename": "ash/highlighter/highlighter_controller_test_api.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-02T17:45:13Z",
+      "side": 1,
+      "message": "nit: Usually handle_selection_called() and selection() for inline getters",
+      "revId": "f4c20bd54cbf19bf907156e8d3baff4e76219e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b75a9c50_d5129907",
+        "filename": "ash/highlighter/highlighter_controller_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-02T17:45:13Z",
+      "side": 1,
+      "message": "nit: const or constexpr",
+      "revId": "f4c20bd54cbf19bf907156e8d3baff4e76219e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69e9421e_6f6ec2ff",
+        "filename": "ash/highlighter/highlighter_controller_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-02T17:45:13Z",
+      "side": 1,
+      "message": "I like how you wrote the test driven by tables of data.",
+      "revId": "f4c20bd54cbf19bf907156e8d3baff4e76219e0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
