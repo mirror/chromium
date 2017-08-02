@@ -2955,6 +2955,9 @@ const FeatureEntry kFeatureEntries[] = {
     {"tab-strip-keyboard-focus", flag_descriptions::kTabStripKeyboardFocusName,
      flag_descriptions::kTabStripKeyboardFocusDescription, kOsMac,
      FEATURE_VALUE_TYPE(features::kTabStripKeyboardFocus)},
+    {"enable-dino-game-touchbar", flag_descriptions::kTouchbarDinoGameName,
+     flag_descriptions::kTouchbarDinoGameDescription, kOsMac,
+     FEATURE_VALUE_TYPE(features::kTouchbarDinoGame)},
 #endif
 
 #if defined(OS_CHROMEOS)

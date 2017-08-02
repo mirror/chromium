@@ -59,6 +59,7 @@ NSString* const kStarTouchId = @"BOOKMARK";
 NSString* const kNewTabTouchId = @"NEW-TAB";
 NSString* const kExitFullscreenTouchId = @"EXIT-FULLSCREEN";
 NSString* const kFullscreenOriginLabelTouchId = @"FULLSCREEN-ORIGIN-LABEL";
+NSString* const kWebContentsId = @"WEB-CONTENTS";
 
 // The button indexes in the back and forward segment control.
 const int kBackSegmentIndex = 0;
@@ -170,6 +171,7 @@ class HomePrefNotificationBridge {
 
 @synthesize isPageLoading = isPageLoading_;
 @synthesize isStarred = isStarred_;
+@synthesize webContentsView = webContentsView_;
 
 - (instancetype)initWithBrowser:(Browser*)browser
         browserWindowController:(BrowserWindowController*)bwc {
@@ -194,6 +196,16 @@ class HomePrefNotificationBridge {
   if (!base::FeatureList::IsEnabled(features::kBrowserTouchBar))
     return nil;
 
+  if (webContentsView_) {
+    base::scoped_nsobject<NSTouchBar> touchBar([[ui::NSTouchBar() alloc] init]);
+    [touchBar
+        setCustomizationIdentifier:ui::GetTouchBarId(kBrowserWindowTouchBarId)];
+    [touchBar setDelegate:self];
+
+    [touchBar setDefaultItemIdentifiers:@[ kWebContentsId ]];
+    return touchBar.autorelease();
+  }
+
   // When in tab fullscreen, we should show a touch bar containing only
   // items associated with that mode. Since the toolbar is hidden, only
   // the option to exit fullscreen should show up.
@@ -217,9 +229,8 @@ class HomePrefNotificationBridge {
     NSString* itemIdentifier =
         ui::GetTouchBarItemId(kBrowserWindowTouchBarId, item);
     [customIdentifiers addObject:itemIdentifier];
-
     // Don't add the home button if it's not shown in the toolbar.
-    if (showHomeButton_.GetValue() || ![item isEqualTo:kHomeTouchId])
+    if (showHomeButton_.GetValue() || !([item isEqualTo:kHomeTouchId]))
       [defaultIdentifiers addObject:itemIdentifier];
   }
 
@@ -236,10 +247,14 @@ class HomePrefNotificationBridge {
     API_AVAILABLE(macos(10.12.2)) {
   if (!touchBar)
     return nil;
+  if (!touchBar)
+    return nil;
 
   base::scoped_nsobject<NSCustomTouchBarItem> touchBarItem(
       [[ui::NSCustomTouchBarItem() alloc] initWithIdentifier:identifier]);
-  if ([identifier hasSuffix:kBackForwardTouchId]) {
+  if ([identifier hasSuffix:kWebContentsId]) {
+    [touchBarItem setView:webContentsView_];
+  } else if ([identifier hasSuffix:kBackForwardTouchId]) {
     [touchBarItem setView:[self backOrForwardTouchBarView]];
     [touchBarItem setCustomizationLabel:
                       l10n_util::GetNSString(
@@ -318,7 +333,6 @@ class HomePrefNotificationBridge {
   } else if ([identifier hasSuffix:kExitFullscreenTouchId]) {
     return nil;
   }
-
   return touchBarItem.autorelease();
 }
 

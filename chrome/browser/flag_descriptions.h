@@ -12,24 +12,25 @@
 #include "media/media_features.h"
 
 // This file declares strings used in chrome://flags. These messages are not
-// translated, because instead of end-users they target Chromium developers and
-// testers. See https://crbug.com/587272 and https://crbug.com/703134 for more
-// details.
+// translated, because instead of end-users they target Chromium developers
+// and testers. See https://crbug.com/587272 and https://crbug.com/703134
+// for more details.
 //
-// Comments are not necessary. The contents of the strings (which appear in the
-// UI) should be good enough documentation for what flags do and when they
-// apply. If they aren't, fix them.
+// Comments are not necessary. The contents of the strings (which appear in
+// the UI) should be good enough documentation for what flags do and when
+// they apply. If they aren't, fix them.
 //
-// Sort flags in each section alphabetically by the k...Name constant. Follow
-// that by the k...Description constant and any special values associated with
-// that.
+// Sort flags in each section alphabetically by the k...Name constant.
+// Follow that by the k...Description constant and any special values
+// associated with that.
 //
 // Put #ifdefed flags in the appropriate section toward the bottom, don't
 // intersperse the file with ifdefs.
 
 namespace flag_descriptions {
 
-// Cross-platform -------------------------------------------------------------
+// Cross-platform
+// -------------------------------------------------------------
 
 extern const char kAccelerated2dCanvasName[];
 extern const char kAccelerated2dCanvasDescription[];
@@ -1250,6 +1251,9 @@ extern const char kTabDetachingInFullscreenDescription[];
 
 extern const char kTabStripKeyboardFocusName[];
 extern const char kTabStripKeyboardFocusDescription[];
+
+extern const char kTouchbarDinoGameName[];
+extern const char kTouchbarDinoGameDescription[];
 
 extern const char kTranslateNewUxName[];
 extern const char kTranslateNewUxDescription[];

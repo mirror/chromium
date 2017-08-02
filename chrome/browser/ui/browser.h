@@ -26,6 +26,7 @@
 #include "chrome/browser/ui/browser_navigator_params.h"
 #include "chrome/browser/ui/chrome_bubble_manager.h"
 #include "chrome/browser/ui/chrome_web_modal_dialog_manager_delegate.h"
+#include "chrome/browser/ui/cocoa/touchbar_web_contents_manager.h"
 #include "chrome/browser/ui/exclusive_access/exclusive_access_manager.h"
 #include "chrome/browser/ui/profile_chooser_constants.h"
 #include "chrome/browser/ui/tab_contents/core_tab_helper_delegate.h"
@@ -56,6 +57,10 @@
 #if !defined(OS_ANDROID)
 #include "components/zoom/zoom_observer.h"
 #endif  // !defined(OS_ANDROID)
+
+#if defined(OS_MACOSX)
+#include "chrome/browser/ui/cocoa/touchbar_web_contents_manager.h"
+#endif
 
 #if BUILDFLAG(ENABLE_EXTENSIONS)
 #include "extensions/browser/extension_registry_observer.h"
@@ -593,6 +598,7 @@ class Browser : public TabStripModelObserver,
   void NavigationStateChanged(content::WebContents* source,
                               content::InvalidateTypes changed_flags) override;
   void VisibleSecurityStateChanged(content::WebContents* source) override;
+  void DisplayWebContentsInTouchbar(content::WebContents* contents) override;
   void AddNewContents(content::WebContents* source,
                       content::WebContents* new_contents,
                       WindowOpenDisposition disposition,
@@ -999,6 +1005,10 @@ class Browser : public TabStripModelObserver,
   BookmarkBar::State bookmark_bar_state_;
 
   std::unique_ptr<ExclusiveAccessManager> exclusive_access_manager_;
+
+#if defined(OS_MACOSX)
+  std::unique_ptr<TouchbarWebContentsManager> touchbar_web_contents_manager_;
+#endif
 
   std::unique_ptr<extensions::WindowController> extension_window_controller_;
 

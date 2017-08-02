@@ -7,6 +7,7 @@
 #include "cc/output/output_surface_client.h"
 #include "cc/output/output_surface_frame.h"
 #include "components/viz/service/display_embedder/compositor_overlay_candidate_validator.h"
+#include "content/public/common/content_features.h"
 #include "gpu/GLES2/gl2extchromium.h"
 #include "gpu/ipc/client/gpu_process_hosted_ca_layer_tree_params.h"
 #include "services/ui/public/cpp/gpu/context_provider_command_buffer.h"
@@ -27,6 +28,14 @@ struct GpuOutputSurfaceMac::RemoteLayers {
         [content_layer setContextId:content_ca_context_id];
         [content_layer
             setAutoresizingMask:kCALayerMaxXMargin | kCALayerMaxYMargin];
+        if (base::FeatureList::IsEnabled(features::kTouchbarDinoGame)) {
+          // when the feature kTouchBarDino is on, we want webContentsView_
+          // that is displayed on the Touch Bar to receive Touch Events.
+          // When this property is set to YES, content_layer receives
+          // Touch Events instead of the webContentsView_, which is why it is
+          // set to NO here
+          [content_layer setAllowsHitTesting:NO];
+        }
       }
     } else {
       content_layer.reset();
@@ -38,6 +47,7 @@ struct GpuOutputSurfaceMac::RemoteLayers {
         fullscreen_low_power_layer.reset([[CALayerHost alloc] init]);
         [fullscreen_low_power_layer
             setContextId:fullscreen_low_power_ca_context_id];
+        [fullscreen_low_power_layer setAllowsHitTesting:NO];
       }
     } else {
       fullscreen_low_power_layer.reset();

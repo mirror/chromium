@@ -416,6 +416,16 @@ void BrowserWindowCocoa::SetFocusToLocationBar(bool select_all) {
   [controller_ focusLocationBar:select_all ? YES : NO];
 }
 
+void BrowserWindowCocoa::DisplayWebContentsInTouchbar(
+    content::WebContents* contents) {
+  if (contents) {
+    NSView* view = contents->GetNativeView();
+    [controller_ displayViewInTouchbar:view];
+  } else {
+    [controller_ displayViewInTouchbar:nil];
+  }
+}
+
 void BrowserWindowCocoa::UpdateReloadStopState(bool is_loading, bool force) {
   [controller_ setIsLoading:is_loading force:force];
 }

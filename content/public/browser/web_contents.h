@@ -840,9 +840,28 @@ class WebContents : public PageNavigator,
 
   // Returns true if the WebContents has completed its first meaningful paint.
   virtual bool CompletedFirstVisuallyNonEmptyPaint() const = 0;
+
+  // Indicates/Sets whether the current page is an error page.
+  virtual bool IsErrorPage() = 0;
+  virtual void SetIsErrorPage(bool is_error_page) = 0;
+
+  // Gets/Sets the popup's WebContents to display on the Touch Bar when the
+  // page is an error page.
+  virtual WebContents* GetPopupContents() = 0;
+  virtual void SetPopupContents(WebContents* popup_contents) = 0;
 #endif  // OS_ANDROID
 
  private:
+#if defined(OS_MACOSX)
+  // content::WebContents of the hidden popup created in the error page to be
+  // displayed in the TouchBar.
+  WebContents* popup_contents_ = nullptr;
+  // Tells whether the current page is an error page or not, which is needed to
+  // know in which content::WebContents to have popup_contents as a nullptr
+  // (normal pages), and where to set it to the hidden popup's (error page)
+  // content::WebContents.
+  bool is_error_page_ = false;
+#endif
   // This interface should only be implemented inside content.
   friend class WebContentsImpl;
   WebContents() {}
