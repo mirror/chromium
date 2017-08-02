@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d2ec82f_417a7a05",
+        "filename": "chrome/browser/android/logo_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T13:12:34Z",
+      "side": 1,
+      "message": "Why not DISALLOW_COPY_AND_ASSIGN?",
+      "revId": "2816f127d23601f67562ccafc057512ca2572f5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53386538_59f2e59e",
+        "filename": "chrome/browser/android/logo_service_factory.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T13:12:34Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN?",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 0
+      },
+      "revId": "2816f127d23601f67562ccafc057512ca2572f5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
