@@ -46,6 +46,30 @@
       "revId": "a554e3a7c070e2648eb62dc2f6a1aa939525ef9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1150cbc1_4158d085",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-02T23:31:38Z",
+      "side": 0,
+      "message": "That\u0027s not true. I just tried it.",
+      "parentUuid": "a6d6b89b_e78f5569",
+      "range": {
+        "startLine": 280,
+        "startChar": 0,
+        "endLine": 283,
+        "endChar": 53
+      },
+      "revId": "a554e3a7c070e2648eb62dc2f6a1aa939525ef9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

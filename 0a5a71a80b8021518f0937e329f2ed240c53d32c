@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "4e59745e_d18c2334",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-02T23:31:38Z",
+      "side": 1,
+      "message": "So, why do you consider what happened at the end of the session more important than what happened at the start? If we can normalize by user, why do we only want to count events at the end? What\u0027s the downside to logging all changes?",
+      "parentUuid": "8a56200b_cd518ac5",
+      "range": {
+        "startLine": 145,
+        "startChar": 0,
+        "endLine": 145,
+        "endChar": 37
+      },
+      "revId": "0a5a71a80b8021518f0937e329f2ed240c53d32c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "abbcbf75_cd95ffe1",
         "filename": "chrome/browser/chromeos/tether/tether_service.cc",
         "patchSetId": 3
@@ -180,6 +204,30 @@
       "side": 1,
       "message": "Are you looking at the most recent patch set? I moved the adapter_ setting to OnBluetoothAdapterAdvertisingIntervalSet.",
       "parentUuid": "4fb4b1a3_d0dcd8f0",
+      "range": {
+        "startLine": 301,
+        "startChar": 0,
+        "endLine": 316,
+        "endChar": 1
+      },
+      "revId": "0a5a71a80b8021518f0937e329f2ed240c53d32c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f68f8e69_8c016b4c",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-02T23:31:38Z",
+      "side": 1,
+      "message": "That doesn\u0027t fix the race condition.\n\nExample:\n(0) is_ble_advertising_supported_ starts as true.\n(1) TetherService starts up, and before the adapter is fetched, OnSyncFinished() is called.\n(2) UpdateTetherTechnologyState() is called, and Tether is ENABLED.\n(3) The adapter is fetched, and it actually doesn\u0027t support advertising.\n(4) UpdateTetherTechnologyState() is called, and Tether is UNAVAILABLE.",
+      "parentUuid": "3619d4b4_fab17597",
       "range": {
         "startLine": 301,
         "startChar": 0,
