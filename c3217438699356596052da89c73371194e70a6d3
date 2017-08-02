@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9b63cf4_0bc3d190",
+        "filename": "build/args/fuchsia.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-02T17:52:28Z",
+      "side": 1,
+      "message": "I didn\u0027t mean setting them all in a global declare_args() in the root .gn, but rather working them into the regular location where the settings are defined. I think this will be better for future refactors, because it means people think about is_fuchsia for their feature.\n\ne.g. enable_basic_printing could just be added here: https://cs.chromium.org/chromium/src/printing/features/features.gni?l\u003d10\n\nPut another way, if these flags are *required* for a correct Fuchsia build (and I don\u0027t believe we intend to support different values for these settings) then they should be live in existing gn files as the defaults when building for Fuchsia. Otherwise, the default gn gen out/fuch --args\u003d\u0027target_os\u003d\"fuchsia\"\u0027 will be confusingly broken.",
+      "revId": "c3217438699356596052da89c73371194e70a6d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdd1e743_5a9ecd47",
+        "filename": "build/args/fuchsia.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-02T17:52:28Z",
+      "side": 1,
+      "message": "Similarly for enable_webrtc here: https://cs.chromium.org/chromium/src/media/media_options.gni?l\u003d62 \n\netc.",
+      "revId": "c3217438699356596052da89c73371194e70a6d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
