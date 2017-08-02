@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f2e38ad_7afc7f63",
+        "filename": "chrome/browser/ui/views/feature_promos/feature_promo.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-02T17:37:02Z",
+      "side": 1,
+      "message": "Nit: Why have these be functions?  Why not public static constexprs?",
+      "revId": "b96c2f7e643d2f1f6cc1cf53e428ea85cd63c330",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dad4969_74dc9a10",
+        "filename": "chrome/browser/ui/views/feature_promos/feature_promo.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-02T17:37:02Z",
+      "side": 1,
+      "message": "Doesn\u0027t seem like this new-tab-promo-specific stuff should be in FeaturePromoBubbleView.  I would assume this method should be pure virtual.",
+      "revId": "b96c2f7e643d2f1f6cc1cf53e428ea85cd63c330",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51f6721b_ee07bddd",
+        "filename": "chrome/browser/ui/views/feature_promos/feature_promo.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-02T17:37:02Z",
+      "side": 1,
+      "message": "Nit: I\u0027d move this below GetStringSpecifier() so we didn\u0027t have a non-virtual in between two groups of virtuals.",
+      "revId": "b96c2f7e643d2f1f6cc1cf53e428ea85cd63c330",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab7d61d6_00071386",
+        "filename": "chrome/browser/ui/views/feature_promos/feature_promo.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-02T17:37:02Z",
+      "side": 1,
+      "message": "Nit: I\u0027d avoid talking about Finch here since it\u0027s not clear every subclass will want to use Finch to decide on its strings for all time.\n\nJust saying \"Returns the string ID to display in the promo.\" is fine.",
+      "revId": "b96c2f7e643d2f1f6cc1cf53e428ea85cd63c330",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ec1a555_04fc2292",
+        "filename": "chrome/browser/ui/views/feature_promos/new_tab_promo.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-02T17:37:02Z",
+      "side": 1,
+      "message": "Why are we passing in |anchor_view| if we don\u0027t use it?",
+      "revId": "b96c2f7e643d2f1f6cc1cf53e428ea85cd63c330",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9e314ad_ad9e1d36",
+        "filename": "chrome/browser/ui/views/feature_promos/new_tab_promo.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-02T17:37:02Z",
+      "side": 1,
+      "message": "Nit: users -\u003e users\u0027; called -\u003e created",
+      "revId": "b96c2f7e643d2f1f6cc1cf53e428ea85cd63c330",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e66f2479_095846aa",
+        "filename": "chrome/browser/ui/views/feature_promos/new_tab_promo.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-02T17:37:02Z",
+      "side": 1,
+      "message": "This method doesn\u0027t override anything from the parent class, so shouldn\u0027t have a comment like this above it.",
+      "revId": "b96c2f7e643d2f1f6cc1cf53e428ea85cd63c330",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6d4d509_5adf8017",
+        "filename": "chrome/browser/ui/views/feature_promos/new_tab_promo.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-02T17:37:02Z",
+      "side": 1,
+      "message": "Nit: This comment seems a little misleading since neither this constructor nor the rest of the class know about the NewTabButton.  You could say something like \"anchors the bubble to |anchor_rect|\" I suppose.",
+      "revId": "b96c2f7e643d2f1f6cc1cf53e428ea85cd63c330",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
