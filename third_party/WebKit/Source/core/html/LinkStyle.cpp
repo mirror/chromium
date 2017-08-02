@@ -64,7 +64,7 @@ void LinkStyle::SetCSSStyleSheet(
     ReferrerPolicy referrer_policy,
     const WTF::TextEncoding& charset,
     const CSSStyleSheetResource* cached_style_sheet) {
-  if (!owner_->isConnected()) {
+  if (StyleResolver::IsDisabled() || !owner_->isConnected()) {
     // While the stylesheet is asynchronously loading, the owner can be
     // disconnected from a document.
     // In that case, cancel any processing on the loaded content.

@@ -418,6 +418,11 @@ void WEBPImageDecoder::Decode(size_t index) {
   if (Failed())
     return;
 
+  if (ImageDecoder::IsDisabled()) {
+    SetFailed();
+    return;
+  }
+
   Vector<size_t> frames_to_decode = FindFramesToDecode(index);
 
   DCHECK(demux_);
