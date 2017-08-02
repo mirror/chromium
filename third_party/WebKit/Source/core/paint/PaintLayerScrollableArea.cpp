@@ -1485,6 +1485,7 @@ bool PaintLayerScrollableArea::HitTestOverflowControls(
   if (!HasScrollbar() && !Box().CanResize())
     return false;
 
+  // Hit test resize corner.
   IntRect resize_control_rect;
   if (Box().Style()->Resize() != EResize::kNone) {
     resize_control_rect = ResizerCornerRect(
@@ -1494,47 +1495,38 @@ bool PaintLayerScrollableArea::HitTestOverflowControls(
       return true;
   }
 
-  int resize_control_size = max(resize_control_rect.Height(), 0);
-  if (HasVerticalScrollbar() &&
-      VerticalScrollbar()->ShouldParticipateInHitTesting()) {
-    LayoutRect v_bar_rect(
-        VerticalScrollbarStart(0, Box().Size().Width().ToInt()),
-        Box().BorderTop().ToInt(), VerticalScrollbar()->ScrollbarThickness(),
-        Box().Size().Height().ToInt() -
-            (Box().BorderTop() + Box().BorderBottom()).ToInt() -
-            (HasHorizontalScrollbar()
-                 ? HorizontalScrollbar()->ScrollbarThickness()
-                 : resize_control_size));
-    if (v_bar_rect.Contains(local_point)) {
-      result.SetScrollbar(VerticalScrollbar());
-      return true;
-    }
+  Scrollbar* scrollbar = nullptr;
+
+  if (HorizontalScrollbar() &&
+      HorizontalScrollbar()->ShouldParticipateInHitTesting() &&
+      HorizontalScrollbar()->FrameRect().Contains(local_point))
+    scrollbar = HorizontalScrollbar();
+  if (VerticalScrollbar() &&
+      VerticalScrollbar()->ShouldParticipateInHitTesting() &&
+      VerticalScrollbar()->FrameRect().Contains(local_point))
+    scrollbar = VerticalScrollbar();
+
+  if (!scrollbar)
+    return false;
+
+  // For Aura Overlay Scrollbar, only scrollbar thumb should participate hit
+  // test.
+  if (scrollbar->IsOverlayScrollbar()) {
+    LocalFrameView* frame_view = Box().GetFrameView();
+    DCHECK(frame_view);
+    IntPoint root_frame_point = frame_view->ConvertToRootFrame(
+        frame_view->ContentsToFrame(result.RoundedPointInMainFrame()));
+
+    if (scrollbar->GetTheme().HitTest(*scrollbar, root_frame_point) == kNoPart)
+      return false;
   }
 
-  resize_control_size = max(resize_control_rect.Width(), 0);
-  if (HasHorizontalScrollbar() &&
-      HorizontalScrollbar()->ShouldParticipateInHitTesting()) {
-    // TODO(crbug.com/638981): Are the conversions to int intentional?
-    LayoutRect h_bar_rect(
-        HorizontalScrollbarStart(0),
-        (Box().Size().Height() - Box().BorderBottom() -
-         HorizontalScrollbar()->ScrollbarThickness())
-            .ToInt(),
-        (Box().Size().Width() - (Box().BorderLeft() + Box().BorderRight()) -
-         (HasVerticalScrollbar() ? VerticalScrollbar()->ScrollbarThickness()
-                                 : resize_control_size))
-            .ToInt(),
-        HorizontalScrollbar()->ScrollbarThickness());
-    if (h_bar_rect.Contains(local_point)) {
-      result.SetScrollbar(HorizontalScrollbar());
-      return true;
-    }
-  }
+  result.SetScrollbar(scrollbar);
 
   // FIXME: We should hit test the m_scrollCorner and pass it back through the
   // result.
 
-  return false;
+  return true;
 }
 
 IntRect PaintLayerScrollableArea::ResizerCornerRect(
