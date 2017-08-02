@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5ff4460_bdfb3174",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1779,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-02T19:03:28Z",
+      "side": 1,
+      "message": "Will this work in an iframe?\n\nThe docs for ScrollToGlobalPoint say that the point is in\nwindow coordinates (not frame coordinates), but I believe\nAbsoluteBoundingBoxRect gives you frame coordinates.\n\nIt\u0027s possible we have pre-existing bugs here. Ever since\nthe code was refactored to support OOPIFs, there are some\ncorner cases like that that we didn\u0027t look into.\n\nIf there isn\u0027t an easy way to make this deal with window\ncoordinates, I propose changing the documentation to indicate\nwhat coordinate it does expect, then assign me a bug to\nfix it on the browser side when we forward the request here.",
+      "revId": "a5ec6ce0755e0b4759dba0416d6faca60b7e69a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
