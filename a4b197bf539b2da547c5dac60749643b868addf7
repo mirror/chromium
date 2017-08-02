@@ -22,6 +22,30 @@
       "revId": "a4b197bf539b2da547c5dac60749643b868addf7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f42a4914_43e3212c",
+        "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1111144
+      },
+      "writtenOn": "2017-08-02T17:21:22Z",
+      "side": 1,
+      "message": "Actually it always success. Even if authpolicyd is not running.",
+      "parentUuid": "a842fa72_0cd9b6ee",
+      "range": {
+        "startLine": 371,
+        "startChar": 2,
+        "endLine": 371,
+        "endChar": 18
+      },
+      "revId": "a4b197bf539b2da547c5dac60749643b868addf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
