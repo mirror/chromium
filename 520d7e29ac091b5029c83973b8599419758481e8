@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f46b0ee9_b152b700",
+        "filename": "chrome/test/data/extensions/underscore_metadata_folders/_badfolder/empty_doc",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-02T20:52:09Z",
+      "side": 1,
+      "message": "Needed?",
+      "revId": "520d7e29ac091b5029c83973b8599419758481e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59a52d8f_67b6b8dc",
+        "filename": "chrome/test/data/extensions/underscore_metadata_folders/manifest.json",
+        "patchSetId": 10
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-02T20:52:09Z",
+      "side": 1,
+      "message": "Sometimes it\u0027s nice to provide a bit more description here, e.g.:\n\"An extension with a (disallowed) folder prefixed by an underscore.\"",
+      "revId": "520d7e29ac091b5029c83973b8599419758481e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8a0ecce_591db8a1",
+        "filename": "extensions/common/file_util_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-02T20:52:09Z",
+      "side": 1,
+      "message": "There\u0027s still quite a bit of duplicate code between these tests.  What about instead:\n\nvoid RunDirectoryTest(std::vector\u003cstd::string\u003e extra_directories,\n                      base::Optional\u003cstd::string\u003e expected_error) {\n  base::ScopedTempDir temp;\n  ASSERT_TRUE(temp.CreateUniqueTempDir());\n\n  base::FilePath ext_path \u003d temp.GetPath();\n  ASSERT_TRUE(base::CreateDirectory(ext_path));\n\n  ASSERT_EQ(static_cast\u003cint\u003e(strlen(manifest_content)),\n            base::WriteFile(ext_path.AppendASCII(\"manifest.json\"),\n                            manifest_content, strlen(manifest_content)));\n\n  for (const auto\u0026 dir : extra_directories)\n    ASSERT_TRUE(base::CreateDirectory(ext_path.AppendASCII(dir));\n\n  std::string error;\n  scoped_refptr\u003cExtension\u003e extension \u003d file_util::LoadExtension(\n      manifest_content, ext_path, Manifest::UNPACKED, 0, \u0026error);\n  ASSERT_TRUE(extension) \u003c\u003c error;\n  EXPECT_TRUE(error.empty());\n\n  std::vector\u003cInstallWarning\u003e warnings;\n  if (expected_warning) {\n    EXPECT_EQ(1u, warnings.size());\n    EXPECT_EQ(*expected_warning, warnings[0].message);\n  } else {\n    EXPECT_TRUE(warnings.empty());\n  }\n}\n\nAnd then, this first test is just:\n\n{\n  RunDirectoryTest(\n      {\"_metadata\"}, \n      \"_metadata is a reserved directory that will not be allowed at \"\n      \"the time of Chrome Web Store upload.\");\n}\n\nand the next is:\n\n{\n  RunDirectoryTest(\n      {\"_badfolder\", \"_metadata\"},\n      \"Cannot load extension with file or directory name _badfolder. \"\n      \"Filenames starting with \\\"_\\\" are reserved for use by the system.\");\n}\n\nand so on.",
+      "revId": "520d7e29ac091b5029c83973b8599419758481e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
