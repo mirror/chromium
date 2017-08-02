@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "097b20e7_84352b8e",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-02T18:21:15Z",
+      "side": 1,
+      "message": "I add some comment in the header file. I don\u0027t mention if session restore will come here, just in case the plan is changed.\n\nThis needs to work when staggered background tab opening is not enabled, i.e, when StaggeredBackgroundTabOpenExperiment is disabled. In that case, pending_navigations_ is always empty. But we still need to know if TabManager is loading background tabs in order to have meaningful comparison.",
+      "parentUuid": "3bde9d12_ca4a1a59",
+      "range": {
+        "startLine": 593,
+        "startChar": 17,
+        "endLine": 593,
+        "endChar": 40
+      },
+      "revId": "5d46d62dd243271f99556cf27ab1f5298949f275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3a2a711_1b65a66d",
         "filename": "chrome/browser/resource_coordinator/tab_manager.h",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "357cd109_86f6c7c4",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-02T18:21:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3a2a711_1b65a66d",
+      "range": {
+        "startLine": 222,
+        "startChar": 18,
+        "endLine": 222,
+        "endChar": 19
+      },
+      "revId": "5d46d62dd243271f99556cf27ab1f5298949f275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "521cb689_89f3fc0a",
         "filename": "chrome/browser/resource_coordinator/tab_manager_unittest.cc",
         "patchSetId": 2
@@ -59,6 +107,24 @@
       "writtenOn": "2017-08-02T18:03:42Z",
       "side": 1,
       "message": "Is it possible to use parameterized test TEST_P?",
+      "revId": "5d46d62dd243271f99556cf27ab1f5298949f275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99a94798_784b3156",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-02T18:21:15Z",
+      "side": 1,
+      "message": "Probably, I thought about that. Since there is just one parameter, I ended up using this approach. I can look into the parameterized way.",
+      "parentUuid": "521cb689_89f3fc0a",
       "revId": "5d46d62dd243271f99556cf27ab1f5298949f275",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "d6da833b_0525276a",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-02T18:21:15Z",
+      "side": 1,
+      "message": "I am following the guideline in scoped_feature_list.h, which makes sense to me, because the SetUp() may need the feature flag.",
+      "parentUuid": "3613e8d2_95931d6a",
+      "range": {
+        "startLine": 219,
+        "startChar": 4,
+        "endLine": 219,
+        "endChar": 45
+      },
+      "revId": "5d46d62dd243271f99556cf27ab1f5298949f275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7dbde63_c9f1fb6a",
         "filename": "chrome/common/chrome_features.h",
         "patchSetId": 2
@@ -108,6 +198,30 @@
       "revId": "5d46d62dd243271f99556cf27ab1f5298949f275",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df318ae9_132d175b",
+        "filename": "chrome/common/chrome_features.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-02T18:21:15Z",
+      "side": 1,
+      "message": "This is explained in the description. In the finch experiment, we need to have a control group, which calls MaybeThrottleNavigation, but does not do the actual throttling.",
+      "parentUuid": "b7dbde63_c9f1fb6a",
+      "range": {
+        "startLine": 189,
+        "startChar": 0,
+        "endLine": 190,
+        "endChar": 65
+      },
+      "revId": "5d46d62dd243271f99556cf27ab1f5298949f275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
