@@ -15,18 +15,17 @@
 #include "base/files/scoped_temp_dir.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
-#include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
-#include "base/single_thread_task_runner.h"
 #include "base/synchronization/waitable_event.h"
-#include "base/threading/thread_task_runner_handle.h"
+#include "base/test/scoped_task_environment.h"
+#include "base/threading/sequenced_task_runner_handle.h"
 #include "base/time/time.h"
 #include "chrome/browser/media_galleries/fileapi/itunes_data_provider.h"
 #include "chrome/browser/media_galleries/fileapi/media_file_system_backend.h"
 #include "chrome/browser/media_galleries/fileapi/media_path_filter.h"
 #include "chrome/browser/media_galleries/imported_media_gallery_registry.h"
 #include "content/public/browser/browser_thread.h"
-#include "content/public/test/test_browser_thread.h"
+#include "content/public/test/test_browser_thread_bundle.h"
 #include "storage/browser/fileapi/async_file_util.h"
 #include "storage/browser/fileapi/external_mount_points.h"
 #include "storage/browser/fileapi/file_system_context.h"
@@ -123,9 +122,7 @@ class TestMediaFileSystemBackend : public MediaFileSystemBackend {
  public:
   TestMediaFileSystemBackend(const base::FilePath& profile_path,
                              ITunesFileUtil* itunes_file_util)
-      : MediaFileSystemBackend(
-            profile_path,
-            MediaFileSystemBackend::MediaTaskRunner().get()),
+      : MediaFileSystemBackend(profile_path),
         test_file_util_(itunes_file_util) {}
 
   storage::AsyncFileUtil* GetAsyncFileUtil(
@@ -143,8 +140,8 @@ class TestMediaFileSystemBackend : public MediaFileSystemBackend {
 class ItunesFileUtilTest : public testing::Test {
  public:
   ItunesFileUtilTest()
-      : io_thread_(content::BrowserThread::IO, &message_loop_) {
-  }
+      : task_environment_(
+            base::test::ScopedTaskEnvironment::MainThreadType::UI) {}
 
   void SetUpDataProvider() {
     ASSERT_TRUE(fake_library_dir_.CreateUniqueTempDir());
@@ -163,7 +160,7 @@ class ItunesFileUtilTest : public testing::Test {
     scoped_refptr<storage::SpecialStoragePolicy> storage_policy =
         new content::MockSpecialStoragePolicy();
 
-    // Initialize fake ItunesDataProvider on media task runner thread.
+    // Initialize fake ItunesDataProvider on media task runner.
     MediaFileSystemBackend::MediaTaskRunner()->PostTask(
         FROM_HERE,
         base::Bind(&ItunesFileUtilTest::SetUpDataProvider,
@@ -184,12 +181,30 @@ class ItunesFileUtilTest : public testing::Test {
                                itunes_data_provider_.get())));
 
     file_system_context_ = new storage::FileSystemContext(
-        base::ThreadTaskRunnerHandle::Get().get(),
-        base::ThreadTaskRunnerHandle::Get().get(),
+        content::BrowserThread::GetTaskRunnerForThread(
+            content::BrowserThread::IO)
+            .get(),
+        base::SequencedTaskRunnerHandle::Get().get(),
         storage::ExternalMountPoints::CreateRefCounted().get(),
         storage_policy.get(), NULL, std::move(additional_providers),
         std::vector<storage::URLRequestAutoMountHandler>(),
         profile_dir_.GetPath(), content::CreateAllowFileAccessOptions());
+  }
+
+  void TearDownDataProvider() { itunes_data_provider_.reset(); }
+
+  void TearDown() override {
+    // Free fake ItunesDataProvider on media task runner.
+    MediaFileSystemBackend::MediaTaskRunner()->PostTask(
+        FROM_HERE, base::Bind(&ItunesFileUtilTest::TearDownDataProvider,
+                              base::Unretained(this)));
+    base::WaitableEvent event(base::WaitableEvent::ResetPolicy::MANUAL,
+                              base::WaitableEvent::InitialState::NOT_SIGNALED);
+    MediaFileSystemBackend::MediaTaskRunner()->PostTask(
+        FROM_HERE,
+        base::Bind(&base::WaitableEvent::Signal, base::Unretained(&event)));
+    event.Wait();
+    task_environment_.RunUntilIdle();
   }
 
  protected:
@@ -225,10 +240,10 @@ class ItunesFileUtilTest : public testing::Test {
     return itunes_data_provider_.get();
   }
 
- private:
-  base::MessageLoop message_loop_;
-  content::TestBrowserThread io_thread_;
+  base::test::ScopedTaskEnvironment task_environment_;
+  content::TestBrowserThreadBundle thread_bundle_;
 
+ private:
   base::ScopedTempDir profile_dir_;
   base::ScopedTempDir fake_library_dir_;
 
