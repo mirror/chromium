@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "305d769f_2bea5a94",
+        "filename": "chrome/browser/page_load_metrics/observers/delay_navigation_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-02T21:46:37Z",
+      "side": 1,
+      "message": "Let\u0027s add an EXPECT_EQ that once we\u0027ve committed, the URL is the expected one.",
+      "revId": "93e63f3024b448cba9e283ef1deeea2ceb6f9c05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0c459bb_dff4895e",
+        "filename": "content/public/test/navigation_simulator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-02T21:46:37Z",
+      "side": 1,
+      "message": "Shouldn\u0027t the state be even earlier? The callback is passed to the handle in DidStartNavigation, so if one calls SetOnDeferCallback after DidStartNavigation has executed, it will likely have missed WillStartRequest. Or do we have cases where we don\u0027t care about deferring WillStartRequest and only latter stages?",
+      "range": {
+        "startLine": 590,
+        "startChar": 19,
+        "endLine": 590,
+        "endChar": 27
+      },
+      "revId": "93e63f3024b448cba9e283ef1deeea2ceb6f9c05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
