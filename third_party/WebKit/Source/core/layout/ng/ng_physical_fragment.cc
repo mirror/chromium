@@ -14,6 +14,7 @@
 namespace blink {
 
 NGPhysicalFragment::NGPhysicalFragment(LayoutObject* layout_object,
+                                       bool use_first_line_style,
                                        NGPhysicalSize size,
                                        NGFragmentType type,
                                        RefPtr<NGBreakToken> break_token)
@@ -21,7 +22,8 @@ NGPhysicalFragment::NGPhysicalFragment(LayoutObject* layout_object,
       size_(size),
       break_token_(std::move(break_token)),
       type_(type),
-      is_placed_(false) {}
+      is_placed_(false),
+      use_first_line_style_(use_first_line_style) {}
 
 void NGPhysicalFragment::Destroy() const {
   switch (Type()) {
@@ -42,7 +44,7 @@ void NGPhysicalFragment::Destroy() const {
 
 const ComputedStyle& NGPhysicalFragment::Style() const {
   DCHECK(layout_object_);
-  return layout_object_->StyleRef();
+  return layout_object_->StyleRef(use_first_line_style_);
 }
 
 NGPixelSnappedPhysicalBoxStrut NGPhysicalFragment::BorderWidths() const {

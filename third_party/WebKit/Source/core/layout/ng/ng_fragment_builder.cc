@@ -16,21 +16,27 @@
 
 namespace blink {
 
-// TODO(ikilpatrick): Make writing mode and direction be in the constructor.
-NGFragmentBuilder::NGFragmentBuilder(NGPhysicalFragment::NGFragmentType type,
-                                     NGLayoutInputNode node)
-    : type_(type),
-      writing_mode_(kHorizontalTopBottom),
-      direction_(TextDirection::kLtr),
+NGFragmentBuilder::NGFragmentBuilder(NGLayoutInputNode node,
+                                     NGWritingMode writing_mode,
+                                     TextDirection direction,
+                                     bool use_first_line_style)
+    : NGBaseFragmentBuilder(writing_mode, direction, use_first_line_style),
       node_(node),
       layout_object_(node.GetLayoutObject()),
       did_break_(false) {}
 
-NGFragmentBuilder::NGFragmentBuilder(NGPhysicalFragment::NGFragmentType type,
-                                     LayoutObject* layout_object)
-    : type_(type),
-      writing_mode_(kHorizontalTopBottom),
-      direction_(TextDirection::kLtr),
+NGFragmentBuilder::NGFragmentBuilder(NGLayoutInputNode node,
+                                     const NGConstraintSpace& space)
+    : NGBaseFragmentBuilder(space),
+      node_(node),
+      layout_object_(node.GetLayoutObject()),
+      did_break_(false) {}
+
+NGFragmentBuilder::NGFragmentBuilder(LayoutObject* layout_object,
+                                     NGWritingMode writing_mode,
+                                     TextDirection direction,
+                                     bool use_first_line_style)
+    : NGBaseFragmentBuilder(writing_mode, direction, use_first_line_style),
       node_(nullptr),
       layout_object_(layout_object),
       did_break_(false) {}
@@ -216,9 +222,9 @@ RefPtr<NGLayoutResult> NGFragmentBuilder::ToBoxFragment() {
   }
 
   RefPtr<NGPhysicalBoxFragment> fragment = AdoptRef(new NGPhysicalBoxFragment(
-      layout_object_, physical_size, overflow_.ConvertToPhysical(writing_mode_),
-      children_, baselines_, border_edges_.ToPhysical(writing_mode_),
-      std::move(break_token)));
+      layout_object_, use_first_line_style_, physical_size,
+      overflow_.ConvertToPhysical(writing_mode_), children_, baselines_,
+      border_edges_.ToPhysical(writing_mode_), std::move(break_token)));
 
   return AdoptRef(new NGLayoutResult(
       std::move(fragment), oof_positioned_descendants_, unpositioned_floats_,

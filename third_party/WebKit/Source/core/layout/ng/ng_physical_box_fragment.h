@@ -19,6 +19,7 @@ class CORE_EXPORT NGPhysicalBoxFragment final : public NGPhysicalFragment {
  public:
   // This modifies the passed-in children vector.
   NGPhysicalBoxFragment(LayoutObject* layout_object,
+                        bool use_first_line_style,
                         NGPhysicalSize size,
                         NGPhysicalSize overflow,
                         Vector<RefPtr<NGPhysicalFragment>>& children,
