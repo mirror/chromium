@@ -28,4 +28,3 @@
 #include "extensions/common/extension_message_generator.h"
 #include "gpu/ipc/common/gpu_message_generator.h"
 #include "media/gpu/ipc/common/media_message_generator.h"
-#include "remoting/host/chromoting_messages.h"
