@@ -490,6 +490,24 @@
     },
     {
       "key": {
+        "uuid": "cb50d0ec_45b72a81",
+        "filename": "net/disk_cache/backend_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-08-02T18:02:10Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "55bbdb18_39402d4c",
+      "revId": "a3127320698feb28bd4954f383b14be34d176e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "381ba64a_2b18f270",
         "filename": "net/disk_cache/blockfile/backend_impl.h",
         "patchSetId": 10
@@ -773,6 +791,30 @@
     },
     {
       "key": {
+        "uuid": "2a8f3dbe_7b0b5a02",
+        "filename": "net/disk_cache/disk_cache.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-08-02T18:02:10Z",
+      "side": 1,
+      "message": "(Keeping the other as open feedback re: long sentence)",
+      "parentUuid": "b0db2eaa_20fa3cbb",
+      "range": {
+        "startLine": 153,
+        "startChar": 30,
+        "endLine": 153,
+        "endChar": 36
+      },
+      "revId": "a3127320698feb28bd4954f383b14be34d176e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "438736fe_85b2cc8a",
         "filename": "net/disk_cache/simple/simple_backend_impl.h",
         "patchSetId": 10
@@ -982,6 +1024,30 @@
       "revId": "a3127320698feb28bd4954f383b14be34d176e38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52b27101_c4917228",
+        "filename": "net/disk_cache/simple/simple_index.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-08-02T18:02:10Z",
+      "side": 1,
+      "message": "Done means resolved (in v.14)",
+      "parentUuid": "55c5b647_1e7a03ef",
+      "range": {
+        "startLine": 110,
+        "startChar": 14,
+        "endLine": 110,
+        "endChar": 35
+      },
+      "revId": "a3127320698feb28bd4954f383b14be34d176e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
