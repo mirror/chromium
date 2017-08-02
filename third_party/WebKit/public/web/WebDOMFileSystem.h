@@ -37,7 +37,7 @@
 #include "public/platform/WebURL.h"
 #include "WebFrame.h"
 
-#if BLINK_IMPLEMENTATION
+#if INSIDE_BLINK
 #include "platform/heap/Handle.h"
 #endif
 
@@ -104,7 +104,7 @@ class WebDOMFileSystem {
 
   bool IsNull() const { return private_.IsNull(); }
 
-#if BLINK_IMPLEMENTATION
+#if INSIDE_BLINK
   WebDOMFileSystem(DOMFileSystem*);
   WebDOMFileSystem& operator=(DOMFileSystem*);
 #endif

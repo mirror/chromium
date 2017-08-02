@@ -47,25 +47,25 @@ class WebIDBKeyRange {
     Assign(lower, upper, lower_open, upper_open);
   }
 
-  BLINK_EXPORT WebIDBKey Lower() const;
-  BLINK_EXPORT WebIDBKey Upper() const;
-  BLINK_EXPORT bool LowerOpen() const;
-  BLINK_EXPORT bool UpperOpen() const;
+  BLINK_PLATFORM_EXPORT WebIDBKey Lower() const;
+  BLINK_PLATFORM_EXPORT WebIDBKey Upper() const;
+  BLINK_PLATFORM_EXPORT bool LowerOpen() const;
+  BLINK_PLATFORM_EXPORT bool UpperOpen() const;
 
-  BLINK_EXPORT void Assign(const WebIDBKeyRange&);
-  BLINK_EXPORT void Assign(const WebIDBKey& lower,
-                           const WebIDBKey& upper,
-                           bool lower_open,
-                           bool upper_open);
+  BLINK_PLATFORM_EXPORT void Assign(const WebIDBKeyRange&);
+  BLINK_PLATFORM_EXPORT void Assign(const WebIDBKey& lower,
+                                    const WebIDBKey& upper,
+                                    bool lower_open,
+                                    bool upper_open);
 
   WebIDBKeyRange& operator=(const WebIDBKeyRange& e) {
     Assign(e);
     return *this;
   }
 
-  BLINK_EXPORT void Reset();
+  BLINK_PLATFORM_EXPORT void Reset();
 
-#if BLINK_IMPLEMENTATION
+#if INSIDE_BLINK
   WebIDBKeyRange(IDBKeyRange* value) : private_(value) {}
   WebIDBKeyRange& operator=(IDBKeyRange* value) {
     private_ = value;
