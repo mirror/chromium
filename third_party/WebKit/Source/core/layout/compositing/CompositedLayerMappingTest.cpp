@@ -1419,9 +1419,9 @@ TEST_P(CompositedLayerMappingTest, AncestorClippingMaskLayerGrandchildUpdates) {
   EXPECT_FALSE(grandchild_mapping->AncestorClippingLayer());
 }
 
-TEST_P(CompositedLayerMappingTest, AncestorClipMaskRequiredByBorderRadius) {
-  // Verify that we create the mask layer when the child is contained within
-  // the rectangular clip but not contained within the rounded rect clip.
+TEST_P(CompositedLayerMappingTest, AncestorClipAndMaskRequiredByBorderRadius) {
+  // Verify that we create the clip and mask layers when the child is contained
+  // within the rectangular clip but not contained within the rounded rect clip.
   SetBodyInnerHTML(
       "<style>"
       "  #ancestor {"
@@ -1461,9 +1461,9 @@ TEST_P(CompositedLayerMappingTest, AncestorClipMaskRequiredByBorderRadius) {
 }
 
 TEST_P(CompositedLayerMappingTest,
-       AncestorClipMaskNotRequiredByNestedBorderRadius) {
+       AncestorClipAndMaskNotRequiredByNestedBorderRadius) {
   // This case has the child within all ancestors and does not require a
-  // mask.
+  // clip or mask.
   SetBodyInnerHTML(
       "<style>"
       "  #grandparent {"
@@ -1491,15 +1491,14 @@ TEST_P(CompositedLayerMappingTest,
   CompositedLayerMapping* child_mapping =
       child_paint_layer->GetCompositedLayerMapping();
   ASSERT_TRUE(child_mapping);
-  EXPECT_TRUE(child_mapping->AncestorClippingLayer());
-  EXPECT_FALSE(child_mapping->AncestorClippingLayer()->MaskLayer());
-  EXPECT_FALSE(child_mapping->AncestorClippingMaskLayer());
+  EXPECT_FALSE(child_mapping->AncestorClippingLayer());
 }
 
 TEST_P(CompositedLayerMappingTest,
-       AncestorClipMaskRequiredByParentBorderRadius) {
+       AncestorClipAndMaskRequiredByParentBorderRadius) {
   // This case has the child within the grandparent but not the parent, and does
   // require a mask so that the parent will clip the corners.
+  // Also verifies that we create the AncestorClippingLayer in such cases.
   SetBodyInnerHTML(
       "<style>"
       "  #grandparent {"
@@ -1537,9 +1536,10 @@ TEST_P(CompositedLayerMappingTest,
 }
 
 TEST_P(CompositedLayerMappingTest,
-       AncestorClipMaskNotRequiredByParentBorderRadius) {
+       AncestorClipButNotMaskRequiredByParentBorderRadius) {
   // This case has the child within the grandparent but not the parent, and does
-  // not require a mask because the parent does not have border radius
+  // not require a mask because the parent does not have border radius.
+  // However, we do need a clip.
   SetBodyInnerHTML(
       "<style>"
       "  #grandparent {"
@@ -1573,11 +1573,12 @@ TEST_P(CompositedLayerMappingTest,
 }
 
 TEST_P(CompositedLayerMappingTest,
-       AncestorClipMaskRequiredByGrandparentBorderRadius1) {
+       AncestorClipButNotMaskRequiredByGrandparentBorderRadius1) {
   // This case has the child clipped by the grandparent border radius but not
   // the parent, and requires a mask to clip to the grandparent. Although in
   // an optimized world we would not need this because the parent clips out
   // the child before it is clipped by the grandparent.
+  // Also verifies that we create the AncestorClippingLayer in such cases.
   SetBodyInnerHTML(
       "<style>"
       "  #grandparent {"
@@ -1615,8 +1616,9 @@ TEST_P(CompositedLayerMappingTest,
 }
 
 TEST_P(CompositedLayerMappingTest,
-       AncestorClipMaskRequiredByGrandparentBorderRadius2) {
+       AncestorClipAndMaskRequiredByGrandparentBorderRadius2) {
   // Similar to the previous case, but here we really do need the mask.
+  // Also verifies that we create the AncestorClippingLayer in such cases.
   SetBodyInnerHTML(
       "<style>"
       "  #grandparent {"
@@ -1654,9 +1656,9 @@ TEST_P(CompositedLayerMappingTest,
 }
 
 TEST_P(CompositedLayerMappingTest,
-       AncestorClipMaskNotRequiredByBorderRadiusInside) {
-  // Verify that we do not create the mask layer when the child is contained
-  // within the rounded rect clip.
+       AncestorClipAndMaskNotRequiredByBorderRadiusInside) {
+  // Verify that we do not create the ancestor clipping layer nor the mask layer
+  // when the child is contained within the rounded rect clip.
   SetBodyInnerHTML(
       "<style>"
       "  #ancestor {"
@@ -1690,15 +1692,14 @@ TEST_P(CompositedLayerMappingTest,
   CompositedLayerMapping* child_mapping =
       child_paint_layer->GetCompositedLayerMapping();
   ASSERT_TRUE(child_mapping);
-  EXPECT_TRUE(child_mapping->AncestorClippingLayer());
-  EXPECT_FALSE(child_mapping->AncestorClippingLayer()->MaskLayer());
-  EXPECT_FALSE(child_mapping->AncestorClippingMaskLayer());
+  EXPECT_FALSE(child_mapping->AncestorClippingLayer());
 }
 
 TEST_P(CompositedLayerMappingTest,
-       AncestorClipMaskNotRequiredByBorderRadiusOutside) {
+       AncestorClipAndMaskNotRequiredByBorderRadiusOutside) {
   // Verify that we do not create the mask layer when the child is outside
-  // the ancestors rectangular clip.
+  // the ancestors rectangular clip. Also verifies that we do create the
+  // AncestorClippingLayer in such cases.
   SetBodyInnerHTML(
       "<style>"
       "  #ancestor {"
