@@ -117,6 +117,30 @@
       "revId": "9d452d18c67679d4222db7a96e5da8a6615aae7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08d97b35_c37087dd",
+        "filename": "ios/chrome/browser/web/mailto_handler.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-08-02T01:50:06Z",
+      "side": 1,
+      "message": "Removed supportedHeaders from API. If a need comes up in the future, it can be added back either as a method or a new property that can be overridden by subclass.",
+      "parentUuid": "8099bf4d_d44d7ee4",
+      "range": {
+        "startLine": 82,
+        "startChar": 15,
+        "endLine": 82,
+        "endChar": 31
+      },
+      "revId": "9d452d18c67679d4222db7a96e5da8a6615aae7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
