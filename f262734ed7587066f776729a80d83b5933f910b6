@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d256b4d_dc5b7de1",
+        "filename": "ui/accessibility/platform/ax_snapshot_node_android_platform.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-02T21:54:52Z",
+      "side": 1,
+      "message": "You can just call node-\u003edata().HasState(test_state)\n\nYou may not need these helper functions at all, ideally\nyou can just use the helpers already in AXNodeData.",
+      "revId": "f262734ed7587066f776729a80d83b5933f910b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
