@@ -22,6 +22,30 @@
       "revId": "9748cc538ef46b4bc3c85777f29ab44ec8af85fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adb240ac_98b8922f",
+        "filename": "services/device/generic_sensor/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-08-02T20:30:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bda41ea4_35b4f6fb",
+      "range": {
+        "startLine": 63,
+        "startChar": 48,
+        "endLine": 64,
+        "endChar": 30
+      },
+      "revId": "9748cc538ef46b4bc3c85777f29ab44ec8af85fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
