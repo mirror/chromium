@@ -46,6 +46,29 @@
       "revId": "57b0f3375dbfb6a5214636cb04b9574e119e6b2d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a3d4cce1_736a3786",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_navigation_observer_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1205,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-08-02T14:34:19Z",
+      "side": 1,
+      "message": "nit (just thinking of ways to make this code a little cleaner, very optional).\n\nConsider adding a function VerifyNavigationEventExists(\u003cexpected params\u003e, \u003cwhole navlist\u003e) that loops through the list and confirms some element with the expected values exists there. A comparison function/operator for NavigationEvent would probably be useful too.",
+      "range": {
+        "startLine": 1205,
+        "startChar": 6,
+        "endLine": 1205,
+        "endChar": 14
+      },
+      "revId": "57b0f3375dbfb6a5214636cb04b9574e119e6b2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
