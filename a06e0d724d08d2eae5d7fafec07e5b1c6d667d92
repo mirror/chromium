@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4da0afe_26708377",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-08-02T03:20:06Z",
+      "side": 1,
+      "message": "Perhaps just my OCD. But, similar to coding style, please don\u0027t abbreviate in the change comments (for at least the first instance, and certainly in the title line). \n\nI personally like changes such as:\n\nbluetooth: Thing Being Changed.\nbluetooth: android: Thing Being Changed.\nbluetooth: web: Thing Being Changed.\n\nAt a glace it lets a skim reader know the main category of the change, and the scope (platform specific, at the web bluetooth layer, etc).",
+      "range": {
+        "startLine": 7,
+        "startChar": 40,
+        "endLine": 7,
+        "endChar": 45
+      },
+      "revId": "a06e0d724d08d2eae5d7fafec07e5b1c6d667d92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "789276f5_13554c63",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/service/reconnect-during.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-08-02T03:20:06Z",
+      "side": 1,
+      "message": "holds another connection in an iframe",
+      "range": {
+        "startLine": 30,
+        "startChar": 58,
+        "endLine": 31,
+        "endChar": 19
+      },
+      "revId": "a06e0d724d08d2eae5d7fafec07e5b1c6d667d92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac072680_b59a3064",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/service/reconnect-during.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-08-02T03:20:06Z",
+      "side": 1,
+      "message": "just \u0027reconnect\u0027, because there isn\u0027t a reconnect().",
+      "range": {
+        "startLine": 31,
+        "startChar": 66,
+        "endLine": 31,
+        "endChar": 77
+      },
+      "revId": "a06e0d724d08d2eae5d7fafec07e5b1c6d667d92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

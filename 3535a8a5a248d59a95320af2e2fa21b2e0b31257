@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "48487171_11f8d415",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/service/reconnect-during.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-08-02T03:20:06Z",
+      "side": 1,
+      "message": "Ok, I\u0027m wrong because I was trusting comments and things aren\u0027t implemented yet.\n\ngetHealthThermometerDeviceWithServicesDiscovered: I was expecting its setup in the iframe to add the fake attributes and that they are there and the main frame should be able to access them too.\n\nsee the TODO though, it just hasn\u0027t been done yet:\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/LayoutTests/resources/bluetooth/health-thermometer-iframe.html\n\nI\u0027m pretty sure that all the setup we see in getConnectedHealthThermometerDevice should be done in that iframe. (hopefully without copy paste code).",
+      "parentUuid": "95389bc4_6a4ba369",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 80
+      },
+      "revId": "3535a8a5a248d59a95320af2e2fa21b2e0b31257",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc2fed24_159d312b",
         "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/service/reconnect-during.js",
         "patchSetId": 8
