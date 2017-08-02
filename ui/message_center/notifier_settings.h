@@ -74,7 +74,8 @@ struct MESSAGE_CENTER_EXPORT NotifierId {
   GURL url;
 
   // The identifier of the profile where the notification is created. This is
-  // used for ChromeOS multi-profile support and can be empty.
+  // used for ChromeOS multi-profile support. If it is left empty and multiple
+  // accounts exist on the device, the notification will not be shown.
   std::string profile_id;
 
  private:
