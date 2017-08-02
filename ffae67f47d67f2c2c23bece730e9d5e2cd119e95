@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b9a6576_47c38759",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerProvider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-02T02:19:36Z",
+      "side": 1,
+      "message": "nit: everything in public will go away after Onion Soup, not sure if it\u0027s worth mentioning if it\u0027s not talking about a specific plan for this class",
+      "revId": "ffae67f47d67f2c2c23bece730e9d5e2cd119e95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caba5b97_0e26807a",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerProvider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-02T02:19:36Z",
+      "side": 1,
+      "message": "...and to talk about more specifically this provider_id should just go away once everything\u0027s mojofied / servicification is done.",
+      "revId": "ffae67f47d67f2c2c23bece730e9d5e2cd119e95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a7639ca_2a126bc8",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerProvider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-02T02:19:36Z",
+      "side": 1,
+      "message": "nit: felt a bit verbose to mention worker navigation thing here and below, maybe we could just remove this \u0027(...)\u0027 part",
+      "revId": "ffae67f47d67f2c2c23bece730e9d5e2cd119e95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e416ee53_8d978b7e",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerProvider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-02T02:19:36Z",
+      "side": 1,
+      "message": "...and slightly rephrase this here, say, \"...during startup. The instance is supposed to back up WorkerNavigator.serviceWorker but it is not really wired yet (crbug.com/371690).\"",
+      "revId": "ffae67f47d67f2c2c23bece730e9d5e2cd119e95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32075ad4_44592685",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerProvider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-02T02:19:36Z",
+      "side": 1,
+      "message": "Ok, maybe: \"The instance is used to implement ServiceWorkerRegistration#update() and ServiceWorkerRegistration#unregister(), just because WebServiceWorkerRegistration\u0027s corresponding methods need |provider_id| to send the requests to the browser process, and this class is used as the wrapper object that hides the ID details to Blink.\"\n\nor something like that?",
+      "revId": "ffae67f47d67f2c2c23bece730e9d5e2cd119e95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
