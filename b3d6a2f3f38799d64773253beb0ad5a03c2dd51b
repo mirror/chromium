@@ -329,6 +329,24 @@
     },
     {
       "key": {
+        "uuid": "c422595d_d27c6fdc",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab/new_tab_tracker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-08-02T23:21:57Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5cabe490_c96686b0",
+      "revId": "b3d6a2f3f38799d64773253beb0ad5a03c2dd51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c74aba1_abd89db2",
         "filename": "chrome/browser/feature_engagement_tracker/features/new_tab/new_tab_tracker_factory.h",
         "patchSetId": 3
