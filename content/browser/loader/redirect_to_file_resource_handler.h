@@ -97,6 +97,7 @@ class CONTENT_EXPORT RedirectToFileResourceHandler
 
   bool BufIsFull() const;
 
+  bool writes_pending_file_creation_ = false;
   CreateTemporaryFileStreamFunction create_temporary_file_stream_;
 
   // We allocate a single, fixed-size IO buffer (buf_) used to read from the
@@ -107,23 +108,23 @@ class CONTENT_EXPORT RedirectToFileResourceHandler
   // tracks the offset into buf_ that we are writing to disk.
 
   scoped_refptr<net::GrowableIOBuffer> buf_;
-  bool buf_write_pending_;
-  int write_cursor_;
+  bool buf_write_pending_ = false;
+  int write_cursor_ = 0;
 
   // Helper writer object which maintains references to the net::FileStream and
   // storage::ShareableFileReference. This is maintained separately so that,
   // on Windows, the temporary file isn't deleted until after it is closed.
   class Writer;
-  Writer* writer_;
+  Writer* writer_ = nullptr;
 
   // |next_buffer_size_| is the size of the buffer to be allocated on the next
   // OnWillRead() call.  We exponentially grow the size of the buffer allocated
   // when our owner fills our buffers. On the first OnWillRead() call, we
   // allocate a buffer of 32k and double it in OnReadCompleted() if the buffer
   // was filled, up to a maximum size of 512k.
-  int next_buffer_size_;
+  int next_buffer_size_ = kInitialReadBufSize;
 
-  bool completed_during_write_;
+  bool completed_during_write_ = false;
   GURL will_start_url_;
   net::URLRequestStatus completed_status_;
 
