@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d52515f_b16a5781",
+        "filename": "chrome/browser/net/profile_network_context_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-02T23:34:07Z",
+      "side": 1,
+      "message": "For my information: Does this imply that those tests end up posting messages on the profile_io_data_main_network_context_ end of the pipe?  Or are requests considered pending if they\u0027re just never bound to an implementation?",
+      "range": {
+        "startLine": 74,
+        "startChar": 11,
+        "endLine": 74,
+        "endChar": 16
+      },
+      "revId": "0d9082f9c09519757d387353618fece739e648c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "105976f7_0216fcec",
+        "filename": "chrome/browser/net/profile_network_context_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-02T23:34:07Z",
+      "side": 1,
+      "message": "nit, suggestion: Given that the order in which these routines are called is important, would it make sense to put CreateMainNetworkContext() first in the files, so the naive instinct matches with the requirement?",
+      "range": {
+        "startLine": 45,
+        "startChar": 28,
+        "endLine": 45,
+        "endChar": 29
+      },
+      "revId": "0d9082f9c09519757d387353618fece739e648c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0b8a215_1b4da755",
+        "filename": "chrome/browser/net/profile_network_context_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-02T23:34:07Z",
+      "side": 1,
+      "message": "nit, suggestion: I prefer to phrase method documentation comments as restrictions on the consumer, rather than as description of the consumer.  Prescriptive comments are (to me) clearer than descriptive ones in terms of what changes are allowed.  So I\u0027d prefer to have this phrased \"This must be called before SetUpProfileIODataMainContext.\".  (Same comment about the paired statement in that function\u0027s comment.)",
+      "range": {
+        "startLine": 45,
+        "startChar": 36,
+        "endLine": 45,
+        "endChar": 42
+      },
+      "revId": "0d9082f9c09519757d387353618fece739e648c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faba27d5_1cfe6eb6",
+        "filename": "chrome/browser/net/profile_network_context_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-02T23:34:07Z",
+      "side": 1,
+      "message": "Do you mean ProfileNetworkContextService::SetUpProfileIODataMainContext()?",
+      "range": {
+        "startLine": 59,
+        "startChar": 37,
+        "endLine": 59,
+        "endChar": 65
+      },
+      "revId": "0d9082f9c09519757d387353618fece739e648c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "709329b4_4dffd015",
+        "filename": "chrome/browser/net/profile_network_context_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-02T23:34:07Z",
+      "side": 1,
+      "message": "Confirming: The reason for the existence of this is so that CreateMainNetworkContext() can be called in the !network service case and we\u0027ll have something to vend because the pipe was setup in construction?",
+      "range": {
+        "startLine": 60,
+        "startChar": 40,
+        "endLine": 60,
+        "endChar": 72
+      },
+      "revId": "0d9082f9c09519757d387353618fece739e648c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e08d054_2c7d2c64",
+        "filename": "chrome/test/base/test_chrome_content_browser_client.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-02T23:34:07Z",
+      "side": 1,
+      "message": "nit, but could you amplify?  Specifically, I think the \"In particular\" phrase is describing what happens in the non-TestProfile case, and I presume that in the TestProfile case CreateNetworkContext is called after Profile::CreateRequestContext and there\u0027s more than one (zero?) StoragePartition per BrowserContextKeyedService, but I\u0027m not sure, and I\u0027d like the comment to be clearer.",
+      "range": {
+        "startLine": 24,
+        "startChar": 3,
+        "endLine": 24,
+        "endChar": 29
+      },
+      "revId": "0d9082f9c09519757d387353618fece739e648c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "935fbad4_d8a0e875",
+        "filename": "chrome/test/base/test_chrome_content_browser_client.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-02T23:34:07Z",
+      "side": 1,
+      "message": "Confirming I understand: So in the TestProfile+network service case we request from the network service, and in the TestProfile+!network service case we wrap, and just completely dodge the Chrome-level construction of the NetworkContext?",
+      "range": {
+        "startLine": 33,
+        "startChar": 5,
+        "endLine": 33,
+        "endChar": 16
+      },
+      "revId": "0d9082f9c09519757d387353618fece739e648c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bc83b94_048a15bf",
+        "filename": "content/public/browser/content_browser_client.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-02T23:34:07Z",
+      "side": 1,
+      "message": "Nit: It-\u003eIf.",
+      "range": {
+        "startLine": 836,
+        "startChar": 29,
+        "endLine": 836,
+        "endChar": 32
+      },
+      "revId": "0d9082f9c09519757d387353618fece739e648c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "851ef031_424001a0",
+        "filename": "content/public/browser/content_browser_client.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-02T23:34:07Z",
+      "side": 1,
+      "message": "Suggestion: Maybe phrase this instead in terms of the options available to the embedder?  \"If the network service is disabled, the embedder may return a NetworkContext, or it may return nullptr, in which case the StoragePartition will create one wrapping its URLRequestContext\"?",
+      "range": {
+        "startLine": 838,
+        "startChar": 36,
+        "endLine": 838,
+        "endChar": 37
+      },
+      "revId": "0d9082f9c09519757d387353618fece739e648c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
