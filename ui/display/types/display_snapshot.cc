@@ -57,6 +57,7 @@ DisplaySnapshot::~DisplaySnapshot() {}
 
 // static
 gfx::BufferFormat DisplaySnapshot::PrimaryFormat() {
+  // Use BGRX_8888 because old devices (e.g. Haswell) doesn't support BGRA fb.
   return gfx::BufferFormat::BGRX_8888;
 }
 

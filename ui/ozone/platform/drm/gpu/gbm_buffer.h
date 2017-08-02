@@ -54,11 +54,9 @@ class GbmBuffer : public ScanoutBuffer {
 
   // ScanoutBuffer:
   uint32_t GetFramebufferId() const override;
-  uint32_t GetOpaqueFramebufferId() const override;
   uint32_t GetHandle() const override;
   gfx::Size GetSize() const override;
   uint32_t GetFramebufferPixelFormat() const override;
-  uint32_t GetOpaqueFramebufferPixelFormat() const override;
   uint64_t GetFormatModifier() const override;
   const DrmDevice* GetDrmDevice() const override;
   bool RequiresGlFinish() const override;
@@ -88,11 +86,6 @@ class GbmBuffer : public ScanoutBuffer {
   gbm_bo* bo_;
   uint32_t framebuffer_ = 0;
   uint32_t framebuffer_pixel_format_ = 0;
-  // If |opaque_framebuffer_pixel_format_| differs from
-  // |framebuffer_pixel_format_| the following member is set to a valid fb,
-  // otherwise it is set to 0.
-  uint32_t opaque_framebuffer_ = 0;
-  uint32_t opaque_framebuffer_pixel_format_ = 0;
   uint64_t format_modifier_ = 0;
   uint32_t format_;
   uint32_t flags_;

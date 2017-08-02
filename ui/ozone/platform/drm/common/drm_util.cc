@@ -493,31 +493,6 @@ gfx::BufferFormat GetBufferFormatFromFourCCFormat(int format) {
   }
 }
 
-int GetFourCCFormatForOpaqueFramebuffer(gfx::BufferFormat format) {
-  // DRM atomic interface doesn't currently support specifying an alpha
-  // blending. We can simulate disabling alpha bleding creating an fb
-  // with a format without the alpha channel.
-  switch (format) {
-    case gfx::BufferFormat::RGBA_8888:
-    case gfx::BufferFormat::RGBX_8888:
-      return DRM_FORMAT_XBGR8888;
-    case gfx::BufferFormat::BGRA_8888:
-    case gfx::BufferFormat::BGRX_8888:
-      return DRM_FORMAT_XRGB8888;
-    case gfx::BufferFormat::BGR_565:
-      return DRM_FORMAT_RGB565;
-    case gfx::BufferFormat::UYVY_422:
-      return DRM_FORMAT_UYVY;
-    case gfx::BufferFormat::YUV_420_BIPLANAR:
-      return DRM_FORMAT_NV12;
-    case gfx::BufferFormat::YVU_420:
-      return DRM_FORMAT_YVU420;
-    default:
-      NOTREACHED();
-      return 0;
-  }
-}
-
 MovableDisplaySnapshots CreateMovableDisplaySnapshotsFromParams(
     const std::vector<DisplaySnapshot_Params>& displays) {
   MovableDisplaySnapshots snapshots;

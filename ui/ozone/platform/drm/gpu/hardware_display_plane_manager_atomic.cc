@@ -98,9 +98,7 @@ bool HardwareDisplayPlaneManagerAtomic::SetPlaneData(
     CrtcController* crtc) {
   HardwareDisplayPlaneAtomic* atomic_plane =
       static_cast<HardwareDisplayPlaneAtomic*>(hw_plane);
-  uint32_t framebuffer_id = overlay.z_order
-                                ? overlay.buffer->GetFramebufferId()
-                                : overlay.buffer->GetOpaqueFramebufferId();
+  uint32_t framebuffer_id = overlay.buffer->GetFramebufferId();
   if (!atomic_plane->SetPlaneData(
           plane_list->atomic_property_set.get(), crtc_id, framebuffer_id,
           overlay.display_bounds, src_rect, overlay.plane_transform)) {

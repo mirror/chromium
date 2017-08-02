@@ -75,8 +75,6 @@ std::vector<DisplaySnapshot_Params> CreateParamsFromSnapshot(
 int GetFourCCFormatFromBufferFormat(gfx::BufferFormat format);
 gfx::BufferFormat GetBufferFormatFromFourCCFormat(int format);
 
-int GetFourCCFormatForOpaqueFramebuffer(gfx::BufferFormat format);
-
 gfx::Size GetMaximumCursorSize(int fd);
 
 DisplayMode_Params GetDisplayModeParams(const display::DisplayMode& mode);
