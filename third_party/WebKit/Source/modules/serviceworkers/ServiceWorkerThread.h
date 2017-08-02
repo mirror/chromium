@@ -37,13 +37,14 @@
 
 namespace blink {
 
+class ServiceWorkerGlobalScopeProxy;
 class ServiceWorkerInstalledScriptsManager;
 struct GlobalScopeCreationParams;
 
 class MODULES_EXPORT ServiceWorkerThread final : public WorkerThread {
  public:
   ServiceWorkerThread(ThreadableLoadingContext*,
-                      WorkerReportingProxy&,
+                      ServiceWorkerGlobalScopeProxy*,
                       std::unique_ptr<ServiceWorkerInstalledScriptsManager>);
   ~ServiceWorkerThread() override;
 
@@ -59,6 +60,7 @@ class MODULES_EXPORT ServiceWorkerThread final : public WorkerThread {
   InstalledScriptsManager* GetInstalledScriptsManager() override;
 
  private:
+  Persistent<ServiceWorkerGlobalScopeProxy> global_scope_proxy_;
   std::unique_ptr<WorkerBackingThread> worker_backing_thread_;
   std::unique_ptr<ServiceWorkerInstalledScriptsManager>
       installed_scripts_manager_;
