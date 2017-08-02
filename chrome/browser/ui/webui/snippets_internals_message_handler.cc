@@ -14,6 +14,7 @@
 #include "base/command_line.h"
 #include "base/feature_list.h"
 #include "base/i18n/time_formatting.h"
+#include "base/json/json_reader.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/field_trial.h"
@@ -23,6 +24,7 @@
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/time/time.h"
 #include "base/values.h"
 #include "chrome/browser/android/chrome_feature_list.h"
 #include "chrome/browser/ntp_snippets/content_suggestions_service_factory.h"
@@ -35,16 +37,17 @@
 #include "components/ntp_snippets/pref_names.h"
 #include "components/ntp_snippets/remote/remote_suggestions_fetcher.h"
 #include "components/ntp_snippets/remote/remote_suggestions_provider.h"
+#include "components/ntp_snippets/remote/remote_suggestions_provider_impl.h"
 #include "components/ntp_snippets/switches.h"
 #include "components/offline_pages/core/offline_page_feature.h"
 #include "components/prefs/pref_service.h"
 #include "components/variations/variations_associated_data.h"
 #include "content/public/browser/web_ui.h"
 
-using ntp_snippets::ContentSuggestion;
 using ntp_snippets::Category;
 using ntp_snippets::CategoryInfo;
 using ntp_snippets::CategoryStatus;
+using ntp_snippets::ContentSuggestion;
 using ntp_snippets::KnownCategories;
 using ntp_snippets::RemoteSuggestionsProvider;
 using ntp_snippets::UserClassifier;
@@ -149,6 +152,15 @@ std::set<variations::VariationID> SnippetsExperiments() {
   return result;
 }
 
+std::string TimeToJSONTimeString(const base::Time time) {
+  base::Time::Exploded exploded;
+  time.UTCExplode(&exploded);
+  return base::StringPrintf(
+      "%04d-%02d-%02dT%02d:%02d:%02d.%03dZ", exploded.year, exploded.month,
+      exploded.day_of_month, exploded.hour, exploded.minute, exploded.second,
+      exploded.millisecond);
+}
+
 }  // namespace
 
 SnippetsInternalsMessageHandler::SnippetsInternalsMessageHandler(
@@ -191,6 +203,12 @@ void SnippetsInternalsMessageHandler::RegisterMessages() {
       base::Bind(&SnippetsInternalsMessageHandler::
                      FetchRemoteSuggestionsInTheBackground,
                  base::Unretained(this)));
+
+  web_ui()->RegisterMessageCallback(
+      "pushDummySuggestionIn10Seconds",
+      base::Bind(
+          &SnippetsInternalsMessageHandler::PushDummySuggestionIn10Seconds,
+          base::Unretained(this)));
 
   web_ui()->RegisterMessageCallback(
       "refreshContent",
@@ -346,6 +364,56 @@ void SnippetsInternalsMessageHandler::FetchRemoteSuggestionsInTheBackground(
   DCHECK_EQ(0u, args->GetSize());
   remote_suggestions_provider_->RefetchInTheBackground(
       RemoteSuggestionsProvider::FetchStatusCallback());
+}
+
+void SnippetsInternalsMessageHandler::PushDummySuggestionInternal() {
+  std::string json =
+      "{\"categories\" : [{"
+      "  \"id\": 1,"
+      "  \"localizedTitle\": \"section title\","
+      "  \"suggestions\" : [{"
+      "    \"ids\" : [\"http://url.com\"],"
+      "    \"title\" : \"Pushed Dummy Title %s\","
+      "    \"snippet\" : \"Pushed Dummy Snippet\","
+      "    \"fullPageUrl\" : \"http://url.com\","
+      "    \"creationTime\" : \"%s\","
+      "    \"expirationTime\" : \"%s\","
+      "    \"attribution\" : \"Pushed Dummy Publisher\","
+      "    \"imageUrl\" : \"https://www.google.com/favicon.ico\" "
+      "  }]"
+      "}]}";
+  json = base::StringPrintf(
+      json.c_str(),
+      base::UTF16ToUTF8(base::TimeFormatTimeOfDay(base::Time::Now())).c_str(),
+      TimeToJSONTimeString(base::Time::Now()).c_str(),
+      TimeToJSONTimeString(base::Time::Now() + base::TimeDelta::FromMinutes(60))
+          .c_str());
+
+  std::vector<ntp_snippets::FetchedCategory> fetched_categories;
+  if (!ntp_snippets::JsonToCategories(*base::JSONReader::Read(json),
+                                      &fetched_categories,
+                                      /*fetch_time=*/base::Time::Now())) {
+    NOTREACHED();
+    return;
+  }
+
+  DCHECK_EQ(1u, fetched_categories.size());
+  DCHECK_EQ(1u, fetched_categories[0].suggestions.size());
+
+  // TODO(vitaliii): Provide JSON directly to BreakingNewsAppHandler once it is
+  // connected to the provider.
+  static_cast<ntp_snippets::RemoteSuggestionsProviderImpl*>(
+      remote_suggestions_provider_)
+      ->PushArticleSuggestionsToTheFrontForDebugging(
+          std::move(fetched_categories[0].suggestions[0]));
+}
+
+void SnippetsInternalsMessageHandler::PushDummySuggestionIn10Seconds(
+    const base::ListValue* args) {
+  suggestion_push_timer_.Start(
+      FROM_HERE, base::TimeDelta::FromSeconds(10),
+      base::Bind(&SnippetsInternalsMessageHandler::PushDummySuggestionInternal,
+                 weak_ptr_factory_.GetWeakPtr()));
 }
 
 void SnippetsInternalsMessageHandler::SendAllContent() {

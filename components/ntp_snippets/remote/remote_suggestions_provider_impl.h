@@ -142,6 +142,9 @@ class RemoteSuggestionsProviderImpl final : public RemoteSuggestionsProvider {
   // the constructor.
   CachedImageFetcher& GetImageFetcherForTesting() { return image_fetcher_; }
 
+  void PushArticleSuggestionsToTheFrontForDebugging(
+      std::unique_ptr<RemoteSuggestion> suggestion);
+
  private:
   friend class RemoteSuggestionsProviderImplTest;
 
@@ -158,6 +161,14 @@ class RemoteSuggestionsProviderImpl final : public RemoteSuggestionsProvider {
                            CallsSchedulerWhenSignedIn);
   FRIEND_TEST_ALL_PREFIXES(RemoteSuggestionsProviderImplTest,
                            CallsSchedulerWhenSignedOut);
+  // TODO(vitaliii): Remove once PrependArticleSuggestion is set as a callback
+  // in BreakingNewsListener.
+  FRIEND_TEST_ALL_PREFIXES(RemoteSuggestionsProviderImplTest,
+                           PrependingShouldNotAffectOtherSuggestions);
+  FRIEND_TEST_ALL_PREFIXES(RemoteSuggestionsProviderImplTest,
+                           ShouldNotPrependDismissedSuggestion);
+  FRIEND_TEST_ALL_PREFIXES(RemoteSuggestionsProviderImplTest,
+                           ShouldRestorePrependedSuggestionOnTopAfterRestart);
 
   // Possible state transitions:
   //       NOT_INITED --------+
@@ -285,6 +296,10 @@ class RemoteSuggestionsProviderImpl final : public RemoteSuggestionsProvider {
   void IntegrateSuggestions(Category category,
                             CategoryContent* content,
                             RemoteSuggestion::PtrVector new_suggestions);
+
+  // Adds newly available suggestion at the top of Articles category.
+  void PrependArticleSuggestion(
+      std::unique_ptr<RemoteSuggestion> remote_suggestion);
 
   // Dismisses a suggestion within a given category content.
   // Note that this modifies the suggestion datastructures of |content|
