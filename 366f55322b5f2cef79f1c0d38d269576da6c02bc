@@ -34,6 +34,24 @@
       "revId": "366f55322b5f2cef79f1c0d38d269576da6c02bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d78fb96_65573c9e",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-02T18:05:10Z",
+      "side": 1,
+      "message": "Right now mapping a sensor type to an index makes this hard but I\u0027ve discussed with Jun the possibility of reworking the way that fusion sensors read concrete sensors so that they have access to the entire reading buffer. This would allow us to simply index into it by type instead of going through a specific mapping maintained by a PlatformSensor object.",
+      "parentUuid": "8eb1b6d7_9440aa81",
+      "revId": "366f55322b5f2cef79f1c0d38d269576da6c02bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
