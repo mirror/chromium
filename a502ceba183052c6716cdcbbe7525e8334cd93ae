@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "2783bd2a_8671d72c",
+        "filename": "ash/root_window_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 687,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-02T14:46:45Z",
+      "side": 1,
+      "message": "maybe: \"The display ids for existing shelf instances have changed, so request re-initialization...\"?",
+      "revId": "a502ceba183052c6716cdcbbe7525e8334cd93ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d403cc0_cee3eeff",
+        "filename": "ash/root_window_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-02T14:46:45Z",
+      "side": 1,
+      "message": "Should the Shelf itself be the observer?\nOtherwise, CC\u0027ing sky for simple changes to RWC, he may wish to review.",
+      "revId": "a502ceba183052c6716cdcbbe7525e8334cd93ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f160f4dd_f37206a8",
+        "filename": "ash/root_window_controller.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-02T14:46:45Z",
+      "side": 1,
+      "message": "Should we also be watching for OnWindowTreeHostReusedForDisplay?\n(maybe in a separate cl, I\u0027m unsure how that defect would manifest)",
+      "revId": "a502ceba183052c6716cdcbbe7525e8334cd93ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a404ea2a_48d699ea",
         "filename": "ash/root_window_controller_unittest.cc",
         "patchSetId": 1
@@ -19,6 +70,58 @@
     },
     {
       "key": {
+        "uuid": "9b1c5d6e_6c520da1",
+        "filename": "ash/root_window_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-02T14:46:45Z",
+      "side": 1,
+      "message": "Hmm, I\u0027ve hit similar issues before, maybe also use a unique name, like ShelfInitializationObserver? Also, maybe add a brief class comment?",
+      "parentUuid": "a404ea2a_48d699ea",
+      "revId": "a502ceba183052c6716cdcbbe7525e8334cd93ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f12dc5a1_ecdaf677",
+        "filename": "ash/root_window_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-02T14:46:45Z",
+      "side": 1,
+      "message": "nit: private: DISALLOW_COPY_AND_ASSIGN",
+      "revId": "a502ceba183052c6716cdcbbe7525e8334cd93ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5899bcee_009f3247",
+        "filename": "ash/root_window_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-02T14:46:45Z",
+      "side": 1,
+      "message": "nit: check the init count before swapping displays, to ensure it changes?",
+      "revId": "a502ceba183052c6716cdcbbe7525e8334cd93ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bce1f164_794e853b",
         "filename": "ash/root_window_controller_unittest.cc",
         "patchSetId": 1
@@ -30,6 +133,24 @@
       "writtenOn": "2017-08-02T04:53:42Z",
       "side": 1,
       "message": "I suspect this test will have to be either rewritten or thrown away when you move prefs loading into ash.",
+      "revId": "a502ceba183052c6716cdcbbe7525e8334cd93ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85fc93ee_19dc74ac",
+        "filename": "ash/root_window_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-02T14:46:45Z",
+      "side": 1,
+      "message": "Possibly, I\u0027m not sure we\u0027ll have a production use for those first three ShelfObserver functions after switching to prefs observation. Instead, maybe we could simulate display swapping and check that unique per-display shelf prefs are respected? (to be clear, what you have here is fine for now)",
+      "parentUuid": "bce1f164_794e853b",
       "revId": "a502ceba183052c6716cdcbbe7525e8334cd93ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
