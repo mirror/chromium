@@ -69,6 +69,30 @@
       "revId": "57b0f3375dbfb6a5214636cb04b9574e119e6b2d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5b592de3_a95a29ce",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_navigation_observer_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1205,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-02T15:44:44Z",
+      "side": 1,
+      "message": "ACK.\nI thought of that too. Though since only in these two test cases the navigation order of 2 events maybe non-deterministic, in other cases they should and must be deterministic. Therefore, I opt for this easy fix.",
+      "parentUuid": "a3d4cce1_736a3786",
+      "range": {
+        "startLine": 1205,
+        "startChar": 6,
+        "endLine": 1205,
+        "endChar": 14
+      },
+      "revId": "57b0f3375dbfb6a5214636cb04b9574e119e6b2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
