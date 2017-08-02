@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8c87216_2d3db7a6",
+        "filename": "components/autofill/content/common/autofill_driver.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-08-02T14:49:23Z",
+      "side": 1,
+      "message": "Please also comment on the meaning of the three arguments, in particular |should_show_not_secure_warning|.",
+      "range": {
+        "startLine": 111,
+        "startChar": 5,
+        "endLine": 112,
+        "endChar": 37
+      },
+      "revId": "6745b75ba804e24787118f13dcfc8396e71a775f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "108092b5_d2f6483c",
+        "filename": "components/autofill/content/common/autofill_driver.mojom",
+        "patchSetId": 9
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-08-02T14:49:23Z",
+      "side": 1,
+      "message": "nit: The indentation seems off.",
+      "range": {
+        "startLine": 114,
+        "startChar": 35,
+        "endLine": 114,
+        "endChar": 38
+      },
+      "revId": "6745b75ba804e24787118f13dcfc8396e71a775f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a2ce192_0eb926f8",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1046,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-08-02T14:49:23Z",
+      "side": 1,
+      "message": "The design doc [1] says: \u0027“Show all passwords” addon is always shown when the suggestion popup is shown.\u0027 Is |!was_password_autofilled_| equivalent to \"when the suggestion popup is shown\"? Given that this callsite is already in the ShowSuggestions method, it seems like it should not be necessary to check |was_password_autofilled_|. \n\n[1] https://docs.google.com/document/d/1ehDiymXXbsSInSIwfX-WQZPw0GUmvlqe_FYQdkwsoSo/edit?pli\u003d1#heading\u003dh.8g1jxucdjhfi",
+      "range": {
+        "startLine": 1046,
+        "startChar": 11,
+        "endLine": 1046,
+        "endChar": 35
+      },
+      "revId": "6745b75ba804e24787118f13dcfc8396e71a775f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7da17eec_5c5bd49a",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-08-02T14:49:23Z",
+      "side": 1,
+      "message": "The restriction of the UI is not enforced by ManualFallbackSuggestion, but by the particular callsite. So the second comment sentence should be at that callsite rather than at the method declaration.",
+      "range": {
+        "startLine": 118,
+        "startChar": 26,
+        "endLine": 119,
+        "endChar": 16
+      },
+      "revId": "6745b75ba804e24787118f13dcfc8396e71a775f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15f958c6_9621b6a9",
+        "filename": "components/password_manager/core/browser/password_autofill_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-08-02T14:49:23Z",
+      "side": 1,
+      "message": "Please explain what |icon_str| means. Also, is the passed value the same on all callsites? In that case, should the string be hard-coded inside this methods instead?",
+      "range": {
+        "startLine": 112,
+        "startChar": 0,
+        "endLine": 114,
+        "endChar": 14
+      },
+      "revId": "6745b75ba804e24787118f13dcfc8396e71a775f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e6f297c_6716b991",
+        "filename": "components/password_manager/core/browser/password_autofill_manager_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 967,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-08-02T14:49:23Z",
+      "side": 1,
+      "message": "This could be const as well, right?",
+      "range": {
+        "startLine": 967,
+        "startChar": 2,
+        "endLine": 967,
+        "endChar": 40
+      },
+      "revId": "6745b75ba804e24787118f13dcfc8396e71a775f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7db82778_ae92b10a",
+        "filename": "components/password_manager/core/browser/password_autofill_manager_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 973,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-08-02T14:49:23Z",
+      "side": 1,
+      "message": "nit: The name |elements| suggests a container. Instead, this is a matcher, so please consider renaming to, e.g., |elements_matcher|.",
+      "range": {
+        "startLine": 973,
+        "startChar": 7,
+        "endLine": 973,
+        "endChar": 15
+      },
+      "revId": "6745b75ba804e24787118f13dcfc8396e71a775f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23bd05e1_1ed555a5",
+        "filename": "components/password_manager/core/browser/password_autofill_manager_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 988,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-08-02T14:49:23Z",
+      "side": 1,
+      "message": "Would it be worth including a TODO with a bug number here to explain what are the plans for testing the functionality on Android?",
+      "range": {
+        "startLine": 987,
+        "startChar": 5,
+        "endLine": 988,
+        "endChar": 55
+      },
+      "revId": "6745b75ba804e24787118f13dcfc8396e71a775f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3ce9722_df9b23c6",
+        "filename": "components/password_manager/core/browser/password_autofill_manager_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1021,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-08-02T14:49:23Z",
+      "side": 1,
+      "message": "nit: Is this false (as opposed to true in the test above) the reason why the HTTP warning is not shown? If so, let\u0027s highlight that either by an inline comment or making it a named const bool variable with a name indicating the meaning.",
+      "range": {
+        "startLine": 1021,
+        "startChar": 49,
+        "endLine": 1021,
+        "endChar": 54
+      },
+      "revId": "6745b75ba804e24787118f13dcfc8396e71a775f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
