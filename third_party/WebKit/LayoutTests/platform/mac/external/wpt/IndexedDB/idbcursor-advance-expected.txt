@@ -1,0 +1,9 @@
+This is a testharness.js-based test.
+FAIL IDBCursor.advance() - advances assert_unreached: open should succeed Reached unreachable code
+FAIL IDBCursor.advance() - advances backwards assert_unreached: open should succeed Reached unreachable code
+FAIL IDBCursor.advance() - skip far forward assert_unreached: open should succeed Reached unreachable code
+FAIL IDBCursor.advance() - within range assert_unreached: open should succeed Reached unreachable code
+FAIL IDBCursor.advance() - within single key range assert_unreached: open should succeed Reached unreachable code
+FAIL IDBCursor.advance() - within single key range, with several results assert_unreached: open should succeed Reached unreachable code
+Harness: the test ran to completion.
+

@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+FAIL IndexedDB inside of a WebWorker  assert_equals: get(1) in worker expected "test" but got "open.error"
+Harness: the test ran to completion.
+
