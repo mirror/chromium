@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4cb5e59d_d8c9d7b7",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-08-02T21:58:14Z",
+      "side": 1,
+      "message": "EncodeCallback is a OnceCallback. I\u0027d actually asked the same question of Sergey a while back, and he answered it well: \"The callback here is a base::OnceCallback, which means it can be called only once. It\u0027s enforced by allowing Run() call to be called only on r-value. The r-value version of Run() resets the callback, which ensures it\u0027s not possible to call it again.\"",
+      "parentUuid": "27d0d6a8_43b72100",
+      "range": {
+        "startLine": 37,
+        "startChar": 33,
+        "endLine": 37,
+        "endChar": 0
+      },
+      "revId": "f7eea84c1e37ff117c3313c4306b2dc36d4fc465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9b16ec9_cbde947f",
         "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
         "patchSetId": 12
@@ -45,6 +69,30 @@
       "revId": "f7eea84c1e37ff117c3313c4306b2dc36d4fc465",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59e24710_b9904e2e",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-08-02T21:58:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9b16ec9_cbde947f",
+      "range": {
+        "startLine": 61,
+        "startChar": 78,
+        "endLine": 61,
+        "endChar": 0
+      },
+      "revId": "f7eea84c1e37ff117c3313c4306b2dc36d4fc465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1e031a5b_c8c19df2",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-08-02T21:58:14Z",
+      "side": 1,
+      "message": "I will add a DCHECK here for duration \u003e 0 - but currently, params.duration will always be positive. See the following:\n\nWith the current frame scheduler, it will not be zero. The duration is always set to a constant positive number, kTargetFrameInterval, calculated here:\nhttps://cs.chromium.org/chromium/src/remoting/protocol/webrtc_frame_scheduler_simple.cc?rcl\u003ddd536442dfab83c16649ec1709a28801f5d0656c\u0026l\u003d22\nAssuming the target frame rate is set logically (i.e. to a positive number), duration will always be positive. Currently, the target frame rate is set just above that linked line, to 30.",
+      "parentUuid": "73504c1f_89ea29e5",
+      "range": {
+        "startLine": 74,
+        "startChar": 72,
+        "endLine": 74,
+        "endChar": 0
+      },
+      "revId": "f7eea84c1e37ff117c3313c4306b2dc36d4fc465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c5cb2da_369f29d6",
         "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
         "patchSetId": 12
@@ -82,6 +154,30 @@
       "writtenOn": "2017-08-02T20:43:01Z",
       "side": 1,
       "message": "My understanding is that this can be an expensive operation. Can it be hardware-accelerated too?",
+      "range": {
+        "startLine": 78,
+        "startChar": 30,
+        "endLine": 78,
+        "endChar": 0
+      },
+      "revId": "f7eea84c1e37ff117c3313c4306b2dc36d4fc465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75d2dd1e_81fb3c4c",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-08-02T21:58:14Z",
+      "side": 1,
+      "message": "Either libyuv would need to be hardware accelerated (which I don\u0027t think it is) or we\u0027d need a new I420 conversion that was hardware accelerated on multiple platforms. Someone else from Chrome Media might know if there\u0027s any facilities within Chrome for handling this already. We could get lucky (like we did for hardware encoding) and find that it\u0027s already been done. I haven\u0027t stumbled into anything yet, though.\n\nA first stepping stone to speeding up this call is to make sure that libyuv is compiled with all relevant CPU optimizations and extensions, which I did for ARM. (i.e. libyuv is compiled with ARM NEON enabled)",
+      "parentUuid": "2c5cb2da_369f29d6",
       "range": {
         "startLine": 78,
         "startChar": 30,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "41a70103_0a4ccafc",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-08-02T21:58:14Z",
+      "side": 1,
+      "message": "`git cl format` seems to want it this way - the lines are exactly 81 chars long each",
+      "parentUuid": "b74c4cf5_c16eabd7",
+      "range": {
+        "startLine": 141,
+        "startChar": 49,
+        "endLine": 141,
+        "endChar": 0
+      },
+      "revId": "f7eea84c1e37ff117c3313c4306b2dc36d4fc465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4319cd70_05c1b7e0",
         "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
         "patchSetId": 12
@@ -137,6 +257,30 @@
       "revId": "f7eea84c1e37ff117c3313c4306b2dc36d4fc465",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72016be1_766cf8fc",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-08-02T21:58:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4319cd70_05c1b7e0",
+      "range": {
+        "startLine": 153,
+        "startChar": 39,
+        "endLine": 153,
+        "endChar": 0
+      },
+      "revId": "f7eea84c1e37ff117c3313c4306b2dc36d4fc465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
