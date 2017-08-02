@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "55372118_72612d3a",
+        "filename": "ui/app_list/search_result.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-02T18:06:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5221522c_7a52910f",
+      "revId": "3998aa9500975213df4927c67e7fe3d8712ddaf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9068c4ab_5d70c375",
         "filename": "ui/app_list/views/search_result_tile_item_list_view.h",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "babe9251_2fe18f3f",
+        "filename": "ui/app_list/views/search_result_tile_item_list_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-02T18:06:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9068c4ab_5d70c375",
+      "revId": "3998aa9500975213df4927c67e7fe3d8712ddaf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b289e56_58cef055",
         "filename": "ui/app_list/views/search_result_view.cc",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "3998aa9500975213df4927c67e7fe3d8712ddaf9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90a78e0b_42ed6635",
+        "filename": "ui/app_list/views/search_result_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1147616
+      },
+      "writtenOn": "2017-08-02T18:06:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b289e56_58cef055",
+      "revId": "3998aa9500975213df4927c67e7fe3d8712ddaf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
