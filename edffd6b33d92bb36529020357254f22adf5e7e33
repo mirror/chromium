@@ -163,6 +163,30 @@
       "revId": "edffd6b33d92bb36529020357254f22adf5e7e33",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd2e7ae4_d38fbfc5",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-02T03:36:26Z",
+      "side": 1,
+      "message": "I\u0027ll give you a 4th option.  Fix it.  :-P\n\nIn my quick read of this code, I think this is a legitimate check.  Stop() is supposed to stop all in-progress calls and prevent future changes.  It does this by resetting the |fetcher_| and setting |done_| to true.  However, when contextual suggestions are enabled in the new flow, suppose Stop() is called while fetching an oauth token.  In that case, there is no |fetcher_| to stop.  The contextual suggestion service will then start a fetcher.  When that fetcher completes, it\u0027ll call into OnURLFetchComplete().  This function expected |done_| to be false, as there was a fetcher in progress, and that\u0027s what it\u0027s checking.\n\nYou need to cancel the context suggestion service, regardless of what state it\u0027s in during its control flow, when Stop() is called.",
+      "parentUuid": "e190568b_9d38c123",
+      "range": {
+        "startLine": 304,
+        "startChar": 17,
+        "endLine": 304,
+        "endChar": 0
+      },
+      "revId": "edffd6b33d92bb36529020357254f22adf5e7e33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
