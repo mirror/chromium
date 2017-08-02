@@ -29,6 +29,7 @@ struct CONTENT_EXPORT SyntheticPointerActionParams {
     PRESS,
     MOVE,
     RELEASE,
+    LEAVE,
     IDLE,
     POINTER_ACTION_TYPE_MAX = IDLE
   };
@@ -51,7 +52,8 @@ struct CONTENT_EXPORT SyntheticPointerActionParams {
 
   void set_position(const gfx::PointF& position) {
     DCHECK(pointer_action_type_ == PointerActionType::PRESS ||
-           pointer_action_type_ == PointerActionType::MOVE);
+           pointer_action_type_ == PointerActionType::MOVE ||
+           pointer_action_type_ == PointerActionType::LEAVE);
     position_ = position;
   }
 
@@ -71,7 +73,8 @@ struct CONTENT_EXPORT SyntheticPointerActionParams {
 
   gfx::PointF position() const {
     DCHECK(pointer_action_type_ == PointerActionType::PRESS ||
-           pointer_action_type_ == PointerActionType::MOVE);
+           pointer_action_type_ == PointerActionType::MOVE ||
+           pointer_action_type_ == PointerActionType::LEAVE);
     return position_;
   }
 

@@ -423,7 +423,12 @@ bool LegacyInputRouterImpl::OfferToRenderer(
                  .data.fling_start.velocity_x != 0.0 ||
          static_cast<const blink::WebGestureEvent&>(input_event)
                  .data.fling_start.velocity_y != 0.0);
-
+  if (WebInputEvent::IsMouseEventType(input_event.GetType())) {
+    const blink::WebMouseEvent& mouse =
+        static_cast<const blink::WebMouseEvent&>(input_event);
+    LOG(ERROR) << "DesktopWindowTreeHostX11::DispatchMouseEvent "
+               << mouse.click_count << " " << (int)mouse.button;
+  }
   // This conversion is temporary. WebInputEvent should be generated
   // directly from ui::Event with the viewport coordinates. See
   // crbug.com/563730.
