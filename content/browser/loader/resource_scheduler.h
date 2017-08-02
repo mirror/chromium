@@ -14,6 +14,7 @@
 #include <vector>
 
 #include "base/compiler_specific.h"
+#include "base/feature_list.h"
 #include "base/macros.h"
 #include "base/sequence_checker.h"
 #include "content/common/content_export.h"
@@ -131,13 +132,12 @@ class CONTENT_EXPORT ResourceScheduler {
     return GetMaxDelayableRequestsExperimentConfig();
   }
 
-  // Public for tests
+  // Public for tests.
   static net::EffectiveConnectionType
-  GetMaxDelayableRequestsExperimentMaxECTForTests() {
-    return GetMaxDelayableRequestsExperimentMaxECT();
-  }
+  GetMaxECTForMaxDelayableRequestsNetworkOverrideForTests();
 
  private:
+  class Client;
   class RequestQueue;
   class ScheduledResourceRequest;
   struct RequestPriorityParams;
@@ -145,7 +145,23 @@ class CONTENT_EXPORT ResourceScheduler {
     bool operator()(const ScheduledResourceRequest* a,
                     const ScheduledResourceRequest* b) const;
   };
-  class Client;
+
+  struct NonDelayableThrottlesDelayableExperiment {
+    // The maximum ECT for which the experiment should be enabled.
+    const net::EffectiveConnectionType max_effective_connection_type;
+
+    // The weight of non-delayable requests for the throttling of delayable
+    // requests.
+    const double non_delayable_weight;
+
+    // This method computes the correct weight to use based on the current
+    // effective connection type. If it is out of bounds, it returns 0,
+    // effectively disabling the experiment.
+    double GetCurrentNonDelayableWeight(
+        const net::NetworkQualityEstimator* network_quality_estimator) const;
+
+    NonDelayableThrottlesDelayableExperiment();
+  };
 
   typedef int64_t ClientId;
   typedef std::map<ClientId, Client*> ClientMap;
@@ -173,7 +189,8 @@ class CONTENT_EXPORT ResourceScheduler {
 
   // Reads the experiment parameters to determine the maximum effective
   // connection type for which the experiment should be run.
-  static net::EffectiveConnectionType GetMaxDelayableRequestsExperimentMaxECT();
+  static net::EffectiveConnectionType GetMaxECTForExperiment(
+      const base::Feature& experiment);
 
   // This function computes the maximum number of delayable requests to allow
   // based on the configuration of the experiment
@@ -209,6 +226,11 @@ class CONTENT_EXPORT ResourceScheduler {
   // The maximum ECT for which the maximum delayable requests in flight should
   // be overridden.
   const net::EffectiveConnectionType max_delayable_requests_threshold_;
+
+  // Parameters for the throttling of non-delayable requests in the
+  // presence of delayable requests.
+  const NonDelayableThrottlesDelayableExperiment
+      non_delayable_throttles_delayable_experiment_;
 
   SEQUENCE_CHECKER(sequence_checker_);
 
