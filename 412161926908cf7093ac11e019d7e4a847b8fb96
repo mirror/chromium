@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "15e82575_2da400eb",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 2886,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-02T16:56:47Z",
+      "side": 1,
+      "message": "Ah, right. It\u0027s kind of painful to try and correctly mock out the service environment in a unit test. I think it\u0027s reasonable to bypass this filtering in a test environment.\n\nEven if you did something to make it work, it would either be hard to maintain (i.e. would have to replicate a large chunk of the renderer manifest within the unittest manifest) or it would be just as cheesy as bypassing on a null connector (i.e. you would add a wildcard capability to the unittest).",
+      "parentUuid": "c46e3e6c_6290172e",
+      "revId": "412161926908cf7093ac11e019d7e4a847b8fb96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6f51e843_206c3926",
         "filename": "content/browser/frame_host/render_frame_host_interface_provider_unittest.cc",
         "patchSetId": 33
