@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59bfd117_cfe9837e",
+        "filename": "third_party/WebKit/Source/core/paint/PaintTiming.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-08-02T04:03:06Z",
+      "side": 1,
+      "message": "Is this just for First*PaintRendered()? If so, I\u0027d prefer to expose them as public functions.",
+      "revId": "25424c4b5cf4208313d9d0dd66f061ae632e8ed3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "980add63_1d1979ad",
+        "filename": "third_party/WebKit/Source/core/paint/PaintTiming.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1115941
+      },
+      "writtenOn": "2017-08-02T04:03:06Z",
+      "side": 1,
+      "message": "Maybe we can just make FirstMeaningfulPaintDetectorTest a friend class of this.",
+      "revId": "25424c4b5cf4208313d9d0dd66f061ae632e8ed3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
