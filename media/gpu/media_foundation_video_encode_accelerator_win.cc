@@ -75,8 +75,11 @@ struct MediaFoundationVideoEncodeAccelerator::BitstreamBufferRef {
                      std::unique_ptr<base::SharedMemory> shm,
                      size_t size)
       : id(id), shm(std::move(shm)), size(size) {}
+  BitstreamBufferRef(int32_t id, uint8_t* buffer, size_t size)
+      : id(id), buffer(buffer), size(size) {}
   const int32_t id;
   const std::unique_ptr<base::SharedMemory> shm;
+  uint8_t* buffer;
   const size_t size;
 
  private:
@@ -238,18 +241,6 @@ bool MediaFoundationVideoEncodeAccelerator::Initialize(
   return SUCCEEDED(hr);
 }
 
-void MediaFoundationVideoEncodeAccelerator::Encode(
-    const scoped_refptr<VideoFrame>& frame,
-    bool force_keyframe) {
-  DVLOG(3) << __func__;
-  DCHECK(encode_client_task_runner_->BelongsToCurrentThread());
-
-  encoder_thread_task_runner_->PostTask(
-      FROM_HERE, base::Bind(&MediaFoundationVideoEncodeAccelerator::EncodeTask,
-                            encoder_task_weak_factory_.GetWeakPtr(), frame,
-                            force_keyframe));
-}
-
 void MediaFoundationVideoEncodeAccelerator::UseOutputBitstreamBuffer(
     const BitstreamBuffer& buffer) {
   DVLOG(3) << __func__ << ": buffer size=" << buffer.size();
@@ -277,6 +268,41 @@ void MediaFoundationVideoEncodeAccelerator::UseOutputBitstreamBuffer(
       base::Bind(
           &MediaFoundationVideoEncodeAccelerator::UseOutputBitstreamBufferTask,
           encoder_task_weak_factory_.GetWeakPtr(), base::Passed(&buffer_ref)));
+}
+
+void MediaFoundationVideoEncodeAccelerator::UseOutputBitstreamBuffer(
+    int32_t id,
+    uint8_t* buffer,
+    size_t size) {
+  DVLOG(3) << __func__ << ": buffer size=" << size;
+  DCHECK(encode_client_task_runner_->BelongsToCurrentThread());
+
+  if (size < bitstream_buffer_size_) {
+    DLOG(ERROR) << "Output buffer isn't big enough: " << size << " vs. "
+                << bitstream_buffer_size_;
+    NotifyError(kInvalidArgumentError);
+    return;
+  }
+
+  std::unique_ptr<BitstreamBufferRef> buffer_ref(
+      new BitstreamBufferRef(id, buffer, size));
+  encoder_thread_task_runner_->PostTask(
+      FROM_HERE,
+      base::Bind(
+          &MediaFoundationVideoEncodeAccelerator::UseOutputBitstreamBufferTask,
+          encoder_task_weak_factory_.GetWeakPtr(), base::Passed(&buffer_ref)));
+}
+
+void MediaFoundationVideoEncodeAccelerator::Encode(
+    const scoped_refptr<VideoFrame>& frame,
+    bool force_keyframe) {
+  DVLOG(3) << __func__;
+  DCHECK(encode_client_task_runner_->BelongsToCurrentThread());
+
+  encoder_thread_task_runner_->PostTask(
+      FROM_HERE, base::Bind(&MediaFoundationVideoEncodeAccelerator::EncodeTask,
+                            encoder_task_weak_factory_.GetWeakPtr(), frame,
+                            force_keyframe));
 }
 
 void MediaFoundationVideoEncodeAccelerator::RequestEncodingParametersChange(
@@ -622,7 +648,7 @@ void MediaFoundationVideoEncodeAccelerator::ProcessOutput() {
 
   {
     MediaBufferScopedPointer scoped_buffer(output_buffer.Get());
-    memcpy(buffer_ref->shm->memory(), scoped_buffer.get(), size);
+    memcpy(buffer_ref->buffer, scoped_buffer.get(), size);
   }
 
   encode_client_task_runner_->PostTask(
@@ -658,8 +684,7 @@ void MediaFoundationVideoEncodeAccelerator::ReturnBitstreamBuffer(
   DVLOG(3) << __func__;
   DCHECK(encoder_thread_task_runner_->BelongsToCurrentThread());
 
-  memcpy(buffer_ref->shm->memory(), encode_output->memory(),
-         encode_output->size());
+  memcpy(buffer_ref->buffer, encode_output->memory(), encode_output->size());
   encode_client_task_runner_->PostTask(
       FROM_HERE,
       base::Bind(&Client::BitstreamBufferReady, encode_client_, buffer_ref->id,

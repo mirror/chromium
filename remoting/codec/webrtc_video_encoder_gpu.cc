@@ -4,6 +4,7 @@
 
 #include "remoting/codec/webrtc_video_encoder_gpu.h"
 
+#include <cstdlib>
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/logging.h"
@@ -27,7 +28,9 @@ const int kWebrtcVideoEncoderGpuOutputBufferCount = 1;
 
 namespace remoting {
 
-WebrtcVideoEncoderGpu::~WebrtcVideoEncoderGpu() {}
+WebrtcVideoEncoderGpu::~WebrtcVideoEncoderGpu() {
+  FreeOutputBuffers();
+}
 
 void WebrtcVideoEncoderGpu::Encode(std::unique_ptr<webrtc::DesktopFrame> frame,
                                    const FrameParams& params,
@@ -107,12 +110,12 @@ void WebrtcVideoEncoderGpu::RequireBitstreamBuffers(
   input_coded_size_ = input_coded_size;
   output_buffer_size_ = output_buffer_size;
 
-  output_buffers_.clear();
+  FreeOutputBuffers();
 
   for (unsigned int i = 0; i < kWebrtcVideoEncoderGpuOutputBufferCount; ++i) {
-    auto shm = base::MakeUnique<base::SharedMemory>();
-    LOG_ASSERT(shm->CreateAndMapAnonymous(output_buffer_size_));
-    output_buffers_.push_back(std::move(shm));
+    uint8_t* buffer = (uint8_t*)malloc(sizeof(uint8_t) * output_buffer_size_);
+    DCHECK(buffer);
+    output_buffers_.push_back(buffer);
   }
 
   for (size_t i = 0; i < output_buffers_.size(); ++i) {
@@ -137,9 +140,8 @@ void WebrtcVideoEncoderGpu::BitstreamBufferReady(int32_t bitstream_buffer_id,
 
   std::unique_ptr<EncodedFrame> encoded_frame =
       base::MakeUnique<EncodedFrame>();
-  base::SharedMemory* output_buffer =
-      output_buffers_[bitstream_buffer_id].get();
-  encoded_frame->data.assign(reinterpret_cast<char*>(output_buffer->memory()),
+  uint8_t* output_buffer = output_buffers_[bitstream_buffer_id];
+  encoded_frame->data.assign(reinterpret_cast<char*>(output_buffer),
                              payload_size);
   encoded_frame->key_frame = key_frame;
   encoded_frame->size = webrtc::DesktopSize(input_coded_size_.width(),
@@ -191,9 +193,19 @@ bool WebrtcVideoEncoderGpu::Initialize() {
 void WebrtcVideoEncoderGpu::UseOutputBitstreamBufferId(
     int32_t bitstream_buffer_id) {
   DVLOG(3) << __func__ << " id=" << bitstream_buffer_id;
-  video_encode_accelerator_->UseOutputBitstreamBuffer(media::BitstreamBuffer(
-      bitstream_buffer_id, output_buffers_[bitstream_buffer_id]->handle(),
-      output_buffer_size_));
+  video_encode_accelerator_->UseOutputBitstreamBuffer(
+      bitstream_buffer_id, output_buffers_[bitstream_buffer_id],
+      // TODO(gusss): they're not mapped beforehand. where should the size be
+      // coming from?
+      // output_buffers_[bitstream_buffer_id]->mapped_size()));
+      output_buffer_size_);
+}
+
+void WebrtcVideoEncoderGpu::FreeOutputBuffers() {
+  for (uint8_t* buf : output_buffers_) {
+    free(buf);
+  }
+  output_buffers_.clear();
 }
 
 // static
