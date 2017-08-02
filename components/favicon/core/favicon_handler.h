@@ -142,11 +142,14 @@ class FaviconHandler {
                  FaviconDriverObserver::NotificationIconType handler_type);
   ~FaviconHandler();
 
-  // Initiates loading the favicon for the specified url.
-  void FetchFavicon(const GURL& url);
+  // Called when a new page is loaded. |is_same_document| is true for fragment
+  // navigations and history pushState/replaceState, see
+  // NavigationHandle::IsSameDocument().
+  void OnPageNavigation(const GURL& page_url, bool is_same_document);
 
   // Collects the candidate favicons as listed in the HTML head, as well as
-  // the WebManifest URL if available (or empty URL otherwise).
+  // the WebManifest URL if available (or empty URL otherwise). |candidates|
+  // must not be empty (if the page lists none /favicon.ico should be provided).
   void OnUpdateCandidates(const GURL& page_url,
                           const std::vector<favicon::FaviconURL>& candidates,
                           const GURL& manifest_url);
@@ -250,7 +253,7 @@ class FaviconHandler {
       const std::vector<SkBitmap>& bitmaps,
       const std::vector<gfx::Size>& original_bitmap_sizes);
 
-  bool ShouldSaveFavicon();
+  bool ShouldSaveFavicon(const GURL& page_url) const;
 
   // Updates |best_favicon_| and returns true if it was considered a satisfying
   // image (e.g. exact size match).
@@ -296,8 +299,9 @@ class FaviconHandler {
 
   const FaviconDriverObserver::NotificationIconType handler_type_;
 
-  // URL of the page we're requesting the favicon for.
-  GURL url_;
+  // URL of the page(s) we're requesting the favicon for. They can be multiple
+  // in case of in-page navigations (e.g. fragment navigations).
+  std::vector<GURL> page_urls_;
 
   // Whether we got data back for the initial request to the FaviconService.
   bool got_favicon_from_history_;
