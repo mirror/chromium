@@ -8,10 +8,6 @@
 #include "media/video/video_encode_accelerator.h"
 #include "remoting/codec/webrtc_video_encoder.h"
 
-namespace base {
-class SharedMemory;
-}
-
 namespace remoting {
 
 // A WebrtcVideoEncoder implementation utilizing the VideoEncodeAccelerator
@@ -47,6 +43,8 @@ class WebrtcVideoEncoderGpu : public WebrtcVideoEncoder,
 
   void UseOutputBitstreamBufferId(int32_t bitstream_buffer_id);
 
+  void FreeOutputBuffers();
+
   State state_;
 
   // Only after the first encode request do we know how large the incoming
@@ -60,8 +58,8 @@ class WebrtcVideoEncoderGpu : public WebrtcVideoEncoder,
 
   media::VideoCodecProfile codec_profile_;
 
-  // Shared memory with which the VEA transfers output to WebrtcVideoEncoderGpu
-  std::vector<std::unique_ptr<base::SharedMemory>> output_buffers_;
+  // Buffers with which the VEA transfers output to WebrtcVideoEncoderGpu
+  std::vector<uint8_t*> output_buffers_;
 
   // TODO(gusss): required_input_frame_count_ is currently unused; evaluate
   // whether or not it's actually needed. This variable represents the number of

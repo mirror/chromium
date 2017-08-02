@@ -46,6 +46,9 @@ class MEDIA_GPU_EXPORT MediaFoundationVideoEncodeAccelerator
   void Encode(const scoped_refptr<VideoFrame>& frame,
               bool force_keyframe) override;
   void UseOutputBitstreamBuffer(const BitstreamBuffer& buffer) override;
+  void UseOutputBitstreamBuffer(int32_t id,
+                                uint8_t* buffer,
+                                size_t size) override;
   void RequestEncodingParametersChange(uint32_t bitrate,
                                        uint32_t framerate) override;
   void Destroy() override;
