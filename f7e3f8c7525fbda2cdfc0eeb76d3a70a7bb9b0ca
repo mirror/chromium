@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7810bb77_1c5d190b",
+        "filename": "chrome_elf/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-08-02T18:22:53Z",
+      "side": 1,
+      "message": "Just do \"//base\", here (the \":\u003cduplicate of dir name\u003e\" is implicit if omitted, and GN style is to prefer that when possible).",
+      "range": {
+        "startLine": 80,
+        "startChar": 7,
+        "endLine": 80,
+        "endChar": 16
+      },
+      "revId": "f7e3f8c7525fbda2cdfc0eeb76d3a70a7bb9b0ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
