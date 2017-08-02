@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b561c2f_d3756758",
+        "filename": "chrome/browser/resources/chromeos/login/oobe_welcome.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-08-02T10:56:45Z",
+      "side": 1,
+      "message": "this.$.welcomeScreen.i18nUpdateLocale();",
+      "revId": "998d2d450d61127b9423168cfe4dc67ee83e49a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
