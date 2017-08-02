@@ -2,6 +2,98 @@
   "comments": [
     {
       "key": {
+        "uuid": "67bc0ee3_c3f6f7d4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 22
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-02T17:45:59Z",
+      "side": 1,
+      "message": "Nit: Remove this part. Timing out wasn\u0027t part of the SchedulerWorker.",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 11
+      },
+      "revId": "eb9687209c9efba9fde69645e7447660b7c3efe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c3fe855_9889b8b4",
+        "filename": "base/task_scheduler/scheduler_worker.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-02T17:45:59Z",
+      "side": 1,
+      "message": "We\u0027ve got some duplicate checks here. This would be better as\n\nif (join_called_for_testing.IsSet())\n  return;\n\nDCHECK(should_exit_.IsSet())\nthread_-\u003eDetach();",
+      "range": {
+        "startLine": 247,
+        "startChar": 4,
+        "endLine": 248,
+        "endChar": 42
+      },
+      "revId": "eb9687209c9efba9fde69645e7447660b7c3efe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66ee1882_ece98ebb",
+        "filename": "base/task_scheduler/scheduler_worker.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-02T17:45:59Z",
+      "side": 1,
+      "message": "This can also be Called by |worker|\u0027s thread since there is now a fixed 1:1 correspondence between SchedulerWorkers and threads.",
+      "range": {
+        "startLine": 68,
+        "startChar": 7,
+        "endLine": 68,
+        "endChar": 43
+      },
+      "revId": "eb9687209c9efba9fde69645e7447660b7c3efe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a288878d_d30ac8ab",
+        "filename": "base/task_scheduler/scheduler_worker.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-02T17:45:59Z",
+      "side": 1,
+      "message": "Nit: Remove stray linebreak.",
+      "range": {
+        "startLine": 152,
+        "startChar": 44,
+        "endLine": 154,
+        "endChar": 1
+      },
+      "revId": "eb9687209c9efba9fde69645e7447660b7c3efe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "25004f15_3891c19c",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
         "patchSetId": 22

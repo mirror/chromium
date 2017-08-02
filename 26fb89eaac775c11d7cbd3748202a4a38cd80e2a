@@ -284,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "8f45c21d_faabff7f",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-02T17:45:59Z",
+      "side": 1,
+      "message": "That works much better. Thanks!",
+      "parentUuid": "edf10640_0a8d096b",
+      "range": {
+        "startLine": 333,
+        "startChar": 9,
+        "endLine": 333,
+        "endChar": 25
+      },
+      "revId": "26fb89eaac775c11d7cbd3748202a4a38cd80e2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b35d195d_8dca0df7",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
         "patchSetId": 18
