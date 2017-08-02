@@ -6,6 +6,7 @@
 #define CONTENT_BROWSER_FRAME_HOST_CROSS_PROCESS_FRAME_CONNECTOR_H_
 
 #include <stdint.h>
+#include <unordered_set>
 
 #include "cc/output/compositor_frame.h"
 #include "content/browser/renderer_host/event_with_latency_info.h"
@@ -29,6 +30,7 @@ struct SurfaceSequence;
 
 namespace content {
 class RenderFrameProxyHost;
+class RenderWidgetHostView;
 class RenderWidgetHostViewBase;
 class RenderWidgetHostViewChildFrame;
 class WebCursor;
@@ -158,6 +160,9 @@ class CONTENT_EXPORT CrossProcessFrameConnector {
                          const viz::SurfaceSequence& sequence);
 
   void SetRect(const gfx::Rect& frame_rect);
+
+  // Set of all RWHVs which are nested inside |view_|.
+  std::unordered_set<RenderWidgetHostView*> GetAllSubViews();
 
   // The RenderFrameProxyHost that routes messages to the parent frame's
   // renderer process.
