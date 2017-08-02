@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ad51a2f_762010ec",
+        "filename": "components/password_manager/core/browser/password_store.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-02T15:01:33Z",
+      "side": 1,
+      "message": "Nit: to initialize |reuse_detector_| in place in header.",
+      "range": {
+        "startLine": 118,
+        "startChar": 20,
+        "endLine": 118,
+        "endChar": 27
+      },
+      "revId": "557f4dc62140db817c0abc7e93f620356b58a347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8609959_99cd62fa",
+        "filename": "components/password_manager/core/browser/password_store.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1128440
+      },
+      "writtenOn": "2017-08-02T15:01:33Z",
+      "side": 1,
+      "message": "Why do we need this?",
+      "range": {
+        "startLine": 19,
+        "startChar": 16,
+        "endLine": 19,
+        "endChar": 30
+      },
+      "revId": "557f4dc62140db817c0abc7e93f620356b58a347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
