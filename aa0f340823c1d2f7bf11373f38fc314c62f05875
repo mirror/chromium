@@ -34,6 +34,41 @@
       "revId": "aa0f340823c1d2f7bf11373f38fc314c62f05875",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "43e18607_20c18b12",
+        "filename": "components/page_info_strings.grdp",
+        "patchSetId": 11
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-02T19:37:39Z",
+      "side": 1,
+      "message": "Indeed, this whole section is excluded on iOS.",
+      "parentUuid": "47664a6e_8defb50f",
+      "revId": "aa0f340823c1d2f7bf11373f38fc314c62f05875",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "569408c3_acf28056",
+        "filename": "tools/gritsettings/resource_ids",
+        "patchSetId": 11
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-08-02T19:37:39Z",
+      "side": 1,
+      "message": "I\u0027m curious: how do you bump these? Just keep  increasing until the CQ doesn\u0027t complain?\n(I\u0027ve never learned how these allocations work, or come across documentation on them.)",
+      "revId": "aa0f340823c1d2f7bf11373f38fc314c62f05875",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
