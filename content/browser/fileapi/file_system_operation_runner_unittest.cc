@@ -238,13 +238,8 @@ TEST_F(MultiThreadFileSystemOperationRunnerTest, OpenAndShutdown) {
       base::Bind(&DidOpenFile));
   operation_runner()->Shutdown();
 
-  // Wait until the task posted on FILE thread is done.
-  base::RunLoop run_loop;
-  BrowserThread::PostTaskAndReply(
-      BrowserThread::FILE, FROM_HERE,
-      base::Bind(&base::DoNothing),
-      run_loop.QuitClosure());
-  run_loop.Run();
+  // Wait until the task posted on the blocking thread is done.
+  base::TaskScheduler::GetInstance()->FlushForTesting();
   // This should finish without thread assertion failure on debug build.
 }
 
