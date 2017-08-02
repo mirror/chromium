@@ -11,6 +11,7 @@
 #include "base/single_thread_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
+#include "chrome/browser/extensions/api/image_writer_private/error_messages.h"
 
 #if defined(OS_CHROMEOS)
 #include "chromeos/dbus/dbus_thread_manager.h"
@@ -60,7 +61,6 @@ class ImageWriterFakeImageBurnerClient
 } // namespace
 #endif
 
-MockOperationManager::MockOperationManager() : OperationManager(NULL) {}
 MockOperationManager::MockOperationManager(content::BrowserContext* context)
     : OperationManager(context) {}
 MockOperationManager::~MockOperationManager() {}
@@ -77,8 +77,26 @@ void FakeDiskMountManager::UnmountDeviceRecursively(
 }
 #endif
 
+SimulateProgressInfo::SimulateProgressInfo(
+    const std::vector<int>& progress_list, bool will_succeed)
+    : progress_list(progress_list), will_succeed(will_succeed) {}
+
+SimulateProgressInfo::~SimulateProgressInfo() {}
+SimulateProgressInfo::SimulateProgressInfo(const SimulateProgressInfo&) = default;
+
 FakeImageWriterClient::FakeImageWriterClient() {}
 FakeImageWriterClient::~FakeImageWriterClient() {}
+
+void FakeImageWriterClient::SimulateProgressAndCompletion(
+    const SimulateProgressInfo& info) {
+  for (int progress : info.progress_list)
+    Progress(progress);
+  if (info.will_succeed) {
+    Success();
+  } else {
+    Error(error::kVerificationFailed);
+  }
+}
 
 void FakeImageWriterClient::Write(const ProgressCallback& progress_callback,
                                   const SuccessCallback& success_callback,
@@ -89,8 +107,11 @@ void FakeImageWriterClient::Write(const ProgressCallback& progress_callback,
   success_callback_ = success_callback;
   error_callback_ = error_callback;
 
-  if (!write_callback_.is_null())
-    write_callback_.Run();
+  if (simulate_on_write_) {
+    printf("** my simulate_on_write_ *** WHEE ***\n");
+    SimulateProgressAndCompletion(*simulate_on_write_);
+    simulate_on_write_.reset();
+  }
 }
 
 void FakeImageWriterClient::Verify(const ProgressCallback& progress_callback,
@@ -98,12 +119,16 @@ void FakeImageWriterClient::Verify(const ProgressCallback& progress_callback,
                                    const ErrorCallback& error_callback,
                                    const base::FilePath& source,
                                    const base::FilePath& target) {
+  printf("*** FAKE VERIFY ****\n");
   progress_callback_ = progress_callback;
   success_callback_ = success_callback;
   error_callback_ = error_callback;
 
-  if (!verify_callback_.is_null())
-    verify_callback_.Run();
+  if (simulate_on_verify_) {
+    printf("** my simulate_on_verify_ *** WHEE ***\n");
+    SimulateProgressAndCompletion(*simulate_on_verify_);
+    simulate_on_verify_.reset();
+  }
 }
 
 void FakeImageWriterClient::Cancel(const CancelCallback& cancel_callback) {
@@ -117,28 +142,30 @@ void FakeImageWriterClient::Shutdown() {
   error_callback_.Reset();
   cancel_callback_.Reset();
 
-  write_callback_.Reset();
-  verify_callback_.Reset();
+  simulate_on_write_.reset();
+  simulate_on_write_.reset();
 }
 
-void FakeImageWriterClient::SetWriteCallback(
-    const base::Closure& write_callback) {
-  write_callback_ = write_callback;
+void FakeImageWriterClient::SimulateProgressOnWrite(
+    const std::vector<int>& progress_list, bool will_succeed) {
+  simulate_on_write_ = SimulateProgressInfo(progress_list, will_succeed);
 }
 
-void FakeImageWriterClient::SetVerifyCallback(
-    const base::Closure& verify_callback) {
-  verify_callback_ = verify_callback;
+void FakeImageWriterClient::SimulateProgressOnVerifyWrite(
+    const std::vector<int>& progress_list, bool will_succeed) {
+  simulate_on_verify_ = SimulateProgressInfo(progress_list, will_succeed);
 }
 
 void FakeImageWriterClient::Progress(int64_t progress) {
   if (!progress_callback_.is_null())
     progress_callback_.Run(progress);
+  LOG(WARNING) << "Fake Progress, progress = " << progress;
 }
 
 void FakeImageWriterClient::Success() {
   if (!success_callback_.is_null())
     success_callback_.Run();
+  printf("Fake: Success\n");
 }
 
 void FakeImageWriterClient::Error(const std::string& message) {
@@ -151,16 +178,54 @@ void FakeImageWriterClient::Cancel() {
     cancel_callback_.Run();
 }
 
-ImageWriterTestUtils::ImageWriterTestUtils() {
+#if !defined(OS_CHROMEOS)
+
+scoped_refptr<ImageWriterUtilityClient>
+FakeImageWriterUtilityClientFactory::Create() {
+  printf("MY CREATE!!\n");
+  printf("MY CREATE!!\n");
+  printf("MY CREATE!!\n");
+  printf("utils_ = [%p]\n", utils_);
+  auto* client = new FakeImageWriterClient();
+  utils_->OnUtilityClientCreated(client);
+  return make_scoped_refptr(client);
+}
+
+#endif  // !defined(OS_CHROMEOS)
+
+ImageWriterTestUtils::ImageWriterTestUtils()
+#if !defined(OS_CHROMEOS)
+  : utility_client_factory_(this)
+#endif
+{
 }
 ImageWriterTestUtils::~ImageWriterTestUtils() {
 }
+
+#if !defined(OS_CHROMEOS)
+void ImageWriterTestUtils::OnUtilityClientCreated(FakeImageWriterClient* client) {
+  DCHECK(!client_.get()) << "ImageWriterTestUtils expects single FakeImageWriterClient instance per test case.";
+  client_ = client;
+  printf("** ImageWriterUtilityClient::OnUtilityClientCreated: [%p]\n", client);
+  if (!client_creation_callback_.is_null())
+    std::move(client_creation_callback_).Run(client);
+}
+#endif
+
+#if !defined(OS_CHROMEOS)
+void ImageWriterTestUtils::RunOnUtilityClientCreation(
+    base::OnceCallback<void(FakeImageWriterClient*)> closure) {
+  client_creation_callback_ = std::move(closure);
+}
+
+#endif
 
 void ImageWriterTestUtils::SetUp() {
   SetUp(false);
 }
 
 void ImageWriterTestUtils::SetUp(bool is_browser_test) {
+  printf("ImageWriterTestUtils::SetUp\n");
   ASSERT_TRUE(temp_dir_.CreateUniqueTempDir());
   ASSERT_TRUE(
       base::CreateTemporaryFileInDir(temp_dir_.GetPath(), &test_image_path_));
@@ -179,7 +244,9 @@ void ImageWriterTestUtils::SetUp(bool is_browser_test) {
     dbus_setter->SetImageBurnerClient(std::move(image_burner_fake));
   }
 
+  printf("ImageWriterTestUtils::SetUp::DiskMountManager\n");
   FakeDiskMountManager* disk_manager = new FakeDiskMountManager();
+  printf("Fake: [%p]\n", disk_manager);
   chromeos::disks::DiskMountManager::InitializeForTesting(disk_manager);
 
   // Adds a disk entry for test_device_path_ with the same device and file path.
@@ -201,20 +268,23 @@ void ImageWriterTestUtils::SetUp(bool is_browser_test) {
       false);
   disk_manager->SetupDefaultReplies();
 #else
-  client_ = new FakeImageWriterClient();
-  image_writer::Operation::SetUtilityClientForTesting(client_);
+  ImageWriterUtilityClient::SetFactoryForTesting(&utility_client_factory_);
 #endif
 }
 
 void ImageWriterTestUtils::TearDown() {
+  printf("****** ImageWriterTestUtils::TearDown\n");
+  printf("****** ImageWriterTestUtils::TearDown\n");
+  printf("****** ImageWriterTestUtils::TearDown\n");
 #if defined(OS_CHROMEOS)
   if (chromeos::DBusThreadManager::IsInitialized()) {
     chromeos::DBusThreadManager::Shutdown();
   }
   chromeos::disks::DiskMountManager::Shutdown();
 #else
-  image_writer::Operation::SetUtilityClientForTesting(NULL);
-  client_->Shutdown();
+  if (client_.get())
+    client_->Shutdown();
+  ImageWriterUtilityClient::SetFactoryForTesting(nullptr);
 #endif
 }
 
@@ -229,12 +299,6 @@ const base::FilePath& ImageWriterTestUtils::GetImagePath() {
 const base::FilePath& ImageWriterTestUtils::GetDevicePath() {
   return test_device_path_;
 }
-
-#if !defined(OS_CHROMEOS)
-FakeImageWriterClient* ImageWriterTestUtils::GetUtilityClient() {
-  return client_.get();
-}
-#endif
 
 bool ImageWriterTestUtils::ImageWrittenToDevice() {
   std::unique_ptr<char[]> image_buffer(new char[kTestFileSize]);
@@ -265,7 +329,14 @@ bool ImageWriterTestUtils::FillFile(const base::FilePath& file,
 }
 
 ImageWriterUnitTestBase::ImageWriterUnitTestBase()
-    : thread_bundle_(content::TestBrowserThreadBundle::IO_MAINLOOP) {
+    //: thread_bundle_(content::TestBrowserThreadBundle::IO_MAINLOOP)
+    //: scoped_task_environment_(
+    //    base::test::ScopedTaskEnvironment::MainThreadType::UI)
+    : scoped_task_environment_(
+          base::test::ScopedTaskEnvironment::MainThreadType::UI),
+      thread_bundle_(content::TestBrowserThreadBundle::REAL_IO_THREAD)
+      //thread_bundle_(content::TestBrowserThreadBundle::IO_MAINLOOP)
+{
 }
 ImageWriterUnitTestBase::~ImageWriterUnitTestBase() {
 }
