@@ -44,13 +44,14 @@ class WebIDBKey {
   WebIDBKey() {}
   ~WebIDBKey() { Reset(); }
 
-  BLINK_EXPORT static WebIDBKey CreateArray(const WebVector<WebIDBKey>&);
-  BLINK_EXPORT static WebIDBKey CreateBinary(const WebData&);
-  BLINK_EXPORT static WebIDBKey CreateString(const WebString&);
-  BLINK_EXPORT static WebIDBKey CreateDate(double);
-  BLINK_EXPORT static WebIDBKey CreateNumber(double);
-  BLINK_EXPORT static WebIDBKey CreateInvalid();
-  BLINK_EXPORT static WebIDBKey CreateNull();
+  BLINK_PLATFORM_EXPORT static WebIDBKey CreateArray(
+      const WebVector<WebIDBKey>&);
+  BLINK_PLATFORM_EXPORT static WebIDBKey CreateBinary(const WebData&);
+  BLINK_PLATFORM_EXPORT static WebIDBKey CreateString(const WebString&);
+  BLINK_PLATFORM_EXPORT static WebIDBKey CreateDate(double);
+  BLINK_PLATFORM_EXPORT static WebIDBKey CreateNumber(double);
+  BLINK_PLATFORM_EXPORT static WebIDBKey CreateInvalid();
+  BLINK_PLATFORM_EXPORT static WebIDBKey CreateNull();
 
   WebIDBKey(const WebIDBKey& e) { Assign(e); }
   WebIDBKey& operator=(const WebIDBKey& e) {
@@ -58,25 +59,30 @@ class WebIDBKey {
     return *this;
   }
 
-  BLINK_EXPORT void Assign(const WebIDBKey&);
-  BLINK_EXPORT void AssignArray(const WebVector<WebIDBKey>&);
-  BLINK_EXPORT void AssignBinary(const WebData&);
-  BLINK_EXPORT void AssignString(const WebString&);
-  BLINK_EXPORT void AssignDate(double);
-  BLINK_EXPORT void AssignNumber(double);
-  BLINK_EXPORT void AssignInvalid();
-  BLINK_EXPORT void AssignNull();
-  BLINK_EXPORT void Reset();
+  BLINK_PLATFORM_EXPORT void Assign(const WebIDBKey&);
+  BLINK_PLATFORM_EXPORT void AssignArray(const WebVector<WebIDBKey>&);
+  BLINK_PLATFORM_EXPORT void AssignBinary(const WebData&);
+  BLINK_PLATFORM_EXPORT void AssignString(const WebString&);
+  BLINK_PLATFORM_EXPORT void AssignDate(double);
+  BLINK_PLATFORM_EXPORT void AssignNumber(double);
+  BLINK_PLATFORM_EXPORT void AssignInvalid();
+  BLINK_PLATFORM_EXPORT void AssignNull();
+  BLINK_PLATFORM_EXPORT void Reset();
 
-  BLINK_EXPORT WebIDBKeyType KeyType() const;
-  BLINK_EXPORT bool IsValid() const;
-  BLINK_EXPORT WebVector<WebIDBKey> Array() const;  // Only valid for ArrayType.
-  BLINK_EXPORT WebData Binary() const;       // Only valid for BinaryType.
-  BLINK_EXPORT WebString GetString() const;  // Only valid for StringType.
-  BLINK_EXPORT double Date() const;          // Only valid for DateType.
-  BLINK_EXPORT double Number() const;        // Only valid for NumberType.
+  BLINK_PLATFORM_EXPORT WebIDBKeyType KeyType() const;
+  BLINK_PLATFORM_EXPORT bool IsValid() const;
+  // Only valid for ArrayType.
+  BLINK_PLATFORM_EXPORT WebVector<WebIDBKey> Array() const;
+  // Only valid for BinaryType.
+  BLINK_PLATFORM_EXPORT WebData Binary() const;
+  // Only valid for StringType.
+  BLINK_PLATFORM_EXPORT WebString GetString() const;
+  // Only valid for DateType.
+  BLINK_PLATFORM_EXPORT double Date() const;
+  // Only valid for NumberType.
+  BLINK_PLATFORM_EXPORT double Number() const;
 
-#if BLINK_IMPLEMENTATION
+#if INSIDE_BLINK
   WebIDBKey(IDBKey* value) : private_(value) {}
   WebIDBKey& operator=(IDBKey* value) {
     private_ = value;
