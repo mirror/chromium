@@ -22,6 +22,7 @@
 #include "net/base/net_errors.h"
 #include "net/base/net_export.h"
 #include "net/base/request_priority.h"
+#include "net/http/http_request_headers.h"
 #include "net/ssl/token_binding.h"
 
 namespace crypto {
@@ -145,6 +146,9 @@ class NET_EXPORT_PRIVATE HttpStream {
   // between when the full headers have been received and the stream has been
   // closed.
   virtual bool GetLoadTimingInfo(LoadTimingInfo* load_timing_info) const = 0;
+
+  virtual void GetWireRequestHeaders(HttpRequestHeaders::HeaderVector* headers,
+                                     std::string* request_line) = 0;
 
   // Get the SSLInfo associated with this stream's connection.  This should
   // only be called for streams over SSL sockets, otherwise the behavior is

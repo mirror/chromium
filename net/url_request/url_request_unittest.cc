@@ -11595,4 +11595,61 @@ TEST_F(URLRequestTest, URLRequestRedirectJobCancelRequest) {
   EXPECT_EQ(0, d.received_redirect_count());
 }
 
+static std::string FindHeader(const HttpRequestHeaders::HeaderVector& headers,
+                              const char* key) {
+  for (const auto& pair : headers) {
+    if (pair.key == key)
+      return pair.value;
+  }
+  return "<not found>";
+}
+
+TEST_F(URLRequestTestHTTP, WireRequestHeaders) {
+  ASSERT_TRUE(http_test_server()->Start());
+
+  TestDelegate request_delegate;
+  TestURLRequestContext context;
+  HttpRequestHeaders extra_headers;
+  extra_headers.SetHeader("X-Foo", "bar");
+
+  {
+    HttpRequestHeaders::HeaderVector headers;
+    std::string request_line;
+    std::unique_ptr<URLRequest> r(context.CreateRequest(
+        http_test_server()->GetURL("/defaultresponse"), DEFAULT_PRIORITY,
+        &request_delegate, TRAFFIC_ANNOTATION_FOR_TESTS));
+    r->SetExtraRequestHeaders(extra_headers);
+    r->Start();
+    r->GetWireRequestHeaders(&headers, &request_line);
+    EXPECT_TRUE(headers.empty());
+    base::RunLoop().Run();
+    EXPECT_EQ(OK, request_delegate.request_status());
+    r->GetWireRequestHeaders(&headers, &request_line);
+    EXPECT_TRUE(headers.empty());
+  }
+  {
+    HttpRequestHeaders::HeaderVector headers;
+    std::string request_line;
+    std::unique_ptr<URLRequest> r(context.CreateRequest(
+        http_test_server()->GetURL("/defaultresponse"), DEFAULT_PRIORITY,
+        &request_delegate, TRAFFIC_ANNOTATION_FOR_TESTS));
+    r->SetLoadFlags(r->load_flags() | LOAD_REPORT_WIRE_REQUEST_HEADERS);
+    r->SetExtraRequestHeaders(extra_headers);
+    r->Start();
+    r->GetWireRequestHeaders(&headers, &request_line);
+    EXPECT_TRUE(headers.empty());
+    base::RunLoop().Run();
+    EXPECT_EQ(OK, request_delegate.request_status());
+
+    r->GetWireRequestHeaders(&headers, &request_line);
+    EXPECT_FALSE(headers.empty());
+    EXPECT_EQ("bar", FindHeader(headers, "X-Foo"));
+    EXPECT_EQ("gzip, deflate", FindHeader(headers, "Accept-Encoding"));
+    EXPECT_NE("<not found>", FindHeader(headers, "Connection"));
+    EXPECT_NE("<not found>", FindHeader(headers, "Host"));
+
+    EXPECT_EQ("GET /defaultresponse HTTP/1.1\r\n", request_line);
+  }
+}
+
 }  // namespace net

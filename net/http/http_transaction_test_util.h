@@ -248,6 +248,9 @@ class MockNetworkTransaction
   RequestPriority priority() const { return priority_; }
   const HttpRequestInfo* request() const { return request_; }
 
+  void GetWireRequestHeaders(HttpRequestHeaders::HeaderVector*,
+                             std::string*) override{};
+
   // Bogus value that will be returned by GetTotalReceivedBytes() if the
   // MockNetworkTransaction was started.
   static const int64_t kTotalReceivedBytes;

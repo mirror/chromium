@@ -6718,4 +6718,65 @@ TEST_F(SpdyNetworkTransactionTest, InsecureUrlCreatesSecureSpdySession) {
   EXPECT_THAT(out.rv, IsError(ERR_SPDY_INADEQUATE_TRANSPORT_SECURITY));
 };
 
+static std::string FindHeader(const HttpRequestHeaders::HeaderVector& headers,
+                              const char* key) {
+  for (const auto& pair : headers) {
+    if (pair.key == key)
+      return pair.value;
+  }
+  return "<not found>";
+}
+
+TEST_F(SpdyNetworkTransactionTest, WireRequestHeaders) {
+  SpdySerializedFrame req(
+      spdy_util_.ConstructSpdyGet(nullptr, 0, 1, DEFAULT_PRIORITY, true));
+  MockWrite writes[] = {CreateMockWrite(req, 0)};
+
+  SpdySerializedFrame resp(spdy_util_.ConstructSpdyGetReply(nullptr, 0, 1));
+  SpdySerializedFrame body(spdy_util_.ConstructSpdyDataFrame(1, true));
+  MockRead reads[] = {
+      CreateMockRead(resp, 1), CreateMockRead(body, 2),
+      MockRead(ASYNC, 0, 3)  // EOF
+  };
+
+  SequencedSocketData data(reads, arraysize(reads), writes, arraysize(writes));
+  {
+    HttpRequestHeaders::HeaderVector headers;
+    std::string request_line;
+
+    NormalSpdyTransactionHelper helper(CreateGetRequest(), DEFAULT_PRIORITY,
+                                       NetLogWithSource(), nullptr);
+    helper.RunPreTestSetup();
+    helper.AddData(&data);
+    helper.StartDefaultTest();
+    helper.trans()->GetWireRequestHeaders(&headers, &request_line);
+    EXPECT_TRUE(headers.empty());
+    helper.FinishDefaultTestWithoutVerification();
+    helper.trans()->GetWireRequestHeaders(&headers, &request_line);
+    EXPECT_TRUE(headers.empty());
+    EXPECT_TRUE(request_line.empty());
+  }
+  {
+    HttpRequestHeaders::HeaderVector headers;
+    std::string request_line;
+
+    HttpRequestInfo request_info(CreateGetRequest());
+    request_info.load_flags |= LOAD_REPORT_WIRE_REQUEST_HEADERS;
+    NormalSpdyTransactionHelper helper(request_info, DEFAULT_PRIORITY,
+                                       NetLogWithSource(), nullptr);
+    helper.RunPreTestSetup();
+    helper.AddData(&data);
+    helper.StartDefaultTest();
+    helper.trans()->GetWireRequestHeaders(&headers, &request_line);
+    EXPECT_TRUE(headers.empty());
+    helper.FinishDefaultTestWithoutVerification();
+    helper.trans()->GetWireRequestHeaders(&headers, &request_line);
+    EXPECT_FALSE(headers.empty());
+    std::string header_value;
+    EXPECT_EQ("GET", FindHeader(headers, ":method"));
+    EXPECT_EQ("/", FindHeader(headers, ":path"));
+    EXPECT_TRUE(request_line.empty());
+  }
+}
+
 }  // namespace net

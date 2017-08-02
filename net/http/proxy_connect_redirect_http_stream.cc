@@ -93,6 +93,12 @@ bool ProxyConnectRedirectHttpStream::GetLoadTimingInfo(
   return true;
 }
 
+void ProxyConnectRedirectHttpStream::GetWireRequestHeaders(
+    HttpRequestHeaders::HeaderVector* headers,
+    std::string* request_line) {
+  NOTREACHED();
+};
+
 void ProxyConnectRedirectHttpStream::GetSSLInfo(SSLInfo* ssl_info) {
   NOTREACHED();
 }

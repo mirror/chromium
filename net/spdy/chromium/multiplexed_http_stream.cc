@@ -3,8 +3,9 @@
 // found in the LICENSE file.
 
 #include "net/spdy/chromium/multiplexed_http_stream.h"
-
 #include "base/logging.h"
+#include "net/http/http_request_headers.h"
+#include "net/spdy/core/spdy_header_block.h"
 
 namespace net {
 
@@ -55,6 +56,21 @@ void MultiplexedHttpStream::SetConnectionReused() {}
 bool MultiplexedHttpStream::CanReuseConnection() const {
   // Multiplexed streams aren't considered reusable.
   return false;
+}
+
+void MultiplexedHttpStream::GetWireRequestHeaders(
+    HttpRequestHeaders::HeaderVector* headers,
+    std::string* request_line) {
+  if (wire_request_headers_)
+    *headers = *wire_request_headers_;
+}
+
+void MultiplexedHttpStream::SetWireRequestHeaders(
+    const SpdyHeaderBlock& headers) {
+  DCHECK(!wire_request_headers_);
+  wire_request_headers_.reset(new HttpRequestHeaders::HeaderVector());
+  for (const auto& it : headers)
+    wire_request_headers_->emplace_back(it.first, it.second);
 }
 
 }  // namespace net
