@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4524d67a_8c11c697",
+        "filename": "chrome/browser/ui/blocked_content/popup_blocker_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-02T02:02:55Z",
+      "side": 1,
+      "message": "Nit: Simpler:\n\n  int expected_active_tab \u003d (what_to_expect \u003d\u003d ExpectForegroundTab) ? 1 : 0;\n  EXPECT_EQ(expected_active_tab, browser-\u003etab_strip_model()-\u003eactive_index());",
+      "revId": "94ea523610bb6a004690206d8e8fe1eebd0ee11e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71188584_a363b130",
+        "filename": "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-02T02:02:55Z",
+      "side": 1,
+      "message": "If we were to get this Send call wrong -- either never doing it or always doing it -- would the tests catch it?\n\nIf not let\u0027s make sure to expand the tests to verify the window features are set at the correct times.",
+      "revId": "94ea523610bb6a004690206d8e8fe1eebd0ee11e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef98d730_4508eaae",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-02T02:02:55Z",
+      "side": 1,
+      "message": "Nit: Function comments should be descriptive (\"Creates\") rather than imperative (\"Create\"); see https://google.github.io/styleguide/cppguide.html#Function_Comments .",
+      "revId": "94ea523610bb6a004690206d8e8fe1eebd0ee11e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a193e4d_af31442f",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-02T02:02:55Z",
+      "side": 1,
+      "message": "Nit: Can function and arg both be const?",
+      "revId": "94ea523610bb6a004690206d8e8fe1eebd0ee11e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e9d5f56_7b358b3b",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-02T02:02:55Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem to be used",
+      "revId": "94ea523610bb6a004690206d8e8fe1eebd0ee11e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15114f86_b284e728",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-02T02:02:55Z",
+      "side": 1,
+      "message": "This basically looks like some kind of table.  Can we just use a views table control?",
+      "revId": "94ea523610bb6a004690206d8e8fe1eebd0ee11e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fea3d437_70daa2da",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-02T02:02:55Z",
+      "side": 1,
+      "message": "Nit: If you erase() after the RemoveChildView() calls, you can do this with a reference instead of a copy.\n\nCan also use auto here to avoid the long typename.\n\nAlso, avoid at() in general, since it implies you care about the difference from [], but in Chromium, exceptions are disabled, so the two are basically equivalent.",
+      "revId": "94ea523610bb6a004690206d8e8fe1eebd0ee11e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db9425dc_3e7fb0cd",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-02T02:02:55Z",
+      "side": 1,
+      "message": "I think these deletes double-free.  Normally RemoveChildView() should delete the child unless set_owned_by_parent() is false.",
+      "revId": "94ea523610bb6a004690206d8e8fe1eebd0ee11e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa396e38_49665684",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-02T02:02:55Z",
+      "side": 1,
+      "message": "These Layout/GetPreferredSize() methods look like they\u0027d mostly go away if we just used a GridLayout for this stuff.",
+      "revId": "94ea523610bb6a004690206d8e8fe1eebd0ee11e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05e1cf68_8d4e026d",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-02T02:02:55Z",
+      "side": 1,
+      "message": "Nit: auto",
+      "revId": "94ea523610bb6a004690206d8e8fe1eebd0ee11e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "821a35c0_e0a12bf6",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-02T02:02:55Z",
+      "side": 1,
+      "message": "Nit: Declare this variable immediately above its use, or inline it",
+      "revId": "94ea523610bb6a004690206d8e8fe1eebd0ee11e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c05cb085_ec91b97b",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-02T02:02:55Z",
+      "side": 1,
+      "message": "Nit: auto",
+      "revId": "94ea523610bb6a004690206d8e8fe1eebd0ee11e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aea04f50_66e6710b",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-02T02:02:55Z",
+      "side": 1,
+      "message": "Nit: I\u0027d look for a way to rewrite this with find_if() and a lambda.",
+      "revId": "94ea523610bb6a004690206d8e8fe1eebd0ee11e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
