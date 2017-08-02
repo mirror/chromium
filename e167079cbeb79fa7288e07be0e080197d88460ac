@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f5b204c_a6c65ad9",
+        "filename": "chrome/test/data/webui/extensions/extension_detail_view_test.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-02T20:15:45Z",
+      "side": 1,
+      "message": "Can this be the browserPreload URL, and be removed from here? Same question for other tests that also call importHtml().",
+      "revId": "e167079cbeb79fa7288e07be0e080197d88460ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
