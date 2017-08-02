@@ -121,7 +121,7 @@ class MouseLatencyBrowserTest : public ContentBrowserTest {
 
   const base::Value& StopTracing() {
     bool success = TracingController::GetInstance()->StopTracing(
-        TracingController::CreateStringSink(
+        TracingController::CreateStringEndpoint(
             base::Bind(&MouseLatencyBrowserTest::OnTraceDataCollected,
                        base::Unretained(this))));
     EXPECT_TRUE(success);

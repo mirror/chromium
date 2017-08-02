@@ -9,6 +9,7 @@
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/test/trace_event_analyzer.h"
+#include "base/time/time.h"
 #include "base/trace_event/trace_config.h"
 #include "base/trace_event/trace_event.h"
 #include "base/trace_event/trace_log.h"
@@ -92,7 +93,8 @@ class ChromeTraceEventAgentTest : public testing::Test {
   void StartTracing(const std::string& categories) {
     agent_->StartTracing(
         base::trace_event::TraceConfig(categories, "").ToString(),
-        base::BindRepeating([] {}));
+        base::TimeTicks::Now(),
+        base::BindRepeating([](bool success) { EXPECT_TRUE(success); }));
   }
 
   void StopAndFlush(base::Closure quit_closure) {
