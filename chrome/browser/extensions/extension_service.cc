@@ -1277,8 +1277,10 @@ void ExtensionService::CheckManagementPolicy() {
     }
   }
 
-  for (const std::string& id : to_unload)
+  for (const std::string& id : to_unload) {
     UnloadExtension(id, UnloadedExtensionReason::DISABLE);
+    extension_prefs_->DeleteExtensionPrefs(id);
+  }
 
   for (const auto& i : to_disable)
     DisableExtension(i.first, i.second);
