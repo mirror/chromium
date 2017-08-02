@@ -67,6 +67,7 @@ typedef NS_ENUM(NSInteger, ItemType) {
   ItemTypeWebServicesHeader,
   ItemTypeWebServicesFooter,
   ItemTypeWebServicesShowSuggestions,
+  ItemTypeWebServicesShowContentSuggestions,
   ItemTypeWebServicesSendUsageData,
   ItemTypeWebServicesDoNotTrack,
   ItemTypeWebServicesPhysicalWeb,
@@ -79,8 +80,11 @@ typedef NS_ENUM(NSInteger, ItemType) {
                                               PrefObserverDelegate> {
   ios::ChromeBrowserState* _browserState;  // weak
   PrefBackedBoolean* _suggestionsEnabled;
+  PrefBackedBoolean* _contentSuggestionsEnabled;
   // The item related to the switch for the show suggestions setting.
   CollectionViewSwitchItem* _showSuggestionsItem;
+  // The item related to the switch for the show content suggestions setting.
+  CollectionViewSwitchItem* _showContentSuggestionsItem;
 
   // Pref observer to track changes to prefs.
   std::unique_ptr<PrefObserverBridge> _prefObserverBridge;
@@ -122,6 +126,10 @@ typedef NS_ENUM(NSInteger, ItemType) {
         initWithPrefService:_browserState->GetPrefs()
                    prefName:prefs::kSearchSuggestEnabled];
     [_suggestionsEnabled setObserver:self];
+    _contentSuggestionsEnabled = [[PrefBackedBoolean alloc]
+        initWithPrefService:_browserState->GetPrefs()
+                   prefName:prefs::kContentSuggestRemoteEnabled];
+    [_contentSuggestionsEnabled setObserver:self];
 
     PrefService* prefService = _browserState->GetPrefs();
 
@@ -181,6 +189,12 @@ typedef NS_ENUM(NSInteger, ItemType) {
   [model addItem:_showSuggestionsItem
       toSectionWithIdentifier:SectionIdentifierWebServices];
 
+  if (experimental_flags::IsSuggestionsUIEnabled()) {
+    _showContentSuggestionsItem = [self showContentSuggestionsSwitchItem];
+    [model addItem:_showContentSuggestionsItem
+        toSectionWithIdentifier:SectionIdentifierWebServices];
+  }
+
   [model addItem:[self sendUsageDetailItem]
       toSectionWithIdentifier:SectionIdentifierWebServices];
 
@@ -229,6 +243,17 @@ typedef NS_ENUM(NSInteger, ItemType) {
   showSuggestionsSwitchItem.on = [_suggestionsEnabled value];
 
   return showSuggestionsSwitchItem;
+}
+
+- (CollectionViewSwitchItem*)showContentSuggestionsSwitchItem {
+  CollectionViewSwitchItem* showContentSuggestionsSwitchItem =
+      [[CollectionViewSwitchItem alloc]
+          initWithType:ItemTypeWebServicesShowContentSuggestions];
+  showContentSuggestionsSwitchItem.text =
+      l10n_util::GetNSString(IDS_IOS_OPTIONS_CONTENT_SUGGESTIONS);
+  showContentSuggestionsSwitchItem.on = [_contentSuggestionsEnabled value];
+
+  return showContentSuggestionsSwitchItem;
 }
 
 - (CollectionViewItem*)showSuggestionsFooterItem {
@@ -313,6 +338,12 @@ typedef NS_ENUM(NSInteger, ItemType) {
         base::mac::ObjCCastStrict<CollectionViewSwitchCell>(cell);
     [switchCell.switchView addTarget:self
                               action:@selector(showSuggestionsToggled:)
+                    forControlEvents:UIControlEventValueChanged];
+  } else if (itemType == ItemTypeWebServicesShowContentSuggestions) {
+    CollectionViewSwitchCell* switchCell =
+        base::mac::ObjCCastStrict<CollectionViewSwitchCell>(cell);
+    [switchCell.switchView addTarget:self
+                              action:@selector(showContentSuggestionsToggled:)
                     forControlEvents:UIControlEventValueChanged];
   }
 
@@ -443,6 +474,24 @@ typedef NS_ENUM(NSInteger, ItemType) {
   BOOL isOn = switchCell.switchView.isOn;
   switchItem.on = isOn;
   [_suggestionsEnabled setValue:isOn];
+}
+
+- (void)showContentSuggestionsToggled:(UISwitch*)sender {
+  NSIndexPath* switchPath = [self.collectionViewModel
+      indexPathForItemType:ItemTypeWebServicesShowContentSuggestions
+         sectionIdentifier:SectionIdentifierWebServices];
+
+  CollectionViewSwitchItem* switchItem =
+      base::mac::ObjCCastStrict<CollectionViewSwitchItem>(
+          [self.collectionViewModel itemAtIndexPath:switchPath]);
+  CollectionViewSwitchCell* switchCell =
+      base::mac::ObjCCastStrict<CollectionViewSwitchCell>(
+          [self.collectionView cellForItemAtIndexPath:switchPath]);
+
+  DCHECK_EQ(switchCell.switchView, sender);
+  BOOL isOn = switchCell.switchView.isOn;
+  switchItem.on = isOn;
+  [_contentSuggestionsEnabled setValue:isOn];
 }
 
 #pragma mark - PrefObserverDelegate
