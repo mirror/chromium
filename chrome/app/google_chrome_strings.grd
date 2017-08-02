@@ -1281,6 +1281,25 @@ Please check your email at <ph name="ACCOUNT_EMAIL">$2<ex>jane.doe@example.com</
           Select <ph name="SMALL_PRODUCT_LOGO">&lt;div class="logo-small"&gt;&lt;/div&gt;</ph> <ph name="BEGIN_BOLD">&lt;strong&gt;</ph>Google Chrome<ph name="END_BOLD">&lt;/strong&gt;</ph>
         </message>
       </if>
+
+      <!-- Safe Browsing password protection modal warning dialog strings -->
+      <if expr="chromeos or is_linux or is_macosx or is_win">
+        <message name="IDS_CHANGE_PASSWORD_WARNING_TITLE" desc="Text displayed in password protection warning dialog when user reuses their Google password on phishing sites.">
+          This site may have just stolen your password
+        </message>
+        <message name="IDS_CHANGE_PASSWORD_WARNING_TITLE_SOFTER" desc="Text displayed in password protection warning dialog when user reuses their Google password on phishing sites.">
+          Your password may be compromised
+        </message>
+        <message name="IDS_CHANGE_PASSWORD_WARNING_DETAIL" desc="Text displayed in password protection warning dialog when user reuses their Google password on phishing sites.">
+          You could lose access to your Google Account or experience identity theft. Chrome recommends changing your password now.
+        </message>
+        <message name="IDS_CHANGE_PASSWORD_WARNING_ACCEPT" desc="Label on button that takes user to change password page.">
+          Help me fix this
+        </message>
+        <message name="IDS_CHANGE_PASSWORD_WARNING_CANCEL" desc="Label on button to cancel this warning dialog.">
+          Ignore
+        </message>
+      </if>
     </messages>
   </release>
 </grit>
