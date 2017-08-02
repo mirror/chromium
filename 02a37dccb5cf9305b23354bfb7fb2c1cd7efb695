@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "a5ff2501_e3534fe3",
+        "filename": "components/ntp_tiles/popular_sites_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-08-02T19:28:07Z",
+      "side": 1,
+      "message": "Propagating this since this depends on UX.\n(UI can easily remove empty sections. Adding them back is much harder.)",
+      "parentUuid": "26091b68_5a50556a",
+      "range": {
+        "startLine": 187,
+        "startChar": 24,
+        "endLine": 187,
+        "endChar": 0
+      },
+      "revId": "02a37dccb5cf9305b23354bfb7fb2c1cd7efb695",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "065c72d3_bbb5b5df",
         "filename": "components/ntp_tiles/popular_sites_impl.cc",
         "patchSetId": 4
