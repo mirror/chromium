@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80bc3939_ae6a3db5",
+        "filename": "chrome/browser/net/profile_network_context_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-02T12:52:07Z",
+      "side": 1,
+      "message": "This block could be moved into CreateDefaultNetworkContextParams(), but it doesn\u0027t necessarily have to be the same for profile and system request contexts, and the reasoning is a bit different, so decided to keep it separate for now.",
+      "range": {
+        "startLine": 39,
+        "startChar": 1,
+        "endLine": 39,
+        "endChar": 8
+      },
+      "revId": "125bf43616f56f32823ad83ba3d8661037ec0434",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
