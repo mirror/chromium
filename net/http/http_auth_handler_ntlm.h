@@ -23,6 +23,8 @@
 #include <windows.h>
 #include <security.h>
 #include "net/http/http_auth_sspi_win.h"
+#elif defined(NTLM_PORTABLE)
+#include "net/ntlm/ntlm_client.h"
 #endif
 
 #include <string>
@@ -142,16 +144,15 @@ class NET_EXPORT_PRIVATE HttpAuthHandlerNTLM : public HttpAuthHandler {
 
   // Given an input token received from the server, generate the next output
   // token to be sent to the server.
-  int GetNextToken(const void* in_token,
-                   uint32_t in_token_len,
-                   void** out_token,
-                   uint32_t* out_token_len);
+  ntlm::Buffer GetNextToken(const ntlm::Buffer& in_token);
 
   // Create an NTLM SPN to identify the |origin| server.
   static std::string CreateSPN(const GURL& origin);
 
 #if defined(NTLM_SSPI)
   HttpAuthSSPI auth_sspi_;
+#elif defined(NTLM_PORTABLE)
+  ntlm::NtlmClient ntlm_client_;
 #endif
 
 #if defined(NTLM_PORTABLE)
