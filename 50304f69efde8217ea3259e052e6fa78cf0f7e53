@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "ef6b1d77_0408f4ac",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1225649
+      },
+      "writtenOn": "2017-08-02T21:22:46Z",
+      "side": 1,
+      "message": "Because the PageRenovator takes ownership of it, and the PageRenovator is created here. The PageRenovator is created at the same time as the loader starts because it is meant to be scoped to a given page.",
+      "parentUuid": "de7c551e_3584c65c",
+      "revId": "50304f69efde8217ea3259e052e6fa78cf0f7e53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f4f70a59_89a8fe8b",
         "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
         "patchSetId": 5
@@ -110,6 +128,24 @@
       "writtenOn": "2017-08-02T16:21:27Z",
       "side": 1,
       "message": "Why does the PageRenovationLoader not actually own the PageRenovator then?",
+      "revId": "50304f69efde8217ea3259e052e6fa78cf0f7e53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23954963_0ff42713",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1225649
+      },
+      "writtenOn": "2017-08-02T21:22:46Z",
+      "side": 1,
+      "message": "I assume you mean the opposite (why doesn\u0027t the PageRenovator own the PageRenovationLoader)? This is covered in the design doc. The PageRenovationLoader is supposed to be long-living, since it holds static data (the list of renovations and the loaded renovation script). Making it owned by the PageRenovator would mean that the list of renovations would be re-created and the script be reloaded for every page, since the PageRenovator is scoped to a single page.",
+      "parentUuid": "4b81602a_d922dc23",
       "revId": "50304f69efde8217ea3259e052e6fa78cf0f7e53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
