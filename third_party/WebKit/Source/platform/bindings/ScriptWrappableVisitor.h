@@ -98,7 +98,6 @@ class PLATFORM_EXPORT ScriptWrappableVisitor : public v8::EmbedderHeapTracer,
   static WrapperVisitor* CurrentVisitor(v8::Isolate*);
 
   static void WriteBarrier(v8::Isolate*,
-                           const void*,
                            const TraceWrapperV8Reference<v8::Value>*);
 
   // TODO(mlippautz): Remove once ScriptWrappable is converted to
@@ -106,33 +105,33 @@ class PLATFORM_EXPORT ScriptWrappableVisitor : public v8::EmbedderHeapTracer,
   static void WriteBarrier(v8::Isolate*, const v8::Persistent<v8::Object>*);
 
   template <typename T>
-  static void WriteBarrier(const void* object, const Member<T>& value) {
-    WriteBarrier(object, value.Get());
+  static void WriteBarrier(const Member<T>& value) {
+    WriteBarrier(value.Get());
   }
 
   template <typename T>
-  static void WriteBarrier(const void* src_object, const T* dst_object) {
+  static void WriteBarrier(const T* dst_object) {
     static_assert(!NeedsAdjustAndMark<T>::value,
                   "wrapper tracing is not supported within mixins");
-    if (!src_object || !dst_object) {
-      return;
-    }
-    // We only require a write barrier if |srcObject|  is already marked. Note
-    // that this implicitly disables the write barrier when the GC is not
-    // active as object will not be marked in this case.
-    if (!HeapObjectHeader::FromPayload(src_object)->IsWrapperHeaderMarked()) {
+    if (!dst_object) {
       return;
     }
 
     const ThreadState* thread_state = ThreadState::Current();
     DCHECK(thread_state);
+    WrapperVisitor* const current = CurrentVisitor(thread_state->GetIsolate());
+
+    // Bail out if tracing is not in progress.
+    if (!current->TracingInProgress())
+      return;
+
     // If the wrapper is already marked we can bail out here.
     if (TraceTrait<T>::GetHeapObjectHeader(dst_object)->IsWrapperHeaderMarked())
       return;
+
     // Otherwise, eagerly mark the wrapper header and put the object on the
     // marking deque for further processing.
-    WrapperVisitor* const visitor = CurrentVisitor(thread_state->GetIsolate());
-    visitor->MarkAndPushToMarkingDeque(dst_object);
+    current->MarkAndPushToMarkingDeque(dst_object);
   }
 
   void RegisterV8References(const std::vector<std::pair<void*, void*>>&
@@ -168,6 +167,8 @@ class PLATFORM_EXPORT ScriptWrappableVisitor : public v8::EmbedderHeapTracer,
 
   // Immediately cleans up all wrappers if necessary.
   void PerformCleanup();
+
+  bool TracingInProgress() const override { return tracing_in_progress_; }
 
  protected:
   bool PushToMarkingDeque(

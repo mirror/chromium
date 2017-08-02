@@ -53,21 +53,21 @@ class TraceWrapperMember : public Member<T> {
     DCHECK(!other.raw_ || other.parent_);
     parent_ = other.parent_;
     Member<T>::operator=(other);
-    ScriptWrappableVisitor::WriteBarrier(parent_, other);
+    ScriptWrappableVisitor::WriteBarrier(other);
     return *this;
   }
 
   TraceWrapperMember& operator=(const Member<T>& other) {
     DCHECK(!TraceWrapperMemberIsNotInitialized());
     Member<T>::operator=(other);
-    ScriptWrappableVisitor::WriteBarrier(parent_, other);
+    ScriptWrappableVisitor::WriteBarrier(other);
     return *this;
   }
 
   TraceWrapperMember& operator=(T* other) {
     DCHECK(!TraceWrapperMemberIsNotInitialized());
     Member<T>::operator=(other);
-    ScriptWrappableVisitor::WriteBarrier(parent_, other);
+    ScriptWrappableVisitor::WriteBarrier(other);
     return *this;
   }
 
