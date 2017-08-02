@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "990b33e8_980407ce",
+        "filename": "ash/system/update/tray_update.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-02T03:00:59Z",
+      "side": 1,
+      "message": "nit: add \"// static\" above this line",
+      "revId": "316446f3ba3036bf65f96be1493a7528886ee420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4ce522c_ed6ef3f1",
+        "filename": "ash/system/update/tray_update.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-02T03:00:59Z",
+      "side": 1,
+      "message": "nit: not needed anymore",
+      "revId": "316446f3ba3036bf65f96be1493a7528886ee420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09ce6e51_c13b23c3",
+        "filename": "ash/system/update/tray_update_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-02T03:00:59Z",
+      "side": 1,
+      "message": "Now that I think about it more, it would probably be better to do this in a TearDown method, like:\n\nvoid TearDown() override {\n  AshTestBase::TearDown();\n  TrayUpdate::ResetForTesting();\n}\n\nthat way the state is always good after the test ends (so the statics won\u0027t affect other tests).",
+      "revId": "316446f3ba3036bf65f96be1493a7528886ee420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
