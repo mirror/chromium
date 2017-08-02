@@ -47,6 +47,130 @@ const char kCertDateErrorHistogram[] =
 
 const net::SHA256HashValue kCertPublicKeyHashValue = {{0x01, 0x02}};
 
+const std::string kOkayCertName = "ok_cert.pem";
+
+const std::string kMcAfeeCert =
+    "-----BEGIN PRIVATE "
+    "KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCmN5NFlT/"
+    "MRX40\neXR91XlTk/dlUU02MXGfoJlilOx6m4m864BQ2C8LHZ29FZkHhvy1LB+rqv/"
+    "HlHs7\nSUUi6JzYUFI/gx270a2D4qdzBUOxTMh+kmxGTKNYAcqN1DLG4ALSxsucqipLSi2K\n/"
+    "7IP2YAaLxKi7imC6NlVFIZzMSVdrf8DsyBurs33PKqsw+"
+    "anQWflM3CQXKLW1ZVu\nZHiFtd7J6Vq+24/"
+    "dIAOI5y8FQO1HX41EZzDBpjuJVUXHm6rqMgJss6usawmGOTAo\n5BgoqAL3zoHqa9GUZHKn9bD"
+    "48dAjge5C5BA1O6SF/agAVDWOkEXlaznLSpIdLR4M\nsarzM/"
+    "xvAgMBAAECggEAPVgHb0fM2tvO3xjwCDzP4Subw3XE9Do9P/"
+    "dqhHqH6Bwd\nMm8L1Upj2ktc2trstl14SHj3W0jpy0OeU1wQOvj0YdUK9cuzHo0c566vtAB+"
+    "YiH/\nYM8zTKKeKi3HDp8A+mrUP+wEW1Zl85F1y3Xgxn60C3XR//"
+    "W7tkevZfoEQOEjdDXZ\ngZ+n0/d54xUvfR/lGfVT/PQzHdnvxi+qoK1QXdPMW0UzAXoUxcyvm/"
+    "T6IyXn/"
+    "VIO\nq8NLBjGMNMfFWpQM0KQmRSyLj06vdspUeIv661qaPtzhqlKZKur+"
+    "c3S1fdUGxASh\nfwuoK3ZIMVVcTscttv30wDwQW4E46/"
+    "W7hauzmHF8eQKBgQDar4SncQy9zBIpDplk\nw2je0wDpFOGtObmXkrPzcm2E7QfrmORpcAeYku"
+    "iTpl+m81HiMgmhFyWJVUobyq99\nX9QE74RpF34tVJpGwdxrkc6Tkb+"
+    "AJJrcovHyrpLdiQKj8MaILy5F3NtXPoH6E+"
+    "sb\nEFtKP261v85aEShtqWeA17xAlQKBgQDClClKy3M9fqyyTUcM8l+XIm56NY9/"
+    "KiZS\n41JEX2RQAhlup35x/O4GFjIxfCfJAk+mdXyjfuPH+LV2XB+HO/"
+    "hqIeMkL3vSxNP0\n+53kCU0lVgsbOb3+zVp6/"
+    "q0rffajhiGdkBKkr3VLQwAJ4KV4dSvqQavbojggU2mS\njqwF7dEz8wKBgEfztgbNqG6ORW9i0"
+    "U+ZB9lAvazy5On08z6O00yHWseAobl/va9/"
+    "\nX9Bwjbt+4zvwFQICiq6JCh2shUytnJ34uK7DC+L0CtzpWDVttZNjDv/41XRZFub/"
+    "\nafH6RHJFkSvVnczTETuFVlnXRDa+"
+    "9P0bnZ3JTyjXqhJyUMX8FgULdnIdAoGBAKyT\nWCQ8WhN6nJTvsUqsVVfoc+/"
+    "0PTdeHOt7LuXxbTkBA6l+6MkUuc+"
+    "wNAhrw6WmZRqQ\nLWGdE02zKs61WklJSURoldrsOnhvlkY8PIeaMFAjBmq5RegOHmfkJZbje7M"
+    "BLiNf\nOwnRjMiZvhkEo/44fiCg6lo8gGc7U/"
+    "FmlPAVQ209AoGAdv7YAwuWaKnVAoU9wgaT\npyIN8pQ4JMG+"
+    "STfGBsc3tFk2AHJ303cOjGqMjsASSlPMmmZEuj12it1MyTl7oHXw\nUrx6Iqouzqr98lOrM3/"
+    "qHZ0giNf+TFuD3oOHvWEW3Tu7EAE2hPthWhbOQrmzjplP\ngAXtO6FCQl1o4vWA+zXSYYA=\n-"
+    "----END PRIVATE KEY-----\n-----BEGIN "
+    "CERTIFICATE-----\nMIIEOzCCAyOgAwIBAgIJAJpsNuOa+"
+    "Ek7MA0GCSqGSIb3DQEBCwUAMIGzMQswCQYD\nVQQGEwJVUzETMBEGA1UECAwKQ2FsaWZvcm5pY"
+    "TEWMBQGA1UEBwwNU2FuIEZyYW5j\naXNjbzEbMBkGA1UECgwSTWNBZmVlIFdlYiBHYXRld2F5M"
+    "RswGQYDVQQLDBJNY0Fm\nZWUgV2ViIEdhdGV3YXkxGzAZBgNVBAMMEk1jQWZlZSBXZWIgR2F0Z"
+    "XdheTEgMB4G\nCSqGSIb3DQEJARYRZXhhbXBsZUBnbWFpbC5jb20wHhcNMTcwODAxMDAxMjA0W"
+    "hcN\nMTgwODAxMDAxMjA0WjCBszELMAkGA1UEBhMCVVMxEzARBgNVBAgMCkNhbGlmb3Ju\naWE"
+    "xFjAUBgNVBAcMDVNhbiBGcmFuY2lzY28xGzAZBgNVBAoMEk1jQWZlZSBXZWIg\nR2F0ZXdheTE"
+    "bMBkGA1UECwwSTWNBZmVlIFdlYiBHYXRld2F5MRswGQYDVQQDDBJN\nY0FmZWUgV2ViIEdhdGV"
+    "3YXkxIDAeBgkqhkiG9w0BCQEWEWV4YW1wbGVAZ21haWwu\nY29tMIIBIjANBgkqhkiG9w0BAQE"
+    "FAAOCAQ8AMIIBCgKCAQEApjeTRZU/"
+    "zEV+NHl0\nfdV5U5P3ZVFNNjFxn6CZYpTsepuJvOuAUNgvCx2dvRWZB4b8tSwfq6r/"
+    "x5R7O0lF\nIuic2FBSP4Mdu9Gtg+KncwVDsUzIfpJsRkyjWAHKjdQyxuAC0sbLnKoqS0otiv+"
+    "y\nD9mAGi8Sou4pgujZVRSGczElXa3/"
+    "A7Mgbq7N9zyqrMPmp0Fn5TNwkFyi1tWVbmR4\nhbXeyelavtuP3SADiOcvBUDtR1+"
+    "NRGcwwaY7iVVFx5uq6jICbLOrrGsJhjkwKOQY\nKKgC986B6mvRlGRyp/"
+    "Ww+"
+    "PHQI4HuQuQQNTukhf2oAFQ1jpBF5Ws5y0qSHS0eDLGq\n8zP8bwIDAQABo1AwTjAdBgNVHQ4EF"
+    "gQUt6PpqiCkogIa5dDMGKRJwOxMWtwwHwYD\nVR0jBBgwFoAUt6PpqiCkogIa5dDMGKRJwOxMW"
+    "twwDAYDVR0TBAUwAwEB/"
+    "zANBgkq\nhkiG9w0BAQsFAAOCAQEACycC6vjzcMQ8OtBEf8vRU34Qw+3iKMBgM18zqoytLo+"
+    "h\nyVr+2GG4wS/wewXIQiRgPfh+aiqiATfAZWfoBLV7RW5FREw9r6n/g/"
+    "6y2msAtOMW\n6m0EOlpY28h2ouxRi8rfTeaNNSGxBG302eYGmrrjBKSEOseXlWcD1jsKcml2TN"
+    "Or\nBVXOdr87HDfsZ29zYU9eyid4K45AXhJzMRjfGWywGqzZHpS6X5zoPh1FnXICJL4O\nx3az"
+    "B92aP3FP/"
+    "NuwN3y7YWasWOEow5zWmo+"
+    "ZF2Twx0FDTVMS4vn56gx3NJTJppZc\noonlMHjNfmpwKaxjNE1g6cQ+6wmw6m2Gt6d9pvfvqA="
+    "=\n-----END CERTIFICATE-----";
+const std::string kCyberoamCert =
+    "-----BEGIN PRIVATE "
+    "KEY-----"
+    "\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDF0hNIEKBX6oYH\nDer4e8"
+    "TbGn31M5bCKNXJClUFZi7ay5EGLm1kA27BykwpUvAdJ6Ti26htZdwOj6er\nwKFpR1n16U+"
+    "VzNdMlSiuJ4sOtXk/XsIdXlt3NrS5rupt+Nw1S3/"
+    "z+t5jTFmIVNf4\nTIBVB03uciSglXPXBWnNCMSfdflTTNcbU0vqSE6aTYS5quAnyFSupikFzI+"
+    "t+N7S\nuvS/OnLiZP3PbdA4CIgEKtP4NQ0/"
+    "4vxcJxK+p1JmysCGySDij6lSt3pVhpZnr2Kx\ndVdf/"
+    "oj1E2DRWeYCB3DwSLJ1zesve+"
+    "uabmO8mYuMRLWEnyPVckFJ7E6xN0S2msw8\nTcIBLDCrAgMBAAECggEASIJmGuYtP8xw8CkD1a"
+    "zYTU96l+QfAHAjXJty6pW32u7+\n63sdEanIcTQLkqIZ7TXY1GabZ+"
+    "4MKTIyzVvATmye5upsB4ab7DBIRv2rlOqj1LyQ\n/"
+    "l7Vu+7Lc7xPpZuwa8CO2Ak+drtHnhcrSpIQABq7UAl6r3nYihor28G5AJInn4ZH\n2/"
+    "+59x0xGMf2f2rl90MI28bnD/+RkhXWQly564PkPmVBJjwBq7NdqizthWGChZFW\nG7jwW/"
+    "yzlusu881/"
+    "u9fmU23CnrujluJ7dZP7cgZNPbQ2kokTYbRKk9P7Ij+"
+    "w04yj\ny1qXVYdCngAkGQW5ZF8WaOmYNTg2quTuOrq0y1Qv4QKBgQDklkFH7LpBtAvHP6F2\nQ"
+    "1ENQWl2xADYWjbSDWohUYXVMQtEb5Oo0+HeUox/SLXwO5w4PgTi2wmdS/"
+    "FBrpIO\nsh5RR9bPJ98xJTGkpnUW9ezKFRzXB9Nrevi2FxRWR101/"
+    "r+SO7YoDebaMfCvOEMd\nlt/"
+    "Wb2oo7O66iMLo6ath33QsswKBgQDdi0bwKN+"
+    "dtKX3HaXdDJbSeCGImapzK1p2\nDw0LhhyhP8ZNK3NWTlYB8BU47oKsfVyS1DTFll0RNLHqydh"
+    "FsLwBHFUrWq/q6bfs\n49p+dW6pBzUiR4lFiH0yPz/"
+    "Asd+n64Oj3J27ldGIRImVyqq7WMLwyhjCmzUJ8YeQ\nzKVSZ77YKQKBgQDOyZq+"
+    "zUnl3FH3avnO+bDeE/mrZj75egsz1MzY3V378gUmYOWs\nihk/vV+6WfW1IMf/"
+    "HSPgcZRuBuB2sc0RnFLO5vVNq90+"
+    "IU6ai7dLESin25eec0bw\naWuLlq9gKekJyq5VRM1RyNm5NApvCK+2meFepKXd5hFFECl6+"
+    "MCAptv6/wKBgAw0\n71yuM9wBpx9dj9UFK44/"
+    "NkHLjbu4yMw2ehaHdi5gUDHSUhGQUWbb7p9rbOHKKn6g\nmKPGbCxVhfQU2QjF+"
+    "yXohLzVy1mbNRolV9Wd7NH9Zq0T2flt0tAg8gdRBay/6knu\nDvbWA2yJsjcBqrSV6G/"
+    "SAtk+Kgb5Oun8jKNkufw5AoGAKWlFdAiFGuugqAhm9bTE\n9VCNjNjj3GpaPO8zl4RP+"
+    "X2fJvcmFNxpRgZUzDhH40noHEoRrHviTXOW3uZLmG+o\nVxEOViMPSj4ec12U+t9KuJG/"
+    "tkBLDjzty3IuY8IyPfT7A4grjbqLCtb2zV4tKgtu\nHJOYRbEYvDk+mrLAZvcW+dw=\n-----"
+    "END PRIVATE KEY-----\n-----BEGIN "
+    "CERTIFICATE-----"
+    "\nMIIEIzCCAwugAwIBAgIJAJZS14qNbWmdMA0GCSqGSIb3DQEBCwUAMIGnMQswCQYD\nVQQGEw"
+    "JVUzETMBEGA1UECAwKQ2FsaWZvcm5pYTEWMBQGA1UEBwwNU2FuIEZyYW5j\naXNjbzERMA8GA1"
+    "UECgwIQ3liZXJvYW0xETAPBgNVBAsMCEN5YmVyb2FtMSQwIgYD\nVQQDDBtDeWJlcm9hbSBTU0"
+    "wgQ0FfQUgzNDNKSzk4UjcxHzAdBgkqhkiG9w0BCQEW\nEHRlc3RAZXhhbXBsZS5jb20wHhcNMT"
+    "cwODAxMTczMDA0WhcNMTgwODAxMTczMDA0\nWjCBpzELMAkGA1UEBhMCVVMxEzARBgNVBAgMCk"
+    "NhbGlmb3JuaWExFjAUBgNVBAcM\nDVNhbiBGcmFuY2lzY28xETAPBgNVBAoMCEN5YmVyb2FtMR"
+    "EwDwYDVQQLDAhDeWJl\ncm9hbTEkMCIGA1UEAwwbQ3liZXJvYW0gU1NMIENBX0FIMzQzSks5OF"
+    "I3MR8wHQYJ\nKoZIhvcNAQkBFhB0ZXN0QGV4YW1wbGUuY29tMIIBIjANBgkqhkiG9w0BAQEFAA"
+    "OC\nAQ8AMIIBCgKCAQEAxdITSBCgV+qGBw3q+"
+    "HvE2xp99TOWwijVyQpVBWYu2suRBi5t\nZANuwcpMKVLwHSek4tuobWXcDo+"
+    "nq8ChaUdZ9elPlczXTJUorieLDrV5P17CHV5b\ndza0ua7qbfjcNUt/8/"
+    "reY0xZiFTX+"
+    "EyAVQdN7nIkoJVz1wVpzQjEn3X5U0zXG1NL\n6khOmk2EuargJ8hUrqYpBcyPrfje0rr0vzpy4"
+    "mT9z23QOAiIBCrT+DUNP+L8XCcS\nvqdSZsrAhskg4o+pUrd6VYaWZ69isXVXX/"
+    "6I9RNg0VnmAgdw8Eiydc3rL3vrmm5j\nvJmLjES1hJ8j1XJBSexOsTdEtprMPE3CASwwqwIDAQ"
+    "ABo1AwTjAdBgNVHQ4EFgQU\nQeAXfiKxtfTgJEJgm4Bg1zR4zWEwHwYDVR0jBBgwFoAUQeAXfi"
+    "KxtfTgJEJgm4Bg\n1zR4zWEwDAYDVR0TBAUwAwEB/"
+    "zANBgkqhkiG9w0BAQsFAAOCAQEApmGJ7Rv1wfiU\nSyxu6UMjHRbuWu7w40L82rbfiQj+"
+    "0zssTf6Bjcyi1De3HX1mhfKwSeKKWEKeYMg0\nbmKaJrHuQ6vQ+"
+    "OGDmYhlu2lzY2DTpB7lDdJJR8FgJP+pJWPpp3xvUYfSAfRda6hS\nHSUJkzrJ+rWNw8bWO5Ce+"
+    "2Aysb7mkuOmRWkg1UcZw3hepqBg7cQHjeMtXV+"
+    "QMT06\nT9Khb042X1MExPCc7xoIwxRbLcOCGyCbbcbB7w6HzgkJ2dA/"
+    "mS+sNfDtGRq4PxLd\nyvmNowVyb9OGj2cm9zHTcQKX1eB8Ch4L1bxpk+"
+    "L1TixiZPGE4byq2ZntjVY7YA3U\nZvlsiSgAag==\n-----END CERTIFICATE-----";
+
 // Runs |quit_closure| on the UI thread once a URL request has been
 // seen. Returns a request that hangs.
 std::unique_ptr<net::test_server::HttpResponse> WaitForRequest(
@@ -91,6 +215,7 @@ class TestSSLErrorHandlerDelegate : public SSLErrorHandler::Delegate {
         ssl_interstitial_shown_(false),
         bad_clock_interstitial_shown_(false),
         captive_portal_interstitial_shown_(false),
+        content_filter_interstitial_shown_(false),
         redirected_to_suggested_url_(false),
         is_overridable_error_(true) {}
 
@@ -116,6 +241,9 @@ class TestSSLErrorHandlerDelegate : public SSLErrorHandler::Delegate {
   int captive_portal_interstitial_shown() const {
     return captive_portal_interstitial_shown_;
   }
+  int content_filter_interstitial_shown() const {
+    return content_filter_interstitial_shown_;
+  }
   bool bad_clock_interstitial_shown() const {
     return bad_clock_interstitial_shown_;
   }
@@ -134,6 +262,7 @@ class TestSSLErrorHandlerDelegate : public SSLErrorHandler::Delegate {
     ssl_interstitial_shown_ = false;
     bad_clock_interstitial_shown_ = false;
     captive_portal_interstitial_shown_ = false;
+    content_filter_interstitial_shown_ = false;
     redirected_to_suggested_url_ = false;
   }
 
@@ -161,6 +290,10 @@ class TestSSLErrorHandlerDelegate : public SSLErrorHandler::Delegate {
     captive_portal_interstitial_shown_ = true;
   }
 
+  void ShowContentFilterInterstitial() override {
+    content_filter_interstitial_shown_ = true;
+  }
+
   void CheckSuggestedUrl(
       const GURL& suggested_url,
       const CommonNameMismatchHandler::CheckUrlCallback& callback) override {
@@ -182,6 +315,7 @@ class TestSSLErrorHandlerDelegate : public SSLErrorHandler::Delegate {
   bool ssl_interstitial_shown_;
   bool bad_clock_interstitial_shown_;
   bool captive_portal_interstitial_shown_;
+  bool content_filter_interstitial_shown_;
   bool redirected_to_suggested_url_;
   bool is_overridable_error_;
   CommonNameMismatchHandler::CheckUrlCallback suggested_url_callback_;
@@ -263,17 +397,18 @@ class SSLErrorHandlerNameMismatchNoSANTest
 
 // A class to test the captive portal certificate list feature. Creates an error
 // handler with a name mismatch error by default. The error handler can be
-// recreated by calling ResetErrorHandler() with an appropriate cert status.
-class SSLErrorHandlerCaptivePortalCertListTest
-    : public ChromeRenderViewHostTestHarness {
+// recreated by calling ResetErrorHandlerForCaptivePortalTest() with an
+// appropriate cert status.
+class SSLErrorAssistantTest : public ChromeRenderViewHostTestHarness {
  public:
-  SSLErrorHandlerCaptivePortalCertListTest() : field_trial_list_(nullptr) {}
+  SSLErrorAssistantTest() : field_trial_list_(nullptr) {}
 
   void SetUp() override {
     ChromeRenderViewHostTestHarness::SetUp();
     SSLErrorHandler::ResetConfigForTesting();
     SSLErrorHandler::SetInterstitialDelayForTesting(base::TimeDelta());
-    ResetErrorHandler(net::CERT_STATUS_COMMON_NAME_INVALID);
+    ResetErrorHandler(kOkayCertName, std::string(),
+                      net::CERT_STATUS_COMMON_NAME_INVALID);
   }
 
   void TearDown() override {
@@ -289,7 +424,7 @@ class SSLErrorHandlerCaptivePortalCertListTest
   const net::SSLInfo& ssl_info() { return ssl_info_; }
 
  protected:
-  void SetFeatureEnabled(bool enabled) {
+  void SetCaptivePortalFeatureEnabled(bool enabled) {
     if (enabled) {
       scoped_feature_list_.InitFromCommandLine(
           "CaptivePortalCertificateList" /* enabled */,
@@ -300,12 +435,40 @@ class SSLErrorHandlerCaptivePortalCertListTest
     }
   }
 
-  // Deletes the current error handler and creates a new one with the given
-  // |cert_status|.
-  void ResetErrorHandler(net::CertStatus cert_status) {
+  // Loads the contents of a certificate into an X509Certificate object from
+  // a string.
+  scoped_refptr<net::X509Certificate> LoadCertFromString(
+      std::string cert_data) {
+    net::CertificateList certs_found =
+        net::X509Certificate::CreateCertificateListFromBytes(
+            cert_data.data(), cert_data.size(),
+            net::X509Certificate::FORMAT_AUTO);
+    if (certs_found.empty()) {
+      return NULL;
+    }
+    return certs_found[0];
+  }
+
+  // Resets the SSLErrorHandler to contain the certificate and the certificate
+  // status specified. This function can either load a certificate into the
+  // handler from a file name specified in the cert_name parameter, or from a
+  // string cert_data containing the contents of the certificate. If both the
+  // cert_name and cert_data parameters are provided, the function defaults to
+  // loading the certificate from file.
+  void ResetErrorHandler(std::string cert_name,
+                         std::string cert_data,
+                         net::CertStatus cert_status) {
+    if (cert_name.empty() && cert_data.empty()) {
+      return;
+    }
+
     ssl_info_.Reset();
+    // If a certificate name is provided, load the certificate from file.
+    // Otherwise, load the certificate from the cert_data field.
     ssl_info_.cert =
-        net::ImportCertFromFile(net::GetTestCertsDirectory(), "ok_cert.pem");
+        !cert_name.empty()
+            ? net::ImportCertFromFile(net::GetTestCertsDirectory(), cert_name)
+            : LoadCertFromString(cert_data);
     ssl_info_.cert_status = cert_status;
     ssl_info_.public_key_hashes.push_back(
         net::HashValue(kCertPublicKeyHashValue));
@@ -318,6 +481,12 @@ class SSLErrorHandlerCaptivePortalCertListTest
         ssl_info_,
         GURL(),  // request_url
         base::Callback<void(content::CertificateRequestResultType)>()));
+  }
+
+  // Deletes the current error handler and creates a new one with the given
+  // |cert_status|.
+  void ResetErrorHandlerForCaptivePortalTest(net::CertStatus cert_status) {
+    ResetErrorHandler(kOkayCertName, std::string(), cert_status);
 
     // Enable finch experiment for captive portal interstitials.
     ASSERT_TRUE(base::FieldTrialList::CreateFieldTrial(
@@ -370,6 +539,26 @@ class SSLErrorHandlerCaptivePortalCertListTest
         SSLErrorHandler::SHOW_SSL_INTERSTITIAL_OVERRIDABLE, 1);
   }
 
+  // Sets up a mock SSL Error Assistant config with regexes that match a
+  // McAfee Web Gateway certificate or a Cyberoam certificate and starts
+  // handling certificate errors.
+  void RunContentFilterTest() {
+    auto config_proto =
+        base::MakeUnique<chrome_browser_ssl::SSLErrorAssistantConfig>();
+    chrome_browser_ssl::ContentFilterEntry* filter1 =
+        config_proto->add_content_filter();
+    filter1->set_name("McAfee Web Gateway");
+    filter1->set_regex("McAfee Web Gateway");
+    chrome_browser_ssl::ContentFilterEntry* filter2 =
+        config_proto->add_content_filter();
+    filter2->set_name("Cyberoam");
+    filter2->set_regex("Cyberoam SSL CA_[A-Z0-9]+");
+    SSLErrorHandler::SetErrorAssistantProto(std::move(config_proto));
+
+    error_handler()->StartHandlingError();
+    base::RunLoop().RunUntilIdle();
+  }
+
  private:
   net::SSLInfo ssl_info_;
   std::unique_ptr<TestSSLErrorHandler> error_handler_;
@@ -377,9 +566,8 @@ class SSLErrorHandlerCaptivePortalCertListTest
   base::FieldTrialList field_trial_list_;
   base::test::ScopedFeatureList scoped_feature_list_;
 
-  DISALLOW_COPY_AND_ASSIGN(SSLErrorHandlerCaptivePortalCertListTest);
+  DISALLOW_COPY_AND_ASSIGN(SSLErrorAssistantTest);
 };
-
 
 class SSLErrorHandlerDateInvalidTest : public ChromeRenderViewHostTestHarness {
  public:
@@ -858,8 +1046,8 @@ TEST_F(SSLErrorHandlerDateInvalidTest, TimeQueryHangs) {
 
 // Tests that a certificate marked as a known captive portal certificate causes
 // the captive portal interstitial to be shown.
-TEST_F(SSLErrorHandlerCaptivePortalCertListTest, Enabled) {
-  SetFeatureEnabled(true);
+TEST_F(SSLErrorAssistantTest, TestCaptivePortalInterstitialWithFeatureEnabled) {
+  SetCaptivePortalFeatureEnabled(true);
 
   EXPECT_FALSE(error_handler()->IsTimerRunningForTesting());
   EXPECT_EQ(1u, ssl_info().public_key_hashes.size());
@@ -908,8 +1096,9 @@ TEST_F(SSLErrorHandlerCaptivePortalCertListTest, Enabled) {
 // Tests that a certificate marked as a known captive portal certificate does
 // not cause the captive portal interstitial to be shown, if the feature is
 // disabled.
-TEST_F(SSLErrorHandlerCaptivePortalCertListTest, Disabled) {
-  SetFeatureEnabled(false);
+TEST_F(SSLErrorAssistantTest,
+       TestNoCaptivePortalInterstitialWithFeatureDisabled) {
+  SetCaptivePortalFeatureEnabled(false);
 
   // Default error for SSLErrorHandlerNameMismatchTest tests is name mismatch.
   TestNoCaptivePortalInterstitial();
@@ -918,10 +1107,11 @@ TEST_F(SSLErrorHandlerCaptivePortalCertListTest, Disabled) {
 // Tests that an error other than name mismatch does not cause a captive portal
 // interstitial to be shown, even if the certificate is marked as a known
 // captive portal certificate.
-TEST_F(SSLErrorHandlerCaptivePortalCertListTest, AuthorityInvalid) {
-  SetFeatureEnabled(true);
+TEST_F(SSLErrorAssistantTest,
+       TestNoCaptivePortalInterstitialWithAuthorityInvalidError) {
+  SetCaptivePortalFeatureEnabled(true);
 
-  ResetErrorHandler(net::CERT_STATUS_AUTHORITY_INVALID);
+  ResetErrorHandlerForCaptivePortalTest(net::CERT_STATUS_AUTHORITY_INVALID);
   TestNoCaptivePortalInterstitial();
 }
 
@@ -929,16 +1119,17 @@ TEST_F(SSLErrorHandlerCaptivePortalCertListTest, AuthorityInvalid) {
 // not cause a captive portal interstitial to be shown, even if the certificate
 // is marked as a known captive portal certificate. The resulting error is
 // authority-invalid.
-TEST_F(SSLErrorHandlerCaptivePortalCertListTest,
-       NameMismatchAndAuthorityInvalid) {
-  SetFeatureEnabled(true);
+TEST_F(
+    SSLErrorAssistantTest,
+    TestNoCaptivePortalInterstitialWithNameMismatchAndAuthorityInvalidErrors) {
+  SetCaptivePortalFeatureEnabled(true);
 
   const net::CertStatus cert_status =
       net::CERT_STATUS_COMMON_NAME_INVALID | net::CERT_STATUS_AUTHORITY_INVALID;
   // Sanity check that AUTHORITY_INVALID is seen as the net error.
   ASSERT_EQ(net::ERR_CERT_AUTHORITY_INVALID,
             net::MapCertStatusToNetError(cert_status));
-  ResetErrorHandler(cert_status);
+  ResetErrorHandlerForCaptivePortalTest(cert_status);
   TestNoCaptivePortalInterstitial();
 }
 
@@ -946,8 +1137,9 @@ TEST_F(SSLErrorHandlerCaptivePortalCertListTest,
 // captive portal interstitial to be shown, even if the certificate is marked as
 // a known captive portal certificate. Similar to
 // NameMismatchAndAuthorityInvalid, except the resulting error is name mismatch.
-TEST_F(SSLErrorHandlerCaptivePortalCertListTest, NameMismatchAndWeakKey) {
-  SetFeatureEnabled(true);
+TEST_F(SSLErrorAssistantTest,
+       TestNoCaptivePortalInterstitialWithNameMismatchAndWeakKeyErrors) {
+  SetCaptivePortalFeatureEnabled(true);
 
   const net::CertStatus cert_status =
       net::CERT_STATUS_COMMON_NAME_INVALID | net::CERT_STATUS_WEAK_KEY;
@@ -956,14 +1148,15 @@ TEST_F(SSLErrorHandlerCaptivePortalCertListTest, NameMismatchAndWeakKey) {
   // CertStatus even when COMMON_NAME_INVALID is the net error.
   ASSERT_EQ(net::ERR_CERT_COMMON_NAME_INVALID,
             net::MapCertStatusToNetError(cert_status));
-  ResetErrorHandler(cert_status);
+  ResetErrorHandlerForCaptivePortalTest(cert_status);
   TestNoCaptivePortalInterstitial();
 }
 
 #else
 
-TEST_F(SSLErrorHandlerCaptivePortalCertListTest, DisabledByBuild) {
-  SetFeatureEnabled(true);
+TEST_F(SSLErrorAssistantTest,
+       TestGenericSSLInterstitialWhenCaptivePortalDisabledByBuild) {
+  SetCaptivePortalFeatureEnabled(true);
 
   // Default error for SSLErrorHandlerNameMismatchTest tests is name mismatch,
   // but the feature is disabled by build so a generic SSL interstitial will be
@@ -1008,3 +1201,165 @@ TEST_F(SSLErrorHandlerCaptivePortalCertListTest, DisabledByBuild) {
 }
 
 #endif  // BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
+
+TEST_F(SSLErrorAssistantTest, TestContentFilterTriggerOnMatchingCertificate) {
+  base::HistogramTester histograms;
+
+  ResetErrorHandler(std::string(), kMcAfeeCert,
+                    net::CERT_STATUS_AUTHORITY_INVALID);
+  delegate()->set_non_overridable_error();
+  RunContentFilterTest();
+
+  EXPECT_FALSE(delegate()->ssl_interstitial_shown());
+  EXPECT_TRUE(delegate()->content_filter_interstitial_shown());
+  EXPECT_FALSE(delegate()->suggested_url_checked());
+
+  ResetErrorHandler(std::string(), kCyberoamCert,
+                    net::CERT_STATUS_AUTHORITY_INVALID);
+  delegate()->set_non_overridable_error();
+  RunContentFilterTest();
+
+  EXPECT_FALSE(delegate()->ssl_interstitial_shown());
+  EXPECT_TRUE(delegate()->content_filter_interstitial_shown());
+  EXPECT_FALSE(delegate()->suggested_url_checked());
+
+  histograms.ExpectTotalCount(SSLErrorHandler::GetHistogramNameForTesting(), 6);
+  histograms.ExpectBucketCount(SSLErrorHandler::GetHistogramNameForTesting(),
+                               SSLErrorHandler::HANDLE_ALL, 2);
+  histograms.ExpectBucketCount(
+      SSLErrorHandler::GetHistogramNameForTesting(),
+      SSLErrorHandler::SHOW_SSL_INTERSTITIAL_NONOVERRIDABLE, 0);
+  histograms.ExpectBucketCount(
+      SSLErrorHandler::GetHistogramNameForTesting(),
+      SSLErrorHandler::SHOW_SSL_INTERSTITIAL_OVERRIDABLE, 0);
+  histograms.ExpectBucketCount(SSLErrorHandler::GetHistogramNameForTesting(),
+                               SSLErrorHandler::CONTENT_FILTER_CERT_FOUND, 2);
+  histograms.ExpectBucketCount(
+      SSLErrorHandler::GetHistogramNameForTesting(),
+      SSLErrorHandler::SHOW_CONTENT_FILTER_INTERSTITIAL, 2);
+}
+
+TEST_F(SSLErrorAssistantTest,
+       TestNoContentFilterTriggerOnMiscellaneousCertificate) {
+  base::HistogramTester histograms;
+
+  ResetErrorHandler(kOkayCertName, std::string(),
+                    net::CERT_STATUS_AUTHORITY_INVALID);
+  delegate()->set_non_overridable_error();
+  RunContentFilterTest();
+
+  EXPECT_TRUE(delegate()->ssl_interstitial_shown());
+  EXPECT_FALSE(delegate()->content_filter_interstitial_shown());
+  EXPECT_FALSE(delegate()->suggested_url_checked());
+
+  histograms.ExpectTotalCount(SSLErrorHandler::GetHistogramNameForTesting(), 2);
+  histograms.ExpectBucketCount(SSLErrorHandler::GetHistogramNameForTesting(),
+                               SSLErrorHandler::HANDLE_ALL, 1);
+  histograms.ExpectBucketCount(
+      SSLErrorHandler::GetHistogramNameForTesting(),
+      SSLErrorHandler::SHOW_SSL_INTERSTITIAL_NONOVERRIDABLE, 1);
+  histograms.ExpectBucketCount(SSLErrorHandler::GetHistogramNameForTesting(),
+                               SSLErrorHandler::CONTENT_FILTER_CERT_FOUND, 0);
+  histograms.ExpectBucketCount(
+      SSLErrorHandler::GetHistogramNameForTesting(),
+      SSLErrorHandler::SHOW_CONTENT_FILTER_INTERSTITIAL, 0);
+}
+
+TEST_F(SSLErrorAssistantTest,
+       TestNoContentFilterInterstitialWithoutAuthorityInvalidError) {
+  base::HistogramTester histograms;
+
+  ResetErrorHandler(std::string(), kMcAfeeCert,
+                    net::CERT_STATUS_COMMON_NAME_INVALID);
+  delegate()->set_non_overridable_error();
+  RunContentFilterTest();
+
+  EXPECT_TRUE(delegate()->ssl_interstitial_shown());
+  EXPECT_FALSE(delegate()->content_filter_interstitial_shown());
+  EXPECT_FALSE(delegate()->suggested_url_checked());
+
+  ResetErrorHandler(std::string(), kCyberoamCert,
+                    net::CERT_STATUS_COMMON_NAME_INVALID);
+  delegate()->set_non_overridable_error();
+  RunContentFilterTest();
+
+  EXPECT_TRUE(delegate()->ssl_interstitial_shown());
+  EXPECT_FALSE(delegate()->content_filter_interstitial_shown());
+  EXPECT_FALSE(delegate()->suggested_url_checked());
+
+  histograms.ExpectTotalCount(SSLErrorHandler::GetHistogramNameForTesting(), 4);
+  histograms.ExpectBucketCount(SSLErrorHandler::GetHistogramNameForTesting(),
+                               SSLErrorHandler::HANDLE_ALL, 2);
+  histograms.ExpectBucketCount(
+      SSLErrorHandler::GetHistogramNameForTesting(),
+      SSLErrorHandler::SHOW_SSL_INTERSTITIAL_NONOVERRIDABLE, 2);
+  histograms.ExpectBucketCount(SSLErrorHandler::GetHistogramNameForTesting(),
+                               SSLErrorHandler::CONTENT_FILTER_CERT_FOUND, 0);
+  histograms.ExpectBucketCount(
+      SSLErrorHandler::GetHistogramNameForTesting(),
+      SSLErrorHandler::SHOW_CONTENT_FILTER_INTERSTITIAL, 0);
+}
+
+TEST_F(SSLErrorAssistantTest, TestNoContentFilterInterstitialWithTwoErrors) {
+  base::HistogramTester histograms;
+
+  ResetErrorHandler(std::string(), kMcAfeeCert,
+                    net::CERT_STATUS_AUTHORITY_INVALID |
+                        net::CERT_STATUS_COMMON_NAME_INVALID);
+  delegate()->set_non_overridable_error();
+  RunContentFilterTest();
+
+  EXPECT_TRUE(delegate()->ssl_interstitial_shown());
+  EXPECT_FALSE(delegate()->content_filter_interstitial_shown());
+  EXPECT_FALSE(delegate()->suggested_url_checked());
+
+  ResetErrorHandler(std::string(), kCyberoamCert,
+                    net::CERT_STATUS_COMMON_NAME_INVALID);
+  delegate()->set_non_overridable_error();
+  RunContentFilterTest();
+
+  EXPECT_TRUE(delegate()->ssl_interstitial_shown());
+  EXPECT_FALSE(delegate()->content_filter_interstitial_shown());
+  EXPECT_FALSE(delegate()->suggested_url_checked());
+
+  histograms.ExpectTotalCount(SSLErrorHandler::GetHistogramNameForTesting(), 4);
+  histograms.ExpectBucketCount(SSLErrorHandler::GetHistogramNameForTesting(),
+                               SSLErrorHandler::HANDLE_ALL, 2);
+  histograms.ExpectBucketCount(
+      SSLErrorHandler::GetHistogramNameForTesting(),
+      SSLErrorHandler::SHOW_SSL_INTERSTITIAL_NONOVERRIDABLE, 2);
+  histograms.ExpectBucketCount(SSLErrorHandler::GetHistogramNameForTesting(),
+                               SSLErrorHandler::CONTENT_FILTER_CERT_FOUND, 0);
+  histograms.ExpectBucketCount(
+      SSLErrorHandler::GetHistogramNameForTesting(),
+      SSLErrorHandler::SHOW_CONTENT_FILTER_INTERSTITIAL, 0);
+}
+
+TEST_F(SSLErrorAssistantTest, TestNoContentFilterInterstitialIfOverridable) {
+  base::HistogramTester histograms;
+
+  // The errors thrown in tests are overridable by default, so we don't
+  // have to change anything here.
+  ResetErrorHandler(std::string(), kMcAfeeCert,
+                    net::CERT_STATUS_AUTHORITY_INVALID);
+  RunContentFilterTest();
+
+  EXPECT_TRUE(delegate()->ssl_interstitial_shown());
+  EXPECT_FALSE(delegate()->content_filter_interstitial_shown());
+  EXPECT_FALSE(delegate()->suggested_url_checked());
+
+  histograms.ExpectTotalCount(SSLErrorHandler::GetHistogramNameForTesting(), 2);
+  histograms.ExpectBucketCount(SSLErrorHandler::GetHistogramNameForTesting(),
+                               SSLErrorHandler::HANDLE_ALL, 1);
+  histograms.ExpectBucketCount(
+      SSLErrorHandler::GetHistogramNameForTesting(),
+      SSLErrorHandler::SHOW_SSL_INTERSTITIAL_NONOVERRIDABLE, 0);
+  histograms.ExpectBucketCount(
+      SSLErrorHandler::GetHistogramNameForTesting(),
+      SSLErrorHandler::SHOW_SSL_INTERSTITIAL_OVERRIDABLE, 1);
+  histograms.ExpectBucketCount(SSLErrorHandler::GetHistogramNameForTesting(),
+                               SSLErrorHandler::CONTENT_FILTER_CERT_FOUND, 0);
+  histograms.ExpectBucketCount(
+      SSLErrorHandler::GetHistogramNameForTesting(),
+      SSLErrorHandler::SHOW_CONTENT_FILTER_INTERSTITIAL, 0);
+}
