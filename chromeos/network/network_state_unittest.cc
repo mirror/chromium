@@ -121,6 +121,14 @@ TEST_F(NetworkStateTest, SsidHex) {
   EXPECT_TRUE(SetStringProperty(shill::kWifiHexSsid, wifi_hex));
   EXPECT_TRUE(SignalInitialPropertiesReceived());
   EXPECT_EQ(network_state_.name(), wifi_hex_result);
+
+  // Check HexSSID via network state dictionary.
+  base::DictionaryValue dictionary;
+  network_state_.GetStateProperties(&dictionary);
+  std::string value;
+  EXPECT_TRUE(
+      dictionary.GetStringWithoutPathExpansion(shill::kWifiHexSsid, &value));
+  EXPECT_EQ(value, wifi_hex);
 }
 
 // Non-UTF-8 SSID should be preserved in |raw_ssid_| field.
