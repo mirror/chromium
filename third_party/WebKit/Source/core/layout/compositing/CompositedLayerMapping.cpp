@@ -504,15 +504,16 @@ void CompositedLayerMapping::UpdateCompositingReasons() {
 }
 
 bool CompositedLayerMapping::AncestorRoundedCornersWillClip(
+    const LayoutRect& child_rect_in_nearest_clipping_space,
+    const PaintLayer* nearest_clipping_ancestor,
     const PaintLayer* compositing_ancestor) {
   // Find all clips up to the ancestor compositing container to correctly
   // handle nested clips.
-  LayoutPoint offset_to_clipper;
-  owning_layer_.ConvertToLayerCoords(compositing_ancestor, offset_to_clipper);
+  LayoutPoint zero_offset;
   Vector<FloatRoundedRect> rounded_rect_clips;
   LayerClipRecorder::CollectRoundedRectClips(
-      owning_layer_, compositing_ancestor, -offset_to_clipper, true,
-      LayerClipRecorder::kDoNotIncludeSelfForBorderRadius, rounded_rect_clips);
+      *nearest_clipping_ancestor, compositing_ancestor, zero_offset, true,
+      LayerClipRecorder::kIncludeSelfForBorderRadius, rounded_rect_clips);
 
   for (auto clip_rect : rounded_rect_clips) {
     FloatRect inner_clip_rect = clip_rect.RadiusCenterRect();
@@ -522,8 +523,10 @@ bool CompositedLayerMapping::AncestorRoundedCornersWillClip(
     // entirely outside the rectangular border (ignoring rounded corners) so
     // is also unaffected by the rounded corners. In both cases the existing
     // rectangular clip is adequate and the mask is unnecessary.
-    if (!inner_clip_rect.Contains(FloatRect(composited_bounds_)) &&
-        composited_bounds_.Intersects(EnclosingLayoutRect(clip_rect.Rect()))) {
+    if (!inner_clip_rect.Contains(
+            FloatRect(child_rect_in_nearest_clipping_space)) &&
+        child_rect_in_nearest_clipping_space.Intersects(
+            EnclosingLayoutRect(clip_rect.Rect()))) {
       return true;
     }
   }
@@ -580,8 +583,18 @@ void CompositedLayerMapping::
   // should be via mask or by compositing the parent too.
   // https://bugs.chromium.org/p/chromium/issues/detail?id=615870
   if (owning_layer_is_clipped) {
-    owning_layer_is_masked =
-        AncestorRoundedCornersWillClip(compositing_ancestor);
+    LayoutRect local_visual_rect = composited_bounds_;
+    GetLayoutObject().MapToVisualRectInAncestorSpace(clipping_container,
+                                                     local_visual_rect);
+    owning_layer_is_masked = AncestorRoundedCornersWillClip(
+        local_visual_rect, clipping_container->EnclosingLayer(),
+        compositing_ancestor);
+    // Delay this check until after mask detection, because the mask is still
+    // required when the ancestor clip contains the composited_bound_ but the
+    // border radius clips the content.
+    if (!owning_layer_is_masked) {
+      owning_layer_is_clipped = !clip_rect.Rect().Contains(local_visual_rect);
+    }
   }
 }
 
