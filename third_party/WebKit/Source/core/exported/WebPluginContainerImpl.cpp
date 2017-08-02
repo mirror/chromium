@@ -393,6 +393,13 @@ void WebPluginContainerImpl::Cut() {
     web_plugin_->ReplaceSelection(WebString());
 }
 
+void WebPluginContainerImpl::Paste() {
+  // Pull text from copy-paste clipboard to send to plugin.
+  WebString text = Platform::Current()->Clipboard()->ReadPlainText(
+      WebClipboard::kBufferStandard);
+  web_plugin_->ReplaceSelection(text);
+}
+
 bool WebPluginContainerImpl::ExecuteEditCommand(const WebString& name) {
   if (web_plugin_->ExecuteEditCommand(name))
     return true;
@@ -841,8 +848,10 @@ void WebPluginContainerImpl::HandleKeyboardEvent(KeyboardEvent* event) {
 
   if (web_event.GetType() == WebInputEvent::kRawKeyDown ||
       web_event.GetType() == WebInputEvent::kKeyDown) {
-    if ((web_event.GetModifiers() & WebInputEvent::kInputModifiers) ==
-            kEditingModifier &&
+    int input_modifiers =
+        web_event.GetModifiers() & WebInputEvent::kInputModifiers;
+
+    if (input_modifiers == kEditingModifier &&
         // Only copy/cut if there's a selection, so that we only ever do
         // this for Pepper plugins that support copying/cutting.
         // Windowless NPAPI plugins will get the event as before.
@@ -854,21 +863,35 @@ void WebPluginContainerImpl::HandleKeyboardEvent(KeyboardEvent* event) {
         return;
       }
 
-      // Ask the plugin if it can cut text before calling Cut().
+      // Ask the plugin if it can edit text before calling Cut().
       if (web_event.windows_key_code == VKEY_X && web_plugin_->CanEditText()) {
         Cut();
         event->SetDefaultHandled();
         return;
       }
     }
-    // Alternate shortcut for Cut() is Shift + Delete.
-    if ((web_event.GetModifiers() & WebInputEvent::kInputModifiers) ==
-            WebInputEvent::kShiftKey &&
-        web_event.windows_key_code == VKEY_DELETE &&
-        web_plugin_->HasSelection() && web_plugin_->CanEditText()) {
-      Cut();
+    // Ask the plugin if it can edit text before calling Paste().
+    if (input_modifiers == kEditingModifier &&
+        web_event.windows_key_code == VKEY_V && web_plugin_->CanEditText()) {
+      Paste();
       event->SetDefaultHandled();
       return;
+    }
+    // Alternate shortcuts for Cut() and Paste() are Shift + Delete and Shift +
+    // Insert, respectively.
+    if (input_modifiers == WebInputEvent::kShiftKey) {
+      if (web_event.windows_key_code == VKEY_DELETE &&
+          web_plugin_->HasSelection() && web_plugin_->CanEditText()) {
+        Cut();
+        event->SetDefaultHandled();
+        return;
+      }
+      if (web_event.windows_key_code == VKEY_INSERT &&
+          web_plugin_->CanEditText()) {
+        Paste();
+        event->SetDefaultHandled();
+        return;
+      }
     }
   }
 
