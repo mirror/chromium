@@ -751,17 +751,6 @@ Value* DictionaryValue::SetDoubleWithoutPathExpansion(StringPiece path,
   return SetWithoutPathExpansion(path, MakeUnique<Value>(in_value));
 }
 
-Value* DictionaryValue::SetStringWithoutPathExpansion(StringPiece path,
-                                                      StringPiece in_value) {
-  return SetWithoutPathExpansion(path, MakeUnique<Value>(in_value));
-}
-
-Value* DictionaryValue::SetStringWithoutPathExpansion(
-    StringPiece path,
-    const string16& in_value) {
-  return SetWithoutPathExpansion(path, MakeUnique<Value>(in_value));
-}
-
 DictionaryValue* DictionaryValue::SetDictionaryWithoutPathExpansion(
     StringPiece path,
     std::unique_ptr<DictionaryValue> in_value) {
