@@ -178,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "65739b8c_34be08d0",
+        "filename": "net/disk_cache/backend_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-02T15:27:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4eda0ec4_f539e352",
+      "revId": "a3127320698feb28bd4954f383b14be34d176e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4bb12278_8c1de592",
         "filename": "net/disk_cache/backend_unittest.cc",
         "patchSetId": 10
@@ -401,6 +419,24 @@
     },
     {
       "key": {
+        "uuid": "c4bef42d_baf05875",
+        "filename": "net/disk_cache/backend_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 563,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-02T15:27:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4e750877_3bab35ba",
+      "revId": "a3127320698feb28bd4954f383b14be34d176e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2d7d792_74d3b0ce",
         "filename": "net/disk_cache/backend_unittest.cc",
         "patchSetId": 10
@@ -430,6 +466,24 @@
       "side": 1,
       "message": "Hmm, what\u0027s annoying is that CreateCacheBackend doesn\u0027t know about the mock backend...\nThis test does fail *for me* if one e.g. comments out line 613, but that\u0027s still rather flimsy.",
       "parentUuid": "b2d7d792_74d3b0ce",
+      "revId": "a3127320698feb28bd4954f383b14be34d176e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55bbdb18_39402d4c",
+        "filename": "net/disk_cache/backend_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 586,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-02T15:27:18Z",
+      "side": 1,
+      "message": "Fair, we\u0027d likely need to pull out CacheCreator into its own file so we could override or inject in to it. Okay, fine for now.",
+      "parentUuid": "3778dc33_e5d69224",
       "revId": "a3127320698feb28bd4954f383b14be34d176e38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -503,6 +557,30 @@
       "revId": "a3127320698feb28bd4954f383b14be34d176e38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6690aa17_09e00c71",
+        "filename": "net/disk_cache/disk_cache.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-02T15:27:18Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ad37271a_e104d55a",
+      "range": {
+        "startLine": 113,
+        "startChar": 8,
+        "endLine": 113,
+        "endChar": 11
+      },
+      "revId": "a3127320698feb28bd4954f383b14be34d176e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -588,6 +666,30 @@
       "side": 1,
       "message": "Hmm, can\u0027t agree, since this is the rationale for storing the pointer.",
       "parentUuid": "7587a4fe_579d0122",
+      "range": {
+        "startLine": 151,
+        "startChar": 61,
+        "endLine": 151,
+        "endChar": 70
+      },
+      "revId": "a3127320698feb28bd4954f383b14be34d176e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df0eea1d_3bff3a22",
+        "filename": "net/disk_cache/disk_cache.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-02T15:27:18Z",
+      "side": 1,
+      "message": "Good point. I\u0027m just trying to find a way to break up this very long sentence.",
+      "parentUuid": "1977c189_5a38323c",
       "range": {
         "startLine": 151,
         "startChar": 61,
@@ -751,6 +853,30 @@
       "side": 1,
       "message": "It\u0027s being shared, though, not moved?\n(the backend needs its own copies since it needs to pass it to entries)",
       "parentUuid": "11b8c94c_f1917d52",
+      "range": {
+        "startLine": 110,
+        "startChar": 14,
+        "endLine": 110,
+        "endChar": 35
+      },
+      "revId": "a3127320698feb28bd4954f383b14be34d176e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edf6c64e_ab717812",
+        "filename": "net/disk_cache/simple/simple_index.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-02T15:27:18Z",
+      "side": 1,
+      "message": "Sorry, misunderstanding. Here is the guide\u0027s text:\n\nIf the function (at least sometimes) takes a ref on a refcounted object, declare the param as scoped_refptr\u003cT\u003e. The caller can decide whether it wishes to transfer ownership (by calling std::move(t) when passing t) or retain its ref (by simply passing t directly).\n\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#Object-ownership-and-calling-conventions",
+      "parentUuid": "d19efd74_27cc3423",
       "range": {
         "startLine": 110,
         "startChar": 14,
