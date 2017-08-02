@@ -39,6 +39,30 @@
       "revId": "a72089701ae0757b60af15e72226210cabfcb70a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb6cd18c_0a9151a4",
+        "filename": "ui/base/win/shell.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-02T15:32:36Z",
+      "side": 1,
+      "message": "If we believe this could actually fail for some reason, NOTREACHED() isn\u0027t really appropriate, as that asserts \"never fails\".\n\nThe existing DCHECK at the bottom of the function declares that GetCount() always succeeds.  It seems like either that DCHECK is incorrect, or the previous implementation here was correct (that we can just DCHECK that GetCount succeeded and move on safely).\n\nFWIW I\u0027m also really confused why the loop counts down, as loops that count down are unusual and so signal \"it\u0027s critically important that this loop not count up\", but that\u0027s not the case here.\n\nFor these reasons, I\u0027d either return to the previous code, or if GetCount() cannot be relied on to succeed, then early-return above and not DCHECK it below.",
+      "parentUuid": "e951ea57_13a007f7",
+      "range": {
+        "startLine": 182,
+        "startChar": 7,
+        "endLine": 182,
+        "endChar": 10
+      },
+      "revId": "a72089701ae0757b60af15e72226210cabfcb70a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
