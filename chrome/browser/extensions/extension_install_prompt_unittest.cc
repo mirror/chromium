@@ -70,8 +70,8 @@ void VerifyPromptPermissionsCallback(
 
 void SetImage(gfx::Image* image_out,
               const base::Closure& quit_closure,
-              const gfx::Image& image_in) {
-  *image_out = image_in;
+              gfx::Image image_in) {
+  *image_out = std::move(image_in);
   quit_closure.Run();
 }
 

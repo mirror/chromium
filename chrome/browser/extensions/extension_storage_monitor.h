@@ -84,7 +84,7 @@ class ExtensionStorageMonitor : public KeyedService,
                                   int64_t current_usage);
   void OnImageLoaded(const std::string& extension_id,
                      int64_t current_usage,
-                     const gfx::Image& image);
+                     gfx::Image image);
   void OnNotificationButtonClick(const std::string& extension_id,
                                  int button_index);
 
