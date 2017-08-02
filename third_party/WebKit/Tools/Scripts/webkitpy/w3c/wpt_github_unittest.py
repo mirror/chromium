@@ -51,22 +51,20 @@ class WPTGitHubTest(unittest.TestCase):
         with self.assertRaises(GitHubError):
             self.wpt_github.delete_remote_branch('rutabaga')
 
-    def test_pr_for_chromium_commit_prefers_change_id(self):
+    def test_pr_for_chromium_commit(self):
         self.wpt_github.all_pull_requests = lambda: [
-            PullRequest('PR1', 1, 'body\nChange-Id: I00c0ffee\nCr-Commit-Position: refs/heads/master@{#10}', 'open', []),
-            PullRequest('PR2', 2, 'body\nChange-Id: I00decade\nCr-Commit-Position: refs/heads/master@{#33}', 'open', []),
+            PullRequest('PR1', 1, 'body\nChange-Id: I00c0ffee', 'open', []),
+            PullRequest('PR2', 2, 'body\nChange-Id: I00decade', 'open', []),
         ]
         chromium_commit = MockChromiumCommit(
             MockHost(), change_id='I00decade', position='refs/heads/master@{#10}')
         pull_request = self.wpt_github.pr_for_chromium_commit(chromium_commit)
         self.assertEqual(pull_request.number, 2)
 
-    def test_pr_for_chromium_commit_falls_back_to_commit_position(self):
+    def test_pr_for_chromium_commit_ignores_commit_position(self):
         self.wpt_github.all_pull_requests = lambda: [
             PullRequest('PR1', 1, 'body\nChange-Id: I00c0ffee\nCr-Commit-Position: refs/heads/master@{#10}', 'open', []),
-            PullRequest('PR2', 2, 'body\nChange-Id: I00decade\nCr-Commit-Position: refs/heads/master@{#33}', 'open', []),
         ]
         chromium_commit = MockChromiumCommit(
-            MockHost(), position='refs/heads/master@{#10}')
-        pull_request = self.wpt_github.pr_for_chromium_commit(chromium_commit)
-        self.assertEqual(pull_request.number, 1)
+            MockHost(), change_id='W00tecade', position='refs/heads/master@{#10}')
+        self.assertIsNone(self.wpt_github.pr_for_chromium_commit(chromium_commit))
