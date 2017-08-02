@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d28637b_cbde7ea1",
+        "filename": "chrome/browser/resources/chromeos/keyboard_overlay.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-02T22:19:45Z",
+      "side": 1,
+      "message": "Editorial comment: Wow. This seems like a maintenance nightmare, nevermind the user confusion. I hope the decision was not made lightly.",
+      "revId": "439ef77fd13e0601a4eef70bc1d6e11af40b47ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f498949e_2a4820f9",
+        "filename": "chrome/browser/resources/chromeos/keyboard_overlay.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-02T22:19:45Z",
+      "side": 1,
+      "message": "Remove if with extra lookup:\n\nreturn topRowMap[label] || label;",
+      "revId": "439ef77fd13e0601a4eef70bc1d6e11af40b47ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e195be02_e7fc0ae8",
+        "filename": "chrome/browser/resources/chromeos/keyboard_overlay.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 852,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-02T22:19:45Z",
+      "side": 1,
+      "message": "It would be nice to have a better descriptor for this keyboard layout than \u00272\u0027.",
+      "revId": "439ef77fd13e0601a4eef70bc1d6e11af40b47ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16f2777b_34191048",
+        "filename": "chrome/browser/resources/chromeos/keyboard_overlay.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 924,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-02T22:19:45Z",
+      "side": 1,
+      "message": "Any reason to make this an object instead of just an array?",
+      "revId": "439ef77fd13e0601a4eef70bc1d6e11af40b47ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
