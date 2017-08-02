@@ -77,6 +77,8 @@ class LevelDBDatabaseImpl : public mojom::LevelDBDatabase,
                                        leveldb::WriteBatch* batch);
 
   std::unique_ptr<leveldb::Env> environment_;
+  // TODO(cmumford): Convert to a raw pointer for logging purposes only. No
+  // longer own the cache as they are all shared.
   std::unique_ptr<leveldb::Cache> cache_;
   std::unique_ptr<leveldb::DB> db_;
   base::Optional<base::trace_event::MemoryAllocatorDumpGuid> memory_dump_id_;

@@ -25,12 +25,14 @@
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/sys_info.h"
 #include "base/threading/thread_restrictions.h"
 #include "base/trace_event/memory_dump_manager.h"
 #include "base/trace_event/memory_dump_provider.h"
 #include "base/trace_event/process_memory_dump.h"
 #include "base/trace_event/trace_event.h"
 #include "third_party/leveldatabase/chromium_logger.h"
+#include "third_party/leveldatabase/src/include/leveldb/cache.h"
 #include "third_party/leveldatabase/src/include/leveldb/options.h"
 #include "third_party/re2/src/re2/re2.h"
 
@@ -362,7 +364,32 @@ Status ChromiumWritableFile::Sync() {
 
 base::LazyInstance<ChromiumEnv>::Leaky default_env = LAZY_INSTANCE_INITIALIZER;
 
+size_t DefaultBlockCacheSize() {
+  if (base::SysInfo::IsLowEndDevice())
+    return 1 << 20;  // 1MB
+  else
+    return 8 << 20;  // 8MB
+}
+
+leveldb::Cache* GetDefaultBlockCache() {
+  static leveldb::Cache* cache = leveldb::NewLRUCache(DefaultBlockCacheSize());
+  return cache;
+}
+
 }  // unnamed namespace
+
+// Returns a separate (from the default) block cache for use by web API's.
+// This can be used to give them their own read cache to help ensure that rogue
+// pages don't flush the cache used by Chromium thus slowing down the UI or
+// other backend tasks.
+leveldb::Cache* SharedWebBlockCache() {
+  if (base::SysInfo::IsLowEndDevice())
+    return GetDefaultBlockCache();
+
+  const int block_cache_size = 8 << 20;  // 8MB
+  static leveldb::Cache* cache = leveldb::NewLRUCache(block_cache_size);
+  return cache;
+}
 
 ChromiumOptions::ChromiumOptions() {
 // Currently log reuse is an experimental feature in leveldb. More info at:
@@ -375,6 +402,10 @@ ChromiumOptions::ChromiumOptions() {
 #else
   reuse_logs = true;
 #endif
+  // By default use a single shared block cache to conserve memory. The owner of
+  // this object can create their own, or set to NULL to have leveldb create a
+  // new db-specific block cache.
+  block_cache = GetDefaultBlockCache();
 }
 
 const char* MethodIDToString(MethodID method) {
