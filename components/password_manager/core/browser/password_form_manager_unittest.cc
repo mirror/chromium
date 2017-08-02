@@ -3133,14 +3133,23 @@ TEST_F(PasswordFormManagerTest, ProbablyAccountCreationUpload) {
   expected_types[saved_match()->password_element] =
       autofill::PROBABLY_ACCOUNT_CREATION_PASSWORD;
 
-  EXPECT_CALL(*client()->mock_driver()->mock_autofill_download_manager(),
-              StartUploadRequest(
-                  CheckUploadedAutofillTypesAndSignature(
-                      pending_structure.FormSignatureAsStr(), expected_types,
-                      false /* expect_generation_vote */,
-                      autofill::AutofillUploadContents::Field::NO_INFORMATION
-                      /* expected_username_vote_type */),
-                  false, expected_available_field_types, std::string(), true));
+  // Checks the username vote type is saved.
+  autofill::AutofillUploadContents::Field::UsernameVoteType
+      expected_username_vote_type =
+          autofill::AutofillUploadContents::Field::NO_INFORMATION;
+  if (saved_match()->username_edited_in_prompt) {
+    expected_types[saved_match()->username_element] = autofill::USERNAME;
+    expected_username_vote_type =
+        autofill::AutofillUploadContents::Field::USERNAME_EDITED;
+  }
+
+  EXPECT_CALL(
+      *client()->mock_driver()->mock_autofill_download_manager(),
+      StartUploadRequest(
+          CheckUploadedAutofillTypesAndSignature(
+              pending_structure.FormSignatureAsStr(), expected_types,
+              false /* expect_generation_vote */, expected_username_vote_type),
+          false, expected_available_field_types, std::string(), true));
 
   form_manager.ProvisionallySave(
       form_to_save, PasswordFormManager::IGNORE_OTHER_POSSIBLE_USERNAMES);
