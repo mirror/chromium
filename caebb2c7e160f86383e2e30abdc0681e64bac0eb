@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5510d571_f1e2324a",
+        "filename": "chrome/browser/ssl/insecure_sensitive_input_driver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-02T20:22:20Z",
+      "side": 1,
+      "message": "I think it\u0027s possible that |entry| could be null here, we aren\u0027t guaranteed to always have a navigation entry.",
+      "range": {
+        "startLine": 48,
+        "startChar": 28,
+        "endLine": 48,
+        "endChar": 33
+      },
+      "revId": "caebb2c7e160f86383e2e30abdc0681e64bac0eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3944498c_948fe9aa",
+        "filename": "chrome/browser/ssl/insecure_sensitive_input_driver.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-02T20:22:20Z",
+      "side": 1,
+      "message": "ISTR we decided that this should be GetLastCommittedEntry",
+      "range": {
+        "startLine": 49,
+        "startChar": 36,
+        "endLine": 49,
+        "endChar": 51
+      },
+      "revId": "caebb2c7e160f86383e2e30abdc0681e64bac0eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bbb8400_d6b0706a",
+        "filename": "components/security_state/core/ssl_status_input_event_data.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-02T20:22:20Z",
+      "side": 1,
+      "message": "nit: I think you might be able to just define a default copy constructor on this class (removing DISALLOW_COPY_AND_ASSIGN) and then do: cloned \u003d base::MakeUnique\u003c..\u003e(*this) or something like that.",
+      "range": {
+        "startLine": 29,
+        "startChar": 43,
+        "endLine": 29,
+        "endChar": 49
+      },
+      "revId": "caebb2c7e160f86383e2e30abdc0681e64bac0eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9822a05b_f0746089",
+        "filename": "components/security_state/core/ssl_status_input_event_data.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-02T20:22:20Z",
+      "side": 1,
+      "message": "The \"core\" part of components can be used on iOS and therefore can\u0027t depend on content. Can this go in components/security_state/content instead?\n\nAlso, here\u0027s another possible organization to consider. Define a simple struct here in core:\n\nstruct InsecureInputEventData{\n  bool insecure_field_edited;\n};\n\nAnd then define the SSLStatus user data in components/security_state/core:\n\nclass SSLStatusInputEventData : public SSLStatus::UserData {\n  ...\n  bool insecure_field_edited() { return data_.insecure_field_edited; }\n  ...\n  private:\n    InsecureInputEventData data_;\n};\n\nThen add an InsecureInputEventData method to VisibleSecurityState and SecurityInfo. That way we don\u0027t have to add new fields to VisibleSecurityState and SecurityInfo whenever we add new fields to InsecureInputEventData.",
+      "range": {
+        "startLine": 10,
+        "startChar": 10,
+        "endLine": 10,
+        "endChar": 17
+      },
+      "revId": "caebb2c7e160f86383e2e30abdc0681e64bac0eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
