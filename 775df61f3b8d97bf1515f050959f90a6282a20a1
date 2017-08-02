@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "72efff6a_793c32a7",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedScriptValue.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-02T02:59:28Z",
+      "side": 1,
+      "message": "SerializedScriptValue::ToWireString and ToWireData both padded the data returned to a multiple of 2 bytes. Doing that always meant extra copies though, so GetWireData was introduced which doesn\u0027t do that padding. Since the current serialization format is just based on bytes rather than 16 bit integers anyway this should all be no problem.\nBut apparently no code was trying to parse back a SerializedScriptValue from the result of GetWireData (or if they are, I\u0027m not sure what constructor they would be using, since anyting I tried would fail in this DCHECK when the buffer isn\u0027t a multiple of 16 bits).",
+      "parentUuid": "3d5633ab_5da6f2ca",
+      "revId": "775df61f3b8d97bf1515f050959f90a6282a20a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06e5a98b_222ef155",
         "filename": "third_party/WebKit/public/platform/WebMessagePortChannel.h",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "775df61f3b8d97bf1515f050959f90a6282a20a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd83ec6c_51504b6b",
+        "filename": "third_party/WebKit/public/platform/WebMessagePortChannel.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-02T02:59:28Z",
+      "side": 1,
+      "message": "In the case of PostMessage no ownership of memory is transferred. The serialization to a mojo message happens directly within the PostMessage call. For TryGetMessage I need to somehow transfer ownership of the bytes for after TryGetMessage returns (at least without changing how the API is used). So pointer + size when we\u0027re only passing a reference to the bytes into PostMessage, and vector\u003cuint8_t\u003e to transfer ownership on the way out. In the future I do want to change how TryGetMessage works, but that\u0027s probably easier to do after onion-soupyfying messageport (have a mostly working CL for that, just needs some cleaning up/figuring out proper dependencies between WebKit/common, WebKit/public, etc).",
+      "parentUuid": "06e5a98b_222ef155",
+      "revId": "775df61f3b8d97bf1515f050959f90a6282a20a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
