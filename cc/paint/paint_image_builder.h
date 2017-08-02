@@ -5,9 +5,13 @@
 #ifndef CC_PAINT_PAINT_IMAGE_BUILDER_H_
 #define CC_PAINT_PAINT_IMAGE_BUILDER_H_
 
+#include "base/memory/ptr_util.h"
 #include "cc/paint/paint_export.h"
 #include "cc/paint/paint_image.h"
+#include "cc/paint/paint_image_generator.h"
 #include "cc/paint/paint_op_buffer.h"
+#include "cc/paint/skia_paint_image_generator.h"
+#include "third_party/skia/include/core/SkImage.h"
 
 namespace cc {
 
@@ -36,6 +40,19 @@ class CC_PAINT_EXPORT PaintImageBuilder {
   }
   void set_is_multipart(bool is_multipart) {
     paint_image_.is_multipart_ = is_multipart;
+  }
+
+  void set_paint_image_generator(sk_sp<PaintImageGenerator> generator) {
+    paint_image_.paint_image_generator_ = generator;
+  }
+
+  uint32_t set_sk_image_id(uint32_t unique_id) {
+    DCHECK(paint_image_.paint_image_generator_);
+
+    paint_image_.cached_sk_image_ =
+        SkImage::MakeFromGenerator(base::MakeUnique<SkiaPaintImageGenerator>(
+            paint_image_.paint_image_generator_, unique_id));
+    return paint_image_.cached_sk_image_->uniqueID();
   }
 
   PaintImage TakePaintImage() const;
