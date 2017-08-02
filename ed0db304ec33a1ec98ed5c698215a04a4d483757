@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5b8dbe1_a96b203f",
+        "filename": "chrome/browser/ui/views/location_bar/star_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1111184
+      },
+      "writtenOn": "2017-08-02T22:00:43Z",
+      "side": 1,
+      "message": "Is this needed?",
+      "range": {
+        "startLine": 15,
+        "startChar": 25,
+        "endLine": 15,
+        "endChar": 27
+      },
+      "revId": "ed0db304ec33a1ec98ed5c698215a04a4d483757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3bdb58d_ab1ea494",
+        "filename": "chrome/browser/ui/views/location_bar/star_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1111184
+      },
+      "writtenOn": "2017-08-02T22:00:43Z",
+      "side": 1,
+      "message": "What is the flow here when ShowPromo() is called when a promo is already visible?  (Or if the add/edit bookmark widget is already visible) Perhaps a quick return is appropriate.\n\nSimilarly, what is the flow when the user triggers the StarButton (trying to show the add/edit bookmark widget) when a promo bubble is visible?  I would expect one of three things:\n1 - the promo widget is dismissed and replaced with the add/edit widget\n2 - the promo widget is simply dismissed\n3 - the add/edit widget is not shown and the user action is a no-op (not a huge fan but at least it\u0027s deterministic.\n\n(It might be valuable to add a test to answer that later question and ensure it remains true depending on how convoluted the solution is)",
+      "range": {
+        "startLine": 39,
+        "startChar": 15,
+        "endLine": 39,
+        "endChar": 24
+      },
+      "revId": "ed0db304ec33a1ec98ed5c698215a04a4d483757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7a532d7_6648ec22",
+        "filename": "chrome/browser/ui/views/location_bar/star_view.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1111184
+      },
+      "writtenOn": "2017-08-02T22:00:43Z",
+      "side": 1,
+      "message": "Will this \u0027if\u0027 clause ever be false?  From the looks of things it won\u0027t, or if it is it will crash. i.e.\n- It will crash on line 51 anyway if |widget| is null.\n- If BubbleDialogDelegateView::CreateBubble() returns an instance it will be a new instance and |bookmark_promo_observer_| shouldn\u0027t be observing a new instance somehow by magic.",
+      "range": {
+        "startLine": 45,
+        "startChar": 6,
+        "endLine": 45,
+        "endChar": 12
+      },
+      "revId": "ed0db304ec33a1ec98ed5c698215a04a4d483757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81110a49_6dd624be",
+        "filename": "chrome/browser/ui/views/location_bar/star_view.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1111184
+      },
+      "writtenOn": "2017-08-02T22:00:43Z",
+      "side": 1,
+      "message": "Can this be forward declared here and included in the .cc file?",
+      "range": {
+        "startLine": 11,
+        "startChar": 19,
+        "endLine": 11,
+        "endChar": 25
+      },
+      "revId": "ed0db304ec33a1ec98ed5c698215a04a4d483757",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
