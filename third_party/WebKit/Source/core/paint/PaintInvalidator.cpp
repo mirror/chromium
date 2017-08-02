@@ -33,14 +33,13 @@ static LayoutRect SlowMapToVisualRectInAncestorSpace(
                                                      FloatRect(rect), result);
     return result;
   }
-
   LayoutRect result(rect);
   if (object.IsLayoutView()) {
     ToLayoutView(object).MapToVisualRectInAncestorSpace(
         &ancestor, result, kInputIsInFrameCoordinates, kDefaultVisualRectFlags);
-  }
-
+  }  // else {
   object.MapToVisualRectInAncestorSpace(&ancestor, result);
+  //}
   return result;
 }
 
