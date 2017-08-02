@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "9e331b19_0cdd578b",
+        "filename": "chrome/browser/resources/chromeos/keyboard_overlay.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 852,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-02T22:34:25Z",
+      "side": 1,
+      "message": "i just suggested this to match what i think is the existing terminology used in udev and chrome.",
+      "parentUuid": "e195be02_e7fc0ae8",
+      "revId": "439ef77fd13e0601a4eef70bc1d6e11af40b47ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "16f2777b_34191048",
         "filename": "chrome/browser/resources/chromeos/keyboard_overlay.js",
         "patchSetId": 6
