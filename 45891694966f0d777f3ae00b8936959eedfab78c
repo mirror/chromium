@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "591b7fd8_a35aa894",
+        "filename": "third_party/WebKit/Source/core/exported/WebPluginContainerImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 873,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-02T00:44:15Z",
+      "side": 1,
+      "message": "Let\u0027s move this in with cut/paste above, so we don\u0027t have to check kEditModifier separately.",
+      "revId": "45891694966f0d777f3ae00b8936959eedfab78c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5a24050_3cd4b5f8",
+        "filename": "third_party/WebKit/Source/core/exported/WebPluginContainerImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-02T00:44:15Z",
+      "side": 1,
+      "message": "... Insert, respectively.",
+      "revId": "45891694966f0d777f3ae00b8936959eedfab78c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7ed30f2_591635a7",
+        "filename": "third_party/WebKit/Source/core/exported/WebPluginContainerImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 881,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-02T00:44:15Z",
+      "side": 1,
+      "message": "Let\u0027s also save the result of \"web_event.GetModifiers() \u0026 WebInputEvent::kInputModifiers\" once, and reuse that instead of calculating it in multiple places.",
+      "revId": "45891694966f0d777f3ae00b8936959eedfab78c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
