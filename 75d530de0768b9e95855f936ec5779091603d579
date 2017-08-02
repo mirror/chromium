@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d7545ad9_f80d116c",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 735,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-02T00:17:06Z",
+      "side": 1,
+      "message": "Addressed in CL:\nhttps://chromium-review.googlesource.com/c/597170",
+      "parentUuid": "953978b9_26dc7dae",
+      "range": {
+        "startLine": 735,
+        "startChar": 55,
+        "endLine": 735,
+        "endChar": 56
+      },
+      "revId": "75d530de0768b9e95855f936ec5779091603d579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2b446f24_c9f5173f",
         "filename": "components/omnibox/browser/scored_history_match.cc",
         "patchSetId": 6
