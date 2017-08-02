@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b42c8d33_a5f2880c",
+        "filename": "ui/webui/resources/js/cr/ui/list.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-02T18:31:09Z",
+      "side": 1,
+      "message": "Have you considered using the PointerEvents API instead, which encompasses both mouse and touch events? See https://developer.mozilla.org/en-US/docs/Web/API/Pointer_events#Event_types_and_Global_Event_Handlers.\n\nPerhaps we can reduce the amount of registered listeners in this class by using PointerEvents API.",
+      "revId": "8a43a358430fe4b1218fd2e9c3c3bf81f6a9c124",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a932073_b7c68557",
+        "filename": "ui/webui/resources/js/cr/ui/list.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-02T18:31:09Z",
+      "side": 1,
+      "message": "This should probably be !Event, since the event can\u0027t be null.\n\nAlso @private annotation missing.",
+      "revId": "8a43a358430fe4b1218fd2e9c3c3bf81f6a9c124",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
