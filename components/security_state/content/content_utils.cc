@@ -12,6 +12,7 @@
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "components/security_state/core/security_state.h"
+#include "components/security_state/core/ssl_status_input_event_data.h"
 #include "components/strings/grit/components_chromium_strings.h"
 #include "components/strings/grit/components_strings.h"
 #include "content/public/browser/navigation_entry.h"
@@ -56,21 +57,27 @@ blink::WebSecurityStyle SecurityLevelToSecurityStyle(
 void ExplainHTTPSecurity(
     const security_state::SecurityInfo& security_info,
     content::SecurityStyleExplanations* security_style_explanations) {
-  if (security_info.security_level == security_state::HTTP_SHOW_WARNING) {
-    if (security_info.displayed_password_field_on_http ||
-        security_info.displayed_credit_card_field_on_http) {
-      security_style_explanations->neutral_explanations.push_back(
-          content::SecurityStyleExplanation(
-              l10n_util::GetStringUTF8(IDS_PRIVATE_USER_DATA_INPUT),
-              l10n_util::GetStringUTF8(
-                  IDS_PRIVATE_USER_DATA_INPUT_DESCRIPTION)));
-    }
-    if (security_info.incognito_downgraded_security_level) {
-      security_style_explanations->neutral_explanations.push_back(
-          content::SecurityStyleExplanation(
-              l10n_util::GetStringUTF8(IDS_INCOGNITO_NONSECURE),
-              l10n_util::GetStringUTF8(IDS_INCOGNITO_NONSECURE_DESCRIPTION)));
-    }
+  if (security_info.security_level != security_state::HTTP_SHOW_WARNING)
+    return;
+
+  if (security_info.edited_form_field_on_http) {
+    security_style_explanations->neutral_explanations.push_back(
+        content::SecurityStyleExplanation(
+            l10n_util::GetStringUTF8(IDS_EDITED_NONSECURE),
+            l10n_util::GetStringUTF8(IDS_EDITED_NONSECURE_DESCRIPTION)));
+  }
+  if (security_info.displayed_password_field_on_http ||
+      security_info.displayed_credit_card_field_on_http) {
+    security_style_explanations->neutral_explanations.push_back(
+        content::SecurityStyleExplanation(
+            l10n_util::GetStringUTF8(IDS_PRIVATE_USER_DATA_INPUT),
+            l10n_util::GetStringUTF8(IDS_PRIVATE_USER_DATA_INPUT_DESCRIPTION)));
+  }
+  if (security_info.incognito_downgraded_security_level) {
+    security_style_explanations->neutral_explanations.push_back(
+        content::SecurityStyleExplanation(
+            l10n_util::GetStringUTF8(IDS_INCOGNITO_NONSECURE),
+            l10n_util::GetStringUTF8(IDS_INCOGNITO_NONSECURE_DESCRIPTION)));
   }
 }
 
@@ -381,6 +388,11 @@ std::unique_ptr<security_state::VisibleSecurityState> GetVisibleSecurityState(
   state->displayed_credit_card_field_on_http =
       !!(ssl.content_status &
          content::SSLStatus::DISPLAYED_CREDIT_CARD_FIELD_ON_HTTP);
+
+  SSLStatusInputEventData* input_events =
+      static_cast<SSLStatusInputEventData*>(ssl.user_data.get());
+  state->edited_form_field_on_http =
+      input_events && input_events->insecure_field_edited();
 
   return state;
 }
