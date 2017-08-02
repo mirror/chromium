@@ -10,7 +10,8 @@ ShellContentUtilityClient::ShellContentUtilityClient() = default;
 
 ShellContentUtilityClient::~ShellContentUtilityClient() = default;
 
-void ShellContentUtilityClient::UtilityThreadStarted() {
+void ShellContentUtilityClient::UtilityThreadStarted(
+    service_manager::BinderRegistry* registry) {
   utility_handler::UtilityThreadStarted();
 }
 

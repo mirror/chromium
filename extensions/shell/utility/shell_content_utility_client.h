@@ -16,7 +16,7 @@ class ShellContentUtilityClient : public content::ContentUtilityClient {
   ~ShellContentUtilityClient() override;
 
   // content::ContentUtilityClient:
-  void UtilityThreadStarted() override;
+  void UtilityThreadStarted(service_manager::BinderRegistry* registry) override;
 };
 
 }  // namespace extensions

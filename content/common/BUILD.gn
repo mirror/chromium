@@ -276,6 +276,8 @@ source_set("common") {
     "quarantine/quarantine_linux.cc",
     "quarantine/quarantine_mac.mm",
     "quarantine/quarantine_win.cc",
+    "queueing_connection_filter.cc",
+    "queueing_connection_filter.h",
     "quota_messages.h",
     "render_process_messages.h",
     "render_widget_surface_properties.cc",

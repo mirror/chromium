@@ -28,7 +28,8 @@ class CONTENT_EXPORT ContentUtilityClient {
   virtual ~ContentUtilityClient() {}
 
   // Notifies us that the UtilityThread has been created.
-  virtual void UtilityThreadStarted() {}
+  virtual void UtilityThreadStarted(service_manager::BinderRegistry* registry) {
+  }
 
   // Allows the embedder to filter messages.
   virtual bool OnMessageReceived(const IPC::Message& message);

@@ -8,8 +8,8 @@
 
 #include "content/child/blink_platform_impl.h"
 #include "content/child/child_process.h"
+#include "content/common/queueing_connection_filter.h"
 #include "content/public/common/service_manager_connection.h"
-#include "content/public/common/simple_connection_filter.h"
 #include "content/public/utility/content_utility_client.h"
 #include "content/utility/utility_blink_platform_impl.h"
 #include "content/utility/utility_service_factory.h"
@@ -67,27 +67,37 @@ void UtilityThreadImpl::EnsureBlinkInitialized() {
   blink::Platform::Initialize(blink_platform_impl_.get());
 }
 
+void UtilityThreadImpl::OnChannelConnected(int32_t peer_pid) {
+  ChildThreadImpl::OnChannelConnected(peer_pid);
+
+  if (!release_pending_requests_closure_.is_null())
+    release_pending_requests_closure_.Run();
+}
+
 void UtilityThreadImpl::Init() {
   ChildProcess::current()->AddRefProcess();
+
+  ServiceManagerConnection* connection = GetServiceManagerConnection();
+  if (!connection) {
+    GetContentClient()->utility()->UtilityThreadStarted(nullptr);
+    return;
+  }
 
   auto registry = base::MakeUnique<service_manager::BinderRegistry>();
   registry->AddInterface(
       base::Bind(&UtilityThreadImpl::BindServiceFactoryRequest,
                  base::Unretained(this)),
       base::ThreadTaskRunnerHandle::Get());
-
-  content::ServiceManagerConnection* connection = GetServiceManagerConnection();
-  if (connection) {
-    connection->AddConnectionFilter(
-        base::MakeUnique<SimpleConnectionFilter>(std::move(registry)));
-  }
-
-  GetContentClient()->utility()->UtilityThreadStarted();
-
   service_factory_.reset(new UtilityServiceFactory);
 
-  if (connection)
-    connection->Start();
+  GetContentClient()->utility()->UtilityThreadStarted(registry.get());
+
+  std::unique_ptr<QueueingConnectionFilter> filter =
+      base::MakeUnique<QueueingConnectionFilter>(GetIOTaskRunner(),
+                                                 std::move(registry));
+  release_pending_requests_closure_ = filter->GetReleaseCallback();
+  connection->AddConnectionFilter(std::move(filter));
+  connection->Start();
 }
 
 bool UtilityThreadImpl::OnControlMessageReceived(const IPC::Message& msg) {

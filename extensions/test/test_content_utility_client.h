@@ -16,7 +16,7 @@ class TestContentUtilityClient : public content::ContentUtilityClient {
   ~TestContentUtilityClient() override;
 
   // content::ContentUtilityClient:
-  void UtilityThreadStarted() override;
+  void UtilityThreadStarted(service_manager::BinderRegistry* registry) override;
 };
 
 }  // namespace extensions

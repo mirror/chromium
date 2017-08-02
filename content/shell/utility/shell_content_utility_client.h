@@ -17,7 +17,7 @@ class ShellContentUtilityClient : public ContentUtilityClient {
   ~ShellContentUtilityClient() override;
 
   // ContentUtilityClient:
-  void UtilityThreadStarted() override;
+  void UtilityThreadStarted(service_manager::BinderRegistry* registry) override;
   void RegisterServices(StaticServiceMap* services) override;
   void RegisterNetworkBinders(
       service_manager::BinderRegistry* registry) override;

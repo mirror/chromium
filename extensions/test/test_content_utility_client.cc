@@ -16,15 +16,11 @@ TestContentUtilityClient::TestContentUtilityClient() = default;
 
 TestContentUtilityClient::~TestContentUtilityClient() = default;
 
-void TestContentUtilityClient::UtilityThreadStarted() {
+void TestContentUtilityClient::UtilityThreadStarted(
+    service_manager::BinderRegistry* registry) {
   utility_handler::UtilityThreadStarted();
 
-  auto registry = base::MakeUnique<service_manager::BinderRegistry>();
-  utility_handler::ExposeInterfacesToBrowser(registry.get(), false);
-  content::ChildThread::Get()
-      ->GetServiceManagerConnection()
-      ->AddConnectionFilter(base::MakeUnique<content::SimpleConnectionFilter>(
-          std::move(registry)));
+  utility_handler::ExposeInterfacesToBrowser(registry, false);
 }
 
 }  // namespace extensions

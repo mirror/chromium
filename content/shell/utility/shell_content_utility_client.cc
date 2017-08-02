@@ -114,18 +114,14 @@ ShellContentUtilityClient::ShellContentUtilityClient() {}
 ShellContentUtilityClient::~ShellContentUtilityClient() {
 }
 
-void ShellContentUtilityClient::UtilityThreadStarted() {
-  auto registry = base::MakeUnique<service_manager::BinderRegistry>();
+void ShellContentUtilityClient::UtilityThreadStarted(
+    service_manager::BinderRegistry* registry) {
   registry->AddInterface(base::Bind(&TestServiceImpl::Create),
                          base::ThreadTaskRunnerHandle::Get());
   registry->AddInterface<mojom::PowerMonitorTest>(
       base::Bind(&PowerMonitorTestImpl::MakeStrongBinding,
                  base::Passed(base::MakeUnique<PowerMonitorTestImpl>())),
       base::ThreadTaskRunnerHandle::Get());
-  content::ChildThread::Get()
-      ->GetServiceManagerConnection()
-      ->AddConnectionFilter(
-          base::MakeUnique<SimpleConnectionFilter>(std::move(registry)));
 }
 
 void ShellContentUtilityClient::RegisterServices(StaticServiceMap* services) {
