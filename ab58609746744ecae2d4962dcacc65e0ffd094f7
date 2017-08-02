@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "652e27bd_167ecf4e",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyFontUtils.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-08-02T15:07:29Z",
+      "side": 1,
+      "message": "I\u0027ll add a comment in a subsequent CL. In font: 0/0 (i.e. a unit less font size 0) calling ConsumeNumber makes the parsing \"cursor\" proceed to past the 0 of 0/0, that\u0027s not what we want.\nExamples:\nfont: 100 0/0; should parse 100 as weight, 0 as font size.\nfont: 1 0/0; should parse 1 as weight, 0 as font size. \n\nWeight can only be \u003e 1 and \u003c 1000, but if we find that out after ConsumeNumber, we advance parsing too far.",
+      "parentUuid": "c057379d_dc3f4488",
+      "revId": "ab58609746744ecae2d4962dcacc65e0ffd094f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6004cb70_0dd9b461",
         "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyFontUtils.cpp",
         "patchSetId": 7
