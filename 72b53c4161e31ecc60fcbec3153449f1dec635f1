@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1aec6ab0_df50880c",
+        "filename": "tools/perf/fetch_benchmark_deps.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-08-02T16:55:01Z",
+      "side": 1,
+      "message": "Can you change this to just os.path.join(perf_dir, \u0027contrib\u0027)? Would it work?",
+      "range": {
+        "startLine": 97,
+        "startChar": 70,
+        "endLine": 97,
+        "endChar": 0
+      },
+      "revId": "72b53c4161e31ecc60fcbec3153449f1dec635f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
