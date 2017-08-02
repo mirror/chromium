@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ca9c5f8f_cb1df96a",
+        "filename": "extensions/browser/api/serial/serial_api.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-02T07:04:13Z",
+      "side": 1,
+      "message": "Done. Keep the original logic: return an empty list back in case of error.\nSorry I missed such a scenario..",
+      "parentUuid": "de8b7da9_ab244394",
+      "revId": "6a8bf76c51e408bf5a047d272b115d72dbdad657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9659d178_ddddce84",
         "filename": "extensions/browser/api/serial/serial_apitest.cc",
         "patchSetId": 15
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "1940354e_db760620",
+        "filename": "extensions/browser/api/serial/serial_apitest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-02T07:04:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9659d178_ddddce84",
+      "range": {
+        "startLine": 42,
+        "startChar": 4,
+        "endLine": 43,
+        "endChar": 48
+      },
+      "revId": "6a8bf76c51e408bf5a047d272b115d72dbdad657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35c9709c_633ba9af",
         "filename": "extensions/browser/api/serial/serial_apitest.cc",
         "patchSetId": 15
@@ -62,6 +104,30 @@
       "revId": "6a8bf76c51e408bf5a047d272b115d72dbdad657",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a893eaed_383ff34d",
+        "filename": "extensions/browser/api/serial/serial_apitest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-08-02T07:04:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35c9709c_633ba9af",
+      "range": {
+        "startLine": 45,
+        "startChar": 4,
+        "endLine": 46,
+        "endChar": 48
+      },
+      "revId": "6a8bf76c51e408bf5a047d272b115d72dbdad657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
