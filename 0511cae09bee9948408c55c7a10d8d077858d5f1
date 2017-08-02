@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d80bff1_60940cc6",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/payments/PaymentRequestPaymentAppAndBasicCardWithModifiersTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-02T12:35:04Z",
+      "side": 1,
+      "message": "mastercard_any_supported_type",
+      "range": {
+        "startLine": 260,
+        "startChar": 50,
+        "endLine": 260,
+        "endChar": 91
+      },
+      "revId": "0511cae09bee9948408c55c7a10d8d077858d5f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f301af3_873a96c6",
+        "filename": "components/test/data/payments/bobpay_and_basic_card_with_modifiers.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-02T12:35:04Z",
+      "side": 1,
+      "message": "Let\u0027s use this shorter statement instead:\n\nprint(JSON.stringify(resp, undefined, 2));\n\nPaymentResponse is now serializable, which makes our life easier.",
+      "revId": "0511cae09bee9948408c55c7a10d8d077858d5f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
