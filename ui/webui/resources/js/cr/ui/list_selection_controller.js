@@ -172,6 +172,10 @@ cr.define('cr.ui', function() {
       sm.endChange();
     },
 
+    handleTouchEvents: function(e, index) {
+      // Do nothing. Touch events may be translated as mouse events by default.
+    },
+
     /**
      * Called by the view when it receives a keydown event.
      * @param {Event} e The keydown event.
