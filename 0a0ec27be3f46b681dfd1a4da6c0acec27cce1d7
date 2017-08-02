@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "66c1c9e2_d04e554a",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-08-02T18:15:38Z",
+      "side": 1,
+      "message": "Nevermind, found it.\n\nOK, I forgot that an IPC handled inside a task (shame x3). So the renderer state can\u0027t change inside a task, except the task handling ChildProcessMsg_SetProcessBackgrounded IPC.\n\nBut we still can assume that visibility status stays the same during the task lifetime and check for it only when handling \"task end\" event.",
+      "parentUuid": "579f7342_73f446a5",
+      "revId": "0a0ec27be3f46b681dfd1a4da6c0acec27cce1d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e2e77d7a_9517efe3",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator.cc",
         "patchSetId": 11
