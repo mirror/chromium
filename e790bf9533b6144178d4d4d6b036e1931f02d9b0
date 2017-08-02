@@ -59,6 +59,24 @@
     },
     {
       "key": {
+        "uuid": "410fbde6_19a7d07a",
+        "filename": "chrome/install_static/user_data_dir.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-08-02T13:15:15Z",
+      "side": 1,
+      "message": "Scott will have to answer for this one, but I believe this has been fine as-is to this point. I don\u0027t see a reason why we can\u0027t use local statics now that those are threadsafe, however.\nI think it should be a followup CL, though?",
+      "parentUuid": "07dff785_3f0f0953",
+      "revId": "e790bf9533b6144178d4d4d6b036e1931f02d9b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8b0e4b95_74d39a05",
         "filename": "chrome/installer/setup/installer_crash_reporting.cc",
         "patchSetId": 8
@@ -93,6 +111,24 @@
       "writtenOn": "2017-08-01T20:28:59Z",
       "side": 1,
       "message": "Is _TRUNCATE smart or should we tear things down right here if the string won’t fit?",
+      "revId": "e790bf9533b6144178d4d4d6b036e1931f02d9b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9629dfab_e947feac",
+        "filename": "chrome_elf/chrome_elf_main.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-08-02T13:15:15Z",
+      "side": 1,
+      "message": "This kind of has to work, as otherwise the browser won\u0027t start, and this is pre crash reporting :(. I think it\u0027s likely better to do the wrong thing here by snipping a path incorrect than to bail.",
+      "parentUuid": "c6d0d034_d8474c64",
       "revId": "e790bf9533b6144178d4d4d6b036e1931f02d9b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
