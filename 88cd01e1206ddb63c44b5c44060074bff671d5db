@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0eadf3e4_9717a85c",
+        "filename": "third_party/WebKit/Source/core/workers/Worklet.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-02T15:04:53Z",
+      "side": 1,
+      "message": "How about SelectGlobalScope since this is not simply returning a previously set state but actually calculating the global scope to select? Also, this function needs documentation.",
+      "revId": "88cd01e1206ddb63c44b5c44060074bff671d5db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8866bd3c_26aadc3b",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-02T15:04:53Z",
+      "side": 1,
+      "message": "This comment is a bit confusing. How about\n// We use each global scope for many frames to try to maximize cache hits.",
+      "revId": "88cd01e1206ddb63c44b5c44060074bff671d5db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79e3c00a_3067d5cd",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-02T15:04:53Z",
+      "side": 1,
+      "message": "This isn\u0027t to balance the workload since we only ever use one global scope at a time. It\u0027s to enforce the constraint that you can\u0027t rely on the state in your paint worklet global scope.",
+      "range": {
+        "startLine": 40,
+        "startChar": 53,
+        "endLine": 40,
+        "endChar": 73
+      },
+      "revId": "88cd01e1206ddb63c44b5c44060074bff671d5db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1228e8f4_aab6fad2",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-02T15:04:53Z",
+      "side": 1,
+      "message": "Also count how often it changes (i.e. twice).",
+      "revId": "88cd01e1206ddb63c44b5c44060074bff671d5db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
