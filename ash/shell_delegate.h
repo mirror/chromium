@@ -35,7 +35,6 @@ namespace ui {
 #if defined(USE_OZONE)
 class InputDeviceControllerClient;
 #endif
-class MenuModel;
 }
 
 namespace ash {
@@ -43,8 +42,6 @@ namespace ash {
 class AccessibilityDelegate;
 class GPUSupport;
 class PaletteDelegate;
-class Shelf;
-struct ShelfItem;
 class SystemTrayDelegate;
 class WallpaperDelegate;
 
@@ -108,11 +105,6 @@ class ASH_EXPORT ShellDelegate {
   virtual AccessibilityDelegate* CreateAccessibilityDelegate() = 0;
 
   virtual std::unique_ptr<PaletteDelegate> CreatePaletteDelegate() = 0;
-
-  // Creates a menu model for the |shelf| and optional shelf |item|.
-  // If |item| is null, this creates a context menu for the wallpaper or shelf.
-  virtual ui::MenuModel* CreateContextMenu(Shelf* shelf,
-                                           const ShelfItem* item) = 0;
 
   // Creates a GPU support object. Shell takes ownership of the object.
   virtual GPUSupport* CreateGPUSupport() = 0;
