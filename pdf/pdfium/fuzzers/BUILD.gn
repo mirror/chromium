@@ -145,7 +145,7 @@ if (pdf_enable_xfa) {
     dict = "dicts/pdf_codec_png.dict"
     seed_corpuses = [
       "corpora/pdf_codec_png",
-      "//cc/test/data",
+      "//components/viz/test/data",
       "//third_party/WebKit/LayoutTests/images/png-suite/samples",
       "//third_party/WebKit/LayoutTests/images/resources/pngfuzz",
     ]
