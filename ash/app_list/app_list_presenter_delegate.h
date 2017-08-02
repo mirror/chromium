@@ -19,7 +19,7 @@ namespace app_list {
 class AppListPresenterImpl;
 class AppListView;
 class AppListViewDelegateFactory;
-}
+}  // namespace app_list
 
 namespace ui {
 class LocatedEvent;
@@ -68,6 +68,7 @@ class ASH_EXPORT AppListPresenterDelegate
 
   // ShellObserver overrides:
   void OnOverviewModeStarting() override;
+  void OnShelfAlignmentChanged(aura::Window* root_window) override;
 
   // TabletModeObserver:
   void OnTabletModeStarted() override;

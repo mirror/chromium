@@ -250,6 +250,14 @@ void AppListPresenterDelegate::OnOverviewModeStarting() {
     presenter_->Dismiss();
 }
 
+void AppListPresenterDelegate::OnShelfAlignmentChanged(
+    aura::Window* root_window) {
+  if (app_list::features::IsFullscreenAppListEnabled()) {
+    if (is_visible_)
+      presenter_->Dismiss();
+  }
+}
+
 void AppListPresenterDelegate::OnTabletModeStarted() {
   if (!app_list::features::IsFullscreenAppListEnabled())
     return;
