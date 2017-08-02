@@ -93,6 +93,30 @@
       "revId": "26dbd95d540375390e72335d62234d6c8da97eeb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80801adc_1f4dbecc",
+        "filename": "ui/app_list/views/search_result_answer_card_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-08-02T21:03:11Z",
+      "side": 1,
+      "message": "Looks like to much customization for CustomButton: to handle only Enter and filter out Space. If no other functionality is used I would discard CustomButton and handle only Enter manually here.\n\n\nOnKeyPressed(const ui::KeyEvent\u0026 event) can be inherited directly from View\n \nJust change:\n\nif (event.key_code() \u003d\u003d ui::ENTER) {\n  OpenResult();\n  return true;\n}\n\nreturn false;",
+      "parentUuid": "bc6fcb22_0c721a32",
+      "range": {
+        "startLine": 95,
+        "startChar": 11,
+        "endLine": 95,
+        "endChar": 23
+      },
+      "revId": "26dbd95d540375390e72335d62234d6c8da97eeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
