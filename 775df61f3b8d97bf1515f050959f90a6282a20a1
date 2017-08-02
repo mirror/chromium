@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d5633ab_5da6f2ca",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedScriptValue.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-02T00:34:24Z",
+      "side": 1,
+      "message": "Would you help me understand why this change is needed?",
+      "revId": "775df61f3b8d97bf1515f050959f90a6282a20a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06e5a98b_222ef155",
+        "filename": "third_party/WebKit/public/platform/WebMessagePortChannel.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-02T00:34:24Z",
+      "side": 1,
+      "message": "Maybe stupid question: Why do you use WebVector for TryGetMessage while you use uint8_t* and size_t for PostMessage?",
+      "revId": "775df61f3b8d97bf1515f050959f90a6282a20a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
