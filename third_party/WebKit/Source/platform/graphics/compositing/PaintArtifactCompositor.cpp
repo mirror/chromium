@@ -443,10 +443,6 @@ void PaintArtifactCompositor::Update(
   root_layer_->set_property_tree_sequence_number(
       g_s_property_tree_sequence_number);
 
-  PropertyTreeManager property_tree_manager(*host->property_trees(),
-                                            root_layer_.get(),
-                                            g_s_property_tree_sequence_number);
-
   Vector<PendingLayer, 0> pending_layers;
   CollectPendingLayers(paint_artifact, pending_layers);
 
@@ -458,6 +454,11 @@ void PaintArtifactCompositor::Update(
   store_debug_info = true;
 #endif
 
+  Vector<std::unique_ptr<RRectContentLayerClient>>
+      new_rrect_content_layer_clients;
+  PropertyTreeManager property_tree_manager(
+      *host->property_trees(), new_rrect_content_layer_clients,
+      root_layer_.get(), g_s_property_tree_sequence_number);
   for (const PendingLayer& pending_layer : pending_layers) {
     gfx::Vector2dF layer_offset;
     scoped_refptr<cc::Layer> layer = CompositedLayerForPendingLayer(
@@ -469,8 +470,9 @@ void PaintArtifactCompositor::Update(
         property_tree_manager.EnsureCompositorTransformNode(transform);
     int clip_id = property_tree_manager.EnsureCompositorClipNode(
         pending_layer.property_tree_state.Clip());
-    int effect_id = property_tree_manager.SwitchToEffectNode(
-        *pending_layer.property_tree_state.Effect());
+    int effect_id = property_tree_manager.SwitchToEffectNodeWithRoundedClip(
+        *pending_layer.property_tree_state.Effect(),
+        *pending_layer.property_tree_state.Clip());
 
     layer->set_offset_to_transform_parent(layer_offset);
     CompositorElementId element_id =
@@ -506,7 +508,8 @@ void PaintArtifactCompositor::Update(
     if (extra_data_for_testing_enabled_)
       extra_data_for_testing_->content_layers.push_back(layer);
   }
-  content_layer_clients_.clear();
+  property_tree_manager.Finalize();
+  rrect_content_layer_clients_.swap(new_rrect_content_layer_clients);
   content_layer_clients_.swap(new_content_layer_clients);
 
   // Mark the property trees as having been rebuilt.
