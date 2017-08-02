@@ -40,8 +40,10 @@ class LeveldbScopedDatabase
                         const std::string& key,
                         std::string* scoped_key);
 
-  LeveldbScopedDatabase(const std::string& uma_client_name,
-                        const base::FilePath& path);
+  LeveldbScopedDatabase(
+      const std::string& uma_client_name,
+      const base::FilePath& path,
+      const scoped_refptr<base::SequencedTaskRunner>& task_runner);
 
   // Reads a single |value| from the database for the specified |key|.
   ValueStore::Status Read(const std::string& scope,

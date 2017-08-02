@@ -10,6 +10,7 @@
 #include "base/files/file_util.h"
 #include "base/memory/ptr_util.h"
 #include "base/threading/thread_restrictions.h"
+#include "extensions/browser/api/storage/backend_task_runner.h"
 #include "extensions/browser/value_store/leveldb_value_store.h"
 #include "extensions/common/constants.h"
 
@@ -167,13 +168,13 @@ bool LegacyValueStoreFactory::StateDBExists() const {
 }
 
 std::unique_ptr<ValueStore> LegacyValueStoreFactory::CreateRulesStore() {
-  return base::MakeUnique<LeveldbValueStore>(kRulesDatabaseUMAClientName,
-                                             GetRulesDBPath());
+  return base::MakeUnique<LeveldbValueStore>(
+      kRulesDatabaseUMAClientName, GetRulesDBPath(), GetBackendTaskRunner());
 }
 
 std::unique_ptr<ValueStore> LegacyValueStoreFactory::CreateStateStore() {
-  return base::MakeUnique<LeveldbValueStore>(kStateDatabaseUMAClientName,
-                                             GetStateDBPath());
+  return base::MakeUnique<LeveldbValueStore>(
+      kStateDatabaseUMAClientName, GetStateDBPath(), GetBackendTaskRunner());
 }
 
 std::unique_ptr<ValueStore> LegacyValueStoreFactory::CreateSettingsStore(
@@ -184,7 +185,8 @@ std::unique_ptr<ValueStore> LegacyValueStoreFactory::CreateSettingsStore(
       GetSettingsRoot(settings_namespace).GetModel(model_type);
   DCHECK(settings_root != nullptr);
   return base::MakeUnique<LeveldbValueStore>(
-      kSettingsDatabaseUMAClientName, settings_root->GetDBPath(extension_id));
+      kSettingsDatabaseUMAClientName, settings_root->GetDBPath(extension_id),
+      GetBackendTaskRunner());
 }
 
 void LegacyValueStoreFactory::DeleteSettings(

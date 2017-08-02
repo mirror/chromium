@@ -31,8 +31,10 @@ class LeveldbValueStore : public ValueStore,
   // need to be notified of that, but we don't want to permanently give up.
   //
   // Must be created on the FILE thread.
-  LeveldbValueStore(const std::string& uma_client_name,
-                    const base::FilePath& path);
+  LeveldbValueStore(
+      const std::string& uma_client_name,
+      const base::FilePath& path,
+      const scoped_refptr<base::SequencedTaskRunner>& task_runner);
 
   // Must be deleted on the FILE thread.
   ~LeveldbValueStore() override;

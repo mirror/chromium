@@ -5,6 +5,7 @@
 #include "extensions/browser/value_store/test_value_store_factory.h"
 
 #include "base/memory/ptr_util.h"
+#include "extensions/browser/api/storage/backend_task_runner.h"
 #include "extensions/browser/value_store/leveldb_value_store.h"
 #include "extensions/browser/value_store/testing_value_store.h"
 
@@ -106,7 +107,8 @@ std::unique_ptr<ValueStore> TestValueStoreFactory::CreateRulesStore() {
   if (db_path_.empty())
     last_created_store_ = new TestingValueStore();
   else
-    last_created_store_ = new LeveldbValueStore(kUMAClientName, db_path_);
+    last_created_store_ =
+        new LeveldbValueStore(kUMAClientName, db_path_, GetBackendTaskRunner());
   return base::WrapUnique(last_created_store_);
 }
 

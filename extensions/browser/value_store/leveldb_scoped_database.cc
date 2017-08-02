@@ -41,9 +41,11 @@ bool LeveldbScopedDatabase::CreateKey(const std::string& scope,
   return true;
 }
 
-LeveldbScopedDatabase::LeveldbScopedDatabase(const std::string& uma_client_name,
-                                             const base::FilePath& path)
-    : LazyLevelDb(uma_client_name, path) {}
+LeveldbScopedDatabase::LeveldbScopedDatabase(
+    const std::string& uma_client_name,
+    const base::FilePath& path,
+    const scoped_refptr<base::SequencedTaskRunner>& task_runner)
+    : LazyLevelDb(uma_client_name, path, task_runner) {}
 
 LeveldbScopedDatabase::~LeveldbScopedDatabase() {}
 
