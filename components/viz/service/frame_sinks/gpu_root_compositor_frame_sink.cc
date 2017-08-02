@@ -32,7 +32,8 @@ GpuRootCompositorFrameSink::GpuRootCompositorFrameSink(
       display_(std::move(display)),
       client_(std::move(client)),
       compositor_frame_sink_binding_(this, std::move(request)),
-      display_private_binding_(this, std::move(display_private_request)) {
+      display_private_binding_(this, std::move(display_private_request)),
+      hit_test_aggregator_(base::MakeUnique<HitTestAggregator>(this)) {
   DCHECK(display_begin_frame_source_);
   compositor_frame_sink_binding_.set_connection_error_handler(
       base::Bind(&GpuRootCompositorFrameSink::OnClientConnectionLost,
@@ -92,6 +93,25 @@ void GpuRootCompositorFrameSink::DidNotProduceFrame(
   support_->DidNotProduceFrame(begin_frame_ack);
 }
 
+void GpuRootCompositorFrameSink::OnAggregatedHitTestRegionListUpdated(
+    mojo::ScopedSharedBufferHandle active_handle,
+    uint32_t active_handle_size,
+    mojo::ScopedSharedBufferHandle idle_handle,
+    uint32_t idle_handle_size) {
+  support_->frame_sink_manager()->OnAggregatedHitTestRegionListUpdated(
+      support_->frame_sink_id(),
+      active_handle->Clone(mojo::SharedBufferHandle::AccessMode::READ_ONLY),
+      active_handle_size,
+      idle_handle->Clone(mojo::SharedBufferHandle::AccessMode::READ_ONLY),
+      idle_handle_size);
+}
+
+void GpuRootCompositorFrameSink::SwitchActiveAggregatedHitTestRegionList(
+    uint8_t active_handle_index) {
+  support_->frame_sink_manager()->SwitchActiveAggregatedHitTestRegionList(
+      support_->frame_sink_id(), active_handle_index);
+}
+
 void GpuRootCompositorFrameSink::DisplayOutputSurfaceLost() {
   // TODO(staraz): Implement this. Client should hear about context/output
   // surface lost.
@@ -100,7 +120,7 @@ void GpuRootCompositorFrameSink::DisplayOutputSurfaceLost() {
 void GpuRootCompositorFrameSink::DisplayWillDrawAndSwap(
     bool will_draw_and_swap,
     const cc::RenderPassList& render_pass) {
-  hit_test_aggregator_.PostTaskAggregate(display_->CurrentSurfaceId());
+  hit_test_aggregator_->PostTaskAggregate(display_->CurrentSurfaceId());
 }
 
 void GpuRootCompositorFrameSink::DisplayDidDrawAndSwap() {}
@@ -112,7 +132,7 @@ void GpuRootCompositorFrameSink::DidReceiveCompositorFrameAck(
 }
 
 void GpuRootCompositorFrameSink::OnBeginFrame(const BeginFrameArgs& args) {
-  hit_test_aggregator_.Swap();
+  hit_test_aggregator_->Swap();
   if (client_)
     client_->OnBeginFrame(args);
 }

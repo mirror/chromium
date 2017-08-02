@@ -12,6 +12,7 @@
 #include "components/viz/service/display/display_client.h"
 #include "components/viz/service/frame_sinks/compositor_frame_sink_support_client.h"
 #include "components/viz/service/hit_test/hit_test_aggregator.h"
+#include "components/viz/service/hit_test/hit_test_aggregator_delegate.h"
 #include "mojo/public/cpp/bindings/associated_binding.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "services/viz/compositing/privileged/interfaces/frame_sink_manager.mojom.h"
@@ -28,7 +29,8 @@ class GpuRootCompositorFrameSink
     : public NON_EXPORTED_BASE(CompositorFrameSinkSupportClient),
       public NON_EXPORTED_BASE(mojom::CompositorFrameSink),
       public NON_EXPORTED_BASE(mojom::DisplayPrivate),
-      public NON_EXPORTED_BASE(DisplayClient) {
+      public NON_EXPORTED_BASE(DisplayClient),
+      public HitTestAggregatorDelegate {
  public:
   GpuRootCompositorFrameSink(
       FrameSinkManagerImpl* frame_sink_manager,
@@ -54,6 +56,15 @@ class GpuRootCompositorFrameSink
   void SubmitCompositorFrame(const LocalSurfaceId& local_surface_id,
                              cc::CompositorFrame frame) override;
   void DidNotProduceFrame(const BeginFrameAck& begin_frame_ack) override;
+
+  // HitTestAggregatorDelegate:
+  void OnAggregatedHitTestRegionListUpdated(
+      mojo::ScopedSharedBufferHandle active_handle,
+      uint32_t active_handle_size,
+      mojo::ScopedSharedBufferHandle idle_handle,
+      uint32_t idle_handle_size) override;
+  void SwitchActiveAggregatedHitTestRegionList(
+      uint8_t active_handle_index) override;
 
  private:
   // DisplayClient:
@@ -86,7 +97,7 @@ class GpuRootCompositorFrameSink
       compositor_frame_sink_binding_;
   mojo::AssociatedBinding<mojom::DisplayPrivate> display_private_binding_;
 
-  HitTestAggregator hit_test_aggregator_;
+  std::unique_ptr<HitTestAggregator> hit_test_aggregator_;
 
   DISALLOW_COPY_AND_ASSIGN(GpuRootCompositorFrameSink);
 };
