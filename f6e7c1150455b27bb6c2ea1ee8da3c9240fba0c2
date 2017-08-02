@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "46028233_0d92a0c3",
+        "filename": "content/browser/accessibility/browser_accessibility_cocoa.mm",
+        "patchSetId": 16
+      },
+      "lineNbr": 1389,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-02T17:46:32Z",
+      "side": 1,
+      "message": "I think there is at most one insertion, deletion, or replacement at once, right? If so, we can implement this like so:\n\nfor (i \u003d 0; i \u003c old.length \u0026\u0026 i \u003c new.length; i++)\n  if (old[i] !\u003d new[i]) break;\nfor (j \u003d 0; j \u003c old.length \u0026\u0026 j \u003c new.length; j++)\n  if (old[old.length - j] !\u003d new[new.length - j]) break;\n\nSo now we know there are i equal characters at the start of both strings, and j equal characters at the end of both strings. Either i or j could be 0 (or both, if the string is completely replaced). Now the edit operation is simply:\n\nDeleted text: old[i to old.length - j]\nInserted text: new[i to new.length - i]\n\nSome worked examples:\n\nold \u003d \"abcd\", new \u003d \"abfecd\" (insertion): i \u003d 2, j \u003d 2, so deleted text is empty, inserted text is new[2 to 3] \u003d \"fe\"\nold \u003d \"abcd\", new \u003d \"ad\" (deletion): i \u003d 1, j \u003d 1, deleted text is old[1 to 2] \u003d \"bc\", inserted text is empty\nold \u003d \"abcd\", new \u003d \"afed\" (replacement): i \u003d 1, j \u003d 1, deleted text is old[1 to 2] \u003d \"bc\", inserted text is new[1 to 2] \u003d \"fe\"\n\nI think this will work properly in all single-edit cases. If we get multiple edits at once, it is \"conservative\" (ie: it will fail back to deleting the entire old string and inserting the entire new string)\n\nWhat do you think?",
+      "revId": "f6e7c1150455b27bb6c2ea1ee8da3c9240fba0c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
