@@ -78,6 +78,16 @@ Polymer({
       this.$.permission.disabled =
           site.source != settings.SiteSettingSource.EMBARGO;
     }
+
+    if (this.isNonDefaultAsk_(site.setting, site.source)) {
+      assert(
+          this.$.permission.disabled,
+          'The \'Ask\' entry is for display-only and cannot be set by the ' +
+              'user.');
+      assert(
+          this.$.permission.value == settings.ContentSetting.ASK,
+          'The \'Ask\' should only show up when it\'s currently selected.');
+    }
   },
 
   /**
@@ -145,6 +155,25 @@ Polymer({
     return (
         source != settings.SiteSettingSource.DEFAULT &&
         source != settings.SiteSettingSource.PREFERENCE);
+  },
+
+  /**
+   * Returns true if the permission is set to a non-default 'ask'.
+   * Note this will only be called when |this.site| is updated.
+   * @param {!settings.ContentSetting} setting The setting of the permission.
+   * @param {!settings.SiteSettingSource} source The source of the permission.
+   * @private
+   */
+  isNonDefaultAsk_: function(setting, source) {
+    if (setting != settings.ContentSetting.ASK ||
+        source == settings.SiteSettingSource.DEFAULT)
+      return false;
+
+    assert(
+        source == settings.SiteSettingSource.EXTENSION ||
+            source == settings.SiteSettingSource.POLICY,
+        'Only extensions or enterprise policy can change the setting to ASK.');
+    return true;
   },
 
   /**

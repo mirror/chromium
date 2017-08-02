@@ -126,7 +126,7 @@ suite('SiteDetails', function() {
           {
             embeddingOrigin: 'https://foo.com:443',
             origin: 'https://foo.com:443',
-            setting: settings.ContentSetting.BLOCK,
+            setting: settings.ContentSetting.ASK,
             source: settings.SiteSettingSource.POLICY,
           },
         ],
