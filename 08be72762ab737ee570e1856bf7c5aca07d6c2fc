@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "31f03eef_0c60d9f1",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-08-02T21:32:28Z",
+      "side": 1,
+      "message": "This is needed in order to force the scrollbar to be on the detail-view element level, and not the \"entire page\" level.\n\nThe reason why commenting it out doesn\u0027t cause any visible issue, because the overflow by default is \"visible\", and thus the #main container sticks out of the default-view element, and forces the \"entire page\" level to scroll instead. But this might cause issue in the future still, because the #main container is still breaking out of it\u0027s parent unexpectedly.\n\nBy having the overflow:auto here, we\u0027re explicitly saying \"we know for sure detail-view is gonna fill 100% of the height, and everything inside of it will scroll\".\n\nSee screenshot comparison with color blocks: http://imgur.com/a/uL2Vn",
+      "parentUuid": "8766c593_87052bde",
+      "revId": "08be72762ab737ee570e1856bf7c5aca07d6c2fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d51a981_f92b254d",
         "filename": "chrome/browser/resources/md_extensions/detail_view.html",
         "patchSetId": 2
@@ -51,6 +69,24 @@
       "revId": "08be72762ab737ee570e1856bf7c5aca07d6c2fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f9ebc8e_640564ef",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-08-02T21:32:28Z",
+      "side": 1,
+      "message": "I think Devlin might be recalling the the caveat of margin:auto that used to be an issue in old IEs (I forgot exactly what scenario makes it not work). Fortunately chrome:extensions is only in Chrome, so cross-browser compat. is not a concern :)",
+      "parentUuid": "ee41183f_98091235",
+      "revId": "08be72762ab737ee570e1856bf7c5aca07d6c2fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
