@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "373bceeb_738f9872",
+        "filename": "media/remoting/fake_remoter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-08-02T04:15:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85962ab7_60850007",
+      "range": {
+        "startLine": 93,
+        "startChar": 0,
+        "endLine": 93,
+        "endChar": 6
+      },
+      "revId": "424a307fd068ec78729cd85d93252ef23e8f593a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d4345cc_c8465dca",
         "filename": "media/remoting/renderer_controller.h",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "424a307fd068ec78729cd85d93252ef23e8f593a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c47485a_d30404fd",
+        "filename": "media/remoting/renderer_controller.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-08-02T04:15:04Z",
+      "side": 1,
+      "message": "Seems like \"defines\" is only allowed in config(), not in source_set(). I followed the media/media_options.gni patterns and added a ENABLE_MEDIA_REMOTING_RPC build flag there.",
+      "parentUuid": "8d4345cc_c8465dca",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 68,
+        "endChar": 24
+      },
+      "revId": "424a307fd068ec78729cd85d93252ef23e8f593a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
