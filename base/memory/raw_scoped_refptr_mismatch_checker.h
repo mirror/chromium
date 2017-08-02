@@ -25,18 +25,17 @@ namespace internal {
 
 template <typename T>
 struct NeedsScopedRefptrButGetsRawPtr {
-  static_assert(!std::is_reference<T>::value,
-                "NeedsScopedRefptrButGetsRawPtr requires non-reference type.");
+  using Decayed = typename std::decay<T>::type;
+  using Pointee = typename std::remove_pointer<Decayed>::type;
 
   enum {
     // Human readable translation: you needed to be a scoped_refptr if you are a
     // raw pointer type and are convertible to a RefCounted(Base|ThreadSafeBase)
     // type.
     value =
-        (std::is_pointer<T>::value &&
-         (std::is_convertible<T, const subtle::RefCountedBase*>::value ||
-          std::is_convertible<T,
-                              const subtle::RefCountedThreadSafeBase*>::value))
+        (std::is_pointer<Decayed>::value &&
+         (std::is_base_of<subtle::RefCountedBase, Pointee>::value ||
+          std::is_base_of<subtle::RefCountedThreadSafeBase, Pointee>::value))
   };
 };
 

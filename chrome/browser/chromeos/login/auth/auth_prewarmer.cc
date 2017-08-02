@@ -15,6 +15,7 @@
 #include "chromeos/network/network_state_handler.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/notification_source.h"
+#include "content/public/browser/resource_context.h"
 #include "content/public/browser/resource_hints.h"
 #include "google_apis/gaia/gaia_urls.h"
 #include "url/gurl.h"

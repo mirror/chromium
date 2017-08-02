@@ -35,6 +35,7 @@
 #include "components/policy/core/common/cloud/cloud_policy_constants.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/browser/resource_context.h"
 #include "crypto/nss_key_util.h"
 #include "crypto/scoped_nss_types.h"
 #include "net/base/net_errors.h"

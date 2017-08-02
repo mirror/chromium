@@ -15,6 +15,7 @@
 #include "components/user_manager/user.h"
 #include "components/user_manager/user_manager.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/browser/resource_context.h"
 #include "net/cert/nss_cert_database.h"
 
 namespace {

@@ -10,6 +10,7 @@
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "net/base/network_delegate.h"
 #include "net/dns/mojo_host_resolver_impl.h"
 #include "net/interfaces/proxy_resolver_service.mojom.h"
 #include "net/proxy/mojo_proxy_resolver_factory.h"

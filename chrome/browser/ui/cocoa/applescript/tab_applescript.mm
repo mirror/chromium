@@ -311,7 +311,7 @@ void ResumeAppleEventAndSendReply(NSAppleEventManagerSuspensionID suspension_id,
   NSAppleEventManagerSuspensionID suspensionID =
       [manager suspendCurrentAppleEvent];
   content::RenderFrameHost::JavaScriptResultCallback callback =
-      base::Bind(&ResumeAppleEventAndSendReply, suspensionID);
+      base::Bind(&ResumeAppleEventAndSendReply, base::Unretained(suspensionID));
 
   base::string16 script = base::SysNSStringToUTF16(
       [[command evaluatedArguments] objectForKey:@"javascript"]);

@@ -171,9 +171,9 @@ void ObjectProxy::CallMethodInternal(MethodCall* method_call,
                                 method_call->GetMember());
 
   // Wait for the response in the D-Bus thread.
-  base::OnceClosure task =
-      base::BindOnce(&ObjectProxy::StartAsyncMethodCall, this, timeout_ms,
-                     request_message, std::move(callback), start_time);
+  base::OnceClosure task = base::BindOnce(
+      &ObjectProxy::StartAsyncMethodCall, this, timeout_ms,
+      base::Unretained(request_message), std::move(callback), start_time);
   bus_->GetDBusTaskRunner()->PostTask(FROM_HERE, std::move(task));
 }
 
@@ -299,9 +299,9 @@ void ObjectProxy::OnPendingCallIsComplete(DBusPendingCall* pending_call,
   bus_->AssertOnDBusThread();
 
   DBusMessage* response_message = dbus_pending_call_steal_reply(pending_call);
-  base::OnceClosure task =
-      base::BindOnce(&ObjectProxy::RunCallMethodInternalCallback, this,
-                     std::move(callback), start_time, response_message);
+  base::OnceClosure task = base::BindOnce(
+      &ObjectProxy::RunCallMethodInternalCallback, this, std::move(callback),
+      start_time, base::Unretained(response_message));
   bus_->GetOriginTaskRunner()->PostTask(FROM_HERE, std::move(task));
 
   // Remove the pending call from the set.

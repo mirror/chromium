@@ -15,13 +15,16 @@
 #include "content/browser/loader/navigation_url_loader_delegate.h"
 #include "content/browser/loader/navigation_url_loader_impl_core.h"
 #include "content/browser/service_worker/service_worker_navigation_handle.h"
+#include "content/browser/service_worker/service_worker_navigation_handle_core.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/global_request_id.h"
 #include "content/public/browser/navigation_data.h"
 #include "content/public/browser/navigation_ui_data.h"
+#include "content/public/browser/resource_context.h"
 #include "content/public/browser/storage_partition.h"
 #include "content/public/browser/stream_handle.h"
+#include "net/url_request/url_request_context_getter.h"
 
 namespace content {
 
@@ -53,7 +56,7 @@ NavigationURLLoaderImpl::NavigationURLLoaderImpl(
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
       base::Bind(&NavigationURLLoaderImplCore::Start, core_, resource_context,
-                 storage_partition->GetURLRequestContext(),
+                 base::Unretained(storage_partition->GetURLRequestContext()),
                  base::Unretained(storage_partition->GetFileSystemContext()),
                  service_worker_handle_core, appcache_handle_core,
                  base::Passed(&request_info),

@@ -25,6 +25,7 @@
 #include "components/signin/core/account_id/account_id.h"
 #include "components/user_manager/user_names.h"
 #include "content/public/browser/notification_service.h"
+#include "content/public/browser/resource_context.h"
 #include "content/public/test/test_utils.h"
 #include "crypto/nss_util_internal.h"
 #include "crypto/scoped_test_system_nss_key_slot.h"

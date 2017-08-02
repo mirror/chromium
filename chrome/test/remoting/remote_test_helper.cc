@@ -6,6 +6,7 @@
 
 #include "base/bind.h"
 #include "chrome/test/remoting/waiter.h"
+#include "content/public/browser/web_contents.h"
 
 namespace remoting {
 

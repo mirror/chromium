@@ -289,11 +289,10 @@ void LoginPerformer::StartLoginCompletion() {
   chromeos::LoginEventRecorder::Get()->AddLoginTimeMarker("AuthStarted", false);
   content::BrowserContext* browser_context = GetSigninContext();
   EnsureAuthenticator();
-  task_runner_->PostTask(FROM_HERE,
-                         base::Bind(&chromeos::Authenticator::CompleteLogin,
-                                    authenticator_.get(),
-                                    browser_context,
-                                    user_context_));
+  task_runner_->PostTask(
+      FROM_HERE,
+      base::Bind(&chromeos::Authenticator::CompleteLogin, authenticator_.get(),
+                 base::Unretained(browser_context), user_context_));
   user_context_.ClearSecrets();
 }
 

@@ -38,6 +38,7 @@
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/notification_types.h"
 #include "content/public/browser/render_process_host.h"
+#include "content/public/browser/resource_context.h"
 #include "content/public/browser/url_data_source.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/gfx/color_utils.h"
