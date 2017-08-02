@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60064178_7b773c1f",
+        "filename": "content/browser/frame_host/frame_tree.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-02T09:22:56Z",
+      "side": 1,
+      "message": "Sorry, I still don\u0027t understand this. In general, hitting this branch means the renderer process in question never went away, so why do we need to rebind the widget? What caused this message pipe to be closed?",
+      "range": {
+        "startLine": 328,
+        "startChar": 4,
+        "endLine": 328,
+        "endChar": 60
+      },
+      "revId": "71cf1fcf662a25f58266994b3b8abe0bd107d32e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "480da962_c864897c",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-02T09:22:56Z",
+      "side": 1,
+      "message": "I\u0027m a bit confused about this: we have a WidgetRequest here and an unrelated WidgetPtr below. Shouldn\u0027t we be sending the WidgetRequest here off to the renderer (and keeping the other end of the message pipe for RenderWidgetHostImpl below?)",
+      "range": {
+        "startLine": 523,
+        "startChar": 0,
+        "endLine": 525,
+        "endChar": 3
+      },
+      "revId": "71cf1fcf662a25f58266994b3b8abe0bd107d32e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e32e72f_73105e7a",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1681,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-02T09:22:56Z",
+      "side": 1,
+      "message": "I\u0027m pretty sure the main render frame should always have a non-zero widget routing ID? Is there some case where that\u0027s not true?\n\n(Maybe it\u0027s because of that hack that\u0027s mentioned below?)",
+      "range": {
+        "startLine": 1679,
+        "startChar": 0,
+        "endLine": 1681,
+        "endChar": 5
+      },
+      "revId": "71cf1fcf662a25f58266994b3b8abe0bd107d32e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
