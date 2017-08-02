@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "68501c85_bf948148",
+        "filename": "chrome/browser/ui/webui/snippets_internals_message_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-02T13:06:03Z",
+      "side": 1,
+      "message": "Done. \n\n\u003e Hm, I guess there is no way to trigger GCM to \n\u003e actually send us a push message?\n\nI believe - no, but it would be an overkill in my view.\n\n\u003e One step back: Why exactly is all this here? If it\u0027s to check that the whole path from GCM works, then it should probably be an integration test rather than something in the internals page. If it\u0027s just to try out the UI, then creating the suggestion directly, without JSON, is good enough.\n\nAs per our offline discussion, I know have only one JSON suggestion (without categories) and I use CreateFromContentSuggestionsDictionary.",
+      "parentUuid": "b90f7de1_de615f12",
+      "range": {
+        "startLine": 401,
+        "startChar": 58,
+        "endLine": 401,
+        "endChar": 0
+      },
+      "revId": "2b73bb5e2cf0e3a10b4286a47961929559fa2252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "16efc1a0_048a9f0e",
         "filename": "chrome/browser/ui/webui/snippets_internals_message_handler.cc",
         "patchSetId": 12
