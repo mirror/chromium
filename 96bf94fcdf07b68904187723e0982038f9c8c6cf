@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0219a17_da3de11f",
+        "filename": "components/arc/bluetooth/arc_bluetooth_bridge.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-02T22:37:34Z",
+      "side": 1,
+      "message": "nit: unneeded",
+      "range": {
+        "startLine": 370,
+        "startChar": 41,
+        "endLine": 370,
+        "endChar": 45
+      },
+      "revId": "96bf94fcdf07b68904187723e0982038f9c8c6cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
