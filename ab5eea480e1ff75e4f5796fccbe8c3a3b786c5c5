@@ -1,0 +1,306 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3996cef_1adf744d",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-02T22:11:35Z",
+      "side": 1,
+      "message": "Should add comments for each of the variables.",
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cabc2b3a_62e26f16",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-02T22:11:35Z",
+      "side": 1,
+      "message": "Line 18 is tricky. Static variables should not be objects that, in essence, run code during initialization/destruction. This means that objc objects should generally not be static variables.\n\nThe reason is that the order of construction/destruction of static variables is not defined, so tricky bugs can creep in. (See C++ style guide for more details: https://google.github.io/styleguide/cppguide.html#Static_and_Global_Variables)\n\nInstead, you can define a c method in the namespace that returns the color.",
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb508eb5_63b6795f",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-02T22:11:35Z",
+      "side": 1,
+      "message": "Just a note that since these are weak references, the views must always be in the view hierarchy whenever they are accessed, or they become nil.",
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7281d04_884fdb63",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-02T22:11:35Z",
+      "side": 1,
+      "message": "Need memory management attribute on last two properties. Since these are enums, it should be assign.",
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9966b482_622a60d7",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-02T22:11:35Z",
+      "side": 1,
+      "message": "Should this be using MaterialTypography?",
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f829ba3_675023d7",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-02T22:11:35Z",
+      "side": 1,
+      "message": "Would be good to split this up to helper methods.",
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "195cf4db_75adb3b0",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-02T22:11:35Z",
+      "side": 1,
+      "message": "The bubble view\u0027s frame is being managed by the parent. I don\u0027t think there should be constraints that require the bubble view to be a certain size. I would expect that the constraints instead expressed the relationships between the bubble view and its children (either through positioning/size), assuming the bubble view\u0027s size is set. \n\nEd, what do you think?",
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c75e7ad_d7cd0743",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-02T22:11:35Z",
+      "side": 1,
+      "message": "Why corner radius?",
+      "range": {
+        "startLine": 154,
+        "startChar": 40,
+        "endLine": 154,
+        "endChar": 68
+      },
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79f226f2_cfe6107c",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-02T22:11:35Z",
+      "side": 1,
+      "message": "Why is the margin dictating the height?",
+      "range": {
+        "startLine": 161,
+        "startChar": 49,
+        "endLine": 161,
+        "endChar": 56
+      },
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e16dce6a_2beb97a0",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-02T22:11:35Z",
+      "side": 1,
+      "message": "One possible idea here would be to align the top of the background with the bottom of the arrow.",
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d6c7e80_2278d995",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-02T22:11:35Z",
+      "side": 1,
+      "message": "Can consider aligning bottom of background with top of arrow.",
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b92df182_588bd288",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-02T22:11:35Z",
+      "side": 1,
+      "message": "Should this be leadingAnchor. Offset is difference between beginning of bubble and beginning of arrow, not center of arrow.",
+      "range": {
+        "startLine": 199,
+        "startChar": 20,
+        "endLine": 199,
+        "endChar": 33
+      },
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d6c84c2_e8a4d2ea",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-02T22:11:35Z",
+      "side": 1,
+      "message": "Why is this constraint dependent on the position of the arrow? Theoretically, shouldn\u0027t the background have the same margin on both sides no matter what alignment there is?",
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "084f2645_33d7eb85",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-02T22:11:35Z",
+      "side": 1,
+      "message": "Does this impact the edge of the bubble? Doesn\u0027t the radius just impact the corners?",
+      "range": {
+        "startLine": 239,
+        "startChar": 44,
+        "endLine": 239,
+        "endChar": 63
+      },
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bccdf8e_d96958f2",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-02T22:11:35Z",
+      "side": 1,
+      "message": "Relationship between margin and height of background is not clear to me. Would be better to make a new constant.",
+      "range": {
+        "startLine": 242,
+        "startChar": 31,
+        "endLine": 242,
+        "endChar": 42
+      },
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8644d43_75de5a52",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-02T22:11:35Z",
+      "side": 1,
+      "message": "What happens if the width/height given by |size| is smaller than optimalSize?",
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
