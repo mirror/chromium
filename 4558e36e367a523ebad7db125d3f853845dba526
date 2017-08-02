@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "fc11de12_f8e55b23",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-08-02T18:09:28Z",
+      "side": 1,
+      "message": "Note: Turns out it is needed to destroy notification_presenter_ before message_center_, as message_center_ is used in notification_presenter_\u0027s dtor.",
+      "parentUuid": "10ad0725_60191446",
+      "range": {
+        "startLine": 152,
+        "startChar": 2,
+        "endLine": 152,
+        "endChar": 25
+      },
+      "revId": "4558e36e367a523ebad7db125d3f853845dba526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7425d528_71a89ca3",
         "filename": "chromeos/components/tether/notification_remover.cc",
         "patchSetId": 2
