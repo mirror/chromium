@@ -19,6 +19,93 @@
     },
     {
       "key": {
+        "uuid": "3eab70e9_e6fe8ce9",
+        "filename": "cc/animation/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-02T18:14:54Z",
+      "side": 1,
+      "message": "Blink does use compositor groups, or at least it\u0027s assigning them, see:\n\nAnimation::PreCommit, which routes passed in group to the animation when started\n\nCompositorPendingAnimations::Update, which increments and passes the group id in to above. Each Blink Document has a CompositorPendingAnimations instance, so each document looks like it will have its own monotonically increasing group id. There is logic to skip 0/1 which are documented in a comment as special cases. In general it looks like animations that are in pending list at time of method call will all start with the same group id.",
+      "parentUuid": "adc91e02_e7322fcc",
+      "revId": "6cff5e982cabad6b6d76ab6143f7de3eced3f32a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1faeb72_26ec3c47",
+        "filename": "cc/animation/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-02T18:14:54Z",
+      "side": 1,
+      "message": "Blink logic never references cc::AnimationTarget. Maybe it just uses the cc::Layer as the target? Requires further investigation. Would be fine IMO to add TODO to elaborate on this.",
+      "range": {
+        "startLine": 35,
+        "startChar": 1,
+        "endLine": 35,
+        "endChar": 17
+      },
+      "revId": "6cff5e982cabad6b6d76ab6143f7de3eced3f32a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d76ff0b5_c7bcb360",
+        "filename": "cc/animation/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-02T18:14:54Z",
+      "side": 1,
+      "message": "FWIW I think historically ElementAnimations was called something like AnimationController and so was controller type logic. ElementAnimations is 1:1 with an element id, whereas as you note there can be multiple AnimationPlayers for a single ElementAnimations instance.\n\nI am not sure why we may need multiple players, there is a comment in player header re: Blink having to handle conflicting target animated properties. Scale, pausing, resuming are per-player, perhaps related.\n\nIt looks like Blink\u0027s Animation class creates a cc::AnimationPlayer on demand if/when a composited animation in Animation::PreCommit, and when the Blink Animation class is destroyed the player is also destroyed. There are special cases however for link highlight and scroll offset animations.\n\nI thought that Blink created one AnimationPlayer per element id, and would use that one player for multiple Animations, but reading code just now looks like it\u0027s 1:1 at least for Blink. Would be easy to check with a small test case and some logging.\n\nJust talking out loud, separating AnimationPlayer from ElementAnimations allows separating data that may need to be pushed/updated to impl thread. ElementAnimations has the list of players and otherwise mostly just has member data to track whether elements are in active/pending list, and whether a push is needed. But we do need to track that somewhere, and we wouldn\u0027t need to push that state itself to impl. And presuming there is some valid need for multiple players for a single element id, we need somewhere to put logic to iterate over them, and ElementAnimations provides that as well.",
+      "range": {
+        "startLine": 44,
+        "startChar": 25,
+        "endLine": 44,
+        "endChar": 42
+      },
+      "revId": "6cff5e982cabad6b6d76ab6143f7de3eced3f32a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb7acfcd_8bb596a8",
+        "filename": "cc/animation/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-02T18:14:54Z",
+      "side": 1,
+      "message": "any way",
+      "range": {
+        "startLine": 91,
+        "startChar": 57,
+        "endLine": 91,
+        "endChar": 63
+      },
+      "revId": "6cff5e982cabad6b6d76ab6143f7de3eced3f32a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e741ef5d_4a809ec5",
         "filename": "cc/animation/README.md",
         "patchSetId": 6
