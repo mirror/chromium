@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7850d586_9020f261",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-08-02T18:17:19Z",
+      "side": 0,
+      "message": "Not needed anymore. Will be removed.",
+      "range": {
+        "startLine": 153,
+        "startChar": 9,
+        "endLine": 153,
+        "endChar": 40
+      },
+      "revId": "8a27a65933598dfa8795bdf04e31ac5a94002619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
