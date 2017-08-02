@@ -16,8 +16,8 @@
 #include "base/threading/thread_checker.h"
 #include "build/build_config.h"
 #include "content/child/child_process.h"
+#include "content/common/queueing_connection_filter.h"
 #include "content/gpu/gpu_service_factory.h"
-#include "content/public/common/connection_filter.h"
 #include "content/public/common/content_client.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/service_manager_connection.h"
@@ -58,75 +58,6 @@ ChildThreadImpl::Options GetOptions() {
 
   return builder.Build();
 }
-
-// This ConnectionFilter queues all incoming bind interface requests until
-// Release() is called.
-class QueueingConnectionFilter : public ConnectionFilter {
- public:
-  QueueingConnectionFilter(
-      scoped_refptr<base::SequencedTaskRunner> io_task_runner,
-      std::unique_ptr<service_manager::BinderRegistry> registry)
-      : io_task_runner_(io_task_runner),
-        registry_(std::move(registry)),
-        weak_factory_(this) {
-    // This will be reattached by any of the IO thread functions on first call.
-    io_thread_checker_.DetachFromThread();
-  }
-  ~QueueingConnectionFilter() override {
-    DCHECK(io_thread_checker_.CalledOnValidThread());
-  }
-
-  base::Closure GetReleaseCallback() {
-    return base::Bind(base::IgnoreResult(&base::TaskRunner::PostTask),
-                      io_task_runner_, FROM_HERE,
-                      base::Bind(&QueueingConnectionFilter::Release,
-                                 weak_factory_.GetWeakPtr()));
-  }
-
- private:
-  struct PendingRequest {
-    std::string interface_name;
-    mojo::ScopedMessagePipeHandle interface_pipe;
-  };
-
-  // ConnectionFilter:
-  void OnBindInterface(const service_manager::BindSourceInfo& source_info,
-                       const std::string& interface_name,
-                       mojo::ScopedMessagePipeHandle* interface_pipe,
-                       service_manager::Connector* connector) override {
-    DCHECK(io_thread_checker_.CalledOnValidThread());
-    if (registry_->CanBindInterface(interface_name)) {
-      if (released_) {
-        registry_->BindInterface(interface_name, std::move(*interface_pipe));
-      } else {
-        std::unique_ptr<PendingRequest> request =
-            base::MakeUnique<PendingRequest>();
-        request->interface_name = interface_name;
-        request->interface_pipe = std::move(*interface_pipe);
-        pending_requests_.push_back(std::move(request));
-      }
-    }
-  }
-
-  void Release() {
-    DCHECK(io_thread_checker_.CalledOnValidThread());
-    released_ = true;
-    for (auto& request : pending_requests_) {
-      registry_->BindInterface(request->interface_name,
-                               std::move(request->interface_pipe));
-    }
-  }
-
-  base::ThreadChecker io_thread_checker_;
-  scoped_refptr<base::SequencedTaskRunner> io_task_runner_;
-  bool released_ = false;
-  std::vector<std::unique_ptr<PendingRequest>> pending_requests_;
-  std::unique_ptr<service_manager::BinderRegistry> registry_;
-
-  base::WeakPtrFactory<QueueingConnectionFilter> weak_factory_;
-
-  DISALLOW_COPY_AND_ASSIGN(QueueingConnectionFilter);
-};
 
 }  // namespace
 

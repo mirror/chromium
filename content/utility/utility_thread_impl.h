@@ -44,9 +44,13 @@ class UtilityThreadImpl : public UtilityThread,
   // ChildThread:
   bool OnControlMessageReceived(const IPC::Message& msg) override;
 
+  void OnChannelConnected(int32_t peer_id) override;
+
   // Binds requests to our |service factory_|.
   void BindServiceFactoryRequest(
       service_manager::mojom::ServiceFactoryRequest request);
+
+  base::Closure release_pending_requests_closure_;
 
   // blink::Platform implementation if needed.
   std::unique_ptr<UtilityBlinkPlatformImpl> blink_platform_impl_;

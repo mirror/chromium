@@ -239,7 +239,8 @@ ChromeContentUtilityClient::ChromeContentUtilityClient()
 
 ChromeContentUtilityClient::~ChromeContentUtilityClient() = default;
 
-void ChromeContentUtilityClient::UtilityThreadStarted() {
+void ChromeContentUtilityClient::UtilityThreadStarted(
+    service_manager::BinderRegistry* registry) {
 #if BUILDFLAG(ENABLE_EXTENSIONS)
   extensions::utility_handler::UtilityThreadStarted();
 #endif
@@ -248,20 +249,16 @@ void ChromeContentUtilityClient::UtilityThreadStarted() {
   if (command_line->HasSwitch(switches::kUtilityProcessRunningElevated))
     utility_process_running_elevated_ = true;
 
-  content::ServiceManagerConnection* connection =
-      content::ChildThread::Get()->GetServiceManagerConnection();
-
   // NOTE: Some utility process instances are not connected to the Service
   // Manager. Nothing left to do in that case.
-  if (!connection)
+  if (!registry)
     return;
 
-  auto registry = base::MakeUnique<service_manager::BinderRegistry>();
 #if BUILDFLAG(ENABLE_EXTENSIONS)
   extensions::ExtensionsHandler::ExposeInterfacesToBrowser(
-      registry.get(), utility_process_running_elevated_);
+      registry, utility_process_running_elevated_);
   extensions::utility_handler::ExposeInterfacesToBrowser(
-      registry.get(), utility_process_running_elevated_);
+      registry, utility_process_running_elevated_);
 #endif
   // If our process runs with elevated privileges, only add elevated Mojo
   // interfaces to the interface registry.
@@ -298,9 +295,6 @@ void ChromeContentUtilityClient::UtilityThreadStarted() {
                            base::ThreadTaskRunnerHandle::Get());
 #endif
   }
-
-  connection->AddConnectionFilter(
-      base::MakeUnique<content::SimpleConnectionFilter>(std::move(registry)));
 }
 
 bool ChromeContentUtilityClient::OnMessageReceived(

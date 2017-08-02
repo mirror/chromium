@@ -19,7 +19,7 @@ class ChromeContentUtilityClient : public content::ContentUtilityClient {
   ~ChromeContentUtilityClient() override;
 
   // content::ContentUtilityClient:
-  void UtilityThreadStarted() override;
+  void UtilityThreadStarted(service_manager::BinderRegistry* registry) override;
   bool OnMessageReceived(const IPC::Message& message) override;
   void RegisterServices(StaticServiceMap* services) override;
 
