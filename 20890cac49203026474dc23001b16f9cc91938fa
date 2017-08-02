@@ -46,6 +46,30 @@
       "revId": "20890cac49203026474dc23001b16f9cc91938fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b04a89b2_447d823e",
+        "filename": "ui/native_theme/common_theme.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-02T03:38:40Z",
+      "side": 1,
+      "message": "\u003e Seems like readonly textfields should look like disabled textfields by default rather than looking like normal ones?\n\nI\u0027m not sure.. disabled textfields tend to have no text in them until they become enabled. (A typical example that comes to mind is a \"Enter your state/province\" which becomes enabled if you\u0027re outside the USA). So it\u0027s hard to compare.\n\nI think the omnibox in popup windows is the clearest use-case we have for readonly. In this use-case, readonly should look the same as non-read-only. It\u0027s just not editable.\n\n\u003e Am I understanding correctly that the thing in the cookies dialog that uses a readonly textfield is each grey label giving the current value of a cookie property?  If no, then what is?  If yes, then why is that a textfield rather than a label?\n\nYou are correct. Making them a textfield makes the text selectable. Except, we now support selectable views::Label via SetSelectable(true). That wasn\u0027t available when the cookies dialog was written. Switching over should be straightforward.\n\n\u003e I am concerned in general about why that should be grey text, and the a11y impact of using a \"disabled\" style there -- \"disabled\" text is not normally mandated to follow contrast rules, so it may be insufficiently readable to all users.  But these questions seem like they maybe don\u0027t need to be answered on this CL.\n\nYup - agree :). STYLE_SECONDARY (or STYLE_HINT) are a better fit. But for convenience STYLE_SECONDARY is black/default unless --secondary-ui-md is set so we don\u0027t make text on dialogs grey prematurely.\n\n\u003e \n\u003e Otherwise, I\u0027m all for removing these constants and instead doing something like \"in Textfield itself, READONLY state is drawn like ____ state by default\".",
+      "parentUuid": "391e07cb_4437fb19",
+      "range": {
+        "startLine": 88,
+        "startChar": 23,
+        "endLine": 88,
+        "endChar": 51
+      },
+      "revId": "20890cac49203026474dc23001b16f9cc91938fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
