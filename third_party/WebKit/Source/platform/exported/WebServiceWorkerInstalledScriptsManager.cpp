@@ -12,15 +12,27 @@ WebServiceWorkerInstalledScriptsManager::RawScriptData::Create(
     WebString encoding,
     WebVector<BytesChunk> script_text,
     WebVector<BytesChunk> meta_data) {
-  return WTF::WrapUnique(new RawScriptData(
-      std::move(encoding), std::move(script_text), std::move(meta_data)));
+  return WTF::WrapUnique(
+      new RawScriptData(std::move(encoding), std::move(script_text),
+                        std::move(meta_data), true /* succeeded */));
+}
+
+// static
+std::unique_ptr<WebServiceWorkerInstalledScriptsManager::RawScriptData>
+WebServiceWorkerInstalledScriptsManager::RawScriptData::
+    CreateFailureInstance() {
+  return WTF::WrapUnique(
+      new RawScriptData(WebString() /* encoding */, WebVector<BytesChunk>(),
+                        WebVector<BytesChunk>(), false /* succeeded */));
 }
 
 WebServiceWorkerInstalledScriptsManager::RawScriptData::RawScriptData(
     WebString encoding,
     WebVector<BytesChunk> script_text,
-    WebVector<BytesChunk> meta_data)
-    : encoding_(std::move(encoding)),
+    WebVector<BytesChunk> meta_data,
+    bool succeeded)
+    : succeeded_(succeeded),
+      encoding_(std::move(encoding)),
       script_text_(std::move(script_text)),
       meta_data_(std::move(meta_data)),
       headers_(WTF::MakeUnique<CrossThreadHTTPHeaderMapData>()) {}
