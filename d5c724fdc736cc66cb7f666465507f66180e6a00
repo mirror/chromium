@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df605d09_160aafdb",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 927,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-08-02T18:45:37Z",
+      "side": 1,
+      "message": "The mixed content was dynamically added on the original page load, and is not present after back navigation; is that distinction important here? Do we need a test for the case where the mixed content was in the body of the page itself (not dynamically added)?\n\nThe original bug concerned Reload; is there any reason to have a separate test for that, or is back/forward navigation sufficiently identical?",
+      "range": {
+        "startLine": 927,
+        "startChar": 20,
+        "endLine": 927,
+        "endChar": 42
+      },
+      "revId": "d5c724fdc736cc66cb7f666465507f66180e6a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5c88483_7b4d9af0",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 944,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-08-02T18:45:37Z",
+      "side": 1,
+      "message": "Noob question: We\u0027re setting up an event listener /after/ doing the thing that we expect to trigger the event. Is there somehow a guarantee that the event hasn\u0027t fired already by this point (e.g. no messages pumping or something)?",
+      "range": {
+        "startLine": 944,
+        "startChar": 11,
+        "endLine": 944,
+        "endChar": 47
+      },
+      "revId": "d5c724fdc736cc66cb7f666465507f66180e6a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
