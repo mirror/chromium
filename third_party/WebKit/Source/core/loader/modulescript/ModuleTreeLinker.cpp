@@ -30,7 +30,7 @@ ModuleTreeLinker* ModuleTreeLinker::Fetch(
   ancestor_list_with_url.insert(request.Url());
 
   ModuleTreeLinker* fetcher =
-      new ModuleTreeLinker(ancestor_list_with_url, level, modulator,
+      new ModuleTreeLinker(std::move(ancestor_list_with_url), level, modulator,
                            reached_url_set, registry, client);
   fetcher->FetchSelf(request);
   return fetcher;
@@ -49,8 +49,8 @@ ModuleTreeLinker* ModuleTreeLinker::FetchDescendantsForInlineScript(
 
   // 4. "Fetch the descendants of script (using an empty ancestor list)."
   ModuleTreeLinker* fetcher = new ModuleTreeLinker(
-      empty_ancestor_list, ModuleGraphLevel::kTopLevelModuleFetch, modulator,
-      nullptr, registry, client);
+      std::move(empty_ancestor_list), ModuleGraphLevel::kTopLevelModuleFetch,
+      modulator, nullptr, registry, client);
   fetcher->module_script_ = module_script;
   fetcher->AdvanceState(State::kFetchingSelf);
 
@@ -68,7 +68,7 @@ ModuleTreeLinker* ModuleTreeLinker::FetchDescendantsForInlineScript(
   return fetcher;
 }
 
-ModuleTreeLinker::ModuleTreeLinker(const AncestorList& ancestor_list_with_url,
+ModuleTreeLinker::ModuleTreeLinker(AncestorList&& ancestor_list_with_url,
                                    ModuleGraphLevel level,
                                    Modulator* modulator,
                                    ModuleTreeReachedUrlSet* reached_url_set,
@@ -82,7 +82,7 @@ ModuleTreeLinker::ModuleTreeLinker(const AncestorList& ancestor_list_with_url,
               : reached_url_set),
       registry_(registry),
       client_(client),
-      ancestor_list_with_url_(ancestor_list_with_url),
+      ancestor_list_with_url_(std::move(ancestor_list_with_url)),
       level_(level),
       module_script_(this, nullptr) {
   CHECK(modulator);

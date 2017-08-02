@@ -46,7 +46,7 @@ class CORE_EXPORT ModuleTreeLinker final : public SingleModuleClient {
   bool HasFinished() const { return state_ == State::kFinished; }
 
  private:
-  ModuleTreeLinker(const AncestorList& ancestor_list_with_url,
+  ModuleTreeLinker(AncestorList&& ancestor_list_with_url,
                    ModuleGraphLevel,
                    Modulator*,
                    ModuleTreeReachedUrlSet*,
