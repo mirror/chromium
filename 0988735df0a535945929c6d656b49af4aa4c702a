@@ -46,6 +46,40 @@
       "revId": "0988735df0a535945929c6d656b49af4aa4c702a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f40f52ef_c991fe96",
+        "filename": "third_party/WebKit/Source/core/exported/WebPluginContainerTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 604,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-02T21:10:05Z",
+      "side": 1,
+      "message": "Instead of copying \"selected text\" into the clipboard and pasting it right back, how about pasting something else into the clipboard, so it is more obvious that the text in the clipboard actually changed.",
+      "revId": "0988735df0a535945929c6d656b49af4aa4c702a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2691195f_9e61410c",
+        "filename": "third_party/WebKit/Source/core/exported/WebPluginContainerTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 632,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-02T21:10:05Z",
+      "side": 1,
+      "message": "Pass the expected text as the first argument.",
+      "revId": "0988735df0a535945929c6d656b49af4aa4c702a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
