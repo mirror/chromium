@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f78bc572_3e6db1d5",
+        "filename": "content/common/service_worker/service_worker_types.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-02T07:27:50Z",
+      "side": 1,
+      "message": "It\u0027s kind of confusing there is a blob_uuid, blob_size, and blob.\n\nIs |blob| only populated when features::kMojoBlobs is enabled? I\u0027ll add a comment saying that if so.",
+      "revId": "058ca543e9c4bcb6250fb8cc78e595dd4b0b452d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
