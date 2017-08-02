@@ -5,21 +5,20 @@
 #ifndef ASH_HIGHLIGHTER_HIGHLIGHTER_CONTROLLER_TEST_API_H_
 #define ASH_HIGHLIGHTER_HIGHLIGHTER_CONTROLLER_TEST_API_H_
 
-#include <memory>
-
+#include "ash/highlighter/highlighter_selection_observer.h"
 #include "base/macros.h"
+#include "ui/gfx/geometry/rect.h"
 
 namespace ash {
 
 class FastInkPoints;
 class HighlighterController;
-class HighlighterSelectionObserver;
 
 // An api for testing the HighlighterController class.
-class HighlighterControllerTestApi {
+class HighlighterControllerTestApi : public HighlighterSelectionObserver {
  public:
   explicit HighlighterControllerTestApi(HighlighterController* instance);
-  ~HighlighterControllerTestApi();
+  ~HighlighterControllerTestApi() override;
 
   void SetEnabled(bool enabled);
   bool IsShowingHighlighter() const;
@@ -28,9 +27,18 @@ class HighlighterControllerTestApi {
   const FastInkPoints& points() const;
   const FastInkPoints& predicted_points() const;
 
+  void ResetSelection() { handle_selection_called_ = false; }
+  bool HandleSelectionCalled() const { return handle_selection_called_; }
+  const gfx::Rect& GetSelection() const { return selection_; }
+
  private:
+  // HighlighterSelectionObserver:
+  void HandleSelection(const gfx::Rect& rect) override;
+
   HighlighterController* instance_;
-  std::unique_ptr<HighlighterSelectionObserver> observer_;
+
+  bool handle_selection_called_ = false;
+  gfx::Rect selection_;
 
   DISALLOW_COPY_AND_ASSIGN(HighlighterControllerTestApi);
 };
