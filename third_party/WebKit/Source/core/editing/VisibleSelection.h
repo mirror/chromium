@@ -138,10 +138,6 @@ class CORE_TEMPLATE_CLASS_EXPORT VisibleSelectionTemplate {
  private:
   friend class SelectionAdjuster;
 
-  VisibleSelectionTemplate(const SelectionTemplate<Strategy>&, TextGranularity);
-
-  void Validate(const SelectionTemplate<Strategy>&, TextGranularity);
-
   // We need to store these as Positions because VisibleSelection is
   // used to store values in editing commands for use when
   // undoing the command. We need to be able to create a selection that, while
