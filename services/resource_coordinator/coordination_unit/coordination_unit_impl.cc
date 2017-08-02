@@ -41,6 +41,14 @@ const FrameCoordinationUnitImpl* CoordinationUnitImpl::ToFrameCoordinationUnit(
 }
 
 // static
+const WebContentsCoordinationUnitImpl*
+CoordinationUnitImpl::ToWebContentsCoordinationUnit(
+    const CoordinationUnitImpl* coordination_unit) {
+  DCHECK(coordination_unit->id().type == CoordinationUnitType::kWebContents);
+  return static_cast<const WebContentsCoordinationUnitImpl*>(coordination_unit);
+}
+
+// static
 std::vector<CoordinationUnitImpl*>
 CoordinationUnitImpl::GetCoordinationUnitsOfType(CoordinationUnitType type) {
   std::vector<CoordinationUnitImpl*> results;
