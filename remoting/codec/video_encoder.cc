@@ -6,8 +6,10 @@
 
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
+#include "build/build_config.h"
 #include "remoting/codec/video_encoder_verbatim.h"
 #include "remoting/codec/video_encoder_vpx.h"
+#include "remoting/codec/video_encoder_webrtc_video_encoder_gpu.h"
 #include "remoting/protocol/session_config.h"
 
 namespace remoting {
@@ -22,6 +24,8 @@ std::unique_ptr<VideoEncoder> VideoEncoder::Create(
     return VideoEncoderVpx::CreateForVP9();
   } else if (video_config.codec == protocol::ChannelConfig::CODEC_VERBATIM) {
     return base::WrapUnique(new VideoEncoderVerbatim());
+  } else if (video_config.codec == protocol::ChannelConfig::CODEC_H264) {
+    return base::MakeUnique<VideoEncoderWebrtcVideoEncoderGpu>();
   }
 
   NOTREACHED() << "Unknown codec type: " << video_config.codec;
