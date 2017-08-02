@@ -11,6 +11,7 @@
 #include "base/files/file_path.h"
 #include "base/macros.h"
 #include "base/message_loop/message_loop.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/profiler/scoped_tracker.h"
 #include "base/strings/string_util.h"
 #include "ui/app_list/app_list_constants.h"
@@ -110,6 +111,7 @@ void AppListMainView::ModelChanged() {
   model_->RemoveObserver(this);
   model_ = delegate_->GetModel();
   model_->AddObserver(this);
+  model_->RecordItemsInFoldersForUMA();
   search_box_view_->ModelChanged();
   delete contents_view_;
   contents_view_ = nullptr;
@@ -181,10 +183,16 @@ void AppListMainView::OnSearchEngineIsGoogleChanged(bool is_google) {
 
 void AppListMainView::ActivateApp(AppListItem* item, int event_flags) {
   // TODO(jennyz): Activate the folder via AppListModel notification.
-  if (item->GetItemType() == AppListFolderItem::kItemType)
+  if (item->GetItemType() == AppListFolderItem::kItemType) {
     contents_view_->ShowFolderContent(static_cast<AppListFolderItem*>(item));
-  else
+    UMA_HISTOGRAM_ENUMERATION(kAppListOpenedFolderHistogram,
+                              features::IsFullscreenAppListEnabled()
+                                  ? FULLSCREEN_APP_LIST_FOLDERS
+                                  : OLD_FOLDERS,
+                              MAX_FOLDER_OPENED);
+  } else {
     item->Activate(event_flags);
+  }
 }
 
 void AppListMainView::CancelDragInActiveFolder() {

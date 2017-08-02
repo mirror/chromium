@@ -20,12 +20,14 @@
 #include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "base/command_line.h"
 #include "base/memory/ptr_util.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/metrics/user_metrics.h"
 #include "base/metrics/user_metrics_action.h"
 #include "base/timer/timer.h"
 #include "chromeos/chromeos_switches.h"
 #include "third_party/skia/include/core/SkPath.h"
 #include "ui/accessibility/ax_node_data.h"
+#include "ui/app_list/app_list_constants.h"
 #include "ui/app_list/presenter/app_list.h"
 #include "ui/aura/window_tree_host.h"
 #include "ui/base/l10n/l10n_util.h"
@@ -253,6 +255,13 @@ std::unique_ptr<views::InkDropRipple> AppListButton::CreateInkDropRipple()
 }
 
 void AppListButton::NotifyClick(const ui::Event& event) {
+  // Check the shell for app list visibility because |is_app_list_showing_| will
+  // update before this function is called while hiding the app list.
+  if (!Shell::Get()->IsAppListVisible()) {
+    UMA_HISTOGRAM_ENUMERATION(app_list::kAppListToggleMethodHistogram,
+                              app_list::SHELF_BUTTON,
+                              app_list::MAX_APP_LIST_TOGGLE_METHOD);
+  }
   ImageButton::NotifyClick(event);
   if (listener_)
     listener_->ButtonPressed(this, event, GetInkDrop());
