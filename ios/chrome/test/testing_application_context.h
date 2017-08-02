@@ -59,6 +59,7 @@ class TestingApplicationContext : public ApplicationContext {
   ios::ChromeBrowserStateManager* chrome_browser_state_manager_;
   std::unique_ptr<network_time::NetworkTimeTracker> network_time_tracker_;
   bool was_last_shutdown_clean_;
+  bool is_shutting_down_;
 
   DISALLOW_COPY_AND_ASSIGN(TestingApplicationContext);
 };
