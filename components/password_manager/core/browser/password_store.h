@@ -583,7 +583,8 @@ class PasswordStore : protected PasswordStoreSync,
   void InitOnBackgroundThread(
       const syncer::SyncableService::StartSyncFlare& flare);
 
-  // Deletes objest that should be destroyed on the background thread.
+  // Deletes object that should be destroyed on the background thread.
+  // WARNING: this method can be skipped on shutdown.
   void DestroyOnBackgroundThread();
 
   // The observers.
@@ -593,7 +594,10 @@ class PasswordStore : protected PasswordStoreSync,
   std::unique_ptr<AffiliatedMatchHelper> affiliated_match_helper_;
 // TODO(crbug.com/706392): Fix password reuse detection for Android.
 #if !defined(OS_ANDROID) && !defined(OS_IOS)
-  std::unique_ptr<PasswordReuseDetector> reuse_detector_;
+  // PasswordReuseDetector can be only destroyed on the background thread. It
+  // can't be owned by PasswordStore because PasswordStore can be destroyed on
+  // UI thread and DestroyOnBackgroundThread isn't guaranteed to be called.
+  PasswordReuseDetector* reuse_detector_;
 #endif
 #if defined(SYNC_PASSWORD_REUSE_DETECTION_ENABLED)
   std::unique_ptr<PasswordStoreSigninNotifier> notifier_;
