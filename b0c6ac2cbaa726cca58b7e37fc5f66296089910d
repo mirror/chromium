@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67c427cd_9099a471",
+        "filename": "components/variations/proto/study.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-08-02T20:33:46Z",
+      "side": 1,
+      "message": "nit: I guess align this with the others? Did you run git cl format?",
+      "revId": "b0c6ac2cbaa726cca58b7e37fc5f66296089910d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "236d0f34_1be4202b",
+        "filename": "components/variations/study_filtering_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1002483
+      },
+      "writtenOn": "2017-08-02T20:33:46Z",
+      "side": 1,
+      "message": "nit: add trailing comma",
+      "revId": "b0c6ac2cbaa726cca58b7e37fc5f66296089910d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
