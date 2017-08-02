@@ -159,6 +159,30 @@
     },
     {
       "key": {
+        "uuid": "aac196ac_839c01a8",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-08-02T09:21:21Z",
+      "side": 1,
+      "message": "I have come across some reports recently that this policy is indeed not blocking all types of requests which I consider to be a bug. The intent of this policy at least as far as I remember was to make sure certain endpoints can not be interacted with through any user/extension triggered action direct or indirect.",
+      "parentUuid": "e544f403_80512b3c",
+      "range": {
+        "startLine": 160,
+        "startChar": 30,
+        "endLine": 160,
+        "endChar": 37
+      },
+      "revId": "ea6fc4b0dbfdcdd1d416f4856949ce014eb59cd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "52bae2c4_520ddc21",
         "filename": "net/proxy/proxy_script_fetcher_impl.cc",
         "patchSetId": 2
