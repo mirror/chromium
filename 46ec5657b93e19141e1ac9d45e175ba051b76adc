@@ -16,6 +16,24 @@
       "revId": "46ec5657b93e19141e1ac9d45e175ba051b76adc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15c486d1_3bb85c62",
+        "filename": "services/metrics/public/cpp/ukm_source_id.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-08-02T23:00:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7e5af55_9c8e1083",
+      "revId": "46ec5657b93e19141e1ac9d45e175ba051b76adc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
