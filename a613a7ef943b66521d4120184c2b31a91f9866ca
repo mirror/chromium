@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "011745ed_85bf610d",
+        "filename": "ios/chrome/app/spotlight/spotlight_manager_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-02T20:20:34Z",
+      "side": 0,
+      "message": "This needs to be replaced by a ScopedTaskEnvironment, that\u0027s why you\u0027re getting\n\nCheck failed: TaskScheduler::GetInstance(). Ref. Prerequisite section of post_task.h\n\n(there\u0027s no TaskScheduler instance in the test)",
+      "revId": "a613a7ef943b66521d4120184c2b31a91f9866ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
