@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8766c593_87052bde",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-02T20:09:31Z",
+      "side": 1,
+      "message": "Is this needed?  (Commenting it out seems to not cause a problem)",
+      "revId": "08be72762ab737ee570e1856bf7c5aca07d6c2fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d51a981_f92b254d",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-02T20:09:31Z",
+      "side": 1,
+      "message": "My recollection is that margin: auto is defined along the lines of \"the browser decides on something \u0027reasonable\u0027\".  Is this an acceptable way to center content in webui?  (Or, said differently, are we doing this enough places that if something changes, we\u0027ll know about it? :))",
+      "revId": "08be72762ab737ee570e1856bf7c5aca07d6c2fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
