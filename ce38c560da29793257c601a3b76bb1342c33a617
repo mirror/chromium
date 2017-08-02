@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5abbb1e4_089f230b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/clear-site-data/storage.https.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-02T12:06:34Z",
+      "side": 1,
+      "message": "You have `explicit_done` above, which is what I would have suggested.\n\nAn alternative is to wrap the `TestUtils...` call below in a `promise_test`. Something like:\n\n```\npromise_test(t \u003d\u003e {\n  return TestUtils.populateStorage()\n    .then(_ \u003d\u003e ...)\n    .then(_ \u003d\u003e ...);\n});\n```",
+      "revId": "ce38c560da29793257c601a3b76bb1342c33a617",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15c6d127_6daf2c73",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/clear-site-data/support/test_utils.sub.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-08-02T12:06:34Z",
+      "side": 1,
+      "message": "Overengineering...",
+      "revId": "ce38c560da29793257c601a3b76bb1342c33a617",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
