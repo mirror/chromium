@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0a02d6f_8ec121ff",
+        "filename": "cc/resources/resource_provider_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1771,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-08-02T21:30:46Z",
+      "side": 1,
+      "message": "Keep some comment here about what its doing. \"Return the resources....\"",
+      "revId": "63b7667bd9502fc779b9ad641e0ab4e5b6a7701e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f3189a5_ad832663",
+        "filename": "cc/resources/resource_provider_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1824,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-08-02T21:30:46Z",
+      "side": 1,
+      "message": "extra space",
+      "revId": "63b7667bd9502fc779b9ad641e0ab4e5b6a7701e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
