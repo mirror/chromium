@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4fe92e9_3c1c3da4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-08-02T19:32:59Z",
+      "side": 1,
+      "message": "Commit message needs work.",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 20
+      },
+      "revId": "2b023c62d5aaa6cacdde92b34051ea2548a551bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69fb66b7_0de593fb",
+        "filename": "base/profiler/native_stack_sampler_mac.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-08-02T19:32:59Z",
+      "side": 1,
+      "message": "newline before this line. const?",
+      "range": {
+        "startLine": 33,
+        "startChar": 10,
+        "endLine": 33,
+        "endChar": 29
+      },
+      "revId": "2b023c62d5aaa6cacdde92b34051ea2548a551bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78cb498c_dc6e8656",
+        "filename": "base/profiler/native_stack_sampler_mac.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1000023
+      },
+      "writtenOn": "2017-08-02T19:32:59Z",
+      "side": 1,
+      "message": "OK, this is the use of \"the end of the stack buffer to avoid crashes\". Why does this avoid crashing?\n\nPlease clarify in a comment or in the CL description.",
+      "range": {
+        "startLine": 468,
+        "startChar": 4,
+        "endLine": 468,
+        "endChar": 17
+      },
+      "revId": "2b023c62d5aaa6cacdde92b34051ea2548a551bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
