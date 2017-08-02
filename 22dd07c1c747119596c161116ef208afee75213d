@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91c54feb_4947595d",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 1540,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-08-02T23:39:52Z",
+      "side": 1,
+      "message": "Move this down to where its first used.",
+      "range": {
+        "startLine": 1540,
+        "startChar": 2,
+        "endLine": 1540,
+        "endChar": 62
+      },
+      "revId": "22dd07c1c747119596c161116ef208afee75213d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10e81f9a_ecf88707",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 1545,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-08-02T23:39:52Z",
+      "side": 1,
+      "message": "In what case can we get here? i.e. If this LayoutBox has a scrollbar, it must have a PaintLayer so shouldn\u0027t we have already tried hit testing the scrollbar from PaintLayer::HitTestLayer (in the \"Check current layer overflow first\" section)",
+      "range": {
+        "startLine": 1545,
+        "startChar": 4,
+        "endLine": 1545,
+        "endChar": 16
+      },
+      "revId": "22dd07c1c747119596c161116ef208afee75213d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e546de5a_2f930429",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutView.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-08-02T23:39:52Z",
+      "side": 1,
+      "message": "This looks wrong to me. result.RoundedPointInMainFrame() should be returning a point in root frame coordinates. You shouldn\u0027t need the ContentsToFrame conversion.\n\nThough now that I look inside HitTestResult, that calls into HitTestLocation::Point and HitTestLocation says that all the coordinates are in \"Document\"/\"Content\" coordinates which would make this conversion correct but the name of RoundedPointInMainFrame wrong.\n\nIn a separate patch, please rename HitTestResult::RoundedPointInMainFrame and HitTestResult::PointInMainFrame to (Rounded)PointInContents.",
+      "range": {
+        "startLine": 131,
+        "startChar": 2,
+        "endLine": 132,
+        "endChar": 72
+      },
+      "revId": "22dd07c1c747119596c161116ef208afee75213d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87a4e4a0_ed94d029",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutView.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-08-02T23:39:52Z",
+      "side": 1,
+      "message": "LocalFrameView has ContentsToRootFrame that is a shorthand for the previous two lines",
+      "range": {
+        "startLine": 133,
+        "startChar": 2,
+        "endLine": 133,
+        "endChar": 74
+      },
+      "revId": "22dd07c1c747119596c161116ef208afee75213d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49054c69_4c94a066",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutView.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-08-02T23:39:52Z",
+      "side": 1,
+      "message": "root_frame_point is only used inside this if block. Move its declaration and definition here.",
+      "range": {
+        "startLine": 140,
+        "startChar": 50,
+        "endLine": 140,
+        "endChar": 66
+      },
+      "revId": "22dd07c1c747119596c161116ef208afee75213d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4635d9d3_6789d757",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayer.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 2077,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-08-02T23:39:52Z",
+      "side": 1,
+      "message": "This should be \"Check current layer for overflow controls first\"",
+      "range": {
+        "startLine": 2077,
+        "startChar": 2,
+        "endLine": 2077,
+        "endChar": 39
+      },
+      "revId": "22dd07c1c747119596c161116ef208afee75213d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6653a24_b54a71c3",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayer.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 2125,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-08-02T23:39:52Z",
+      "side": 1,
+      "message": "I\u0027m not sure on the terminology here - I\u0027d just leave this as it was.",
+      "range": {
+        "startLine": 2125,
+        "startChar": 19,
+        "endLine": 2125,
+        "endChar": 32
+      },
+      "revId": "22dd07c1c747119596c161116ef208afee75213d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "836c832c_1c7e8ae5",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 1517,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-08-02T23:39:52Z",
+      "side": 1,
+      "message": "Use ContentsToRootFrame",
+      "range": {
+        "startLine": 1517,
+        "startChar": 44,
+        "endLine": 1517,
+        "endChar": 62
+      },
+      "revId": "22dd07c1c747119596c161116ef208afee75213d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfa5a94d_a10786b0",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollbarThemeOverlay.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-08-02T23:39:52Z",
+      "side": 1,
+      "message": "Make this SetHitTestEnabled(bool).",
+      "range": {
+        "startLine": 92,
+        "startChar": 7,
+        "endLine": 92,
+        "endChar": 20
+      },
+      "revId": "22dd07c1c747119596c161116ef208afee75213d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e91a799_6f4ae24d",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollbarThemeOverlayMock.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-08-02T23:39:52Z",
+      "side": 1,
+      "message": "You can just remove this method here since ScrollbarThemeOverlayMock inherits from ScrollbarThemeOverlay",
+      "range": {
+        "startLine": 68,
+        "startChar": 7,
+        "endLine": 68,
+        "endChar": 20
+      },
+      "revId": "22dd07c1c747119596c161116ef208afee75213d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
