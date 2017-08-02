@@ -2,14 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "core/css/properties/CSSPropertyAPIOpacity.h"
+#include "core/css/properties/CSSPropertyAPIOpacityNonInherited.h"
 
 #include "core/css/parser/CSSPropertyParserHelpers.h"
 
 class CSSParserLocalContext;
 namespace blink {
 
-const CSSValue* CSSPropertyAPIOpacity::parseSingleValue(
+const CSSValue* CSSPropertyAPIOpacityNonInherited::parseSingleValue(
     CSSParserTokenRange& range,
     const CSSParserContext& context,
     const CSSParserLocalContext&) {
