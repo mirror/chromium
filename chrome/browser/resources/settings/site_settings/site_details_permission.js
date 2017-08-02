@@ -148,6 +148,27 @@ Polymer({
   },
 
   /**
+   * Returns true if the permission is set to a non-default 'ask'.
+   * Note this will only be called when |this.site| is updated.
+   * @param {!settings.ContentSetting} setting The setting of the permission.
+   * @param {!settings.SiteSettingSource} source The source of the permission.
+   * @private
+   */
+  isNonDefaultAsk_: function(setting, source) {
+    if (setting != settings.ContentSetting.ASK ||
+        source == settings.SiteSettingSource.DEFAULT)
+      return false;
+
+    assert(
+        source == settings.SiteSettingSource.EXTENSION ||
+            source == settings.SiteSettingSource.POLICY ||
+            source == settings.SiteSettingSource.PREFERENCE,
+        'Only user preference, extensions or enterprise policy can change ' +
+            'the setting to ASK.');
+    return true;
+  },
+
+  /**
    * Updates the string used to describe the source of this permission setting.
    * Note |source| is a subproperty of |this.site|, so this will only be called
    * when |this.site| is updated.
