@@ -46,6 +46,30 @@
       "revId": "79ffa4ee640bb2256df7e9c9503c1fb0117eec27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dafe1bde_4ac6ac0b",
+        "filename": "cc/scheduler/scheduler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-02T01:02:23Z",
+      "side": 1,
+      "message": "\u003e The way things are currently coded, yeah.\n\u003e \n\u003e We may want to use BEGIN_IMPL_FRAME_DEADLINE_MODE_LATE if BeginMainFrameToActivateIsFast, in which case no. But that should probably be done as a separate patch.\n\nReally? Form what I could infer in the code, the regular mode is used if we are trying to be aggressive with the deadline for a gesture/animation on the impl thread. Is there a reason why we would want to change that behaviour in this case?",
+      "parentUuid": "e2c41138_34ec801c",
+      "range": {
+        "startLine": 384,
+        "startChar": 34,
+        "endLine": 384,
+        "endChar": 54
+      },
+      "revId": "79ffa4ee640bb2256df7e9c9503c1fb0117eec27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
