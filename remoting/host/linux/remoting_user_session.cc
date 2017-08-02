@@ -56,6 +56,11 @@ namespace {
 // unlikely to interfere with it, but is otherwise arbitrary.
 const int kMessageFd = 202;
 
+// This is the exit code the Python session script will use to signal that the
+// user-session wrapper should restart instead of exiting. It must be kept in
+// sync with RESTART_EXIT_CODE in linux_me2me_host.py
+const int kRestartExitCode = 41;
+
 const char kPamName[] = "chrome-remote-desktop";
 const char kScriptName[] = "chrome-remote-desktop";
 const char kStartCommand[] = "start";
@@ -273,8 +278,7 @@ void ExecMe2MeScript(base::EnvironmentMap environment,
       ShellEscapeArgument(FindScriptPath());
   CHECK(escaped_script_path) << "Could not escape script path";
 
-  std::string shell_arg =
-      *escaped_script_path + " --start --foreground --keep-parent-env";
+  std::string shell_arg = *escaped_script_path + " --start --child-process";
 
   environment["USER"] = pwinfo->pw_name;
   environment["LOGNAME"] = pwinfo->pw_name;
@@ -301,6 +305,23 @@ void ExecMe2MeScript(base::EnvironmentMap environment,
   execve(pwinfo->pw_shell, const_cast<char* const*>(arg_ptrs.data()),
          const_cast<char* const*>(env_ptrs.data()));
   PLOG(FATAL) << "Failed to exec login shell " << pwinfo->pw_shell;
+}
+
+void Restart(const std::string& user) {
+  char exe_path[PATH_MAX];
+  ssize_t path_size = readlink("/proc/self/exe", exe_path, arraysize(exe_path));
+  PCHECK(path_size >= 0) << "Failed to determine binary location";
+  CHECK(path_size < PATH_MAX) << "Binary path too long";
+  exe_path[path_size] = '\0';
+  CHECK(exe_path[0] == '/') << "self path not absolute";
+
+  // Real user ID has already been set to the target user. Set the corresponding
+  // environment variables, too.
+  PCHECK(setenv("USER", user.c_str(), true) == 0) << "setenv failed";
+  PCHECK(setenv("LOGNAME", user.c_str(), true) == 0) << "setenv failed";
+
+  execl(exe_path, exe_path, "start", "--foreground", (char*)nullptr);
+  PCHECK(false) << "Failed to exec self";
 }
 
 // Runs the me2me script in a PAM session. Exits the program on failure.
@@ -380,9 +401,14 @@ void ExecuteSession(std::string user,
       PCHECK(wait_result >= 0) << "wait failed";
     } while (!WIFEXITED(status) && !WIFSIGNALED(status));
 
+    bool restart = false;
+
     if (WIFEXITED(status)) {
       if (WEXITSTATUS(status) == EXIT_SUCCESS) {
         LOG(INFO) << "Child exited successfully";
+      } else if (WEXITSTATUS(status) == kRestartExitCode) {
+        LOG(INFO) << "Restarting session";
+        restart = true;
       } else {
         LOG(WARNING) << "Child exited with status " << WEXITSTATUS(status);
       }
@@ -395,6 +421,10 @@ void ExecuteSession(std::string user,
       LOG(WARNING) << "Failed to close PAM session";
     }
     ignore_result(pam_handle.SetCredentials(PAM_DELETE_CRED));
+
+    if (restart) {
+      Restart(user);
+    }
   }
 }
 
