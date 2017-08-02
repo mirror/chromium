@@ -16,6 +16,52 @@
       "revId": "034fdc32c07968e2c787109e0a05440551830cfb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a62c9b43_553f673d",
+        "filename": "remoting/host/setup/daemon_controller_delegate_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-02T00:25:12Z",
+      "side": 1,
+      "message": "Is there a suitable scoped_* type you can use here instead of manually closing it in multiple places?",
+      "range": {
+        "startLine": 44,
+        "startChar": 23,
+        "endLine": 44,
+        "endChar": 0
+      },
+      "revId": "034fdc32c07968e2c787109e0a05440551830cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb025be5_9fc3643b",
+        "filename": "remoting/host/setup/daemon_controller_delegate_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-02T00:25:12Z",
+      "side": 1,
+      "message": "Maybe use RAII for waitpid as well, so you can just return when needed?",
+      "range": {
+        "startLine": 68,
+        "startChar": 51,
+        "endLine": 68,
+        "endChar": 0
+      },
+      "revId": "034fdc32c07968e2c787109e0a05440551830cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
