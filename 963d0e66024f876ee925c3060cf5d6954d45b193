@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f4271e5a_aa1bb791",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-02T20:48:57Z",
+      "side": 1,
+      "message": "FWIW, SequencedWorkerPool also had shutdown behaviors but maybe the fix didn\u0027t take advantage of that as it should have...",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 38
+      },
+      "revId": "963d0e66024f876ee925c3060cf5d6954d45b193",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e675dac0_cd03aaca",
+        "filename": "extensions/browser/sandboxed_unpacker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-02T20:48:57Z",
+      "side": 1,
+      "message": "Relying on SKIP_ON_SHUTDOWN for this isn\u0027t quite correct either. All code should be resilient to crashes mid execution. Consider using base::ImportantFileWriter to do so (in a follow-up as this has long been broken)",
+      "revId": "963d0e66024f876ee925c3060cf5d6954d45b193",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a34e9803_acdb1e2d",
+        "filename": "extensions/browser/sandboxed_unpacker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-02T20:48:57Z",
+      "side": 1,
+      "message": "Looking at callers it looks like it plumbing lands on 4 different task runners 3 of which are SKIP_ON_SHUTDOWN and another which is still BrowserThread::FILE.\n\nI agree that if this is an important requirement you just make your own or grab the common one.",
+      "revId": "963d0e66024f876ee925c3060cf5d6954d45b193",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

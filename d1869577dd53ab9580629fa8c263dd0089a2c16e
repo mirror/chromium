@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc9c4d4e_61861a2c",
+        "filename": "base/threading/sequenced_worker_pool.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-02T20:48:57Z",
+      "side": 0,
+      "message": "Wooohoooooooo!",
+      "revId": "d1869577dd53ab9580629fa8c263dd0089a2c16e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
