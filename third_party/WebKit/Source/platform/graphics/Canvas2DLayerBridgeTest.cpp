@@ -277,6 +277,25 @@ class Canvas2DLayerBridgeTest : public Test {
         bridge->PrepareTextureMailbox(&texture_mailbox, &release_callback));
   }
 
+  void PrepareMailboxAndLostContextTest() {
+    Canvas2DLayerBridgePtr bridge(AdoptRef(new Canvas2DLayerBridge(
+        IntSize(300, 150), 0, kNonOpaque,
+        Canvas2DLayerBridge::kForceAccelerationForTesting,
+        CanvasColorParams())));
+
+    viz::TextureMailbox texture_mailbox;
+    std::unique_ptr<viz::SingleReleaseCallback> release_callback;
+    EXPECT_TRUE(
+        bridge->PrepareTextureMailbox(&texture_mailbox, &release_callback));
+
+    bool lost_resource = true;
+    // Get a new context provider so that the WeakPtr to the old one is null.
+    // This is the test to make sure that ReleaseMailboxImageResource() handles
+    // null context_provider_wrapper properly.
+    SharedGpuContext::ContextProviderWrapper();
+    release_callback->Run(gpu::SyncToken(), lost_resource);
+  }
+
   void PrepareMailboxAndLoseResourceTest() {
     // Prepare a mailbox, then report the resource as lost.
     // This test passes by not crashing and not triggering assertions.
@@ -365,6 +384,10 @@ TEST_F(Canvas2DLayerBridgeTest,
 
 TEST_F(Canvas2DLayerBridgeTest, PrepareMailboxAndLoseResource) {
   PrepareMailboxAndLoseResourceTest();
+}
+
+TEST_F(Canvas2DLayerBridgeTest, PrepareMailboxAndLostContext) {
+  PrepareMailboxAndLostContextTest();
 }
 
 TEST_F(Canvas2DLayerBridgeTest, AccelerationHint) {
