@@ -106,6 +106,11 @@ bool isAllowedStateStansition(keyboard::KeyboardControllerState from,
           // keyboard being shown.
           {keyboard::KeyboardControllerState::SHOWING,
            keyboard::KeyboardControllerState::WILL_HIDE},
+
+          // SHOWN -> HIDDEN occurs when you flip out of tablet mode with the
+          // keyboard still open.
+          {keyboard::KeyboardControllerState::SHOWING,
+           keyboard::KeyboardControllerState::WILL_HIDE},
       };
   return kAllowedStateTransition.count(std::make_pair(from, to)) == 1;
 };
@@ -738,7 +743,9 @@ void KeyboardController::
 }
 
 void KeyboardController::HideAnimationFinished() {
-  if (state_ != KeyboardControllerState::HIDING)
+  if (state_ != KeyboardControllerState::HIDING &&
+      state_ != KeyboardControllerState::SHOWN &&
+      state_ != KeyboardControllerState::SHOWING)
     return;
 
   ui_->HideKeyboardContainer(container_.get());
@@ -746,6 +753,7 @@ void KeyboardController::HideAnimationFinished() {
 
   for (KeyboardControllerObserver& observer : observer_list_)
     observer.OnKeyboardHidden();
+
   ui_->EnsureCaretInWorkArea();
 }
 
@@ -828,6 +836,17 @@ void KeyboardController::ChangeState(KeyboardControllerState state) {
 void KeyboardController::ReportLingeringState() {
   UMA_HISTOGRAM_ENUMERATION("VirtualKeyboard.LingeringIntermediateState",
                             state_, KeyboardControllerState::COUNT);
+}
+
+void KeyboardController::NotifyTabletModeEnded() {
+  // If the keyboard is open while flipping out of tablet mode, we need to
+  // notify observers that the keyboard is going away.
+  NotifyContentsBoundsChanging(gfx::Rect());
+  if (keyboard_visible()) {
+    // Do internal state cleanup to indicate that the keyboard is no longer
+    // present
+    HideAnimationFinished();
+  }
 }
 
 }  // namespace keyboard
