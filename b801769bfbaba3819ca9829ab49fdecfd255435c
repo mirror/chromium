@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "49c00671_9eaf8446",
+        "filename": "remoting/host/client_session.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-02T18:02:26Z",
+      "side": 1,
+      "message": "Yeah it really depends on how the FileTransferMessageHandler class is created and how it is initialized, there could easily be a static create method on it which receives the necessary state and creates a handler.  Let\u0027s see how it looks once it is being used.",
+      "parentUuid": "94d62979_6d98ed20",
+      "range": {
+        "startLine": 245,
+        "startChar": 36,
+        "endLine": 245,
+        "endChar": 74
+      },
+      "revId": "b801769bfbaba3819ca9829ab49fdecfd255435c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c07c1693_37186220",
         "filename": "remoting/host/file_transfer_message_handler_factory.cc",
         "patchSetId": 2
