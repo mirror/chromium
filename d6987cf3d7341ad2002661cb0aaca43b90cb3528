@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc03ded4_63bcc5a3",
+        "filename": "chrome/test/data/webui/settings/google_assistant_page_test.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-02T22:39:51Z",
+      "side": 1,
+      "message": "You probably have to convert this to use ES6 (because the base class was converted). Should be pretty straight forward, see example at https://chromium-review.googlesource.com/c/596682.",
+      "revId": "d6987cf3d7341ad2002661cb0aaca43b90cb3528",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
