@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7db9dc0f_e05a5489",
+        "filename": "cc/quads/render_pass.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-08-02T18:03:49Z",
+      "side": 1,
+      "message": "we shouldn\u0027t need to make 3 copies of one rect",
+      "revId": "b1ebd1e7e825da575db2601072ea8e549b20e67d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ddd067c_6d6154c2",
+        "filename": "cc/quads/render_pass.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-08-02T18:03:49Z",
+      "side": 1,
+      "message": "Oh, it\u0027s destroyed here, my bad in suggesting references.",
+      "revId": "b1ebd1e7e825da575db2601072ea8e549b20e67d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
