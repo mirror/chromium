@@ -295,16 +295,29 @@ class ArcNotificationContentViewTest : public views::ViewsTestBase {
   TestNotificationSurfaceManager* surface_manager() {
     return surface_manager_.get();
   }
-  views::Widget* widget() { return notification_view_->GetWidget(); }
+  views::Widget* widget() {
+    views::Widget* widget = notification_view_->GetWidget();
+    DCHECK_EQ(widget, wrapper_widget_.get());
+    return widget;
+  }
 
-  ArcNotificationContentView* GetArcNotificationContentView() {
+  ArcNotificationContentView* GetArcNotificationContentView() const {
     views::View* view = notification_view_->contents_view_;
     EXPECT_EQ(ArcNotificationContentView::kViewClassName, view->GetClassName());
     return static_cast<ArcNotificationContentView*>(view);
   }
+  message_center::NotificationControlButtonsView* GetControlButtonsView()
+      const {
+    DCHECK(GetArcNotificationContentView());
+    DCHECK(GetArcNotificationContentView()->control_buttons_view_);
+    return GetArcNotificationContentView()->control_buttons_view_;
+  }
 
   TestNotificationSurfaceManager* surface_manager() const {
     return surface_manager_.get();
+  }
+  ArcNotificationView* notification_view() const {
+    return notification_view_.get();
   }
 
  private:
@@ -394,6 +407,64 @@ TEST_F(ArcNotificationContentViewTest, ReuseSurfaceAfterClosing) {
 
   // Reuse again.
   CreateAndShowNotificationView(notification);
+  CloseNotificationView();
+}
+
+TEST_F(ArcNotificationContentViewTest, TraversalFocus) {
+  std::string notification_key("notification id");
+  const bool reverse = false;
+
+  auto notification_item =
+      base::MakeUnique<MockArcNotificationItem>(notification_key);
+  surface_manager()->PrepareSurface(notification_key);
+  message_center::Notification notification =
+      CreateNotification(notification_item.get());
+  CreateAndShowNotificationView(notification);
+
+  views::FocusManager* focus_manager = notification_view()->GetFocusManager();
+
+  views::View* view =
+      focus_manager->GetNextFocusableView(nullptr, widget(), reverse, true);
+  EXPECT_EQ(GetArcNotificationContentView(), view);
+
+  view = focus_manager->GetNextFocusableView(view, nullptr, reverse, true);
+  EXPECT_EQ(GetControlButtonsView()->settings_button(), view);
+
+  view = focus_manager->GetNextFocusableView(view, nullptr, reverse, true);
+  EXPECT_EQ(GetControlButtonsView()->close_button(), view);
+
+  view = focus_manager->GetNextFocusableView(view, nullptr, reverse, true);
+  EXPECT_EQ(nullptr, view);
+
+  CloseNotificationView();
+}
+
+TEST_F(ArcNotificationContentViewTest, TraversalFocusReverse) {
+  std::string notification_key("notification id");
+  const bool reverse = true;
+
+  auto notification_item =
+      base::MakeUnique<MockArcNotificationItem>(notification_key);
+  surface_manager()->PrepareSurface(notification_key);
+  message_center::Notification notification =
+      CreateNotification(notification_item.get());
+  CreateAndShowNotificationView(notification);
+
+  views::FocusManager* focus_manager = notification_view()->GetFocusManager();
+
+  views::View* view =
+      focus_manager->GetNextFocusableView(nullptr, widget(), reverse, true);
+  EXPECT_EQ(GetControlButtonsView()->close_button(), view);
+
+  view = focus_manager->GetNextFocusableView(view, nullptr, reverse, true);
+  EXPECT_EQ(GetControlButtonsView()->settings_button(), view);
+
+  view = focus_manager->GetNextFocusableView(view, nullptr, reverse, true);
+  EXPECT_EQ(GetArcNotificationContentView(), view);
+
+  view = focus_manager->GetNextFocusableView(view, nullptr, reverse, true);
+  EXPECT_EQ(nullptr, view);
+
   CloseNotificationView();
 }
 
