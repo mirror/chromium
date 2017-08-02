@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03f566db_ca1c2845",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-02T19:56:09Z",
+      "side": 1,
+      "message": "nit: validation",
+      "revId": "9f62aba0673e8b8730ef8014eb601ee30871a0bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddf62665_f637a5a0",
+        "filename": "testing/libfuzzer/fuzzers/mojo_parse_message_fuzzer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-02T19:56:09Z",
+      "side": 1,
+      "message": "nit: you can just pass nullptr for handles",
+      "revId": "9f62aba0673e8b8730ef8014eb601ee30871a0bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61ad2c75_04d79ab6",
+        "filename": "testing/libfuzzer/fuzzers/mojo_parse_message_fuzzer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-02T19:56:09Z",
+      "side": 1,
+      "message": "This tramples the message header too. Presumably that is intentional, yes?",
+      "revId": "9f62aba0673e8b8730ef8014eb601ee30871a0bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be347192_50740817",
+        "filename": "testing/libfuzzer/fuzzers/mojo_parse_message_fuzzer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-02T19:56:09Z",
+      "side": 1,
+      "message": "This seems like a reasonable approach to me. Presumably we\u0027ll also want to fuzz associated interface usage, and all relevant processing for that happens within MultiplexRouter.",
+      "revId": "9f62aba0673e8b8730ef8014eb601ee30871a0bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
