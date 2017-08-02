@@ -5,6 +5,7 @@
 #include "chrome/browser/ssl/ssl_error_handler.h"
 
 #include <stdint.h>
+#include <regex>
 #include <unordered_set>
 #include <utility>
 
@@ -171,6 +172,17 @@ bool IsCaptivePortalInterstitialEnabled() {
   return base::FeatureList::IsEnabled(kCaptivePortalInterstitial);
 }
 
+std::unique_ptr<std::unordered_set<std::string>> LoadCaptivePortalCertHashes(
+    const chrome_browser_ssl::SSLErrorAssistantConfig& proto) {
+  auto hashes = base::MakeUnique<std::unordered_set<std::string>>();
+  for (const chrome_browser_ssl::CaptivePortalCert& cert :
+       proto.captive_portal_cert()) {
+    hashes.get()->insert(cert.sha256_hash());
+  }
+  return hashes;
+}
+#endif
+
 // Reads the SSL error assistant configuration from the resource bundle.
 std::unique_ptr<chrome_browser_ssl::SSLErrorAssistantConfig>
 ReadErrorAssistantProtoFromResourceBundle() {
@@ -184,16 +196,17 @@ ReadErrorAssistantProtoFromResourceBundle() {
   return proto->ParseFromZeroCopyStream(&stream) ? std::move(proto) : nullptr;
 }
 
-std::unique_ptr<std::unordered_set<std::string>> LoadCaptivePortalCertHashes(
+std::unique_ptr<std::vector<std::regex>> LoadContentFilterRegexes(
     const chrome_browser_ssl::SSLErrorAssistantConfig& proto) {
-  auto hashes = base::MakeUnique<std::unordered_set<std::string>>();
-  for (const chrome_browser_ssl::CaptivePortalCert& cert :
-       proto.captive_portal_cert()) {
-    hashes.get()->insert(cert.sha256_hash());
+  auto regexes = base::MakeUnique<std::vector<std::regex>>();
+  for (const chrome_browser_ssl::ContentFilterEntry& filter :
+       proto.content_filter()) {
+    // There isn't a regex type in proto buffer world, so we are typecasting
+    // the string literals returned from our proto to regexes here.
+    regexes.get()->push_back(std::regex(filter.regex()));
   }
-  return hashes;
+  return regexes;
 }
-#endif
 
 bool IsSSLCommonNameMismatchHandlingEnabled() {
   return base::FeatureList::IsEnabled(kSSLCommonNameMismatchHandling);
@@ -215,6 +228,10 @@ class ConfigSingleton {
   // use.
   bool IsKnownCaptivePortalCert(const net::SSLInfo& ssl_info);
 #endif
+
+  // Returns true if the cert issuer matches one of our known content filter
+  // providers.
+  bool CertContainsContentFilterString(const net::SSLInfo& ssl_info);
 
   // Testing methods:
   void ResetForTesting();
@@ -254,6 +271,8 @@ class ConfigSingleton {
   // is called.
   std::unique_ptr<std::unordered_set<std::string>> captive_portal_spki_hashes_;
 #endif
+
+  std::unique_ptr<std::vector<std::regex>> content_filter_regexes_;
 };
 
 ConfigSingleton::ConfigSingleton()
@@ -312,7 +331,6 @@ void ConfigSingleton::SetNetworkTimeTrackerForTesting(
   network_time_tracker_ = tracker;
 }
 
-#if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
 void ConfigSingleton::SetErrorAssistantProto(
     std::unique_ptr<chrome_browser_ssl::SSLErrorAssistantConfig> proto) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
@@ -323,9 +341,16 @@ void ConfigSingleton::SetErrorAssistantProto(
     return;
   }
   error_assistant_proto_ = std::move(proto);
+
+  content_filter_regexes_ = LoadContentFilterRegexes(*error_assistant_proto_);
+
+#if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
   captive_portal_spki_hashes_ =
       LoadCaptivePortalCertHashes(*error_assistant_proto_);
+#endif
 }
+
+#if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
 
 bool ConfigSingleton::IsKnownCaptivePortalCert(const net::SSLInfo& ssl_info) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
@@ -348,6 +373,27 @@ bool ConfigSingleton::IsKnownCaptivePortalCert(const net::SSLInfo& ssl_info) {
   return false;
 }
 #endif
+
+bool ConfigSingleton::CertContainsContentFilterString(
+    const net::SSLInfo& ssl_info) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  if (!content_filter_regexes_) {
+    error_assistant_proto_ = ReadErrorAssistantProtoFromResourceBundle();
+    CHECK(error_assistant_proto_);
+    content_filter_regexes_ = LoadContentFilterRegexes(*error_assistant_proto_);
+  }
+
+  // Compares the common name of the issuer of the certificate to our
+  // content filter regexes.
+  const std::string cert_issuer = ssl_info.cert->issuer().common_name;
+  for (const std::regex& regex : *content_filter_regexes_) {
+    if (std::regex_match(cert_issuer, regex)) {
+      RecordUMA(SSLErrorHandler::CONTENT_FILTER_CERT_FOUND);
+      return true;
+    }
+  }
+  return false;
+}
 
 class SSLErrorHandlerDelegateImpl : public SSLErrorHandler::Delegate {
  public:
@@ -381,6 +427,7 @@ class SSLErrorHandlerDelegateImpl : public SSLErrorHandler::Delegate {
   void NavigateToSuggestedURL(const GURL& suggested_url) override;
   bool IsErrorOverridable() const override;
   void ShowCaptivePortalInterstitial(const GURL& landing_url) override;
+  void ShowContentFilterInterstitial() override;
   void ShowSSLInterstitial() override;
   void ShowBadClockInterstitial(const base::Time& now,
                                 ssl_errors::ClockState clock_state) override;
@@ -454,6 +501,20 @@ void SSLErrorHandlerDelegateImpl::ShowCaptivePortalInterstitial(
 #else
   NOTREACHED();
 #endif
+}
+
+void SSLErrorHandlerDelegateImpl::ShowContentFilterInterstitial() {
+  // TODO(sperigo): Update this code to render the content filter blocking
+  // page. For the first content filter interstitial CL, I am not checking
+  // in any of the UI code. Therefore ShowContentFilterInterstitial() currently
+  // renders the generic SSL interstitial.
+  (SSLBlockingPage::Create(
+       web_contents_, cert_error_, ssl_info_, request_url_, options_mask_,
+       base::Time::NowFromSystemTime(), std::move(ssl_cert_reporter_),
+       base::FeatureList::IsEnabled(kSuperfishInterstitial) &&
+           IsSuperfish(ssl_info_.cert),
+       callback_))
+      ->Show();
 }
 
 void SSLErrorHandlerDelegateImpl::ShowSSLInterstitial() {
@@ -585,12 +646,8 @@ void SSLErrorHandler::StartHandlingError() {
     return;
   }
 
-  const net::CertStatus non_name_mismatch_errors =
-      ssl_info_.cert_status ^ net::CERT_STATUS_COMMON_NAME_INVALID;
   const bool only_error_is_name_mismatch =
-      cert_error_ == net::ERR_CERT_COMMON_NAME_INVALID &&
-      (!net::IsCertStatusError(non_name_mismatch_errors) ||
-       net::IsCertStatusMinorError(ssl_info_.cert_status));
+      IsOnlyCertError(net::CERT_STATUS_COMMON_NAME_INVALID);
 
 #if BUILDFLAG(ENABLE_CAPTIVE_PORTAL_DETECTION)
   // Check known captive portal certificate list if the only error is
@@ -606,6 +663,18 @@ void SSLErrorHandler::StartHandlingError() {
     return;
   }
 #endif
+
+  // The content filter interstitial is displayed if and only if:
+  // - the error thrown is not overridable
+  // - the only certificate error is CERT_STATUS_AUTHORITY_INVALID
+  // - the certificate contains a string that indicates it was issued by a
+  //   content filter
+  if (!delegate_->IsErrorOverridable() &&
+      IsOnlyCertError(net::CERT_STATUS_AUTHORITY_INVALID) &&
+      g_config.Pointer()->CertContainsContentFilterString(ssl_info_)) {
+    ShowContentFilterInterstitial();
+    return;
+  }
 
   if (IsSSLCommonNameMismatchHandlingEnabled() &&
       cert_error_ == net::ERR_CERT_COMMON_NAME_INVALID &&
@@ -680,6 +749,15 @@ void SSLErrorHandler::ShowCaptivePortalInterstitial(const GURL& landing_url) {
 #else
   NOTREACHED();
 #endif
+}
+
+void SSLErrorHandler::ShowContentFilterInterstitial() {
+  // Show SSL blocking page. The interstitial owns the blocking page.
+  RecordUMA(SHOW_CONTENT_FILTER_INTERSTITIAL);
+  delegate_->ShowContentFilterInterstitial();
+  // Once an interstitial is displayed, no need to keep the handler around.
+  // This is the equivalent of "delete this".
+  web_contents_->RemoveUserData(UserDataKey());
 }
 
 void SSLErrorHandler::ShowSSLInterstitial() {
@@ -815,4 +893,12 @@ void SSLErrorHandler::HandleCertDateInvalidErrorImpl(
     return;  // |this| is deleted after showing the interstitial.
   }
   ShowSSLInterstitial();
+}
+
+bool SSLErrorHandler::IsOnlyCertError(net::CertStatus cert_error) {
+  const net::CertStatus other_errors = ssl_info_.cert_status ^ cert_error;
+
+  return cert_error_ == net::MapCertStatusToNetError(cert_error) &&
+         (!net::IsCertStatusError(other_errors) ||
+          net::IsCertStatusMinorError(ssl_info_.cert_status));
 }
