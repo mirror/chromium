@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3317da6d_3f368203",
+        "filename": "chrome/browser/ui/ash/palette_delegate_chromeos.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-02T23:13:23Z",
+      "side": 1,
+      "message": "Could this be a OneShotTimer? That would make it a little more obvious that it doesn\u0027t repeat and would get rid of the Reset() below.",
+      "revId": "866ea6d838a6c94b2b2bfb6bbd43515b27f09536",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
