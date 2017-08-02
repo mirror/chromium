@@ -94,6 +94,30 @@
       "revId": "e4b3c4e5daeee5e79c04b981ea8bcb4ac9582040",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b0cdb0c_dab8fa3a",
+        "filename": "cc/trees/layer_tree_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1512,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-08-02T14:53:19Z",
+      "side": 1,
+      "message": "Small addendum; spoke to majidvp and he opinionated that the scroll chain should only have items that are scrollable (and user scrollable) in it. E.g. the viewport case should go through CanConsumeDelta as well.",
+      "parentUuid": "612c809a_006e9a58",
+      "range": {
+        "startLine": 1511,
+        "startChar": 1,
+        "endLine": 1512,
+        "endChar": 42
+      },
+      "revId": "e4b3c4e5daeee5e79c04b981ea8bcb4ac9582040",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
