@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c529a71_676dd48c",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1183785
+      },
+      "writtenOn": "2017-08-02T18:15:29Z",
+      "side": 0,
+      "message": "privacy and settings view controller file not referred.",
+      "revId": "16ec2957886c89f4c764f7062f1febd97ce153c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
