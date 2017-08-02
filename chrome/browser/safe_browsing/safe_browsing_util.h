@@ -18,6 +18,8 @@
 #include "base/strings/string_piece.h"
 #include "base/time/time.h"
 #include "chrome/browser/safe_browsing/chunk_range.h"
+#include "chrome/browser/safe_browsing/download_protection/callback_typedefs.h"
+#include "chrome/browser/safe_browsing/download_protection/download_check_enums.h"
 #include "components/safe_browsing_db/util.h"
 
 namespace safe_browsing {
@@ -84,6 +86,8 @@ struct SBChunkDelete {
   bool is_sub_del;
   std::vector<ChunkRange> chunk_del;
 };
+
+void RecordCountOfWhitelistedDownload(WhitelistType type);
 
 }  // namespace safe_browsing
 
