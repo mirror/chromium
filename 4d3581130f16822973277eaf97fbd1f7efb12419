@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9fe89dd8_868793f9",
+        "filename": "third_party/WebKit/Source/core/editing/InputMethodController.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1180,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-02T02:10:30Z",
+      "side": 1,
+      "message": "Could you move |int flags \u003d ...| to L1185?\nFor reducing extent of |flags|?",
+      "revId": "4d3581130f16822973277eaf97fbd1f7efb12419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc976def_b2b2406d",
+        "filename": "third_party/WebKit/Source/core/editing/InputMethodController.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1181,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-02T02:10:30Z",
+      "side": 1,
+      "message": "nit: s/Element*/const Element* const/",
+      "revId": "4d3581130f16822973277eaf97fbd1f7efb12419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85b61080_56993c94",
+        "filename": "third_party/WebKit/Source/core/editing/InputMethodController.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1183,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-02T02:10:30Z",
+      "side": 1,
+      "message": "nit: s/return kWebTextInputFlagNone;/",
+      "revId": "4d3581130f16822973277eaf97fbd1f7efb12419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
