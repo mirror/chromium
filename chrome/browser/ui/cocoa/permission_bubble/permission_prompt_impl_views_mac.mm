@@ -12,7 +12,7 @@
 namespace {
 
 constexpr base::Feature kCocoaPermissionBubbles = {
-    "CocoaPermissionBubbles", base::FEATURE_DISABLED_BY_DEFAULT};
+    "CocoaPermissionBubbles", base::FEATURE_ENABLED_BY_DEFAULT};
 
 bool UseViewsBubbles() {
   return ui::MaterialDesignController::IsSecondaryUiMaterial() ||
