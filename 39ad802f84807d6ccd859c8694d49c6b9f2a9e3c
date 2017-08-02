@@ -175,6 +175,24 @@
       "revId": "39ad802f84807d6ccd859c8694d49c6b9f2a9e3c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3eb373e_16bc33a0",
+        "filename": "components/ui_devtools/views/ui_devtools_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-08-02T17:50:31Z",
+      "side": 1,
+      "message": "I\u0027m not sure I understand why this is the case. We dispatch the inspectNodeRequested message only in the case of a mouse-press, and dispatch the nodeHighlightRequested message for all other mouse event types. In your test you are synthesizing a mouse move followed by a mouse press, which means that we should be able to assert EXPECT_EQ() in the test with a pre-determined value.\n\nWhen you run your test, how many of each event type is being seen by the FakeFrontendChannel? Do these numbers change based on the order in which you run the test suite / on independent runs of the same test?\n\n(Side note: depending on implementation in EventGenerator, it\u0027s possible that the call to MoveMouseBy() will actually generate more than one ui:: mouse event, e.g., a ET_MOUSE_ENTERED followed by an ET_MOUSE_MOVED. If this is the case then it would be correct to make the expected value for EXPECT_EQ(..., GetNodeHighlightRequestedCount()) be greater than 1. To double-check, it would be a good idea to add logging in UIDevToolsOverlayAgent::OnMouseEvent() during your test run in order to understand which mouse event types are being seen, and if they trigger the appropriate calls to frontend() as you\u0027d expect.)",
+      "parentUuid": "5c49a560_191d66f9",
+      "revId": "39ad802f84807d6ccd859c8694d49c6b9f2a9e3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
