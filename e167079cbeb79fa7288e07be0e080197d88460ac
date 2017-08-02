@@ -16,6 +16,24 @@
       "revId": "e167079cbeb79fa7288e07be0e080197d88460ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53848048_1f6ff82a",
+        "filename": "chrome/test/data/webui/extensions/extension_detail_view_test.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1214259
+      },
+      "writtenOn": "2017-08-02T21:15:38Z",
+      "side": 1,
+      "message": "Currently the tests are written in a way that uses other custom elements on the page for interactions and validations of states, so we can\u0027t simply systematically move the importHtml to browserPreload. The tests would have to be adjusted to be more \"unit\"-y, so I think we could tackle that in another CL in the future as an improvement.",
+      "parentUuid": "8f5b204c_a6c65ad9",
+      "revId": "e167079cbeb79fa7288e07be0e080197d88460ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
