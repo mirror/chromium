@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98e02c2b_a50eec19",
+        "filename": "services/viz/compositing/privileged/interfaces/frame_sink_manager.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-08-02T21:41:13Z",
+      "side": 1,
+      "message": "Is this big enough given the uint32_ts above?",
+      "range": {
+        "startLine": 116,
+        "startChar": 42,
+        "endLine": 116,
+        "endChar": 47
+      },
+      "revId": "a0c1ac06aa78e55c7625c51afd3697d5c14f08e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
