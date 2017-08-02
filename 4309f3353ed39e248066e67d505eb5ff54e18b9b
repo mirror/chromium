@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bf9086a0_0d478c2f",
+        "filename": "net/cert/internal/certificate_policies.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-08-02T00:13:04Z",
+      "side": 1,
+      "message": "Done\n\n(sorry about that; I split this off from a test CL and missed that).",
+      "parentUuid": "37c17d9f_a0eba14d",
+      "revId": "4309f3353ed39e248066e67d505eb5ff54e18b9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f68bafb8_3ff8550a",
         "filename": "net/cert/internal/name_constraints.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "4309f3353ed39e248066e67d505eb5ff54e18b9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "007518c9_eaf5a3ab",
+        "filename": "net/cert/internal/name_constraints.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-08-02T00:13:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f68bafb8_3ff8550a",
+      "revId": "4309f3353ed39e248066e67d505eb5ff54e18b9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +118,30 @@
     },
     {
       "key": {
+        "uuid": "354aec69_e12c6204",
+        "filename": "net/cert/internal/verify_name_match.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-08-02T00:13:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "444b5084_82b10ddd",
+      "range": {
+        "startLine": 163,
+        "startChar": 27,
+        "endLine": 163,
+        "endChar": 54
+      },
+      "revId": "4309f3353ed39e248066e67d505eb5ff54e18b9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8badbd15_4bd0d7cc",
         "filename": "net/cert/x509_util.cc",
         "patchSetId": 2
@@ -93,6 +153,24 @@
       "writtenOn": "2017-08-01T22:40:54Z",
       "side": 1,
       "message": "hmmm, off topic for this CL, but should this actually return false if GeneralNames::Create returns nullptr?",
+      "revId": "4309f3353ed39e248066e67d505eb5ff54e18b9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c06648e_1836241e",
+        "filename": "net/cert/x509_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-08-02T00:13:04Z",
+      "side": 1,
+      "message": "Good question.\n\nNot sure what author\u0027s intent was.",
+      "parentUuid": "8badbd15_4bd0d7cc",
       "revId": "4309f3353ed39e248066e67d505eb5ff54e18b9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -113,6 +191,24 @@
       "revId": "4309f3353ed39e248066e67d505eb5ff54e18b9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b6ea721_e234732e",
+        "filename": "net/data/parse_certificate_unittest/rebase-errors.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-08-02T00:13:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47c41155_826dc3be",
+      "revId": "4309f3353ed39e248066e67d505eb5ff54e18b9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
