@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5031d6e4_07cd9f04",
+        "filename": "third_party/WebKit/Source/core/html/canvas/CanvasRenderingContext.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-08-02T19:49:51Z",
+      "side": 1,
+      "message": "What is going on here? ColorCanvasExtensionsEnabled is the right flag to look at for enabling color space support in canvases.  TrueColorRendering is something else, it has to do with blending in linear space.  Same comment for other places in the code where you switched flags.",
+      "range": {
+        "startLine": 42,
+        "startChar": 25,
+        "endLine": 42,
+        "endChar": 43
+      },
+      "revId": "285da8b960c66d1284bf95487f847b504c0afb66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
