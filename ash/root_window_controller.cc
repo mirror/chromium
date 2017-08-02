@@ -506,6 +506,7 @@ void RootWindowController::OnWallpaperAnimationFinished(views::Widget* widget) {
 }
 
 void RootWindowController::Shutdown() {
+  Shell::Get()->window_tree_host_manager()->RemoveObserver(this);
   Shell::Get()->RemoveShellObserver(this);
 
   touch_exploration_manager_.reset();
@@ -680,6 +681,14 @@ void RootWindowController::UpdateAfterLoginStatusChange(LoginStatus status) {
     status_area_widget->UpdateAfterLoginStatusChange(status);
 }
 
+void RootWindowController::OnWindowTreeHostsSwappedDisplays(
+    AshWindowTreeHost* host1,
+    AshWindowTreeHost* host2) {
+  // Display ID has changed, so request shelf initialization to fetch the
+  // shelf alignment and auto-hide state from prefs.
+  shelf_->NotifyShelfInitialized();
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // RootWindowController, private:
 
@@ -726,6 +735,7 @@ void RootWindowController::Init(RootWindowType root_window_type) {
   }
 
   shell->AddShellObserver(this);
+  shell->window_tree_host_manager()->AddObserver(this);
 
   root_window_layout_manager_->OnWindowResized();
   if (root_window_type == RootWindowType::PRIMARY) {

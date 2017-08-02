@@ -10,6 +10,7 @@
 #include "ash/public/cpp/shell_window_ids.h"
 #include "ash/session/session_controller.h"
 #include "ash/session/test_session_controller_client.h"
+#include "ash/shelf/shelf_controller.h"
 #include "ash/shell.h"
 #include "ash/test/ash_test_base.h"
 #include "ash/wm/system_modal_container_layout_manager.h"
@@ -17,6 +18,8 @@
 #include "ash/wm/window_state.h"
 #include "ash/wm/window_util.h"
 #include "base/command_line.h"
+#include "base/stl_util.h"
+#include "mojo/public/cpp/bindings/associated_binding.h"
 #include "ui/aura/client/focus_change_observer.h"
 #include "ui/aura/client/focus_client.h"
 #include "ui/aura/client/window_parenting_client.h"
@@ -554,6 +557,56 @@ TEST_F(RootWindowControllerTest, MultipleDisplaysGetWindowForFullscreenMode) {
   EXPECT_EQ(w2->GetNativeWindow(),
             controllers[0]->GetWindowForFullscreenMode());
   EXPECT_EQ(NULL, controllers[1]->GetWindowForFullscreenMode());
+}
+
+namespace {
+
+class TestShelfObserver : public mojom::ShelfObserver {
+ public:
+  TestShelfObserver() = default;
+  ~TestShelfObserver() override = default;
+
+  // mojom::ShelfObserver:
+  void OnShelfInitialized(int64_t display_id) override {
+    shelf_initialized_display_ids_.push_back(display_id);
+  }
+  void OnAlignmentChanged(ShelfAlignment alignment,
+                          int64_t display_id) override {}
+  void OnAutoHideBehaviorChanged(ShelfAutoHideBehavior auto_hide,
+                                 int64_t display_id) override {}
+  void OnShelfItemAdded(int32_t, const ShelfItem&) override {}
+  void OnShelfItemRemoved(const ShelfID&) override {}
+  void OnShelfItemMoved(const ShelfID&, int32_t) override {}
+  void OnShelfItemUpdated(const ShelfItem&) override {}
+  void OnShelfItemDelegateChanged(const ShelfID&,
+                                  mojom::ShelfItemDelegatePtr) override {}
+
+  std::vector<int64_t> shelf_initialized_display_ids_;
+};
+
+}  // namespace
+
+// Verifies that shelves are re-initialized after display swap, which will
+// reload their alignment prefs. http://crbug.com/748291
+TEST_F(RootWindowControllerTest, ShelfInitializedOnDisplaySwap) {
+  UpdateDisplay("1024x768,800x600");
+
+  ShelfController* controller = Shell::Get()->shelf_controller();
+  TestShelfObserver observer;
+  mojom::ShelfObserverAssociatedPtr observer_ptr;
+  mojo::AssociatedBinding<mojom::ShelfObserver> binding(
+      &observer, mojo::MakeIsolatedRequest(&observer_ptr));
+  controller->AddObserver(observer_ptr.PassInterface());
+  base::RunLoop().RunUntilIdle();
+
+  // After swapping displays the shelf on each display is re-initialized.
+  SwapPrimaryDisplay();
+  base::RunLoop().RunUntilIdle();
+  ASSERT_EQ(2u, observer.shelf_initialized_display_ids_.size());
+  EXPECT_TRUE(base::ContainsValue(observer.shelf_initialized_display_ids_,
+                                  GetPrimaryDisplay().id()));
+  EXPECT_TRUE(base::ContainsValue(observer.shelf_initialized_display_ids_,
+                                  GetSecondaryDisplay().id()));
 }
 
 // Test that ForWindow() works with multiple displays and child widgets.
