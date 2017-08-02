@@ -16,6 +16,24 @@
       "revId": "7a8b6562db74095518b9cb7f16058e44aa3b5276",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a64d4e6_33f80d6f",
+        "filename": "content/child/loader/cors_url_loader.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-08-02T12:10:05Z",
+      "side": 1,
+      "message": "Updated in https://chromium-review.googlesource.com/c/558226",
+      "parentUuid": "f496e50d_9a222a64",
+      "revId": "7a8b6562db74095518b9cb7f16058e44aa3b5276",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
