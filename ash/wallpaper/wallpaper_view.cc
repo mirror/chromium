@@ -4,6 +4,7 @@
 
 #include "ash/wallpaper/wallpaper_view.h"
 
+#include "ash/login/ui/login_constants.h"
 #include "ash/root_window_controller.h"
 #include "ash/session/session_controller.h"
 #include "ash/shell.h"
@@ -18,6 +19,8 @@
 #include "ui/display/manager/managed_display_info.h"
 #include "ui/display/screen.h"
 #include "ui/gfx/canvas.h"
+#include "ui/gfx/color_analysis.h"
+#include "ui/gfx/color_utils.h"
 #include "ui/gfx/geometry/safe_integer_conversions.h"
 #include "ui/gfx/geometry/size_conversions.h"
 #include "ui/gfx/transform.h"
@@ -70,6 +73,23 @@ class LayerControlView : public views::View {
  private:
   DISALLOW_COPY_AND_ASSIGN(LayerControlView);
 };
+
+// Returns the color of the overlay to be applied on top of the wallpaper.
+// The overlay is needed by login, lock, OOBE and add user screens.
+SkColor GetWallpaperOverlay() {
+  SkColor overlay_color =
+      Shell::Get()->wallpaper_controller()->GetProminentColor(
+          color_utils::ColorProfile(color_utils::LumaRange::DARK,
+                                    color_utils::SaturationRange::MUTED));
+  if (overlay_color == WallpaperController::kInvalidColor)
+    overlay_color = login_constants::kDefaultBaseColor;
+
+  overlay_color = color_utils::GetResultingPaintColor(
+      SkColorSetA(login_constants::kDefaultBaseColor,
+                  login_constants::kTranslucentColorDarkenAlpha),
+      SkColorSetA(overlay_color, 0xFF));
+  return SkColorSetA(overlay_color, login_constants::kTranslucentAlpha);
+}
 
 }  // namespace
 
@@ -181,6 +201,12 @@ void WallpaperView::OnPaint(gfx::Canvas* canvas) {
                          (height() - wallpaper_rect.height()) / 2,
                          wallpaper_rect.width(), wallpaper_rect.height(), true);
   }
+  session_manager::SessionState state =
+      Shell::Get()->session_controller()->GetSessionState();
+  if (state != session_manager::SessionState::ACTIVE &&
+      state != session_manager::SessionState::LOGGED_IN_NOT_ACTIVE) {
+    canvas->DrawColor(GetWallpaperOverlay());
+  }
 }
 
 bool WallpaperView::OnMousePressed(const ui::MouseEvent& event) {
@@ -235,6 +261,13 @@ views::Widget* CreateWallpaper(aura::Window* root_window, int container_id) {
 
   aura::Window* container = root_window->GetChildById(container_id);
   wallpaper_widget->SetBounds(container->bounds());
+  session_manager::SessionState state =
+      Shell::Get()->session_controller()->GetSessionState();
+  if (state != session_manager::SessionState::ACTIVE &&
+      state != session_manager::SessionState::LOGGED_IN_NOT_ACTIVE) {
+    wallpaper_widget->GetLayer()->SetLayerBlur(login_constants::kBlurSigma);
+  }
+
   return wallpaper_widget;
 }
 
