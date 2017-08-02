@@ -166,6 +166,22 @@ void SafeBrowsingUIHandler::GetDatabaseManagerInfo(
   ResolveJavascriptCallback(base::Value(callback_id), database_manager_info);
 }
 
+void SafeBrowsingUIHandler::GetFullHashCacheInfo(const base::ListValue* args) {
+  base::ListValue full_hash_cache_info;
+
+#if SAFE_BROWSING_DB_LOCAL
+  const V4LocalDatabaseManager* local_database_manager_instance =
+      V4LocalDatabaseManager::current_local_database_manager();
+  if (local_database_manager_instance) {
+    FullHashCacheInfo full_hash_cache_info_proto;
+  }
+#endif
+  AllowJavascript();
+  std::string callback_id;
+  args->GetString(0, &callback_id);
+  ResolveJavascriptCallback(base::Value(callback_id), full_hash_cache_info);
+}
+
 void SafeBrowsingUIHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback(
       "getExperiments", base::Bind(&SafeBrowsingUIHandler::GetExperiments,
@@ -176,6 +192,10 @@ void SafeBrowsingUIHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback(
       "getDatabaseManagerInfo",
       base::Bind(&SafeBrowsingUIHandler::GetDatabaseManagerInfo,
+                 base::Unretained(this)));
+  web_ui()->RegisterMessageCallback(
+      "getFullHashCacheInfo",
+      base::Bind(&SafeBrowsingUIHandler::GetFullHashCacheInfo,
                  base::Unretained(this)));
 }
 

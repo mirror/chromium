@@ -25,6 +25,7 @@ class SafeBrowsingUIHandler : public content::WebUIMessageHandler {
   void GetExperiments(const base::ListValue* args);
   void GetPrefs(const base::ListValue* args);
   void GetDatabaseManagerInfo(const base::ListValue* args);
+  void GetFullHashCacheInfo(const base::ListValue* args);
 
   void RegisterMessages() override;
 
