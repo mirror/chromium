@@ -34,6 +34,7 @@
 #include "ui/base/x/x11_util.h"
 #include "ui/base/x/x11_util_internal.h"
 #include "ui/base/x/x11_window_event_manager.h"
+#include "ui/compositor/compositor_constants.h"
 #include "ui/display/screen.h"
 #include "ui/events/devices/x11/device_data_manager_x11.h"
 #include "ui/events/devices/x11/device_list_cache_x11.h"
@@ -1476,6 +1477,12 @@ void DesktopWindowTreeHostX11::InitX11Window(
     // fullscreen on the window when it matches the desktop size.
     ui::SetHideTitlebarWhenMaximizedProperty(xwindow_,
                                              ui::HIDE_TITLEBAR_WHEN_MAXIMIZED);
+  }
+
+  if (params.type == Widget::InitParams::TYPE_TOOLTIP) {
+    // Disable compositing on tooltips as a workaround for
+    // https://crbug.com/442111.
+    ui::SetIntProperty(xwindow_, kForceSoftwareCompositor, "INTEGER", 1);
   }
 
   // If we have a parent, record the parent/child relationship. We use this

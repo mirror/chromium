@@ -28,7 +28,7 @@ void ImageTransportFactory::Initialize() {
   DCHECK(!g_factory || g_initialized_for_unit_tests);
   if (g_initialized_for_unit_tests)
     return;
-  SetFactory(new GpuProcessTransportFactory);
+  SetFactory(new GpuProcessTransportFactory(false));
 }
 
 void ImageTransportFactory::InitializeForUnitTests(

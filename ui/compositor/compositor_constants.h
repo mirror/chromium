@@ -13,6 +13,13 @@
 // mouse, rather than the hardware surface we've painted. As a result, for
 // small or infrequently painting windows, we force back to the software
 // compositor to avoid this bug. See http://crbug.com/333380.
+//
+// On Linux, this flag is used to disable compositing on tooltips as a
+// workaround for https://crbug.com/442111.
+#if defined(OS_WIN)
 const wchar_t kForceSoftwareCompositor[] = L"Chrome.ForceSoftwareCompositor";
+#elif defined(USE_X11)
+const char kForceSoftwareCompositor[] = "Chrome.ForceSoftwareCompositor";
+#endif
 
 #endif  // UI_COMPOSITOR_COMPOSITOR_CONSTANTS_H_

@@ -45,7 +45,7 @@ class GpuProcessTransportFactory : public ui::ContextFactory,
                                    public ui::ContextFactoryPrivate,
                                    public ImageTransportFactory {
  public:
-  GpuProcessTransportFactory();
+  explicit GpuProcessTransportFactory(bool force_software_compositor);
 
   ~GpuProcessTransportFactory() override;
 
@@ -109,6 +109,8 @@ class GpuProcessTransportFactory : public ui::ContextFactory,
 
   scoped_refptr<cc::VulkanInProcessContextProvider>
   SharedVulkanContextProvider();
+
+  const bool force_software_compositor_;
 
   // Manages creation and hierarchy of frame sinks.
   std::unique_ptr<viz::FrameSinkManagerHost> frame_sink_manager_host_;
