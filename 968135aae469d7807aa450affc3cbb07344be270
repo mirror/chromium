@@ -435,6 +435,24 @@
       "revId": "968135aae469d7807aa450affc3cbb07344be270",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "50f4d0ce_48f0df91",
+        "filename": "base/values.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-08-02T20:21:07Z",
+      "side": 1,
+      "message": "I\u0027m undecided.\n\nOriginally I didn\u0027t want raw pointers floating around, especially considering the history with this class and poor pointer-based interfaces. But it does seem like the main use-case for the iterator is to get the pointer, especially considering the number of legacy use-cases.\n\nAnd I suppose one can always use DictItems() if you need to do more complex operations.\n\nI\u0027m fine changing this if you want and have the energy to do so :)",
+      "parentUuid": "ecab12f4_82bc2cc8",
+      "revId": "968135aae469d7807aa450affc3cbb07344be270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
