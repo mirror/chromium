@@ -1594,7 +1594,7 @@ static void testEnumAttributeAttributeSetter(v8::Local<v8::Value> v8Value, const
       "EnumValue3",
   };
   if (!IsValidEnum(cppValue, validValues, WTF_ARRAY_LENGTH(validValues), "TestEnum", dummyExceptionState)) {
-    CurrentExecutionContext(isolate)->AddConsoleMessage(ConsoleMessage::Create(kJSMessageSource, kWarningMessageLevel, dummyExceptionState.Message()));
+    ExecutionContext::ForFunctionObject(info)->AddConsoleMessage(ConsoleMessage::Create(kJSMessageSource, kWarningMessageLevel, dummyExceptionState.Message()));
     return;
   }
 
@@ -1635,7 +1635,7 @@ static void testEnumOrNullAttributeAttributeSetter(v8::Local<v8::Value> v8Value,
       "EnumValue3",
   };
   if (!IsValidEnum(cppValue, validValues, WTF_ARRAY_LENGTH(validValues), "TestEnum", dummyExceptionState)) {
-    CurrentExecutionContext(isolate)->AddConsoleMessage(ConsoleMessage::Create(kJSMessageSource, kWarningMessageLevel, dummyExceptionState.Message()));
+    ExecutionContext::ForFunctionObject(info)->AddConsoleMessage(ConsoleMessage::Create(kJSMessageSource, kWarningMessageLevel, dummyExceptionState.Message()));
     return;
   }
 
@@ -2157,7 +2157,7 @@ static void callWithExecutionContextAnyAttributeAttributeGetter(const v8::Functi
 
   TestObject* impl = V8TestObject::toImpl(holder);
 
-  ExecutionContext* executionContext = CurrentExecutionContext(info.GetIsolate());
+  ExecutionContext* executionContext = ExecutionContext::ForReceiverObject(info);
 
   V8SetReturnValue(info, impl->callWithExecutionContextAnyAttribute(executionContext).V8Value());
 }
@@ -2174,7 +2174,7 @@ static void callWithExecutionContextAnyAttributeAttributeSetter(v8::Local<v8::Va
   // Prepare the value to be set.
   ScriptValue cppValue = ScriptValue(ScriptState::Current(info.GetIsolate()), v8Value);
 
-  ExecutionContext* executionContext = CurrentExecutionContext(isolate);
+  ExecutionContext* executionContext = ExecutionContext::ForReceiverObject(info);
 
   impl->setCallWithExecutionContextAnyAttribute(executionContext, cppValue);
 }
@@ -2211,7 +2211,8 @@ static void callWithExecutionContextAndScriptStateAnyAttributeAttributeGetter(co
 
   TestObject* impl = V8TestObject::toImpl(holder);
 
-  ExecutionContext* executionContext = CurrentExecutionContext(info.GetIsolate());
+  ExecutionContext* executionContext = ExecutionContext::ForReceiverObject(info);
+
   ScriptState* scriptState = ScriptState::ForReceiverObject(info);
 
   V8SetReturnValue(info, impl->callWithExecutionContextAndScriptStateAnyAttribute(scriptState, executionContext).V8Value());
@@ -2229,7 +2230,7 @@ static void callWithExecutionContextAndScriptStateAnyAttributeAttributeSetter(v8
   // Prepare the value to be set.
   ScriptValue cppValue = ScriptValue(ScriptState::Current(info.GetIsolate()), v8Value);
 
-  ExecutionContext* executionContext = CurrentExecutionContext(isolate);
+  ExecutionContext* executionContext = ExecutionContext::ForReceiverObject(info);
 
   ScriptState* scriptState = ScriptState::ForReceiverObject(info);
 
@@ -3934,7 +3935,7 @@ static void setterCallWithExecutionContextStringAttributeAttributeSetter(v8::Loc
   if (!cppValue.Prepare())
     return;
 
-  ExecutionContext* executionContext = CurrentExecutionContext(isolate);
+  ExecutionContext* executionContext = ExecutionContext::ForReceiverObject(info);
 
   impl->setSetterCallWithExecutionContextStringAttribute(executionContext, cppValue);
 }
@@ -8038,7 +8039,7 @@ static void activityLoggingAccessForAllWorldsMethodMethod(const v8::FunctionCall
 static void callWithExecutionContextVoidMethodMethod(const v8::FunctionCallbackInfo<v8::Value>& info) {
   TestObject* impl = V8TestObject::toImpl(info.Holder());
 
-  ExecutionContext* executionContext = CurrentExecutionContext(info.GetIsolate());
+  ExecutionContext* executionContext = ExecutionContext::ForReceiverObject(info);
   impl->callWithExecutionContextVoidMethod(executionContext);
 }
 
@@ -8064,7 +8065,7 @@ static void callWithScriptStateExecutionContextVoidMethodMethod(const v8::Functi
 
   ScriptState* scriptState = ScriptState::ForReceiverObject(info);
 
-  ExecutionContext* executionContext = CurrentExecutionContext(info.GetIsolate());
+  ExecutionContext* executionContext = ExecutionContext::ForReceiverObject(info);
   impl->callWithScriptStateExecutionContextVoidMethod(scriptState, executionContext);
 }
 
@@ -8849,7 +8850,7 @@ static void callWithExecutionContextRaisesExceptionVoidMethodLongArgMethod(const
   if (exceptionState.HadException())
     return;
 
-  ExecutionContext* executionContext = CurrentExecutionContext(info.GetIsolate());
+  ExecutionContext* executionContext = ExecutionContext::ForReceiverObject(info);
   impl->callWithExecutionContextRaisesExceptionVoidMethodLongArg(executionContext, longArg, exceptionState);
   if (exceptionState.HadException()) {
     return;
