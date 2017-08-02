@@ -21,6 +21,7 @@ const char kDeviceID1[] = "fake_device_1";
 const char kDeviceID2[] = "fake_device_2";
 const char kDeviceID3[] = "fake_device_3";
 const char kDeviceID4[] = "fake_device_4";
+const char kDeviceID5[] = "fake_device_5";
 
 void CheckTrackAdapterSettingsEqualsResolution(
     const VideoCaptureSettings& settings) {
@@ -126,6 +127,21 @@ class MediaStreamConstraintsUtilVideoDeviceTest : public testing::Test {
                                                  media::PIXEL_FORMAT_Y16)};
     capabilities_.device_capabilities.push_back(std::move(device));
 
+    // A device that reports invalid frame rates. These devices exist and should
+    // be supported if no constraints are placed on the frame rate.
+    device = ::mojom::VideoInputDeviceCapabilities::New();
+    device->device_id = kDeviceID5;
+    device->facing_mode = ::mojom::FacingMode::NONE;
+    device->formats = {
+        media::VideoCaptureFormat(
+            gfx::Size(MediaStreamVideoSource::kDefaultWidth,
+                      MediaStreamVideoSource::kDefaultHeight),
+            0.0f, media::PIXEL_FORMAT_I420),
+        media::VideoCaptureFormat(gfx::Size(500, 500), 0.1f,
+                                  media::PIXEL_FORMAT_I420),
+    };
+    capabilities_.device_capabilities.push_back(std::move(device));
+
     capabilities_.power_line_capabilities = {
         media::PowerLineFrequency::FREQUENCY_DEFAULT,
         media::PowerLineFrequency::FREQUENCY_50HZ,
@@ -140,6 +156,7 @@ class MediaStreamConstraintsUtilVideoDeviceTest : public testing::Test {
     default_device_ = capabilities_.device_capabilities[0].get();
     low_res_device_ = capabilities_.device_capabilities[1].get();
     high_res_device_ = capabilities_.device_capabilities[2].get();
+    invalid_frame_rate_device_ = capabilities_.device_capabilities[4].get();
     default_closest_format_ = &default_device_->formats[1];
     low_res_closest_format_ = &low_res_device_->formats[2];
     high_res_closest_format_ = &high_res_device_->formats[2];
@@ -157,6 +174,7 @@ class MediaStreamConstraintsUtilVideoDeviceTest : public testing::Test {
   const mojom::VideoInputDeviceCapabilities* default_device_;
   const mojom::VideoInputDeviceCapabilities* low_res_device_;
   const mojom::VideoInputDeviceCapabilities* high_res_device_;
+  const mojom::VideoInputDeviceCapabilities* invalid_frame_rate_device_;
   // Closest formats to the default settings.
   const media::VideoCaptureFormat* default_closest_format_;
   const media::VideoCaptureFormat* low_res_closest_format_;
@@ -2150,6 +2168,33 @@ TEST_F(MediaStreamConstraintsUtilVideoDeviceTest, NoDevicesWithConstraints) {
       capabilities, constraint_factory_.CreateWebMediaConstraints());
   EXPECT_FALSE(result.HasValue());
   EXPECT_TRUE(std::string(result.failed_constraint_name()).empty());
+}
+
+// This test verifies that having a device that reports a frame rate outside
+// the valid range works as long as no frame-rate constraints are used.
+TEST_F(MediaStreamConstraintsUtilVideoDeviceTest, InvalidFrameRateDevice) {
+  constraint_factory_.Reset();
+  constraint_factory_.basic().device_id.SetExact(
+      blink::WebString::FromASCII(invalid_frame_rate_device_->device_id));
+  auto result = SelectSettings();
+  EXPECT_TRUE(result.HasValue());
+  EXPECT_EQ(invalid_frame_rate_device_->device_id, result.device_id());
+  EXPECT_EQ(invalid_frame_rate_device_->formats[0].frame_rate,
+            result.FrameRate());
+  EXPECT_LT(result.FrameRate(), 1.0);
+  EXPECT_FALSE(result.min_frame_rate().has_value());
+  EXPECT_FALSE(result.max_frame_rate().has_value());
+
+  // Select the second format with invalid frame rate.
+  constraint_factory_.basic().width.SetExact(500);
+  result = SelectSettings();
+  EXPECT_TRUE(result.HasValue());
+  EXPECT_EQ(invalid_frame_rate_device_->device_id, result.device_id());
+  EXPECT_EQ(invalid_frame_rate_device_->formats[1].frame_rate,
+            result.FrameRate());
+  EXPECT_LT(result.FrameRate(), 1.0);
+  EXPECT_FALSE(result.min_frame_rate().has_value());
+  EXPECT_FALSE(result.max_frame_rate().has_value());
 }
 
 }  // namespace content

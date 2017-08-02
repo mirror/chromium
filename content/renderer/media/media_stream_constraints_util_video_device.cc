@@ -32,6 +32,9 @@ const int kDefaultResolutionArea = MediaStreamVideoSource::kDefaultWidth *
 // The minimum aspect ratio to be supported by sources.
 const double kMinSourceAspectRatio = 0.05;
 
+// The minimum frame rate that can be specified by constraints.
+const double kMinConstraintFrameRate = 1.0;
+
 // VideoKind enum values. See https://w3c.github.io/mediacapture-depth.
 const char kVideoKindColor[] = "color";
 const char kVideoKindDepth[] = "depth";
@@ -117,8 +120,7 @@ class ConstrainedFormat {
                                 1,
                                 format.frame_size.width(),
                                 0.0,
-                                HUGE_VAL),
-        constrained_frame_rate_(1, format.frame_rate) {}
+                                HUGE_VAL) {}
 
   long native_height() const { return native_height_; }
   long native_width() const { return native_width_; }
@@ -140,8 +142,12 @@ class ConstrainedFormat {
   double MaxAspectRatio() const {
     return constrained_resolution_.max_aspect_ratio();
   }
-  double MinFrameRate() const { return constrained_frame_rate_.Min(); }
-  double MaxFrameRate() const { return constrained_frame_rate_.Max(); }
+  base::Optional<double> MinFrameRate() const {
+    return constrained_frame_rate_.Min();
+  }
+  base::Optional<double> MaxFrameRate() const {
+    return constrained_frame_rate_.Max();
+  }
 
   // Returns true if the application of |constraint_set| is successful and
   // results in a nonempty set. Returns true otherwise.
@@ -150,9 +156,14 @@ class ConstrainedFormat {
     auto resolution_intersection = constrained_resolution_.Intersection(
         ResolutionSet::FromConstraintSet(constraint_set));
     auto frame_rate_intersection = constrained_frame_rate_.Intersection(
-        NumericRangeSet<double>::FromConstraint(constraint_set.frame_rate));
-    if (resolution_intersection.IsEmpty() || frame_rate_intersection.IsEmpty())
+        NumericRangeSet<double>::FromConstraint(
+            constraint_set.frame_rate, kMinConstraintFrameRate, HUGE_VAL));
+    if (resolution_intersection.IsEmpty() ||
+        frame_rate_intersection.IsEmpty() ||
+        (frame_rate_intersection.Min().has_value() &&
+         *frame_rate_intersection.Min() > native_frame_rate_)) {
       return false;
+    }
 
     constrained_resolution_ = resolution_intersection;
     constrained_frame_rate_ = frame_rate_intersection;
@@ -300,14 +311,23 @@ double FrameRateConstraintSourceDistance(
   bool constraint_has_max = ConstraintHasMax(constraint);
   double constraint_max = constraint_has_max ? ConstraintMax(constraint) : -1.0;
 
-  if ((constraint_has_max &&
-       constrained_format.MinFrameRate() >
-           constraint_max + blink::DoubleConstraint::kConstraintEpsilon) ||
-      (constraint_has_min &&
-       constrained_format.MaxFrameRate() <
-           constraint_min - blink::DoubleConstraint::kConstraintEpsilon) ||
-      (constraint_has_min && constraint_has_max &&
-       constraint_min > constraint_max)) {
+  bool constraint_min_out_of_range =
+      constraint_has_min &&
+      ((constraint_min > constrained_format.native_frame_rate()) ||
+       (constrained_format.MaxFrameRate().has_value() &&
+        constraint_min > *constrained_format.MaxFrameRate() +
+                             blink::DoubleConstraint::kConstraintEpsilon));
+  bool constraint_max_out_of_range =
+      constraint_has_max &&
+      ((constraint_max < kMinConstraintFrameRate) ||
+       (constrained_format.MinFrameRate().has_value() &&
+        constraint_max < *constrained_format.MinFrameRate() -
+                             blink::DoubleConstraint::kConstraintEpsilon));
+  bool constraint_self_contradicts = constraint_has_min && constraint_has_max &&
+                                     constraint_min > constraint_max;
+
+  if (constraint_max_out_of_range || constraint_min_out_of_range ||
+      constraint_self_contradicts) {
     if (failed_constraint_name)
       *failed_constraint_name = constraint.GetName();
     return HUGE_VAL;
@@ -315,9 +335,10 @@ double FrameRateConstraintSourceDistance(
 
   // Compute the cost using the native rate.
   if (constraint_has_max &&
-      constrained_format.native_frame_rate() > constraint_max)
+      constrained_format.native_frame_rate() > constraint_max) {
     return NumericConstraintFitnessDistance(
         constrained_format.native_frame_rate(), constraint_max);
+  }
 
   return 0.0;
 }
@@ -562,11 +583,14 @@ double AspectRatioConstraintFitnessDistance(
 // frameRate constraint.
 // Based on https://w3c.github.io/mediacapture-main/#dfn-fitness-distance.
 double FrameRateConstraintFitnessDistance(
-    double value,
+    double native_frame_rate,
+    base::Optional<double> max_frame_rate,
     const blink::DoubleConstraint& constraint) {
   if (!constraint.HasIdeal())
     return 0.0;
 
+  double value =
+      max_frame_rate.has_value() ? *max_frame_rate : native_frame_rate;
   // Source frame rates greater than ideal support the ideal value using
   // frame-rate adjustment.
   if (value >=
@@ -653,7 +677,8 @@ double CandidateFitnessDistance(
   fitness += ResolutionConstraintFitnessDistance(constrained_format.MaxWidth(),
                                                  constraint_set.width);
   fitness += FrameRateConstraintFitnessDistance(
-      constrained_format.MaxFrameRate(), constraint_set.frame_rate);
+      constrained_format.native_frame_rate(), constrained_format.MaxFrameRate(),
+      constraint_set.frame_rate);
 
   return fitness;
 }
