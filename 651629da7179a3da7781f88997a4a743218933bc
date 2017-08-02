@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a8127361_8f30ed2b",
+        "filename": "base/run_loop.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-02T13:45:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "630f6ca4_dc1b8d66",
+      "revId": "651629da7179a3da7781f88997a4a743218933bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc39db8b_c215778c",
         "filename": "base/run_loop.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "651629da7179a3da7781f88997a4a743218933bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab60b4a7_1a58fdfc",
+        "filename": "base/run_loop.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-02T13:45:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc39db8b_c215778c",
+      "revId": "651629da7179a3da7781f88997a4a743218933bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "930dc215_372bba3b",
+        "filename": "base/run_loop.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-02T13:45:05Z",
+      "side": 1,
+      "message": "Clarified as \"main RunLoop\"",
+      "parentUuid": "d795f922_8c96ecb9",
+      "revId": "651629da7179a3da7781f88997a4a743218933bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6bd40c74_427dc446",
         "filename": "base/run_loop.h",
         "patchSetId": 2
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "4f086d73_1cf2197e",
+        "filename": "base/run_loop.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-02T13:45:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6bd40c74_427dc446",
+      "revId": "651629da7179a3da7781f88997a4a743218933bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2743e1a_ddf1fa14",
         "filename": "base/run_loop.h",
         "patchSetId": 2
@@ -84,6 +156,24 @@
       "revId": "651629da7179a3da7781f88997a4a743218933bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c9e5f90_ff894ec0",
+        "filename": "base/run_loop.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-02T13:45:05Z",
+      "side": 1,
+      "message": "Right, I tried that but then the constructor logic was complex enough that I didn\u0027t want to duplicate and to have delegated constructors I needed to have a second enum value which essentially resulted in the same thing.",
+      "parentUuid": "f2743e1a_ddf1fa14",
+      "revId": "651629da7179a3da7781f88997a4a743218933bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
