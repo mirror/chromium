@@ -8,7 +8,6 @@
 #include "chrome/browser/feature_engagement/tracker_factory.h"
 #include "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker.h"
 #include "chrome/browser/profiles/profile.h"
-#include "chrome/common/pref_names.h"
 #include "components/feature_engagement/public/event_constants.h"
 #include "components/feature_engagement/public/feature_constants.h"
 #include "components/feature_engagement/public/tracker.h"
@@ -35,7 +34,6 @@ NewTabTracker::~NewTabTracker() = default;
 // static
 void NewTabTracker::RegisterProfilePrefs(
     user_prefs::PrefRegistrySyncable* registry) {
-  registry->RegisterBooleanPref(prefs::kNewTabInProductHelp, false);
   registry->RegisterIntegerPref(prefs::kSessionTimeTotal, 0);
 }
 
@@ -78,7 +76,6 @@ bool NewTabTracker::HasEnoughSessionTimeElapsed() {
 }
 
 void NewTabTracker::ShowPromo() {
-  GetPrefs()->SetBoolean(prefs::kNewTabInProductHelp, true);
   // TODO(crbug.com/737830): Call the promo.
 
   // Clears the flag for whether there is any in-product help being displayed.
@@ -97,8 +94,10 @@ void NewTabTracker::UpdateSessionTime(base::TimeDelta elapsed) {
   // Session time does not need to be tracked anymore if the
   // in-product help has been shown already.
   // This prevents unnecessary interaction with prefs.
-  if (GetPrefs()->GetBoolean(prefs::kNewTabInProductHelp))
+  if (GetFeatureTracker()->GetTriggerState(kIPHNewTabFeature) ==
+      Tracker::TriggerState::HAS_BEEN_DISPLAYED) {
     return;
+  }
 
   base::TimeDelta elapsed_session_time;
   elapsed_session_time += base::TimeDelta::FromMinutes(GetPrefs()->GetInteger(
