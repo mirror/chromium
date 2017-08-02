@@ -24,6 +24,7 @@ namespace resource_coordinator {
 
 class CoordinationUnitGraphObserver;
 class FrameCoordinationUnitImpl;
+class WebContentsCoordinationUnitImpl;
 
 class CoordinationUnitImpl : public mojom::CoordinationUnit {
  public:
@@ -34,6 +35,8 @@ class CoordinationUnitImpl : public mojom::CoordinationUnit {
   ~CoordinationUnitImpl() override;
 
   static const FrameCoordinationUnitImpl* ToFrameCoordinationUnit(
+      const CoordinationUnitImpl* coordination_unit);
+  static const WebContentsCoordinationUnitImpl* ToWebContentsCoordinationUnit(
       const CoordinationUnitImpl* coordination_unit);
   static std::vector<CoordinationUnitImpl*> GetCoordinationUnitsOfType(
       CoordinationUnitType type);
@@ -80,6 +83,9 @@ class CoordinationUnitImpl : public mojom::CoordinationUnit {
   const CoordinationUnitID& id() const { return id_; }
   const std::set<CoordinationUnitImpl*>& children() const { return children_; }
   const std::set<CoordinationUnitImpl*>& parents() const { return parents_; }
+  const base::ObserverList<CoordinationUnitGraphObserver>& observers() const {
+    return observers_;
+  }
   const std::map<mojom::PropertyType, std::unique_ptr<base::Value>>&
   properties_for_testing() const {
     return properties_;
@@ -87,8 +93,15 @@ class CoordinationUnitImpl : public mojom::CoordinationUnit {
   mojo::Binding<mojom::CoordinationUnit>& binding() { return binding_; }
 
  protected:
+#define NOTIFY_OBSERVERS(observers, Method, ...) \
+  for (auto& observer : observers) {             \
+    observer.Method(__VA_ARGS__);                \
+  }
+
   friend class FrameCoordinationUnitImpl;
 
+  virtual void OnPropertyChanged(const mojom::PropertyType property_type,
+                                 const base::Value& value);
   // Propagate property change to relevant |CoordinationUnitImpl| instances.
   virtual void PropagateProperty(mojom::PropertyType property_type,
                                  const base::Value& value) {}
