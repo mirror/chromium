@@ -34,6 +34,24 @@
       "revId": "728f335be8c589824389e203d278de5b8fc8e70d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b46f0c06_827562d4",
+        "filename": "content/browser/media/capture/desktop_capture_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-08-02T21:17:38Z",
+      "side": 1,
+      "message": "Sorry. I misremembered the implementation of DesktopSize::is_empty().",
+      "parentUuid": "37735dc4_6b78b51e",
+      "revId": "728f335be8c589824389e203d278de5b8fc8e70d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
