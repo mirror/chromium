@@ -22,6 +22,30 @@
       "revId": "f7b4895286106adc668d76c26564679c2f70abd0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "119e0951_971b31e0",
+        "filename": "chrome/renderer/chrome_render_frame_observer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-08-02T09:39:35Z",
+      "side": 1,
+      "message": "CL description describes how tests were failing / flaky when this was non-associated.  I was able to reproduce flakiness locally.  When I changed to use an associated interface, it fixed the tests.  I can\u0027t be sure which IPCs are interacting, but it does make sense to me that the preloaded JS must run  before tests start.",
+      "parentUuid": "53021749_d0b15471",
+      "range": {
+        "startLine": 138,
+        "startChar": 8,
+        "endLine": 138,
+        "endChar": 28
+      },
+      "revId": "f7b4895286106adc668d76c26564679c2f70abd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
