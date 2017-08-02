@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "ffd19e98_8281cb4d",
+        "filename": "media/renderers/audio_renderer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-08-02T23:19:25Z",
+      "side": 1,
+      "message": "Ack.\n\nOne clarification: even when resampling, it seems the mixer will still disable FIFO on all its converters? AFAICT the assumption is always that inputs can handle requests of any size.",
+      "parentUuid": "b83b3357_c7a77d1f",
+      "range": {
+        "startLine": 397,
+        "startChar": 13,
+        "endLine": 397,
+        "endChar": 17
+      },
+      "revId": "d0016be5a6a1da4e67c23bebb78615642c2a750a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "283b2f53_4740e619",
         "filename": "media/renderers/audio_renderer_impl.cc",
         "patchSetId": 1
