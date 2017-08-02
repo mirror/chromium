@@ -9,12 +9,14 @@
 #include <stdlib.h>
 #include <wctype.h>
 
+#include <algorithm>
 #include <limits>
 #include <type_traits>
 
 #include "base/logging.h"
 #include "base/numerics/safe_math.h"
 #include "base/scoped_clear_errno.h"
+#include "base/strings/stringprintf.h"
 #include "base/third_party/dmg_fp/dmg_fp.h"
 
 namespace base {
@@ -457,6 +459,40 @@ std::string HexEncode(const void* bytes, size_t size) {
     ret[(i * 2) + 1] = kHexChars[b & 0xf];
   }
   return ret;
+}
+
+std::string StringToHexASCIIDump(const StringPiece& input) {
+  const int kBytesPerLine = 16;  // Maximum bytes dumped per line.
+  int offset = 0;
+  const char* buf = input.data();
+  int bytes_remaining = input.size();
+  std::string output;
+  const char* p = buf;
+  while (bytes_remaining > 0) {
+    const int line_bytes = std::min(bytes_remaining, kBytesPerLine);
+    base::StringAppendF(&output, "0x%04x:  ", offset);
+    for (int i = 0; i < kBytesPerLine; ++i) {
+      if (i < line_bytes) {
+        base::StringAppendF(&output, "%02x", p[i]);
+      } else {
+        output += "  ";
+      }
+      if (i % 2) {
+        output += ' ';
+      }
+    }
+    output += ' ';
+    for (int i = 0; i < line_bytes; ++i) {
+      // Replace non-printable characters with '.'
+      output += (p[i] >= 0x20 && p[i] <= 0x7f) ? p[i] : '.';
+    }
+
+    bytes_remaining -= line_bytes;
+    offset += line_bytes;
+    p += line_bytes;
+    output += '\n';
+  }
+  return output;
 }
 
 bool HexStringToInt(const StringPiece& input, int* output) {
