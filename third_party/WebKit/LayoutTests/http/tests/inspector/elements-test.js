@@ -1,3 +1,6 @@
+// This file is being deprecated and is moving to front_end/elements_test_runner/ElementsTestRunner.js
+// Please see crbug.com/667560 for more details
+
 var initialize_ElementTest = function() {
 
 InspectorTest.preloadPanel("elements");
