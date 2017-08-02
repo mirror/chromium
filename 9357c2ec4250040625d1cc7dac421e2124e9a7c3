@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "164ed7d0_7ce0cf93",
+        "filename": "chrome/test/data/webui/extensions/cr_extensions_browsertest.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-02T22:55:15Z",
+      "side": 1,
+      "message": "Toolbar?",
+      "revId": "9357c2ec4250040625d1cc7dac421e2124e9a7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1311fb89_476a7506",
+        "filename": "chrome/test/data/webui/extensions/cr_extensions_browsertest.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-02T22:55:15Z",
+      "side": 1,
+      "message": "\\n (here and above)",
+      "revId": "9357c2ec4250040625d1cc7dac421e2124e9a7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
