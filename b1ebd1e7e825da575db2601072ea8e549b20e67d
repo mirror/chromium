@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3a4bfb69_648260ec",
+        "filename": "cc/quads/render_pass.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-08-02T18:16:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7db9dc0f_e05a5489",
+      "revId": "b1ebd1e7e825da575db2601072ea8e549b20e67d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ddd067c_6d6154c2",
         "filename": "cc/quads/render_pass.cc",
         "patchSetId": 3
