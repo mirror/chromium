@@ -3146,6 +3146,10 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kOneGoogleBarOnLocalNtpName,
      flag_descriptions::kOneGoogleBarOnLocalNtpDescription, kOsDesktop,
      FEATURE_VALUE_TYPE(features::kOneGoogleBarOnLocalNtp)},
+
+    {"voice-search-on-local-ntp", flag_descriptions::kVoiceSearchOnLocalNtpName,
+     flag_descriptions::kVoiceSearchOnLocalNtpDescription, kOsDesktop,
+     FEATURE_VALUE_TYPE(features::kVoiceSearchOnLocalNtp)},
 #endif  // !defined(OS_ANDROID)
 
 #if defined(OS_MACOSX)

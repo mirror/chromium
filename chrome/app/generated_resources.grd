@@ -8328,6 +8328,46 @@ I don't think this site should be blocked!
          desc="Title for the app launcher promo box shown on apps pages.">
         Discover the Chrome App Launcher
       </message>
+      <message name="IDS_NEW_TAB_VOICE_LISTENING"
+        desc="Used to indicate that the speech recognition service has started and is still waiting for user input. This message appears if there is no activity for 2 seconds after the user has been instructed to start speaking.">
+        Listening...
+      </message>
+      <message name="IDS_NEW_TAB_VOICE_READY"
+        desc="Used to indicate that the speech recognition service has started and is waiting for user input.">
+        Speak now
+      </message>
+      <message name="IDS_NEW_TAB_VOICE_NO_TRANSLATION"
+        desc="Used to indicate that speech input was detected but the service couldn't confidently translate the message. Provides a link to the user to retry voice input.">
+        Didn't get that. <ph name="START_LINK">&lt;a href="#" onclick="voice.speech.restart_();"&gt;</ph>Try again<ph name="END_LINK">&lt;a/&gt;</ph>
+      </message>
+      <message name="IDS_NEW_TAB_VOICE_WAITING"
+        desc="Used to indicate that the speech recognition service is waiting for user permission to use the microphone.">
+        Waiting...
+      </message>
+      <message name="IDS_NEW_TAB_VOICE_AUDIO_ERROR"
+        desc="Used to indicate that there was an error starting the microphone to record speech input.">
+        Please check your microphone. <ph name="START_LINK">&lt;a href="https://support.google.com/chrome/?p=ui_voice_search" target="_blank"&gt;</ph>Learn more<ph name="END_LINK">&lt;a/&gt;</ph>
+      </message>
+      <message name="IDS_NEW_TAB_VOICE_NETWORK_ERROR"
+        desc="Used to indicate that there was a network error when communicating with the speech recognition service.">
+        No Internet connection.
+      </message>
+      <message name="IDS_NEW_TAB_VOICE_LANGUAGE_ERROR"
+        desc="Used to indicate that the speech recognition service is not available for the user's locale.">
+        Voice search in your language is not available.
+      </message>
+      <message name="IDS_NEW_TAB_VOICE_PERMISSION_ERROR"
+        desc="Used to indicate that the speech recognition service did not get permission to use the microphone.">
+        Voice search has been turned off. <ph name="START_LINK">&lt;a href="https://support.google.com/chrome/?p=ui_voice_search" target="_blank"&gt;</ph>Details<ph name="END_LINK">&lt;a/&gt;</ph>
+      </message>
+      <message name="IDS_NEW_TAB_VOICE_NO_VOICE"
+        desc="Used to indicate that the speech recognition service didn't receive any voice input.">
+        Please check your microphone and audio levels. <ph name="START_LINK">&lt;a href="https://support.google.com/chrome/?p=ui_voice_search" target="_blank"&gt;</ph>Learn more<ph name="END_LINK">&lt;a/&gt;</ph>
+      </message>
+      <message name="IDS_NEW_TAB_VOICE_HOTWORD_TOOLTIP"
+        desc="Tooltip that is displayed when a user hovers over the microphone icon in the Searchbox while the Chrome Hotword extension is active.">
+        Listening for "Ok Google"
+      </message>
 
       <if expr="not use_titlecase">
         <message name="IDS_NEW_TAB_APP_OPTIONS"

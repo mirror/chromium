@@ -88,6 +88,7 @@ var IDS = {
   FAKEBOX: 'fakebox',
   FAKEBOX_INPUT: 'fakebox-input',
   FAKEBOX_TEXT: 'fakebox-text',
+  FAKEBOX_SPEECH: 'fakebox-speech',
   LOGO: 'logo',
   NOTIFICATION: 'mv-notice',
   NOTIFICATION_CLOSE_BUTTON: 'mv-notice-x',
@@ -485,7 +486,8 @@ function isFakeboxFocused() {
  * @return {boolean} True if the click occurred in an enabled fakebox.
  */
 function isFakeboxClick(event) {
-  return $(IDS.FAKEBOX).contains(event.target);
+  return $(IDS.FAKEBOX).contains(event.target) &&
+      !$(IDS.FAKEBOX_SPEECH).contains(event.target);
 }
 
 
@@ -526,6 +528,25 @@ function handlePostMessage(event) {
   }
   // TODO(treib): Should we also handle the 'loaded' message from the iframe
   // here? We could hide the page until it arrives, to avoid flicker.
+}
+
+
+/**
+ * Wraps two event handlers into a single handler.
+ * Executes them in the supplied order.
+ *
+ * @param {!Function} oldHandler The old event handler, can be null.
+ * @param {!Function} newHandler The new event handler.
+ */
+function mergeEventHandlers(oldHandler, newHandler) {
+  if (!!oldHandler) {
+    return function(event) {
+      oldHandler.call(event);
+      newHandler.call(event);
+    };
+  } else {
+    return newHandler;
+  }
 }
 
 
@@ -578,6 +599,23 @@ function init() {
 
     $(IDS.FAKEBOX_TEXT).textContent =
         configData.translatedStrings.searchboxPlaceholder;
+
+    $(IDS.FAKEBOX_SPEECH).hidden = !configData.isVoiceSearchEnabled;
+    if (configData.isVoiceSearchEnabled) {
+      $(IDS.FAKEBOX_SPEECH).title =
+          configData.translatedStrings.fakeboxSpeechTooltip;
+
+      voice.speech.init_(configData);
+
+      $(IDS.FAKEBOX_SPEECH).onmouseup = function(event) {
+        // If propagated, closes the overlay (click on the background).
+        event.stopPropagation();
+        voice.speech.toggleStartStop_();
+      };
+      window.addEventListener('keydown', voice.speech.handleKeyDown_);
+      searchboxApiHandle.onfocuschange = mergeEventHandlers(
+          searchboxApiHandle.onfocuschange, voice.speech.handleOmniboxFocused_);
+    }
 
     // Listener for updating the key capture state.
     document.body.onmousedown = function(event) {
