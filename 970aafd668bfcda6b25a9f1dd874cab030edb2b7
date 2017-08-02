@@ -16,6 +16,24 @@
       "revId": "970aafd668bfcda6b25a9f1dd874cab030edb2b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cee787d_8be97deb",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXARIAGridCell.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-08-02T19:18:11Z",
+      "side": 1,
+      "message": "I guess it doesn\u0027t make sense unless the cell is being used as a widget, which it would only be with a grid or treegrid parent.",
+      "parentUuid": "c2db9f94_b099ce59",
+      "revId": "970aafd668bfcda6b25a9f1dd874cab030edb2b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
