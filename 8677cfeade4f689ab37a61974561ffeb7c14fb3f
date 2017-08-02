@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6aa183a4_18df039a",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-02T19:39:15Z",
+      "side": 1,
+      "message": "For fusion sensors based on sensors that report values continuously we may want to, instead of configuring yet another timer, provide an internal mechanism for such sensors to signal to fusion sensors that their value has changed. This change can be used within the device service to recalculate the fusion value but not be propagated to Mojo clients.",
+      "revId": "8677cfeade4f689ab37a61974561ffeb7c14fb3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
