@@ -16,6 +16,24 @@
       "revId": "53a4df1f58d61be05273922c3efd10f0c1de311a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "280539b0_ea17854d",
+        "filename": "chrome/browser/sync_file_system/drive_backend/sync_task_token.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-08-02T09:34:41Z",
+      "side": 0,
+      "message": "Unfortunately, the NOTREACHED will hit in the shutdown sequence, and may cause a test failure depends on the configuration.",
+      "parentUuid": "ac91d556_10da558e",
+      "revId": "53a4df1f58d61be05273922c3efd10f0c1de311a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
