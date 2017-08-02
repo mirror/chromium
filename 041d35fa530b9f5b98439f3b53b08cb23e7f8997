@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a517034_e77b82b6",
+        "filename": "chrome/browser/media/router/discovery/media_sink_discovery_metrics.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-08-02T00:47:03Z",
+      "side": 1,
+      "message": "Nit: \"RecordDeviceCounts\", because you\u0027re recording two counts (available... and known...)?",
+      "range": {
+        "startLine": 25,
+        "startChar": 15,
+        "endLine": 25,
+        "endChar": 32
+      },
+      "revId": "041d35fa530b9f5b98439f3b53b08cb23e7f8997",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "603f9ca6_56b65b4f",
+        "filename": "chrome/browser/media/router/discovery/media_sink_discovery_metrics.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-08-02T00:47:03Z",
+      "side": 1,
+      "message": "Is there a need for this method to be public, or can it be protected?",
+      "revId": "041d35fa530b9f5b98439f3b53b08cb23e7f8997",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
