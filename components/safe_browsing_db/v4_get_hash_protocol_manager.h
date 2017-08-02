@@ -24,6 +24,7 @@
 #include "base/time/default_clock.h"
 #include "base/time/time.h"
 #include "base/timer/timer.h"
+#include "components/safe_browsing/web_ui/webui.pb.h"
 #include "components/safe_browsing_db/safebrowsing.pb.h"
 #include "components/safe_browsing_db/util.h"
 #include "components/safe_browsing_db/v4_protocol_manager_util.h"
@@ -186,6 +187,7 @@ class V4GetHashProtocolManager : public net::URLFetcherDelegate {
 
   // net::URLFetcherDelegate interface.
   void OnURLFetchComplete(const net::URLFetcher* source) override;
+  void CollectFullHashCacheInfo(FullHashCacheInfo* full_hash_cache_info);
 
  protected:
   // Constructs a V4GetHashProtocolManager that issues network requests using
@@ -327,6 +329,8 @@ class V4GetHashProtocolManager : public net::URLFetcherDelegate {
   // The context we use to issue network requests.
   scoped_refptr<net::URLRequestContextGetter> request_context_getter_;
 
+  // Records number of cache hits.
+  int number_of_cache_hits_ = 0;
   // ID for URLFetchers for testing.
   int url_fetcher_id_;
 

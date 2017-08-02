@@ -193,6 +193,10 @@ void V4LocalDatabaseManager::CollectDatabaseManagerInfo(
   // Update the protobuf with the information from V4Database.
   v4_database_->CollectDatabaseInfo(
       database_manager_info->mutable_database_info());
+
+  FullHashCacheInfo full_hash_cache_info;
+  v4_get_hash_protocol_manager_->CollectFullHashCacheInfo(
+      &full_hash_cache_info);
 }
 
 V4LocalDatabaseManager::V4LocalDatabaseManager(
