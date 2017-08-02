@@ -73,8 +73,9 @@ class TetherNotificationPresenter
   };
 
  private:
+  friend class TetherNotificationPresenterTest;
+
   // IDs associated with Tether notification types.
-  static const char kTetherNotifierId[];
   static const char kPotentialHotspotNotificationId[];
   static const char kActiveHostNotificationId[];
   static const char kSetupRequiredNotificationId[];
@@ -93,9 +94,6 @@ class TetherNotificationPresenter
       const base::string16& message,
       const message_center::RichNotificationData rich_notification_data,
       int signal_strength);
-
-  friend class TetherNotificationPresenterTest;
-
   void SetSettingsUiDelegateForTesting(
       std::unique_ptr<SettingsUiDelegate> settings_ui_delegate);
   void ShowNotification(
