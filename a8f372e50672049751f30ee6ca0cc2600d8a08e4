@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27ffe4a8_c66e18e2",
+        "filename": "sandbox/linux/bpf_dsl/syscall_set.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1117686
+      },
+      "writtenOn": "2017-08-02T08:52:49Z",
+      "side": 1,
+      "message": "It is 5000.",
+      "range": {
+        "startLine": 22,
+        "startChar": 71,
+        "endLine": 22,
+        "endChar": 75
+      },
+      "revId": "a8f372e50672049751f30ee6ca0cc2600d8a08e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0fdb196_9bcb2f06",
+        "filename": "sandbox/linux/seccomp-bpf-helpers/baseline_policy.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1117686
+      },
+      "writtenOn": "2017-08-02T08:52:49Z",
+      "side": 1,
+      "message": "Line should not exceed 80 chars.",
+      "range": {
+        "startLine": 150,
+        "startChar": 79,
+        "endLine": 150,
+        "endChar": 80
+      },
+      "revId": "a8f372e50672049751f30ee6ca0cc2600d8a08e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d415e41_06c65d01",
+        "filename": "sandbox/linux/seccomp-bpf/syscall.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1117686
+      },
+      "writtenOn": "2017-08-02T08:52:49Z",
+      "side": 1,
+      "message": "This asm code needs to be re-written:\n- Up to eight arguments can go into registers in MIPS N64\n- offsets should be 8 bytes not 4 (when storing $ra for example)",
+      "range": {
+        "startLine": 270,
+        "startChar": 10,
+        "endLine": 270,
+        "endChar": 14
+      },
+      "revId": "a8f372e50672049751f30ee6ca0cc2600d8a08e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "326e21f8_70191071",
+        "filename": "sandbox/linux/seccomp-bpf/syscall.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 416,
+      "author": {
+        "id": 1117686
+      },
+      "writtenOn": "2017-08-02T08:52:49Z",
+      "side": 1,
+      "message": "Why not defining err_status as intptr_t?",
+      "range": {
+        "startLine": 416,
+        "startChar": 55,
+        "endLine": 416,
+        "endChar": 63
+      },
+      "revId": "a8f372e50672049751f30ee6ca0cc2600d8a08e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dde5120c_543f354f",
+        "filename": "sandbox/linux/system_headers/linux_seccomp.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1117686
+      },
+      "writtenOn": "2017-08-02T08:52:49Z",
+      "side": 1,
+      "message": "This should be AUDIT_ARCH_MIPSEL64.",
+      "range": {
+        "startLine": 51,
+        "startChar": 8,
+        "endLine": 51,
+        "endChar": 27
+      },
+      "revId": "a8f372e50672049751f30ee6ca0cc2600d8a08e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8738b163_478490f0",
+        "filename": "sandbox/linux/system_headers/mips_linux_ucontext.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1117686
+      },
+      "writtenOn": "2017-08-02T08:52:49Z",
+      "side": 1,
+      "message": "Isn\u0027t it _ABI64?",
+      "range": {
+        "startLine": 40,
+        "startChar": 18,
+        "endLine": 40,
+        "endChar": 19
+      },
+      "revId": "a8f372e50672049751f30ee6ca0cc2600d8a08e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
