@@ -39,6 +39,7 @@ class MockComponentUpdateService : public ComponentUpdateService {
   MOCK_CONST_METHOD1(
       GetComponentForMimeType,
       std::unique_ptr<ComponentInfo>(const std::string& mime_type));
+  MOCK_CONST_METHOD0(GetComponents, std::vector<ComponentInfo>());
   MOCK_METHOD0(GetOnDemandUpdater,
       OnDemandUpdater&());
   MOCK_METHOD2(MaybeThrottle,
