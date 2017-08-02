@@ -89,6 +89,12 @@ void VirtualKeyboardController::OnTabletModeStarted() {
 }
 
 void VirtualKeyboardController::OnTabletModeEnded() {
+  keyboard::KeyboardController* keyboard_controller =
+      keyboard::KeyboardController::GetInstance();
+  if (keyboard_controller) {
+    keyboard_controller->NotifyTabletModeEnded();
+  }
+
   if (IsVirtualKeyboardEnabled()) {
     SetKeyboardEnabled(false);
   } else {
