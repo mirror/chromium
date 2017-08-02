@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df7aa3d6_f4ed7e00",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-02T16:04:21Z",
+      "side": 1,
+      "message": "We already have scanout support for BGRX.\nWhat this patch is doing is adding BGRA/RGBA...",
+      "revId": "ee13f234280d7a5af16f420cf3edc4a511e21552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c7d034d_d3701b41",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-02T16:04:21Z",
+      "side": 1,
+      "message": "How is this patch realated to \"atomic overlay planes cause flickering on ARC++\" at all?",
+      "revId": "ee13f234280d7a5af16f420cf3edc4a511e21552",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
