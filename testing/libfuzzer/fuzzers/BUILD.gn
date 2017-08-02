@@ -6,6 +6,7 @@
 
 import("//build/config/features.gni")
 import("//media/media_options.gni")
+import("//mojo/public/tools/bindings/mojom.gni")
 import("//testing/libfuzzer/fuzzer_test.gni")
 
 # root BUILD depends on this target. Needed for package discovery
@@ -459,6 +460,22 @@ fuzzer_test("hash_fuzzer") {
   ]
   deps = [
     "//base",
+  ]
+}
+
+mojom("fuzz_mojom") {
+  sources = [
+    "fuzz.mojom",
+  ]
+}
+
+fuzzer_test("mojo_parse_message_fuzzer") {
+  sources = [
+    "mojo_parse_message_fuzzer.cc",
+  ]
+  deps = [
+    ":fuzz_mojom",
+    "//mojo/edk/system",
   ]
 }
 
