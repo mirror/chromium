@@ -6,6 +6,7 @@
 #define WebFrameOwnerProperties_h
 
 #include "public/platform/WebFeaturePolicy.h"
+#include "public/platform/WebScrollbar.h"
 #include "public/platform/WebString.h"
 #include "public/platform/WebVector.h"
 
@@ -14,10 +15,10 @@
 namespace blink {
 
 struct WebFrameOwnerProperties {
-  enum class ScrollingMode { kAuto, kAlwaysOff, kAlwaysOn, kLast = kAlwaysOn };
+  using ScrollingMode = WebScrollbar::ScrollingMode;
 
   WebString name;  // browsing context container's name
-  ScrollingMode scrolling_mode;
+  WebScrollbar::ScrollingMode scrolling_mode;
   int margin_width;
   int margin_height;
   bool allow_fullscreen;
@@ -29,7 +30,7 @@ struct WebFrameOwnerProperties {
   WebVector<WebFeaturePolicyFeature> allowed_features;
 
   WebFrameOwnerProperties()
-      : scrolling_mode(ScrollingMode::kAuto),
+      : scrolling_mode(WebScrollbar::ScrollingMode::kAuto),
         margin_width(-1),
         margin_height(-1),
         allow_fullscreen(false),
@@ -48,7 +49,8 @@ struct WebFrameOwnerProperties {
       const WebString& required_csp,
       const WebVector<WebFeaturePolicyFeature>& allowed_features)
       : name(name),
-        scrolling_mode(static_cast<ScrollingMode>(scrolling_mode)),
+        scrolling_mode(
+            static_cast<WebScrollbar::ScrollingMode>(scrolling_mode)),
         margin_width(margin_width),
         margin_height(margin_height),
         allow_fullscreen(allow_fullscreen),
