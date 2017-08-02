@@ -32,9 +32,13 @@ NGLineOrientation ToLineOrientation(NGWritingMode writing_mode) {
 
 }  // namespace
 
-NGTextFragmentBuilder::NGTextFragmentBuilder(NGInlineNode node)
-    : node_(node),
-      writing_mode_(FromPlatformWritingMode(node_.Style().GetWritingMode())) {}
+NGTextFragmentBuilder::NGTextFragmentBuilder(NGInlineNode node,
+                                             bool use_first_line_style)
+    : NGBaseFragmentBuilder(
+          FromPlatformWritingMode(node_.Style().GetWritingMode()),
+          TextDirection::kLtr,
+          use_first_line_style),
+      node_(node) {}
 
 NGTextFragmentBuilder& NGTextFragmentBuilder::SetSize(
     const NGLogicalSize& size) {
@@ -53,9 +57,9 @@ RefPtr<NGPhysicalTextFragment> NGTextFragmentBuilder::ToTextFragment(
     unsigned start_offset,
     unsigned end_offset) {
   return AdoptRef(new NGPhysicalTextFragment(
-      node_.GetLayoutObject(), node_, index, start_offset, end_offset,
-      size_.ConvertToPhysical(writing_mode_), ToLineOrientation(writing_mode_),
-      std::move(shape_result_)));
+      node_.GetLayoutObject(), use_first_line_style_, node_.Text(), index,
+      start_offset, end_offset, size_.ConvertToPhysical(writing_mode_),
+      ToLineOrientation(writing_mode_), std::move(shape_result_)));
 }
 
 }  // namespace blink

@@ -15,22 +15,12 @@
 
 namespace blink {
 
-NGLineBoxFragmentBuilder::NGLineBoxFragmentBuilder(NGInlineNode node)
-    : writing_mode_(kHorizontalTopBottom),
-      direction_(TextDirection::kLtr),
+NGLineBoxFragmentBuilder::NGLineBoxFragmentBuilder(NGInlineNode node,
+                                                   NGWritingMode writing_mode,
+                                                   TextDirection direction,
+                                                   bool use_first_line_style)
+    : NGBaseFragmentBuilder(writing_mode, direction, use_first_line_style),
       node_(node) {}
-
-NGLineBoxFragmentBuilder& NGLineBoxFragmentBuilder::SetWritingMode(
-    NGWritingMode writing_mode) {
-  writing_mode_ = writing_mode;
-  return *this;
-}
-
-NGLineBoxFragmentBuilder& NGLineBoxFragmentBuilder::SetDirection(
-    TextDirection direction) {
-  direction_ = direction;
-  return *this;
-}
 
 NGLineBoxFragmentBuilder& NGLineBoxFragmentBuilder::SetInlineSize(
     LayoutUnit size) {
@@ -85,7 +75,7 @@ NGLineBoxFragmentBuilder::ToLineBoxFragment() {
   }
 
   return AdoptRef(new NGPhysicalLineBoxFragment(
-      physical_size, children_, metrics_,
+      use_first_line_style_, physical_size, children_, metrics_,
       break_token_ ? std::move(break_token_)
                    : NGInlineBreakToken::Create(node_)));
 }

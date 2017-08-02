@@ -70,6 +70,12 @@ NGConstraintSpaceBuilder& NGConstraintSpaceBuilder::SetTextDirection(
   return *this;
 }
 
+NGConstraintSpaceBuilder& NGConstraintSpaceBuilder::SetUseFirstLineStyle(
+    bool use_first_line_style) {
+  use_first_line_style_ = use_first_line_style;
+  return *this;
+}
+
 NGConstraintSpaceBuilder& NGConstraintSpaceBuilder::SetMarginStrut(
     const NGMarginStrut& margin_strut) {
   margin_strut_ = margin_strut;
@@ -233,8 +239,9 @@ RefPtr<NGConstraintSpace> NGConstraintSpaceBuilder::ToConstraintSpace(
   if (is_in_parallel_flow) {
     return AdoptRef(new NGConstraintSpace(
         static_cast<NGWritingMode>(out_writing_mode),
-        static_cast<TextDirection>(text_direction_), available_size,
-        percentage_resolution_size, parent_percentage_resolution_inline_size,
+        static_cast<TextDirection>(text_direction_), use_first_line_style_,
+        available_size, percentage_resolution_size,
+        parent_percentage_resolution_inline_size,
         initial_containing_block_size_, fragmentainer_space_available_,
         is_fixed_size_inline_, is_fixed_size_block_, is_shrink_to_fit_,
         is_inline_direction_triggers_scrollbar_,
@@ -245,7 +252,7 @@ RefPtr<NGConstraintSpace> NGConstraintSpaceBuilder::ToConstraintSpace(
   }
   return AdoptRef(new NGConstraintSpace(
       out_writing_mode, static_cast<TextDirection>(text_direction_),
-      available_size, percentage_resolution_size,
+      use_first_line_style_, available_size, percentage_resolution_size,
       parent_percentage_resolution_inline_size, initial_containing_block_size_,
       fragmentainer_space_available_, is_fixed_size_block_,
       is_fixed_size_inline_, is_shrink_to_fit_,

@@ -8,6 +8,7 @@
 #include "core/layout/ng/geometry/ng_static_position.h"
 #include "core/layout/ng/inline/ng_baseline.h"
 #include "core/layout/ng/inline/ng_physical_text_fragment.h"
+#include "core/layout/ng/ng_base_fragment_builder.h"
 #include "core/layout/ng/ng_break_token.h"
 #include "core/layout/ng/ng_constraint_space.h"
 #include "core/layout/ng/ng_layout_result.h"
@@ -19,15 +20,22 @@
 
 namespace blink {
 
-class CORE_EXPORT NGFragmentBuilder final {
+class CORE_EXPORT NGFragmentBuilder final : public NGBaseFragmentBuilder {
   DISALLOW_NEW();
 
  public:
-  NGFragmentBuilder(NGPhysicalFragment::NGFragmentType, NGLayoutInputNode);
+  NGFragmentBuilder(NGLayoutInputNode,
+                    NGWritingMode,
+                    TextDirection,
+                    bool use_first_line_style);
+  NGFragmentBuilder(NGLayoutInputNode, const NGConstraintSpace&);
 
   // Build a fragment for LayoutObject without NGLayoutInputNode. LayoutInline
   // has NGInlineItem but does not have corresponding NGLayoutInputNode.
-  NGFragmentBuilder(NGPhysicalFragment::NGFragmentType, LayoutObject*);
+  NGFragmentBuilder(LayoutObject*,
+                    NGWritingMode,
+                    TextDirection,
+                    bool use_first_line_style);
 
   using WeakBoxList = PersistentHeapLinkedHashSet<WeakMember<NGBlockNode>>;
 
@@ -162,6 +170,7 @@ class CORE_EXPORT NGFragmentBuilder final {
   NGPhysicalFragment::NGFragmentType type_;
   NGWritingMode writing_mode_;
   TextDirection direction_;
+  bool use_first_line_style_ = false;  // TODO(kojii): Need to set this up
 
   NGLayoutInputNode node_;
   LayoutObject* layout_object_;

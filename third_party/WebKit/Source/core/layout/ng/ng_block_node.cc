@@ -369,10 +369,10 @@ RefPtr<NGLayoutResult> NGBlockNode::RunOldLayout(
                                         box_->LayoutOverflowRect().Height());
   NGLogicalSize overflow_size =
       overflow_physical_size.ConvertToLogical(writing_mode);
-  NGFragmentBuilder builder(NGPhysicalFragment::kFragmentBox, *this);
+  // TODO(kojii): Implement use_first_line_style.
+  NGFragmentBuilder builder(*this, writing_mode, box_->StyleRef().Direction(),
+                            false);
   builder.SetSize(box_size)
-      .SetDirection(box_->StyleRef().Direction())
-      .SetWritingMode(writing_mode)
       .SetOverflowSize(overflow_size);
   CopyBaselinesFromOldLayout(constraint_space, &builder);
   return builder.ToBoxFragment();

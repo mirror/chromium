@@ -93,6 +93,7 @@ class CORE_EXPORT NGPhysicalFragment : public RefCounted<NGPhysicalFragment> {
 
  protected:
   NGPhysicalFragment(LayoutObject* layout_object,
+                     bool use_first_line_style,
                      NGPhysicalSize size,
                      NGFragmentType type,
                      RefPtr<NGBreakToken> break_token = nullptr);
@@ -105,6 +106,7 @@ class CORE_EXPORT NGPhysicalFragment : public RefCounted<NGPhysicalFragment> {
   unsigned type_ : 2;  // NGFragmentType
   unsigned is_placed_ : 1;
   unsigned border_edge_ : 4;  // NGBorderEdges::Physical
+  unsigned use_first_line_style_ : 1;
 
  private:
   void Destroy() const;

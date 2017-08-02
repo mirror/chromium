@@ -140,12 +140,13 @@ bool NGInlineLayoutAlgorithm::PlaceItems(
   NGLineHeightMetrics line_metrics(line_style, baseline_type_);
   NGLineHeightMetrics line_metrics_with_leading = line_metrics;
   line_metrics_with_leading.AddLeading(line_style.ComputedLineHeightAsFixed());
-  NGLineBoxFragmentBuilder line_box(Node());
-  line_box.SetWritingMode(ConstraintSpace().WritingMode());
+  NGLineBoxFragmentBuilder line_box(Node(), ConstraintSpace().WritingMode(),
+                                    Node().BaseDirection(),
+                                    line_info->UseFirstLineStyle());
 
   // Compute heights of all inline items by placing the dominant baseline at 0.
   // The baseline is adjusted after the height of the line box is computed.
-  NGTextFragmentBuilder text_builder(Node());
+  NGTextFragmentBuilder text_builder(Node(), line_info->UseFirstLineStyle());
   NGInlineBoxState* box =
       box_states_.OnBeginPlaceItems(&line_style, baseline_type_);
 

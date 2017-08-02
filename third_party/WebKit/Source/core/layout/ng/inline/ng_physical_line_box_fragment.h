@@ -16,7 +16,8 @@ namespace blink {
 class CORE_EXPORT NGPhysicalLineBoxFragment final : public NGPhysicalFragment {
  public:
   // This modifies the passed-in children vector.
-  NGPhysicalLineBoxFragment(NGPhysicalSize size,
+  NGPhysicalLineBoxFragment(bool use_first_line_style,
+                            NGPhysicalSize size,
                             Vector<RefPtr<NGPhysicalFragment>>& children,
                             const NGLineHeightMetrics&,
                             RefPtr<NGBreakToken> break_token = nullptr);
@@ -32,8 +33,8 @@ class CORE_EXPORT NGPhysicalLineBoxFragment final : public NGPhysicalFragment {
 
   RefPtr<NGPhysicalFragment> CloneWithoutOffset() const {
     Vector<RefPtr<NGPhysicalFragment>> children_copy(children_);
-    return AdoptRef(new NGPhysicalLineBoxFragment(size_, children_copy,
-                                                  metrics_, break_token_));
+    return AdoptRef(new NGPhysicalLineBoxFragment(
+        use_first_line_style_, size_, children_copy, metrics_, break_token_));
   }
 
  private:
