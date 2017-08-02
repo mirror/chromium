@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "9ee6aab9_e3fc93d5",
+        "filename": "chrome/browser/android/logo_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T13:35:19Z",
+      "side": 1,
+      "message": "I think if the copy ctor is deleted, then the move ctor gets implicitly deleted too (unless you manually define it I guess).",
+      "parentUuid": "6033f39d_1c62c9f7",
+      "revId": "2816f127d23601f67562ccafc057512ca2572f5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53386538_59f2e59e",
         "filename": "chrome/browser/android/logo_service_factory.h",
         "patchSetId": 1
