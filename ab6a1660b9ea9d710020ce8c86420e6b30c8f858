@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1501ac7f_262dd2fb",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-02T13:45:14Z",
+      "side": 1,
+      "message": "\"interpret\"? (we did parse it)",
+      "range": {
+        "startLine": 174,
+        "startChar": 50,
+        "endLine": 174,
+        "endChar": 55
+      },
+      "revId": "ab6a1660b9ea9d710020ce8c86420e6b30c8f858",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
