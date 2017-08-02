@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2388aa28_c48a7f92",
+        "filename": "chrome/browser/ui/omnibox/omnibox_view_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-02T15:11:53Z",
+      "side": 1,
+      "message": "I think this loop shouldn\u0027t be needed.  If there are no tasks in the queue, then either the backend must be loaded, or we never asked it to load (so the loop would spin forever).  Assuming the latter can\u0027t happen, I\u0027d write this as:\n\n      content::RunAllBlockingPoolTasksUntilIdle();\n      ASSERT_TRUE(history_service-\u003eBackendLoaded());",
+      "revId": "c86a947f3ed9a4856e39e3bb2689770baaa20272",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
