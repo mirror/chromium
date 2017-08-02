@@ -69,10 +69,10 @@
   [self.containerViewController
       addChildViewController:self.bubbleViewController];
   self.bubbleViewController.view.frame = bubbleFrame;
-  self.bubbleViewController.view.backgroundColor = [UIColor blueColor];
   [self.containerViewController.view addSubview:self.bubbleViewController.view];
   [self.bubbleViewController
       didMoveToParentViewController:self.containerViewController];
+  [self.bubbleViewController animateContentIn];
 }
 
 // Calculate the bubble's frame using bubble_util methods. Depends on the target
