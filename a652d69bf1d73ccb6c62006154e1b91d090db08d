@@ -16,6 +16,24 @@
       "revId": "a652d69bf1d73ccb6c62006154e1b91d090db08d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ed73604_533ed26f",
+        "filename": "net/ntlm/ntlm_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1130105
+      },
+      "writtenOn": "2017-08-02T21:02:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37d9fa1b_9acb2e60",
+      "revId": "a652d69bf1d73ccb6c62006154e1b91d090db08d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
