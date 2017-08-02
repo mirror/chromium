@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5a99c534_4f3f78fb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-02T21:01:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f4271e5a_aa1bb791",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 38
+      },
+      "revId": "963d0e66024f876ee925c3060cf5d6954d45b193",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e675dac0_cd03aaca",
         "filename": "extensions/browser/sandboxed_unpacker.h",
         "patchSetId": 4
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "fe0d9ce5_f374a234",
+        "filename": "extensions/browser/sandboxed_unpacker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-02T21:01:40Z",
+      "side": 1,
+      "message": "Adjusted the TODO.",
+      "parentUuid": "e675dac0_cd03aaca",
+      "revId": "963d0e66024f876ee925c3060cf5d6954d45b193",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a34e9803_acdb1e2d",
         "filename": "extensions/browser/sandboxed_unpacker.h",
         "patchSetId": 4
@@ -53,6 +95,24 @@
       "writtenOn": "2017-08-02T20:48:57Z",
       "side": 1,
       "message": "Looking at callers it looks like it plumbing lands on 4 different task runners 3 of which are SKIP_ON_SHUTDOWN and another which is still BrowserThread::FILE.\n\nI agree that if this is an important requirement you just make your own or grab the common one.",
+      "revId": "963d0e66024f876ee925c3060cf5d6954d45b193",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcfcf7d1_2404280a",
+        "filename": "extensions/browser/sandboxed_unpacker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-02T21:01:40Z",
+      "side": 1,
+      "message": "Yep, in a followup I\u0027m planning on just removing this parameter entirely and using the common extensions file task runner.\n\nMy understanding was that tasks posted to legacy threads (like the FILE thread) would run with the default task traits, which have TaskShutdownBehavior::SKIP_ON_SHUTDOWN - is that not the case?",
+      "parentUuid": "a34e9803_acdb1e2d",
       "revId": "963d0e66024f876ee925c3060cf5d6954d45b193",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
