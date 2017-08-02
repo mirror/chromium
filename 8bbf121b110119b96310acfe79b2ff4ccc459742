@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "b72d7c68_b4545d30",
+        "filename": "chrome/common/profiling/memlog.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-02T17:18:10Z",
+      "side": 1,
+      "message": "I added a comment to the Memlog interface.\n\nI think we should allow prototyping for the profiling process to continue quickly, and do a security review before removing the compile time flag.",
+      "parentUuid": "36064d71_8e8b5b37",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 51
+      },
+      "revId": "8bbf121b110119b96310acfe79b2ff4ccc459742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aeb81f28_fa4a49a8",
         "filename": "chrome/profiling/memlog_connection_manager.cc",
         "patchSetId": 4
@@ -69,6 +93,30 @@
       "revId": "8bbf121b110119b96310acfe79b2ff4ccc459742",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f7aa397_aeb35186",
+        "filename": "chrome/profiling/memlog_connection_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-02T17:18:10Z",
+      "side": 1,
+      "message": "On Windows, profiler only works for release builds.",
+      "parentUuid": "aeb81f28_fa4a49a8",
+      "range": {
+        "startLine": 100,
+        "startChar": 4,
+        "endLine": 100,
+        "endChar": 7
+      },
+      "revId": "8bbf121b110119b96310acfe79b2ff4ccc459742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -95,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "446e3f00_ef77e796",
+        "filename": "chrome/profiling/memlog_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-02T17:18:10Z",
+      "side": 1,
+      "message": "yup",
+      "parentUuid": "4b7fddfe_82b6f1b7",
+      "range": {
+        "startLine": 41,
+        "startChar": 4,
+        "endLine": 41,
+        "endChar": 7
+      },
+      "revId": "8bbf121b110119b96310acfe79b2ff4ccc459742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91caf1dc_76e91ad2",
         "filename": "chrome/profiling/memlog_impl.cc",
         "patchSetId": 4
@@ -115,6 +187,30 @@
       "revId": "8bbf121b110119b96310acfe79b2ff4ccc459742",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a01d7104_b6f5aa7a",
+        "filename": "chrome/profiling/memlog_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-02T17:18:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91caf1dc_76e91ad2",
+      "range": {
+        "startLine": 47,
+        "startChar": 32,
+        "endLine": 47,
+        "endChar": 74
+      },
+      "revId": "8bbf121b110119b96310acfe79b2ff4ccc459742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
