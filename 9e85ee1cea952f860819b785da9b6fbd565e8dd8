@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89c9bb82_3d049909",
+        "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlayback.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-08-02T04:24:21Z",
+      "side": 1,
+      "message": "A pointer to an int set to 0 looks pretty odd to me...\nAt the very least, |identifier| is confusing vs |id| used on the line above.",
+      "revId": "9e85ee1cea952f860819b785da9b6fbd565e8dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
