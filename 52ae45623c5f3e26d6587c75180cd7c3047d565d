@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0f60419_a518d9c6",
+        "filename": "content/child/service_worker/service_worker_network_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-02T08:14:56Z",
+      "side": 1,
+      "message": "I\u0027ve come to assume WrapUnique means the ctor is private, so maybe we can save lines of text by removing these... don\u0027t know if about the custom of the project as a whole though",
+      "revId": "52ae45623c5f3e26d6587c75180cd7c3047d565d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f37f1192_42f1533a",
+        "filename": "content/child/service_worker/service_worker_network_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-02T08:14:56Z",
+      "side": 1,
+      "message": "is worth doign something like?\n\n// This is only called for service worker clients.\nDCHECK(provider_type \u003d\u003d WINDOW || provdier_type \u003d\u003d SHARED_WORKER || provider_type \u003d\u003d WORKER))?",
+      "revId": "52ae45623c5f3e26d6587c75180cd7c3047d565d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75f672d7_95ce7901",
+        "filename": "content/child/service_worker/service_worker_network_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-02T08:14:56Z",
+      "side": 1,
+      "message": "maybe put \"controller\" in quotes and say \"i.e., a service worker execution context\"\n(since it\u0027s not necsesarily a controller, but it\u0027s the terminology provider/provider host has adopted so far)",
+      "revId": "52ae45623c5f3e26d6587c75180cd7c3047d565d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be960814_3656c4a1",
+        "filename": "content/child/service_worker/service_worker_network_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-02T08:14:56Z",
+      "side": 1,
+      "message": "Do dedicataed workers get a ServiceWorkerNetworkProvider? how is it made?",
+      "revId": "52ae45623c5f3e26d6587c75180cd7c3047d565d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63343746_38ae5617",
+        "filename": "content/child/service_worker/service_worker_network_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-02T08:14:56Z",
+      "side": 1,
+      "message": "worth saying something like \"|type| must be WINDOW, SHARED_WORKR, or WORKER. |is_parent_frame_secure\" is only releavant when type is WINDOW\"?",
+      "revId": "52ae45623c5f3e26d6587c75180cd7c3047d565d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
