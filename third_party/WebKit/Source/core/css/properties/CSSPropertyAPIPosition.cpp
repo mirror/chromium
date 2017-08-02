@@ -2,18 +2,21 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "core/css/properties/CSSPropertyAPIOpacity.h"
+#include "core/css/properties/CSSPropertyAPIPosition.h"
 
+#include "core/css/parser/CSSParserContext.h"
 #include "core/css/parser/CSSPropertyParserHelpers.h"
+#include "core/css/properties/CSSPropertyMarginUtils.h"
 
 class CSSParserLocalContext;
 namespace blink {
 
-const CSSValue* CSSPropertyAPIOpacity::parseSingleValue(
+const CSSValue* CSSPropertyAPIPosition::parseSingleValue(
     CSSParserTokenRange& range,
     const CSSParserContext& context,
     const CSSParserLocalContext&) {
-  return CSSPropertyParserHelpers::ConsumeNumber(range, kValueRangeAll);
+  return CSSPropertyMarginUtils::ConsumeMarginOrOffset(
+      range, context.Mode(), CSSPropertyParserHelpers::UnitlessQuirk::kAllow);
 }
 
 }  // namespace blink

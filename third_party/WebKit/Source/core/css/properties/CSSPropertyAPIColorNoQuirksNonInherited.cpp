@@ -2,20 +2,19 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "core/css/properties/CSSPropertyAPIStrokeOrLength.h"
+#include "core/css/properties/CSSPropertyAPIColorNoQuirksNonInherited.h"
 
+#include "core/css/parser/CSSParserContext.h"
 #include "core/css/parser/CSSPropertyParserHelpers.h"
 
-namespace blink {
 class CSSParserLocalContext;
+namespace blink {
 
-const CSSValue* CSSPropertyAPIStrokeOrLength::parseSingleValue(
+const CSSValue* CSSPropertyAPIColorNoQuirksNonInherited::parseSingleValue(
     CSSParserTokenRange& range,
-    const CSSParserContext&,
+    const CSSParserContext& context,
     const CSSParserLocalContext&) {
-  return CSSPropertyParserHelpers::ConsumeLengthOrPercent(
-      range, kSVGAttributeMode, kValueRangeAll,
-      CSSPropertyParserHelpers::UnitlessQuirk::kForbid);
+  return CSSPropertyParserHelpers::ConsumeColor(range, context.Mode());
 }
 
 }  // namespace blink
