@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55f28ad1_b7ed8f8d",
+        "filename": "content/public/browser/arc_tracing_agent.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-02T22:48:50Z",
+      "side": 1,
+      "message": "nit: use the guard-clause pattern:\n\n  if (!success) {\n    // In the event of a failure, we don\u0027t use PostTask, because the\n    // delegate_-\u003eStartTracing call will have already done it.\n    return;\n  }\n  // rest",
+      "range": {
+        "startLine": 155,
+        "startChar": 4,
+        "endLine": 155,
+        "endChar": 18
+      },
+      "revId": "ae1fa6bd91365b5438c34c57699b187c5fe075c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
