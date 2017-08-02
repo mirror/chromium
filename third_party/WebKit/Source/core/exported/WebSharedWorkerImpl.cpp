@@ -349,7 +349,7 @@ void WebSharedWorkerImpl::OnScriptLoaderFinished() {
   if (RuntimeEnabledFeatures::OffMainThreadFetchEnabled()) {
     std::unique_ptr<WebWorkerFetchContext> web_worker_fetch_context =
         client_->CreateWorkerFetchContext(
-            WebLocalFrameBase::FromFrame(main_frame_->GetFrame())
+            WebLocalFrameImpl::FromFrame(main_frame_->GetFrame())
                 ->GetDocumentLoader()
                 ->GetServiceWorkerNetworkProvider());
     DCHECK(web_worker_fetch_context);
