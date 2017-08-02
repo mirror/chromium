@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "244fc1bc_8664dc0f",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/common.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-08-02T02:45:19Z",
+      "side": 1,
+      "message": "I think this name is less precise since it\u0027s not clear what the method is testing the commit for - a more precise name could be _is_commit_exportable",
+      "revId": "a2242d98deb46856bbed1b07b44514383cf61fb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78c7a82f_1605cd05",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_importer.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-08-02T02:45:19Z",
+      "side": 1,
+      "message": "This isn\u0027t necessarily in the scope of this CL but does this need to be a separate method?",
+      "revId": "a2242d98deb46856bbed1b07b44514383cf61fb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
