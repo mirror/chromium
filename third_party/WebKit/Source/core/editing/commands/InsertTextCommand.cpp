@@ -84,7 +84,6 @@ void InsertTextCommand::SetEndingSelectionWithoutValidation(
       SelectionInDOMTree::Builder()
           .Collapse(start_position)
           .Extend(end_position)
-          .SetIsDirectional(EndingVisibleSelection().IsDirectional())
           .Build());
 }
 
@@ -109,7 +108,6 @@ bool InsertTextCommand::PerformTrivialReplace(const String& text,
   SetEndingSelection(
       SelectionInDOMTree::Builder()
           .Collapse(EndingVisibleSelection().End())
-          .SetIsDirectional(EndingVisibleSelection().IsDirectional())
           .Build());
   return true;
 }
@@ -139,7 +137,6 @@ bool InsertTextCommand::PerformOverwrite(const String& text,
   SetEndingSelection(
       SelectionInDOMTree::Builder()
           .Collapse(EndingVisibleSelection().End())
-          .SetIsDirectional(EndingVisibleSelection().IsDirectional())
           .Build());
   return true;
 }
@@ -289,7 +286,6 @@ void InsertTextCommand::DoApply(EditingState* editing_state) {
   if (!select_inserted_text_) {
     SelectionInDOMTree::Builder builder;
     builder.SetAffinity(EndingVisibleSelection().Affinity());
-    builder.SetIsDirectional(EndingVisibleSelection().IsDirectional());
     if (EndingVisibleSelection().End().IsNotNull())
       builder.Collapse(EndingVisibleSelection().End());
     SetEndingSelection(builder.Build());

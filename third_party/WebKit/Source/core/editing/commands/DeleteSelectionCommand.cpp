@@ -207,8 +207,8 @@ void DeleteSelectionCommand::SetStartingSelectionOnSmartDelete(
   SelectionInDOMTree::Builder builder;
   builder.SetAffinity(new_base.Affinity())
       .SetBaseAndExtentDeprecated(new_base.DeepEquivalent(),
-                                  new_extent.DeepEquivalent())
-      .SetIsDirectional(StartingVisibleSelection().IsDirectional());
+                                  new_extent.DeepEquivalent());
+  //     .SetIsDirectional(StartingVisibleSelection().IsDirectional());
   SetStartingSelection(CreateVisibleSelection(builder.Build()));
 }
 
@@ -1126,7 +1126,6 @@ void DeleteSelectionCommand::DoApply(EditingState* editing_state) {
     GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
     SelectionInDOMTree::Builder builder;
     builder.SetAffinity(affinity);
-    builder.SetIsDirectional(EndingVisibleSelection().IsDirectional());
     if (ending_position_.IsNotNull())
       builder.Collapse(ending_position_);
     SetEndingSelection(builder.Build());
@@ -1187,7 +1186,6 @@ void DeleteSelectionCommand::DoApply(EditingState* editing_state) {
 
   SelectionInDOMTree::Builder builder;
   builder.SetAffinity(affinity);
-  builder.SetIsDirectional(EndingVisibleSelection().IsDirectional());
   if (ending_position_.IsNotNull())
     builder.Collapse(ending_position_);
   SetEndingSelection(builder.Build());

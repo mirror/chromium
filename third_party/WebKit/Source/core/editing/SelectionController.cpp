@@ -80,7 +80,7 @@ SelectionInDOMTree ConvertToSelectionInDOMTree(
       .SetAffinity(selection_in_flat_tree.Affinity())
       .SetBaseAndExtent(ToPositionInDOMTree(selection_in_flat_tree.Base()),
                         ToPositionInDOMTree(selection_in_flat_tree.Extent()))
-      .SetIsDirectional(selection_in_flat_tree.IsDirectional())
+      //      .SetIsDirectional(selection_in_flat_tree.IsDirectional())
       .SetIsHandleVisible(selection_in_flat_tree.IsHandleVisible())
       .Build();
 }
@@ -814,11 +814,11 @@ void SelectionController::SetNonDirectionalSelectionIfNeeded(
     original_base_in_flat_tree_ = PositionInFlatTreeWithAffinity();
   }
 
-  builder.SetIsHandleVisible(handle_visibility == HandleVisibility::kVisible)
-      .SetIsDirectional(frame_->GetEditor()
+  builder.SetIsHandleVisible(handle_visibility == HandleVisibility::kVisible);
+  /*    .SetIsDirectional(frame_->GetEditor()
                             .Behavior()
                             .ShouldConsiderSelectionAsDirectional() ||
-                        new_selection.IsDirectional());
+                        new_selection.IsDirectional());*/
   const SelectionInFlatTree& selection_in_flat_tree = builder.Build();
   if (Selection().ComputeVisibleSelectionInFlatTree() ==
           CreateVisibleSelection(selection_in_flat_tree) &&
@@ -831,6 +831,9 @@ void SelectionController::SetNonDirectionalSelectionIfNeeded(
           .SetShouldClearTypingStyle(true)
           .SetCursorAlignOnScroll(CursorAlignOnScroll::kIfNeeded)
           .SetGranularity(granularity)
+          .SetIsDirectional(frame_->GetEditor()
+                                .Behavior()
+                                .ShouldConsiderSelectionAsDirectional())
           .Build());
 }
 

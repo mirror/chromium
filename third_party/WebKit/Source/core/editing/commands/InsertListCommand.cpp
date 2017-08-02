@@ -161,10 +161,10 @@ void InsertListCommand::DoApply(EditingState* editing_state) {
     const VisiblePosition& new_end =
         PreviousPositionOf(visible_end, kCannotCrossEditingBoundary);
     SelectionInDOMTree::Builder builder;
-    builder.SetIsDirectional(EndingVisibleSelection().IsDirectional());
     builder.Collapse(visible_start.ToPositionWithAffinity());
     if (new_end.IsNotNull())
       builder.Extend(new_end.DeepEquivalent());
+    SetCommandDirectional(false);
     SetEndingSelection(builder.Build());
     if (!EndingVisibleSelection().RootEditableElement())
       return;
@@ -222,6 +222,7 @@ void InsertListCommand::DoApply(EditingState* editing_state) {
         // and use it as the end of the new selection.
         if (!start_of_last_paragraph.IsConnected())
           return;
+        SetCommandDirectional(false);
         SetEndingSelection(
             SelectionInDOMTree::Builder()
                 .Collapse(start_of_current_paragraph.DeepEquivalent())
@@ -263,6 +264,7 @@ void InsertListCommand::DoApply(EditingState* editing_state) {
         start_of_current_paragraph =
             StartOfNextParagraph(EndingVisibleSelection().VisibleStart());
       }
+      SetCommandDirectional(false);
       SetEndingSelection(
           SelectionInDOMTree::Builder()
               .Collapse(visible_end_of_selection.DeepEquivalent())
@@ -300,7 +302,6 @@ void InsertListCommand::DoApply(EditingState* editing_state) {
             .SetBaseAndExtentDeprecated(
                 visible_start_of_selection.DeepEquivalent(),
                 visible_end_of_selection.DeepEquivalent())
-            .SetIsDirectional(EndingVisibleSelection().IsDirectional())
             .Build());
     return;
   }
@@ -427,7 +428,7 @@ bool InsertListCommand::DoApplyForSingleParagraph(
                                  Position::LastOffsetInNode(*new_list),
                                  IGNORE_EXCEPTION_FOR_TESTING);
       }
-
+      SetCommandDirectional(false);
       SetEndingSelection(SelectionInDOMTree::Builder()
                              .Collapse(Position::FirstPositionInNode(*new_list))
                              .Build());

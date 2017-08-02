@@ -86,6 +86,7 @@ CompositeEditCommand::CompositeEditCommand(Document& document)
                            ->Selection()
                            .ComputeVisibleSelectionInDOMTreeDeprecated());
   SetEndingVisibleSelection(starting_selection_);
+  is_directional_ = document.GetFrame()->Selection().IsDirectional();
 }
 
 CompositeEditCommand::~CompositeEditCommand() {
@@ -208,6 +209,8 @@ void CompositeEditCommand::ApplyCommandToComposite(
   if (selection != command->EndingVisibleSelection()) {
     command->SetStartingSelection(selection);
     command->SetEndingVisibleSelection(selection);
+    command->is_directional_ =
+        is_directional_;  // this is only called from one place.
   }
   command->DoApply(editing_state);
   if (!editing_state->IsAborted())
@@ -1090,7 +1093,7 @@ void CompositeEditCommand::PushAnchorElementDown(Element* anchor_node,
     return;
 
   DCHECK(anchor_node->IsLink()) << anchor_node;
-
+  SetCommandDirectional(false);
   SetEndingSelection(
       SelectionInDOMTree::Builder().SelectAllChildren(*anchor_node).Build());
   ApplyStyledElement(anchor_node, editing_state);
@@ -1287,7 +1290,7 @@ void CompositeEditCommand::MoveParagraphWithClones(
 
   CloneParagraphUnderNewElement(start, end, outer_node, block_element,
                                 editing_state);
-
+  SetCommandDirectional(false);
   SetEndingSelection(
       SelectionInDOMTree::Builder().Collapse(start).Extend(end).Build());
   DeleteSelection(editing_state, false, false, false);
@@ -1375,7 +1378,7 @@ void CompositeEditCommand::MoveParagraphs(
   int start_index = -1;
   int end_index = -1;
   int destination_index = -1;
-  bool original_is_directional = EndingVisibleSelection().IsDirectional();
+  // bool original_is_directional = EndingVisibleSelection().IsDirectional();
   if (should_preserve_selection == kPreserveSelection &&
       !EndingVisibleSelection().IsNone()) {
     VisiblePosition visible_start = EndingVisibleSelection().VisibleStart();
@@ -1465,6 +1468,7 @@ void CompositeEditCommand::MoveParagraphs(
 
   const SelectionInDOMTree& selection_to_delete =
       SelectionInDOMTree::Builder().Collapse(start).Extend(end).Build();
+  SetCommandDirectional(false);
   SetEndingSelection(selection_to_delete);
   DeleteSelection(editing_state, false, false, false);
   if (editing_state->IsAborted())
@@ -1513,7 +1517,6 @@ void CompositeEditCommand::MoveParagraphs(
   const SelectionInDOMTree& destination_selection =
       SelectionInDOMTree::Builder()
           .Collapse(destination.ToPositionWithAffinity())
-          .SetIsDirectional(original_is_directional)
           .Build();
   if (EndingVisibleSelection().IsNone()) {
     // We abort executing command since |destination| becomes invisible.
@@ -1576,7 +1579,6 @@ void CompositeEditCommand::MoveParagraphs(
   SetEndingSelection(SelectionInDOMTree::Builder()
                          .Collapse(start_range.StartPosition())
                          .Extend(end_range.StartPosition())
-                         .SetIsDirectional(original_is_directional)
                          .Build());
 }
 
@@ -1682,7 +1684,6 @@ bool CompositeEditCommand::BreakOutOfEmptyListItem(
   SetEndingSelection(
       SelectionInDOMTree::Builder()
           .Collapse(Position::FirstPositionInNode(*new_block))
-          .SetIsDirectional(EndingVisibleSelection().IsDirectional())
           .Build());
 
   style->PrepareToApplyAt(EndingVisibleSelection().Start());
@@ -1745,7 +1746,6 @@ bool CompositeEditCommand::BreakOutOfEmptyMailBlockquotedParagraph(
   SetEndingSelection(
       SelectionInDOMTree::Builder()
           .Collapse(at_br.ToPositionWithAffinity())
-          .SetIsDirectional(EndingVisibleSelection().IsDirectional())
           .Build());
 
   // If this is an empty paragraph there must be a line break here.
@@ -1931,7 +1931,9 @@ void CompositeEditCommand::SetEndingVisibleSelection(
     if (UndoStep* undo_step = command->GetUndoStep()) {
       DCHECK(command->IsTopLevelCommand());
       undo_step->SetEndingSelection(selection);
+      undo_step->SetIsDirectional(is_directional_);
     }
+    command->SetCommandDirectional(is_directional_);
     command->ending_selection_ = selection;
   }
 }

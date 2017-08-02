@@ -58,6 +58,12 @@ class CORE_EXPORT CompositeEditCommand : public EditCommand {
 
   void SetStartingSelection(const VisibleSelection&);
   void SetEndingSelection(const SelectionInDOMTree&);
+
+  bool Directional() { return is_directional_; }
+  void SetCommandDirectional(bool directional) {
+    is_directional_ = directional;
+  }
+
   // TODO(yosin): |setEndingVisibleSelection()| will take |SelectionInUndoStep|
   // You should not use this function other than copying existing selection.
   void SetEndingVisibleSelection(const VisibleSelection&);
@@ -231,6 +237,7 @@ class CORE_EXPORT CompositeEditCommand : public EditCommand {
   VisibleSelection starting_selection_;
   VisibleSelection ending_selection_;
   Member<UndoStep> undo_step_;
+  bool is_directional_ = false;
 };
 
 DEFINE_TYPE_CASTS(CompositeEditCommand,

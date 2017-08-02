@@ -14,7 +14,6 @@ SelectionTemplate<Strategy>::SelectionTemplate(const SelectionTemplate& other)
     : base_(other.base_),
       extent_(other.extent_),
       affinity_(other.affinity_),
-      is_directional_(other.is_directional_),
       is_handle_visible_(other.is_handle_visible_)
 #if DCHECK_IS_ON()
       ,
@@ -39,7 +38,6 @@ bool SelectionTemplate<Strategy>::operator==(
   DCHECK_EQ(base_.GetDocument(), other.GetDocument()) << *this << ' ' << other;
   return base_ == other.base_ && extent_ == other.extent_ &&
          affinity_ == other.affinity_ &&
-         is_directional_ == other.is_directional_ &&
          is_handle_visible_ == other.is_handle_visible_;
 }
 
@@ -296,13 +294,6 @@ SelectionTemplate<Strategy>::Builder::SetBaseAndExtentDeprecated(
   if (extent.IsNotNull())
     return Collapse(extent);
   return SetBaseAndExtent(EphemeralRangeTemplate<Strategy>());
-}
-
-template <typename Strategy>
-typename SelectionTemplate<Strategy>::Builder&
-SelectionTemplate<Strategy>::Builder::SetIsDirectional(bool is_directional) {
-  selection_.is_directional_ = is_directional;
-  return *this;
 }
 
 template <typename Strategy>

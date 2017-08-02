@@ -109,7 +109,7 @@ SelectionInDOMTree CreateSelection(const size_t start,
   const SelectionInDOMTree& selection =
       SelectionInDOMTree::Builder()
           .SetBaseAndExtent(start_position, end_position)
-          .SetIsDirectional(is_directional)
+          //          .SetIsDirectional(is_directional)
           .Build();
   return selection;
 }
@@ -257,6 +257,7 @@ void TypingCommand::UpdateSelectionIfDifferentFromCurrentSelection(
   if (current_selection == typing_command->EndingVisibleSelection())
     return;
 
+  typing_command->SetCommandDirectional(frame->Selection().IsDirectional());
   typing_command->SetStartingSelection(current_selection);
   typing_command->SetEndingVisibleSelection(current_selection);
 }
@@ -275,7 +276,9 @@ void TypingCommand::InsertText(Document& document,
         .UpdateMarkersForWordsAffectedByEditing(IsSpaceOrNewline(text[0]));
 
   InsertText(document, text, frame->Selection().GetSelectionInDOMTree(),
-             options, composition, is_incremental_insertion);
+             options, composition, is_incremental_insertion,
+             InputEvent::InputType::kInsertText,
+             frame->Selection().IsDirectional());
 }
 
 void TypingCommand::AdjustSelectionAfterIncrementalInsertion(
@@ -297,14 +300,13 @@ void TypingCommand::AdjustSelectionAfterIncrementalInsertion(
   const size_t end = selection_start + text_length;
   const size_t start =
       CompositionType() == kTextCompositionUpdate ? selection_start : end;
-  const SelectionInDOMTree& selection = CreateSelection(
-      start, end, EndingVisibleSelection().IsDirectional(), element);
+  const SelectionInDOMTree& selection =
+      CreateSelection(start, end, Directional(), element);
 
   if (selection == frame->Selection()
                        .ComputeVisibleSelectionInDOMTreeDeprecated()
                        .AsSelection())
     return;
-
   SetEndingSelection(selection);
   frame->Selection().SetSelection(selection);
 }
@@ -318,7 +320,8 @@ void TypingCommand::InsertText(
     Options options,
     TextCompositionType composition_type,
     const bool is_incremental_insertion,
-    InputEvent::InputType input_type) {
+    InputEvent::InputType input_type,
+    bool directional) {
   LocalFrame* frame = document.GetFrame();
   DCHECK(frame);
 
@@ -358,6 +361,7 @@ void TypingCommand::InsertText(
           LastTypingCommandIfStillOpenForTyping(frame)) {
     if (last_typing_command->EndingVisibleSelection() !=
         selection_for_insertion) {
+      last_typing_command->SetCommandDirectional(directional);
       last_typing_command->SetStartingSelection(selection_for_insertion);
       last_typing_command->SetEndingVisibleSelection(selection_for_insertion);
     }
@@ -382,6 +386,7 @@ void TypingCommand::InsertText(
       document, kInsertText, new_text, options, composition_type);
   bool change_selection = selection_for_insertion != current_selection;
   if (change_selection) {
+    command->SetCommandDirectional(directional);
     command->SetStartingSelection(selection_for_insertion);
     command->SetEndingVisibleSelection(selection_for_insertion);
   }
@@ -391,8 +396,11 @@ void TypingCommand::InsertText(
   command->Apply();
 
   if (change_selection) {
+    command->SetCommandDirectional(directional);
     command->SetEndingVisibleSelection(current_selection);
-    frame->Selection().SetSelection(current_selection.AsSelection());
+    frame->Selection().SetSelection(
+        current_selection.AsSelection(),
+        SetSelectionData::Builder().SetIsDirectional(directional).Build());
   }
 }
 
@@ -693,7 +701,6 @@ bool TypingCommand::MakeEditableRootEmpty(EditingState* editing_state) {
   SetEndingSelection(
       SelectionInDOMTree::Builder()
           .Collapse(Position::FirstPositionInNode(*root))
-          .SetIsDirectional(EndingVisibleSelection().IsDirectional())
           .Build());
 
   return true;
@@ -749,7 +756,8 @@ void TypingCommand::DeleteKeyPressed(TextGranularity granularity,
   smart_delete_ = false;
   GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
 
-  SelectionModifier selection_modifier(*frame, EndingVisibleSelection());
+  SelectionModifier selection_modifier(*frame, EndingVisibleSelection(),
+                                       Directional());
   selection_modifier.Modify(SelectionModifyAlteration::kExtend,
                             SelectionModifyDirection::kBackward, granularity);
   if (kill_ring && selection_modifier.Selection().IsCaret() &&
@@ -819,7 +827,6 @@ void TypingCommand::DeleteKeyPressed(TextGranularity granularity,
         SelectionInDOMTree::Builder()
             .Collapse(Position::BeforeNode(*table))
             .Extend(EndingVisibleSelection().Start())
-            .SetIsDirectional(EndingVisibleSelection().IsDirectional())
             .Build());
     TypingAddedToOpenCommand(kDeleteKey);
     return;
@@ -924,7 +931,8 @@ void TypingCommand::ForwardDeleteKeyPressed(TextGranularity granularity,
   // Handle delete at beginning-of-block case.
   // Do nothing in the case that the caret is at the start of a
   // root editable element or at the start of a document.
-  SelectionModifier selection_modifier(*frame, EndingVisibleSelection());
+  SelectionModifier selection_modifier(*frame, EndingVisibleSelection(),
+                                       Directional());
   selection_modifier.Modify(SelectionModifyAlteration::kExtend,
                             SelectionModifyDirection::kForward, granularity);
   if (kill_ring && selection_modifier.Selection().IsCaret() &&
@@ -959,7 +967,6 @@ void TypingCommand::ForwardDeleteKeyPressed(TextGranularity granularity,
             .SetBaseAndExtentDeprecated(
                 EndingVisibleSelection().End(),
                 Position::AfterNode(*downstream_end.ComputeContainerNode()))
-            .SetIsDirectional(EndingVisibleSelection().IsDirectional())
             .Build());
     TypingAddedToOpenCommand(kForwardDeleteKey);
     return;

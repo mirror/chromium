@@ -47,8 +47,9 @@ class SelectionModifier {
   // |frame| is used for providing settings.
   SelectionModifier(const LocalFrame& /* frame */,
                     const VisibleSelection&,
-                    LayoutUnit);
-  SelectionModifier(const LocalFrame&, const VisibleSelection&);
+                    LayoutUnit,
+                    bool);
+  SelectionModifier(const LocalFrame&, const VisibleSelection&, bool);
 
   LayoutUnit XPosForVerticalArrowNavigation() const {
     return x_pos_for_vertical_arrow_navigation_;
@@ -61,6 +62,8 @@ class SelectionModifier {
   bool ModifyWithPageGranularity(SelectionModifyAlteration,
                                  unsigned vertical_distance,
                                  SelectionModifyVerticalDirection);
+
+  bool Directional() { return is_directional_; }
 
  private:
   LocalFrame* GetFrame() const { return frame_; }
@@ -99,7 +102,7 @@ class SelectionModifier {
   Member<LocalFrame> frame_;
   VisibleSelection selection_;
   LayoutUnit x_pos_for_vertical_arrow_navigation_;
-
+  bool is_directional_ = false;
   DISALLOW_COPY_AND_ASSIGN(SelectionModifier);
 };
 

@@ -136,7 +136,6 @@ void BreakBlockquoteCommand::DoApply(EditingState* editing_state) {
     SetEndingSelection(
         SelectionInDOMTree::Builder()
             .Collapse(Position::BeforeNode(*break_element))
-            .SetIsDirectional(EndingVisibleSelection().IsDirectional())
             .Build());
     RebalanceWhitespace();
     return;
@@ -155,7 +154,6 @@ void BreakBlockquoteCommand::DoApply(EditingState* editing_state) {
     SetEndingSelection(
         SelectionInDOMTree::Builder()
             .Collapse(Position::BeforeNode(*break_element))
-            .SetIsDirectional(EndingVisibleSelection().IsDirectional())
             .Build());
     RebalanceWhitespace();
     return;
@@ -201,7 +199,6 @@ void BreakBlockquoteCommand::DoApply(EditingState* editing_state) {
     SetEndingSelection(
         SelectionInDOMTree::Builder()
             .Collapse(FirstPositionInOrBeforeNode(start_node))
-            .SetIsDirectional(EndingVisibleSelection().IsDirectional())
             .Build());
     return;
   }
@@ -287,7 +284,6 @@ void BreakBlockquoteCommand::DoApply(EditingState* editing_state) {
   SetEndingSelection(
       SelectionInDOMTree::Builder()
           .Collapse(Position::BeforeNode(*break_element))
-          .SetIsDirectional(EndingVisibleSelection().IsDirectional())
           .Build());
   RebalanceWhitespace();
 }

@@ -106,11 +106,11 @@ VisibleSelection ComputeSelectionForInsertion(
   CharacterIterator char_it(selection_range);
   const EphemeralRange& range_for_insertion =
       char_it.CalculateCharacterSubrange(offset, length);
-  const VisibleSelection& selection =
-      CreateVisibleSelection(SelectionInDOMTree::Builder()
-                                 .SetBaseAndExtent(range_for_insertion)
-                                 .SetIsDirectional(is_directional)
-                                 .Build());
+  const VisibleSelection& selection = CreateVisibleSelection(
+      SelectionInDOMTree::Builder()
+          .SetBaseAndExtent(range_for_insertion)
+          //                                 .SetIsDirectional(is_directional)
+          .Build());
   return selection;
 }
 
@@ -160,7 +160,7 @@ void InsertIncrementalTextCommand::DoApply(EditingState* editing_state) {
                                       common_suffix_length);
   const VisibleSelection& selection_for_insertion =
       ComputeSelectionForInsertion(selection_range, offset, length,
-                                   EndingVisibleSelection().IsDirectional());
+                                   Directional());
 
   SetEndingSelectionWithoutValidation(selection_for_insertion.Start(),
                                       selection_for_insertion.End());

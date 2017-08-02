@@ -141,6 +141,7 @@ class CORE_EXPORT TextControlElement : public HTMLFormControlElementWithState {
   Node* CreatePlaceholderBreakElement() const;
 
   String DirectionForFormData() const;
+  bool IsDirectional() { return is_directional_; }
 
  protected:
   TextControlElement(const QualifiedName&, Document&);
@@ -202,7 +203,7 @@ class CORE_EXPORT TextControlElement : public HTMLFormControlElementWithState {
   unsigned cached_selection_start_;
   unsigned cached_selection_end_;
   TextFieldSelectionDirection cached_selection_direction_;
-
+  mutable bool is_directional_ = false;
   FRIEND_TEST_ALL_PREFIXES(TextControlElementTest, IndexForPosition);
 };
 

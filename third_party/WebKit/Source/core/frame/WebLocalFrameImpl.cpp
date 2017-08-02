@@ -1214,7 +1214,6 @@ void WebLocalFrameImpl::SelectRange(
                              .SetBaseAndExtent(range)
                              .SetAffinity(VP_DEFAULT_AFFINITY)
                              .SetIsHandleVisible(show_handles)
-                             .SetIsDirectional(false)
                              .Build(),
                          SetSelectionData());
 }

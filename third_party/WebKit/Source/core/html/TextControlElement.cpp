@@ -438,12 +438,13 @@ bool TextControlElement::SetSelectionRange(
                         : start_position)
           .Extend(direction == kSelectionHasBackwardDirection ? start_position
                                                               : end_position)
-          .SetIsDirectional(direction != kSelectionHasNoDirection)
+          //          .SetIsDirectional(direction != kSelectionHasNoDirection)
           .Build(),
       SetSelectionData::Builder()
           .SetShouldCloseTyping(true)
           .SetShouldClearTypingStyle(true)
           .SetDoNotSetFocus(true)
+          .SetIsDirectional(direction != kSelectionHasNoDirection)
           .Build());
   return did_change;
 }
@@ -618,13 +619,15 @@ SelectionInDOMTree TextControlElement::Selection() const {
 
   DCHECK_LE(start, end);
   HTMLElement* inner_text = InnerEditorElement();
-  if (!inner_text)
+  if (!inner_text) {
+    is_directional_ = false;
     return SelectionInDOMTree();
+  }
 
   if (!inner_text->HasChildren()) {
+    is_directional_ = selectionDirection() != "none";
     return SelectionInDOMTree::Builder()
         .Collapse(Position(inner_text, 0))
-        .SetIsDirectional(selectionDirection() != "none")
         .Build();
   }
 
@@ -647,12 +650,13 @@ SelectionInDOMTree TextControlElement::Selection() const {
     offset += length;
   }
 
-  if (!start_node || !end_node)
+  if (!start_node || !end_node) {
+    is_directional_ = false;
     return SelectionInDOMTree();
-
+  }
+  is_directional_ = selectionDirection() != "none";
   return SelectionInDOMTree::Builder()
       .SetBaseAndExtent(Position(start_node, start), Position(end_node, end))
-      .SetIsDirectional(selectionDirection() != "none")
       .Build();
 }
 

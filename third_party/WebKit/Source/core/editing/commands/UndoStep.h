@@ -67,6 +67,8 @@ class UndoStep : public GarbageCollectedFinalized<UndoStep> {
 
   uint64_t SequenceNumber() const { return sequence_number_; }
 
+  bool Directional() { return is_directional_; }
+  void SetIsDirectional(bool directional) { is_directional_ = directional; }
   DECLARE_TRACE();
 
  private:
@@ -83,6 +85,7 @@ class UndoStep : public GarbageCollectedFinalized<UndoStep> {
   Member<Element> ending_root_editable_element_;
   InputEvent::InputType input_type_;
   const uint64_t sequence_number_;
+  bool is_directional_ = false;
 };
 
 }  // namespace blink

@@ -724,10 +724,11 @@ TEST_F(GranularityStrategyTest, UpdateExtentWithNullPositionForCharacter) {
   const SelectionInDOMTree& selection_in_dom_tree =
       SelectionInDOMTree::Builder()
           .Collapse(Position(sample->firstChild(), 2))
-          .SetIsDirectional(true)
           .SetIsHandleVisible(true)
           .Build();
-  Selection().SetSelection(selection_in_dom_tree);
+  Selection().SetSelection(
+      selection_in_dom_tree,
+      SetSelectionData::Builder().SetIsDirectional(true).Build());
 
   // Since, it is not obvious that |visiblePositionForContentsPoint()| returns
   // null position, we verify here.
@@ -756,10 +757,11 @@ TEST_F(GranularityStrategyTest, UpdateExtentWithNullPositionForDirectional) {
   const SelectionInDOMTree& selection_in_dom_tree =
       SelectionInDOMTree::Builder()
           .Collapse(Position(sample->firstChild(), 2))
-          .SetIsDirectional(true)
           .SetIsHandleVisible(true)
           .Build();
-  Selection().SetSelection(selection_in_dom_tree);
+  Selection().SetSelection(
+      selection_in_dom_tree,
+      SetSelectionData::Builder().SetIsDirectional(true).Build());
 
   // Since, it is not obvious that |visiblePositionForContentsPoint()| returns
   // null position, we verify here.

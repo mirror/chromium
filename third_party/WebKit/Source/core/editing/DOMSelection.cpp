@@ -78,7 +78,8 @@ bool DOMSelection::IsAvailable() const {
 }
 
 void DOMSelection::UpdateFrameSelection(const SelectionInDOMTree& selection,
-                                        Range* new_cached_range) const {
+                                        Range* new_cached_range,
+                                        bool directional) const {
   DCHECK(GetFrame());
   FrameSelection& frame_selection = GetFrame()->Selection();
   // TODO(tkent): Specify FrameSelection::DoNotSetFocus. crbug.com/690272
@@ -86,6 +87,7 @@ void DOMSelection::UpdateFrameSelection(const SelectionInDOMTree& selection,
       selection, SetSelectionData::Builder()
                      .SetShouldCloseTyping(true)
                      .SetShouldClearTypingStyle(true)
+                     .SetIsDirectional(directional)
                      .Build());
   CacheRangeIfSelectionOfDocument(new_cached_range);
   if (!did_set)
@@ -285,9 +287,9 @@ void DOMSelection::collapse(Node* node,
   UpdateFrameSelection(
       SelectionInDOMTree::Builder()
           .Collapse(Position(node, offset))
-          .SetIsDirectional(GetFrame()->Selection().IsDirectional())
+          //    .SetIsDirectional(GetFrame()->Selection().IsDirectional())
           .Build(),
-      new_range);
+      new_range, GetFrame()->Selection().IsDirectional());
 }
 
 // https://www.w3.org/TR/selection-api/#dom-selection-collapsetoend
@@ -412,9 +414,9 @@ void DOMSelection::setBaseAndExtent(Node* base_node,
   UpdateFrameSelection(
       SelectionInDOMTree::Builder()
           .SetBaseAndExtentDeprecated(base_position, extent_position)
-          .SetIsDirectional(true)
+          //         .SetIsDirectional(true)
           .Build(),
-      new_range);
+      new_range, true);
 }
 
 void DOMSelection::modify(const String& alter_string,
@@ -541,7 +543,7 @@ void DOMSelection::extend(Node* node,
     builder.Collapse(new_focus);
   else
     builder.Collapse(old_anchor).Extend(new_focus);
-  UpdateFrameSelection(builder.SetIsDirectional(true).Build(), new_range);
+  UpdateFrameSelection(builder.Build(), new_range, true);
 }
 
 Range* DOMSelection::getRangeAt(unsigned index,

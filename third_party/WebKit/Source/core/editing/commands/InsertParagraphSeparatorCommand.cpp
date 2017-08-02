@@ -335,11 +335,10 @@ void InsertParagraphSeparatorCommand::DoApply(EditingState* editing_state) {
     AppendBlockPlaceholder(parent, editing_state);
     if (editing_state->IsAborted())
       return;
-
+    SetCommandDirectional(false);
     SetEndingSelection(
         SelectionInDOMTree::Builder()
             .Collapse(Position::FirstPositionInNode(*parent))
-            .SetIsDirectional(EndingVisibleSelection().IsDirectional())
             .Build());
     return;
   }
@@ -413,7 +412,6 @@ void InsertParagraphSeparatorCommand::DoApply(EditingState* editing_state) {
     SetEndingSelection(
         SelectionInDOMTree::Builder()
             .Collapse(insertion_position)
-            .SetIsDirectional(EndingVisibleSelection().IsDirectional())
             .Build());
     return;
   }
@@ -440,7 +438,6 @@ void InsertParagraphSeparatorCommand::DoApply(EditingState* editing_state) {
       SetEndingSelection(
           SelectionInDOMTree::Builder()
               .Collapse(insertion_position)
-              .SetIsDirectional(EndingVisibleSelection().IsDirectional())
               .Build());
       return;
     }
@@ -593,7 +590,6 @@ void InsertParagraphSeparatorCommand::DoApply(EditingState* editing_state) {
   SetEndingSelection(
       SelectionInDOMTree::Builder()
           .Collapse(Position::FirstPositionInNode(*block_to_insert))
-          .SetIsDirectional(EndingVisibleSelection().IsDirectional())
           .Build());
   ApplyStyleAfterInsertion(start_block, editing_state);
 }

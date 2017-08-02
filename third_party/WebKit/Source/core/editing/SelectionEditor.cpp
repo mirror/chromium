@@ -58,7 +58,7 @@ void SelectionEditor::ClearVisibleSelection() {
   cached_visible_selection_in_flat_tree_is_dirty_ = false;
   if (!ShouldAlwaysUseDirectionalSelection())
     return;
-  selection_.is_directional_ = true;
+  // selection_.is_directional_ = true;
 }
 
 void SelectionEditor::Dispose() {
@@ -113,8 +113,8 @@ void SelectionEditor::MarkCacheDirty() {
 
 void SelectionEditor::SetSelection(const SelectionInDOMTree& new_selection) {
   new_selection.AssertValidFor(GetDocument());
-  if (selection_ == new_selection)
-    return;
+  // if (selection_ == new_selection)
+  //   return;
   ClearDocumentCachedRange();
   MarkCacheDirty();
   selection_ = new_selection;
@@ -402,8 +402,8 @@ void SelectionEditor::UpdateCachedVisibleSelectionInFlatTreeIfNeeded() const {
     builder.Collapse(base);
   else if (extent.IsNotNull())
     builder.Collapse(extent);
-  builder.SetAffinity(selection_.Affinity())
-      .SetIsDirectional(selection_.IsDirectional());
+  builder.SetAffinity(selection_.Affinity());
+  //     .SetIsDirectional(selection_.IsDirectional());
   cached_visible_selection_in_flat_tree_ =
       CreateVisibleSelection(builder.Build());
   if (!cached_visible_selection_in_flat_tree_.IsNone())

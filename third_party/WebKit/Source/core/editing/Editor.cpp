@@ -189,6 +189,7 @@ Editor::RevealSelectionScope::~RevealSelectionScope() {
 VisibleSelection Editor::SelectionForCommand(Event* event) {
   VisibleSelection selection =
       GetFrame().Selection().ComputeVisibleSelectionInDOMTree();
+  is_directional_ = GetFrame().Selection().IsDirectional();
   if (!event)
     return selection;
   // If the target is a text control, and the current selection is outside of
@@ -203,8 +204,10 @@ VisibleSelection Editor::SelectionForCommand(Event* event) {
       (selection.Start().IsNull() ||
        text_control_of_target != text_control_of_selection_start)) {
     const SelectionInDOMTree& select = text_control_of_target->Selection();
-    if (!select.IsNone())
+    if (!select.IsNone()) {
+      is_directional_ = text_control_of_target->IsDirectional();
       return CreateVisibleSelection(select);
+    }
   }
   return selection;
 }
@@ -959,6 +962,10 @@ void Editor::AppliedEditing(CompositeEditCommand* cmd) {
     // Only register undo entry when combined with other commands.
     if (!last_edit_command_->GetUndoStep())
       undo_stack_->RegisterUndoStep(last_edit_command_->EnsureUndoStep());
+
+    last_edit_command_->EnsureUndoStep()->SetIsDirectional(
+        cmd->EnsureUndoStep()->Directional());
+
     last_edit_command_->EnsureUndoStep()->SetEndingSelection(
         cmd->EnsureUndoStep()->EndingSelection());
     last_edit_command_->AppendCommandToUndoStep(cmd);
@@ -1068,7 +1075,7 @@ bool Editor::InsertTextWithoutSendingTextEvent(
       triggering_event && triggering_event->IsComposition()
           ? TypingCommand::kTextCompositionConfirm
           : TypingCommand::kTextCompositionNone,
-      false, input_type);
+      false, input_type, Directional());
 
   // Reveal the current selection
   if (LocalFrame* edited_frame = selection.Start().GetDocument()->GetFrame()) {

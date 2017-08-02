@@ -44,16 +44,13 @@ template <typename Strategy>
 VisibleSelectionTemplate<Strategy>::VisibleSelectionTemplate()
     : affinity_(TextAffinity::kDownstream),
       selection_type_(kNoSelection),
-      base_is_first_(true),
-      is_directional_(false) {}
+      base_is_first_(true) {}
 
 template <typename Strategy>
 VisibleSelectionTemplate<Strategy>::VisibleSelectionTemplate(
     const SelectionTemplate<Strategy>& selection,
     TextGranularity granularity)
-    : affinity_(selection.Affinity()),
-      selection_type_(kNoSelection),
-      is_directional_(selection.IsDirectional()) {
+    : affinity_(selection.Affinity()), selection_type_(kNoSelection) {
   Validate(selection, granularity);
 }
 
@@ -116,8 +113,7 @@ VisibleSelectionTemplate<Strategy>::VisibleSelectionTemplate(
       extent_(other.extent_),
       affinity_(other.affinity_),
       selection_type_(other.selection_type_),
-      base_is_first_(other.base_is_first_),
-      is_directional_(other.is_directional_) {}
+      base_is_first_(other.base_is_first_) {}
 
 template <typename Strategy>
 VisibleSelectionTemplate<Strategy>& VisibleSelectionTemplate<Strategy>::
@@ -127,7 +123,6 @@ operator=(const VisibleSelectionTemplate<Strategy>& other) {
   affinity_ = other.affinity_;
   selection_type_ = other.selection_type_;
   base_is_first_ = other.base_is_first_;
-  is_directional_ = other.is_directional_;
   return *this;
 }
 
@@ -138,7 +133,6 @@ SelectionTemplate<Strategy> VisibleSelectionTemplate<Strategy>::AsSelection()
   if (base_.IsNotNull())
     builder.SetBaseAndExtent(base_, extent_);
   return builder.SetAffinity(affinity_)
-      .SetIsDirectional(is_directional_)
       .Build();
 }
 
@@ -782,8 +776,7 @@ template <typename Strategy>
 static bool EqualSelectionsAlgorithm(
     const VisibleSelectionTemplate<Strategy>& selection1,
     const VisibleSelectionTemplate<Strategy>& selection2) {
-  if (selection1.Affinity() != selection2.Affinity() ||
-      selection1.IsDirectional() != selection2.IsDirectional())
+  if (selection1.Affinity() != selection2.Affinity())
     return false;
 
   if (selection1.IsNone())
@@ -842,7 +835,6 @@ void VisibleSelectionTemplate<Strategy>::PrintTo(
            << " extent:" << selection.Extent()
            << " start: " << selection.Start() << " end: " << selection.End()
            << ' ' << selection.Affinity() << ' '
-           << (selection.IsDirectional() ? "Directional" : "NonDirectional")
            << ')';
 }
 

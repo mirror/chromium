@@ -79,7 +79,8 @@ class CORE_EXPORT TypingCommand final : public CompositeEditCommand {
       Options,
       TextCompositionType = kTextCompositionNone,
       const bool is_incremental_insertion = false,
-      InputEvent::InputType = InputEvent::InputType::kInsertText);
+      InputEvent::InputType = InputEvent::InputType::kInsertText,
+      bool is_directional = false);
   static bool InsertLineBreak(Document&);
   static bool InsertParagraphSeparator(Document&);
   static bool InsertParagraphSeparatorInQuotedContent(Document&);

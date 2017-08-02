@@ -1084,6 +1084,7 @@ void ReplaceSelectionCommand::DoApply(EditingState* editing_state) {
       if (IsEndOfParagraph(start_after_delete) &&
           !IsStartOfParagraph(start_after_delete) &&
           !IsEndOfEditableOrNonEditableContent(start_after_delete)) {
+        SetCommandDirectional(false);
         SetEndingSelection(
             SelectionInDOMTree::Builder()
                 .Collapse(NextPositionOf(start_after_delete).DeepEquivalent())
@@ -1101,6 +1102,7 @@ void ReplaceSelectionCommand::DoApply(EditingState* editing_state) {
           NextPositionOf(visible_start, kCannotCrossEditingBoundary);
       if (IsEndOfParagraph(visible_start) &&
           !IsStartOfParagraph(visible_start) && next.IsNotNull()) {
+        SetCommandDirectional(false);
         SetEndingSelection(SelectionInDOMTree::Builder()
                                .Collapse(next.DeepEquivalent())
                                .Build());
@@ -1132,6 +1134,7 @@ void ReplaceSelectionCommand::DoApply(EditingState* editing_state) {
       if (editing_state->IsAborted())
         return;
       GetDocument().UpdateStyleAndLayoutIgnorePendingStylesheets();
+      SetCommandDirectional(false);
       SetEndingSelection(
           SelectionInDOMTree::Builder()
               .Collapse(
@@ -1524,6 +1527,7 @@ void ReplaceSelectionCommand::DoApply(EditingState* editing_state) {
           if (editing_state->IsAborted())
             return;
         }
+        SetCommandDirectional(false);
         SetEndingSelection(SelectionInDOMTree::Builder()
                                .Collapse(Position::AfterNode(
                                    *inserted_nodes.LastLeafInserted()))
@@ -1532,6 +1536,7 @@ void ReplaceSelectionCommand::DoApply(EditingState* editing_state) {
         last_position_to_select =
             EndingVisibleSelection().VisibleStart().DeepEquivalent();
       } else if (!IsStartOfParagraph(end_of_inserted_content)) {
+        SetCommandDirectional(false);
         SetEndingSelection(
             SelectionInDOMTree::Builder()
                 .Collapse(end_of_inserted_content.DeepEquivalent())
@@ -1544,6 +1549,7 @@ void ReplaceSelectionCommand::DoApply(EditingState* editing_state) {
                           editing_state);
           if (editing_state->IsAborted())
             return;
+          SetCommandDirectional(false);
           SetEndingSelection(
               SelectionInDOMTree::Builder()
                   .Collapse(Position::FirstPositionInNode(*new_list_item))
@@ -1762,7 +1768,6 @@ void ReplaceSelectionCommand::CompleteHTMLReplacement(
     SetEndingSelection(
         SelectionInDOMTree::Builder()
             .SetBaseAndExtentDeprecated(start, end)
-            .SetIsDirectional(EndingVisibleSelection().IsDirectional())
             .Build());
     return;
   }
@@ -1771,10 +1776,10 @@ void ReplaceSelectionCommand::CompleteHTMLReplacement(
     SetEndingSelection(
         SelectionInDOMTree::Builder()
             .Collapse(end)
-            .SetIsDirectional(EndingVisibleSelection().IsDirectional())
             .Build());
     return;
   }
+  SetCommandDirectional(false);
   SetEndingSelection(SelectionInDOMTree());
 }
 
@@ -1993,7 +1998,7 @@ bool ReplaceSelectionCommand::PerformTrivialReplace(
 
   start_of_inserted_range_ = start;
   end_of_inserted_range_ = end;
-
+  SetCommandDirectional(false);
   SetEndingSelection(
       SelectionInDOMTree::Builder()
           .SetBaseAndExtentDeprecated(select_replacement_ ? start : end, end)

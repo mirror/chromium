@@ -174,7 +174,7 @@ void FrameSelection::MoveCaretSelection(const IntPoint& point) {
   const VisiblePosition position =
       VisiblePositionForContentsPoint(point, GetFrame());
   SelectionInDOMTree::Builder builder;
-  builder.SetIsDirectional(GetSelectionInDOMTree().IsDirectional());
+  // builder.SetIsDirectional(IsDirectional());
   builder.SetIsHandleVisible(true);
   if (position.IsNotNull())
     builder.Collapse(position.ToPositionWithAffinity());
@@ -182,6 +182,7 @@ void FrameSelection::MoveCaretSelection(const IntPoint& point) {
                                     .SetShouldCloseTyping(true)
                                     .SetShouldClearTypingStyle(true)
                                     .SetSetSelectionBy(SetSelectionBy::kUser)
+                                    .SetIsDirectional(is_directional_)
                                     .Build());
 }
 
@@ -205,8 +206,11 @@ bool FrameSelection::SetSelectionDeprecated(
   passed_selection.AssertValidFor(GetDocument());
 
   SelectionInDOMTree::Builder builder(passed_selection);
-  if (ShouldAlwaysUseDirectionalSelection(frame_))
-    builder.SetIsDirectional(true);
+  bool direction = options.Directional();
+  if (ShouldAlwaysUseDirectionalSelection(frame_)) {
+    //  builder.SetIsDirectional(true);
+    direction = true;
+  }
   SelectionInDOMTree new_selection = builder.Build();
   if (granularity_strategy_ && !options.DoNotClearStrategy())
     granularity_strategy_->Clear();
@@ -222,9 +226,13 @@ bool FrameSelection::SetSelectionDeprecated(
 
   const SelectionInDOMTree old_selection_in_dom_tree =
       selection_editor_->GetSelectionInDOMTree();
-  if (old_selection_in_dom_tree == new_selection)
+  if (old_selection_in_dom_tree == new_selection &&
+      direction == is_directional_)
     return false;
+
   selection_editor_->SetSelection(new_selection);
+  // SetIsDirectional(new_selection.IsDirectional());
+  SetIsDirectional(direction);
   ScheduleVisualUpdateForPaintInvalidationIfNeeded();
 
   const Document& current_document = GetDocument();
@@ -348,9 +356,9 @@ bool FrameSelection::Modify(SelectionModifyAlteration alter,
                             SelectionModifyDirection direction,
                             TextGranularity granularity,
                             SetSelectionBy set_selection_by) {
-  SelectionModifier selection_modifier(*GetFrame(),
-                                       ComputeVisibleSelectionInDOMTree(),
-                                       x_pos_for_vertical_arrow_navigation_);
+  SelectionModifier selection_modifier(
+      *GetFrame(), ComputeVisibleSelectionInDOMTree(),
+      x_pos_for_vertical_arrow_navigation_, is_directional_);
   const bool modified =
       selection_modifier.Modify(alter, direction, granularity);
   if (set_selection_by == SetSelectionBy::kUser &&
@@ -377,6 +385,7 @@ bool FrameSelection::Modify(SelectionModifyAlteration alter,
                    .SetShouldCloseTyping(true)
                    .SetShouldClearTypingStyle(true)
                    .SetSetSelectionBy(set_selection_by)
+                   .SetIsDirectional(selection_modifier.Directional())
                    .Build());
 
   if (granularity == TextGranularity::kLine ||

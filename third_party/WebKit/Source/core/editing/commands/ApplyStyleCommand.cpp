@@ -179,7 +179,6 @@ void ApplyStyleCommand::UpdateStartEnd(const Position& new_start,
       SelectionInDOMTree::Builder()
           .Collapse(new_start)
           .Extend(new_end)
-          .SetIsDirectional(EndingVisibleSelection().IsDirectional())
           .Build());
   start_ = new_start;
   end_ = new_end;

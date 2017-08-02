@@ -365,8 +365,10 @@ void IndentOutdentCommand::OutdentRegion(
       SelectionInDOMTree::Builder builder;
       if (original_selection_end.IsNotNull())
         builder.Collapse(original_selection_end);
+      SetCommandDirectional(false);
       SetEndingSelection(builder.Build());
     } else {
+      SetCommandDirectional(false);
       SetEndingSelection(
           SelectionInDOMTree::Builder()
               .Collapse(end_of_current_paragraph.DeepEquivalent())

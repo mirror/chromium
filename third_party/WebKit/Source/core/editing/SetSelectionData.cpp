@@ -60,4 +60,10 @@ SetSelectionData::Builder& SetSelectionData::Builder::SetSetSelectionBy(
   return *this;
 }
 
+SetSelectionData::Builder& SetSelectionData::Builder::SetIsDirectional(
+    bool new_value) {
+  data_.is_directional_ = new_value;
+  return *this;
+}
+
 }  // namespace blink
