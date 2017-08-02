@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53ce690c_6286bd02",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-02T16:19:33Z",
+      "side": 1,
+      "message": "Nit: I might call this RemoveRowAtIndex(int index) to match GetRowIndexOf() and to avoid conflating with the ListItem and Row typedefs, neither of which this uses.",
+      "revId": "be75385dcb56f6c064f1f70689b9859a05e77798",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8afd5234_520dd25e",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-02T16:19:33Z",
+      "side": 1,
+      "message": "Nit: If push_back(Row(icon, label)) works, that\u0027d be both more readable, and more robust against any future change to the underlying Row type definition.",
+      "revId": "be75385dcb56f6c064f1f70689b9859a05e77798",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41a3d3d3_2559e85c",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-02T16:19:33Z",
+      "side": 1,
+      "message": "Nit: entirely",
+      "revId": "be75385dcb56f6c064f1f70689b9859a05e77798",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b064ad0_cdb2fe16",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-02T16:19:33Z",
+      "side": 1,
+      "message": "Nit: I think rather than calling ResetLayout() here you could just RemoveAllChildViews(), which should empty the layout manager but leave the column definitions in place?  Then the code in ResetLayout() could be done in the constructor instead.  Not 100% sure on this.",
+      "revId": "be75385dcb56f6c064f1f70689b9859a05e77798",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7faa9c5_a8ef0cb1",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-02T16:19:33Z",
+      "side": 1,
+      "message": "Nit: Or:\n\n  return (iter \u003d\u003d list_item_views_.end())\n             ? -1\n             : std::distance(list_item_views_.begin(), iter);",
+      "revId": "be75385dcb56f6c064f1f70689b9859a05e77798",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

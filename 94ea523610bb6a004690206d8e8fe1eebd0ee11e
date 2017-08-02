@@ -212,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "333a2893_97e0b16e",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-02T16:19:33Z",
+      "side": 1,
+      "message": "It certainly helps, but I would still seek to use a table control rather than rebuilding one if it\u0027s reasonably easy to do so.  This may not be easy if e.g. you can\u0027t make the appearance look like what you want.",
+      "parentUuid": "56f1cb45_2a478265",
+      "revId": "94ea523610bb6a004690206d8e8fe1eebd0ee11e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fea3d437_70daa2da",
         "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
         "patchSetId": 8
@@ -276,6 +294,24 @@
       "side": 1,
       "message": "humm.. I think it won\u0027t happen here. RemoveChildView() calls DoRemoveChildView() with |delete_removed_view| being false. So |View| won\u0027t free it. WDYT?\n\nhttps://cs.chromium.org/chromium/src/ui/views/view.cc?gsn\u003dDoRemoveChildView\u0026l\u003d2077",
       "parentUuid": "db9425dc_3e7fb0cd",
+      "revId": "94ea523610bb6a004690206d8e8fe1eebd0ee11e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f28ebb2d_572a5886",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-02T16:19:33Z",
+      "side": 1,
+      "message": "You\u0027re right.\n\nHowever, I think we could do it the other way.  If we delete the child views, their destructors should auto-remove them from their parent.  So we could eliminate the explicit Remove calls.",
+      "parentUuid": "c9b08191_eaa28ecc",
       "revId": "94ea523610bb6a004690206d8e8fe1eebd0ee11e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
