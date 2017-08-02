@@ -218,6 +218,10 @@ class TabManager : public TabStripModelObserver,
     return is_session_restore_loading_tabs_;
   }
 
+  // Return whether it is loading background tabs. This does not include session
+  // restore cases;
+  bool IsLoadingBackgroundTabs() const;
+
  private:
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, PurgeBackgroundRenderer);
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, ActivateTabResetPurgeState);
@@ -249,6 +253,9 @@ class TabManager : public TabStripModelObserver,
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, BackgroundTabLoadingMode);
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, BackgroundTabLoadingSlots);
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, BackgroundTabsLoadingOrdering);
+  FRIEND_TEST_ALL_PREFIXES(TabManagerTest, IsLoadingBackgroundTabs);
+  FRIEND_TEST_ALL_PREFIXES(TabManagerWithExperimentDisabledTest,
+                           IsLoadingBackgroundTabs);
   FRIEND_TEST_ALL_PREFIXES(TabManagerStatsCollectorTest,
                            HistogramsSessionRestoreSwitchToTab);
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest,
