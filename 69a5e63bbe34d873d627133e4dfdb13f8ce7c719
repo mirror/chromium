@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "dcc6a8a8_a64327fb",
+        "filename": "chrome/browser/ui/cocoa/browser/exclusive_access_controller_views.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1166494
+      },
+      "writtenOn": "2017-08-02T15:46:02Z",
+      "side": 1,
+      "message": "Added |CallHideCallbackAsNotShownIfNecessary()|.\nI\u0027m feeling that an anonymous namespace method might be simpler as readers don\u0027t have to switch between files.\n\ntapted@ Does it still look good to you?",
+      "parentUuid": "50bdf29e_442c2de9",
+      "range": {
+        "startLine": 86,
+        "startChar": 4,
+        "endLine": 86,
+        "endChar": 25
+      },
+      "revId": "69a5e63bbe34d873d627133e4dfdb13f8ce7c719",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7e206689_9ef2f4fb",
         "filename": "chrome/browser/ui/exclusive_access/exclusive_access_bubble_hide_callback.h",
         "patchSetId": 8
