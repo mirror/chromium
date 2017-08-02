@@ -219,8 +219,8 @@ class SubresourceIntegrityTest : public ::testing::Test {
         expectation == kIntegritySuccess,
         SubresourceIntegrity::CheckSubresourceIntegrity(
             String(integrity), kBasicScript, strlen(kBasicScript), test.target,
-            *CreateTestResource(test.target, test.allow_origin_url,
-                                test.service_worker),
+            CreateTestResource(test.target, test.allow_origin_url,
+                               test.service_worker),
             report_info));
   }
 
