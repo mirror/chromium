@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2466fa3c_19064014",
+        "filename": "services/viz/public/cpp/compositing/mojo/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-02T16:47:57Z",
+      "side": 1,
+      "message": "Hmm... a mojo/ subdirectory seems a little unfortunate to me. If you really want to keep typemapping stuff separate I might call it \"typemaps\" instead. But I\u0027m not sure it\u0027s really that necessary or useful to keep typemaps separate from the rest of the code?\n\nThat said, I\u0027m not a viz owner so take this protest with a grain of salt.",
+      "revId": "98961dd95ac796c67349200c3481663ab56bc420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
