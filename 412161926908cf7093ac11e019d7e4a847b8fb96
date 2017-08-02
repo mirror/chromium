@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c46e3e6c_6290172e",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 2886,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-02T15:59:30Z",
+      "side": 1,
+      "message": "Because I could not figure out how to set up |child_identity| here and service_manifests in GN files for the unit test target so that the |connector-\u003eFilterInterfaces()| call below would not reject the interface request.\n\nBypassing the whole thing if |connector| is nullptr would work, but that makes for a weird security check. :-)",
+      "revId": "412161926908cf7093ac11e019d7e4a847b8fb96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f51e843_206c3926",
+        "filename": "content/browser/frame_host/render_frame_host_interface_provider_unittest.cc",
+        "patchSetId": 33
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-02T15:59:30Z",
+      "side": 1,
+      "message": "This line is failing as the InterfaceRequest is never delivered to the registered binder.",
+      "revId": "412161926908cf7093ac11e019d7e4a847b8fb96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
