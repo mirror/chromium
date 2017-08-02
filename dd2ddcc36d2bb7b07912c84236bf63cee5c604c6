@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "500d936f_f3f6db4f",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-02T09:11:50Z",
+      "side": 1,
+      "message": "nit: return here and on line 79, and have NOTREACHED after the switch?",
+      "revId": "dd2ddcc36d2bb7b07912c84236bf63cee5c604c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2a0147e_5909d257",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-02T09:11:50Z",
+      "side": 1,
+      "message": "nit: could we rename Mode -\u003e FetchMode (it\u0027s private enum so it\u0027s fine, but just for our readability)",
+      "revId": "dd2ddcc36d2bb7b07912c84236bf63cee5c604c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a726352d_9b464f44",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-02T09:11:50Z",
+      "side": 1,
+      "message": "please initialize this with some value",
+      "revId": "dd2ddcc36d2bb7b07912c84236bf63cee5c604c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f09fe3b8_247d4677",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-02T09:11:50Z",
+      "side": 1,
+      "message": "nit: this phrasing doesn\u0027t sound like a TODO",
+      "revId": "dd2ddcc36d2bb7b07912c84236bf63cee5c604c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a59a79b7_1fc50473",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-02T09:11:50Z",
+      "side": 1,
+      "message": "nit: URL -\u003e request.url",
+      "revId": "dd2ddcc36d2bb7b07912c84236bf63cee5c604c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecd0f1c0_8d0f56e7",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-02T09:11:50Z",
+      "side": 1,
+      "message": "Whoa, we append this 1024 times... (I see that the code is from the old test)",
+      "revId": "dd2ddcc36d2bb7b07912c84236bf63cee5c604c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
