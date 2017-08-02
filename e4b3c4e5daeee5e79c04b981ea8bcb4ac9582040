@@ -118,6 +118,30 @@
       "revId": "e4b3c4e5daeee5e79c04b981ea8bcb4ac9582040",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f117d3d_4c9c9ab8",
+        "filename": "cc/trees/layer_tree_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1512,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-08-02T22:43:33Z",
+      "side": 1,
+      "message": "Apologies for the slow turn-around time.\n\n\u003e  RootScrollBegin calls DistributeScrollDelta (via ScrollBeginImpl), so likely don\u0027t need to call both.\n\nIt does but its meant to be for a GSU so the deltas are DCHECKed to be 0.\n\n\u003e However for viewport scroll nodes it looks like DistributeScrollDelta skips any checks of scrollable\n\nI believe that\u0027s intentional. The viewport can consume delta even if neither the inner nor outer layers are scrollable. That\u0027s because it can use that delta towards moving the URL bar. It also does some adjustment on the return value by setting unconsumed overscroll values but I suppose that\u0027s not inherent to the viewport and could be moved out.\n\n\u003e It is feasible that DistributeToScrollChainDescendant somehow absorbs the delta if layers aren\u0027t scrollable, but I haven\u0027t been able to follow that logic all the way yet.\n\nIt looks like ScrollTree::ScrollBy (which eventually any layer being scrolled goes through) wont scroll a layer that\u0027s not marked user_scrollable. Any unconsumed delta will stored in the ScrollState and used for overscrolling actions.\n\nThe viewport is scrolled by cc::Viewport::ScrollBy -\u003e LTHI::ScrollSingleNode -\u003e LTHI::ScrollNodeWith*Delta -\u003e ScrollTree::ScrollBy\n\n\u003e Small addendum; spoke to majidvp and he opinionated that the scroll chain should only have items that are scrollable (and user scrollable) in it. E.g. the viewport case should go through CanConsumeDelta as well.\n\nThe viewport is special in this regard. We\u0027ve decided that it should always be a part of the scroll chain as it does more than just \"scroll\". That said, you could probably short circuit the call to ScrollSingleNode from Viewport::ScrollBy and do a user_scrollable check there. sahel@ is adding a Viewport::CanScroll in https://crrev.com/c/581910 which is exactly what you could use, just scroll the inner/outer nodes iff CanScroll. But as mentioned above, this should only be a short circuit, ScrollTree::ScrollBy should prevent scrolling !user_scrollable.",
+      "parentUuid": "8b0cdb0c_dab8fa3a",
+      "range": {
+        "startLine": 1511,
+        "startChar": 1,
+        "endLine": 1512,
+        "endChar": 42
+      },
+      "revId": "e4b3c4e5daeee5e79c04b981ea8bcb4ac9582040",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
