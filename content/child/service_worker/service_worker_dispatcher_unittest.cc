@@ -89,9 +89,13 @@ class ServiceWorkerDispatcherTest : public testing::Test {
                                     const ServiceWorkerObjectInfo& info,
                                     bool should_notify_controllerchange,
                                     const std::set<uint32_t>& used_features) {
-    dispatcher_->OnSetControllerServiceWorker(thread_id, provider_id, info,
-                                              should_notify_controllerchange,
-                                              used_features);
+    ServiceWorkerMsg_SetControllerServiceWorker_Params params;
+    params.thread_id = thread_id;
+    params.provider_id = provider_id;
+    params.object_info = info;
+    params.should_notify_controllerchange = should_notify_controllerchange;
+    params.used_features = used_features;
+    dispatcher_->OnSetControllerServiceWorker(params);
   }
 
   void OnPostMessage(const ServiceWorkerMsg_MessageToDocument_Params& params) {
@@ -198,8 +202,8 @@ TEST_F(ServiceWorkerDispatcherTest,
   scoped_refptr<ServiceWorkerProviderContext> provider_context(
       new ServiceWorkerProviderContext(
           kProviderId, SERVICE_WORKER_PROVIDER_FOR_CONTROLLER,
-          mojom::ServiceWorkerProviderAssociatedRequest(),
-          thread_safe_sender()));
+          mojom::ServiceWorkerProviderAssociatedRequest(), thread_safe_sender(),
+          ServiceWorkerProviderContext::ControllerChangeCallback()));
 
   // The passed references should be adopted and owned by the provider context.
   OnAssociateRegistration(kDocumentMainThreadId, kProviderId, info, attrs);
@@ -232,8 +236,8 @@ TEST_F(ServiceWorkerDispatcherTest,
   scoped_refptr<ServiceWorkerProviderContext> provider_context(
       new ServiceWorkerProviderContext(
           kProviderId, SERVICE_WORKER_PROVIDER_FOR_WINDOW,
-          mojom::ServiceWorkerProviderAssociatedRequest(),
-          thread_safe_sender()));
+          mojom::ServiceWorkerProviderAssociatedRequest(), thread_safe_sender(),
+          ServiceWorkerProviderContext::ControllerChangeCallback()));
 
   // The passed references should be adopted and only the registration reference
   // should be owned by the provider context.
@@ -282,8 +286,8 @@ TEST_F(ServiceWorkerDispatcherTest, OnSetControllerServiceWorker) {
   scoped_refptr<ServiceWorkerProviderContext> provider_context(
       new ServiceWorkerProviderContext(
           kProviderId, SERVICE_WORKER_PROVIDER_FOR_WINDOW,
-          mojom::ServiceWorkerProviderAssociatedRequest(),
-          thread_safe_sender()));
+          mojom::ServiceWorkerProviderAssociatedRequest(), thread_safe_sender(),
+          ServiceWorkerProviderContext::ControllerChangeCallback()));
   OnAssociateRegistration(kDocumentMainThreadId, kProviderId, info, attrs);
   ipc_sink()->ClearMessages();
   OnSetControllerServiceWorker(kDocumentMainThreadId, kProviderId, attrs.active,
@@ -331,7 +335,8 @@ TEST_F(ServiceWorkerDispatcherTest, OnSetControllerServiceWorker) {
   // implementation.
   provider_context = new ServiceWorkerProviderContext(
       kProviderId, SERVICE_WORKER_PROVIDER_FOR_WINDOW,
-      mojom::ServiceWorkerProviderAssociatedRequest(), thread_safe_sender());
+      mojom::ServiceWorkerProviderAssociatedRequest(), thread_safe_sender(),
+      ServiceWorkerProviderContext::ControllerChangeCallback());
   OnAssociateRegistration(kDocumentMainThreadId, kProviderId, info, attrs);
   provider_client.reset(
       new MockWebServiceWorkerProviderClientImpl(kProviderId, dispatcher()));
@@ -363,8 +368,8 @@ TEST_F(ServiceWorkerDispatcherTest, OnSetControllerServiceWorker_Null) {
   scoped_refptr<ServiceWorkerProviderContext> provider_context(
       new ServiceWorkerProviderContext(
           kProviderId, SERVICE_WORKER_PROVIDER_FOR_WINDOW,
-          mojom::ServiceWorkerProviderAssociatedRequest(),
-          thread_safe_sender()));
+          mojom::ServiceWorkerProviderAssociatedRequest(), thread_safe_sender(),
+          ServiceWorkerProviderContext::ControllerChangeCallback()));
 
   OnAssociateRegistration(kDocumentMainThreadId, kProviderId, info, attrs);
 

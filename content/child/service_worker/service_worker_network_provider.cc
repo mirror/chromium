@@ -92,6 +92,18 @@ class WebServiceWorkerNetworkProviderForFrame
 
   ServiceWorkerNetworkProvider* provider() { return provider_.get(); }
 
+  std::unique_ptr<blink::WebURLLoader> CreateURLLoader(
+      const blink::WebURLRequest& request,
+      base::SingleThreadTaskRunner* task_runner) override {
+    if (!ServiceWorkerUtils::IsServicificationEnabled() ||
+        !provider_->context() || !provider_->context()->event_dispatcher())
+      return nullptr;
+
+    // TODO(kinuko): Set up URLLoaderFactory with NetworkProvider's
+    // event_dispatcher_ for fetch event handling.
+    return nullptr;
+  }
+
  private:
   std::unique_ptr<ServiceWorkerNetworkProvider> provider_;
 };
@@ -177,7 +189,7 @@ ServiceWorkerNetworkProvider::ServiceWorkerNetworkProvider(
     ServiceWorkerProviderType provider_type,
     int browser_provider_id,
     bool is_parent_frame_secure)
-    : provider_id_(browser_provider_id) {
+    : provider_id_(browser_provider_id), weak_factory_(this) {
   if (provider_id_ == kInvalidServiceWorkerProviderId)
     return;
   if (!ChildThreadImpl::current())
@@ -194,7 +206,6 @@ ServiceWorkerNetworkProvider::ServiceWorkerNetworkProvider(
   context_ = new ServiceWorkerProviderContext(
       provider_id_, provider_type, std::move(client_request),
       ChildThreadImpl::current()->thread_safe_sender());
-
   ChildThreadImpl::current()->channel()->GetRemoteAssociatedInterface(
       &dispatcher_host_);
   dispatcher_host_->OnProviderCreated(std::move(host_info));
@@ -211,7 +222,7 @@ ServiceWorkerNetworkProvider::ServiceWorkerNetworkProvider(
 
 ServiceWorkerNetworkProvider::ServiceWorkerNetworkProvider(
     mojom::ServiceWorkerProviderInfoForStartWorkerPtr info)
-    : provider_id_(info->provider_id) {
+    : provider_id_(info->provider_id), weak_factory_(this) {
   context_ = new ServiceWorkerProviderContext(
       provider_id_, SERVICE_WORKER_PROVIDER_FOR_CONTROLLER,
       std::move(info->client_request),
@@ -234,7 +245,7 @@ ServiceWorkerNetworkProvider::ServiceWorkerNetworkProvider(
 }
 
 ServiceWorkerNetworkProvider::ServiceWorkerNetworkProvider()
-    : provider_id_(kInvalidServiceWorkerProviderId) {}
+    : provider_id_(kInvalidServiceWorkerProviderId), weak_factory_(this) {}
 
 ServiceWorkerNetworkProvider::~ServiceWorkerNetworkProvider() {
   if (provider_id_ == kInvalidServiceWorkerProviderId)
