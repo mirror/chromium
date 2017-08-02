@@ -140,6 +140,24 @@
       "revId": "c49f20c2faf11a7efd5f2871adabbdb2aac4f21a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86a9033f_2d84348a",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-02T07:28:56Z",
+      "side": 1,
+      "message": "Done. \n\nNow BreakingNewsListener returns a single suggestion (https://chromium-review.googlesource.com/c/589267/).\n\nThis function is meant only for push to value.\n\nIt is now called PrepentArticleSuggestion.",
+      "parentUuid": "51725c92_b885f3bc",
+      "revId": "c49f20c2faf11a7efd5f2871adabbdb2aac4f21a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

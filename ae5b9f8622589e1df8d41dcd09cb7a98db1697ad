@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "eeb72d83_8e8dabe6",
+        "filename": "chrome/browser/ui/webui/snippets_internals_message_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-02T07:28:56Z",
+      "side": 1,
+      "message": "As per our offline discussion, that\u0027s then new \"proper\" way to do serializaiton (see crbug.com/634507). I\u0027ve also moved out this function to time_serialization.h in a separate CL.",
+      "parentUuid": "c2eaf58e_f76ad726",
+      "range": {
+        "startLine": 155,
+        "startChar": 46,
+        "endLine": 155,
+        "endChar": 0
+      },
+      "revId": "ae5b9f8622589e1df8d41dcd09cb7a98db1697ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f3cdc070_933b929b",
         "filename": "chrome/browser/ui/webui/snippets_internals_message_handler.cc",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "ae5b9f8622589e1df8d41dcd09cb7a98db1697ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25aa1eea_d3862461",
+        "filename": "chrome/browser/ui/webui/snippets_internals_message_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-02T07:28:56Z",
+      "side": 1,
+      "message": "I rewrote this bit and now it should look better.\n\n\u003e what is the id used for?\n\nJust to distinguish multiple pushed cards.\n\n\u003e TBH, this code has quite some smells... \n\nYeap, this was an early draft.\n\n\u003e couldn\u0027t we simply use random card from the current list?\n\nI believe that would be too cumbersome. Also then one could not distinguish different pushed cards.",
+      "parentUuid": "f3cdc070_933b929b",
+      "range": {
+        "startLine": 386,
+        "startChar": 66,
+        "endLine": 386,
+        "endChar": 0
+      },
+      "revId": "ae5b9f8622589e1df8d41dcd09cb7a98db1697ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "21d47a26_8130ee01",
+        "filename": "components/ntp_snippets/remote/remote_suggestion.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-02T07:28:56Z",
+      "side": 1,
+      "message": "Modifying the score does not look good.\n\nInstead I went for storing the rank in the database. See https://chromium-review.googlesource.com/c/593318/.",
+      "parentUuid": "11dd0f20_28f24c14",
+      "range": {
+        "startLine": 157,
+        "startChar": 18,
+        "endLine": 157,
+        "endChar": 0
+      },
+      "revId": "ae5b9f8622589e1df8d41dcd09cb7a98db1697ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae47d19d_2681e772",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
         "patchSetId": 4
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "784a2b2a_5a31a53e",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 776,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-02T07:28:56Z",
+      "side": 1,
+      "message": "Done.\n\nNow it is only 1 article suggestion.",
+      "parentUuid": "ae47d19d_2681e772",
+      "range": {
+        "startLine": 776,
+        "startChar": 33,
+        "endLine": 776,
+        "endChar": 51
+      },
+      "revId": "ae5b9f8622589e1df8d41dcd09cb7a98db1697ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95e7f3e5_4a573bdc",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
         "patchSetId": 4
@@ -108,6 +204,24 @@
       "revId": "ae5b9f8622589e1df8d41dcd09cb7a98db1697ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21c8de67_c7926101",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 786,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-02T07:28:56Z",
+      "side": 1,
+      "message": "Done.\n\nDLOG(WARNING)",
+      "parentUuid": "95e7f3e5_4a573bdc",
+      "revId": "ae5b9f8622589e1df8d41dcd09cb7a98db1697ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
