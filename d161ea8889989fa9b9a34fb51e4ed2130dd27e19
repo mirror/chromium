@@ -19,6 +19,52 @@
     },
     {
       "key": {
+        "uuid": "89f5fdfb_b438db5a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/devices/DevicesView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-02T21:25:45Z",
+      "side": 1,
+      "message": "template it?",
+      "range": {
+        "startLine": 436,
+        "startChar": 30,
+        "endLine": 436,
+        "endChar": 38
+      },
+      "revId": "d161ea8889989fa9b9a34fb51e4ed2130dd27e19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aab0bd13_eb5ea622",
+        "filename": "third_party/WebKit/Source/devtools/front_end/devices/DevicesView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-02T21:25:45Z",
+      "side": 1,
+      "message": "template it?",
+      "range": {
+        "startLine": 469,
+        "startChar": 24,
+        "endLine": 469,
+        "endChar": 34
+      },
+      "revId": "d161ea8889989fa9b9a34fb51e4ed2130dd27e19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80de11fd_757cea7c",
         "filename": "third_party/WebKit/Source/devtools/front_end/devices/DevicesView.js",
         "patchSetId": 1
@@ -30,6 +76,23 @@
       "writtenOn": "2017-08-02T21:25:03Z",
       "side": 1,
       "message": "ditto.",
+      "revId": "d161ea8889989fa9b9a34fb51e4ed2130dd27e19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5781a84e_36e1f5e4",
+        "filename": "third_party/WebKit/Source/devtools/front_end/devices/DevicesView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-02T21:25:45Z",
+      "side": 1,
+      "message": "How does this compile without me specifying template?",
       "revId": "d161ea8889989fa9b9a34fb51e4ed2130dd27e19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +116,52 @@
     },
     {
       "key": {
+        "uuid": "ef744b76_8ad5b0e7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/BlockedURLsPane.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-02T21:25:45Z",
+      "side": 1,
+      "message": "No need for ! I think.",
+      "range": {
+        "startLine": 28,
+        "startChar": 30,
+        "endLine": 28,
+        "endChar": 31
+      },
+      "revId": "d161ea8889989fa9b9a34fb51e4ed2130dd27e19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f917565d_f196d224",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/BlockedURLsPane.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-02T21:25:45Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 35,
+        "startChar": 37,
+        "endLine": 35,
+        "endChar": 38
+      },
+      "revId": "d161ea8889989fa9b9a34fb51e4ed2130dd27e19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9c119b90_d5b2bdbf",
         "filename": "third_party/WebKit/Source/devtools/front_end/network/BlockedURLsPane.js",
         "patchSetId": 1
@@ -64,6 +173,46 @@
       "writtenOn": "2017-08-02T21:25:03Z",
       "side": 1,
       "message": "g/item/s//pattern/? :-)",
+      "revId": "d161ea8889989fa9b9a34fb51e4ed2130dd27e19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f89d82d9_b60e0fe7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/BlockedURLsPane.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-02T21:25:45Z",
+      "side": 1,
+      "message": "Why change this? Did it compile before?",
+      "range": {
+        "startLine": 126,
+        "startChar": 11,
+        "endLine": 126,
+        "endChar": 17
+      },
+      "revId": "d161ea8889989fa9b9a34fb51e4ed2130dd27e19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a89ceaa_64cc6fb4",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/ListWidget.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-02T21:25:45Z",
+      "side": 1,
+      "message": "This can be replaced with _updatePlaceholder now.",
       "revId": "d161ea8889989fa9b9a34fb51e4ed2130dd27e19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
