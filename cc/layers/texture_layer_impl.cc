@@ -63,7 +63,6 @@ bool TextureLayerImpl::IsSnapped() {
 
 void TextureLayerImpl::PushPropertiesTo(LayerImpl* layer) {
   LayerImpl::PushPropertiesTo(layer);
-
   TextureLayerImpl* texture_layer = static_cast<TextureLayerImpl*>(layer);
   texture_layer->SetFlipped(flipped_);
   texture_layer->SetUVTopLeft(uv_top_left_);
@@ -150,14 +149,15 @@ void TextureLayerImpl::AppendQuads(RenderPass* render_pass,
 
   SharedQuadState* shared_quad_state =
       render_pass->CreateAndAppendSharedQuadState();
-  PopulateSharedQuadState(shared_quad_state);
+  SkColor bg_color =
+      blend_background_color_ ? background_color() : SK_ColorTRANSPARENT;
+  bool opaque = contents_opaque() || (SkColorGetA(bg_color) == 0xFF);
+
+  PopulateSharedQuadState(shared_quad_state, opaque);
 
   AppendDebugBorderQuad(render_pass, bounds(), shared_quad_state,
                         append_quads_data);
 
-  SkColor bg_color = blend_background_color_ ?
-      background_color() : SK_ColorTRANSPARENT;
-  bool opaque = contents_opaque() || (SkColorGetA(bg_color) == 0xFF);
 
   gfx::Rect quad_rect(bounds());
   gfx::Rect opaque_rect = opaque ? quad_rect : gfx::Rect();
