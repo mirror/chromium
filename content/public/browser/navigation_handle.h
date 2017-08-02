@@ -114,6 +114,9 @@ class CONTENT_EXPORT NavigationHandle {
   // Used for specifying a base URL for pages loaded via data URLs.
   virtual const GURL& GetBaseURLForDataURL() = 0;
 
+  // Get a unique ID for this navigation.
+  virtual int GetNavigationId() const = 0;
+
   // Parameters available at network request start time ------------------------
   //
   // The following parameters are only available when the network request is
