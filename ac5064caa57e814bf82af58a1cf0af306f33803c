@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20560839_3bf16dcd",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-08-02T22:58:38Z",
+      "side": 1,
+      "message": "nit: fill 80 chars on previous line",
+      "revId": "ac5064caa57e814bf82af58a1cf0af306f33803c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00226871_7232f531",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-08-02T22:58:38Z",
+      "side": 1,
+      "message": "nit: add {}",
+      "revId": "ac5064caa57e814bf82af58a1cf0af306f33803c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
