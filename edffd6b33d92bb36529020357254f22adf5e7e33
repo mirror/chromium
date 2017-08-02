@@ -187,6 +187,30 @@
       "revId": "edffd6b33d92bb36529020357254f22adf5e7e33",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a5059b7_c5944602",
+        "filename": "components/omnibox/browser/zero_suggest_provider.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1145964
+      },
+      "writtenOn": "2017-08-02T21:32:26Z",
+      "side": 1,
+      "message": "We discussed offline. We will do option 1) for now, but we created a bug to track this: https://bugs.chromium.org/p/chromium/issues/detail?id\u003d751837\n\nThis is assigned to Gheorghe who originally designed this component. We will fix this as soon as we can.",
+      "parentUuid": "bd2e7ae4_d38fbfc5",
+      "range": {
+        "startLine": 304,
+        "startChar": 17,
+        "endLine": 304,
+        "endChar": 0
+      },
+      "revId": "edffd6b33d92bb36529020357254f22adf5e7e33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
