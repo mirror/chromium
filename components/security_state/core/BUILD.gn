@@ -13,6 +13,8 @@ static_library("core") {
     "security_state.h",
     "security_state_ui.cc",
     "security_state_ui.h",
+    "ssl_status_input_event_data.cc",
+    "ssl_status_input_event_data.h",
     "switches.cc",
     "switches.h",
   ]
