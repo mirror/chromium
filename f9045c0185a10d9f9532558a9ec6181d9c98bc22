@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "029b7e5d_12a05e45",
+        "filename": "content/common/download/download_stream.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-02T17:21:14Z",
+      "side": 1,
+      "message": "NETWORK_REQUEST_STATUS is an unnecessary prefix on these values. Mojom enums generate C++ enum classes (and appropriately namespaced value symbols in other language), so there is no risk of name collisions if you call these simply OK, TIMEOUT, etc. It is much nicer to write:\n\n  NetworkRequestStatus::OK\n\ninstead of:\n\n  NetworkRequestStatus::NETWORK_REQUEST_STATUS_OK",
+      "revId": "f9045c0185a10d9f9532558a9ec6181d9c98bc22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
