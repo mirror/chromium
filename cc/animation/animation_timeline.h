@@ -16,6 +16,7 @@ namespace cc {
 
 class AnimationHost;
 class AnimationPlayer;
+class GroupAnimationPlayer;
 
 // An AnimationTimeline owns a group of AnimationPlayers.
 // This is a cc counterpart for blink::AnimationTimeline (in 1:1 relationship).
@@ -43,9 +44,15 @@ class CC_ANIMATION_EXPORT AnimationTimeline
 
   void ClearPlayers();
 
+  void AttachGroupPlayer(scoped_refptr<GroupAnimationPlayer> group_player);
+  void DetachGroupPlayer(scoped_refptr<GroupAnimationPlayer> group_player);
+
+  void ClearGroupPlayers();
+
   void PushPropertiesTo(AnimationTimeline* timeline_impl);
 
   AnimationPlayer* GetPlayerById(int player_id) const;
+  GroupAnimationPlayer* GetGroupPlayerById(int player_id) const;
 
   void SetNeedsPushProperties();
   bool needs_push_properties() const { return needs_push_properties_; }
@@ -57,14 +64,23 @@ class CC_ANIMATION_EXPORT AnimationTimeline
   virtual ~AnimationTimeline();
 
   void PushAttachedPlayersToImplThread(AnimationTimeline* timeline) const;
+  void PushAttachedGroupPlayersToImplThread(AnimationTimeline* timeline) const;
   void RemoveDetachedPlayersFromImplThread(AnimationTimeline* timeline) const;
+  void RemoveDetachedGroupPlayersFromImplThread(
+      AnimationTimeline* timeline) const;
   void PushPropertiesToImplThread(AnimationTimeline* timeline);
 
   void ErasePlayer(scoped_refptr<AnimationPlayer> player);
+  void EraseGroupPlayer(scoped_refptr<GroupAnimationPlayer> group_player);
 
   // A list of all players which this timeline owns.
   using IdToPlayerMap = std::unordered_map<int, scoped_refptr<AnimationPlayer>>;
   IdToPlayerMap id_to_player_map_;
+
+  // A list of all group players which this timeline owns.
+  using IdToGroupPlayerMap =
+      std::unordered_map<int, scoped_refptr<GroupAnimationPlayer>>;
+  IdToGroupPlayerMap id_to_group_player_map_;
 
   int id_;
   AnimationHost* animation_host_;

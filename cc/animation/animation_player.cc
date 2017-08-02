@@ -11,6 +11,7 @@
 #include "cc/animation/animation_events.h"
 #include "cc/animation/animation_host.h"
 #include "cc/animation/animation_timeline.h"
+#include "cc/animation/group_animation_player.h"
 #include "cc/animation/scroll_offset_animation_curve.h"
 #include "cc/animation/transform_operations.h"
 #include "cc/trees/property_animation_state.h"
@@ -62,6 +63,11 @@ void AnimationPlayer::SetAnimationTimeline(AnimationTimeline* timeline) {
   // Register player only if layer AND host attached.
   if (element_id_ && animation_host_)
     RegisterPlayer();
+}
+
+void AnimationPlayer::SetGroupAnimationPlayer(
+    GroupAnimationPlayer* group_animation_player) {
+  group_animation_player_ = group_animation_player;
 }
 
 void AnimationPlayer::AttachElement(ElementId element_id) {
@@ -313,7 +319,7 @@ void AnimationPlayer::UpdateState(bool start_ready_animations,
 
 void AnimationPlayer::UpdateTickingState(UpdateTickingType type) {
   bool force = type == UpdateTickingType::FORCE;
-  if (animation_host_) {
+  if (group_animation_player_) {
     bool was_ticking = is_ticking_;
     is_ticking_ = HasNonDeletedAnimation();
 
@@ -321,7 +327,7 @@ void AnimationPlayer::UpdateTickingState(UpdateTickingType type) {
         element_animations_->has_element_in_any_list();
 
     if (is_ticking_ && ((!was_ticking && has_element_in_any_list) || force)) {
-      animation_host_->AddToTicking(this);
+      group_animation_player_->AddToTicking(this);
     } else if (!is_ticking_ && (was_ticking || force)) {
       RemoveFromTicking();
     }
@@ -334,7 +340,7 @@ void AnimationPlayer::RemoveFromTicking() {
   // before ::Animate doesn't start an animation.
   is_ticking_ = false;
   last_tick_time_ = base::TimeTicks();
-  animation_host_->RemoveFromTicking(this);
+  // group_animation_player_->RemoveFromTicking(this);
 }
 
 bool AnimationPlayer::NotifyAnimationStarted(const AnimationEvent& event) {
