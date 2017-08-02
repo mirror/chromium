@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c990cb4_8672a09c",
+        "filename": "media/base/android/mock_media_codec_bridge.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-08-02T06:27:19Z",
+      "side": 1,
+      "message": "5 is memorized in the wrapper test.",
+      "revId": "be27e139a5d1621f7546f299875585c9c8d040e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acf17d4e_6d500dd1",
+        "filename": "media/gpu/android/codec_wrapper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-08-02T06:27:19Z",
+      "side": 1,
+      "message": "should this return MEDIA_CODEC_OK or MEDIA_CODEC_ERROR?  that way, it\u0027s easy to remember \"CodecWrapper transitions to the error state if and only if it returns CODEC_ERROR\".",
+      "revId": "be27e139a5d1621f7546f299875585c9c8d040e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f5e7dbe_851a65a2",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-08-02T06:27:19Z",
+      "side": 1,
+      "message": "what if it\u0027s not draining?",
+      "revId": "be27e139a5d1621f7546f299875585c9c8d040e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

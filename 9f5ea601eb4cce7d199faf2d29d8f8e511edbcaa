@@ -22,6 +22,30 @@
       "revId": "9f5ea601eb4cce7d199faf2d29d8f8e511edbcaa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad87ced3_a9d0314f",
+        "filename": "media/gpu/android/codec_image.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-08-02T06:27:19Z",
+      "side": 1,
+      "message": "that\u0027s odd.  the docs for CopyTexImage explicitly say that {return false;} is an okay implementation.  i do see the DCHECK, though, so i\u0027m not sure what\u0027s up.",
+      "parentUuid": "623cc2a4_4ea09b39",
+      "range": {
+        "startLine": 71,
+        "startChar": 2,
+        "endLine": 71,
+        "endChar": 35
+      },
+      "revId": "9f5ea601eb4cce7d199faf2d29d8f8e511edbcaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
