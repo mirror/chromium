@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "019f53fe_2526e43a",
+        "filename": "chrome/browser/ui/views/feature_promos/bookmark_promo.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-02T18:03:02Z",
+      "side": 1,
+      "message": "Nit: Wrapping here is a bit odd.  \"Bookmark Button\" \u003d\u003d StarView?  Why the two different names?  called -\u003e created",
+      "revId": "421f3e31dfeaccee1b95b91a41cbce6760e83799",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87e49896_eb0ce8c8",
+        "filename": "chrome/browser/ui/views/feature_promos/bookmark_promo.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-02T18:03:02Z",
+      "side": 1,
+      "message": "This method does not override something in FeaturePromoBubbleView, so should not have a comment like this.",
+      "revId": "421f3e31dfeaccee1b95b91a41cbce6760e83799",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4dd1328_868fed96",
+        "filename": "chrome/browser/ui/views/location_bar/star_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-02T18:03:02Z",
+      "side": 1,
+      "message": "Nit: Here and elsewhere in this file, only qualify the function with a classname when we need to e.g. explicitly distinguish the superclass version from the current class version (as in ExecuteCommand()).",
+      "revId": "421f3e31dfeaccee1b95b91a41cbce6760e83799",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccbdccd0_97bf0eb9",
+        "filename": "chrome/browser/ui/views/location_bar/star_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-02T18:03:02Z",
+      "side": 1,
+      "message": "Nit: You don\u0027t directly subclass WidgetObserver, so this should just be part of the BubbleIconView group.",
+      "revId": "421f3e31dfeaccee1b95b91a41cbce6760e83799",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
