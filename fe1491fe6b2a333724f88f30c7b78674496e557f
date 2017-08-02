@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "074ab40d_744cb758",
+        "filename": "net/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 5863,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-02T15:37:24Z",
+      "side": 1,
+      "message": "Not needed - clusterfuzz uses random values from 1 to 10000.",
+      "range": {
+        "startLine": 5863,
+        "startChar": 24,
+        "endLine": 5863,
+        "endChar": 25
+      },
+      "revId": "fe1491fe6b2a333724f88f30c7b78674496e557f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
