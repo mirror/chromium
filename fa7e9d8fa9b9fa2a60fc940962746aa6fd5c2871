@@ -34,6 +34,24 @@
       "revId": "fa7e9d8fa9b9fa2a60fc940962746aa6fd5c2871",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f07241b_90f00f1a",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/ScrollingCoordinator.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 785,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-02T18:05:33Z",
+      "side": 1,
+      "message": "Yeah, that\u0027s a good point. I will try to use the repro in the bug, and see what the codepath looks like. Hopefully that will help us understand the problem better.",
+      "parentUuid": "290d22cd_73fa2137",
+      "revId": "fa7e9d8fa9b9fa2a60fc940962746aa6fd5c2871",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
