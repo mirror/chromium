@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bef47645_569b6b66",
+        "filename": "chrome/browser/subresource_filter/subresource_filter_configuration_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-02T21:54:54Z",
+      "side": 1,
+      "message": "Can we also add a test where there is a URL belonging to an activation list and it\nshould get activated only when the activation list is the same and not when its empty?",
+      "revId": "aad150e22046401ff66f6b6f3ece95ccffb4105d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
