@@ -1,0 +1,607 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b9455be_a33b35d5",
+        "filename": "chrome/installer/zucchini/README.md",
+        "patchSetId": 28
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-02T06:05:21Z",
+      "side": 1,
+      "message": "End with period, same below.",
+      "range": {
+        "startLine": 123,
+        "startChar": 25,
+        "endLine": 123,
+        "endChar": 28
+      },
+      "revId": "15182f708fba579ac666323f215c8d7041253e50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5c4a05d_42910c69",
+        "filename": "chrome/installer/zucchini/README.md",
+        "patchSetId": 28
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-02T06:05:21Z",
+      "side": 1,
+      "message": "NIT: CRC32, same below. Reason: It\u0027s an acronym.",
+      "range": {
+        "startLine": 160,
+        "startChar": 19,
+        "endLine": 160,
+        "endChar": 24
+      },
+      "revId": "15182f708fba579ac666323f215c8d7041253e50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f7c4699_ad170524",
+        "filename": "chrome/installer/zucchini/README.md",
+        "patchSetId": 28
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-02T06:05:21Z",
+      "side": 1,
+      "message": "pools?",
+      "range": {
+        "startLine": 175,
+        "startChar": 32,
+        "endLine": 175,
+        "endChar": 36
+      },
+      "revId": "15182f708fba579ac666323f215c8d7041253e50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38f3e625_f3dc4450",
+        "filename": "chrome/installer/zucchini/README.md",
+        "patchSetId": 28
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-02T06:05:21Z",
+      "side": 1,
+      "message": "\"old\" and an element in \"new\".",
+      "range": {
+        "startLine": 179,
+        "startChar": 49,
+        "endLine": 179,
+        "endChar": 69
+      },
+      "revId": "15182f708fba579ac666323f215c8d7041253e50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b306b9b8_78d8cb31",
+        "filename": "chrome/installer/zucchini/README.md",
+        "patchSetId": 28
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-02T06:05:21Z",
+      "side": 1,
+      "message": "correspondence",
+      "range": {
+        "startLine": 179,
+        "startChar": 12,
+        "endLine": 179,
+        "endChar": 26
+      },
+      "revId": "15182f708fba579ac666323f215c8d7041253e50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b67c097f_4bb6f76b",
+        "filename": "chrome/installer/zucchini/README.md",
+        "patchSetId": 28
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-02T06:05:21Z",
+      "side": 1,
+      "message": "Starting offset of the element in old file.\n\nSimilar below.",
+      "range": {
+        "startLine": 183,
+        "startChar": 22,
+        "endLine": 183,
+        "endChar": 71
+      },
+      "revId": "15182f708fba579ac666323f215c8d7041253e50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cd9a2c0_6151a8c0",
+        "filename": "chrome/installer/zucchini/README.md",
+        "patchSetId": 28
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-02T06:05:21Z",
+      "side": 1,
+      "message": "Length of the element in old file.\n\n(note TYPO).  Same below.",
+      "range": {
+        "startLine": 185,
+        "startChar": 22,
+        "endLine": 185,
+        "endChar": 28
+      },
+      "revId": "15182f708fba579ac666323f215c8d7041253e50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3120f154_f0eb8cef",
+        "filename": "chrome/installer/zucchini/README.md",
+        "patchSetId": 28
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-02T06:05:21Z",
+      "side": 1,
+      "message": "dst offsets (in new image) are",
+      "range": {
+        "startLine": 190,
+        "startChar": 40,
+        "endLine": 190,
+        "endChar": 67
+      },
+      "revId": "15182f708fba579ac666323f215c8d7041253e50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f6aaa99_8b68bf84",
+        "filename": "chrome/installer/zucchini/README.md",
+        "patchSetId": 28
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-02T06:05:21Z",
+      "side": 1,
+      "message": "Maybe \"Encodes\"? Same below.",
+      "range": {
+        "startLine": 190,
+        "startChar": 0,
+        "endLine": 190,
+        "endChar": 9
+      },
+      "revId": "15182f708fba579ac666323f215c8d7041253e50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dfb40ca_43790eca",
+        "filename": "chrome/installer/zucchini/README.md",
+        "patchSetId": 28
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-02T06:05:21Z",
+      "side": 1,
+      "message": "Fix wrapping, apply to entire file?",
+      "range": {
+        "startLine": 204,
+        "startChar": 70,
+        "endLine": 204,
+        "endChar": 99
+      },
+      "revId": "15182f708fba579ac666323f215c8d7041253e50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b276d083_09e706bb",
+        "filename": "chrome/installer/zucchini/patch_reader.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-02T06:05:21Z",
+      "side": 1,
+      "message": "NIT: Implicit dependence of offset_t \u003d\u003d uint32_t. More robust to have:\n\nuint32_t length \u003d 0;\nif (!path::ParseVarUInt\u003cuint32_t\u003e(\u0026copy_count_, \u0026length))\n  return base::nullopt;\nequivalence.length \u003d length;\n\n|src_offset| and |dst_offset| already do something like this below, so don\u0027t need to change.",
+      "range": {
+        "startLine": 77,
+        "startChar": 52,
+        "endLine": 77,
+        "endChar": 70
+      },
+      "revId": "15182f708fba579ac666323f215c8d7041253e50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "262d9216_a01ddba5",
+        "filename": "chrome/installer/zucchini/patch_reader.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-02T06:05:21Z",
+      "side": 1,
+      "message": "In README.md the bias is said to be -1. Should pick one convention and stick with it.",
+      "range": {
+        "startLine": 139,
+        "startChar": 32,
+        "endLine": 139,
+        "endChar": 41
+      },
+      "revId": "15182f708fba579ac666323f215c8d7041253e50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee27da80_341cbe15",
+        "filename": "chrome/installer/zucchini/patch_reader.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-02T06:05:21Z",
+      "side": 1,
+      "message": "uint32_t",
+      "range": {
+        "startLine": 181,
+        "startChar": 2,
+        "endLine": 181,
+        "endChar": 10
+      },
+      "revId": "15182f708fba579ac666323f215c8d7041253e50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8da2d35_974b7a5f",
+        "filename": "chrome/installer/zucchini/patch_reader.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-02T06:05:21Z",
+      "side": 1,
+      "message": "uint32_t",
+      "range": {
+        "startLine": 182,
+        "startChar": 27,
+        "endLine": 182,
+        "endChar": 35
+      },
+      "revId": "15182f708fba579ac666323f215c8d7041253e50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b37580b_d064243d",
+        "filename": "chrome/installer/zucchini/patch_reader.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-02T06:05:21Z",
+      "side": 1,
+      "message": "In README.md the bias is said to be -1. Should pick one convention and stick with it.",
+      "range": {
+        "startLine": 187,
+        "startChar": 32,
+        "endLine": 187,
+        "endChar": 41
+      },
+      "revId": "15182f708fba579ac666323f215c8d7041253e50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d5897c2_1c0bf547",
+        "filename": "chrome/installer/zucchini/patch_reader.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-02T06:05:21Z",
+      "side": 1,
+      "message": "static_cast\u003coffset_t\u003e(target);\n\nMaybe with size validation.\n\nThe general philosophy here is that persisted data should have non-ambiguous type when reading and writing, and any translation to/from abstract representation (offset_t) needs to be explicit, and if performent, validated.  Ideally, we can just redefine offset_t to be uint64_t, and there\u0027s no compile error and there\u0027s no change in patch format (don\u0027t worry about supporting this for now).",
+      "range": {
+        "startLine": 189,
+        "startChar": 9,
+        "endLine": 189,
+        "endChar": 15
+      },
+      "revId": "15182f708fba579ac666323f215c8d7041253e50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48ecffb5_11ae249d",
+        "filename": "chrome/installer/zucchini/patch_reader.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-02T06:05:21Z",
+      "side": 1,
+      "message": "uint32_t patch_type_int \u003d kUnrecognisedPatch;\n\nThen read into that, and after validation, assign\n\npatch_type_ \u003d patch_type_int;",
+      "revId": "15182f708fba579ac666323f215c8d7041253e50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d4b8324_c1884f6c",
+        "filename": "chrome/installer/zucchini/patch_reader.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-02T06:05:21Z",
+      "side": 1,
+      "message": "Is it worthwhile to verify that *source is not empty, i.e., no extra crap is left after the patch?",
+      "revId": "15182f708fba579ac666323f215c8d7041253e50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d955eee3_2bc008ae",
+        "filename": "chrome/installer/zucchini/patch_reader.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-02T06:05:21Z",
+      "side": 1,
+      "message": "MAIN_TYPE",
+      "range": {
+        "startLine": 77,
+        "startChar": 20,
+        "endLine": 77,
+        "endChar": 29
+      },
+      "revId": "15182f708fba579ac666323f215c8d7041253e50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "598a6c3c_69f72e01",
+        "filename": "chrome/installer/zucchini/patch_reader.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-02T06:05:21Z",
+      "side": 1,
+      "message": "Optional: Consider making these private, and use FRIEND_TEST_ALL_PREFIXES() from gtest_prod_util.h. Same for the other *Source classes.",
+      "range": {
+        "startLine": 100,
+        "startChar": 15,
+        "endLine": 100,
+        "endChar": 23
+      },
+      "revId": "15182f708fba579ac666323f215c8d7041253e50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b74e9fe7_01a5e41e",
+        "filename": "chrome/installer/zucchini/patch_reader.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-02T06:05:21Z",
+      "side": 1,
+      "message": "Not sure what\u0027s meant by this: member variables are stil states??",
+      "range": {
+        "startLine": 198,
+        "startChar": 17,
+        "endLine": 198,
+        "endChar": 26
+      },
+      "revId": "15182f708fba579ac666323f215c8d7041253e50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fd7f2a3_478abfc4",
+        "filename": "chrome/installer/zucchini/patch_reader.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-02T06:05:21Z",
+      "side": 1,
+      "message": "(Clarification rant)\nOriginally Element was defined in Zucchini-gen as disjoint images found in \"old\" or in \"new\", and not a separator. You want to treat images and separators at equal footing (and depart from Courgette), and I suppose that\u0027s fine,  So we should stop using the term \"separators\"; please update README.md.\n\nThis will lead to more work in ensemble matching...",
+      "range": {
+        "startLine": 201,
+        "startChar": 21,
+        "endLine": 201,
+        "endChar": 34
+      },
+      "revId": "15182f708fba579ac666323f215c8d7041253e50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4af2e38_b82b34ce",
+        "filename": "chrome/installer/zucchini/patch_reader.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-02T06:05:21Z",
+      "side": 1,
+      "message": "Should there be a move constructor, so Create() won\u0027t do massive copying?\n\nAlternatively, replace Create() with a separate ParseEnsemblePatchReader() function that takes EnsemblePatchReader*, and consumes |buffer| (caller takes care of creating new |buffer|)? Though in this case, you might want to move all the Parse*() functions to bottom of file (or forward-declare EnsemblePatchReader).",
+      "range": {
+        "startLine": 250,
+        "startChar": 2,
+        "endLine": 250,
+        "endChar": 21
+      },
+      "revId": "15182f708fba579ac666323f215c8d7041253e50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73e0e111_01c44de1",
+        "filename": "chrome/installer/zucchini/patch_reader.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-02T06:05:21Z",
+      "side": 1,
+      "message": "NIT: CRC32",
+      "range": {
+        "startLine": 258,
+        "startChar": 5,
+        "endLine": 258,
+        "endChar": 10
+      },
+      "revId": "15182f708fba579ac666323f215c8d7041253e50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f2f9001_77059a3f",
+        "filename": "chrome/installer/zucchini/patch_reader.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-02T06:05:21Z",
+      "side": 1,
+      "message": "|units_| if you go ahead on renaming PatchElementReader to PatchUnitReader.",
+      "range": {
+        "startLine": 269,
+        "startChar": 34,
+        "endLine": 269,
+        "endChar": 43
+      },
+      "revId": "15182f708fba579ac666323f215c8d7041253e50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcc0efb4_38299cef",
+        "filename": "chrome/installer/zucchini/patch_writer.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-02T06:05:21Z",
+      "side": 1,
+      "message": "Should ensure that the value written (translated from offset_t) fits inside unit32_t?",
+      "revId": "15182f708fba579ac666323f215c8d7041253e50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb3570a2_8e46c0d1",
+        "filename": "chrome/installer/zucchini/patch_writer.h",
+        "patchSetId": 28
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-02T06:05:21Z",
+      "side": 1,
+      "message": "(Clarification request)\nThere seems to be a big design change compared to trunk??  We used to be able to do a \"dry run\" to count the number of bytes needed for the patch, so we can preallocate the size, and then write into it directly on a second pass.  Now everything\u0027s in memory, presumably, because patches are small enough, so we just generate patch in memory, and write into file later??",
+      "range": {
+        "startLine": 32,
+        "startChar": 7,
+        "endLine": 32,
+        "endChar": 33
+      },
+      "revId": "15182f708fba579ac666323f215c8d7041253e50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
