@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80b69733_ec2b1cd2",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-02T15:03:19Z",
+      "side": 1,
+      "message": "Perhaps some of View\u0027s RTL positioning functions would help here or in a non-flipped canvas fix? https://cs.chromium.org/chromium/src/ui/views/view.h?rcl\u003d7e037be1c4dcb0903bd7ec14844e66af79c8afe7\u0026l\u003d358",
+      "revId": "3f05765d62542bc46e3a50a2a99b300d77cf32e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90b5976e_ceac5f81",
+        "filename": "ash/shelf/app_list_button.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-02T15:03:19Z",
+      "side": 1,
+      "message": "Perhaps this View should call EnableCanvasFlippingForRTLUI(false)?",
+      "revId": "3f05765d62542bc46e3a50a2a99b300d77cf32e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b44887c4_0196dd1b",
+        "filename": "ash/shelf/app_list_button_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-02T15:03:19Z",
+      "side": 1,
+      "message": "nit: rename the function app_list_button() and make it (and the return value) const.",
+      "revId": "3f05765d62542bc46e3a50a2a99b300d77cf32e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78b02d31_14977fdc",
+        "filename": "ash/shelf/app_list_button_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-02T15:03:19Z",
+      "side": 1,
+      "message": "Use base/test/scoped_locale.h",
+      "revId": "3f05765d62542bc46e3a50a2a99b300d77cf32e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dc5644f_62c54fe7",
+        "filename": "ash/shelf/app_list_button_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-02T15:03:19Z",
+      "side": 1,
+      "message": "nit: US spelling of \u0027center\u0027 here and elsewhere",
+      "revId": "3f05765d62542bc46e3a50a2a99b300d77cf32e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07794a2f_102e425f",
+        "filename": "ash/shelf/app_list_button_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-02T15:03:19Z",
+      "side": 1,
+      "message": "It would be more helpful to explain the meaning of that, ie. \"Verify that in rtl, the app list button is left of the back button and vice versa.\" or similar.",
+      "revId": "3f05765d62542bc46e3a50a2a99b300d77cf32e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d0789e0_5ff24e88",
+        "filename": "ash/shelf/app_list_button_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-02T15:03:19Z",
+      "side": 1,
+      "message": "Maybe \"Verify that ltr positioning is always used for painting, as canvas flipping is enabled.\"",
+      "revId": "3f05765d62542bc46e3a50a2a99b300d77cf32e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
