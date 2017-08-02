@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb480084_e9cdb99a",
+        "filename": "chrome/browser/browser_process_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-02T15:20:54Z",
+      "side": 1,
+      "message": "Would this be better handled by the ExtensionsBrowserClient initialization/destruction?",
+      "revId": "0c9117f8b0c68bd41dd049b0e12a4e2cb3044677",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
