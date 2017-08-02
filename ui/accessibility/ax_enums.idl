@@ -462,6 +462,10 @@
   };
 
   [cpp_enum_prefix_override="ax_attr"] enum AXBoolAttribute {
+    // The object is at the root of an editable field, such as a content
+    // editable.
+    editable_root,
+
     // Live region attributes.
     container_live_atomic,
     container_live_busy,
