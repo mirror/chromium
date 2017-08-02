@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "341ab0d2_2a2f9e59",
+        "filename": "chrome/browser/ui/views/feature_promos/new_tab_promo.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-02T20:01:39Z",
+      "side": 1,
+      "message": "Is there a convention that \"Create\" means \"caller owns the pointer\"?  I wouldn\u0027t normally assume that.\n\nI kinda like Create(), plus the explanation of who owns the pointer, better than CreateXXX().  But I don\u0027t feel violently.",
+      "parentUuid": "253ba70a_b0081bc1",
+      "range": {
+        "startLine": 17,
+        "startChar": 32,
+        "endLine": 17,
+        "endChar": 38
+      },
+      "revId": "b96c2f7e643d2f1f6cc1cf53e428ea85cd63c330",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6d4d509_5adf8017",
         "filename": "chrome/browser/ui/views/feature_promos/new_tab_promo.h",
         "patchSetId": 1
