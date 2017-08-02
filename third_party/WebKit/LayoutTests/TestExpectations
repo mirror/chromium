@@ -3044,11 +3044,6 @@ crbug.com/719737 [ Mac ] css3/flexbox/radiobutton-min-size.html [ Failure ]
 # module script lacks XHTML support
 crbug.com/717643 external/wpt/html/semantics/scripting-1/the-script-element/module/module-in-xhtml.xhtml [ Failure ]
 
-# Ganesh dither changes
-crbug.com/745776 virtual/gpu/fast/canvas/canvas-text-alignment.html [ NeedsManualRebaseline ]
-crbug.com/745776 virtual/gpu/fast/canvas/fillrect_gradient.html [ NeedsManualRebaseline ]
-crbug.com/745776 virtual/gpu/fast/canvas/gradient-add-second-start-end-stop.html [ NeedsManualRebaseline ]
-
 # Geolocation tests
 crbug.com/745079 external/wpt/geolocation-API/PositionOptions.https.html [ Failure ]
 
