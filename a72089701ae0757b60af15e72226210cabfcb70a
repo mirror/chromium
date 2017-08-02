@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "34d30267_4b0450ec",
+        "filename": "ui/base/win/shell.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-08-02T18:56:15Z",
+      "side": 1,
+      "message": "shlobj is not required to be before propkey in that file. I\u0027m not sure why.",
+      "parentUuid": "b3655546_5c5f75f6",
+      "revId": "a72089701ae0757b60af15e72226210cabfcb70a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e951ea57_13a007f7",
         "filename": "ui/base/win/shell.cc",
         "patchSetId": 14
@@ -54,6 +72,30 @@
       "side": 1,
       "message": "If we believe this could actually fail for some reason, NOTREACHED() isn\u0027t really appropriate, as that asserts \"never fails\".\n\nThe existing DCHECK at the bottom of the function declares that GetCount() always succeeds.  It seems like either that DCHECK is incorrect, or the previous implementation here was correct (that we can just DCHECK that GetCount succeeded and move on safely).\n\nFWIW I\u0027m also really confused why the loop counts down, as loops that count down are unusual and so signal \"it\u0027s critically important that this loop not count up\", but that\u0027s not the case here.\n\nFor these reasons, I\u0027d either return to the previous code, or if GetCount() cannot be relied on to succeed, then early-return above and not DCHECK it below.",
       "parentUuid": "e951ea57_13a007f7",
+      "range": {
+        "startLine": 182,
+        "startChar": 7,
+        "endLine": 182,
+        "endChar": 10
+      },
+      "revId": "a72089701ae0757b60af15e72226210cabfcb70a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9036222f_f963e3ca",
+        "filename": "ui/base/win/shell.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-08-02T18:56:15Z",
+      "side": 1,
+      "message": "I changed the loop direction because the previous code only makes sense if you realize that calling SetValue(key, empty) compacts an internal array, whereas it\u0027s more intuitive that this loop will delete every element. But if you think that\u0027s too surprising, I can make the loop count up again no problem.\n\nAs for the DCHECK, let me explain my reasoning in more detail. At first I thought GetCount would never fail (so I DCHECKed it), but then I realized I was just assuming that and maybe there\u0027s some strange situation where it can fail. If that happens on a debug build I would really like it to trigger something, because we might be leaking properties. Doing just an early-exit won\u0027t accomplish that. My instinct was to make sure release builds are in a defined state but still fail out in debug builds. But you\u0027re right that goes against the principle that you shouldn\u0027t handle a failure after you DCHECK it. So I\u0027m not really sure what to do in this \"I\u0027m pretty sure this won\u0027t happen but MAYBE it will\" situation.",
+      "parentUuid": "eb6cd18c_0a9151a4",
       "range": {
         "startLine": 182,
         "startChar": 7,
