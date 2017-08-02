@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af257f0e_709a33ce",
+        "filename": "mojo/public/tools/fuzzers/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-02T21:38:12Z",
+      "side": 1,
+      "message": "What is the reason to have an empty group?",
+      "range": {
+        "startLine": 11,
+        "startChar": 7,
+        "endLine": 11,
+        "endChar": 14
+      },
+      "revId": "7568a03b843e34792390d3ceb50e69810c1a5cef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afc02480_245fdfa8",
+        "filename": "mojo/public/tools/fuzzers/fuzz.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-02T21:38:12Z",
+      "side": 1,
+      "message": "The indentation is unusual. We usually use 2 spaces. Here and below.",
+      "revId": "7568a03b843e34792390d3ceb50e69810c1a5cef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1bc0e6b_4d26e2c1",
+        "filename": "mojo/public/tools/fuzzers/fuzz.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-02T21:38:12Z",
+      "side": 1,
+      "message": "Do you mean double? And also if you wuold like to cover all the primitive types, you probably also want [u]int64.\n\n(here and below)",
+      "revId": "7568a03b843e34792390d3ceb50e69810c1a5cef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42bcabc2_970e8a1a",
+        "filename": "mojo/public/tools/fuzzers/mojo_parse_message_fuzzer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-02T21:38:12Z",
+      "side": 1,
+      "message": "style nit: FuzzMessage()?",
+      "range": {
+        "startLine": 52,
+        "startChar": 5,
+        "endLine": 52,
+        "endChar": 17
+      },
+      "revId": "7568a03b843e34792390d3ceb50e69810c1a5cef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
