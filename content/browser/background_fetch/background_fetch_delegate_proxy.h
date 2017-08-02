@@ -7,6 +7,8 @@
 
 #include <memory>
 #include <string>
+#include <unordered_map>
+#include <utility>
 
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
@@ -19,11 +21,12 @@ class URLRequestContextGetter;
 
 namespace content {
 
+class BackgroundFetchDelegate;
 class BackgroundFetchJobController;
 class BrowserContext;
 
-// Proxy class for passing messages between BackgroundFetchJobController on the
-// IO thread to and BackgroundFetchDelegate on the UI thread.
+// Proxy class for passing messages between BackgroundFetchJobControllers on the
+// IO thread and BackgroundFetchDelegate on the UI thread.
 // TODO(delphick): Create BackgroundFetchDelegate.
 class CONTENT_EXPORT BackgroundFetchDelegateProxy {
  public:
@@ -53,23 +56,24 @@ class CONTENT_EXPORT BackgroundFetchDelegateProxy {
  private:
   class Core;
 
-  // Called when the download manager has started the given |request|. The
-  // |download_item| continues to be owned by the download system. The
-  // |interrupt_reason| will indicate when a request could not be started.
-  // Should only be called from the BackgroundFetchDelegate (on the IO thread).
-  void DidStartRequest(
-      const base::WeakPtr<BackgroundFetchJobController>& job_controller,
-      scoped_refptr<BackgroundFetchRequestInfo> request,
-      const std::string& download_guid);
-
   // Called when the given |request| has been completed.
   // Should only be called from the BackgroundFetchDelegate (on the IO thread).
-  void DidCompleteRequest(
-      const base::WeakPtr<BackgroundFetchJobController>& job_controller,
-      scoped_refptr<BackgroundFetchRequestInfo> request);
+  void OnDownloadSucceeded(std::string guid,
+                           base::FilePath path,
+                           uint64_t size);
+
+  // Should only be called from the BackgroundFetchDelegate (on the IO thread).
+  void DidStartRequest(const std::string& guid);
 
   std::unique_ptr<Core, BrowserThread::DeleteOnUIThread> ui_core_;
   base::WeakPtr<Core> ui_core_ptr_;
+
+  // Map from DownloadService GUIDs to the RequestInfo and the JobController
+  // that started the download.
+  std::unordered_map<std::string,
+                     std::pair<scoped_refptr<BackgroundFetchRequestInfo>,
+                               base::WeakPtr<BackgroundFetchJobController>>>
+      controller_map_;
 
   base::WeakPtrFactory<BackgroundFetchDelegateProxy> weak_ptr_factory_;
 

@@ -10,6 +10,7 @@
 #include "base/sequenced_task_runner.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/task_scheduler/task_traits.h"
+#include "chrome/browser/background_fetch/background_fetch_download_client.h"
 #include "chrome/browser/download/download_task_scheduler_impl.h"
 #include "chrome/browser/profiles/incognito_helpers.h"
 #include "chrome/browser/profiles/profile.h"
@@ -58,6 +59,11 @@ KeyedService* DownloadServiceFactory::BuildServiceInstanceFor(
       download::DownloadClient::OFFLINE_PAGE_PREFETCH,
       base::MakeUnique<offline_pages::OfflinePrefetchDownloadClient>(context)));
 #endif  // BUILDFLAG(ENABLE_OFFLINE_PAGES)
+
+  clients->insert(std::make_pair(
+      download::DownloadClient::BACKGROUND_FETCH,
+      base::MakeUnique<background_fetch::BackgroundFetchDownloadClient>(
+          context)));
 
   auto* download_manager = content::BrowserContext::GetDownloadManager(context);
 
