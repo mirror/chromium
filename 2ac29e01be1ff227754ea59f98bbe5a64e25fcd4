@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a247482a_43ace034",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2650,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-02T23:06:08Z",
+      "side": 1,
+      "message": "All of these need to be renumbered now unfortunately.",
+      "revId": "2ac29e01be1ff227754ea59f98bbe5a64e25fcd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "210dd759_ee92d958",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 31315,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-02T23:06:08Z",
+      "side": 1,
+      "message": "... removes zero-weighting so that we only report actual underflows.",
+      "revId": "2ac29e01be1ff227754ea59f98bbe5a64e25fcd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
