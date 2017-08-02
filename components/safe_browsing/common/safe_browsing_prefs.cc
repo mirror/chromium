@@ -141,6 +141,8 @@ void RecordExtendedReportingPrefChanged(
 }  // namespace
 
 namespace prefs {
+const char kSafeBrowsingChangePasswordInSettingsEnabled[] =
+    "safebrowsing.change_password_enabled";
 const char kSafeBrowsingEnabled[] = "safebrowsing.enabled";
 const char kSafeBrowsingExtendedReportingEnabled[] =
     "safebrowsing.extended_reporting_enabled";
