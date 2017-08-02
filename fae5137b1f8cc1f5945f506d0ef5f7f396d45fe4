@@ -52,6 +52,24 @@
       "revId": "fae5137b1f8cc1f5945f506d0ef5f7f396d45fe4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abc3b613_02b079db",
+        "filename": "third_party/WebKit/LayoutTests/inspector/coverage/gutter-js-expected.txt",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1162439
+      },
+      "writtenOn": "2017-08-02T11:33:49Z",
+      "side": 1,
+      "message": "I have a CL in-flight to restore the old behavior in which closing braces of covered functions are also covered: http://crrev.com/c/597651\n\nI\u0027ll hold off on landing this until that CL is rolled to avoid another rebaseline dance. Should happen sometime tomorrow.",
+      "parentUuid": "5234e1f8_fdf08689",
+      "revId": "fae5137b1f8cc1f5945f506d0ef5f7f396d45fe4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
