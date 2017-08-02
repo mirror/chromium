@@ -225,10 +225,17 @@ class BASE_EXPORT MessageLoop : public MessagePump::Delegate,
   // - With NestableTasksAllowed set to true, the task #2 will run right away.
   //   Otherwise, it will get executed right after task #1 completes at "thread
   //   message loop level".
+  //
+  // DEPRECATED: Use RunLoop::Type on the relevant RunLoop instead of these
+  // methods.
+  // TODO(gab): Migrate usage and delete these methods.
   void SetNestableTasksAllowed(bool allowed);
   bool NestableTasksAllowed() const;
 
   // Enables nestable tasks on |loop| while in scope.
+  // DEPRECATED: Use RunLoop::Type on the relevant RunLoop instead of this
+  // class.
+  // TODO(gab): Migrate usage and delete this class.
   class ScopedNestableTaskAllower {
    public:
     explicit ScopedNestableTaskAllower(MessageLoop* loop)
@@ -401,7 +408,9 @@ class BASE_EXPORT MessageLoop : public MessagePump::Delegate,
   ObserverList<DestructionObserver> destruction_observers_;
 
   // A recursion block that prevents accidentally running additional tasks when
-  // insider a (accidentally induced?) nested message pump.
+  // insider a (accidentally induced?) nested message pump. Deprecated in favor
+  // of run_loop_client_->ProcessingTasksAllowed(), equivalent until then (both
+  // need to be checked in conditionals).
   bool nestable_tasks_allowed_;
 
   // pump_factory_.Run() is called to create a message pump for this loop
