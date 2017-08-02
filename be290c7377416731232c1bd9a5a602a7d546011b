@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f450db1c_118fb77c",
+        "filename": "chrome/browser/io_thread.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-02T19:21:11Z",
+      "side": 1,
+      "message": "nit: since \"NetworkContext\" is singular either change \"all\" to \"every\", or add an s to NetworkContext?",
+      "range": {
+        "startLine": 205,
+        "startChar": 35,
+        "endLine": 205,
+        "endChar": 53
+      },
+      "revId": "be290c7377416731232c1bd9a5a602a7d546011b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9e2a934_109350ed",
+        "filename": "chrome/browser/net/profile_network_context_service.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-02T19:21:11Z",
+      "side": 1,
+      "message": "nit: \"disabled\" \u003d\u003e \"disables\"",
+      "range": {
+        "startLine": 65,
+        "startChar": 33,
+        "endLine": 65,
+        "endChar": 41
+      },
+      "revId": "be290c7377416731232c1bd9a5a602a7d546011b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "057f3139_c0517085",
+        "filename": "chrome/browser/net/profile_network_context_service.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-02T19:21:11Z",
+      "side": 1,
+      "message": "Your call, but I wonder if MaybeDisableQuic() or DisableQuicIfNotAllowed() would be more clear.",
+      "range": {
+        "startLine": 66,
+        "startChar": 7,
+        "endLine": 66,
+        "endChar": 23
+      },
+      "revId": "be290c7377416731232c1bd9a5a602a7d546011b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55ee0e82_723e389e",
+        "filename": "chrome/browser/net/system_network_context_manager.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-02T19:21:11Z",
+      "side": 1,
+      "message": "I guess QUIC is special here because there are no other things which need to be similarly disabled, or toggled at runtime?",
+      "range": {
+        "startLine": 78,
+        "startChar": 31,
+        "endLine": 78,
+        "endChar": 0
+      },
+      "revId": "be290c7377416731232c1bd9a5a602a7d546011b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
