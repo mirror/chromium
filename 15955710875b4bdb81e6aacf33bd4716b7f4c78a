@@ -1,0 +1,293 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d805478_2bd55830",
+        "filename": "android_webview/browser/surfaces_instance.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-08-02T17:56:59Z",
+      "side": 1,
+      "message": "the existing false isn\u0027t being a good example, but can you put boolean literals into temp vars to give them a name?",
+      "revId": "15955710875b4bdb81e6aacf33bd4716b7f4c78a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7633bcf5_94a75ae0",
+        "filename": "cc/layers/layer_impl.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-08-02T17:56:59Z",
+      "side": 1,
+      "message": "Can we say contents_opaque to be clear about what is opaque and differentiate it from opacity more clearly?",
+      "revId": "15955710875b4bdb81e6aacf33bd4716b7f4c78a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dae5fcc5_f9ee924e",
+        "filename": "cc/layers/painted_scrollbar_layer_impl.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-08-02T17:56:59Z",
+      "side": 1,
+      "message": "use a temp var to give it a name",
+      "revId": "15955710875b4bdb81e6aacf33bd4716b7f4c78a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc76c139_7b9c0125",
+        "filename": "cc/layers/painted_scrollbar_layer_impl.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-08-02T17:56:59Z",
+      "side": 1,
+      "message": "let\u0027s make wei\u0027s life easier by not making the track SQS and using it until after we append the thumb",
+      "revId": "15955710875b4bdb81e6aacf33bd4716b7f4c78a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0cb1e72_0af724b7",
+        "filename": "cc/layers/render_surface_impl.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-08-02T17:56:59Z",
+      "side": 1,
+      "message": "the |render_pass| here is the target, so it\u0027s odd to report this thing as opaque based on the target.\n\nThe quad opaque rect is always set to empty below, so we can report false here. It shouldn\u0027t be true when the target is opaque at least. We\u0027d need to know when *this* one is, which I don\u0027t think we know from here atm.",
+      "revId": "15955710875b4bdb81e6aacf33bd4716b7f4c78a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97b68db6_1f1bf397",
+        "filename": "cc/layers/texture_layer_impl.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-08-02T17:56:59Z",
+      "side": 1,
+      "message": "nit: move this stuff above L150 so we make and populate the SQS together",
+      "revId": "15955710875b4bdb81e6aacf33bd4716b7f4c78a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34766841_b83cf4b7",
+        "filename": "cc/quads/draw_quad_unittest.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-08-02T17:56:59Z",
+      "side": 1,
+      "message": "nit: use true, false is a more likely default to get right by accident",
+      "revId": "15955710875b4bdb81e6aacf33bd4716b7f4c78a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9deae21c_e372fdd9",
+        "filename": "cc/quads/draw_quad_unittest.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-08-02T17:56:59Z",
+      "side": 1,
+      "message": "same",
+      "revId": "15955710875b4bdb81e6aacf33bd4716b7f4c78a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3be8eb5_5fc7b825",
+        "filename": "cc/quads/shared_quad_state.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-08-02T17:56:59Z",
+      "side": 1,
+      "message": "add it to the trace",
+      "revId": "15955710875b4bdb81e6aacf33bd4716b7f4c78a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a1c3496_918ebd05",
+        "filename": "cc/quads/shared_quad_state.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-08-02T17:56:59Z",
+      "side": 1,
+      "message": "is_contents_opaque or is_quad_content_opaque or so please",
+      "revId": "15955710875b4bdb81e6aacf33bd4716b7f4c78a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "783ce4bc_1ff3260a",
+        "filename": "cc/quads/shared_quad_state.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-08-02T17:56:59Z",
+      "side": 1,
+      "message": "// Whether the quads\u0027 content is opaque.",
+      "revId": "15955710875b4bdb81e6aacf33bd4716b7f4c78a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34494074_d1451fe3",
+        "filename": "cc/quads/shared_quad_state.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-08-02T17:56:59Z",
+      "side": 1,
+      "message": "is_contents_opaque or is_quad_content_opaque or so please",
+      "revId": "15955710875b4bdb81e6aacf33bd4716b7f4c78a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e165432_6283ffe0",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 784,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-08-02T17:56:59Z",
+      "side": 1,
+      "message": "Also should not report opaque based on the target here. Instead it is based on the content of the quads being added, which is the screen_background_color.",
+      "revId": "15955710875b4bdb81e6aacf33bd4716b7f4c78a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76b3a8ca_2949c415",
+        "filename": "components/viz/service/display/surface_aggregator_unittest.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 1223,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-08-02T17:56:59Z",
+      "side": 1,
+      "message": "should be opaque based on the color: https://cs.chromium.org/chromium/src/cc/quads/solid_color_draw_quad.cc?rcl\u003d77b69db0b5592af98b59c57c3efdfa4bc16f48d2\u0026l\u003d21",
+      "revId": "15955710875b4bdb81e6aacf33bd4716b7f4c78a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdec3cca_9b9dbd5d",
+        "filename": "content/renderer/android/synchronous_layer_tree_frame_sink.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-08-02T17:56:59Z",
+      "side": 1,
+      "message": "same thing here, using the target to decide if this thing\u0027s content is opaque. instead match what surface_quad is doing, or determine if the surface\u0027s contents are opaque somehow (maybe look at the compositorframe |frame| we\u0027re embedding?)",
+      "revId": "15955710875b4bdb81e6aacf33bd4716b7f4c78a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "298dcf12_10b8517a",
+        "filename": "services/ui/ws/frame_generator.cc",
+        "patchSetId": 34
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-08-02T17:56:59Z",
+      "side": 1,
+      "message": "use var or comment to name bool literals",
+      "revId": "15955710875b4bdb81e6aacf33bd4716b7f4c78a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0944fc56_85feadf1",
+        "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.cpp",
+        "patchSetId": 34
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-08-02T17:56:59Z",
+      "side": 1,
+      "message": "use var or comment to name bool literals",
+      "revId": "15955710875b4bdb81e6aacf33bd4716b7f4c78a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
