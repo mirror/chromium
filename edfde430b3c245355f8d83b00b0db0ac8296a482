@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d156c7a7_4f3c79e3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-08-02T19:18:50Z",
+      "side": 1,
+      "message": "No need to add unit tests here. The TEST line is only used by the QA folks for manual verification.",
+      "revId": "edfde430b3c245355f8d83b00b0db0ac8296a482",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4c5b517_d609aa84",
+        "filename": "net/http/http_auth_handler_ntlm.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-08-02T19:18:50Z",
+      "side": 1,
+      "message": "Here we are depending on a symbol that\u0027s only included if NTLM_PORTABLE is defined. This won\u0027t compile on Windows, and we shouldn\u0027t try to fix it by including ntlm_client.h all the time.\n\nBy the power of type aliasing, we can introduce a HttpAuthHandlerNTLM::Buffer type that\u0027s aliased to ntlm::Buffer when NTLM_PORTABLE is defined, and to std::string when not. This way we can have zero-overhead plumbing to either the portable NTLM implementation or the Windows SSPI one.\n\nOh and you\u0027ll also need to modify the SSPI implementation to work with the modified GetNextToken API.",
+      "revId": "edfde430b3c245355f8d83b00b0db0ac8296a482",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
