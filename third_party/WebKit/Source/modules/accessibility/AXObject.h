@@ -779,9 +779,6 @@ class MODULES_EXPORT AXObject : public GarbageCollectedFinalized<AXObject> {
   // Make this object visible by scrolling as many nested scrollable views as
   // needed.
   void ScrollToMakeVisible() const;
-  // Same, but if the whole object can't be made visible, try for this subrect,
-  // in local coordinates.
-  void ScrollToMakeVisibleWithSubFocus(const IntRect&) const;
   // Scroll this object to a given point in global coordinates of the top-level
   // window.
   void ScrollToGlobalPoint(const IntPoint&) const;
