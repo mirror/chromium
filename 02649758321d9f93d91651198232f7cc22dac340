@@ -102,6 +102,24 @@
     },
     {
       "key": {
+        "uuid": "6b77668d_f8b84d2f",
+        "filename": "content/browser/loader/redirect_to_file_resource_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-02T22:17:40Z",
+      "side": 1,
+      "message": "One thing you could do is wait for your next callback (i.e. when you\u0027re in-band) and cancel then. I\u0027m not sure how clean that would be.\n\nI\u0027ll defer to mmenke@ though.",
+      "parentUuid": "58553c47_a35f4609",
+      "revId": "02649758321d9f93d91651198232f7cc22dac340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2cc53d22_e5a91f77",
         "filename": "content/browser/loader/redirect_to_file_resource_handler.cc",
         "patchSetId": 3
