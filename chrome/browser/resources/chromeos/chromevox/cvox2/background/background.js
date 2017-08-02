@@ -634,6 +634,11 @@ Background.prototype = {
   brailleRoutingCommand_: function(text, position) {
     var actionNodeSpan = null;
     var selectionSpan = null;
+
+    // Treat a position equal to the length of the spannable (which indexes into
+    // nothing as length - 1).
+    if (position == text.length && position > 0)
+      position--;
     text.getSpans(position).forEach(function(span) {
       if (span instanceof Output.SelectionSpan) {
         selectionSpan = span;
