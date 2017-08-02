@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9a40dfab_81b1301b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/background-fetch/resources/utils.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-02T19:13:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a6c459d_5874e884",
+      "revId": "d580a5c7f2cb2a2c21fc798ef5f1b88fa263e07e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d878d942_9ec91e54",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/background-fetch/secure-request-origins.https.window.js",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-27T18:21:49Z",
       "side": 1,
       "message": "It would be nice to refer to a spec on why these cases are OK.",
+      "revId": "d580a5c7f2cb2a2c21fc798ef5f1b88fa263e07e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dca32aeb_a77bc014",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/background-fetch/secure-request-origins.https.window.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-02T19:13:04Z",
+      "side": 1,
+      "message": "Agreed. Will do that in next patchset.",
+      "parentUuid": "d878d942_9ec91e54",
       "revId": "d580a5c7f2cb2a2c21fc798ef5f1b88fa263e07e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9379c227_e61c85ba",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/background-fetch/secure-request-origins.https.window.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-02T19:13:04Z",
+      "side": 1,
+      "message": "No, that\u0027s blocked by https://w3c.github.io/webappsec-mixed-content/",
+      "parentUuid": "6a2a270e_71259b1b",
+      "revId": "d580a5c7f2cb2a2c21fc798ef5f1b88fa263e07e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08a38858_4f44c24b",
         "filename": "third_party/WebKit/Source/modules/background_fetch/BackgroundFetchManager.cpp",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "d580a5c7f2cb2a2c21fc798ef5f1b88fa263e07e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3677f8a1_21778058",
+        "filename": "third_party/WebKit/Source/modules/background_fetch/BackgroundFetchManager.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-02T19:13:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08a38858_4f44c24b",
+      "revId": "d580a5c7f2cb2a2c21fc798ef5f1b88fa263e07e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "850b87bd_3896c24f",
+        "filename": "third_party/WebKit/Source/modules/background_fetch/BackgroundFetchManager.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-02T19:13:04Z",
+      "side": 1,
+      "message": "I added a bug link to all TODOs, if that\u0027s what you mean?",
+      "parentUuid": "e579004f_3ce08899",
+      "revId": "d580a5c7f2cb2a2c21fc798ef5f1b88fa263e07e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e874673b_f9074fd7",
         "filename": "third_party/WebKit/Source/modules/background_fetch/BackgroundFetchManager.cpp",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "d580a5c7f2cb2a2c21fc798ef5f1b88fa263e07e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "907206cb_3c89e8e9",
+        "filename": "third_party/WebKit/Source/modules/background_fetch/BackgroundFetchManager.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-08-02T19:13:04Z",
+      "side": 1,
+      "message": "It\u0027s more specific than that - I disallow wss:, data:, file: and chrome-extension: even though they\u0027re secure. See https://github.com/WICG/background-fetch/issues/44. I\u0027ve reworked these comments anyway.",
+      "parentUuid": "e874673b_f9074fd7",
+      "revId": "d580a5c7f2cb2a2c21fc798ef5f1b88fa263e07e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
