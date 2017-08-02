@@ -185,13 +185,24 @@ cr.define('cr.ui', function() {
     },
 
     /**
+     * Returns whether the given menu item is visible.
+     * @param {cr.ui.MenuItem} menuItem
+     * @return {boolean}
+     */
+    isItemVisible_: function(menuItem) {
+      return !menuItem.hidden &&
+          window.getComputedStyle(menuItem).getPropertyValue('display') !=
+          'none';
+    },
+
+    /**
      * Returns if the menu has any visible item.
      * @return {boolean} True if the menu has visible item. Otherwise, false.
      */
     hasVisibleItems: function() {
       var menuItems = this.menuItems;  // Cache.
       for (var i = 0, menuItem; menuItem = menuItems[i]; i++) {
-        if (!menuItem.isSeparator() && !menuItem.hidden)
+        if (!menuItem.isSeparator() && this.isItemVisible_(menuItem))
           return true;
       }
       return false;
@@ -234,7 +245,8 @@ cr.define('cr.ui', function() {
             break;
 
           item = menuItems[i];
-          if (item && !item.isSeparator() && !item.hidden && !item.disabled)
+          if (item && !item.isSeparator() && this.isItemVisible_(item) &&
+              !item.disabled)
             break;
         }
         if (item && !item.disabled)
