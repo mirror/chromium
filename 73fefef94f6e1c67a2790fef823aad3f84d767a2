@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8b1058b_201bebb3",
+        "filename": "testing/scripts/run_telemetry_benchmark_as_googletest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-08-02T01:03:05Z",
+      "side": 1,
+      "message": "I think we should just use logging.exception() which print the stack \u0026 based on the stack, it should be clear where the exception occurs?",
+      "revId": "73fefef94f6e1c67a2790fef823aad3f84d767a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
