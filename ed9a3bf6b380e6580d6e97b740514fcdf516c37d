@@ -25,6 +25,75 @@
     },
     {
       "key": {
+        "uuid": "448cb024_5a264110",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-02T13:34:03Z",
+      "side": 1,
+      "message": "possible to just make this inline below instead of a separate method?",
+      "range": {
+        "startLine": 125,
+        "startChar": 7,
+        "endLine": 125,
+        "endChar": 56
+      },
+      "revId": "ed9a3bf6b380e6580d6e97b740514fcdf516c37d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef19d5a5_fd3053c6",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 822,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-02T13:34:03Z",
+      "side": 1,
+      "message": "s/size_t/double/?\nand use explicit static_cast when converting from double to size_t.",
+      "range": {
+        "startLine": 822,
+        "startChar": 4,
+        "endLine": 822,
+        "endChar": 10
+      },
+      "revId": "ed9a3bf6b380e6580d6e97b740514fcdf516c37d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e1be554_aa2518dc",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1318,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-02T13:34:03Z",
+      "side": 1,
+      "message": "may be reverse the order?\nif(!n_q_e) {\n   // Say why...?\n   return 0.0;\n}\nif(n_q_e-\u003eGetECT()  \u003c\u003d OFFLINE || n_q_e-\u003eGetECT() \u003e threshold_) {\n // say why?\n  return 0.0;\n}\nreturn weight_;",
+      "range": {
+        "startLine": 1318,
+        "startChar": 0,
+        "endLine": 1318,
+        "endChar": 34
+      },
+      "revId": "ed9a3bf6b380e6580d6e97b740514fcdf516c37d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0cf99ab7_8d8b5988",
         "filename": "content/browser/loader/resource_scheduler.h",
         "patchSetId": 12
@@ -41,6 +110,52 @@
         "startChar": 6,
         "endLine": 197,
         "endChar": 37
+      },
+      "revId": "ed9a3bf6b380e6580d6e97b740514fcdf516c37d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "027ca186_9603099d",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-02T13:34:03Z",
+      "side": 1,
+      "message": "s/Multiplier/Weight/",
+      "range": {
+        "startLine": 198,
+        "startChar": 9,
+        "endLine": 198,
+        "endChar": 59
+      },
+      "revId": "ed9a3bf6b380e6580d6e97b740514fcdf516c37d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "923199b0_f8bce31a",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-02T13:34:03Z",
+      "side": 1,
+      "message": "The comments related to this experiment are currently spread out at multiple places. At 3 places here in .h file, and at couple of places in .cc file.\nIs there a way to make this concise?",
+      "range": {
+        "startLine": 221,
+        "startChar": 9,
+        "endLine": 221,
+        "endChar": 17
       },
       "revId": "ed9a3bf6b380e6580d6e97b740514fcdf516c37d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
