@@ -22,6 +22,46 @@
       "revId": "d58180ac7d94daa1a122852ba4d4a9750220da34",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e60673de_2af058be",
+        "filename": "cc/paint/solid_color_analyzer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-02T17:47:07Z",
+      "side": 1,
+      "message": "nit: change this to match the function name",
+      "range": {
+        "startLine": 136,
+        "startChar": 16,
+        "endLine": 136,
+        "endChar": 47
+      },
+      "revId": "d58180ac7d94daa1a122852ba4d4a9750220da34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccddc232_b7e20d47",
+        "filename": "cc/paint/solid_color_analyzer_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-02T17:47:07Z",
+      "side": 1,
+      "message": "I kind of prefer just a\nfor (int case \u003d 0; case \u003c 2; ++case) {\n  bool scaled \u003d case \u003e 0;\n  ...\n}\n\nbut this works as well.",
+      "revId": "d58180ac7d94daa1a122852ba4d4a9750220da34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
