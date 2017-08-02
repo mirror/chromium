@@ -316,6 +316,23 @@
       "revId": "ef52204077a39b8e3210355202cafd8d23cfa53b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4107c24b_854b67df",
+        "filename": "cc/paint/solid_color_analyzer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-02T08:03:15Z",
+      "side": 1,
+      "message": "I think moving the TearDown(); SetUp(); to a Reset function on the test class would be cleaner.",
+      "revId": "ef52204077a39b8e3210355202cafd8d23cfa53b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
