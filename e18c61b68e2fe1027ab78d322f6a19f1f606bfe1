@@ -16,6 +16,24 @@
       "revId": "e18c61b68e2fe1027ab78d322f6a19f1f606bfe1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "542d4706_a503a22b",
+        "filename": "extensions/browser/api/networking_private/networking_private_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1000212
+      },
+      "writtenOn": "2017-08-02T18:13:41Z",
+      "side": 1,
+      "message": "If |require_pin| is true, and |new_pin| is empty, the code should call RequirePin(true) to enable SIM locking.",
+      "parentUuid": "ce6cf10a_c1bef762",
+      "revId": "e18c61b68e2fe1027ab78d322f6a19f1f606bfe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
