@@ -34,6 +34,24 @@
       "revId": "a5a5454331bc67c10a2030b333a77178e9914a43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4067396a_cf7f2b2b",
+        "filename": "tools/mb/mb_config.pyl",
+        "patchSetId": 1
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-08-02T13:00:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9136d43_138bc57c",
+      "revId": "a5a5454331bc67c10a2030b333a77178e9914a43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
