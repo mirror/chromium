@@ -70,6 +70,7 @@ TEST_F(MemoryDumpSchedulerTest, SingleTrigger) {
       .WillRepeatedly(Invoke(
           [&evt, kLevelOfDetail](MemoryDumpLevelOfDetail level_of_detail) {
             EXPECT_EQ(kLevelOfDetail, level_of_detail);
+            sleep(1);
             evt.Signal();
           }));
 
@@ -83,6 +84,7 @@ TEST_F(MemoryDumpSchedulerTest, SingleTrigger) {
 
   // It takes N-1 ms to perform N ticks of 1ms each.
   EXPECT_GE(time_ms, kPeriodMs * (kTicks - 1));
+  sleep(4);
 
   // Check that stopping twice doesn't cause any problems.
   scheduler_->Stop();
