@@ -190,8 +190,7 @@ bool IsReaderModeEnabled() {
 }
 
 bool IsRequestMobileSiteEnabled() {
-  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
-  return !command_line->HasSwitch(switches::kDisableRequestMobileSite);
+  return YES;
 }
 
 bool IsSafariVCSignInEnabled() {
