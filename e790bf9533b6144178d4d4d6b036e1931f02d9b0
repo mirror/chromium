@@ -42,6 +42,48 @@
     },
     {
       "key": {
+        "uuid": "4eb91ae7_003c3998",
+        "filename": "chrome/app/chrome_crash_reporter_client_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-08-02T19:56:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8512f7f4_eaf943f6",
+      "revId": "e790bf9533b6144178d4d4d6b036e1931f02d9b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ef422d5_da283c79",
+        "filename": "chrome/app/chrome_crash_reporter_client_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-08-02T19:56:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5acd6fb_2496df0e",
+      "range": {
+        "startLine": 250,
+        "startChar": 4,
+        "endLine": 250,
+        "endChar": 16
+      },
+      "revId": "e790bf9533b6144178d4d4d6b036e1931f02d9b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07dff785_3f0f0953",
         "filename": "chrome/install_static/user_data_dir.cc",
         "patchSetId": 8
@@ -97,6 +139,30 @@
       "revId": "e790bf9533b6144178d4d4d6b036e1931f02d9b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5c18746_2a9f8af0",
+        "filename": "chrome/installer/setup/installer_crash_reporting.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-08-02T19:56:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b0e4b95_74d39a05",
+      "range": {
+        "startLine": 97,
+        "startChar": 76,
+        "endLine": 97,
+        "endChar": 78
+      },
+      "revId": "e790bf9533b6144178d4d4d6b036e1931f02d9b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -158,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "eb6ab14a_7f0b7d6d",
+        "filename": "components/crash/content/app/crashpad.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-08-02T19:56:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f8f9992_faae2c7b",
+      "range": {
+        "startLine": 62,
+        "startChar": 48,
+        "endLine": 62,
+        "endChar": 61
+      },
+      "revId": "e790bf9533b6144178d4d4d6b036e1931f02d9b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9807ffd_24d97de8",
         "filename": "components/crash/content/app/crashpad.h",
         "patchSetId": 8
@@ -178,6 +268,30 @@
       "revId": "e790bf9533b6144178d4d4d6b036e1931f02d9b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f8741ee_85960f72",
+        "filename": "components/crash/content/app/crashpad.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-08-02T19:56:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9807ffd_24d97de8",
+      "range": {
+        "startLine": 123,
+        "startChar": 61,
+        "endLine": 123,
+        "endChar": 68
+      },
+      "revId": "e790bf9533b6144178d4d4d6b036e1931f02d9b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -227,6 +341,54 @@
     },
     {
       "key": {
+        "uuid": "46e69457_2a4f866e",
+        "filename": "components/crash/content/app/crashpad.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-08-02T19:56:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a1d51c1_7f92bc35",
+      "range": {
+        "startLine": 124,
+        "startChar": 3,
+        "endLine": 124,
+        "endChar": 16
+      },
+      "revId": "e790bf9533b6144178d4d4d6b036e1931f02d9b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c76c4db9_58bc715d",
+        "filename": "components/crash/content/app/crashpad.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-08-02T19:56:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7987c18f_9a48f324",
+      "range": {
+        "startLine": 124,
+        "startChar": 31,
+        "endLine": 124,
+        "endChar": 54
+      },
+      "revId": "e790bf9533b6144178d4d4d6b036e1931f02d9b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8317ad35_fe9f9377",
         "filename": "components/crash/content/app/crashpad_mac.mm",
         "patchSetId": 8
@@ -241,6 +403,24 @@
       "revId": "e790bf9533b6144178d4d4d6b036e1931f02d9b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cbb9a9a_51024243",
+        "filename": "components/crash/content/app/crashpad_mac.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-08-02T19:56:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8317ad35_fe9f9377",
+      "revId": "e790bf9533b6144178d4d4d6b036e1931f02d9b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -287,6 +467,54 @@
       "revId": "e790bf9533b6144178d4d4d6b036e1931f02d9b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93d09049_78478c5c",
+        "filename": "components/crash/content/app/crashpad_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-08-02T19:56:48Z",
+      "side": 1,
+      "message": "I don\u0027t think this is a layering violation here, as this is effectively internal communications over to an instance of itself running in another process. We could just as well call this --foo-data-dir, but that\u0027d be confusing :).\nAlso see the /prefetch:7 mess below, which is to satisfy assertions in chrome.exe :(.",
+      "parentUuid": "cbd2ae02_09e4d957",
+      "range": {
+        "startLine": 113,
+        "startChar": 47,
+        "endLine": 113,
+        "endChar": 62
+      },
+      "revId": "e790bf9533b6144178d4d4d6b036e1931f02d9b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "871a03a1_d4f5263d",
+        "filename": "components/crash/content/app/crashpad_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-08-02T19:56:48Z",
+      "side": 1,
+      "message": "as far as I know there\u0027s no globally defined\n\nstd::string operator + (const char*, const std::string\u0026)\n\nwhich would be required for \n\n\"foo\" + std::string(\"bar\") to compile.",
+      "parentUuid": "a868c079_cfb7d96d",
+      "range": {
+        "startLine": 113,
+        "startChar": 34,
+        "endLine": 113,
+        "endChar": 46
+      },
+      "revId": "e790bf9533b6144178d4d4d6b036e1931f02d9b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
