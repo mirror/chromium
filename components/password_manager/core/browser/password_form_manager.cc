@@ -866,6 +866,11 @@ bool PasswordFormManager::UploadPasswordVote(
       username_vote_type =
           autofill::AutofillUploadContents::Field::CREDENTIALS_REUSED;
     }
+    if (form_to_upload.username_edited_in_prompt) {
+      field_types[form_to_upload.username_element] = autofill::USERNAME;
+      username_vote_type =
+          autofill::AutofillUploadContents::Field::USERNAME_EDITED;
+    }
   } else {  // User overwrites username.
     field_types[form_to_upload.username_element] = autofill::USERNAME;
     field_types[form_to_upload.password_element] =

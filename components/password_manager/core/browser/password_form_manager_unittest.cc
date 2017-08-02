@@ -481,7 +481,15 @@ class PasswordFormManagerTest : public testing::Test {
 
     autofill::AutofillUploadContents::Field::UsernameVoteType
         expected_username_vote_type =
-            autofill::AutofillUploadContents::Field::CREDENTIALS_REUSED;
+            autofill::AutofillUploadContents::Field::NO_INFORMATION;
+    if (match.username_edited_in_prompt) {
+      expected_types[match.username_element] = autofill::USERNAME;
+      expected_available_field_types.insert(autofill::USERNAME);
+      expected_username_vote_type =
+          autofill::AutofillUploadContents::Field::USERNAME_EDITED;
+    } else
+      expected_username_vote_type =
+          autofill::AutofillUploadContents::Field::CREDENTIALS_REUSED;
 
     bool expect_generation_vote = false;
     if (field_type) {
@@ -2553,8 +2561,9 @@ TEST_F(PasswordFormManagerTest, UploadChangePasswordForm) {
       autofill::NOT_NEW_PASSWORD};
   bool kFalseTrue[] = {false, true};
   for (autofill::ServerFieldType vote : kChangePasswordVotes) {
-    for (bool has_confirmation_field : kFalseTrue)
+    for (bool has_confirmation_field : kFalseTrue) {
       ChangePasswordUploadTest(vote, has_confirmation_field);
+    }
   }
 }
 
@@ -3133,14 +3142,24 @@ TEST_F(PasswordFormManagerTest, ProbablyAccountCreationUpload) {
   expected_types[saved_match()->password_element] =
       autofill::PROBABLY_ACCOUNT_CREATION_PASSWORD;
 
-  EXPECT_CALL(*client()->mock_driver()->mock_autofill_download_manager(),
-              StartUploadRequest(
-                  CheckUploadedAutofillTypesAndSignature(
-                      pending_structure.FormSignatureAsStr(), expected_types,
-                      false /* expect_generation_vote */,
-                      autofill::AutofillUploadContents::Field::NO_INFORMATION
-                      /* expected_username_vote_type */),
-                  false, expected_available_field_types, std::string(), true));
+  // Checks the username vote type is saved.
+  autofill::AutofillUploadContents::Field::UsernameVoteType
+      expected_username_vote_type =
+          autofill::AutofillUploadContents::Field::NO_INFORMATION;
+  if (saved_match()->username_edited_in_prompt) {
+    expected_types[saved_match()->username_element] = autofill::USERNAME;
+    expected_available_field_types.insert(autofill::USERNAME);
+    expected_username_vote_type =
+        autofill::AutofillUploadContents::Field::USERNAME_EDITED;
+  }
+
+  EXPECT_CALL(
+      *client()->mock_driver()->mock_autofill_download_manager(),
+      StartUploadRequest(
+          CheckUploadedAutofillTypesAndSignature(
+              pending_structure.FormSignatureAsStr(), expected_types,
+              false /* expect_generation_vote */, expected_username_vote_type),
+          false, expected_available_field_types, std::string(), true));
 
   form_manager.ProvisionallySave(
       form_to_save, PasswordFormManager::IGNORE_OTHER_POSSIBLE_USERNAMES);

@@ -326,6 +326,9 @@ struct PasswordForm {
   // include signup forms.
   bool IsPossibleChangePasswordFormWithoutUsername() const;
 
+  // True iff username value was edited in a prompt.
+  bool username_edited_in_prompt;
+
   // Equality operators for testing.
   bool operator==(const PasswordForm& form) const;
   bool operator!=(const PasswordForm& form) const;
