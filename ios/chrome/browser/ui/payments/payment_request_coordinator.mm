@@ -119,17 +119,16 @@ const NSTimeInterval kUpdatePaymentSummaryItemIntervalSeconds = 10.0;
   _navigationController = nil;
 }
 
-#pragma mark - Setters
+#pragma mark - Public Methods
 
-- (void)setPending:(BOOL)pending {
+- (void)setPending:(BOOL)pending withCancelButtonEnabled:(BOOL)cancellable {
   _pending = pending;
   _viewController.view.userInteractionEnabled = !pending;
+  [_viewController setCancellable:cancellable];
   [_viewController setPending:pending];
   [_viewController loadModel];
   [[_viewController collectionView] reloadData];
 }
-
-#pragma mark - Public methods
 
 - (void)
 requestFullCreditCard:(const autofill::CreditCard&)card

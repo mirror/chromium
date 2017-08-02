@@ -132,6 +132,9 @@ struct PendingPaymentResponse {
   // Storage for data to return in the payment response, until we're ready to
   // send an actual PaymentResponse.
   PendingPaymentResponse _pendingPaymentResponse;
+
+  // Boolean to track if payment methods are still being fetched.
+  BOOL _fetchingPaymentMethods;
 }
 
 // YES if Payment Request is enabled on the active web state.
@@ -239,6 +242,8 @@ struct PendingPaymentResponse {
     _paymentRequestCache =
         payments::IOSPaymentRequestCacheFactory::GetForBrowserState(
             browserState->GetOriginalChromeBrowserState());
+
+    _fetchingPaymentMethods = YES;
   }
   return self;
 }
@@ -490,6 +495,9 @@ struct PendingPaymentResponse {
 
   [_paymentRequestCoordinator start];
 
+  [_paymentRequestCoordinator setPending:_fetchingPaymentMethods
+                 withCancelButtonEnabled:YES];
+
   return YES;
 }
 
@@ -737,6 +745,12 @@ requestFullCreditCard:(const autofill::CreditCard&)creditCard
   // from the Payment Request object.
 }
 
+- (void)onPaymentMethodsReady {
+  _fetchingPaymentMethods = NO;
+  if (_paymentRequestCoordinator)
+    [_paymentRequestCoordinator setPending:NO withCancelButtonEnabled:YES];
+}
+
 #pragma mark - PaymentRequestCoordinatorDelegate methods
 
 - (void)paymentRequestCoordinatorDidConfirm:
@@ -808,7 +822,7 @@ requestFullCreditCard:(const autofill::CreditCard&)creditCard
 #pragma mark - PaymentResponseHelperConsumer methods
 
 - (void)paymentResponseHelperDidReceivePaymentMethodDetails {
-  [_paymentRequestCoordinator setPending:YES];
+  [_paymentRequestCoordinator setPending:YES withCancelButtonEnabled:NO];
 }
 
 - (void)paymentResponseHelperDidCompleteWithPaymentResponse:
