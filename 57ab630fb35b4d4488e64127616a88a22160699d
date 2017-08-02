@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "5bdfeef8_6082ff68",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 8
+      },
+      "lineNbr": 12301,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-02T00:01:13Z",
+      "side": 1,
+      "message": "This feature is only enabled on Chrome  (needs sync support).",
+      "parentUuid": "d08d3c98_549beb71",
+      "range": {
+        "startLine": 12301,
+        "startChar": 83,
+        "endLine": 12301,
+        "endChar": 89
+      },
+      "revId": "57ab630fb35b4d4488e64127616a88a22160699d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "df78c35c_fca465b8",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 8
+      },
+      "lineNbr": 12301,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-02T00:01:13Z",
+      "side": 1,
+      "message": "These are copied from go/phishguard-strings. I think \"Could\" emphasize on the potential consequence. \n+srahim@, what do you think?",
+      "parentUuid": "77f16c1e_91e0c215",
+      "range": {
+        "startLine": 12301,
+        "startChar": 12,
+        "endLine": 12301,
+        "endChar": 17
+      },
+      "revId": "57ab630fb35b4d4488e64127616a88a22160699d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d0d7dbde_05e56adb",
         "filename": "chrome/app/settings_strings.grdp",
         "patchSetId": 8
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "e4368ef7_ea345a14",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 8
+      },
+      "lineNbr": 3317,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-02T00:01:13Z",
+      "side": 1,
+      "message": "Thanks for catching this. chrome://settings uses all upper cases for button text, though it is handled by css/js. \nOnly the first letter of each world should be capitalized in this grdp file. (Similar to \"Use Classic\", or \"Sign Out\" in the same file).",
+      "parentUuid": "d0d7dbde_05e56adb",
+      "revId": "57ab630fb35b4d4488e64127616a88a22160699d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22ddbd94_4b503680",
         "filename": "components/page_info_strings.grdp",
         "patchSetId": 8
@@ -76,6 +142,24 @@
       "writtenOn": "2017-08-01T22:18:20Z",
       "side": 1,
       "message": "Ditto ditto",
+      "revId": "57ab630fb35b4d4488e64127616a88a22160699d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dae4f1d3_7e0a6a68",
+        "filename": "components/page_info_strings.grdp",
+        "patchSetId": 8
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-02T00:01:13Z",
+      "side": 1,
+      "message": "+srahim@",
+      "parentUuid": "22ddbd94_4b503680",
       "revId": "57ab630fb35b4d4488e64127616a88a22160699d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -102,6 +186,30 @@
       "revId": "57ab630fb35b4d4488e64127616a88a22160699d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0efc9759_e57cf49c",
+        "filename": "components/page_info_strings.grdp",
+        "patchSetId": 8
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-02T00:01:13Z",
+      "side": 1,
+      "message": "Oops. Thanks for catching this! Done.",
+      "parentUuid": "fdc931d4_8377a25b",
+      "range": {
+        "startLine": 346,
+        "startChar": 106,
+        "endLine": 346,
+        "endChar": 112
+      },
+      "revId": "57ab630fb35b4d4488e64127616a88a22160699d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
