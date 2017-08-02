@@ -16,6 +16,24 @@
       "revId": "60e51a55fd634ce8c7d51b91fed13d74d017d69a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a886555c_a4cfc26d",
+        "filename": "chrome/browser/extensions/extension_service_sync_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1549,
+      "author": {
+        "id": 1236093
+      },
+      "writtenOn": "2017-08-02T04:12:22Z",
+      "side": 1,
+      "message": "There is no code that cleans up command line betweet tests in one process. Command line is global, and here is ScopedCommandLine to make \"temporary copy\" on command line, that lives same time as your test.\nIn my case there was single process run for all \"ExtensionServiceSyncTest\", thus running AppToExtension after ProcessSyncDataDeferredEnable finished with failure. I make solid repeate of problem with case: \n\"--gtest_filter\u003dExtensionServiceSyncCustomGalleryTest.ProcessSyncDataPermissionApproval:ExtensionServiceSyncTest.AppToExtension --gtest_shuffle\n\", where seed was 59402.",
+      "parentUuid": "f0f94c92_37fb5ff9",
+      "revId": "60e51a55fd634ce8c7d51b91fed13d74d017d69a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
