@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ad767c3b_310adadb",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-08-02T09:28:48Z",
+      "side": 1,
+      "message": "Neither because\nPositionInFlatTree::ComputeNodeAfterPosition() returns null if kAfterChildren.\nPositionInFlatTree::NodeAsRangePastLastNode() returns anchorNode if the node doesn\u0027t\n have a child and offset is zero.",
+      "parentUuid": "8cc655c6_afffe9f4",
+      "revId": "54f65be2cce8e97b7d2f4533038e9f9598d9901c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9a723010_bf106a63",
         "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
         "patchSetId": 11
@@ -47,6 +65,24 @@
       "writtenOn": "2017-08-02T08:41:16Z",
       "side": 1,
       "message": "It is better to use EphemeralRangeInFlatTree::Nodes()",
+      "revId": "54f65be2cce8e97b7d2f4533038e9f9598d9901c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80433cb1_921993ce",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-08-02T09:28:48Z",
+      "side": 1,
+      "message": "Since EphemeralRangeInFlatTree::Node() uses NodeAsRangeFirstNode() to determine first node, \n we can\u0027t use.\nPlus, getting start/end node algorithm will change because currently it is \n from VisiblePosition.",
+      "parentUuid": "6f6fbcf0_8930ca17",
       "revId": "54f65be2cce8e97b7d2f4533038e9f9598d9901c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
