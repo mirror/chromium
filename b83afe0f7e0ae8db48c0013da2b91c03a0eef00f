@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "33ee63c0_624bdb04",
+        "filename": "content/browser/ssl/ssl_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-02T17:41:09Z",
+      "side": 1,
+      "message": "We intentionally chose for HTTP-bad password warnings to behave differently than mixed content (in that the latter is sticky for the lifetime of the page, and the former disappears dynamically), though I can\u0027t say I really remember why we chose to do it that way. Maybe because HTTP-bad is scarier and we thought it would be more confusing/noticeable for it to appear with a login form but not disappear when the login form disappears.\n\nThat said, I think we should be moving away from dynamically-disappearing indicators; IMO, once a page gets downgraded, it should stay downgraded, for simplicity. The HTTP-bad passwords behavior is temporary -- in fact, I think we should even consider cutting the dynamic-removal behavior with Phase 2. It would simplify the code a lot.",
+      "parentUuid": "49724fc7_ab385f6a",
+      "range": {
+        "startLine": 203,
+        "startChar": 0,
+        "endLine": 203,
+        "endChar": 73
+      },
+      "revId": "b83afe0f7e0ae8db48c0013da2b91c03a0eef00f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a7314764_a1e2412e",
         "filename": "content/browser/ssl/ssl_manager.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-02T17:20:19Z",
       "side": 1,
       "message": "We need to exclude same-page navigations. Test @ https://www.bayden.com/test/mixedcontent/  add insecure image, remove it, then click the #top link? Do we lose the mixed content notice?",
+      "range": {
+        "startLine": 210,
+        "startChar": 4,
+        "endLine": 210,
+        "endChar": 31
+      },
+      "revId": "b83afe0f7e0ae8db48c0013da2b91c03a0eef00f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59c82a53_deedb60f",
+        "filename": "content/browser/ssl/ssl_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-02T17:41:09Z",
+      "side": 1,
+      "message": "Nice catch, fixed with a test.",
+      "parentUuid": "a7314764_a1e2412e",
       "range": {
         "startLine": 210,
         "startChar": 4,
