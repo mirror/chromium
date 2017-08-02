@@ -305,6 +305,30 @@
       "revId": "6f70ee81c022dad414334ae77a55834380439ffa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "696816ef_723cb0b1",
+        "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-08-02T17:24:40Z",
+      "side": 1,
+      "message": "I\u0027m going to make these changes in separate CL to keep the review smaller.",
+      "parentUuid": "e557da3b_eae74040",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 48
+      },
+      "revId": "6f70ee81c022dad414334ae77a55834380439ffa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
