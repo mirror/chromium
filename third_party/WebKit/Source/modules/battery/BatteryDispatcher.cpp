@@ -6,23 +6,37 @@
 
 #include "platform/mojo/MojoHelper.h"
 #include "platform/wtf/Assertions.h"
-#include "public/platform/Platform.h"
-#include "services/device/public/interfaces/constants.mojom-blink.h"
-#include "services/service_manager/public/cpp/connector.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 
 namespace blink {
 
-BatteryDispatcher& BatteryDispatcher::Instance() {
-  DEFINE_STATIC_LOCAL(BatteryDispatcher, battery_dispatcher,
-                      (new BatteryDispatcher));
-  return battery_dispatcher;
+// static
+BatteryDispatcher* BatteryDispatcher::From(LocalFrame& frame) {
+  auto* dispatcher = static_cast<BatteryDispatcher*>(
+      Supplement<LocalFrame>::From(frame, SupplementName()));
+  if (!dispatcher) {
+    dispatcher = new BatteryDispatcher(frame);
+    Supplement<LocalFrame>::ProvideTo(frame, SupplementName(), dispatcher);
+  }
+  return dispatcher;
 }
 
-BatteryDispatcher::BatteryDispatcher() : has_latest_data_(false) {}
+BatteryDispatcher::BatteryDispatcher(LocalFrame& frame)
+    : Supplement<LocalFrame>(frame), has_latest_data_(false) {}
+
+DEFINE_TRACE(BatteryDispatcher) {
+  Supplement<LocalFrame>::Trace(visitor);
+  PlatformEventDispatcher::Trace(visitor);
+}
+
+// static
+const char* BatteryDispatcher::SupplementName() {
+  return "BatteryDispatcher";
+}
 
 void BatteryDispatcher::QueryNextStatus() {
   monitor_->QueryNextStatus(ConvertToBaseCallback(
-      WTF::Bind(&BatteryDispatcher::OnDidChange, WrapPersistent(this))));
+      WTF::Bind(&BatteryDispatcher::OnDidChange, WrapWeakPersistent(this))));
 }
 
 void BatteryDispatcher::OnDidChange(
@@ -45,8 +59,8 @@ void BatteryDispatcher::UpdateBatteryStatus(
 
 void BatteryDispatcher::StartListening() {
   DCHECK(!monitor_.is_bound());
-  Platform::Current()->GetConnector()->BindInterface(
-      device::mojom::blink::kServiceName, mojo::MakeRequest(&monitor_));
+  GetSupplementable()->GetInterfaceProvider().GetInterface(
+      mojo::MakeRequest(&monitor_));
   QueryNextStatus();
 }
 

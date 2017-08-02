@@ -24,6 +24,12 @@ window.onmessage = msg => {
   }
 }
 
+window.onmessage = msg => {
+  if (msg.data === 'Start') {
+    startTest();
+  }
+}
+
 function testVibrate() {
   assert_true(navigator.vibrate(200));
 }
