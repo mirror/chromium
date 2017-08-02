@@ -16,6 +16,24 @@
       "revId": "058ca543e9c4bcb6250fb8cc78e595dd4b0b452d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aa4dfe7_114fe029",
+        "filename": "content/common/service_worker/service_worker_types.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-02T16:01:18Z",
+      "side": 1,
+      "message": "Yes, sorry. Ultimately after mojo blobs is the default we can hopefully get rid of the blob_uuid and blob_size.",
+      "parentUuid": "f78bc572_3e6db1d5",
+      "revId": "058ca543e9c4bcb6250fb8cc78e595dd4b0b452d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
