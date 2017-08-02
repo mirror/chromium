@@ -16,6 +16,24 @@
       "revId": "e790bf9533b6144178d4d4d6b036e1931f02d9b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2aad3675_6a644751",
+        "filename": "chrome/app/chrome_main_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-08-02T16:52:34Z",
+      "side": 0,
+      "message": "Moved into the test stub - thanks.",
+      "parentUuid": "bfbfbadc_38f77835",
+      "revId": "e790bf9533b6144178d4d4d6b036e1931f02d9b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
