@@ -90,6 +90,13 @@ public final class MockUrlRequestJobFactory {
         return nativeGetMockUrlForHangingRead();
     }
 
+    /**
+     * Constructs a mock URL that will produce a hanging GET.
+     */
+    public static String getMockUrlForHangingGet() {
+        return nativeGetMockUrlForHangingGet();
+    }
+
     private static native long nativeAddUrlInterceptors(long requestContextAdapter);
 
     private static native void nativeRemoveUrlInterceptorJobFactory(long interceptorHandle);
@@ -104,4 +111,6 @@ public final class MockUrlRequestJobFactory {
     private static native String nativeGetMockUrlForSSLCertificateError();
 
     private static native String nativeGetMockUrlForHangingRead();
+
+    private static native String nativeGetMockUrlForHangingGet();
 }
