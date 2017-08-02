@@ -69,6 +69,24 @@
       "revId": "aa0f340823c1d2f7bf11373f38fc314c62f05875",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af4f4b75_5d70eb72",
+        "filename": "tools/gritsettings/resource_ids",
+        "patchSetId": 11
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-02T19:54:22Z",
+      "side": 1,
+      "message": "I emailed thestig@ about the DuplicateKey compilation error. He pointed me to this file.\nIncreasing this number by # of new strings will resolve the CQ error, though I figured other people might want to add more strings to components_strings too. So I bumped it by 20, and thestig@ is OK with it. :-)",
+      "parentUuid": "569408c3_acf28056",
+      "revId": "aa0f340823c1d2f7bf11373f38fc314c62f05875",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
