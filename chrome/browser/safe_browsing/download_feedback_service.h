@@ -12,7 +12,8 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "chrome/browser/download/download_commands.h"
-#include "chrome/browser/safe_browsing/download_protection_service.h"
+#include "chrome/browser/safe_browsing/download_protection/download_check_enums.h"
+#include "chrome/browser/safe_browsing/download_protection/download_protection_service.h"
 #include "content/public/browser/download_danger_type.h"
 
 namespace base {
@@ -47,7 +48,7 @@ class DownloadFeedbackService {
   // upload by the server with |upload_requested| if it's needed for better
   // classification.
   static void MaybeStorePingsForDownload(
-      DownloadProtectionService::DownloadCheckResult result,
+      DownloadCheckEnums::DownloadCheckResult result,
       bool upload_requested,
       content::DownloadItem* download,
       const std::string& ping,
