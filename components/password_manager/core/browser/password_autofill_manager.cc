@@ -186,6 +186,19 @@ void PasswordAutofillManager::OnAddPasswordFormMapping(
   login_to_password_info_[key] = fill_data;
 }
 
+autofill::Suggestion PasswordAutofillManager::CreateFormNotSecureWarning(
+    const std::string& icon_str) {
+  autofill::Suggestion http_warning_suggestion(
+      l10n_util::GetStringUTF8(IDS_AUTOFILL_LOGIN_HTTP_WARNING_MESSAGE),
+      l10n_util::GetStringUTF8(IDS_AUTOFILL_HTTP_WARNING_LEARN_MORE), icon_str,
+      autofill::POPUP_ITEM_ID_HTTP_NOT_SECURE_WARNING_MESSAGE);
+  if (!did_show_form_not_secure_warning_) {
+    did_show_form_not_secure_warning_ = true;
+    metrics_util::LogShowedFormNotSecureWarningOnCurrentNavigation();
+  }
+  return http_warning_suggestion;
+}
+
 void PasswordAutofillManager::OnShowPasswordSuggestions(
     int key,
     base::i18n::TextDirection text_direction,
@@ -284,19 +297,39 @@ void PasswordAutofillManager::OnShowNotSecureWarning(
     return;
 
   std::vector<autofill::Suggestion> suggestions;
-  autofill::Suggestion http_warning_suggestion(
-      l10n_util::GetStringUTF8(IDS_AUTOFILL_LOGIN_HTTP_WARNING_MESSAGE),
-      l10n_util::GetStringUTF8(IDS_AUTOFILL_HTTP_WARNING_LEARN_MORE),
-      "httpWarning", autofill::POPUP_ITEM_ID_HTTP_NOT_SECURE_WARNING_MESSAGE);
+  autofill::Suggestion http_warning_suggestion =
+      CreateFormNotSecureWarning("httpWarning");
   suggestions.insert(suggestions.begin(), http_warning_suggestion);
 
   autofill_client_->ShowAutofillPopup(bounds, text_direction, suggestions,
                                       weak_ptr_factory_.GetWeakPtr());
+}
 
-  if (did_show_form_not_secure_warning_)
-    return;
-  did_show_form_not_secure_warning_ = true;
-  metrics_util::LogShowedFormNotSecureWarningOnCurrentNavigation();
+void PasswordAutofillManager::OnManualFallbackSuggestion(
+    base::i18n::TextDirection text_direction,
+    const gfx::RectF& bounds,
+    bool should_show_not_secure_warning) {
+  std::vector<autofill::Suggestion> suggestions;
+  if (base::FeatureList::IsEnabled(
+          password_manager::features::kEnableManualFallbacksFilling)) {
+    if (should_show_not_secure_warning) {
+      autofill::Suggestion http_warning_suggestion =
+          CreateFormNotSecureWarning("httpWarning");
+#if !defined(OS_ANDROID)
+      suggestions.insert(suggestions.begin(), autofill::Suggestion());
+      suggestions.front().frontend_id = autofill::POPUP_ITEM_ID_SEPARATOR;
+#endif
+      suggestions.insert(suggestions.begin(), http_warning_suggestion);
+    }
+
+    autofill::Suggestion all_saved_passwords(
+        l10n_util::GetStringUTF8(IDS_AUTOFILL_SHOW_ALL_SAVED_FALLBACK),
+        std::string(), "showAllSavedPasswords",
+        autofill::POPUP_ITEM_ID_ALL_SAVED_PASSWORDS_ENTRY);
+    suggestions.push_back(all_saved_passwords);
+    autofill_client_->ShowAutofillPopup(bounds, text_direction, suggestions,
+                                        weak_ptr_factory_.GetWeakPtr());
+  }
 }
 
 void PasswordAutofillManager::DidNavigateMainFrame() {
