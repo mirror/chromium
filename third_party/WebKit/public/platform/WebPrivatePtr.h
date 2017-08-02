@@ -274,7 +274,7 @@ class WebPrivatePtr {
  public:
   WebPrivatePtr() : storage_(0) {}
   ~WebPrivatePtr() {
-    // We don't destruct the object pointed by m_ptr here because we don't
+    // We don't destruct the object pointed by storage_ here because we don't
     // want to expose destructors of core classes to embedders. We should
     // call reset() manually in destructors of classes with WebPrivatePtr
     // members.

@@ -49,18 +49,14 @@ class WebRTCStatsResponse;
 //
 // The typical usage pattern is:
 // WebRTCStatsRequest request = <from somewhere>
-// WebRTCStatsResponse response = request.createResponse();
+// WebRTCStatsResponse response = request.CreateResponse();
 //
 // For each item on which statistics are going to be reported:
-//   size_t reportIndex = response.addReport();
-//   Add local information:
-//   size_t elementIndex = response.addElement(reportIndex, true, dateNow());
-//   For each statistic being reported on:
-//     response.addStatistic(reportIndex, true, elementIndex,
-//                           "name of statistic", "statistic value");
-//   Remote information (typically RTCP-derived) is added in the same way.
+//   WebRTCLegacyStats stats(...);
+//   (configuration of stats object depends on item type)
+//   response.AddStats(stats);
 // When finished adding information:
-// request.requestSucceeded(response);
+// request.RequestSucceeded(response);
 
 class WebRTCStatsRequest {
  public:

@@ -216,36 +216,35 @@ class BLINK_PLATFORM_EXPORT Platform {
 
   // Database ------------------------------------------------------------
 
-  // Opens a database file; dirHandle should be 0 if the caller does not need
-  // a handle to the directory containing this file
+  // Opens a database file.
   virtual FileHandle DatabaseOpenFile(const WebString& vfs_file_name,
                                       int desired_flags) {
     return FileHandle();
   }
 
-  // Deletes a database file and returns the error code
+  // Deletes a database file and returns the error code.
   virtual int DatabaseDeleteFile(const WebString& vfs_file_name,
                                  bool sync_dir) {
     return 0;
   }
 
-  // Returns the attributes of the given database file
+  // Returns the attributes of the given database file.
   virtual long DatabaseGetFileAttributes(const WebString& vfs_file_name) {
     return 0;
   }
 
-  // Returns the size of the given database file
+  // Returns the size of the given database file.
   virtual long long DatabaseGetFileSize(const WebString& vfs_file_name) {
     return 0;
   }
 
-  // Returns the space available for the given origin
+  // Returns the space available for the given origin.
   virtual long long DatabaseGetSpaceAvailableForOrigin(
       const WebSecurityOrigin& origin) {
     return 0;
   }
 
-  // Set the size of the given database file
+  // Set the size of the given database file.
   virtual bool DatabaseSetFileSize(const WebString& vfs_file_name,
                                    long long size) {
     return false;
@@ -427,8 +426,7 @@ class BLINK_PLATFORM_EXPORT Platform {
   virtual WebData GetDataResource(const char* name) { return WebData(); }
 
   // Decodes the in-memory audio file data and returns the linear PCM audio data
-  // in the destinationBus.  A sample-rate conversion to sampleRate will occur
-  // if the file data is at a different sample-rate.
+  // in the destinationBus.
   // Returns true on success.
   virtual bool DecodeAudioFileData(WebAudioBus* destination_bus,
                                    const char* audio_file_data,

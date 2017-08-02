@@ -41,7 +41,8 @@ class BLINK_PLATFORM_EXPORT WebContentLayerClient {
   enum PaintingControlSetting {
     // Returns the last PaintArtifact produced.
     kPaintDefaultBehavior,
-    // Paints the content to simulate the behavior of FrameView::paintTree().
+    // Paints the content to simulate the behavior of
+    // LocalFrameView::PaintTree().
     kPaintDefaultBehaviorForTest,
     // Puts the GraphicsContext in disabled mode and disables display item
     // construction in PaintController.
