@@ -520,6 +520,9 @@ RenderFrameHostImpl::RenderFrameHostImpl(SiteInstance* site_instance,
                                     weak_ptr_factory_.GetWeakPtr())));
 
   if (widget_routing_id != MSG_ROUTING_NONE) {
+    mojom::WidgetPtr widget;
+    GetRemoteInterfaces()->GetInterface(&widget);
+
     // TODO(avi): Once RenderViewHostImpl has-a RenderWidgetHostImpl, the main
     // render frame should probably start owning the RenderWidgetHostImpl,
     // so this logic checking for an already existing RWHI should be removed.
@@ -528,11 +531,14 @@ RenderFrameHostImpl::RenderFrameHostImpl(SiteInstance* site_instance,
         RenderWidgetHostImpl::FromID(GetProcess()->GetID(), widget_routing_id);
     if (!render_widget_host_) {
       DCHECK(frame_tree_node->parent());
+
       render_widget_host_ = new RenderWidgetHostImpl(rwh_delegate, GetProcess(),
-                                                     widget_routing_id, hidden);
+                                                     widget_routing_id,
+                                                     std::move(widget), hidden);
       render_widget_host_->set_owned_by_render_frame_host(true);
     } else {
       DCHECK(!render_widget_host_->owned_by_render_frame_host());
+      render_widget_host_->SetWidget(std::move(widget));
     }
     render_widget_host_->input_router()->SetFrameTreeNodeId(
         frame_tree_node_->frame_tree_node_id());
