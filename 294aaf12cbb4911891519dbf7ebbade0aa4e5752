@@ -48,6 +48,54 @@
     },
     {
       "key": {
+        "uuid": "f1e73a67_5cade8d5",
+        "filename": "components/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1111839
+      },
+      "writtenOn": "2017-08-02T01:50:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "642d2c58_ac337fc3",
+      "range": {
+        "startLine": 100,
+        "startChar": 51,
+        "endLine": 100,
+        "endChar": 58
+      },
+      "revId": "294aaf12cbb4911891519dbf7ebbade0aa4e5752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "788e7af9_100a1ae2",
+        "filename": "components/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1111839
+      },
+      "writtenOn": "2017-08-02T01:50:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "067e7855_7e8b4e09",
+      "range": {
+        "startLine": 100,
+        "startChar": 63,
+        "endLine": 100,
+        "endChar": 71
+      },
+      "revId": "294aaf12cbb4911891519dbf7ebbade0aa4e5752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b00f448_1163f670",
         "filename": "components/arc/bluetooth/arc_bluetooth_bridge.cc",
         "patchSetId": 11
@@ -68,6 +116,30 @@
       "revId": "294aaf12cbb4911891519dbf7ebbade0aa4e5752",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf83a7ee_09c4494f",
+        "filename": "components/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1111839
+      },
+      "writtenOn": "2017-08-02T01:50:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b00f448_1163f670",
+      "range": {
+        "startLine": 316,
+        "startChar": 0,
+        "endLine": 318,
+        "endChar": 32
+      },
+      "revId": "294aaf12cbb4911891519dbf7ebbade0aa4e5752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "24ab2862_84214c0b",
+        "filename": "components/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1963,
+      "author": {
+        "id": 1111839
+      },
+      "writtenOn": "2017-08-02T01:50:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30e58ec2_c429cae3",
+      "range": {
+        "startLine": 1963,
+        "startChar": 0,
+        "endLine": 1963,
+        "endChar": 1
+      },
+      "revId": "294aaf12cbb4911891519dbf7ebbade0aa4e5752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "924558ad_3f4af85b",
         "filename": "components/arc/bluetooth/arc_bluetooth_bridge.cc",
         "patchSetId": 11
@@ -114,6 +210,30 @@
       "revId": "294aaf12cbb4911891519dbf7ebbade0aa4e5752",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a695d6a_f37e000a",
+        "filename": "components/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1989,
+      "author": {
+        "id": 1111839
+      },
+      "writtenOn": "2017-08-02T01:50:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "924558ad_3f4af85b",
+      "range": {
+        "startLine": 1989,
+        "startChar": 2,
+        "endLine": 1989,
+        "endChar": 60
+      },
+      "revId": "294aaf12cbb4911891519dbf7ebbade0aa4e5752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "3e2fd782_16e6e8cf",
+        "filename": "components/arc/bluetooth/arc_bluetooth_bridge.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1111839
+      },
+      "writtenOn": "2017-08-02T01:50:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3dde4d89_34cf982f",
+      "range": {
+        "startLine": 364,
+        "startChar": 4,
+        "endLine": 364,
+        "endChar": 41
+      },
+      "revId": "294aaf12cbb4911891519dbf7ebbade0aa4e5752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2fbf791_fdabbe56",
         "filename": "components/arc/bluetooth/arc_bluetooth_bridge.h",
         "patchSetId": 11
@@ -160,6 +304,30 @@
       "revId": "294aaf12cbb4911891519dbf7ebbade0aa4e5752",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f42c97f_0effef1a",
+        "filename": "components/arc/bluetooth/arc_bluetooth_bridge.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1111839
+      },
+      "writtenOn": "2017-08-02T01:50:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2fbf791_fdabbe56",
+      "range": {
+        "startLine": 370,
+        "startChar": 2,
+        "endLine": 370,
+        "endChar": 6
+      },
+      "revId": "294aaf12cbb4911891519dbf7ebbade0aa4e5752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
