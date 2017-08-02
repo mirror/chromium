@@ -304,7 +304,7 @@ SkColor LocationBarView::GetSecureTextColor(
     return GetColor(DEEMPHASIZED_TEXT);
   }
 
-  SkColor text_color = GetColor(TEXT);
+  SkColor text_color = color_utils::DeriveDefaultIconColor(GetColor(TEXT));
   if (!color_utils::IsDark(GetColor(BACKGROUND))) {
     if ((security_level == security_state::EV_SECURE) ||
         (security_level == security_state::SECURE)) {
@@ -695,10 +695,7 @@ void LocationBarView::RefreshLocationIcon() {
 
   security_state::SecurityLevel security_level =
       GetToolbarModel()->GetSecurityLevel(false);
-  SkColor icon_color = (security_level == security_state::NONE ||
-                        security_level == security_state::HTTP_SHOW_WARNING)
-                           ? color_utils::DeriveDefaultIconColor(GetColor(TEXT))
-                           : GetSecureTextColor(security_level);
+  SkColor icon_color = GetSecureTextColor(security_level);
   location_icon_view_->SetImage(gfx::CreateVectorIcon(
       omnibox_view_->GetVectorIcon(), kIconWidth, icon_color));
   location_icon_view_->SetEnabled(!omnibox_view_->IsEditingOrEmpty());
