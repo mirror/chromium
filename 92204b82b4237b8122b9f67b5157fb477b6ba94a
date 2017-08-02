@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "2fb0b640_a7c2d4fc",
+        "filename": "chrome/installer/zucchini/image_index.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-02T06:43:23Z",
+      "side": 1,
+      "message": "In this case, |label_count| would be a misnomer. Should be |label_bound| or something, with comment explaining what it is and what it\u0027s for.\n\nAlso, what if you call LabelAssociatedTargets() multiple times for the same pool?  The variable then gets reassigned (and possibly get smaller), but should it?  Or if this usage pattern is unexpected, then it should be put into comment.",
+      "parentUuid": "046a41ce_a81551b8",
+      "range": {
+        "startLine": 110,
+        "startChar": 37,
+        "endLine": 110,
+        "endChar": 57
+      },
+      "revId": "92204b82b4237b8122b9f67b5157fb477b6ba94a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "00ea8813_16c3404c",
         "filename": "chrome/installer/zucchini/image_index.h",
         "patchSetId": 7
@@ -281,6 +305,30 @@
       "revId": "92204b82b4237b8122b9f67b5157fb477b6ba94a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8022a39d_69f69842",
+        "filename": "chrome/installer/zucchini/image_index.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-02T06:43:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d85395ee_c23ba080",
+      "range": {
+        "startLine": 121,
+        "startChar": 2,
+        "endLine": 121,
+        "endChar": 8
+      },
+      "revId": "92204b82b4237b8122b9f67b5157fb477b6ba94a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

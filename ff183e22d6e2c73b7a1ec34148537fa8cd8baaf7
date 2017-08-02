@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77b7ffa3_debcfa9a",
+        "filename": "chrome/installer/zucchini/image_index.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-02T06:43:23Z",
+      "side": 1,
+      "message": "Remove, since this is not applicable at this layer?",
+      "range": {
+        "startLine": 21,
+        "startChar": 46,
+        "endLine": 21,
+        "endChar": 50
+      },
+      "revId": "ff183e22d6e2c73b7a1ec34148537fa8cd8baaf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88909e12_3c1a674f",
+        "filename": "chrome/installer/zucchini/image_index.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-02T06:43:23Z",
+      "side": 1,
+      "message": "Not needed?",
+      "range": {
+        "startLine": 26,
+        "startChar": 2,
+        "endLine": 26,
+        "endChar": 10
+      },
+      "revId": "ff183e22d6e2c73b7a1ec34148537fa8cd8baaf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8db34092_2b7033f1",
+        "filename": "chrome/installer/zucchini/image_index.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-02T06:43:23Z",
+      "side": 1,
+      "message": "Should mention that a side effect is that label count gets updated? Same below.",
+      "range": {
+        "startLine": 94,
+        "startChar": 48,
+        "endLine": 94,
+        "endChar": 0
+      },
+      "revId": "ff183e22d6e2c73b7a1ec34148537fa8cd8baaf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8080f9bd_94223680",
+        "filename": "chrome/installer/zucchini/image_index_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-02T06:43:23Z",
+      "side": 1,
+      "message": "How about TypeTag(2)?",
+      "revId": "ff183e22d6e2c73b7a1ec34148537fa8cd8baaf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0640f66d_9b8ae17c",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-02T06:43:23Z",
+      "side": 1,
+      "message": "NIT: Label",
+      "revId": "ff183e22d6e2c73b7a1ec34148537fa8cd8baaf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0eb0e7ef_d3018fee",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-02T06:43:23Z",
+      "side": 1,
+      "message": "NIT: Label. Same below.",
+      "range": {
+        "startLine": 106,
+        "startChar": 30,
+        "endLine": 106,
+        "endChar": 35
+      },
+      "revId": "ff183e22d6e2c73b7a1ec34148537fa8cd8baaf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
