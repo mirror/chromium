@@ -1152,6 +1152,7 @@ IntRect Element::BoundsInViewport() const {
   Vector<FloatQuad> quads;
   if (IsSVGElement() && GetLayoutObject()) {
     // Get the bounding rectangle from the SVG model.
+    // TODO(pdr): Update this to return AbsoluteQuads like getClientRects.
     if (ToSVGElement(this)->IsSVGGraphicsElement())
       quads.push_back(GetLayoutObject()->LocalToAbsoluteQuad(
           GetLayoutObject()->ObjectBoundingBox()));
@@ -1192,7 +1193,12 @@ void Element::ClientQuads(Vector<FloatQuad>& quads) {
   if (!element_layout_object)
     return;
 
-  if (IsSVGElement() && !element_layout_object->IsSVGRoot()) {
+  // Both the root SVG object and foreign objects need to convert between SVG
+  // and HTML coordinate spaces and cannot use LocalToAbsoluteQuad directly with
+  // their ObjectBoundingBoxes. We cannot use the AbsoluteQuads codepath below
+  // for all SVGGraphicsElements because it includes stroke.
+  if (IsSVGElement() && !element_layout_object->IsSVGRoot() &&
+      !element_layout_object->IsSVGForeignObject()) {
     // Get the bounding rectangle from the SVG model.
     if (ToSVGElement(this)->IsSVGGraphicsElement())
       quads.push_back(element_layout_object->LocalToAbsoluteQuad(

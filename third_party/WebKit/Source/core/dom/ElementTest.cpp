@@ -248,4 +248,37 @@ TEST_F(ElementTest, GetElementsByClassNameCrash) {
   // The test passes if no crash happens.
 }
 
+TEST_F(ElementTest, GetBoundingClientRectForSVG) {
+  Document& document = GetDocument();
+  SetBodyContent(
+      "<style>body { margin: 0 }</style>"
+      "<svg width='500' height='500'>"
+      "  <rect id='rect' x='10' y='100' width='100' height='100'/>"
+      "  <rect id='stroke' x='10' y='100' width='100' height='100'"
+      "      stroke-width='7'/>"
+      "  <foreignObject id='foreign' x='10' y='100' width='100' height='100'/>"
+      "</svg>");
+
+  Element* rect = document.getElementById("rect");
+  DOMRect* rect_bounding_client_rect = rect->getBoundingClientRect();
+  EXPECT_EQ(100, rect_bounding_client_rect->top());
+  EXPECT_EQ(10, rect_bounding_client_rect->left());
+  EXPECT_EQ(100, rect_bounding_client_rect->width());
+  EXPECT_EQ(100, rect_bounding_client_rect->height());
+
+  Element* stroke = document.getElementById("stroke");
+  DOMRect* stroke_bounding_client_rect = stroke->getBoundingClientRect();
+  EXPECT_EQ(100, stroke_bounding_client_rect->top());
+  EXPECT_EQ(10, stroke_bounding_client_rect->left());
+  EXPECT_EQ(100, stroke_bounding_client_rect->width());
+  EXPECT_EQ(100, stroke_bounding_client_rect->height());
+
+  Element* foreign = document.getElementById("foreign");
+  DOMRect* foreign_bounding_client_rect = foreign->getBoundingClientRect();
+  EXPECT_EQ(100, foreign_bounding_client_rect->top());
+  EXPECT_EQ(10, foreign_bounding_client_rect->left());
+  EXPECT_EQ(100, foreign_bounding_client_rect->width());
+  EXPECT_EQ(100, foreign_bounding_client_rect->height());
+}
+
 }  // namespace blink
