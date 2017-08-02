@@ -22,6 +22,30 @@
       "revId": "a0db3c4f147a0d688d41a5c681c6cf11596c2ae4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "578e207e_c21d3e3e",
+        "filename": "headless/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-08-02T22:27:19Z",
+      "side": 1,
+      "message": "Done - also removed redundant override from build/args/headless.",
+      "parentUuid": "906efc64_35bfcb0b",
+      "range": {
+        "startLine": 226,
+        "startChar": 34,
+        "endLine": 226,
+        "endChar": 44
+      },
+      "revId": "a0db3c4f147a0d688d41a5c681c6cf11596c2ae4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
