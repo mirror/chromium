@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9530e4ac_fa2aa39f",
+        "filename": "chrome/browser/search/one_google_bar/one_google_bar_fetcher_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-02T09:22:41Z",
+      "side": 1,
+      "message": "Would we prefer to use OAuth2 once it\u0027s possible? A comment here explaining that and what needs to happen first would be useful.",
+      "revId": "9b4d25162d08ef4409316ad7a93b42e4ab9ad905",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
