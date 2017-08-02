@@ -473,6 +473,10 @@ class CONTENT_EXPORT WebContentsImpl
   void SetAllowOtherViews(bool allow) override;
   bool GetAllowOtherViews() override;
   bool CompletedFirstVisuallyNonEmptyPaint() const override;
+  bool IsErrorPage() override;
+  void SetIsErrorPage(bool is_error_page) override;
+  WebContents* GetPopupContents() override;
+  void SetPopupContents(WebContents* popup_contents) override;
 #endif
 
   // Implementation of PageNavigator.
@@ -1507,6 +1511,18 @@ class CONTENT_EXPORT WebContentsImpl
   // Date time chooser opened by this tab.
   // Only used in Android since all other platforms use a multi field UI.
   std::unique_ptr<DateTimeChooserAndroid> date_time_chooser_;
+#endif
+
+#if defined(OS_MACOSX)
+  // content::WebContents of the hidden popup created in the error page to be
+  // displayed in the TouchBar.
+  WebContents* popup_contents_;
+
+  // Tells whether the current page is an error page or not, which is needed to
+  // know in which content::WebContents to have popup_contents as a nullptr
+  // (normal pages), and where to set it to the hidden popup's (error page)
+  // content::WebContents.
+  bool is_error_page_;
 #endif
 
   // Holds information about a current color chooser dialog, if one is visible.
