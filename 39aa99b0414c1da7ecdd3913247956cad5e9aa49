@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "8addfcb0_add2540f",
+        "filename": "third_party/WebKit/Source/core/xml/parser/XMLDocumentParser.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 821,
+      "author": {
+        "id": 1106664
+      },
+      "writtenOn": "2017-08-02T00:15:08Z",
+      "side": 1,
+      "message": "\u003e Do you mean the following XML parsing will modify the DOM tree including |parent_element|?\n\nNo, I meant that before parsing started the DOM has been modified.\n\nI was just wondering when default_namespace_uri_ gets a value here it wouldn\u0027t pick up anyway a bit further up the ancestor chain (down the stack) on line 814.\n\nI think I understand now. For example, HTML elements are born with the xhtml nsuri even though there\u0027s no xmlns attribute declaring that.",
+      "parentUuid": "cdffcb8f_b1873fef",
+      "revId": "39aa99b0414c1da7ecdd3913247956cad5e9aa49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "971832eb_3e22bdca",
         "filename": "third_party/WebKit/Source/core/xml/parser/XMLDocumentParser.cpp",
         "patchSetId": 5
