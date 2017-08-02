@@ -513,6 +513,30 @@
     },
     {
       "key": {
+        "uuid": "b2b2c5f1_7f32d53c",
+        "filename": "net/disk_cache/blockfile/backend_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-08-02T16:00:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "381ba64a_2b18f270",
+      "range": {
+        "startLine": 59,
+        "startChar": 14,
+        "endLine": 59,
+        "endChar": 35
+      },
+      "revId": "a3127320698feb28bd4954f383b14be34d176e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c15a06ca_b70e218f",
         "filename": "net/disk_cache/disk_cache.cc",
         "patchSetId": 10
@@ -772,6 +796,30 @@
     },
     {
       "key": {
+        "uuid": "789f7140_7cd39964",
+        "filename": "net/disk_cache/simple/simple_backend_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-08-02T16:00:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "438736fe_85b2cc8a",
+      "range": {
+        "startLine": 60,
+        "startChar": 6,
+        "endLine": 60,
+        "endChar": 27
+      },
+      "revId": "a3127320698feb28bd4954f383b14be34d176e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d71efab2_4455a8c3",
         "filename": "net/disk_cache/simple/simple_entry_impl.h",
         "patchSetId": 10
@@ -792,6 +840,30 @@
       "revId": "a3127320698feb28bd4954f383b14be34d176e38",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "558b7a80_aecd1ac3",
+        "filename": "net/disk_cache/simple/simple_entry_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-08-02T16:00:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d71efab2_4455a8c3",
+      "range": {
+        "startLine": 78,
+        "startChar": 18,
+        "endLine": 78,
+        "endChar": 39
+      },
+      "revId": "a3127320698feb28bd4954f383b14be34d176e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -877,6 +949,30 @@
       "side": 1,
       "message": "Sorry, misunderstanding. Here is the guide\u0027s text:\n\nIf the function (at least sometimes) takes a ref on a refcounted object, declare the param as scoped_refptr\u003cT\u003e. The caller can decide whether it wishes to transfer ownership (by calling std::move(t) when passing t) or retain its ref (by simply passing t directly).\n\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#Object-ownership-and-calling-conventions",
       "parentUuid": "d19efd74_27cc3423",
+      "range": {
+        "startLine": 110,
+        "startChar": 14,
+        "endLine": 110,
+        "endChar": 35
+      },
+      "revId": "a3127320698feb28bd4954f383b14be34d176e38",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55c5b647_1e7a03ef",
+        "filename": "net/disk_cache/simple/simple_index.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-08-02T16:00:17Z",
+      "side": 1,
+      "message": "Done, thanks for the link.",
+      "parentUuid": "edf6c64e_ab717812",
       "range": {
         "startLine": 110,
         "startChar": 14,
