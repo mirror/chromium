@@ -122,6 +122,7 @@ modules_idl_files =
                     "gamepad/Gamepad.idl",
                     "gamepad/GamepadButton.idl",
                     "gamepad/GamepadEvent.idl",
+                    "gamepad/GamepadHapticActuator.idl",
                     "gamepad/GamepadList.idl",
                     "gamepad/GamepadPose.idl",
                     "geolocation/Coordinates.idl",

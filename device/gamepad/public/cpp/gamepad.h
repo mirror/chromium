@@ -21,6 +21,16 @@ class GamepadButton {
   double value;
 };
 
+enum class GamepadHapticActuatorType { kVibration = 0 };
+
+class GamepadHapticActuator {
+ public:
+  GamepadHapticActuator() : type(GamepadHapticActuatorType::kVibration) {}
+  GamepadHapticActuator(GamepadHapticActuatorType type) : type(type) {}
+
+  GamepadHapticActuatorType type;
+};
+
 class GamepadVector {
  public:
   GamepadVector() : not_null(false) {}
@@ -72,6 +82,7 @@ class Gamepad {
   static constexpr size_t kMappingLengthCap = 16;
   static constexpr size_t kAxesLengthCap = 16;
   static constexpr size_t kButtonsLengthCap = 32;
+  static constexpr size_t kHapticActuatorsLengthCap = 32;
 
   Gamepad();
   Gamepad(const Gamepad& other);
@@ -97,6 +108,12 @@ class Gamepad {
 
   // Button states
   GamepadButton buttons[kButtonsLengthCap];
+
+  // Number of valid entries in the haptic actuators array.
+  unsigned haptic_actuators_length;
+
+  // Haptic actuators.
+  GamepadHapticActuator haptic_actuators[kHapticActuatorsLengthCap];
 
   // Mapping type (for example "standard")
   UChar mapping[kMappingLengthCap];

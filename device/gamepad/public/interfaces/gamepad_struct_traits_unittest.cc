@@ -26,6 +26,9 @@ enum GamepadTestDataType {
 Gamepad GetWebGamepadInstance(GamepadTestDataType type) {
   GamepadButton wgb(true, false, 1.0f);
 
+  GamepadHapticActuator wha(
+      GamepadHapticActuatorType::GamepadHapticActuatorTypeVibration);
+
   GamepadVector wgv;
   memset(&wgv, 0, sizeof(GamepadVector));
   wgv.not_null = true;
@@ -79,6 +82,11 @@ Gamepad GetWebGamepadInstance(GamepadTestDataType type) {
     send.buttons_length++;
     send.buttons[i] = wgb;
   }
+  send.haptic_actuators_length = 0U;
+  for (size_t i = 0; i < Gamepad::kHapticActuatorsLengthCap; i++) {
+    send.haptic_actuators_length++;
+    send.haptic_actuators[i] = wgha;
+  }
   send.pose = wgp;
   send.hand = GamepadHand::kRight;
   send.display_id = static_cast<unsigned short>(16);
@@ -90,6 +98,11 @@ bool isWebGamepadButtonEqual(const GamepadButton& lhs,
                              const GamepadButton& rhs) {
   return (lhs.pressed == rhs.pressed && lhs.touched == rhs.touched &&
           lhs.value == rhs.value);
+}
+
+bool isWebGamepadHapticActuatorEqual(const GamepadHapticActuator& lhs,
+                                     const GamepadHapticActuator& rhs) {
+  return lhs.type == rhs.type;
 }
 
 bool isWebGamepadVectorEqual(const GamepadVector& lhs,
@@ -152,6 +165,12 @@ bool isWebGamepadEqual(const Gamepad& send, const Gamepad& echo) {
   }
   for (size_t i = 0; i < Gamepad::kButtonsLengthCap; i++) {
     if (!isWebGamepadButtonEqual(send.buttons[i], echo.buttons[i])) {
+      return false;
+    }
+  }
+  for (size_t i = 0; i < Gamepad : kHapticActuatorsLengthCap; i++) {
+    if (!isWebGamepadHapticActuatorEqual(send.haptic_actuators[i],
+                                         echo.haptic_actuators[i])) {
       return false;
     }
   }

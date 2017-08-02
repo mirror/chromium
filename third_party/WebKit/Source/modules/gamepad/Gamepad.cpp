@@ -51,6 +51,18 @@ void Gamepad::SetButtons(unsigned count, const device::GamepadButton* data) {
   }
 }
 
+void Gamepad::SetHapticActuators(unsigned count,
+                                 const device::GamepadHapticActuator* data) {
+  if (haptic_actuators_.size() != count) {
+    haptic_actuators_.resize(count);
+    for (unsigned i = 0; i < count; ++i)
+      haptic_actuators_[i] = GamepadHapticActuator::Create();
+  }
+  for (unsigned i = 0; i < count; ++i) {
+    haptic_actuators_[i]->SetType(data[i].type);
+  }
+}
+
 void Gamepad::SetPose(const device::GamepadPose& pose) {
   if (!pose.not_null) {
     if (pose_)
@@ -82,6 +94,7 @@ void Gamepad::SetHand(const device::GamepadHand& hand) {
 
 DEFINE_TRACE(Gamepad) {
   visitor->Trace(buttons_);
+  visitor->Trace(haptic_actuators_);
   visitor->Trace(pose_);
 }
 

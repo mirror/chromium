@@ -28,6 +28,7 @@
 
 #include "device/gamepad/public/cpp/gamepad.h"
 #include "modules/gamepad/GamepadButton.h"
+#include "modules/gamepad/GamepadHapticActuator.h"
 #include "modules/gamepad/GamepadPose.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/heap/Handle.h"
@@ -67,6 +68,12 @@ class Gamepad final : public GarbageCollectedFinalized<Gamepad>,
   const GamepadButtonVector& buttons() const { return buttons_; }
   void SetButtons(unsigned count, const device::GamepadButton* data);
 
+  const GamepadHapticActuatorVector& hapticActuators() const {
+    return haptic_actuators_;
+  }
+  void SetHapticActuators(unsigned count,
+                          const device::GamepadHapticActuator* data);
+
   GamepadPose* pose() const { return pose_; }
   void SetPose(const device::GamepadPose&);
 
@@ -88,6 +95,7 @@ class Gamepad final : public GarbageCollectedFinalized<Gamepad>,
   String mapping_;
   DoubleVector axes_;
   GamepadButtonVector buttons_;
+  GamepadHapticActuatorVector haptic_actuators_;
   Member<GamepadPose> pose_;
   String hand_;
   unsigned display_id_;

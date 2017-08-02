@@ -11,6 +11,7 @@ Gamepad::Gamepad()
       timestamp(0),
       axes_length(0),
       buttons_length(0),
+      haptic_actuators_length(0),
       display_id(0) {
   id[0] = 0;
   mapping[0] = 0;

@@ -10,6 +10,7 @@
 #include "device/gamepad/public/cpp/gamepad.h"
 #include "device/gamepad/public/interfaces/gamepad.mojom.h"
 #include "mojo/public/cpp/bindings/array_traits_carray.h"
+#include "mojo/public/cpp/bindings/enum_traits.h"
 #include "mojo/public/cpp/bindings/struct_traits.h"
 
 namespace mojo {
@@ -47,6 +48,26 @@ struct StructTraits<device::mojom::GamepadButtonDataView,
   static double value(const device::GamepadButton& r) { return r.value; }
   static bool Read(device::mojom::GamepadButtonDataView data,
                    device::GamepadButton* out);
+};
+
+template <>
+struct EnumTraits<device::mojom::GamepadHapticActuatorType,
+                  device::GamepadHapticActuatorType> {
+  static device::mojom::GamepadHapticActuatorType ToMojom(
+      device::GamepadHapticActuatorType input);
+  static bool FromMojom(device::mojom::GamepadHapticActuatorType input,
+                        device::GamepadHapticActuatorType* output);
+};
+
+template <>
+struct StructTraits<device::mojom::GamepadHapticActuatorDataView,
+                    device::GamepadHapticActuator> {
+  static const device::GamepadHapticActuatorType& type(
+      const device::GamepadHapticActuator& r) {
+    return r.type;
+  }
+  static bool Read(device::mojom::GamepadHapticActuatorDataView data,
+                   device::GamepadHapticActuator* out);
 };
 
 template <>
@@ -96,6 +117,10 @@ struct StructTraits<device::mojom::GamepadDataView, device::Gamepad> {
   }
   static ConstCArray<device::GamepadButton> buttons(const device::Gamepad& r) {
     return {r.buttons_length, &r.buttons[0]};
+  }
+  static ConstCArray<device::GamepadHapticActuator> haptic_actuators(
+      const device::Gamepad& r) {
+    return {r.haptic_actuators_length, &r.haptic_actuators[0]};
   }
   static const device::GamepadPose& pose(const device::Gamepad& r) {
     return r.pose;

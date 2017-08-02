@@ -38,12 +38,21 @@ enum GamepadHand {
   GamepadHandRight = 2
 };
 
+enum GamepadHapticActuatorType {
+  GamepadHapticActuatorTypeVibration = 0
+};
+
+struct GamepadHapticActuator {
+  GamepadHapticActuatorType type;
+};
+
 struct Gamepad {
   bool connected;
   array<uint16> id;
   uint64 timestamp;
   array<double> axes;
   array<GamepadButton> buttons;
+  array<GamepadHapticActuator> haptic_actuators;
   array<uint16> mapping;
   GamepadPose? pose;
   GamepadHand hand;
