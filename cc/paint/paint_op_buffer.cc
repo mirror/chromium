@@ -2051,4 +2051,13 @@ void PaintOpBuffer::ShrinkToFit() {
   }
 }
 
+PaintOpBuffer::FlatteningIterator::FlatteningIterator(
+    const PaintOpBuffer* buffer,
+    const std::vector<size_t>* offsets)
+    : top_level_iter_(buffer, offsets) {
+  FlattenCurrentOpIfNeeded();
+}
+
+PaintOpBuffer::FlatteningIterator::~FlatteningIterator() = default;
+
 }  // namespace cc

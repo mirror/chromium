@@ -13,7 +13,9 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/trace_event/trace_event.h"
 #include "cc/base/histograms.h"
+#include "cc/paint/display_item_list.h"
 #include "cc/paint/paint_canvas.h"
+#include "cc/paint/paint_recorder.h"
 #include "cc/raster/raster_source.h"
 #include "cc/raster/scoped_gpu_raster.h"
 #include "cc/resources/resource.h"
@@ -26,6 +28,22 @@
 
 namespace cc {
 namespace {
+
+// Reuse canvas setup code from RasterSource by storing it into a PaintRecord
+// that can then be transported.  This is somewhat more convoluted then it
+// should be.
+static sk_sp<PaintRecord> SetupForRaster(
+    const RasterSource* raster_source,
+    const gfx::Rect& raster_full_rect,
+    const gfx::Rect& playback_rect,
+    const gfx::AxisTransform2d& transform) {
+  PaintRecorder recorder;
+  PaintCanvas* canvas =
+      recorder.beginRecording(gfx::RectToSkRect(raster_full_rect));
+  raster_source->SetupCanvasForRaster(canvas, raster_full_rect, playback_rect,
+                                      transform, true);
+  return recorder.finishRecordingAsPicture();
+}
 
 static void RasterizeSource(
     const RasterSource* raster_source,
@@ -40,6 +58,54 @@ static void RasterizeSource(
     bool async_worker_context_enabled,
     bool use_distance_field_text,
     int msaa_sample_count) {
+  gfx::Rect playback_rect = raster_full_rect;
+  if (resource_has_previous_content) {
+    playback_rect.Intersect(raster_dirty_rect);
+  }
+  DCHECK(!playback_rect.IsEmpty())
+      << "Why are we rastering a tile that's not dirty?";
+
+  // Log a histogram of the percentage of pixels that were saved due to
+  // partial raster.
+  const char* client_name = GetClientNameForMetrics();
+  float full_rect_size = raster_full_rect.size().GetArea();
+  if (full_rect_size > 0 && client_name) {
+    float fraction_partial_rastered =
+        static_cast<float>(playback_rect.size().GetArea()) / full_rect_size;
+    float fraction_saved = 1.0f - fraction_partial_rastered;
+    UMA_HISTOGRAM_PERCENTAGE(
+        base::StringPrintf("Renderer4.%s.PartialRasterPercentageSaved.Gpu",
+                           client_name),
+        100.0f * fraction_saved);
+  }
+
+  auto setup_list = make_scoped_refptr(
+      new DisplayItemList(DisplayItemList::kToBeReleasedAsPaintOpBuffer));
+  setup_list->StartPaint();
+  setup_list->push<DrawRecordOp>(SetupForRaster(raster_source, raster_full_rect,
+                                                playback_rect, transform));
+  setup_list->EndPaintOfUnpaired(raster_full_rect);
+  setup_list->Finalize();
+
+  gpu::gles2::GLES2Interface* gl = context_provider->ContextGL();
+  ResourceProvider::ScopedTextureProvider texture_provider(
+      gl, resource_lock, async_worker_context_enabled);
+
+  gl->BeginRasterCHROMIUM(
+      resource_lock->target(), texture_provider.texture_id(),
+      resource_lock->size().width(), resource_lock->size().height(),
+      msaa_sample_count, playback_settings.use_lcd_text,
+      use_distance_field_text, resource_lock->PixelConfig());
+  gl->RasterCHROMIUM(setup_list.get(), playback_rect.x(), playback_rect.y(),
+                     playback_rect.width(), playback_rect.height());
+  gl->RasterCHROMIUM(raster_source->display_list(),
+                     playback_rect.x(), playback_rect.y(),
+                     playback_rect.width(), playback_rect.height());
+  gl->EndRasterCHROMIUM();
+
+// TODO(enne): add a separate mode for this rather than hijacking
+// gpu raster.
+#if 0
   ScopedGpuRaster gpu_raster(context_provider);
 
   ResourceProvider::ScopedSkSurfaceProvider scoped_surface(
@@ -85,6 +151,7 @@ static void RasterizeSource(
   raster_source->PlaybackToCanvas(
       canvas, resource_lock->color_space_for_raster(), raster_full_rect,
       playback_rect, transform, playback_settings);
+#endif
 }
 
 }  // namespace

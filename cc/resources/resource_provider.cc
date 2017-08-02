@@ -1142,6 +1142,10 @@ ResourceProvider::ScopedWriteLockGL::ScopedWriteLockGL(
   color_space_ = resource_provider->GetResourceColorSpaceForRaster(resource);
 }
 
+GrPixelConfig ResourceProvider::ScopedWriteLockGL::PixelConfig() const {
+  return ToGrPixelConfig(format());
+}
+
 ResourceProvider::ScopedWriteLockGL::~ScopedWriteLockGL() {
   DCHECK(thread_checker_.CalledOnValidThread());
   Resource* resource = resource_provider_->GetResource(resource_id_);

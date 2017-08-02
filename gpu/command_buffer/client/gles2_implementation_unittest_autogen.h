@@ -3080,4 +3080,26 @@ TEST_F(GLES2ImplementationTest, SetEnableDCLayersCHROMIUM) {
   gl_->SetEnableDCLayersCHROMIUM(true);
   EXPECT_EQ(0, memcmp(&expected, commands_, sizeof(expected)));
 }
+
+TEST_F(GLES2ImplementationTest, BeginRasterCHROMIUM) {
+  struct Cmds {
+    cmds::BeginRasterCHROMIUM cmd;
+  };
+  Cmds expected;
+  expected.cmd.Init(GL_ARRAY_BUFFER, 2, 3, 4, 5, true, true, 8);
+
+  gl_->BeginRasterCHROMIUM(GL_ARRAY_BUFFER, 2, 3, 4, 5, true, true, 8);
+  EXPECT_EQ(0, memcmp(&expected, commands_, sizeof(expected)));
+}
+
+TEST_F(GLES2ImplementationTest, EndRasterCHROMIUM) {
+  struct Cmds {
+    cmds::EndRasterCHROMIUM cmd;
+  };
+  Cmds expected;
+  expected.cmd.Init();
+
+  gl_->EndRasterCHROMIUM();
+  EXPECT_EQ(0, memcmp(&expected, commands_, sizeof(expected)));
+}
 #endif  // GPU_COMMAND_BUFFER_CLIENT_GLES2_IMPLEMENTATION_UNITTEST_AUTOGEN_H_

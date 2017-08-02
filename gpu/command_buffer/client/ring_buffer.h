@@ -90,6 +90,8 @@ class GPU_EXPORT RingBuffer {
     return (size + alignment_ - 1) & ~(alignment_ - 1);
   }
 
+  // Resizes the given buffer if possible.
+  void ResizeBuffer(void* pointer, unsigned int new_size);
 
  private:
   enum State {

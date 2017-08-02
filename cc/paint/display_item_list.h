@@ -192,6 +192,8 @@ class CC_PAINT_EXPORT DisplayItemList
   FRIEND_TEST_ALL_PREFIXES(DisplayItemListTest, AsValueWithOps);
 
   ~DisplayItemList();
+  // TODO(enne): expose rtree etc
+ public:
 
   void Reset();
 

@@ -1095,7 +1095,8 @@ class CC_PAINT_EXPORT PaintOpBuffer : public SkRefCnt {
     size_t op_offset_ = 0;
   };
 
- private:
+  // TEMP(enne)
+ //private:
   friend class DisplayItemList;
   friend class PaintOpBufferOffsetsTest;
   friend class SolidColorAnalyzer;
@@ -1204,6 +1205,64 @@ class CC_PAINT_EXPORT PaintOpBuffer : public SkRefCnt {
     bool using_offsets_ = false;
     base::Optional<OffsetIterator> offset_iter_;
     base::Optional<Iterator> iter_;
+  };
+
+  // Returns a stream of non-DrawRecord ops from a top level pob with indices.
+  // Upon encountering DrawRecord ops, it returns ops from inside them
+  // without returning the DrawRecord op itself.  It does this recursively.
+  class FlatteningIterator {
+   public:
+    FlatteningIterator(const PaintOpBuffer* buffer,
+                       const std::vector<size_t>* offsets);
+    ~FlatteningIterator();
+
+    PaintOp* operator->() const {
+      return nested_iter_.empty() ? *top_level_iter_ : *nested_iter_.back();
+    }
+    PaintOp* operator*() const { return operator->(); }
+
+    bool operator!=(const FlatteningIterator& other) {
+      if (other.top_level_iter_ != top_level_iter_)
+        return false;
+      if (other.nested_iter_.size() != nested_iter_.size())
+        return false;
+      for (size_t i = 0; i < nested_iter_.size(); ++i) {
+        if (other.nested_iter_[i] != nested_iter_[i])
+          return false;
+      }
+      return true;
+    }
+
+    FlatteningIterator& operator++() {
+      while (!nested_iter_.empty()) {
+        ++nested_iter_.back();
+        if (nested_iter_.back()) {
+          FlattenCurrentOpIfNeeded();
+          return *this;
+        }
+        nested_iter_.pop_back();
+      }
+      ++top_level_iter_;
+      FlattenCurrentOpIfNeeded();
+      return *this;
+    }
+    operator bool() const {
+      return nested_iter_.empty() ? top_level_iter_ : nested_iter_.back();
+    }
+
+   private:
+    void FlattenCurrentOpIfNeeded() {
+      while (true) {
+        PaintOp* op = **this;
+        if (!op || op->GetType() != PaintOpType::DrawRecord)
+          return;
+        auto* record_op = static_cast<DrawRecordOp*>(op);
+        nested_iter_.push_back(Iterator(record_op->record.get()));
+      }
+    }
+
+    PaintOpBuffer::OffsetIterator top_level_iter_;
+    std::vector<Iterator> nested_iter_;
   };
 
   // Replays the paint op buffer into the canvas. If |indices| is specified, it

@@ -49,6 +49,7 @@
 #endif
 
 #if !defined(__native_client__)
+#include "cc/paint/display_item_list.h"
 #include "ui/gfx/color_space.h"
 #include "ui/gfx/ipc/color/gfx_param_traits.h"
 #endif
@@ -7165,6 +7166,72 @@ void GLES2Implementation::Viewport(GLint x,
   state_.SetViewport(x, y, width, height);
   helper_->Viewport(x, y, width, height);
   CheckGLError();
+}
+
+void GLES2Implementation::RasterCHROMIUM(const cc::DisplayItemList* list,
+                                         GLint x,
+                                         GLint y,
+                                         GLint w,
+                                         GLint h) {
+// TODO(enne): Maybe make this extension not valid on nacl?
+#if defined(OS_NACL)
+  NOTREACHED();
+#else
+  // TODO(enne): regenerate this log to include params
+  GPU_CLIENT_SINGLE_THREAD_CHECK();
+  GPU_CLIENT_LOG("[" << GetLogPrefix() << "] glRasterChromium("
+                     << ")");
+
+  // TODO(enne): stop makin' stuff up, maybe use DIL size * max op size??
+  static constexpr unsigned int kMinAlloc = 16 * 1024;
+  static constexpr unsigned int kBlockAlloc = 512 * 1024;
+
+  unsigned int free_size = std::max(transfer_buffer_->GetFreeSize(), kMinAlloc);
+  ScopedTransferBufferPtr buffer(free_size, helper_, transfer_buffer_);
+  DCHECK(buffer.valid());
+
+  char* memory = static_cast<char*>(buffer.address());
+  size_t written_bytes = 0;
+  size_t free_bytes = buffer.size();
+
+  cc::PaintOp::SerializeOptions options;
+
+  gfx::Rect playback_rect(x, y, w, h);
+  std::vector<size_t> indices = list->rtree_.Search(playback_rect);
+  for (cc::PaintOpBuffer::FlatteningIterator iter(&list->paint_op_buffer_,
+                                                  &indices);
+
+       iter; ++iter) {
+    const cc::PaintOp* op = *iter;
+    size_t size = op->Serialize(memory + written_bytes, free_bytes, options);
+    if (!size) {
+      // TODO(enne): write some noop terminator here at the end??
+      buffer.Shrink(written_bytes);
+      helper_->RasterCHROMIUM(buffer.shm_id(), buffer.offset(), x, y, w, h,
+                              buffer.size());
+      buffer.Reset(kBlockAlloc);
+      written_bytes = 0;
+      free_bytes = buffer.size();
+
+      size = op->Serialize(memory + written_bytes, free_bytes, options);
+      // TODO(enne): make sure that there's some minimum size here.
+      DCHECK(size);
+    }
+
+    written_bytes += size;
+    free_bytes -= size;
+  }
+
+  buffer.Shrink(written_bytes);
+
+  // TODO(enne): maybe xywh should be on begin and stored.
+  if (written_bytes) {
+    helper_->RasterCHROMIUM(buffer.shm_id(), buffer.offset(), x, y, w, h,
+                            buffer.size());
+  }
+
+  CheckGLError();
+#endif
 }
 
 // Include the auto-generated part of this file. We split this because it means
