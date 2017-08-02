@@ -38,6 +38,7 @@
 #include "chrome/browser/permissions/permission_uma_util.h"
 #include "chrome/browser/permissions/permission_util.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/safe_browsing/safe_browsing_service.h"
 #include "chrome/browser/ssl/chrome_ssl_host_state_delegate.h"
 #include "chrome/browser/ssl/chrome_ssl_host_state_delegate_factory.h"
 #include "chrome/browser/ui/page_info/page_info_ui.h"
@@ -54,6 +55,7 @@
 #include "components/content_settings/core/common/content_settings_utils.h"
 #include "components/rappor/public/rappor_utils.h"
 #include "components/rappor/rappor_service_impl.h"
+#include "components/safe_browsing/password_protection/password_protection_service.h"
 #include "components/ssl_errors/error_info.h"
 #include "components/strings/grit/components_chromium_strings.h"
 #include "components/strings/grit/components_strings.h"
@@ -232,6 +234,15 @@ void GetSiteIdentityByMaliciousContentStatus(
       *details =
           l10n_util::GetStringUTF16(IDS_PAGE_INFO_UNWANTED_SOFTWARE_DETAILS);
       break;
+    case security_state::MALICIOUS_CONTENT_STATUS_PASSWORD_REUSE:
+      *status = PageInfo::SITE_IDENTITY_STATUS_PASSWORD_REUSE;
+      *details = password_protection_service_ &&
+                         password_protection_service_->ShowSofterWarning()
+                     ? l10n_util::GetStringUTF16(
+                           IDS_PAGE_INFO_GOOGLE_BRANDED_PHISHING_DETAILS_SOFTER)
+                     : l10n_util::GetStringUTF16(
+                           IDS_PAGE_INFO_GOOGLE_BRANDED_PHISHING_DETAILS);
+      break;
   }
 }
 
@@ -275,7 +286,18 @@ PageInfo::PageInfo(PageInfoUI* ui,
           ChromeSSLHostStateDelegateFactory::GetForProfile(profile)),
       did_revoke_user_ssl_decisions_(false),
       profile_(profile),
-      security_level_(security_state::NONE) {
+      security_level_(security_state::NONE),
+      show_change_password_button_(false),
+      password_protection_service_(nullptr) {
+#if defined(SAFE_BROWSING_DB_LOCAL)
+  safe_browsing::SafeBrowsingService* sb_service =
+      g_browser_process->safe_browsing_service();
+  if (sb_service && sb_service->enabled_by_prefs()) {
+    password_protection_service_ =
+        sb_service->GetPasswordProtectionService(profile_);
+  }
+#endif
+
   Init(url, security_info);
 
   PresentSitePermissions();
@@ -487,6 +509,9 @@ void PageInfo::Init(const GURL& url,
     GetSiteIdentityByMaliciousContentStatus(
         security_info.malicious_content_status, &site_identity_status_,
         &site_identity_details_);
+    show_change_password_button_ =
+        security_info.malicious_content_status ==
+        security_state::MALICIOUS_CONTENT_STATUS_PASSWORD_REUSE;
   } else if (certificate_ &&
              (!net::IsCertStatusError(security_info.cert_status) ||
               net::IsCertStatusMinorError(security_info.cert_status))) {
@@ -806,5 +831,9 @@ void PageInfo::PresentSiteIdentity() {
   info.identity_status_description = UTF16ToUTF8(site_identity_details_);
   info.certificate = certificate_;
   info.show_ssl_decision_revoke_button = show_ssl_decision_revoke_button_;
+  info.show_change_password_button = show_change_password_button_;
   ui_->SetIdentityInfo(info);
+  if (show_change_password_button_) {
+    // TODO(jialiul): Call password_protection_service_->OnWarningShow(...)
+  }
 }

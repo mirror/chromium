@@ -34,6 +34,10 @@
 #include "ui/gfx/paint_vector_icon.h"
 #endif
 
+#if defined(SAFE_BROWSING_DB_LOCAL)
+#include "components/safe_browsing/password_protection/password_protection_service.h"
+#endif
+
 namespace {
 
 const int kInvalidResourceID = -1;
@@ -191,7 +195,8 @@ PageInfoUI::ChosenObjectInfo::~ChosenObjectInfo() {}
 PageInfoUI::IdentityInfo::IdentityInfo()
     : identity_status(PageInfo::SITE_IDENTITY_STATUS_UNKNOWN),
       connection_status(PageInfo::SITE_CONNECTION_STATUS_UNKNOWN),
-      show_ssl_decision_revoke_button(false) {}
+      show_ssl_decision_revoke_button(false),
+      show_change_password_button(false) {}
 
 PageInfoUI::IdentityInfo::~IdentityInfo() {}
 
@@ -239,6 +244,14 @@ PageInfoUI::IdentityInfo::GetSecurityDescription() const {
     case PageInfo::SITE_IDENTITY_STATUS_UNWANTED_SOFTWARE:
       return CreateSecurityDescription(IDS_PAGE_INFO_UNWANTED_SOFTWARE_SUMMARY,
                                        IDS_PAGE_INFO_UNWANTED_SOFTWARE_DETAILS);
+    case PageInfo::SITE_IDENTITY_STATUS_PASSWORD_REUSE:
+      return safe_browsing::PasswordProtectionService::ShouldShowSofterWarning()
+                 ? CreateSecurityDescription(
+                       IDS_PAGE_INFO_GOOGLE_BRANDED_PHISHING_SUMMARY_SOFTER,
+                       IDS_PAGE_INFO_GOOGLE_BRANDED_PHISHING_DETAILS_SOFTER)
+                 : CreateSecurityDescription(
+                       IDS_PAGE_INFO_GOOGLE_BRANDED_PHISHING_SUMMARY,
+                       IDS_PAGE_INFO_GOOGLE_BRANDED_PHISHING_DETAILS);
     case PageInfo::SITE_IDENTITY_STATUS_DEPRECATED_SIGNATURE_ALGORITHM:
     case PageInfo::SITE_IDENTITY_STATUS_UNKNOWN:
     case PageInfo::SITE_IDENTITY_STATUS_NO_CERT:

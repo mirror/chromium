@@ -187,6 +187,11 @@ void PasswordProtectionService::OnWarningShown(
   // TODO(jialiul): Trigger event logger here.
 }
 
+bool PasswordProtectionService::ShouldShowSofterWarning() {
+  return base::GetFieldTrialParamByFeatureAsBool(kGoogleBrandedPhishingWarning,
+                                                 "softer_warning", false);
+}
+
 // We cache both types of pings under the same content settings type (
 // CONTENT_SETTINGS_TYPE_PASSWORD_PROTECTION). Since UNFAMILIAR_LOGING_PAGE
 // verdicts are only enabled on extended reporting users, we cache them one

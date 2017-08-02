@@ -22,6 +22,10 @@ namespace net {
 class X509Certificate;
 }
 
+namespace safe_browsing {
+class PasswordProtectionService;
+}
+
 class ChromeSSLHostStateDelegate;
 class ChooserContextBase;
 class HostContentSettingsMap;
@@ -79,10 +83,12 @@ class PageInfo : public TabSpecificContentSettings::SiteDataObserver,
     // is using a deprecated signature algorithm.
     SITE_IDENTITY_STATUS_DEPRECATED_SIGNATURE_ALGORITHM,
     // The website has been flagged by Safe Browsing as dangerous for
-    // containing malware, social engineering, or unwanted software.
+    // containing malware, social engineering, unwanted software, or password
+    // reuse on a low reputation site.
     SITE_IDENTITY_STATUS_MALWARE,
     SITE_IDENTITY_STATUS_SOCIAL_ENGINEERING,
     SITE_IDENTITY_STATUS_UNWANTED_SOFTWARE,
+    SITE_IDENTITY_STATUS_PASSWORD_REUSE,
   };
 
   // UMA statistics for PageInfo. Do not reorder or remove existing
@@ -239,6 +245,14 @@ class PageInfo : public TabSpecificContentSettings::SiteDataObserver,
   Profile* profile_;
 
   security_state::SecurityLevel security_level_;
+
+  // Set when the user ignored the password reuse modal warning dialog. When
+  // |show_change_password_button_| is true, the page identity area of the page
+  // info will include buttons for the users to change corresponding password.
+  bool show_change_password_button_;
+
+  // Used to revoke change password action, and whitelist site by users.
+  safe_browsing::PasswordProtectionService* password_protection_service_;
 
   DISALLOW_COPY_AND_ASSIGN(PageInfo);
 };
