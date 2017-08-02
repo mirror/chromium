@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86403f58_4ffa6700",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridgeTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-08-02T15:44:21Z",
+      "side": 1,
+      "message": "This does not really describe what you are testing/fixing. It is the release callback that we are testing.",
+      "range": {
+        "startLine": 280,
+        "startChar": 7,
+        "endLine": 280,
+        "endChar": 39
+      },
+      "revId": "92b3c991ece414e80f62cd3ddd9294594e658406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba896d7a_6b1d1d28",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridgeTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-08-02T15:44:21Z",
+      "side": 1,
+      "message": "Did you verify that the test fails without your fix? \nYou need to call gl_.SetIsContextLost(true); before this. Otherwise, ContextProviderWrapper will do nothing. It will just keep the same ContextProvider as before.",
+      "range": {
+        "startLine": 295,
+        "startChar": 22,
+        "endLine": 295,
+        "endChar": 44
+      },
+      "revId": "92b3c991ece414e80f62cd3ddd9294594e658406",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
