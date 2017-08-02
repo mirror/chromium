@@ -54,6 +54,12 @@ SetSelectionData::Builder& SetSelectionData::Builder::SetShouldClearTypingStyle(
   return *this;
 }
 
+SetSelectionData::Builder& SetSelectionData::Builder::SetShouldHandleVisible(
+    bool new_value) {
+  data_.should_handle_visible_ = new_value;
+  return *this;
+}
+
 SetSelectionData::Builder& SetSelectionData::Builder::SetSetSelectionBy(
     SetSelectionBy new_value) {
   data_.set_selection_by_ = new_value;
