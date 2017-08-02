@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3fe010c_d1b11f71",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 1224,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-02T08:20:53Z",
+      "side": 1,
+      "message": "This sentence is a bit confusing to read, maybe just \"how many frames have painted.\"",
+      "range": {
+        "startLine": 1224,
+        "startChar": 41,
+        "endLine": 1224,
+        "endChar": 73
+      },
+      "revId": "946303dc6dea37b33f2734ce734e5872acc42594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de7c789d_8f080c14",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 1225,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-02T08:20:53Z",
+      "side": 1,
+      "message": "nit: s/cnt/count",
+      "range": {
+        "startLine": 1225,
+        "startChar": 23,
+        "endLine": 1225,
+        "endChar": 26
+      },
+      "revId": "946303dc6dea37b33f2734ce734e5872acc42594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6e530fb_6ca90f8f",
+        "filename": "third_party/WebKit/Source/core/workers/Worklet.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-02T08:20:53Z",
+      "side": 1,
+      "message": "FindAvailable implies that this function selects the global scope for you. How about we just make this function virtual or have it internally use a protected virtual method to choose the global scope so that PaintWorklet can override the selection behavior - the default could just do in order selection (would address the comment in the function) or always choose 0.",
+      "range": {
+        "startLine": 55,
+        "startChar": 27,
+        "endLine": 55,
+        "endChar": 40
+      },
+      "revId": "946303dc6dea37b33f2734ce734e5872acc42594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5b32e9d_7ce6d744",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-02T08:20:53Z",
+      "side": 1,
+      "message": "nit: remove \"that \"",
+      "range": {
+        "startLine": 36,
+        "startChar": 30,
+        "endLine": 36,
+        "endChar": 35
+      },
+      "revId": "946303dc6dea37b33f2734ce734e5872acc42594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60139386_43702127",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-02T08:20:53Z",
+      "side": 1,
+      "message": "Create a local constant for this and document it.",
+      "range": {
+        "startLine": 39,
+        "startChar": 11,
+        "endLine": 39,
+        "endChar": 30
+      },
+      "revId": "946303dc6dea37b33f2734ce734e5872acc42594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98f3e90d_c551f87f",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-02T08:20:53Z",
+      "side": 1,
+      "message": "It\u0027s strange to have random test points. How about instead we count the number of times each worklet was selected, and the number of times the selection changes and run checks on those numbers at the end?",
+      "revId": "946303dc6dea37b33f2734ce734e5872acc42594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "366ae2c3_300da1e5",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-02T08:20:53Z",
+      "side": 1,
+      "message": "Why DCHECK? Shouldn\u0027t this fail the test in release as well?",
+      "range": {
+        "startLine": 93,
+        "startChar": 6,
+        "endLine": 93,
+        "endChar": 15
+      },
+      "revId": "946303dc6dea37b33f2734ce734e5872acc42594",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
