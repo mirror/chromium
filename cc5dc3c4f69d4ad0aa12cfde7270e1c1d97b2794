@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10ac1adf_5fed0ec2",
+        "filename": "ui/views/controls/button/radio_button_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-02T23:18:40Z",
+      "side": 1,
+      "message": "add description.",
+      "range": {
+        "startLine": 12,
+        "startChar": 10,
+        "endLine": 12,
+        "endChar": 16
+      },
+      "revId": "cc5dc3c4f69d4ad0aa12cfde7270e1c1d97b2794",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07b8f954_9f826dc2",
+        "filename": "ui/views/controls/button/radio_button_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-02T23:18:40Z",
+      "side": 1,
+      "message": "set button_container_ to null here too please.",
+      "range": {
+        "startLine": 36,
+        "startChar": 10,
+        "endLine": 36,
+        "endChar": 15
+      },
+      "revId": "cc5dc3c4f69d4ad0aa12cfde7270e1c1d97b2794",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca44db32_459c3f1d",
+        "filename": "ui/views/controls/button/radio_button_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-02T23:18:40Z",
+      "side": 1,
+      "message": "Please initialize to null.",
+      "range": {
+        "startLine": 44,
+        "startChar": 9,
+        "endLine": 44,
+        "endChar": 20
+      },
+      "revId": "cc5dc3c4f69d4ad0aa12cfde7270e1c1d97b2794",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e97a9cc_3534cbf2",
+        "filename": "ui/views/controls/button/radio_button_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-02T23:18:40Z",
+      "side": 1,
+      "message": "This seems like you\u0027re relying on an implementation detail. Can you instead call button1-\u003eRequestFocus() ?",
+      "range": {
+        "startLine": 73,
+        "startChar": 8,
+        "endLine": 73,
+        "endChar": 29
+      },
+      "revId": "cc5dc3c4f69d4ad0aa12cfde7270e1c1d97b2794",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
