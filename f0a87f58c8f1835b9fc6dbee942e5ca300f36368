@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3cfd5d98_9d1ef9d6",
+        "filename": "cc/blink/web_display_item_list_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-02T21:08:19Z",
+      "side": 1,
+      "message": "This test is great, and I really like this description.",
+      "revId": "f0a87f58c8f1835b9fc6dbee942e5ca300f36368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d75ff806_ac63ad44",
+        "filename": "third_party/WebKit/public/platform/WebDisplayItemList.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-02T21:08:19Z",
+      "side": 1,
+      "message": "Optional: Could you also add this comment to CompositingRecorder?",
+      "revId": "f0a87f58c8f1835b9fc6dbee942e5ca300f36368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
