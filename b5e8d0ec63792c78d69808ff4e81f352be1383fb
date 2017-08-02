@@ -22,6 +22,30 @@
       "revId": "b5e8d0ec63792c78d69808ff4e81f352be1383fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f82b67e2_4e070594",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/customtabs/CustomTabActivity.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 366,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-08-02T02:54:32Z",
+      "side": 1,
+      "message": "Oops. Something wrong happened between my screen and my chair. I reverted this chunk but somehow it\u0027s back after rebasing. I\u0027ll revert this file this week.",
+      "parentUuid": "d898e113_ae617f4c",
+      "range": {
+        "startLine": 366,
+        "startChar": 63,
+        "endLine": 366,
+        "endChar": 64
+      },
+      "revId": "b5e8d0ec63792c78d69808ff4e81f352be1383fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
