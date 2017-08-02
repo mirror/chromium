@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "044fa76a_c2b98797",
+        "filename": "base/strings/string_number_conversions.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-08-02T16:18:23Z",
+      "side": 1,
+      "message": "I\u0027m not imagining this will have a lot of use outside of net/ so can it stay there?",
+      "revId": "7a69d48636737f6c3571f3ed715b37d3b5b9962e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
