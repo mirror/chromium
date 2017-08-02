@@ -16,6 +16,24 @@
       "revId": "b24a70d3bf3c4b73fa9df6fc646fed397a3ca180",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5e82524_31a2ed50",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSShorthandPropertyAPIGrid.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-08-02T22:46:45Z",
+      "side": 1,
+      "message": "I\u0027ve implemented a templated function AddMultipleProperties in Helpers.h. While it makes code shorter, I\u0027m a little concerned it\u0027s less clear than explicit AddProperty. Hence I haven\u0027t changed all AddProperty in this cl. Do we encourage templated programming in general in blink?",
+      "parentUuid": "a67d3ee1_4a73b292",
+      "revId": "b24a70d3bf3c4b73fa9df6fc646fed397a3ca180",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
