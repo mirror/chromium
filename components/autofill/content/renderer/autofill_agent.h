@@ -143,6 +143,7 @@ class AutofillAgent : public content::RenderFrameObserver,
   void DidChangeScrollOffset() override;
   void FocusedNodeChanged(const blink::WebNode& node) override;
   void OnDestruct() override;
+  void WillCommitProvisionalLoad() override;
 
   // Fires IPC messages for a given form submission. Will always fire
   // AutofillHostMsg_WillSubmitForm,  and will also fire

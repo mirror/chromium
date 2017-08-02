@@ -266,6 +266,10 @@ void AutofillAgent::OnDestruct() {
   base::ThreadTaskRunnerHandle::Get()->DeleteSoon(FROM_HERE, this);
 }
 
+void AutofillAgent::WillCommitProvisionalLoad() {
+  element_.Reset();
+}
+
 void AutofillAgent::FireHostSubmitEvents(const WebFormElement& form,
                                          bool form_submitted) {
   FormData form_data;
