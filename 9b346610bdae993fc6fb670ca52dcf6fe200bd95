@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff632164_f9c6bcca",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-02T20:21:24Z",
+      "side": 1,
+      "message": "the little red thingers mean CRs? UNUX line ending (\u0027\\n\u0027) only is preferred.",
+      "revId": "9b346610bdae993fc6fb670ca52dcf6fe200bd95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fef7f856_f413e929",
+        "filename": "components/viz/service/frame_sinks/gpu_compositor_frame_sink.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-02T20:21:24Z",
+      "side": 1,
+      "message": "here, you would add the HitTestRegionListPtr to the central pool per the discussion.",
+      "revId": "9b346610bdae993fc6fb670ca52dcf6fe200bd95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a01a80e_73d8d90b",
+        "filename": "components/viz/service/frame_sinks/gpu_root_compositor_frame_sink.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-02T20:21:24Z",
+      "side": 1,
+      "message": "Because GpuRootCompositorFrameSink is only used by the FrameGenerator, this argument can probably be ignored. It is worth commenting to this effect (and why.)",
+      "revId": "9b346610bdae993fc6fb670ca52dcf6fe200bd95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d95f30f_4c98490a",
+        "filename": "services/viz/public/interfaces/compositing/compositor_frame_sink.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-02T20:21:24Z",
+      "side": 1,
+      "message": "not in alphabetic order",
+      "revId": "9b346610bdae993fc6fb670ca52dcf6fe200bd95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
