@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "f363557f_eed8ee84",
+        "filename": "chrome/browser/extensions/activity_log/activity_log.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 787,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-02T00:12:51Z",
+      "side": 1,
+      "message": "\u003e \u003e could the task manager end up showing the wrong title?\n\u003e \n\u003e The task manager would not show the \"wrong\" title, per se. It would show the same title as what you see in the tabstrip (prefixed by \"Tab: \"). This, and more generally all UI surfaces agreeing on the title for a tab, seems like a good thing.\n\nHmm, I don\u0027t agree.  The task manager shows tasks in each process, which helps attribute resource usage to sites.  After a cross-process navigation, the task manager might show the old page\u0027s title next to the new process\u0027s process ID, CPU, memory, etc, despite the fact that the old page never lived in that process.\n\nIt seems like we shouldn\u0027t be describing the new process with the old page\u0027s title.\n\n\n\u003e \u003e I worry about future code as well, since it\u0027s not obvious that callers have to wait until loading stops before they can query the title.\n\u003e \n\u003e They don\u0027t have to wait until loading stops. Previously, if called before loading was finished, they might have gotten a URL or an actual title. Now, if called before loading is finished, they might get the last page\u0027s url/title, or the current page\u0027s title. Most callers should probably override TitleWasSet anyway to keep up with title changes.\n\nBut why was this change needed in ActivityLog?  Did we just notice it because a test failed?\n\n\u003e \n\u003e The docs for GetTitle seem to have been written for some other (past?) function and not at all relevant to the current GetTitle, so I agree that should be updated.\n\nThanks.",
+      "parentUuid": "2793eba9_09ce0487",
+      "revId": "43ca2da8bdd1c95a419ffb09815468ee6a439eb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5a6f948e_097afeb0",
         "filename": "content/browser/android/web_contents_observer_proxy.cc",
         "patchSetId": 14
@@ -101,6 +119,24 @@
       "side": 1,
       "message": "yes, we can because !last_page_title_.empty() and controller_.IsInitialNavigation() should be mutually exclusive. However the documentation above 1261 continues the thought from that above 1251, so it seems better not to separate them. I can get rid of the else though.",
       "parentUuid": "8fdd4cba_a372e96b",
+      "revId": "43ca2da8bdd1c95a419ffb09815468ee6a439eb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f49b2108_8c41fafc",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 1266,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-02T00:12:51Z",
+      "side": 1,
+      "message": "I don\u0027t think that\u0027s an improvement in readability, because you have to understand that the two cases are mutually exclusive to know that |entry| won\u0027t be the visible entry in the code below.\n\nWe should either move the new check above the IsInitialNavigation block (tweaking the comment on 1253 if you want), or leave it with the else block.  I think it\u0027s worth moving it earlier if we can.",
+      "parentUuid": "8a8b8149_b5ea5f33",
       "revId": "43ca2da8bdd1c95a419ffb09815468ee6a439eb1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
