@@ -34,6 +34,24 @@
       "revId": "ce9fb58dff347e3fc4e89e14b90109b2bc1dd6ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fde862d3_fb406b2d",
+        "filename": "content/browser/payments/payment_app.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-02T21:04:04Z",
+      "side": 0,
+      "message": "As long as users have a clean path forward, I\u0027m OK with this.",
+      "parentUuid": "c7c3d645_2cdc4724",
+      "revId": "ce9fb58dff347e3fc4e89e14b90109b2bc1dd6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
