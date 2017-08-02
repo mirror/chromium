@@ -112,6 +112,7 @@ source_set("unit_tests") {
     "video_encoder_helper_unittest.cc",
     "video_encoder_verbatim_unittest.cc",
     "video_encoder_vpx_unittest.cc",
+    "webrtc_video_encoder_gpu_unittest.cc",
   ]
 
   deps = [
