@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7a1b7e5_9e99c98e",
+        "filename": "components/autofill/core/browser/autofill_experiments.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-08-02T20:24:19Z",
+      "side": 1,
+      "message": "...Enabled?",
+      "range": {
+        "startLine": 131,
+        "startChar": 5,
+        "endLine": 131,
+        "endChar": 46
+      },
+      "revId": "db69bf59283c771f24236a2c1b231a80dfbc9240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92fe4e77_65f6e49f",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-08-02T20:24:19Z",
+      "side": 1,
+      "message": "Should the feature check be inside ShouldFillCreditCardForm()?",
+      "range": {
+        "startLine": 581,
+        "startChar": 27,
+        "endLine": 581,
+        "endChar": 51
+      },
+      "revId": "db69bf59283c771f24236a2c1b231a80dfbc9240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dee3a57_08c4ef5a",
+        "filename": "components/autofill/core/browser/form_structure.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1002376
+      },
+      "writtenOn": "2017-08-02T20:24:19Z",
+      "side": 1,
+      "message": "I think we had talked about having different CC fields?\n\nI.e., a shopping card full of quantity fields shouldn\u0027t offer to fill them all with months.",
+      "range": {
+        "startLine": 609,
+        "startChar": 8,
+        "endLine": 609,
+        "endChar": 27
+      },
+      "revId": "db69bf59283c771f24236a2c1b231a80dfbc9240",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
