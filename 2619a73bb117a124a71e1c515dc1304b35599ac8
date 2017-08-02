@@ -52,6 +52,24 @@
       "revId": "2619a73bb117a124a71e1c515dc1304b35599ac8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7374133_ca88526d",
+        "filename": "chrome/browser/autocomplete/chrome_autocomplete_provider_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-02T22:45:40Z",
+      "side": 1,
+      "message": "Okay, agreed this changelist looks fine.  Thanks for the explanation.",
+      "parentUuid": "b40c48f6_0be46816",
+      "revId": "2619a73bb117a124a71e1c515dc1304b35599ac8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
