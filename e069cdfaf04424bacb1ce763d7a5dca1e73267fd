@@ -25,6 +25,53 @@
     },
     {
       "key": {
+        "uuid": "c7bafc6d_e8629dd0",
+        "filename": "net/http2/hpack/decoder/hpack_varint_decoder_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1222405
+      },
+      "writtenOn": "2017-08-02T15:17:10Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "8401e635_083f7f71",
+      "range": {
+        "startLine": 153,
+        "startChar": 5,
+        "endLine": 158,
+        "endChar": 32
+      },
+      "revId": "e069cdfaf04424bacb1ce763d7a5dca1e73267fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3b74a94b_46a6e590",
+        "filename": "net/http2/hpack/huffman/http2_hpack_huffman_decoder_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1222405
+      },
+      "writtenOn": "2017-08-02T15:17:10Z",
+      "side": 0,
+      "message": "Nice!",
+      "range": {
+        "startLine": 16,
+        "startChar": 42,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "e069cdfaf04424bacb1ce763d7a5dca1e73267fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3eab732_4cf36cf3",
         "filename": "net/http2/http2_structures.cc",
         "patchSetId": 1
@@ -45,6 +92,53 @@
       "revId": "e069cdfaf04424bacb1ce763d7a5dca1e73267fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7fee26f_e0dc24a1",
+        "filename": "net/http2/http2_structures.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1222405
+      },
+      "writtenOn": "2017-08-02T15:17:10Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "e3eab732_4cf36cf3",
+      "range": {
+        "startLine": 101,
+        "startChar": 8,
+        "endLine": 101,
+        "endChar": 31
+      },
+      "revId": "e069cdfaf04424bacb1ce763d7a5dca1e73267fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "594210c0_f4cbd1e3",
+        "filename": "net/quic/platform/impl/quic_text_utils_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1222405
+      },
+      "writtenOn": "2017-08-02T15:17:10Z",
+      "side": 0,
+      "message": "Heh :)",
+      "range": {
+        "startLine": 118,
+        "startChar": 0,
+        "endLine": 146,
+        "endChar": 13
+      },
+      "revId": "e069cdfaf04424bacb1ce763d7a5dca1e73267fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
