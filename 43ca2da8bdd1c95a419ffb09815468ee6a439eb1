@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "8f3deb01_49e75205",
+        "filename": "chrome/browser/extensions/activity_log/activity_log.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 787,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-02T18:09:08Z",
+      "side": 1,
+      "message": "\u003e \u003e \u003e \u003e could the task manager end up showing the wrong title?\n\u003e \u003e \u003e \n\u003e \u003e \u003e The task manager would not show the \"wrong\" title, per se. It would show the same title as what you see in the tabstrip (prefixed by \"Tab: \"). This, and more generally all UI surfaces agreeing on the title for a tab, seems like a good thing.\n\u003e \u003e \n\u003e \u003e Hmm, I don\u0027t agree.  The task manager shows tasks in each process, which helps attribute resource usage to sites.  After a cross-process navigation, the task manager might show the old page\u0027s title next to the new process\u0027s process ID, CPU, memory, etc, despite the fact that the old page never lived in that process.\n\u003e \u003e \n\u003e \u003e It seems like we shouldn\u0027t be describing the new process with the old page\u0027s title.\n\u003e \n\u003e I think all UI surfaces should agree, because it would be weird trying to correlate an entry in the task manager table with a tab that has a different name (of course this usually resolves quickly even if loading everything besides the title takes a long time, so it would rarely matter --- unlike the flickering tab title, which comes up on essentially every navigation). If you feel strongly about it, we can create another function that does what the ActivityLog is doing here and use that for the task manager.\n\nHmm, in my repro example, I found the task manager never actually updates the title in this case (when there\u0027s no title).  You have to close the task manager and reopen it for it to update, unlike for most navigations.\n\nIf it updated itself, I\u0027d be ok with just letting it update after the 1 second timer, but maybe we should change it to show the last committed entry like we do here.\n\n\u003e \u003e \n\u003e \u003e \n\u003e \u003e \u003e \u003e I worry about future code as well, since it\u0027s not obvious that callers have to wait until loading stops before they can query the title.\n\u003e \u003e \u003e \n\u003e \u003e \u003e They don\u0027t have to wait until loading stops. Previously, if called before loading was finished, they might have gotten a URL or an actual title. Now, if called before loading is finished, they might get the last page\u0027s url/title, or the current page\u0027s title. Most callers should probably override TitleWasSet anyway to keep up with title changes.\n\u003e \u003e \n\u003e \u003e But why was this change needed in ActivityLog?  Did we just notice it because a test failed?\n\u003e \n\u003e It\u0027s needed because it makes sense to describe the actual page that\u0027s being pre-rendered. Yes, it was noticed because of tests.\n\u003e \n\u003e \u003e \n\u003e \u003e \u003e \n\u003e \u003e \u003e The docs for GetTitle seem to have been written for some other (past?) function and not at all relevant to the current GetTitle, so I agree that should be updated.\n\u003e \u003e \n\u003e \u003e Thanks.\n\nMy point is that these are two examples of places in the code that do something wrong as a result of showing a stale title after commit.  Given that there are over 100 calls to WebContents::GetTitle(), I\u0027m concerned it may cause more than just 2 issues.\n\nWe can probably still proceed, but you may find some future title-related bugs assigned to you if they bisect to this CL.  :)",
+      "parentUuid": "ed6d2cbb_503b5fea",
+      "revId": "43ca2da8bdd1c95a419ffb09815468ee6a439eb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5a6f948e_097afeb0",
         "filename": "content/browser/android/web_contents_observer_proxy.cc",
         "patchSetId": 14
