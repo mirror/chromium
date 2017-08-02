@@ -133,6 +133,10 @@ class PageInfoUI {
     // connection area of the page info will include an option for the user to
     // revoke their decision to bypass the SSL error for this host.
     bool show_ssl_decision_revoke_button;
+    // Set when the user ignored the password reuse modal warning dialog. When
+    // |show_change_password_button| is true, the page identity area of the page
+    // info will include buttons for the users to change corresponding password.
+    bool show_change_password_button;
   };
 
   using CookieInfoList = std::vector<CookieInfo>;
