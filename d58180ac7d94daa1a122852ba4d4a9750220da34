@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50759cc6_680e9d9c",
+        "filename": "cc/paint/solid_color_analyzer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-02T17:43:27Z",
+      "side": 1,
+      "message": "nit: please surround param refs in comments with \u0027|\u0027 chars so |drawn_shape|",
+      "range": {
+        "startLine": 48,
+        "startChar": 33,
+        "endLine": 48,
+        "endChar": 44
+      },
+      "revId": "d58180ac7d94daa1a122852ba4d4a9750220da34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
