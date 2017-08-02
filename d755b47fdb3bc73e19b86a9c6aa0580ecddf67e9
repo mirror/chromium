@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83f91372_9c7b31cb",
+        "filename": "third_party/WebKit/Source/core/css/StyleSheetList.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-08-02T12:29:47Z",
+      "side": 1,
+      "message": "Looks like it\u0027s possible for `item-\u003esheet()` to be null, or at least some code has null checks for it. That\u0027s probably a tiny fraction of the cases, but better cover them all. So, a `CSSStyleSheet* sheet \u003d item-\u003esheet()` and so on here.",
+      "revId": "d755b47fdb3bc73e19b86a9c6aa0580ecddf67e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
