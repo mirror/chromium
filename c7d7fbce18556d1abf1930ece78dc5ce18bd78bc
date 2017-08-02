@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0f8b406_d87fd1da",
+        "filename": "components/crash/content/app/crashpad.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-08-02T20:23:38Z",
+      "side": 1,
+      "message": "To ensure that nobody’s trying to use it where it won’t do anything:\n\n  DCHECK(user_data_dir.empty());",
+      "revId": "c7d7fbce18556d1abf1930ece78dc5ce18bd78bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
