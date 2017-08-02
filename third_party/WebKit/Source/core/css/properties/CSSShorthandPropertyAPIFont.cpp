@@ -211,7 +211,7 @@ bool ConsumeFont(bool important,
 
 }  // namespace
 
-bool CSSShorthandPropertyAPIFont::parseShorthand(
+bool CSSShorthandPropertyAPIFont::ParseShorthand(
     bool important,
     CSSParserTokenRange& range,
     const CSSParserContext& context,
