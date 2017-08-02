@@ -187,6 +187,30 @@
       "revId": "1b867a92ebab7e4a5f1bed6ec6983aad8317c264",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8a130c91_6788c60d",
+        "filename": "components/ui_devtools/views/ui_devtools_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-02T22:04:04Z",
+      "side": 1,
+      "message": "I removed this line as discussed.",
+      "parentUuid": "aa829980_4feb4e64",
+      "range": {
+        "startLine": 408,
+        "startChar": 19,
+        "endLine": 408,
+        "endChar": 33
+      },
+      "revId": "1b867a92ebab7e4a5f1bed6ec6983aad8317c264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

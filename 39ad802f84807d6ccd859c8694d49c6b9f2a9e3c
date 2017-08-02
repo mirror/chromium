@@ -193,6 +193,24 @@
       "revId": "39ad802f84807d6ccd859c8694d49c6b9f2a9e3c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d41eb164_6d685493",
+        "filename": "components/ui_devtools/views/ui_devtools_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-02T22:04:04Z",
+      "side": 1,
+      "message": "Done, thanks! This is quite tight test for our purposes here.",
+      "parentUuid": "e3eb373e_16bc33a0",
+      "revId": "39ad802f84807d6ccd859c8694d49c6b9f2a9e3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
