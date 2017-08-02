@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "a99e99e4_9779875b",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-02T16:21:27Z",
+      "side": 1,
+      "message": "nit: base::MakeUnique\u003c...\u003e\n\nalso elsewhere where \"new\" is used in a unique_ptr.",
+      "revId": "50304f69efde8217ea3259e052e6fa78cf0f7e53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de7c551e_3584c65c",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-02T16:21:27Z",
+      "side": 1,
+      "message": "Why do you initialize this here, instead of down in RunRenovations?",
+      "revId": "50304f69efde8217ea3259e052e6fa78cf0f7e53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4f70a59_89a8fe8b",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-02T16:21:27Z",
+      "side": 1,
+      "message": "Why did you reorder the loader and snapshot controller calls?",
+      "revId": "50304f69efde8217ea3259e052e6fa78cf0f7e53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "570f4af7_3cb423d1",
         "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
         "patchSetId": 5
@@ -42,6 +93,23 @@
         "endLine": 494,
         "endChar": 48
       },
+      "revId": "50304f69efde8217ea3259e052e6fa78cf0f7e53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b81602a_d922dc23",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-02T16:21:27Z",
+      "side": 1,
+      "message": "Why does the PageRenovationLoader not actually own the PageRenovator then?",
       "revId": "50304f69efde8217ea3259e052e6fa78cf0f7e53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
