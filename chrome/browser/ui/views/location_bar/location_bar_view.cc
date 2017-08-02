@@ -286,7 +286,7 @@ SkColor LocationBarView::GetColor(
       return color_utils::AlphaBlend(GetColor(TEXT), GetColor(BACKGROUND), 128);
 
     case SECURITY_CHIP_TEXT:
-      return GetSecureTextColor(GetToolbarModel()->GetSecurityLevel(false));
+      return GetSecurityColor(GetToolbarModel()->GetSecurityLevel(false));
   }
   NOTREACHED();
   return gfx::kPlaceholderColor;
@@ -298,13 +298,13 @@ SkColor LocationBarView::GetOpaqueBorderColor(bool incognito) const {
                             ThemeProperties::COLOR_TOOLBAR, incognito));
 }
 
-SkColor LocationBarView::GetSecureTextColor(
+SkColor LocationBarView::GetSecurityColor(
     security_state::SecurityLevel security_level) const {
   if (security_level == security_state::SECURE_WITH_POLICY_INSTALLED_CERT) {
     return GetColor(DEEMPHASIZED_TEXT);
   }
 
-  SkColor text_color = GetColor(TEXT);
+  SkColor text_color = color_utils::DeriveDefaultIconColor(GetColor(TEXT));
   if (!color_utils::IsDark(GetColor(BACKGROUND))) {
     if ((security_level == security_state::EV_SECURE) ||
         (security_level == security_state::SECURE)) {
@@ -695,10 +695,7 @@ void LocationBarView::RefreshLocationIcon() {
 
   security_state::SecurityLevel security_level =
       GetToolbarModel()->GetSecurityLevel(false);
-  SkColor icon_color = (security_level == security_state::NONE ||
-                        security_level == security_state::HTTP_SHOW_WARNING)
-                           ? color_utils::DeriveDefaultIconColor(GetColor(TEXT))
-                           : GetSecureTextColor(security_level);
+  SkColor icon_color = GetSecurityColor(security_level);
   location_icon_view_->SetImage(gfx::CreateVectorIcon(
       omnibox_view_->GetVectorIcon(), kIconWidth, icon_color));
   location_icon_view_->SetEnabled(!omnibox_view_->IsEditingOrEmpty());
