@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7210d86b_fdb9c8da",
+        "filename": "content/browser/frame_host/render_widget_host_view_child_frame.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 796,
+      "author": {
+        "id": 1228384
+      },
+      "writtenOn": "2017-08-02T19:25:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54659fcc_f5f50ffd",
+      "revId": "476a05b2013e7dbb1a4b74f7c2a85e8ffd11e458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a3e15ca_bf1b16d1",
         "filename": "content/browser/frame_host/render_widget_host_view_child_frame.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "6e305598_ee27a1f2",
+        "filename": "content/browser/frame_host/render_widget_host_view_child_frame.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 799,
+      "author": {
+        "id": 1228384
+      },
+      "writtenOn": "2017-08-02T19:25:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a3e15ca_bf1b16d1",
+      "revId": "476a05b2013e7dbb1a4b74f7c2a85e8ffd11e458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f04bda3_e08758b0",
         "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-01T19:39:52Z",
       "side": 1,
       "message": "I\u0027m curious: Do we know if any of the other checks in RWHVAndroid::FilterInputEvent should be applied to events that are being sent to child frames? I\u0027m wondering if it would be feasible to just have RWHVChildFrame::FilterInputEvent proxy to the root\u0027s FilterInputEvent.",
+      "revId": "476a05b2013e7dbb1a4b74f7c2a85e8ffd11e458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0222ac90_798bfe5d",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1802,
+      "author": {
+        "id": 1228384
+      },
+      "writtenOn": "2017-08-02T19:25:07Z",
+      "side": 1,
+      "message": "We would have to be careful so that the root does not process an event in a way that assumes the root is the target for the event. For example, it is safe to have the overscroll controllers process a child\u0027s events because they won\u0027t consume them until there is an overscroll gesture in the root. WakeUpGpu seems sensible, but I took a look at ContentViewCore::FilterInputEvent and it looks like that might be an issue.\n\nOn the other hand, it looks like RenderWidgetHostViewChildFrame::FilterInputEvent copy-pastes some code from RenderWidgetHostViewAura::FilterInputEvent which only looks at the event itself. It\u0027d be nice to deduplicate that.\n\nSo there are 3 cases that FilterInputEvent deals with:\n- purely functional inspection of the event\n- processing of the event which can be safely done with an event targeted to another view\n- processing of the event that is only safe for the target view",
+      "parentUuid": "7f04bda3_e08758b0",
       "revId": "476a05b2013e7dbb1a4b74f7c2a85e8ffd11e458",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "74e64678_7f7d802b",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1433,
+      "author": {
+        "id": 1228384
+      },
+      "writtenOn": "2017-08-02T19:25:07Z",
+      "side": 1,
+      "message": "Yeah. The unfortunate this about this test is that most of the logic applies to both android and aura; it\u0027s mainly the handlers that are platform specific. But if you like, I could move these platform specific mocks into their own files which would just leave a few lines of conditional code in the test.",
+      "parentUuid": "e84ec5a2_5a0c7fb8",
+      "revId": "476a05b2013e7dbb1a4b74f7c2a85e8ffd11e458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0a7e3051_9687b73b",
         "filename": "content/browser/site_per_process_browsertest.cc",
         "patchSetId": 3
@@ -81,6 +153,24 @@
       "writtenOn": "2017-08-01T19:39:52Z",
       "side": 1,
       "message": "Do you need this? You could just send the gesture events directly to each intended RenderWidgetHostView, bypassing the router.",
+      "revId": "476a05b2013e7dbb1a4b74f7c2a85e8ffd11e458",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd639970_0dd357a9",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1619,
+      "author": {
+        "id": 1228384
+      },
+      "writtenOn": "2017-08-02T19:25:07Z",
+      "side": 1,
+      "message": "See my TODO in render_widget_host_view_child_frame.cc. With the implementation in this CL, yes, we could just send the events to the child RWHV. But as I mentioned in the TODO, it\u0027d be nice if the router could just route the events to the root instead of routing them to the child only to have the child talk to the root. In that case, the router would be involved in the implementation. So writing the test this way allows it to test either implementation.",
+      "parentUuid": "0a7e3051_9687b73b",
       "revId": "476a05b2013e7dbb1a4b74f7c2a85e8ffd11e458",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
