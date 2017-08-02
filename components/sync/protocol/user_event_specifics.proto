@@ -127,6 +127,9 @@ message UserEventSpecifics {
         REQUEST_SUCCESS = 3;
         // Unable to get a valid response from the SafeBrowsing service.
         REQUEST_FAILURE = 4;
+        // We won't be able to compute reputation for the URL e.g. local IP
+        // address, localhost, not-yet-assigned by ICANN gTLD, etc.
+        URL_UNSUPPORTED = 5;
       }
       optional LookupResult lookup_result = 1;
 
