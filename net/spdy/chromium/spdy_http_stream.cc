@@ -277,6 +277,8 @@ int SpdyHttpStream::SendRequest(const HttpRequestHeaders& request_headers,
   SpdyHeaderBlock headers;
   CreateSpdyHeadersFromHttpRequest(*request_info_, request_headers, direct_,
                                    &headers);
+  if (request_info_->load_flags && LOAD_REPORT_WIRE_REQUEST_HEADERS)
+    SetWireRequestHeaders(headers);
   stream_->net_log().AddEvent(
       NetLogEventType::HTTP_TRANSACTION_HTTP2_SEND_REQUEST_HEADERS,
       base::Bind(&SpdyHeaderBlockNetLogCallback, &headers));

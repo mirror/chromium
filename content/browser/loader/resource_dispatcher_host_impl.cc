@@ -1534,6 +1534,11 @@ ResourceDispatcherHostImpl::CreateResourceHandler(
     }
   }
 
+  if (request_data.report_raw_headers) {
+    const int flags = request->load_flags();
+    request->SetLoadFlags(flags | net::LOAD_REPORT_WIRE_REQUEST_HEADERS);
+  }
+
   bool start_detached = request_data.download_to_network_cache_only;
 
   // Prefetches and <a ping> requests outlive their child process.
@@ -2109,6 +2114,8 @@ void ResourceDispatcherHostImpl::BeginNavigationRequest(
   load_flags |= net::LOAD_VERIFY_EV_CERT;
   if (info.is_main_frame)
     load_flags |= net::LOAD_MAIN_FRAME_DEPRECATED;
+  if (info.report_raw_headers)
+    load_flags |= net::LOAD_REPORT_WIRE_REQUEST_HEADERS;
 
   // TODO(davidben): BuildLoadFlagsForRequest includes logic for
   // CanSendCookiesForOrigin and CanReadRawCookies. Is this needed here?

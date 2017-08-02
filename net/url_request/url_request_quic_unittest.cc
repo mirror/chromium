@@ -485,4 +485,62 @@ TEST_F(URLRequestQuicTest, TestTwoRequests) {
   EXPECT_EQ(kHelloBodyValue, delegate2.data_received());
 }
 
+static std::string FindHeader(const HttpRequestHeaders::HeaderVector& headers,
+                              const char* key) {
+  for (const auto& pair : headers) {
+    if (pair.key == key)
+      return pair.value;
+  }
+  return "<not found>";
+}
+
+TEST_F(URLRequestQuicTest, WireRequestHeaders) {
+  Init();
+  std::string url =
+      base::StringPrintf("https://%s%s", kTestServerHost, kHelloPath);
+  TestURLRequestContext context;
+  HttpRequestHeaders extra_headers;
+  extra_headers.SetHeader("X-Foo", "bar");
+
+  {
+    CheckLoadTimingDelegate delegate(false);
+    HttpRequestHeaders::HeaderVector headers;
+    std::string request_line;
+    std::unique_ptr<URLRequest> r(
+        CreateRequest(GURL(url), DEFAULT_PRIORITY, &delegate));
+    r->SetExtraRequestHeaders(extra_headers);
+    r->Start();
+    r->GetWireRequestHeaders(&headers, &request_line);
+    EXPECT_TRUE(headers.empty());
+    base::RunLoop().Run();
+    EXPECT_TRUE(r->status().is_success());
+    r->GetWireRequestHeaders(&headers, &request_line);
+    EXPECT_TRUE(headers.empty());
+    EXPECT_TRUE(request_line.empty());
+  }
+  {
+    CheckLoadTimingDelegate delegate(true);
+    HttpRequestHeaders::HeaderVector headers;
+    std::string request_line;
+    std::unique_ptr<URLRequest> r(
+        CreateRequest(GURL(url), DEFAULT_PRIORITY, &delegate));
+    r->SetLoadFlags(r->load_flags() | LOAD_REPORT_WIRE_REQUEST_HEADERS);
+    r->SetExtraRequestHeaders(extra_headers);
+    r->Start();
+    r->GetWireRequestHeaders(&headers, &request_line);
+    EXPECT_TRUE(headers.empty());
+    base::RunLoop().Run();
+    EXPECT_TRUE(r->status().is_success());
+
+    r->GetWireRequestHeaders(&headers, &request_line);
+    EXPECT_FALSE(headers.empty());
+    EXPECT_EQ("bar", FindHeader(headers, "x-foo"));
+    EXPECT_EQ("gzip, deflate", FindHeader(headers, "accept-encoding"));
+    EXPECT_EQ("GET", FindHeader(headers, ":method"));
+    EXPECT_EQ("/hello.txt", FindHeader(headers, ":path"));
+
+    EXPECT_TRUE(request_line.empty());
+  }
+}
+
 }  // namespace net

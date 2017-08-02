@@ -99,6 +99,13 @@ bool HttpBasicStream::GetLoadTimingInfo(
                                                 load_timing_info);
 }
 
+void HttpBasicStream::GetWireRequestHeaders(
+    HttpRequestHeaders::HeaderVector* headers,
+    std::string* request_line) {
+  parser()->GetWireRequestHeaders(headers);
+  *request_line = state_.GenerateRequestLine();
+}
+
 bool HttpBasicStream::GetAlternativeService(
     AlternativeService* alternative_service) const {
   return false;

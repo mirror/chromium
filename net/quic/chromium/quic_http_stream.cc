@@ -555,6 +555,8 @@ int QuicHttpStream::DoSendHeaders() {
       base::Bind(&QuicRequestNetLogCallback, stream_->id(), &request_headers_,
                  priority_));
   bool has_upload_data = request_body_stream_ != nullptr;
+  if (request_info_->load_flags && LOAD_REPORT_WIRE_REQUEST_HEADERS)
+    SetWireRequestHeaders(request_headers_);
 
   next_state_ = STATE_SEND_HEADERS_COMPLETE;
   int rv = stream_->WriteHeaders(std::move(request_headers_), !has_upload_data,

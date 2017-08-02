@@ -224,6 +224,11 @@ int HttpStreamParser::SendRequest(const std::string& request_line,
   DCHECK(!callback.is_null());
   DCHECK(response);
 
+  if (request_->load_flags & LOAD_REPORT_WIRE_REQUEST_HEADERS) {
+    wire_request_headers_.reset(new HttpRequestHeaders::HeaderVector());
+    for (net::HttpRequestHeaders::Iterator it(headers); it.GetNext();)
+      wire_request_headers_->emplace_back(it.name(), it.value());
+  }
   net_log_.AddEvent(NetLogEventType::HTTP_TRANSACTION_SEND_REQUEST_HEADERS,
                     base::Bind(&HttpRequestHeaders::NetLogCallback,
                                base::Unretained(&headers), &request_line));
@@ -1140,6 +1145,12 @@ Error HttpStreamParser::GetTokenBindingSignature(crypto::ECPrivateKey* key,
   SSLClientSocket* ssl_socket =
       static_cast<SSLClientSocket*>(connection_->socket());
   return ssl_socket->GetTokenBindingSignature(key, tb_type, out);
+}
+
+void HttpStreamParser::GetWireRequestHeaders(
+    HttpRequestHeaders::HeaderVector* headers) {
+  if (wire_request_headers_)
+    *headers = *wire_request_headers_;
 }
 
 int HttpStreamParser::EncodeChunk(const base::StringPiece& payload,
