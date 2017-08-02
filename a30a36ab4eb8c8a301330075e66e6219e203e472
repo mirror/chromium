@@ -76,6 +76,23 @@
     },
     {
       "key": {
+        "uuid": "897e2fa5_fc4c734f",
+        "filename": "third_party/WebKit/common/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-02T19:14:56Z",
+      "side": 1,
+      "message": "you should absolutely not be adding dependencies from WebKit/common to content/anything",
+      "revId": "a30a36ab4eb8c8a301330075e66e6219e203e472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0283e89d_2a98b37b",
         "filename": "third_party/WebKit/common/origin_trials/trial_token.cc",
         "patchSetId": 2
@@ -133,6 +150,63 @@
     },
     {
       "key": {
+        "uuid": "9cfac644_9000b77d",
+        "filename": "third_party/WebKit/common/origin_trials/trial_token.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-02T19:14:56Z",
+      "side": 1,
+      "message": "this should be third_party/WebKit/common/common_export.h",
+      "revId": "a30a36ab4eb8c8a301330075e66e6219e203e472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d5424ae_4476dab3",
+        "filename": "third_party/WebKit/common/origin_trials/trial_token.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-02T19:14:56Z",
+      "side": 1,
+      "message": "and this should then be BLINK_COMMON_EXPORT",
+      "range": {
+        "startLine": 36,
+        "startChar": 6,
+        "endLine": 36,
+        "endChar": 20
+      },
+      "revId": "a30a36ab4eb8c8a301330075e66e6219e203e472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c52fe261_a29615f1",
+        "filename": "third_party/WebKit/common/origin_trials/trial_token_validator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-02T19:14:56Z",
+      "side": 1,
+      "message": "Not sure what the best solution is going to be for this. Depending on content/ from WebKit/common doesn\u0027t seem like something that should be allowed (because content itself should be allowed to depend on WebKit/common). So you\u0027ll probably have to figure out some other way to get to what ContentClient was giving you before... Not sure what the least bad way would be though.",
+      "revId": "a30a36ab4eb8c8a301330075e66e6219e203e472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4a70c736_63362266",
         "filename": "third_party/WebKit/common/origin_trials/trial_token_validator.h",
         "patchSetId": 2
@@ -150,6 +224,23 @@
         "endLine": 5,
         "endChar": 7
       },
+      "revId": "a30a36ab4eb8c8a301330075e66e6219e203e472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a8c4268_301fdd26",
+        "filename": "third_party/WebKit/common/origin_trials/trial_token_validator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-02T19:14:56Z",
+      "side": 1,
+      "message": "this should also be third_party/WebKit/common/common_export.h",
       "revId": "a30a36ab4eb8c8a301330075e66e6219e203e472",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
