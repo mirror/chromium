@@ -22,6 +22,30 @@
       "revId": "749a1ec8cdd64e491ef565db5ef01734e44e2e9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f88e46ee_f41c74dc",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/ScrollingCoordinator.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 787,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-02T17:46:34Z",
+      "side": 1,
+      "message": "Per offline discussion, I change it to DCHECK layer_rect.key is either a root layer or has a parent layer.",
+      "parentUuid": "4ff8cde4_7a243d27",
+      "range": {
+        "startLine": 787,
+        "startChar": 10,
+        "endLine": 787,
+        "endChar": 26
+      },
+      "revId": "749a1ec8cdd64e491ef565db5ef01734e44e2e9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
