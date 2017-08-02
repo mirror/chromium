@@ -44,12 +44,17 @@ class ASH_EXPORT AppListButton : public views::ImageButton,
   void OnGestureEvent(ui::GestureEvent* event) override;
 
   // Get the center point of the app list button circle used to draw its
-  // background and ink drops.
-  gfx::Point GetAppListButtonCenterPoint() const;
+  // background and ink drops. |called_by_draw_function| specifies whether this
+  // function is called by PaintButtonContents or not. If
+  // |called_by_draw_function| is set the return value is unchanged whether the
+  // orientation is rtl or ltr, since the rendering will flip the positions of
+  // the two buttons.
+  gfx::Point GetAppListButtonCenterPoint(bool called_by_draw_function) const;
 
   // Get the center point of the app list button back arrow. Returns an empty
-  // gfx::Point if the back arrow is not shown.
-  gfx::Point GetBackButtonCenterPoint() const;
+  // gfx::Point if the back arrow is not shown. See GetAppListButtonCenterPoint
+  // for information about |called_by_draw_function|.
+  gfx::Point GetBackButtonCenterPoint(bool called_by_draw_function) const;
 
  protected:
   // views::ImageButton:
@@ -103,6 +108,9 @@ class ASH_EXPORT AppListButton : public views::ImageButton,
   // Flag that gets set each time we receive a mouse or gesture event. It is
   // then used to render the ink drop in the right location.
   bool last_event_is_back_event_ = false;
+
+  // Cached flag that states whether the program is ltr or rtl.
+  const bool is_rtl_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(AppListButton);
 };
