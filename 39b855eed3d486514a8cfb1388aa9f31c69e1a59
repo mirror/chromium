@@ -1,0 +1,259 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c59765f9_b4929b61",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-02T04:42:30Z",
+      "side": 1,
+      "message": "nit: s/auto/const auto\u0026/",
+      "revId": "39b855eed3d486514a8cfb1388aa9f31c69e1a59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a1797ad_a47c4758",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-02T04:42:30Z",
+      "side": 1,
+      "message": "Can we make to return |const Node*|?",
+      "revId": "39b855eed3d486514a8cfb1388aa9f31c69e1a59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a3ac861_6f4a3694",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-02T04:42:30Z",
+      "side": 1,
+      "message": "nit: s/0/nullptr/",
+      "revId": "39b855eed3d486514a8cfb1388aa9f31c69e1a59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac7c4e4a_e1f80aea",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-02T04:42:30Z",
+      "side": 1,
+      "message": "nit: s/Node\u0026/const Node\u0026/",
+      "revId": "39b855eed3d486514a8cfb1388aa9f31c69e1a59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "626b8565_383450c3",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-02T04:42:30Z",
+      "side": 1,
+      "message": "nit: s/0/nullptr/",
+      "revId": "39b855eed3d486514a8cfb1388aa9f31c69e1a59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2ab9255_80e00deb",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-02T04:42:30Z",
+      "side": 1,
+      "message": "Can we make to return |const Node*|?",
+      "revId": "39b855eed3d486514a8cfb1388aa9f31c69e1a59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08b6b4f6_4fc367a2",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-02T04:42:30Z",
+      "side": 1,
+      "message": "nit: s/0/nullptr/",
+      "revId": "39b855eed3d486514a8cfb1388aa9f31c69e1a59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ce060bd_e5934090",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-02T04:42:30Z",
+      "side": 1,
+      "message": "nit: s/Node\u0026/const Node\u0026/",
+      "revId": "39b855eed3d486514a8cfb1388aa9f31c69e1a59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3a34426_0c512200",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-02T04:42:30Z",
+      "side": 1,
+      "message": "nit: s/0/nullptr/",
+      "revId": "39b855eed3d486514a8cfb1388aa9f31c69e1a59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a10e2a8a_238728fc",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-02T04:42:30Z",
+      "side": 1,
+      "message": "nit: s/Node*/const Node\u0026/",
+      "revId": "39b855eed3d486514a8cfb1388aa9f31c69e1a59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5771cba2_741c9806",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-02T04:42:30Z",
+      "side": 1,
+      "message": "Can we use ComparePositionsInFlatTree() in \"EditingUtilieis.h\"?\nComparing PositionInFlatTree(a, 0) and PositionInFlatTree(b, 0) is\nequivalenet to Compare(a, b)",
+      "revId": "39b855eed3d486514a8cfb1388aa9f31c69e1a59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b47455a_7ce49dd5",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-02T04:42:30Z",
+      "side": 1,
+      "message": "We should make to take |const Node\u0026| instead of|Node*|.",
+      "revId": "39b855eed3d486514a8cfb1388aa9f31c69e1a59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37881ca0_e19037cd",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-02T04:42:30Z",
+      "side": 1,
+      "message": "Could you rewrite to below to get more info from log?\n\nif (start_layout_object-\u003eGetSelectionState() !\u003d SelectionState::kStart)\n  DCHECK_EQ(tart_layout_object-\u003eGetSelectionState(),             SelectionState::kStartAndEnd);",
+      "revId": "39b855eed3d486514a8cfb1388aa9f31c69e1a59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb15b9e4_0d0d2212",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 546,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-02T04:42:30Z",
+      "side": 1,
+      "message": "Could you rewrite to below to get more info from log?\n\nif (end_layout_object-\u003eGetSelectionState() !\u003d SelectionState::kEnd)\n  DCHECK_EQ(end_layout_object-\u003eGetSelectionState(), SelectionState::kStartAndEnd);",
+      "revId": "39b855eed3d486514a8cfb1388aa9f31c69e1a59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce6782b8_b487922e",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-02T04:42:30Z",
+      "side": 1,
+      "message": "It seems below is more readable.\n\nif (start_layout_object-\u003eGetSelectionState() \u003d\u003d SelectionState::kStartAndEnd) {\n  DCHECK_EQ(start_layout_object, end_layout_object);\n} else {\n  DCHECK_EQ(start_layoyut_object-\u003eGetSelectionState(), SelectionState::kStart);\n  DCHECK_EQ(end_layoyut_object-\u003eGetSelectionState(), SelectionState::kEnd);\n}",
+      "revId": "39b855eed3d486514a8cfb1388aa9f31c69e1a59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
