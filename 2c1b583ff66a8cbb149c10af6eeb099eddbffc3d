@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "60a000f6_29519a1a",
+        "filename": "chrome/browser/resources/snippets_internals.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-08-02T16:01:16Z",
+      "side": 1,
+      "message": "It seems that both are required.\nIf I leave out strings.js, js fails with\n[ERROR:CONSOLE(194)] \"Unexpected condition on chrome://snippets-internals/: No data. Did you remember to include strings.js?\", source: chrome://resources/js/load_time_data.js (194)",
+      "parentUuid": "b1c24550_7be54ace",
+      "revId": "2c1b583ff66a8cbb149c10af6eeb099eddbffc3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3452471e_497e6db0",
         "filename": "chrome/browser/resources/snippets_internals.html",
         "patchSetId": 2
