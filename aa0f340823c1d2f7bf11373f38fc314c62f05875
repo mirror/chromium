@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12f48e23_9df430da",
+        "filename": "components/page_info_strings.grdp",
+        "patchSetId": 11
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-02T01:06:59Z",
+      "side": 1,
+      "message": "Not sure if you need to check for ios here. I recommend asking sdefresne@, who is also in components/OWNERS.",
+      "revId": "aa0f340823c1d2f7bf11373f38fc314c62f05875",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
