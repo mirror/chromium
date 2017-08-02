@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3e3712b_6377ed30",
+        "filename": "chrome/browser/safe_browsing/download_protection_service.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-02T18:18:02Z",
+      "side": 1,
+      "message": "super minor ignorable nit: this would be easier to read as io_task_runner",
+      "range": {
+        "startLine": 412,
+        "startChar": 9,
+        "endLine": 412,
+        "endChar": 20
+      },
+      "revId": "680dadc8bbd816000283f0512382e6235fabf42e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2c3b90b_32e23965",
+        "filename": "chrome/browser/safe_browsing/download_protection_service.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 986,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-02T18:18:02Z",
+      "side": 1,
+      "message": "Please assign this TODO to me for clean-up.\nLocks going away in PVer4 :)",
+      "range": {
+        "startLine": 986,
+        "startChar": 12,
+        "endLine": 986,
+        "endChar": 18
+      },
+      "revId": "680dadc8bbd816000283f0512382e6235fabf42e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
