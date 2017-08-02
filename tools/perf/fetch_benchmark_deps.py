@@ -88,13 +88,18 @@ def main(args, output):
                       help=('Force fetching all the benchmarks when '
                             'benchmark_name is not specified'),
                       action='store_true', default=False)
+  parser.add_argument('-p', '--platform',
+                      help=('Target platform of the benchmark'),
+                      type=str, default=None)
 
   options = parser.parse_args(args)
 
   if options.benchmark_name:
+    perf_dir = path_util.GetPerfDir()
+    benchmark_dirs=[os.path.join(perf_dir, 'benchmarks'),
+                    os.path.join(perf_dir, 'contrib/cros_benchmarks')]
     config = chromium_config.ChromiumConfig(
-        top_level_dir=path_util.GetPerfDir(),
-        benchmark_dirs=[os.path.join(path_util.GetPerfDir(), 'benchmarks')])
+        top_level_dir=path_util.GetPerfDir(), benchmark_dirs=benchmark_dirs)
     benchmark = benchmark_runner.GetBenchmarkByName(
         options.benchmark_name, config)
     if not benchmark:
