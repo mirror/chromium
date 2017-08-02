@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "003b19af_5fa16bf6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-02T22:25:47Z",
+      "side": 1,
+      "message": "disconnected",
+      "range": {
+        "startLine": 9,
+        "startChar": 111,
+        "endLine": 9,
+        "endChar": 120
+      },
+      "revId": "d4451c462cde8f5a908ba65301e626ac73bf7cb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd04cee6_b4fc768e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-02T22:25:47Z",
+      "side": 1,
+      "message": "nit: Newline before this.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 1
+      },
+      "revId": "d4451c462cde8f5a908ba65301e626ac73bf7cb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd5788fc_57d2daf6",
+        "filename": "chromeos/components/tether/host_scan_scheduler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-02T22:25:47Z",
+      "side": 1,
+      "message": "While you\u0027re here, please remove this check. We should always start up a scan when the user logs in to ensure that something the first time we open quick settings or the settings page.\n\n(You\u0027ll also need to update the CL description and the relevant test.)",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 80
+      },
+      "revId": "d4451c462cde8f5a908ba65301e626ac73bf7cb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3bb12f0_ad809278",
+        "filename": "chromeos/components/tether/host_scan_scheduler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-02T22:25:47Z",
+      "side": 1,
+      "message": "This test should be separated into 4 parts. Each part should test having the other network go from disconnected --\u003e connecting --\u003e connected --\u003e disconnected.\n\nPart 1: No Tether network present.\nPart 2: Tether network present but disconnected.\nPart 3: Tether network present and connecting.\nPart 4: Tether network present and connected.\n\nPlease annotate each part.",
+      "range": {
+        "startLine": 174,
+        "startChar": 0,
+        "endLine": 174,
+        "endChar": 54
+      },
+      "revId": "d4451c462cde8f5a908ba65301e626ac73bf7cb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e5a8aab_d1757de1",
+        "filename": "chromeos/components/tether/host_scan_scheduler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-02T22:25:47Z",
+      "side": 1,
+      "message": "Two things:\n\n(1) We should also have the network be connected - not only connecting and disconnected.\n(2) We don\u0027t need to repeat this process twice.\n(3) We should stop the scan before starting a new one.\n\nSo, the first half of the test should be: start disconnected, then start connecting, then become connected, then disconnect and verify that a scan was started.",
+      "range": {
+        "startLine": 175,
+        "startChar": 0,
+        "endLine": 201,
+        "endChar": 80
+      },
+      "revId": "d4451c462cde8f5a908ba65301e626ac73bf7cb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c59830df_907235ef",
+        "filename": "chromeos/components/tether/host_scan_scheduler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-02T22:25:47Z",
+      "side": 1,
+      "message": "Remove.",
+      "range": {
+        "startLine": 206,
+        "startChar": 0,
+        "endLine": 206,
+        "endChar": 33
+      },
+      "revId": "d4451c462cde8f5a908ba65301e626ac73bf7cb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cc80b6a_a4bbc92b",
+        "filename": "chromeos/components/tether/host_scan_scheduler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-02T22:25:47Z",
+      "side": 1,
+      "message": "num_scans_started() was already at 1 before, so how does num_scans_started() go back to 0 again? I don\u0027t understand how this test passes.",
+      "range": {
+        "startLine": 209,
+        "startChar": 0,
+        "endLine": 209,
+        "endChar": 56
+      },
+      "revId": "d4451c462cde8f5a908ba65301e626ac73bf7cb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e1163dd_611f665b",
+        "filename": "chromeos/components/tether/host_scan_scheduler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-02T22:25:47Z",
+      "side": 1,
+      "message": "It doesn\u0027t make sense to have a connected Wi-Fi network while we also are using a Tether network. You can only have one or the other, since Tether networks use Wi-Fi networks as their underlying network provider.\n\nPlease change the network used in SetDefaultNetwork*() to an Ethernet network and rename the relevant functions.",
+      "range": {
+        "startLine": 213,
+        "startChar": 0,
+        "endLine": 213,
+        "endChar": 32
+      },
+      "revId": "d4451c462cde8f5a908ba65301e626ac73bf7cb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
