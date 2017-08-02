@@ -1220,6 +1220,7 @@ source_set("browser") {
     "renderer_host/input/timeout_monitor.h",
     "renderer_host/input/touch_action_filter.cc",
     "renderer_host/input/touch_action_filter.h",
+    "renderer_host/input/touch_disposition_gesture_filter_client.h",
     "renderer_host/input/touch_emulator.cc",
     "renderer_host/input/touch_emulator.h",
     "renderer_host/input/touch_emulator_client.h",

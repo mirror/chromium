@@ -7,6 +7,7 @@
 
 #include "base/macros.h"
 #include "cc/input/touch_action.h"
+#include "content/browser/renderer_host/input/touch_disposition_gesture_filter_client.h"
 #include "content/common/content_export.h"
 
 namespace blink {
@@ -19,15 +20,17 @@ namespace content {
 // events according to the CSS touch-action values the renderer has sent for
 // each touch point.
 // For details see the touch-action design doc at http://goo.gl/KcKbxQ.
-class CONTENT_EXPORT TouchActionFilter {
+class CONTENT_EXPORT TouchActionFilter
+    : public TouchDispositionGestureFilterClient {
  public:
   TouchActionFilter();
+  ~TouchActionFilter() override {}
 
   // Returns true if the supplied gesture event should be dropped based on the
   // current touch-action state. Otherwise returns false, and possibly modifies
   // the event's directional parameters to make the event compatible with
   // the effective touch-action.
-  bool FilterGestureEvent(blink::WebGestureEvent* gesture_event);
+  bool FilterGestureEvent(blink::WebGestureEvent* gesture_event) override;
 
   // Called when a set-touch-action message is received from the renderer
   // for a touch start event that is currently in flight.
