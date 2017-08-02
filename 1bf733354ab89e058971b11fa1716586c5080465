@@ -1,0 +1,163 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8de5b1a_6b5ecdd8",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T14:08:02Z",
+      "side": 1,
+      "message": "Can you inject the whole timer, rather than TickClock + TaskRunner?",
+      "revId": "1bf733354ab89e058971b11fa1716586c5080465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39ad5155_6390023f",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T14:08:02Z",
+      "side": 1,
+      "message": "optional: Create a \"bool IsListening()\" which returns !on_new_remote_suggestion_callback_.is_null()? Might make some things easier to read.",
+      "revId": "1bf733354ab89e058971b11fa1716586c5080465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ddcd20b_dcfea910",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T14:08:02Z",
+      "side": 1,
+      "message": "So we still set this, even if we didn\u0027t actually got a token here?",
+      "revId": "1bf733354ab89e058971b11fa1716586c5080465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "530de305_7a10e7f1",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T14:08:02Z",
+      "side": 1,
+      "message": "If this whole file is only for Android, then make it android-only in the build file.\n(Maybe the Handler class itself should also be built on Android only?)",
+      "revId": "1bf733354ab89e058971b11fa1716586c5080465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae8d12e6_31a1e794",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T14:08:02Z",
+      "side": 1,
+      "message": "I believe you\u0027re looking for FAIL()",
+      "revId": "1bf733354ab89e058971b11fa1716586c5080465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1053d75_9075dd36",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T14:08:02Z",
+      "side": 1,
+      "message": "Indentation?!",
+      "revId": "1bf733354ab89e058971b11fa1716586c5080465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "946dd33d_44b160c2",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T14:08:02Z",
+      "side": 1,
+      "message": "ValidateToken",
+      "range": {
+        "startLine": 306,
+        "startChar": 62,
+        "endLine": 306,
+        "endChar": 75
+      },
+      "revId": "1bf733354ab89e058971b11fa1716586c5080465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8d5a2ec_7d244448",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T14:08:02Z",
+      "side": 1,
+      "message": "I don\u0027t quite understand what we\u0027re testing here. Why must ValidateToken not be called?",
+      "revId": "1bf733354ab89e058971b11fa1716586c5080465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "498f0fe5_481fa89e",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T14:08:02Z",
+      "side": 1,
+      "message": "Why does this result in a validation? Shouldn\u0027t that still be 1 hour - 1 second away?",
+      "revId": "1bf733354ab89e058971b11fa1716586c5080465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
