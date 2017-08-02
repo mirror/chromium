@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fd667716_1106221f",
+        "filename": "base/strings/string_number_conversions.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-08-02T16:04:20Z",
+      "side": 1,
+      "message": "Done.  I love curlies!  (Gotten used to not using them, because some reviewers in //net push back on them, but fortunately this is //base.)",
+      "parentUuid": "a526e9c4_707d90eb",
+      "range": {
+        "startLine": 480,
+        "startChar": 6,
+        "endLine": 481,
+        "endChar": 22
+      },
+      "revId": "ba6124ed93383371275f83e165c0e1d510f7c2bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0e1a7e3_d9206377",
         "filename": "base/strings/string_number_conversions.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-02T15:17:10Z",
       "side": 1,
       "message": "nit: 0x7f?",
+      "range": {
+        "startLine": 486,
+        "startChar": 42,
+        "endLine": 486,
+        "endChar": 43
+      },
+      "revId": "ba6124ed93383371275f83e165c0e1d510f7c2bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ddc89e4_f5ed800f",
+        "filename": "base/strings/string_number_conversions.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-08-02T16:04:20Z",
+      "side": 1,
+      "message": "Oh no, also it\u0027s \u003e\u003d and \u003c\u003d.  QuicTextUtilsImpl::HexDump() was actually incorrect.  See https://en.wikipedia.org/wiki/ASCII#Printable_characters.",
+      "parentUuid": "f0e1a7e3_d9206377",
       "range": {
         "startLine": 486,
         "startChar": 42,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d3627444_455185a2",
+        "filename": "net/spdy/PRESUBMIT.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-08-02T16:04:20Z",
+      "side": 1,
+      "message": "Hm, SpdyHexDecode is implemented via base::HexStringToBytes, but it might not be a suitable substitute for every possible use of HexStringToBytes (for example, when return value is checked).  And SpdyHexEncode is not implemented.",
+      "parentUuid": "b9601e5b_4a283543",
+      "range": {
+        "startLine": 35,
+        "startChar": 33,
+        "endLine": 37,
+        "endChar": 40
+      },
+      "revId": "ba6124ed93383371275f83e165c0e1d510f7c2bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af53424b_3c8203ae",
         "filename": "net/spdy/core/hpack/hpack_decoder_adapter_test.cc",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "d7159abe_72c7a0f3",
+        "filename": "net/spdy/core/hpack/hpack_decoder_adapter_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 646,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-08-02T16:04:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af53424b_3c8203ae",
+      "range": {
+        "startLine": 646,
+        "startChar": 1,
+        "endLine": 646,
+        "endChar": 54
+      },
+      "revId": "ba6124ed93383371275f83e165c0e1d510f7c2bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "563d6617_1a90255f",
         "filename": "net/spdy/core/hpack/hpack_decoder_adapter_test.cc",
         "patchSetId": 2
@@ -105,6 +201,30 @@
       "writtenOn": "2017-08-02T15:17:10Z",
       "side": 1,
       "message": "optional: Converge with server-side (which does some setting and pushing).",
+      "range": {
+        "startLine": 666,
+        "startChar": 58,
+        "endLine": 666,
+        "endChar": 0
+      },
+      "revId": "ba6124ed93383371275f83e165c0e1d510f7c2bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "726b1fed_685f5bf4",
+        "filename": "net/spdy/core/hpack/hpack_decoder_adapter_test.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 666,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-08-02T16:04:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "563d6617_1a90255f",
       "range": {
         "startLine": 666,
         "startChar": 58,
