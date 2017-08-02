@@ -153,6 +153,30 @@
       "revId": "a72089701ae0757b60af15e72226210cabfcb70a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fd7df11_dbcbe641",
+        "filename": "ui/base/win/shell.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-08-02T22:51:19Z",
+      "side": 1,
+      "message": "Alright, after thinking about this for a while, I changed this to an early return. I\u0027m almost certain there is some strange situation that can cause GetCount to fail (maybe a mounted filesystem physically ejected?), or else it wouldn\u0027t return an HRESULT. If that\u0027s true then it\u0027s something we should handle gracefully, and also there\u0027s probably nothing we can do to avoid leaking.\n\nI agree with Greg\u0027s reasoning about the loop direction. I added static_casts to address the DWORD/int conversion.",
+      "parentUuid": "3c57ab63_39c63c9e",
+      "range": {
+        "startLine": 182,
+        "startChar": 7,
+        "endLine": 182,
+        "endChar": 10
+      },
+      "revId": "a72089701ae0757b60af15e72226210cabfcb70a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
