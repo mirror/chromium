@@ -406,6 +406,16 @@ void ManagePasswordsBubbleModel::OnUsernameEdited(base::string16 new_username) {
     }
   }
   pending_password_.username_value = std::move(new_username);
+  pending_password_.username_element = base::EmptyString16();
+  for (size_t i = 0; i < pending_password_.other_possible_usernames.size();
+       ++i) {
+    if (pending_password_.other_possible_usernames[i].first ==
+        pending_password_.username_value) {
+      pending_password_.username_element =
+          pending_password_.other_possible_usernames[i].second;
+      pending_password_.username_edited_in_prompt = true;
+    }
+  }
 }
 
 void ManagePasswordsBubbleModel::OnSaveClicked() {
