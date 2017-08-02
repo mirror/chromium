@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1502557c_7d54a442",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-02T08:45:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e96f3ca_7b1af7ec",
+      "revId": "8c2593be8050463a571e57ddaab9fbdead920f2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4b34d332_c07fbe50",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.h",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "8c2593be8050463a571e57ddaab9fbdead920f2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf22008e_fd26663c",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-02T08:45:09Z",
+      "side": 1,
+      "message": "Done. Removed together with friends below.\n\nSince there is a public function for debugging, this is not needed anymore.\n\nI\u0027ve added a TODO in tests though. I meant that RemoteSuggestionsProviderImpl will be setting a callback in BreakingNewsGCMAppHandler and we should capture it instead of calling some function directly.",
+      "parentUuid": "4b34d332_c07fbe50",
+      "revId": "8c2593be8050463a571e57ddaab9fbdead920f2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c308c0d2_c598efd5",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2832,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-02T08:45:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5474e44e_0870689b",
+      "revId": "8c2593be8050463a571e57ddaab9fbdead920f2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "554fb186_b0746882",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
         "patchSetId": 10
@@ -67,6 +121,24 @@
       "revId": "8c2593be8050463a571e57ddaab9fbdead920f2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a33dd2ec_b0dfc7c2",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2843,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-02T08:45:09Z",
+      "side": 1,
+      "message": "Done. (also in the entire file https://chromium-review.googlesource.com/c/597601)",
+      "parentUuid": "554fb186_b0746882",
+      "revId": "8c2593be8050463a571e57ddaab9fbdead920f2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "9671018f_32365ff9",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2846,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-02T08:45:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "baea7302_32ea9b1a",
+      "revId": "8c2593be8050463a571e57ddaab9fbdead920f2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08adafb8_828e3df1",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
         "patchSetId": 10
@@ -101,6 +191,24 @@
       "revId": "8c2593be8050463a571e57ddaab9fbdead920f2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9e9f677_f235677f",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2855,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-02T08:45:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08adafb8_828e3df1",
+      "revId": "8c2593be8050463a571e57ddaab9fbdead920f2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "d4910730_08118338",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2895,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-02T08:45:09Z",
+      "side": 1,
+      "message": "Done.\n\nGood catch. I forgot to rewrite this test after removing sorting by score.",
+      "parentUuid": "e05f57f6_18c5b94b",
+      "revId": "8c2593be8050463a571e57ddaab9fbdead920f2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6bcd03f4_610d0d24",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
         "patchSetId": 10
@@ -135,6 +261,24 @@
       "revId": "8c2593be8050463a571e57ddaab9fbdead920f2b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "385656f9_4761898c",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2898,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-02T08:45:09Z",
+      "side": 1,
+      "message": "Actually neither should be set here, but I forgot to rewrite this test after removing sorting by score. By the way, setting the rank here won\u0027t change anything, because the provider ignores existing values.",
+      "parentUuid": "6bcd03f4_610d0d24",
+      "revId": "8c2593be8050463a571e57ddaab9fbdead920f2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
