@@ -15,11 +15,21 @@ namespace offline_pages {
 
 namespace {
 
+// Concrete PageRenovation instances
+class WikipediaPageRenovation : public PageRenovation {
+ public:
+  bool ShouldRun(const GURL& url) const override {
+    return url.host().find("wikipedia.org") != std::string::npos;
+  }
+
+  std::string GetID() const override { return "wikipedia"; }
+};
+
 // Construct list of implemented renovations
 std::vector<std::unique_ptr<PageRenovation>> makeRenovationList() {
-  // TODO(collinbaker): Create PageRenovation instances and put them
-  // in this list.
-  return std::vector<std::unique_ptr<PageRenovation>>();
+  std::vector<std::unique_ptr<PageRenovation>> list;
+  list.emplace_back(new WikipediaPageRenovation);
+  return list;
 }
 
 }  // namespace
