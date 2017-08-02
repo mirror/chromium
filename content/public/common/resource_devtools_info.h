@@ -14,12 +14,19 @@
 #include "base/strings/string_split.h"
 #include "content/common/content_export.h"
 
+namespace net {
+class URLRequest;
+}
+
 namespace content {
 
 // Note: when modifying this structure, also update DeepCopy in
 // resource_devtools_info.cc.
 struct ResourceDevToolsInfo : base::RefCounted<ResourceDevToolsInfo> {
   typedef base::StringPairs HeadersVector;
+
+  static scoped_refptr<ResourceDevToolsInfo> FromURLRequest(
+      net::URLRequest* url_request);
 
   CONTENT_EXPORT ResourceDevToolsInfo();
 

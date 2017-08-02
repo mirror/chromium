@@ -173,10 +173,11 @@ void HttpRequestHeaders::MergeFrom(const HttpRequestHeaders& other) {
   }
 }
 
-std::string HttpRequestHeaders::ToString() const {
+// static
+std::string HttpRequestHeaders::ToString(const HeaderVector& headers) {
   std::string output;
-  for (HeaderVector::const_iterator it = headers_.begin();
-       it != headers_.end(); ++it) {
+  for (HeaderVector::const_iterator it = headers.begin(); it != headers.end();
+       ++it) {
     if (!it->value.empty()) {
       base::StringAppendF(&output, "%s: %s\r\n",
                           it->key.c_str(), it->value.c_str());
@@ -205,37 +206,6 @@ std::unique_ptr<base::Value> HttpRequestHeaders::NetLogCallback(
   }
   dict->Set("headers", std::move(headers));
   return std::move(dict);
-}
-
-// static
-bool HttpRequestHeaders::FromNetLogParam(const base::Value* event_param,
-                                         HttpRequestHeaders* headers,
-                                         std::string* request_line) {
-  headers->Clear();
-  *request_line = "";
-
-  const base::DictionaryValue* dict = NULL;
-  const base::ListValue* header_list = NULL;
-
-  if (!event_param ||
-      !event_param->GetAsDictionary(&dict) ||
-      !dict->GetList("headers", &header_list) ||
-      !dict->GetString("line", request_line)) {
-    return false;
-  }
-
-  for (base::ListValue::const_iterator it = header_list->begin();
-       it != header_list->end();
-       ++it) {
-    std::string header_line;
-    if (!it->GetAsString(&header_line)) {
-      headers->Clear();
-      *request_line = "";
-      return false;
-    }
-    headers->AddHeaderFromString(header_line);
-  }
-  return true;
 }
 
 HttpRequestHeaders::HeaderVector::iterator
