@@ -22,6 +22,30 @@
       "revId": "a1a8d61de9c715062d23158cc6999fb7fedafe2f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1dc43093_79ec4780",
+        "filename": "ios/chrome/test/earl_grey/chrome_test_case.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-08-02T11:11:59Z",
+      "side": 1,
+      "message": "Eric: Thank you for sharing this with us. Both me and Jerome were not aware that Chrome iOS is also moving to using the Chrome standard Feature objects for experiments.\n\nWhile I agree with you that using a Feature would have been simpler, I think that is far too complicated now (and should be out of scope for this CL) for the following reasons:\n1. The experiment is already implemented using experimental flags and is rolling out in M60 (as recommended for Chrome iOS in May).\n2. The goal of the experiment is to gather some data on how the promos behave, but my gut feeling is that the new sign-in promo UI is strictly better than what we had before. I expect we will increase to 10% and then to 100% in the next 2-3 weeks.\n3. We will probably enable the promos by default in the M62. This means that in M62 we will probably remove this experimental flag.\n\nWe will of course use Feature (and not experimental flags) for future features in Chrome iOS.",
+      "parentUuid": "8388ff02_486ff98a",
+      "range": {
+        "startLine": 257,
+        "startChar": 0,
+        "endLine": 257,
+        "endChar": 36
+      },
+      "revId": "a1a8d61de9c715062d23158cc6999fb7fedafe2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
