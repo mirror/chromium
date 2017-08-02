@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "0e978a73_131a11c2",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 8
+      },
+      "lineNbr": 12301,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-02T00:11:12Z",
+      "side": 1,
+      "message": "What happens when someone does a Chromium build and running with --sync-url\u003d\u003cserver\u003e ?\n\nIf it\u0027s truly Chrome-only, then why put the strings in chrome/app/google_chrome_strings.grd only?",
+      "parentUuid": "5bdfeef8_6082ff68",
+      "range": {
+        "startLine": 12301,
+        "startChar": 83,
+        "endLine": 12301,
+        "endChar": 89
+      },
+      "revId": "57ab630fb35b4d4488e64127616a88a22160699d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0d7dbde_05e56adb",
         "filename": "chrome/app/settings_strings.grdp",
         "patchSetId": 8
