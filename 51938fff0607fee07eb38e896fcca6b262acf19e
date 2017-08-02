@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0c795656_15c80a04",
+        "filename": "chrome/utility/safe_browsing/mac/crdmg.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-02T20:22:56Z",
+      "side": 1,
+      "message": "Because we\u0027re enabling the sandbox before calling __builtin_available, the sandbox is actually blocking the version check:\n\nSandboxViolation: crdmg(15489) deny file-read-data /System/Library/CoreServices/SystemVersion.plist\nViolation:       deny file-read-data /System/Library/CoreServices/SystemVersion.plist \nProcess:         crdmg [15489]\nPath:            /Volumes/Build/src/./out/release/crdmg\n\nThread 0 (id: 421251):\n0   libsystem_kernel.dylib        \t0x00007fffe94a1a86 __open_nocancel + 10\n1   crdmg                         \t0x000000010444be98 parseSystemVersionPList + 360\n2                                 \t0xec83485354415541",
+      "revId": "51938fff0607fee07eb38e896fcca6b262acf19e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
