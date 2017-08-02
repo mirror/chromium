@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "558e16a5_ab57727e",
+        "filename": "device/usb/mojo/device_manager_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-08-02T08:13:55Z",
+      "side": 0,
+      "message": "Note: I stopped propagating OnceCallback migration here in this CL, since that doubles the CL size.",
+      "revId": "69d9c64789b8cf9ffe43012ba1c0baf6da71ceda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
