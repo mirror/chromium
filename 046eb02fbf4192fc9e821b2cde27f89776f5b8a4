@@ -1,0 +1,310 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2e988bd_9164ca66",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-02T17:08:56Z",
+      "side": 1,
+      "message": "There\u0027s enough work here that it deserves a proper name. How about LayoutTests for CookieStore.{get,getAll,set}?",
+      "revId": "046eb02fbf4192fc9e821b2cde27f89776f5b8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19122ec8_4e7ef1a2",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/document_cookie_interop.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-02T17:08:56Z",
+      "side": 1,
+      "message": "I don\u0027t understand what \"long day\" means. Based on usage, how about making this\nEXPIRES_AT, setting it to Date.now()  + ..., and adding a comment explaining that the expiration date is meant to be far enough into the future that it won\u0027t happen before the test ends?",
+      "revId": "046eb02fbf4192fc9e821b2cde27f89776f5b8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d2e2427_a46ed7c1",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/document_cookie_interop.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-02T17:08:56Z",
+      "side": 1,
+      "message": "1) Move ourselves to TEST_HOST?\n\n2) The setup sets some cookies on ORIGINAL_HOST, then navigates to TEST_HOST and attempts to read the cookies from there. This verifies ...",
+      "revId": "046eb02fbf4192fc9e821b2cde27f89776f5b8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "874d019a_45a4bf36",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/document_cookie_interop.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-02T17:08:56Z",
+      "side": 1,
+      "message": "1) The code is going to diverge, let\u0027s remove the \"copied from\" line.\n\n2) Would it be possible to move this to a setup function? I\u0027m guessing you want explicit_done: true so tests don\u0027t start until the test is on the correct page.\nDocs: http://web-platform-tests.org/writing-tests/testharness-api.html",
+      "revId": "046eb02fbf4192fc9e821b2cde27f89776f5b8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "450280c1_b4ccff1f",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/document_cookie_interop.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-02T17:08:56Z",
+      "side": 1,
+      "message": "I know \u003d\u003d is fine here, but can you please switch from \u003d\u003d to \u003d\u003d\u003d everywhere so I don\u0027t have to think about it? :)\n\nSeparately, would it make sense to check if hostname is not ORIGINAL_HOST or TEST_HOST?",
+      "revId": "046eb02fbf4192fc9e821b2cde27f89776f5b8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c73ad4c_008c19f9",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/document_cookie_interop.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-02T17:08:56Z",
+      "side": 1,
+      "message": "2-space indentation instead of 4, everywhere.\n\nSorry, LayoutTests has a very long history, and the files are written in a mix of various styles. I think the following files are fairly representative of the current preferred style.\n\n1) https://cs.chromium.org/chromium/src/third_party/WebKit/LayoutTests/external/wpt/IndexedDB/nested-cloning-common.js\n2) https://cs.chromium.org/chromium/src/third_party/WebKit/LayoutTests/external/wpt/IndexedDB/request-event-ordering.html",
+      "revId": "046eb02fbf4192fc9e821b2cde27f89776f5b8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d5351c3_8769f594",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/document_cookie_interop.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-02T17:08:56Z",
+      "side": 1,
+      "message": "Why is the then() necessary?",
+      "revId": "046eb02fbf4192fc9e821b2cde27f89776f5b8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51c32bf7_3120719b",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/document_cookie_interop.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-02T17:08:56Z",
+      "side": 1,
+      "message": "It seems to me that this block is testing the behavior when the cookie jar is empty. This is a valid test, but I think it\u0027s a different test case. I think that the block below the document.cookie assignments is sufficient to cover document.cookie -\u003e cookieStore sync.\n\nFor all blocks, I think you can make the code less repetitive by wrapping it in a for loop.\n\nfor (let name of [STRICT_DOM, LAX_DOM, NORMAL_DOM]) ...\n\nIn order to take advantage of this in later blocks, you\u0027d have to be a bit more strategic about cookie values, i.e. instead of using 2.1, 2.2, 2.3, you\u0027d use something like `${name}-value-2`.\n\nOnce you do this, hopefully the code size drops enough that you\u0027re willing to replace ... with ${name} in the failure explanation messages.",
+      "revId": "046eb02fbf4192fc9e821b2cde27f89776f5b8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15b64946_9a5f7357",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/document_cookie_interop.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-02T17:08:56Z",
+      "side": 1,
+      "message": "I think this fits on one line.",
+      "revId": "046eb02fbf4192fc9e821b2cde27f89776f5b8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f0defdc_df4a811b",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/document_cookie_interop.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-02T17:08:56Z",
+      "side": 1,
+      "message": "The ... makes some of the error messages ambiguous, so it\u0027s not easy to figure out which test failed, based on the test output.",
+      "revId": "046eb02fbf4192fc9e821b2cde27f89776f5b8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72d12a29_aac157d0",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/document_cookie_interop.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-02T17:08:56Z",
+      "side": 1,
+      "message": "This fits on one line.",
+      "revId": "046eb02fbf4192fc9e821b2cde27f89776f5b8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c73a3af1_4ad7a964",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/document_cookie_interop.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-02T17:08:56Z",
+      "side": 1,
+      "message": "This fits on one line.",
+      "revId": "046eb02fbf4192fc9e821b2cde27f89776f5b8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "481ac815_9e0dfe32",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/document_cookie_interop.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-02T17:08:56Z",
+      "side": 1,
+      "message": "Please consider turning this into a cleanup function, so the cookies get cleared even if the test fails.\n\nadd_cleanup(() \u003d\u003e { \n  clearKnownCookies();\n  clearKnownCookies({ ... });\n});",
+      "revId": "046eb02fbf4192fc9e821b2cde27f89776f5b8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57b7831e_2e36d002",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/async_cookies/document_cookie_interop.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-02T17:08:56Z",
+      "side": 1,
+      "message": "This fits on one line.",
+      "revId": "046eb02fbf4192fc9e821b2cde27f89776f5b8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15b22a3d_521dd908",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/resources/testharness-helpers.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-02T17:08:56Z",
+      "side": 1,
+      "message": "I don\u0027t think TEST_ROOT and TEST_SUB are used anywhere. Please remove?",
+      "revId": "046eb02fbf4192fc9e821b2cde27f89776f5b8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d21b727_7ca35545",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/resources/testharness-helpers.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-02T17:08:56Z",
+      "side": 1,
+      "message": "I don\u0027t think the _DOM / _from_dom is relevant anymore.\n\nHow about SAME_SITE_LAX_NAME / SAME_SITE_STRICT_NAME / SAME_SITE_NONE_NAME, with a comment pointing to https://tools.ietf.org/html/draft-west-first-party-cookies-07\n\nThe values could be \u0027same-site-lax\u0027, \u0027same-site-strict\u0027 and \u0027same-site-none\u0027.",
+      "revId": "046eb02fbf4192fc9e821b2cde27f89776f5b8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33392d63_2a8eada0",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/resources/testharness-helpers.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-02T17:08:56Z",
+      "side": 1,
+      "message": "well-known cookies --\u003e cookies used in tests? (for consistency, clearKnownCookies -\u003e clearTestCookies)",
+      "revId": "046eb02fbf4192fc9e821b2cde27f89776f5b8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37ae315f_4003ba05",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/storage/resources/testharness-helpers.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-02T17:08:56Z",
+      "side": 1,
+      "message": "How about async function clearKnownCookies(options \u003d {})?\n\n(you can have the default value be undefined if you really prefer, though I think {} is easier to reason about)",
+      "revId": "046eb02fbf4192fc9e821b2cde27f89776f5b8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
