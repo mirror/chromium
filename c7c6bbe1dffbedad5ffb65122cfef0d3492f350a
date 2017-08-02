@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9216876_f0017f6a",
+        "filename": "chrome/browser/search/instant_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-08-02T11:34:11Z",
+      "side": 1,
+      "message": "nit: maybe move this variable declaration inside the if {..} block since that\u0027s the only place it\u0027s used?",
+      "revId": "c7c6bbe1dffbedad5ffb65122cfef0d3492f350a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3be7712_454aac9f",
+        "filename": "chrome/common/search.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-08-02T11:34:11Z",
+      "side": 1,
+      "message": "nit: grammar which/that confusion, should use \"that\" here, eg.,\n\n// SearchBouncer tracks URLs that should be sent back to ...",
+      "revId": "c7c6bbe1dffbedad5ffb65122cfef0d3492f350a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b30b859_ed1d86ae",
+        "filename": "chrome/common/search.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-08-02T11:34:11Z",
+      "side": 1,
+      "message": "dito:\n\n// Sets the URLs that the renderer should send back to the browser process for reassignment to an Instant renderer.",
+      "revId": "c7c6bbe1dffbedad5ffb65122cfef0d3492f350a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
