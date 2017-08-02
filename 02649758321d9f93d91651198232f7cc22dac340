@@ -19,6 +19,93 @@
     },
     {
       "key": {
+        "uuid": "c0ca4378_211d6c5a",
+        "filename": "content/browser/loader/redirect_to_file_resource_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-02T19:55:01Z",
+      "side": 1,
+      "message": "Are any of the tests guaranteed to hit this case?  If not, we should add one.",
+      "range": {
+        "startLine": 250,
+        "startChar": 27,
+        "endLine": 250,
+        "endChar": 46
+      },
+      "revId": "02649758321d9f93d91651198232f7cc22dac340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5975bb9_fe339dba",
+        "filename": "content/browser/loader/redirect_to_file_resource_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-02T19:55:01Z",
+      "side": 1,
+      "message": "Also, this code will be going away when the network service ships (No time soon).  Not saying this to suggest you block your feature on that shipping, but it would be great if you could manage to make integration tests (For your feature, not for this change) for whatever you\u0027re working on that should work regardless of whether we\u0027re using RDH or the network service.",
+      "parentUuid": "f2d526e7_fec547ef",
+      "revId": "02649758321d9f93d91651198232f7cc22dac340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cc53d22_e5a91f77",
+        "filename": "content/browser/loader/redirect_to_file_resource_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-02T19:55:01Z",
+      "side": 1,
+      "message": "I know it\u0027s not used again, but... writes_pending_file_creation_ \u003d false?",
+      "range": {
+        "startLine": 260,
+        "startChar": 29,
+        "endLine": 260,
+        "endChar": 0
+      },
+      "revId": "02649758321d9f93d91651198232f7cc22dac340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c23626ea_a53ff4b7",
+        "filename": "content/browser/loader/redirect_to_file_resource_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-02T19:55:01Z",
+      "side": 1,
+      "message": "Do we have tests that are guaranteed to hit each path here?  I suspect we don\u0027t.  Sorry that I can\u0027t provide more information (Without spending a fair bit of time refreshing my memory on this code.  This code sees few enough changes that I can\u0027t remember it that well)",
+      "range": {
+        "startLine": 261,
+        "startChar": 16,
+        "endLine": 261,
+        "endChar": 0
+      },
+      "revId": "02649758321d9f93d91651198232f7cc22dac340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0cf102ce_53a5822b",
         "filename": "content/browser/loader/redirect_to_file_resource_handler.h",
         "patchSetId": 3
