@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cd3d1b7e_3f3df750",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1155789
+      },
+      "writtenOn": "2017-08-02T21:11:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "03f566db_ca1c2845",
+      "revId": "9f62aba0673e8b8730ef8014eb601ee30871a0bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ddf62665_f637a5a0",
         "filename": "testing/libfuzzer/fuzzers/mojo_parse_message_fuzzer.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "9f62aba0673e8b8730ef8014eb601ee30871a0bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "132cbf46_7636830b",
+        "filename": "testing/libfuzzer/fuzzers/mojo_parse_message_fuzzer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1155789
+      },
+      "writtenOn": "2017-08-02T21:11:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ddf62665_f637a5a0",
+      "revId": "9f62aba0673e8b8730ef8014eb601ee30871a0bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1d9efeba_68e65a79",
+        "filename": "testing/libfuzzer/fuzzers/mojo_parse_message_fuzzer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1155789
+      },
+      "writtenOn": "2017-08-02T21:11:12Z",
+      "side": 1,
+      "message": "Yes, that is intentional.\n\nAlso, the underlying mojo::interal::Buffer will be larger than |size| because it adds space for the header, but this won\u0027t cause any issues for this fuzzer, correct?",
+      "parentUuid": "61ad2c75_04d79ab6",
+      "revId": "9f62aba0673e8b8730ef8014eb601ee30871a0bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be347192_50740817",
         "filename": "testing/libfuzzer/fuzzers/mojo_parse_message_fuzzer.cc",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-02T19:56:09Z",
       "side": 1,
       "message": "This seems like a reasonable approach to me. Presumably we\u0027ll also want to fuzz associated interface usage, and all relevant processing for that happens within MultiplexRouter.",
+      "revId": "9f62aba0673e8b8730ef8014eb601ee30871a0bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6620cb94_6a092c07",
+        "filename": "testing/libfuzzer/fuzzers/mojo_parse_message_fuzzer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1155789
+      },
+      "writtenOn": "2017-08-02T21:11:12Z",
+      "side": 1,
+      "message": "That\u0027s a good idea. That would require adding an associated interface to fuzz.mojom and perhaps updating the Impl to bind them. Nothing related to populating the message data needs to change, correct?",
+      "parentUuid": "be347192_50740817",
       "revId": "9f62aba0673e8b8730ef8014eb601ee30871a0bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
