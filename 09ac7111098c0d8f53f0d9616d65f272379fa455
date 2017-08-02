@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "8c8cd190_5a4c521a",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-02T22:15:19Z",
+      "side": 1,
+      "message": "Should we use the 1000 multiplier here, otherwise the precision will be lost?",
+      "revId": "09ac7111098c0d8f53f0d9616d65f272379fa455",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9840a55e_be044201",
         "filename": "services/resource_coordinator/coordination_unit/coordination_unit_impl.cc",
         "patchSetId": 5
@@ -18,6 +35,76 @@
         "startChar": 60,
         "endLine": 369,
         "endChar": 61
+      },
+      "revId": "09ac7111098c0d8f53f0d9616d65f272379fa455",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bb91bf8_1c13889e",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-02T22:15:19Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "9840a55e_be044201",
+      "range": {
+        "startLine": 369,
+        "startChar": 60,
+        "endLine": 369,
+        "endChar": 61
+      },
+      "revId": "09ac7111098c0d8f53f0d9616d65f272379fa455",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de693578_c1ca88d5",
+        "filename": "services/resource_coordinator/coordination_unit/web_contents_coordination_unit_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-02T22:15:19Z",
+      "side": 1,
+      "message": "Why do we need to convert to double here?",
+      "range": {
+        "startLine": 56,
+        "startChar": 4,
+        "endLine": 56,
+        "endChar": 10
+      },
+      "revId": "09ac7111098c0d8f53f0d9616d65f272379fa455",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "799209c4_5cbcb6e3",
+        "filename": "services/resource_coordinator/coordination_unit/web_contents_coordination_unit_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-02T22:15:19Z",
+      "side": 1,
+      "message": "I think the multiplier should be done before sending data into GRC, otherwise the precision is already lost.",
+      "range": {
+        "startLine": 69,
+        "startChar": 60,
+        "endLine": 69,
+        "endChar": 64
       },
       "revId": "09ac7111098c0d8f53f0d9616d65f272379fa455",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
