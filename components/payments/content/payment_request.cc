@@ -15,6 +15,7 @@
 #include "components/payments/core/can_make_payment_query.h"
 #include "components/payments/core/payment_prefs.h"
 #include "components/prefs/pref_service.h"
+#include "components/url_formatter/elide_url.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
@@ -32,8 +33,10 @@ PaymentRequest::PaymentRequest(
       delegate_(std::move(delegate)),
       manager_(manager),
       binding_(this, std::move(request)),
-      top_level_origin_(web_contents_->GetLastCommittedURL().GetOrigin()),
-      frame_origin_(render_frame_host->GetLastCommittedURL().GetOrigin()),
+      top_level_origin_(url_formatter::FormatUrlForSecurityDisplay(
+          web_contents_->GetLastCommittedURL())),
+      frame_origin_(url_formatter::FormatUrlForSecurityDisplay(
+          render_frame_host->GetLastCommittedURL())),
       observer_for_testing_(observer_for_testing),
       journey_logger_(delegate_->IsIncognito(),
                       web_contents_->GetLastCommittedURL(),
@@ -215,8 +218,7 @@ void PaymentRequest::CanMakePayment() {
             ? mojom::CanMakePaymentQueryResult::CAN_MAKE_PAYMENT
             : mojom::CanMakePaymentQueryResult::CANNOT_MAKE_PAYMENT);
     journey_logger_.SetCanMakePaymentValue(can_make_payment);
-  } else if (OriginSecurityChecker::IsOriginLocalhostOrFile(
-                 frame_origin_.GetURL())) {
+  } else if (OriginSecurityChecker::IsOriginLocalhostOrFile(frame_origin_)) {
     client_->OnCanMakePayment(
         can_make_payment
             ? mojom::CanMakePaymentQueryResult::WARNING_CAN_MAKE_PAYMENT
