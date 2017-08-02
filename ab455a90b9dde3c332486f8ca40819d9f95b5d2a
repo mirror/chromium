@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "bfbf35a8_eaa2f712",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_browsertest_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1116013
+      },
+      "writtenOn": "2017-08-02T21:05:12Z",
+      "side": 1,
+      "message": "nit: seems like this comment applies more to line 53?",
+      "range": {
+        "startLine": 57,
+        "startChar": 22,
+        "endLine": 57,
+        "endChar": 0
+      },
+      "revId": "ab455a90b9dde3c332486f8ca40819d9f95b5d2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3cad399_808597a0",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_browsertest_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1116013
+      },
+      "writtenOn": "2017-08-02T21:05:12Z",
+      "side": 1,
+      "message": "request for additional test (here on in another CL): what happens if no browser windows are open but Chrome is still running (e.g. in the task tray) and a prompt appears?",
+      "range": {
+        "startLine": 77,
+        "startChar": 55,
+        "endLine": 77,
+        "endChar": 0
+      },
+      "revId": "ab455a90b9dde3c332486f8ca40819d9f95b5d2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37620c87_a258679d",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_win.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1116013
+      },
+      "writtenOn": "2017-08-02T21:05:12Z",
+      "side": 1,
+      "message": "nit: a user",
+      "range": {
+        "startLine": 74,
+        "startChar": 60,
+        "endLine": 74,
+        "endChar": 0
+      },
+      "revId": "ab455a90b9dde3c332486f8ca40819d9f95b5d2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "77ed7e5c_1f79fe69",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 7
