@@ -525,6 +525,11 @@ class PasswordAutofillAgentTest : public ChromeRenderViewTest {
     return fake_driver_.called_show_pw_suggestions();
   }
 
+  bool GetCalledManualFallbackSuggestion() {
+    base::RunLoop().RunUntilIdle();
+    return fake_driver_.called_manual_fallback_suggestion();
+  }
+
   void ExpectFormSubmittedWithUsernameAndPasswords(
       const std::string& username_value,
       const std::string& password_value,
@@ -3026,6 +3031,27 @@ TEST_F(PasswordAutofillAgentTest, NoForm_MultipleAJAXEventsWithoutSubmission) {
 
   ASSERT_FALSE(fake_driver_.called_password_form_submitted());
   ASSERT_FALSE(static_cast<bool>(fake_driver_.password_form_submitted()));
+}
+
+TEST_F(PasswordAutofillAgentTest, ShowAllSavedPasswordsTest) {
+  LoadHTML(kFormHTML);
+  SetFocused(username_element_);
+  SimulateElementClick("username");
+  EXPECT_FALSE(GetCalledManualFallbackSuggestion());
+  SetFocused(password_element_);
+  SimulateElementClick("password");
+  EXPECT_TRUE(GetCalledManualFallbackSuggestion());
+}
+
+TEST_F(PasswordAutofillAgentTest,
+       NotShowAllSavedPasswordsOnCreditCardFormTest) {
+  LoadHTML(kCreditCardFormHTML);
+  SetFocused(username_element_);
+  SimulateElementClick("username");
+  EXPECT_FALSE(GetCalledManualFallbackSuggestion());
+  SetFocused(password_element_);
+  SimulateElementClick("password");
+  EXPECT_FALSE(GetCalledManualFallbackSuggestion());
 }
 
 }  // namespace autofill

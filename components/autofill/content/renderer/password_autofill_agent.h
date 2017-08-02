@@ -114,6 +114,11 @@ class PasswordAutofillAgent : public content::RenderFrameObserver,
   // on a non-secure page.
   void ShowNotSecureWarning(const blink::WebInputElement& element);
 
+  // Shows an Autofill-style popup with an option to go to settings and check
+  // all saved passwords. This UI is shown when a password field is not
+  // autofilled.
+  void ManualFallbackSuggestion(const blink::WebInputElement& element);
+
   // Called when new form controls are inserted.
   void OnDynamicFormsSeen();
 
