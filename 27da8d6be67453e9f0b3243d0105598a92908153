@@ -22,6 +22,30 @@
       "revId": "27da8d6be67453e9f0b3243d0105598a92908153",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c275257c_5cbfb4de",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninActivity.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-02T12:49:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c85db68f_fe37c388",
+      "range": {
+        "startLine": 141,
+        "startChar": 28,
+        "endLine": 141,
+        "endChar": 29
+      },
+      "revId": "27da8d6be67453e9f0b3243d0105598a92908153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
