@@ -134,11 +134,6 @@ RedirectToFileResourceHandler::RedirectToFileResourceHandler(
     net::URLRequest* request)
     : LayeredResourceHandler(request, std::move(next_handler)),
       buf_(new net::GrowableIOBuffer()),
-      buf_write_pending_(false),
-      write_cursor_(0),
-      writer_(NULL),
-      next_buffer_size_(kInitialReadBufSize),
-      completed_during_write_(false),
       weak_factory_(this) {}
 
 RedirectToFileResourceHandler::~RedirectToFileResourceHandler() {
@@ -168,12 +163,7 @@ void RedirectToFileResourceHandler::OnWillStart(
     std::unique_ptr<ResourceController> controller) {
   DCHECK(!writer_);
 
-  // Defer starting the request until we have created the temporary file.
-  // TODO(darin): This is sub-optimal.  We should not delay starting the
-  // network request like this.
-  will_start_url_ = url;
-  HoldController(std::move(controller));
-  request()->LogBlockedBy("RedirectToFileResourceHandler");
+  // Create the file ASAP but don't block.
   if (create_temporary_file_stream_.is_null()) {
     CreateTemporaryFileStream(
         base::Bind(&RedirectToFileResourceHandler::DidCreateTemporaryFile,
@@ -183,6 +173,7 @@ void RedirectToFileResourceHandler::OnWillStart(
         base::Bind(&RedirectToFileResourceHandler::DidCreateTemporaryFile,
                    weak_factory_.GetWeakPtr()));
   }
+  next_handler_->OnWillStart(url, std::move(controller));
 }
 
 void RedirectToFileResourceHandler::OnWillRead(
@@ -252,23 +243,29 @@ void RedirectToFileResourceHandler::DidCreateTemporaryFile(
     std::unique_ptr<net::FileStream> file_stream,
     ShareableFileReference* deletable_file) {
   DCHECK(!writer_);
-  DCHECK(has_controller());
   if (error_code != base::File::FILE_OK) {
-    CancelWithError(net::FileErrorToNetError(error_code));
+    if (has_controller()) {
+      CancelWithError(net::FileErrorToNetError(error_code));
+    } else {
+      OutOfBandCancel(net::FileErrorToNetError(error_code),
+                      true /* tell_renderer */);
+    }
     return;
   }
 
   writer_ = new Writer(this, std::move(file_stream), deletable_file);
 
-  // Resume the request.
-  request()->LogUnblocked();
-  next_handler_->OnWillStart(std::move(will_start_url_), ReleaseController());
+  // Resume the request if it was waiting on file creation.
+  if (writes_pending_file_creation_) {
+    DCHECK(has_controller());
+    WriteMore();
+  }
 }
 
 void RedirectToFileResourceHandler::DidWriteToFile(int result) {
   bool failed = false;
   if (result > 0) {
-    next_handler_->OnDataDownloaded(result);
+    OnDataDownloaded(result);
     write_cursor_ += result;
     // WriteMore will resume the request if the request hasn't completed and
     // there's more buffer space.
@@ -310,7 +307,10 @@ void RedirectToFileResourceHandler::DidWriteToFile(int result) {
 }
 
 bool RedirectToFileResourceHandler::WriteMore() {
-  DCHECK(writer_);
+  if (!writer_) {
+    writes_pending_file_creation_ = true;
+    return true;
+  }
 
   for (;;) {
     if (write_cursor_ == buf_->offset()) {
@@ -349,7 +349,7 @@ bool RedirectToFileResourceHandler::WriteMore() {
       break;
     if (rv <= 0)
       return false;
-    next_handler_->OnDataDownloaded(rv);
+    OnDataDownloaded(rv);
     write_cursor_ += rv;
   }
 
