@@ -171,6 +171,7 @@ source_set("unit_tests") {
   sources = [
     "bookmarks/bookmark_last_visit_utils_unittest.cc",
     "bookmarks/bookmark_suggestions_provider_unittest.cc",
+    "breaking_news/breaking_news_gcm_app_handler_unittest.cc",
     "breaking_news/breaking_news_suggestions_provider_unittest.cc",
     "breaking_news/subscription_json_request_unittest.cc",
     "breaking_news/subscription_manager_impl_unittest.cc",
@@ -209,6 +210,8 @@ source_set("unit_tests") {
     "//base/test:test_support",
     "//components/bookmarks/browser",
     "//components/bookmarks/test",
+    "//components/gcm_driver",
+    "//components/gcm_driver/instance_id",
     "//components/image_fetcher/core",
     "//components/leveldb_proto:test_support",
     "//components/ntp_snippets/remote/proto",
