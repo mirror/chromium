@@ -227,6 +227,30 @@
       "revId": "ea6fc4b0dbfdcdd1d416f4856949ce014eb59cd0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "097d6b66_94692aa6",
+        "filename": "net/proxy/proxy_script_fetcher_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1000640
+      },
+      "writtenOn": "2017-08-02T09:17:19Z",
+      "side": 1,
+      "message": "Matt see the documentation here https://www.chromium.org/administrators/policy-list-3#ProxyMode\n\nI just checked that - the windows system proxy settings do allow using a PAC script and therefore \u0027system\u0027 does not necessarily mean this type of request will not happen. I would suggest listing the \u0027fixed_servers\u0027 and \u0027direct\u0027 as only guarantees for avoid a PAC script request.",
+      "parentUuid": "847f0e8c_a5824782",
+      "range": {
+        "startLine": 179,
+        "startChar": 19,
+        "endLine": 179,
+        "endChar": 28
+      },
+      "revId": "ea6fc4b0dbfdcdd1d416f4856949ce014eb59cd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
