@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "642d2c58_ac337fc3",
+        "filename": "components/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-02T00:06:57Z",
+      "side": 1,
+      "message": "\"ensures\" is too strong a guarantee. You may say something like \"tries to ensure\" or something about doing so with high probability.",
+      "range": {
+        "startLine": 100,
+        "startChar": 51,
+        "endLine": 100,
+        "endChar": 58
+      },
+      "revId": "294aaf12cbb4911891519dbf7ebbade0aa4e5752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "067e7855_7e8b4e09",
+        "filename": "components/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-02T00:06:57Z",
+      "side": 1,
+      "message": "Given that there is no guarantee, please also explicitly mention what happens when Android takes more than 5 seconds to tear down.",
+      "range": {
+        "startLine": 100,
+        "startChar": 63,
+        "endLine": 100,
+        "endChar": 71
+      },
+      "revId": "294aaf12cbb4911891519dbf7ebbade0aa4e5752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b00f448_1163f670",
+        "filename": "components/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-02T00:06:57Z",
+      "side": 1,
+      "message": "nit: unregister these in the reverse order in which they are registered. these two should also be moved to the very bottom.",
+      "range": {
+        "startLine": 316,
+        "startChar": 0,
+        "endLine": 318,
+        "endChar": 32
+      },
+      "revId": "294aaf12cbb4911891519dbf7ebbade0aa4e5752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30e58ec2_c429cae3",
+        "filename": "components/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1963,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-02T00:06:57Z",
+      "side": 1,
+      "message": "nit: blank line after this",
+      "range": {
+        "startLine": 1963,
+        "startChar": 0,
+        "endLine": 1963,
+        "endChar": 1
+      },
+      "revId": "294aaf12cbb4911891519dbf7ebbade0aa4e5752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "924558ad_3f4af85b",
+        "filename": "components/arc/bluetooth/arc_bluetooth_bridge.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1989,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-02T00:06:57Z",
+      "side": 1,
+      "message": "nit: use the guard-clause pattern so the wording matches the code:\n\n if (!bluetooth_adapter_ || !bluetooth_adapter_-\u003eIsPowered()) {\n   // The default power state of Bluetooth on Android is off, so there is no need\n   // to send an intent to turn off Bluetooth if the initial power state is off.\n   return;\n }\n EnqueueLocalPowerChange(TURN_ON);",
+      "range": {
+        "startLine": 1989,
+        "startChar": 2,
+        "endLine": 1989,
+        "endChar": 60
+      },
+      "revId": "294aaf12cbb4911891519dbf7ebbade0aa4e5752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dde4d89_34cf982f",
+        "filename": "components/arc/bluetooth/arc_bluetooth_bridge.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-02T00:06:57Z",
+      "side": 1,
+      "message": "nit: ArcBluetoothBridge* const bluetooth_bridge_;",
+      "range": {
+        "startLine": 364,
+        "startChar": 4,
+        "endLine": 364,
+        "endChar": 41
+      },
+      "revId": "294aaf12cbb4911891519dbf7ebbade0aa4e5752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2fbf791_fdabbe56",
+        "filename": "components/arc/bluetooth/arc_bluetooth_bridge.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-02T00:06:57Z",
+      "side": 1,
+      "message": "nit: enum class",
+      "range": {
+        "startLine": 370,
+        "startChar": 2,
+        "endLine": 370,
+        "endChar": 6
+      },
+      "revId": "294aaf12cbb4911891519dbf7ebbade0aa4e5752",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
