@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8843fdd2_4606ac63",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-02T00:07:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da3456a9_e111ac11",
+      "range": {
+        "startLine": 227,
+        "startChar": 0,
+        "endLine": 259,
+        "endChar": 1
+      },
+      "revId": "8fa8fafe612bd808fac84a8a201a845018d9456e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af143f33_9c33ec77",
         "filename": "chrome/browser/chromeos/net/tether_notification_presenter.h",
         "patchSetId": 4
@@ -39,6 +63,24 @@
       "revId": "8fa8fafe612bd808fac84a8a201a845018d9456e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "470eb30c_347b5eab",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-02T00:07:40Z",
+      "side": 1,
+      "message": "That looks more right -- done.",
+      "parentUuid": "af143f33_9c33ec77",
+      "revId": "8fa8fafe612bd808fac84a8a201a845018d9456e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -62,6 +104,30 @@
       "revId": "8fa8fafe612bd808fac84a8a201a845018d9456e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85027bfe_92dc4cff",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-02T00:07:40Z",
+      "side": 1,
+      "message": "This was the result of old work -- reverted.",
+      "parentUuid": "b0782dea_af3fefa1",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 96,
+        "endChar": 27
+      },
+      "revId": "8fa8fafe612bd808fac84a8a201a845018d9456e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
