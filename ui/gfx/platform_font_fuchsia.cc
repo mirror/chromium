@@ -10,7 +10,6 @@ namespace gfx {
 
 // static
 PlatformFont* PlatformFont::CreateDefault() {
-  // TODO(fuchsia): Stubbed during headless bringup, https://crbug.com/743296.
   NOTIMPLEMENTED();
   return NULL;
 }
@@ -18,7 +17,6 @@ PlatformFont* PlatformFont::CreateDefault() {
 // static
 PlatformFont* PlatformFont::CreateFromNameAndSize(const std::string& font_name,
                                                   int font_size) {
-  // TODO(fuchsia): Stubbed during headless bringup, https://crbug.com/743296.
   NOTIMPLEMENTED();
   return NULL;
 }

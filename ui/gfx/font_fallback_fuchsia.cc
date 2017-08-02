@@ -10,8 +10,6 @@
 namespace gfx {
 
 std::vector<Font> GetFallbackFonts(const Font& font) {
-  // TODO(fuchsia): Stubbed while bringing up headless build, see
-  // https://crbug.com/743296.
   return std::vector<Font>();
 }
 

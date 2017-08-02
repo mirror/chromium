@@ -18,7 +18,11 @@ FontRenderParams LoadDefaults() {
   params.autohinter = true;
   params.use_bitmaps = true;
   params.subpixel_rendering = FontRenderParams::SUBPIXEL_RENDERING_NONE;
+
+  // Use subpixel text positioning to keep consistent character spacing when
+  // the page is scaled by a fractional factor.
   params.subpixel_positioning = true;
+  // Slight hinting renders much better than normal hinting on Android.
   params.hinting = FontRenderParams::HINTING_SLIGHT;
 
   return params;
