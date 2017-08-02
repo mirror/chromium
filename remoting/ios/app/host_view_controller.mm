@@ -48,6 +48,8 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
   // When set to true, ClientKeyboard will immediately resign first responder
   // after it becomes first responder.
   BOOL _blocksKeyboard;
+  NSLayoutConstraint* _keyboardHeightConstraint;
+  EAGLView* _hostView;
 }
 @end
 
@@ -68,15 +70,21 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
 
 #pragma mark - UIViewController
 
-- (void)loadView {
-  EAGLView* glView = [[EAGLView alloc] initWithFrame:CGRectZero];
-  glView.displayTaskRunner =
-      remoting::ChromotingClientRuntime::GetInstance()->display_task_runner();
-  self.view = glView;
-}
-
 - (void)viewDidLoad {
   [super viewDidLoad];
+  _hostView = [[EAGLView alloc] initWithFrame:CGRectZero];
+  _hostView.displayTaskRunner =
+      remoting::ChromotingClientRuntime::GetInstance()->display_task_runner();
+  _hostView.translatesAutoresizingMaskIntoConstraints = NO;
+  [self.view addSubview:_hostView];
+
+  [NSLayoutConstraint activateConstraints:@[
+    [_hostView.topAnchor constraintEqualToAnchor:self.view.topAnchor],
+    [_hostView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
+    [_hostView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor],
+  ]];
+  [self setKeyboardSize:CGSizeZero needsLayout:NO];
+
   _floatingButton =
       [MDCFloatingButton floatingButtonWithShape:MDCFloatingButtonShapeMini];
   // Note(nicholss): Setting title to " " because the FAB requires the title
@@ -95,13 +103,13 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
                                    primaryImage:RemotingTheme.menuIcon
                                     activeImage:RemotingTheme.closeIcon];
   [_floatingButton addSubview:_actionImageView];
-  [self.view addSubview:_floatingButton];
+  [_hostView addSubview:_floatingButton];
 
   [self applyInputMode];
 
   _clientKeyboard = [[ClientKeyboard alloc] init];
   _clientKeyboard.delegate = self;
-  [self.view addSubview:_clientKeyboard];
+  [_hostView addSubview:_clientKeyboard];
   // TODO(nicholss): need to pass some keyboard injection interface here.
 }
 
@@ -109,7 +117,7 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
   [super viewDidUnload];
   // TODO(nicholss): There needs to be a hook to tell the client we are done.
 
-  [(EAGLView*)self.view stop];
+  [_hostView stop];
   _clientGestures = nil;
   _client = nil;
 }
@@ -121,16 +129,11 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
   if (!_surfaceCreated) {
-    [_client.displayHandler onSurfaceCreated:(EAGLView*)self.view];
+    [_client.displayHandler onSurfaceCreated:_hostView];
     _surfaceCreated = YES;
   }
-  // viewDidLayoutSubviews may be called before viewDidAppear, in which case
-  // the surface is not ready to handle the transformation matrix.
-  // Call onSurfaceChanged here to cover that case.
-  [_client surfaceChanged:self.view.frame];
-  [self resizeHostToFitIfNeeded];
 
-  [PhysicalKeyboardDetector detectOnView:self.view
+  [PhysicalKeyboardDetector detectOnView:_hostView
                                 callback:^(BOOL hasPhysicalKeyboard) {
                                   if (hasPhysicalKeyboard) {
                                     _clientKeyboard.hasPhysicalKeyboard =
@@ -149,7 +152,7 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
 
   if (!_clientGestures) {
     _clientGestures =
-        [[ClientGestures alloc] initWithView:self.view client:_client];
+        [[ClientGestures alloc] initWithView:_hostView client:_client];
     _clientGestures.delegate = self;
   }
   [[NSNotificationCenter defaultCenter]
@@ -177,17 +180,13 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
 - (void)viewDidLayoutSubviews {
   [super viewDidLayoutSubviews];
 
-  if (self.view.window != nil) {
-    // If the context is not set yet, the view size will be set in
-    // viewDidAppear.
-    [_client surfaceChanged:self.view.bounds];
-    [self resizeHostToFitIfNeeded];
-  }
+  [_client surfaceChanged:_hostView.bounds];
+  [self resizeHostToFitIfNeeded];
 
   CGSize btnSize = _floatingButton.frame.size;
   _floatingButton.frame =
-      CGRectMake(self.view.frame.size.width - btnSize.width - kFabInset,
-                 self.view.frame.size.height - btnSize.height - kFabInset,
+      CGRectMake(_hostView.frame.size.width - btnSize.width - kFabInset,
+                 _hostView.frame.size.height - btnSize.height - kFabInset,
                  btnSize.width, btnSize.height);
 }
 
@@ -221,26 +220,11 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
       [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey]
           CGRectValue]
           .size;
-  if (_keyboardSize.height != keyboardSize.height) {
-    CGFloat deltaHeight = keyboardSize.height - _keyboardSize.height;
-    [UIView animateWithDuration:kKeyboardAnimationTime
-                     animations:^{
-                       CGRect f = self.view.frame;
-                       f.size.height -= deltaHeight;
-                       self.view.frame = f;
-                     }];
-    _keyboardSize = keyboardSize;
-  }
+  [self setKeyboardSize:keyboardSize needsLayout:YES];
 }
 
 - (void)keyboardWillHide:(NSNotification*)notification {
-  [UIView animateWithDuration:kKeyboardAnimationTime
-                   animations:^{
-                     CGRect f = self.view.frame;
-                     f.size.height += _keyboardSize.height;
-                     self.view.frame = f;
-                   }];
-  _keyboardSize = CGSizeZero;
+  [self setKeyboardSize:CGSizeZero needsLayout:YES];
 }
 
 #pragma mark - ClientKeyboardDelegate
@@ -311,8 +295,8 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
 
   if (_settings.shouldResizeHostToFit && !isPhonePortrait &&
       ![self isKeyboardActive]) {
-    [_client setHostResolution:self.view.frame.size
-                         scale:self.view.contentScaleFactor];
+    [_client setHostResolution:_hostView.frame.size
+                         scale:_hostView.contentScaleFactor];
   }
 }
 
@@ -424,7 +408,7 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
         restoresKeyboard:YES
                  handler:cancelHandler];
 
-  alert.popoverPresentationController.sourceView = self.view;
+  alert.popoverPresentationController.sourceView = _hostView;
   // Target the alert menu at the top middle of the FAB.
   alert.popoverPresentationController.sourceRect = CGRectMake(
       _floatingButton.center.x, _floatingButton.frame.origin.y, 1.0, 1.0);
@@ -474,6 +458,24 @@ static const CGFloat kKeyboardAnimationTime = 0.3;
                    style:UIAlertActionStyleDefault
         restoresKeyboard:YES
                  handler:handler];
+}
+
+- (void)setKeyboardSize:(CGSize)keyboardSize needsLayout:(BOOL)needsLayout {
+  _keyboardSize = keyboardSize;
+  if (_keyboardHeightConstraint) {
+    _keyboardHeightConstraint.active = NO;
+  }
+  _keyboardHeightConstraint =
+      [_hostView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor
+                                             constant:-keyboardSize.height];
+  _keyboardHeightConstraint.active = YES;
+
+  if (needsLayout) {
+    [UIView animateWithDuration:kKeyboardAnimationTime
+                     animations:^{
+                       [self.view setNeedsLayout];
+                     }];
+  }
 }
 
 @end
