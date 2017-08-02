@@ -18,7 +18,8 @@ bool ResourceLimits::Lower(int resource, rlim_t limit) {
     return false;
   // Make sure we don't raise the existing limit.
   const struct rlimit new_rlimit = {std::min(old_rlimit.rlim_cur, limit),
-                                    std::min(old_rlimit.rlim_max, limit)};
+                                    old_rlimit.rlim_max};
+                                    //std::min(old_rlimit.rlim_max, limit)};
   int rc = setrlimit(resource, &new_rlimit);
   return rc == 0;
 }
