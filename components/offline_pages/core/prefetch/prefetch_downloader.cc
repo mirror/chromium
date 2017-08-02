@@ -46,8 +46,30 @@ void PrefetchDownloader::StartDownload(const std::string& download_id,
   // TODO(jianli): Specify scheduling parameters, i.e. battery, network and etc.
   // http://crbug.com/736156
   download::DownloadParams params;
+  net::NetworkTrafficAnnotationTag traffic_annotation =
+      net::DefineNetworkTrafficAnnotation("prefetch_download", R"(
+        semantics {
+          sender: "Prefetch Downloader"
+          description:
+            "Chromium interacts with Offline Page Service to prefetch "
+            "suggested website resources."
+          trigger:
+            "When there are suggested website resources to fetch."
+          data:
+            "The link to the contents of the suggested website resources to "
+            "fetch."
+          destination: GOOGLE_OWNED_SERVICE
+        }
+        policy {
+          cookies_allowed: NO
+          setting:
+            "Users can enable or disable the offline prefetch by toggling"
+            "chrome://flags#offline-prefetch in Chromium on Android."
+          policy_exception_justification:
+            "Not implemented, considered not useful."
+        })");
   params.traffic_annotation =
-      net::MutableNetworkTrafficAnnotationTag(NO_TRAFFIC_ANNOTATION_YET);
+      net::MutableNetworkTrafficAnnotationTag(traffic_annotation);
   params.client = download::DownloadClient::OFFLINE_PAGE_PREFETCH;
   // TODO(jianli): Remove the uppercase after the download service fixes
   // this issue.
