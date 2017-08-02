@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b62a0bd_047968d0",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTreeAsText.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 779,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-02T00:58:30Z",
+      "side": 1,
+      "message": "Should we dump SelectionInDOMTree instead?\n\nHowever, the code dumps start/end instead of base/extent. Should we dump base/extent instead?",
+      "range": {
+        "startLine": 779,
+        "startChar": 8,
+        "endLine": 779,
+        "endChar": 24
+      },
+      "revId": "45caf57dd5fb776b8af421eb2953390cad256f65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
