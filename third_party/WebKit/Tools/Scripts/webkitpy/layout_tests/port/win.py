@@ -147,25 +147,21 @@ class WinPort(base.Port):
             service.start()
             self._crash_service = service
 
+    def setup_environ_for_server(self):
+        # More environment variables are required for Apache on Windows.
+        env = super(WinPort, self).setup_environ_for_server()
+        apache_envvars = ['SYSTEMDRIVE', 'SYSTEMROOT', 'TEMP', 'TMP']
+        for key, value in self.host.environ.copy().items():
+            if key not in env and key in apache_envvars:
+                env[key] = value
+        return env
+
     def clean_up_test_run(self):
         super(WinPort, self).clean_up_test_run()
 
         if self._crash_service:
             self._crash_service.stop()
             self._crash_service = None
-
-    def setup_environ_for_server(self):
-        env = super(WinPort, self).setup_environ_for_server()
-
-        # FIXME: This is a temporary hack to get the cr-win bot online until
-        # someone from the cr-win port can take a look.
-        # TODO(qyearsley): Remove this in a separate CL.
-        apache_envvars = ['SYSTEMDRIVE', 'SYSTEMROOT', 'TEMP', 'TMP']
-        for key, value in self.host.environ.copy().items():
-            if key not in env and key in apache_envvars:
-                env[key] = value
-
-        return env
 
     def check_build(self, needs_http, printer):
         result = super(WinPort, self).check_build(needs_http, printer)
