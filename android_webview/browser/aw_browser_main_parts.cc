@@ -120,7 +120,6 @@ int AwBrowserMainParts::PreCreateThreads() {
 
   base::android::MemoryPressureListenerAndroid::RegisterSystemCallback(
       base::android::AttachCurrentThread());
-  DeferredGpuCommandService::SetInstance();
   breakpad::CrashDumpObserver::Create();
 
   if (crash_reporter::IsCrashReporterEnabled()) {
@@ -170,6 +169,8 @@ void AwBrowserMainParts::PreMainMessageLoopRun() {
 
   // TODO(meacer): Remove when PlzNavigate ships.
   content::RenderFrameHost::AllowDataUrlNavigationForAndroidWebView();
+
+  DeferredGpuCommandService::SetInstance();
 }
 
 bool AwBrowserMainParts::MainMessageLoopRun(int* result_code) {
