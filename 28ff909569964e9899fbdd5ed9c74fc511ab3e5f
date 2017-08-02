@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8d3ac77d_a872c4af",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerGlobalScope.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-02T04:56:30Z",
+      "side": 1,
+      "message": "Thanks, that seems good.\nHowever, I prefer injecting another object to overriding the class because it\u0027s easier to understand what\u0027s needed to use the class. \nAs we talked offline, I\u0027d like to add an interface class \"WorkerScriptProvider\" which will have methods for (1) the main script on the main thread or on the worker thread and (2) imported scripts on the worker thread.\nWorkerScriptProvider will be implemented as GeneralWorkerScriptProvider for the most of workers, and for service workers I\u0027ll implement ServiceWOrkerScriptProvider which owns WorkerShadowPage, WorkerScriptLoader and InstalledScriptsManager. After that change, InstalledScriptsManager.* are no longer needed to be placed in core/workers.\n\nI\u0027ll write a small explainer for it later.\nIn this patch, added a TODO comment to the header instead.",
+      "parentUuid": "d89e0094_4610ecb5",
+      "revId": "28ff909569964e9899fbdd5ed9c74fc511ab3e5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e12a3a2_49c51b7d",
         "filename": "third_party/WebKit/Source/core/workers/WorkerGlobalScope.cpp",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "4e3ddfcb_1fa6f49b",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerGlobalScope.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-02T04:56:30Z",
+      "side": 1,
+      "message": "That sounds good. Updated.",
+      "parentUuid": "3e12a3a2_49c51b7d",
+      "revId": "28ff909569964e9899fbdd5ed9c74fc511ab3e5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c343a1fe_aed65139",
         "filename": "third_party/WebKit/Source/core/workers/WorkerGlobalScope.cpp",
         "patchSetId": 6
@@ -50,6 +86,24 @@
       "revId": "28ff909569964e9899fbdd5ed9c74fc511ab3e5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1fee677_8f8ef6dd",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerGlobalScope.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-02T04:56:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c343a1fe_aed65139",
+      "revId": "28ff909569964e9899fbdd5ed9c74fc511ab3e5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
