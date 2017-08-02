@@ -13,9 +13,13 @@
 
 #include "net/ntlm/ntlm.h"
 
+#include <string>
+
+#include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
+#include "build/build_config.h"
 #include "net/ntlm/ntlm_test_data.h"
-#include "testing/gtest/include/gtest/gtest.h"
+#include "testing/platform_test.h"
 
 namespace net {
 namespace ntlm {
