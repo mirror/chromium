@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "5ea11aea_809ecc1a",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-02T21:36:39Z",
+      "side": 1,
+      "message": "Thanks for the explanation, and the screenshot!",
+      "parentUuid": "31f03eef_0c60d9f1",
+      "revId": "08be72762ab737ee570e1856bf7c5aca07d6c2fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d51a981_f92b254d",
         "filename": "chrome/browser/resources/md_extensions/detail_view.html",
         "patchSetId": 2
@@ -84,6 +102,24 @@
       "side": 1,
       "message": "I think Devlin might be recalling the the caveat of margin:auto that used to be an issue in old IEs (I forgot exactly what scenario makes it not work). Fortunately chrome:extensions is only in Chrome, so cross-browser compat. is not a concern :)",
       "parentUuid": "ee41183f_98091235",
+      "revId": "08be72762ab737ee570e1856bf7c5aca07d6c2fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e36af427_157533cb",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-02T21:36:39Z",
+      "side": 1,
+      "message": "Mostly I just don\u0027t like relying on unspec\u0027d behavior, even if that unspec\u0027d behavior is commonly used. :)  But since we use this in a bunch of places, this should be fine.",
+      "parentUuid": "7f9ebc8e_640564ef",
       "revId": "08be72762ab737ee570e1856bf7c5aca07d6c2fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
