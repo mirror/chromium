@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e96f3ca_7b1af7ec",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T07:54:44Z",
+      "side": 1,
+      "message": "Should this be ArticleSuggestion (singular)?",
+      "revId": "8c2593be8050463a571e57ddaab9fbdead920f2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b34d332_c07fbe50",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T07:54:44Z",
+      "side": 1,
+      "message": "I don\u0027t quite unterstand this TODO (but maybe I don\u0027t have to..?)",
+      "revId": "8c2593be8050463a571e57ddaab9fbdead920f2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5474e44e_0870689b",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2832,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T07:54:44Z",
+      "side": 1,
+      "message": "I think these tests would be easier to read with some high-level comments, at least one per \"phase\" (setup, test, check results).\n\nHere e.g.: // Set up the provider with some article suggestions.",
+      "revId": "8c2593be8050463a571e57ddaab9fbdead920f2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "554fb186_b0746882",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2843,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T07:54:44Z",
+      "side": 1,
+      "message": "Status::Success()",
+      "revId": "8c2593be8050463a571e57ddaab9fbdead920f2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baea7302_32ea9b1a",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2846,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T07:54:44Z",
+      "side": 1,
+      "message": "// Prepend an article suggestion.",
+      "revId": "8c2593be8050463a571e57ddaab9fbdead920f2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08adafb8_828e3df1",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2855,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T07:54:44Z",
+      "side": 1,
+      "message": "// Check that the prepended suggestion is in the front, and all the others are still there.",
+      "revId": "8c2593be8050463a571e57ddaab9fbdead920f2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e05f57f6_18c5b94b",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2895,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T07:54:44Z",
+      "side": 1,
+      "message": "Why is this loop backwards?",
+      "revId": "8c2593be8050463a571e57ddaab9fbdead920f2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bcd03f4_610d0d24",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2898,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T07:54:44Z",
+      "side": 1,
+      "message": "Should this set rank rather than score?",
+      "revId": "8c2593be8050463a571e57ddaab9fbdead920f2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
