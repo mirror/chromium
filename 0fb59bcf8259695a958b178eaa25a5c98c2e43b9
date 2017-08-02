@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40874011_4824add7",
+        "filename": "tools/perf/disable_story",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-08-02T23:34:30Z",
+      "side": 1,
+      "message": "Nit: put the closing triple-quote on the same line?",
+      "revId": "0fb59bcf8259695a958b178eaa25a5c98c2e43b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b75d32c_1d4fff37",
+        "filename": "tools/perf/disable_story",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-08-02T23:34:30Z",
+      "side": 1,
+      "message": "Nit: this indentation looks a little weird to me. I\u0027d write this as:\n\nwhile filepath and not any(filepath.endswith(os.path.join(root))\n                           for root in known_roots):\n\nif that works.",
+      "revId": "0fb59bcf8259695a958b178eaa25a5c98c2e43b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
