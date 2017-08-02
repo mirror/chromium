@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "513f45aa_9e072b5d",
+        "filename": "testing/libfuzzer/fuzzers/mojo_parse_message_fuzzer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-02T21:14:00Z",
+      "side": 1,
+      "message": "I can\u0027t imagine why that would cause any issues.",
+      "parentUuid": "1d9efeba_68e65a79",
+      "revId": "9f62aba0673e8b8730ef8014eb601ee30871a0bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be347192_50740817",
         "filename": "testing/libfuzzer/fuzzers/mojo_parse_message_fuzzer.cc",
         "patchSetId": 4
@@ -136,6 +154,24 @@
       "side": 1,
       "message": "That\u0027s a good idea. That would require adding an associated interface to fuzz.mojom and perhaps updating the Impl to bind them. Nothing related to populating the message data needs to change, correct?",
       "parentUuid": "be347192_50740817",
+      "revId": "9f62aba0673e8b8730ef8014eb601ee30871a0bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b46e42f_89df9eca",
+        "filename": "testing/libfuzzer/fuzzers/mojo_parse_message_fuzzer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-02T21:14:00Z",
+      "side": 1,
+      "message": "The header format is different for messages which carry associated interface handles, but that\u0027s it.",
+      "parentUuid": "6620cb94_6a092c07",
       "revId": "9f62aba0673e8b8730ef8014eb601ee30871a0bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
