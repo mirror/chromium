@@ -52,6 +52,24 @@
       "revId": "366f55322b5f2cef79f1c0d38d269576da6c02bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "999967a5_c4e6e468",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-08-02T18:14:30Z",
+      "side": 1,
+      "message": "Yes, I think this rework is also related to the following bug:\n\"Maybe pass a mojo::ScopedSharedBufferHandle to SensorReadingSharedBufferReader constructor\"\nhttps://bugs.chromium.org/p/chromium/issues/detail?id\u003d742408\n\nCurrently I am working on a CL for the above bug. After the above bug is fixed, I can start working on the rework that simplifies the fusion sensor reading that Reilly mentioned.",
+      "parentUuid": "1d78fb96_65573c9e",
+      "revId": "366f55322b5f2cef79f1c0d38d269576da6c02bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
