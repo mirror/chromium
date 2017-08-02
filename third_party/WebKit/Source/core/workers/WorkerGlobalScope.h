@@ -167,6 +167,28 @@ class CORE_EXPORT WorkerGlobalScope
   void RemoveURLFromMemoryCache(const KURL&) final;
 
  private:
+  enum class LoadResult { kSuccess, kFailed, kNotHandled };
+
+  // Tries to load the script synchronously from the
+  // InstalledScriptsManager. This blocks until the script is received. If the
+  // script load is not handled by the InstalledScriptsManager, returns
+  // LoadResult::kNotHandled. In that case, needs to fall back to
+  // TryLoadingScriptFromWorkerScriptLoader().
+  // TODO(shimazu): Move TryLoadingScriptFrom* to another class which provides
+  // the worker's scripts.
+  LoadResult TryLoadingScriptFromInstalledScriptsManager(
+      const KURL& script_url,
+      KURL* out_response_url,
+      String* out_source_code,
+      std::unique_ptr<Vector<char>>* out_cached_meta_data);
+  // Tries to load the script synchronously from the WorkerScriptLoader. This
+  // blocks until the script is received.
+  LoadResult TryLoadingScriptFromWorkerScriptLoader(
+      const KURL& script_url,
+      KURL* out_response_url,
+      String* out_source_code,
+      std::unique_ptr<Vector<char>>* out_cached_meta_data);
+
   // ExecutionContext
   EventTarget* ErrorEventTarget() final { return this; }
   const KURL& VirtualURL() const final { return url_; }
