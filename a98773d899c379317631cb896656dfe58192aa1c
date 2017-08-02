@@ -22,6 +22,30 @@
       "revId": "a98773d899c379317631cb896656dfe58192aa1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3bcb5f7_71ef5353",
+        "filename": "content/browser/permissions/capability_broker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-08-02T15:08:11Z",
+      "side": 1,
+      "message": "\u003e It turns out that when PermissionManager says it wants a GURL, what it really wants is an origin packaged in a GURL. \n\nTricky /sigh.  Well-spotted Sam, and thank you for looking.\n\n\u003e Changing this to\n\u003e \n\u003e   frame-\u003eGetLastCommittedOrigin().GetURL()\n\u003e \n\u003e fixes the failing layout tests for me.\n\nDone, and running trys again.",
+      "parentUuid": "8c4e6eda_a36fb94b",
+      "range": {
+        "startLine": 91,
+        "startChar": 39,
+        "endLine": 91,
+        "endChar": 58
+      },
+      "revId": "a98773d899c379317631cb896656dfe58192aa1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
