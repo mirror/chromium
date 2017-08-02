@@ -756,6 +756,7 @@ class TestPlatformDisplay : public PlatformDisplay {
   void ReleaseCapture() override;
   void SetCursor(const ui::CursorData& cursor) override;
   void SetCursorSize(const ui::CursorSize& cursor_size) override;
+  void ConfineCursorToBounds(const gfx::Rect& pixel_bounds) override;
   void MoveCursorTo(const gfx::Point& window_pixel_location) override;
   void UpdateTextInputState(const ui::TextInputState& state) override;
   void SetImeVisibility(bool visible) override;
