@@ -105,6 +105,9 @@ struct NET_EXPORT SSLConfig {
   // also enabled via version_min and version_max.
   TLS13Variant tls13_variant;
 
+  // Whether early data is enabled on this connection.
+  bool early_data_enabled;
+
   // Presorted list of cipher suites which should be explicitly prevented from
   // being used in addition to those disabled by the net built-in policy.
   //

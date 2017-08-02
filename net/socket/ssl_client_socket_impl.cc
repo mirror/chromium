@@ -336,12 +336,13 @@ class SSLClientSocketImpl::SSLContext {
 
     SSL_CTX_set_msg_callback(ssl_ctx_.get(), MessageCallback);
 
-    if (!SSL_CTX_add_client_custom_ext(ssl_ctx_.get(), kTbExtNum,
-                                       &TokenBindingAddCallback,
-                                       &TokenBindingFreeCallback, nullptr,
-                                       &TokenBindingParseCallback, nullptr)) {
-      NOTREACHED();
-    }
+    // if (!SSL_CTX_add_client_custom_ext(ssl_ctx_.get(), kTbExtNum,
+    //                                    &TokenBindingAddCallback,
+    //                                    &TokenBindingFreeCallback, nullptr,
+    //                                    &TokenBindingParseCallback, nullptr))
+    //                                    {
+    //   NOTREACHED();
+    // }
   }
 
   static int TokenBindingAddCallback(SSL* ssl,
@@ -354,6 +355,7 @@ class SSLClientSocketImpl::SSLContext {
     SSLClientSocketImpl* socket =
         SSLClientSocketImpl::SSLContext::GetInstance()->GetClientSocketFromSSL(
             ssl);
+
     return socket->TokenBindingAdd(out, out_len, out_alert_value);
   }
 
@@ -927,6 +929,8 @@ int SSLClientSocketImpl::Init() {
     return ERR_UNEXPECTED;
   }
 
+  SSL_set_early_data_enabled(ssl_.get(), ssl_config_.early_data_enabled);
+
   switch (ssl_config_.tls13_variant) {
     case kTLS13VariantDraft:
       SSL_set_tls13_variant(ssl_.get(), tls13_default);
@@ -1085,6 +1089,8 @@ int SSLClientSocketImpl::DoHandshake() {
       next_handshake_state_ = STATE_HANDSHAKE;
       return ERR_IO_PENDING;
     }
+    if (ssl_error == SSL_ERROR_EARLY_DATA_REJECTED)
+      return ERR_EARLY_DATA_REJECTED;
 
     OpenSSLErrorInfo error_info;
     net_error = MapLastOpenSSLError(ssl_error, err_tracer, &error_info);
@@ -1110,6 +1116,9 @@ int SSLClientSocketImpl::DoHandshake() {
                    reason == SSL_R_APPLICATION_DATA_INSTEAD_OF_HANDSHAKE) {
           connect_error_details_ =
               SSLErrorDetails::kApplicationDataInsteadOfHandshake;
+        } else if (lib == ERR_LIB_SSL &&
+                   reason == SSL_R_WRONG_VERSION_ON_EARLY_DATA) {
+          return ERR_EARLY_DATA_REJECTED;
         } else {
           connect_error_details_ = SSLErrorDetails::kProtocolError;
         }
@@ -1452,6 +1461,7 @@ int SSLClientSocketImpl::DoPayloadRead(IOBuffer* buf, int buf_len) {
     // A zero return from SSL_read may mean any of:
     // - The underlying BIO_read returned 0.
     // - The peer sent a close_notify.
+    // - The peer rejected early data.
     // - Any arbitrary error. https://crbug.com/466303
     //
     // TransportReadComplete converts the first to an ERR_CONNECTION_CLOSED
@@ -1468,9 +1478,17 @@ int SSLClientSocketImpl::DoPayloadRead(IOBuffer* buf, int buf_len) {
       DCHECK(ssl_config_.client_private_key);
       DCHECK_NE(kNoPendingResult, signature_result_);
       pending_read_error_ = ERR_IO_PENDING;
+    } else if (pending_read_ssl_error_ == SSL_ERROR_EARLY_DATA_REJECTED) {
+      return ERR_EARLY_DATA_REJECTED;
     } else {
       pending_read_error_ = MapLastOpenSSLError(
           pending_read_ssl_error_, err_tracer, &pending_read_error_info_);
+    }
+
+    if (ERR_GET_LIB(pending_read_error_info_.error_code) == ERR_LIB_SSL &&
+        ERR_GET_REASON(pending_read_error_info_.error_code) ==
+            SSL_R_WRONG_VERSION_ON_EARLY_DATA) {
+      return ERR_EARLY_DATA_REJECTED;
     }
 
     // Many servers do not reliably send a close_notify alert when shutting down
@@ -1525,8 +1543,17 @@ int SSLClientSocketImpl::DoPayloadWrite() {
   int ssl_error = SSL_get_error(ssl_.get(), rv);
   if (ssl_error == SSL_ERROR_WANT_PRIVATE_KEY_OPERATION)
     return ERR_IO_PENDING;
+  if (ssl_error == SSL_ERROR_EARLY_DATA_REJECTED)
+    return ERR_EARLY_DATA_REJECTED;
+
   OpenSSLErrorInfo error_info;
   int net_error = MapLastOpenSSLError(ssl_error, err_tracer, &error_info);
+
+  if (ERR_GET_LIB(error_info.error_code) == ERR_LIB_SSL &&
+      ERR_GET_REASON(error_info.error_code) ==
+          SSL_R_WRONG_VERSION_ON_EARLY_DATA) {
+    return ERR_EARLY_DATA_REJECTED;
+  }
 
   if (net_error != ERR_IO_PENDING) {
     net_log_.AddEvent(

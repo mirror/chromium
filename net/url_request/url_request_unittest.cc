@@ -11371,4 +11371,182 @@ TEST_F(URLRequestTest, URLRequestRedirectJobCancelRequest) {
   EXPECT_EQ(0, d.received_redirect_count());
 }
 
+class HTTPSEarlyDataTest : public testing::Test {
+ public:
+  HTTPSEarlyDataTest()
+      : context_(true), test_server_(net::EmbeddedTestServer::TYPE_HTTPS) {
+    context_.set_network_delegate(&network_delegate_);
+    cert_verifier_.set_default_result(OK);
+    context_.set_cert_verifier(&cert_verifier_);
+    context_.Init();
+
+    ssl_config_service_ = new TestSSLConfigService(false, false, false, false);
+    ssl_config_service_->set_max_version(SSL_PROTOCOL_VERSION_TLS1_3);
+    context_.set_ssl_config_service(ssl_config_service_.get());
+
+    ssl_config_.version_max = SSL_PROTOCOL_VERSION_TLS1_3;
+    ssl_config_.early_data_enabled = true;
+    test_server_.SetSSLConfig(net::EmbeddedTestServer::CERT_OK, ssl_config_);
+    test_server_.AddDefaultHandlers(
+        base::FilePath(FILE_PATH_LITERAL("net/data/ssl")));
+  }
+  ~HTTPSEarlyDataTest() override {}
+
+  void ResetSSLConfig(net::EmbeddedTestServer::ServerCertificate cert,
+                      uint16 version) {
+    ssl_config_.version_max = version;
+    test_server_.SetSSLConfig(cert, ssl_config_);
+  }
+
+ protected:
+  MockCertVerifier cert_verifier_;
+  TestNetworkDelegate network_delegate_;  // Must outlive URLRequest.
+  TestURLRequestContext context_;
+  scoped_refptr<TestSSLConfigService> ssl_config_service_;
+
+  SSLServerConfig ssl_config_;
+  EmbeddedTestServer test_server_;
+};
+
+// TLSEarlyDatatTest tests that we handle early data correctly.
+TEST_F(HTTPSEarlyDataTest, TLSEarlyDataTest) {
+  ASSERT_TRUE(test_server_.Start());
+  SSLClientSocket::ClearSessionCache();
+
+  {
+    TestDelegate d;
+    std::unique_ptr<URLRequest> r(
+        context_.CreateRequest(test_server_.GetURL("/"), DEFAULT_PRIORITY, &d,
+                               TRAFFIC_ANNOTATION_FOR_TESTS));
+
+    r->Start();
+    EXPECT_TRUE(r->is_pending());
+
+    base::RunLoop().Run();
+
+    EXPECT_EQ(1, d.response_started_count());
+
+    ASSERT_TRUE(r->ssl_info().unverified_cert.get());
+    ASSERT_TRUE(
+        test_server_.GetCertificate()->Equals(r->ssl_info().cert.get()));
+  }
+
+  reinterpret_cast<HttpCache*>(context_.http_transaction_factory())
+      ->CloseAllConnections();
+
+  {
+    TestDelegate d;
+    std::unique_ptr<URLRequest> r(
+        context_.CreateRequest(test_server_.GetURL("/"), DEFAULT_PRIORITY, &d,
+                               TRAFFIC_ANNOTATION_FOR_TESTS));
+
+    r->Start();
+    EXPECT_TRUE(r->is_pending());
+
+    base::RunLoop().Run();
+
+    EXPECT_EQ(1, d.response_started_count());
+
+    ASSERT_TRUE(r->ssl_info().unverified_cert.get());
+    ASSERT_TRUE(
+        test_server_.GetCertificate()->Equals(r->ssl_info().cert.get()));
+  }
+}
+
+// TLSEarlyDataRejectTest tests that we gracefully handle an early data reject
+// and retry without early data.
+TEST_F(HTTPSEarlyDataTest, TLSEarlyDataRejectTest) {
+  ASSERT_TRUE(test_server_.Start());
+  SSLClientSocket::ClearSessionCache();
+
+  {
+    TestDelegate d;
+    std::unique_ptr<URLRequest> r(
+        context_.CreateRequest(test_server_.GetURL("/"), DEFAULT_PRIORITY, &d,
+                               TRAFFIC_ANNOTATION_FOR_TESTS));
+
+    r->Start();
+    EXPECT_TRUE(r->is_pending());
+
+    base::RunLoop().Run();
+
+    ASSERT_TRUE(r->ssl_info().unverified_cert.get());
+    ASSERT_TRUE(
+        test_server_.GetCertificate()->Equals(r->ssl_info().cert.get()));
+  }
+
+  reinterpret_cast<HttpCache*>(context_.http_transaction_factory())
+      ->CloseAllConnections();
+
+  ResetSSLConfig(net::EmbeddedTestServer::CERT_EXPIRED,
+                 SSL_PROTOCOL_VERSION_TLS1_3);
+
+  {
+    TestDelegate d;
+    std::unique_ptr<URLRequest> r(
+        context_.CreateRequest(test_server_.GetURL("/"), DEFAULT_PRIORITY, &d,
+                               TRAFFIC_ANNOTATION_FOR_TESTS));
+
+    r->Start();
+    EXPECT_TRUE(r->is_pending());
+
+    base::RunLoop().Run();
+
+    EXPECT_EQ(1, d.response_started_count());
+
+    ASSERT_TRUE(r->ssl_info().unverified_cert.get());
+    ASSERT_TRUE(
+        test_server_.GetCertificate()->Equals(r->ssl_info().cert.get()));
+  }
+}
+
+// TLSEarlyDataTLS12RejectTest tests that we gracefully handle an early data
+// reject from a TLS 1.2 server and retry without early data.
+TEST_F(HTTPSEarlyDataTest, TLSEarlyDataTLS12RejectTest) {
+  ASSERT_TRUE(test_server_.Start());
+  SSLClientSocket::ClearSessionCache();
+
+  {
+    TestDelegate d;
+    std::unique_ptr<URLRequest> r(
+        context_.CreateRequest(test_server_.GetURL("/"), DEFAULT_PRIORITY, &d,
+                               TRAFFIC_ANNOTATION_FOR_TESTS));
+
+    r->Start();
+    EXPECT_TRUE(r->is_pending());
+
+    base::RunLoop().Run();
+
+    EXPECT_EQ(1, d.response_started_count());
+
+    ASSERT_TRUE(r->ssl_info().unverified_cert.get());
+    ASSERT_TRUE(
+        test_server_.GetCertificate()->Equals(r->ssl_info().cert.get()));
+  }
+
+  reinterpret_cast<HttpCache*>(context_.http_transaction_factory())
+      ->CloseAllConnections();
+
+  ResetSSLConfig(net::EmbeddedTestServer::CERT_EXPIRED,
+                 SSL_PROTOCOL_VERSION_TLS1_3);
+
+  {
+    TestDelegate d;
+    std::unique_ptr<URLRequest> r(
+        context_.CreateRequest(test_server_.GetURL("/"), DEFAULT_PRIORITY, &d,
+                               TRAFFIC_ANNOTATION_FOR_TESTS));
+
+    r->Start();
+    EXPECT_TRUE(r->is_pending());
+
+    base::RunLoop().Run();
+
+    EXPECT_EQ(1, d.response_started_count());
+
+    ASSERT_TRUE(r->ssl_info().unverified_cert.get());
+    ASSERT_TRUE(
+        test_server_.GetCertificate()->Equals(r->ssl_info().cert.get()));
+  }
+}
+
 }  // namespace net

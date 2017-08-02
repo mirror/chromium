@@ -5334,6 +5334,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="-202" label="CERT_AUTHORITY_INVALID"/>
   <int value="-201" label="CERT_DATE_INVALID"/>
   <int value="-200" label="CERT_COMMON_NAME_INVALID"/>
+  <int value="-176" label="EARLY_DATA_REJECTED"/>
   <int value="-175" label="SSL_VERSION_INTERFERENCE"/>
   <int value="-174" label="READ_IF_READY_NOT_IMPLEMENTED"/>
   <int value="-173" label="WS_UPGRADE"/>
@@ -26254,6 +26255,7 @@ from previous Chrome versions.
   <int value="173" label="WS_UPGRADE"/>
   <int value="174" label="READ_IF_READY_NOT_IMPLEMENTED"/>
   <int value="175" label="SSL_VERSION_INTERFERENCE"/>
+  <int value="176" label="EARLY_DATA_REJECTED"/>
   <int value="200" label="CERT_COMMON_NAME_INVALID"/>
   <int value="201" label="CERT_DATE_INVALID"/>
   <int value="202" label="CERT_AUTHORITY_INVALID"/>

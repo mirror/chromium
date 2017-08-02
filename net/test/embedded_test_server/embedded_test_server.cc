@@ -253,9 +253,12 @@ bool EmbeddedTestServer::GetAddressList(AddressList* address_list) const {
 
 void EmbeddedTestServer::SetSSLConfig(ServerCertificate cert,
                                       const SSLServerConfig& ssl_config) {
-  DCHECK(!Started());
   cert_ = cert;
   ssl_config_ = ssl_config;
+
+  if (Started()) {
+    InitializeSSLServerContext();
+  }
 }
 
 void EmbeddedTestServer::SetSSLConfig(ServerCertificate cert) {

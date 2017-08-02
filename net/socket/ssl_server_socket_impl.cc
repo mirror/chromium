@@ -644,6 +644,9 @@ SSLServerContextImpl::SSLServerContextImpl(
       break;
   }
 
+  SSL_CTX_set_early_data_enabled(ssl_ctx_.get(),
+                                 ssl_server_config.early_data_enabled);
+
   // Set certificate and private key.
   DCHECK(cert_->os_cert_handle());
   DCHECK(key_->key());
