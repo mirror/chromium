@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dd3ae7bd_12c04fda",
+        "filename": "content/common/service_worker/service_worker_installed_scripts_manager.mojom",
+        "patchSetId": 17
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-02T02:36:28Z",
+      "side": 1,
+      "message": "Yes, this should be uint64. Negative values are not expected here.",
+      "parentUuid": "432f4747_d29805bb",
+      "range": {
+        "startLine": 25,
+        "startChar": 2,
+        "endLine": 25,
+        "endChar": 18
+      },
+      "revId": "39da0e87908132c978c50d78fa1a0e73d6ec817d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fcc14a17_8fb42cfe",
         "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
         "patchSetId": 17
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "7dac9bf4_797dfe84",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-02T02:36:28Z",
+      "side": 1,
+      "message": "Good catch, thanks!\nAdded a CHECK since it\u0027s a security check.",
+      "parentUuid": "fcc14a17_8fb42cfe",
+      "range": {
+        "startLine": 76,
+        "startChar": 4,
+        "endLine": 76,
+        "endChar": 35
+      },
+      "revId": "39da0e87908132c978c50d78fa1a0e73d6ec817d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d08d7a4_5e500483",
         "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
         "patchSetId": 17
@@ -68,6 +116,30 @@
       "revId": "39da0e87908132c978c50d78fa1a0e73d6ec817d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78f05f02_29e76b1c",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-02T02:36:28Z",
+      "side": 1,
+      "message": "Changed the type of |remining_bytes_| to uint64_t.",
+      "parentUuid": "4d08d7a4_5e500483",
+      "range": {
+        "startLine": 82,
+        "startChar": 46,
+        "endLine": 82,
+        "endChar": 70
+      },
+      "revId": "39da0e87908132c978c50d78fa1a0e73d6ec817d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
