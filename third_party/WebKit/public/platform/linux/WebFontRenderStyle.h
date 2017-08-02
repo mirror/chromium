@@ -37,7 +37,7 @@ namespace blink {
 
 struct FontRenderStyle;
 
-struct BLINK_EXPORT WebFontRenderStyle {
+struct BLINK_PLATFORM_EXPORT WebFontRenderStyle {
   // Each of the use* members below can take one of three values:
   //   0: off
   //   1: on
@@ -52,7 +52,7 @@ struct BLINK_EXPORT WebFontRenderStyle {
   char use_subpixel_positioning;  // use subpixel positioning (fractional X
                                   // positions for glyphs)
 
-#if BLINK_IMPLEMENTATION || BLINK_PLATFORM_IMPLEMENTATION
+#if INSIDE_BLINK
   // Translates the members of this struct to a FontRenderStyle
   void ToFontRenderStyle(FontRenderStyle*);
 #endif
