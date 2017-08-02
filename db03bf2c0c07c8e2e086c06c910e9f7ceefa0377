@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c56f9a48_8c185680",
+        "filename": "third_party/WebKit/Source/core/editing/commands/SelectionForUndoStep.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-02T19:13:11Z",
+      "side": 1,
+      "message": "I\u0027m a little skeptical about this comparison, which makes the construction of SelectionForUndoStep heavier that one might expect.\n\nCould you (in a later patch) add constructors that don\u0027t perform the comparison, so that the class can be constructed in a light manner? And also comment/rename From() to indicate that it\u0027s expensive?",
+      "range": {
+        "startLine": 20,
+        "startChar": 31,
+        "endLine": 20,
+        "endChar": 61
+      },
+      "revId": "db03bf2c0c07c8e2e086c06c910e9f7ceefa0377",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5d08cf3_177b23f7",
+        "filename": "third_party/WebKit/Source/core/editing/commands/SelectionForUndoStep.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-02T19:13:11Z",
+      "side": 1,
+      "message": "nit: DCHECK_GT(base, extent) seems better.",
+      "revId": "db03bf2c0c07c8e2e086c06c910e9f7ceefa0377",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd6c84dd_f65b442d",
+        "filename": "third_party/WebKit/Source/core/editing/commands/SelectionForUndoStep.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-02T19:13:11Z",
+      "side": 1,
+      "message": "nit: DCHECK_LT(base, extent) seems better.",
+      "revId": "db03bf2c0c07c8e2e086c06c910e9f7ceefa0377",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
