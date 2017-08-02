@@ -1764,7 +1764,15 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
 - (id)initWithRenderWidgetHostViewMac:(RenderWidgetHostViewMac*)r {
   self = [super initWithFrame:NSZeroRect];
   if (self) {
-    self.acceptsTouchEvents = YES;
+    if (@available(macOS 10.12.2, *)) {
+      if ([self respondsToSelector:@selector(setAllowedTouchTypes:)]) {
+        self.allowedTouchTypes =
+            NSTouchTypeMaskDirect | NSTouchTypeMaskIndirect;
+      } else {
+        self.acceptsTouchEvents = YES;
+      }
+    }
+
     editCommand_helper_.reset(new RenderWidgetHostViewMacEditCommandHelper);
     editCommand_helper_->AddEditingSelectorsToClass([self class]);
 
@@ -2448,7 +2456,39 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
 }
 
 - (void)touchesBeganWithEvent:(NSEvent*)event {
-  [responderDelegate_ touchesBeganWithEvent:event];
+  if (@available(macOS 10.12.2, *)) {
+    NSEventType type = [event type];
+
+    if (type == NSEventTypeDirectTouch) {
+      // Synthesize Mouse Click Event.
+      blink::WebMouseEvent mouseDownEvent =
+          WebMouseEventBuilder::BuildFromTouchEvent(
+              event, self, blink::WebInputEvent::kMouseDown,
+              blink::WebInputEvent::kLeftButtonDown);
+      blink::WebMouseEvent mouseUpEvent =
+          WebMouseEventBuilder::BuildFromTouchEvent(
+              event, self, blink::WebInputEvent::kMouseUp,
+              blink::WebInputEvent::kNoModifiers);
+
+      ui::LatencyInfo latency_info(ui::SourceEventType::OTHER);
+      latency_info.AddLatencyNumber(ui::INPUT_EVENT_LATENCY_UI_COMPONENT, 0, 0);
+
+      for (auto mouseEvent : {mouseDownEvent, mouseUpEvent}) {
+        if (renderWidgetHostView_->ShouldRouteEvent(mouseEvent)) {
+          renderWidgetHostView_->render_widget_host_->delegate()
+              ->GetInputEventRouter()
+              ->RouteMouseEvent(renderWidgetHostView_.get(), &mouseEvent,
+                                latency_info);
+        } else {
+          renderWidgetHostView_->ProcessMouseEvent(mouseEvent, latency_info);
+        }
+      }
+    } else {
+      [responderDelegate_ touchesBeganWithEvent:event];
+    }
+  } else {
+    [responderDelegate_ touchesBeganWithEvent:event];
+  }
 }
 
 - (void)touchesCancelledWithEvent:(NSEvent*)event {

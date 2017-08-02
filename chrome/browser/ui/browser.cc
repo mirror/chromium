@@ -982,6 +982,9 @@ void Browser::TabInsertedAt(TabStripModel* tab_strip_model,
 void Browser::TabClosingAt(TabStripModel* tab_strip_model,
                            WebContents* contents,
                            int index) {
+  if (contents->GetPopupContents()) {
+    delete contents->GetPopupContents();
+  }
   exclusive_access_manager_->OnTabClosing(contents);
   SessionService* session_service =
       SessionServiceFactory::GetForProfile(profile_);
@@ -1116,6 +1119,13 @@ void Browser::ActiveTabChanged(WebContents* old_contents,
     instant_controller_->ActiveTabChanged();
 
   SearchTabHelper::FromWebContents(new_contents)->OnTabActivated();
+
+#if defined(OS_MACOSX)
+  // The touchbar needs to observe the correct WebContents to be able to set
+  // the popup_contents_ and is_error_page_ via the observer.
+  touchbar_web_contents_manager_.reset(
+      new TouchbarWebContentsManager(new_contents));
+#endif
 }
 
 void Browser::TabMoved(WebContents* contents,
@@ -1514,12 +1524,25 @@ void Browser::VisibleSecurityStateChanged(WebContents* source) {
   helper->VisibleSecurityStateChanged();
 }
 
+void Browser::DisplayWebContentsInTouchbar(content::WebContents* contents) {
+  window()->DisplayWebContentsInTouchbar(contents);
+}
+
 void Browser::AddNewContents(WebContents* source,
                              WebContents* new_contents,
                              WindowOpenDisposition disposition,
                              const gfx::Rect& initial_rect,
                              bool user_gesture,
                              bool* was_blocked) {
+#if defined(OS_MACOSX)
+  if (touchbar_web_contents_manager_->ShouldHidePopup(disposition)) {
+    // Hide the currently created popup.
+    disposition = WindowOpenDisposition::IGNORE_ACTION;
+    // Display the popup's WebContents in the touchbar.
+    touchbar_web_contents_manager_->DisplayWebContentsInTouchbar(new_contents);
+  }
+
+#endif
   chrome::AddWebContents(this, source, new_contents, disposition, initial_rect,
                          user_gesture, was_blocked);
 }
