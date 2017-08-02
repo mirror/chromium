@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0ed5888_866b5590",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/EmbeddedWorker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-02T05:22:16Z",
+      "side": 1,
+      "message": "+haraken@, is it allowed modules/ depends on core/exported?",
+      "range": {
+        "startLine": 35,
+        "startChar": 6,
+        "endLine": 35,
+        "endChar": 7
+      },
+      "revId": "b8fd31009a8c6e38288a2868bf86c6b5d6718501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
