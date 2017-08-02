@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c43ad38_58d20622",
+        "filename": "third_party/WebKit/Source/core/paint/BoxPaintInvalidatorTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-02T23:49:54Z",
+      "side": 1,
+      "message": "nit: remove",
+      "revId": "306e4eca1c777490234eb7dcd6d5663bdedae8f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
