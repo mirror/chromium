@@ -34,6 +34,24 @@
       "revId": "e18c61b68e2fe1027ab78d322f6a19f1f606bfe1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb763962_aede0b83",
+        "filename": "extensions/browser/api/networking_private/networking_private_chromeos.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-02T22:07:19Z",
+      "side": 1,
+      "message": "OK, so let\u0027s make that explicit / more clear. set_new_pin only made sense with the old logic when we always called RequirePin().\n\nif (!require_pin || new_pin.empty()) {\n  // Set the RequirePin state.\n  ...RequirePin(...);\n} else {\n  // Change the pin. RequirePin must already have been set to true.\n  // TODO(benchan): Check that Cellular.SIMLockStatus.LockEnabled is true.\n  ...ChangePin(..., new_pin, ...);\n}",
+      "parentUuid": "542d4706_a503a22b",
+      "revId": "e18c61b68e2fe1027ab78d322f6a19f1f606bfe1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
