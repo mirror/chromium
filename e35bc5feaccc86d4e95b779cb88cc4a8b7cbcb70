@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e39ffc5_e069384a",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 1219,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-08-02T22:54:41Z",
+      "side": 1,
+      "message": "Style guide discourages using unsigned like this, use int instead: https://google.github.io/styleguide/cppguide.html#Integer_Types",
+      "range": {
+        "startLine": 1219,
+        "startChar": 2,
+        "endLine": 1219,
+        "endChar": 10
+      },
+      "revId": "e35bc5feaccc86d4e95b779cb88cc4a8b7cbcb70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
