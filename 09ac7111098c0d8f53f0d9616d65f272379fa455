@@ -66,6 +66,30 @@
     },
     {
       "key": {
+        "uuid": "9e2c641c_eca00e79",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-08-02T22:57:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1bb91bf8_1c13889e",
+      "range": {
+        "startLine": 369,
+        "startChar": 60,
+        "endLine": 369,
+        "endChar": 61
+      },
+      "revId": "09ac7111098c0d8f53f0d9616d65f272379fa455",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de693578_c1ca88d5",
         "filename": "services/resource_coordinator/coordination_unit/web_contents_coordination_unit_impl.cc",
         "patchSetId": 5
@@ -77,6 +101,30 @@
       "writtenOn": "2017-08-02T22:15:19Z",
       "side": 1,
       "message": "Why do we need to convert to double here?",
+      "range": {
+        "startLine": 56,
+        "startChar": 4,
+        "endLine": 56,
+        "endChar": 10
+      },
+      "revId": "09ac7111098c0d8f53f0d9616d65f272379fa455",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4a4fe1f_2e4a05b7",
+        "filename": "services/resource_coordinator/coordination_unit/web_contents_coordination_unit_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-08-02T22:57:21Z",
+      "side": 1,
+      "message": "Changed this with lpy\u0027s suggestion anyway.",
+      "parentUuid": "de693578_c1ca88d5",
       "range": {
         "startLine": 56,
         "startChar": 4,
@@ -109,6 +157,30 @@
       "revId": "09ac7111098c0d8f53f0d9616d65f272379fa455",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac404a9a_19f938f9",
+        "filename": "services/resource_coordinator/coordination_unit/web_contents_coordination_unit_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-08-02T22:57:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "799209c4_5cbcb6e3",
+      "range": {
+        "startLine": 69,
+        "startChar": 60,
+        "endLine": 69,
+        "endChar": 64
+      },
+      "revId": "09ac7111098c0d8f53f0d9616d65f272379fa455",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
