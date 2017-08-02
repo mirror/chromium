@@ -16,6 +16,24 @@
       "revId": "7cfa6d3b702707a0bd381c95d3088c234e2dda17",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "308cc968_4086edba",
+        "filename": "chrome/browser/resources/settings/people_page/setup_pin_dialog.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-02T18:59:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a120bbb8_a40d5ea6",
+      "revId": "7cfa6d3b702707a0bd381c95d3088c234e2dda17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
