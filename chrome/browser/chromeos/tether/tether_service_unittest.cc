@@ -67,6 +67,32 @@ class MockCryptAuthDeviceManager : public cryptauth::CryptAuthDeviceManager {
                      std::vector<cryptauth::ExternalDeviceInfo>());
 };
 
+class MockExtendedBluetoothAdapter : public device::MockBluetoothAdapter {
+ public:
+  void SetAdvertisingInterval(
+      const base::TimeDelta& min,
+      const base::TimeDelta& max,
+      const base::Closure& callback,
+      const AdvertisementErrorCallback& error_callback) override {
+    if (is_ble_advertising_supported_) {
+      callback.Run();
+    } else {
+      error_callback.Run(device::BluetoothAdvertisement::ErrorCode::
+                             ERROR_INVALID_ADVERTISEMENT_INTERVAL);
+    }
+  }
+
+  void SetIsBleAdvertisingSupported(bool is_ble_advertising_supported) {
+    is_ble_advertising_supported_ = is_ble_advertising_supported;
+  }
+
+ protected:
+  ~MockExtendedBluetoothAdapter() override {}
+
+ private:
+  bool is_ble_advertising_supported_ = true;
+};
+
 class TestTetherService : public TetherService {
  public:
   TestTetherService(Profile* profile,
@@ -109,7 +135,8 @@ class TestInitializerDelegate : public TetherService::InitializerDelegate {
       chromeos::ManagedNetworkConfigurationHandler*
           managed_network_configuration_handler,
       chromeos::NetworkConnect* network_connect,
-      chromeos::NetworkConnectionHandler* network_connection_handler) override {
+      chromeos::NetworkConnectionHandler* network_connection_handler,
+      scoped_refptr<device::BluetoothAdapter> adapter) override {
     is_tether_running_ = true;
   }
 
@@ -155,7 +182,7 @@ class TetherServiceTest : public chromeos::NetworkStateTest {
         mock_cryptauth_device_manager_.get());
 
     mock_adapter_ =
-        make_scoped_refptr(new NiceMock<device::MockBluetoothAdapter>());
+        make_scoped_refptr(new NiceMock<MockExtendedBluetoothAdapter>());
     is_adapter_powered_ = true;
     ON_CALL(*mock_adapter_, IsPresent()).WillByDefault(Return(true));
     ON_CALL(*mock_adapter_, IsPowered())
@@ -244,7 +271,7 @@ class TetherServiceTest : public chromeos::NetworkStateTest {
   chromeos::tether::FakeNotificationPresenter* fake_notification_presenter_;
   std::unique_ptr<cryptauth::FakeCryptAuthService> fake_cryptauth_service_;
 
-  scoped_refptr<device::MockBluetoothAdapter> mock_adapter_;
+  scoped_refptr<MockExtendedBluetoothAdapter> mock_adapter_;
   bool is_adapter_powered_;
 
   std::unique_ptr<TestTetherService> tether_service_;
@@ -286,6 +313,18 @@ TEST_F(TetherServiceTest, TestSuspend) {
             network_state_handler()->GetTechnologyState(
                 chromeos::NetworkTypePattern::Tether()));
   EXPECT_TRUE(test_initializer_delegate_->is_tether_running());
+}
+
+TEST_F(TetherServiceTest, TestBleAdvertisingNotSupported) {
+  mock_adapter_->SetIsBleAdvertisingSupported(false);
+
+  CreateTetherService();
+
+  EXPECT_EQ(
+      chromeos::NetworkStateHandler::TechnologyState::TECHNOLOGY_UNAVAILABLE,
+      network_state_handler()->GetTechnologyState(
+          chromeos::NetworkTypePattern::Tether()));
+  EXPECT_FALSE(test_initializer_delegate_->is_tether_running());
 }
 
 TEST_F(TetherServiceTest, TestScreenLock) {
