@@ -61,6 +61,7 @@ class PepperWebPluginImpl : public blink::WebPlugin {
   blink::WebString SelectionAsText() const override;
   blink::WebString SelectionAsMarkup() const override;
   bool CanEditText() const override;
+  void ReplaceSelection(const blink::WebString& text) override;
   blink::WebURL LinkAtPosition(const blink::WebPoint& position) const override;
   bool GetPrintPresetOptionsFromDocument(
       blink::WebPrintPresetOptions* preset_options) override;

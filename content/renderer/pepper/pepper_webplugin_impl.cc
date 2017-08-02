@@ -289,6 +289,12 @@ bool PepperWebPluginImpl::CanEditText() const {
   return instance_ && instance_->CanEditText();
 }
 
+void PepperWebPluginImpl::ReplaceSelection(const WebString& text) {
+  if (!instance_)
+    return;
+  instance_->ReplaceSelection(text.Utf8());
+}
+
 WebURL PepperWebPluginImpl::LinkAtPosition(const WebPoint& position) const {
   // Re-entrancy may cause JS to try to execute script on the plugin before it
   // is fully initialized. See: crbug.com/715747.
