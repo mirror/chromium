@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "7bd12cd0_cededc43",
+        "filename": "base/sync_socket_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-02T20:08:18Z",
+      "side": 1,
+      "message": "\"the world is already bad\" is not a convincing argument for making it worse, imo :-P\n\nI haven\u0027t looked at the code under test in detail here, but the usual way to test things like this without sleep() is to have a Time object and then stub this out in tests and call some StepForwardForTesting() function on the thread that advances time on a mock thread. It\u0027s possible that our thread class doesn\u0027t support that.",
+      "parentUuid": "90a7fc39_38645a7b",
+      "range": {
+        "startLine": 150,
+        "startChar": 18,
+        "endLine": 150,
+        "endChar": 34
+      },
+      "revId": "1ebafa813b231bbaa659241abfe0026d2d767112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e267a6dc_72ac5006",
         "filename": "base/sync_socket_unittest.cc",
         "patchSetId": 2
