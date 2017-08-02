@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "50bdf29e_442c2de9",
+        "filename": "chrome/browser/ui/cocoa/browser/exclusive_access_controller_views.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-08-02T02:55:04Z",
+      "side": 1,
+      "message": "Even wrapped there still would need to be an assignment to clear it? Might as well just have a method to check and run? Bit simpler than a wrapping class.\nCallHideCallbackAsNotShownIfNecessary()  // repeated 4 times.",
+      "parentUuid": "686eb4b4_3cef2653",
+      "range": {
+        "startLine": 86,
+        "startChar": 4,
+        "endLine": 86,
+        "endChar": 25
+      },
+      "revId": "69a5e63bbe34d873d627133e4dfdb13f8ce7c719",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7e206689_9ef2f4fb",
         "filename": "chrome/browser/ui/exclusive_access/exclusive_access_bubble_hide_callback.h",
         "patchSetId": 8
