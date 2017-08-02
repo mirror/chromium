@@ -863,17 +863,15 @@ void CSSParserImpl::ConsumeDeclarationList(CSSParserTokenStream& stream,
         stream.UncheckedConsume();
         break;
       case kIdentToken: {
+        const auto declaration_start = stream.Position();
+        while (!stream.AtEnd() && stream.Peek().GetType() != kSemicolonToken)
+          stream.ConsumeComponentValue();
+
         // TODO(shend): Use streams instead of ranges
-        auto range = stream.MakeRangeToEOF();
+        ConsumeDeclaration(
+            stream.MakeSubRange(declaration_start, stream.Position()),
+            rule_type);
 
-        const CSSParserToken* declaration_start = &range.Peek();
-        while (!range.AtEnd() && range.Peek().GetType() != kSemicolonToken)
-          range.ConsumeComponentValue();
-
-        ConsumeDeclaration(range.MakeSubRange(declaration_start, &range.Peek()),
-                           rule_type);
-
-        stream.UpdatePositionFromRange(range);
         break;
       }
       case kAtKeywordToken: {
