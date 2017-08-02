@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca89348e_96d9aa75",
+        "filename": "content/child/service_worker/service_worker_dispatcher_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-02T06:00:02Z",
+      "side": 1,
+      "message": "I think you forgot to remove this?",
+      "revId": "1c6cdb47a4aec98ac8f54fb22f4435576c0e403a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "561d3842_61c1baa5",
+        "filename": "content/child/service_worker/service_worker_provider_context.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-02T06:00:02Z",
+      "side": 1,
+      "message": "can remove this now",
+      "revId": "1c6cdb47a4aec98ac8f54fb22f4435576c0e403a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
