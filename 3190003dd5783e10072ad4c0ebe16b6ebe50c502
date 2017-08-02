@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "776b2d84_5ce30e2c",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParserHelpers.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-02T23:00:55Z",
+      "side": 1,
+      "message": "Hmm, sizeof...(values) is a compile time constant, so a runtime DCHECK_EQ doesnt seem appropriate. I would get someone who\u0027s more familiar with variadic templates to review this.",
+      "revId": "3190003dd5783e10072ad4c0ebe16b6ebe50c502",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

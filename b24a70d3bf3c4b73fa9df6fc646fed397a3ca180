@@ -34,6 +34,24 @@
       "revId": "b24a70d3bf3c4b73fa9df6fc646fed397a3ca180",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50141b6b_1d7033a7",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSShorthandPropertyAPIGrid.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-02T23:00:55Z",
+      "side": 1,
+      "message": "Yeah, you could argue both that it\u0027s less readable (cos template magics) or that it\u0027s more readable (since it\u0027s no longer a wall of text). I don\u0027t think Blink \"encourages\" templates. Ultimately it depends on the author/reviewers. I know animations and parsing use templates, but most other parts of the codebase don\u0027t. My personal opinion is that templates (and template metaprogramming) is a big part of modern C++, and should not be dismissed simply because it\u0027s \"complicated\".\n\nIn this case, I would ask the style team for an opinion.",
+      "parentUuid": "e5e82524_31a2ed50",
+      "revId": "b24a70d3bf3c4b73fa9df6fc646fed397a3ca180",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
