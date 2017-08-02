@@ -281,6 +281,30 @@
       "revId": "6f519ea13897502e560743752a2ee98a44c03909",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "586ad7c7_34484aa1",
+        "filename": "extensions/browser/file_reader_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-02T00:01:53Z",
+      "side": 1,
+      "message": "Oh my bad, and yeah the newline helps.",
+      "parentUuid": "e25da9e8_9604c8a5",
+      "range": {
+        "startLine": 5,
+        "startChar": 10,
+        "endLine": 5,
+        "endChar": 20
+      },
+      "revId": "6f519ea13897502e560743752a2ee98a44c03909",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
