@@ -92,13 +92,20 @@ void PaintedScrollbarLayerImpl::AppendQuads(
   gfx::PointF uv_top_left(0.f, 0.f);
   gfx::PointF uv_bottom_right(1.f, 1.f);
 
-  SharedQuadState* shared_quad_state =
+  SharedQuadState* shared_quad_state_thumb =
       render_pass->CreateAndAppendSharedQuadState();
-  PopulateScaledSharedQuadState(shared_quad_state, internal_contents_scale_,
-                                internal_contents_scale_);
+  PopulateScaledSharedQuadState(shared_quad_state_thumb,
+                                internal_contents_scale_,
+                                internal_contents_scale_, false);
+
+  SharedQuadState* shared_quad_state_track =
+      render_pass->CreateAndAppendSharedQuadState();
+  PopulateScaledSharedQuadState(shared_quad_state_track,
+                                internal_contents_scale_,
+                                internal_contents_scale_, contents_opaque());
 
   AppendDebugBorderQuad(render_pass, internal_content_bounds_,
-                        shared_quad_state, append_quads_data);
+                        shared_quad_state_track, append_quads_data);
 
   gfx::Rect thumb_quad_rect = ComputeThumbQuadRect();
   gfx::Rect scaled_thumb_quad_rect =
@@ -120,7 +127,7 @@ void PaintedScrollbarLayerImpl::AppendQuads(
                              thumb_opacity_};
     TextureDrawQuad* quad =
         render_pass->CreateAndAppendDrawQuad<TextureDrawQuad>();
-    quad->SetNew(shared_quad_state, scaled_thumb_quad_rect, opaque_rect,
+    quad->SetNew(shared_quad_state_thumb, scaled_thumb_quad_rect, opaque_rect,
                  scaled_visible_thumb_quad_rect, thumb_resource_id,
                  premultipled_alpha, uv_top_left, uv_bottom_right,
                  SK_ColorTRANSPARENT, opacity, flipped, nearest_neighbor,
@@ -141,7 +148,7 @@ void PaintedScrollbarLayerImpl::AppendQuads(
     const float opacity[] = {1.0f, 1.0f, 1.0f, 1.0f};
     TextureDrawQuad* quad =
         render_pass->CreateAndAppendDrawQuad<TextureDrawQuad>();
-    quad->SetNew(shared_quad_state, scaled_track_quad_rect, opaque_rect,
+    quad->SetNew(shared_quad_state_track, scaled_track_quad_rect, opaque_rect,
                  scaled_visible_track_quad_rect, track_resource_id,
                  premultipled_alpha, uv_top_left, uv_bottom_right,
                  SK_ColorTRANSPARENT, opacity, flipped, nearest_neighbor,
