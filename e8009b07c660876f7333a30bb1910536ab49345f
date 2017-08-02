@@ -16,6 +16,24 @@
       "revId": "e8009b07c660876f7333a30bb1910536ab49345f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce620434_4bcaeba1",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/TargetManager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-08-02T04:21:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c99586e_d33e943a",
+      "revId": "e8009b07c660876f7333a30bb1910536ab49345f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
