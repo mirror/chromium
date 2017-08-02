@@ -7,6 +7,8 @@
 
 #import <Foundation/Foundation.h>
 
+#include <map>
+
 class GURL;
 
 // This class stores all the parameters relevant to the app startup in case
@@ -16,6 +18,12 @@ class GURL;
 // The URL received that should be opened.
 @property(nonatomic, readonly, assign) const GURL& externalURL;
 
+// The URL query string parameters in the case that the app was launched as a
+// result of Universal Link navigation. The map associates query string
+// parameters with their corresponding value.
+@property(nonatomic, assign) std::map<std::string, std::string>
+    externalURLParams;
+
 // Boolean to track if a voice search is requested at startup.
 @property(nonatomic, readwrite, assign) BOOL launchVoiceSearch;
 // Boolean to track if the app should launch in incognito mode.
@@ -24,6 +32,8 @@ class GURL;
 @property(nonatomic, readwrite, assign) BOOL launchFocusOmnibox;
 // Boolean to track if a QR scanner is requested at startup.
 @property(nonatomic, readwrite, assign) BOOL launchQRScanner;
+// Boolean to track if a Payment Request is requested at startup.
+@property(nonatomic, readwrite, assign) BOOL launchPaymentRequest;
 
 - (instancetype)init NS_UNAVAILABLE;
 
