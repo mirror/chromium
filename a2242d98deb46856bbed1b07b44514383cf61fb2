@@ -19,6 +19,40 @@
     },
     {
       "key": {
+        "uuid": "9aaafd4f_a0595023",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/common_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-08-02T17:28:04Z",
+      "side": 1,
+      "message": "Optional: we could also add unit test methods for testing _test_commit (or whatever the function is called) when (1) there are errors on applying the patch, (2) the patch applies but the diff is empty.\n\nIf we add such tests (which is probably not necessary), there would be two main approaches: replacing test_patch or apply_patch, or adding canned command responses using MockExecutive (https://cs.chromium.org/chromium/src/third_party/WebKit/Tools/Scripts/webkitpy/common/system/executive_mock.py?l\u003d68).",
+      "revId": "a2242d98deb46856bbed1b07b44514383cf61fb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9652ab91_f22353ec",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/local_wpt.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-08-02T17:28:04Z",
+      "side": 1,
+      "message": "If I understand correctly, this diff is used in order to tell if a patch could be applied successfully but there was no diff after applying the patch.\n\nI\u0027m not sure, but I guess this happens when the patch itself is empty?\n\nAnyway, in this case (no diff), perhaps we could also return False to indicate \"something was wrong\"? This might simplify the _test_commit function that uses this.",
+      "revId": "a2242d98deb46856bbed1b07b44514383cf61fb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "78c7a82f_1605cd05",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_importer.py",
         "patchSetId": 1
@@ -30,6 +64,24 @@
       "writtenOn": "2017-08-02T02:45:19Z",
       "side": 1,
       "message": "This isn\u0027t necessarily in the scope of this CL but does this need to be a separate method?",
+      "revId": "a2242d98deb46856bbed1b07b44514383cf61fb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb4a20c6_a96269a6",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_importer.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-08-02T17:28:04Z",
+      "side": 1,
+      "message": "This a separate method just for convenience in the unit tests -- having this here means that we can replace it in unit tests of other importer methods without caring about how the list of exportable commits is actually obtained.",
+      "parentUuid": "78c7a82f_1605cd05",
       "revId": "a2242d98deb46856bbed1b07b44514383cf61fb2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
