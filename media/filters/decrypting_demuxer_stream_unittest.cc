@@ -340,7 +340,7 @@ TEST_F(DecryptingDemuxerStreamTest, Read_DecryptError) {
   EXPECT_CALL(*decryptor_, Decrypt(_, encrypted_buffer_, _))
       .WillRepeatedly(RunCallback<2>(Decryptor::kError,
                                      scoped_refptr<DecoderBuffer>()));
-  ReadAndExpectBufferReadyWith(DemuxerStream::kAborted, NULL);
+  ReadAndExpectBufferReadyWith(DemuxerStream::kError, nullptr);
 }
 
 // Test the case where the input is an end-of-stream buffer.
