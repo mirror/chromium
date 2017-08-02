@@ -67,6 +67,9 @@ class CORE_EXPORT Worklet : public GarbageCollectedFinalized<Worklet>,
   virtual bool NeedsToCreateGlobalScope() = 0;
   virtual WorkletGlobalScopeProxy* CreateGlobalScope() = 0;
 
+  // TODO(nhiroki): Support the case where there are multiple global scopes.
+  virtual unsigned SelectedGlobalScope() const { return 0u; }
+
   // "A Worklet has a list of the worklet's WorkletGlobalScopes. Initially this
   // list is empty; it is populated when the user agent chooses to create its
   // WorkletGlobalScope."
