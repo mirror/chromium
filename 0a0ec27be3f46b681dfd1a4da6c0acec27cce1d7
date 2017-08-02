@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "70db07d7_4b85e885",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-08-02T19:25:18Z",
+      "side": 1,
+      "message": "Ok, then I\u0027ll AdvanceTime only when it\u0027s not processing task. This means that the time between task start and task end will all be considered to be in the renderer status measured at task end.",
+      "parentUuid": "66c1c9e2_d04e554a",
+      "revId": "0a0ec27be3f46b681dfd1a4da6c0acec27cce1d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e2e77d7a_9517efe3",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator.cc",
         "patchSetId": 11
@@ -78,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "f954b8c5_f46cd30c",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-08-02T19:25:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2e77d7a_9517efe3",
+      "range": {
+        "startLine": 147,
+        "startChar": 24,
+        "endLine": 147,
+        "endChar": 38
+      },
+      "revId": "0a0ec27be3f46b681dfd1a4da6c0acec27cce1d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7491c168_2c2a16b8",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator.cc",
         "patchSetId": 11
@@ -92,6 +134,24 @@
       "revId": "0a0ec27be3f46b681dfd1a4da6c0acec27cce1d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43467158_18a61122",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-08-02T19:25:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7491c168_2c2a16b8",
+      "revId": "0a0ec27be3f46b681dfd1a4da6c0acec27cce1d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -115,6 +175,30 @@
       "revId": "0a0ec27be3f46b681dfd1a4da6c0acec27cce1d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8cc130e_91ac3027",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-08-02T19:25:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a445e812_f9671050",
+      "range": {
+        "startLine": 170,
+        "startChar": 28,
+        "endLine": 170,
+        "endChar": 68
+      },
+      "revId": "0a0ec27be3f46b681dfd1a4da6c0acec27cce1d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
