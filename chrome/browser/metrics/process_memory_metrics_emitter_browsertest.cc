@@ -139,8 +139,15 @@ void CheckAllMemoryMetrics(const base::HistogramTester& histogram_tester,
 
 class ProcessMemoryMetricsEmitterTest : public InProcessBrowserTest {
  public:
-  ProcessMemoryMetricsEmitterTest() {}
+  ProcessMemoryMetricsEmitterTest() {
+
+  }
   ~ProcessMemoryMetricsEmitterTest() override {}
+
+  void SetUp() override {
+    ukm::UkmRecorder::Set(&test_ukm_recorder_);
+    InProcessBrowserTest::SetUp();
+  }
 
  protected:
   ukm::TestUkmRecorder test_ukm_recorder_;

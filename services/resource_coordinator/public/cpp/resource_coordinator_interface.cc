@@ -71,9 +71,9 @@ void ResourceCoordinatorInterface::SendEvent(
 
 void ResourceCoordinatorInterface::SetProperty(
     mojom::PropertyType property_type,
-    std::unique_ptr<base::Value> value) {
+    int64_t value) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  service_->SetProperty(property_type, std::move(value));
+  service_->SetProperty(property_type, value);
 }
 
 void ResourceCoordinatorInterface::AddChild(
