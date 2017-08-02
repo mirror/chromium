@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "54f60b7c_673c258e",
+        "filename": "chrome/browser/ui/webui/memory_internals_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-02T01:16:55Z",
+      "side": 1,
+      "message": "sender_id fixed",
+      "parentUuid": "c8da775b_18fe50a9",
+      "revId": "65687eb9653c66b06ab5a6a52a5157ae9f37afba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86c2bed9_39409382",
         "filename": "chrome/browser/ui/webui/memory_internals_ui.cc",
         "patchSetId": 3
@@ -39,6 +57,30 @@
       "revId": "65687eb9653c66b06ab5a6a52a5157ae9f37afba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4ada6a3_d086f5fb",
+        "filename": "chrome/browser/ui/webui/memory_internals_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-02T01:16:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86c2bed9_39409382",
+      "range": {
+        "startLine": 83,
+        "startChar": 14,
+        "endLine": 83,
+        "endChar": 41
+      },
+      "revId": "65687eb9653c66b06ab5a6a52a5157ae9f37afba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "24f97f3d_2d7bec27",
+        "filename": "chrome/profiling/allocation_tracker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-02T01:16:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ce9d168_5f9643d7",
+      "range": {
+        "startLine": 34,
+        "startChar": 22,
+        "endLine": 34,
+        "endChar": 33
+      },
+      "revId": "65687eb9653c66b06ab5a6a52a5157ae9f37afba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98b8ddbf_8df8d03f",
         "filename": "chrome/profiling/memlog_connection_manager.cc",
         "patchSetId": 3
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "8248c4cd_8b64a70c",
+        "filename": "chrome/profiling/memlog_connection_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-02T01:16:55Z",
+      "side": 1,
+      "message": "no, since vector needs to be able to assign.",
+      "parentUuid": "98b8ddbf_8df8d03f",
+      "revId": "65687eb9653c66b06ab5a6a52a5157ae9f37afba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9cd953d8_44d39357",
         "filename": "chrome/profiling/memlog_impl.cc",
         "patchSetId": 3
@@ -96,6 +180,24 @@
       "revId": "65687eb9653c66b06ab5a6a52a5157ae9f37afba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e128c913_776f2244",
+        "filename": "chrome/profiling/memlog_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-02T01:16:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9cd953d8_44d39357",
+      "revId": "65687eb9653c66b06ab5a6a52a5157ae9f37afba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -142,6 +244,30 @@
       "revId": "65687eb9653c66b06ab5a6a52a5157ae9f37afba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a185bec_f5bf1092",
+        "filename": "chrome/profiling/memlog_stream_parser.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-02T01:16:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "668b7d31_471ea913",
+      "range": {
+        "startLine": 34,
+        "startChar": 13,
+        "endLine": 34,
+        "endChar": 17
+      },
+      "revId": "65687eb9653c66b06ab5a6a52a5157ae9f37afba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
