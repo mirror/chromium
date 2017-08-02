@@ -33,6 +33,12 @@ class GURL;
 // made current.
 - (BOOL)shouldOpenNTPTabOnActivationOfTabModel:(TabModel*)tabModel;
 
+// Returns whether the user should stay on the current visible tab rather than
+// moving to a new tab based on flags set within the startup information's
+// startup parameters.
+- (BOOL)shouldStayOnTabWithStartupParameters:
+    (id<StartupInformation>)startupInformation;
+
 @end
 
 #endif  // IOS_CHROME_APP_APPLICATION_DELEGATE_TAB_OPENING_H_

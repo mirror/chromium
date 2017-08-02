@@ -8,6 +8,7 @@
 #include "base/mac/foundation_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/user_metrics_action.h"
+#include "base/stl_util.h"
 #include "base/strings/sys_string_conversions.h"
 #include "ios/chrome/browser/chrome_url_constants.h"
 #include "ios/chrome/common/app_group/app_group_constants.h"
@@ -74,7 +75,6 @@ enum MobileSessionStartAction {
   if (!gurl.is_valid() || gurl.scheme().length() == 0)
     return nil;
 
-  // TODO(ios): Temporary fix for b/7174478
   if (IsXCallbackURL(gurl)) {
     NSString* action = [completeURL path];
     // Currently only "open" and "extension-command" are supported.

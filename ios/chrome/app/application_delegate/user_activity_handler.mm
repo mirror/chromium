@@ -12,21 +12,25 @@
 #include "base/mac/foundation_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/metrics/user_metrics_action.h"
+#include "base/stl_util.h"
 #include "base/strings/sys_string_conversions.h"
 #include "components/handoff/handoff_utility.h"
 #import "ios/chrome/app/application_delegate/startup_information.h"
 #import "ios/chrome/app/application_delegate/tab_opening.h"
 #include "ios/chrome/app/application_mode.h"
+#include "ios/chrome/app/chrome_app_startup_parameters.h"
 #import "ios/chrome/app/spotlight/actions_spotlight_manager.h"
 #import "ios/chrome/app/spotlight/spotlight_util.h"
 #include "ios/chrome/browser/app_startup_parameters.h"
 #include "ios/chrome/browser/chrome_url_constants.h"
 #include "ios/chrome/browser/metrics/first_user_action_recorder.h"
+#include "ios/chrome/browser/payments/ios_payment_instrument_launcher.h"
 #import "ios/chrome/browser/tabs/tab.h"
 #import "ios/chrome/browser/tabs/tab_model.h"
 #import "ios/chrome/browser/u2f/u2f_controller.h"
 #import "ios/chrome/browser/ui/main/browser_view_information.h"
 #import "net/base/mac/url_conversions.h"
+#include "net/base/url_util.h"
 #include "ui/base/page_transition_types.h"
 #include "url/gurl.h"
 
@@ -42,6 +46,7 @@ NSString* const kShortcutNewTab = @"OpenNewTab";
 NSString* const kShortcutNewIncognitoTab = @"OpenIncognitoTab";
 NSString* const kShortcutVoiceSearch = @"OpenVoiceSearch";
 NSString* const kShortcutQRScanner = @"OpenQRScanner";
+
 }  // namespace
 
 @interface UserActivityHandler ()
@@ -51,6 +56,9 @@ NSString* const kShortcutQRScanner = @"OpenQRScanner";
 // Routes Universal 2nd Factor (U2F) callback to the correct Tab.
 + (void)routeU2FURL:(const GURL&)URL
     browserViewInformation:(id<BrowserViewInformation>)browserViewInformation;
+// Handles Universal Link navigation to the app by creating the appropriate
+// startup parameters for the given link's query parameters.
++ (AppStartupParameters*)createStartupParamsFromUniversalLink:(const GURL&)URL;
 @end
 
 @implementation UserActivityHandler
@@ -73,15 +81,21 @@ NSString* const kShortcutQRScanner = @"OpenQRScanner";
                               handoff::ORIGIN_COUNT);
   } else if ([userActivity.activityType
                  isEqualToString:NSUserActivityTypeBrowsingWeb]) {
-    // App was launched as the result of a Universal Link navigation. The value
-    // of userActivity.webpageURL is not used. The only supported action
-    // at this time is opening a New Tab Page.
-    GURL newTabURL(kChromeUINewTabURL);
-    webpageURL = net::NSURLWithGURL(newTabURL);
+    // App was launched as the result of a Universal Link navigation.
+    GURL gurl = net::GURLWithNSURL(webpageURL);
     AppStartupParameters* startupParams =
-        [[AppStartupParameters alloc] initWithExternalURL:newTabURL];
+        [UserActivityHandler createStartupParamsFromUniversalLink:gurl];
+    if (!startupParams) {
+      GURL newTabURL(kChromeUINewTabURL);
+      webpageURL = net::NSURLWithGURL(newTabURL);
+      startupParams =
+          [[AppStartupParameters alloc] initWithExternalURL:newTabURL];
+    }
     [startupInformation setStartupParameters:startupParams];
     base::RecordAction(base::UserMetricsAction("IOSLaunchedByUniversalLink"));
+
+    if ([startupParams launchPaymentRequest])
+      return YES;
   } else if (spotlight::IsSpotlightAvailable() &&
              [userActivity.activityType
                  isEqualToString:CSSearchableItemActionType]) {
@@ -226,6 +240,12 @@ NSString* const kShortcutQRScanner = @"OpenQRScanner";
     // synchronously.
     [startupInformation setStartupParameters:nil];
   } else {
+    // Depending on the startup parameters the user may need to stay on the
+    // current tab rather than navigate to a new one. This checks for that
+    // before attempting to present a new tab.
+    if ([tabOpener shouldStayOnTabWithStartupParameters:startupInformation])
+      return;
+
     // The app is already active so the applicationDidBecomeActive: method
     // will never be called. Open the requested URL after all modal UIs have
     // been dismissed. |_startupParameters| must be retained until all deferred
@@ -309,6 +329,28 @@ NSString* const kShortcutQRScanner = @"OpenQRScanner";
       }
     }
   }
+}
+
++ (AppStartupParameters*)createStartupParamsFromUniversalLink:(const GURL&)URL {
+  std::map<std::string, std::string> parameters;
+  net::QueryIterator query_iterator(URL);
+  while (!query_iterator.IsAtEnd()) {
+    parameters.insert(std::make_pair(query_iterator.GetKey(),
+                                     query_iterator.GetUnescapedValue()));
+    query_iterator.Advance();
+  }
+
+  // Currently only Payment Request parameters are supported.
+  if (base::ContainsKey(parameters, payments::kPaymentRequestID) &&
+      base::ContainsKey(parameters, payments::kPaymentRequestData)) {
+    AppStartupParameters* startupParams =
+        [[AppStartupParameters alloc] initWithExternalURL:URL];
+    [startupParams setExternalURLParams:parameters];
+    [startupParams setLaunchPaymentRequest:YES];
+    return startupParams;
+  }
+
+  return nil;
 }
 
 @end
