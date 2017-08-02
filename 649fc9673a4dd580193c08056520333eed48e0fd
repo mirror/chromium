@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a366b05c_72f074e8",
+        "filename": "ui/views/controls/button/toggle_button.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-08-02T00:37:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "82c5016b_21bde6c9",
+      "range": {
+        "startLine": 187,
+        "startChar": 9,
+        "endLine": 187,
+        "endChar": 22
+      },
+      "revId": "649fc9673a4dd580193c08056520333eed48e0fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9320c032_3ddb6a8c",
         "filename": "ui/views/controls/button/toggle_button.cc",
         "patchSetId": 4
@@ -167,6 +191,54 @@
     },
     {
       "key": {
+        "uuid": "acc2ba46_34aa2791",
+        "filename": "ui/views/controls/button/toggle_button.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-08-02T00:37:27Z",
+      "side": 1,
+      "message": "actually, I guess that HasFocus is redundant because without focus we wouldn\u0027t be getting a key event.",
+      "parentUuid": "52c8331b_858818d9",
+      "range": {
+        "startLine": 222,
+        "startChar": 10,
+        "endLine": 222,
+        "endChar": 24
+      },
+      "revId": "649fc9673a4dd580193c08056520333eed48e0fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b6944c6_44e6933c",
+        "filename": "ui/views/controls/button/toggle_button.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-08-02T00:37:27Z",
+      "side": 1,
+      "message": "\u003e \u003e And that\u0027s pretty normal behavior --- we typically don\u0027t show focus\n\u003e \u003e indicators when someone is using the mouse to interact.\n\u003e \n\u003e I\u0027m not sure I would say it like that, it\u0027s more that many controls don\u0027t get focus when you click on them.\n\nYea, that\u0027s true in Views. I always thought of that as a sort of crutch because we don\u0027t have an easy way of copying the way the web does it (clicking does move focus around but the focus indicator is invisible till you press tab).",
+      "parentUuid": "918dd2a7_a3dc5f0f",
+      "range": {
+        "startLine": 222,
+        "startChar": 8,
+        "endLine": 222,
+        "endChar": 16
+      },
+      "revId": "649fc9673a4dd580193c08056520333eed48e0fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "53577ce9_b6ea9ed2",
         "filename": "ui/views/controls/button/toggle_button.h",
         "patchSetId": 4
@@ -187,6 +259,30 @@
       "revId": "649fc9673a4dd580193c08056520333eed48e0fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9efb6e5b_a334c8b3",
+        "filename": "ui/views/controls/button/toggle_button.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-08-02T00:37:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53577ce9_b6ea9ed2",
+      "range": {
+        "startLine": 74,
+        "startChar": 4,
+        "endLine": 74,
+        "endChar": 17
+      },
+      "revId": "649fc9673a4dd580193c08056520333eed48e0fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
