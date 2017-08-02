@@ -5,11 +5,13 @@
 #ifndef CONTENT_COMMON_UNIQUE_NAME_HELPER_H_
 #define CONTENT_COMMON_UNIQUE_NAME_HELPER_H_
 
+#include <map>
 #include <string>
 #include <vector>
 
 #include "base/macros.h"
 #include "base/strings/string_piece.h"
+#include "content/common/content_export.h"
 
 namespace content {
 
@@ -64,7 +66,7 @@ namespace content {
 //                   [ framePosition-forParent? ]
 //
 // retryNumber ::= smallest non-negative integer resulting in unique name
-class UniqueNameHelper {
+class CONTENT_EXPORT UniqueNameHelper {
  public:
   // Adapter class so UniqueNameHelper can be used with both RenderFrameImpl and
   // ExplodedFrameState.
@@ -74,7 +76,7 @@ class UniqueNameHelper {
     virtual ~FrameAdapter();
 
     virtual bool IsMainFrame() const = 0;
-    virtual bool IsCandidateUnique(const std::string& name) const = 0;
+    virtual bool IsCandidateUnique(base::StringPiece name) const = 0;
     // Returns the number of sibling frames of this frame. Note this should not
     // include this frame in the count.
     virtual int GetSiblingCount() const = 0;
@@ -133,6 +135,14 @@ class UniqueNameHelper {
   // initial empty document, as unique name changes after that point will break
   // history navigations. See https://crbug.com/607205.
   void UpdateName(const std::string& name);
+
+  // Helper to update legacy names generated for PageState v24 and earlier.
+  static std::string UpdateLegacyNameFromV24(
+      std::string legacy_name,
+      std::map<std::string, std::string>* replacements);
+
+  static std::string CalculateLegacyNameForTesting(const FrameAdapter* frame,
+                                                   const std::string& name);
 
  private:
   FrameAdapter* const frame_;
