@@ -16,6 +16,24 @@
       "revId": "366f55322b5f2cef79f1c0d38d269576da6c02bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8eb1b6d7_9440aa81",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-08-02T18:02:06Z",
+      "side": 1,
+      "message": "\u003eHow caller would know what index to use?\n\nThe PlatformSensorFusion constructor takes a \"const std::vector\u003cmojom::SensorType\u003e\u0026 source_sensor_types\" parameter, and the underlying source sensors are stored in the same order in the \"std::vector\u003cscoped_refptr\u003cPlatformSensor\u003e\u003e source_sensors_\". When caller constructs a certain fusion sensor, it needs to provide the types of the source sensors and the corresponding fusion sensor algorithm:\nhttps://cs.chromium.org/chromium/src/services/device/generic_sensor/platform_sensor_provider_mac.cc?l\u003d46-57\nSo the caller knows which index corresponds to which sensor type, and the order is fixed after the fusion sensor is constructed.\n\n\u003eWouldn\u0027t it be better to have syntax similar to OnSensorReadingChanged(mojom::SensorType \n\u003etype)?\n\u003e\n\u003ebool GetLatestReading(mojom::SensorType type, SensorReading* result);\n\u003e\n\u003eThen, it would be easier to get correct data from GetFusedData(mojom::SensorType\n\u003ewhich_sensor_changed, SensorReading* fused_reading);\n\nThe advantage of the current method is that it doesn\u0027t need to do a search for the |source_sensors_| for the correct data, since the order is fixed and the algorithm knows the index of the sensor it needs. If we add a \"mojom::SensorType type\" parameter to the GetLatestReading(), then we need to do a search each time when sensor data is needed, and it is not efficient.",
+      "parentUuid": "5b4642e6_23a6e956",
+      "revId": "366f55322b5f2cef79f1c0d38d269576da6c02bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
