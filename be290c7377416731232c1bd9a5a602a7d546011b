@@ -187,6 +187,30 @@
       "revId": "be290c7377416731232c1bd9a5a602a7d546011b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b0f868f_890a9700",
+        "filename": "chrome/browser/net/system_network_context_manager.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1116006
+      },
+      "writtenOn": "2017-08-02T19:38:57Z",
+      "side": 1,
+      "message": "Ah, I see. That makes sense.\n\nI wonder if we should change the behavior to that QUIC is disabled only per-profile? But that\u0027s not part of this CL.",
+      "parentUuid": "95f2d207_ca502f1d",
+      "range": {
+        "startLine": 78,
+        "startChar": 31,
+        "endLine": 78,
+        "endChar": 0
+      },
+      "revId": "be290c7377416731232c1bd9a5a602a7d546011b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
