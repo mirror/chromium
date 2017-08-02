@@ -423,6 +423,24 @@
     },
     {
       "key": {
+        "uuid": "97641480_d34470dd",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-02T23:55:35Z",
+      "side": 1,
+      "message": "Have to call designated initializer.",
+      "parentUuid": "d4114b06_afafd140",
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4a155503_7de0f6fc",
         "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller.mm",
         "patchSetId": 3
