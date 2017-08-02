@@ -22,6 +22,30 @@
       "revId": "2f05c01ba416139b5ed3960107fe2a5f38e24fb3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4818c8fe_b56b1204",
+        "filename": "third_party/WebKit/Source/platform/bindings/TraceWrapperMember.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-08-02T20:50:16Z",
+      "side": 1,
+      "message": "This is done now; Still need to remove the old constructor.",
+      "parentUuid": "cdf59fa7_707eadc6",
+      "range": {
+        "startLine": 88,
+        "startChar": 8,
+        "endLine": 88,
+        "endChar": 15
+      },
+      "revId": "2f05c01ba416139b5ed3960107fe2a5f38e24fb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
