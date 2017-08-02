@@ -1348,6 +1348,7 @@ jumbo_source_set("unit_tests") {
     "exported/FakeWebPlugin.h",
     "exported/LocalFrameClientImplTest.cpp",
     "exported/PrerenderingTest.cpp",
+    "exported/VirtualTimeTest.cpp",
     "exported/WebAssociatedURLLoaderImplTest.cpp",
     "exported/WebDocumentSubresourceFilterTest.cpp",
     "exported/WebDocumentTest.cpp",
