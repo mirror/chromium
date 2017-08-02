@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97e32f36_14b32455",
+        "filename": "base/profiler/native_stack_sampler_mac.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2017-08-02T20:54:11Z",
+      "side": 1,
+      "message": "What\u0027s the reason for having the sentinel if we\u0027re not checking it?",
+      "range": {
+        "startLine": 34,
+        "startChar": 16,
+        "endLine": 34,
+        "endChar": 35
+      },
+      "revId": "4297a39aacf6d2c94be6e62cdf7a22acd146d9cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "830e81f9_91012a76",
+        "filename": "base/profiler/native_stack_sampler_mac.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2017-08-02T20:54:11Z",
+      "side": 1,
+      "message": "This will do a 12MB memset every sample (120MB per second of memory bandwidth usage, 1ms/s on recent hardware) which seems unnecessarily expensive. It looks like the CFI frame pointer unwind can only dereference memory 256 * 8 bytes below rbp, so I think a 2k pre-buffer would be sufficient?",
+      "range": {
+        "startLine": 436,
+        "startChar": 0,
+        "endLine": 436,
+        "endChar": 65
+      },
+      "revId": "4297a39aacf6d2c94be6e62cdf7a22acd146d9cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
