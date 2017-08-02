@@ -45,6 +45,69 @@
       "revId": "5d46d62dd243271f99556cf27ab1f5298949f275",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "521cb689_89f3fc0a",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-02T18:03:42Z",
+      "side": 1,
+      "message": "Is it possible to use parameterized test TEST_P?",
+      "revId": "5d46d62dd243271f99556cf27ab1f5298949f275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3613e8d2_95931d6a",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-02T18:03:42Z",
+      "side": 1,
+      "message": "Should we always set up parent first?",
+      "range": {
+        "startLine": 219,
+        "startChar": 4,
+        "endLine": 219,
+        "endChar": 45
+      },
+      "revId": "5d46d62dd243271f99556cf27ab1f5298949f275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7dbde63_c9f1fb6a",
+        "filename": "chrome/common/chrome_features.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-02T18:03:42Z",
+      "side": 1,
+      "message": "I am having a hard time to understand why we need two features guard here. My understanding is if background navigation is not enabled, then MaybeThrottleNavigation will not be called. However, we call it manually in unit tests.",
+      "range": {
+        "startLine": 189,
+        "startChar": 0,
+        "endLine": 190,
+        "endChar": 65
+      },
+      "revId": "5d46d62dd243271f99556cf27ab1f5298949f275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
