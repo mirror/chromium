@@ -16,6 +16,24 @@
       "revId": "728f335be8c589824389e203d278de5b8fc8e70d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37735dc4_6b78b51e",
+        "filename": "content/browser/media/capture/desktop_capture_device.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1126869
+      },
+      "writtenOn": "2017-08-02T21:14:56Z",
+      "side": 1,
+      "message": "As we discussed in the previous cl, we agreed that \"a 100x1 frame should almost be the same as a 2x2 black one\". If output size is 100x0, it will be replace with 2x2 and then run to line283.\nWith the cl, no matter the policy of resolution_chooser uses, 1x1 frame or any frame with 1 pixel width/height will be handled the same at line283.",
+      "parentUuid": "ada82549_9696d6a0",
+      "revId": "728f335be8c589824389e203d278de5b8fc8e70d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
