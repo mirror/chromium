@@ -16,6 +16,24 @@
       "revId": "9e85ee1cea952f860819b785da9b6fbd565e8dd8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e959beea_2eef0b92",
+        "filename": "third_party/WebKit/Source/modules/remoteplayback/RemotePlayback.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1103784
+      },
+      "writtenOn": "2017-08-02T06:07:40Z",
+      "side": 1,
+      "message": "[I\u0027m not the author]\n\nWhat\u0027s confusing here is: the actual identifier (to probe::AsyncTaskScheduled) is the address of |identifier| (we need to pass a globally unique pointer). The value of 0 is simply a placeholder, and it actually does not matter. So I would name it async_task_id_storage or something like that.\n\nAlso, it\u0027d be a good idea to write a few lines of notes about this.",
+      "parentUuid": "89c9bb82_3d049909",
+      "revId": "9e85ee1cea952f860819b785da9b6fbd565e8dd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
