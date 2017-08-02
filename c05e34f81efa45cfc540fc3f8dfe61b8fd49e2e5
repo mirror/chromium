@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f80dd5f_ecc071e7",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_header_synchronizing.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-02T15:21:52Z",
+      "side": 1,
+      "message": "Not sure why you split the method. The only call calls consecutively both methods.",
+      "range": {
+        "startLine": 15,
+        "startChar": 8,
+        "endLine": 15,
+        "endChar": 40
+      },
+      "revId": "c05e34f81efa45cfc540fc3f8dfe61b8fd49e2e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
