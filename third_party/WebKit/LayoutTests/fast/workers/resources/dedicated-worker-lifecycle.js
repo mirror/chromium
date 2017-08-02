@@ -25,11 +25,11 @@ function runTests()
 
         // Orphan our worker (no more references to it) and wait for it to exit.
         worker.onmessage = 0;
+        worker.terminate();
         worker = 0;
-        // Allocating a Date object seems to scramble the stack and force the worker object to get GC'd.
-        new Date();
         waitUntilWorkerThreadsExit(orphanedWorkerExited);
     }
+
 }
 
 function orphanedWorkerExited()
@@ -51,12 +51,11 @@ function orphanedWorkerExited()
 
         // Orphan our worker (no more references to it) and wait for it to exit.
         worker.onmessage = 0;
+        worker.terminate();
         worker = 0;
-        // For some reason, the worker object does not get GC'd unless we allocate a new object here.
-        // The conjecture is that there's a value on the stack that appears to point to the worker which this clobbers.
-        new Date();
         waitUntilWorkerThreadsExit(orphanedTimeoutWorkerExited);
     }
+
 }
 
 function orphanedTimeoutWorkerExited()
