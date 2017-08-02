@@ -146,6 +146,9 @@ class NET_EXPORT_PRIVATE HttpStream {
   // closed.
   virtual bool GetLoadTimingInfo(LoadTimingInfo* load_timing_info) const = 0;
 
+  virtual void GetWireRequestHeaders(HttpRequestHeaders* headers,
+                                     std::string* request_line) = 0;
+
   // Get the SSLInfo associated with this stream's connection.  This should
   // only be called for streams over SSL sockets, otherwise the behavior is
   // undefined.

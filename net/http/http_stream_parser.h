@@ -104,6 +104,8 @@ class NET_EXPORT_PRIVATE HttpStreamParser {
                                  TokenBindingType tb_type,
                                  std::vector<uint8_t>* out);
 
+  void GetWireRequestHeaders(HttpRequestHeaders* headers);
+
   // Encodes the given |payload| in the chunked format to |output|.
   // Returns the number of bytes written to |output|. |output_size| should
   // be large enough to store the encoded chunk, which is payload.size() +
@@ -280,6 +282,8 @@ class NET_EXPORT_PRIVATE HttpStreamParser {
   // |request_body_read_buf_| unless the data is chunked.
   scoped_refptr<SeekableIOBuffer> request_body_send_buf_;
   bool sent_last_chunk_;
+
+  std::unique_ptr<HttpRequestHeaders> wire_request_headers_;
 
   // Error received when uploading the body, if any.
   int upload_error_;

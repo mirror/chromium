@@ -389,6 +389,13 @@ bool HttpNetworkTransaction::GetLoadTimingInfo(
   return true;
 }
 
+void HttpNetworkTransaction::GetWireRequestHeaders(HttpRequestHeaders* headers,
+                                                   std::string* request_line) {
+  if (!stream_)
+    return;
+  stream_->GetWireRequestHeaders(headers, request_line);
+}
+
 bool HttpNetworkTransaction::GetRemoteEndpoint(IPEndPoint* endpoint) const {
   if (remote_endpoint_.address().empty())
     return false;

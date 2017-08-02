@@ -61,6 +61,8 @@ class NET_EXPORT WebSocketHandshakeStreamBase : public HttpStream {
   // been called.
   virtual std::unique_ptr<WebSocketStream> Upgrade() = 0;
 
+  void GetWireRequestHeaders(HttpRequestHeaders*, std::string*) override{};
+
  protected:
   // As with the destructor, this must be inline.
   WebSocketHandshakeStreamBase() {}

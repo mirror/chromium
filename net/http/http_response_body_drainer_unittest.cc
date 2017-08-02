@@ -139,6 +139,11 @@ class MockHttpStream : public HttpStream {
     return false;
   }
 
+  void GetWireRequestHeaders(HttpRequestHeaders* headers,
+                             std::string* request_line) override {
+    ADD_FAILURE();
+  }
+
   void Drain(HttpNetworkSession*) override {}
 
   void PopulateNetErrorDetails(NetErrorDetails* details) override { return; }

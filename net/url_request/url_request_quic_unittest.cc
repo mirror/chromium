@@ -485,4 +485,58 @@ TEST_F(URLRequestQuicTest, TestTwoRequests) {
   EXPECT_EQ(kHelloBodyValue, delegate2.data_received());
 }
 
+TEST_F(URLRequestQuicTest, WireRequestHeaders) {
+  Init();
+  std::string url =
+      base::StringPrintf("https://%s%s", kTestServerHost, kHelloPath);
+  TestURLRequestContext context;
+  HttpRequestHeaders extra_headers;
+  extra_headers.SetHeader("X-Foo", "bar");
+
+  {
+    CheckLoadTimingDelegate delegate(false);
+    HttpRequestHeaders headers;
+    std::string request_line;
+    std::unique_ptr<URLRequest> r(
+        CreateRequest(GURL(url), DEFAULT_PRIORITY, &delegate));
+    r->SetExtraRequestHeaders(extra_headers);
+    r->Start();
+    r->GetWireRequestHeaders(&headers, &request_line);
+    EXPECT_TRUE(headers.IsEmpty());
+    base::RunLoop().Run();
+    EXPECT_TRUE(r->status().is_success());
+    r->GetWireRequestHeaders(&headers, &request_line);
+    EXPECT_TRUE(headers.IsEmpty());
+    EXPECT_TRUE(request_line.empty());
+  }
+  {
+    CheckLoadTimingDelegate delegate(true);
+    HttpRequestHeaders headers;
+    std::string request_line;
+    std::unique_ptr<URLRequest> r(
+        CreateRequest(GURL(url), DEFAULT_PRIORITY, &delegate));
+    r->SetLoadFlags(r->load_flags() | LOAD_REPORT_WIRE_REQUEST_HEADERS);
+    r->SetExtraRequestHeaders(extra_headers);
+    r->Start();
+    r->GetWireRequestHeaders(&headers, &request_line);
+    EXPECT_TRUE(headers.IsEmpty());
+    base::RunLoop().Run();
+    EXPECT_TRUE(r->status().is_success());
+
+    r->GetWireRequestHeaders(&headers, &request_line);
+    EXPECT_FALSE(headers.IsEmpty());
+    std::string header_value;
+    EXPECT_TRUE(headers.GetHeader("X-Foo", &header_value));
+    EXPECT_EQ("bar", header_value);
+    EXPECT_TRUE(headers.GetHeader("Accept-Encoding", &header_value));
+    EXPECT_EQ("gzip, deflate", header_value);
+    EXPECT_TRUE(headers.GetHeader(":method", &header_value));
+    EXPECT_EQ("GET", header_value);
+    EXPECT_TRUE(headers.GetHeader(":path", &header_value));
+    EXPECT_EQ("/hello.txt", header_value);
+
+    EXPECT_TRUE(request_line.empty());
+  }
+}
+
 }  // namespace net

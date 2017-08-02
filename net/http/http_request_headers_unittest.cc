@@ -167,6 +167,34 @@ TEST(HttpRequestHeaders, CopyFrom) {
   EXPECT_EQ("B: b\r\nC: c\r\n\r\n", headers.ToString());
 }
 
+bool HttpRequestHeadersFromNetLogParam(const base::Value* event_param,
+                                       HttpRequestHeaders* headers,
+                                       std::string* request_line) {
+  headers->Clear();
+  *request_line = "";
+
+  const base::DictionaryValue* dict = NULL;
+  const base::ListValue* header_list = NULL;
+
+  if (!event_param || !event_param->GetAsDictionary(&dict) ||
+      !dict->GetList("headers", &header_list) ||
+      !dict->GetString("line", request_line)) {
+    return false;
+  }
+
+  for (base::ListValue::const_iterator it = header_list->begin();
+       it != header_list->end(); ++it) {
+    std::string header_line;
+    if (!it->GetAsString(&header_line)) {
+      headers->Clear();
+      *request_line = "";
+      return false;
+    }
+    headers->AddHeaderFromString(header_line);
+  }
+  return true;
+}
+
 TEST(HttpRequestHeaders, ToNetLogParamAndBackAgain) {
   HttpRequestHeaders headers;
   headers.SetHeader("B", "b");
@@ -178,9 +206,8 @@ TEST(HttpRequestHeaders, ToNetLogParamAndBackAgain) {
   HttpRequestHeaders headers2;
   std::string request_line2;
 
-  ASSERT_TRUE(HttpRequestHeaders::FromNetLogParam(event_param.get(),
-                                                  &headers2,
-                                                  &request_line2));
+  ASSERT_TRUE(HttpRequestHeadersFromNetLogParam(event_param.get(), &headers2,
+                                                &request_line2));
   EXPECT_EQ(request_line, request_line2);
   EXPECT_EQ("B: b\r\nA: a\r\n\r\n", headers2.ToString());
 }

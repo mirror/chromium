@@ -6718,4 +6718,58 @@ TEST_F(SpdyNetworkTransactionTest, InsecureUrlCreatesSecureSpdySession) {
   EXPECT_THAT(out.rv, IsError(ERR_SPDY_INADEQUATE_TRANSPORT_SECURITY));
 };
 
+TEST_F(SpdyNetworkTransactionTest, WireRequestHeaders) {
+  SpdySerializedFrame req(
+      spdy_util_.ConstructSpdyGet(nullptr, 0, 1, DEFAULT_PRIORITY, true));
+  MockWrite writes[] = {CreateMockWrite(req, 0)};
+
+  SpdySerializedFrame resp(spdy_util_.ConstructSpdyGetReply(nullptr, 0, 1));
+  SpdySerializedFrame body(spdy_util_.ConstructSpdyDataFrame(1, true));
+  MockRead reads[] = {
+      CreateMockRead(resp, 1), CreateMockRead(body, 2),
+      MockRead(ASYNC, 0, 3)  // EOF
+  };
+
+  SequencedSocketData data(reads, arraysize(reads), writes, arraysize(writes));
+  {
+    HttpRequestHeaders headers;
+    std::string request_line;
+
+    NormalSpdyTransactionHelper helper(CreateGetRequest(), DEFAULT_PRIORITY,
+                                       NetLogWithSource(), nullptr);
+    helper.RunPreTestSetup();
+    helper.AddData(&data);
+    helper.StartDefaultTest();
+    helper.trans()->GetWireRequestHeaders(&headers, &request_line);
+    EXPECT_TRUE(headers.IsEmpty());
+    helper.FinishDefaultTestWithoutVerification();
+    helper.trans()->GetWireRequestHeaders(&headers, &request_line);
+    EXPECT_TRUE(headers.IsEmpty());
+    EXPECT_TRUE(request_line.empty());
+  }
+  {
+    HttpRequestHeaders headers;
+    std::string request_line;
+
+    HttpRequestInfo request_info(CreateGetRequest());
+    request_info.load_flags |= LOAD_REPORT_WIRE_REQUEST_HEADERS;
+    NormalSpdyTransactionHelper helper(request_info, DEFAULT_PRIORITY,
+                                       NetLogWithSource(), nullptr);
+    helper.RunPreTestSetup();
+    helper.AddData(&data);
+    helper.StartDefaultTest();
+    helper.trans()->GetWireRequestHeaders(&headers, &request_line);
+    EXPECT_TRUE(headers.IsEmpty());
+    helper.FinishDefaultTestWithoutVerification();
+    helper.trans()->GetWireRequestHeaders(&headers, &request_line);
+    EXPECT_FALSE(headers.IsEmpty());
+    std::string header_value;
+    EXPECT_TRUE(headers.GetHeader(":method", &header_value));
+    EXPECT_EQ("GET", header_value);
+    EXPECT_TRUE(headers.GetHeader(":path", &header_value));
+    EXPECT_EQ("/", header_value);
+    EXPECT_TRUE(request_line.empty());
+  }
+}
+
 }  // namespace net

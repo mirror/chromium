@@ -11595,4 +11595,55 @@ TEST_F(URLRequestTest, URLRequestRedirectJobCancelRequest) {
   EXPECT_EQ(0, d.received_redirect_count());
 }
 
+TEST_F(URLRequestTestHTTP, WireRequestHeaders) {
+  ASSERT_TRUE(http_test_server()->Start());
+
+  TestDelegate request_delegate;
+  TestURLRequestContext context;
+  HttpRequestHeaders extra_headers;
+  extra_headers.SetHeader("X-Foo", "bar");
+
+  {
+    HttpRequestHeaders headers;
+    std::string request_line;
+    std::unique_ptr<URLRequest> r(context.CreateRequest(
+        http_test_server()->GetURL("/defaultresponse"), DEFAULT_PRIORITY,
+        &request_delegate, TRAFFIC_ANNOTATION_FOR_TESTS));
+    r->SetExtraRequestHeaders(extra_headers);
+    r->Start();
+    r->GetWireRequestHeaders(&headers, &request_line);
+    EXPECT_TRUE(headers.IsEmpty());
+    base::RunLoop().Run();
+    EXPECT_EQ(OK, request_delegate.request_status());
+    r->GetWireRequestHeaders(&headers, &request_line);
+    EXPECT_TRUE(headers.IsEmpty());
+  }
+  {
+    HttpRequestHeaders headers;
+    std::string request_line;
+    std::unique_ptr<URLRequest> r(context.CreateRequest(
+        http_test_server()->GetURL("/defaultresponse"), DEFAULT_PRIORITY,
+        &request_delegate, TRAFFIC_ANNOTATION_FOR_TESTS));
+    r->SetLoadFlags(r->load_flags() | LOAD_REPORT_WIRE_REQUEST_HEADERS);
+    r->SetExtraRequestHeaders(extra_headers);
+    r->Start();
+    r->GetWireRequestHeaders(&headers, &request_line);
+    EXPECT_TRUE(headers.IsEmpty());
+    base::RunLoop().Run();
+    EXPECT_EQ(OK, request_delegate.request_status());
+
+    r->GetWireRequestHeaders(&headers, &request_line);
+    EXPECT_FALSE(headers.IsEmpty());
+    std::string header_value;
+    EXPECT_TRUE(headers.GetHeader("X-Foo", &header_value));
+    EXPECT_EQ("bar", header_value);
+    EXPECT_TRUE(headers.GetHeader("Accept-Encoding", &header_value));
+    EXPECT_EQ("gzip, deflate", header_value);
+    EXPECT_TRUE(headers.HasHeader("Connection"));
+    EXPECT_TRUE(headers.HasHeader("Host"));
+
+    EXPECT_EQ("GET /defaultresponse HTTP/1.1\r\n", request_line);
+  }
+}
+
 }  // namespace net

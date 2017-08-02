@@ -395,6 +395,11 @@ void URLRequest::GetLoadTimingInfo(LoadTimingInfo* load_timing_info) const {
   *load_timing_info = load_timing_info_;
 }
 
+void URLRequest::GetWireRequestHeaders(HttpRequestHeaders* headers,
+                                       std::string* request_line) {
+  job_->GetWireRequestHeaders(headers, request_line);
+}
+
 void URLRequest::PopulateNetErrorDetails(NetErrorDetails* details) const {
   if (!job_)
     return;

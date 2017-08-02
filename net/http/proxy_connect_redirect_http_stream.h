@@ -57,6 +57,9 @@ class ProxyConnectRedirectHttpStream : public HttpStream {
   // This function may be called.
   bool GetLoadTimingInfo(LoadTimingInfo* load_timing_info) const override;
 
+  void GetWireRequestHeaders(HttpRequestHeaders* headers,
+                             std::string* request_line) override;
+
   void GetSSLInfo(SSLInfo* ssl_info) override;
   void GetSSLCertRequestInfo(SSLCertRequestInfo* cert_request_info) override;
   bool GetRemoteEndpoint(IPEndPoint* endpoint) override;

@@ -505,6 +505,12 @@ bool HttpCache::Transaction::GetLoadTimingInfo(
   return true;
 }
 
+void HttpCache::Transaction::GetWireRequestHeaders(HttpRequestHeaders* headers,
+                                                   std::string* request_line) {
+  if (network_trans_)
+    network_trans_->GetWireRequestHeaders(headers, request_line);
+}
+
 bool HttpCache::Transaction::GetRemoteEndpoint(IPEndPoint* endpoint) const {
   if (network_trans_)
     return network_trans_->GetRemoteEndpoint(endpoint);

@@ -164,6 +164,8 @@ class NET_EXPORT_PRIVATE HttpTransaction {
   // does not modify |load_timing_info| if there's no timing information to
   // provide.
   virtual bool GetLoadTimingInfo(LoadTimingInfo* load_timing_info) const = 0;
+  virtual void GetWireRequestHeaders(HttpRequestHeaders* headers,
+                                     std::string* request_line) = 0;
 
   // Gets the remote endpoint of the socket that the transaction's underlying
   // stream is using or did use, if any. Returns true and fills in |endpoint|
