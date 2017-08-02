@@ -282,8 +282,13 @@ class RedirectToFileResourceHandlerTest
       WARN_UNUSED_RESULT {
     DCHECK(file_stream_);
 
-    EXPECT_EQ(MockResourceLoader::Status::CALLBACK_PENDING,
-              mock_loader_->OnWillStart(url_request_->url()));
+    MockResourceLoader::Status expected_status;
+    if (GetParam() == CompletionMode::ASYNC) {
+      expected_status = MockResourceLoader::Status::CALLBACK_PENDING;
+    } else {
+      expected_status = MockResourceLoader::Status::IDLE;
+    }
+    EXPECT_EQ(expected_status, mock_loader_->OnWillStart(url_request_->url()));
 
     file_stream_->set_expect_closed(file_error == base::File::FILE_OK);
     if (file_error != base::File::FILE_OK)
@@ -305,6 +310,9 @@ class RedirectToFileResourceHandlerTest
                 mock_loader_->status());
       test_handler_->Resume();
       mock_loader_->WaitUntilIdleOrCanceled();
+    } else if (GetParam() == CompletionMode::ASYNC) {
+      // We have to cancel the handler so it releases the controller.
+      test_handler_->CancelWithError(net::ERR_FAILED);
     }
     EXPECT_NE(MockResourceLoader::Status::CALLBACK_PENDING,
               mock_loader_->status());
