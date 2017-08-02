@@ -5,8 +5,12 @@
 #ifndef CHROME_ELF_CHROME_ELF_MAIN_H_
 #define CHROME_ELF_CHROME_ELF_MAIN_H_
 
+extern "C" void DumpProcessWithoutCrash();
+extern "C" void GetUserDataDirectoryThunk(wchar_t* user_data_dir,
+                                          size_t user_data_dir_length,
+                                          wchar_t* invalid_user_data_dir,
+                                          size_t invalid_user_data_dir_length);
 extern "C" void SignalInitializeCrashReporting();
 extern "C" void SignalChromeElf();
-extern "C" void DumpProcessWithoutCrash();
 
 #endif  // CHROME_ELF_CHROME_ELF_MAIN_H_
