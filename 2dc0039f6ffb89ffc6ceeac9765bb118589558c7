@@ -307,6 +307,30 @@
       "revId": "2dc0039f6ffb89ffc6ceeac9765bb118589558c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a665257_298ea56a",
+        "filename": "content/public/common/network_service.mojom",
+        "patchSetId": 20
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-02T14:34:47Z",
+      "side": 1,
+      "message": "Great, I\u0027ll revert the URLRequestContextBuilder change to use no cache in that case, and just let the cache code handle it.",
+      "parentUuid": "ebd8970a_4592c13f",
+      "range": {
+        "startLine": 23,
+        "startChar": 2,
+        "endLine": 23,
+        "endChar": 9
+      },
+      "revId": "2dc0039f6ffb89ffc6ceeac9765bb118589558c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
