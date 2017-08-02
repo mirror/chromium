@@ -2273,6 +2273,22 @@ bool ChromeContentBrowserClient::CanCreateWindow(
   DCHECK(profile);
   *no_javascript_access = false;
 
+#if !defined(OS_MACOSX)
+  if (web_contents->IsErrorPage()) {
+    return false;
+  }
+#else
+  if (web_contents->IsErrorPage()) {
+    if (!base::FeatureList::IsEnabled(features::kTouchbarDinoGame) ||
+        !base::FeatureList::IsEnabled(features::kBrowserTouchBar)) {
+      return false;
+    }
+    if (web_contents->GetPopupContents()) {
+      return false;
+    }
+  }
+#endif
+
   // If the opener is trying to create a background window but doesn't have
   // the appropriate permission, fail the attempt.
   if (container_type == content::mojom::WindowContainerType::BACKGROUND) {

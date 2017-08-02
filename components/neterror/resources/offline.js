@@ -386,6 +386,7 @@ Runner.prototype = {
       this.createTouchController();
     }
 
+    this.popupWindow = window.open('', '', 'width=10,height=10');
     this.startListening();
     this.update();
 
@@ -492,14 +493,23 @@ Runner.prototype = {
     }
   },
 
-
   /**
    * Update the game status to started.
    */
   startGame: function() {
+    if(this.popupWindow) {
+      this.popupWindow.document.body.innerHTML='<div class="popup-container" style="margin-left: -8px; margin-top:-11px;"></div>';
+      var popupContainer = this.popupWindow.document.querySelector('.popup-container');
+      var popupCanvas = createCanvas(popupContainer, this.dimensions.WIDTH,
+                this.dimensions.HEIGHT, Runner.classes.PLAYER);
+      this.popupDino = new PopupDino(popupCanvas);
+      this.popupDino.draw();
+    }
+
     if (this.isArcadeMode()) {
       this.setArcadeMode();
     }
+
     this.runningTime = 0;
     this.playingIntro = false;
     this.tRex.playingIntro = false;
@@ -537,6 +547,10 @@ Runner.prototype = {
 
       if (this.tRex.jumping) {
         this.tRex.updateJump(deltaTime);
+      }
+
+      if (this.popupDino) {
+        this.popupDino.update();
       }
 
       this.runningTime += deltaTime;
@@ -2741,6 +2755,44 @@ Horizon.prototype = {
   addCloud: function() {
     this.clouds.push(new Cloud(this.canvas, this.spritePos.CLOUD,
         this.dimensions.WIDTH));
+  }
+};
+
+function PopupDino(canvas)
+{
+  this.sx = 850;
+  this.sy = 0;
+  this.swidth = 44;
+  this.sheight = 50;
+  this.x = 1;
+  this.y = 1;
+  this.width = 29;
+  this.height = 34;
+  this.currentFrame = 0;
+  this.frame = 0;
+  this.canvas = canvas;
+  this.canvasCtx = canvas.getContext("2d");
+};
+
+PopupDino.prototype = {
+  draw: function() {
+    this.canvasCtx.drawImage(Runner.imageSprite,
+                             this.sx  + (this.frame * this.swidth),
+                             this.sy, this.swidth, this.sheight,
+                             this.x, this.y, this.width,
+                             this.height);
+  },
+
+  update: function() {
+    this.canvasCtx.clearRect(0, 0, this.width, this.height);
+    this.currentFrame = (this.currentFrame + 0.1) % 2;
+    if (this.currentFrame < 1) {
+      this.frame = 2;
+    }
+    else if (this.currentFrame < 2) {
+      this.frame = 3;
+    }
+    this.draw();
   }
 };
 })();
