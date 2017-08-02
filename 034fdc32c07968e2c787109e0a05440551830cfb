@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8c57447_594d6b12",
+        "filename": "remoting/host/setup/daemon_controller_delegate_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-08-02T00:09:42Z",
+      "side": 1,
+      "message": "These methods are basically copied from\nremoting/host/mac/me2me_preference_pane.mm\n\nThe only significant change is to use\nbase::mac::AuthorizationCreateToRunAsRoot()\ninstead of the pref-pane padlock widget, to\nget the elevated auth token.",
+      "revId": "034fdc32c07968e2c787109e0a05440551830cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
