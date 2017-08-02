@@ -201,22 +201,6 @@ void MediaStreamDispatcher::OnDestruct() {
   // Do not self-destruct. UserMediaClientImpl owns |this|.
 }
 
-void MediaStreamDispatcher::OnDeviceOpenFailed(int request_id) {
-  DCHECK(thread_checker_.CalledOnValidThread());
-
-  for (auto it = requests_.begin(); it != requests_.end(); ++it) {
-    Request& request = *it;
-    if (request.ipc_request != request_id)
-      continue;
-    if (request.handler.get()) {
-      request.handler->OnDeviceOpenFailed(request.request_id);
-      DVLOG(1) << __func__ << " request_id=" << request.request_id;
-    }
-    requests_.erase(it);
-    break;
-  }
-}
-
 void MediaStreamDispatcher::OnStreamGenerated(
     int32_t request_id,
     const std::string& label,
@@ -286,6 +270,22 @@ void MediaStreamDispatcher::OnDeviceOpened(
       request.handler->OnDeviceOpened(request.request_id, label, device_info);
       DVLOG(1) << __func__ << " request_id=" << request.request_id
                << " label=" << label;
+    }
+    requests_.erase(it);
+    break;
+  }
+}
+
+void MediaStreamDispatcher::OnDeviceOpenFailed(int32_t request_id) {
+  DCHECK(thread_checker_.CalledOnValidThread());
+
+  for (auto it = requests_.begin(); it != requests_.end(); ++it) {
+    Request& request = *it;
+    if (request.ipc_request != request_id)
+      continue;
+    if (request.handler.get()) {
+      request.handler->OnDeviceOpenFailed(request.request_id);
+      DVLOG(1) << __func__ << " request_id=" << request.request_id;
     }
     requests_.erase(it);
     break;

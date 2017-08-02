@@ -157,6 +157,8 @@ class MockMediaStreamDispatcherHost : public MediaStreamDispatcherHost,
     OnDeviceOpenedInternal(request_id, label, device_info);
   }
 
+  void OnDeviceOpenFailed(int32_t request_id) override {}
+
   void OnDeviceStopped(const std::string& label,
                        const StreamDeviceInfo& device_info) override {
     OnDeviceStoppedInternal(label, device_info);

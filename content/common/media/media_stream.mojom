@@ -67,8 +67,13 @@ interface MediaStreamDispatcher {
   // Informs the renderer that browser has failed to generate a stream.
   OnStreamGenerationFailed(int32 request_id, MediaStreamRequestResult result);
 
+  // TODO(wjia): should DeviceOpen* methods be merged with
+  // StreamGenerat* ones?
   // Informs the renderer that browser has opened a device successfully.
   OnDeviceOpened(int32 request_id, string label, StreamDeviceInfo device_info);
+
+  // Informs the renderer that browser has failed to open a device.
+  OnDeviceOpenFailed(int32 request_id);
 
   // The browser reports that a media device has been stopped. Stopping was
   // triggered from the browser process.

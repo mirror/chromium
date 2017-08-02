@@ -117,9 +117,6 @@ class CONTENT_EXPORT MediaStreamDispatcher
       mojo::ScopedMessagePipeHandle* interface_pipe) override;
   void OnDestruct() override;
 
-  // Messages from the browser.
-  void OnDeviceOpenFailed(int request_id);
-
   // mojom::MediaStreamDispatcher implementation.
   void OnStreamGenerated(int32_t request_id,
                          const std::string& label,
@@ -130,6 +127,7 @@ class CONTENT_EXPORT MediaStreamDispatcher
   void OnDeviceOpened(int32_t request_id,
                       const std::string& label,
                       const StreamDeviceInfo& device_info) override;
+  void OnDeviceOpenFailed(int32_t request_id) override;
   void OnDeviceStopped(const std::string& label,
                        const StreamDeviceInfo& device_info) override;
 
