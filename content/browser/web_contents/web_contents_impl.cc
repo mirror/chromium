@@ -530,6 +530,10 @@ WebContentsImpl::WebContentsImpl(BrowserContext* browser_context)
       minimum_zoom_percent_(static_cast<int>(kMinimumZoomFactor * 100)),
       maximum_zoom_percent_(static_cast<int>(kMaximumZoomFactor * 100)),
       zoom_scroll_remainder_(0),
+#if defined(OS_MACOSX)
+      popup_contents_(nullptr),
+      is_error_page_(false),
+#endif  // defined(OS_MACOSX)
       fullscreen_widget_process_id_(ChildProcessHost::kInvalidUniqueID),
       fullscreen_widget_routing_id_(MSG_ROUTING_NONE),
       fullscreen_widget_had_focus_at_shutdown_(false),
@@ -5531,6 +5535,22 @@ bool WebContentsImpl::GetAllowOtherViews() {
 
 bool WebContentsImpl::CompletedFirstVisuallyNonEmptyPaint() const {
   return did_first_visually_non_empty_paint_;
+}
+
+bool WebContentsImpl::IsErrorPage() {
+  return is_error_page_;
+}
+
+void WebContentsImpl::SetIsErrorPage(bool is_error_page) {
+  is_error_page_ = is_error_page;
+}
+
+WebContents* WebContentsImpl::GetPopupContents() {
+  return popup_contents_;
+}
+
+void WebContentsImpl::SetPopupContents(WebContents* popup_contents) {
+  popup_contents_ = popup_contents;
 }
 
 #endif

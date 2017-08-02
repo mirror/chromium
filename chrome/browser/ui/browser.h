@@ -57,6 +57,10 @@
 #include "components/zoom/zoom_observer.h"
 #endif  // !defined(OS_ANDROID)
 
+#if defined(OS_MACOSX)
+#include "chrome/browser/ui/cocoa/touchbar_web_contents_manager.h"
+#endif
+
 #if BUILDFLAG(ENABLE_EXTENSIONS)
 #include "extensions/browser/extension_registry_observer.h"
 #endif
@@ -593,6 +597,7 @@ class Browser : public TabStripModelObserver,
   void NavigationStateChanged(content::WebContents* source,
                               content::InvalidateTypes changed_flags) override;
   void VisibleSecurityStateChanged(content::WebContents* source) override;
+  void DisplayWebContentsInTouchbar(content::WebContents* contents) override;
   void AddNewContents(content::WebContents* source,
                       content::WebContents* new_contents,
                       WindowOpenDisposition disposition,
@@ -999,6 +1004,10 @@ class Browser : public TabStripModelObserver,
   BookmarkBar::State bookmark_bar_state_;
 
   std::unique_ptr<ExclusiveAccessManager> exclusive_access_manager_;
+
+#if defined(OS_MACOSX)
+  std::unique_ptr<TouchbarWebContentsManager> touchbar_web_contents_manager_;
+#endif
 
   std::unique_ptr<extensions::WindowController> extension_window_controller_;
 
