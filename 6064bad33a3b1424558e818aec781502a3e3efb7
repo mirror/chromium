@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "454a8a02_a7a2d773",
+        "filename": "third_party/WebKit/LayoutTests/accessibility/aom-actions.html",
+        "patchSetId": 7
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-08-02T23:26:40Z",
+      "side": 1,
+      "message": "Thanks for adding this test.",
+      "revId": "6064bad33a3b1424558e818aec781502a3e3efb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cc29060_e11ed2cf",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 830,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-08-02T23:26:40Z",
+      "side": 1,
+      "message": "I just noticed this shadows the argument - can we name it something else so I don\u0027t get confused again?",
+      "revId": "6064bad33a3b1424558e818aec781502a3e3efb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "467d490b_4fd23aa4",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 850,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-08-02T23:26:40Z",
+      "side": 1,
+      "message": "This is a little counter-intuitive - perhaps name the argument \"actionElement\", and then have a separate variable for \"targetElement\"?",
+      "revId": "6064bad33a3b1424558e818aec781502a3e3efb7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
