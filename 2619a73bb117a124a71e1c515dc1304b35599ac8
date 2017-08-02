@@ -16,6 +16,24 @@
       "revId": "2619a73bb117a124a71e1c515dc1304b35599ac8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e01424c3_773188b8",
+        "filename": "chrome/browser/autocomplete/chrome_autocomplete_provider_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-02T22:07:24Z",
+      "side": 1,
+      "message": "You can always edit the merge before it applies.\n\nI thought some of the service worker lookup stuff can be slow, e.g., goes to disk.  I don\u0027t think this order is best.",
+      "parentUuid": "9508da5f_c0e25f82",
+      "revId": "2619a73bb117a124a71e1c515dc1304b35599ac8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
