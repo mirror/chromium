@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a605d3d8_db68fc9d",
+        "filename": "third_party/WebKit/Source/core/leak_detector/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1151889
+      },
+      "writtenOn": "2017-08-02T04:57:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2f482fd_0e030018",
+      "revId": "3ab1f7c0f88dc477a0fb5788cf86a276bf193163",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b229989_43938314",
         "filename": "third_party/WebKit/Source/core/leak_detector/LeakDetector.cpp",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "3ab1f7c0f88dc477a0fb5788cf86a276bf193163",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dc8272a_62521b6d",
+        "filename": "third_party/WebKit/Source/core/leak_detector/LeakDetector.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1151889
+      },
+      "writtenOn": "2017-08-02T04:57:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b229989_43938314",
+      "revId": "3ab1f7c0f88dc477a0fb5788cf86a276bf193163",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "cbf73c4f_7fd23e30",
+        "filename": "third_party/WebKit/Source/core/leak_detector/LeakDetector.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1151889
+      },
+      "writtenOn": "2017-08-02T04:57:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fea2855e_682af6e9",
+      "revId": "3ab1f7c0f88dc477a0fb5788cf86a276bf193163",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71041c41_b8712871",
         "filename": "third_party/WebKit/Source/core/leak_detector/LeakDetector.h",
         "patchSetId": 7
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-01T06:18:31Z",
       "side": 1,
       "message": "Is there any reason you have to implement LeakDetector in core/?\n\nI guess it would make more sense to implement it in controller/. Then LeakDetector can directly use core/ and modules/. So you won\u0027t need to add AbstractAnimationWorkletThreadGCFunction.",
+      "revId": "3ab1f7c0f88dc477a0fb5788cf86a276bf193163",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5503d60_12ff3885",
+        "filename": "third_party/WebKit/Source/core/leak_detector/LeakDetector.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1151889
+      },
+      "writtenOn": "2017-08-02T04:57:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71041c41_b8712871",
       "revId": "3ab1f7c0f88dc477a0fb5788cf86a276bf193163",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "2b9b04af_cb048331",
+        "filename": "third_party/WebKit/Source/core/leak_detector/LeakDetectorClient.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1151889
+      },
+      "writtenOn": "2017-08-02T04:57:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "472110a7_d07dc934",
+      "revId": "3ab1f7c0f88dc477a0fb5788cf86a276bf193163",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0f2b904_25510073",
         "filename": "third_party/WebKit/Source/core/leak_detector/LeakDetectorClient.h",
         "patchSetId": 7
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "6565c42c_1ed45a05",
+        "filename": "third_party/WebKit/Source/core/leak_detector/LeakDetectorClient.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1151889
+      },
+      "writtenOn": "2017-08-02T04:57:22Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d0f2b904_25510073",
+      "revId": "3ab1f7c0f88dc477a0fb5788cf86a276bf193163",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87bdef2d_e57cae02",
         "filename": "third_party/WebKit/Source/modules/exported/WebLeakDetector.cpp",
         "patchSetId": 7
@@ -115,6 +223,24 @@
       "writtenOn": "2017-08-01T06:18:31Z",
       "side": 1,
       "message": "Nit: This method name is a bit confusing since it is not reporting anything. You can fix it in a follow-up CL since this will affect a public API.",
+      "revId": "3ab1f7c0f88dc477a0fb5788cf86a276bf193163",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "522b7d40_df238662",
+        "filename": "third_party/WebKit/Source/modules/exported/WebLeakDetector.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1151889
+      },
+      "writtenOn": "2017-08-02T04:57:22Z",
+      "side": 1,
+      "message": "I talked with keishi-san about this naming and agreed that the name CollectGarbageAndReport() would be okay because this method will report on callback. It would make sense to have report in the name as an API since eventually this method does report.",
+      "parentUuid": "87bdef2d_e57cae02",
       "revId": "3ab1f7c0f88dc477a0fb5788cf86a276bf193163",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
