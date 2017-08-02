@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66575a61_78fbf7a2",
+        "filename": "third_party/WebKit/Source/modules/gamepad/Gamepad.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2017-08-02T01:29:40Z",
+      "side": 1,
+      "message": "Can we remove SetAxesChanged and SetButtonsChanged? I don\u0027t understand why we would need a public setter since the value is set internally.",
+      "range": {
+        "startLine": 67,
+        "startChar": 7,
+        "endLine": 67,
+        "endChar": 21
+      },
+      "revId": "44eacc33a305d6a3e1cdeda38311b85d666a0e8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "096335db_da78b12b",
+        "filename": "third_party/WebKit/Source/modules/gamepad/Gamepad.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2017-08-02T01:29:40Z",
+      "side": 1,
+      "message": "Please move these initializations to the constructor initializer list.",
+      "range": {
+        "startLine": 100,
+        "startChar": 26,
+        "endLine": 100,
+        "endChar": 30
+      },
+      "revId": "44eacc33a305d6a3e1cdeda38311b85d666a0e8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d23a15aa_b2ab3691",
+        "filename": "third_party/WebKit/Source/modules/gamepad/Gamepad.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2017-08-02T01:29:40Z",
+      "side": 1,
+      "message": "The docs for CachedAttribute say that the boolean value is generally named \"is*Dirty\". Can you change these to isAxesDirty and isButtonsDirty? Or maybe isAxisDataDirty and isButtonDataDirty so it makes grammatical sense.\n\nhttps://chromium.googlesource.com/chromium/src/+/master/third_party/WebKit/Source/bindings/IDLExtendedAttributes.md#CachedAttribute_a",
+      "revId": "44eacc33a305d6a3e1cdeda38311b85d666a0e8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "499bbf0b_cfbaa600",
+        "filename": "third_party/WebKit/Source/modules/gamepad/Gamepad.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2017-08-02T01:29:40Z",
+      "side": 1,
+      "message": "Can we keep the MeasureAs attributes?",
+      "range": {
+        "startLine": 40,
+        "startChar": 5,
+        "endLine": 40,
+        "endChar": 20
+      },
+      "revId": "44eacc33a305d6a3e1cdeda38311b85d666a0e8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf9ccd07_7bc113ef",
+        "filename": "third_party/WebKit/Source/modules/gamepad/GamepadButton.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2017-08-02T01:29:40Z",
+      "side": 1,
+      "message": "Please #include the header instead of using a forward declaration.\n\nhttps://google.github.io/styleguide/cppguide.html#Forward_Declarations",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 15
+      },
+      "revId": "44eacc33a305d6a3e1cdeda38311b85d666a0e8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7f30f9b_0d6539e5",
+        "filename": "third_party/WebKit/Source/modules/gamepad/GamepadButton.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1136314
+      },
+      "writtenOn": "2017-08-02T01:29:40Z",
+      "side": 1,
+      "message": "I\u0027d prefer not overloading operator\u003d\u003d for this. It\u0027s confusing for two reasons, first because we didn\u0027t define operator\u003d\u003d for two device_buttons or two blink_buttons. Second because blink_button \u003d\u003d device_button doesn\u0027t imply device_button \u003d\u003d blink_button (the latter won\u0027t compile).\n\nCan you change this to a named method?",
+      "range": {
+        "startLine": 37,
+        "startChar": 7,
+        "endLine": 37,
+        "endChar": 15
+      },
+      "revId": "44eacc33a305d6a3e1cdeda38311b85d666a0e8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
