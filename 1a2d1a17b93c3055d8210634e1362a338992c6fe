@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "406c8c61_8763592f",
+        "filename": "chrome/browser/ui/webui/chromeos/network_element_localized_strings_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-02T15:39:18Z",
+      "side": 1,
+      "message": "nit: blank line after namespace and before matching }",
+      "revId": "1a2d1a17b93c3055d8210634e1362a338992c6fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
