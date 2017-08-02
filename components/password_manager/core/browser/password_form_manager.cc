@@ -835,6 +835,16 @@ bool PasswordFormManager::UploadPasswordVote(
     return false;
   }
 
+  // Check if a username vote type should be sent in case the user
+  // edits the prompt
+  if (form_to_upload.username_edited_in_prompt) {
+    autofill::ServerFieldTypeSet available_field_types;
+    FieldTypeMap field_types;
+    field_types[form_to_upload.username_element] = autofill::USERNAME;
+    LabelFields(field_types, &form_structure, &available_field_types,
+                autofill::AutofillUploadContents::Field::USERNAME_EDITED);
+  }
+
   autofill::ServerFieldTypeSet available_field_types;
   // A map from field names to field types.
   FieldTypeMap field_types;
