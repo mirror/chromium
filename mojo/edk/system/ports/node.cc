@@ -387,6 +387,7 @@ int Node::MergePorts(const PortRef& port_ref,
       destination_node_name,
       base::MakeUnique<MergePortEvent>(destination_port_name, new_port_name,
                                        new_port_descriptor));
+  BeginProxying(port_ref);
   return OK;
 }
 
@@ -499,6 +500,7 @@ int Node::OnUserMessage(std::unique_ptr<UserMessageEvent> message) {
 }
 
 int Node::OnPortAccepted(std::unique_ptr<PortAcceptedEvent> event) {
+  CHECK(false);
   PortRef port_ref;
   if (GetPort(event->port_name(), &port_ref) != OK)
     return ERROR_PORT_UNKNOWN;
@@ -786,10 +788,11 @@ int Node::SendUserMessageInternal(const PortRef& port_ref,
       return ERROR_PORT_CANNOT_SEND_SELF;
   }
 
+  std::vector<PortRef> new_proxies;
   NodeName target_node;
   int rv = PrepareToForwardUserMessage(port_ref, Port::kReceiving,
                                        false /* ignore_closed_peer */, m.get(),
-                                       &target_node);
+                                       &target_node, &new_proxies);
   if (rv != OK)
     return rv;
 
@@ -801,6 +804,8 @@ int Node::SendUserMessageInternal(const PortRef& port_ref,
   DCHECK_NE(kInvalidNodeName, target_node);
   if (target_node != name_) {
     delegate_->ForwardEvent(target_node, std::move(m));
+    for (auto& ref : new_proxies)
+      BeginProxying(ref);
     return OK;
   }
 
@@ -985,10 +990,6 @@ int Node::AcceptPort(const PortName& port_name,
   if (rv != OK)
     return rv;
 
-  // Allow referring port to forward messages.
-  delegate_->ForwardEvent(
-      port_descriptor.referring_node_name,
-      base::MakeUnique<PortAcceptedEvent>(port_descriptor.referring_port_name));
   return OK;
 }
 
@@ -996,7 +997,8 @@ int Node::PrepareToForwardUserMessage(const PortRef& forwarding_port_ref,
                                       Port::State expected_port_state,
                                       bool ignore_closed_peer,
                                       UserMessageEvent* message,
-                                      NodeName* forward_to_node) {
+                                      NodeName* forward_to_node,
+                                      std::vector<PortRef>* new_proxies) {
   bool target_is_remote = false;
   for (;;) {
     NodeName target_node_name;
@@ -1088,10 +1090,12 @@ int Node::PrepareToForwardUserMessage(const PortRef& forwarding_port_ref,
         // events are routed at least 1 or 2 intra-node hops before (if ever)
         // being routed externally.
         Event::PortDescriptor* port_descriptors = message->port_descriptors();
+        new_proxies->reserve(message->num_ports());
         for (size_t i = 0; i < message->num_ports(); ++i) {
           ConvertToProxy(locker.GetPort(attached_port_refs[i]),
                          target_node_name, message->ports() + i,
                          port_descriptors + i);
+          new_proxies->push_back(attached_port_refs[i]);
         }
       }
     }
@@ -1180,14 +1184,17 @@ int Node::ForwardUserMessagesFromProxy(const PortRef& port_ref) {
         break;
     }
 
+    std::vector<PortRef> new_proxies;
     NodeName target_node;
-    int rv = PrepareToForwardUserMessage(port_ref, Port::kProxying,
-                                         true /* ignore_closed_peer */,
-                                         message.get(), &target_node);
+    int rv = PrepareToForwardUserMessage(
+        port_ref, Port::kProxying, true /* ignore_closed_peer */, message.get(),
+        &target_node, &new_proxies);
     if (rv != OK)
       return rv;
 
     delegate_->ForwardEvent(target_node, std::move(message));
+    for (auto& ref : new_proxies)
+      BeginProxying(ref);
   }
   return OK;
 }
