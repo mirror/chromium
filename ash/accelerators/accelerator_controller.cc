@@ -54,6 +54,7 @@
 #include "chromeos/chromeos_switches.h"
 #include "chromeos/dbus/dbus_thread_manager.h"
 #include "chromeos/dbus/power_manager_client.h"
+#include "ui/app_list/app_list_constants.h"
 #include "ui/app_list/presenter/app_list.h"
 #include "ui/base/accelerators/accelerator.h"
 #include "ui/base/accelerators/accelerator_manager.h"
@@ -449,6 +450,11 @@ void HandleToggleAppList(const ui::Accelerator& accelerator) {
   if (accelerator.key_code() == ui::VKEY_LWIN)
     base::RecordAction(UserMetricsAction("Accel_Search_LWin"));
   Shell::Get()->ToggleAppList();
+  if (Shell::Get()->IsAppListVisible()) {
+    UMA_HISTOGRAM_ENUMERATION(app_list::kAppListToggleMethodHistogram,
+                              app_list::SEARCH_KEY,
+                              app_list::MAX_APP_LIST_TOGGLE_METHOD);
+  }
 }
 
 void HandleToggleFullscreen(const ui::Accelerator& accelerator) {
