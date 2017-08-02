@@ -37,10 +37,6 @@ const char kDisableLRUSnapshotCache[] = "disable-lru-snapshot-cache";
 // Disable auto-reload of error pages if offline.
 const char kDisableOfflineAutoReload[] = "disable-offline-auto-reload";
 
-// Disables the tab strip auto scroll new tabs.
-const char kDisableTabStripAutoScrollNewTabs[] =
-    "disable-tab-strip-autoscroll-new-tabs";
-
 // Disables Physical Web scanning for nearby URLs.
 const char kDisableIOSPhysicalWeb[] = "disable-ios-physical-web";
 

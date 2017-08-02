@@ -123,11 +123,6 @@ const flags_ui::FeatureEntry kFeatureEntries[] = {
 void AppendSwitchesFromExperimentalSettings(base::CommandLine* command_line) {
   NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
 
-  // Populate command line flag for the tab strip auto scroll new tabs
-  // experiment from the configuration plist.
-  if ([defaults boolForKey:@"TabStripAutoScrollNewTabsDisabled"])
-    command_line->AppendSwitch(switches::kDisableTabStripAutoScrollNewTabs);
-
   // Populate command line flag for the SnapshotLRUCache experiment from the
   // configuration plist.
   NSString* enableLRUSnapshotCache =
