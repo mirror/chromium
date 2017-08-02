@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c715562d_3210d320",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-02T23:55:49Z",
+      "side": 1,
+      "message": "nit: Add \"using chromeos::NetworkStateHandler::TechnologyState;\" as the first line in this function so that you don\u0027t need multiple lines for those enum values either.",
+      "range": {
+        "startLine": 282,
+        "startChar": 0,
+        "endLine": 282,
+        "endChar": 1
+      },
+      "revId": "6fd62b2d647b22d7f9d9c6badda892c7eba4e957",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b43f87f4_1eb7911a",
+        "filename": "chrome/browser/chromeos/tether/tether_service_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-02T23:55:49Z",
+      "side": 1,
+      "message": "nit: Why is this test moved down? Unless there is a strong reason, let\u0027s leave it where it was to prevent unnecessary history modification.",
+      "range": {
+        "startLine": 503,
+        "startChar": 0,
+        "endLine": 503,
+        "endChar": 54
+      },
+      "revId": "6fd62b2d647b22d7f9d9c6badda892c7eba4e957",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
