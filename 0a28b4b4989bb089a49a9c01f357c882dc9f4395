@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b39414b_6831bf05",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-02T20:47:17Z",
+      "side": 1,
+      "message": "This isn\u0027t true. Scans can still be performed when one or both of these are connected.\n\nPlease be more descriptive about the full context of your change and describe what you did to implement the change.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 87
+      },
+      "revId": "0a28b4b4989bb089a49a9c01f357c882dc9f4395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebc67c6d_0fe4bfe5",
+        "filename": "chromeos/components/tether/host_scan_scheduler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-02T20:47:17Z",
+      "side": 1,
+      "message": "nit: Unnecessary to compare to nullptr.",
+      "range": {
+        "startLine": 71,
+        "startChar": 0,
+        "endLine": 71,
+        "endChar": 57
+      },
+      "revId": "0a28b4b4989bb089a49a9c01f357c882dc9f4395",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
