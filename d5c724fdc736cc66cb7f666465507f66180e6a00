@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d86701ec_308d543b",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 927,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-02T19:50:53Z",
+      "side": 1,
+      "message": "\u003e Do we need a test for the case where the mixed content was in the body of the page itself (not dynamically added)?\n\nNot sure I understand this one; if the mixed content is present on page load, we\u0027d expect the page to still be downgraded when you navigate back to it, and we wouldn\u0027t hit this bug. I do think there is an existing test case covering this scenario though: https://cs.chromium.org/chromium/src/chrome/browser/ssl/ssl_browser_tests.cc?q\u003dssl_browser_t\u0026sq\u003dpackage:chromium\u0026l\u003d2530\n\n\u003e The original bug concerned Reload; is there any reason to have a separate test for that, or is back/forward navigation sufficiently identical?\n\nI could go either way. The underlying bug is the same, and there are probably lots of ways to navigate to an existing entry and we aren\u0027t going to have tests for all of them. Still, I could be convinced to add a Reload test just for the sake of making it easy to see the relationship between the commit and the bug report. *shrug*",
+      "parentUuid": "df605d09_160aafdb",
+      "range": {
+        "startLine": 927,
+        "startChar": 20,
+        "endLine": 927,
+        "endChar": 42
+      },
+      "revId": "d5c724fdc736cc66cb7f666465507f66180e6a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a5c88483_7b4d9af0",
         "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-02T18:45:37Z",
       "side": 1,
       "message": "Noob question: We\u0027re setting up an event listener /after/ doing the thing that we expect to trigger the event. Is there somehow a guarantee that the event hasn\u0027t fired already by this point (e.g. no messages pumping or something)?",
+      "range": {
+        "startLine": 944,
+        "startChar": 11,
+        "endLine": 944,
+        "endChar": 47
+      },
+      "revId": "d5c724fdc736cc66cb7f666465507f66180e6a00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc320192_ea2cdebb",
+        "filename": "chrome/browser/ssl/ssl_browser_tests.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 944,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-02T19:50:53Z",
+      "side": 1,
+      "message": "See the documentation on base::RunLoop::Quit(): if you call Quit() before Run(), then Run() will return immediately. https://cs.chromium.org/chromium/src/base/run_loop.h?q\u003dbase::RunLoop\u0026sq\u003dpackage:chromium\u0026l\u003d69",
+      "parentUuid": "a5c88483_7b4d9af0",
       "range": {
         "startLine": 944,
         "startChar": 11,
