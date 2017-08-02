@@ -31,6 +31,11 @@ var CrPolicyIndicatorType = {
   PRIMARY_USER: 'primary_user',
   RECOMMENDED: 'recommended',
   USER_POLICY: 'userPolicy',
+
+  // From extensions.controlledInfo.type
+  POLICY: 'POLICY',
+  CHILD_CUSTODIAN: 'CHILD_CUSTODIAN',
+  SUPERVISED_USER_CUSTODIAN: 'SUPERVISED_USER_CUSTODIAN',
 };
 
 /** @polymerBehavior */
@@ -70,8 +75,12 @@ var CrPolicyIndicatorBehavior = {
 
     indicatorTooltip: {
       type: String,
-      computed: 'getIndicatorTooltip(indicatorType, indicatorSourceName)',
+      computed: 'getIndicatorTooltip(' +
+          'indicatorType, indicatorSourceName, tooltipText)',
     },
+
+    // Upstream may optionally pass in a string to be used for the tooltip.
+    tooltipText: String,
   },
 
   /**
@@ -98,12 +107,19 @@ var CrPolicyIndicatorBehavior = {
         return 'cr:group';
       case CrPolicyIndicatorType.OWNER:
         return 'cr:person';
+      case CrPolicyIndicatorType.POLICY:
       case CrPolicyIndicatorType.USER_POLICY:
       case CrPolicyIndicatorType.DEVICE_POLICY:
       case CrPolicyIndicatorType.RECOMMENDED:
         return 'cr20:domain';
+      case CrPolicyIndicatorType.CHILD_CUSTODIAN:
+        return 'cr:account-child-invert';
+      case CrPolicyIndicatorType.SUPERVISED_USER_CUSTODIAN:
+        return 'cr:supervisor-account';
       default:
-        assertNotReached();
+        // TODO(scottchen): default should do assertNotReached() once we pull
+        // this fix: https://github.com/Polymer/polymer/issues/2712
+        return '';
     }
   },
 
@@ -116,6 +132,8 @@ var CrPolicyIndicatorBehavior = {
    * @return {string} The tooltip text for |type|.
    */
   getIndicatorTooltip: function(type, name, opt_matches) {
+    if (this.tooltipText)
+      return this.tooltipText;
     if (!CrPolicyStrings)
       return '';  // Tooltips may not be defined, e.g. in OOBE.
     switch (type) {
