@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e57f4999_e2ad7f8f",
+        "filename": "chrome/app/chrome_main_delegate.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-02T16:59:48Z",
+      "side": 1,
+      "message": "Note here that this goes to test_stubs in tests since we forgot what was up since last time.",
+      "revId": "80aa3c3f2c47949ad4665b55cd205f333d29febe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
