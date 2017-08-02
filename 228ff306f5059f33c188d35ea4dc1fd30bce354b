@@ -177,6 +177,466 @@
       "revId": "228ff306f5059f33c188d35ea4dc1fd30bce354b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "576b47dc_9069fc29",
+        "filename": "components/cryptauth/device_capability_manager_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-02T20:43:49Z",
+      "side": 1,
+      "message": "Organized in the wrong order. Correct order:\n\n#include \"file_youre_testing.h\"\n\n#include \u003cstl_class_1.h\u003e\n#include \u003cstl_class_2.h\u003e\n\n#include \"chromium_file_1.h\"\n#include \"chromium_file_2.h\"\n\nFor each group, alphabetize within that group.",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 46
+      },
+      "revId": "228ff306f5059f33c188d35ea4dc1fd30bce354b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9b6d743_cba7f329",
+        "filename": "components/cryptauth/device_capability_manager_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-02T20:43:49Z",
+      "side": 1,
+      "message": "Unused.",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 24
+      },
+      "revId": "228ff306f5059f33c188d35ea4dc1fd30bce354b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "febc7f21_5be409b5",
+        "filename": "components/cryptauth/device_capability_manager_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-02T20:43:49Z",
+      "side": 1,
+      "message": "Unused.",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 22
+      },
+      "revId": "228ff306f5059f33c188d35ea4dc1fd30bce354b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71917c66_ec36a059",
+        "filename": "components/cryptauth/device_capability_manager_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-02T20:43:49Z",
+      "side": 1,
+      "message": "These test device infos are the same in every test; thus, they should be const and initialized in the constructor.",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 73,
+        "endChar": 45
+      },
+      "revId": "228ff306f5059f33c188d35ea4dc1fd30bce354b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41d7890f_55af57cc",
+        "filename": "components/cryptauth/device_capability_manager_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-02T20:43:49Z",
+      "side": 1,
+      "message": "No need for a function - just do the initialization here.",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 82,
+        "endChar": 36
+      },
+      "revId": "228ff306f5059f33c188d35ea4dc1fd30bce354b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f91d8cc_bd3f2a90",
+        "filename": "components/cryptauth/device_capability_manager_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-02T20:43:49Z",
+      "side": 1,
+      "message": "Mock FindEligibleUnlockDevices() implementation.",
+      "range": {
+        "startLine": 94,
+        "startChar": 5,
+        "endLine": 95,
+        "endChar": 31
+      },
+      "revId": "228ff306f5059f33c188d35ea4dc1fd30bce354b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39eec2d9_ac210bcf",
+        "filename": "components/cryptauth/device_capability_manager_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-02T20:43:49Z",
+      "side": 1,
+      "message": "You need to save error_callback so that you can also test error cases.",
+      "range": {
+        "startLine": 99,
+        "startChar": 6,
+        "endLine": 99,
+        "endChar": 58
+      },
+      "revId": "228ff306f5059f33c188d35ea4dc1fd30bce354b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df6a8463_91b82a80",
+        "filename": "components/cryptauth/device_capability_manager_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-02T20:43:49Z",
+      "side": 1,
+      "message": "Mock ToggleEasyUnlock() implementation.",
+      "range": {
+        "startLine": 103,
+        "startChar": 0,
+        "endLine": 103,
+        "endChar": 76
+      },
+      "revId": "228ff306f5059f33c188d35ea4dc1fd30bce354b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02cb98fc_a9b4c358",
+        "filename": "components/cryptauth/device_capability_manager_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-02T20:43:49Z",
+      "side": 1,
+      "message": "With this code, you\u0027re adding a back-end implementation detail about whether the device can be toggled. It\u0027s not your responsibility to add this kind of logic - you should just mock out the function to return what you want it to return.\n\nFor example, imagine that someday we add a server-side change which, if you enable a device for a capability, it adds it to the eligible devices. Then, this code would not match what we expect from the server anyway. Don\u0027t make implementation detail assumptions about the things you\u0027re mocking out.",
+      "range": {
+        "startLine": 108,
+        "startChar": 0,
+        "endLine": 119,
+        "endChar": 5
+      },
+      "revId": "228ff306f5059f33c188d35ea4dc1fd30bce354b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a8d8753_8327c2d2",
+        "filename": "components/cryptauth/device_capability_manager_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-02T20:43:49Z",
+      "side": 1,
+      "message": "for (const auto\u0026 device_info : test_eligible_external_devices_infos_) {\n  find_eligible_unlock_devices_response_.add_eligible_devices()-\u003eCopyFrom(device_info);\n}\n\nSame below.",
+      "range": {
+        "startLine": 130,
+        "startChar": 0,
+        "endLine": 135,
+        "endChar": 5
+      },
+      "revId": "228ff306f5059f33c188d35ea4dc1fd30bce354b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e9d4dd9_ccc0de06",
+        "filename": "components/cryptauth/device_capability_manager_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-02T20:43:49Z",
+      "side": 1,
+      "message": "This should take the capability as a parameter.",
+      "range": {
+        "startLine": 162,
+        "startChar": 0,
+        "endLine": 162,
+        "endChar": 30
+      },
+      "revId": "228ff306f5059f33c188d35ea4dc1fd30bce354b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85da9d50_942fffd8",
+        "filename": "components/cryptauth/device_capability_manager_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-02T20:43:49Z",
+      "side": 1,
+      "message": "SetCapabilityForDevice",
+      "range": {
+        "startLine": 170,
+        "startChar": 7,
+        "endLine": 170,
+        "endChar": 23
+      },
+      "revId": "228ff306f5059f33c188d35ea4dc1fd30bce354b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0e29caa_ad469cbf",
+        "filename": "components/cryptauth/device_capability_manager_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-02T20:43:49Z",
+      "side": 1,
+      "message": "These *_called_ booleans are messy to keep track of. Instead, please use a pattern similar to [1].\n\n(1) Create a string result_ instance field in this class.\n(2) Create a kSuccessResult constant in the anonymous namespace.\n(3) In your success callbacks, set result_ to kSuccessResult.\n(4) In your error callbacks, set result_ to the error string.\n(5) Create a GetResultAndReset() function, and use it to verify the last result. This function clears result_ each time it\u0027s called, so you won\u0027t have to keep track of these booleans.\n\nYou\u0027ll want to do something similar with the eligible devices returned in the success case of that function.\n\n[1] https://cs.chromium.org/chromium/src/chromeos/components/tether/tether_connector_unittest.cc",
+      "range": {
+        "startLine": 181,
+        "startChar": 0,
+        "endLine": 198,
+        "endChar": 3
+      },
+      "revId": "228ff306f5059f33c188d35ea4dc1fd30bce354b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b650090_eedad216",
+        "filename": "components/cryptauth/device_capability_manager_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-02T20:43:49Z",
+      "side": 1,
+      "message": "Create a function for invoking specific callbacks. This is confusing/error-prone.",
+      "range": {
+        "startLine": 204,
+        "startChar": 0,
+        "endLine": 204,
+        "endChar": 67
+      },
+      "revId": "228ff306f5059f33c188d35ea4dc1fd30bce354b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "446a9ecf_f7a1eabd",
+        "filename": "components/cryptauth/device_capability_manager_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-02T20:43:49Z",
+      "side": 1,
+      "message": "Note: This is confusing - why would you take a parameter and immediately verify that it is true? Why even have a parameter in that case? (But you\u0027ll be removing this function.)",
+      "range": {
+        "startLine": 205,
+        "startChar": 0,
+        "endLine": 205,
+        "endChar": 32
+      },
+      "revId": "228ff306f5059f33c188d35ea4dc1fd30bce354b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5956d20d_3b2fc37f",
+        "filename": "components/cryptauth/device_capability_manager_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-02T20:43:49Z",
+      "side": 1,
+      "message": "Note: This function will be eliminated when you use GetResultAndReset().",
+      "range": {
+        "startLine": 222,
+        "startChar": 0,
+        "endLine": 222,
+        "endChar": 76
+      },
+      "revId": "228ff306f5059f33c188d35ea4dc1fd30bce354b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f05f6f5d_ce0294d0",
+        "filename": "components/cryptauth/device_capability_manager_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-02T20:43:49Z",
+      "side": 1,
+      "message": "Note: This is unusual. You shouldn\u0027t be adding booleans together to form an int. (But you\u0027ll be removing this function.)",
+      "range": {
+        "startLine": 227,
+        "startChar": 0,
+        "endLine": 227,
+        "endChar": 62
+      },
+      "revId": "228ff306f5059f33c188d35ea4dc1fd30bce354b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df8a8412_3acd324b",
+        "filename": "components/cryptauth/device_capability_manager_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-02T20:43:49Z",
+      "side": 1,
+      "message": "This should be created in SetUp(), not when the test is constructed.",
+      "range": {
+        "startLine": 235,
+        "startChar": 0,
+        "endLine": 235,
+        "endChar": 77
+      },
+      "revId": "228ff306f5059f33c188d35ea4dc1fd30bce354b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a92db19_cd6bbd77",
+        "filename": "components/cryptauth/device_capability_manager_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-02T20:43:49Z",
+      "side": 1,
+      "message": "These two should be const and listed above the rest.",
+      "range": {
+        "startLine": 238,
+        "startChar": 0,
+        "endLine": 238,
+        "endChar": 58
+      },
+      "revId": "228ff306f5059f33c188d35ea4dc1fd30bce354b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c7b135b_df15d2a0",
+        "filename": "components/cryptauth/device_capability_manager_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-02T20:43:49Z",
+      "side": 1,
+      "message": "Note: use_underscores_for_variable_names_. But you\u0027ll be replacing this with result_.",
+      "range": {
+        "startLine": 249,
+        "startChar": 14,
+        "endLine": 249,
+        "endChar": 30
+      },
+      "revId": "228ff306f5059f33c188d35ea4dc1fd30bce354b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
