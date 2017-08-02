@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c80a5ce3_d1047f1c",
+        "filename": "content/common/media/media_stream_messages.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-08-02T17:03:57Z",
+      "side": 1,
+      "message": "we no longer need this constant because we are not defining any messages, just traits. let\u0027s remove here and also in ipc/ipc_message_start.h",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 44
+      },
+      "revId": "f7a26f5ea79ad0985a954b3915d6cd8f450ed960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a4cd7c4_d7bb06a6",
+        "filename": "content/common/media/media_stream_messages.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1116053
+      },
+      "writtenOn": "2017-08-02T17:03:57Z",
+      "side": 1,
+      "message": "If these are still required, can we rename this file to something like media_stream_struct_traits.h  since there are no messages here?  Alternatively, can this be combined with some other *.h file to make this file go away entirely?",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 23
+      },
+      "revId": "f7a26f5ea79ad0985a954b3915d6cd8f450ed960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
