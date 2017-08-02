@@ -5,6 +5,7 @@
 #include "cc/paint/paint_op_writer.h"
 
 #include "cc/paint/paint_flags.h"
+#include "cc/paint/paint_shader.h"
 #include "third_party/skia/include/core/SkFlattenableSerialization.h"
 #include "third_party/skia/include/core/SkTextBlob.h"
 
@@ -25,6 +26,8 @@ void PaintOpWriter::WriteSimple(const T& val) {
 }
 
 void PaintOpWriter::WriteFlattenable(const SkFlattenable* val) {
+  DCHECK(SkIsAlign4(reinterpret_cast<uintptr_t>(memory_)))
+      << "Flattenable must start writing at 4 byte alignment.";
   // TODO(enne): change skia API to make this a const parameter.
   sk_sp<SkData> data(
       SkValidatingSerializeFlattenable(const_cast<SkFlattenable*>(val)));
@@ -79,12 +82,16 @@ void PaintOpWriter::Write(const PaintFlags& flags) {
   WriteSimple(flags.bitfields_uint_);
 
   // TODO(enne): WriteTypeface, http://crbug.com/737629
+
+  // Flattenables must be written starting at a 4 byte boundary, which should be
+  // the case here.
   WriteFlattenable(flags.path_effect_.get());
-  // TODO(enne): WritePaintShader, http://crbug.com/737629
   WriteFlattenable(flags.mask_filter_.get());
   WriteFlattenable(flags.color_filter_.get());
   WriteFlattenable(flags.draw_looper_.get());
   WriteFlattenable(flags.image_filter_.get());
+
+  Write(flags.shader_.get());
 }
 
 void PaintOpWriter::Write(const PaintImage& image, ImageDecodeCache* cache) {
@@ -105,6 +112,46 @@ void PaintOpWriter::Write(const sk_sp<SkData>& data) {
 
 void PaintOpWriter::Write(const sk_sp<SkTextBlob>& blob) {
   // TODO(enne): implement SkTextBlob serialization: http://crbug.com/737629
+}
+
+void PaintOpWriter::Write(const PaintShader* shader) {
+  if (!shader) {
+    WriteSimple(false);
+    return;
+  }
+
+  // TODO(vmpstr): This could be optimized to only serialize fields relevant to
+  // the specific shader type. If done, then corresponding reading and tests
+  // would have to also be updated.
+  WriteSimple(true);
+  WriteSimple(shader->shader_type_);
+  WriteSimple(shader->flags_);
+  WriteSimple(shader->end_radius_);
+  WriteSimple(shader->start_radius_);
+  WriteSimple(shader->tx_);
+  WriteSimple(shader->ty_);
+  WriteSimple(shader->fallback_color_);
+  WriteSimple(shader->scaling_behavior_);
+  if (shader->local_matrix_) {
+    Write(true);
+    WriteSimple(*shader->local_matrix_);
+  } else {
+    Write(false);
+  }
+  WriteSimple(shader->center_);
+  WriteSimple(shader->tile_);
+  WriteSimple(shader->start_point_);
+  WriteSimple(shader->end_point_);
+  // TODO(vmpstr): Write PaintImage image_. http://crbug.com/737629
+  // TODO(vmpstr): Write sk_sp<PaintRecord> record_. http://crbug.com/737629
+  WriteSimple(shader->colors_.size());
+  WriteData(shader->colors_.size() * sizeof(SkColor), shader->colors_.data());
+
+  WriteSimple(shader->positions_.size());
+  WriteData(shader->positions_.size() * sizeof(SkScalar),
+            shader->positions_.data());
+  // Explicitly don't write the cached_shader_ because that can be regenerated
+  // using other fields.
 }
 
 void PaintOpWriter::WriteData(size_t bytes, const void* input) {
