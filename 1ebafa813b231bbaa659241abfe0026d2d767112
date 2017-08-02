@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d372a599_e6973a21",
+        "filename": "base/sync_socket_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-02T20:03:20Z",
+      "side": 1,
+      "message": "Done. Actually it should be false in this test.",
+      "parentUuid": "b5e218ef_5cc6e585",
+      "range": {
+        "startLine": 148,
+        "startChar": 42,
+        "endLine": 148,
+        "endChar": 46
+      },
+      "revId": "1ebafa813b231bbaa659241abfe0026d2d767112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc8b49a9_8531e0dd",
         "filename": "base/sync_socket_unittest.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "90a7fc39_38645a7b",
+        "filename": "base/sync_socket_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-02T20:03:20Z",
+      "side": 1,
+      "message": "I\u0027m not happy about it either, but do you have suggestions on how to implement this test without sleep?\nProblem is that previously it was normally calling shutdown() before HangingReceiveThread has a chance to call Receive(). This case can be tested without a separate thread, see ReceiveAfterShutdown.\n\nThere are actually quite a few unittests in base that use sleep(), some with delay that\u0027s much longer than 10ms,",
+      "parentUuid": "dc8b49a9_8531e0dd",
+      "range": {
+        "startLine": 150,
+        "startChar": 18,
+        "endLine": 150,
+        "endChar": 34
+      },
+      "revId": "1ebafa813b231bbaa659241abfe0026d2d767112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e267a6dc_72ac5006",
         "filename": "base/sync_socket_unittest.cc",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-02T19:49:08Z",
       "side": 1,
       "message": "This looks like a test that\u0027s just going to be flaky. Not having test coverage seems better than sleeps and timeouts.",
+      "range": {
+        "startLine": 176,
+        "startChar": 27,
+        "endLine": 176,
+        "endChar": 41
+      },
+      "revId": "1ebafa813b231bbaa659241abfe0026d2d767112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1325c43_c7033d51",
+        "filename": "base/sync_socket_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-02T20:03:20Z",
+      "side": 1,
+      "message": "FWIW the old CancelReceiveShutdown can be flaky in theory for the same reason, at least in theory. \n\nRemoved this check, but kept it in ReceiveWithTimeoutAfterShutdown with kReceiveTimeout.",
+      "parentUuid": "e267a6dc_72ac5006",
       "range": {
         "startLine": 176,
         "startChar": 27,
