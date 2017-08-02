@@ -1,0 +1,245 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b18a551_49221703",
+        "filename": "cc/paint/paint_image.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-02T22:53:56Z",
+      "side": 1,
+      "message": "I\u0027d like to avoid adding this, and instead use width/height to create the bounds... There are a bunch of cases that do that already and always converting from SkIRect to whatever flavor of rect the call sites want is slower than just typing out width/height",
+      "range": {
+        "startLine": 78,
+        "startChar": 2,
+        "endLine": 78,
+        "endChar": 24
+      },
+      "revId": "98c72daa80beeee482f9750972b3c05f463c3eae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b168f71c_486363fc",
+        "filename": "cc/paint/paint_image_builder.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-02T22:53:56Z",
+      "side": 1,
+      "message": "nit: std::move",
+      "range": {
+        "startLine": 46,
+        "startChar": 42,
+        "endLine": 46,
+        "endChar": 51
+      },
+      "revId": "98c72daa80beeee482f9750972b3c05f463c3eae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a42a81d_94a03773",
+        "filename": "cc/paint/paint_image_builder.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-02T22:53:56Z",
+      "side": 1,
+      "message": "It\u0027s not obvious what this returns, can you comment?",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 45
+      },
+      "revId": "98c72daa80beeee482f9750972b3c05f463c3eae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29253d09_d0717f92",
+        "filename": "cc/paint/paint_image_builder.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-02T22:53:56Z",
+      "side": 1,
+      "message": "this is awkward from the api perspective, why do i have to set the generator before setting a paint id? For paint_record, we just passed both in one function. Should this be the same?",
+      "range": {
+        "startLine": 50,
+        "startChar": 4,
+        "endLine": 50,
+        "endChar": 48
+      },
+      "revId": "98c72daa80beeee482f9750972b3c05f463c3eae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69ae50e5_3f10958f",
+        "filename": "cc/paint/paint_image_builder.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-02T22:53:56Z",
+      "side": 1,
+      "message": ":( the whole point of this was to defer creating a cached sk image until later, but now we\u0027re doing in the builder?",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 54,
+        "endChar": 61
+      },
+      "revId": "98c72daa80beeee482f9750972b3c05f463c3eae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c78d990f_f1218f1c",
+        "filename": "cc/paint/paint_image_generator.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-02T22:53:56Z",
+      "side": 1,
+      "message": "Can you leave comments on the functions here?",
+      "revId": "98c72daa80beeee482f9750972b3c05f463c3eae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efb917ea_9606418e",
+        "filename": "cc/paint/skia_paint_image_generator.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-02T22:53:56Z",
+      "side": 1,
+      "message": "Why not just use PaintImageGenerator and later remove the fact that it derives from SkImageGenerator",
+      "range": {
+        "startLine": 15,
+        "startChar": 22,
+        "endLine": 15,
+        "endChar": 45
+      },
+      "revId": "98c72daa80beeee482f9750972b3c05f463c3eae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fcc0419_84e38d2d",
+        "filename": "media/renderers/skcanvas_video_renderer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-02T22:53:56Z",
+      "side": 1,
+      "message": "This is kind of what I mean about conversions :) no point in exposing bounds() if we just convert whatever we return by calling size() and then -\u003e gfx::Size and then to gfx::SizeF..\n\nThis is all equivalent to gfx::SizeF(last_image_.width(), last_image_.height())",
+      "range": {
+        "startLine": 389,
+        "startChar": 17,
+        "endLine": 389,
+        "endChar": 35
+      },
+      "revId": "98c72daa80beeee482f9750972b3c05f463c3eae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa0f0360_2da2f6b0",
+        "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-02T22:53:56Z",
+      "side": 1,
+      "message": "while here, just cached_frame_ \u003d source_.Create...",
+      "range": {
+        "startLine": 109,
+        "startChar": 2,
+        "endLine": 110,
+        "endChar": 28
+      },
+      "revId": "98c72daa80beeee482f9750972b3c05f463c3eae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9640a4c_634611e1",
+        "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-02T22:53:56Z",
+      "side": 1,
+      "message": "nit: !!FrameAtIndex",
+      "range": {
+        "startLine": 394,
+        "startChar": 9,
+        "endLine": 394,
+        "endChar": 14
+      },
+      "revId": "98c72daa80beeee482f9750972b3c05f463c3eae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2683f317_91c41417",
+        "filename": "third_party/WebKit/Source/platform/graphics/BitmapImageTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-02T22:53:56Z",
+      "side": 1,
+      "message": "I\u0027m not really sure what this is doing. FrameAtIndex doesn\u0027t really say that it will cache anything?",
+      "revId": "98c72daa80beeee482f9750972b3c05f463c3eae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
