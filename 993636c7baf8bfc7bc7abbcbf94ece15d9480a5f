@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "955c92c7_756d8dc3",
+        "filename": "extensions/shell/browser/shell_desktop_controller_aura.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-02T14:14:59Z",
+      "side": 1,
+      "message": "What\u0027s the lifetime of this object compared to AppWindowRegistry?  If the registry outlives this, then we risk a UAF on a notification.\n\nAlso, if you use the ScopedObserver interface, it has an IsObserving() method that would obviate the need for the registry HasObserver method.",
+      "revId": "993636c7baf8bfc7bc7abbcbf94ece15d9480a5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d09f04d2_9fd593ee",
+        "filename": "extensions/shell/browser/shell_desktop_controller_aura_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-02T14:14:59Z",
+      "side": 1,
+      "message": "What manages this lifetime?",
+      "revId": "993636c7baf8bfc7bc7abbcbf94ece15d9480a5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
