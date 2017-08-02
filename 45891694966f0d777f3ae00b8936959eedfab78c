@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6f480c00_a939ae2a",
+        "filename": "third_party/WebKit/Source/core/exported/WebPluginContainerImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 873,
+      "author": {
+        "id": 1229489
+      },
+      "writtenOn": "2017-08-02T18:55:29Z",
+      "side": 1,
+      "message": "I don\u0027t have it with the Copy() and Cut() because those require there to be text selection. Do you think I should move the checks for HasSelection() inside the checks for Copy and Cut so I can put the kEditModifier checks together?",
+      "parentUuid": "591b7fd8_a35aa894",
+      "revId": "45891694966f0d777f3ae00b8936959eedfab78c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d5a24050_3cd4b5f8",
         "filename": "third_party/WebKit/Source/core/exported/WebPluginContainerImpl.cpp",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "fdc9158c_3c8cdc24",
+        "filename": "third_party/WebKit/Source/core/exported/WebPluginContainerImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1229489
+      },
+      "writtenOn": "2017-08-02T18:55:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5a24050_3cd4b5f8",
+      "revId": "45891694966f0d777f3ae00b8936959eedfab78c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f7ed30f2_591635a7",
         "filename": "third_party/WebKit/Source/core/exported/WebPluginContainerImpl.cpp",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "45891694966f0d777f3ae00b8936959eedfab78c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7c1ae0e_3942779b",
+        "filename": "third_party/WebKit/Source/core/exported/WebPluginContainerImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 881,
+      "author": {
+        "id": 1229489
+      },
+      "writtenOn": "2017-08-02T18:55:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7ed30f2_591635a7",
+      "revId": "45891694966f0d777f3ae00b8936959eedfab78c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
