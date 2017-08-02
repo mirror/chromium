@@ -728,8 +728,9 @@ TEST_F(PictureLayerImplTest, ScaledBoundsOverflowInt) {
   active_layer()->draw_properties().visible_layer_rect =
       gfx::Rect(layer_bounds);
   SharedQuadState state;
-  active_layer()->PopulateScaledSharedQuadState(&state, adjusted_scale,
-                                                adjusted_scale);
+  active_layer()->PopulateScaledSharedQuadState(
+      &state, adjusted_scale, adjusted_scale,
+      active_layer()->contents_opaque());
 }
 
 TEST_F(PictureLayerImplTest, PinchGestureTilings) {
@@ -1518,6 +1519,7 @@ TEST_F(PictureLayerImplTest, DisallowTileDrawQuads) {
             render_pass->quad_list.front()->material);
   EXPECT_EQ(render_pass->quad_list.front()->rect, layer_rect);
   EXPECT_EQ(render_pass->quad_list.front()->opaque_rect, layer_rect);
+  EXPECT_TRUE(render_pass->quad_list.front()->shared_quad_state->is_opaque);
   EXPECT_EQ(render_pass->quad_list.front()->visible_rect, layer_rect);
 }
 
@@ -1555,6 +1557,7 @@ TEST_F(PictureLayerImplTest, ResourcelessPartialRecording) {
   const DrawQuad* quad = render_pass->quad_list.front();
   EXPECT_EQ(quad_visible, quad->rect);
   EXPECT_EQ(quad_visible, quad->opaque_rect);
+  EXPECT_TRUE(quad->shared_quad_state->is_opaque);
   EXPECT_EQ(quad_visible, quad->visible_rect);
 }
 
