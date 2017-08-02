@@ -309,6 +309,7 @@ void DesktopWindowTreeHostMus::Init(aura::Window* content_window,
       base::MakeUnique<NativeCursorManagerMus>(window()));
   aura::client::SetCursorClient(window(), cursor_manager_.get());
   InitHost();
+  window()->Show();
 
   NativeWidgetAura::SetShadowElevationFromInitParams(window(), params);
 
