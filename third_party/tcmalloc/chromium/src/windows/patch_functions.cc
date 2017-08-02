@@ -72,15 +72,8 @@
 #error This file is intended for patching allocators - use override_functions.cc instead.
 #endif
 
-// We use psapi.  Non-MSVC systems will have to link this in themselves.
-#ifdef _MSC_VER
-#pragma comment(lib, "Psapi.lib")
-#endif
-
 // Make sure we always use the 'old' names of the psapi functions.
-#ifndef PSAPI_VERSION
-#define PSAPI_VERSION 1
-#endif
+#define PSAPI_VERSION 2
 
 #include <windows.h>
 #include <stdio.h>
