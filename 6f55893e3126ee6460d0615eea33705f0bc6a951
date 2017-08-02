@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "df180782_c2d7f475",
+        "filename": "third_party/WebKit/Source/core/exported/WebWorkerShadowPage.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-02T04:30:18Z",
+      "side": 1,
+      "message": "Thank you for the clarification!\n\nAccording to the git-history[1], this was added just for avoiding crashes. I added a comment that an empty InterfaceProvider is intentional.\n\n[1] https://chromium-review.googlesource.com/c/576370",
+      "parentUuid": "063ee472_fd86f47b",
+      "range": {
+        "startLine": 37,
+        "startChar": 1,
+        "endLine": 37,
+        "endChar": 30
+      },
+      "revId": "6f55893e3126ee6460d0615eea33705f0bc6a951",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "97e886ba_e03789ce",
         "filename": "third_party/WebKit/Source/core/exported/WebWorkerShadowPage.h",
         "patchSetId": 7
@@ -114,6 +138,24 @@
     },
     {
       "key": {
+        "uuid": "0a08bb2d_82bd9d49",
+        "filename": "third_party/WebKit/Source/core/exported/WebWorkerShadowPage.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-02T04:30:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97e886ba_e03789ce",
+      "revId": "6f55893e3126ee6460d0615eea33705f0bc6a951",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f34f73c_32de5c29",
         "filename": "third_party/WebKit/Source/core/exported/WebWorkerShadowPage.h",
         "patchSetId": 7
@@ -125,6 +167,24 @@
       "writtenOn": "2017-08-01T10:58:29Z",
       "side": 1,
       "message": "Hm, having data_saver_enabled here alone feels a bit weird... should the clients of this class set it via GetSettings() maybe?",
+      "revId": "6f55893e3126ee6460d0615eea33705f0bc6a951",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae87d31a_61589486",
+        "filename": "third_party/WebKit/Source/core/exported/WebWorkerShadowPage.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-02T04:30:18Z",
+      "side": 1,
+      "message": "Good point. Done.",
+      "parentUuid": "7f34f73c_32de5c29",
       "revId": "6f55893e3126ee6460d0615eea33705f0bc6a951",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
