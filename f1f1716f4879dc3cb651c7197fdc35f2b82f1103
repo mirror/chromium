@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a73ac371_51963323",
+        "filename": "content/browser/accessibility/browser_accessibility_cocoa.mm",
+        "patchSetId": 18
+      },
+      "lineNbr": 1402,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-02T21:21:07Z",
+      "side": 1,
+      "message": "I think these two for loops are now doing the same thing as\nBrowserAccessibilityAndroid::CommonEndLengths, so we should\nconsider using the same helper function for both. A TODO in\nboth places is fine for now.\n\nIs there a good use case for why we should\ntreat all whitespace the same? For something like a diff\ntool, this makes sense, but for text editing I wouldn\u0027t\nexpect the whitespace character to change from one edit\nto the next, would you?\n\nI think it would be simpler to just test for exact equality.\n\nFinally, I\u0027m pretty sure that neither of these functions\ncorrectly handle unicode characters that don\u0027t fit into a\nsingle 16-bit char. For example if someone replaced a\n4-byte unicode char with a different 4-byte unicode char\nthat has the same first two bytes, we\u0027d treat it as a deletion\nand insertion of the last 2 bytes, which would be wrong.\nI think the right solution is to use TextIterator.\n\nSo maybe a TODO to combine this with\nBrowserAccessibilityAndroid::CommonEndLengths and to make\nthem both fully unicode-aware.",
+      "revId": "f1f1716f4879dc3cb651c7197fdc35f2b82f1103",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
