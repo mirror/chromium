@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "e1796ded_ef9a6417",
+        "filename": "ppapi/tests/blink_test_plugin.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-08-02T03:55:11Z",
+      "side": 1,
+      "message": "Note, the format is premultiplied, so changing alpha from 0xFF to 0x80 also needs scaling the color components (i.e. you want 0x80000080 / 0x80008000)\nIt might be related to your problem.",
+      "parentUuid": "d8622071_1751f0d7",
+      "range": {
+        "startLine": 117,
+        "startChar": 79,
+        "endLine": 117,
+        "endChar": 0
+      },
+      "revId": "79528e1dba5a81d3488ba9541effeb62a9e84eef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d1af713_b196d917",
         "filename": "third_party/WebKit/LayoutTests/plugins/iframe-plugin-bgcolor.html",
         "patchSetId": 2
