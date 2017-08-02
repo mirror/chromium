@@ -16,15 +16,18 @@ namespace payments {
 // URL payment method identifiers for iOS payment apps.
 const char kBobpayPaymentMethodIdentifier[] =
     "https://emerald-eon.appspot.com/bobpay";
+const char kAlicepayPaymentMethodIdentifier[] =
+    "https://emerald-eon.appspot.com/alicepay";
 
 // Scheme names for iOS payment apps.
 const char kBobpaySchemeName[] = "bobpay://";
+const char kAlicepaySchemeName[] = "bobpay://";
 
 const std::map<std::string, std::string>& GetMethodNameToSchemeName() {
   static const std::map<std::string, std::string> kMethodToScheme =
       std::map<std::string, std::string>{
           {kBobpayPaymentMethodIdentifier, kBobpaySchemeName},
-      };
+          {kAlicepayPaymentMethodIdentifier, kAlicepaySchemeName}};
   return kMethodToScheme;
 }
 

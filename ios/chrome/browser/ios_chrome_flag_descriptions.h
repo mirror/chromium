@@ -39,6 +39,11 @@ extern const char kPhysicalWebDescription[];
 extern const char kWebPaymentsName[];
 extern const char kWebPaymentsDescription[];
 
+// Title and description for the flag to enable third party payment app
+// integration with Web Payments.
+extern const char kWebPaymentsNativeAppsName[];
+extern const char kWebPaymentsNativeAppsDescription[];
+
 // Title and description for the flag to enable Captive Portal Login.
 extern const char kIosCaptivePortalName[];
 extern const char kIosCaptivePortalDescription[];
