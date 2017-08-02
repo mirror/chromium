@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9783671e_9a9e502e",
+        "filename": "chrome/browser/ui/webui/snippets_internals_message_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T14:17:12Z",
+      "side": 1,
+      "message": "nit: Whole sentences in comments please, i.e. start with capital letter and end with period.",
+      "revId": "596b7500f1bc1310205789fdcae5505b4ad8fb5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4347cdf_0ba0425a",
+        "filename": "chrome/browser/ui/webui/snippets_internals_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T14:17:12Z",
+      "side": 1,
+      "message": "This also needs to be #ifdef\u0027d",
+      "revId": "596b7500f1bc1310205789fdcae5505b4ad8fb5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

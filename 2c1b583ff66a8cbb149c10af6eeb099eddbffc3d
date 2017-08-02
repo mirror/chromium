@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "b1c24550_7be54ace",
+        "filename": "chrome/browser/resources/snippets_internals.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T14:17:12Z",
+      "side": 1,
+      "message": "But there\u0027s also load_time_data.js above - what\u0027s that then? Are both required?",
+      "parentUuid": "8ad3ff21_c5fa8ace",
+      "revId": "2c1b583ff66a8cbb149c10af6eeb099eddbffc3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3452471e_497e6db0",
         "filename": "chrome/browser/resources/snippets_internals.html",
         "patchSetId": 2
