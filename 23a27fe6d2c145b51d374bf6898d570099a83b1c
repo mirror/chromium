@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dffcd108_5868820a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-02T09:29:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "93fc96ca_6eb87500",
+      "revId": "23a27fe6d2c145b51d374bf6898d570099a83b1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "caefaec6_5208b357",
         "filename": "third_party/WebKit/Source/core/editing/SetSelectionData.h",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-02T09:09:45Z",
       "side": 1,
       "message": "I\u0027m confusing.  Is \u0027Handle\u0027 a verb, or a noun?  \u0027Handle\u0027 here looks a verb because \u0027should\u0027 is preprended, but \u0027handle\u0027 in FrameSelection::is_handle_visible_ looks a noun.",
+      "revId": "23a27fe6d2c145b51d374bf6898d570099a83b1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1f78ec1_d79be036",
+        "filename": "third_party/WebKit/Source/core/editing/SetSelectionData.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-02T09:29:51Z",
+      "side": 1,
+      "message": "Done. Rename to ShouldShowHandle()",
+      "parentUuid": "caefaec6_5208b357",
       "revId": "23a27fe6d2c145b51d374bf6898d570099a83b1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
