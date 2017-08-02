@@ -8,9 +8,12 @@
 #include <sstream>
 #include <utility>
 
+#include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
+#include "net/http2/platform/api/http2_export.h"
 #include "net/http2/platform/api/http2_string.h"
+#include "net/http2/platform/api/http2_string_piece.h"
 
 namespace net {
 
@@ -30,6 +33,16 @@ inline void Http2StrAppendImpl(Http2String* output, Args... args) {
 template <typename... Args>
 inline Http2String Http2StringPrintfImpl(const Args&... args) {
   return base::StringPrintf(std::forward<const Args&>(args)...);
+}
+
+inline Http2String Http2HexEncodeImpl(const void* bytes, size_t size) {
+  return base::HexEncode(bytes, size);
+}
+
+HTTP2_EXPORT_PRIVATE Http2String Http2HexDecodeImpl(Http2StringPiece data);
+
+inline Http2String Http2HexDumpImpl(Http2StringPiece data) {
+  return base::StringToHexASCIIDump(data);
 }
 
 }  // namespace net
