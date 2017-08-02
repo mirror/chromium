@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85c3ea58_60b85c98",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-08-02T06:52:58Z",
+      "side": 1,
+      "message": "why not call CreateManualAckWithDamage()?",
+      "revId": "9180d670faff65612381dc4b0e57a9e1bbcb73a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4479e9b3_bd9efc87",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-08-02T06:52:58Z",
+      "side": 1,
+      "message": "nothing calls SetVideoFrameProviderClient(nullptr).",
+      "revId": "9180d670faff65612381dc4b0e57a9e1bbcb73a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaf79590_e293e554",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-08-02T06:52:58Z",
+      "side": 1,
+      "message": "i don\u0027t think we have to worry about this.  DidReceiveFrame \u003d\u003e GetCurrentFrame is a new frame.  if, later, UpdateCurrentFrame returns true for the same frame, then it seems like a bug.",
+      "revId": "9180d670faff65612381dc4b0e57a9e1bbcb73a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0572e7d4_e26f4d71",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-08-02T06:52:58Z",
+      "side": 1,
+      "message": "i found https://cs.chromium.org/chromium/src/components/exo/surface_tree_host.cc?rcl\u003d3071381c4aad890703718b68076c50dabf692192\u0026l\u003d273 for an example where manual frames seem to be interspersed with ones from OnBeginFrame.",
+      "revId": "9180d670faff65612381dc4b0e57a9e1bbcb73a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d61ed0b_fac4e78b",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-08-02T06:52:58Z",
+      "side": 1,
+      "message": "this has no effect; it\u0027s overwritten on the next line.",
+      "revId": "9180d670faff65612381dc4b0e57a9e1bbcb73a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91cb039c_b120fbba",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-08-02T06:52:58Z",
+      "side": 1,
+      "message": "i think the \u0027false\u0027 on 115 is used to fill in |has_damage|.  don\u0027t know what happens with DidNotProduceFrame, but probably it\u0027s okay if |has_damage| is true.",
+      "revId": "9180d670faff65612381dc4b0e57a9e1bbcb73a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fd5e012_776ce350",
+        "filename": "third_party/WebKit/Source/platform/graphics/VideoFrameSubmitter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-08-02T06:52:58Z",
+      "side": 1,
+      "message": "is this used anywhere?",
+      "revId": "9180d670faff65612381dc4b0e57a9e1bbcb73a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
