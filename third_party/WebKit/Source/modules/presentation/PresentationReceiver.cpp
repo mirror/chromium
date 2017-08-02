@@ -13,6 +13,7 @@
 #include "core/frame/Deprecation.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/LocalFrame.h"
+#include "core/frame/LocalFrameClient.h"
 #include "core/frame/Navigator.h"
 #include "core/frame/UseCounter.h"
 #include "modules/presentation/NavigatorPresentation.h"
@@ -20,12 +21,13 @@
 #include "modules/presentation/PresentationConnection.h"
 #include "modules/presentation/PresentationConnectionList.h"
 #include "public/platform/modules/presentation/WebPresentationClient.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 
 namespace blink {
 
 PresentationReceiver::PresentationReceiver(LocalFrame* frame,
                                            WebPresentationClient* client)
-    : ContextClient(frame) {
+    : ContextClient(frame), receiver_binding_(this) {
   connection_list_ = new PresentationConnectionList(frame->GetDocument());
 
   if (client)
@@ -59,25 +61,17 @@ ScriptPromise PresentationReceiver::connectionList(ScriptState* script_state) {
   return connection_list_property_->Promise(script_state->World());
 }
 
-WebPresentationConnection* PresentationReceiver::OnReceiverConnectionAvailable(
-    const WebPresentationInfo& presentation_info) {
-  // take() will call PresentationReceiver::registerConnection()
-  // and register the connection.
-  auto connection = PresentationConnection::Take(this, presentation_info);
+void PresentationReceiver::InitIfNeeded() {
+  if (receiver_binding_.is_bound())
+    return;
 
-  // receiver.connectionList property not accessed
-  if (!connection_list_property_)
-    return connection;
+  mojom::blink::PresentationServicePtr presentation_service;
+  auto* interface_provider = GetFrame()->Client()->GetInterfaceProvider();
+  interface_provider->GetInterface(mojo::MakeRequest(&presentation_service));
 
-  if (connection_list_property_->GetState() ==
-      ScriptPromisePropertyBase::kPending) {
-    connection_list_property_->Resolve(connection_list_);
-  } else if (connection_list_property_->GetState() ==
-             ScriptPromisePropertyBase::kResolved) {
-    connection_list_->DispatchConnectionAvailableEvent(connection);
-  }
-
-  return connection;
+  mojom::blink::PresentationReceiverPtr receiver_ptr;
+  receiver_binding_.Bind(mojo::MakeRequest(&receiver_ptr));
+  presentation_service->SetReceiver(std::move(receiver_ptr));
 }
 
 void PresentationReceiver::DidChangeConnectionState(
@@ -107,6 +101,30 @@ void PresentationReceiver::RemoveConnection(
     WebPresentationConnection* connection) {
   DCHECK(connection_list_);
   connection_list_->RemoveConnection(connection);
+}
+
+void PresentationReceiver::OnReceiverConnectionAvailable(
+    mojom::blink::PresentationInfoPtr info,
+    mojom::blink::PresentationConnectionPtr controller_connection,
+    mojom::blink::PresentationConnectionRequest receiver_connection_request) {
+  // take() will call PresentationReceiver::registerConnection()
+  // and register the connection.
+  auto connection = PresentationConnection::Take(
+      this, *info, std::move(controller_connection),
+      std::move(receiver_connection_request));
+
+  // Only notify receiver.connectionList property if it has been acccessed
+  // previously.
+  if (!connection_list_property_)
+    return;
+
+  if (connection_list_property_->GetState() ==
+      ScriptPromisePropertyBase::kPending) {
+    connection_list_property_->Resolve(connection_list_);
+  } else if (connection_list_property_->GetState() ==
+             ScriptPromisePropertyBase::kResolved) {
+    connection_list_->DispatchConnectionAvailableEvent(connection);
+  }
 }
 
 void PresentationReceiver::RegisterConnection(

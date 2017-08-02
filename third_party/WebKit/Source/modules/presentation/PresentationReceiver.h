@@ -10,10 +10,12 @@
 #include "core/dom/ContextLifecycleObserver.h"
 #include "core/dom/DOMException.h"
 #include "modules/ModulesExport.h"
+#include "mojo/public/cpp/bindings/binding.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/heap/Handle.h"
 #include "platform/heap/Heap.h"
 #include "public/platform/modules/presentation/WebPresentationReceiver.h"
+#include "public/platform/modules/presentation/presentation.mojom-blink.h"
 
 namespace blink {
 
@@ -30,7 +32,8 @@ class MODULES_EXPORT PresentationReceiver final
     : public GarbageCollectedFinalized<PresentationReceiver>,
       public ScriptWrappable,
       public ContextClient,
-      public WebPresentationReceiver {
+      public WebPresentationReceiver,
+      public mojom::blink::PresentationReceiver {
   USING_GARBAGE_COLLECTED_MIXIN(PresentationReceiver);
   DEFINE_WRAPPERTYPEINFO();
   using ConnectionListProperty =
@@ -47,12 +50,17 @@ class MODULES_EXPORT PresentationReceiver final
   // PresentationReceiver.idl implementation
   ScriptPromise connectionList(ScriptState*);
 
-  // Implementation of WebPresentationController.
-  WebPresentationConnection* OnReceiverConnectionAvailable(
-      const WebPresentationInfo&) override;
+  // WebPresentationReceiver implementation.
+  void InitIfNeeded() override;
   void DidChangeConnectionState(WebPresentationConnectionState) override;
   void TerminateConnection() override;
   void RemoveConnection(WebPresentationConnection*) override;
+
+  // mojom::blink::PresentationReceiver
+  void OnReceiverConnectionAvailable(
+      mojom::blink::PresentationInfoPtr,
+      mojom::blink::PresentationConnectionPtr,
+      mojom::blink::PresentationConnectionRequest) override;
 
   void RegisterConnection(PresentationConnection*);
 
@@ -65,6 +73,8 @@ class MODULES_EXPORT PresentationReceiver final
 
   Member<ConnectionListProperty> connection_list_property_;
   Member<PresentationConnectionList> connection_list_;
+
+  mojo::Binding<mojom::blink::PresentationReceiver> receiver_binding_;
 };
 
 }  // namespace blink

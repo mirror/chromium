@@ -11,6 +11,7 @@
 #include "core/fileapi/Blob.h"
 #include "core/fileapi/FileError.h"
 #include "core/typed_arrays/ArrayBufferViewHelpers.h"
+#include "mojo/public/cpp/bindings/binding.h"
 #include "platform/heap/Handle.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/wtf/text/WTFString.h"
@@ -18,6 +19,7 @@
 #include "public/platform/modules/presentation/WebPresentationConnectionProxy.h"
 #include "public/platform/modules/presentation/WebPresentationController.h"
 #include "public/platform/modules/presentation/WebPresentationInfo.h"
+#include "public/platform/modules/presentation/presentation.mojom-blink.h"
 
 namespace WTF {
 class AtomicString;
@@ -31,9 +33,10 @@ class PresentationController;
 class PresentationReceiver;
 class PresentationRequest;
 
-class PresentationConnection final : public EventTargetWithInlineData,
-                                     public ContextClient,
-                                     public WebPresentationConnection {
+class PresentationConnection : public EventTargetWithInlineData,
+                               public ContextClient,
+                               public WebPresentationConnection,
+                               public mojom::blink::PresentationConnection {
   USING_GARBAGE_COLLECTED_MIXIN(PresentationConnection);
   DEFINE_WRAPPERTYPEINFO();
 
@@ -45,8 +48,12 @@ class PresentationConnection final : public EventTargetWithInlineData,
   static PresentationConnection* Take(PresentationController*,
                                       const WebPresentationInfo&,
                                       PresentationRequest*);
-  static PresentationConnection* Take(PresentationReceiver*,
-                                      const WebPresentationInfo&);
+  static PresentationConnection* Take(
+      PresentationReceiver*,
+      const mojom::blink::PresentationInfo&,
+      mojom::blink::PresentationConnectionPtr controller_connection,
+      mojom::blink::PresentationConnectionRequest receiver_connection_request);
+
   ~PresentationConnection() override;
 
   // EventTarget implementation.
@@ -85,6 +92,12 @@ class PresentationConnection final : public EventTargetWithInlineData,
   // Notifies the connection about its state change to 'closed'.
   void DidClose(WebPresentationConnectionCloseReason, const String& message);
 
+  // mojom::blink::PresentationConnection implementation.
+  void OnMessage(mojom::blink::PresentationConnectionMessagePtr,
+                 OnMessageCallback) override;
+  void DidChangeState(mojom::blink::PresentationConnectionState) override;
+  void OnClose() override;
+
   // WebPresentationConnection implementation.
   void BindProxy(std::unique_ptr<WebPresentationConnectionProxy>) override;
   void DidReceiveTextMessage(const WebString& message) override;
@@ -99,9 +112,17 @@ class PresentationConnection final : public EventTargetWithInlineData,
   void NotifyTargetConnection(WebPresentationConnectionState);
 
  protected:
+  PresentationConnection(LocalFrame*, const String& id, const KURL&);
+
   // EventTarget implementation.
   void AddedEventListener(const AtomicString& event_type,
                           RegisteredEventListener&) override;
+
+  String id_;
+  KURL url_;
+
+  mojo::Binding<mojom::blink::PresentationConnection> connection_binding_;
+  mojom::blink::PresentationConnectionPtr target_connection_;
 
  private:
   class BlobLoader;
@@ -115,8 +136,6 @@ class PresentationConnection final : public EventTargetWithInlineData,
   enum BinaryType { kBinaryTypeBlob, kBinaryTypeArrayBuffer };
 
   class Message;
-
-  PresentationConnection(LocalFrame*, const String& id, const KURL&);
 
   bool CanSendMessage(ExceptionState&);
   void HandleMessageQueue();
@@ -132,8 +151,6 @@ class PresentationConnection final : public EventTargetWithInlineData,
   // Cancel loads and pending messages when the connection is closed.
   void TearDown();
 
-  String id_;
-  KURL url_;
   WebPresentationConnectionState state_;
 
   // For Blob data handling.
@@ -143,6 +160,47 @@ class PresentationConnection final : public EventTargetWithInlineData,
   BinaryType binary_type_;
 
   std::unique_ptr<WebPresentationConnectionProxy> proxy_;
+};
+
+class ControllerPresentationConnection final : public PresentationConnection {
+ public:
+  ControllerPresentationConnection(LocalFrame*,
+                                   PresentationController*,
+                                   const String& id,
+                                   const KURL&);
+  ~ControllerPresentationConnection() override;
+
+  DECLARE_VIRTUAL_TRACE();
+
+  // WebPresentationConnection implementation.
+  void InitForController() override;
+
+ private:
+  Member<PresentationController> controller_;
+};
+
+// XXX: DidChangeState is different for receiver. Also
+// DidChangeState(content::PRESENTATION_CONNECTION_STATE_CONNECTED); in
+// BindControllerConnection.
+class ReceiverPresentationConnection final : public PresentationConnection {
+ public:
+  ReceiverPresentationConnection(LocalFrame*,
+                                 PresentationReceiver*,
+                                 const String& id,
+                                 const KURL&);
+  ~ReceiverPresentationConnection() override;
+
+  DECLARE_VIRTUAL_TRACE();
+
+  // WebPresentationConnection implementation.
+  void InitForController() override;
+
+  void InitForReceiver(
+      mojom::blink::PresentationConnectionPtr controller_connection_ptr,
+      mojom::blink::PresentationConnectionRequest receiver_connection_request);
+
+ private:
+  Member<PresentationReceiver> receiver_;
 };
 
 }  // namespace blink
