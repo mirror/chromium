@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5221522c_7a52910f",
+        "filename": "ui/app_list/search_result.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-02T17:40:58Z",
+      "side": 1,
+      "message": "set_is_url",
+      "revId": "3998aa9500975213df4927c67e7fe3d8712ddaf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9068c4ab_5d70c375",
+        "filename": "ui/app_list/views/search_result_tile_item_list_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-02T17:40:58Z",
+      "side": 1,
+      "message": "nit: We should comment both of these or neither (I would suggest neither, the names are clear)",
+      "revId": "3998aa9500975213df4927c67e7fe3d8712ddaf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b289e56_58cef055",
+        "filename": "ui/app_list/views/search_result_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-02T17:40:58Z",
+      "side": 1,
+      "message": "Store this as a unique_ptr and move it to details_text_ below.",
+      "revId": "3998aa9500975213df4927c67e7fe3d8712ddaf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
