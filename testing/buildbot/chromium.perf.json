@@ -3807,7 +3807,8 @@
           "-v",
           "--upload-results",
           "--output-format=chartjson",
-          "--browser=android-chromium"
+          "--browser=android-chromium",
+          "--output-format=json-test-results"
         ],
         "isolate_name": "telemetry_perf_tests",
         "name": "system_health.common_mobile",
@@ -3838,6 +3839,7 @@
           "--upload-results",
           "--output-format=chartjson",
           "--browser=reference",
+          "--output-format=json-test-results",
           "--output-trace-tag=_ref"
         ],
         "isolate_name": "telemetry_perf_tests",
@@ -3868,7 +3870,8 @@
           "-v",
           "--upload-results",
           "--output-format=chartjson",
-          "--browser=android-chromium"
+          "--browser=android-chromium",
+          "--output-format=json-test-results"
         ],
         "isolate_name": "telemetry_perf_tests",
         "name": "system_health.memory_mobile",
@@ -3899,6 +3902,7 @@
           "--upload-results",
           "--output-format=chartjson",
           "--browser=reference",
+          "--output-format=json-test-results",
           "--output-trace-tag=_ref"
         ],
         "isolate_name": "telemetry_perf_tests",
@@ -8580,7 +8584,8 @@
           "-v",
           "--upload-results",
           "--output-format=chartjson",
-          "--browser=android-chromium"
+          "--browser=android-chromium",
+          "--output-format=json-test-results"
         ],
         "isolate_name": "telemetry_perf_tests",
         "name": "system_health.common_mobile",
@@ -8611,6 +8616,7 @@
           "--upload-results",
           "--output-format=chartjson",
           "--browser=reference",
+          "--output-format=json-test-results",
           "--output-trace-tag=_ref"
         ],
         "isolate_name": "telemetry_perf_tests",
@@ -8641,7 +8647,8 @@
           "-v",
           "--upload-results",
           "--output-format=chartjson",
-          "--browser=android-chromium"
+          "--browser=android-chromium",
+          "--output-format=json-test-results"
         ],
         "isolate_name": "telemetry_perf_tests",
         "name": "system_health.memory_mobile",
@@ -8672,6 +8679,7 @@
           "--upload-results",
           "--output-format=chartjson",
           "--browser=reference",
+          "--output-format=json-test-results",
           "--output-trace-tag=_ref"
         ],
         "isolate_name": "telemetry_perf_tests",
@@ -11534,6 +11542,7 @@
           "--upload-results",
           "--output-format=chartjson",
           "--browser=android-webview",
+          "--output-format=json-test-results",
           "--webview-embedder-apk=../../out/Release/apks/SystemWebViewShell.apk"
         ],
         "isolate_name": "telemetry_perf_webview_tests",
@@ -11565,6 +11574,7 @@
           "--upload-results",
           "--output-format=chartjson",
           "--browser=android-webview",
+          "--output-format=json-test-results",
           "--webview-embedder-apk=../../out/Release/apks/SystemWebViewShell.apk"
         ],
         "isolate_name": "telemetry_perf_webview_tests",
@@ -15857,7 +15867,8 @@
           "-v",
           "--upload-results",
           "--output-format=chartjson",
-          "--browser=android-chromium"
+          "--browser=android-chromium",
+          "--output-format=json-test-results"
         ],
         "isolate_name": "telemetry_perf_tests",
         "name": "system_health.common_mobile",
@@ -15888,6 +15899,7 @@
           "--upload-results",
           "--output-format=chartjson",
           "--browser=reference",
+          "--output-format=json-test-results",
           "--output-trace-tag=_ref"
         ],
         "isolate_name": "telemetry_perf_tests",
@@ -15918,7 +15930,8 @@
           "-v",
           "--upload-results",
           "--output-format=chartjson",
-          "--browser=android-chromium"
+          "--browser=android-chromium",
+          "--output-format=json-test-results"
         ],
         "isolate_name": "telemetry_perf_tests",
         "name": "system_health.memory_mobile",
@@ -15949,6 +15962,7 @@
           "--upload-results",
           "--output-format=chartjson",
           "--browser=reference",
+          "--output-format=json-test-results",
           "--output-trace-tag=_ref"
         ],
         "isolate_name": "telemetry_perf_tests",
@@ -18842,6 +18856,7 @@
           "--upload-results",
           "--output-format=chartjson",
           "--browser=android-webview",
+          "--output-format=json-test-results",
           "--webview-embedder-apk=../../out/Release/apks/SystemWebViewShell.apk"
         ],
         "isolate_name": "telemetry_perf_webview_tests",
@@ -18873,6 +18888,7 @@
           "--upload-results",
           "--output-format=chartjson",
           "--browser=android-webview",
+          "--output-format=json-test-results",
           "--webview-embedder-apk=../../out/Release/apks/SystemWebViewShell.apk"
         ],
         "isolate_name": "telemetry_perf_webview_tests",
@@ -23165,7 +23181,8 @@
           "-v",
           "--upload-results",
           "--output-format=chartjson",
-          "--browser=android-chromium"
+          "--browser=android-chromium",
+          "--output-format=json-test-results"
         ],
         "isolate_name": "telemetry_perf_tests",
         "name": "system_health.common_mobile",
@@ -23196,6 +23213,7 @@
           "--upload-results",
           "--output-format=chartjson",
           "--browser=reference",
+          "--output-format=json-test-results",
           "--output-trace-tag=_ref"
         ],
         "isolate_name": "telemetry_perf_tests",
@@ -23226,7 +23244,8 @@
           "-v",
           "--upload-results",
           "--output-format=chartjson",
-          "--browser=android-chromium"
+          "--browser=android-chromium",
+          "--output-format=json-test-results"
         ],
         "isolate_name": "telemetry_perf_tests",
         "name": "system_health.memory_mobile",
@@ -23257,6 +23276,7 @@
           "--upload-results",
           "--output-format=chartjson",
           "--browser=reference",
+          "--output-format=json-test-results",
           "--output-trace-tag=_ref"
         ],
         "isolate_name": "telemetry_perf_tests",
@@ -27816,7 +27836,8 @@
           "-v",
           "--upload-results",
           "--output-format=chartjson",
-          "--browser=android-chromium"
+          "--browser=android-chromium",
+          "--output-format=json-test-results"
         ],
         "isolate_name": "telemetry_perf_tests",
         "name": "system_health.common_mobile",
@@ -27847,6 +27868,7 @@
           "--upload-results",
           "--output-format=chartjson",
           "--browser=reference",
+          "--output-format=json-test-results",
           "--output-trace-tag=_ref"
         ],
         "isolate_name": "telemetry_perf_tests",
@@ -27877,7 +27899,8 @@
           "-v",
           "--upload-results",
           "--output-format=chartjson",
-          "--browser=android-chromium"
+          "--browser=android-chromium",
+          "--output-format=json-test-results"
         ],
         "isolate_name": "telemetry_perf_tests",
         "name": "system_health.memory_mobile",
@@ -27908,6 +27931,7 @@
           "--upload-results",
           "--output-format=chartjson",
           "--browser=reference",
+          "--output-format=json-test-results",
           "--output-trace-tag=_ref"
         ],
         "isolate_name": "telemetry_perf_tests",
@@ -33185,7 +33209,8 @@
           "-v",
           "--upload-results",
           "--output-format=chartjson",
-          "--browser=release"
+          "--browser=release",
+          "--output-format=json-test-results"
         ],
         "isolate_name": "telemetry_perf_tests",
         "name": "system_health.common_desktop",
@@ -33216,6 +33241,7 @@
           "--upload-results",
           "--output-format=chartjson",
           "--browser=reference",
+          "--output-format=json-test-results",
           "--output-trace-tag=_ref"
         ],
         "isolate_name": "telemetry_perf_tests",
@@ -33246,7 +33272,8 @@
           "-v",
           "--upload-results",
           "--output-format=chartjson",
-          "--browser=release"
+          "--browser=release",
+          "--output-format=json-test-results"
         ],
         "isolate_name": "telemetry_perf_tests",
         "name": "system_health.memory_desktop",
@@ -33277,6 +33304,7 @@
           "--upload-results",
           "--output-format=chartjson",
           "--browser=reference",
+          "--output-format=json-test-results",
           "--output-trace-tag=_ref"
         ],
         "isolate_name": "telemetry_perf_tests",
@@ -38263,7 +38291,8 @@
           "-v",
           "--upload-results",
           "--output-format=chartjson",
-          "--browser=release"
+          "--browser=release",
+          "--output-format=json-test-results"
         ],
         "isolate_name": "telemetry_perf_tests",
         "name": "system_health.common_desktop",
@@ -38294,6 +38323,7 @@
           "--upload-results",
           "--output-format=chartjson",
           "--browser=reference",
+          "--output-format=json-test-results",
           "--output-trace-tag=_ref"
         ],
         "isolate_name": "telemetry_perf_tests",
@@ -38324,7 +38354,8 @@
           "-v",
           "--upload-results",
           "--output-format=chartjson",
-          "--browser=release"
+          "--browser=release",
+          "--output-format=json-test-results"
         ],
         "isolate_name": "telemetry_perf_tests",
         "name": "system_health.memory_desktop",
@@ -38355,6 +38386,7 @@
           "--upload-results",
           "--output-format=chartjson",
           "--browser=reference",
+          "--output-format=json-test-results",
           "--output-trace-tag=_ref"
         ],
         "isolate_name": "telemetry_perf_tests",
@@ -43320,7 +43352,8 @@
           "-v",
           "--upload-results",
           "--output-format=chartjson",
-          "--browser=release"
+          "--browser=release",
+          "--output-format=json-test-results"
         ],
         "isolate_name": "telemetry_perf_tests",
         "name": "system_health.common_desktop",
@@ -43351,6 +43384,7 @@
           "--upload-results",
           "--output-format=chartjson",
           "--browser=reference",
+          "--output-format=json-test-results",
           "--output-trace-tag=_ref"
         ],
         "isolate_name": "telemetry_perf_tests",
@@ -43381,7 +43415,8 @@
           "-v",
           "--upload-results",
           "--output-format=chartjson",
-          "--browser=release"
+          "--browser=release",
+          "--output-format=json-test-results"
         ],
         "isolate_name": "telemetry_perf_tests",
         "name": "system_health.memory_desktop",
@@ -43412,6 +43447,7 @@
           "--upload-results",
           "--output-format=chartjson",
           "--browser=reference",
+          "--output-format=json-test-results",
           "--output-trace-tag=_ref"
         ],
         "isolate_name": "telemetry_perf_tests",
@@ -48377,7 +48413,8 @@
           "-v",
           "--upload-results",
           "--output-format=chartjson",
-          "--browser=release"
+          "--browser=release",
+          "--output-format=json-test-results"
         ],
         "isolate_name": "telemetry_perf_tests",
         "name": "system_health.common_desktop",
@@ -48408,6 +48445,7 @@
           "--upload-results",
           "--output-format=chartjson",
           "--browser=reference",
+          "--output-format=json-test-results",
           "--output-trace-tag=_ref"
         ],
         "isolate_name": "telemetry_perf_tests",
@@ -48438,7 +48476,8 @@
           "-v",
           "--upload-results",
           "--output-format=chartjson",
-          "--browser=release"
+          "--browser=release",
+          "--output-format=json-test-results"
         ],
         "isolate_name": "telemetry_perf_tests",
         "name": "system_health.memory_desktop",
@@ -48469,6 +48508,7 @@
           "--upload-results",
           "--output-format=chartjson",
           "--browser=reference",
+          "--output-format=json-test-results",
           "--output-trace-tag=_ref"
         ],
         "isolate_name": "telemetry_perf_tests",
@@ -53413,7 +53453,8 @@
           "-v",
           "--upload-results",
           "--output-format=chartjson",
-          "--browser=release"
+          "--browser=release",
+          "--output-format=json-test-results"
         ],
         "isolate_name": "telemetry_perf_tests",
         "name": "system_health.common_desktop",
@@ -53444,6 +53485,7 @@
           "--upload-results",
           "--output-format=chartjson",
           "--browser=reference",
+          "--output-format=json-test-results",
           "--output-trace-tag=_ref"
         ],
         "isolate_name": "telemetry_perf_tests",
@@ -53474,7 +53516,8 @@
           "-v",
           "--upload-results",
           "--output-format=chartjson",
-          "--browser=release"
+          "--browser=release",
+          "--output-format=json-test-results"
         ],
         "isolate_name": "telemetry_perf_tests",
         "name": "system_health.memory_desktop",
@@ -53505,6 +53548,7 @@
           "--upload-results",
           "--output-format=chartjson",
           "--browser=reference",
+          "--output-format=json-test-results",
           "--output-trace-tag=_ref"
         ],
         "isolate_name": "telemetry_perf_tests",
@@ -58470,7 +58514,8 @@
           "-v",
           "--upload-results",
           "--output-format=chartjson",
-          "--browser=release"
+          "--browser=release",
+          "--output-format=json-test-results"
         ],
         "isolate_name": "telemetry_perf_tests",
         "name": "system_health.common_desktop",
@@ -58501,6 +58546,7 @@
           "--upload-results",
           "--output-format=chartjson",
           "--browser=reference",
+          "--output-format=json-test-results",
           "--output-trace-tag=_ref"
         ],
         "isolate_name": "telemetry_perf_tests",
@@ -58531,7 +58577,8 @@
           "-v",
           "--upload-results",
           "--output-format=chartjson",
-          "--browser=release"
+          "--browser=release",
+          "--output-format=json-test-results"
         ],
         "isolate_name": "telemetry_perf_tests",
         "name": "system_health.memory_desktop",
@@ -58562,6 +58609,7 @@
           "--upload-results",
           "--output-format=chartjson",
           "--browser=reference",
+          "--output-format=json-test-results",
           "--output-trace-tag=_ref"
         ],
         "isolate_name": "telemetry_perf_tests",
@@ -63527,7 +63575,8 @@
           "-v",
           "--upload-results",
           "--output-format=chartjson",
-          "--browser=release"
+          "--browser=release",
+          "--output-format=json-test-results"
         ],
         "isolate_name": "telemetry_perf_tests",
         "name": "system_health.common_desktop",
@@ -63558,6 +63607,7 @@
           "--upload-results",
           "--output-format=chartjson",
           "--browser=reference",
+          "--output-format=json-test-results",
           "--output-trace-tag=_ref"
         ],
         "isolate_name": "telemetry_perf_tests",
@@ -63588,7 +63638,8 @@
           "-v",
           "--upload-results",
           "--output-format=chartjson",
-          "--browser=release"
+          "--browser=release",
+          "--output-format=json-test-results"
         ],
         "isolate_name": "telemetry_perf_tests",
         "name": "system_health.memory_desktop",
@@ -63619,6 +63670,7 @@
           "--upload-results",
           "--output-format=chartjson",
           "--browser=reference",
+          "--output-format=json-test-results",
           "--output-trace-tag=_ref"
         ],
         "isolate_name": "telemetry_perf_tests",
@@ -68563,7 +68615,8 @@
           "-v",
           "--upload-results",
           "--output-format=chartjson",
-          "--browser=release_x64"
+          "--browser=release_x64",
+          "--output-format=json-test-results"
         ],
         "isolate_name": "telemetry_perf_tests",
         "name": "system_health.common_desktop",
@@ -68594,6 +68647,7 @@
           "--upload-results",
           "--output-format=chartjson",
           "--browser=reference",
+          "--output-format=json-test-results",
           "--output-trace-tag=_ref"
         ],
         "isolate_name": "telemetry_perf_tests",
@@ -68624,7 +68678,8 @@
           "-v",
           "--upload-results",
           "--output-format=chartjson",
-          "--browser=release_x64"
+          "--browser=release_x64",
+          "--output-format=json-test-results"
         ],
         "isolate_name": "telemetry_perf_tests",
         "name": "system_health.memory_desktop",
@@ -68655,6 +68710,7 @@
           "--upload-results",
           "--output-format=chartjson",
           "--browser=reference",
+          "--output-format=json-test-results",
           "--output-trace-tag=_ref"
         ],
         "isolate_name": "telemetry_perf_tests",
@@ -73620,7 +73676,8 @@
           "-v",
           "--upload-results",
           "--output-format=chartjson",
-          "--browser=release_x64"
+          "--browser=release_x64",
+          "--output-format=json-test-results"
         ],
         "isolate_name": "telemetry_perf_tests",
         "name": "system_health.common_desktop",
@@ -73651,6 +73708,7 @@
           "--upload-results",
           "--output-format=chartjson",
           "--browser=reference",
+          "--output-format=json-test-results",
           "--output-trace-tag=_ref"
         ],
         "isolate_name": "telemetry_perf_tests",
@@ -73681,7 +73739,8 @@
           "-v",
           "--upload-results",
           "--output-format=chartjson",
-          "--browser=release_x64"
+          "--browser=release_x64",
+          "--output-format=json-test-results"
         ],
         "isolate_name": "telemetry_perf_tests",
         "name": "system_health.memory_desktop",
@@ -73712,6 +73771,7 @@
           "--upload-results",
           "--output-format=chartjson",
           "--browser=reference",
+          "--output-format=json-test-results",
           "--output-trace-tag=_ref"
         ],
         "isolate_name": "telemetry_perf_tests",
@@ -78740,7 +78800,8 @@
           "-v",
           "--upload-results",
           "--output-format=chartjson",
-          "--browser=release_x64"
+          "--browser=release_x64",
+          "--output-format=json-test-results"
         ],
         "isolate_name": "telemetry_perf_tests",
         "name": "system_health.common_desktop",
@@ -78771,6 +78832,7 @@
           "--upload-results",
           "--output-format=chartjson",
           "--browser=reference",
+          "--output-format=json-test-results",
           "--output-trace-tag=_ref"
         ],
         "isolate_name": "telemetry_perf_tests",
@@ -78801,7 +78863,8 @@
           "-v",
           "--upload-results",
           "--output-format=chartjson",
-          "--browser=release_x64"
+          "--browser=release_x64",
+          "--output-format=json-test-results"
         ],
         "isolate_name": "telemetry_perf_tests",
         "name": "system_health.memory_desktop",
@@ -78832,6 +78895,7 @@
           "--upload-results",
           "--output-format=chartjson",
           "--browser=reference",
+          "--output-format=json-test-results",
           "--output-trace-tag=_ref"
         ],
         "isolate_name": "telemetry_perf_tests",
@@ -83839,7 +83903,8 @@
           "-v",
           "--upload-results",
           "--output-format=chartjson",
-          "--browser=release_x64"
+          "--browser=release_x64",
+          "--output-format=json-test-results"
         ],
         "isolate_name": "telemetry_perf_tests",
         "name": "system_health.common_desktop",
@@ -83870,6 +83935,7 @@
           "--upload-results",
           "--output-format=chartjson",
           "--browser=reference",
+          "--output-format=json-test-results",
           "--output-trace-tag=_ref"
         ],
         "isolate_name": "telemetry_perf_tests",
@@ -83900,7 +83966,8 @@
           "-v",
           "--upload-results",
           "--output-format=chartjson",
-          "--browser=release_x64"
+          "--browser=release_x64",
+          "--output-format=json-test-results"
         ],
         "isolate_name": "telemetry_perf_tests",
         "name": "system_health.memory_desktop",
@@ -83931,6 +83998,7 @@
           "--upload-results",
           "--output-format=chartjson",
           "--browser=reference",
+          "--output-format=json-test-results",
           "--output-trace-tag=_ref"
         ],
         "isolate_name": "telemetry_perf_tests",
@@ -88938,7 +89006,8 @@
           "-v",
           "--upload-results",
           "--output-format=chartjson",
-          "--browser=release_x64"
+          "--browser=release_x64",
+          "--output-format=json-test-results"
         ],
         "isolate_name": "telemetry_perf_tests",
         "name": "system_health.common_desktop",
@@ -88969,6 +89038,7 @@
           "--upload-results",
           "--output-format=chartjson",
           "--browser=reference",
+          "--output-format=json-test-results",
           "--output-trace-tag=_ref"
         ],
         "isolate_name": "telemetry_perf_tests",
@@ -88999,7 +89069,8 @@
           "-v",
           "--upload-results",
           "--output-format=chartjson",
-          "--browser=release_x64"
+          "--browser=release_x64",
+          "--output-format=json-test-results"
         ],
         "isolate_name": "telemetry_perf_tests",
         "name": "system_health.memory_desktop",
@@ -89030,6 +89101,7 @@
           "--upload-results",
           "--output-format=chartjson",
           "--browser=reference",
+          "--output-format=json-test-results",
           "--output-trace-tag=_ref"
         ],
         "isolate_name": "telemetry_perf_tests",
@@ -94016,7 +94088,8 @@
           "-v",
           "--upload-results",
           "--output-format=chartjson",
-          "--browser=release"
+          "--browser=release",
+          "--output-format=json-test-results"
         ],
         "isolate_name": "telemetry_perf_tests",
         "name": "system_health.common_desktop",
@@ -94047,6 +94120,7 @@
           "--upload-results",
           "--output-format=chartjson",
           "--browser=reference",
+          "--output-format=json-test-results",
           "--output-trace-tag=_ref"
         ],
         "isolate_name": "telemetry_perf_tests",
@@ -94077,7 +94151,8 @@
           "-v",
           "--upload-results",
           "--output-format=chartjson",
-          "--browser=release"
+          "--browser=release",
+          "--output-format=json-test-results"
         ],
         "isolate_name": "telemetry_perf_tests",
         "name": "system_health.memory_desktop",
@@ -94108,6 +94183,7 @@
           "--upload-results",
           "--output-format=chartjson",
           "--browser=reference",
+          "--output-format=json-test-results",
           "--output-trace-tag=_ref"
         ],
         "isolate_name": "telemetry_perf_tests",
@@ -99094,7 +99170,8 @@
           "-v",
           "--upload-results",
           "--output-format=chartjson",
-          "--browser=release_x64"
+          "--browser=release_x64",
+          "--output-format=json-test-results"
         ],
         "isolate_name": "telemetry_perf_tests",
         "name": "system_health.common_desktop",
@@ -99125,6 +99202,7 @@
           "--upload-results",
           "--output-format=chartjson",
           "--browser=reference",
+          "--output-format=json-test-results",
           "--output-trace-tag=_ref"
         ],
         "isolate_name": "telemetry_perf_tests",
@@ -99155,7 +99233,8 @@
           "-v",
           "--upload-results",
           "--output-format=chartjson",
-          "--browser=release_x64"
+          "--browser=release_x64",
+          "--output-format=json-test-results"
         ],
         "isolate_name": "telemetry_perf_tests",
         "name": "system_health.memory_desktop",
@@ -99186,6 +99265,7 @@
           "--upload-results",
           "--output-format=chartjson",
           "--browser=reference",
+          "--output-format=json-test-results",
           "--output-trace-tag=_ref"
         ],
         "isolate_name": "telemetry_perf_tests",
@@ -104193,7 +104273,8 @@
           "-v",
           "--upload-results",
           "--output-format=chartjson",
-          "--browser=release_x64"
+          "--browser=release_x64",
+          "--output-format=json-test-results"
         ],
         "isolate_name": "telemetry_perf_tests",
         "name": "system_health.common_desktop",
@@ -104224,6 +104305,7 @@
           "--upload-results",
           "--output-format=chartjson",
           "--browser=reference",
+          "--output-format=json-test-results",
           "--output-trace-tag=_ref"
         ],
         "isolate_name": "telemetry_perf_tests",
@@ -104254,7 +104336,8 @@
           "-v",
           "--upload-results",
           "--output-format=chartjson",
-          "--browser=release_x64"
+          "--browser=release_x64",
+          "--output-format=json-test-results"
         ],
         "isolate_name": "telemetry_perf_tests",
         "name": "system_health.memory_desktop",
@@ -104285,6 +104368,7 @@
           "--upload-results",
           "--output-format=chartjson",
           "--browser=reference",
+          "--output-format=json-test-results",
           "--output-trace-tag=_ref"
         ],
         "isolate_name": "telemetry_perf_tests",
