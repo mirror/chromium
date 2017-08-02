@@ -177,18 +177,20 @@ void LayoutTheme::AdjustStyle(ComputedStyle& style, Element* e) {
         LengthSize control_size = platform_theme_->GetControlSize(
             part, style.GetFont().GetFontDescription(),
             LengthSize(style.Width(), style.Height()), style.EffectiveZoom());
+
+        LengthSize min_control_size = platform_theme_->MinimumControlSize(
+            part, style.GetFont().GetFontDescription(), style.EffectiveZoom());
+
+        // Only potentially set min-size to |control_size| for these parts.
+        if (part == kCheckboxPart || part == kRadioPart)
+          SetMinimumSize(style, &control_size, &min_control_size);
+        else
+          SetMinimumSize(style, nullptr, &min_control_size);
+
         if (control_size.Width() != style.Width())
           style.SetWidth(control_size.Width());
         if (control_size.Height() != style.Height())
           style.SetHeight(control_size.Height());
-
-        // Min-Width / Min-Height
-        LengthSize min_control_size = platform_theme_->MinimumControlSize(
-            part, style.GetFont().GetFontDescription(), style.EffectiveZoom());
-        if (min_control_size.Width() != style.MinWidth())
-          style.SetMinWidth(min_control_size.Width());
-        if (min_control_size.Height() != style.MinHeight())
-          style.SetMinHeight(min_control_size.Height());
 
         // Font
         FontDescription control_font = platform_theme_->ControlFont(
@@ -898,15 +900,29 @@ void LayoutTheme::SetSizeIfAuto(ComputedStyle& style, const IntSize& size) {
 }
 
 // static
-void LayoutTheme::SetMinimumSizeIfAuto(ComputedStyle& style,
-                                       const IntSize& size) {
+void LayoutTheme::SetMinimumSize(ComputedStyle& style,
+                                 const LengthSize* size,
+                                 const LengthSize* min_size) {
   // We only want to set a minimum size if no explicit size is specified, to
   // avoid overriding author intentions.
-  if (style.MinWidth().IsIntrinsicOrAuto() && style.Width().IsIntrinsicOrAuto())
-    style.SetMinWidth(Length(size.Width(), kFixed));
-  if (style.MinHeight().IsIntrinsicOrAuto() &&
+  if (size && style.MinWidth().IsIntrinsicOrAuto() &&
+      style.Width().IsIntrinsicOrAuto())
+    style.SetMinWidth(size->Width());
+  else if (min_size && min_size->Width() != style.MinWidth())
+    style.SetMinWidth(min_size->Width());
+  if (size && style.MinHeight().IsIntrinsicOrAuto() &&
       style.Height().IsIntrinsicOrAuto())
-    style.SetMinHeight(Length(size.Height(), kFixed));
+    style.SetMinHeight(size->Height());
+  else if (min_size && min_size->Height() != style.MinHeight())
+    style.SetMinHeight(min_size->Height());
+}
+
+// static
+void LayoutTheme::SetMinimumSizeIfAuto(ComputedStyle& style,
+                                       const IntSize& size) {
+  LengthSize length_size(Length(size.Width(), kFixed),
+                         Length(size.Height(), kFixed));
+  SetMinimumSize(style, &length_size);
 }
 
 void LayoutTheme::AdjustCheckboxStyleUsingFallbackTheme(
