@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a120bbb8_a40d5ea6",
+        "filename": "chrome/browser/resources/settings/people_page/setup_pin_dialog.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-02T16:12:52Z",
+      "side": 1,
+      "message": "pinKeyboardValue_ is declared as a String so it should never be null or undefined, so this can just be \u0027pinKeyboardValue_.length \u003e 0\u0027",
+      "revId": "7cfa6d3b702707a0bd381c95d3088c234e2dda17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
