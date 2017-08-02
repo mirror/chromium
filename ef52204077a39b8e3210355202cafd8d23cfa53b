@@ -333,6 +333,24 @@
       "revId": "ef52204077a39b8e3210355202cafd8d23cfa53b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "717f8972_28314293",
+        "filename": "cc/paint/solid_color_analyzer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1157921
+      },
+      "writtenOn": "2017-08-02T17:25:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4107c24b_854b67df",
+      "revId": "ef52204077a39b8e3210355202cafd8d23cfa53b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
