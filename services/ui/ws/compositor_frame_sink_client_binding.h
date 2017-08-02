@@ -31,7 +31,8 @@ class CompositorFrameSinkClientBinding
  private:
   // viz::mojom::CompositorFrameSink implementation:
   void SubmitCompositorFrame(const viz::LocalSurfaceId& local_surface_id,
-                             cc::CompositorFrame frame) override;
+                             cc::CompositorFrame frame,
+                             base::TimeTicks submit_time) override;
   void SetNeedsBeginFrame(bool needs_begin_frame) override;
   void DidNotProduceFrame(const viz::BeginFrameAck& ack) override;
 

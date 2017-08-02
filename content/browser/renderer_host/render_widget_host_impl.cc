@@ -2571,7 +2571,20 @@ void RenderWidgetHostImpl::SetNeedsBeginFrame(bool needs_begin_frame) {
 
 void RenderWidgetHostImpl::SubmitCompositorFrame(
     const viz::LocalSurfaceId& local_surface_id,
-    cc::CompositorFrame frame) {
+    cc::CompositorFrame frame,
+    base::TimeTicks submit_time) {
+  TRACE_EVENT_FLOW_END0(TRACE_DISABLED_BY_DEFAULT("cc.debug.ipc"),
+                        "SubmitCompositorFrame", local_surface_id.local_id());
+  bool tracing_enabled;
+  TRACE_EVENT_CATEGORY_GROUP_ENABLED(TRACE_DISABLED_BY_DEFAULT("cc.debug.ipc"),
+                                     &tracing_enabled);
+  if (tracing_enabled) {
+    base::TimeDelta elapsed = base::TimeTicks::Now() - submit_time;
+    TRACE_EVENT_INSTANT1(TRACE_DISABLED_BY_DEFAULT("cc.debug.ipc"),
+                         "SubmitCompositorFrame::TimeElapsed",
+                         TRACE_EVENT_SCOPE_THREAD,
+                         "elapsed time:", elapsed.InMicroseconds());
+  }
   auto new_surface_properties =
       RenderWidgetSurfaceProperties::FromCompositorFrame(frame);
 
@@ -2706,8 +2719,12 @@ device::mojom::WakeLock* RenderWidgetHostImpl::GetWakeLock() {
 void RenderWidgetHostImpl::DidAllocateSharedBitmap(uint32_t sequence_number) {
   if (saved_frame_.local_surface_id.is_valid() &&
       sequence_number >= saved_frame_.max_shared_bitmap_sequence_number) {
-    SubmitCompositorFrame(saved_frame_.local_surface_id,
-                          std::move(saved_frame_.frame));
+    bool tracing_enabled;
+    TRACE_EVENT_CATEGORY_GROUP_ENABLED(
+        TRACE_DISABLED_BY_DEFAULT("cc.debug.ipc"), &tracing_enabled);
+    SubmitCompositorFrame(
+        saved_frame_.local_surface_id, std::move(saved_frame_.frame),
+        tracing_enabled ? base::TimeTicks::Now() : base::TimeTicks());
     saved_frame_.local_surface_id = viz::LocalSurfaceId();
     compositor_frame_sink_binding_.ResumeIncomingMethodCallProcessing();
     TRACE_EVENT_ASYNC_END0("renderer_host", "PauseCompositorFrameSink", this);

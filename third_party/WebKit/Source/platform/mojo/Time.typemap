@@ -16,4 +16,5 @@ public_deps = [
 type_mappings = [
   "mojo.common.mojom.Time=WTF::Time[copyable_pass_by_value]",
   "mojo.common.mojom.TimeDelta=WTF::TimeDelta[copyable_pass_by_value]",
+  "mojo.common.mojom.TimeTicks=base::TimeTicks[copyable_pass_by_value]",
 ]

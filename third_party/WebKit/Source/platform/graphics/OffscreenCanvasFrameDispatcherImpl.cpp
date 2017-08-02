@@ -4,6 +4,7 @@
 
 #include "platform/graphics/OffscreenCanvasFrameDispatcherImpl.h"
 
+#include "base/time/time.h"
 #include "cc/output/compositor_frame.h"
 #include "cc/quads/texture_draw_quad.h"
 #include "components/viz/common/quads/resource_format.h"
@@ -308,7 +309,8 @@ void OffscreenCanvasFrameDispatcherImpl::DispatchFrame(
   }
 
   pending_compositor_frames_++;
-  sink_->SubmitCompositorFrame(current_local_surface_id_, std::move(frame));
+  sink_->SubmitCompositorFrame(current_local_surface_id_, std::move(frame),
+                               base::TimeTicks());
 }
 
 void OffscreenCanvasFrameDispatcherImpl::DidReceiveCompositorFrameAck(
