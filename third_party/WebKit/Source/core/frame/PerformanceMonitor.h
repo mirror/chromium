@@ -136,6 +136,11 @@ class CORE_EXPORT PerformanceMonitor final
   unsigned layout_depth_ = 0;
   unsigned user_callback_depth_ = 0;
   const void* user_callback_;
+  double v8_compile_start_time_ = 0;
+  double v8_compile_duration_ = 0;
+  String v8_compile_file_name_;
+  unsigned v8_compile_line_ = 0;
+  unsigned v8_compile_column_ = 0;
 
   double thresholds_[kAfterLast];
 
