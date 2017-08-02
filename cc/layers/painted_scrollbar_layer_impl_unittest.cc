@@ -93,13 +93,13 @@ TEST(PaintedScrollbarLayerImplTest, Occlusion) {
               gfx::Rect(scaled_layer_size).ToString());
     EXPECT_EQ(track_quad->opaque_rect.ToString(),
               gfx::Rect(scaled_layer_size).ToString());
+    EXPECT_TRUE(track_quad->shared_quad_state->is_opaque);
     EXPECT_EQ(track_quad->visible_rect.ToString(),
               gfx::Rect(scaled_layer_size).ToString());
     EXPECT_EQ(thumb_quad->rect.ToString(), scaled_thumb_rect.ToString());
     EXPECT_EQ(thumb_quad->visible_rect.ToString(),
               scaled_thumb_rect.ToString());
-    EXPECT_EQ(thumb_quad->visible_rect.ToString(),
-              scaled_thumb_rect.ToString());
+    EXPECT_FALSE(thumb_quad->shared_quad_state->is_opaque);
     for (size_t i = 0; i < 4; ++i) {
       EXPECT_EQ(thumb_opacity, thumb_quad->vertex_opacity[i]);
       EXPECT_EQ(1.f, track_quad->vertex_opacity[i]);

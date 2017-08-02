@@ -96,7 +96,9 @@ void UIResourceLayerImpl::AppendQuads(
     AppendQuadsData* append_quads_data) {
   SharedQuadState* shared_quad_state =
       render_pass->CreateAndAppendSharedQuadState();
-  PopulateSharedQuadState(shared_quad_state);
+  bool is_opaque = layer_tree_impl()->IsUIResourceOpaque(ui_resource_id_) ||
+                   contents_opaque();
+  PopulateSharedQuadState(shared_quad_state, is_opaque);
 
   AppendDebugBorderQuad(render_pass, bounds(), shared_quad_state,
                         append_quads_data);
@@ -116,11 +118,9 @@ void UIResourceLayerImpl::AppendQuads(
 
   DCHECK(!bounds().IsEmpty());
 
-  bool opaque = layer_tree_impl()->IsUIResourceOpaque(ui_resource_id_) ||
-                contents_opaque();
 
   gfx::Rect quad_rect(bounds());
-  gfx::Rect opaque_rect(opaque ? quad_rect : gfx::Rect());
+  gfx::Rect opaque_rect(is_opaque ? quad_rect : gfx::Rect());
   gfx::Rect visible_quad_rect =
       draw_properties().occlusion_in_content_space.GetUnoccludedContentRect(
           quad_rect);
