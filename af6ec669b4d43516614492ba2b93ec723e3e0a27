@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d356d20_03529215",
+        "filename": "tools/gn/runtime_deps.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-08-02T01:09:11Z",
+      "side": 1,
+      "message": "Nit: delete the printf().",
+      "revId": "af6ec669b4d43516614492ba2b93ec723e3e0a27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
