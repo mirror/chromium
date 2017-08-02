@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "974f4624_dda0b50d",
+        "filename": "ui/views/view.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1713,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-02T03:44:37Z",
+      "side": 1,
+      "message": "How come you need the additional check?",
+      "range": {
+        "startLine": 1713,
+        "startChar": 20,
+        "endLine": 1713,
+        "endChar": 29
+      },
+      "revId": "b393953e5ea528f809f6b4630491083818e3ec4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
