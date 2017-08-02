@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "75b1d1f1_f5a4698f",
+        "filename": "media/base/android/mock_media_codec_bridge.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-08-02T07:29:52Z",
+      "side": 1,
+      "message": "Do you mean I could use ProduceOneOutput in the wrapper test? That\u0027s what I\u0027ve done",
+      "parentUuid": "4c990cb4_8672a09c",
+      "revId": "be27e139a5d1621f7546f299875585c9c8d040e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "acf17d4e_6d500dd1",
         "filename": "media/gpu/android/codec_wrapper.cc",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "d7751571_7578c922",
+        "filename": "media/gpu/android/codec_wrapper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-08-02T07:29:52Z",
+      "side": 1,
+      "message": "sgtm, done\n\nSurprisingly the line in mcvd \"if (codec-\u003eSetSurface())\" continued to compile because MediaCodecStatus is not an enum class. But a unit test failed so I caught it yay.",
+      "parentUuid": "acf17d4e_6d500dd1",
+      "revId": "be27e139a5d1621f7546f299875585c9c8d040e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4f5e7dbe_851a65a2",
         "filename": "media/gpu/android/media_codec_video_decoder.cc",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-02T06:27:19Z",
       "side": 1,
       "message": "what if it\u0027s not draining?",
+      "revId": "be27e139a5d1621f7546f299875585c9c8d040e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea3276e4_d7d721af",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-08-02T07:29:52Z",
+      "side": 1,
+      "message": "Good point done.",
+      "parentUuid": "4f5e7dbe_851a65a2",
       "revId": "be27e139a5d1621f7546f299875585c9c8d040e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
