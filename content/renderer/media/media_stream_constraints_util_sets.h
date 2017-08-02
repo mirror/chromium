@@ -13,6 +13,7 @@
 
 #include "base/gtest_prod_util.h"
 #include "base/logging.h"
+#include "base/optional.h"
 #include "content/common/content_export.h"
 #include "content/renderer/media/media_stream_constraints_util.h"
 
@@ -27,40 +28,57 @@ namespace content {
 template <typename T>
 class NumericRangeSet {
  public:
-  NumericRangeSet() : min_(0), max_(DefaultMax()) {}
-  NumericRangeSet(T min, T max) : min_(min), max_(max) {}
+  NumericRangeSet() : min_(base::Optional<T>()), max_(base::Optional<T>()) {}
+  NumericRangeSet(base::Optional<T> min, base::Optional<T> max)
+      : min_(min), max_(max) {}
   NumericRangeSet(const NumericRangeSet& other) = default;
   NumericRangeSet& operator=(const NumericRangeSet& other) = default;
   ~NumericRangeSet() = default;
 
-  T Min() const { return min_; }
-  T Max() const { return max_; }
-  bool IsEmpty() const { return max_ < min_; }
+  base::Optional<T> Min() const { return min_; }
+  base::Optional<T> Max() const { return max_; }
+  bool IsEmpty() const { return max_ && min_ && *max_ < *min_; }
 
   NumericRangeSet Intersection(const NumericRangeSet& other) const {
-    return NumericRangeSet(std::max(min_, other.min_),
-                           std::min(max_, other.max_));
+    base::Optional<T> min = min_;
+    if (other.Min().has_value())
+      min = min.has_value() ? std::max(*min, *other.Min()) : other.Min();
+
+    base::Optional<T> max = max_;
+    if (other.Max().has_value())
+      max = max.has_value() ? std::min(*max, *other.Max()) : other.Max();
+
+    return NumericRangeSet(min, max);
   }
 
   // Creates a NumericRangeSet based on the minimum and maximum values of
   // |constraint|.
   template <typename ConstraintType>
-  static auto FromConstraint(ConstraintType constraint)
+  static auto FromConstraint(ConstraintType constraint,
+                             decltype(constraint.Min()) absolute_min,
+                             decltype(constraint.Min()) absolute_max)
       -> NumericRangeSet<decltype(constraint.Min())> {
+    // Return an empty set if constraint values are out of the valid range.
+    if ((ConstraintHasMax(constraint) &&
+         ConstraintMax(constraint) < absolute_min) ||
+        (ConstraintHasMin(constraint) &&
+         ConstraintMin(constraint) > absolute_max)) {
+      return NumericRangeSet<decltype(constraint.Min())>(1, 0);
+    }
     return NumericRangeSet<decltype(constraint.Min())>(
-        ConstraintHasMin(constraint) ? ConstraintMin(constraint) : 0,
-        ConstraintHasMax(constraint) ? ConstraintMax(constraint)
-                                     : DefaultMax());
+        ConstraintHasMin(constraint) &&
+                ConstraintMin(constraint) >= absolute_min
+            ? ConstraintMin(constraint)
+            : base::Optional<T>(),
+        ConstraintHasMax(constraint) &&
+                ConstraintMax(constraint) <= absolute_max
+            ? ConstraintMax(constraint)
+            : base::Optional<T>());
   }
 
  private:
-  static inline T DefaultMax() {
-    return std::numeric_limits<T>::has_infinity
-               ? std::numeric_limits<T>::infinity()
-               : std::numeric_limits<T>::max();
-  }
-  T min_;
-  T max_;
+  base::Optional<T> min_;
+  base::Optional<T> max_;
 };
 
 // This class defines a set of discrete elements suitable for resolving
