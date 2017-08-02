@@ -8,6 +8,7 @@
 #include "core/css/CSSCustomIdentValue.h"
 #include "core/css/CSSIdentifierValue.h"
 #include "core/css/CSSPrimitiveValue.h"
+#include "core/css/CSSProperty.h"
 #include "core/css/CSSValueList.h"
 #include "core/css/parser/CSSParserMode.h"
 #include "core/css/parser/CSSParserTokenRange.h"
@@ -185,6 +186,31 @@ CSSValueList* ConsumeCommaSeparatedList(Func callback,
   } while (ConsumeCommaIncludingWhitespace(range));
   DCHECK(list->length());
   return list;
+}
+
+template <typename... Values>
+void AddMultipleProperties(CSSPropertyID current_shorthand,
+                           bool important,
+                           IsImplicitProperty implicit,
+                           HeapVector<CSSProperty, 256>& properties,
+                           const Values&... values) {
+  DCHECK_EQ(sizeof...(values), 0u);
+}
+
+template <CSSPropertyID first_property,
+          CSSPropertyID... other_properties,
+          typename FirstValue,
+          typename... OtherValues>
+void AddMultipleProperties(CSSPropertyID current_shorthand,
+                           bool important,
+                           IsImplicitProperty implicit,
+                           HeapVector<CSSProperty, 256>& properties,
+                           const FirstValue& first_value,
+                           const OtherValues&... other_values) {
+  AddProperty(first_property, current_shorthand, first_value, important,
+              implicit, properties);
+  AddMultipleProperties<other_properties...>(
+      current_shorthand, important, implicit, properties, other_values...);
 }
 
 CSSValue* ConsumeTransformList(CSSParserTokenRange&, const CSSParserContext&);
