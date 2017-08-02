@@ -6,7 +6,6 @@
 #define NGPhysicalTextFragment_h
 
 #include "core/CoreExport.h"
-#include "core/layout/ng/inline/ng_inline_node.h"
 #include "core/layout/ng/ng_block_node.h"
 #include "core/layout/ng/ng_physical_fragment.h"
 #include "platform/heap/Handle.h"
@@ -14,6 +13,7 @@
 namespace blink {
 
 class ShapeResult;
+class NGInlineNode;
 
 // In CSS Writing Modes Levle 4, line orientation for layout and line
 // orientation for paint are not always the same.
@@ -37,7 +37,7 @@ enum class NGLineOrientation {
 class CORE_EXPORT NGPhysicalTextFragment final : public NGPhysicalFragment {
  public:
   NGPhysicalTextFragment(LayoutObject* layout_object,
-                         const NGInlineNode node,
+                         const NGInlineNode& node,
                          unsigned item_index,
                          unsigned start_offset,
                          unsigned end_offset,
@@ -52,8 +52,8 @@ class CORE_EXPORT NGPhysicalTextFragment final : public NGPhysicalFragment {
         shape_result_(shape_result),
         line_orientation_(static_cast<unsigned>(line_orientation)) {}
 
-  const NGInlineNode Node() const { return node_; }
-  StringView Text() const { return node_.Text(start_offset_, end_offset_); }
+  const NGInlineNode& Node() const { return node_; }
+  StringView Text() const;
 
   const ShapeResult* TextShapeResult() const { return shape_result_.Get(); }
 
@@ -78,7 +78,7 @@ class CORE_EXPORT NGPhysicalTextFragment final : public NGPhysicalFragment {
  private:
   // TODO(kojii): NGInlineNode is to access text content and NGLayoutInlineItem.
   // Review if it's better to point them.
-  const NGInlineNode node_;
+  const NGInlineNode& node_;
   unsigned item_index_;
   unsigned start_offset_;
   unsigned end_offset_;
