@@ -61,6 +61,7 @@ def main():
   json_test_results = None
 
   results = None
+  executed_command = False
   try:
     cmd = [sys.executable] + rest_args + [
       '--output-dir', tempfile_dir,
@@ -70,6 +71,7 @@ def main():
       rc = xvfb.run_executable(cmd, env)
     else:
       rc = common.run_command(cmd, env=env)
+    executed_command = True
 
     # If we have also output chartjson read it in and return it.
     # results-chart.json is the file name output by telemetry when the
@@ -102,6 +104,13 @@ def main():
       json_test_results = json.load(f)
 
   except Exception:
+    text = 'Unexpected exception has occured'
+    if executed_command:
+      text += ' before executing the command:'
+    else:
+      text += ' after executing the command:'
+    print text
+
     traceback.print_exc()
     if results:
       print 'results, which possibly caused exception: %s' % json.dumps(
