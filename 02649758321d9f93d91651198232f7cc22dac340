@@ -60,6 +60,48 @@
     },
     {
       "key": {
+        "uuid": "58553c47_a35f4609",
+        "filename": "content/browser/loader/redirect_to_file_resource_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-08-02T22:07:58Z",
+      "side": 1,
+      "message": "Definitely. There will be integration tests, including many current integration tests.\n\nCharlie - what should I do instead here?",
+      "parentUuid": "d5975bb9_fe339dba",
+      "revId": "02649758321d9f93d91651198232f7cc22dac340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50e67d1b_7f39f2f7",
+        "filename": "content/browser/loader/redirect_to_file_resource_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-08-02T22:07:58Z",
+      "side": 1,
+      "message": "Yes, I had to modify the unittests to correctly handle this case too, as cancelling out of band left the controller orphaned in the test handler, and I have to manually release it: RedirectToFileResourceHandlerTest.CreateFileFails/1.",
+      "parentUuid": "c0ca4378_211d6c5a",
+      "range": {
+        "startLine": 250,
+        "startChar": 27,
+        "endLine": 250,
+        "endChar": 46
+      },
+      "revId": "02649758321d9f93d91651198232f7cc22dac340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2cc53d22_e5a91f77",
         "filename": "content/browser/loader/redirect_to_file_resource_handler.cc",
         "patchSetId": 3
@@ -80,6 +122,30 @@
       "revId": "02649758321d9f93d91651198232f7cc22dac340",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c10600a_95ddd418",
+        "filename": "content/browser/loader/redirect_to_file_resource_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-08-02T22:07:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2cc53d22_e5a91f77",
+      "range": {
+        "startLine": 260,
+        "startChar": 29,
+        "endLine": 260,
+        "endChar": 0
+      },
+      "revId": "02649758321d9f93d91651198232f7cc22dac340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -106,6 +172,30 @@
     },
     {
       "key": {
+        "uuid": "452ada1e_965cb2b1",
+        "filename": "content/browser/loader/redirect_to_file_resource_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-08-02T22:07:58Z",
+      "side": 1,
+      "message": "Added test for testing this code path... although the code is a little different, I need to use OnResponseStarted as my blocker for this to return.",
+      "parentUuid": "c23626ea_a53ff4b7",
+      "range": {
+        "startLine": 261,
+        "startChar": 16,
+        "endLine": 261,
+        "endChar": 0
+      },
+      "revId": "02649758321d9f93d91651198232f7cc22dac340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0cf102ce_53a5822b",
         "filename": "content/browser/loader/redirect_to_file_resource_handler.h",
         "patchSetId": 3
@@ -120,6 +210,24 @@
       "revId": "02649758321d9f93d91651198232f7cc22dac340",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b8a275d_c644b20f",
+        "filename": "content/browser/loader/redirect_to_file_resource_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-08-02T22:07:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0cf102ce_53a5822b",
+      "revId": "02649758321d9f93d91651198232f7cc22dac340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
