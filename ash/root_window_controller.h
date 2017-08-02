@@ -10,6 +10,7 @@
 #include <vector>
 
 #include "ash/ash_export.h"
+#include "ash/display/window_tree_host_manager.h"
 #include "ash/public/cpp/shelf_types.h"
 #include "ash/shell_observer.h"
 #include "ash/wm/workspace/workspace_types.h"
@@ -80,7 +81,8 @@ class RootWindowLayoutManager;
 // The RootWindowController for particular root window is stored in
 // its property (RootWindowSettings) and can be obtained using
 // |RootWindowController::ForWindow(aura::Window*)| function.
-class ASH_EXPORT RootWindowController : public ShellObserver {
+class ASH_EXPORT RootWindowController : public WindowTreeHostManager::Observer,
+                                        public ShellObserver {
  public:
   // Enumerates the type of display. If there is only a single display then
   // it is primary. In a multi-display environment one monitor is deemed the
@@ -254,6 +256,10 @@ class ASH_EXPORT RootWindowController : public ShellObserver {
 
   // Called when the login status changes after login (such as lock/unlock).
   void UpdateAfterLoginStatusChange(LoginStatus status);
+
+  // WindowTreeHostManager::Observer:
+  void OnWindowTreeHostsSwappedDisplays(AshWindowTreeHost* host1,
+                                        AshWindowTreeHost* host2) override;
 
  private:
   // TODO(sky): remove this. Temporary during ash-mus unification.
