@@ -81,7 +81,6 @@ SelectionInDOMTree ConvertToSelectionInDOMTree(
       .SetBaseAndExtent(ToPositionInDOMTree(selection_in_flat_tree.Base()),
                         ToPositionInDOMTree(selection_in_flat_tree.Extent()))
       .SetIsDirectional(selection_in_flat_tree.IsDirectional())
-      .SetIsHandleVisible(selection_in_flat_tree.IsHandleVisible())
       .Build();
 }
 
@@ -806,15 +805,15 @@ void SelectionController::SetNonDirectionalSelectionIfNeeded(
     original_base_in_flat_tree_ = PositionInFlatTreeWithAffinity();
   }
 
-  builder.SetIsHandleVisible(handle_visibility == HandleVisibility::kVisible)
-      .SetIsDirectional(frame_->GetEditor()
-                            .Behavior()
-                            .ShouldConsiderSelectionAsDirectional() ||
-                        new_selection.IsDirectional());
+  builder.SetIsDirectional(
+      frame_->GetEditor().Behavior().ShouldConsiderSelectionAsDirectional() ||
+      new_selection.IsDirectional());
   const SelectionInFlatTree& selection_in_flat_tree = builder.Build();
+  const bool should_show_handle =
+      handle_visibility == HandleVisibility::kVisible;
   if (Selection().ComputeVisibleSelectionInFlatTree() ==
           CreateVisibleSelection(selection_in_flat_tree) &&
-      Selection().IsHandleVisible() == selection_in_flat_tree.IsHandleVisible())
+      Selection().IsHandleVisible() == should_show_handle)
     return;
   Selection().SetSelection(
       ConvertToSelectionInDOMTree(selection_in_flat_tree),
@@ -823,6 +822,7 @@ void SelectionController::SetNonDirectionalSelectionIfNeeded(
           .SetShouldClearTypingStyle(true)
           .SetCursorAlignOnScroll(CursorAlignOnScroll::kIfNeeded)
           .SetGranularity(granularity)
+          .SetShouldShowHandle(should_show_handle)
           .Build());
 }
 
