@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<title>Reference for position: sticky should create a stacking context</title>
+
+<style>
+.container {
+  position: fixed;
+}
+
+.indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: green;
+}
+
+.box {
+  width: 200px;
+  height: 200px;
+}
+</style>
+
+<div class="container">
+  <div class="indicator box"></div>
+</div>
+
+<div>You should see a single green box above. No red should be visible.</div>
