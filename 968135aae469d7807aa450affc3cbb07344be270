@@ -417,6 +417,24 @@
       "revId": "968135aae469d7807aa450affc3cbb07344be270",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b503eee_3ca2a41a",
+        "filename": "base/values.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-08-02T20:06:17Z",
+      "side": 1,
+      "message": "While I still feel like FindKey should also return pointers, this is unrelated to this change and can be done in a follow-up CL.",
+      "parentUuid": "ecab12f4_82bc2cc8",
+      "revId": "968135aae469d7807aa450affc3cbb07344be270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
