@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7e5af55_9c8e1083",
+        "filename": "services/metrics/public/cpp/ukm_source_id.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-08-02T21:57:18Z",
+      "side": 1,
+      "message": "nit: I think the kStyleConstants is preferred now?",
+      "revId": "46ec5657b93e19141e1ac9d45e175ba051b76adc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
