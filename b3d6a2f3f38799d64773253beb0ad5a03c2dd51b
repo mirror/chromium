@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1e914a63_179ab127",
+        "filename": "chrome/browser/feature_engagement_tracker/features/feature_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-08-02T23:20:49Z",
+      "side": 1,
+      "message": "Checked with Catherine, the second constructor is needed for the unittests.",
+      "parentUuid": "93cb9ce9_befeab5c",
+      "revId": "b3d6a2f3f38799d64773253beb0ad5a03c2dd51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1d12ed2_43833eed",
         "filename": "chrome/browser/feature_engagement_tracker/features/feature_tracker.h",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "b3d6a2f3f38799d64773253beb0ad5a03c2dd51b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50bc6c3f_f1ea41c8",
+        "filename": "chrome/browser/feature_engagement_tracker/features/feature_tracker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-08-02T23:20:49Z",
+      "side": 1,
+      "message": "Let me know what you think of my approach of having a separate class to manage the kSessionTimeTotal pref.",
+      "parentUuid": "f1d12ed2_43833eed",
+      "revId": "b3d6a2f3f38799d64773253beb0ad5a03c2dd51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "8edc3c9f_1e3b4c57",
+        "filename": "chrome/browser/feature_engagement_tracker/features/feature_tracker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-08-02T23:20:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a87f3a50_834e0379",
+      "range": {
+        "startLine": 21,
+        "startChar": 6,
+        "endLine": 21,
+        "endChar": 20
+      },
+      "revId": "b3d6a2f3f38799d64773253beb0ad5a03c2dd51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f21ecd72_e53c57eb",
         "filename": "chrome/browser/feature_engagement_tracker/features/feature_tracker.h",
         "patchSetId": 3
@@ -73,6 +133,24 @@
       "revId": "b3d6a2f3f38799d64773253beb0ad5a03c2dd51b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cc5f4e8_cb37e76a",
+        "filename": "chrome/browser/feature_engagement_tracker/features/feature_tracker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-08-02T23:20:49Z",
+      "side": 1,
+      "message": "Checked with Catherine, the second constructor is needed for the unittests.",
+      "parentUuid": "f21ecd72_e53c57eb",
+      "revId": "b3d6a2f3f38799d64773253beb0ad5a03c2dd51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "8628913f_2cfba38f",
+        "filename": "chrome/browser/feature_engagement_tracker/features/feature_tracker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-08-02T23:20:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77d50f32_f4dcde47",
+      "revId": "b3d6a2f3f38799d64773253beb0ad5a03c2dd51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "321a6519_267d8172",
         "filename": "chrome/browser/feature_engagement_tracker/features/feature_tracker.h",
         "patchSetId": 3
@@ -107,6 +203,24 @@
       "revId": "b3d6a2f3f38799d64773253beb0ad5a03c2dd51b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fdf1b27_2e1683bb",
+        "filename": "chrome/browser/feature_engagement_tracker/features/feature_tracker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-08-02T23:20:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "321a6519_267d8172",
+      "revId": "b3d6a2f3f38799d64773253beb0ad5a03c2dd51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "7a95ea36_597f0275",
+        "filename": "chrome/browser/feature_engagement_tracker/features/feature_tracker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-08-02T23:20:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3d1e591_89a70ed8",
+      "revId": "b3d6a2f3f38799d64773253beb0ad5a03c2dd51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d46174cd_a9ba0a2c",
         "filename": "chrome/browser/feature_engagement_tracker/features/new_tab/new_tab_tracker.cc",
         "patchSetId": 3
@@ -144,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "85128923_631d0e70",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab/new_tab_tracker.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-08-02T23:20:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d46174cd_a9ba0a2c",
+      "revId": "b3d6a2f3f38799d64773253beb0ad5a03c2dd51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b1b1e12_82ffb362",
         "filename": "chrome/browser/feature_engagement_tracker/features/new_tab/new_tab_tracker.h",
         "patchSetId": 3
@@ -155,6 +305,24 @@
       "writtenOn": "2017-07-29T00:57:03Z",
       "side": 1,
       "message": "Once this refactor has landed, I think you intend on having both NewTabTracker and BookmarkTracker inherit from FeatureTracker. Won\u0027t both of then be observers of the session, and thus we\u0027re still going to double-count time?",
+      "revId": "b3d6a2f3f38799d64773253beb0ad5a03c2dd51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cabe490_c96686b0",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab/new_tab_tracker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-08-02T23:20:49Z",
+      "side": 1,
+      "message": "Hoping this is addressed by SessionDurationTracker",
+      "parentUuid": "7b1b1e12_82ffb362",
       "revId": "b3d6a2f3f38799d64773253beb0ad5a03c2dd51b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -178,6 +346,24 @@
     },
     {
       "key": {
+        "uuid": "28e376b4_a4cb9b57",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab/new_tab_tracker_factory.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-08-02T23:20:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c74aba1_abd89db2",
+      "revId": "b3d6a2f3f38799d64773253beb0ad5a03c2dd51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df22ebe3_4bd50d2f",
         "filename": "chrome/browser/feature_engagement_tracker/features/new_tab/new_tab_tracker_unittest.cc",
         "patchSetId": 3
@@ -192,6 +378,24 @@
       "revId": "b3d6a2f3f38799d64773253beb0ad5a03c2dd51b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c463dd09_b9110da4",
+        "filename": "chrome/browser/feature_engagement_tracker/features/new_tab/new_tab_tracker_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-08-02T23:20:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df22ebe3_4bd50d2f",
+      "revId": "b3d6a2f3f38799d64773253beb0ad5a03c2dd51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
