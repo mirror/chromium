@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "dde407b8_e4f9464b",
+        "filename": "third_party/WebKit/Source/core/frame/RemoteFrameOwner.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-02T05:48:05Z",
+      "side": 1,
+      "message": "I\u0027m suggesting moving the enum definition itself from public/web/WebFrameOwnerProperties.h to public/platform/WebScrollbar.h. Then you can move the checks to Scrollbar.cpp.",
+      "parentUuid": "99967982_b69a14ae",
+      "revId": "ae9f19cbd919532bc08e94328d1705da66e472e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8bd6a902_8f3b43f0",
         "filename": "third_party/WebKit/Source/core/frame/Settings.cpp",
         "patchSetId": 2
