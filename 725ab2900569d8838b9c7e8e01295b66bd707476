@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "444429a2_a158e1e5",
+        "filename": "cc/raster/raster_source.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-02T00:37:15Z",
+      "side": 1,
+      "message": "I don\u0027t know that the flattened picture needs the complicated logic here in terms of opaqueness or debug colors or edge pixels or clearing.  I think clearing to transparent should be good enough for tracing.  I was just simplifying as I went here.",
+      "revId": "725ab2900569d8838b9c7e8e01295b66bd707476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
