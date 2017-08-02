@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "906ac167_ad19ae97",
+        "filename": "chrome/installer/zucchini/image_index.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-02T19:13:15Z",
+      "side": 1,
+      "message": "Renaming LabelBound() and label_bound.\nIt is unexpected indeed to call LabelAssociatedTargets multiple time. Some checks are already there, but I\u0027m adding comments about it. More specifically:\n-All targets must have a label in |label_manager|\n-All targets must be represented as offset.",
+      "parentUuid": "2fb0b640_a7c2d4fc",
+      "range": {
+        "startLine": 110,
+        "startChar": 37,
+        "endLine": 110,
+        "endChar": 57
+      },
+      "revId": "92204b82b4237b8122b9f67b5157fb477b6ba94a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "00ea8813_16c3404c",
         "filename": "chrome/installer/zucchini/image_index.h",
         "patchSetId": 7
