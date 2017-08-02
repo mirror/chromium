@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "61c00472_61f68647",
+        "filename": "ios/chrome/browser/ui/settings/passwords_settings_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1240,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-08-02T15:54:52Z",
+      "side": 1,
+      "message": "The test run a couple of tens of seconds on my simulator.\n\nI\u0027m also concerned that the EG user actions are (in this case) slower than those of real users, so it takes a lot of value of the test result.",
+      "parentUuid": "e4581ab7_87b10aa6",
+      "revId": "a8621fef1a0318ccd7e8c456f99b84f8cc6011bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "731d2f31_e28a35e0",
         "filename": "ios/chrome/browser/ui/settings/passwords_settings_egtest.mm",
         "patchSetId": 1
