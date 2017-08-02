@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05c495ec_39e73647",
+        "filename": "third_party/WebKit/Source/core/layout/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-02T18:05:50Z",
+      "side": 1,
+      "message": "The first two lines of AncestorRoundedCornersWillClip duplicate this - refactor\nto avoid computing twice.",
+      "revId": "1513660aa0cec9dbb8419569d327b5fbaf806ae3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
