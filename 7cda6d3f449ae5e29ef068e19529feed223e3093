@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "72d64489_4289d442",
+        "filename": "build/mac_toolchain.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-08-02T20:42:46Z",
+      "side": 1,
+      "message": "This should work because the bots don\u0027t have /Library/GoogleCorpSupport/, which I confirmed on at least one bot.",
+      "revId": "7cda6d3f449ae5e29ef068e19529feed223e3093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0b8861f6_59da5563",
         "filename": "build/mac_toolchain.py",
         "patchSetId": 1
