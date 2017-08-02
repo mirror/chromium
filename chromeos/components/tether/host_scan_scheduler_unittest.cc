@@ -58,6 +58,7 @@ class FakeHostScanner : public HostScanner {
 };
 
 const char kWifiServiceGuid[] = "wifiServiceGuid";
+const char kTetherGuid[] = "tetherGuid";
 
 std::string CreateConfigurationJsonString() {
   std::stringstream ss;
@@ -197,6 +198,40 @@ TEST_F(HostScanSchedulerTest, DefaultNetworkChanged) {
 
   EXPECT_EQ(1, fake_host_scanner_->num_scans_started());
   EXPECT_TRUE(
+      network_state_handler()->GetScanningByType(NetworkTypePattern::Tether()));
+
+  network_state_handler()->AddTetherNetworkState(
+      kTetherGuid, "name", "carrier", 100 /* battery_percentage */,
+      100 /* signal strength */, false /* has_connected_to_host */);
+  base::RunLoop().RunUntilIdle();
+  network_state_handler()->SetTetherNetworkStateConnecting(kTetherGuid);
+
+  EXPECT_EQ(0, fake_host_scanner_->num_scans_started());
+  EXPECT_FALSE(
+      network_state_handler()->GetScanningByType(NetworkTypePattern::Tether()));
+
+  SetDefaultNetworkConnecting();
+
+  EXPECT_EQ(0, fake_host_scanner_->num_scans_started());
+  EXPECT_FALSE(
+      network_state_handler()->GetScanningByType(NetworkTypePattern::Tether()));
+
+  SetDefaultNetworkDisconnected();
+
+  EXPECT_EQ(0, fake_host_scanner_->num_scans_started());
+  EXPECT_FALSE(
+      network_state_handler()->GetScanningByType(NetworkTypePattern::Tether()));
+
+  SetDefaultNetworkConnecting();
+
+  EXPECT_EQ(0, fake_host_scanner_->num_scans_started());
+  EXPECT_FALSE(
+      network_state_handler()->GetScanningByType(NetworkTypePattern::Tether()));
+
+  SetDefaultNetworkDisconnected();
+
+  EXPECT_EQ(0, fake_host_scanner_->num_scans_started());
+  EXPECT_FALSE(
       network_state_handler()->GetScanningByType(NetworkTypePattern::Tether()));
 }
 
