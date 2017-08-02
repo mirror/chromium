@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "70cdbc6f_4f04dc14",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-02T23:01:36Z",
+      "side": 1,
+      "message": "I briefly address this in the documentation for RecordFinalTetherTechnologyState:\n\n\"Record to UMA Tether\u0027s last TechnologyState before it was shutdown.\nTether\u0027s TechnologyState at the end of its life is the most likely to\naccurately represent how it has been used by the user.\"\n\nI believe if we *always* emit to this histogram, we will be getting inaccurate metrics for how Tether is being used. There may be intermediate states until the user settles on how they want the system to configured in respect to Tether. For example, they might have turned off Bluetooth, but then re-enabled it upon seeing our prompt to do so, and then decided that Tether was useful enough to keep enabled.\n\nRecording at the end of each chrome session will be consistent across all emitting devices (so we know the individual contributions to this metric all happened on the same event) and most accurately reflects how the user was using Tether.",
+      "parentUuid": "933c8aae_1f619138",
+      "range": {
+        "startLine": 145,
+        "startChar": 0,
+        "endLine": 145,
+        "endChar": 37
+      },
+      "revId": "0a5a71a80b8021518f0937e329f2ed240c53d32c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "abbcbf75_cd95ffe1",
         "filename": "chrome/browser/chromeos/tether/tether_service.cc",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "09e44ac9_43a8f2af",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-02T23:01:36Z",
+      "side": 1,
+      "message": "Good catch, done.",
+      "parentUuid": "abbcbf75_cd95ffe1",
+      "range": {
+        "startLine": 301,
+        "startChar": 0,
+        "endLine": 316,
+        "endChar": 1
+      },
+      "revId": "0a5a71a80b8021518f0937e329f2ed240c53d32c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69cbb06d_eddbe2ba",
         "filename": "chrome/browser/chromeos/tether/tether_service.cc",
         "patchSetId": 3
@@ -68,6 +116,30 @@
       "revId": "0a5a71a80b8021518f0937e329f2ed240c53d32c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "560efdff_8a74e9f8",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-02T23:01:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69cbb06d_eddbe2ba",
+      "range": {
+        "startLine": 331,
+        "startChar": 20,
+        "endLine": 331,
+        "endChar": 62
+      },
+      "revId": "0a5a71a80b8021518f0937e329f2ed240c53d32c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
