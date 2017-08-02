@@ -2,6 +2,69 @@
   "comments": [
     {
       "key": {
+        "uuid": "e2e77d7a_9517efe3",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-08-02T18:01:25Z",
+      "side": 1,
+      "message": "nit: could we just use base::TimeDelta below?",
+      "range": {
+        "startLine": 147,
+        "startChar": 24,
+        "endLine": 147,
+        "endChar": 38
+      },
+      "revId": "0a0ec27be3f46b681dfd1a4da6c0acec27cce1d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7491c168_2c2a16b8",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-08-02T18:01:25Z",
+      "side": 1,
+      "message": "Could we use base::TimeTicks::SnappedToNextTick here? This should make code simpler.",
+      "revId": "0a0ec27be3f46b681dfd1a4da6c0acec27cce1d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a445e812_f9671050",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-08-02T18:01:25Z",
+      "side": 1,
+      "message": "nit: Given that we do intersect segments, we don\u0027t need to check for TimePastStepEnd here.",
+      "range": {
+        "startLine": 170,
+        "startChar": 28,
+        "endLine": 170,
+        "endChar": 68
+      },
+      "revId": "0a0ec27be3f46b681dfd1a4da6c0acec27cce1d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d2ede229_945ac714",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator.cc",
         "patchSetId": 11
