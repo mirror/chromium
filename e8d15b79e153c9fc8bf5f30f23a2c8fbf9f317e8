@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02d51bbd_27cde4e9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 19
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-02T22:26:50Z",
+      "side": 1,
+      "message": "nit: Start the second part on a new line.\n\n1. ...\n2. ...",
+      "range": {
+        "startLine": 11,
+        "startChar": 9,
+        "endLine": 11,
+        "endChar": 10
+      },
+      "revId": "e8d15b79e153c9fc8bf5f30f23a2c8fbf9f317e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bd62502_ef1f7a2a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 19
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-02T22:26:50Z",
+      "side": 1,
+      "message": "This CL also makes it such that the resource coordinator pointers in RFH and RPH can be null, which is change in behavior that might be nice to call out.",
+      "revId": "e8d15b79e153c9fc8bf5f30f23a2c8fbf9f317e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb50fb02_2efbcc61",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_impl.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-02T22:26:50Z",
+      "side": 1,
+      "message": "Generic design question: observers should be implementation detail of a class. Why are those being exposed publicly to code outside of this class?",
+      "revId": "e8d15b79e153c9fc8bf5f30f23a2c8fbf9f317e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17e20e09_923bdfa2",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_impl.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-02T22:26:50Z",
+      "side": 1,
+      "message": "Are two lines of code worthwhile putting in a macro and obscuring the actual implementation? I personally find it a lot more clear to see these two lines of code instead of going and digging out the expansion of a non-standard macro for notifying observers.",
+      "revId": "e8d15b79e153c9fc8bf5f30f23a2c8fbf9f317e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29d81754_076dc76c",
+        "filename": "services/resource_coordinator/coordination_unit/web_contents_coordination_unit_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-02T22:26:50Z",
+      "side": 1,
+      "message": "Is it guaranteed that GetProperty for kVisible will never return an empty Value()? If yes, let\u0027s encode that in a DCHECK.",
+      "range": {
+        "startLine": 58,
+        "startChar": 9,
+        "endLine": 58,
+        "endChar": 20
+      },
+      "revId": "e8d15b79e153c9fc8bf5f30f23a2c8fbf9f317e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
