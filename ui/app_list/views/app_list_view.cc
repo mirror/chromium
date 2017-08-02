@@ -228,6 +228,7 @@ void AppListView::Initialize(gfx::NativeView parent,
 
   UMA_HISTOGRAM_TIMES("Apps.AppListCreationTime",
                       base::Time::Now() - start_time);
+  app_list_main_view_->model()->RecordItemsInFoldersForUMA();
 }
 
 void AppListView::SetBubbleArrow(views::BubbleBorder::Arrow arrow) {
@@ -537,6 +538,10 @@ void AppListView::EndDrag(const gfx::Point& location) {
           SetState(FULLSCREEN_SEARCH);
           break;
         case PEEKING:
+          // todo(newcomer): add histogram to see if fullscreen launcher is
+          // enabled.
+          UMA_HISTOGRAM_ENUMERATION(kAppListPeekingToFullscreenHistogram, SWIPE,
+                                    MAX_PEEKING_TO_FULLSCREEN);
           SetState(FULLSCREEN_ALL_APPS);
           break;
         case CLOSED:
@@ -816,6 +821,12 @@ bool AppListView::HandleScroll(const ui::Event* event) {
     case ui::ET_MOUSEWHEEL:
       SetState(event->AsMouseWheelEvent()->y_offset() < 0 ? FULLSCREEN_ALL_APPS
                                                           : CLOSED);
+      if (app_list_state_ == FULLSCREEN_ALL_APPS) {
+        UMA_HISTOGRAM_ENUMERATION(kAppListPeekingToFullscreenHistogram,
+                                  MOUSEWHEEL_SCROLL, MAX_PEEKING_TO_FULLSCREEN);
+      }
+      // Return true unconditionally because all mousewheel events are large
+      // enough to transition the app list.
       return true;
     case ui::ET_SCROLL:
     case ui::ET_SCROLL_FLING_START: {
@@ -823,6 +834,10 @@ bool AppListView::HandleScroll(const ui::Event* event) {
           kAppListMinScrollToSwitchStates) {
         SetState(event->AsScrollEvent()->y_offset() < 0 ? FULLSCREEN_ALL_APPS
                                                         : CLOSED);
+        if (app_list_state_ == FULLSCREEN_ALL_APPS) {
+          UMA_HISTOGRAM_ENUMERATION(kAppListPeekingToFullscreenHistogram,
+                                    MOUSEPAD_SCROLL, MAX_PEEKING_TO_FULLSCREEN);
+        }
         return true;
       }
       break;
