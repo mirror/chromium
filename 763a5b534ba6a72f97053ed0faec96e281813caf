@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1144cde3_ac940d46",
+        "filename": "components/cdm/browser/media_drm_storage_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-02T08:17:09Z",
+      "side": 1,
+      "message": "A brief comment describing why we need all three of these would be nice.\n\norigin_id_ can mention that it wants to avoid exposing the actual origin to EME.\nNot sure why we need both origin_ and origin_string_ though \u003d)",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 66,
+        "endChar": 36
+      },
+      "revId": "763a5b534ba6a72f97053ed0faec96e281813caf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b21e378_644d09a8",
+        "filename": "media/mojo/interfaces/media_drm_storage.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-02T08:17:09Z",
+      "side": 1,
+      "message": "What is \"origin ID\"? I\u0027m guessing it\u0027s related to origin... maybe?",
+      "range": {
+        "startLine": 17,
+        "startChar": 39,
+        "endLine": 17,
+        "endChar": 48
+      },
+      "revId": "763a5b534ba6a72f97053ed0faec96e281813caf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
