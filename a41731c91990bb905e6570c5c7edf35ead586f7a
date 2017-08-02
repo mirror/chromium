@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d6dfb23e_f93f95e8",
+        "filename": "ash/system/update/tray_update.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-08-02T00:55:19Z",
+      "side": 1,
+      "message": "Only clearing the statics without adding \"tray_view()-\u003eSetVisible(false)\", the test is still flaky. After the first TrayUpdateTest is complete, tray_view() is still visible when running the second test.",
+      "parentUuid": "8fb45c20_220ae75a",
+      "revId": "a41731c91990bb905e6570c5c7edf35ead586f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8dc44e9e_af29ee80",
         "filename": "ash/system/update/tray_update.h",
         "patchSetId": 1
