@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ba218f93_a3e199b0",
+        "filename": "ui/base/win/shell.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-08-02T23:37:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "745db732_ce6928ce",
+      "revId": "e69ba26c4447fc171a910998957a045e66d1f179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de7708e3_a01de6f2",
         "filename": "ui/base/win/shell.cc",
         "patchSetId": 15
@@ -33,6 +51,24 @@
       "revId": "e69ba26c4447fc171a910998957a045e66d1f179",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96d331a4_a29f9d93",
+        "filename": "ui/base/win/shell.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-08-02T23:37:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de7708e3_a01de6f2",
+      "revId": "e69ba26c4447fc171a910998957a045e66d1f179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
