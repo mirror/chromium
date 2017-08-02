@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "de41b253_308455a0",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-02T23:43:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1eb3188_92f230b1",
+      "revId": "d186c38054baabf3e3381e7793835b0f3dab7cc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "19164e54_8f1e117c",
         "filename": "components/exo/shell_surface.cc",
         "patchSetId": 11
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-02T08:56:51Z",
       "side": 1,
       "message": "scary amount of time to lock the compositor but I guess fine if needed",
+      "revId": "d186c38054baabf3e3381e7793835b0f3dab7cc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "165ff774_64a710ae",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-02T23:43:05Z",
+      "side": 1,
+      "message": "Agreed and I believe Android is producing unnecessary frames. I\u0027ll look into\nthis separately. Added TODO.",
+      "parentUuid": "19164e54_8f1e117c",
       "revId": "d186c38054baabf3e3381e7793835b0f3dab7cc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "d186c38054baabf3e3381e7793835b0f3dab7cc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c0bb0fe_270ecc77",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-02T23:43:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "322b9750_907597c6",
+      "revId": "d186c38054baabf3e3381e7793835b0f3dab7cc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "a4795c8e_7d473ebb",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 797,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-02T23:43:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6783bd66_4986759e",
+      "range": {
+        "startLine": 796,
+        "startChar": 4,
+        "endLine": 797,
+        "endChar": 47
+      },
+      "revId": "d186c38054baabf3e3381e7793835b0f3dab7cc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f94efe7_d3288383",
         "filename": "components/exo/shell_surface.cc",
         "patchSetId": 11
@@ -90,6 +168,24 @@
       "revId": "d186c38054baabf3e3381e7793835b0f3dab7cc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2339df04_63871d87",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1043,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-02T23:43:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f94efe7_d3288383",
+      "revId": "d186c38054baabf3e3381e7793835b0f3dab7cc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +206,24 @@
     },
     {
       "key": {
+        "uuid": "b677dcb8_2dc15897",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1814,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-02T23:43:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08af35bc_13b7c9b9",
+      "revId": "d186c38054baabf3e3381e7793835b0f3dab7cc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5468f581_b6f6fae5",
         "filename": "components/exo/shell_surface.h",
         "patchSetId": 11
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "cc3fd7cb_c89b6a1a",
+        "filename": "components/exo/shell_surface.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-02T23:43:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5468f581_b6f6fae5",
+      "revId": "d186c38054baabf3e3381e7793835b0f3dab7cc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f33d6b8_162b96d6",
         "filename": "third_party/wayland-protocols/include/protocol/remote-shell-unstable-v1-client-protocol.h",
         "patchSetId": 11
@@ -138,6 +270,30 @@
       "writtenOn": "2017-08-02T08:56:51Z",
       "side": 1,
       "message": "please use the wayland-scanner version in third_party/wayland to generate these files",
+      "range": {
+        "startLine": 1,
+        "startChar": 32,
+        "endLine": 1,
+        "endChar": 39
+      },
+      "revId": "d186c38054baabf3e3381e7793835b0f3dab7cc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3dfe579_5443c5df",
+        "filename": "third_party/wayland-protocols/include/protocol/remote-shell-unstable-v1-client-protocol.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-02T23:43:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f33d6b8_162b96d6",
       "range": {
         "startLine": 1,
         "startChar": 32,
