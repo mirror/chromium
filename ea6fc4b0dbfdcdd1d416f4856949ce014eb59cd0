@@ -135,6 +135,30 @@
     },
     {
       "key": {
+        "uuid": "e544f403_80512b3c",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-08-02T08:49:23Z",
+      "side": 1,
+      "message": "The policy states \"This policy prevents the user from loading web pages from blacklisted URLs.\", do you mean that it only prevents navigation, but other forms are allowed?",
+      "parentUuid": "22937fc1_8d8fc887",
+      "range": {
+        "startLine": 160,
+        "startChar": 30,
+        "endLine": 160,
+        "endChar": 37
+      },
+      "revId": "ea6fc4b0dbfdcdd1d416f4856949ce014eb59cd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "52bae2c4_520ddc21",
         "filename": "net/proxy/proxy_script_fetcher_impl.cc",
         "patchSetId": 2
@@ -170,6 +194,30 @@
       "side": 1,
       "message": "I don\u0027t know what either of these terms mean.  Chrome does weird magic choosing a proxy server.  Code in net/ of course shouldn\u0027t document what chrome code does.  Other embedders may behave differently.",
       "parentUuid": "52bae2c4_520ddc21",
+      "range": {
+        "startLine": 179,
+        "startChar": 19,
+        "endLine": 179,
+        "endChar": 28
+      },
+      "revId": "ea6fc4b0dbfdcdd1d416f4856949ce014eb59cd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "847f0e8c_a5824782",
+        "filename": "net/proxy/proxy_script_fetcher_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-08-02T08:49:23Z",
+      "side": 1,
+      "message": "What do you think about adding this in a comment instead of policy, starting with \"For chromium uses, this policy can be used...\"?",
+      "parentUuid": "c788be23_83bc0f0e",
       "range": {
         "startLine": 179,
         "startChar": 19,
