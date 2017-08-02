@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "94d62979_6d98ed20",
+        "filename": "remoting/host/client_session.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-08-02T15:37:55Z",
+      "side": 1,
+      "message": "Now that you say so, I was planning on having the message handlers manage their own lifetime. Since the factory wouldn\u0027t have to manage their lifetimes, then perhaps I could make the factory method static. However, I will be passing additional context to the message handlers in the future so that the handlers can write to disk and such. I could either pass that context with by making this factory contain that context, or pass it with currying. I was planning on keeping that context in the factory, which would require that I keep the member factory here.",
+      "parentUuid": "f6e729c5_ce79d53a",
+      "range": {
+        "startLine": 245,
+        "startChar": 36,
+        "endLine": 245,
+        "endChar": 74
+      },
+      "revId": "b801769bfbaba3819ca9829ab49fdecfd255435c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c07c1693_37186220",
         "filename": "remoting/host/file_transfer_message_handler_factory.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "b801769bfbaba3819ca9829ab49fdecfd255435c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c53a50a_4534e074",
+        "filename": "remoting/host/file_transfer_message_handler_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-08-02T15:37:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c07c1693_37186220",
+      "range": {
+        "startLine": 14,
+        "startChar": 40,
+        "endLine": 14,
+        "endChar": 57
+      },
+      "revId": "b801769bfbaba3819ca9829ab49fdecfd255435c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0d14e4bf_3a5e7e84",
+        "filename": "remoting/host/file_transfer_message_handler_factory.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-08-02T15:37:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d867de4_b1768778",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 5
+      },
+      "revId": "b801769bfbaba3819ca9829ab49fdecfd255435c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2eea077d_3b1e9d25",
         "filename": "remoting/host/me2me_desktop_environment.cc",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "b801769bfbaba3819ca9829ab49fdecfd255435c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dabe584_776658e5",
+        "filename": "remoting/host/me2me_desktop_environment.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-08-02T15:37:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2eea077d_3b1e9d25",
+      "range": {
+        "startLine": 61,
+        "startChar": 7,
+        "endLine": 61,
+        "endChar": 50
+      },
+      "revId": "b801769bfbaba3819ca9829ab49fdecfd255435c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
