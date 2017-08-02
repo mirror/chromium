@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e73eac74_7f40e330",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-02T19:12:59Z",
+      "side": 1,
+      "message": "The tests are disabled and will be enabled in followup CL for easier review.",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 17,
+        "endChar": 8
+      },
+      "revId": "b39db4ec25e2a7f3e3c1914b6f25fba3f17d5bc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
