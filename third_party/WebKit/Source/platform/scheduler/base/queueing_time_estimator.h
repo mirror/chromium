@@ -22,7 +22,8 @@ class PLATFORM_EXPORT QueueingTimeEstimator {
    public:
     virtual void OnQueueingTimeForWindowEstimated(
         base::TimeDelta queueing_time,
-        base::TimeTicks window_start_time) = 0;
+        base::TimeTicks window_start_time,
+        bool report_to_uma) = 0;
     Client() {}
     virtual ~Client() {}
 
@@ -36,9 +37,10 @@ class PLATFORM_EXPORT QueueingTimeEstimator {
     int GetStepsPerWindow() const;
     void Add(base::TimeDelta bin_value);
     base::TimeDelta GetAverage() const;
+    bool IndexAtZero() const;
 
    private:
-    int index_;
+    size_t index_;
     std::vector<base::TimeDelta> circular_buffer_;
     base::TimeDelta running_sum_;
   };
@@ -46,9 +48,12 @@ class PLATFORM_EXPORT QueueingTimeEstimator {
   class State {
    public:
     explicit State(int steps_per_window);
-    void OnTopLevelTaskStarted(base::TimeTicks task_start_time);
+    void OnTopLevelTaskStarted(Client* client, base::TimeTicks task_start_time);
     void OnTopLevelTaskCompleted(Client* client, base::TimeTicks task_end_time);
     void OnBeginNestedRunLoop();
+    void OnRendererStateChanged(Client* client,
+                                bool backgrounded,
+                                base::TimeTicks transition_time);
 
     // |step_expected_queueing_time| is the expected queuing time of a
     // smaller window of a step's width. By combining these step EQTs through a
@@ -83,12 +88,16 @@ class PLATFORM_EXPORT QueueingTimeEstimator {
     // sliding window's step width, and the number of bins of the circular
     // buffer.
     int steps_per_window;
-    base::TimeTicks window_start_time;
+    base::TimeTicks step_start_time;
     base::TimeTicks current_task_start_time;
     RunningAverage step_queueing_times;
+    // |renderer_backgrounded| is the renderer's current status.
+    bool renderer_backgrounded;
+    bool processing_task;
 
    private:
-    bool TimePastWindowEnd(base::TimeTicks task_end_time);
+    void AdvanceTime(Client* client, base::TimeTicks current_time);
+    bool TimePastStepEnd(base::TimeTicks task_end_time);
     bool in_nested_message_loop_ = false;
   };
 
@@ -100,6 +109,8 @@ class PLATFORM_EXPORT QueueingTimeEstimator {
   void OnTopLevelTaskStarted(base::TimeTicks task_start_time);
   void OnTopLevelTaskCompleted(base::TimeTicks task_end_time);
   void OnBeginNestedRunLoop();
+  void OnRendererStateChanged(bool backgrounded,
+                              base::TimeTicks transition_time);
 
   // Returns all state except for the current |client_|.
   const State& GetState() const { return state_; }

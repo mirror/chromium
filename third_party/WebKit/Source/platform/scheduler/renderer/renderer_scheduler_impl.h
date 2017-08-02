@@ -142,9 +142,9 @@ class PLATFORM_EXPORT RendererSchedulerImpl
   void OnBeginNestedRunLoop() override;
 
   // QueueingTimeEstimator::Client implementation:
-  void OnQueueingTimeForWindowEstimated(
-      base::TimeDelta queueing_time,
-      base::TimeTicks window_start_time) override;
+  void OnQueueingTimeForWindowEstimated(base::TimeDelta queueing_time,
+                                        base::TimeTicks window_start_time,
+                                        bool report_to_uma) override;
 
   scoped_refptr<MainThreadTaskQueue> DefaultTaskQueue();
   scoped_refptr<MainThreadTaskQueue> CompositorTaskQueue();
@@ -568,7 +568,6 @@ class PLATFORM_EXPORT RendererSchedulerImpl
     base::TimeTicks current_policy_expiration_time;
     base::TimeTicks estimated_next_frame_begin;
     base::TimeTicks current_task_start_time;
-    base::TimeTicks uma_last_queueing_time_report_window_start_time;
     base::TimeDelta most_recent_expected_queueing_time;
     base::TimeDelta compositor_frame_interval;
     base::TimeDelta longest_jank_free_task_duration;
