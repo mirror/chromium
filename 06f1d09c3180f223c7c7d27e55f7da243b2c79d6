@@ -22,6 +22,30 @@
       "revId": "06f1d09c3180f223c7c7d27e55f7da243b2c79d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc9f8646_b7882dca",
+        "filename": "components/arc/common/video_encode_accelerator.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1002450
+      },
+      "writtenOn": "2017-08-02T08:11:19Z",
+      "side": 1,
+      "message": "Yes, it should be called once per call to Encode(). However, the video frame could be processed by the encode accelerator, it will take longer time. In addition, the caller could feed multiple video frames to the encoder to do the encoding in pipe-line. So, we would like to make Encode() asynchronous.",
+      "parentUuid": "5acd6f18_97a7eb47",
+      "range": {
+        "startLine": 202,
+        "startChar": 2,
+        "endLine": 202,
+        "endChar": 42
+      },
+      "revId": "06f1d09c3180f223c7c7d27e55f7da243b2c79d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
