@@ -22,6 +22,30 @@
       "revId": "b8edf150d0df208dd50c0bf299367085de896d1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "234bc841_6a460646",
+        "filename": "services/device/generic_sensor/platform_sensor_provider_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-08-02T20:34:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "52fc6a1a_a64c5678",
+      "range": {
+        "startLine": 247,
+        "startChar": 0,
+        "endLine": 248,
+        "endChar": 56
+      },
+      "revId": "b8edf150d0df208dd50c0bf299367085de896d1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
