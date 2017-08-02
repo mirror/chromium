@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "8a6be17c_a7c426ab",
+        "filename": "base/sync_socket_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-02T22:35:34Z",
+      "side": 1,
+      "message": "Unfortunately a Sleep() doesn\u0027t actually guarantee that the hanging receive thread will be in recv() by the time it returns, either - especially when we\u0027re running things in QEMU where we can end up not scheduling an entire CPU core for significant periods.\n\nThe only way I can see to make this sort-of-reliable would be to set the test thread and HangingReceiveThread to have the same CPU-core affinity, then set the thread to be higher priority, then Sleep(0) to nudge the OS to consider scheduling it.\n\nWe should probably do the thread priority bump in any case, to make it more likely that it gets scheduled even if the test system is under load.",
+      "parentUuid": "979ef493_e11d53d1",
+      "range": {
+        "startLine": 150,
+        "startChar": 18,
+        "endLine": 150,
+        "endChar": 34
+      },
+      "revId": "1ebafa813b231bbaa659241abfe0026d2d767112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e267a6dc_72ac5006",
         "filename": "base/sync_socket_unittest.cc",
         "patchSetId": 2
