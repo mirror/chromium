@@ -44,6 +44,7 @@
 #include "core/frame/WebLocalFrameImpl.h"
 #include "core/layout/LayoutObject.h"
 #include "core/page/Page.h"
+#include "platform/KeyboardCodes.h"
 #include "platform/graphics/GraphicsContext.h"
 #include "platform/graphics/paint/CullRect.h"
 #include "platform/graphics/paint/ForeignLayerDisplayItem.h"
@@ -137,6 +138,37 @@ class TestPlugin : public FakeWebPlugin {
   TestPluginWebFrameClient* const test_client_;
 };
 
+// Subclass of FakeWebPlugin that has a selection of 'selected text' as plain
+// text (when this text selection has not been cut). Used for testing Cut(), so
+// CanEditText() returns true by default.
+class TestPluginWithEditableText : public FakeWebPlugin {
+ public:
+  TestPluginWithEditableText(const WebPluginParams& params,
+                             TestPluginWebFrameClient* test_client)
+      : FakeWebPlugin(params), did_cut_text_(false) {}
+
+  bool HasSelection() const override { return !did_cut_text_; }
+  bool CanEditText() const override { return true; }
+
+  WebString SelectionAsText() const override {
+    if (!did_cut_text_)
+      return WebString("selected text");
+
+    return WebString();
+  }
+
+  void ReplaceSelection(const WebString& text) override {
+    if (text.IsEmpty())
+      did_cut_text_ = true;
+  }
+  void ResetTextSelection() { did_cut_text_ = false; }
+
+ private:
+  ~TestPluginWithEditableText() override {}
+
+  bool did_cut_text_;
+};
+
 class TestPluginWebFrameClient : public FrameTestHelpers::TestWebFrameClient {
   WebLocalFrame* CreateChildFrame(
       WebLocalFrame* parent,
@@ -152,17 +184,25 @@ class TestPluginWebFrameClient : public FrameTestHelpers::TestWebFrameClient {
 
   WebPlugin* CreatePlugin(const WebPluginParams& params) override {
     if (params.mime_type == "application/x-webkit-test-webplugin" ||
-        params.mime_type == "application/pdf")
+        params.mime_type == "application/pdf") {
+      if (has_editable_text_)
+        return new TestPluginWithEditableText(params, this);
+
       return new TestPlugin(params, this);
+    }
     return WebFrameClient::CreatePlugin(params);
   }
 
  public:
   void OnPrintPage() { printed_page_ = true; }
   bool PrintedAtLeastOnePage() const { return printed_page_; }
+  void SetHasEditableText(bool has_editable_text) {
+    has_editable_text_ = has_editable_text;
+  }
 
  private:
   bool printed_page_ = false;
+  bool has_editable_text_ = false;
 };
 
 void TestPlugin::PrintPage(int page_number, WebCanvas* canvas) {
@@ -368,6 +408,8 @@ TEST_F(WebPluginContainerTest, Copy) {
   EXPECT_TRUE(web_view->MainFrame()->ToWebLocalFrame()->ExecuteCommand("Copy"));
   EXPECT_EQ(WebString("x"), Platform::Current()->Clipboard()->ReadPlainText(
                                 WebClipboard::Buffer()));
+
+  ClearClipboardBuffer();
 }
 
 TEST_F(WebPluginContainerTest, CopyFromContextMenu) {
@@ -402,6 +444,8 @@ TEST_F(WebPluginContainerTest, CopyFromContextMenu) {
   EXPECT_TRUE(web_view->MainFrameImpl()->ExecuteCommand("Copy"));
   EXPECT_EQ(WebString("x"), Platform::Current()->Clipboard()->ReadPlainText(
                                 WebClipboard::Buffer()));
+
+  ClearClipboardBuffer();
 }
 
 // Verifies |Ctrl-C| and |Ctrl-Insert| keyboard events, results in copying to
@@ -448,6 +492,84 @@ TEST_F(WebPluginContainerTest, CopyInsertKeyboardEventsTest) {
       ->HandleEvent(key_event_insert);
   EXPECT_EQ(WebString("x"), Platform::Current()->Clipboard()->ReadPlainText(
                                 WebClipboard::Buffer()));
+
+  ClearClipboardBuffer();
+}
+
+// Verifies |Ctrl-X| and |Shift-Delete| keyboard events, results in cutting text
+// and copying the cut text to the clipboard.
+TEST_F(WebPluginContainerTest, CutDeleteKeyboardEventsTest) {
+  RegisterMockedURL("plugin_container.html");
+  // Must outlive |web_view_helper|.
+  TestPluginWebFrameClient plugin_web_frame_client;
+  FrameTestHelpers::WebViewHelper web_view_helper;
+
+  // Use TestPluginWithEditableText for testing Cut().
+  plugin_web_frame_client.SetHasEditableText(true);
+
+  WebViewBase* web_view = web_view_helper.InitializeAndLoad(
+      base_url_ + "plugin_container.html", &plugin_web_frame_client);
+  EnablePlugins(web_view, WebSize(300, 300));
+
+  WebElement plugin_container_one_element =
+      web_view->MainFrameImpl()->GetDocument().GetElementById(
+          WebString::FromUTF8("translated-plugin"));
+  WebInputEvent::Modifiers modifier_key = static_cast<WebInputEvent::Modifiers>(
+      WebInputEvent::kControlKey | WebInputEvent::kNumLockOn |
+      WebInputEvent::kIsLeft);
+#if defined(OS_MACOSX)
+  modifier_key = static_cast<WebInputEvent::Modifiers>(
+      WebInputEvent::kMetaKey | WebInputEvent::kNumLockOn |
+      WebInputEvent::kIsLeft);
+#endif
+  WebKeyboardEvent web_keyboard_event_x(WebInputEvent::kRawKeyDown,
+                                        modifier_key,
+                                        WebInputEvent::kTimeStampForTesting);
+  web_keyboard_event_x.windows_key_code = VKEY_X;
+  KeyboardEvent* key_event_x = KeyboardEvent::Create(web_keyboard_event_x, 0);
+  ToWebPluginContainerImpl(plugin_container_one_element.PluginContainer())
+      ->HandleEvent(key_event_x);
+  EXPECT_EQ(
+      WebString("selected text"),
+      Platform::Current()->Clipboard()->ReadPlainText(WebClipboard::Buffer()));
+
+  WebPlugin* plugin =
+      ToWebPluginContainerImpl(plugin_container_one_element.PluginContainer())
+          ->Plugin();
+  TestPluginWithEditableText* test_plugin =
+      static_cast<TestPluginWithEditableText*>(plugin);
+
+  // Check that text selection is now empty.
+  EXPECT_FALSE(test_plugin->HasSelection());
+  EXPECT_EQ(WebString(), test_plugin->SelectionAsText());
+
+  ClearClipboardBuffer();
+
+  // Reset text selection back to "selected text" for next time.
+  test_plugin->ResetTextSelection();
+
+  modifier_key = static_cast<WebInputEvent::Modifiers>(
+      WebInputEvent::kShiftKey | WebInputEvent::kNumLockOn |
+      WebInputEvent::kIsLeft);
+
+  WebKeyboardEvent web_keyboard_event_delete(
+      WebInputEvent::kRawKeyDown, modifier_key,
+      WebInputEvent::kTimeStampForTesting);
+  web_keyboard_event_delete.windows_key_code = VKEY_DELETE;
+  KeyboardEvent* key_event_delete =
+      KeyboardEvent::Create(web_keyboard_event_delete, 0);
+  ToWebPluginContainerImpl(plugin_container_one_element.PluginContainer())
+      ->HandleEvent(key_event_delete);
+
+  EXPECT_EQ(
+      WebString("selected text"),
+      Platform::Current()->Clipboard()->ReadPlainText(WebClipboard::Buffer()));
+
+  // Check that text selection is now empty.
+  EXPECT_FALSE(test_plugin->HasSelection());
+  EXPECT_EQ(WebString(), test_plugin->SelectionAsText());
+
+  ClearClipboardBuffer();
 }
 
 // A class to facilitate testing that events are correctly received by plugins.

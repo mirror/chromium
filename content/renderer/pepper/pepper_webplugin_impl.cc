@@ -289,6 +289,29 @@ bool PepperWebPluginImpl::CanEditText() const {
   return instance_ && instance_->CanEditText();
 }
 
+bool PepperWebPluginImpl::ExecuteEditCommand(const blink::WebString& name) {
+  if (!instance_)
+    return false;
+
+  if (name == "Cut") {
+    instance_->ReplaceSelection("");
+    return true;
+  }
+  return false;
+}
+
+bool PepperWebPluginImpl::ExecuteEditCommand(const blink::WebString& name,
+                                             const blink::WebString& value) {
+  if (!instance_)
+    return false;
+
+  if (name == "Cut") {
+    instance_->ReplaceSelection(value.Utf8());
+    return true;
+  }
+  return false;
+}
+
 WebURL PepperWebPluginImpl::LinkAtPosition(const WebPoint& position) const {
   // Re-entrancy may cause JS to try to execute script on the plugin before it
   // is fully initialized. See: crbug.com/715747.
