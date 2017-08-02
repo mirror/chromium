@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "292bbcc0_75f37309",
+        "filename": "third_party/WebKit/Source/modules/gamepad/Gamepad.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2017-08-02T09:30:34Z",
+      "side": 1,
+      "message": "Sure. I had the NavigatorLanguage implementation in mind when writing this one, I agree these setters aren\u0027t needed in this case.",
+      "parentUuid": "66575a61_78fbf7a2",
+      "range": {
+        "startLine": 67,
+        "startChar": 7,
+        "endLine": 67,
+        "endChar": 21
+      },
+      "revId": "44eacc33a305d6a3e1cdeda38311b85d666a0e8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "096335db_da78b12b",
         "filename": "third_party/WebKit/Source/modules/gamepad/Gamepad.h",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "44eacc33a305d6a3e1cdeda38311b85d666a0e8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e030db4e_403a37c7",
+        "filename": "third_party/WebKit/Source/modules/gamepad/Gamepad.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2017-08-02T09:30:34Z",
+      "side": 1,
+      "message": "OK. I thought the opposite was preferred per the \"Non-Static Class Member Initializers\" entry in https://chromium-cpp.appspot.com/.",
+      "parentUuid": "096335db_da78b12b",
+      "range": {
+        "startLine": 100,
+        "startChar": 26,
+        "endLine": 100,
+        "endChar": 30
+      },
+      "revId": "44eacc33a305d6a3e1cdeda38311b85d666a0e8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +136,48 @@
     },
     {
       "key": {
+        "uuid": "42e4f9a8_704e30fe",
+        "filename": "third_party/WebKit/Source/modules/gamepad/Gamepad.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2017-08-02T09:30:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d23a15aa_b2ab3691",
+      "revId": "44eacc33a305d6a3e1cdeda38311b85d666a0e8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b99b9a23_faa38c7c",
+        "filename": "third_party/WebKit/Source/modules/gamepad/Gamepad.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2017-08-02T09:30:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "499bbf0b_cfbaa600",
+      "range": {
+        "startLine": 40,
+        "startChar": 5,
+        "endLine": 40,
+        "endChar": 20
+      },
+      "revId": "44eacc33a305d6a3e1cdeda38311b85d666a0e8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf9ccd07_7bc113ef",
         "filename": "third_party/WebKit/Source/modules/gamepad/GamepadButton.h",
         "patchSetId": 1
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "e351ed53_01b3f522",
+        "filename": "third_party/WebKit/Source/modules/gamepad/GamepadButton.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2017-08-02T09:30:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf9ccd07_7bc113ef",
+      "range": {
+        "startLine": 16,
+        "startChar": 6,
+        "endLine": 16,
+        "endChar": 15
+      },
+      "revId": "44eacc33a305d6a3e1cdeda38311b85d666a0e8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7f30f9b_0d6539e5",
         "filename": "third_party/WebKit/Source/modules/gamepad/GamepadButton.h",
         "patchSetId": 1
@@ -131,6 +245,30 @@
       "revId": "44eacc33a305d6a3e1cdeda38311b85d666a0e8a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb625a82_9281192d",
+        "filename": "third_party/WebKit/Source/modules/gamepad/GamepadButton.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1111977
+      },
+      "writtenOn": "2017-08-02T09:30:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7f30f9b_0d6539e5",
+      "range": {
+        "startLine": 37,
+        "startChar": 7,
+        "endLine": 37,
+        "endChar": 15
+      },
+      "revId": "44eacc33a305d6a3e1cdeda38311b85d666a0e8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
