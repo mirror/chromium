@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a584b06_ab48c700",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1200,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-02T22:05:24Z",
+      "side": 1,
+      "message": "I\u0027m 80% sure this is true",
+      "revId": "f563ffef4b6562d54563e1c365b4cc60e72fa6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbff7d09_88b7d077",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-02T22:05:24Z",
+      "side": 1,
+      "message": "Random number that doesn\u0027t overlap with host return codes. (Not that it really matters if it does.)",
+      "revId": "f563ffef4b6562d54563e1c365b4cc60e72fa6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ba64318_d0208de9",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-02T22:05:24Z",
+      "side": 1,
+      "message": "I\u0027m doing this manually here to avoid calling the path-munging stuff as root, but it seems kind of odd to be doing basically the same lookup as we do to find the script path, above, but differently.",
+      "revId": "f563ffef4b6562d54563e1c365b4cc60e72fa6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84374b49_5bcee312",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-02T22:05:24Z",
+      "side": 1,
+      "message": "I now think that this might be better called relaunch for consistency with the Python script. Thoughts?",
+      "revId": "f563ffef4b6562d54563e1c365b4cc60e72fa6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
