@@ -53,6 +53,10 @@ class CONTENT_EXPORT RedirectToFileResourceHandler
   // |next_handler|.
   RedirectToFileResourceHandler(std::unique_ptr<ResourceHandler> next_handler,
                                 net::URLRequest* request);
+  RedirectToFileResourceHandler(
+      std::unique_ptr<ResourceHandler> next_handler,
+      CreateTemporaryFileStreamFunction temp_stream_function,
+      net::URLRequest* request);
   ~RedirectToFileResourceHandler() override;
 
   // Replace the CreateTemporaryFileStream implementation with a mocked one for
@@ -80,6 +84,12 @@ class CONTENT_EXPORT RedirectToFileResourceHandler
   // Returns the size of |buf_|, to make sure it's being increased as expected.
   int GetBufferSizeForTesting() const;
 
+ protected:
+  // Called before calling |OnResponseCompleted| on the next_handler_. Provides
+  // hook for subclasses. Cannot block the handler, but can return a net error
+  // to cancel the request that isn't net::IO_PENDING.
+  virtual int OnResponseCompletedHook();
+
  private:
   void DidCreateTemporaryFile(base::File::Error error_code,
                               std::unique_ptr<net::FileStream> file_stream,
@@ -97,6 +107,7 @@ class CONTENT_EXPORT RedirectToFileResourceHandler
 
   bool BufIsFull() const;
 
+  bool pending_temp_file_creation_ = false;
   CreateTemporaryFileStreamFunction create_temporary_file_stream_;
 
   // We allocate a single, fixed-size IO buffer (buf_) used to read from the

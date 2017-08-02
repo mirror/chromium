@@ -196,7 +196,7 @@ class AsyncResourceHandlerTest : public ::testing::Test,
         false);                                 // initiated_in_secure_context
     info->AssociateWithRequest(request.get());
     std::unique_ptr<AsyncResourceHandler> handler =
-        base::MakeUnique<AsyncResourceHandler>(request.get(), &rdh_);
+        base::MakeUnique<AsyncResourceHandler>(request.get(), &rdh_, nullptr);
     loader_ = base::MakeUnique<ResourceLoader>(
         std::move(request), std::move(handler), this);
   }

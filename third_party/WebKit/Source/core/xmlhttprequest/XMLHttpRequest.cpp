@@ -242,7 +242,7 @@ XMLHttpRequest::XMLHttpRequest(
       upload_events_allowed_(true),
       upload_complete_(false),
       same_origin_request_(true),
-      downloading_to_file_(false),
+      downloading_to_blob_(false),
       response_text_overflow_(false),
       send_flag_(false),
       response_array_buffer_failure_(false) {}
@@ -349,7 +349,7 @@ Blob* XMLHttpRequest::ResponseBlob() {
     return nullptr;
 
   if (!response_blob_) {
-    if (downloading_to_file_) {
+    if (downloading_to_blob_) {
       DCHECK(!binary_response_builder_);
 
       // When responseType is set to "blob", we redirect the downloaded
@@ -1020,9 +1020,9 @@ void XMLHttpRequest::CreateRequest(PassRefPtr<EncodedFormData> http_body,
 
   // When responseType is set to "blob", we redirect the downloaded data to a
   // file-handle directly.
-  downloading_to_file_ = GetResponseTypeCode() == kResponseTypeBlob;
-  if (downloading_to_file_) {
-    request.SetDownloadToFile(true);
+  downloading_to_blob_ = GetResponseTypeCode() == kResponseTypeBlob;
+  if (downloading_to_blob_) {
+    request.SetDownloadToBlob(true);
     resource_loader_options.data_buffering_policy = kDoNotBufferData;
   }
 
@@ -1163,7 +1163,7 @@ void XMLHttpRequest::ClearResponse() {
 
   response_blob_ = nullptr;
 
-  downloading_to_file_ = false;
+  downloading_to_blob_ = false;
   length_downloaded_to_file_ = 0;
 
   // These variables may referred by the response accessors. So, we can clear
@@ -1532,7 +1532,7 @@ void XMLHttpRequest::DidFinishLoading(unsigned long identifier, double) {
   if (state_ < kHeadersReceived)
     ChangeState(kHeadersReceived);
 
-  if (downloading_to_file_ && response_type_code_ != kResponseTypeBlob &&
+  if (downloading_to_blob_ && response_type_code_ != kResponseTypeBlob &&
       length_downloaded_to_file_) {
     DCHECK_EQ(kLoading, state_);
     // In this case, we have sent the request with DownloadToFile true,
@@ -1585,13 +1585,14 @@ void XMLHttpRequest::DidFailLoadingFromBlob() {
 }
 
 PassRefPtr<BlobDataHandle> XMLHttpRequest::CreateBlobDataHandleFromResponse() {
-  DCHECK(downloading_to_file_);
+  DCHECK(downloading_to_blob_);
   std::unique_ptr<BlobData> blob_data = BlobData::Create();
-  String file_path = response_.DownloadedFilePath();
+  const String& blob_uuid = response_.BlobUUID();
   // If we errored out or got no data, we return an empty handle.
-  if (!file_path.IsEmpty() && length_downloaded_to_file_) {
-    blob_data->AppendFile(file_path, 0, length_downloaded_to_file_,
-                          InvalidFileTime());
+  if (!blob_uuid.IsEmpty() && length_downloaded_to_file_) {
+    blob_data->AppendBlob(
+        BlobDataHandle::Create(blob_uuid, "", length_downloaded_to_file_), 0,
+        length_downloaded_to_file_);
     // FIXME: finalResponseMIMETypeWithFallback() defaults to
     // text/xml which may be incorrect. Replace it with
     // finalResponseMIMEType() after compatibility investigation.
@@ -1780,7 +1781,7 @@ void XMLHttpRequest::DidDownloadData(int data_length) {
   if (error_)
     return;
 
-  DCHECK(downloading_to_file_);
+  DCHECK(downloading_to_blob_);
 
   if (state_ < kHeadersReceived)
     ChangeState(kHeadersReceived);

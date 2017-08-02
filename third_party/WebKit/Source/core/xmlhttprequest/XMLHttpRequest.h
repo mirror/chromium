@@ -354,9 +354,9 @@ class XMLHttpRequest final : public XMLHttpRequestEventTarget,
   bool upload_events_allowed_;
   bool upload_complete_;
   bool same_origin_request_;
-  // True iff the ongoing resource loading is using the downloadToFile
+  // True iff the ongoing resource loading is using the downloadToBlob
   // option.
-  bool downloading_to_file_;
+  bool downloading_to_blob_;
   bool response_text_overflow_;
   bool send_flag_;
   bool response_array_buffer_failure_;

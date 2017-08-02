@@ -80,6 +80,7 @@ class STORAGE_EXPORT BlobMemoryController {
   };
 
   struct MemoryAllocation {
+    // Do not construct manually. Use ReserveMemoryQuota.
     MemoryAllocation(base::WeakPtr<BlobMemoryController> controller,
                      uint64_t item_id,
                      size_t length);
@@ -91,6 +92,19 @@ class STORAGE_EXPORT BlobMemoryController {
     size_t length;
 
     DISALLOW_COPY_AND_ASSIGN(MemoryAllocation);
+  };
+
+  struct STORAGE_EXPORT TempDiskAllocation {
+    // Do not construct manually. Use ReserveTemporaryDiskQuota.
+    TempDiskAllocation(base::WeakPtr<BlobMemoryController> controller,
+                       uint64_t length);
+    ~TempDiskAllocation();
+
+   private:
+    base::WeakPtr<BlobMemoryController> controller;
+    uint64_t length;
+
+    DISALLOW_COPY_AND_ASSIGN(TempDiskAllocation);
   };
 
   class QuotaAllocationTask {
@@ -128,8 +142,20 @@ class STORAGE_EXPORT BlobMemoryController {
   Strategy DetermineStrategy(size_t preemptive_transported_bytes,
                              uint64_t total_transportation_bytes) const;
 
-  // Checks to see if we can reserve quota (disk or memory) for the given size.
+  // Returns if the given size can fit into disk or memory quota.
   bool CanReserveQuota(uint64_t size) const;
+
+  // Returns if the given size can fit into disk quota.
+  bool CanReserveDiskQuota(uint64_t size) const;
+
+  // Reserves disk quota, or returns nullptr if impossible. Meant to be used to
+  // reserve disk quota before using BlobStorageContext::AddFutureBlob. Destroy
+  // the TempDiskAllocation to free allocation before calling.
+  // BlobStorageContext::BuildPreregisteredBlob.
+  std::unique_ptr<TempDiskAllocation> ReserveTemporaryDiskQuota(
+      uint64_t size,
+      base::FilePath* directory_path,
+      base::FilePath* file_path);
 
   // Reserves quota for the given |unreserved_memory_items|. The items must be
   // bytes items in QUOTA_NEEDED state which we change to QUOTA_REQUESTED.

@@ -14,8 +14,8 @@ t.step(function() {
         req.responseType = 'blob';
         req.onreadystatechange = t.step_func(function() {
             if (req.readyState == req.DONE) {
-                assert_equals(200, req.status, "Status");
-                assert_equals(103746, req.response.size, "Size");
+                assert_equals(req.status, 200, "Status");
+                assert_equals(req.response.size, 103746, "Size");
                 if (++i < 3)
                     doRequest();
                 else

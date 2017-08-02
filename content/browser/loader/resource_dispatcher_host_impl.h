@@ -42,6 +42,7 @@
 #include "net/base/load_states.h"
 #include "net/base/request_priority.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
+#include "storage/browser/blob/blob_data_handle.h"
 #include "third_party/WebKit/public/platform/WebMixedContentContextType.h"
 #include "url/gurl.h"
 
@@ -56,6 +57,7 @@ class HttpRequestHeaders;
 }
 
 namespace storage {
+class BlobDataHandle;
 class FileSystemContext;
 class ShareableFileReference;
 }
@@ -203,6 +205,14 @@ class CONTENT_EXPORT ResourceDispatcherHostImpl
       int child_id, int request_id,
       const base::FilePath& file_path);
   void UnregisterDownloadedTempFile(int child_id, int request_id);
+
+  // Maintains a collection of temp blobs created in support of
+  // the download_to_blob capability.
+  void RegisterDownloadedTempBlob(
+      int child_id,
+      int request_id,
+      std::unique_ptr<storage::BlobDataHandle> blob_data_handle);
+  void UnregisterDownloadedTempBlob(int child_id, int request_id);
 
   // Needed for the sync IPC message dispatcher macros.
   bool Send(IPC::Message* message);
@@ -624,7 +634,8 @@ class CONTENT_EXPORT ResourceDispatcherHostImpl
       net::URLRequest* request,
       mojom::URLLoaderAssociatedRequest mojo_request,
       mojom::URLLoaderClientPtr url_loader_client,
-      ResourceType resource_type);
+      ResourceType resource_type,
+      scoped_refptr<ChromeBlobStorageContext> blob_context);
 
   // Wraps |handler| in the standard resource handlers for normal resource
   // loading and navigation requests. This adds MimeTypeResourceHandler and
@@ -647,6 +658,8 @@ class CONTENT_EXPORT ResourceDispatcherHostImpl
 
   void OnCancelRequest(ResourceRequesterInfo* requester_info, int request_id);
   void OnReleaseDownloadedFile(ResourceRequesterInfo* requester_info,
+                               int request_id);
+  void OnReleaseDownloadedBlob(ResourceRequesterInfo* requester_info,
                                int request_id);
   void OnDidChangePriority(ResourceRequesterInfo* requester_info,
                            int request_id,
@@ -731,6 +744,15 @@ class CONTENT_EXPORT ResourceDispatcherHostImpl
   typedef std::map<int, DeletableFilesMap>
       RegisteredTempFiles;  // key is child process id
   RegisteredTempFiles registered_temp_files_;
+
+  // Collection of temp blobs downloaded for child processes via
+  // the download_to_blob mechanism. We avoid deleting them until
+  // the client no longer needs them.
+  using TemporaryBlobMap =
+      std::map<int, storage::BlobDataHandle>;  // Key is request id.
+  using RegisteredTempBlobs =
+      std::map<int, TemporaryBlobMap>;  // key is child process id.
+  RegisteredTempBlobs registered_temp_blobs_;
 
   // A timer that periodically calls UpdateLoadInfo while pending_loaders_ is
   // not empty and at least one RenderViewHost is loading.

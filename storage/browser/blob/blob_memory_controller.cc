@@ -46,6 +46,7 @@ const int64_t kMinSecondsForPressureEvictions = 30;
 
 using FileCreationInfo = BlobMemoryController::FileCreationInfo;
 using MemoryAllocation = BlobMemoryController::MemoryAllocation;
+using TempDiskAllocation = BlobMemoryController::TempDiskAllocation;
 using QuotaAllocationTask = BlobMemoryController::QuotaAllocationTask;
 using DiskSpaceFuncPtr = BlobMemoryController::DiskSpaceFuncPtr;
 
@@ -66,6 +67,7 @@ BlobStorageLimits CalculateBlobStorageLimitsImpl(const FilePath& storage_dir,
       disk_enabled ? base::SysInfo::AmountOfTotalDiskSpace(storage_dir) : 0ull;
   int64_t memory_size = base::SysInfo::AmountOfPhysicalMemory();
 
+  LOG(ERROR) << "disk size " << disk_size;
   BlobStorageLimits limits;
 
   // Don't do specialty configuration for error size (-1).
@@ -292,6 +294,16 @@ MemoryAllocation::MemoryAllocation(
 MemoryAllocation::~MemoryAllocation() {
   if (controller)
     controller->RevokeMemoryAllocation(item_id, length);
+}
+
+TempDiskAllocation::TempDiskAllocation(
+    base::WeakPtr<BlobMemoryController> controller,
+    uint64_t length)
+    : controller(controller), length(length) {}
+
+TempDiskAllocation::~TempDiskAllocation() {
+  if (controller)
+    controller->disk_used_ -= length;
 }
 
 BlobMemoryController::QuotaAllocationTask::~QuotaAllocationTask() {}
@@ -574,6 +586,30 @@ bool BlobMemoryController::CanReserveQuota(uint64_t size) const {
   // disk and memory.
   return size <= GetAvailableMemoryForBlobs() ||
          size <= GetAvailableFileSpaceForBlobs();
+}
+
+bool BlobMemoryController::CanReserveDiskQuota(uint64_t size) const {
+  uint64_t total_disk_used = disk_used_;
+  if (in_flight_memory_used_ < pending_memory_quota_total_size_) {
+    total_disk_used +=
+        pending_memory_quota_total_size_ - in_flight_memory_used_;
+  }
+  if (limits_.effective_max_disk_space < total_disk_used)
+    return false;
+  return size < limits_.effective_max_disk_space - total_disk_used;
+}
+
+std::unique_ptr<BlobMemoryController::TempDiskAllocation>
+BlobMemoryController::ReserveTemporaryDiskQuota(uint64_t size,
+                                                base::FilePath* directory_path,
+                                                base::FilePath* file_path) {
+  if (!CanReserveDiskQuota(size)) {
+    return nullptr;
+  }
+  disk_used_ += size;
+  *directory_path = blob_storage_dir_;
+  *file_path = GenerateNextPageFileName();
+  return base::MakeUnique<TempDiskAllocation>(weak_factory_.GetWeakPtr(), size);
 }
 
 base::WeakPtr<QuotaAllocationTask> BlobMemoryController::ReserveMemoryQuota(
