@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "d5556425_1b6ccf59",
+        "filename": "chrome/browser/media/router/discovery/media_sink_discovery_metrics.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-02T17:44:52Z",
+      "side": 1,
+      "message": "clock_-\u003eNow() can go into a variable and be used here and also for setting the record time below.",
+      "revId": "041d35fa530b9f5b98439f3b53b08cb23e7f8997",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f20bb79c_e3fe5d9c",
+        "filename": "chrome/browser/media/router/discovery/media_sink_discovery_metrics.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-02T17:44:52Z",
+      "side": 1,
+      "message": "nit: RecordDeviceCountsPeriodically is a bit of a misnomer since the method itself doesn\u0027t record periodically. I would name it \"RecordDeviceCountsIfNeeded\".",
+      "range": {
+        "startLine": 21,
+        "startChar": 7,
+        "endLine": 21,
+        "endChar": 37
+      },
+      "revId": "041d35fa530b9f5b98439f3b53b08cb23e7f8997",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0a517034_e77b82b6",
         "filename": "chrome/browser/media/router/discovery/media_sink_discovery_metrics.h",
         "patchSetId": 1
