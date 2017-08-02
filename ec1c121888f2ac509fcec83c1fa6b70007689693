@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d03d128b_ce1c571f",
+        "filename": "services/ui/public/interfaces/window_manager.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-02T16:19:41Z",
+      "side": 1,
+      "message": "\u0027container\u0027 feels like a fairly ash-y thing, and leaking that into mus feels awkward.",
+      "revId": "ec1c121888f2ac509fcec83c1fa6b70007689693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b21e0bc_161f7345",
+        "filename": "services/ui/ws/modal_window_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-02T16:19:41Z",
+      "side": 1,
+      "message": "WindowTree already knows which windows are top-level (in WindowTree::OnWmCreatedTopLevelWindow()). Can it set some flag on ServerWindows appropriate, so mus doesn\u0027t need to know/care about the container windows?",
+      "revId": "ec1c121888f2ac509fcec83c1fa6b70007689693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
