@@ -14,10 +14,12 @@
   GURL _externalURL;
 }
 
+@synthesize externalURLParams = _externalURLParams;
 @synthesize launchVoiceSearch = _launchVoiceSearch;
 @synthesize launchInIncognito = _launchInIncognito;
 @synthesize launchFocusOmnibox = _launchFocusOmnibox;
 @synthesize launchQRScanner = _launchQRScanner;
+@synthesize launchPaymentRequest = _launchPaymentRequest;
 
 - (const GURL&)externalURL {
   return _externalURL;
@@ -50,6 +52,10 @@
 
   if (self.launchVoiceSearch) {
     [description appendString:@", should launch voice search"];
+  }
+
+  if (self.launchPaymentRequest) {
+    [description appendString:@", should launch payment request"];
   }
 
   return description;
