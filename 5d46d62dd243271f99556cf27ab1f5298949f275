@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3bde9d12_ca4a1a59",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-08-02T17:46:47Z",
+      "side": 1,
+      "message": "Can you add a comment here or in the header to explain more:\n1- Why do you exclude session restore, maybe add a note that session restore will eventually come from here as well\n2 - Why not just check for pending navigations (I am confused about the !tab-\u003eIsVisible() part)",
+      "range": {
+        "startLine": 593,
+        "startChar": 17,
+        "endLine": 593,
+        "endChar": 40
+      },
+      "revId": "5d46d62dd243271f99556cf27ab1f5298949f275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3a2a711_1b65a66d",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1115914
+      },
+      "writtenOn": "2017-08-02T17:46:47Z",
+      "side": 1,
+      "message": "nit: .",
+      "range": {
+        "startLine": 222,
+        "startChar": 18,
+        "endLine": 222,
+        "endChar": 19
+      },
+      "revId": "5d46d62dd243271f99556cf27ab1f5298949f275",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
