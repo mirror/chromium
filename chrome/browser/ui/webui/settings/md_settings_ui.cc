@@ -17,6 +17,7 @@
 #include "chrome/browser/ui/webui/settings/about_handler.h"
 #include "chrome/browser/ui/webui/settings/appearance_handler.h"
 #include "chrome/browser/ui/webui/settings/browser_lifetime_handler.h"
+#include "chrome/browser/ui/webui/settings/change_password_handler.h"
 #include "chrome/browser/ui/webui/settings/downloads_handler.h"
 #include "chrome/browser/ui/webui/settings/extension_control_handler.h"
 #include "chrome/browser/ui/webui/settings/font_handler.h"
@@ -123,6 +124,7 @@ MdSettingsUI::MdSettingsUI(content::WebUI* web_ui)
 #endif  // defined(USE_NSS_CERTS)
 
   AddSettingsPageUIHandler(base::MakeUnique<BrowserLifetimeHandler>());
+  AddSettingsPageUIHandler(base::MakeUnique<ChangePasswordHandler>(profile));
   AddSettingsPageUIHandler(base::MakeUnique<ClearBrowsingDataHandler>(web_ui));
   AddSettingsPageUIHandler(base::MakeUnique<CookiesViewHandler>());
   AddSettingsPageUIHandler(base::MakeUnique<DownloadsHandler>(profile));

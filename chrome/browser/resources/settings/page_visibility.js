@@ -7,6 +7,7 @@
  * @typedef {{
  *   advancedSettings: (boolean|undefined),
  *   appearance: (boolean|undefined|AppearancePageVisibility),
+ *   changePassword: (boolean|undefined),
  *   dateTime: (boolean|undefined|DateTimePageVisibility),
  *   defaultBrowser: (boolean|undefined),
  *   downloads: (boolean|undefined|DownloadsPageVisibility),
@@ -74,6 +75,7 @@ cr.define('settings', function() {
       appearance: false,
       defaultBrowser: false,
       advancedSettings: false,
+     // changePassword: false,
     };
     // </if>
     // <if expr="chromeos">
@@ -98,6 +100,7 @@ cr.define('settings', function() {
         googleDrive: false,
       },
       multidevice: false,
+      changePassword: false,
     };
     // </if>
   }
