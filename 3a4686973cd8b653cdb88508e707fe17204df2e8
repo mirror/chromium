@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90909e45_5e5a089d",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-02T03:11:12Z",
+      "side": 1,
+      "message": "Hrm. Can we just call BuildNode here? e.g.\n\n  auto node \u003d BuildNode(root-\u003eGetTypeName(), GetAttributes(root), std::move(children),\n                        root-\u003enode_id());",
+      "revId": "3a4686973cd8b653cdb88508e707fe17204df2e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8819b6c4_e9db32ec",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-02T03:11:12Z",
+      "side": 1,
+      "message": "It should not be necessary to iterate over all root windows here. See my comment in UIDevToolsOverlayAgent::OnMouseEvent()",
+      "revId": "3a4686973cd8b653cdb88508e707fe17204df2e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acb404fb_4c83828a",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-02T03:11:12Z",
+      "side": 1,
+      "message": "This should be a DCHECK()",
+      "revId": "3a4686973cd8b653cdb88508e707fe17204df2e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6ec44b9_16c3d826",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-02T03:11:12Z",
+      "side": 1,
+      "message": "Document the return value if no valid target is found.",
+      "revId": "3a4686973cd8b653cdb88508e707fe17204df2e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a48385a_069912b5",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-02T03:11:12Z",
+      "side": 1,
+      "message": "TODO(thanhph)\n\nTODOs in the code should have owners.",
+      "revId": "3a4686973cd8b653cdb88508e707fe17204df2e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed4389cd_bcd42da4",
+        "filename": "components/ui_devtools/views/ui_devtools_overlay_agent.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-02T03:11:12Z",
+      "side": 1,
+      "message": "This should include the root window as an input to FindElementIdTargetedByPoint(). |event| has an associated root window, and the |root_location()| is in the coordinate space of that root. Without sending the root-window, the root_location() loses its meaning. So, something like:\n  aura::Window* target \u003d static_cast\u003c...\u003e(event-\u003etarget());\n  int element_id \u003d dom_agent_-\u003eFindElementIdTargetedByPoint(target-\u003eGetRootWindow(),\n                                                            event-\u003eroot_location());",
+      "revId": "3a4686973cd8b653cdb88508e707fe17204df2e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "475f5211_175fbe47",
+        "filename": "components/ui_devtools/views/ui_element.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-02T03:11:12Z",
+      "side": 1,
+      "message": "We shouldn\u0027t need this.",
+      "revId": "3a4686973cd8b653cdb88508e707fe17204df2e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
