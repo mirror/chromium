@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b78daad6_dac1cbba",
+        "filename": "content/renderer/device_sensors/device_motion_event_pump.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-08-02T21:22:13Z",
+      "side": 1,
+      "message": "If I understand correctly it\u0027s possible to have sensors being not null while the\nbuffer is not yet initialized (which happens inside the OnSensorCreated\ncallback)?\n\nI guess it looks more complicated now because we keep the shared_buffers and\nsensors around after stopping. If the shared_buffers and sensors where cleared\n(mojo pipe closed) after each stop the DidStart could be invoked in\nOnSensorCreated.\n\nAnyway, maybe an idea to simplify some duplicate code is to put the CanStart()\ninside the DidStart() (with an early return) and rename DidStart to something\nlike DidStartIfPossible() or MaybeDidStart(). Also probably better to rename\nCanStart() to something more specific like SensorSharedBuffersReady(). And also\nseems like a good idea to add some comments (probably in DidStart) when this can\nhappen and why SensorSharedBufferReady needs to be checked..",
+      "range": {
+        "startLine": 94,
+        "startChar": 19,
+        "endLine": 94,
+        "endChar": 0
+      },
+      "revId": "0b26bc25db4f1032376c91668581e162ea88cb0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "308408cd_8e2ab097",
+        "filename": "content/renderer/device_sensors/device_motion_event_pump.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-08-02T21:22:13Z",
+      "side": 1,
+      "message": "Is it possible to fire \u0027partial\u0027 motion data here? in the current implementation there is specific code to check that all the possible sensors are active before activating the buffer:\nhttps://cs.chromium.org/chromium/src/device/sensors/sensor_manager_android.cc?l\u003d270",
+      "revId": "0b26bc25db4f1032376c91668581e162ea88cb0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
