@@ -22,6 +22,30 @@
       "revId": "cb43656810e6a176ecb0aca00ceb819ed1461013",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c0953f6_03234bc5",
+        "filename": "components/variations/proto/study.proto",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-02T20:36:50Z",
+      "side": 1,
+      "message": "Yeah, presubmit complains, but it\u0027s a warning, so I\u0027m uploading w/ the consistent alignment.",
+      "parentUuid": "b0804cf9_17f3c0ac",
+      "range": {
+        "startLine": 192,
+        "startChar": 23,
+        "endLine": 192,
+        "endChar": 24
+      },
+      "revId": "cb43656810e6a176ecb0aca00ceb819ed1461013",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
