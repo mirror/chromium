@@ -378,6 +378,30 @@
     },
     {
       "key": {
+        "uuid": "b0aaaf9a_69e7e19c",
+        "filename": "components/arc/common/file_system.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-02T09:06:47Z",
+      "side": 1,
+      "message": "Thanks: what I\u0027m trying to understand is what this field will be used for. I see it\u0027s used for some filtering in one of the followup CLs: is that all? Will it be appended / concatenated with anything, is it purely for display, something else, etc?",
+      "parentUuid": "f62c9023_96ed29f8",
+      "range": {
+        "startLine": 31,
+        "startChar": 27,
+        "endLine": 31,
+        "endChar": 43
+      },
+      "revId": "e54a5a46504ddabe52b7da046c1b4ac75a8dabc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa255e1d_75dd3ab0",
         "filename": "components/arc/common/file_system.mojom",
         "patchSetId": 4
