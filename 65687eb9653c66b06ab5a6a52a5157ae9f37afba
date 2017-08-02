@@ -1,0 +1,147 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c8da775b_18fe50a9",
+        "filename": "chrome/browser/ui/webui/memory_internals_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-08-02T00:24:22Z",
+      "side": 1,
+      "message": "Should this be pid or sender_id?",
+      "revId": "65687eb9653c66b06ab5a6a52a5157ae9f37afba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86c2bed9_39409382",
+        "filename": "chrome/browser/ui/webui/memory_internals_ui.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-08-02T00:24:22Z",
+      "side": 1,
+      "message": "base::File f -\u003e base::File file",
+      "range": {
+        "startLine": 83,
+        "startChar": 14,
+        "endLine": 83,
+        "endChar": 41
+      },
+      "revId": "65687eb9653c66b06ab5a6a52a5157ae9f37afba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ce9d168_5f9643d7",
+        "filename": "chrome/profiling/allocation_tracker.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-08-02T00:24:22Z",
+      "side": 1,
+      "message": "gha... can we not return non-const references?",
+      "range": {
+        "startLine": 34,
+        "startChar": 22,
+        "endLine": 34,
+        "endChar": 33
+      },
+      "revId": "65687eb9653c66b06ab5a6a52a5157ae9f37afba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98b8ddbf_8df8d03f",
+        "filename": "chrome/profiling/memlog_connection_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-08-02T00:24:22Z",
+      "side": 1,
+      "message": "Hah. Wow.\n\nCan we do\n\nstd::vector\u003cbase::AutoLock\u003e locks;\nlocks.emplace_back(connection-\u003eparser-\u003elock);\n\n?",
+      "revId": "65687eb9653c66b06ab5a6a52a5157ae9f37afba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cd953d8_44d39357",
+        "filename": "chrome/profiling/memlog_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-08-02T00:24:22Z",
+      "side": 1,
+      "message": "f -\u003e file\n\nno single-letter variable names please :)",
+      "revId": "65687eb9653c66b06ab5a6a52a5157ae9f37afba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06999ad8_d3515f9b",
+        "filename": "chrome/profiling/memlog_stream_parser.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-08-02T00:24:22Z",
+      "side": 1,
+      "message": "Make into private member with an assessor that returns a pointer please.",
+      "range": {
+        "startLine": 34,
+        "startChar": 13,
+        "endLine": 34,
+        "endChar": 17
+      },
+      "revId": "65687eb9653c66b06ab5a6a52a5157ae9f37afba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "668b7d31_471ea913",
+        "filename": "chrome/profiling/memlog_stream_parser.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-08-02T00:24:22Z",
+      "side": 1,
+      "message": "Make into private member with an assessor that returns a pointer please.",
+      "range": {
+        "startLine": 34,
+        "startChar": 13,
+        "endLine": 34,
+        "endChar": 17
+      },
+      "revId": "65687eb9653c66b06ab5a6a52a5157ae9f37afba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
