@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "81ca0a42_c8928d1d",
+        "filename": "chrome/browser/io_thread.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-02T19:31:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f450db1c_118fb77c",
+      "range": {
+        "startLine": 205,
+        "startChar": 35,
+        "endLine": 205,
+        "endChar": 53
+      },
+      "revId": "be290c7377416731232c1bd9a5a602a7d546011b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9e2a934_109350ed",
         "filename": "chrome/browser/net/profile_network_context_service.h",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "be290c7377416731232c1bd9a5a602a7d546011b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4b0c5c1_a6f943f5",
+        "filename": "chrome/browser/net/profile_network_context_service.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-02T19:31:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9e2a934_109350ed",
+      "range": {
+        "startLine": 65,
+        "startChar": 33,
+        "endLine": 65,
+        "endChar": 41
+      },
+      "revId": "be290c7377416731232c1bd9a5a602a7d546011b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a0c056e4_6290c1eb",
+        "filename": "chrome/browser/net/profile_network_context_service.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-02T19:31:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "057f3139_c0517085",
+      "range": {
+        "startLine": 66,
+        "startChar": 7,
+        "endLine": 66,
+        "endChar": 23
+      },
+      "revId": "be290c7377416731232c1bd9a5a602a7d546011b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55ee0e82_723e389e",
         "filename": "chrome/browser/net/system_network_context_manager.h",
         "patchSetId": 10
@@ -82,6 +154,30 @@
       "writtenOn": "2017-08-02T19:21:11Z",
       "side": 1,
       "message": "I guess QUIC is special here because there are no other things which need to be similarly disabled, or toggled at runtime?",
+      "range": {
+        "startLine": 78,
+        "startChar": 31,
+        "endLine": 78,
+        "endChar": 0
+      },
+      "revId": "be290c7377416731232c1bd9a5a602a7d546011b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95f2d207_ca502f1d",
+        "filename": "chrome/browser/net/system_network_context_manager.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-02T19:31:31Z",
+      "side": 1,
+      "message": "What makes this unique is that it\u0027s disabled globally based on per-profile settings.\n\nI added this bool because I was concerned about startup races, which I now think don\u0027t actually exist.  However, we\u0027re still going to need to handle restarting the network service, and for that, we need to track its state in the browser, not just the NetworkService.  Having this bool now vastly decreases the likelihood of losing state when restarting processes (There are changes that I have yet to introduce that will request the system context be set up first whenever we restart the network process, so we can assume this class will be called, it\u0027s just a matter of getting the right value to the network service).",
+      "parentUuid": "55ee0e82_723e389e",
       "range": {
         "startLine": 78,
         "startChar": 31,
