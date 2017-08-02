@@ -5,12 +5,20 @@
 #include "chrome/browser/ui/views/tab_dialogs_views.h"
 
 #include "base/memory/ptr_util.h"
+#include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/passwords/manage_passwords_bubble_model.h"
+#include "chrome/browser/ui/views/autofill/save_card_bubble_views.h"
+#include "chrome/browser/ui/views/autofill/save_card_icon_view.h"
 #include "chrome/browser/ui/views/collected_cookies_views.h"
+#include "chrome/browser/ui/views/frame/browser_view.h"
 #include "chrome/browser/ui/views/hung_renderer_view.h"
+#include "chrome/browser/ui/views/location_bar/location_bar_view.h"
 #include "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.h"
+#include "chrome/browser/ui/views/toolbar/app_menu_button.h"
+#include "chrome/browser/ui/views/toolbar/toolbar_view.h"
 #include "chrome/browser/ui/views/validation_message_bubble_view.h"
 #include "content/public/browser/web_contents.h"
+#include "ui/base/material_design/material_design_controller.h"
 
 #if !defined(OS_CHROMEOS)
 #include "chrome/browser/ui/views/sync/profile_signin_confirmation_dialog_views.h"
@@ -90,4 +98,30 @@ base::WeakPtr<ValidationMessageBubble> TabDialogsViews::ShowValidationMessage(
     const base::string16& sub_text) {
   return (new ValidationMessageBubbleView(
       web_contents_, anchor_in_root_view, main_text, sub_text))->AsWeakPtr();
+}
+
+autofill::SaveCardBubbleView* TabDialogsViews::ShowSaveCardBubble(
+    autofill::SaveCardBubbleController* controller,
+    bool user_gesture) {
+  Browser* browser = chrome::FindBrowserWithWebContents(web_contents_);
+  BrowserView* browser_view = static_cast<BrowserView*>(browser->window());
+  LocationBarView* location_bar = browser_view->GetLocationBarView();
+  ToolbarView* toolbar = browser_view->toolbar();
+  BubbleIconView* card_view = location_bar->save_credit_card_icon_view();
+
+  views::View* anchor_view = location_bar;
+  if (!ui::MaterialDesignController::IsSecondaryUiMaterial()) {
+    if (card_view && card_view->visible())
+      anchor_view = card_view;
+    else
+      anchor_view = toolbar->app_menu_button();
+  }
+
+  autofill::SaveCardBubbleViews* bubble = new autofill::SaveCardBubbleViews(
+      anchor_view, gfx::Point(), web_contents_, controller);
+  if (card_view)
+    bubble->GetWidget()->AddObserver(card_view);
+  bubble->Show(user_gesture ? autofill::SaveCardBubbleViews::USER_GESTURE
+                            : autofill::SaveCardBubbleViews::AUTOMATIC);
+  return bubble;
 }

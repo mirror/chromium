@@ -1174,14 +1174,6 @@ void BrowserView::ShowBookmarkBubble(const GURL& url, bool already_bookmarked) {
                                bookmark_bar_view_.get());
 }
 
-autofill::SaveCardBubbleView* BrowserView::ShowSaveCreditCardBubble(
-    content::WebContents* web_contents,
-    autofill::SaveCardBubbleController* controller,
-    bool is_user_gesture) {
-  return toolbar_->ShowSaveCreditCardBubble(web_contents, controller,
-                                            is_user_gesture);
-}
-
 ShowTranslateBubbleResult BrowserView::ShowTranslateBubble(
     content::WebContents* web_contents,
     translate::TranslateStep step,

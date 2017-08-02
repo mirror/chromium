@@ -299,28 +299,6 @@ void ToolbarView::ShowBookmarkBubble(
     bubble_widget->AddObserver(star_view);
 }
 
-autofill::SaveCardBubbleView* ToolbarView::ShowSaveCreditCardBubble(
-    content::WebContents* web_contents,
-    autofill::SaveCardBubbleController* controller,
-    bool is_user_gesture) {
-  views::View* anchor_view = location_bar();
-  BubbleIconView* card_view = location_bar()->save_credit_card_icon_view();
-  if (!ui::MaterialDesignController::IsSecondaryUiMaterial()) {
-    if (card_view && card_view->visible())
-      anchor_view = card_view;
-    else
-      anchor_view = app_menu_button_;
-  }
-
-  autofill::SaveCardBubbleViews* bubble = new autofill::SaveCardBubbleViews(
-      anchor_view, web_contents, controller);
-  if (card_view)
-    bubble->GetWidget()->AddObserver(card_view);
-  bubble->Show(is_user_gesture ? autofill::SaveCardBubbleViews::USER_GESTURE
-                               : autofill::SaveCardBubbleViews::AUTOMATIC);
-  return bubble;
-}
-
 void ToolbarView::ShowTranslateBubble(
     content::WebContents* web_contents,
     translate::TranslateStep step,

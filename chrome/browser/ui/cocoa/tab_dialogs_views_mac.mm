@@ -8,9 +8,13 @@
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/browser_window.h"
-#include "chrome/browser/ui/cocoa/browser_window_controller.h"
+#import "chrome/browser/ui/cocoa/browser_window_cocoa.h"
+#import "chrome/browser/ui/cocoa/browser_window_controller.h"
 #import "chrome/browser/ui/cocoa/bubble_anchor_helper_views.h"
+#import "chrome/browser/ui/cocoa/location_bar/location_bar_view_mac.h"
+#import "chrome/browser/ui/cocoa/location_bar/save_credit_card_decoration.h"
 #import "chrome/browser/ui/cocoa/passwords/passwords_bubble_controller.h"
+#include "chrome/browser/ui/views/autofill/save_card_bubble_views.h"
 #include "chrome/browser/ui/views/collected_cookies_views.h"
 #include "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.h"
 #include "chrome/browser/ui/views/sync/profile_signin_confirmation_dialog_views.h"
@@ -88,4 +92,26 @@ void TabDialogsViewsMac::HideManagePasswordsBubble() {
     return;
   }
   ManagePasswordsBubbleView::CloseCurrentBubble();
+}
+
+autofill::SaveCardBubbleView* TabDialogsViewsMac::ShowSaveCardBubble(
+    autofill::SaveCardBubbleController* controller,
+    bool is_user_gesture) {
+  if (!ui::MaterialDesignController::IsSecondaryUiMaterial())
+    return TabDialogsCocoa::ShowSaveCardBubble(controller, is_user_gesture);
+  Browser* browser = chrome::FindBrowserWithWebContents(web_contents());
+  BrowserWindowCocoa* browser_window =
+      static_cast<BrowserWindowCocoa*>(browser->window());
+  LocationBarViewMac* location_bar =
+      static_cast<LocationBarViewMac*>(browser_window->GetLocationBar());
+  gfx::Point anchor_point =
+      gfx::ScreenPointFromNSPoint(ui::ConvertPointFromWindowToScreen(
+          browser_window->GetNativeWindow(),
+          location_bar->GetSaveCreditCardBubblePoint()));
+  autofill::SaveCardBubbleViews* bubble = new autofill::SaveCardBubbleViews(
+      nullptr, anchor_point, web_contents(), controller);
+  KeepBubbleAnchored(bubble, location_bar->save_credit_card_decoration());
+  bubble->Show(is_user_gesture ? autofill::SaveCardBubbleViews::USER_GESTURE
+                               : autofill::SaveCardBubbleViews::AUTOMATIC);
+  return bubble;
 }

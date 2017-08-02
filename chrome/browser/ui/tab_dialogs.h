@@ -17,6 +17,11 @@
 class Browser;
 class Profile;
 
+namespace autofill {
+class SaveCardBubbleController;
+class SaveCardBubbleView;
+}  // namespace autofill
+
 namespace content {
 class WebContents;
 struct WebContentsUnresponsiveState;
@@ -71,8 +76,17 @@ class TabDialogs : public base::SupportsUserData::Data {
       const base::string16& main_text,
       const base::string16& sub_text) = 0;
 
+  virtual autofill::SaveCardBubbleView* ShowSaveCardBubble(
+      autofill::SaveCardBubbleController* controller,
+      bool user_gesture) = 0;
+
+  static void SetTabDialogsForTest(TabDialogs* tab_dialogs);
+
  protected:
   static const void* UserDataKey();
+
+ private:
+  static TabDialogs* g_tab_dialogs_for_test_;
 };
 
 #endif  // CHROME_BROWSER_UI_TAB_DIALOGS_H_

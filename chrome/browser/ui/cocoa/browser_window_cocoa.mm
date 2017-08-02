@@ -501,13 +501,6 @@ void BrowserWindowCocoa::ShowBookmarkBubble(const GURL& url,
                       alreadyBookmarked:(already_bookmarked ? YES : NO)];
 }
 
-autofill::SaveCardBubbleView* BrowserWindowCocoa::ShowSaveCreditCardBubble(
-    content::WebContents* web_contents,
-    autofill::SaveCardBubbleController* controller,
-    bool user_gesture) {
-  return new autofill::SaveCardBubbleViewBridge(controller, controller_);
-}
-
 ShowTranslateBubbleResult BrowserWindowCocoa::ShowTranslateBubble(
     content::WebContents* contents,
     translate::TranslateStep step,
