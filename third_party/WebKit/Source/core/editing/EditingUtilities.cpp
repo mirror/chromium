@@ -166,11 +166,91 @@ bool IsAtomicNode(const Node* node) {
 }
 
 template <typename Traversal>
-static int ComparePositions(Node* container_a,
+static HeapVector<Member<const Node>> GetAncestors(const Node& node) {
+  HeapVector<Member<const Node>> ancestors;
+  for (const Node* runner = &node; runner;) {
+    ancestors.push_back(runner);
+    Node* next = Traversal::Parent(*runner);
+    if (runner == next)
+      break;
+    runner = next;
+  }
+  return ancestors;
+}
+
+// Return order or no value if nodes don't have same root.
+template <typename Traversal>
+static Optional<int> CompareNode(const Node& a, const Node& b) {
+  if (a == b)
+    return { 0 };
+  const HeapVector<Member<const Node>>& a_ancestors = GetAncestors<Traversal>(a);
+  const HeapVector<Member<const Node>>& b_ancestors = GetAncestors<Traversal>(b);
+  if (a_ancestors[a_ancestors.size() - 1] !=
+    b_ancestors[b_ancestors.size() - 1])
+    return {};
+  const Node* recentAncestor = a_ancestors[a_ancestors.size() - 1];
+  size_t i = 0;
+  for (; i < std::min(a_ancestors.size(), b_ancestors.size()); ++i) {
+    if (a_ancestors[a_ancestors.size() - 1 - i] !=
+      b_ancestors[b_ancestors.size() - 1 - i])
+      break;
+    recentAncestor = a_ancestors[a_ancestors.size() - 1 - i];
+  }
+
+  if (i == a_ancestors.size())
+    return { -1 };  // a is ancestor of b
+  if (i == b_ancestors.size())
+    return { 1 };  // b is ancestor of a
+  const Node* a_child_of_RA = a_ancestors[a_ancestors.size() - 1 - i];
+  const Node* b_child_of_RA = b_ancestors[b_ancestors.size() - 1 - i];
+  for (const Node* runner = a_child_of_RA; runner;
+    runner = Traversal::Next(*runner)) {
+    if (runner == b_child_of_RA)
+      return { -1 };
+  }
+  return { 1 };
+}
+
+template <typename Traversal>
+static int ComparePositionsNew(Node* container_a,
                             int offset_a,
                             Node* container_b,
                             int offset_b,
                             bool* disconnected) {
+  DCHECK(container_a);
+  DCHECK(container_b);
+
+  if (disconnected)
+    *disconnected = false;
+
+  if (!container_a)
+    return -1;
+  if (!container_b)
+    return 1;
+
+  const Optional<int> optional_order = CompareNode<Traversal>(*container_a, *container_b);
+  if (!optional_order.has_value()) {
+    if (disconnected)
+      *disconnected = true;
+    return 0;
+  }
+
+  const int order = optional_order.value();
+  if (order != 0)
+    return order;
+  const int order_offset = offset_a - offset_b;
+  if (!order_offset)
+    return 0;
+  return order_offset < 0 ? -1 : 1;
+}
+
+
+template <typename Traversal>
+static int ComparePositionsDeprecated(Node* container_a,
+  int offset_a,
+  Node* container_b,
+  int offset_b,
+  bool* disconnected) {
   DCHECK(container_a);
   DCHECK(container_b);
 
@@ -261,6 +341,27 @@ static int ComparePositions(Node* container_a,
   // Should never reach this point.
   NOTREACHED();
   return 0;
+}
+
+template <typename Traversal>
+static int ComparePositions(Node* container_a,
+  int offset_a,
+  Node* container_b,
+  int offset_b,
+  bool* disconnected) {
+  bool new_dis = false;
+  int new_order = ComparePositionsNew< Traversal>(container_a, offset_a, container_b,
+    offset_b, &new_dis);
+  int old_order = ComparePositionsDeprecated< Traversal>(container_a, offset_a, container_b,
+    offset_b, disconnected);
+  if (disconnected)
+    DCHECK_EQ(new_dis, *disconnected);
+  if (new_order != old_order) {
+    int new_order2 = ComparePositionsNew< Traversal>(container_a, offset_a, container_b,
+      offset_b, &new_dis);
+    DCHECK_EQ(new_order2, old_order);
+  }
+  return old_order;
 }
 
 int ComparePositionsInDOMTree(Node* container_a,
