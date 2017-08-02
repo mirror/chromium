@@ -29,6 +29,8 @@
 #include "core/dom/DOMException.h"
 
 #include "core/dom/ExceptionCode.h"
+#include "platform/wtf/Assertions.h"
+#include "public/platform/WebStorageQuotaError.h"
 
 namespace blink {
 
@@ -216,5 +218,11 @@ String DOMException::GetErrorMessage(ExceptionCode ec) {
 
   return entry->message;
 }
+
+STATIC_ASSERT_ENUM(kWebStorageQuotaErrorNotSupported, kNotSupportedError);
+STATIC_ASSERT_ENUM(kWebStorageQuotaErrorInvalidModification,
+                   kInvalidModificationError);
+STATIC_ASSERT_ENUM(kWebStorageQuotaErrorInvalidAccess, kInvalidAccessError);
+STATIC_ASSERT_ENUM(kWebStorageQuotaErrorAbort, kAbortError);
 
 }  // namespace blink

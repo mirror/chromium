@@ -50,6 +50,7 @@
 #include "platform/network/HTTPParsers.h"
 #include "platform/scheduler/child/web_scheduler.h"
 #include "platform/weborigin/KURL.h"
+#include "platform/wtf/Assertions.h"
 #include "platform/wtf/CurrentTime.h"
 #include "platform/wtf/MathExtras.h"
 #include "platform/wtf/StdLibExtras.h"
@@ -59,6 +60,7 @@
 #include "public/platform/Platform.h"
 #include "public/platform/WebCachePolicy.h"
 #include "public/platform/WebSecurityOrigin.h"
+#include "public/platform/WebURLRequest.h"
 
 namespace blink {
 
@@ -1225,5 +1227,15 @@ bool Resource::IsLoadEventBlockingResourceType() const {
   NOTREACHED();
   return false;
 }
+
+STATIC_ASSERT_ENUM(WebURLRequest::kPriorityUnresolved,
+                   kResourceLoadPriorityUnresolved);
+STATIC_ASSERT_ENUM(WebURLRequest::kPriorityVeryLow,
+                   kResourceLoadPriorityVeryLow);
+STATIC_ASSERT_ENUM(WebURLRequest::kPriorityLow, kResourceLoadPriorityLow);
+STATIC_ASSERT_ENUM(WebURLRequest::kPriorityMedium, kResourceLoadPriorityMedium);
+STATIC_ASSERT_ENUM(WebURLRequest::kPriorityHigh, kResourceLoadPriorityHigh);
+STATIC_ASSERT_ENUM(WebURLRequest::kPriorityVeryHigh,
+                   kResourceLoadPriorityVeryHigh);
 
 }  // namespace blink
