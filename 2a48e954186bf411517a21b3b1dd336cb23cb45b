@@ -22,6 +22,30 @@
       "revId": "2a48e954186bf411517a21b3b1dd336cb23cb45b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96811e6c_2235f964",
+        "filename": "ios/chrome/browser/ui/ntp/new_tab_page_toolbar_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-08-02T06:37:04Z",
+      "side": 1,
+      "message": "Yes.",
+      "parentUuid": "0eab7c63_963f6504",
+      "range": {
+        "startLine": 62,
+        "startChar": 9,
+        "endLine": 62,
+        "endChar": 19
+      },
+      "revId": "2a48e954186bf411517a21b3b1dd336cb23cb45b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
