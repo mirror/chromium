@@ -9,33 +9,40 @@
 
 namespace bubble_util {
 
-// Calculate the distance from the bubble's leading edge to the leading edge of
-// its bounding coordinate system. In LTR contexts, the returned float is the
-// x-coordinate of the bubble's origin. This calculation is based on
-// |targetFrame|, which is the frame of the target UI element, and the bubble's
-// alignment, direction, and size. The returned float is in the same coordinate
-// system as |targetFrame|, which should be the coordinate system in which the
-// bubble is drawn.
-CGFloat LeadingDistance(CGRect targetFrame,
-                        BubbleAlignment alignment,
-                        CGFloat bubbleWidth);
-
-// Calculate the y-coordinate of the bubble's origin based on |targetFrame|, and
-// the bubble's arrow direction and size. The returned float is in the same
-// coordinate system as |targetFrame|, which should be the coordinate system in
-// which the bubble is drawn.
-CGFloat OriginY(CGRect targetFrame,
-                BubbleArrowDirection arrowDirection,
-                CGFloat bubbleHeight);
+// Calculate the coordinates of the point of the speech bubble's triangle based
+// on the |frame| of the target UI element and the bubble's |arrowDirection|.
+// The returned point is in the same coordinate system as |frame|.
+CGPoint AnchorPoint(CGRect targetFrame, BubbleArrowDirection arrowDirection);
 
 // Calculate the maximum width of the bubble such that it stays within its
-// bounding coordinate space. |targetFrame| is the frame the target UI element
-// in the coordinate system in which the bubble is drawn. |alignment| is the
-// bubble's alignment, and |boundingWidth| is the width of the coordinate space
-// in which the bubble is drawn.
-CGFloat MaxWidth(CGRect targetFrame,
+// bounding coordinate space. |anchorPoint| is the point of the target UI
+// element at which the bubble is anchored. It is in the coordinate system in
+// which the bubble is drawn. |alignment| is the bubble's alignment, and
+// |boundingWidth| is the width of the coordinate space in which the bubble is
+// drawn.
+CGFloat MaxWidth(CGPoint anchorPoint,
                  BubbleAlignment alignment,
                  CGFloat boundingWidth);
+
+// Calculate the bubble's frame. |targetFrame| is the frame of the UI element
+// the bubble is pointing to. |size| is the size of the bubble. |direction| is
+// the direction the bubble's arrow is pointing. |alignment| is the alignment of
+// the anchor (either leading, centered, or trailing). |boundingWidth| is the
+// width of the bubble's superview.
+CGRect BubbleFrame(CGPoint anchorPoint,
+                   CGSize size,
+                   BubbleArrowDirection direction,
+                   BubbleAlignment alignment,
+                   CGFloat boundingWidth);
+
+// Returns the portion of |rect| that can enclose a bubble pointed anchored at
+// |anchorPoint| and pointing in |direction|. If |direction| is
+// |BubbleViewArrowDirectionUp|, then the rectangle inside of |rect| and beneath
+// |anchorPoint| is returned. If |direction| is |BubbleViewArrowDirectionDown|,
+// then the rectangle inside of |rect| and above |anchorPoint| is returned.
+CGRect DivideRectAtPoint(CGRect rect,
+                         CGPoint anchorPoint,
+                         BubbleArrowDirection direction);
 
 }  // namespace bubble_util
 
