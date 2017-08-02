@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cdf59fa7_707eadc6",
+        "filename": "third_party/WebKit/Source/platform/bindings/TraceWrapperMember.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-08-02T19:56:22Z",
+      "side": 1,
+      "message": "I still need to remove parent_ here.",
+      "range": {
+        "startLine": 88,
+        "startChar": 8,
+        "endLine": 88,
+        "endChar": 15
+      },
+      "revId": "2f05c01ba416139b5ed3960107fe2a5f38e24fb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
