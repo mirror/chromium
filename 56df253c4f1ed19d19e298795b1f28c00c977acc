@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "778c33d1_f384d664",
+        "filename": "chrome/browser/ui/passwords/manage_passwords_bubble_model.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-02T09:28:40Z",
+      "side": 1,
+      "message": "set it to empty string before the loop. It will process the case when there is no matched field.",
+      "range": {
+        "startLine": 413,
+        "startChar": 6,
+        "endLine": 413,
+        "endChar": 40
+      },
+      "revId": "56df253c4f1ed19d19e298795b1f28c00c977acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eade1723_096a44c2",
+        "filename": "components/autofill/core/common/password_form.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-02T09:28:40Z",
+      "side": 1,
+      "message": "Tell what the field is, but not how it affects on vote processing or whatever. \nE.g. True iff username value was edited in a prompt.",
+      "revId": "56df253c4f1ed19d19e298795b1f28c00c977acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "019f0bd5_f568a8bf",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 878,
+      "author": {
+        "id": 1145779
+      },
+      "writtenOn": "2017-08-02T09:28:40Z",
+      "side": 1,
+      "message": "I would move the new block after this curly bracket. \n* LabelFields should be called only once. It simplifies the logic. \n* If the new block is here, it will override \"REUSED\" type.",
+      "range": {
+        "startLine": 878,
+        "startChar": 4,
+        "endLine": 878,
+        "endChar": 5
+      },
+      "revId": "56df253c4f1ed19d19e298795b1f28c00c977acc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
