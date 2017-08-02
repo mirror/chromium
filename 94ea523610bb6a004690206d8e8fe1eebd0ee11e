@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6dfffaa5_014e8a92",
+        "filename": "chrome/browser/ui/blocked_content/popup_blocker_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-08-02T10:13:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4524d67a_8c11c697",
+      "revId": "94ea523610bb6a004690206d8e8fe1eebd0ee11e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71188584_a363b130",
         "filename": "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.cc",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-02T02:02:55Z",
       "side": 1,
       "message": "If we were to get this Send call wrong -- either never doing it or always doing it -- would the tests catch it?\n\nIf not let\u0027s make sure to expand the tests to verify the window features are set at the correct times.",
+      "revId": "94ea523610bb6a004690206d8e8fe1eebd0ee11e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9af292ef_9d5c1c71",
+        "filename": "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-08-02T10:13:13Z",
+      "side": 1,
+      "message": "PopupBlcokerBrowserTest.MAYBE_WindowFeatures and .WindowFeaturesBarProps  seems to have been introduced to cover that.",
+      "parentUuid": "71188584_a363b130",
       "revId": "94ea523610bb6a004690206d8e8fe1eebd0ee11e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5d4b45e7_26c0e586",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-08-02T10:13:13Z",
+      "side": 1,
+      "message": "Thanks. Done. And Removed \"If a child.. set tag.\"",
+      "parentUuid": "ef98d730_4508eaae",
+      "revId": "94ea523610bb6a004690206d8e8fe1eebd0ee11e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a193e4d_af31442f",
         "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
         "patchSetId": 8
@@ -67,6 +121,24 @@
       "revId": "94ea523610bb6a004690206d8e8fe1eebd0ee11e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "532aef70_1062c3e7",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-08-02T10:13:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a193e4d_af31442f",
+      "revId": "94ea523610bb6a004690206d8e8fe1eebd0ee11e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "3a492b63_6ac2f74d",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-08-02T10:13:13Z",
+      "side": 1,
+      "message": "Oops. Sorry. Done.",
+      "parentUuid": "3e9d5f56_7b358b3b",
+      "revId": "94ea523610bb6a004690206d8e8fe1eebd0ee11e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15114f86_b284e728",
         "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
         "patchSetId": 8
@@ -98,6 +188,24 @@
       "writtenOn": "2017-08-02T02:02:55Z",
       "side": 1,
       "message": "This basically looks like some kind of table.  Can we just use a views table control?",
+      "revId": "94ea523610bb6a004690206d8e8fe1eebd0ee11e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56f1cb45_2a478265",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-08-02T10:13:13Z",
+      "side": 1,
+      "message": "Will Using grid layout do for this comment?",
+      "parentUuid": "15114f86_b284e728",
       "revId": "94ea523610bb6a004690206d8e8fe1eebd0ee11e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "cdb4b07d_190d22c6",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-08-02T10:13:13Z",
+      "side": 1,
+      "message": "Much better! Thanks :)",
+      "parentUuid": "fea3d437_70daa2da",
+      "revId": "94ea523610bb6a004690206d8e8fe1eebd0ee11e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db9425dc_3e7fb0cd",
         "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
         "patchSetId": 8
@@ -132,6 +258,24 @@
       "writtenOn": "2017-08-02T02:02:55Z",
       "side": 1,
       "message": "I think these deletes double-free.  Normally RemoveChildView() should delete the child unless set_owned_by_parent() is false.",
+      "revId": "94ea523610bb6a004690206d8e8fe1eebd0ee11e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9b08191_eaa28ecc",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-08-02T10:13:13Z",
+      "side": 1,
+      "message": "humm.. I think it won\u0027t happen here. RemoveChildView() calls DoRemoveChildView() with |delete_removed_view| being false. So |View| won\u0027t free it. WDYT?\n\nhttps://cs.chromium.org/chromium/src/ui/views/view.cc?gsn\u003dDoRemoveChildView\u0026l\u003d2077",
+      "parentUuid": "db9425dc_3e7fb0cd",
       "revId": "94ea523610bb6a004690206d8e8fe1eebd0ee11e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "edae6365_3c1b6a12",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-08-02T10:13:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa396e38_49665684",
+      "revId": "94ea523610bb6a004690206d8e8fe1eebd0ee11e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "05e1cf68_8d4e026d",
         "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
         "patchSetId": 8
@@ -169,6 +331,24 @@
       "revId": "94ea523610bb6a004690206d8e8fe1eebd0ee11e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "436644d8_51a1bc4f",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-08-02T10:13:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "05e1cf68_8d4e026d",
+      "revId": "94ea523610bb6a004690206d8e8fe1eebd0ee11e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "b9bf5592_f89b6935",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-08-02T10:13:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "821a35c0_e0a12bf6",
+      "revId": "94ea523610bb6a004690206d8e8fe1eebd0ee11e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c05cb085_ec91b97b",
         "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
         "patchSetId": 8
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "c1f63a7c_4d0b0c58",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-08-02T10:13:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c05cb085_ec91b97b",
+      "revId": "94ea523610bb6a004690206d8e8fe1eebd0ee11e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aea04f50_66e6710b",
         "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
         "patchSetId": 8
@@ -220,6 +436,24 @@
       "revId": "94ea523610bb6a004690206d8e8fe1eebd0ee11e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "978233d9_38ab3473",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-08-02T10:13:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aea04f50_66e6710b",
+      "revId": "94ea523610bb6a004690206d8e8fe1eebd0ee11e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
