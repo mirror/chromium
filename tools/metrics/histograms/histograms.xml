@@ -1617,6 +1617,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Apps.AppListFolderOpened" units="AppListFolderOpened">
+  <owner>newcomer@chromium.org</owner>
+  <summary>
+    The number of times folders are opened. This is logged when the folder is
+    clicked.
+  </summary>
+</histogram>
+
 <histogram name="Apps.AppListHowEnabled" enum="AppListEnableSource">
   <owner>tapted@chromium.org</owner>
   <summary>
@@ -1627,11 +1635,28 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Apps.AppListOpenMethod" units="AppListOpenMethod">
+  <owner>newcomer@chromium.org</owner>
+  <summary>
+    The number of times the different methods for showing the app list are used.
+    This is logged when the app list is shown.
+  </summary>
+</histogram>
+
 <histogram name="Apps.AppListPageOpened" enum="AppListPage">
   <owner>calamity@chromium.org</owner>
   <summary>
     The page that the app list goes to. This is gathered every time the user
     initiates a transition to another page in the launcher.
+  </summary>
+</histogram>
+
+<histogram name="Apps.AppListPeekingToFullscreen"
+    units="AppListPeekingToFullscreen">
+  <owner>newcomer@chromium.org</owner>
+  <summary>
+    The action which transitions the app list from Peeking to Fullscreen. This
+    is logged when the transition method is used.
   </summary>
 </histogram>
 
@@ -1708,6 +1733,15 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
     call ChromeAppModeMain. For example, when Chrome updates from 32-bit to
     64-bit, an older shim will find the new framework version but fail to dyload
     it.
+  </summary>
+</histogram>
+
+<histogram name="Apps.AppsInFolders" units="Apps">
+  <owner>newcomer@chromium.org</owner>
+  <summary>
+    The total number of apps in folders. This is logged each time the app list
+    is initialized. The suffix denotes whether the fullscreen app list feature
+    has been enabled.
   </summary>
 </histogram>
 
