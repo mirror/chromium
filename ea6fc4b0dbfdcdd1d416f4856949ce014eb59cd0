@@ -389,6 +389,30 @@
       "revId": "ea6fc4b0dbfdcdd1d416f4856949ce014eb59cd0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99697ed5_e4ce5099",
+        "filename": "net/proxy/proxy_script_fetcher_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-02T12:55:14Z",
+      "side": 1,
+      "message": "We\u0027ll need something servicification friendly - a ProxyScriptFetcher subclass in chrome/ doesn\u0027t work.\n\nAlso, the code that actually implements the logic this logic is in components/proxy_config and chromeos/network/proxy/proxy_config_service_impl.cc (Part of the goal of annotations in the code were so that it was more likely they\u0027d be updated when the code changes.  If that\u0027s the goal, perhaps that\u0027s where this should live?  Maybe make it part of ProxyConfig, which we\u0027re going to have to pass over Mojo to the network service anyways, to support Chrome\u0027s behavior)",
+      "parentUuid": "bdb623d9_53d5fca9",
+      "range": {
+        "startLine": 179,
+        "startChar": 19,
+        "endLine": 179,
+        "endChar": 28
+      },
+      "revId": "ea6fc4b0dbfdcdd1d416f4856949ce014eb59cd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
