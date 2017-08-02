@@ -282,7 +282,7 @@ class WebURLRequest {
   BLINK_PLATFORM_EXPORT void SetAppCacheHostID(int);
 
   // If true, the response body will be downloaded to a file managed by the
-  // WebURLLoader. See WebURLResponse::downloadedFilePath.
+  // WebURLLoader. See WebURLResponse::DownloadFilePath.
   BLINK_PLATFORM_EXPORT bool DownloadToFile() const;
   BLINK_PLATFORM_EXPORT void SetDownloadToFile(bool);
 

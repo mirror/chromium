@@ -56,7 +56,7 @@ class WebStorageQuotaCallbacks {
   BLINK_PLATFORM_EXPORT WebStorageQuotaCallbacks(StorageQuotaCallbacks*);
 #endif
 
-  // Callback for WebFrameClient::queryStorageUsageAndQuota.
+  // Callback for Platform::QueryStorageUsageAndQuota.
   BLINK_PLATFORM_EXPORT void DidQueryStorageUsageAndQuota(
       unsigned long long usage_in_bytes,
       unsigned long long quota_in_bytes);
