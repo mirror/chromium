@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad011739_9a332afd",
+        "filename": "ash/highlighter/highlighter_result_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-08-02T21:33:46Z",
+      "side": 1,
+      "message": "nit: use base::MakeUnique here too to be consistent.",
+      "range": {
+        "startLine": 250,
+        "startChar": 25,
+        "endLine": 250,
+        "endChar": 28
+      },
+      "revId": "0cc96c92d1f846fee06b8fadd65838b426d6b5ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
