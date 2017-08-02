@@ -7,6 +7,7 @@
 #include <stddef.h>
 
 #include "cc/paint/paint_flags.h"
+#include "cc/paint/paint_op_buffer.h"
 #include "cc/paint/paint_shader.h"
 #include "third_party/skia/include/core/SkFlattenableSerialization.h"
 #include "third_party/skia/include/core/SkPath.h"
