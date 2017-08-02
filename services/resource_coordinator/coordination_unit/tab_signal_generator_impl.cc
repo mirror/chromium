@@ -33,7 +33,7 @@ bool TabSignalGeneratorImpl::ShouldObserve(
 void TabSignalGeneratorImpl::OnPropertyChanged(
     const CoordinationUnitImpl* coordination_unit,
     const mojom::PropertyType property_type,
-    const base::Value& value) {
+    int64_t value) {
   if (coordination_unit->id().type == CoordinationUnitType::kFrame) {
     OnFramePropertyChanged(
         CoordinationUnitImpl::ToFrameCoordinationUnit(coordination_unit),
@@ -49,7 +49,7 @@ void TabSignalGeneratorImpl::BindToInterface(
 void TabSignalGeneratorImpl::OnFramePropertyChanged(
     const FrameCoordinationUnitImpl* coordination_unit,
     const mojom::PropertyType property_type,
-    const base::Value& value) {
+    int64_t value) {
   if (property_type == mojom::PropertyType::kNetworkIdle) {
     // Ignore when the signal doesn't come from main frame.
     if (!coordination_unit->IsMainFrame())
