@@ -2091,6 +2091,11 @@ const char kTabStripKeyboardFocusName[] = "Tab Strip Keyboard Focus";
 const char kTabStripKeyboardFocusDescription[] =
     "Enable keyboard focus for the tabs in the tab strip.";
 
+const char kTouchbarDinoGameName[] = "Touchbar Dino Game";
+
+const char kTouchbarDinoGameDescription[] =
+    "Displays the offline dinosaur game on the touchbar.";
+
 #endif  // defined(OS_MACOSX)
 
 #if defined(OS_MACOSX)

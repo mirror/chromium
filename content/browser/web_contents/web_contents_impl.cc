@@ -116,6 +116,7 @@
 #include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/child_process_host.h"
 #include "content/public/common/content_constants.h"
+#include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/page_zoom.h"
 #include "content/public/common/result_codes.h"
@@ -530,6 +531,10 @@ WebContentsImpl::WebContentsImpl(BrowserContext* browser_context)
       minimum_zoom_percent_(static_cast<int>(kMinimumZoomFactor * 100)),
       maximum_zoom_percent_(static_cast<int>(kMaximumZoomFactor * 100)),
       zoom_scroll_remainder_(0),
+#if defined(OS_MACOSX)
+      popup_contents_(nullptr),
+      is_error_page_(false),
+#endif  // defined(OS_MACOSX)
       fullscreen_widget_process_id_(ChildProcessHost::kInvalidUniqueID),
       fullscreen_widget_routing_id_(MSG_ROUTING_NONE),
       fullscreen_widget_had_focus_at_shutdown_(false),
@@ -2451,9 +2456,11 @@ void WebContentsImpl::ShowCreatedWindow(int process_id,
                                         bool user_gesture) {
   WebContentsImpl* popup =
       GetCreatedWindow(process_id, main_frame_widget_route_id);
+
   if (popup) {
     WebContentsDelegate* delegate = GetDelegate();
     popup->is_resume_pending_ = true;
+
     if (!delegate || delegate->ShouldResumeRequestsForCreatedWindow())
       popup->ResumeLoadingCreatedWebContents();
 
@@ -3689,8 +3696,9 @@ void WebContentsImpl::ReadyToCommitNavigation(
 }
 
 void WebContentsImpl::DidFinishNavigation(NavigationHandle* navigation_handle) {
-  for (auto& observer : observers_)
+  for (auto& observer : observers_) {
     observer.DidFinishNavigation(navigation_handle);
+  }
 
   if (navigation_handle->HasCommitted()) {
     BrowserAccessibilityManager* manager =
@@ -5531,6 +5539,22 @@ bool WebContentsImpl::GetAllowOtherViews() {
 
 bool WebContentsImpl::CompletedFirstVisuallyNonEmptyPaint() const {
   return did_first_visually_non_empty_paint_;
+}
+
+bool WebContentsImpl::IsErrorPage() {
+  return is_error_page_;
+}
+
+void WebContentsImpl::SetIsErrorPage(bool is_error_page) {
+  is_error_page_ = is_error_page;
+}
+
+WebContents* WebContentsImpl::GetPopupContents() {
+  return popup_contents_;
+}
+
+void WebContentsImpl::SetPopupContents(WebContents* popup_contents) {
+  popup_contents_ = popup_contents;
 }
 
 #endif
