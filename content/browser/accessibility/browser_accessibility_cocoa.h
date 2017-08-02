@@ -37,10 +37,6 @@
 // from browserAccessibility_.
 - (ui::AXRole)internalRole;
 
-// Convenience method to determine if this object should expose its
-// accessible name in AXValue (as opposed to AXTitle/AXDescription).
-- (BOOL)shouldExposeNameInAXValue;
-
 // Convenience method to get the BrowserAccessibilityDelegate from
 // the manager.
 - (content::BrowserAccessibilityDelegate*)delegate;
