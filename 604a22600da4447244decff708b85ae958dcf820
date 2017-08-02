@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de373d8b_776ae24c",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-02T22:49:14Z",
+      "side": 1,
+      "message": "It would seem to make more sense to do something like:\n  int min_x \u003d std::min(back_center().x(), circle_center().x());\n  int max_x \u003d std::max(back_center().x(), circle_center().x());\nAnd code below can continue just using |back_center.y()| or |circle_center.y()|.",
+      "revId": "604a22600da4447244decff708b85ae958dcf820",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7b3b51f_414e2a6f",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 362,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-02T22:49:14Z",
+      "side": 1,
+      "message": "Can we just flip the vector icon? That should probably be okay.",
+      "revId": "604a22600da4447244decff708b85ae958dcf820",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc18cace_5fddfc82",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-02T22:49:14Z",
+      "side": 1,
+      "message": "nit: avoid \"we\" in comments, and \"to the left of\" is more descriptive here (when \u0027front\u0027 is meant to convey \u0027preceding\u0027, that infers \"to the right of\" in RTL languages), consider \"In RTL, the app list circle is shown to the left of the back button.\"",
+      "revId": "604a22600da4447244decff708b85ae958dcf820",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28b54f55_5645da0f",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-02T22:49:14Z",
+      "side": 1,
+      "message": "This is the perfect example of a place to use View::GetMirroredXInView(), consider |return gfx::Point(GetMirroredXInView(kShelfButtonSize / 2.f), kShelfButtonSize / 2.f);|\nAlso, optionally consider caching the value |kShelfButtonSize / 2.f| as kHalfShelfButtonSize or similar. Hopefully you can eliminate |is_rtl_| and the include.",
+      "revId": "604a22600da4447244decff708b85ae958dcf820",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6ba503f_84f62fbb",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 466,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-02T22:49:14Z",
+      "side": 1,
+      "message": "nit: const (if you keep this temp local)",
+      "revId": "604a22600da4447244decff708b85ae958dcf820",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08873bbd_7e1c2782",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 471,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-02T22:49:14Z",
+      "side": 1,
+      "message": "Consider instead using |shelf_-\u003eIsHorizontalAlignment()|",
+      "revId": "604a22600da4447244decff708b85ae958dcf820",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bb6a94c_f38cd817",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-02T22:49:14Z",
+      "side": 1,
+      "message": "Ditto suggestion to use GetMirroredXInView",
+      "revId": "604a22600da4447244decff708b85ae958dcf820",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
