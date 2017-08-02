@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8748c4fc_b7d21025",
+        "filename": "extensions/shell/browser/shell_desktop_controller_aura.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-02T22:46:54Z",
+      "side": 1,
+      "message": "\u003e What\u0027s the lifetime of this object compared to AppWindowRegistry?  If the registry outlives this, then we risk a UAF on a notification.\n\nThis class outlives ExtensionsBrowserClient and BrowserContext-keyed services. That makes sense, given the DesktopController is the environment extensions run in.\n\n(I\u0027ve tried the other way around -- creating the DC after BCKSs and destroying it before shutting down the extensions systems -- but extension background pages ended up looking for Windows or WindowTreeHosts that no longer existed. We\u0027d need to partially shutdown the extensions system first.)\n\n\u003e \n\u003e Also, if you use the ScopedObserver interface, it has an IsObserving() method that would obviate the need for the registry HasObserver method.\n\nSince it outlives the registry, a ScopedObserver wouldn\u0027t be appropriate,\nif I understand your suggestion.\n\nI don\u0027t love doing it this way, but the alternatives are messy:\n\nA. Make the DesktopController interface derive from\n   AppWindowRegistry::Observer, and make shell_browser_main_parts.cc\n   responsible for adding/removing it as an observer when\n   creating/destroying the extensions system. But then we have an abstract\n   base deriving from an interface, and shell_brower_main_parts.cc would\n   be doing windowing-related bookkeeping.\n\nB. Scrap the app_windows_ cache entirely. Instead, in CloseAppWindows(),\n   find each AppWindow by calling\n   AppWindowRegistry::GetAppWindowForNativeWindow() for each of our host\u0027s\n   children. Not terrible, but it means ShellDesktopControllerAura needs\n   to cache a BrowserContext, and we\u0027re still using a BCKS even though the\n   BCKS\u0027s will outlive us.",
+      "parentUuid": "955c92c7_756d8dc3",
+      "revId": "993636c7baf8bfc7bc7abbcbf94ece15d9480a5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d09f04d2_9fd593ee",
         "filename": "extensions/shell/browser/shell_desktop_controller_aura_unittest.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "993636c7baf8bfc7bc7abbcbf94ece15d9480a5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aee48dd2_c886b9f8",
+        "filename": "extensions/shell/browser/shell_desktop_controller_aura_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-02T22:46:54Z",
+      "side": 1,
+      "message": "TestAppWindowContents takes ownership of |web_contents|.\n\nAppWindow::Init takes ownership of |app_window_contents|.\n\nAlso, if you don\u0027t mind a slightly larger CL, I updated these to move\nsemantics so ownership is clear.",
+      "parentUuid": "d09f04d2_9fd593ee",
+      "revId": "993636c7baf8bfc7bc7abbcbf94ece15d9480a5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
