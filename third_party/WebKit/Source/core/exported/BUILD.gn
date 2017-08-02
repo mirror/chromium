@@ -93,6 +93,8 @@ blink_core_sources("exported") {
     "WebViewBase.h",
     "WebViewImpl.cpp",
     "WebViewImpl.h",
+    "WebWorkerShadowPage.cpp",
+    "WebWorkerShadowPage.h",
   ]
 
   jumbo_excluded_sources = [
