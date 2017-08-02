@@ -139,12 +139,47 @@ PresentationConnection::PresentationConnection(LocalFrame* frame,
     : ContextClient(frame),
       id_(id),
       url_(url),
+      connection_binding_(this),
       state_(WebPresentationConnectionState::kConnecting),
       binary_type_(kBinaryTypeArrayBuffer),
       proxy_(nullptr) {}
 
 PresentationConnection::~PresentationConnection() {
   DCHECK(!blob_loader_);
+}
+
+void PresentationConnection::OnMessage(
+    mojom::blink::PresentationConnectionMessagePtr message,
+    OnMessageCallback callback) {
+  DCHECK(!callback.is_null());
+  if (message->is_data()) {
+    const auto& data = message->get_data();
+    DidReceiveBinaryMessage(&data.front(), data.size());
+  } else {
+    DidReceiveTextMessage(message->get_message());
+  }
+
+  std::move(callback).Run(true);
+}
+
+void PresentationConnection::DidChangeState(
+    mojom::blink::PresentationConnectionState state) {
+  switch (state) {
+    case mojom::blink::PresentationConnectionState::CONNECTED:
+    case mojom::blink::PresentationConnectionState::TERMINATED:
+      DidChangeState(state);
+      break;
+    case mojom::blink::PresentationConnectionState::CLOSED:
+      DidClose();
+      break;
+    case mojom::blink::PresentationConnectionState::CONNECTING:
+      NOTREACHED();
+  }
+}
+
+void PresentationConnection::OnClose() {
+  DidClose();
+  target_connection_->OnClose();
 }
 
 void PresentationConnection::BindProxy(
@@ -182,8 +217,9 @@ PresentationConnection* PresentationConnection::Take(
   DCHECK(controller);
   DCHECK(request);
 
-  PresentationConnection* connection = new PresentationConnection(
-      controller->GetFrame(), presentation_info.id, presentation_info.url);
+  PresentationConnection* connection = new ControllerPresentationConnection(
+      controller->GetFrame(), controller, presentation_info.id,
+      presentation_info.url);
   controller->RegisterConnection(connection);
 
   // Fire onconnectionavailable event asynchronously.
@@ -197,14 +233,69 @@ PresentationConnection* PresentationConnection::Take(
   return connection;
 }
 
+ControllerPresentationConnection::ControllerPresentationConnection(
+    LocalFrame* frame,
+    PresentationController* controller,
+    const String& id,
+    const KURL& url)
+    : PresentationConnection(frame, id, url), controller_(controller) {}
+
+ControllerPresentationConnection::~ControllerPresentationConnection() = default;
+
+DEFINE_TRACE(ControllerPresentationConnection) {
+  visitor->Trace(controller_);
+  PresentationConnection::Trace(visitor);
+}
+
+void ControllerPresentationConnection::InitForController() {
+  mojom::blink::PresentationConnectionPtr controller_connection_ptr;
+  connection_binding_.Bind(mojo::MakeRequest(&controller_connection_ptr));
+  controller_->GetPresentationService()->SetPresentationConnection(
+      mojom::blink::PresentationInfo::New(url_, id_),
+      std::move(controller_connection_ptr),
+      mojo::MakeRequest(&target_connection_));
+}
+
+ReceiverPresentationConnection::ReceiverPresentationConnection(
+    LocalFrame* frame,
+    PresentationReceiver* receiver,
+    const String& id,
+    const KURL& url)
+    : PresentationConnection(frame, id, url), receiver_(receiver) {}
+
+ReceiverPresentationConnection::~ReceiverPresentationConnection() = default;
+
+void ReceiverPresentationConnection::InitForController() {
+  NOTREACHED();
+}
+
+void ReceiverPresentationConnection::InitForReceiver(
+    mojom::blink::PresentationConnectionPtr controller_connection_ptr,
+    mojom::blink::PresentationConnectionRequest receiver_connection_request) {
+  target_connection_ = std::move(controller_connection_ptr);
+  connection_binding_.Bind(std::move(receiver_connection_request));
+}
+
+DEFINE_TRACE(ReceiverPresentationConnection) {
+  visitor->Trace(receiver_);
+  PresentationConnection::Trace(visitor);
+}
+
 // static
 PresentationConnection* PresentationConnection::Take(
     PresentationReceiver* receiver,
-    const WebPresentationInfo& presentation_info) {
+    const mojom::blink::PresentationInfo& presentation_info,
+    mojom::blink::PresentationConnectionPtr controller_connection,
+    mojom::blink::PresentationConnectionRequest receiver_connection_request) {
   DCHECK(receiver);
 
-  PresentationConnection* connection = new PresentationConnection(
-      receiver->GetFrame(), presentation_info.id, presentation_info.url);
+  ReceiverPresentationConnection* connection =
+      new ReceiverPresentationConnection(receiver->GetFrame(), receiver,
+                                         presentation_info.id,
+                                         presentation_info.url);
+  connection->InitForReceiver(std::move(controller_connection),
+                              std::move(receiver_connection_request));
+
   receiver->RegisterConnection(connection);
 
   return connection;
@@ -441,7 +532,7 @@ void PresentationConnection::DidChangeState(
     case WebPresentationConnectionState::kTerminated:
       DispatchStateChangeEvent(Event::Create(EventTypeNames::terminate));
       return;
-    // Closed state is handled in |didClose()|.
+    // Closed state is handled in |DidClose()|.
     case WebPresentationConnectionState::kClosed:
       NOTREACHED();
       return;

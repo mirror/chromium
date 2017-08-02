@@ -20,6 +20,11 @@ class WebPresentationConnection {
  public:
   virtual ~WebPresentationConnection() = default;
 
+  // TODO(crbug.com/749327): When this interface is gone, we need to re-think
+  // how controller/receiver connection objects are best represented in Blink,
+  // e.g., Controller / Receicver subclass of PresentationConnection.
+  virtual void InitForController() = 0;
+
   // Takes ownership of |proxy| and stores it in connection object. Should be
   // called only once.
   virtual void BindProxy(std::unique_ptr<WebPresentationConnectionProxy>) = 0;

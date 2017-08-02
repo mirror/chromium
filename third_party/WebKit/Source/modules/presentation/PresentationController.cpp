@@ -164,6 +164,15 @@ PresentationConnection* PresentationController::FindExistingConnection(
   return nullptr;
 }
 
+mojom::blink::PresentationServicePtr&
+PresentationController::GetPresentationService() {
+  if (!presentation_service_) {
+    auto* interface_provider = GetFrame()->Client()->GetInterfaceProvider();
+    interface_provider->GetInterface(mojo::MakeRequest(&presentation_service_));
+  }
+  return presentation_service_;
+}
+
 PresentationConnection* PresentationController::FindConnection(
     const WebPresentationInfo& presentation_info) {
   for (const auto& connection : connections_) {
