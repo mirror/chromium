@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6de90839_40fc253e",
+        "filename": "chrome/browser/android/logo_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-02T17:47:29Z",
+      "side": 1,
+      "message": "As I recall, clang-tidy will change {} to \u003d default, so when I\u0027m doing other cleanup I usually roll that in. The constructor is initializing stuff, though, so it\u0027s not just the default constructor implementation.",
+      "parentUuid": "63dda24e_403bccd5",
+      "revId": "6de554a9e88192f780479bd215e65ee1653a8d06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2fd7abb1_ec6a350e",
         "filename": "chrome/browser/android/logo_service.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "6de554a9e88192f780479bd215e65ee1653a8d06",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d791f4b_deb326cc",
+        "filename": "chrome/browser/android/logo_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-02T17:47:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2fd7abb1_ec6a350e",
+      "revId": "6de554a9e88192f780479bd215e65ee1653a8d06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

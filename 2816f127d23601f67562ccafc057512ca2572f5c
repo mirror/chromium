@@ -141,6 +141,30 @@
       "revId": "2816f127d23601f67562ccafc057512ca2572f5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7dca93a_fa81913d",
+        "filename": "chrome/browser/android/logo_service_factory.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-02T17:47:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c88b1e01_514f38d5",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 0
+      },
+      "revId": "2816f127d23601f67562ccafc057512ca2572f5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
