@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "806125a0_f16d6484",
+        "filename": "chrome/browser/ui/webui/snippets_internals_message_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-02T09:53:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3cbe8306_50b484eb",
+      "range": {
+        "startLine": 387,
+        "startChar": 78,
+        "endLine": 387,
+        "endChar": 0
+      },
+      "revId": "2b73bb5e2cf0e3a10b4286a47961929559fa2252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "393bf4ff_31f279c5",
         "filename": "chrome/browser/ui/webui/snippets_internals_message_handler.cc",
         "patchSetId": 12
@@ -45,6 +69,30 @@
       "revId": "2b73bb5e2cf0e3a10b4286a47961929559fa2252",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe2a364d_f971150b",
+        "filename": "chrome/browser/ui/webui/snippets_internals_message_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-02T09:53:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "393bf4ff_31f279c5",
+      "range": {
+        "startLine": 397,
+        "startChar": 11,
+        "endLine": 397,
+        "endChar": 0
+      },
+      "revId": "2b73bb5e2cf0e3a10b4286a47961929559fa2252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e3f33949_e6b002ba",
+        "filename": "chrome/browser/ui/webui/snippets_internals_message_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-02T09:53:36Z",
+      "side": 1,
+      "message": "Ideally we would like to exercise the entire path eventually. I.e we will pretend that GCM sends us a message and this requires providing a JSON. Thus, having a JSON now save us from rewriting everything again later.",
+      "parentUuid": "40292c23_11b883ac",
+      "range": {
+        "startLine": 401,
+        "startChar": 58,
+        "endLine": 401,
+        "endChar": 0
+      },
+      "revId": "2b73bb5e2cf0e3a10b4286a47961929559fa2252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16efc1a0_048a9f0e",
         "filename": "chrome/browser/ui/webui/snippets_internals_message_handler.cc",
         "patchSetId": 12
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "ea9fcf5c_7f05d069",
+        "filename": "chrome/browser/ui/webui/snippets_internals_message_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-02T09:53:36Z",
+      "side": 1,
+      "message": "ACK.\n\nAs TODO says this should not be here for long. Once we connect GCMAppHandler, we will get a callback somehow differently I hope.\n\nAlso I feel like static_cast is better than having this method in the interface (even though we have suggestions_fetcher_for_debugging there already).",
+      "parentUuid": "16efc1a0_048a9f0e",
+      "range": {
+        "startLine": 406,
+        "startChar": 35,
+        "endLine": 406,
+        "endChar": 0
+      },
+      "revId": "2b73bb5e2cf0e3a10b4286a47961929559fa2252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6dd1a600_ed468fc3",
         "filename": "chrome/browser/ui/webui/snippets_internals_message_handler.h",
         "patchSetId": 12
@@ -114,6 +210,30 @@
       "revId": "2b73bb5e2cf0e3a10b4286a47961929559fa2252",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2641f163_abb03553",
+        "filename": "chrome/browser/ui/webui/snippets_internals_message_handler.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-02T09:53:36Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "6dd1a600_ed468fc3",
+      "range": {
+        "startLine": 66,
+        "startChar": 67,
+        "endLine": 66,
+        "endChar": 0
+      },
+      "revId": "2b73bb5e2cf0e3a10b4286a47961929559fa2252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
