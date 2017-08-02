@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "964c7fb6_6b1dabc9",
+        "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_search_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-08-02T02:53:04Z",
+      "side": 1,
+      "message": "nit: Probably const std::string",
+      "range": {
+        "startLine": 98,
+        "startChar": 1,
+        "endLine": 98,
+        "endChar": 13
+      },
+      "revId": "cf1ace2875f6fb86e91d57dd6c72d933ce3e8410",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
