@@ -46,6 +46,7 @@
 #include "content/browser/media/media_interface_proxy.h"
 #include "content/browser/media/session/media_session_service_impl.h"
 #include "content/browser/payments/payment_app_context_impl.h"
+#include "content/browser/permissions/capability_broker.h"
 #include "content/browser/permissions/permission_service_context.h"
 #include "content/browser/permissions/permission_service_impl.h"
 #include "content/browser/presentation/presentation_service_impl.h"
@@ -4025,14 +4026,10 @@ void RenderFrameHostImpl::BindNFCRequest(device::mojom::NFCRequest request) {
 void RenderFrameHostImpl::GetInterface(
     const std::string& interface_name,
     mojo::ScopedMessagePipeHandle interface_pipe) {
-  if (!registry_ ||
-      !registry_->TryBindInterface(interface_name, &interface_pipe)) {
-    delegate_->OnInterfaceRequest(this, interface_name, &interface_pipe);
-    if (interface_pipe->is_valid()) {
-      GetContentClient()->browser()->BindInterfaceRequestFromFrame(
-          this, interface_name, std::move(interface_pipe));
-    }
-  }
+  DCHECK(interface_pipe.is_valid());
+
+  CapabilityBroker::GetInstance()->BindInterfaceForFrame(
+      this, registry_.get(), interface_name, std::move(interface_pipe));
 }
 
 std::unique_ptr<NavigationHandleImpl>

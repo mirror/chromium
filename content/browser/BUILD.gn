@@ -1101,6 +1101,8 @@ source_set("browser") {
     "payments/payment_instrument_icon_fetcher.h",
     "payments/payment_manager.cc",
     "payments/payment_manager.h",
+    "permissions/capability_broker.cc",
+    "permissions/capability_broker.h",
     "permissions/permission_service_context.cc",
     "permissions/permission_service_context.h",
     "permissions/permission_service_impl.cc",
