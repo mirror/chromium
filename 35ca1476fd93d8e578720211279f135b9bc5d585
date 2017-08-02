@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc5d3b3c_65ae2927",
+        "filename": "content/renderer/pepper/pepper_webplugin_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-02T22:07:17Z",
+      "side": 1,
+      "message": "I think ideally this code would handle the copy of text into the clipboard and then replacing the selection instead of doing some of here and some of it in the WebPluginContainerImpl.\n\nMight want to also avoid duplicate code with the 2 arg version.",
+      "revId": "35ca1476fd93d8e578720211279f135b9bc5d585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
