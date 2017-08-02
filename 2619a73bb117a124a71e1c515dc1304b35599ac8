@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9508da5f_c0e25f82",
+        "filename": "chrome/browser/autocomplete/chrome_autocomplete_provider_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-08-02T22:00:31Z",
+      "side": 1,
+      "message": "This intentionally appears here rather than at the beginning of the method in order to ensure a clean merge to M61 (where the IsOffTheRecord and storage_partition_ lines do not exist). In the follow-on CL to this one, it will be moved to the beginning.",
+      "revId": "2619a73bb117a124a71e1c515dc1304b35599ac8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
