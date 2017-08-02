@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52fc6a1a_a64c5678",
+        "filename": "services/device/generic_sensor/platform_sensor_provider_linux.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-02T19:36:03Z",
+      "side": 1,
+      "message": "// If this PlatformSensorFusion object is successfully initialized\n// |callback| will be run with a reference to this object.\n\n(and below)",
+      "range": {
+        "startLine": 247,
+        "startChar": 0,
+        "endLine": 248,
+        "endChar": 56
+      },
+      "revId": "b8edf150d0df208dd50c0bf299367085de896d1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
