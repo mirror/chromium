@@ -16,6 +16,24 @@
       "revId": "d154e953bc512dc27f84be61ee5b8cc1a24e304d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf7bbfd2_798bf9b2",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_importer.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-08-02T21:53:35Z",
+      "side": 1,
+      "message": "That\u0027s right -- they shouldn\u0027t be, I think they actually are, which is a bug: https://crbug.com/751844",
+      "parentUuid": "9dc86601_a76e35e9",
+      "revId": "d154e953bc512dc27f84be61ee5b8cc1a24e304d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
