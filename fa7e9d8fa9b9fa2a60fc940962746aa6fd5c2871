@@ -16,6 +16,24 @@
       "revId": "fa7e9d8fa9b9fa2a60fc940962746aa6fd5c2871",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "290d22cd_73fa2137",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/ScrollingCoordinator.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 785,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-02T18:03:17Z",
+      "side": 1,
+      "message": "It seems that neither David nor I understand this, and the crash rate is so high, I think this is important to improve our understand in this area, beyond just this specific case.",
+      "parentUuid": "05c90032_7967f256",
+      "revId": "fa7e9d8fa9b9fa2a60fc940962746aa6fd5c2871",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
