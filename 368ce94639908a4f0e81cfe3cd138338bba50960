@@ -19,6 +19,57 @@
     },
     {
       "key": {
+        "uuid": "80a57da7_62f8ea34",
+        "filename": "chromeos/dbus/virtual_file_provider_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-02T05:54:08Z",
+      "side": 1,
+      "message": "\u003d default; here, too?",
+      "revId": "368ce94639908a4f0e81cfe3cd138338bba50960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68318c91_2c30746e",
+        "filename": "chromeos/dbus/virtual_file_provider_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-02T05:54:08Z",
+      "side": 1,
+      "message": "\u003d default; for consistency with Fake?",
+      "revId": "368ce94639908a4f0e81cfe3cd138338bba50960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e565a252_629e4ad2",
+        "filename": "chromeos/dbus/virtual_file_provider_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-02T05:54:08Z",
+      "side": 1,
+      "message": "optional: Better to use std::unique_ptr for this kind of thing.\nMaybe switch to it in another CL is better (with other client classes) for consistency?",
+      "revId": "368ce94639908a4f0e81cfe3cd138338bba50960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3bbebfdd_b9b31dc8",
         "filename": "chromeos/dbus/virtual_file_provider_client.h",
         "patchSetId": 1
@@ -30,6 +81,23 @@
       "writtenOn": "2017-08-02T05:44:41Z",
       "side": 1,
       "message": "could you explain a bit about VirtualFileProvider?",
+      "revId": "368ce94639908a4f0e81cfe3cd138338bba50960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0300097_52a7dd33",
+        "filename": "chromeos/dbus/virtual_file_provider_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-02T05:54:08Z",
+      "side": 1,
+      "message": "RepeatingCallback to indicate this is called multiple times?",
       "revId": "368ce94639908a4f0e81cfe3cd138338bba50960",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
