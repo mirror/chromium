@@ -22,6 +22,30 @@
       "revId": "20890cac49203026474dc23001b16f9cc91938fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "391e07cb_4437fb19",
+        "filename": "ui/native_theme/common_theme.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-02T01:42:59Z",
+      "side": 1,
+      "message": "Seems like readonly textfields should look like disabled textfields by default rather than looking like normal ones?\n\nAm I understanding correctly that the thing in the cookies dialog that uses a readonly textfield is each grey label giving the current value of a cookie property?  If no, then what is?  If yes, then why is that a textfield rather than a label?\n\nI am concerned in general about why that should be grey text, and the a11y impact of using a \"disabled\" style there -- \"disabled\" text is not normally mandated to follow contrast rules, so it may be insufficiently readable to all users.  But these questions seem like they maybe don\u0027t need to be answered on this CL.\n\nOtherwise, I\u0027m all for removing these constants and instead doing something like \"in Textfield itself, READONLY state is drawn like ____ state by default\".",
+      "parentUuid": "4a524b47_150ec7f6",
+      "range": {
+        "startLine": 88,
+        "startChar": 23,
+        "endLine": 88,
+        "endChar": 51
+      },
+      "revId": "20890cac49203026474dc23001b16f9cc91938fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
