@@ -16,6 +16,24 @@
       "revId": "aa0f340823c1d2f7bf11373f38fc314c62f05875",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47664a6e_8defb50f",
+        "filename": "components/page_info_strings.grdp",
+        "patchSetId": 11
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-02T15:59:04Z",
+      "side": 1,
+      "message": "In fact, this section of strings is within \u003cif expr\u003d\"not is_ios\"\u003e ... \u003c/if\u003e. \nsee line 59.\nI\u0027ll add page_info_strings owner to take another look.",
+      "parentUuid": "12f48e23_9df430da",
+      "revId": "aa0f340823c1d2f7bf11373f38fc314c62f05875",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
