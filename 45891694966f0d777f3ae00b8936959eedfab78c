@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c7089aff_a3252a1c",
+        "filename": "third_party/WebKit/Source/core/exported/WebPluginContainerImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 873,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-02T19:10:01Z",
+      "side": 1,
+      "message": "To be specific, right now, you have the code structured like:\n\nif (input_modifiers \u003d\u003d kEditingModifier \u0026\u0026 HasSelection()) {\n  // maybe copy + return\n  // maybe cut + return\n}\nif (input_modifiers \u003d\u003d kEditingModifier \u0026\u0026 ...) {\n  // paste + return\n}\n\nand I am suggesting doing the following:\n\nif (input_modifiers \u003d\u003d kEditingModifier) {\n  if (HasSelection()) {\n    // maybe copy + return\n    // maybe cut + return\n  }\n  // maybe paste + return\n}",
+      "parentUuid": "6f480c00_a939ae2a",
+      "revId": "45891694966f0d777f3ae00b8936959eedfab78c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d5a24050_3cd4b5f8",
         "filename": "third_party/WebKit/Source/core/exported/WebPluginContainerImpl.cpp",
         "patchSetId": 2
