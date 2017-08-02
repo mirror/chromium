@@ -59,7 +59,7 @@ def main():
   chartjson_results_present = '--output-format=chartjson' in rest_args
   chartresults = None
   json_test_results = None
-
+  print 'wip'
   results = None
   try:
     cmd = [sys.executable] + rest_args + [
