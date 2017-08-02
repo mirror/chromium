@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0890f5d1_f371917d",
+        "filename": "third_party/WebKit/Source/controller/leak_detector/BlinkLeakDetectorClient.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-02T08:44:04Z",
+      "side": 1,
+      "message": "Add a class-level comment.",
+      "revId": "216f298dcb5d7d7968730023c52d3b4f84d44f59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33593908_024cbc28",
+        "filename": "third_party/WebKit/Source/controller/leak_detector/README.md",
+        "patchSetId": 9
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-02T08:44:04Z",
+      "side": 1,
+      "message": "I just don\u0027t know but do we need this line?",
+      "revId": "216f298dcb5d7d7968730023c52d3b4f84d44f59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b8e5da1_de994b5f",
+        "filename": "third_party/WebKit/Source/controller/leak_detector/README.md",
+        "patchSetId": 9
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-02T08:44:04Z",
+      "side": 1,
+      "message": "Briefly explain what the leak detector is.",
+      "revId": "216f298dcb5d7d7968730023c52d3b4f84d44f59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
