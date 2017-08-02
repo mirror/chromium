@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e7585a22_49d9eb40",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-02T17:32:23Z",
+      "side": 1,
+      "message": "Done, nice!",
+      "parentUuid": "90909e45_5e5a089d",
+      "revId": "3a4686973cd8b653cdb88508e707fe17204df2e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8819b6c4_e9db32ec",
         "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
         "patchSetId": 12
@@ -33,6 +51,24 @@
       "revId": "3a4686973cd8b653cdb88508e707fe17204df2e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "083207a0_4e49aa83",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-02T17:32:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8819b6c4_e9db32ec",
+      "revId": "3a4686973cd8b653cdb88508e707fe17204df2e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "fd0fcdf2_2a091411",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-02T17:32:23Z",
+      "side": 1,
+      "message": "Done, nice!",
+      "parentUuid": "acb404fb_4c83828a",
+      "revId": "3a4686973cd8b653cdb88508e707fe17204df2e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6ec44b9_16c3d826",
         "filename": "components/ui_devtools/views/ui_devtools_dom_agent.h",
         "patchSetId": 12
@@ -67,6 +121,24 @@
       "revId": "3a4686973cd8b653cdb88508e707fe17204df2e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4dc99f10_7fe7c2ee",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-02T17:32:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6ec44b9_16c3d826",
+      "revId": "3a4686973cd8b653cdb88508e707fe17204df2e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "82d012ec_2367b2ae",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-02T17:32:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8a48385a_069912b5",
+      "revId": "3a4686973cd8b653cdb88508e707fe17204df2e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed4389cd_bcd42da4",
         "filename": "components/ui_devtools/views/ui_devtools_overlay_agent.cc",
         "patchSetId": 12
@@ -98,6 +188,24 @@
       "writtenOn": "2017-08-02T03:11:12Z",
       "side": 1,
       "message": "This should include the root window as an input to FindElementIdTargetedByPoint(). |event| has an associated root window, and the |root_location()| is in the coordinate space of that root. Without sending the root-window, the root_location() loses its meaning. So, something like:\n  aura::Window* target \u003d static_cast\u003c...\u003e(event-\u003etarget());\n  int element_id \u003d dom_agent_-\u003eFindElementIdTargetedByPoint(target-\u003eGetRootWindow(),\n                                                            event-\u003eroot_location());",
+      "revId": "3a4686973cd8b653cdb88508e707fe17204df2e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cadc8185_8c05a8d8",
+        "filename": "components/ui_devtools/views/ui_devtools_overlay_agent.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-02T17:32:23Z",
+      "side": 1,
+      "message": "Done, thanks for clarification! I updated header file comment as well.",
+      "parentUuid": "ed4389cd_bcd42da4",
       "revId": "3a4686973cd8b653cdb88508e707fe17204df2e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -118,6 +226,24 @@
       "revId": "3a4686973cd8b653cdb88508e707fe17204df2e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6abe5a48_05276483",
+        "filename": "components/ui_devtools/views/ui_element.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-02T17:32:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "475f5211_175fbe47",
+      "revId": "3a4686973cd8b653cdb88508e707fe17204df2e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
