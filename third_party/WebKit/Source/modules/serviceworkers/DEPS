@@ -4,6 +4,7 @@ include_rules = [
     "+modules/EventTargetModules.h",
     "+modules/ModulesExport.h",
     "+modules/fetch",
+    "+modules/indexeddb/IndexedDBClientImpl.h",
     "+modules/serviceworkers",
     "+mojo/public/cpp/system/data_pipe.h",
 ]
