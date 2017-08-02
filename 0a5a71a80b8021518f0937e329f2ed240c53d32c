@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "933c8aae_1f619138",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-02T18:54:26Z",
+      "side": 1,
+      "message": "Why are we only recording this when the service is shut down? Shouldn\u0027t we be recording it every time it changes?",
+      "range": {
+        "startLine": 145,
+        "startChar": 0,
+        "endLine": 145,
+        "endChar": 37
+      },
+      "revId": "0a5a71a80b8021518f0937e329f2ed240c53d32c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abbcbf75_cd95ffe1",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-02T18:54:26Z",
+      "side": 1,
+      "message": "This is a race condition. If one of the other callbacks occurs before the adapter is fetched or before the interval is set, the wrong TechnologyState can be set. You need to wait until the Bluetooth stuff is fully initialized before adding any listeners.",
+      "range": {
+        "startLine": 301,
+        "startChar": 0,
+        "endLine": 316,
+        "endChar": 1
+      },
+      "revId": "0a5a71a80b8021518f0937e329f2ed240c53d32c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69cbb06d_eddbe2ba",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-02T18:54:26Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this function have the same shut_down_ check as above?",
+      "range": {
+        "startLine": 331,
+        "startChar": 20,
+        "endLine": 331,
+        "endChar": 62
+      },
+      "revId": "0a5a71a80b8021518f0937e329f2ed240c53d32c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
