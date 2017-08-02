@@ -119,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "0f849a65_a1e4de9b",
+        "filename": "content/browser/dom_storage/dom_storage_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-02T18:04:57Z",
+      "side": 1,
+      "message": "I think this means that the critieria for exactly when to switch keys_only on and off involves more than when the open count transitions between 1 and \u003e1. Once we know the only client has an up to date renderer side cache and no mutation events are inflight with potentially incorrect values, we can drop the browser side cache.\n\nHere\u0027s an idea about how to determine it\u0027s safe to drop it.\n\nWhen the count gets to 1, we want to drop the cache but we don\u0027t know it\u0027s safe yet. Once all messages in transit at this time are flush, it will be safe to do that. We can know when all messages have been flushed by sending a \u0027ping\u0027 to the rendered and waiting for a \u0027pong\u0027 in response.\n\n  when count is 1, send a message to the renderer\n  client-\u003eNotifyDroppingCache(drop_id)\n  the render replies by sending a message back\n  browser-\u003eContnueDroppingCache(drop_id)\n  upon receipt, if count is still 1 --\u003e drop it",
+      "parentUuid": "289c7711_e8365279",
+      "revId": "daa613fdc5671552d7b7d5ba9726c73bfbab1761",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d35764af_dba458eb",
         "filename": "content/browser/dom_storage/dom_storage_host.cc",
         "patchSetId": 5
