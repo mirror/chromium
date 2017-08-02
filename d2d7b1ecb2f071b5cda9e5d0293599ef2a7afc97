@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d24fe861_55685331",
+        "filename": "third_party/WebKit/LayoutTests/inspector/console/console-filter-test-expected.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-02T23:08:29Z",
+      "side": 1,
+      "message": "Currently, groups are set to always be visible, even when everything inside them is filtered out.  I\u0027ve got another CL to address this separate issue\nhttps://chromium-review.googlesource.com/c/592635",
+      "parentUuid": "9b4d6131_b43b91f0",
+      "revId": "d2d7b1ecb2f071b5cda9e5d0293599ef2a7afc97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9d03d7f1_09025824",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "7d3f5929_6bc35308",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-02T23:08:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d03d7f1_09025824",
+      "revId": "d2d7b1ecb2f071b5cda9e5d0293599ef2a7afc97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2247394d_a9a85a0b",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
         "patchSetId": 3
@@ -50,6 +86,24 @@
       "revId": "d2d7b1ecb2f071b5cda9e5d0293599ef2a7afc97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49faeb77_5aea680d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-02T23:08:29Z",
+      "side": 1,
+      "message": "Done.  In the future, maybe \u0027Other\u0027/\u0027Violations\u0027/more specific violation groups.",
+      "parentUuid": "2247394d_a9a85a0b",
+      "revId": "d2d7b1ecb2f071b5cda9e5d0293599ef2a7afc97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "21daa068_2f169586",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-02T23:08:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "587d9be6_e612523f",
+      "range": {
+        "startLine": 47,
+        "startChar": 9,
+        "endLine": 47,
+        "endChar": 21
+      },
+      "revId": "d2d7b1ecb2f071b5cda9e5d0293599ef2a7afc97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "557fa70e_9789a4e8",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
         "patchSetId": 3
@@ -87,6 +165,30 @@
       "writtenOn": "2017-08-02T17:59:52Z",
       "side": 1,
       "message": "Can we instead add contexts one by one? Replacing everything it a big hammer :)",
+      "range": {
+        "startLine": 386,
+        "startChar": 18,
+        "endLine": 386,
+        "endChar": 34
+      },
+      "revId": "d2d7b1ecb2f071b5cda9e5d0293599ef2a7afc97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc687c84_05b16dd4",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-02T23:08:29Z",
+      "side": 1,
+      "message": "Yeah we can do one by one.  However, I still want updates to the sidebar list to be throttled in case messages arrive too fast.  How about:\n\n- replace updateGroupItems() with sidebar.addGroup() + sidebar.clear()\n- when the throttler is scheduled do we then do a sidebar.refresh(), which applies any pending adds/clears",
+      "parentUuid": "557fa70e_9789a4e8",
       "range": {
         "startLine": 386,
         "startChar": 18,
@@ -116,6 +218,24 @@
     },
     {
       "key": {
+        "uuid": "e6873615_6276aa2e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-02T23:08:29Z",
+      "side": 1,
+      "message": "Done via sidebar.addGroup(...)",
+      "parentUuid": "f06ac74c_e918cae3",
+      "revId": "d2d7b1ecb2f071b5cda9e5d0293599ef2a7afc97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01f5096e_e6ea2887",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/consoleSidebar.css",
         "patchSetId": 3
@@ -139,6 +259,30 @@
     },
     {
       "key": {
+        "uuid": "ffa4a359_55dfe126",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/consoleSidebar.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-02T23:08:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01f5096e_e6ea2887",
+      "range": {
+        "startLine": 1,
+        "startChar": 1,
+        "endLine": 1,
+        "endChar": 5
+      },
+      "revId": "d2d7b1ecb2f071b5cda9e5d0293599ef2a7afc97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30d3bd45_4c4f9035",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/consoleView.css",
         "patchSetId": 3
@@ -159,6 +303,30 @@
       "revId": "d2d7b1ecb2f071b5cda9e5d0293599ef2a7afc97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19a6d00d_e5955a85",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/consoleView.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-02T23:08:29Z",
+      "side": 1,
+      "message": "Sorry, undone.",
+      "parentUuid": "30d3bd45_4c4f9035",
+      "range": {
+        "startLine": 40,
+        "startChar": 23,
+        "endLine": 40,
+        "endChar": 26
+      },
+      "revId": "d2d7b1ecb2f071b5cda9e5d0293599ef2a7afc97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -199,6 +367,30 @@
       "revId": "d2d7b1ecb2f071b5cda9e5d0293599ef2a7afc97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fa9f1f8_9c35acf2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console_model/ConsoleModel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-02T23:08:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec710d6f_f86d1780",
+      "range": {
+        "startLine": 450,
+        "startChar": 29,
+        "endLine": 450,
+        "endChar": 34
+      },
+      "revId": "d2d7b1ecb2f071b5cda9e5d0293599ef2a7afc97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
