@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "14273ec3_4e0e6291",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1480,
+      "author": {
+        "id": 1210869
+      },
+      "writtenOn": "2017-08-02T20:37:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "985d1472_d688884a",
+      "revId": "46bc0cc21398a0c629869518b3bffd4d373bf632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77eedd45_13dfe46b",
         "filename": "chrome/browser/ui/browser.cc",
         "patchSetId": 7
@@ -39,6 +57,30 @@
       "revId": "46bc0cc21398a0c629869518b3bffd4d373bf632",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "381eb0fc_515cd206",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1532,
+      "author": {
+        "id": 1210869
+      },
+      "writtenOn": "2017-08-02T20:37:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77eedd45_13dfe46b",
+      "range": {
+        "startLine": 1532,
+        "startChar": 6,
+        "endLine": 1532,
+        "endChar": 37
+      },
+      "revId": "46bc0cc21398a0c629869518b3bffd4d373bf632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -82,6 +124,48 @@
     },
     {
       "key": {
+        "uuid": "03d6959f_481b337a",
+        "filename": "chrome/browser/ui/browser.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1210869
+      },
+      "writtenOn": "2017-08-02T20:37:42Z",
+      "side": 1,
+      "message": "Option 1) seems better because in AddNewContents in browser.h, the opener is checking for the disposition of the new window, to know whether it is a popup. If we move it to BrowserWindowController, we could use browser_-\u003eis_type_popup() but this would return false since it checks for the opener. So we would have to change the logic from the popup\u0027s opener to the popup object.",
+      "parentUuid": "d5694be4_56f59d07",
+      "range": {
+        "startLine": 29,
+        "startChar": 34,
+        "endLine": 29,
+        "endChar": 64
+      },
+      "revId": "46bc0cc21398a0c629869518b3bffd4d373bf632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "818afa4c_de1a29cd",
+        "filename": "chrome/browser/ui/browser.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1210869
+      },
+      "writtenOn": "2017-08-02T20:37:42Z",
+      "side": 1,
+      "message": "?",
+      "parentUuid": "071ca722_52369d19",
+      "revId": "46bc0cc21398a0c629869518b3bffd4d373bf632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4164eeb_ae924c0c",
         "filename": "chrome/browser/ui/browser_window.h",
         "patchSetId": 7
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "b6e8dab0_77731a04",
+        "filename": "chrome/browser/ui/browser_window.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1210869
+      },
+      "writtenOn": "2017-08-02T20:37:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4164eeb_ae924c0c",
+      "range": {
+        "startLine": 179,
+        "startChar": 15,
+        "endLine": 179,
+        "endChar": 43
+      },
+      "revId": "46bc0cc21398a0c629869518b3bffd4d373bf632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31054dbb_0766ac0e",
         "filename": "chrome/browser/ui/cocoa/browser_window_touch_bar.mm",
         "patchSetId": 7
@@ -119,6 +227,24 @@
       "revId": "46bc0cc21398a0c629869518b3bffd4d373bf632",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dcffbcb_8c4ee778",
+        "filename": "chrome/browser/ui/cocoa/browser_window_touch_bar.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1210869
+      },
+      "writtenOn": "2017-08-02T20:37:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31054dbb_0766ac0e",
+      "revId": "46bc0cc21398a0c629869518b3bffd4d373bf632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -162,6 +288,30 @@
     },
     {
       "key": {
+        "uuid": "e2ae1599_cb6dc4ef",
+        "filename": "chrome/browser/ui/cocoa/touchbar_web_contents_observer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1210869
+      },
+      "writtenOn": "2017-08-02T20:37:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59d994f0_2e421079",
+      "range": {
+        "startLine": 63,
+        "startChar": 12,
+        "endLine": 63,
+        "endChar": 21
+      },
+      "revId": "46bc0cc21398a0c629869518b3bffd4d373bf632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee2746d9_bbd1fc19",
         "filename": "components/neterror/resources/offline.js",
         "patchSetId": 7
@@ -176,6 +326,42 @@
       "revId": "46bc0cc21398a0c629869518b3bffd4d373bf632",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6408c51a_a0479e51",
+        "filename": "components/neterror/resources/offline.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1210869
+      },
+      "writtenOn": "2017-08-02T20:37:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee2746d9_bbd1fc19",
+      "revId": "46bc0cc21398a0c629869518b3bffd4d373bf632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fbffe25e_11985b1f",
+        "filename": "components/neterror/resources/offline.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1210869
+      },
+      "writtenOn": "2017-08-02T20:37:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee2746d9_bbd1fc19",
+      "revId": "46bc0cc21398a0c629869518b3bffd4d373bf632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -202,6 +388,30 @@
     },
     {
       "key": {
+        "uuid": "89d01a48_1c60a600",
+        "filename": "components/neterror/resources/offline.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1210869
+      },
+      "writtenOn": "2017-08-02T20:37:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40b36faf_9daa99ce",
+      "range": {
+        "startLine": 503,
+        "startChar": 12,
+        "endLine": 503,
+        "endChar": 15
+      },
+      "revId": "46bc0cc21398a0c629869518b3bffd4d373bf632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6bf0c233_f6a809ca",
         "filename": "components/neterror/resources/offline.js",
         "patchSetId": 7
@@ -216,6 +426,24 @@
       "revId": "46bc0cc21398a0c629869518b3bffd4d373bf632",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7bdb5bc_eb3f6578",
+        "filename": "components/neterror/resources/offline.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1210869
+      },
+      "writtenOn": "2017-08-02T20:37:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6bf0c233_f6a809ca",
+      "revId": "46bc0cc21398a0c629869518b3bffd4d373bf632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -236,6 +464,24 @@
     },
     {
       "key": {
+        "uuid": "ba747b24_b056d3c9",
+        "filename": "components/neterror/resources/offline.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1210869
+      },
+      "writtenOn": "2017-08-02T20:37:42Z",
+      "side": 1,
+      "message": "The canvas already gets created in createCanvas.",
+      "parentUuid": "46cf7418_82e25d5f",
+      "revId": "46bc0cc21398a0c629869518b3bffd4d373bf632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2c702a15_cfc50f22",
         "filename": "components/neterror/resources/offline.js",
         "patchSetId": 7
@@ -250,6 +496,24 @@
       "revId": "46bc0cc21398a0c629869518b3bffd4d373bf632",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "131ff8de_0e67f394",
+        "filename": "components/neterror/resources/offline.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1210869
+      },
+      "writtenOn": "2017-08-02T20:37:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c702a15_cfc50f22",
+      "revId": "46bc0cc21398a0c629869518b3bffd4d373bf632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -273,6 +537,30 @@
       "revId": "46bc0cc21398a0c629869518b3bffd4d373bf632",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a09545a_f64528f5",
+        "filename": "components/neterror/resources/offline.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 2736,
+      "author": {
+        "id": 1210869
+      },
+      "writtenOn": "2017-08-02T20:37:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bbf67018_ffecddc0",
+      "range": {
+        "startLine": 2736,
+        "startChar": 9,
+        "endLine": 2736,
+        "endChar": 18
+      },
+      "revId": "46bc0cc21398a0c629869518b3bffd4d373bf632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -316,6 +604,48 @@
     },
     {
       "key": {
+        "uuid": "f8156aa5_80759eef",
+        "filename": "content/browser/compositor/gpu_output_surface_mac.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1210869
+      },
+      "writtenOn": "2017-08-02T20:37:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d87b7bf_59d76e01",
+      "range": {
+        "startLine": 30,
+        "startChar": 23,
+        "endLine": 30,
+        "endChar": 42
+      },
+      "revId": "46bc0cc21398a0c629869518b3bffd4d373bf632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1f6e3273_474e7bbb",
+        "filename": "content/browser/compositor/gpu_output_surface_mac.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1210869
+      },
+      "writtenOn": "2017-08-02T20:37:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40075126_4a203d1f",
+      "revId": "46bc0cc21398a0c629869518b3bffd4d373bf632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f61847d_ec329ca9",
         "filename": "content/browser/renderer_host/input/web_input_event_builders_mac.h",
         "patchSetId": 7
@@ -327,6 +657,24 @@
       "writtenOn": "2017-07-12T22:32:14Z",
       "side": 1,
       "message": "Now that you\u0027ve figured out why events weren\u0027t making it to the RWHV, would it be possible to just send touch events instead of transforming them into mouse events?",
+      "revId": "46bc0cc21398a0c629869518b3bffd4d373bf632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1996b48_0f48187d",
+        "filename": "content/browser/renderer_host/input/web_input_event_builders_mac.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1210869
+      },
+      "writtenOn": "2017-08-02T20:37:42Z",
+      "side": 1,
+      "message": "Chromium currently doesn\u0027t implement Touch events and their processing from the browser side.",
+      "parentUuid": "7f61847d_ec329ca9",
       "revId": "46bc0cc21398a0c629869518b3bffd4d373bf632",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -350,6 +698,24 @@
     },
     {
       "key": {
+        "uuid": "f17eda46_50b3ec99",
+        "filename": "content/browser/renderer_host/input/web_input_event_builders_mac.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1210869
+      },
+      "writtenOn": "2017-08-02T20:37:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39799a71_42d83875",
+      "revId": "46bc0cc21398a0c629869518b3bffd4d373bf632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbccd3db_6b69f8f8",
         "filename": "content/browser/renderer_host/render_widget_host_view_mac.mm",
         "patchSetId": 7
@@ -361,6 +727,30 @@
       "writtenOn": "2017-07-12T14:11:22Z",
       "side": 1,
       "message": "What are the coordinates going to be on these mouse events?\n\nThis seems like an interop nightmare no if you are generating events from a system that can\u0027t handled them?\n\nPerhaps we really should have a different pointer type for these events and then we can determine them appropriately?",
+      "range": {
+        "startLine": 2403,
+        "startChar": 11,
+        "endLine": 2403,
+        "endChar": 24
+      },
+      "revId": "46bc0cc21398a0c629869518b3bffd4d373bf632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ece9242_59a94656",
+        "filename": "content/browser/renderer_host/render_widget_host_view_mac.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 2403,
+      "author": {
+        "id": 1210869
+      },
+      "writtenOn": "2017-08-02T20:37:42Z",
+      "side": 1,
+      "message": "The coordinates are the ones of the touch events on the Touch bar relative to the origin of the Touch bar view displayed in the Touch Bar",
+      "parentUuid": "bbccd3db_6b69f8f8",
       "range": {
         "startLine": 2403,
         "startChar": 11,
@@ -396,6 +786,30 @@
     },
     {
       "key": {
+        "uuid": "0385c4b5_4015e4a5",
+        "filename": "content/browser/renderer_host/render_widget_host_view_mac.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 2415,
+      "author": {
+        "id": 1210869
+      },
+      "writtenOn": "2017-08-02T20:37:42Z",
+      "side": 1,
+      "message": "WebMouseEvent are not const so this gives a compile error",
+      "parentUuid": "89082c24_822082cb",
+      "range": {
+        "startLine": 2415,
+        "startChar": 14,
+        "endLine": 2415,
+        "endChar": 19
+      },
+      "revId": "46bc0cc21398a0c629869518b3bffd4d373bf632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8b1b7376_23608c5c",
         "filename": "content/browser/renderer_host/render_widget_host_view_mac.mm",
         "patchSetId": 7
@@ -410,6 +824,24 @@
       "revId": "46bc0cc21398a0c629869518b3bffd4d373bf632",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c92a5aa0_6679a57e",
+        "filename": "content/browser/renderer_host/render_widget_host_view_mac.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 2424,
+      "author": {
+        "id": 1210869
+      },
+      "writtenOn": "2017-08-02T20:37:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b1b7376_23608c5c",
+      "revId": "46bc0cc21398a0c629869518b3bffd4d373bf632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -430,6 +862,24 @@
     },
     {
       "key": {
+        "uuid": "db7989a2_3ed2d1a7",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1210869
+      },
+      "writtenOn": "2017-08-02T20:37:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df02ee7c_49c4bea8",
+      "revId": "46bc0cc21398a0c629869518b3bffd4d373bf632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1cefaa61_5b805e34",
         "filename": "content/browser/web_contents/web_contents_impl.cc",
         "patchSetId": 7
@@ -447,6 +897,24 @@
     },
     {
       "key": {
+        "uuid": "c887a40b_a1253320",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2422,
+      "author": {
+        "id": 1210869
+      },
+      "writtenOn": "2017-08-02T20:37:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1cefaa61_5b805e34",
+      "revId": "46bc0cc21398a0c629869518b3bffd4d373bf632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3a3c1a7_0bb39196",
         "filename": "content/browser/web_contents/web_contents_impl.cc",
         "patchSetId": 7
@@ -461,6 +929,24 @@
       "revId": "46bc0cc21398a0c629869518b3bffd4d373bf632",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fe970ed_d3b3be7f",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2426,
+      "author": {
+        "id": 1210869
+      },
+      "writtenOn": "2017-08-02T20:37:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3a3c1a7_0bb39196",
+      "revId": "46bc0cc21398a0c629869518b3bffd4d373bf632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -487,6 +973,30 @@
     },
     {
       "key": {
+        "uuid": "cd4c8149_bb8ba85f",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 3654,
+      "author": {
+        "id": 1210869
+      },
+      "writtenOn": "2017-08-02T20:37:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2849f1a_83840301",
+      "range": {
+        "startLine": 3654,
+        "startChar": 36,
+        "endLine": 3654,
+        "endChar": 37
+      },
+      "revId": "46bc0cc21398a0c629869518b3bffd4d373bf632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1645ba98_2394ab59",
         "filename": "content/public/browser/web_contents.h",
         "patchSetId": 7
@@ -504,6 +1014,24 @@
     },
     {
       "key": {
+        "uuid": "5b4b3dc1_5e672775",
+        "filename": "content/public/browser/web_contents.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1210869
+      },
+      "writtenOn": "2017-08-02T20:37:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1645ba98_2394ab59",
+      "revId": "46bc0cc21398a0c629869518b3bffd4d373bf632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04d47b93_b6c37797",
         "filename": "content/public/browser/web_contents_delegate.h",
         "patchSetId": 7
@@ -518,6 +1046,24 @@
       "revId": "46bc0cc21398a0c629869518b3bffd4d373bf632",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4498fab4_f172c5c3",
+        "filename": "content/public/browser/web_contents_delegate.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1210869
+      },
+      "writtenOn": "2017-08-02T20:37:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04d47b93_b6c37797",
+      "revId": "46bc0cc21398a0c629869518b3bffd4d373bf632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -541,6 +1087,30 @@
       "revId": "46bc0cc21398a0c629869518b3bffd4d373bf632",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d5bc7e3_6429e2c6",
+        "filename": "content/public/common/content_features.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1210869
+      },
+      "writtenOn": "2017-08-02T20:37:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "137fe59f_b1d9377d",
+      "range": {
+        "startLine": 386,
+        "startChar": 39,
+        "endLine": 386,
+        "endChar": 56
+      },
+      "revId": "46bc0cc21398a0c629869518b3bffd4d373bf632",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
