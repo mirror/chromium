@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac99f880_220712f2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-02T20:28:19Z",
+      "side": 1,
+      "message": "More specific description (i.e. what is being migrated?) or we\u0027d have 600 CLs with the same title :)",
+      "range": {
+        "startLine": 7,
+        "startChar": 17,
+        "endLine": 7,
+        "endChar": 41
+      },
+      "revId": "ec61512cfe8de7d8831aaf42f8544393579f46d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9161f87b_4d01708b",
+        "filename": "chrome/browser/spellchecker/spellcheck_custom_dictionary.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-02T20:28:19Z",
+      "side": 1,
+      "message": "Shall we specify an explicit TaskPriority? I\u0027m guessing USER_VISIBLE? Or even BACKGROUND?",
+      "revId": "ec61512cfe8de7d8831aaf42f8544393579f46d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72294577_0ec070d9",
+        "filename": "chrome/browser/spellchecker/spellcheck_custom_dictionary.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-02T20:28:19Z",
+      "side": 1,
+      "message": "#include \"base/task_runner_util.h\"",
+      "revId": "ec61512cfe8de7d8831aaf42f8544393579f46d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
