@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "36064d71_8e8b5b37",
+        "filename": "chrome/common/profiling/memlog.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-08-02T17:10:29Z",
+      "side": 1,
+      "message": "Follow-up CL please..  I filed a bug for it https://bugs.chromium.org/p/chromium/issues/detail?id\u003d751326 and it\u0027s gonna be the next thing I tackle right after making this compile again on windows (and verifying it runs/performs on win/android)",
+      "parentUuid": "fa2b92e7_0045132d",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 51
+      },
+      "revId": "8bbf121b110119b96310acfe79b2ff4ccc459742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aeb81f28_fa4a49a8",
         "filename": "chrome/profiling/memlog_connection_manager.cc",
         "patchSetId": 4
