@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d5fa1911_17493208",
+        "filename": "content/child/service_worker/service_worker_network_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-02T08:46:09Z",
+      "side": 1,
+      "message": "Of course- while people often tend to ask why it\u0027s the case (calling this from the static method in the same class often makes people / us get confused) so I also wanted to save reviewer\u0027s time.",
+      "parentUuid": "d0f60419_a518d9c6",
+      "revId": "52ae45623c5f3e26d6587c75180cd7c3047d565d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f37f1192_42f1533a",
         "filename": "content/child/service_worker/service_worker_network_provider.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-02T08:14:56Z",
       "side": 1,
       "message": "is worth doign something like?\n\n// This is only called for service worker clients.\nDCHECK(provider_type \u003d\u003d WINDOW || provdier_type \u003d\u003d SHARED_WORKER || provider_type \u003d\u003d WORKER))?",
+      "revId": "52ae45623c5f3e26d6587c75180cd7c3047d565d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b2a45d8_506a9f55",
+        "filename": "content/child/service_worker/service_worker_network_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-02T08:46:09Z",
+      "side": 1,
+      "message": "Hm, ok, done (without WORKER one).",
+      "parentUuid": "f37f1192_42f1533a",
       "revId": "52ae45623c5f3e26d6587c75180cd7c3047d565d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b002af59_dbc523b7",
+        "filename": "content/child/service_worker/service_worker_network_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-02T08:46:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75f672d7_95ce7901",
+      "revId": "52ae45623c5f3e26d6587c75180cd7c3047d565d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be960814_3656c4a1",
         "filename": "content/child/service_worker/service_worker_network_provider.h",
         "patchSetId": 1
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-02T08:14:56Z",
       "side": 1,
       "message": "Do dedicataed workers get a ServiceWorkerNetworkProvider? how is it made?",
+      "revId": "52ae45623c5f3e26d6587c75180cd7c3047d565d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76d41695_0e58ac38",
+        "filename": "content/child/service_worker/service_worker_network_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-02T08:46:09Z",
+      "side": 1,
+      "message": "Not yet.",
+      "parentUuid": "be960814_3656c4a1",
       "revId": "52ae45623c5f3e26d6587c75180cd7c3047d565d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -84,6 +156,24 @@
       "revId": "52ae45623c5f3e26d6587c75180cd7c3047d565d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8399308e_aca0c63b",
+        "filename": "content/child/service_worker/service_worker_network_provider.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-02T08:46:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63343746_38ae5617",
+      "revId": "52ae45623c5f3e26d6587c75180cd7c3047d565d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
