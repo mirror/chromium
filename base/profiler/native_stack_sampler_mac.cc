@@ -30,6 +30,7 @@
 namespace base {
 
 namespace {
+uintptr_t kStackSentinelValue = 0xaabbddcc;
 
 // Maps a module's address range (half-open) in memory to an index in a separate
 // data structure.
@@ -430,9 +431,17 @@ void NativeStackSamplerMac::SuspendThreadAndRecordStack(
     StackSamplingProfiler::Sample* sample) {
   x86_thread_state64_t thread_state;
 
+  // Fill buffer with sentinels to aid debugging derefs off the stack.
+  std::fill(reinterpret_cast<uintptr_t*>(stack_buffer->buffer()),
+            reinterpret_cast<uintptr_t*>(
+                reinterpret_cast<uintptr_t>(stack_buffer->buffer()) +
+                stack_buffer->size()),
+            kStackSentinelValue);
+
   // Copy the stack.
 
-  uintptr_t new_stack_top = 0;
+  uintptr_t new_stack_top = 0, new_stack_bottom = 0;
+
   {
     // IMPORTANT NOTE: Do not do ANYTHING in this in this scope that might
     // allocate memory, including indirectly via use of DCHECK/CHECK or other
@@ -456,13 +465,16 @@ void NativeStackSamplerMac::SuspendThreadAndRecordStack(
 
     (*annotator_)(sample);
 
-    CopyStackAndRewritePointers(
-        reinterpret_cast<uintptr_t*>(stack_buffer->buffer()),
-        reinterpret_cast<uintptr_t*>(stack_bottom),
-        reinterpret_cast<uintptr_t*>(stack_top), &thread_state);
+    new_stack_top = reinterpret_cast<uintptr_t>(stack_buffer->buffer()) +
+                    stack_buffer->size();
 
-    new_stack_top =
-        reinterpret_cast<uintptr_t>(stack_buffer->buffer()) + stack_size;
+    new_stack_bottom = new_stack_top - stack_size;
+
+    CopyStackAndRewritePointers(reinterpret_cast<uintptr_t*>(new_stack_bottom),
+                                reinterpret_cast<uintptr_t*>(stack_bottom),
+                                reinterpret_cast<uintptr_t*>(stack_top),
+                                &thread_state);
+
   }  // ScopedSuspendThread
 
   if (test_delegate_)
