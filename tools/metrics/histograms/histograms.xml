@@ -77,6 +77,8 @@ Googlers: There are also a small number of private internal histograms found at
 http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 -->
 
+<!--newcomer here-->
+
 <histogram-configuration>
 
 <!-- Histogram definitions -->
