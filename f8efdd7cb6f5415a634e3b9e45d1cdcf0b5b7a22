@@ -16,6 +16,23 @@
       "revId": "f8efdd7cb6f5415a634e3b9e45d1cdcf0b5b7a22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59c38c43_4ef442d2",
+        "filename": "third_party/WebKit/Source/core/svg/SVGTextContentElementTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-02T01:55:21Z",
+      "side": 1,
+      "message": "nit: Could you add a comment like \"Pass if not crashed.\"?",
+      "revId": "f8efdd7cb6f5415a634e3b9e45d1cdcf0b5b7a22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
