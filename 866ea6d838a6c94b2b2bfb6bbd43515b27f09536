@@ -16,6 +16,24 @@
       "revId": "866ea6d838a6c94b2b2bfb6bbd43515b27f09536",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b0adeab_81600638",
+        "filename": "chrome/browser/ui/ash/palette_delegate_chromeos.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-08-02T23:33:16Z",
+      "side": 1,
+      "message": "Tried that. OneShotTimer can only call a class method with 0 parameters, and I need 1 (rect).",
+      "parentUuid": "3317da6d_3f368203",
+      "revId": "866ea6d838a6c94b2b2bfb6bbd43515b27f09536",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
