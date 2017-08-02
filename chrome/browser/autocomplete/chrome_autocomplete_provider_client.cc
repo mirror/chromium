@@ -293,6 +293,9 @@ void ChromeAutocompleteProviderClient::PrefetchImage(const GURL& url) {
 
 void ChromeAutocompleteProviderClient::StartServiceWorker(
     const GURL& destination_url) {
+  if (!SearchSuggestEnabled())
+    return;
+
   if (profile_->IsOffTheRecord())
     return;
 
@@ -304,9 +307,6 @@ void ChromeAutocompleteProviderClient::StartServiceWorker(
 
   content::ServiceWorkerContext* context = partition->GetServiceWorkerContext();
   if (!context)
-    return;
-
-  if (!SearchSuggestEnabled())
     return;
 
   context->StartServiceWorkerForNavigationHint(destination_url,
