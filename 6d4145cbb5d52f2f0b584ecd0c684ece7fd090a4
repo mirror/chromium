@@ -330,6 +330,24 @@
     },
     {
       "key": {
+        "uuid": "492a1c29_49c9602a",
+        "filename": "chrome/browser/ui/views/harmony/layout_provider_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-02T20:10:01Z",
+      "side": 1,
+      "message": "This is a good thing to find!  It suggests that we actually need a Windows version-specific switch when computing our metrics, or Win 7 and Win 10 users will see real differences in Harmony layout.\n\nIn an ideal world we would also handle 8 well.  In practice much of our UI just kinda lumps 8 in with either 10 or 7, and I\u0027m OK with doing that if it\u0027s too annoying to deal with 8.",
+      "parentUuid": "d6e14cf3_751d581c",
+      "revId": "6d4145cbb5d52f2f0b584ecd0c684ece7fd090a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "79b8db02_b222dbf3",
         "filename": "ui/views/layout/layout_provider.cc",
         "patchSetId": 11
