@@ -191,7 +191,7 @@ class PermissionRequestManager
   std::unique_ptr<PermissionPrompt> view_;
   // We only show prompts when both of these are true. On Desktop, we hide any
   // active prompt on tab switching, while on Android we let the infobar system
-  // handle it.
+  // handle it and modals prevent tab switching.
   bool main_frame_has_fully_loaded_;
   bool tab_can_show_prompts_;
 

@@ -121,11 +121,7 @@ PermissionRequestManager::PermissionRequestManager(
       tab_can_show_prompts_(false),
       persist_(true),
       auto_response_for_test_(NONE),
-      weak_factory_(this) {
-#if defined(OS_ANDROID)
-  tab_can_show_prompts_ = true;
-#endif
-}
+      weak_factory_(this) {}
 
 PermissionRequestManager::~PermissionRequestManager() {
   DCHECK(requests_.empty());
@@ -233,8 +229,10 @@ void PermissionRequestManager::CancelRequest(PermissionRequest* request) {
 void PermissionRequestManager::HideBubble() {
   tab_can_show_prompts_ = false;
 
+#if !defined(OS_ANDROID)
   if (view_)
     DeleteBubble();
+#endif
 }
 
 void PermissionRequestManager::DisplayPendingRequests() {
@@ -247,7 +245,11 @@ void PermissionRequestManager::DisplayPendingRequests() {
     DequeueRequestsAndShowBubble();
   } else {
     // We switched tabs away and back while a prompt was active.
+#if defined(OS_ANDROID)
+    DCHECK(view_);
+#else
     ShowBubble();
+#endif
   }
 }
 
