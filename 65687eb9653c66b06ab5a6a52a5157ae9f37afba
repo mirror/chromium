@@ -220,6 +220,24 @@
     },
     {
       "key": {
+        "uuid": "6141c5e3_d05a52b0",
+        "filename": "chrome/profiling/memlog_connection_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-08-02T18:18:39Z",
+      "side": 1,
+      "message": "Allright, let\u0027s just get something working. Can we add a TODO here and in the reader where we lock referencing this desire?",
+      "parentUuid": "8a41c586_e1ed0690",
+      "revId": "65687eb9653c66b06ab5a6a52a5157ae9f37afba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9cd953d8_44d39357",
         "filename": "chrome/profiling/memlog_impl.cc",
         "patchSetId": 3
