@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "551225cd_0d38fbe2",
+        "filename": "third_party/WebKit/Source/controller/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-02T06:12:45Z",
+      "side": 1,
+      "message": "I\u0027d prefer avoiding a lot of random files at the top level of controller/. Would you mind creating controller/leak_detector/ (including README.md you had before)?",
+      "revId": "f550a01a06d97b48c82d339fc062bb3992fe5437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76ba137b_fb6c10c8",
+        "filename": "third_party/WebKit/Source/controller/LeakDetector.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-02T06:12:45Z",
+      "side": 1,
+      "message": "Can we rename this to BlinkLeakDetector? I\u0027d prefer avoid having the same name classes in //content/ and WebKit.",
+      "revId": "f550a01a06d97b48c82d339fc062bb3992fe5437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b631f93b_56413d78",
+        "filename": "third_party/WebKit/Source/controller/LeakDetectorClient.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-02T06:12:45Z",
+      "side": 1,
+      "message": "Add an empty line.",
+      "revId": "f550a01a06d97b48c82d339fc062bb3992fe5437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a679e505_7c1d8604",
+        "filename": "third_party/WebKit/Source/controller/LeakDetectorClient.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-02T06:12:45Z",
+      "side": 1,
+      "message": "Rename this to BlinkLeakDetectorClient, or move this to an internal class of BlinkLeakDetector (BlinkLeakDetector::Client).",
+      "revId": "f550a01a06d97b48c82d339fc062bb3992fe5437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf70cbf6_f33bf3d2",
+        "filename": "third_party/WebKit/Source/controller/WebLeakDetector.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-02T06:12:45Z",
+      "side": 1,
+      "message": "For simplicity, can you remove LeakDetectorClient?\n\nYou can just make LeakDetector hold a back pointer to WebLeakDetectorImpl.",
+      "revId": "f550a01a06d97b48c82d339fc062bb3992fe5437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb365948_33e128c7",
+        "filename": "third_party/WebKit/Source/modules/ModulesInitializer.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-02T06:12:45Z",
+      "side": 1,
+      "message": "This is no longer needed, right?",
+      "revId": "f550a01a06d97b48c82d339fc062bb3992fe5437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
