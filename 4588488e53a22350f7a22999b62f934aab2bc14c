@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d71a541_299c4c28",
+        "filename": "components/sync/user_events/user_event_service_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1189064
+      },
+      "writtenOn": "2017-08-02T13:07:11Z",
+      "side": 1,
+      "message": "[nit] I\u0027d call these conditions \"known (and immutable) at startup\" rather than constant, but that\u0027s a fairly pedantic distinction.",
+      "range": {
+        "startLine": 41,
+        "startChar": 5,
+        "endLine": 41,
+        "endChar": 11
+      },
+      "revId": "4588488e53a22350f7a22999b62f934aab2bc14c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
