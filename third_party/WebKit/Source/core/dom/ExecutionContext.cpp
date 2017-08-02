@@ -27,7 +27,6 @@
 
 #include "core/dom/ExecutionContext.h"
 
-#include <memory>
 #include "bindings/core/v8/SourceLocation.h"
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "core/dom/SuspendableObject.h"
@@ -56,9 +55,26 @@ ExecutionContext::ExecutionContext()
 
 ExecutionContext::~ExecutionContext() {}
 
+// static
 ExecutionContext* ExecutionContext::From(const ScriptState* script_state) {
   v8::HandleScope scope(script_state->GetIsolate());
   return ToExecutionContext(script_state->GetContext());
+}
+
+// static
+ExecutionContext* ExecutionContext::ForFunctionObject(
+    const v8::FunctionCallbackInfo<v8::Value>& info) {
+  // We're assuming that the current context is not yet changed since
+  // the callback function has got called back.
+  // TODO(yukishiino): Once info.GetFunctionContext() gets implemented,
+  // we should use it instead.
+  return ToExecutionContext(info.GetIsolate()->GetCurrentContext());
+}
+
+// static
+ExecutionContext* ExecutionContext::ForReceiverObject(
+    const v8::FunctionCallbackInfo<v8::Value>& info) {
+  return ToExecutionContext(info.Holder()->CreationContext());
 }
 
 void ExecutionContext::SuspendSuspendableObjects() {
