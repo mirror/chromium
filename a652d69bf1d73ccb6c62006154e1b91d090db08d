@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37d9fa1b_9acb2e60",
+        "filename": "net/ntlm/ntlm_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-08-02T18:47:50Z",
+      "side": 1,
+      "message": "Why is this necessary? It\u0027s only supposed to do something on Mac and we aren\u0027t invoking it?",
+      "revId": "a652d69bf1d73ccb6c62006154e1b91d090db08d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
