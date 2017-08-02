@@ -1,0 +1,205 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce5cf100_c49c14a0",
+        "filename": "chrome/installer/zucchini/rel32_finder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-02T07:28:26Z",
+      "side": 1,
+      "message": "the abs32 reference\u0027s interval lie entirely before |offset|.",
+      "range": {
+        "startLine": 12,
+        "startChar": 36,
+        "endLine": 12,
+        "endChar": 75
+      },
+      "revId": "c29c55030f4b5ecdd160d6116b6291a4d3fe93b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16905351_d0425fe1",
+        "filename": "chrome/installer/zucchini/rel32_finder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-02T07:28:26Z",
+      "side": 1,
+      "message": "Sorry for changing things again. I realized \"head\" and \"tail\" are kinda ill-defined. How about:\n\nIt has various collision scenarios with [|offset|, |offset| + |length|) (oooo), e.g.:",
+      "range": {
+        "startLine": 20,
+        "startChar": 44,
+        "endLine": 20,
+        "endChar": 58
+      },
+      "revId": "c29c55030f4b5ecdd160d6116b6291a4d3fe93b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35b1d086_279d3b97",
+        "filename": "chrome/installer/zucchini/rel32_finder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-02T07:28:26Z",
+      "side": 1,
+      "message": "Add the case where there is no collision:\n......aaaa\noooo......",
+      "range": {
+        "startLine": 23,
+        "startChar": 37,
+        "endLine": 23,
+        "endChar": 0
+      },
+      "revId": "c29c55030f4b5ecdd160d6116b6291a4d3fe93b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01aa2c57_4c4ae10d",
+        "filename": "chrome/installer/zucchini/rel32_finder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-02T07:28:26Z",
+      "side": 1,
+      "message": "lowest offset",
+      "range": {
+        "startLine": 25,
+        "startChar": 34,
+        "endLine": 25,
+        "endChar": 38
+      },
+      "revId": "c29c55030f4b5ecdd160d6116b6291a4d3fe93b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18ac058f_69321eab",
+        "filename": "chrome/installer/zucchini/rel32_finder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-02T07:28:26Z",
+      "side": 1,
+      "message": "highest offset",
+      "range": {
+        "startLine": 25,
+        "startChar": 60,
+        "endLine": 25,
+        "endChar": 64
+      },
+      "revId": "c29c55030f4b5ecdd160d6116b6291a4d3fe93b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21c6e0c2_087a9d85",
+        "filename": "chrome/installer/zucchini/rel32_finder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-02T07:28:26Z",
+      "side": 1,
+      "message": "There\u0027s significant change in algorithm compared to rel32_finder.h in Zucchini trunk. Two approaches:\n(1) Iterate abs32 obstacles in lockstep with finding rel32, and use collision to reject candidate rel32 as well as guide rel32 scan pos.\n(2) Outer loop: find gaps between successive abs32, Pass those gaps repeatedly to rel32 finder, which in inner loop, finds rel32 in gaps.,\n\nCourgette and this CL uses (1), whereas Zucchini trunk uses (2) (although using callback function for inner loop).  I think (2) is more appealing as it separates concerns (obstacle finding \u0026 disassembling code to find rel32).  However, callback usage in (2) makes it less streamable!  Certainly we can store states to emulate the double for-loop, but that\u0027s ugly if done in a single function.\n\nI propose a hybrid approach: Replace Abs32CollisionDetector with Abs32GapFinder.  Then:\n\n*** Caller ***\nAbs32GapFinder gap_finder(abs32_locations, abs32_width, region);\nRel32Finder finder(\u0026gap_finder);\nReference ref;\nwhile (region.GetNext(\u0026ref)) {\n  ...\n}\n\n*** Abs32GapFinder ***\n\nAbs32GapFinder::Abs32GapFinder(locations, width, region) : (store) {\n  // Init: Binary search region head into locations.\n}\n\nConstBufferView Abs32GapFinder::GetNext() {\n  // Compute next gap and return. If none left, return empty Region.\n}\n\n*** Rel32Finder ***\nexplicit Rel32Finder::Rel32Finder(Abs32GapFinder* gap_finder)\n    : gap_finder_(gap_finder) {\n}\n\nvirtual bool Rel32Finder::ParseCode(Reference* ref) \u003d 0;\n\nbool Rel32Finder::GetNext(Reference* ref) {\n  do {\n    if (ParseCode(ref))\n      return true;\n  } while (gap_finder.GetNext(\u0026code_));\n  return false;\n}\n\nAbs32GapFinder* gap_finder_;\n\nprotected:\nConstBufferView Rel32Finder::code_ \u003d EMPTY;\n\n*** Rel32Finder_For_Arch ***\n\nbool Rel32Finder_For_Arch::ParseCode(Reference* ref) override {\n  // Scan |code_| and disassemble, shrink it as we go. Return when found or exhausted.\n}",
+      "revId": "c29c55030f4b5ecdd160d6116b6291a4d3fe93b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d71d0a43_8994b1ce",
+        "filename": "chrome/installer/zucchini/rel32_finder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-02T07:28:26Z",
+      "side": 1,
+      "message": "(Might be Moot)\n\nPerhaps: \"is a sorted list of distinct abs32 reference locations, each spanning |abs32_width| bytes.\"  ?\n\nAlso, I\u0027m not sure how strict should we be in assuming that they (1) are distinct, (2) don\u0027t overlap. Presumably we can get a pathological PE file. Perhaps after the sort, we can check, and go to raw mode if something is weird?",
+      "range": {
+        "startLine": 26,
+        "startChar": 23,
+        "endLine": 26,
+        "endChar": 68
+      },
+      "revId": "c29c55030f4b5ecdd160d6116b6291a4d3fe93b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2e01a29_1e6b4bb1",
+        "filename": "chrome/installer/zucchini/rel32_finder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-02T07:28:26Z",
+      "side": 1,
+      "message": "(Might be Moot)\n\nSeems Collides() and NextOffset() can be combined? Collide() can return 0 if there is no collision. If collision occurs, then Collide() can return the minimal |delta| to be added to |offset| so that |offset + delta| steers clear of the current obstacle (but may run into the next one).",
+      "range": {
+        "startLine": 36,
+        "startChar": 7,
+        "endLine": 36,
+        "endChar": 15
+      },
+      "revId": "c29c55030f4b5ecdd160d6116b6291a4d3fe93b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec7a7ee2_c0ecfa2a",
+        "filename": "chrome/installer/zucchini/rel32_finder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-02T07:28:26Z",
+      "side": 1,
+      "message": "(Might be Moot)\n\nNIT: s/once/if/? Otherwise it parses weird.",
+      "range": {
+        "startLine": 39,
+        "startChar": 10,
+        "endLine": 39,
+        "endChar": 14
+      },
+      "revId": "c29c55030f4b5ecdd160d6116b6291a4d3fe93b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
