@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "ac9e1467_1fe78eac",
+        "filename": "chrome/browser/search/instant_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T12:06:31Z",
+      "side": 1,
+      "message": "I think this isn\u0027t needed anymore",
+      "range": {
+        "startLine": 30,
+        "startChar": 42,
+        "endLine": 30,
+        "endChar": 0
+      },
+      "revId": "c7c6bbe1dffbedad5ffb65122cfef0d3492f350a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b9216876_f0017f6a",
         "filename": "chrome/browser/search/instant_service.cc",
         "patchSetId": 7
@@ -47,6 +70,23 @@
       "writtenOn": "2017-08-02T11:34:11Z",
       "side": 1,
       "message": "dito:\n\n// Sets the URLs that the renderer should send back to the browser process for reassignment to an Instant renderer.",
+      "revId": "c7c6bbe1dffbedad5ffb65122cfef0d3492f350a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7986e2f_cae7f4cf",
+        "filename": "chrome/renderer/searchbox/search_bouncer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T12:06:31Z",
+      "side": 1,
+      "message": "Is Unretained() safe here? If so, add a comment why?",
       "revId": "c7c6bbe1dffbedad5ffb65122cfef0d3492f350a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
