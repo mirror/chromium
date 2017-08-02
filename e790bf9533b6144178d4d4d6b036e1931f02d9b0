@@ -518,6 +518,54 @@
     },
     {
       "key": {
+        "uuid": "8f3586c9_4569f38b",
+        "filename": "components/crash/content/app/crashpad_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-02T20:52:08Z",
+      "side": 1,
+      "message": "what i mean is that this is a \"component\" that is embedded in chrome (.../src/components rather than .../src/chrome). is it okay for the component to have this chrome-specific constant hardcoded in it rather than injected by the embedder? this seems wrong to me. a DEPS rule forbids you from a simple #include \"chrome/common/chrome_switches.h\" for a reason. i don\u0027t think that reason is \"because it\u0027s more fun to redefine things here!\" ;-)",
+      "parentUuid": "93d09049_78478c5c",
+      "range": {
+        "startLine": 113,
+        "startChar": 47,
+        "endLine": 113,
+        "endChar": 62
+      },
+      "revId": "e790bf9533b6144178d4d4d6b036e1931f02d9b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2a5a35f7_9e8bc813",
+        "filename": "components/crash/content/app/crashpad_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-02T20:52:08Z",
+      "side": 1,
+      "message": "i think basic_string has always had a non-member function for this (http://en.cppreference.com/w/cpp/string/basic_string/operator%2B).",
+      "parentUuid": "871a03a1_d4f5263d",
+      "range": {
+        "startLine": 113,
+        "startChar": 34,
+        "endLine": 113,
+        "endChar": 46
+      },
+      "revId": "e790bf9533b6144178d4d4d6b036e1931f02d9b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a53ba8c7_760c0a6e",
         "filename": "headless/lib/headless_content_main_delegate.cc",
         "patchSetId": 8
