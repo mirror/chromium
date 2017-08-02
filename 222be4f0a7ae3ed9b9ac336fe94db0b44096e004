@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d9c1d6ce_1888fed9",
+        "filename": "components/viz/host/hit_test/hit_test_query.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-02T19:50:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cae193a6_39081f74",
+      "revId": "222be4f0a7ae3ed9b9ac336fe94db0b44096e004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5be210e_2ed743b8",
         "filename": "components/viz/host/hit_test/hit_test_query.h",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "222be4f0a7ae3ed9b9ac336fe94db0b44096e004",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7ffb6ad_883bb999",
+        "filename": "components/viz/host/hit_test/hit_test_query.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-02T19:50:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5be210e_2ed743b8",
+      "revId": "222be4f0a7ae3ed9b9ac336fe94db0b44096e004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3887cd3a_bd3385d5",
+        "filename": "components/viz/host/hit_test/hit_test_query.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-02T19:50:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ca66ae64_8794089e",
+      "revId": "222be4f0a7ae3ed9b9ac336fe94db0b44096e004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "abf8438e_c01bb69b",
         "filename": "services/ui/ws/window_server.h",
         "patchSetId": 4
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "fb772479_bc1bec73",
+        "filename": "services/ui/ws/window_server.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-02T19:50:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abf8438e_c01bb69b",
+      "revId": "222be4f0a7ae3ed9b9ac336fe94db0b44096e004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c2e22a3_4e0cd630",
         "filename": "services/viz/compositing/privileged/interfaces/frame_sink_manager.mojom",
         "patchSetId": 4
@@ -84,6 +156,24 @@
       "revId": "222be4f0a7ae3ed9b9ac336fe94db0b44096e004",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e531d23_5e3f00a8",
+        "filename": "services/viz/compositing/privileged/interfaces/frame_sink_manager.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-02T19:50:59Z",
+      "side": 1,
+      "message": "Updated the interface as discussed.",
+      "parentUuid": "1c2e22a3_4e0cd630",
+      "revId": "222be4f0a7ae3ed9b9ac336fe94db0b44096e004",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
