@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "7f7496b1_6645ab9e",
+        "filename": "ash/system/update/tray_update.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-02T01:03:52Z",
+      "side": 1,
+      "message": "You need to call ResetForTesting() at the end of each test, or add TrayUpdateTest::SetUp() and call it before AshTestBase::SetUp().\n\nAshTestBase creates ash::Shell during SetUp(), so it\u0027s probably creating a TrayUpdate with the old static values.",
+      "parentUuid": "d6dfb23e_f93f95e8",
+      "revId": "a41731c91990bb905e6570c5c7edf35ead586f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8dc44e9e_af29ee80",
         "filename": "ash/system/update/tray_update.h",
         "patchSetId": 1
