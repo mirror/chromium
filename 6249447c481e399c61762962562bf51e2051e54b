@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fef4d6dd_ad5c4ef2",
+        "filename": "ios/chrome/browser/passwords/password_controller_js_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-02T17:18:51Z",
+      "side": 1,
+      "message": "Broken comment.",
+      "range": {
+        "startLine": 304,
+        "startChar": 19,
+        "endLine": 304,
+        "endChar": 37
+      },
+      "revId": "6249447c481e399c61762962562bf51e2051e54b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
