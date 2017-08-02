@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b1d71d8b_89545594",
+        "filename": "base/profiler/native_stack_sampler_mac.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1171114
+      },
+      "writtenOn": "2017-08-02T22:37:36Z",
+      "side": 1,
+      "message": "ellyjones@ suggested it as a debugging tool (would be immediately visible in minidumps, etc). No problem dropping it if you think it\u0027s more trouble than it\u0027s worth.",
+      "parentUuid": "97e32f36_14b32455",
+      "range": {
+        "startLine": 34,
+        "startChar": 16,
+        "endLine": 34,
+        "endChar": 35
+      },
+      "revId": "4297a39aacf6d2c94be6e62cdf7a22acd146d9cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "830e81f9_91012a76",
         "filename": "base/profiler/native_stack_sampler_mac.cc",
         "patchSetId": 3
