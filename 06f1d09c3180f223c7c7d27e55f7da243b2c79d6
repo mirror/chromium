@@ -46,6 +46,30 @@
       "revId": "06f1d09c3180f223c7c7d27e55f7da243b2c79d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d27914cb_776d7f8e",
+        "filename": "components/arc/common/video_encode_accelerator.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-02T09:30:49Z",
+      "side": 1,
+      "message": "Result callbacks in Mojo are asynchronous though.\n\n(Basically, what I\u0027m trying to explore here is if we really need frame_id or if the implicit association from invoking the return callback is sufficient. With Mojo, it\u0027s nice to avoid plumbing an explicit ID if the system can provide the same thing)",
+      "parentUuid": "bc9f8646_b7882dca",
+      "range": {
+        "startLine": 202,
+        "startChar": 2,
+        "endLine": 202,
+        "endChar": 42
+      },
+      "revId": "06f1d09c3180f223c7c7d27e55f7da243b2c79d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
