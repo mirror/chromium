@@ -192,7 +192,7 @@ void NativeProcessLauncherImpl::Core::DoLaunchOnThreadPool(
   // way the host will be able to create properly focused UI windows.
 #if defined(OS_WIN)
   command_line.AppendArg(
-      base::StringPrintf("--parent-window=%d", window_handle_));
+      base::StringPrintf("--parent-window=%zd", window_handle_));
 #endif  // !defined(OS_WIN)
 
   base::Process process;
