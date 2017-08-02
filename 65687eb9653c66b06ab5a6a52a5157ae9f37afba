@@ -202,6 +202,24 @@
     },
     {
       "key": {
+        "uuid": "8a41c586_e1ed0690",
+        "filename": "chrome/profiling/memlog_connection_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-08-02T18:14:42Z",
+      "side": 1,
+      "message": "FWIW, I expect in 1-2 weeks to collapse to a single reader thread which will make this all go away.",
+      "parentUuid": "fda9a3fd_bff13ab0",
+      "revId": "65687eb9653c66b06ab5a6a52a5157ae9f37afba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9cd953d8_44d39357",
         "filename": "chrome/profiling/memlog_impl.cc",
         "patchSetId": 3
