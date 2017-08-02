@@ -25,6 +25,161 @@
     },
     {
       "key": {
+        "uuid": "1edb62ae_63ada00b",
+        "filename": "content/browser/service_worker/service_worker_content_settings_proxy_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-02T00:33:39Z",
+      "side": 1,
+      "message": "line 23 could probably fit more text",
+      "revId": "a27c8919e8c6dc0ab47482894ca718d353ecc459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2556efa_3ff06f53",
+        "filename": "content/browser/service_worker/service_worker_content_settings_proxy_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-02T00:33:39Z",
+      "side": 1,
+      "message": "the new ServiceWorkerContentSettingsProxyImpl",
+      "range": {
+        "startLine": 25,
+        "startChar": 52,
+        "endLine": 25,
+        "endChar": 61
+      },
+      "revId": "a27c8919e8c6dc0ab47482894ca718d353ecc459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f82c25a_fa300efc",
+        "filename": "content/browser/service_worker/service_worker_content_settings_proxy_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-02T00:33:39Z",
+      "side": 1,
+      "message": "creates a StrongBinding",
+      "range": {
+        "startLine": 25,
+        "startChar": 15,
+        "endLine": 25,
+        "endChar": 22
+      },
+      "revId": "a27c8919e8c6dc0ab47482894ca718d353ecc459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcf7c0ab_29b60543",
+        "filename": "content/browser/service_worker/service_worker_content_settings_proxy_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-02T00:33:39Z",
+      "side": 1,
+      "message": "same as its",
+      "range": {
+        "startLine": 25,
+        "startChar": 69,
+        "endLine": 26,
+        "endChar": 8
+      },
+      "revId": "a27c8919e8c6dc0ab47482894ca718d353ecc459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df006cf6_ac2e38a3",
+        "filename": "content/browser/service_worker/service_worker_content_settings_proxy_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-02T00:33:39Z",
+      "side": 1,
+      "message": "Response",
+      "range": {
+        "startLine": 43,
+        "startChar": 22,
+        "endLine": 43,
+        "endChar": 30
+      },
+      "revId": "a27c8919e8c6dc0ab47482894ca718d353ecc459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fbfbceb_9c957231",
+        "filename": "content/common/service_worker/embedded_worker.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-02T00:33:39Z",
+      "side": 1,
+      "message": "browser",
+      "range": {
+        "startLine": 80,
+        "startChar": 47,
+        "endLine": 80,
+        "endChar": 54
+      },
+      "revId": "a27c8919e8c6dc0ab47482894ca718d353ecc459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dabba7c_c8f8141f",
+        "filename": "content/common/service_worker/embedded_worker.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-02T00:33:39Z",
+      "side": 1,
+      "message": "the \"each\"/\"every\" relationship is a bit ambiguous. maybe rephrase as:\n// When a relevant web exposed API is called, the renderer calls the appropriate method on this interface. The methods are synchronous because the web exposed APIs are synchronous.",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 82,
+        "endChar": 44
+      },
+      "revId": "a27c8919e8c6dc0ab47482894ca718d353ecc459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "57e0667f_af060ea7",
         "filename": "content/renderer/service_worker/embedded_worker_instance_client_impl.cc",
         "patchSetId": 6
@@ -36,6 +191,30 @@
       "writtenOn": "2017-08-01T11:24:05Z",
       "side": 1,
       "message": "I\u0027m wondering if scope is good as the security origin of the SWContentSettingsProxy.\nDoes params.script_url seem correct?",
+      "range": {
+        "startLine": 138,
+        "startChar": 40,
+        "endLine": 138,
+        "endChar": 52
+      },
+      "revId": "a27c8919e8c6dc0ab47482894ca718d353ecc459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a0c0845_79e64d11",
+        "filename": "content/renderer/service_worker/embedded_worker_instance_client_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-02T00:33:39Z",
+      "side": 1,
+      "message": "Agree that script_url seems nicer, although they must be same-origin anyway",
+      "parentUuid": "57e0667f_af060ea7",
       "range": {
         "startLine": 138,
         "startChar": 40,
@@ -111,6 +290,30 @@
     },
     {
       "key": {
+        "uuid": "d1d8810a_32298930",
+        "filename": "content/renderer/service_worker/service_worker_content_settings_proxy.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-02T00:33:39Z",
+      "side": 1,
+      "message": "I\u0027m not familiar with ThreadLocalPointer either.\n\nMight make sense to move this to Blink so you can just copy what you did for SharedWorkerContextSettingsProxy?",
+      "parentUuid": "1da23d58_7bf0ae49",
+      "range": {
+        "startLine": 48,
+        "startChar": 9,
+        "endLine": 49,
+        "endChar": 53
+      },
+      "revId": "a27c8919e8c6dc0ab47482894ca718d353ecc459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5c7e60f0_76a3c9aa",
         "filename": "content/renderer/service_worker/service_worker_content_settings_proxy.h",
         "patchSetId": 6
@@ -145,6 +348,70 @@
       "writtenOn": "2017-08-01T11:24:05Z",
       "side": 1,
       "message": "And no need to pass |is_unique_origin| if url::Origin is passed to the browser.",
+      "revId": "a27c8919e8c6dc0ab47482894ca718d353ecc459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1836e78f_977d3ca1",
+        "filename": "content/renderer/service_worker/service_worker_content_settings_proxy.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-02T00:33:39Z",
+      "side": 1,
+      "message": "Would it make sense to pass WebSecurityOrigin instead, as preferably security decisions are made with security origin? (And analogous to SharedWorkerContentSettingsProxy)",
+      "parentUuid": "00e1fa97_e8413ebf",
+      "revId": "a27c8919e8c6dc0ab47482894ca718d353ecc459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea573055_7beca448",
+        "filename": "content/renderer/service_worker/service_worker_content_settings_proxy.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-02T00:33:39Z",
+      "side": 1,
+      "message": "InterfacePtr",
+      "range": {
+        "startLine": 36,
+        "startChar": 22,
+        "endLine": 36,
+        "endChar": 29
+      },
+      "revId": "a27c8919e8c6dc0ab47482894ca718d353ecc459",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf17af63_37413833",
+        "filename": "content/renderer/service_worker/service_worker_content_settings_proxy.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-02T00:33:39Z",
+      "side": 1,
+      "message": "a bound",
+      "range": {
+        "startLine": 36,
+        "startChar": 13,
+        "endLine": 36,
+        "endChar": 17
+      },
       "revId": "a27c8919e8c6dc0ab47482894ca718d353ecc459",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
