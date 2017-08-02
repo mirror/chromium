@@ -34,6 +34,24 @@
       "revId": "8c074cd4c0c7534fcd7cac0b6aed325b7a9b69ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e598d60_11772e1a",
+        "filename": "chrome/browser/safe_browsing/download_protection_service.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 1002,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-02T18:08:08Z",
+      "side": 1,
+      "message": "If you don\u0027t have any changes and just want to re-run try bots, you can directly run \"git cl try\"  or click \" CQ dry run\" on gerrit.",
+      "parentUuid": "6173135e_ee9a24f1",
+      "revId": "8c074cd4c0c7534fcd7cac0b6aed325b7a9b69ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
