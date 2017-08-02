@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e438353d_020cbbbb",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-02T18:46:28Z",
+      "side": 1,
+      "message": "Went with the Enable...RTLUI(false) suggestion.",
+      "parentUuid": "80b69733_ec2b1cd2",
+      "revId": "3f05765d62542bc46e3a50a2a99b300d77cf32e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "90b5976e_ceac5f81",
         "filename": "ash/shelf/app_list_button.h",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-02T15:03:19Z",
       "side": 1,
       "message": "Perhaps this View should call EnableCanvasFlippingForRTLUI(false)?",
+      "revId": "3f05765d62542bc46e3a50a2a99b300d77cf32e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ff04dcc_97750590",
+        "filename": "ash/shelf/app_list_button.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-02T18:46:28Z",
+      "side": 1,
+      "message": "Attempted.",
+      "parentUuid": "90b5976e_ceac5f81",
       "revId": "3f05765d62542bc46e3a50a2a99b300d77cf32e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5edc31a0_e8beabd5",
+        "filename": "ash/shelf/app_list_button_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-02T18:46:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b44887c4_0196dd1b",
+      "revId": "3f05765d62542bc46e3a50a2a99b300d77cf32e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78b02d31_14977fdc",
         "filename": "ash/shelf/app_list_button_unittest.cc",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-02T15:03:19Z",
       "side": 1,
       "message": "Use base/test/scoped_locale.h",
+      "revId": "3f05765d62542bc46e3a50a2a99b300d77cf32e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02929623_c9414fa5",
+        "filename": "ash/shelf/app_list_button_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-02T18:46:28Z",
+      "side": 1,
+      "message": "Hey, I tried this ( ScopedLocale(\"he_IL.UTF-8\") ) and the check in line 107 fails. The code also seems to not do the same as SetICUDefaultLocale(\"he\") and the uses seem to all be string related and not rendering related.",
+      "parentUuid": "78b02d31_14977fdc",
       "revId": "3f05765d62542bc46e3a50a2a99b300d77cf32e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "4668fd83_3aa1ed8c",
+        "filename": "ash/shelf/app_list_button_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-02T18:46:28Z",
+      "side": 1,
+      "message": "Oops. Done.",
+      "parentUuid": "5dc5644f_62c54fe7",
+      "revId": "3f05765d62542bc46e3a50a2a99b300d77cf32e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "07794a2f_102e425f",
         "filename": "ash/shelf/app_list_button_unittest.cc",
         "patchSetId": 4
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "f0093612_60bf5cd8",
+        "filename": "ash/shelf/app_list_button_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-02T18:46:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07794a2f_102e425f",
+      "revId": "3f05765d62542bc46e3a50a2a99b300d77cf32e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d0789e0_5ff24e88",
         "filename": "ash/shelf/app_list_button_unittest.cc",
         "patchSetId": 4
@@ -118,6 +226,24 @@
       "revId": "3f05765d62542bc46e3a50a2a99b300d77cf32e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "989f20ae_2ecd84c9",
+        "filename": "ash/shelf/app_list_button_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-02T18:46:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d0789e0_5ff24e88",
+      "revId": "3f05765d62542bc46e3a50a2a99b300d77cf32e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
