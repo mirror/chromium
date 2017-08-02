@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e777901_167b8258",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-02T03:33:54Z",
+      "side": 1,
+      "message": "I think this CL description could be structured so that it focuses on refactor of the utils, and summarizes (in almost bullet point form) the changes and why they are made.\n\nThis will be more helpful to future readers of the code/cl than listing each full CL description individually, and mentioning that this CL came from smaller CLs.",
+      "revId": "18141393ecf04281a3109524f9a76630948f6716",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "363806e8_7fa5b27b",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-02T03:33:54Z",
+      "side": 1,
+      "message": "Overall, we need to think about what step each of these methods represents, and how to elucidate it more in the API names and the comments. Right now, it is not clear when I should use MaxWidth, DivideRectAtPoint, or BubbleFrame.",
+      "revId": "18141393ecf04281a3109524f9a76630948f6716",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcb2f58b_a8aff281",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-02T03:33:54Z",
+      "side": 1,
+      "message": "Why do we need this now, and not before?",
+      "revId": "18141393ecf04281a3109524f9a76630948f6716",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff4e882f_bbefad66",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-02T03:33:54Z",
+      "side": 1,
+      "message": "This should start below anonymous namespace.",
+      "revId": "18141393ecf04281a3109524f9a76630948f6716",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bea327e4_34f5c13a",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-02T03:33:54Z",
+      "side": 1,
+      "message": "Nit: You can avoid needing an else condition by returning anchorPoint at the end of the first if branch.",
+      "revId": "18141393ecf04281a3109524f9a76630948f6716",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00f3d3c7_5da685e4",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1191445
+      },
+      "writtenOn": "2017-08-02T03:33:54Z",
+      "side": 1,
+      "message": "Is rect expected to be the frame of the view to which the bubble is added? If so, then when would GetMinX/GetMinY not be 0?",
+      "revId": "18141393ecf04281a3109524f9a76630948f6716",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
