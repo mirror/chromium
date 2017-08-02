@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91c6e707_83beffb7",
+        "filename": "content/browser/android/string_message_codec.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1115891
+      },
+      "writtenOn": "2017-08-02T20:08:08Z",
+      "side": 0,
+      "message": "Great to see this code eliminated!",
+      "revId": "9aaad30826711122cef9d45c22aae48a7a06df9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe69098b_d42fb563",
+        "filename": "content/browser/android/string_message_codec_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115891
+      },
+      "writtenOn": "2017-08-02T20:08:08Z",
+      "side": 0,
+      "message": "Ditto!",
+      "revId": "9aaad30826711122cef9d45c22aae48a7a06df9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

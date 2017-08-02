@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "ac6ac626_aef18989",
+        "filename": "content/common/message_port.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115891
+      },
+      "writtenOn": "2017-08-02T20:08:08Z",
+      "side": 1,
+      "message": "It looks like this include should be unnecessary.",
+      "revId": "775df61f3b8d97bf1515f050959f90a6282a20a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eab4f01d_1d685cf1",
+        "filename": "content/common/message_port_message_struct_traits.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115891
+      },
+      "writtenOn": "2017-08-02T20:08:08Z",
+      "side": 1,
+      "message": "Is it normal for a *_struct_traits.h header file to also declare the struct? It seems non-obvious that the struct definition would be in here. A separate message_port_message.h would be more intuitive, albeit maybe a bit excessive. I wonder if there is a pattern here that we should be following for the sake of consistency.",
+      "revId": "775df61f3b8d97bf1515f050959f90a6282a20a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3d5633ab_5da6f2ca",
         "filename": "third_party/WebKit/Source/bindings/core/v8/serialization/SerializedScriptValue.cpp",
         "patchSetId": 6
