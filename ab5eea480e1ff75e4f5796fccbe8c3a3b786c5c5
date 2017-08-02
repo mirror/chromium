@@ -36,6 +36,91 @@
     },
     {
       "key": {
+        "uuid": "68dd65e5_57b14169",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-02T22:14:45Z",
+      "side": 1,
+      "message": "Is this arbitrary?",
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56b8be68_8abf1a4f",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-02T22:14:45Z",
+      "side": 1,
+      "message": "Why is a max width necessary?",
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff448d81_b16f3c96",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-02T22:14:45Z",
+      "side": 1,
+      "message": "Please make this variable more specific.",
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0635b33c_4cee053a",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-02T22:14:45Z",
+      "side": 1,
+      "message": "Please define a CGSize instead.",
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47e2edfa_83f4c049",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-02T22:14:45Z",
+      "side": 1,
+      "message": "Please use size literal instead of the macro.",
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb508eb5_63b6795f",
         "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
         "patchSetId": 3
@@ -298,6 +383,159 @@
       "writtenOn": "2017-08-02T22:11:35Z",
       "side": 1,
       "message": "What happens if the width/height given by |size| is smaller than optimalSize?",
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9698675_bcf50b66",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-02T22:14:45Z",
+      "side": 1,
+      "message": "Please use memory management attributes here.",
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4114b06_afafd140",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-02T22:14:45Z",
+      "side": 1,
+      "message": "Could [super init] be used?",
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a155503_7de0f6fc",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-02T22:14:45Z",
+      "side": 1,
+      "message": "It\u0027s common to check the existence of self. See this example: \nhttps://cs.chromium.org/chromium/src/ios/clean/chrome/browser/ui/tab_grid/tab_grid_toolbar.mm?q\u003dfile:ios/clean/chrome/+init\u0026sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d27",
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adf37ac8_bb81b83e",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-02T22:14:45Z",
+      "side": 1,
+      "message": "Consider setting hidden property along with alpha property. I feel this is common practice.",
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c21a4d0_3aaeb875",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-02T22:14:45Z",
+      "side": 1,
+      "message": "Please explain the sink-down animation in the header file.",
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a863ce84_211e9c24",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-02T22:14:45Z",
+      "side": 1,
+      "message": "__block doesn\u0027t seem necessary here.",
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80b18abe_139cde6b",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-02T22:14:45Z",
+      "side": 1,
+      "message": "Should this use a spring animation instead? As I understand it, Apple encourages the spring animation over these animation curves.",
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dd6a457_c46bf657",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-02T22:14:45Z",
+      "side": 1,
+      "message": "In Cooper\u0027s CL, we used a little trick where this if statement was not necessary to differentiate between animating and not animating. Check with him on that.",
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84865558_e5b4336f",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1163361
+      },
+      "writtenOn": "2017-08-02T22:14:45Z",
+      "side": 1,
+      "message": "Use EXPECT_TRUE(CGSizeEqualToSize(...));\nAlso remember to use size literal for the expected size.",
       "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
