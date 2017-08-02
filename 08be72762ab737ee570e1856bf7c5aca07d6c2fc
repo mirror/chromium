@@ -33,6 +33,24 @@
       "revId": "08be72762ab737ee570e1856bf7c5aca07d6c2fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee41183f_98091235",
+        "filename": "chrome/browser/resources/md_extensions/detail_view.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-02T20:20:12Z",
+      "side": 1,
+      "message": "margin: auto is a pretty common technique for center aligning elements (without using display: flex), see example at https://www.w3schools.com/css/css_align.asp.",
+      "parentUuid": "5d51a981_f92b254d",
+      "revId": "08be72762ab737ee570e1856bf7c5aca07d6c2fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
