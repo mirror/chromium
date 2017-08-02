@@ -20,6 +20,7 @@ namespace extensions {
 // Best used with AppWindow::SetAppWindowContentsForTesting().
 class TestAppWindowContents : public AppWindowContents {
  public:
+  // Takes ownership of |web_contents|.
   explicit TestAppWindowContents(content::WebContents* web_contents);
   ~TestAppWindowContents() override;
 
