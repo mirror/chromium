@@ -1710,7 +1710,7 @@ void View::ReorderLayers() {
   if (!v) {
     if (widget) {
       ui::Layer* layer = widget->GetLayer();
-      if (layer)
+      if (layer && widget->GetRootView())
         widget->GetRootView()->ReorderChildLayers(layer);
     }
   } else {
