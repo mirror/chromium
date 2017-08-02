@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97900c37_44118a44",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-08-02T15:05:22Z",
+      "side": 1,
+      "message": "it\u0027s not clear to me why we\u0027d signal reset here.  is there a case where somebody starts a reset, then drops MCVD before it completes?\n\ni think the weird part is that, when we call |reset_cb_| normally, the codec is ready to do more work.  here, it\u0027s not.",
+      "revId": "aae21ddc147546bac700b37b68d26ba05cc78f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7bb8f3c_4eb1ac68",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-08-02T15:05:22Z",
+      "side": 1,
+      "message": "what about |reset_cb_|?  is it guaranteed that all transitions to kError will have a pending decode to signal the error on?\n\nin particular, a failure in DequeueOutput while might HandleError \u003d\u003e set state to error \u003d\u003e do nothing here.  from the outside, i think the transition to the error state would be invisible, and no reset callback would be sent.  maybe HandleError should signal the reset cb with an error or something?\n\nor maybe i\u0027m wrong, and this can\u0027t happen.",
+      "revId": "aae21ddc147546bac700b37b68d26ba05cc78f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c979f35_ee0ea1e7",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-08-02T15:05:22Z",
+      "side": 1,
+      "message": "please expand the comment -- i forgot why until i looked at avda.  :)",
+      "revId": "aae21ddc147546bac700b37b68d26ba05cc78f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
