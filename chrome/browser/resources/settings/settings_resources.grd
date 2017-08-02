@@ -358,6 +358,20 @@
                    file="certificate_manager_page/certificates_error_dialog.html"
                    type="chrome_html" />
       </if>
+      <structure name="IDR_SETTINGS_CHANGE_PASSWORD_BROWSER_PROXY_HTML"
+                 file="change_password_page/change_password_browser_proxy.html"
+                 type="chrome_html" />
+      <structure name="IDR_SETTINGS_CHANGE_PASSWORD_BROWSER_PROXY_JS"
+                 file="change_password_page/change_password_browser_proxy.js"
+                 type="chrome_html" />
+      <structure name="IDR_SETTINGS_CHANGE_PASSWORD_PAGE_HTML"
+                 file="change_password_page/change_password_page.html"
+                 type="chrome_html"
+                 preprocess="true" />
+      <structure name="IDR_SETTINGS_CHANGE_PASSWORD_PAGE_JS"
+                 file="change_password_page/change_password_page.js"
+                 type="chrome_html"
+                 preprocess="true" />
       <if expr="is_win">
         <structure name="IDR_SETTINGS_CHROME_CLEANUP_PROXY_HTML"
                    file="chrome_cleanup_page/chrome_cleanup_proxy.html"
