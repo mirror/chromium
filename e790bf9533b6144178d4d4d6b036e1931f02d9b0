@@ -201,6 +201,40 @@
     },
     {
       "key": {
+        "uuid": "797a85ee_653c5ef0",
+        "filename": "components/crash/content/app/crashpad.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-08-02T21:00:55Z",
+      "side": 1,
+      "message": "(Another example of Chrome-specific logic in here. This comment will only make sense in light of the comment that follows it, but Gerrit doesn’t let you specify a custom order for these things.)",
+      "revId": "e790bf9533b6144178d4d4d6b036e1931f02d9b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "879e907f_b889337f",
+        "filename": "components/crash/content/app/crashpad.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-08-02T21:00:55Z",
+      "side": 1,
+      "message": "(This too. Basically anything based on browser_process, or perhaps even on process_type.)",
+      "revId": "e790bf9533b6144178d4d4d6b036e1931f02d9b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6f8f9992_faae2c7b",
         "filename": "components/crash/content/app/crashpad.h",
         "patchSetId": 8
@@ -563,6 +597,30 @@
       "revId": "e790bf9533b6144178d4d4d6b036e1931f02d9b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6c9d9995_9eded630",
+        "filename": "components/crash/content/app/crashpad_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-08-02T21:00:55Z",
+      "side": 1,
+      "message": "Everything in this (embedded_handler) section is pretty Chrome-specific. But (most of it, at least) is also setup.exe-specific. Ultimately, these extra arguments are probably something that we should move into the CrashReporterClient interface, which would be better for layering. I think that’s better for a separate change, though, since there are a few client implementations we’d need to hit, other stuff in here that should move to CrashReporterClient, and it’s starting to be a lot for a change that’s already not too small to begin with, and that we’ve already had to revert once…\n\nMaybe we should get a bug filed to move more of this into CrashReporterClient.",
+      "parentUuid": "8f3586c9_4569f38b",
+      "range": {
+        "startLine": 113,
+        "startChar": 47,
+        "endLine": 113,
+        "endChar": 62
+      },
+      "revId": "e790bf9533b6144178d4d4d6b036e1931f02d9b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
