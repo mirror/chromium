@@ -11,7 +11,7 @@
 #include "base/memory/ptr_util.h"
 #include "cc/paint/paint_canvas.h"
 #include "cc/paint/paint_flags.h"
-#include "cc/paint/paint_image.h"
+#include "cc/paint/paint_image_builder.h"
 #include "gpu/GLES2/gl2extchromium.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "gpu/command_buffer/common/capabilities.h"
@@ -223,10 +223,10 @@ sk_sp<SkImage> NewSkImageFromVideoFrameNative(VideoFrame* video_frame,
 }  // anonymous namespace
 
 // Generates an RGB image from a VideoFrame. Convert YUV to RGB plain on GPU.
-class VideoImageGenerator : public SkImageGenerator {
+class VideoImageGenerator : public cc::PaintImageGenerator {
  public:
   VideoImageGenerator(const scoped_refptr<VideoFrame>& frame)
-      : SkImageGenerator(
+      : cc::PaintImageGenerator(
             SkImageInfo::MakeN32Premul(frame->visible_rect().width(),
                                        frame->visible_rect().height())),
         frame_(frame) {
@@ -234,19 +234,20 @@ class VideoImageGenerator : public SkImageGenerator {
   }
   ~VideoImageGenerator() override {}
 
- protected:
-  bool onGetPixels(const SkImageInfo& info,
-                   void* pixels,
-                   size_t row_bytes,
-                   const Options&) override {
+  SkData* RefEncodedData() override { return nullptr; }
+
+  bool GetPixels(const SkImageInfo& info,
+                 void* pixels,
+                 size_t row_bytes,
+                 uint32_t lazy_pixel_ref) override {
     // If skia couldn't do the YUV conversion on GPU, we will on CPU.
     SkCanvasVideoRenderer::ConvertVideoFrameToRGBPixels(frame_.get(), pixels,
                                                         row_bytes);
     return true;
   }
 
-  bool onQueryYUV8(SkYUVSizeInfo* sizeInfo,
-                   SkYUVColorSpace* color_space) const override {
+  bool QueryYUV8(SkYUVSizeInfo* sizeInfo,
+                 SkYUVColorSpace* color_space) const override {
     if (!media::IsYuvPlanar(frame_->format()) ||
         // TODO(rileya): Skia currently doesn't support YUVA conversion. Remove
         // this case once it does. As-is we will fall back on the pure-software
@@ -276,8 +277,9 @@ class VideoImageGenerator : public SkImageGenerator {
     return true;
   }
 
-  bool onGetYUV8Planes(const SkYUVSizeInfo& sizeInfo,
-                       void* planes[3]) override {
+  bool GetYUV8Planes(const SkYUVSizeInfo& sizeInfo,
+                     void* planes[3],
+                     uint32_t lazy_pixel_ref) override {
     media::VideoPixelFormat format = frame_->format();
     DCHECK(media::IsYuvPlanar(format) && format != PIXEL_FORMAT_YV12A);
 
@@ -384,7 +386,7 @@ void SkCanvasVideoRenderer::Paint(const scoped_refptr<VideoFrame>& video_frame,
   const bool need_rotation = video_rotation != VIDEO_ROTATION_0;
   const bool need_scaling =
       dest_rect.size() !=
-      gfx::SizeF(gfx::SkISizeToSize(last_image_->dimensions()));
+      gfx::SizeF(gfx::SkISizeToSize(last_image_.bounds().size()));
   const bool need_translation = !dest_rect.origin().IsOrigin();
   bool need_transform = need_rotation || need_scaling || need_translation;
   if (need_transform) {
@@ -415,10 +417,10 @@ void SkCanvasVideoRenderer::Paint(const scoped_refptr<VideoFrame>& video_frame,
           gfx::SizeF(rotated_dest_size.height(), rotated_dest_size.width());
     }
     canvas->scale(
-        SkFloatToScalar(rotated_dest_size.width() / last_image_->width()),
-        SkFloatToScalar(rotated_dest_size.height() / last_image_->height()));
-    canvas->translate(-SkFloatToScalar(last_image_->width() * 0.5f),
-                      -SkFloatToScalar(last_image_->height() * 0.5f));
+        SkFloatToScalar(rotated_dest_size.width() / last_image_.width()),
+        SkFloatToScalar(rotated_dest_size.height() / last_image_.height()));
+    canvas->translate(-SkFloatToScalar(last_image_.width() * 0.5f),
+                      -SkFloatToScalar(last_image_.height() * 0.5f));
   }
 
   // This is a workaround for crbug.com/524717. A texture backed image is not
@@ -427,15 +429,11 @@ void SkCanvasVideoRenderer::Paint(const scoped_refptr<VideoFrame>& video_frame,
   // sw image into the SkPicture. The long term solution is for Skia to provide
   // a SkPicture filter that makes a picture safe for multiple CPU raster
   // threads. (skbug.com/4321).
-  sk_sp<SkImage> image;
+  cc::PaintImage image = last_image_;
   if (canvas->imageInfo().colorType() == kUnknown_SkColorType)
-    image = last_image_->makeNonTextureImage();
-  else
-    image = last_image_;
-  canvas->drawImage(cc::PaintImage(renderer_stable_id_, std::move(image),
-                                   cc::PaintImage::AnimationType::VIDEO,
-                                   cc::PaintImage::CompletionState::DONE),
-                    0, 0, &video_flags);
+    image = last_image_.CloneWithSkImage(
+        last_image_.GetSkImage()->makeNonTextureImage());
+  canvas->drawImage(image, 0, 0, &video_flags);
 
   if (need_transform)
     canvas->restore();
@@ -872,7 +870,7 @@ bool SkCanvasVideoRenderer::CopyVideoFrameTexturesToGLTexture(
 
     const GrGLTextureInfo* texture_info =
         skia::GrBackendObjectToGrGLTextureInfo(
-            last_image_->getTextureHandle(true));
+            last_image_.GetSkImage()->getTextureHandle(true));
 
     if (!texture_info)
       return false;
@@ -1011,7 +1009,7 @@ bool SkCanvasVideoRenderer::TexSubImage2D(unsigned target,
 void SkCanvasVideoRenderer::ResetCache() {
   DCHECK(thread_checker_.CalledOnValidThread());
   // Clear cached values.
-  last_image_ = nullptr;
+  last_image_ = cc::PaintImage();
   last_timestamp_ = kNoTimestamp;
 }
 
@@ -1019,8 +1017,16 @@ bool SkCanvasVideoRenderer::UpdateLastImage(
     const scoped_refptr<VideoFrame>& video_frame,
     const Context3D& context_3d) {
   if (!last_image_ || video_frame->timestamp() != last_timestamp_ ||
-      !last_image_->getTextureHandle(true)) {
+      !last_image_.GetSkImage()->getTextureHandle(true)) {
     ResetCache();
+
+    cc::PaintImageBuilder paint_image_builder;
+    paint_image_builder.set_id(renderer_stable_id_);
+    paint_image_builder.set_animation_type(
+        cc::PaintImage::AnimationType::VIDEO);
+    paint_image_builder.set_completion_state(
+        cc::PaintImage::CompletionState::DONE);
+
     // Generate a new image.
     // Note: Skia will hold onto |video_frame| via |video_generator| only when
     // |video_frame| is software.
@@ -1030,16 +1036,17 @@ bool SkCanvasVideoRenderer::UpdateLastImage(
       DCHECK(context_3d.gr_context);
       DCHECK(context_3d.gl);
       if (media::VideoFrame::NumPlanes(video_frame->format()) > 1) {
-        last_image_ =
-            NewSkImageFromVideoFrameYUVTextures(video_frame.get(), context_3d);
+        paint_image_builder.set_image(
+            NewSkImageFromVideoFrameYUVTextures(video_frame.get(), context_3d));
       } else {
-        last_image_ =
-            NewSkImageFromVideoFrameNative(video_frame.get(), context_3d);
+        paint_image_builder.set_image(
+            NewSkImageFromVideoFrameNative(video_frame.get(), context_3d));
       }
     } else {
-      last_image_ = SkImage::MakeFromGenerator(
-          base::MakeUnique<VideoImageGenerator>(video_frame));
+      paint_image_builder.set_paint_image_generator(
+          sk_make_sp<VideoImageGenerator>(video_frame));
     }
+    last_image_ = paint_image_builder.TakePaintImage();
     CorrectLastImageDimensions(gfx::RectToSkIRect(video_frame->visible_rect()));
     if (!last_image_)  // Couldn't create the SkImage.
       return false;
@@ -1055,9 +1062,10 @@ void SkCanvasVideoRenderer::CorrectLastImageDimensions(
   last_image_dimensions_for_testing_ = visible_rect.size();
   if (!last_image_)
     return;
-  if (last_image_->dimensions() != visible_rect.size() &&
-      last_image_->bounds().contains(visible_rect)) {
-    last_image_ = last_image_->makeSubset(visible_rect);
+  if (last_image_.bounds().size() != visible_rect.size() &&
+      last_image_.bounds().contains(visible_rect)) {
+    last_image_ = last_image_.CloneWithSkImage(
+        last_image_.GetSkImage()->makeSubset(visible_rect));
   }
 }
 
