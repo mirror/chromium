@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "260a5552_35614614",
+        "filename": "chrome/browser/extensions/extension_apitest.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-02T00:31:08Z",
+      "side": 1,
+      "message": "Hmm, would you rather add an entry to the Flags enum? That looks like the \"scalable\" way - these other 10 methods seem to be largely convenience methods. Or would you prefer to see that enum converted into the struct you\u0027re talking about?",
+      "parentUuid": "3a8cfa23_921445e9",
+      "revId": "401d1fe7cfac07d81849f31e6380e50531868ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7803ceb6_9d7c4f51",
         "filename": "chrome/browser/extensions/extension_apitest.h",
         "patchSetId": 6
