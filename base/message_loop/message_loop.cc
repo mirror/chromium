@@ -243,7 +243,7 @@ void MessageLoop::SetNestableTasksAllowed(bool allowed) {
 }
 
 bool MessageLoop::NestableTasksAllowed() const {
-  return nestable_tasks_allowed_;
+  return nestable_tasks_allowed_ || run_loop_client_->ProcessingTasksAllowed();
 }
 
 // TODO(gab): Migrate TaskObservers to RunLoop as part of separating concerns
@@ -386,7 +386,7 @@ bool MessageLoop::ProcessNextDelayedNonNestableTask() {
 }
 
 void MessageLoop::RunTask(PendingTask* pending_task) {
-  DCHECK(nestable_tasks_allowed_);
+  DCHECK(NestableTasksAllowed());
   current_pending_task_ = pending_task;
 
 #if defined(OS_WIN)
@@ -491,7 +491,7 @@ void MessageLoop::ScheduleWork() {
 }
 
 bool MessageLoop::DoWork() {
-  if (!nestable_tasks_allowed_) {
+  if (!NestableTasksAllowed()) {
     // Task can't be executed right now.
     return false;
   }
@@ -529,7 +529,7 @@ bool MessageLoop::DoWork() {
 }
 
 bool MessageLoop::DoDelayedWork(TimeTicks* next_delayed_work_time) {
-  if (!nestable_tasks_allowed_ ||
+  if (!NestableTasksAllowed() ||
       !SweepDelayedWorkQueueAndReturnTrueIfStillHasWork()) {
     recent_time_ = *next_delayed_work_time = TimeTicks();
     return false;
