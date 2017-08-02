@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1c77e37_9b389a05",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 914,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-02T17:37:40Z",
+      "side": 1,
+      "message": "While you are here, mind removing the fitWindow part? We don\u0027t support fitWindow anymore :)",
+      "range": {
+        "startLine": 914,
+        "startChar": 143,
+        "endLine": 914,
+        "endChar": 152
+      },
+      "revId": "fdede49c54d867a0b225b4341d0f64b3d25d707d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23559f1b_84543be8",
+        "filename": "third_party/WebKit/public/web/WebDeviceEmulationParams.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-02T17:37:40Z",
+      "side": 1,
+      "message": "Let\u0027s make this work too. (-1, -1) means no override.\n\nSo, the whole idea for both screen_size and view_position would be:\n- if nothing is passed, use default value, otherwise the passed one;\n- for desktop, default is original value;\n- for mobile, default is view_size and (0, 0).",
+      "range": {
+        "startLine": 29,
+        "startChar": 11,
+        "endLine": 29,
+        "endChar": 24
+      },
+      "revId": "fdede49c54d867a0b225b4341d0f64b3d25d707d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
