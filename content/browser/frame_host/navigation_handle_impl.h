@@ -163,6 +163,7 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
   ReloadType GetReloadType() override;
   RestoreType GetRestoreType() override;
   const GURL& GetBaseURLForDataURL() override;
+  int GetNavigationId() const override;
   const GlobalRequestID& GetGlobalRequestID() override;
 
   // Resume and CancelDeferredNavigation must only be called by the
@@ -552,6 +553,9 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
   std::unique_ptr<NavigationUIData> navigation_ui_data_;
 
   SSLStatus ssl_status_;
+
+  // The unique id to identify this to navigation with.
+  int navigation_id_;
 
   // The id of the URLRequest tied to this navigation.
   GlobalRequestID request_id_;
