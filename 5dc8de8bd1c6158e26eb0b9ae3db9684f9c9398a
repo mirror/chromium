@@ -1,0 +1,681 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9286df6_271f3915",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 8341,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T11:09:11Z",
+      "side": 1,
+      "message": "Can we set the onclick handler from JS? Including it in the string feels hacky, and I wonder if it even works with CSP?",
+      "revId": "5dc8de8bd1c6158e26eb0b9ae3db9684f9c9398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30eafc34_fc7273a2",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 8349,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T11:09:11Z",
+      "side": 1,
+      "message": "Hm, I wonder about translation for the link - this one seems to lead to an English page. Any idea how this worked on the remote NTP? Same for the other links below.",
+      "range": {
+        "startLine": 8349,
+        "startChar": 195,
+        "endLine": 8349,
+        "endChar": 0
+      },
+      "revId": "5dc8de8bd1c6158e26eb0b9ae3db9684f9c9398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83b10e17_021fe9c3",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 3152,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T11:09:11Z",
+      "side": 1,
+      "message": "New flags should be added at the end of the array.\nYou\u0027ll also have to update an xml file that lists all the flags; there\u0027s a test that checks this. Also see the comment at the top of this array.",
+      "revId": "5dc8de8bd1c6158e26eb0b9ae3db9684f9c9398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9769f48e_cf40de74",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 603,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T11:09:11Z",
+      "side": 1,
+      "message": "Since it\u0027s hidden by default, could move this into the if and make it just \".hidden \u003d false\".",
+      "revId": "5dc8de8bd1c6158e26eb0b9ae3db9684f9c9398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48d0d87c_74963a4c",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T11:09:11Z",
+      "side": 1,
+      "message": "What does the trailing underscore mean? AFAIK it\u0027s usually used to indicate \"private\", but clearly that\u0027s not the case here.",
+      "revId": "5dc8de8bd1c6158e26eb0b9ae3db9684f9c9398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de3d160b_e4aa46bf",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 616,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T11:09:11Z",
+      "side": 1,
+      "message": "Hrm, this is messy. As far as I can see, the onfocuschange handler isn\u0027t used elsewhere, so maybe just check that it\u0027s not set before (as a safeguard, in case we ever start using it elsewhere, though that seems unlikely), and then directly set it?",
+      "range": {
+        "startLine": 616,
+        "startChar": 60,
+        "endLine": 616,
+        "endChar": 0
+      },
+      "revId": "5dc8de8bd1c6158e26eb0b9ae3db9684f9c9398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdaadd64_3d662264",
+        "filename": "chrome/browser/resources/local_ntp/voice.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T11:09:11Z",
+      "side": 1,
+      "message": "I think the -css3 version isn\u0027t required, since there\u0027s a non-prefixed version below. (There\u0027s more instances of this in this file)",
+      "revId": "5dc8de8bd1c6158e26eb0b9ae3db9684f9c9398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c57fb6e_23065ceb",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T11:09:11Z",
+      "side": 1,
+      "message": "nit: At first I was confused if this referred to the button in the fakebox or the one in the overlay. Maybe mention that?",
+      "revId": "5dc8de8bd1c6158e26eb0b9ae3db9684f9c9398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "883aa569_894de498",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T11:09:11Z",
+      "side": 1,
+      "message": "What about these? (Add a TODO maybe?)",
+      "revId": "5dc8de8bd1c6158e26eb0b9ae3db9684f9c9398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33731086_38d6a091",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T11:09:11Z",
+      "side": 1,
+      "message": "nit: if (currentState !\u003d STARTING) return ? Saves a level of indentation.",
+      "revId": "5dc8de8bd1c6158e26eb0b9ae3db9684f9c9398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f460d2a_d41e38c4",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T11:09:11Z",
+      "side": 1,
+      "message": "Okay, these states officially confuse the hell out of me. What exactly do ABORTED and STOPPED mean? Why doesn\u0027t stop_() set the state to STOPPED if it wasn\u0027t ABORTED before?\n[I also got confused by speech.abort_ vs recognition.abort_...]",
+      "revId": "5dc8de8bd1c6158e26eb0b9ae3db9684f9c9398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8431c33_f6e37eba",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T11:09:11Z",
+      "side": 1,
+      "message": "What exactly does that mean? E.g. will it hide the overlay?",
+      "revId": "5dc8de8bd1c6158e26eb0b9ae3db9684f9c9398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b68a936b_8ee9c432",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T11:09:11Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think \"Searchbox client\" applies here. I guess just removing that part of the comment is fine.",
+      "revId": "5dc8de8bd1c6158e26eb0b9ae3db9684f9c9398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9515189a_91a7d7ce",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T11:09:11Z",
+      "side": 1,
+      "message": "A search on what? (Maybe just remove the \"on\"?)",
+      "revId": "5dc8de8bd1c6158e26eb0b9ae3db9684f9c9398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd6de3de_6a5ebc9e",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T11:09:11Z",
+      "side": 1,
+      "message": "What\u0027s \"cad\"?",
+      "range": {
+        "startLine": 592,
+        "startChar": 29,
+        "endLine": 592,
+        "endChar": 32
+      },
+      "revId": "5dc8de8bd1c6158e26eb0b9ae3db9684f9c9398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83ec784d_45e9770a",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 662,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T11:09:11Z",
+      "side": 1,
+      "message": "IMO this is misleadingly named: If it returns false, then that doesn\u0027t necessarily mean that the UI is visible. But I can\u0027t think of a better name, probably because I don\u0027t really know what this function means...",
+      "revId": "5dc8de8bd1c6158e26eb0b9ae3db9684f9c9398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40008233_de1415c6",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 691,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T11:09:11Z",
+      "side": 1,
+      "message": "The STARTING state seems pointless: It\u0027s only set in this one place, right before the one place that checks it.",
+      "revId": "5dc8de8bd1c6158e26eb0b9ae3db9684f9c9398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c410b8e_a6bd338f",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 706,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T11:09:11Z",
+      "side": 1,
+      "message": "So this gets called from handleWindowClick_ at the very end of this file, and target is actually a member of view.ClickTarget_, i.e. \u00270\u0027, \u00271\u0027, etc., and this gets passed as a \"reason\" to log_. That doesn\u0027t really seem all that useful... maybe at least rename variables/parameters to make this a bit more obvious?",
+      "revId": "5dc8de8bd1c6158e26eb0b9ae3db9684f9c9398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b620d979_8cb2a449",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T11:09:11Z",
+      "side": 1,
+      "message": "nit: Are both ID and class required?!",
+      "revId": "5dc8de8bd1c6158e26eb0b9ae3db9684f9c9398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0de1f4b0_aefa9878",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 828,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T11:09:11Z",
+      "side": 1,
+      "message": "What exactly does that mean?\nFWIW, I think a \"smoke test\" that just opens an NTP with voice search enabled and checks for errors should cover this just fine. Search for LocalNTPOneGoogleBarSmokeTest for an example.",
+      "revId": "5dc8de8bd1c6158e26eb0b9ae3db9684f9c9398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac63a706_4c9e0bb9",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 847,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T11:09:11Z",
+      "side": 1,
+      "message": "Hm, I was about to suggest .textContent instead of .innerHTML, but this actually does rely on HTML parsing since the text may contain a link... this feels quite hacky. What if the actual recognized text contains characters that could be interpreted as HTML?\nAny ideas on how to improve this? At the very least, we should rename the parameters to e.g. interimHtml.",
+      "revId": "5dc8de8bd1c6158e26eb0b9ae3db9684f9c9398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59f59029_12457e26",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 976,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T11:09:11Z",
+      "side": 1,
+      "message": "Should this add a class, rather than overwriting any previous ones?",
+      "revId": "5dc8de8bd1c6158e26eb0b9ae3db9684f9c9398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "373bfe8e_43a05d24",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1012,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T11:09:11Z",
+      "side": 1,
+      "message": "Unused (I think you moved this to css, where it belongs? :)",
+      "range": {
+        "startLine": 1012,
+        "startChar": 59,
+        "endLine": 1012,
+        "endChar": 0
+      },
+      "revId": "5dc8de8bd1c6158e26eb0b9ae3db9684f9c9398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dc25742_14cef620",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1019,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T11:09:11Z",
+      "side": 1,
+      "message": "This too",
+      "range": {
+        "startLine": 1019,
+        "startChar": 62,
+        "endLine": 1019,
+        "endChar": 0
+      },
+      "revId": "5dc8de8bd1c6158e26eb0b9ae3db9684f9c9398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff7ee2aa_22290fe2",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1082,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T11:09:11Z",
+      "side": 1,
+      "message": "As above, I think the TODO can be removed.",
+      "revId": "5dc8de8bd1c6158e26eb0b9ae3db9684f9c9398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5ee5f4f_388df8f4",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1116,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T11:09:11Z",
+      "side": 1,
+      "message": "These should work without the \"-webkit\" prefix. I\u0027d also just inline them.",
+      "revId": "5dc8de8bd1c6158e26eb0b9ae3db9684f9c9398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9d3c3dc_cfcec414",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1124,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T11:09:11Z",
+      "side": 1,
+      "message": "wat, so the animation actually has nothing to do with the volume levels, it\u0027s just random? lol...",
+      "revId": "5dc8de8bd1c6158e26eb0b9ae3db9684f9c9398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "92d2a00b_c491259e",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1132,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T11:09:11Z",
+      "side": 1,
+      "message": "nit: specify the interval in ms and get rid of SECOND_IN_MILLISECONDS_?",
+      "revId": "5dc8de8bd1c6158e26eb0b9ae3db9684f9c9398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dace0dda_2dc3724c",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1159,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T11:09:11Z",
+      "side": 1,
+      "message": "OVERLAY_CLASSES_ or OVERLAY_CLASSLIST_ or something?\nDo we actually need two separate classes?",
+      "revId": "5dc8de8bd1c6158e26eb0b9ae3db9684f9c9398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5ddc698_a1b4b093",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1342,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T11:09:11Z",
+      "side": 1,
+      "message": "Should this be\nview.isNoMatchShown_ \u003d (error \u003d\u003d RecognitionError.NO_MATCH);\n?",
+      "revId": "5dc8de8bd1c6158e26eb0b9ae3db9684f9c9398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f258c647_5a63b2ad",
+        "filename": "chrome/browser/resources/local_ntp/voice.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 1421,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T11:09:11Z",
+      "side": 1,
+      "message": "nit: Is this correctly indented?!",
+      "revId": "5dc8de8bd1c6158e26eb0b9ae3db9684f9c9398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf26d97e_b323c15d",
+        "filename": "chrome/browser/search/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T11:09:11Z",
+      "side": 1,
+      "message": "s/voice_search/voice/ :)\nMaybe add a \"_js\" suffix to both inputs?",
+      "revId": "5dc8de8bd1c6158e26eb0b9ae3db9684f9c9398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ab55e74_6fd3856a",
+        "filename": "chrome/browser/search/local_ntp_source.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T11:09:11Z",
+      "side": 1,
+      "message": "is_voice_search_enabled",
+      "range": {
+        "startLine": 151,
+        "startChar": 29,
+        "endLine": 151,
+        "endChar": 0
+      },
+      "revId": "5dc8de8bd1c6158e26eb0b9ae3db9684f9c9398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bc106e7_d167fd31",
+        "filename": "chrome/browser/search/tools/generate_integrity_header.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T11:09:11Z",
+      "side": 1,
+      "message": "This is a bit weird now; there\u0027ll be multiple \"// FROM\" lines distributed over the file. Maybe put them all at the top?",
+      "range": {
+        "startLine": 26,
+        "startChar": 49,
+        "endLine": 26,
+        "endChar": 0
+      },
+      "revId": "5dc8de8bd1c6158e26eb0b9ae3db9684f9c9398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dff44c0d_3ac2cb6f",
+        "filename": "chrome/browser/search/tools/generate_integrity_header.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T11:09:11Z",
+      "side": 1,
+      "message": "s/file/files/ :)",
+      "revId": "5dc8de8bd1c6158e26eb0b9ae3db9684f9c9398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "900e6d4e_73cba238",
+        "filename": "chrome/browser/search/tools/generate_integrity_header.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T11:09:11Z",
+      "side": 1,
+      "message": "Out of curiosity: Is the \"sys.argv\" required? What does it change?",
+      "revId": "5dc8de8bd1c6158e26eb0b9ae3db9684f9c9398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c163541_08412271",
+        "filename": "chrome/browser/search/tools/generate_integrity_header.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T11:09:11Z",
+      "side": 1,
+      "message": "input_paths_and_integrity maybe?",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 22
+      },
+      "revId": "5dc8de8bd1c6158e26eb0b9ae3db9684f9c9398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

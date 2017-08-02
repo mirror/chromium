@@ -212,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "dd6cbc1b_34588a8e",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T11:09:11Z",
+      "side": 1,
+      "message": "That seems weird. How exactly is the fill color changed in CSS? Do we actually need to change it via CSS, or can we just put the proper color into the SVG?",
+      "parentUuid": "b610a8e0_45897b86",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d1211bc0_3ba685bb",
         "filename": "chrome/browser/resources/local_ntp/local_ntp.html",
         "patchSetId": 2
@@ -419,6 +437,24 @@
       "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dcbc5917_8e430856",
+        "filename": "chrome/browser/resources/local_ntp/voice_search.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T11:09:11Z",
+      "side": 1,
+      "message": "Yeah, my question was essentially \"why do we need a util method for this one-liner\". I\u0027d inline it.",
+      "parentUuid": "afa85617_3d9ef1a5",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -1181,6 +1217,24 @@
     },
     {
       "key": {
+        "uuid": "b0a661f7_bce2df0a",
+        "filename": "chrome/browser/search/local_ntp_source.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T11:09:11Z",
+      "side": 1,
+      "message": "Er.. what do the placeholders achieve, then?",
+      "parentUuid": "b1317d57_59012a59",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db4c6773_abd9cf82",
         "filename": "chrome/browser/search/local_ntp_source.cc",
         "patchSetId": 2
@@ -1245,6 +1299,24 @@
       "side": 1,
       "message": "Yes, there is. I looked into it briefly last week, but couldn\u0027t really figure it out in a few minutes, so I skipped it for now. I\u0027ll look into this once we fix other issues with this CL. Keeping this comment unresolved as a reminder.",
       "parentUuid": "6834b3c3_1724ec85",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d26b499d_2843c246",
+        "filename": "chrome/browser/search/local_ntp_source.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T11:09:11Z",
+      "side": 1,
+      "message": "In order to unblock this CL, you could replace the translated string by a hardcoded constant (plus TODO) here.",
+      "parentUuid": "aeaa595f_5d1e7344",
       "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
