@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "570f4af7_3cb423d1",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-08-02T01:51:47Z",
+      "side": 1,
+      "message": "can you come up with better name than cb? As it is, i\u0027ve no idea what this is...",
+      "range": {
+        "startLine": 491,
+        "startChar": 18,
+        "endLine": 491,
+        "endChar": 20
+      },
+      "revId": "50304f69efde8217ea3259e052e6fa78cf0f7e53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38c2d1b4_b6a15bed",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-08-02T01:51:47Z",
+      "side": 1,
+      "message": "can pass the base::Bind directly in,\npage_renovator_-\u003eRunRenovations(base::Bind(\u0026BackgroundLoaderOffliner::....));",
+      "range": {
+        "startLine": 494,
+        "startChar": 46,
+        "endLine": 494,
+        "endChar": 48
+      },
+      "revId": "50304f69efde8217ea3259e052e6fa78cf0f7e53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
