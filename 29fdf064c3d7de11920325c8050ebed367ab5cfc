@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "26caed08_2716956c",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-02T19:13:50Z",
+      "side": 1,
+      "message": "Yes, RunOrDefer would still make sense when used by desktop impl of MediaRouteController. If we implement MRC for Android and it follows a similar pattern to MRMojoImpl / MRDesktop then we might consider the call pattern (e.g., caller always check mojo_connections_ready() and call Defer() if necessary)",
+      "parentUuid": "8dd04240_898e150a",
+      "range": {
+        "startLine": 54,
+        "startChar": 20,
+        "endLine": 54,
+        "endChar": 30
+      },
+      "revId": "29fdf064c3d7de11920325c8050ebed367ab5cfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b6e58e6_7993ce6a",
         "filename": "chrome/browser/media/router/mojo/media_router_desktop_impl.h",
         "patchSetId": 6
@@ -284,6 +308,53 @@
     },
     {
       "key": {
+        "uuid": "ddd244f2_c986cc7a",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-02T19:13:50Z",
+      "side": 1,
+      "message": "Resolved",
+      "parentUuid": "c579f39a_c37010d3",
+      "range": {
+        "startLine": 281,
+        "startChar": 2,
+        "endLine": 281,
+        "endChar": 28
+      },
+      "revId": "29fdf064c3d7de11920325c8050ebed367ab5cfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4396101a_ec84a702",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 831,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-02T19:13:50Z",
+      "side": 1,
+      "message": "Can DoUpdateMediaSinks be combined into this method? Same for any other Foo() methods that only calls to DoFoo().",
+      "range": {
+        "startLine": 831,
+        "startChar": 32,
+        "endLine": 831,
+        "endChar": 0
+      },
+      "revId": "29fdf064c3d7de11920325c8050ebed367ab5cfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b35a0909_f7a134e2",
         "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.h",
         "patchSetId": 6
@@ -319,6 +390,30 @@
       "side": 1,
       "message": "Some of these methods (e.g. OnUserGesture(), RegisterMRP()) are overridden in MRDesktop, and I think it\u0027s okay for other methods like CreateRoute() to be overridden if necessary to do additional things.",
       "parentUuid": "b35a0909_f7a134e2",
+      "range": {
+        "startLine": 59,
+        "startChar": 35,
+        "endLine": 59,
+        "endChar": 43
+      },
+      "revId": "29fdf064c3d7de11920325c8050ebed367ab5cfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a635469_a9d57b93",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-02T19:13:50Z",
+      "side": 1,
+      "message": "My concern is that it leaves a larger surface for the subclass to override, and that makes it more prone to errors. For methods X() that have a DoX() version, can we make X() final? We should find a way to not require overriding both CreateRoute() and DoCreateRoute() in the desktop impl.",
+      "parentUuid": "7d45bbb2_8816e0ed",
       "range": {
         "startLine": 59,
         "startChar": 35,
