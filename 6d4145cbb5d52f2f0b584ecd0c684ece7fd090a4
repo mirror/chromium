@@ -312,6 +312,24 @@
     },
     {
       "key": {
+        "uuid": "d6e14cf3_751d581c",
+        "filename": "chrome/browser/ui/views/harmony/layout_provider_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-08-02T19:28:40Z",
+      "side": 1,
+      "message": "I played around with the trybots and it turns out this wasn\u0027t a GDI vs DirectWrite issue, Windows 7 just gets a different result than Windows 10. So that\u0027s upsetting. Should we switch on OS version too, or what? There\u0027s an additional wrinkle in that we don\u0027t have any Windows 8 bots... I ask around to see if we have a machine to try it out.",
+      "parentUuid": "c075813f_e59f0bcc",
+      "revId": "6d4145cbb5d52f2f0b584ecd0c684ece7fd090a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "79b8db02_b222dbf3",
         "filename": "ui/views/layout/layout_provider.cc",
         "patchSetId": 11

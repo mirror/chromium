@@ -16,6 +16,24 @@
       "revId": "6658e05cced3a6b5016a0cc0a952d09db85402e7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3601272_90a93254",
+        "filename": "ui/gfx/platform_font_win.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-08-02T19:28:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d56f488_c7d3bd3c",
+      "revId": "6658e05cced3a6b5016a0cc0a952d09db85402e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
