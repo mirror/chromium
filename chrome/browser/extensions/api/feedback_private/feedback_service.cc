@@ -12,9 +12,9 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/feedback/system_logs/chrome_system_logs_fetcher.h"
 #include "chrome/browser/profiles/profile.h"
-#include "chrome/common/chrome_content_client.h"
 #include "content/public/browser/browser_thread.h"
 #include "extensions/browser/blob_reader.h"
+#include "extensions/common/extensions_client.h"
 #include "net/base/network_change_notifier.h"
 
 using content::BrowserThread;
@@ -33,7 +33,7 @@ void FeedbackService::SendFeedback(
     scoped_refptr<FeedbackData> feedback_data,
     const SendFeedbackCallback& callback) {
   feedback_data->set_locale(g_browser_process->GetApplicationLocale());
-  feedback_data->set_user_agent(GetUserAgent());
+  feedback_data->set_user_agent(ExtensionsClient::Get()->GetUserAgent());
 
   if (!feedback_data->attached_file_uuid().empty()) {
     // Self-deleting object.
