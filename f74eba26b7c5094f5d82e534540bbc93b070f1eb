@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a20acdb_284790b1",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-02T01:33:37Z",
+      "side": 1,
+      "message": "s/ratio/fraction/\n\nand\n\ns/can be used/can safely be used/",
+      "range": {
+        "startLine": 30,
+        "startChar": 15,
+        "endLine": 30,
+        "endChar": 20
+      },
+      "revId": "f74eba26b7c5094f5d82e534540bbc93b070f1eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94a312a8_ad463706",
+        "filename": "media/remoting/renderer_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-02T01:33:37Z",
+      "side": 1,
+      "message": "nit: For consistency (audio then video, like you did above):\n\n  client_-\u003eAudioDecodedByteCount() + client_-\u003eVideoDecodedByteCount() - ...",
+      "range": {
+        "startLine": 436,
+        "startChar": 16,
+        "endLine": 436,
+        "endChar": 21
+      },
+      "revId": "f74eba26b7c5094f5d82e534540bbc93b070f1eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
