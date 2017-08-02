@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "032395fd_d5f2bb18",
+        "filename": "third_party/WebKit/Source/devtools/front_end/devices/DevicesView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-02T21:25:03Z",
+      "side": 1,
+      "message": "call it rule for consistency?",
+      "revId": "d161ea8889989fa9b9a34fb51e4ed2130dd27e19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80de11fd_757cea7c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/devices/DevicesView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-02T21:25:03Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "d161ea8889989fa9b9a34fb51e4ed2130dd27e19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22732b87_e3fd3557",
+        "filename": "third_party/WebKit/Source/devtools/front_end/devices/DevicesView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-02T21:25:03Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "d161ea8889989fa9b9a34fb51e4ed2130dd27e19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c119b90_d5b2bdbf",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/BlockedURLsPane.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-02T21:25:03Z",
+      "side": 1,
+      "message": "g/item/s//pattern/? :-)",
+      "revId": "d161ea8889989fa9b9a34fb51e4ed2130dd27e19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
