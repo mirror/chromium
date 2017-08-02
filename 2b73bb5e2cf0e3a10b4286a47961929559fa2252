@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3cbe8306_50b484eb",
+        "filename": "chrome/browser/ui/webui/snippets_internals_message_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T09:09:59Z",
+      "side": 1,
+      "message": "Maybe store base::Time::Now() in a local variable, to make sure you actually get the same value each time? (Not sure if it matters here, but IMO it\u0027s good practice.)",
+      "range": {
+        "startLine": 387,
+        "startChar": 78,
+        "endLine": 387,
+        "endChar": 0
+      },
+      "revId": "2b73bb5e2cf0e3a10b4286a47961929559fa2252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "393bf4ff_31f279c5",
+        "filename": "chrome/browser/ui/webui/snippets_internals_message_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T09:09:59Z",
+      "side": 1,
+      "message": "NOTREACHED is like DCHECK: don\u0027t handle failures.",
+      "range": {
+        "startLine": 397,
+        "startChar": 11,
+        "endLine": 397,
+        "endChar": 0
+      },
+      "revId": "2b73bb5e2cf0e3a10b4286a47961929559fa2252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40292c23_11b883ac",
+        "filename": "chrome/browser/ui/webui/snippets_internals_message_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 401,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T09:09:59Z",
+      "side": 1,
+      "message": "This is all a quite convoluted way to get a single suggestion :)\nWould RemoteSuggestion::CreateFromContentSuggestionsDictionary be simpler?",
+      "range": {
+        "startLine": 401,
+        "startChar": 58,
+        "endLine": 401,
+        "endChar": 0
+      },
+      "revId": "2b73bb5e2cf0e3a10b4286a47961929559fa2252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16efc1a0_048a9f0e",
+        "filename": "chrome/browser/ui/webui/snippets_internals_message_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T09:09:59Z",
+      "side": 1,
+      "message": "Hm. Should the method be declared on RemoteSuggestionsProvider (not Impl)?",
+      "range": {
+        "startLine": 406,
+        "startChar": 35,
+        "endLine": 406,
+        "endChar": 0
+      },
+      "revId": "2b73bb5e2cf0e3a10b4286a47961929559fa2252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6dd1a600_ed468fc3",
+        "filename": "chrome/browser/ui/webui/snippets_internals_message_handler.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T09:09:59Z",
+      "side": 1,
+      "message": "HandlePushDummySuggestionIn10Seconds? Then you can probably drop the \"Internal\".\nAlso, move the Internal one elsewhere, so that all the message handlers (and only them) are in one place?",
+      "range": {
+        "startLine": 66,
+        "startChar": 67,
+        "endLine": 66,
+        "endChar": 0
+      },
+      "revId": "2b73bb5e2cf0e3a10b4286a47961929559fa2252",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
