@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27d0d6a8_43b72100",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-02T20:43:01Z",
+      "side": 1,
+      "message": "Why do you need std::move here?",
+      "range": {
+        "startLine": 37,
+        "startChar": 33,
+        "endLine": 37,
+        "endChar": 0
+      },
+      "revId": "f7eea84c1e37ff117c3313c4306b2dc36d4fc465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9b16ec9_cbde947f",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-02T20:43:01Z",
+      "side": 1,
+      "message": "Could you use a weak pointer instead of base::Unretained?",
+      "range": {
+        "startLine": 61,
+        "startChar": 78,
+        "endLine": 61,
+        "endChar": 0
+      },
+      "revId": "f7eea84c1e37ff117c3313c4306b2dc36d4fc465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73504c1f_89ea29e5",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-02T20:43:01Z",
+      "side": 1,
+      "message": "What\u0027s the relation between params.duration and the actual time on the system? I\u0027m assuming that params.duration can never be zero, right?",
+      "range": {
+        "startLine": 74,
+        "startChar": 72,
+        "endLine": 74,
+        "endChar": 0
+      },
+      "revId": "f7eea84c1e37ff117c3313c4306b2dc36d4fc465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c5cb2da_369f29d6",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-02T20:43:01Z",
+      "side": 1,
+      "message": "My understanding is that this can be an expensive operation. Can it be hardware-accelerated too?",
+      "range": {
+        "startLine": 78,
+        "startChar": 30,
+        "endLine": 78,
+        "endChar": 0
+      },
+      "revId": "f7eea84c1e37ff117c3313c4306b2dc36d4fc465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b74c4cf5_c16eabd7",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-02T20:43:01Z",
+      "side": 1,
+      "message": "I think both these assignments fit within 80 characters--no need to split the line.",
+      "range": {
+        "startLine": 141,
+        "startChar": 49,
+        "endLine": 141,
+        "endChar": 0
+      },
+      "revId": "f7eea84c1e37ff117c3313c4306b2dc36d4fc465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4319cd70_05c1b7e0",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-02T20:43:01Z",
+      "side": 1,
+      "message": "This is unlikely to be expensive in practise, but you\u0027re looking up the timestamp in the map twice--once to assert that it\u0027s there and one to call it. You could get away with a single call to find().",
+      "range": {
+        "startLine": 153,
+        "startChar": 39,
+        "endLine": 153,
+        "endChar": 0
+      },
+      "revId": "f7eea84c1e37ff117c3313c4306b2dc36d4fc465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
