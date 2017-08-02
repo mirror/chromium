@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2db9f94_b099ce59",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXARIAGridCell.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-02T16:09:24Z",
+      "side": 1,
+      "message": "Why is aria-readonly not allowed on a table?\n\nMost of the ARIA attributes designed for grids also work\nfine for native tables without using the grid role - for example\nit\u0027s fine to use aria-colindex on one cell in a table, you don\u0027t\nhave to add a role to every single row and cell first.\n\nI just checked the spec this does match the spec, but I just\nworry sometimes that it\u0027s confusing for authors.",
+      "revId": "970aafd668bfcda6b25a9f1dd874cab030edb2b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
