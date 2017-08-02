@@ -189,6 +189,30 @@
       "revId": "26dbd95d540375390e72335d62234d6c8da97eeb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8483e02_f1c6f8d1",
+        "filename": "ui/app_list/views/search_result_answer_card_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-08-02T23:57:18Z",
+      "side": 1,
+      "message": "Good to know.",
+      "parentUuid": "0efa1761_001dac93",
+      "range": {
+        "startLine": 95,
+        "startChar": 11,
+        "endLine": 95,
+        "endChar": 23
+      },
+      "revId": "26dbd95d540375390e72335d62234d6c8da97eeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
