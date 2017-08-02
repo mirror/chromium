@@ -130,6 +130,9 @@ class NET_EXPORT URLRequestJob : public base::PowerObserver {
   // for more information on the difference.
   virtual void GetLoadTimingInfo(LoadTimingInfo* load_timing_info) const;
 
+  virtual void GetWireRequestHeaders(HttpRequestHeaders* headers,
+                                     std::string* request_line);
+
   // Gets the remote endpoint that the network stack is currently fetching the
   // URL from. Returns true and fills in |endpoint| if it is available; returns
   // false and leaves |endpoint| unchanged if it is unavailable.

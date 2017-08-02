@@ -265,6 +265,9 @@ void URLRequestJob::GetLoadTimingInfo(LoadTimingInfo* load_timing_info) const {
   // Only certain request types return more than just request start times.
 }
 
+void URLRequestJob::GetWireRequestHeaders(HttpRequestHeaders* headers,
+                                          std::string* request_line) {}
+
 bool URLRequestJob::GetRemoteEndpoint(IPEndPoint* endpoint) const {
   return false;
 }

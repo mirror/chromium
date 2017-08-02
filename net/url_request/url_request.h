@@ -482,6 +482,12 @@ class NET_EXPORT URLRequest : public base::SupportsUserData {
   // in HttpResponseHeaders class as to the format of the data.
   HttpResponseHeaders* response_headers() const;
 
+  // Gets actual request headers that have hit the wire. It can only be called
+  // after the request was sent and only when request wsa started with
+  // LOAD_REPORT_WIRE_REQUEST_HEADERS set in load flags.
+  void GetWireRequestHeaders(HttpRequestHeaders* raw_headers,
+                             std::string* request_line);
+
   // Get the SSL connection info.
   const SSLInfo& ssl_info() const {
     return response_info_.ssl_info;

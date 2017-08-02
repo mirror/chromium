@@ -72,6 +72,9 @@ class NET_EXPORT_PRIVATE HttpBasicStream : public HttpStream {
 
   bool GetLoadTimingInfo(LoadTimingInfo* load_timing_info) const override;
 
+  void GetWireRequestHeaders(HttpRequestHeaders* headers,
+                             std::string* request_line) override;
+
   bool GetAlternativeService(
       AlternativeService* alternative_service) const override;
 

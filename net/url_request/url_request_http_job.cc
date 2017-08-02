@@ -1110,6 +1110,13 @@ void URLRequestHttpJob::GetLoadTimingInfo(
     load_timing_info->receive_headers_end = receive_headers_end_;
 }
 
+void URLRequestHttpJob::GetWireRequestHeaders(HttpRequestHeaders* headers,
+                                              std::string* request_line) {
+  if (!transaction_)
+    return;
+  transaction_->GetWireRequestHeaders(headers, request_line);
+}
+
 bool URLRequestHttpJob::GetRemoteEndpoint(IPEndPoint* endpoint) const {
   if (!transaction_)
     return false;

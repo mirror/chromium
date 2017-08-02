@@ -356,6 +356,13 @@ void DevToolsURLInterceptorRequestJob::CancelAuth() {
   auth_info_ = nullptr;
 }
 
+void DevToolsURLInterceptorRequestJob::GetWireRequestHeaders(
+    net::HttpRequestHeaders* headers,
+    std::string* request_line) {
+  if (sub_request_)
+    sub_request_->request()->GetWireRequestHeaders(headers, request_line);
+}
+
 void DevToolsURLInterceptorRequestJob::OnAuthRequired(
     net::URLRequest* request,
     net::AuthChallengeInfo* auth_info) {

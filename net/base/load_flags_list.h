@@ -87,3 +87,7 @@ LOAD_FLAG(DISABLE_CONNECTION_MIGRATION, 1 << 17)
 // Indicates that the cache should not check that the request matches the
 // response's vary header.
 LOAD_FLAG(SKIP_VARY_CHECK, 1 << 18)
+
+// If set, the low-level headers (along with transport-specific fields and HTTP
+// request string) will be kept for later retrieval by the client.
+LOAD_FLAG(REPORT_WIRE_REQUEST_HEADERS, 1 << 19)

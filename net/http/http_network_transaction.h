@@ -81,6 +81,8 @@ class NET_EXPORT_PRIVATE HttpNetworkTransaction
   LoadState GetLoadState() const override;
   void SetQuicServerInfo(QuicServerInfo* quic_server_info) override;
   bool GetLoadTimingInfo(LoadTimingInfo* load_timing_info) const override;
+  void GetWireRequestHeaders(HttpRequestHeaders* headers,
+                             std::string* request_line) override;
   bool GetRemoteEndpoint(IPEndPoint* endpoint) const override;
   void PopulateNetErrorDetails(NetErrorDetails* details) const override;
   void SetPriority(RequestPriority priority) override;

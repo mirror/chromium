@@ -15085,6 +15085,11 @@ class FakeStream : public HttpStream,
     return false;
   }
 
+  void GetWireRequestHeaders(HttpRequestHeaders* headers,
+                             std::string* request_line) override {
+    ADD_FAILURE();
+  }
+
   bool GetAlternativeService(
       AlternativeService* alternative_service) const override {
     ADD_FAILURE();

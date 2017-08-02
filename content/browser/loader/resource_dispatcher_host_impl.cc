@@ -1535,6 +1535,11 @@ ResourceDispatcherHostImpl::CreateResourceHandler(
     }
   }
 
+  if (request_data.report_raw_headers) {
+    const int flags = request->load_flags();
+    request->SetLoadFlags(flags | net::LOAD_REPORT_WIRE_REQUEST_HEADERS);
+  }
+
   bool start_detached = request_data.download_to_network_cache_only;
 
   // Prefetches and <a ping> requests outlive their child process.

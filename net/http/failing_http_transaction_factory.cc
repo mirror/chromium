@@ -52,6 +52,7 @@ class FailingHttpTransaction : public HttpTransaction {
            const CompletionCallback& callback) override;
   void StopCaching() override;
   bool GetFullRequestHeaders(HttpRequestHeaders* headers) const override;
+  void GetWireRequestHeaders(HttpRequestHeaders*, std::string*) override {}
   int64_t GetTotalReceivedBytes() const override;
   int64_t GetTotalSentBytes() const override;
   void DoneReading() override;

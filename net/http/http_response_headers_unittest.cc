@@ -2044,6 +2044,34 @@ INSTANTIATE_TEST_CASE_P(HttpResponseHeaders,
                         UpdateWithNewRangeTest,
                         testing::ValuesIn(update_range_tests));
 
+bool HttpResponseHeadersFromNetLogParam(
+    const base::Value* event_param,
+    scoped_refptr<HttpResponseHeaders>* http_response_headers) {
+  *http_response_headers = NULL;
+
+  const base::DictionaryValue* dict = NULL;
+  const base::ListValue* header_list = NULL;
+
+  if (!event_param || !event_param->GetAsDictionary(&dict) ||
+      !dict->GetList("headers", &header_list)) {
+    return false;
+  }
+
+  std::string raw_headers;
+  for (base::ListValue::const_iterator it = header_list->begin();
+       it != header_list->end(); ++it) {
+    std::string header_line;
+    if (!it->GetAsString(&header_line))
+      return false;
+
+    raw_headers.append(header_line);
+    raw_headers.push_back('\0');
+  }
+  raw_headers.push_back('\0');
+  *http_response_headers = new HttpResponseHeaders(raw_headers);
+  return true;
+}
+
 TEST(HttpResponseHeadersTest, ToNetLogParamAndBackAgain) {
   std::string headers("HTTP/1.1 404\n"
                       "Content-Length: 450\n"
@@ -2056,7 +2084,7 @@ TEST(HttpResponseHeadersTest, ToNetLogParamAndBackAgain) {
   scoped_refptr<HttpResponseHeaders> recreated;
 
   ASSERT_TRUE(
-      HttpResponseHeaders::FromNetLogParam(event_param.get(), &recreated));
+      HttpResponseHeadersFromNetLogParam(event_param.get(), &recreated));
   ASSERT_TRUE(recreated.get());
   EXPECT_EQ(parsed->GetHttpVersion(), recreated->GetHttpVersion());
   EXPECT_EQ(parsed->response_code(), recreated->response_code());

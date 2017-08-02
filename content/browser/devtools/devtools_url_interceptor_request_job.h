@@ -56,6 +56,8 @@ class DevToolsURLInterceptorRequestJob : public net::URLRequestJob,
 
   void SetAuth(const net::AuthCredentials& credentials) override;
   void CancelAuth() override;
+  void GetWireRequestHeaders(net::HttpRequestHeaders* headers,
+                             std::string* request_line) override;
 
   // net::URLRequest::Delegate methods:
   void OnAuthRequired(net::URLRequest* request,

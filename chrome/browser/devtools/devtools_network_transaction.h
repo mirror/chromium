@@ -79,6 +79,8 @@ class DevToolsNetworkTransaction
   net::LoadState GetLoadState() const override;
   void SetQuicServerInfo(net::QuicServerInfo* quic_server_info) override;
   bool GetLoadTimingInfo(net::LoadTimingInfo* load_timing_info) const override;
+  void GetWireRequestHeaders(net::HttpRequestHeaders* headers,
+                             std::string* request_line) override;
   bool GetRemoteEndpoint(net::IPEndPoint* endpoint) const override;
   void PopulateNetErrorDetails(net::NetErrorDetails* details) const override;
   void SetPriority(net::RequestPriority priority) override;
