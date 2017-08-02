@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f5f11aee_dd05036e",
+        "filename": "ios/chrome/browser/ui/ntp/recent_tabs/recent_tabs_table_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-08-02T18:28:22Z",
+      "side": 1,
+      "message": "I was thinking the same when doing this, and went with the safest option. \n\nChanged to weakSelf.",
+      "parentUuid": "91a13c46_2c0373a3",
+      "range": {
+        "startLine": 423,
+        "startChar": 33,
+        "endLine": 423,
+        "endChar": 47
+      },
+      "revId": "937f992d72ea85ced979d7d646eb4099902921d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cf9852fc_f1ab2f4b",
         "filename": "ios/clean/chrome/browser/ui/recent_tabs/recent_tabs_coordinator.mm",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-02T18:07:31Z",
       "side": 1,
       "message": "Since browser.dispatcher doesn\u0027t implement ApplicationCommands, this is asking for a crash. Just pass nil for now until we get all of the commands converted and can unify the old and clean protocols.",
+      "range": {
+        "startLine": 33,
+        "startChar": 52,
+        "endLine": 33,
+        "endChar": 59
+      },
+      "revId": "937f992d72ea85ced979d7d646eb4099902921d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8d261fa_b27cf7f1",
+        "filename": "ios/clean/chrome/browser/ui/recent_tabs/recent_tabs_coordinator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1165759
+      },
+      "writtenOn": "2017-08-02T18:28:22Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "cf9852fc_f1ab2f4b",
       "range": {
         "startLine": 33,
         "startChar": 52,
