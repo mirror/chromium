@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fef546fa_337f338f",
+        "filename": "content/browser/payments/payment_app_database.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-02T20:18:04Z",
+      "side": 1,
+      "message": "Add ad note that \"pattern\" is the scope URL of the service worker registration.",
+      "range": {
+        "startLine": 36,
+        "startChar": 51,
+        "endLine": 36,
+        "endChar": 58
+      },
+      "revId": "2c25d961621a3250b9763271342197957e96772f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

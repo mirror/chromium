@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5e2b4fbf_e5de3189",
+        "filename": "content/browser/payments/payment_app.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-02T20:18:04Z",
+      "side": 0,
+      "message": "This data is stored on disk. Please double check with service worker owners that it\u0027s fine to update the schema like this. Usually I would expect marking \"origin \u003d 2\" deprecated and then adding \"registration_id \u003d 8\" at the bottom.",
+      "revId": "ce9fb58dff347e3fc4e89e14b90109b2bc1dd6ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
