@@ -16,6 +16,24 @@
       "revId": "419986798f4fd3647da22c9cc774510044b85e33",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae08b439_6360b481",
+        "filename": "ui/base/idle/idle_fuchsia.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-02T16:31:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e5ba347_c02d179e",
+      "revId": "419986798f4fd3647da22c9cc774510044b85e33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
