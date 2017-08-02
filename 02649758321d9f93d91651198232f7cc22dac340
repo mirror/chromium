@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2d526e7_fec547ef",
+        "filename": "content/browser/loader/redirect_to_file_resource_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-02T19:31:35Z",
+      "side": 1,
+      "message": "We are trying very hard to remove all OutOfBandCancels in the loader stack, so it would be best if we didn\u0027t rely on this API.",
+      "revId": "02649758321d9f93d91651198232f7cc22dac340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cf102ce_53a5822b",
+        "filename": "content/browser/loader/redirect_to_file_resource_handler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-02T19:31:35Z",
+      "side": 1,
+      "message": "nit: no longer used",
+      "revId": "02649758321d9f93d91651198232f7cc22dac340",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
