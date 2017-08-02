@@ -641,30 +641,6 @@ TEST_F(HostResolverImplTest, AsynchronousLookup) {
   EXPECT_EQ("just.testing", proc_->GetCaptureList()[0].hostname);
 }
 
-// RFC 6761 localhost names should always resolve to loopback.
-TEST_F(HostResolverImplTest, LocalhostLookup) {
-  // Add a rule resolving localhost names to a non-loopback IP and test
-  // that they still resolves to loopback.
-  proc_->AddRuleForAllFamilies("foo.localhost", "192.168.1.42");
-  proc_->AddRuleForAllFamilies("localhost", "192.168.1.42");
-  proc_->AddRuleForAllFamilies("localhost.", "192.168.1.42");
-
-  Request* req0 = CreateRequest("foo.localhost", 80);
-  EXPECT_THAT(req0->Resolve(), IsOk());
-  EXPECT_TRUE(req0->HasAddress("127.0.0.1", 80));
-  EXPECT_TRUE(req0->HasAddress("::1", 80));
-
-  Request* req1 = CreateRequest("localhost", 80);
-  EXPECT_THAT(req1->Resolve(), IsOk());
-  EXPECT_TRUE(req1->HasAddress("127.0.0.1", 80));
-  EXPECT_TRUE(req1->HasAddress("::1", 80));
-
-  Request* req2 = CreateRequest("localhost.", 80);
-  EXPECT_THAT(req2->Resolve(), IsOk());
-  EXPECT_TRUE(req2->HasAddress("127.0.0.1", 80));
-  EXPECT_TRUE(req2->HasAddress("::1", 80));
-}
-
 TEST_F(HostResolverImplTest, LocalhostIPV4IPV6Lookup) {
   Request* req1 = CreateRequest("localhost6", 80, MEDIUM, ADDRESS_FAMILY_IPV4);
   EXPECT_THAT(req1->Resolve(), IsOk());
@@ -1712,6 +1688,53 @@ class HostResolverImplDnsTest : public HostResolverImplTest {
 // TODO(szym): Test AbortAllInProgressJobs due to DnsConfig change.
 
 // TODO(cbentzel): Test a mix of requests with different HostResolverFlags.
+
+// RFC 6761 localhost names should always resolve to loopback.
+TEST_F(HostResolverImplDnsTest, LocalhostLookup) {
+  DnsConfig config = CreateValidDnsConfig();
+  ChangeDnsConfig(config);
+  // Add a rule resolving localhost names to a non-loopback IP and test
+  // that they still resolves to loopback.
+  proc_->AddRuleForAllFamilies("foo.localhost", "192.168.1.42");
+  proc_->AddRuleForAllFamilies("localhost", "192.168.1.42");
+  proc_->AddRuleForAllFamilies("localhost.", "192.168.1.42");
+
+  Request* req0 = CreateRequest("foo.localhost", 80);
+  EXPECT_THAT(req0->Resolve(), IsOk());
+  EXPECT_TRUE(req0->HasAddress("127.0.0.1", 80));
+  EXPECT_TRUE(req0->HasAddress("::1", 80));
+
+  Request* req1 = CreateRequest("localhost", 80);
+  EXPECT_THAT(req1->Resolve(), IsOk());
+  EXPECT_TRUE(req1->HasAddress("127.0.0.1", 80));
+  EXPECT_TRUE(req1->HasAddress("::1", 80));
+
+  Request* req2 = CreateRequest("localhost.", 80);
+  EXPECT_THAT(req2->Resolve(), IsOk());
+  EXPECT_TRUE(req2->HasAddress("127.0.0.1", 80));
+  EXPECT_TRUE(req2->HasAddress("::1", 80));
+
+  // This should be true even when a HOSTS file is in play.
+  DnsHosts hosts;
+  hosts[DnsHostsKey("localhost", ADDRESS_FAMILY_IPV4)] =
+      IPAddress({192, 168, 1, 1});
+  hosts[DnsHostsKey("foo.localhost", ADDRESS_FAMILY_IPV4)] =
+      IPAddress({192, 168, 1, 2});
+  config.hosts = hosts;
+  ChangeDnsConfig(config);
+
+  Request* req3 = CreateRequest("localhost.", 80);
+  EXPECT_THAT(req3->Resolve(), IsOk());
+  EXPECT_TRUE(req3->HasAddress("127.0.0.1", 80));
+  EXPECT_TRUE(req3->HasAddress("::1", 80));
+  EXPECT_FALSE(req3->HasAddress("192.168.1.1", 80));
+
+  Request* req4 = CreateRequest("foo.localhost.", 80);
+  EXPECT_THAT(req4->Resolve(), IsOk());
+  EXPECT_TRUE(req4->HasAddress("127.0.0.1", 80));
+  EXPECT_TRUE(req4->HasAddress("::1", 80));
+  EXPECT_FALSE(req4->HasAddress("192.168.1.2", 80));
+}
 
 // Test successful and fallback resolutions in HostResolverImpl::DnsTask.
 TEST_F(HostResolverImplDnsTest, DnsTask) {
