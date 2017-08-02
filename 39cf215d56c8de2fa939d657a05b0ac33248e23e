@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72b9ca1b_9c867a40",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2339,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-02T14:48:27Z",
+      "side": 1,
+      "message": "Given the number of calls following this pattern how about a MaybeReleaseId function?",
+      "range": {
+        "startLine": 2339,
+        "startChar": 13,
+        "endLine": 2339,
+        "endChar": 35
+      },
+      "revId": "39cf215d56c8de2fa939d657a05b0ac33248e23e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
