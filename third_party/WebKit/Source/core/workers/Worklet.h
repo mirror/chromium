@@ -67,6 +67,14 @@ class CORE_EXPORT Worklet : public GarbageCollectedFinalized<Worklet>,
   virtual bool NeedsToCreateGlobalScope() = 0;
   virtual WorkletGlobalScopeProxy* CreateGlobalScope() = 0;
 
+  // In the current implementation, audio/animation worklet use one global
+  // scope while paint worklet uses two. This function chooses which global
+  // scope to use. By default, we always choose the one at index 0 because
+  // audio/animation worklet has only one. Paint worklet overrides this function
+  // and implement its own logic.
+  // TODO(nhiroki): Support the case where there are multiple global scopes.
+  virtual unsigned SelecteGlobalScope() const { return 0u; }
+
   // "A Worklet has a list of the worklet's WorkletGlobalScopes. Initially this
   // list is empty; it is populated when the user agent chooses to create its
   // WorkletGlobalScope."

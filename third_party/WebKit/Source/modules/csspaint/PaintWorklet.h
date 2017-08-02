@@ -25,7 +25,7 @@ class MODULES_EXPORT PaintWorklet final : public Worklet {
 
  public:
   // At this moment, paint worklet allows at most two global scopes at any time.
-  static const unsigned kNumGlobalScopes = 2u;
+  static const unsigned kNumGlobalScopes;
   static PaintWorklet* Create(LocalFrame*);
   ~PaintWorklet() override;
 
@@ -51,6 +51,7 @@ class MODULES_EXPORT PaintWorklet final : public Worklet {
   bool NeedsToCreateGlobalScope() final;
   WorkletGlobalScopeProxy* CreateGlobalScope() final;
 
+  unsigned SelecteGlobalScope() const final;
   Member<PaintWorkletPendingGeneratorRegistry> pending_generator_registry_;
   DocumentDefinitionMap document_definition_map_;
 };
