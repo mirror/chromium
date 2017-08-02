@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b4642e6_23a6e956",
+        "filename": "services/device/generic_sensor/platform_sensor_fusion.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1182699
+      },
+      "writtenOn": "2017-08-02T08:18:03Z",
+      "side": 1,
+      "message": "How caller would know what index to use?\n\nWouldn\u0027t it be better to have syntax similar to OnSensorReadingChanged(mojom::SensorType type)?\n\nbool GetLatestReading(mojom::SensorType type, SensorReading* result);\n\nThen, it would be easier to get correct data from GetFusedData(mojom::SensorType which_sensor_changed, SensorReading* fused_reading);",
+      "revId": "366f55322b5f2cef79f1c0d38d269576da6c02bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
