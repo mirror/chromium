@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b25f8d03_7e43266c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/clear-site-data/storage.https.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-08-02T14:50:57Z",
+      "side": 1,
+      "message": "Explicit done only prevents the test suite from finishing after the page is loaded, i.e. before we have a chance to add tests on line 39. However, testharness still complains.\n\nWrapping the whole thing as promise_test would be possible, but then we would have one large test instead of one test for each datatype. I think the latter produces a much nicer result, you see which backends pass and which ones are failing.",
+      "parentUuid": "5abbb1e4_089f230b",
+      "revId": "ce38c560da29793257c601a3b76bb1342c33a617",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "15c6d127_6daf2c73",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/clear-site-data/support/test_utils.sub.js",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-02T12:06:34Z",
       "side": 1,
       "message": "Overengineering...",
+      "revId": "ce38c560da29793257c601a3b76bb1342c33a617",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76329d05_29b01261",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/clear-site-data/support/test_utils.sub.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-08-02T14:50:57Z",
+      "side": 1,
+      "message": "Yeah, I\u0027m well aware by now that I have a different threshold than you :)\n\nBut I\u0027m actually not sure what you mean here. Copy the local storage code? Or don\u0027t worry about renaming it?",
+      "parentUuid": "15c6d127_6daf2c73",
       "revId": "ce38c560da29793257c601a3b76bb1342c33a617",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
