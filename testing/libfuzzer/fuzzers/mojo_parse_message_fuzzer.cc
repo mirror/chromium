@@ -1,0 +1,96 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#include <stddef.h>
+#include <stdint.h>
+
+#include "base/message_loop/message_loop.h"
+#include "base/run_loop.h"
+#include "base/task_scheduler/task_scheduler.h"
+#include "mojo/edk/embedder/embedder.h"
+#include "mojo/public/cpp/bindings/binding.h"
+#include "testing/libfuzzer/fuzzers/fuzz.mojom.h"
+
+/* Dummy implementation of the FuzzInterface. */
+class FuzzImpl : public fuzz::mojom::FuzzInterface {
+ public:
+  explicit FuzzImpl(fuzz::mojom::FuzzInterfaceRequest request)
+      : binding_(this, std::move(request)) {}
+
+  void FuzzBasic() override {}
+
+  void FuzzBasicResp(FuzzBasicRespCallback callback) override {
+    std::move(callback).Run();
+  }
+
+  void FuzzBasicSyncResp(FuzzBasicSyncRespCallback callback) override {
+    std::move(callback).Run();
+  }
+
+  void FuzzArgs(fuzz::mojom::FuzzStructPtr a,
+                fuzz::mojom::FuzzStructPtr b) override {}
+
+  void FuzzArgsResp(fuzz::mojom::FuzzStructPtr a,
+                    fuzz::mojom::FuzzStructPtr b,
+                    FuzzArgsRespCallback callback) override {
+    std::move(callback).Run();
+  };
+
+  void FuzzArgsSyncResp(fuzz::mojom::FuzzStructPtr a,
+                        fuzz::mojom::FuzzStructPtr b,
+                        FuzzArgsSyncRespCallback callback) override {
+    std::move(callback).Run();
+  };
+
+  ~FuzzImpl() {}
+
+  /* Expose the binding to the fuzz harness. */
+  mojo::Binding<FuzzInterface> binding_;
+};
+
+void fuzz_message(const uint8_t* data, size_t size, base::RunLoop* run) {
+  fuzz::mojom::FuzzInterfacePtr fuzz;
+  auto impl = base::MakeUnique<FuzzImpl>(MakeRequest(&fuzz));
+  auto router = impl->binding_.RouterForTesting();
+  std::vector<mojo::ScopedHandle> handles;
+
+  /* Create a mojo message with the appropriate payload size. */
+  mojo::Message message(0, 0, size, 0, &handles);
+
+  /* Set the raw message data. */
+  memcpy(message.mutable_data(), data, size);
+
+  /* Run the message through header validation, payload validation, and
+   * dispatch to the impl. */
+  router->SimulateReceivingMessageForTesting(&message);
+
+  /* Allow the harness function to return now. */
+  run->Quit();
+}
+
+// Entry point for LibFuzzer.
+extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
+  static base::MessageLoop message_loop(base::MessageLoop::TYPE_UI);
+
+  /* Mojo messages must be sent and processed from TaskRunners. Pass the data
+   * along to run in an appropriate context, and wait for it to finish. */
+  base::RunLoop run;
+  message_loop.task_runner()->PostTask(
+      FROM_HERE, base::BindOnce(&fuzz_message, data, size, &run));
+  run.Run();
+
+  return 0;
+}
+
+// Environment is optional.
+struct Environment {
+  Environment() {
+    base::TaskScheduler::CreateAndStartWithDefaultParams(
+        "MojoParseMessageFuzzerProcess");
+    mojo::edk::Init();
+  }
+  mojo::internal::ScopedSuppressValidationErrorLoggingForTests log_suppression;
+};
+
+Environment* env = new Environment();
