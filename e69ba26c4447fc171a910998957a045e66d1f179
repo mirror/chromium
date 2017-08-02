@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "745db732_ce6928ce",
+        "filename": "ui/base/win/shell.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-02T23:05:59Z",
+      "side": 1,
+      "message": "Nit: OK, I buy the counting-down loop argument.  What about this:\n\n  for (DWORD i \u003d property_count; i \u003e 0; --i) {\n    PROPERTYKEY key;\n    if (SUCCEEDED(pps-\u003eGetAt(i - 1, \u0026key))) {\n\nThis avoids casts and is shorter in general.",
+      "revId": "e69ba26c4447fc171a910998957a045e66d1f179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de7708e3_a01de6f2",
+        "filename": "ui/base/win/shell.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-02T23:05:59Z",
+      "side": 1,
+      "message": "Nit: Another way to write this without #ifs would be:\n\n  DCHECK(FAILED(pps-\u003eGetCount(\u0026property_count)) || !property_count);",
+      "revId": "e69ba26c4447fc171a910998957a045e66d1f179",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
