@@ -51,9 +51,9 @@ void QuadList::ReplaceExistingQuadWithOpaqueTransparentSolidColor(Iterator at) {
   // solid color quad needs to set |needs_blending| to false, and set both
   // |visible_rect| and |opaque_rect| to its quad rect so it is drawn and
   // ShouldDrawWithBlending() returns false so it is drawn without blending.
-  const gfx::Rect& rect = at->rect;
-  const gfx::Rect& opaque_rect = at->rect;
-  const gfx::Rect& visible_rect = at->rect;
+  const gfx::Rect rect = at->rect;
+  const gfx::Rect opaque_rect = at->rect;
+  const gfx::Rect visible_rect = at->rect;
   bool needs_blending = false;
   const SharedQuadState* shared_quad_state = at->shared_quad_state;
 
