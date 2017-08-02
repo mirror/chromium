@@ -45,9 +45,6 @@ bool IsAlertOnBackgroundUploadEnabled();
 // Whether auto-reload is enabled.
 bool IsAutoReloadEnabled();
 
-// Whether the lru snapshot cache experiment is enabled.
-bool IsLRUSnapshotCacheEnabled();
-
 // Whether the iOS MDM integration is enabled.
 bool IsMDMIntegrationEnabled();
 
