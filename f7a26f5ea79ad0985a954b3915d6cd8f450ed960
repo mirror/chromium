@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7c0473ba_759b0ee7",
+        "filename": "content/common/media/media_stream_messages.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-08-02T18:03:59Z",
+      "side": 1,
+      "message": "Sure. I intend to remove this in the next CL when we remove MediaStreamDispatcherHost as a BrowserMessageFilter. MediaStreamMsgStart is still in use at https://cs.chromium.org/chromium/src/content/browser/renderer_host/media/media_stream_dispatcher_host.cc?q\u003dmedia_stream_dispa\u0026sq\u003dpackage:chromium\u0026l\u003d41",
+      "parentUuid": "c80a5ce3_d1047f1c",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 44
+      },
+      "revId": "f7a26f5ea79ad0985a954b3915d6cd8f450ed960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7a4cd7c4_d7bb06a6",
         "filename": "content/common/media/media_stream_messages.h",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-02T17:03:57Z",
       "side": 1,
       "message": "If these are still required, can we rename this file to something like media_stream_struct_traits.h  since there are no messages here?  Alternatively, can this be combined with some other *.h file to make this file go away entirely?",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 23
+      },
+      "revId": "f7a26f5ea79ad0985a954b3915d6cd8f450ed960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9af1bee4_94acadbc",
+        "filename": "content/common/media/media_stream_messages.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-08-02T18:03:59Z",
+      "side": 1,
+      "message": "Sgtm. These are required as we do not have typemapping for StreamDeviceInfo yet. Shall rename this file to media_stream_param_traits.h. We would also need a .cc file to generate read, write, etc methods when we remove this file from content_message_generator.h. All this would become relatively easier to do after we clean up MediaStreamMsgStart. Hence, I will take up your suggestion in a follow up CL along with MediaStreamMsgStart removal.",
+      "parentUuid": "7a4cd7c4_d7bb06a6",
       "range": {
         "startLine": 20,
         "startChar": 0,
