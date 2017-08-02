@@ -139,6 +139,18 @@ void CastMediaSinkService::Stop() {
   cast_media_sink_service_impl_.reset();
 }
 
+void CastMediaSinkService::OnDialSinkAdded(const MediaSinkInternal& sink) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+  DCHECK(cast_media_sink_service_impl_);
+  cast_media_sink_service_impl_->OnDialSinkAdded(sink);
+}
+
+void CastMediaSinkService::OnDialSinksRemoved() {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+  DCHECK(cast_media_sink_service_impl_);
+  cast_media_sink_service_impl_->OnDialSinksRemoved();
+}
+
 void CastMediaSinkService::SetDnsSdRegistryForTest(DnsSdRegistry* registry) {
   DCHECK(!dns_sd_registry_);
   dns_sd_registry_ = registry;

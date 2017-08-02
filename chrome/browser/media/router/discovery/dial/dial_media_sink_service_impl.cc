@@ -61,6 +61,11 @@ DeviceDescriptionService* DialMediaSinkServiceImpl::GetDescriptionService() {
   return description_service_.get();
 }
 
+void DialMediaSinkServiceImpl::SetDialMediaSinkServiceDelegate(
+    DialMediaSinkServiceDelegate* delegate) {
+  delegate_ = delegate;
+}
+
 void DialMediaSinkServiceImpl::SetDialRegistryForTest(
     DialRegistry* dial_registry) {
   DCHECK(!test_dial_registry_);
@@ -81,6 +86,8 @@ void DialMediaSinkServiceImpl::OnDialDeviceEvent(
 
   current_sinks_.clear();
   current_devices_ = devices;
+  if (delegate_)
+    delegate_->OnDialSinksRemoved();
 
   GetDescriptionService()->GetDeviceDescriptions(devices,
                                                  request_context_.get());
@@ -115,7 +122,10 @@ void DialMediaSinkServiceImpl::OnDeviceDescriptionAvailable(
     return;
   }
 
-  current_sinks_.insert(MediaSinkInternal(sink, extra_data));
+  MediaSinkInternal dial_sink(sink, extra_data);
+  current_sinks_.insert(dial_sink);
+  if (delegate_)
+    delegate_->OnDialSinkAdded(dial_sink);
 
   // Start fetch timer again if device description comes back after
   // |finish_timer_| fires.
