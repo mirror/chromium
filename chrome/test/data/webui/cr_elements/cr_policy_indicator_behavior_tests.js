@@ -46,6 +46,15 @@ suite('CrPolicyIndicatorBehavior', function() {
             indicator.indicatorType, indicator.indicatorSourceName, false));
   });
 
+  test('tooltip text passed in', function() {
+    indicator.indicatorType = CrPolicyIndicatorType.USER_POLICY;
+    indicator.tooltipText = 'custom tip';
+
+    assertTrue(indicator.indicatorVisible);
+    assertEquals('cr20:domain', indicator.indicatorIcon);
+    assertEquals('custom tip', indicator.indicatorTooltip);
+  });
+
   if (cr.isChromeOS) {
     test('primary-user controlled indicator', function() {
       indicator.indicatorType = CrPolicyIndicatorType.PRIMARY_USER;
