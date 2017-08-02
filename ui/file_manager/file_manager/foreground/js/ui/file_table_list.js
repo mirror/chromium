@@ -77,6 +77,20 @@ FileTableList.prototype.createSelectionController = function(sm) {
  */
 function FileListSelectionController(selectionModel) {
   cr.ui.ListSelectionController.call(this, selectionModel);
+
+  /**
+   * Whether to allow touch-specific interaction.
+   * @type {boolean}
+   */
+  this.enableTouchMode_ = false;
+  util.isTouchModeEnabled(function(enabled) {
+    this.enableTouchMode_ = enabled;
+  }.bind(this));
+
+  /**
+   * @type {boolean}
+   */
+  this.tapping_ = false;
 }
 
 FileListSelectionController.prototype = /** @struct */ {
@@ -86,6 +100,50 @@ FileListSelectionController.prototype = /** @struct */ {
 /** @override */
 FileListSelectionController.prototype.handlePointerDownUp = function(e, index) {
   filelist.handlePointerDownUp.call(this, e, index);
+};
+
+/** @override */
+FileListSelectionController.prototype.handleTouchEvents = function(e, index) {
+  if (!this.enableTouchMode_)
+    return;
+  switch (e.type) {
+    case 'touchstart':
+      // TODO: declare vars
+      this.tapping_ = true;
+      this.isLongTap_ = false;
+      this.longTapDetectorTimeout_ = setTimeout(function() {
+        this.isLongTap_ = true;
+        this.longTapDetectorTimeout_ = null;
+        if (filelist.handleLongPress.call(this, e, index)) {
+          // if long press is trapped, suppress tap
+          // long press --> trap to select one file
+          // go on to drag --> use Chrome's default behavior
+          this.tapping_ = false;
+        }
+      }.bind(this), 500);
+      // note: this may be
+      break;
+    case 'touchmove':
+      this.tapping_ = false;
+      break;
+    case 'touchend':
+      // TODO: veirfy this is on the same item as touchstart
+      if (this.longTapDetectorTimeout_ != null) {
+        clearTimeout(this.longTapDetectorTimeout_);
+      }
+      if (this.tapping_) {
+        if (this.isLongTap_) {
+          if (filelist.handleLongTap.call(this, e, index)) {
+            e.preventDefault();
+          }
+        } else {
+          if (filelist.handleTap.call(this, e, index)) {
+            e.preventDefault();
+          }
+        }
+      }
+      break;
+  }
 };
 
 /** @override */
@@ -197,6 +255,62 @@ filelist.updateListItemExternalProps = function(li, externalProps) {
 };
 
 /**
+ * Handles a tap event.
+ *
+ * @param {!Event} e The browser mouse event.
+ * @param {number} index The index that was under the mouse pointer, -1 if
+ *     none.
+ * @return True if conducted any action. False when if did nothing special for
+ * tap.
+ * @this {cr.ui.ListSelectionController}
+ */
+filelist.handleTap = function(e, index) {
+  var result = filelist.handlePointerDownUp.call(this, e, index, 'tap');
+  if (result) {
+    console.log(
+        'do something special for tap, rather than falling back to click.');
+    e.preventDefault();
+  }
+  return result;
+};
+
+/**
+ * Handles a long press virtual event.
+ *
+ * @param {!Event} e The browser mouse event.
+ * @param {number} index The index that was under the mouse pointer, -1 if
+ *     none.
+ * @return True if conducted any action. False when if did nothing special for
+ * tap.
+ * @this {cr.ui.ListSelectionController}
+ */
+filelist.handleLongPress = function(e, index) {
+  var result = filelist.handlePointerDownUp.call(this, e, index, 'longpress');
+  if (result) {
+    e.preventDefault();
+  }
+  return result;
+};
+
+/**
+ * Handles a long tap event.
+ *
+ * @param {!Event} e The browser mouse event.
+ * @param {number} index The index that was under the mouse pointer, -1 if
+ *     none.
+ * @return True if conducted any action. False when if did nothing special for
+ * tap.
+ * @this {cr.ui.ListSelectionController}
+ */
+filelist.handleLongTap = function(e, index) {
+  var result = filelist.handlePointerDownUp.call(this, e, index, 'longtap');
+  if (result) {
+    e.preventDefault();
+  }
+  return result;
+};
+
+/**
  * Handles mouseup/mousedown events on file list to change the selection state.
  *
  * Basically the content of this function is identical to
@@ -211,33 +325,52 @@ filelist.updateListItemExternalProps = function(li, externalProps) {
  * @param {!Event} e The browser mouse event.
  * @param {number} index The index that was under the mouse pointer, -1 if
  *     none.
+ * @param {string} opt_tapevent
+ * @return True if conducted any action.
  * @this {cr.ui.ListSelectionController}
  */
-filelist.handlePointerDownUp = function(e, index) {
+filelist.handlePointerDownUp = function(e, index, opt_tapevent) {
+  // TODO: rename this function as handleFileSelection
+  var actionTaken = false;
   var sm = /** @type {!FileListSelectionModel|!FileListSingleSelectionModel} */
            (this.selectionModel);
   var anchorIndex = sm.anchorIndex;
-  var isDown = (e.type == 'mousedown');
+  var isMouseDown = (e.type == 'mousedown');
+  var isTap = (opt_tapevent == 'tap');
+  var isLongPress = (opt_tapevent == 'longpress');
+  var isLongTap = (opt_tapevent == 'longtap');
 
   var isTargetCheckmark = e.target.classList.contains('detail-checkmark') ||
                           e.target.classList.contains('checkmark');
   // If multiple selection is allowed and the checkmark is clicked without
   // modifiers(Ctrl/Shift), the click should toggle the item's selection.
   // (i.e. same behavior as Ctrl+Click)
-  var isClickOnCheckmark = isTargetCheckmark && sm.multiple && index != -1 &&
-                           !e.shiftKey && !e.ctrlKey && e.button == 0;
+  var isClickOnCheckmark = isTargetCheckmark && e.button == 0 && sm.multiple &&
+      index != -1 && !e.shiftKey && !e.ctrlKey;
+
+  var isTapToSelect = isTap && sm.getCheckSelectMode() ||
+      isLongPress && !sm.getIndexSelected(index);
+  if (isLongPress) {
+    // Long press on a selected item may be the drag.
+    // Do nothing until tuoch end.
+    if (sm.getIndexSelected(index)) {
+      return false;
+    }
+  }
 
   sm.beginChange();
 
   if (index == -1) {
     sm.leadIndex = sm.anchorIndex = -1;
+    actionTaken = true;
     sm.unselectAll();
   } else {
-    if (sm.multiple && (e.ctrlKey || isClickOnCheckmark) && !e.shiftKey) {
+    if (sm.multiple && (e.ctrlKey || isClickOnCheckmark || isTapToSelect) &&
+        !e.shiftKey) {
       // Selection is handled at mouseUp.
-      if (!isDown) {
-        // 1) When checkmark area is clicked, toggle item selection and enable
-        //    the check-select mode.
+      if (!isMouseDown) {
+        // 1) When checkmark area is clicked or the file row is tapped,
+        //    toggle item selection and enable the check-select mode.
         if (isClickOnCheckmark) {
           // If a selected item's checkmark is clicked when the selection mode
           // is not check-select, we should avoid toggling(unselecting) the
@@ -251,16 +384,20 @@ filelist.handlePointerDownUp = function(e, index) {
         sm.setIndexSelected(index, !sm.getIndexSelected(index));
         sm.leadIndex = index;
         sm.anchorIndex = index;
+        actionTaken = true;
       }
     } else if (e.shiftKey && anchorIndex != -1 && anchorIndex != index) {
-      // Shift is done in mousedown.
-      if (isDown) {
+      // When an item is either clicked or tapped while pressing shift key,
+      // the range between the anchor item and the currently clicked one should
+      // be selected. Shift is done in mousedown.
+      if (isMouseDown) {
         sm.unselectAll();
         sm.leadIndex = index;
         if (sm.multiple)
           sm.selectRange(anchorIndex, index);
         else
           sm.setIndexSelected(index, true);
+        actionTaken = true;
       }
     } else {
       // Right click for a context menu needs to not clear the selection.
@@ -268,7 +405,7 @@ filelist.handlePointerDownUp = function(e, index) {
 
       // If the index is selected this is handled in mouseup.
       var indexSelected = sm.getIndexSelected(index);
-      if ((indexSelected && !isDown || !indexSelected && isDown) &&
+      if ((indexSelected && !isMouseDown || !indexSelected && isMouseDown) &&
           !(indexSelected && isRightClick)) {
         // 2) When non-checkmark area is clicked in check-select mode, disable
         //    the check-select mode.
@@ -279,11 +416,17 @@ filelist.handlePointerDownUp = function(e, index) {
           sm.unselectAll();
           sm.beginChange();
         }
+        actionTaken = true;
         sm.selectedIndex = index;
       }
     }
   }
   sm.endChange();
+  if (actionTaken && (isTap || isLongPress || isLongTap)) {
+    // If tap event is handled, should prevent default not to issue click event.
+    e.preventDefault();
+  }
+  return actionTaken;
 };
 
 /**
