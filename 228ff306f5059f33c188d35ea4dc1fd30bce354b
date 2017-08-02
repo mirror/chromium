@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77a9e4ac_8d8fb70b",
+        "filename": "components/cryptauth/device_capability_manager.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-02T18:39:31Z",
+      "side": 1,
+      "message": "DeviceCapabilityManager sends requests to the back-end which enable/disable device capabilities and finds devices which contain those capabilities. Here, the term \"capability\" refers to the ability of a device to use a given feature.",
+      "range": {
+        "startLine": 19,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 77
+      },
+      "revId": "228ff306f5059f33c188d35ea4dc1fd30bce354b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae296048_a1f13c05",
+        "filename": "components/cryptauth/device_capability_manager.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-02T18:39:31Z",
+      "side": 1,
+      "message": "Enables or disables |capability| for the device corresponding to |public_key|. In error cases, |error_callback| is invoked with an error string.\n\n(It\u0027s implied that the callbacks will be invoked - no need to mention that they will be invoked unless extra information is needed - e.g., that the error string will be passed.)",
+      "revId": "228ff306f5059f33c188d35ea4dc1fd30bce354b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f74ab943_2b381a35",
+        "filename": "components/cryptauth/device_capability_manager.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-02T18:39:31Z",
+      "side": 1,
+      "message": "Fetches metadata about the device which are eligible for |capability|. In error cases, |error_callback| is invoked with an error string.",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 30
+      },
+      "revId": "228ff306f5059f33c188d35ea4dc1fd30bce354b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cabd3fd9_3281ff03",
+        "filename": "components/cryptauth/device_capability_manager.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-02T18:39:31Z",
+      "side": 1,
+      "message": "What happened to the capability parameter for this function? Please add it back.",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 27
+      },
+      "revId": "228ff306f5059f33c188d35ea4dc1fd30bce354b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9eec99e0_a56293c5",
+        "filename": "components/cryptauth/device_capability_manager.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-02T18:39:31Z",
+      "side": 1,
+      "message": "Used for SET_CAPABILITY Requests.\n\nnit: This doesn\u0027t necessary toggle the capability. It is valid to enable a capability that is already enabled.",
+      "range": {
+        "startLine": 54,
+        "startChar": 0,
+        "endLine": 54,
+        "endChar": 70
+      },
+      "revId": "228ff306f5059f33c188d35ea4dc1fd30bce354b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68580ce8_185f5764",
+        "filename": "components/cryptauth/device_capability_manager.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-02T18:39:31Z",
+      "side": 1,
+      "message": "Used for FIND_ELIGIBLE_DEVICES Requests.",
+      "range": {
+        "startLine": 62,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 79
+      },
+      "revId": "228ff306f5059f33c188d35ea4dc1fd30bce354b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6758364e_5cfb0aab",
+        "filename": "components/cryptauth/device_capability_manager.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-02T18:39:31Z",
+      "side": 1,
+      "message": "Likewise, why was capability removed from this constructor? Please add it back.",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 37
+      },
+      "revId": "228ff306f5059f33c188d35ea4dc1fd30bce354b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "594dceba_8ef9dd8b",
+        "filename": "components/cryptauth/device_capability_manager.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-02T18:39:31Z",
+      "side": 1,
+      "message": "Should be present in both request types.",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 27
+      },
+      "revId": "228ff306f5059f33c188d35ea4dc1fd30bce354b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
