@@ -20,7 +20,8 @@ TestingApplicationContext::TestingApplicationContext()
     : application_locale_("en"),
       local_state_(nullptr),
       chrome_browser_state_manager_(nullptr),
-      was_last_shutdown_clean_(false) {
+      was_last_shutdown_clean_(false),
+      is_shutting_down_(false) {
   DCHECK(!GetApplicationContext());
   SetApplicationContext(this);
 }
@@ -56,6 +57,10 @@ void TestingApplicationContext::SetLastShutdownClean(bool clean) {
   was_last_shutdown_clean_ = clean;
 }
 
+void TestingApplicationContext::SetIsShuttingDown() {
+  is_shutting_down_ = true;
+}
+
 void TestingApplicationContext::SetChromeBrowserStateManager(
     ios::ChromeBrowserStateManager* manager) {
   DCHECK(thread_checker_.CalledOnValidThread());
@@ -73,6 +78,11 @@ void TestingApplicationContext::OnAppEnterBackground() {
 bool TestingApplicationContext::WasLastShutdownClean() {
   DCHECK(thread_checker_.CalledOnValidThread());
   return was_last_shutdown_clean_;
+}
+
+bool TestingApplicationContext::IsShuttingDown() {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  return is_shutting_down_;
 }
 
 PrefService* TestingApplicationContext::GetLocalState() {
