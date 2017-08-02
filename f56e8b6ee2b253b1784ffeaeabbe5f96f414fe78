@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71e220b9_595aa1af",
+        "filename": "components/offline_pages/core/offline_page_model_query.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-02T20:56:14Z",
+      "side": 1,
+      "message": "CountMatchingURLs not url_set.count, right?",
+      "revId": "f56e8b6ee2b253b1784ffeaeabbe5f96f414fe78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a73292d_8af68e56",
+        "filename": "components/offline_pages/core/offline_page_model_query.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-02T20:56:14Z",
+      "side": 1,
+      "message": "nit: can you make this a std::pair of Requirement and URLSearchParams?  Then it\u0027d be better documented.",
+      "revId": "f56e8b6ee2b253b1784ffeaeabbe5f96f414fe78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80198522_874786fe",
+        "filename": "components/offline_pages/core/offline_page_model_query.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-08-02T20:56:14Z",
+      "side": 1,
+      "message": "While it sounds cool, I think that the name |strip_fragment| would be a little more readable",
+      "revId": "f56e8b6ee2b253b1784ffeaeabbe5f96f414fe78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
