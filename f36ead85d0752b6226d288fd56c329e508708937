@@ -615,6 +615,30 @@
     },
     {
       "key": {
+        "uuid": "4177146d_f867e9e5",
+        "filename": "chrome/browser/ui/cocoa/passwords/passwords_list_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-02T16:55:55Z",
+      "side": 1,
+      "message": "The comment is on the TAB",
+      "parentUuid": "5e58d43e_49ca915b",
+      "range": {
+        "startLine": 338,
+        "startChar": 35,
+        "endLine": 338,
+        "endChar": 44
+      },
+      "revId": "f36ead85d0752b6226d288fd56c329e508708937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cedc566f_38557dda",
         "filename": "chrome/browser/ui/cocoa/passwords/passwords_list_view_controller.mm",
         "patchSetId": 1

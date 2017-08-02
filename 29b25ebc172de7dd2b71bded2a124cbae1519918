@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b357fa7c_eff5b08d",
+        "filename": "chrome/browser/ui/cocoa/passwords/save_pending_password_view_controller.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-02T16:55:55Z",
+      "side": 1,
+      "message": "A comment on what it is?",
+      "range": {
+        "startLine": 17,
+        "startChar": 32,
+        "endLine": 17,
+        "endChar": 54
+      },
+      "revId": "29b25ebc172de7dd2b71bded2a124cbae1519918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d349737_67c056dc",
+        "filename": "chrome/browser/ui/cocoa/passwords/save_pending_password_view_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-02T16:55:55Z",
+      "side": 1,
+      "message": "declare the methods in interface",
+      "range": {
+        "startLine": 56,
+        "startChar": 8,
+        "endLine": 56,
+        "endChar": 15
+      },
+      "revId": "29b25ebc172de7dd2b71bded2a124cbae1519918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f8adea7_f8275870",
+        "filename": "chrome/browser/ui/cocoa/passwords/save_pending_password_view_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-02T16:55:55Z",
+      "side": 1,
+      "message": "memory leak here I think\nuse base::scoped_nsobject",
+      "range": {
+        "startLine": 90,
+        "startChar": 60,
+        "endLine": 90,
+        "endChar": 65
+      },
+      "revId": "29b25ebc172de7dd2b71bded2a124cbae1519918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb6253f4_18cde1c3",
+        "filename": "chrome/browser/ui/cocoa/passwords/save_pending_password_view_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-02T16:55:55Z",
+      "side": 1,
+      "message": "Same as above",
+      "range": {
+        "startLine": 101,
+        "startChar": 2,
+        "endLine": 101,
+        "endChar": 25
+      },
+      "revId": "29b25ebc172de7dd2b71bded2a124cbae1519918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71e09e3f_81aefa1f",
+        "filename": "chrome/browser/ui/cocoa/passwords/save_pending_password_view_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-02T16:55:55Z",
+      "side": 1,
+      "message": "Don\u0027t you get a call via NSTextFieldDelegate? What is the purpose of registering in the notification centre then?",
+      "range": {
+        "startLine": 115,
+        "startChar": 12,
+        "endLine": 115,
+        "endChar": 23
+      },
+      "revId": "29b25ebc172de7dd2b71bded2a124cbae1519918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
