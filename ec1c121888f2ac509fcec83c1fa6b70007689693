@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9722cc38_b96ba058",
+        "filename": "services/ui/public/interfaces/window_manager.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-02T19:34:44Z",
+      "side": 1,
+      "message": "It seems like a common thing a window manager would want to do. That is, generally a window-manager is going to create top-level windows under a particular window (container). I can rename to something other than container, but I think it would feel awkward.",
+      "parentUuid": "d03d128b_ce1c571f",
+      "revId": "ec1c121888f2ac509fcec83c1fa6b70007689693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5b21e0bc_161f7345",
         "filename": "services/ui/ws/modal_window_controller.cc",
         "patchSetId": 5
