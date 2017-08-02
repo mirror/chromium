@@ -7,6 +7,7 @@
     <link rel="import" href="chrome://resources/polymer/v1_0/paper-styles/color.html">
     <link rel="stylesheet" href="chrome://resources/css/text_defaults_md.css">
     <link rel="import" href="chrome://resources/html/cr.html">
+    <link rel="import" href="chrome://resources/html/load_time_data.html">
     <link rel="import" href="chrome://resources/html/util.html">
     <style is="custom-style">
       .top-title-bar {
@@ -21,6 +22,13 @@
         background-color: white;
         color: #333;
         width: 448px;
+      }
+      .details-container {
+        display: flex;
+        padding: 24px 24px;
+      }
+      .details {
+        font-size: 14px;
       }
       .action-container {
         display: flex;
@@ -40,12 +48,24 @@
   <body>
     <div class="container">
       <div class="top-title-bar">Desktop Identity Consistency Internals</div>
+      <div class="details-container">
+        <div class="details" id="syncEnabledSection">
+          Sync is enabled.
+        </div>
+        <div class="details" id="syncDisabledSection" synDisabledSection>
+          Sync is disabled.
+        </div>
+      </div>
       <div class="action-container">
         <paper-button class="primary-action" id="enableSyncButton">
           Enable Sync
+        </paper-button>
+        <paper-button class="primary-action" id="disableSyncButton">
+          Disable Sync
         </paper-button>
       </div>
     </div>
   </body>
   <script src="signin_dice_internals.js"></script>
+  <script src="chrome://signin-dice-internals/strings.js"></script>
 </html>
