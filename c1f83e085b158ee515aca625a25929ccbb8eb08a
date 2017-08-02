@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "440625b1_9baf738d",
+        "filename": "chrome/browser/win/settings_app_monitor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 794,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-02T11:33:52Z",
+      "side": 1,
+      "message": "nit: static constexpr",
+      "range": {
+        "startLine": 794,
+        "startChar": 2,
+        "endLine": 794,
+        "endChar": 11
+      },
+      "revId": "c1f83e085b158ee515aca625a25929ccbb8eb08a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ede62f83_b3c7bdcf",
+        "filename": "chrome/browser/win/settings_app_monitor.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 799,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-02T11:33:52Z",
+      "side": 1,
+      "message": "nit: braces for multi-line conditional",
+      "range": {
+        "startLine": 799,
+        "startChar": 4,
+        "endLine": 799,
+        "endChar": 10
+      },
+      "revId": "c1f83e085b158ee515aca625a25929ccbb8eb08a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
