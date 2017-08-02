@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d4619ab8_4a6a2ea9",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1225649
+      },
+      "writtenOn": "2017-08-02T21:47:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a99e99e4_9779875b",
+      "revId": "50304f69efde8217ea3259e052e6fa78cf0f7e53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de7c551e_3584c65c",
         "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
         "patchSetId": 5
@@ -71,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "df861a39_04b4900d",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1225649
+      },
+      "writtenOn": "2017-08-02T21:47:54Z",
+      "side": 1,
+      "message": "That was a holdover from older code of mine; I changed it back.",
+      "parentUuid": "f4f70a59_89a8fe8b",
+      "revId": "50304f69efde8217ea3259e052e6fa78cf0f7e53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "570f4af7_3cb423d1",
         "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
         "patchSetId": 5
@@ -94,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "5ed9abe2_0412173c",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1225649
+      },
+      "writtenOn": "2017-08-02T21:47:54Z",
+      "side": 1,
+      "message": "I passed it in directly instead.",
+      "parentUuid": "570f4af7_3cb423d1",
+      "range": {
+        "startLine": 491,
+        "startChar": 18,
+        "endLine": 491,
+        "endChar": 20
+      },
+      "revId": "50304f69efde8217ea3259e052e6fa78cf0f7e53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38c2d1b4_b6a15bed",
         "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
         "patchSetId": 5
@@ -114,6 +174,30 @@
       "revId": "50304f69efde8217ea3259e052e6fa78cf0f7e53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "705c8a49_727be869",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1225649
+      },
+      "writtenOn": "2017-08-02T21:47:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38c2d1b4_b6a15bed",
+      "range": {
+        "startLine": 494,
+        "startChar": 46,
+        "endLine": 494,
+        "endChar": 48
+      },
+      "revId": "50304f69efde8217ea3259e052e6fa78cf0f7e53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
