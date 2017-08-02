@@ -23,6 +23,7 @@
 namespace media {
 
 struct PendingDecode {
+  static PendingDecode CreateEos();
   PendingDecode(scoped_refptr<DecoderBuffer> buffer,
                 VideoDecoder::DecodeCB decode_cb);
   PendingDecode(PendingDecode&& other);
@@ -82,6 +83,9 @@ class MEDIA_GPU_EXPORT MediaCodecVideoDecoder : public VideoDecoder {
   void SetOverlayInfo(const OverlayInfo& overlay_info);
 
  private:
+  // The test has access for PumpCodec().
+  friend class MediaCodecVideoDecoderTest;
+
   enum class State {
     kOk,
     kError,
@@ -98,9 +102,8 @@ class MEDIA_GPU_EXPORT MediaCodecVideoDecoder : public VideoDecoder {
   };
 
   enum class DrainType {
-    kFlush,
-    kReset,
-    kDestroy,
+    kForReset,
+    kForDestroy,
   };
 
   // Finishes initialization.
@@ -116,13 +119,21 @@ class MEDIA_GPU_EXPORT MediaCodecVideoDecoder : public VideoDecoder {
   // Sets |codecs_|'s output surface to |incoming_surface_|. Releases the codec
   // and both the current and incoming bundles on failure.
   void TransitionToIncomingSurface();
-  void StartCodecCreation();
+  void CreateCodec();
   void OnCodecCreated(std::unique_ptr<MediaCodecBridge> codec);
 
+  // Flushes the codec, or if flush() is not supported, releases it and creates
+  // a new one.
+  void FlushCodec();
   void PumpCodec(bool force_start_timer);
   bool QueueInput();
   bool DequeueOutput();
+  void StartDrainingCodec(DrainType drain_type);
   void ManageTimer(bool start_timer);
+
+  void ResetCodec();
+  void ClearPendingDecodes(DecodeStatus status);
+  void OnCodecDrained();
 
   // Sets |state_| and runs pending callbacks.
   void HandleError();
@@ -138,11 +149,24 @@ class MEDIA_GPU_EXPORT MediaCodecVideoDecoder : public VideoDecoder {
 
   State state_;
   bool lazy_init_pending_;
-  std::deque<PendingDecode> pending_decodes_;
-  VideoFrameFactory::OutputWithReleaseMailboxCB output_cb_;
 
-  // The ongoing drain operation, if any.
+  // Whether the codec needs to be flushed on the next Decode() because it was
+  // drained.
+  bool codec_needs_flush_;
+  std::deque<PendingDecode> pending_decodes_;
+
+  // The reason for the current drain operation if any.
   base::Optional<DrainType> drain_type_;
+
+  // The current reset cb if a Reset() is in progress.
+  base::Closure reset_cb_;
+
+  // The EOS decode cb for the current drain operation, to be called when the
+  // codec outputs an EOS buffer. Non-null while the EOS is propagating through
+  // the codec.
+  VideoDecoder::DecodeCB eos_decode_cb_;
+
+  VideoFrameFactory::OutputWithReleaseMailboxCB output_cb_;
   VideoDecoderConfig decoder_config_;
 
   // The surface bundle that we're transitioning to, if any.
@@ -177,11 +201,11 @@ class MEDIA_GPU_EXPORT MediaCodecVideoDecoder : public VideoDecoder {
   // codec with.
   std::unique_ptr<AndroidVideoSurfaceChooser> surface_chooser_;
 
-  // The factory for creating VideoFrames from CodecOutputBuffers.
-  std::unique_ptr<VideoFrameFactory> video_frame_factory_;
-
   // Current state for the chooser.
   AndroidVideoSurfaceChooser::State chooser_state_;
+
+  // The factory for creating VideoFrames from CodecOutputBuffers.
+  std::unique_ptr<VideoFrameFactory> video_frame_factory_;
 
   // An optional factory callback for creating mojo AndroidOverlays.
   AndroidOverlayMojoFactoryCB overlay_factory_cb_;
