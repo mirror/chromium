@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "62f8c414_df4e6dee",
+        "filename": "components/password_manager/core/browser/password_store.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-02T15:38:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ad51a2f_762010ec",
+      "range": {
+        "startLine": 118,
+        "startChar": 20,
+        "endLine": 118,
+        "endChar": 27
+      },
+      "revId": "557f4dc62140db817c0abc7e93f620356b58a347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8609959_99cd62fa",
         "filename": "components/password_manager/core/browser/password_store.h",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "557f4dc62140db817c0abc7e93f620356b58a347",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3a1b976_f2cd419b",
+        "filename": "components/password_manager/core/browser/password_store.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-02T15:38:20Z",
+      "side": 1,
+      "message": "Presubmit complained about defined(OS_IOS) usage. Actually it complained about the new added line in the constructor. But it\u0027s used here too, thus should be included.",
+      "parentUuid": "d8609959_99cd62fa",
+      "range": {
+        "startLine": 19,
+        "startChar": 16,
+        "endLine": 19,
+        "endChar": 30
+      },
+      "revId": "557f4dc62140db817c0abc7e93f620356b58a347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
