@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb3b35ef_df91e232",
+        "filename": "cc/layers/picture_layer_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-02T19:33:44Z",
+      "side": 1,
+      "message": "style nit: need curly braces on multi-line conditional body",
+      "revId": "0e8d2ae942e1eba0d7809870890a2b99520c9409",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07a597ae_458989ee",
+        "filename": "cc/layers/render_surface_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-02T19:33:44Z",
+      "side": 1,
+      "message": "Is this true? It looks like you\u0027re testing that it\u0027s there.",
+      "revId": "0e8d2ae942e1eba0d7809870890a2b99520c9409",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
