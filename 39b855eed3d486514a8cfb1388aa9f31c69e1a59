@@ -207,6 +207,24 @@
     },
     {
       "key": {
+        "uuid": "941d521f_65675e4c",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-02T05:14:32Z",
+      "side": 1,
+      "message": "Or templatize Node::compareDocumentPosition()?\nWe may want to unify:\n- Node::compareDocumentPosition()\n- Range::compareBoundaryPoints()\n- ComparePositionsInDOMTree()\n- ComparePositionsInFlatTreeTree()",
+      "parentUuid": "d157dfa7_197df93a",
+      "revId": "39b855eed3d486514a8cfb1388aa9f31c69e1a59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0b47455a_7ce49dd5",
         "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
         "patchSetId": 7
