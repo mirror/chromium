@@ -42,11 +42,11 @@
 
 namespace blink {
 
+class EmbeddedWorker;
 class FetchEvent;
 class ParentFrameTaskRunners;
 class ServiceWorkerGlobalScope;
 class WebDataConsumerHandle;
-class WebEmbeddedWorkerImpl;
 class WebServiceWorkerContextClient;
 struct WebServiceWorkerError;
 class WebServiceWorkerRequest;
@@ -71,7 +71,7 @@ class ServiceWorkerGlobalScopeProxy final
   WTF_MAKE_NONCOPYABLE(ServiceWorkerGlobalScopeProxy);
 
  public:
-  static ServiceWorkerGlobalScopeProxy* Create(WebEmbeddedWorkerImpl&,
+  static ServiceWorkerGlobalScopeProxy* Create(EmbeddedWorker&,
                                                WebServiceWorkerContextClient&);
   ~ServiceWorkerGlobalScopeProxy() override;
 
@@ -165,23 +165,23 @@ class ServiceWorkerGlobalScopeProxy final
 
   DECLARE_TRACE();
 
-  // Detach this proxy object entirely from the outside world,
-  // clearing out all references.
+  // Detach this proxy object entirely from the outside world, clearing out all
+  // references.
   //
-  // It is called during WebEmbeddedWorkerImpl finalization _after_
-  // the worker thread using the proxy has been terminated.
+  // It is called during EmbeddedWorker finalization _after_ the worker thread
+  // using the proxy has been terminated.
   void Detach();
 
  private:
-  ServiceWorkerGlobalScopeProxy(WebEmbeddedWorkerImpl&,
+  ServiceWorkerGlobalScopeProxy(EmbeddedWorker&,
                                 WebServiceWorkerContextClient&);
 
   WebServiceWorkerContextClient& Client() const;
   ServiceWorkerGlobalScope* WorkerGlobalScope() const;
 
-  // Non-null until the WebEmbeddedWorkerImpl explicitly detach()es
-  // as part of its finalization.
-  WebEmbeddedWorkerImpl* embedded_worker_;
+  // Non-null until the EmbeddedWorker explicitly detach()es as part of its
+  // finalization.
+  EmbeddedWorker* embedded_worker_;
 
   Member<ParentFrameTaskRunners> parent_frame_task_runners_;
 

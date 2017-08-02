@@ -124,7 +124,7 @@ class MockServiceWorkerInstalledScriptsManager
                std::unique_ptr<RawScriptData>(const WebURL& script_url));
 };
 
-class WebEmbeddedWorkerImplTest : public ::testing::Test {
+class EmbeddedWorkerTest : public ::testing::Test {
  protected:
   void SetUp() override {
     auto client = WTF::MakeUnique<MockServiceWorkerContextClient>();
@@ -169,7 +169,7 @@ class WebEmbeddedWorkerImplTest : public ::testing::Test {
 
 }  // namespace
 
-TEST_F(WebEmbeddedWorkerImplTest, TerminateSoonAfterStart) {
+TEST_F(EmbeddedWorkerTest, TerminateSoonAfterStart) {
   EXPECT_CALL(*mock_client_, WorkerReadyForInspection()).Times(1);
   worker_->StartWorkerContext(start_data_);
   ::testing::Mock::VerifyAndClearExpectations(mock_client_);
@@ -179,7 +179,7 @@ TEST_F(WebEmbeddedWorkerImplTest, TerminateSoonAfterStart) {
   ::testing::Mock::VerifyAndClearExpectations(mock_client_);
 }
 
-TEST_F(WebEmbeddedWorkerImplTest, TerminateWhileWaitingForDebugger) {
+TEST_F(EmbeddedWorkerTest, TerminateWhileWaitingForDebugger) {
   EXPECT_CALL(*mock_client_, WorkerReadyForInspection()).Times(1);
   start_data_.wait_for_debugger_mode =
       WebEmbeddedWorkerStartData::kWaitForDebugger;
@@ -191,7 +191,7 @@ TEST_F(WebEmbeddedWorkerImplTest, TerminateWhileWaitingForDebugger) {
   ::testing::Mock::VerifyAndClearExpectations(mock_client_);
 }
 
-TEST_F(WebEmbeddedWorkerImplTest, TerminateWhileLoadingScript) {
+TEST_F(EmbeddedWorkerTest, TerminateWhileLoadingScript) {
   EXPECT_CALL(*mock_client_, WorkerReadyForInspection()).Times(1);
   worker_->StartWorkerContext(start_data_);
   ::testing::Mock::VerifyAndClearExpectations(mock_client_);
@@ -218,7 +218,7 @@ TEST_F(WebEmbeddedWorkerImplTest, TerminateWhileLoadingScript) {
   ::testing::Mock::VerifyAndClearExpectations(mock_client_);
 }
 
-TEST_F(WebEmbeddedWorkerImplTest, TerminateWhilePausedAfterDownload) {
+TEST_F(EmbeddedWorkerTest, TerminateWhilePausedAfterDownload) {
   EXPECT_CALL(*mock_client_, WorkerReadyForInspection()).Times(1);
   start_data_.pause_after_download_mode =
       WebEmbeddedWorkerStartData::kPauseAfterDownload;
@@ -254,7 +254,7 @@ TEST_F(WebEmbeddedWorkerImplTest, TerminateWhilePausedAfterDownload) {
   ::testing::Mock::VerifyAndClearExpectations(mock_client_);
 }
 
-TEST_F(WebEmbeddedWorkerImplTest, ScriptNotFound) {
+TEST_F(EmbeddedWorkerTest, ScriptNotFound) {
   WebURL script_url =
       URLTestHelpers::ToKURL("https://www.example.com/sw-404.js");
   WebURLResponse response;
@@ -295,7 +295,7 @@ TEST_F(WebEmbeddedWorkerImplTest, ScriptNotFound) {
   ::testing::Mock::VerifyAndClearExpectations(mock_client_);
 }
 
-TEST_F(WebEmbeddedWorkerImplTest, NoRegistration) {
+TEST_F(EmbeddedWorkerTest, NoRegistration) {
   EXPECT_CALL(*mock_client_, WorkerReadyForInspection()).Times(1);
   start_data_.pause_after_download_mode =
       WebEmbeddedWorkerStartData::kPauseAfterDownload;
@@ -334,7 +334,7 @@ TEST_F(WebEmbeddedWorkerImplTest, NoRegistration) {
 #define MAYBE_DontPauseAfterDownload DontPauseAfterDownload
 #endif
 
-TEST_F(WebEmbeddedWorkerImplTest, MAYBE_DontPauseAfterDownload) {
+TEST_F(EmbeddedWorkerTest, MAYBE_DontPauseAfterDownload) {
   EXPECT_CALL(*mock_client_, WorkerReadyForInspection()).Times(1);
   worker_->StartWorkerContext(start_data_);
   ::testing::Mock::VerifyAndClearExpectations(mock_client_);
@@ -387,7 +387,7 @@ TEST_F(WebEmbeddedWorkerImplTest, MAYBE_DontPauseAfterDownload) {
 #define MAYBE_PauseAfterDownload PauseAfterDownload
 #endif
 
-TEST_F(WebEmbeddedWorkerImplTest, MAYBE_PauseAfterDownload) {
+TEST_F(EmbeddedWorkerTest, MAYBE_PauseAfterDownload) {
   EXPECT_CALL(*mock_client_, WorkerReadyForInspection()).Times(1);
   start_data_.pause_after_download_mode =
       WebEmbeddedWorkerStartData::kPauseAfterDownload;

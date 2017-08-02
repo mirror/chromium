@@ -28,8 +28,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef WebEmbeddedWorkerImpl_h
-#define WebEmbeddedWorkerImpl_h
+#ifndef EmbeddedWorker_h
+#define EmbeddedWorker_h
 
 #include <memory>
 #include "core/exported/WorkerShadowPage.h"
@@ -53,17 +53,15 @@ class WorkerInspectorProxy;
 class WorkerScriptLoader;
 class WorkerThread;
 
-class MODULES_EXPORT WebEmbeddedWorkerImpl final
-    : public WebEmbeddedWorker,
-      public WorkerShadowPage::Client {
-  WTF_MAKE_NONCOPYABLE(WebEmbeddedWorkerImpl);
+class MODULES_EXPORT EmbeddedWorker final : public WebEmbeddedWorker,
+                                            public WorkerShadowPage::Client {
+  WTF_MAKE_NONCOPYABLE(EmbeddedWorker);
 
  public:
-  WebEmbeddedWorkerImpl(
-      std::unique_ptr<WebServiceWorkerContextClient>,
-      std::unique_ptr<WebServiceWorkerInstalledScriptsManager>,
-      std::unique_ptr<WebContentSettingsClient>);
-  ~WebEmbeddedWorkerImpl() override;
+  EmbeddedWorker(std::unique_ptr<WebServiceWorkerContextClient>,
+                 std::unique_ptr<WebServiceWorkerInstalledScriptsManager>,
+                 std::unique_ptr<WebContentSettingsClient>);
+  ~EmbeddedWorker() override;
 
   // WebEmbeddedWorker overrides.
   void StartWorkerContext(const WebEmbeddedWorkerStartData&) override;
@@ -144,4 +142,4 @@ class MODULES_EXPORT WebEmbeddedWorkerImpl final
 
 }  // namespace blink
 
-#endif  // WebEmbeddedWorkerImpl_h
+#endif  // EmbeddedWorker_h

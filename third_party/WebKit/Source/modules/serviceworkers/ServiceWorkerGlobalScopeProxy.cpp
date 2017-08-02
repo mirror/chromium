@@ -51,7 +51,6 @@
 #include "modules/background_fetch/BackgroundFetchedEvent.h"
 #include "modules/background_fetch/BackgroundFetchedEventInit.h"
 #include "modules/background_sync/SyncEvent.h"
-#include "modules/exported/WebEmbeddedWorkerImpl.h"
 #include "modules/fetch/Headers.h"
 #include "modules/notifications/Notification.h"
 #include "modules/notifications/NotificationEvent.h"
@@ -66,6 +65,7 @@
 #include "modules/payments/PaymentRequestRespondWithObserver.h"
 #include "modules/push_messaging/PushEvent.h"
 #include "modules/push_messaging/PushMessageData.h"
+#include "modules/serviceworkers/EmbeddedWorker.h"
 #include "modules/serviceworkers/ExtendableEvent.h"
 #include "modules/serviceworkers/ExtendableMessageEvent.h"
 #include "modules/serviceworkers/FetchEvent.h"
@@ -91,7 +91,7 @@
 namespace blink {
 
 ServiceWorkerGlobalScopeProxy* ServiceWorkerGlobalScopeProxy::Create(
-    WebEmbeddedWorkerImpl& embedded_worker,
+    EmbeddedWorker& embedded_worker,
     WebServiceWorkerContextClient& client) {
   return new ServiceWorkerGlobalScopeProxy(embedded_worker, client);
 }
@@ -542,11 +542,10 @@ void ServiceWorkerGlobalScopeProxy::PostMessageToPageInspector(
   // The TaskType of Inspector tasks need to be Unthrottled because they need to
   // run even on a suspended page.
   parent_frame_task_runners_->Get(TaskType::kUnthrottled)
-      ->PostTask(
-          BLINK_FROM_HERE,
-          CrossThreadBind(&WebEmbeddedWorkerImpl::PostMessageToPageInspector,
-                          CrossThreadUnretained(embedded_worker_), session_id,
-                          message));
+      ->PostTask(BLINK_FROM_HERE,
+                 CrossThreadBind(&EmbeddedWorker::PostMessageToPageInspector,
+                                 CrossThreadUnretained(embedded_worker_),
+                                 session_id, message));
 }
 
 void ServiceWorkerGlobalScopeProxy::DidCreateWorkerGlobalScope(
@@ -576,7 +575,7 @@ void ServiceWorkerGlobalScopeProxy::DidLoadInstalledScript(
       ->PostTask(
           BLINK_FROM_HERE,
           CrossThreadBind(
-              &WebEmbeddedWorkerImpl::SetContentSecurityPolicyAndReferrerPolicy,
+              &EmbeddedWorker::SetContentSecurityPolicyAndReferrerPolicy,
               CrossThreadUnretained(embedded_worker_),
               csp_headers_on_worker_thread, referrer_policy_on_worker_thread,
               CrossThreadUnretained(&waitable_event)));
@@ -626,7 +625,7 @@ void ServiceWorkerGlobalScopeProxy::DidTerminateWorkerThread() {
 }
 
 ServiceWorkerGlobalScopeProxy::ServiceWorkerGlobalScopeProxy(
-    WebEmbeddedWorkerImpl& embedded_worker,
+    EmbeddedWorker& embedded_worker,
     WebServiceWorkerContextClient& client)
     : embedded_worker_(&embedded_worker),
       client_(&client),
