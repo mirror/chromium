@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef2b03f4_867d9a90",
+        "filename": "media/audio/android/audio_track_output_stream.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1148014
+      },
+      "writtenOn": "2017-08-02T01:36:53Z",
+      "side": 1,
+      "message": "[TBD]\nGet this pointer ahead of time and use AudioBus::WrapMemory() for the bus passed\ninto OnMoreData() to avoid the extra copy? Requires that the data block be sized\nappropriately...",
+      "range": {
+        "startLine": 132,
+        "startChar": 10,
+        "endLine": 132,
+        "endChar": 20
+      },
+      "revId": "e1ad3676ba397c609d2e1d7d10d5d25749e06041",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9144959_20d0e396",
+        "filename": "media/base/android/java/src/org/chromium/media/AudioTrackOutputStream.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1148014
+      },
+      "writtenOn": "2017-08-02T01:36:53Z",
+      "side": 1,
+      "message": "[TBD]\nI think instead of doing the threading in Java you should handle it in the C++\nclass and change this class to expose only a WriteAudio() call that can be\ncalled from C++.\n\nWe have a class FakeAudioWorker (it\u0027s named poorly, sorry) which can handle\ncallback scheduling for you. Essentially you\u0027d just construct a FakeAudioWorker\nand give it your stream information (sample rate, buffer size, etc) and it\u0027ll\npoll at the correct period on existing threads; no need for the sleep business.",
+      "range": {
+        "startLine": 43,
+        "startChar": 10,
+        "endLine": 43,
+        "endChar": 22
+      },
+      "revId": "e1ad3676ba397c609d2e1d7d10d5d25749e06041",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6918eddc_3c0515f7",
+        "filename": "media/base/android/java/src/org/chromium/media/AudioTrackOutputStream.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1148014
+      },
+      "writtenOn": "2017-08-02T01:36:53Z",
+      "side": 1,
+      "message": "[TBD]\nsetVolume() does not work for bitstream output.",
+      "range": {
+        "startLine": 198,
+        "startChar": 9,
+        "endLine": 198,
+        "endChar": 18
+      },
+      "revId": "e1ad3676ba397c609d2e1d7d10d5d25749e06041",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58d44eca_9ee13ea9",
+        "filename": "media/base/audio_buffer_queue.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1148014
+      },
+      "writtenOn": "2017-08-02T01:36:53Z",
+      "side": 1,
+      "message": "Remove this.",
+      "revId": "e1ad3676ba397c609d2e1d7d10d5d25749e06041",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a52c73a0_afcf7123",
+        "filename": "media/renderers/audio_renderer_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1148014
+      },
+      "writtenOn": "2017-08-02T01:36:53Z",
+      "side": 1,
+      "message": "[TBD]\nWe already do this in PipelineImpl.",
+      "revId": "e1ad3676ba397c609d2e1d7d10d5d25749e06041",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
