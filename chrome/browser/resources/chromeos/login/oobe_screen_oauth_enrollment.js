@@ -411,6 +411,9 @@ login.createScreen('OAuthEnrollmentScreen', 'oauth-enrollment', function() {
       this.currentStep_ = step;
       this.lastBackMessageValue_ = false;
       this.updateControlsState();
+
+      this.dispatchEvent(
+          new CustomEvent('stepchanged', {detail: this.currentStep_}));
     },
 
     /**

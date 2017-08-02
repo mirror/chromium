@@ -347,6 +347,29 @@ cr.define('cr.ui', function() {
     }
   };
 
+  Oobe.joinActiveDirectoryDeviceForTesting = function(
+      machine_name, username, password) {
+    // Helper method that runs |fn| after |step| is visible.
+    function waitForOAuthEnrollmentStep(step, fn) {
+      var oauth = $('oauth-enrollment');
+      if (oauth.currentStep_ == step) {
+        fn();
+      } else {
+        oauth.addEventListener('stepchanged', function handler(e) {
+          if (e.detail === step) {
+            oauth.removeEventListener('stepchanged', handler);
+            fn();
+          }
+        });
+      }
+    }
+
+    waitForOAuthEnrollmentStep('ad-join', function() {
+      chrome.send(
+          'oauthEnrollAdCompleteLogin', [machine_name, username, password]);
+    });
+  };
+
   /**
    * Guest login for telemetry.
    */
