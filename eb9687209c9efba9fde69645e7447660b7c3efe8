@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25004f15_3891c19c",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-02T16:51:25Z",
+      "side": 1,
+      "message": "It is invalid to post a task ...",
+      "range": {
+        "startLine": 101,
+        "startChar": 42,
+        "endLine": 101,
+        "endChar": 69
+      },
+      "revId": "eb9687209c9efba9fde69645e7447660b7c3efe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
