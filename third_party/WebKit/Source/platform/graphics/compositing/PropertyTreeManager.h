@@ -5,15 +5,18 @@
 #ifndef PropertyTreeManager_h
 #define PropertyTreeManager_h
 
+#include "cc/layers/content_layer_client.h"
 #include "platform/wtf/HashMap.h"
 #include "platform/wtf/HashSet.h"
 #include "platform/wtf/Noncopyable.h"
 #include "platform/wtf/Vector.h"
+#include "third_party/skia/include/core/SkBlendMode.h"
 
 namespace cc {
 class ClipTree;
 class EffectTree;
 class Layer;
+class PictureLayer;
 class PropertyTrees;
 class ScrollTree;
 class TransformTree;
@@ -23,8 +26,27 @@ namespace blink {
 
 class ClipPaintPropertyNode;
 class EffectPaintPropertyNode;
+class FloatRoundedRect;
 class ScrollPaintPropertyNode;
 class TransformPaintPropertyNode;
+
+class RRectContentLayerClient : public cc::ContentLayerClient {
+ public:
+  RRectContentLayerClient(const FloatRoundedRect& rrect);
+  ~RRectContentLayerClient();
+
+  cc::Layer* GetLayer() const;
+
+  gfx::Rect PaintableRegion() override;
+  scoped_refptr<cc::DisplayItemList> PaintContentsToDisplayList(
+      PaintingControlSetting painting_status) override;
+  bool FillsBoundsCompletely() const override { return false; }
+  size_t GetApproximateUnsharedMemoryUsage() const { return 0; }
+
+ private:
+  scoped_refptr<cc::PictureLayer> layer_;
+  SkRRect rrect_;
+};
 
 // Mutates a cc property tree to reflect Blink paint property tree
 // state. Intended for use by PaintArtifactCompositor.
@@ -33,8 +55,10 @@ class PropertyTreeManager {
 
  public:
   PropertyTreeManager(cc::PropertyTrees&,
+                      Vector<std::unique_ptr<RRectContentLayerClient>>&,
                       cc::Layer* root_layer,
                       int sequence_number);
+  ~PropertyTreeManager();
 
   void SetupRootTransformNode();
   void SetupRootClipNode();
@@ -79,13 +103,19 @@ class PropertyTreeManager {
   // until |owning_layer_id| is removed from the scroll node.
   void UpdateLayerScrollMapping(cc::Layer*, const TransformPaintPropertyNode*);
 
-  int SwitchToEffectNode(const EffectPaintPropertyNode& next_effect);
-  int GetCurrentCompositorEffectNodeIndex() const {
-    return effect_stack_.back().id;
-  }
+  int SwitchToEffectNodeWithRoundedClip(
+      const EffectPaintPropertyNode& next_effect,
+      const ClipPaintPropertyNode& next_clip);
+  void Finalize();
 
  private:
-  void BuildEffectNodesRecursively(const EffectPaintPropertyNode* next_effect);
+  bool BuildEffectNodesRecursively(const EffectPaintPropertyNode* next_effect);
+  SkBlendMode BuildSyntheticEffectNodeForRoundedClipIfNeeded(
+      const ClipPaintPropertyNode* target_clip,
+      SkBlendMode delegated_blend,
+      bool effect_is_newly_built);
+  void EmitRoundedClipMaskLayer();
+  bool IsCurrentEffectSynthetic() const;
 
   cc::TransformTree& GetTransformTree();
   cc::ClipTree& GetClipTree();
@@ -94,13 +124,16 @@ class PropertyTreeManager {
 
   int EnsureCompositorScrollNode(const ScrollPaintPropertyNode*);
 
-  const EffectPaintPropertyNode* CurrentEffectNode() const;
-
   // Scroll translation has special treatment in the transform and scroll trees.
   void UpdateScrollAndScrollTranslationNodes(const TransformPaintPropertyNode*);
 
+  void ExitEffect();
+
   // Property trees which should be updated by the manager.
   cc::PropertyTrees& property_trees_;
+
+  Vector<std::unique_ptr<RRectContentLayerClient>>&
+      rrect_content_layer_clients_;
 
   // Layer to which transform "owner" layers should be added. These will not
   // have any actual children, but at present must exist in the tree.
@@ -111,13 +144,17 @@ class PropertyTreeManager {
   HashMap<const ClipPaintPropertyNode*, int> clip_node_map_;
   HashMap<const ScrollPaintPropertyNode*, int> scroll_node_map_;
 
-  struct BlinkEffectAndCcIdPair {
+  struct EffectStackEntry {
+    enum class EffectType : char { kRoundedClip, kEffect } type;
     const EffectPaintPropertyNode* effect;
-    // The cc property tree effect node id, or 'node index', for the cc effect
-    // node corresponding to the above Blink effect paint property node.
-    int id;
+    const ClipPaintPropertyNode* clip;
+    int effect_id;
   };
-  Vector<BlinkEffectAndCcIdPair> effect_stack_;
+  Vector<EffectStackEntry> effect_stack_;
+  const EffectPaintPropertyNode* current_effect_;
+  const ClipPaintPropertyNode* current_clip_;
+  int current_effect_id_;
+
   int sequence_number_;
 
 #if DCHECK_IS_ON()

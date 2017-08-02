@@ -28,6 +28,7 @@ namespace blink {
 class ContentLayerClientImpl;
 class JSONObject;
 class PaintArtifact;
+class RRectContentLayerClient;
 class WebLayer;
 struct PaintChunk;
 
@@ -168,6 +169,7 @@ class PLATFORM_EXPORT PaintArtifactCompositor {
   scoped_refptr<cc::Layer> root_layer_;
   std::unique_ptr<WebLayer> web_layer_;
   Vector<std::unique_ptr<ContentLayerClientImpl>> content_layer_clients_;
+  Vector<std::unique_ptr<RRectContentLayerClient>> rrect_content_layer_clients_;
 
   bool extra_data_for_testing_enabled_ = false;
   std::unique_ptr<ExtraDataForTesting> extra_data_for_testing_;

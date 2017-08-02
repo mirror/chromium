@@ -56,6 +56,12 @@ CompositorElementId CompositorElementIdFromRootEffectId(uint64_t id) {
                                    CompositorElementIdNamespace::kEffectRoot);
 }
 
+CompositorElementId GenCompositorElementIdForRoundedClip() {
+  static uint64_t serial;
+  return CreateCompositorElementId(
+      ++serial, CompositorElementIdNamespace::kEffectRoundedClip);
+}
+
 CompositorElementIdNamespace NamespaceFromCompositorElementId(
     CompositorElementId element_id) {
   return static_cast<CompositorElementIdNamespace>(
