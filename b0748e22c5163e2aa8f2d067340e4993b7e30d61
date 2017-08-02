@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ff2cf67c_fc68c43e",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1212809
+      },
+      "writtenOn": "2017-08-02T00:28:45Z",
+      "side": 1,
+      "message": "Discussed offline, will leave as is for now, added a TODO about doing the refactor",
+      "parentUuid": "bedd56ff_578d70b1",
+      "range": {
+        "startLine": 602,
+        "startChar": 48,
+        "endLine": 602,
+        "endChar": 0
+      },
+      "revId": "b0748e22c5163e2aa8f2d067340e4993b7e30d61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2eeebf1_a27a55fd",
         "filename": "chrome/browser/ui/webui/media_router/media_router_ui.h",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "b0748e22c5163e2aa8f2d067340e4993b7e30d61",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "feed810f_0848b3ce",
+        "filename": "chrome/browser/ui/webui/media_router/media_router_ui.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1212809
+      },
+      "writtenOn": "2017-08-02T00:28:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2eeebf1_a27a55fd",
+      "range": {
+        "startLine": 270,
+        "startChar": 29,
+        "endLine": 270,
+        "endChar": 35
+      },
+      "revId": "b0748e22c5163e2aa8f2d067340e4993b7e30d61",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
