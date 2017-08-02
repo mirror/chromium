@@ -94,6 +94,29 @@
     },
     {
       "key": {
+        "uuid": "cedd8b29_6da78a22",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-02T19:24:42Z",
+      "side": 1,
+      "message": "This logic is very complicated (I know it already was before this change).\n\nDoes editing team think it would be useful to write a unit test to cover this changed logic and have some way to pull out the items marked for invalidation to make sure they\u0027re what we expect? And could test a range of edge cases and permutations more easily perhaps than having a batch of layout tests.\n\nI see VisibleSelectionTest uses an existing EditingTestBase. Other Paint unit tests use RenderingTest pretty heavily, which is basically a LayoutTest written in C++ and so faster, less flaky, doesn\u0027t always need to go through JS APIs to scrutinize internal data, etc.\n\nSee LayoutTableCellTest for an example where wangxianzhu@ has done some intricate testing via RenderingTest.\n\nI know editing/selection and repainting has its own set of complexity so this is very open to discussion but wanted to mention given the scope of the logic and changes below. We have a general goal for paint to move toward unit tests vs layout tests where we can. Or at least add unit tests to go along with regression-preventing layout tests.",
+      "range": {
+        "startLine": 445,
+        "startChar": 29,
+        "endLine": 445,
+        "endChar": 67
+      },
+      "revId": "54f65be2cce8e97b7d2f4533038e9f9598d9901c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6f6fbcf0_8930ca17",
         "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
         "patchSetId": 11
