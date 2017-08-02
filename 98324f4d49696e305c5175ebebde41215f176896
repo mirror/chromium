@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd3a2c12_650acfe9",
+        "filename": "chrome/browser/ui/omnibox/omnibox_view_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-02T08:44:37Z",
+      "side": 1,
+      "message": "Nit: I\u0027d maybe make this say \"Wait for the AddPageWithDetails() call to finish and for all observers to process the notification; some (e.g. the in-memory history database) may do something important.\"  Then I\u0027d remove the comment inside the block below.\n\nThis is because the run comment there really handles both these comments.",
+      "revId": "98324f4d49696e305c5175ebebde41215f176896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
