@@ -22,6 +22,30 @@
       "revId": "3eb5a6b80c417548919bfa9192e3d70ab5534ed5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c064d60a_a616c93e",
+        "filename": "net/cert/x509_certificate_bytes.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-08-02T01:13:10Z",
+      "side": 1,
+      "message": "Thanks - I will revert this particular line.\n\nWe do have some inconsistencies in this regard - SignatureAlgorithm::Create() also accepts nullptr (as do the main certificate parsing functions).\n\nI think probably non-null everywhere is the right approach as it forces callers to think about propagating or logging errors.",
+      "parentUuid": "5ac8e2ef_fa71b213",
+      "range": {
+        "startLine": 76,
+        "startChar": 68,
+        "endLine": 76,
+        "endChar": 74
+      },
+      "revId": "3eb5a6b80c417548919bfa9192e3d70ab5534ed5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
