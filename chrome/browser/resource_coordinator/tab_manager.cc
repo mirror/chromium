@@ -590,6 +590,21 @@ void TabManager::OnSessionRestoreFinishedLoadingTabs() {
   is_session_restore_loading_tabs_ = false;
 }
 
+bool TabManager::IsLoadingBackgroundTabs() const {
+  if (IsSessionRestoreLoadingTabs())
+    return false;
+
+  if (!pending_navigations_.empty())
+    return true;
+
+  for (const content::WebContents* tab : loading_contents_) {
+    if (!tab->IsVisible())
+      return true;
+  }
+
+  return false;
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // TabManager, private:
 
@@ -1120,7 +1135,9 @@ std::vector<BrowserInfo> TabManager::GetBrowserInfoList() const {
 content::NavigationThrottle::ThrottleCheckResult
 TabManager::MaybeThrottleNavigation(BackgroundTabNavigationThrottle* throttle) {
   content::NavigationHandle* navigation_handle = throttle->navigation_handle();
-  if (CanLoadNextTab()) {
+  if (!base::FeatureList::IsEnabled(
+          features::kStaggeredBackgroundTabOpenExperiment) ||
+      CanLoadNextTab()) {
     loading_contents_.insert(navigation_handle->GetWebContents());
     return content::NavigationThrottle::PROCEED;
   }
