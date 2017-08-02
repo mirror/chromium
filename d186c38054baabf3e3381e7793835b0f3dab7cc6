@@ -1,0 +1,152 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1eb3188_92f230b1",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-02T08:56:51Z",
+      "side": 1,
+      "message": "nit: remove reference to arc. maybe just s/arc window/window/",
+      "revId": "d186c38054baabf3e3381e7793835b0f3dab7cc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19164e54_8f1e117c",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-02T08:56:51Z",
+      "side": 1,
+      "message": "scary amount of time to lock the compositor but I guess fine if needed",
+      "revId": "d186c38054baabf3e3381e7793835b0f3dab7cc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "322b9750_907597c6",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-02T08:56:51Z",
+      "side": 1,
+      "message": "is this needed? can we just let the lock release as it gets deleted instead?",
+      "revId": "d186c38054baabf3e3381e7793835b0f3dab7cc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6783bd66_4986759e",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 797,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-02T08:56:51Z",
+      "side": 1,
+      "message": "How about simply:\nif (orientation_ \u003d\u003d expected_orientation_)\n  compositor_lock_.reset();",
+      "range": {
+        "startLine": 796,
+        "startChar": 4,
+        "endLine": 797,
+        "endChar": 47
+      },
+      "revId": "d186c38054baabf3e3381e7793835b0f3dab7cc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f94efe7_d3288383",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1043,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-02T08:56:51Z",
+      "side": 1,
+      "message": "can we observe this from ctor to dtor instead?",
+      "revId": "d186c38054baabf3e3381e7793835b0f3dab7cc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08af35bc_13b7c9b9",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1814,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-02T08:56:51Z",
+      "side": 1,
+      "message": "this and above helper functions don\u0027t seem that useful. LockCompositor is just called from one place so maybe just move that code there and \"compositor_lock_.reset()\" is as simple to understand as UnlockCompositor() so I would prefer the former.",
+      "revId": "d186c38054baabf3e3381e7793835b0f3dab7cc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5468f581_b6f6fae5",
+        "filename": "components/exo/shell_surface.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-02T08:56:51Z",
+      "side": 1,
+      "message": "nit: \"// Overridden from ui::CompositorLockClient:\" and move up to public section just below OnDisplayMetricsChanged",
+      "revId": "d186c38054baabf3e3381e7793835b0f3dab7cc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f33d6b8_162b96d6",
+        "filename": "third_party/wayland-protocols/include/protocol/remote-shell-unstable-v1-client-protocol.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-02T08:56:51Z",
+      "side": 1,
+      "message": "please use the wayland-scanner version in third_party/wayland to generate these files",
+      "range": {
+        "startLine": 1,
+        "startChar": 32,
+        "endLine": 1,
+        "endChar": 39
+      },
+      "revId": "d186c38054baabf3e3381e7793835b0f3dab7cc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
