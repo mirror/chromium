@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac91d556_10da558e",
+        "filename": "chrome/browser/sync_file_system/drive_backend/sync_task_token.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-02T09:20:05Z",
+      "side": 0,
+      "message": "nit: might we want to just remove this part but keep NOTREACHED above? (Up to you)",
+      "revId": "53a4df1f58d61be05273922c3efd10f0c1de311a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
