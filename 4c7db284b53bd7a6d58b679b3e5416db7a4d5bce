@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ea61ec1_ddb2a7bf",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-02T00:11:50Z",
+      "side": 1,
+      "message": "Oops - this was actually never necessary to have here in the first place. Please remove.",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 82,
+        "endChar": 46
+      },
+      "revId": "4c7db284b53bd7a6d58b679b3e5416db7a4d5bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b8743c2_faf05111",
+        "filename": "chrome/browser/chromeos/net/tether_notification_presenter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-02T00:11:50Z",
+      "side": 1,
+      "message": "Now that you\u0027ve removed the reference to kTetherNotifierId, I don\u0027t think there\u0027s any reason why these need to be static functions anymore. Please move them to the anonymous namespace and remove from the header file.",
+      "range": {
+        "startLine": 117,
+        "startChar": 0,
+        "endLine": 117,
+        "endChar": 53
+      },
+      "revId": "4c7db284b53bd7a6d58b679b3e5416db7a4d5bce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
