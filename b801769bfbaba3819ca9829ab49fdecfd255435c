@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "5418fae8_46d135be",
+        "filename": "remoting/host/client_session.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1224704
+      },
+      "writtenOn": "2017-08-02T18:09:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49c00671_9eaf8446",
+      "range": {
+        "startLine": 245,
+        "startChar": 36,
+        "endLine": 245,
+        "endChar": 74
+      },
+      "revId": "b801769bfbaba3819ca9829ab49fdecfd255435c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c07c1693_37186220",
         "filename": "remoting/host/file_transfer_message_handler_factory.cc",
         "patchSetId": 2
