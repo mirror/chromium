@@ -582,6 +582,17 @@ void CompositedLayerMapping::
   if (owning_layer_is_clipped) {
     owning_layer_is_masked =
         AncestorRoundedCornersWillClip(compositing_ancestor);
+    // Delay this check until after mask detection, because the mask is still
+    // required when the ancestor clip contains the composited_bound_ but the
+    // border radius clips the content.
+    if (!owning_layer_is_masked) {
+      LayoutPoint offset_to_clipper;
+      owning_layer_.ConvertToLayerCoords(compositing_ancestor,
+                                         offset_to_clipper);
+      LayoutRect offset_bounds = composited_bounds_;
+      offset_bounds.MoveBy(offset_to_clipper);
+      owning_layer_is_clipped = !clip_rect.Rect().Contains(offset_bounds);
+    }
   }
 }
 
