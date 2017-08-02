@@ -235,6 +235,30 @@
       "revId": "2dc0039f6ffb89ffc6ceeac9765bb118589558c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb498dbe_4d7ec139",
+        "filename": "content/public/common/network_service.mojom",
+        "patchSetId": 20
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-08-02T13:36:02Z",
+      "side": 1,
+      "message": "Where is the DCHECK? It looks like backends other than simple use \u003c0 as effectively the same as 0, while Simple does that for separate SetMaxSize but not for size passed to the constructor --- which will get turned into a uint64_t (that\u0027s a lot of sign-extension 1s!). Given we can be converting people (if only for experiments) it may make sense for me to just fix SimpleCache \nto handle negative sizes consistently, and for this to pass it through --- this was people with a bit of nonsense in their profiles (how common is it?) would get neither no cache nor effectively infinite-size caches.",
+      "parentUuid": "31d70fc5_47730a3e",
+      "range": {
+        "startLine": 23,
+        "startChar": 2,
+        "endLine": 23,
+        "endChar": 9
+      },
+      "revId": "2dc0039f6ffb89ffc6ceeac9765bb118589558c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
