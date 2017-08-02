@@ -76,6 +76,7 @@ const NSTimeInterval kUpdatePaymentSummaryItemIntervalSeconds = 10.0;
   [_viewController setConnectionSecure:_connectionSecure];
   [_viewController setDelegate:self];
   [_viewController setDataSource:_mediator];
+  [_viewController setPending:_pending];
   [_viewController loadModel];
 
   _navigationController = [[UINavigationController alloc]
