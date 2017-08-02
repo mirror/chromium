@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "15e2f8a9_c2a3e99f",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-02T19:38:45Z",
+      "side": 1,
+      "message": "In theory, *cast_media_sink_service_impl_ gets deleted via a task posted when the unique_ptr is reset (unless the reset is on the IO thread, in which case the deletion happens immediately), so any task posted while cast_media_sink_service_impl_ is non-null should run before *cast_media_sink_service_impl_ is deleted. Hence that\u0027s why I think using Unretained should be ok here. I don\u0027t feel strongly though. This is a bit safer and it might be better to revisit after switching over to task scheduler.",
+      "parentUuid": "3299c300_3102bd5a",
+      "range": {
+        "startLine": 136,
+        "startChar": 66,
+        "endLine": 136,
+        "endChar": 0
+      },
+      "revId": "5a44b21bf09bb6540ea4ab5d8c2598ddc721331d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "993d055f_90c0ea57",
         "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service.h",
         "patchSetId": 5
