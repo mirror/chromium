@@ -49,6 +49,7 @@ cc_component("blink") {
 
 cc_test("cc_blink_unittests") {
   sources = [
+    "web_display_item_list_impl_unittest.cc",
     "web_layer_impl_fixed_bounds_unittest.cc",
 
     # Setup.
