@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "720d1734_e9d734f5",
+        "filename": "ui/app_list/views/search_result_answer_card_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-08-02T20:53:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea598491_fdcd4964",
+      "range": {
+        "startLine": 89,
+        "startChar": 7,
+        "endLine": 89,
+        "endChar": 19
+      },
+      "revId": "26dbd95d540375390e72335d62234d6c8da97eeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30f2b3d3_0edb284f",
         "filename": "ui/app_list/views/search_result_answer_card_view.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-02T02:49:52Z",
       "side": 1,
       "message": "qq, which functionality we use from CustomButton",
+      "range": {
+        "startLine": 95,
+        "startChar": 11,
+        "endLine": 95,
+        "endChar": 23
+      },
+      "revId": "26dbd95d540375390e72335d62234d6c8da97eeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc6fcb22_0c721a32",
+        "filename": "ui/app_list/views/search_result_answer_card_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-08-02T20:53:43Z",
+      "side": 1,
+      "message": "Enter - to open the result.",
+      "parentUuid": "30f2b3d3_0edb284f",
       "range": {
         "startLine": 95,
         "startChar": 11,
