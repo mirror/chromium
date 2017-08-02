@@ -31,6 +31,9 @@
 #define Document_h
 
 #include <memory>
+#include <string>
+#include <utility>
+
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/ScriptValue.h"
 #include "core/CoreExport.h"
@@ -1329,6 +1332,7 @@ class CORE_EXPORT Document : public ContainerNode,
   // non-secure passwords fields are no longer visible.
   void IncrementPasswordCount();
   void DecrementPasswordCount();
+  void LogFieldEdited();
 
   CoreProbeSink* GetProbeSink() final;
 
@@ -1452,6 +1456,8 @@ class CORE_EXPORT Document : public ContainerNode,
 
   void SendSensitiveInputVisibility();
   void SendSensitiveInputVisibilityInternal();
+  void SendFieldEdited();
+  void SendFieldEditedInternal();
 
   bool HaveImportsLoaded() const;
   void ViewportDefiningElementDidChange();
@@ -1697,6 +1703,8 @@ class CORE_EXPORT Document : public ContainerNode,
   Member<PropertyRegistry> property_registry_;
 
   unsigned password_count_;
+
+  bool logged_field_edit_;
 
   TaskHandle sensitive_input_visibility_task_;
 

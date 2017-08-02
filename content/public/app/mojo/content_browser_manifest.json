@@ -122,7 +122,7 @@
           "blink::mojom::MediaSessionService",
           "blink::mojom::PermissionService",
           "blink::mojom::PresentationService",
-          "blink::mojom::SensitiveInputVisibilityService",
+          "blink::mojom::SensitiveInputEventService",
           "blink::mojom::TextSuggestionHost",
           "blink::mojom::WebBluetoothService",
           "blink::mojom::WebSocket",

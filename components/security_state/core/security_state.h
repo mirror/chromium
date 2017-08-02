@@ -136,6 +136,8 @@ struct SecurityInfo {
   bool displayed_password_field_on_http;
   // True if the page displayed credit card field on an HTTP page.
   bool displayed_credit_card_field_on_http;
+  // True if the user edited a form field on an HTTP Page.
+  bool edited_form_field_on_http;
   // True if the secure page contained a form with a nonsecure target.
   bool contained_mixed_form;
   // True if the server's certificate does not contain a
@@ -184,6 +186,8 @@ struct VisibleSecurityState {
   bool displayed_password_field_on_http;
   // True if the page was an HTTP page that displayed a credit card field.
   bool displayed_credit_card_field_on_http;
+  // True if the user edited a form field on an HTTP Page.
+  bool edited_form_field_on_http;
   // True if the page was displayed in an Incognito context.
   bool is_incognito;
 };

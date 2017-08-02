@@ -36,6 +36,7 @@ enum MarkHttpStatus {
 bool GetSecurityLevelAndHistogramValueForNonSecureFieldTrial(
     std::string switch_or_field_trial_group,
     bool displayed_sensitive_input_on_http,
+    bool edited_form_field_on_http,
     bool is_incognito,
     SecurityLevel* level,
     MarkHttpStatus* histogram_status) {
@@ -50,7 +51,16 @@ bool GetSecurityLevelAndHistogramValueForNonSecureFieldTrial(
   if (switch_or_field_trial_group ==
       switches::kMarkHttpAsNonSecureWhileIncognitoOrEditing) {
     *histogram_status = NON_SECURE_WHILE_INCOGNITO_OR_EDITING;
-    *level = (is_incognito || displayed_sensitive_input_on_http)
+    *level = (is_incognito || displayed_sensitive_input_on_http ||
+              edited_form_field_on_http)
+                 ? security_state::HTTP_SHOW_WARNING
+                 : NONE;
+    return true;
+  }
+  if (switch_or_field_trial_group ==
+      switches::kMarkHttpAsNonSecureAfterEditing) {
+    *histogram_status = NON_SECURE_AFTER_EDITING;
+    *level = (displayed_sensitive_input_on_http || edited_form_field_on_http)
                  ? security_state::HTTP_SHOW_WARNING
                  : NONE;
     return true;
@@ -66,6 +76,7 @@ bool GetSecurityLevelAndHistogramValueForNonSecureFieldTrial(
 
 SecurityLevel GetSecurityLevelForNonSecureFieldTrial(
     bool displayed_sensitive_input_on_http,
+    bool edited_form_field_on_http,
     bool is_incognito) {
   std::string choice =
       base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
@@ -80,11 +91,11 @@ SecurityLevel GetSecurityLevelForNonSecureFieldTrial(
   // If the command-line switch is set, then it takes precedence over
   // the field trial group.
   if (!GetSecurityLevelAndHistogramValueForNonSecureFieldTrial(
-          choice, displayed_sensitive_input_on_http, is_incognito, &level,
-          &status)) {
+          choice, displayed_sensitive_input_on_http, edited_form_field_on_http,
+          is_incognito, &level, &status)) {
     if (!GetSecurityLevelAndHistogramValueForNonSecureFieldTrial(
-            group, displayed_sensitive_input_on_http, is_incognito, &level,
-            &status)) {
+            group, displayed_sensitive_input_on_http, edited_form_field_on_http,
+            is_incognito, &level, &status)) {
       status = HTTP_SHOW_WARNING_ON_SENSITIVE_FIELDS;
       level = displayed_sensitive_input_on_http
                   ? security_state::HTTP_SHOW_WARNING
@@ -152,6 +163,7 @@ SecurityLevel GetSecurityLevelForRequest(
       return GetSecurityLevelForNonSecureFieldTrial(
           visible_security_state.displayed_password_field_on_http ||
               visible_security_state.displayed_credit_card_field_on_http,
+          visible_security_state.edited_form_field_on_http,
           visible_security_state.is_incognito);
     }
     return NONE;
@@ -248,6 +260,8 @@ void SecurityInfoForRequest(
       visible_security_state.displayed_password_field_on_http;
   security_info->displayed_credit_card_field_on_http =
       visible_security_state.displayed_credit_card_field_on_http;
+  security_info->edited_form_field_on_http =
+      visible_security_state.edited_form_field_on_http;
   security_info->cert_missing_subject_alt_name =
       visible_security_state.certificate &&
       !visible_security_state.certificate->GetSubjectAltName(nullptr, nullptr);
@@ -280,9 +294,9 @@ bool IsHttpWarningForIncognitoEnabled() {
   // If the command-line switch is set, then it takes precedence over
   // the field trial group.
   if (!GetSecurityLevelAndHistogramValueForNonSecureFieldTrial(
-          choice, false, true, &level, &status)) {
+          choice, false, true, false, &level, &status)) {
     if (!GetSecurityLevelAndHistogramValueForNonSecureFieldTrial(
-            group, false, true, &level, &status)) {
+            group, false, true, false, &level, &status)) {
       return false;
     }
   }
@@ -309,6 +323,7 @@ SecurityInfo::SecurityInfo()
       pkp_bypassed(false),
       displayed_password_field_on_http(false),
       displayed_credit_card_field_on_http(false),
+      edited_form_field_on_http(false),
       contained_mixed_form(false),
       cert_missing_subject_alt_name(false),
       incognito_downgraded_security_level(false) {}
@@ -344,6 +359,7 @@ VisibleSecurityState::VisibleSecurityState()
       pkp_bypassed(false),
       displayed_password_field_on_http(false),
       displayed_credit_card_field_on_http(false),
+      edited_form_field_on_http(false),
       is_incognito(false) {}
 
 VisibleSecurityState::~VisibleSecurityState() {}
@@ -367,6 +383,7 @@ bool VisibleSecurityState::operator==(const VisibleSecurityState& other) const {
           displayed_credit_card_field_on_http ==
               other.displayed_credit_card_field_on_http &&
           contained_mixed_form == other.contained_mixed_form &&
+          edited_form_field_on_http == other.edited_form_field_on_http &&
           is_incognito == other.is_incognito);
 }
 

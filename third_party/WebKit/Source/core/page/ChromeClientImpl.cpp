@@ -32,6 +32,7 @@
 #include "core/page/ChromeClientImpl.h"
 
 #include <memory>
+#include <utility>
 
 #include "bindings/core/v8/ScriptController.h"
 #include "build/build_config.h"
@@ -1031,6 +1032,8 @@ void ChromeClientImpl::DidChangeValueInTextField(
   UseCounter::Count(doc, doc.IsSecureContext()
                              ? WebFeature::kFieldEditInSecureContext
                              : WebFeature::kFieldEditInNonSecureContext);
+  doc.LogFieldEdited();
+
   web_view_->PageImportanceSignals()->SetHadFormInteraction();
 }
 
