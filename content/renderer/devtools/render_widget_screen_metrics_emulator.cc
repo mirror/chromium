@@ -67,14 +67,16 @@ void RenderWidgetScreenMetricsEmulator::Apply() {
     window_screen_rect = original_window_screen_rect_;
   } else {
     applied_widget_rect_.set_origin(emulation_params_.view_position);
-    gfx::Rect screen_rect = applied_widget_rect_;
-    if (!emulation_params_.screen_size.IsEmpty()) {
-      screen_rect = gfx::Rect(0, 0, emulation_params_.screen_size.width,
-                              emulation_params_.screen_size.height);
-    }
+    modified_resize_params.screen_info.rect = applied_widget_rect_;
+    modified_resize_params.screen_info.available_rect = applied_widget_rect_;
+    window_screen_rect = applied_widget_rect_;
+  }
+
+  if (!emulation_params_.screen_size.IsEmpty()) {
+    gfx::Rect screen_rect = gfx::Rect(0, 0, emulation_params_.screen_size.width,
+                                      emulation_params_.screen_size.height);
     modified_resize_params.screen_info.rect = screen_rect;
     modified_resize_params.screen_info.available_rect = screen_rect;
-    window_screen_rect = applied_widget_rect_;
   }
 
   modified_resize_params.screen_info.device_scale_factor =
