@@ -1098,6 +1098,8 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
 
         mUiMode = getResources().getConfiguration().uiMode;
         mScreenWidthDp = getResources().getConfiguration().screenWidthDp;
+
+        logEGLShaderCacheSizeHistogram();
     }
 
     @Override
@@ -2303,5 +2305,38 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
      */
     public DiscardableReferencePool getReferencePool() {
         return mReferencePool;
+    }
+
+    /**
+     * Logs a histogram with the size of the Android EGL shader cache.
+     */
+    private static void logEGLShaderCacheSizeHistogram() {
+        Context cacheContext;
+        // On Android N+ this cache is stored in the protected storage context.
+        if (BuildInfo.isAtLeastN()) {
+            cacheContext =
+                    ContextUtils.getApplicationContext().createDeviceProtectedStorageContext();
+        } else {
+            cacheContext = ContextUtils.getApplicationContext();
+        }
+
+        if (cacheContext.getCodeCacheDir() == null) {
+            return;
+        }
+
+        // Must log async, as we're doing a file access.
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... unused) {
+                File cacheFile = new File(
+                        cacheContext.getCodeCacheDir(), "com.android.opengl.shaders_cache");
+                if (!cacheFile.exists()) {
+                    return;
+                }
+                String histogramName = "Memory.Experimental.Browser.EGLShaderCacheSize.Android";
+                RecordHistogram.recordMemoryKBHistogram(histogramName, (int) cacheFile.length());
+            }
+        }
+                .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 }

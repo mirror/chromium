@@ -114,6 +114,13 @@ public class BuildInfo {
     }
 
     /**
+     * @return Whether the current device is running Android N release or newer.
+     */
+    public static boolean isAtLeastN() {
+        return Build.VERSION.SDK_INT >= 24;
+    }
+
+    /**
      * @return Whether the current device is running Android O release or newer.
      */
     public static boolean isAtLeastO() {
