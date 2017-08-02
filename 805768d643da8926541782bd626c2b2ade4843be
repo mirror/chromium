@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "297c726e_7f840365",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 3
+      },
+      "lineNbr": 4430,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-02T01:42:34Z",
+      "side": 1,
+      "message": "just to check, does this actually fit within the key? if not, we might want to display \"menu\" here",
+      "revId": "805768d643da8926541782bd626c2b2ade4843be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

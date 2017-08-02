@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91c26750_3b316225",
+        "filename": "chrome/browser/resources/chromeos/keyboard_overlay.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-02T01:42:34Z",
+      "side": 1,
+      "message": "just LAYOUT_2 instead of NEW_LAYOUT_2?",
+      "range": {
+        "startLine": 128,
+        "startChar": 40,
+        "endLine": 128,
+        "endChar": 52
+      },
+      "revId": "e4d10e88cd7763a84e32014811ce1e617da1f50f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
