@@ -1193,6 +1193,37 @@ public class CronetHttpURLConnectionTest extends CronetTestBase {
                 CacheSetting.DONT_USE_CACHE, ExpectedOutcome.FAILURE);
     }
 
+    @SmallTest
+    @Feature({"Cronet"})
+    @OnlyRunCronetHttpURLConnection
+    // Tests that if disconnect() is called on a different thread when
+    // getResponseCode() is still waiting for response, there is no
+    // NPE but only IOException.
+    // Regression test for crbug.com/751786
+    public void testDisconnectWhenGetResponseCodeIsWaiting() throws Exception {
+        MockUrlRequestJobFactory mockUrlRequestJobFactory =
+                new MockUrlRequestJobFactory(mCronetEngine);
+        URL url = new URL(MockUrlRequestJobFactory.getMockUrlForHangingGet());
+        final HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        // connect() is non-blocking. This is to make sure disconnect() triggers cancellation.
+        connection.connect();
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    connection.getResponseCode();
+                    fail();
+                } catch (IOException e) {
+                    // Expected
+                }
+            }
+        });
+        t.start();
+        connection.disconnect();
+        t.join();
+        mockUrlRequestJobFactory.shutdown();
+    }
+
     private void checkExceptionsAreThrown(HttpURLConnection connection)
             throws Exception {
         try {
