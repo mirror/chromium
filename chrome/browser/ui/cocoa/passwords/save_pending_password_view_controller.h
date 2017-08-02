@@ -7,8 +7,6 @@
 
 #import "chrome/browser/ui/cocoa/passwords/pending_password_view_controller.h"
 
-@class PasswordsListViewController;
-
 // Manages the view that offers to save the user's password.
 @interface SavePendingPasswordViewController
     : PendingPasswordViewController<NSTextViewDelegate> {
@@ -16,7 +14,8 @@
   base::scoped_nsobject<NSButton> saveButton_;
   base::scoped_nsobject<NSButton> neverButton_;
   base::scoped_nsobject<NSButton> editButton_;
-  base::scoped_nsobject<PasswordsListViewController> passwordItem_;
+  base::scoped_nsobject<NSView> passwordItemContainer_;
+  BOOL editMode_;
 }
 
 - (NSView*)createPasswordView;

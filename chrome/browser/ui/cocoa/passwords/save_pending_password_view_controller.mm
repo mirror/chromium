@@ -4,6 +4,8 @@
 
 #import "chrome/browser/ui/cocoa/passwords/save_pending_password_view_controller.h"
 
+#include "base/strings/sys_string_conversions.h"
+#import "chrome/browser/ui/cocoa/passwords/password_item_views.h"
 #import "chrome/browser/ui/cocoa/passwords/passwords_bubble_utils.h"
 #import "chrome/browser/ui/cocoa/passwords/passwords_list_view_controller.h"
 #include "chrome/browser/ui/passwords/manage_passwords_bubble_model.h"
@@ -11,10 +13,12 @@
 #include "components/password_manager/core/common/password_manager_features.h"
 #include "ui/base/l10n/l10n_util.h"
 
-@interface SavePendingPasswordViewController ()
+@interface SavePendingPasswordViewController ()<NSTextFieldDelegate>
 - (void)onSaveClicked:(id)sender;
 - (void)onNeverForThisSiteClicked:(id)sender;
 - (void)onEditClicked:(id)sender;
+- (void)refreshRow;
+- (BOOL)disableEditMode;
 @end
 
 @implementation SavePendingPasswordViewController
@@ -43,7 +47,39 @@
 }
 
 - (void)onEditClicked:(id)sender {
-  // TODO(crbug.com/734965)
+  editMode_ = TRUE;
+  [editButton_ setEnabled:FALSE];
+  [self refreshRow];
+}
+
+// Key handler for editable username field.
+- (BOOL)control:(NSControl*)control
+               textView:(NSTextView*)textView
+    doCommandBySelector:(SEL)commandSelector {
+  if (commandSelector == @selector(insertTab:) ||
+      commandSelector == @selector(insertNewline:) ||
+      commandSelector == @selector(cancelOperation:)) {
+    // TODO(crbug.com/734965): Update the username credential.
+    return [self disableEditMode];
+  }
+  return FALSE;
+}
+
+// Focus handler for editable username field.
+- (void)EndEditing:(NSNotification*)notification {
+  [self disableEditMode];
+  // TODO(crbug.com/734965): Update the username credential.
+}
+
+- (BOOL)disableEditMode {
+  if (editMode_) {
+    editMode_ = FALSE;
+    [editButton_ setEnabled:TRUE];
+    [self refreshRow];
+    [[passwordItemContainer_ window] setDefaultButtonCell:[saveButton_ cell]];
+    return TRUE;
+  }
+  return FALSE;
 }
 
 - (NSView*)createPasswordView {
@@ -51,10 +87,36 @@
           password_manager::features::kEnableUsernameCorrection) &&
       self.model->pending_password().username_value.empty())
     return nil;
-  passwordItem_.reset([[PasswordsListViewController alloc]
-      initWithModelAndForm:self.model
-                      form:&self.model->pending_password()]);
-  return [passwordItem_ view];
+  PendingPasswordItemView* item = [[PendingPasswordItemView alloc]
+      initWithForm:self.model->pending_password()
+          editMode:editMode_];
+  [item layoutWithFirstColumn:[item firstColumnWidth]
+                 secondColumn:[item secondColumnWidth]];
+  passwordItemContainer_.reset([[NSView alloc] initWithFrame:[item frame]]);
+  [passwordItemContainer_ setSubviews:@[ item ]];
+  return passwordItemContainer_;
+}
+
+- (void)refreshRow {
+  PendingPasswordItemView* item = [[PendingPasswordItemView alloc]
+      initWithForm:self.model->pending_password()
+          editMode:editMode_];
+  [item layoutWithFirstColumn:[item firstColumnWidth]
+                 secondColumn:[item secondColumnWidth]];
+  [passwordItemContainer_ setSubviews:@[ item ]];
+  if (editMode_) {
+    [[passwordItemContainer_ window] makeFirstResponder:[item usernameField]];
+    [[item usernameField]
+        setStringValue:base::SysUTF16ToNSString(
+                           self.model->pending_password().username_value)];
+    [[item usernameField].cell setUsesSingleLineMode:YES];
+    [[item usernameField] setDelegate:self];
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self
+               selector:@selector(EndEditing:)
+                   name:NSControlTextDidEndEditingNotification
+                 object:[item usernameField]];
+  }
 }
 
 - (NSArray*)createButtonsAndAddThemToView:(NSView*)view {
