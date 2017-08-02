@@ -28,7 +28,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "modules/exported/WebEmbeddedWorkerImpl.h"
+#include "modules/serviceworkers/EmbeddedWorker.h"
 
 #include <memory>
 #include "bindings/core/v8/SourceLocation.h"
@@ -83,12 +83,12 @@ std::unique_ptr<WebEmbeddedWorker> WebEmbeddedWorker::Create(
     std::unique_ptr<WebServiceWorkerInstalledScriptsManager>
         installed_scripts_manager,
     std::unique_ptr<WebContentSettingsClient> content_settings_client) {
-  return WTF::MakeUnique<WebEmbeddedWorkerImpl>(
-      std::move(client), std::move(installed_scripts_manager),
-      std::move(content_settings_client));
+  return WTF::MakeUnique<EmbeddedWorker>(std::move(client),
+                                         std::move(installed_scripts_manager),
+                                         std::move(content_settings_client));
 }
 
-WebEmbeddedWorkerImpl::WebEmbeddedWorkerImpl(
+EmbeddedWorker::EmbeddedWorker(
     std::unique_ptr<WebServiceWorkerContextClient> client,
     std::unique_ptr<WebServiceWorkerInstalledScriptsManager>
         installed_scripts_manager,
@@ -106,7 +106,7 @@ WebEmbeddedWorkerImpl::WebEmbeddedWorkerImpl(
   }
 }
 
-WebEmbeddedWorkerImpl::~WebEmbeddedWorkerImpl() {
+EmbeddedWorker::~EmbeddedWorker() {
   // TerminateWorkerContext() must be called before the destructor.
   DCHECK(asked_to_terminate_);
 
@@ -116,7 +116,7 @@ WebEmbeddedWorkerImpl::~WebEmbeddedWorkerImpl() {
   }
 }
 
-void WebEmbeddedWorkerImpl::StartWorkerContext(
+void EmbeddedWorker::StartWorkerContext(
     const WebEmbeddedWorkerStartData& data) {
   DCHECK(!asked_to_terminate_);
   DCHECK(!main_script_loader_);
@@ -161,7 +161,7 @@ void WebEmbeddedWorkerImpl::StartWorkerContext(
   shadow_page_->Initialize(worker_start_data_.script_url);
 }
 
-void WebEmbeddedWorkerImpl::TerminateWorkerContext() {
+void EmbeddedWorker::TerminateWorkerContext() {
   if (asked_to_terminate_)
     return;
   asked_to_terminate_ = true;
@@ -191,7 +191,7 @@ void WebEmbeddedWorkerImpl::TerminateWorkerContext() {
   worker_inspector_proxy_->WorkerThreadTerminated();
 }
 
-void WebEmbeddedWorkerImpl::ResumeAfterDownload() {
+void EmbeddedWorker::ResumeAfterDownload() {
   DCHECK(!asked_to_terminate_);
   DCHECK_EQ(pause_after_download_state_, kIsPausedAfterDownload);
 
@@ -199,32 +199,31 @@ void WebEmbeddedWorkerImpl::ResumeAfterDownload() {
   StartWorkerThread();
 }
 
-void WebEmbeddedWorkerImpl::AttachDevTools(const WebString& host_id,
-                                           int session_id) {
+void EmbeddedWorker::AttachDevTools(const WebString& host_id, int session_id) {
   WebDevToolsAgent* devtools_agent = shadow_page_->DevToolsAgent();
   if (devtools_agent)
     devtools_agent->Attach(host_id, session_id);
 }
 
-void WebEmbeddedWorkerImpl::ReattachDevTools(const WebString& host_id,
-                                             int session_id,
-                                             const WebString& saved_state) {
+void EmbeddedWorker::ReattachDevTools(const WebString& host_id,
+                                      int session_id,
+                                      const WebString& saved_state) {
   WebDevToolsAgent* devtools_agent = shadow_page_->DevToolsAgent();
   if (devtools_agent)
     devtools_agent->Reattach(host_id, session_id, saved_state);
   ResumeStartup();
 }
 
-void WebEmbeddedWorkerImpl::DetachDevTools(int session_id) {
+void EmbeddedWorker::DetachDevTools(int session_id) {
   WebDevToolsAgent* devtools_agent = shadow_page_->DevToolsAgent();
   if (devtools_agent)
     devtools_agent->Detach(session_id);
 }
 
-void WebEmbeddedWorkerImpl::DispatchDevToolsMessage(int session_id,
-                                                    int call_id,
-                                                    const WebString& method,
-                                                    const WebString& message) {
+void EmbeddedWorker::DispatchDevToolsMessage(int session_id,
+                                             int call_id,
+                                             const WebString& method,
+                                             const WebString& message) {
   if (asked_to_terminate_)
     return;
   WebDevToolsAgent* devtools_agent = shadow_page_->DevToolsAgent();
@@ -234,8 +233,7 @@ void WebEmbeddedWorkerImpl::DispatchDevToolsMessage(int session_id,
   }
 }
 
-void WebEmbeddedWorkerImpl::AddMessageToConsole(
-    const WebConsoleMessage& message) {
+void EmbeddedWorker::AddMessageToConsole(const WebConsoleMessage& message) {
   MessageLevel web_core_message_level;
   switch (message.level) {
     case WebConsoleMessage::kLevelVerbose:
@@ -261,12 +259,12 @@ void WebEmbeddedWorkerImpl::AddMessageToConsole(
                              message.column_number, nullptr)));
 }
 
-void WebEmbeddedWorkerImpl::PostMessageToPageInspector(int session_id,
-                                                       const String& message) {
+void EmbeddedWorker::PostMessageToPageInspector(int session_id,
+                                                const String& message) {
   worker_inspector_proxy_->DispatchMessageFromWorker(session_id, message);
 }
 
-void WebEmbeddedWorkerImpl::SetContentSecurityPolicyAndReferrerPolicy(
+void EmbeddedWorker::SetContentSecurityPolicyAndReferrerPolicy(
     ContentSecurityPolicyResponseHeaders csp_headers,
     String referrer_policy,
     WaitableEvent* event) {
@@ -276,12 +274,11 @@ void WebEmbeddedWorkerImpl::SetContentSecurityPolicyAndReferrerPolicy(
 }
 
 std::unique_ptr<WebApplicationCacheHost>
-WebEmbeddedWorkerImpl::CreateApplicationCacheHost(
-    WebApplicationCacheHostClient*) {
+EmbeddedWorker::CreateApplicationCacheHost(WebApplicationCacheHostClient*) {
   return nullptr;
 }
 
-void WebEmbeddedWorkerImpl::OnShadowPageInitialized() {
+void EmbeddedWorker::OnShadowPageInitialized() {
   DCHECK(!asked_to_terminate_);
 
   DCHECK(worker_context_client_);
@@ -307,21 +304,20 @@ void WebEmbeddedWorkerImpl::OnShadowPageInitialized() {
       WebURLRequest::kFetchRequestModeSameOrigin,
       WebURLRequest::kFetchCredentialsModeSameOrigin,
       worker_start_data_.address_space, WTF::Closure(),
-      Bind(&WebEmbeddedWorkerImpl::OnScriptLoaderFinished,
-           WTF::Unretained(this)));
+      Bind(&EmbeddedWorker::OnScriptLoaderFinished, WTF::Unretained(this)));
   // Do nothing here since onScriptLoaderFinished() might have been already
   // invoked and |this| might have been deleted at this point.
 }
 
-void WebEmbeddedWorkerImpl::SendProtocolMessage(int session_id,
-                                                int call_id,
-                                                const WebString& message,
-                                                const WebString& state) {
+void EmbeddedWorker::SendProtocolMessage(int session_id,
+                                         int call_id,
+                                         const WebString& message,
+                                         const WebString& state) {
   worker_context_client_->SendDevToolsMessage(session_id, call_id, message,
                                               state);
 }
 
-void WebEmbeddedWorkerImpl::ResumeStartup() {
+void EmbeddedWorker::ResumeStartup() {
   bool was_waiting = (waiting_for_debugger_state_ == kWaitingForDebugger);
   waiting_for_debugger_state_ = kNotWaitingForDebugger;
   if (was_waiting)
@@ -329,11 +325,11 @@ void WebEmbeddedWorkerImpl::ResumeStartup() {
 }
 
 WebDevToolsAgentClient::WebKitClientMessageLoop*
-WebEmbeddedWorkerImpl::CreateClientMessageLoop() {
+EmbeddedWorker::CreateClientMessageLoop() {
   return worker_context_client_->CreateDevToolsMessageLoop();
 }
 
-void WebEmbeddedWorkerImpl::OnScriptLoaderFinished() {
+void EmbeddedWorker::OnScriptLoaderFinished() {
   DCHECK(main_script_loader_);
   if (asked_to_terminate_)
     return;
@@ -368,7 +364,7 @@ void WebEmbeddedWorkerImpl::OnScriptLoaderFinished() {
   StartWorkerThread();
 }
 
-void WebEmbeddedWorkerImpl::StartWorkerThread() {
+void EmbeddedWorker::StartWorkerThread() {
   DCHECK_EQ(pause_after_download_state_, kDontPauseAfterDownload);
   DCHECK(!asked_to_terminate_);
 
