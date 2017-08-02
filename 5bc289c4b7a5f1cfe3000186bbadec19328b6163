@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9080e5d_e738e429",
+        "filename": "components/safe_browsing/web_ui/webui.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-02T20:07:23Z",
+      "side": 1,
+      "message": "uint64",
+      "range": {
+        "startLine": 22,
+        "startChar": 13,
+        "endLine": 22,
+        "endChar": 18
+      },
+      "revId": "5bc289c4b7a5f1cfe3000186bbadec19328b6163",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f96fd86_f7b3ddd9",
+        "filename": "components/safe_browsing/web_ui/webui.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-02T20:07:23Z",
+      "side": 1,
+      "message": "uint64",
+      "range": {
+        "startLine": 41,
+        "startChar": 15,
+        "endLine": 41,
+        "endChar": 20
+      },
+      "revId": "5bc289c4b7a5f1cfe3000186bbadec19328b6163",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d5ec514_fd0d23f7",
+        "filename": "components/safe_browsing/web_ui/webui.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-02T20:07:23Z",
+      "side": 1,
+      "message": "nit: could be uint64 since we never expect it to be negative.",
+      "range": {
+        "startLine": 49,
+        "startChar": 15,
+        "endLine": 49,
+        "endChar": 20
+      },
+      "revId": "5bc289c4b7a5f1cfe3000186bbadec19328b6163",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a470665_0495623a",
+        "filename": "components/safe_browsing/web_ui/webui.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-02T20:07:23Z",
+      "side": 1,
+      "message": "uint32",
+      "range": {
+        "startLine": 52,
+        "startChar": 15,
+        "endLine": 52,
+        "endChar": 20
+      },
+      "revId": "5bc289c4b7a5f1cfe3000186bbadec19328b6163",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22a990c0_206a68d6",
+        "filename": "components/safe_browsing/web_ui/webui.proto",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-02T20:07:23Z",
+      "side": 1,
+      "message": "optional: I would prefer to call this also checks_attempted.",
+      "range": {
+        "startLine": 52,
+        "startChar": 21,
+        "endLine": 52,
+        "endChar": 41
+      },
+      "revId": "5bc289c4b7a5f1cfe3000186bbadec19328b6163",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
