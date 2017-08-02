@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "072177f5_70b891bc",
+        "filename": "ios/chrome/browser/ui/first_run/first_run_util.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-02T01:07:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77ab2b47_10803703",
+      "revId": "a2dc328d3454d5cb5611a17cf763f816b29fe0ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a9c1cc3_4bdff591",
         "filename": "ios/chrome/browser/ui/first_run/first_run_util.mm",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-01T23:41:52Z",
       "side": 1,
       "message": "So effectively instead of passing in a taskrunner, we\u0027re letting //base pick one for us?  The rest of the call looks pretty much unchanged from before.",
+      "revId": "a2dc328d3454d5cb5611a17cf763f816b29fe0ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "806dfc26_59fa41b7",
+        "filename": "ios/chrome/browser/ui/first_run/first_run_util.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-02T01:07:55Z",
+      "side": 1,
+      "message": "This change is motivated by GetBlockingPool()\u0027s deprecation.  The new interface in post_task.h automatically chooses the runner for you.",
+      "parentUuid": "8a9c1cc3_4bdff591",
       "revId": "a2dc328d3454d5cb5611a17cf763f816b29fe0ab",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
