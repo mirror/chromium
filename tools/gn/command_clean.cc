@@ -46,7 +46,8 @@ std::string ExtractGNBuildCommands(const base::FilePath& build_ninja_file) {
 
 const char kDefaultNinjaFile[] =
     "rule gn\n"
-    "  command = gn -q gen //out/%s/\n"
+    "  command = gn -q gen //out/%" PRIsFP
+    "/\n"
     "  description = Regenerating ninja files\n"
     "\n"
     "build build.ninja: gn\n"
