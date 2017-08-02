@@ -5,13 +5,16 @@
 #include "components/ntp_tiles/popular_sites_impl.h"
 
 #include <stddef.h>
+#include <map>
 #include <utility>
 
 #include "base/bind.h"
 #include "base/command_line.h"
 #include "base/feature_list.h"
+#include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
+#include "base/strings/utf_string_conversions.h"
 #include "base/time/time.h"
 #include "base/values.h"
 #include "build/build_config.h"
@@ -53,6 +56,8 @@ const char kPopularSitesURLFormat[] =
 const char kPopularSitesDefaultDirectory[] = "chrome/ntp/";
 const char kPopularSitesDefaultCountryCode[] = "DEFAULT";
 const char kPopularSitesDefaultVersion[] = "5";
+const int kSitesExplorationStartVersion = 6;
+const int kSitesExplorationBakedInVersion = 5;
 const int kPopularSitesRedownloadIntervalHours = 24;
 
 const char kPopularSitesLastDownloadPref[] = "popular_sites_last_download";
@@ -107,6 +112,25 @@ std::string GetVariationVersion() {
                                             "version");
 }
 
+bool IsDictionaryValidSite(const base::DictionaryValue& dict) {
+  base::string16 title;
+  std::string url;
+  return dict.GetString("title", &title) && dict.GetString("url", &url);
+}
+
+// Only one valid site dictionary has to be in the list. Empty lists are not
+// considered valid for a specific version to avoid ambiguity.
+bool IsValidVersion5SitesList(const base::ListValue& list) {
+  PopularSites::SitesVector sites;
+  for (size_t i = 0; i < list.GetSize(); i++) {
+    const base::DictionaryValue* item;
+    if (list.GetDictionary(i, &item) && IsDictionaryValidSite(*item)) {
+      return true;
+    }
+  }
+  return false;
+}
+
 PopularSites::SitesVector ParseSiteList(const base::ListValue& list) {
   PopularSites::SitesVector sites;
   for (size_t i = 0; i < list.GetSize(); i++) {
@@ -130,6 +154,70 @@ PopularSites::SitesVector ParseSiteList(const base::ListValue& list) {
                      &sites.back().default_icon_resource);
   }
   return sites;
+}
+
+std::map<SectionType, PopularSites::SitesVector> ParseVersion5(
+    const base::ListValue& list) {
+  return {{SectionType::PERSONALIZED, ParseSiteList(list)}};
+}
+
+// Returns true only if the passed |list| consisted of valid sections.
+bool ParseVersion6OrAbove(
+    const base::ListValue& list,
+    std::map<SectionType, PopularSites::SitesVector>* sections) {
+  for (size_t i = 0; i < list.GetSize(); i++) {
+    const base::DictionaryValue* item;
+    if (!list.GetDictionary(i, &item)) {
+      LOG(WARNING) << "Parsed SitesExploration list contained an invalid "
+                   << "section at position " << i << ".";
+      continue;
+    }
+    int section;
+    if (!item->GetInteger("section", &section) || section < 0 ||
+        section > static_cast<int>(SectionType::LAST)) {
+      LOG(WARNING) << "Parsed SitesExploration list contained a section with "
+                   << "invalid ID (" << section << ")";
+      continue;
+    }
+    const base::ListValue* sites_list;
+    if (!item->GetList("sites", &sites_list)) {
+      continue;
+    }
+    PopularSites::SitesVector sites = ParseSiteList(*sites_list);
+    SectionType section_type = static_cast<SectionType>(section);
+    if (sites.empty() || section_type == SectionType::UNKNOWN) {
+      continue;
+    }
+    (*sections)[section_type] = std::move(sites);
+  }
+  if (sections->empty()) {
+    // Valid lists would have contained at least the PERSONALIZED section.
+    return false;
+  }
+  if (!base::FeatureList::IsEnabled(kSitesExplorationFeature)) {
+    // New versions of popular sites that should act like old versions will
+    // mimic having only the personalized list.
+    *sections = {
+        std::make_pair(SectionType::PERSONALIZED,
+                       std::move((*sections)[SectionType::PERSONALIZED]))};
+  }
+  return true;
+}
+
+std::map<SectionType, PopularSites::SitesVector> ParseSites(
+    const base::ListValue& list,
+    int version) {
+  if (version >= kSitesExplorationStartVersion) {
+    std::map<SectionType, PopularSites::SitesVector> sections;
+    if (ParseVersion6OrAbove(list, &sections)) {
+      return sections;
+    }
+    // For version mismatches, a valid list might still be processed.
+    LOG_IF(DFATAL, IsValidVersion5SitesList(list))
+        << "Expected to parse a popular sites list of version "
+        << kSitesExplorationStartVersion << " but found an earlier version";
+  }
+  return ParseVersion5(list);
 }
 
 #if defined(GOOGLE_CHROME_BUILD) && (defined(OS_ANDROID) || defined(OS_IOS))
@@ -201,7 +289,8 @@ PopularSitesImpl::PopularSitesImpl(
       download_context_(download_context),
       parse_json_(std::move(parse_json)),
       is_fallback_(false),
-      sites_(ParseSiteList(*prefs->GetList(kPopularSitesJsonPref))),
+      sections_(ParseSites(*prefs->GetList(kPopularSitesJsonPref),
+                           kSitesExplorationBakedInVersion)),
       weak_ptr_factory_(this) {}
 
 PopularSitesImpl::~PopularSitesImpl() {}
@@ -232,8 +321,9 @@ bool PopularSitesImpl::MaybeStartFetch(bool force_download,
   return false;
 }
 
-const PopularSites::SitesVector& PopularSitesImpl::sites() const {
-  return sites_;
+const std::map<SectionType, PopularSitesImpl::SitesVector>&
+PopularSitesImpl::sections() const {
+  return sections_;
 }
 
 GURL PopularSitesImpl::GetLastURLFetched() const {
@@ -243,13 +333,13 @@ GURL PopularSitesImpl::GetLastURLFetched() const {
 GURL PopularSitesImpl::GetURLToFetch() {
   const std::string directory = GetDirectoryToFetch();
   const std::string country = GetCountryToFetch();
-  const std::string version = GetVersionToFetch();
+  version_ = GetVersionToFetch();
 
   const GURL override_url =
       GURL(prefs_->GetString(ntp_tiles::prefs::kPopularSitesOverrideURL));
   return override_url.is_valid()
              ? override_url
-             : GetPopularSitesURL(directory, country, version);
+             : GetPopularSitesURL(directory, country, version_);
 }
 
 std::string PopularSitesImpl::GetDirectoryToFetch() {
@@ -396,7 +486,9 @@ void PopularSitesImpl::OnJsonParsed(std::unique_ptr<base::Value> json) {
                    base::Time::Now().ToInternalValue());
   prefs_->SetString(kPopularSitesURLPref, pending_url_.spec());
 
-  sites_ = ParseSiteList(*list);
+  int version;
+  base::StringToInt(version_, &version);
+  sections_ = ParseSites(*list, version);
   callback_.Run(true);
 }
 
