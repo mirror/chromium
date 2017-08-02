@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "95389bc4_6a4ba369",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/service/reconnect-during.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-08-02T00:09:43Z",
+      "side": 1,
+      "message": "It doesn\u0027t actually add any, just registers them as known services, unless I\u0027m missing something.\n\nI can add these as part of getHealthThermometerDeviceWithServiceDiscovered if that would be appropriate.",
+      "parentUuid": "ae8f0e23_29cd5bcf",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 80
+      },
+      "revId": "3535a8a5a248d59a95320af2e2fa21b2e0b31257",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc2fed24_159d312b",
         "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/service/reconnect-during.js",
         "patchSetId": 8
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "622c9883_be19fbc8",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/service/reconnect-during.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-08-02T00:09:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc2fed24_159d312b",
+      "range": {
+        "startLine": 14,
+        "startChar": 27,
+        "endLine": 14,
+        "endChar": 49
+      },
+      "revId": "3535a8a5a248d59a95320af2e2fa21b2e0b31257",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e52d2a64_6c4ff9de",
         "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/service/reconnect-during.js",
         "patchSetId": 8
@@ -68,6 +116,30 @@
       "revId": "3535a8a5a248d59a95320af2e2fa21b2e0b31257",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c12ed31_8f7b5694",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/service/reconnect-during.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1108705
+      },
+      "writtenOn": "2017-08-02T00:09:43Z",
+      "side": 1,
+      "message": "Missed this, sorry.",
+      "parentUuid": "e52d2a64_6c4ff9de",
+      "range": {
+        "startLine": 21,
+        "startChar": 6,
+        "endLine": 22,
+        "endChar": 34
+      },
+      "revId": "3535a8a5a248d59a95320af2e2fa21b2e0b31257",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
