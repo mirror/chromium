@@ -499,6 +499,8 @@ source_set("browser") {
     "child_process_launcher_helper.cc",
     "child_process_launcher_helper.h",
     "child_process_launcher_helper_android.cc",
+    "child_process_launcher_helper_android.h",
+    "child_process_launcher_helper_fuchsia.cc",
     "child_process_launcher_helper_linux.cc",
     "child_process_launcher_helper_mac.cc",
     "child_process_launcher_helper_posix.cc",
@@ -1617,6 +1619,14 @@ source_set("browser") {
     sources += [
       "posix_file_descriptor_info_impl.cc",
       "posix_file_descriptor_info_impl.h",
+    ]
+  }
+
+  if (is_fuchsia) {
+    sources -= [
+      "child_process_launcher_helper_posix.cc",
+      "child_process_launcher_helper_posix.h",
+      "memory/memory_monitor.cc",
     ]
   }
 

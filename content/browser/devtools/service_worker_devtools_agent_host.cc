@@ -68,7 +68,12 @@ std::string ServiceWorkerDevToolsAgentHost::GetType() {
 
 std::string ServiceWorkerDevToolsAgentHost::GetTitle() {
   if (RenderProcessHost* host = RenderProcessHost::FromID(worker_id().first)) {
-    return base::StringPrintf("Worker pid:%d",
+    return base::StringPrintf("Worker pid:"
+#if defined(OS_FUCHSIA)
+                              "%lu",
+#else
+                              "%d",
+#endif
                               base::GetProcId(host->GetHandle()));
   }
   return "";

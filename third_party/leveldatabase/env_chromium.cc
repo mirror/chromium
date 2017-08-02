@@ -747,6 +747,9 @@ Status ChromiumEnv::RenameFile(const std::string& src, const std::string& dst) {
 }
 
 Status ChromiumEnv::LockFile(const std::string& fname, FileLock** lock) {
+#if defined(OS_FUCHSIA)
+  return Status::NotSupported("File locking not supported under Fuchsia.");
+#else
   *lock = NULL;
   Status result;
   int flags = base::File::FLAG_OPEN_ALWAYS |
@@ -803,9 +806,13 @@ Status ChromiumEnv::LockFile(const std::string& fname, FileLock** lock) {
 
   *lock = new ChromiumFileLock(std::move(file), fname);
   return result;
+#endif  // defined(OS_FUCHSIA)
 }
 
 Status ChromiumEnv::UnlockFile(FileLock* lock) {
+#if defined(OS_FUCHSIA)
+  return Status::NotSupported("File locking not supported under Fuchsia.");
+#else
   std::unique_ptr<ChromiumFileLock> my_lock(
       reinterpret_cast<ChromiumFileLock*>(lock));
   Status result;
@@ -819,6 +826,7 @@ Status ChromiumEnv::UnlockFile(FileLock* lock) {
   bool removed = locks_.Remove(my_lock->name_);
   DCHECK(removed);
   return result;
+#endif
 }
 
 Status ChromiumEnv::GetTestDirectory(std::string* path) {
