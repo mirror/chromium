@@ -16,6 +16,24 @@
       "revId": "18692cf35ba2834dcb6db225bdc4b07b17fbbed5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f424033_12c5b195",
+        "filename": "components/arc/intent_helper/arc_intent_helper_bridge.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-02T00:18:54Z",
+      "side": 1,
+      "message": "Personally, I\u0027m slightly prefer adding this when actually needed, but I\u0027m also fine with leaving this as is.",
+      "parentUuid": "eaa2d27e_08ee112c",
+      "revId": "18692cf35ba2834dcb6db225bdc4b07b17fbbed5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
