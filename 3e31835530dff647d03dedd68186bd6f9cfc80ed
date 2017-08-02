@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae5c6c62_38398859",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css-fonts/variations/font-parse-numeric-stretch-style-weight.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-08-02T15:24:45Z",
+      "side": 1,
+      "message": "Came late, but would have been good to cover 0 and e.g 0.9 as well (invalid according to spec if I read it correctly).",
+      "revId": "3e31835530dff647d03dedd68186bd6f9cfc80ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
