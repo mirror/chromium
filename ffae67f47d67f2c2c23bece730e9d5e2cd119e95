@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2eb1174d_f188c422",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerProvider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-02T02:29:47Z",
+      "side": 1,
+      "message": "Yea, I wanted to mention the implementing class since it\u0027s needed to understand how this Web* class works, even though that is kind of a documentation layering violation, so I used Onion Soup 2.0 as an excuse to be able to mention it (since it\u0027ll go away soon). But I can just remove the Onion Soup reference and say \"for Chromium it is content::WebS*\"",
+      "parentUuid": "2b9a6576_47c38759",
+      "revId": "ffae67f47d67f2c2c23bece730e9d5e2cd119e95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "caba5b97_0e26807a",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerProvider.h",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "ffae67f47d67f2c2c23bece730e9d5e2cd119e95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fad5cef1_47379c8e",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerProvider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-02T02:29:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "caba5b97_0e26807a",
+      "revId": "ffae67f47d67f2c2c23bece730e9d5e2cd119e95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "aadf7165_6ae33f6e",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerProvider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-02T02:29:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a7639ca_2a126bc8",
+      "revId": "ffae67f47d67f2c2c23bece730e9d5e2cd119e95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e416ee53_8d978b7e",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerProvider.h",
         "patchSetId": 3
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "7fc78ba2_2104cd19",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerProvider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-02T02:29:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e416ee53_8d978b7e",
+      "revId": "ffae67f47d67f2c2c23bece730e9d5e2cd119e95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32075ad4_44592685",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerProvider.h",
         "patchSetId": 3
@@ -81,6 +153,24 @@
       "writtenOn": "2017-08-02T02:19:36Z",
       "side": 1,
       "message": "Ok, maybe: \"The instance is used to implement ServiceWorkerRegistration#update() and ServiceWorkerRegistration#unregister(), just because WebServiceWorkerRegistration\u0027s corresponding methods need |provider_id| to send the requests to the browser process, and this class is used as the wrapper object that hides the ID details to Blink.\"\n\nor something like that?",
+      "revId": "ffae67f47d67f2c2c23bece730e9d5e2cd119e95",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e58cde8_0cba927f",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerProvider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-02T02:29:47Z",
+      "side": 1,
+      "message": "Ah much better. Done.",
+      "parentUuid": "32075ad4_44592685",
       "revId": "ffae67f47d67f2c2c23bece730e9d5e2cd119e95",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
