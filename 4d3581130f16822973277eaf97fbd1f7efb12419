@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f8ff7041_d21c3ed3",
+        "filename": "third_party/WebKit/Source/core/editing/InputMethodController.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1180,
+      "author": {
+        "id": 1121234
+      },
+      "writtenOn": "2017-08-02T07:13:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9fe89dd8_868793f9",
+      "revId": "4d3581130f16822973277eaf97fbd1f7efb12419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc976def_b2b2406d",
         "filename": "third_party/WebKit/Source/core/editing/InputMethodController.cpp",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-02T02:10:30Z",
       "side": 1,
       "message": "nit: s/Element*/const Element* const/",
+      "revId": "4d3581130f16822973277eaf97fbd1f7efb12419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41ba8bc6_75f3320c",
+        "filename": "third_party/WebKit/Source/core/editing/InputMethodController.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1181,
+      "author": {
+        "id": 1121234
+      },
+      "writtenOn": "2017-08-02T07:13:40Z",
+      "side": 1,
+      "message": "Element* const only we can apply here. Otherwise it throws propagated Compilation errors inside FocusController methods.",
+      "parentUuid": "fc976def_b2b2406d",
       "revId": "4d3581130f16822973277eaf97fbd1f7efb12419",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "4d3581130f16822973277eaf97fbd1f7efb12419",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31c59bdc_451220e5",
+        "filename": "third_party/WebKit/Source/core/editing/InputMethodController.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 1183,
+      "author": {
+        "id": 1121234
+      },
+      "writtenOn": "2017-08-02T07:13:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85b61080_56993c94",
+      "revId": "4d3581130f16822973277eaf97fbd1f7efb12419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
