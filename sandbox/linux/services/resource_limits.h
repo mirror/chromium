@@ -19,6 +19,12 @@ class SANDBOX_EXPORT ResourceLimits {
   // Lower the soft and hard limit of |resource| to |limit|. If the current
   // limit is lower than |limit|, keep it.
   static bool Lower(int resource, rlim_t limit) WARN_UNUSED_RESULT;
+  // Lower the soft limit of |resource| to |limit| and the hard limit to
+  // |max|. If the current limit is lower than the new values, keep it.
+  static bool Lower(int resource, rlim_t limit, rlim_t max) WARN_UNUSED_RESULT;
+  // Change soft limit of |resource| to the current limit plus |change|.
+  static bool AdjustCurrent(int resource,
+                            long long int change) WARN_UNUSED_RESULT;
 
  private:
   DISALLOW_IMPLICIT_CONSTRUCTORS(ResourceLimits);
