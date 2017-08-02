@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "8578a0b3_0e1472a3",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/automation_predicate.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-08-02T16:57:03Z",
+      "side": 1,
+      "message": "I\u0027ll file a bug rather than a TODO. It\u0027ll still look the same (focused + is editable root). The focused part is important if somehow we get into an unfocused editable, we probably don\u0027t want to consider it a root i.e. scope jump commands inside.",
+      "parentUuid": "13cbb08e_b266c7a1",
+      "revId": "875fbef56a89f5954ec49a28eca26e9e0568c3e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "53acb375_bda3165b",
         "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/output.js",
         "patchSetId": 7
@@ -98,6 +116,24 @@
       "writtenOn": "2017-08-02T16:30:36Z",
       "side": 1,
       "message": "Does this need a TODO? Do you know why this is throwing an\nexception?",
+      "revId": "875fbef56a89f5954ec49a28eca26e9e0568c3e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9b34360_54d7f4be",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/output.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 831,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-08-02T16:57:03Z",
+      "side": 1,
+      "message": "For both of these, this throws because the cursor offsets index into a position not in the spannable. This can happen if the anchor/focus offsets are off from Blink. I don\u0027t think it\u0027s useful to add a TODO here.",
+      "parentUuid": "53acb375_bda3165b",
       "revId": "875fbef56a89f5954ec49a28eca26e9e0568c3e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
