@@ -26,7 +26,6 @@ cr.define('safe_browsing', function() {
       experimentsListFormatted += "<div><b>" + result[i + 1] +
           "</b>: " + result[i] + "</div>";
       }
-
       $('experiments-list').innerHTML = experimentsListFormatted;
   }
 

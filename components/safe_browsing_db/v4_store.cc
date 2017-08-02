@@ -375,6 +375,7 @@ void V4Store::ApplyUpdate(
   if (apply_update_result == APPLY_UPDATE_SUCCESS) {
     new_store->has_valid_data_ = true;
     new_store->last_apply_update_result_ = apply_update_result;
+    new_store->last_apply_update_time_millis_ = base::Time::Now();
     RecordApplyUpdateTime(metric, TimeTicks::Now() - before, store_path_);
   } else {
     new_store.reset();
@@ -767,6 +768,7 @@ HashPrefix V4Store::GetMatchingHashPrefix(const FullHash& full_hash) {
   // full hash. However, if that happens, this method returns any one of them.
   // It does not guarantee which one of those will be returned.
   DCHECK(full_hash.size() == 32u || full_hash.size() == 21u);
+  store_checks_counter_ += 1;
   for (const auto& pair : hash_prefix_map_) {
     const PrefixSize& prefix_size = pair.first;
     const HashPrefixes& hash_prefixes = pair.second;
@@ -874,8 +876,12 @@ void V4Store::CollectStoreInfo(
     const std::string& base_metric) {
   store_info->set_file_name(base_metric + GetUmaSuffixForStore(store_path_));
   store_info->set_file_size_bytes(file_size_);
-
   store_info->set_update_status(static_cast<int>(last_apply_update_result_));
+  store_info->set_store_checks_counter(store_checks_counter_);
+  if (last_apply_update_time_millis_.ToJavaTime()) {
+    store_info->set_last_apply_update_time_millis(
+        last_apply_update_time_millis_.ToJavaTime());
+  }
 }
 
 }  // namespace safe_browsing

@@ -44,6 +44,20 @@ void AddStoreInfo(const DatabaseManagerInfo::DatabaseInfo::StoreInfo store_info,
     database_info_list->GetList().push_back(
         base::Value(store_info.update_status()));
   }
+  if (store_info.has_last_apply_update_time_millis()) {
+    database_info_list->GetList().push_back(base::Value("Last update time"));
+    base::Time last_update = base::Time::UnixEpoch() +
+                             base::TimeDelta::FromMilliseconds(
+                                 store_info.last_apply_update_time_millis());
+    database_info_list->GetList().push_back(base::Value(
+        base::UTF16ToASCII(base::TimeFormatShortDateAndTime(last_update))));
+  }
+  if (store_info.has_store_checks_counter()) {
+    database_info_list->GetList().push_back(
+        base::Value("Number of database checks"));
+    database_info_list->GetList().push_back(
+        base::Value(store_info.store_checks_counter()));
+  }
 }
 
 void AddDatabaseInfo(const DatabaseManagerInfo::DatabaseInfo database_info,
@@ -74,7 +88,7 @@ void AddUpdateInfo(const DatabaseManagerInfo::UpdateInfo update_info,
     database_info_list->GetList().push_back(base::Value("Last update time"));
     // Converts time to Base::Time
     base::Time last_update =
-        base::Time::UnixEpoch() + base::TimeDelta::FromMicroseconds(
+        base::Time::UnixEpoch() + base::TimeDelta::FromMilliseconds(
                                       update_info.last_update_time_millis());
     database_info_list->GetList().push_back(base::Value(
         base::UTF16ToASCII(base::TimeFormatShortDateAndTime(last_update))));

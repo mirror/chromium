@@ -43,6 +43,12 @@ message DatabaseManagerInfo {
       // store. The values of update_status corresponds to the enum
       // ApplyUpdateResult in V4Store.
       optional int32 update_status = 3;
+
+      // The time of applying the updates to the store.
+      optional int64 last_apply_update_time_millis = 4;
+
+      // The number of times the store has been queried for a prefix.
+      optional int32 store_checks_counter = 5;
     }
 
     // Information about each of the stores managed by the database.
