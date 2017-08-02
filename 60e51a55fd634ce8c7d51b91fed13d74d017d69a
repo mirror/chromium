@@ -34,6 +34,24 @@
       "revId": "60e51a55fd634ce8c7d51b91fed13d74d017d69a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3393b7c2_45b1242d",
+        "filename": "chrome/browser/extensions/extension_service_sync_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1549,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-02T15:16:12Z",
+      "side": 1,
+      "message": "I thought the code in test_suite.cc was responsible for cleaning up the command line:\n\nhttps://chromium.googlesource.com/chromium/src/+/4facdc7896f97288160451b2d592982e680358d1/base/test/test_suite.cc#85\n\nWhat\u0027s more, we have a lot of tests that rely on this behavior, since *many* modify the command line directly and don\u0027t reset it.  I\u0027ll see if I can\u0027t experiment with this a bit locally.",
+      "parentUuid": "a886555c_a4cfc26d",
+      "revId": "60e51a55fd634ce8c7d51b91fed13d74d017d69a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
