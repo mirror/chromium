@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb260837_4ecb5da1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/favicon/FaviconHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-02T15:53:36Z",
+      "side": 1,
+      "message": "Nit: Don\u0027t align the parameters, and if you don\u0027t mind, can you undo the alignment in the other places in this file too?",
+      "revId": "91158e3cd41ad105a0fff93079702b48effa233a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4735d3ab_e8514307",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-02T15:53:36Z",
+      "side": 1,
+      "message": "Small nit: \"...therefore postponing\"?",
+      "revId": "91158e3cd41ad105a0fff93079702b48effa233a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
