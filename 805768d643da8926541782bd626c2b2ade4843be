@@ -16,6 +16,24 @@
       "revId": "805768d643da8926541782bd626c2b2ade4843be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e19c867b_e42a50ba",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 3
+      },
+      "lineNbr": 4430,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-08-02T01:51:17Z",
+      "side": 1,
+      "message": "Yes, it fits. Please take a look at the screenshots I posted here: https://bugs.chromium.org/p/chromium/issues/detail?id\u003d743096#c15",
+      "parentUuid": "297c726e_7f840365",
+      "revId": "805768d643da8926541782bd626c2b2ade4843be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

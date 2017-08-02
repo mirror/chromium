@@ -22,6 +22,30 @@
       "revId": "e4d10e88cd7763a84e32014811ce1e617da1f50f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d50d5170_536a3040",
+        "filename": "chrome/browser/resources/chromeos/keyboard_overlay.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-08-02T01:51:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91c26750_3b316225",
+      "range": {
+        "startLine": 128,
+        "startChar": 40,
+        "endLine": 128,
+        "endChar": 52
+      },
+      "revId": "e4d10e88cd7763a84e32014811ce1e617da1f50f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
