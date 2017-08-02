@@ -34,6 +34,24 @@
       "revId": "ecbd648c61f1d914bbaded8a44a42cdf2d5bfcaa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14cbe2f8_5332a83f",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 2251,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-02T08:32:31Z",
+      "side": 1,
+      "message": "My concern is that the numbers we\u0027re measuring don\u0027t mean anything to do with the potential memory savings. For example, I think a 100x100 scroller will still record a painting for up to a 8100x8100 scrollable region and we may save up to this many tiles. https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/layout/compositing/CompositedLayerMapping.cpp?type\u003dcs\u0026q\u003dCompositedLayerMapping::RecomputeInterestRect\u0026sq\u003dpackage:chromium\u0026l\u003d3108\n\nWe can measure the exact impact of the experiment since it will use a finch trial right?",
+      "parentUuid": "e875ec0f_f98c836a",
+      "revId": "ecbd648c61f1d914bbaded8a44a42cdf2d5bfcaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
