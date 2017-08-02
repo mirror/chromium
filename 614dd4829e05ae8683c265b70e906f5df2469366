@@ -2,6 +2,120 @@
   "comments": [
     {
       "key": {
+        "uuid": "54801506_05106d05",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-02T05:37:30Z",
+      "side": 1,
+      "message": "Can you say something about the longer-term plan? I think eventually we want InstalledScriptsManager to re-request the installed script (or keep it in cache for some time, etc)",
+      "revId": "614dd4829e05ae8683c265b70e906f5df2469366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87464fa4_bac9c6e8",
+        "filename": "third_party/WebKit/Source/core/workers/InstalledScriptsManager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-02T05:37:30Z",
+      "side": 1,
+      "message": "happened while",
+      "revId": "614dd4829e05ae8683c265b70e906f5df2469366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72eba48a_08b9723e",
+        "filename": "third_party/WebKit/Source/core/workers/InstalledScriptsManager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-02T05:37:30Z",
+      "side": 1,
+      "message": "has not yet been received from the browser process yet",
+      "range": {
+        "startLine": 66,
+        "startChar": 39,
+        "endLine": 66,
+        "endChar": 58
+      },
+      "revId": "614dd4829e05ae8683c265b70e906f5df2469366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bed950cd_4bd05bc7",
+        "filename": "third_party/WebKit/Source/core/workers/InstalledScriptsManager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-02T05:37:30Z",
+      "side": 1,
+      "message": "This can block if",
+      "revId": "614dd4829e05ae8683c265b70e906f5df2469366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a119ac5_14c5e72b",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerGlobalScope.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-02T05:37:30Z",
+      "side": 1,
+      "message": "provided by",
+      "range": {
+        "startLine": 205,
+        "startChar": 36,
+        "endLine": 205,
+        "endChar": 41
+      },
+      "revId": "614dd4829e05ae8683c265b70e906f5df2469366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26c5b325_c88afd42",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerGlobalScope.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-02T05:37:30Z",
+      "side": 1,
+      "message": "slightly prefer moving 257-261 in here, and then NOTREACHED() at the end",
+      "revId": "614dd4829e05ae8683c265b70e906f5df2469366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "66bdc0ee_3d314987",
         "filename": "third_party/WebKit/Source/core/workers/WorkerGlobalScope.cpp",
         "patchSetId": 7
@@ -19,6 +133,69 @@
     },
     {
       "key": {
+        "uuid": "902ec025_0bca922f",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerGlobalScope.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-02T05:37:30Z",
+      "side": 1,
+      "message": "it\u0027d be nice to explain when kNotHandled is used. It seems like it means the script was not in the InstaleldScriptsManager, which means either it was not an instaleld script or it was already taken.",
+      "revId": "614dd4829e05ae8683c265b70e906f5df2469366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fe1f423_9e71c070",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerGlobalScope.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-02T05:37:30Z",
+      "side": 1,
+      "message": "could not be handled?\n\nmaybe explain in what circumstatned it\u0027s not handled. \"The script was not an installed script\" or something?",
+      "range": {
+        "startLine": 174,
+        "startChar": 14,
+        "endLine": 174,
+        "endChar": 27
+      },
+      "revId": "614dd4829e05ae8683c265b70e906f5df2469366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77779a1b_c5fda810",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerGlobalScope.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-02T05:37:30Z",
+      "side": 1,
+      "message": "\"the caller should fall back to\"\n\n? maybe it\u0027s not needed to say that though?",
+      "range": {
+        "startLine": 175,
+        "startChar": 42,
+        "endLine": 175,
+        "endChar": 49
+      },
+      "revId": "614dd4829e05ae8683c265b70e906f5df2469366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "78bdf635_7047b50d",
         "filename": "third_party/WebKit/Source/core/workers/WorkerGlobalScope.h",
         "patchSetId": 7
@@ -30,6 +207,29 @@
       "writtenOn": "2017-08-02T05:22:20Z",
       "side": 1,
       "message": "Does this TODO comment mean... we want to factor out these methods into the separate class that is dedicated to provide the worker scripts without exposing these details to WorkerGlobalScope?",
+      "revId": "614dd4829e05ae8683c265b70e906f5df2469366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f38e6691_f118c37a",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerGlobalScope.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-02T05:37:30Z",
+      "side": 1,
+      "message": "Maybe to nice to explain the diff between InstalledScriptsManager and WorkerScriptLoader...\n\n\n\"InstalledScriptsManager holds scripts that are sent from the browser upon starting an installed worker.\"\n\n\"WorkerScriptLoader requests the script from the browser\"\n\nor something like that.",
+      "range": {
+        "startLine": 184,
+        "startChar": 67,
+        "endLine": 184,
+        "endChar": 72
+      },
       "revId": "614dd4829e05ae8683c265b70e906f5df2469366",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -64,6 +264,57 @@
       "writtenOn": "2017-08-02T05:22:20Z",
       "side": 1,
       "message": "It\u0027s probably worth having some comment for kTaken case for main script",
+      "revId": "614dd4829e05ae8683c265b70e906f5df2469366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63cf181b_bfeed123",
+        "filename": "third_party/WebKit/Source/platform/exported/WebServiceWorkerInstalledScriptsManager.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-02T05:37:30Z",
+      "side": 1,
+      "message": "\"\" \u003d\u003e WebString() /* encoding */",
+      "revId": "614dd4829e05ae8683c265b70e906f5df2469366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31025378_5fd57f50",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerInstalledScriptsManager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-02T05:37:30Z",
+      "side": 1,
+      "message": "\"FailureData\" kind of sounds like a type of data (like meta data or the body data).\n\nCould \"CreateFailureInstance\" or something be easier to understand?",
+      "revId": "614dd4829e05ae8683c265b70e906f5df2469366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc6091a3_e58c4dbc",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerInstalledScriptsManager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-02T05:37:30Z",
+      "side": 1,
+      "message": "nit: Seems nicer to do something like Success(), so true is success and false is failure.",
       "revId": "614dd4829e05ae8683c265b70e906f5df2469366",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
