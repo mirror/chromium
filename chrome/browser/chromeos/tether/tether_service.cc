@@ -8,6 +8,7 @@
 #include "base/command_line.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "chrome/browser/chromeos/net/tether_notification_presenter.h"
 #include "chrome/browser/chromeos/tether/tether_service_factory.h"
@@ -142,7 +143,7 @@ void TetherService::Shutdown() {
   if (shut_down_)
     return;
 
-  RecordFinalTetherTechnologyState();
+  RecordFinalTetherFeatureState();
 
   shut_down_ = true;
 
@@ -278,25 +279,34 @@ void TetherService::UpdateTetherTechnologyState() {
 
 chromeos::NetworkStateHandler::TechnologyState
 TetherService::GetTetherTechnologyState() {
-  if (shut_down_ || suspended_ || !is_ble_advertising_supported_ ||
-      session_manager_client_->IsScreenLocked() || !HasSyncedTetherHosts() ||
-      IsCellularAvailableButNotEnabled()) {
-    // If Cellular technology is available, then Tether technology is treated
-    // as a subset of Cellular, and it should only be enabled when Cellular
-    // technology is enabled.
-    return chromeos::NetworkStateHandler::TechnologyState::
-        TECHNOLOGY_UNAVAILABLE;
-  } else if (!IsAllowedByPolicy()) {
-    return chromeos::NetworkStateHandler::TechnologyState::
-        TECHNOLOGY_PROHIBITED;
-  } else if (!IsBluetoothAvailable()) {
-    return chromeos::NetworkStateHandler::TechnologyState::
-        TECHNOLOGY_UNINITIALIZED;
-  } else if (!IsEnabledbyPreference()) {
-    return chromeos::NetworkStateHandler::TechnologyState::TECHNOLOGY_AVAILABLE;
-  }
+  switch (GetTetherFeatureState()) {
+    case OTHER_OR_UNKNOWN:
+    case BLE_ADVERTISING_NOT_SUPPORTED:
+    case SCREEN_LOCKED:
+    case NO_AVAILABLE_HOSTS:
+    case CELLULAR_DISABLED:
+      return chromeos::NetworkStateHandler::TechnologyState::
+          TECHNOLOGY_UNAVAILABLE;
 
-  return chromeos::NetworkStateHandler::TechnologyState::TECHNOLOGY_ENABLED;
+    case PROHIBITED:
+      return chromeos::NetworkStateHandler::TechnologyState::
+          TECHNOLOGY_PROHIBITED;
+
+    case BLUETOOTH_DISABLED:
+      return chromeos::NetworkStateHandler::TechnologyState::
+          TECHNOLOGY_UNINITIALIZED;
+
+    case USER_PREFERENCE_DISABLED:
+      return chromeos::NetworkStateHandler::TechnologyState::
+          TECHNOLOGY_AVAILABLE;
+
+    case ENABLED:
+      return chromeos::NetworkStateHandler::TechnologyState::TECHNOLOGY_ENABLED;
+
+    default:
+      return chromeos::NetworkStateHandler::TechnologyState::
+          TECHNOLOGY_UNAVAILABLE;
+  }
 }
 
 void TetherService::OnBluetoothAdapterFetched(
@@ -379,8 +389,43 @@ bool TetherService::CanEnableBluetoothNotificationBeShown() {
   return true;
 }
 
-void TetherService::RecordFinalTetherTechnologyState() {
-  // TODO (hansberry): Implement.
+TetherService::TetherFeatureState TetherService::GetTetherFeatureState() {
+  if (shut_down_ || suspended_)
+    return OTHER_OR_UNKNOWN;
+
+  if (!is_ble_advertising_supported_)
+    return BLE_ADVERTISING_NOT_SUPPORTED;
+
+  if (session_manager_client_->IsScreenLocked())
+    return SCREEN_LOCKED;
+
+  if (!HasSyncedTetherHosts())
+    return NO_AVAILABLE_HOSTS;
+
+  // If Cellular technology is available, then Tether technology is treated
+  // as a subset of Cellular, and it should only be enabled when Cellular
+  // technology is enabled.
+  if (IsCellularAvailableButNotEnabled())
+    return CELLULAR_DISABLED;
+
+  if (!IsAllowedByPolicy())
+    return PROHIBITED;
+
+  if (!IsBluetoothAvailable())
+    return BLUETOOTH_DISABLED;
+
+  if (!IsEnabledbyPreference())
+    return USER_PREFERENCE_DISABLED;
+
+  return ENABLED;
+}
+
+void TetherService::RecordFinalTetherFeatureState() {
+  TetherFeatureState tether_feature_state = GetTetherFeatureState();
+  DCHECK(tether_feature_state != TetherFeatureState::TETHER_FEATURE_STATE_MAX);
+  UMA_HISTOGRAM_ENUMERATION("InstantTethering.FinalFeatureState",
+                            tether_feature_state,
+                            TetherFeatureState::TETHER_FEATURE_STATE_MAX);
 }
 
 void TetherService::SetInitializerDelegateForTest(
