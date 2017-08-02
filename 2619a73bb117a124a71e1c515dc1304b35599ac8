@@ -34,6 +34,24 @@
       "revId": "2619a73bb117a124a71e1c515dc1304b35599ac8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b40c48f6_0be46816",
+        "filename": "chrome/browser/autocomplete/chrome_autocomplete_provider_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1115920
+      },
+      "writtenOn": "2017-08-02T22:42:27Z",
+      "side": 1,
+      "message": "I think you may be remembering a comment by horo@ about the hint call itself: \"StartServiceWorkerForNavigationHint() checks the ServiceWorker DB every time. It is not a light weight task\". The service worker context is simply a member variable of the storage partition and retrieving the partition is a map lookup.\n\nThe cost of looking these things up is also no different than it is before this change and what it continues to be for every non-incognito session.\n\nGranted, I could manually merge I just prefer an automatic merge because a) I\u0027m lazy and b) the automated process creates a nicer log trail.",
+      "parentUuid": "e01424c3_773188b8",
+      "revId": "2619a73bb117a124a71e1c515dc1304b35599ac8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
