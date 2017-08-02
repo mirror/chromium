@@ -801,8 +801,9 @@ void DCLayerTree::SwapChainPresenter::ReallocateSwapChain(bool yuy2) {
   desc.Scaling = DXGI_SCALING_STRETCH;
   desc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_SEQUENTIAL;
   desc.AlphaMode = DXGI_ALPHA_MODE_IGNORE;
-  desc.Flags =
-      DXGI_SWAP_CHAIN_FLAG_YUV_VIDEO | DXGI_SWAP_CHAIN_FLAG_FULLSCREEN_VIDEO;
+  desc.Flags = DXGI_SWAP_CHAIN_FLAG_YUV_VIDEO |
+               DXGI_SWAP_CHAIN_FLAG_FULLSCREEN_VIDEO |
+               DXGI_SWAP_CHAIN_FLAG_HW_PROTECTED;
 
   HANDLE handle;
   create_surface_handle_function_(COMPOSITIONOBJECT_ALL_ACCESS, nullptr,
@@ -835,7 +836,7 @@ void DCLayerTree::SwapChainPresenter::ReallocateSwapChain(bool yuy2) {
                   << ". Falling back to BGRA";
     }
     desc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
-    desc.Flags = 0;
+    desc.Flags = DXGI_SWAP_CHAIN_FLAG_HW_PROTECTED;
     hr = media_factory->CreateSwapChainForCompositionSurfaceHandle(
         d3d11_device_.Get(), swap_chain_handle_.Get(), &desc, nullptr,
         swap_chain_.GetAddressOf());
