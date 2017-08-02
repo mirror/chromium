@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "623cc2a4_4ea09b39",
+        "filename": "media/gpu/android/codec_image.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-08-02T04:56:39Z",
+      "side": 1,
+      "message": "Returning false was triggering DCHECKs in calling code. It doesn\u0027t really matter so now it always returns true.",
+      "range": {
+        "startLine": 71,
+        "startChar": 2,
+        "endLine": 71,
+        "endChar": 35
+      },
+      "revId": "9f5ea601eb4cce7d199faf2d29d8f8e511edbcaa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
