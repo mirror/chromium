@@ -204,13 +204,20 @@ void PerformanceMonitor::Did(const probe::CallFunction& probe) {
 }
 
 void PerformanceMonitor::Will(const probe::V8Compile& probe) {
-  // Todo(maxlg): https://crbug.com/738495 Intentionally leave out as we need to
-  // verify monotonical time is reasonable in overhead.
+  if (!enabled_ || !thresholds_[kLongTask])
+    return;
+
+  v8_compile_start_time_ = probe.CaptureStartTime();
 }
 
 void PerformanceMonitor::Did(const probe::V8Compile& probe) {
-  // Todo(maxlg): https://crbug.com/738495 Intentionally leave out as we need to
-  // verify monotonical time is reasonable in overhead.
+  if (!enabled_ || !thresholds_[kLongTask])
+    return;
+
+  v8_compile_duration_ = probe.Duration();
+  v8_compile_file_name_ = probe.file_name;
+  v8_compile_line_ = probe.line;
+  v8_compile_column_ = probe.column;
 }
 
 void PerformanceMonitor::Will(const probe::UserCallback& probe) {
