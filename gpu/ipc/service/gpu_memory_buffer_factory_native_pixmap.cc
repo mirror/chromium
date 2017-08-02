@@ -118,7 +118,7 @@ GpuMemoryBufferFactoryNativePixmap::CreateImageForGpuMemoryBuffer(
   }
 
   scoped_refptr<gl::GLImageNativePixmap> image(
-      new gl::GLImageNativePixmap(size, internalformat));
+      new gl::GLImageNativePixmap(size));
   if (!image->Initialize(pixmap.get(), format)) {
     LOG(ERROR) << "Failed to create GLImage " << size.ToString() << " format "
                << static_cast<int>(format);
@@ -147,7 +147,7 @@ GpuMemoryBufferFactoryNativePixmap::CreateAnonymousImage(
     return nullptr;
   }
   scoped_refptr<gl::GLImageNativePixmap> image(
-      new gl::GLImageNativePixmap(size, internalformat));
+      new gl::GLImageNativePixmap(size));
   if (!image->Initialize(pixmap.get(), format)) {
     LOG(ERROR) << "Failed to create GLImage " << size.ToString() << " format "
                << static_cast<int>(format);

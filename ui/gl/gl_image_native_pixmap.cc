@@ -27,31 +27,6 @@
 namespace gl {
 namespace {
 
-bool ValidInternalFormat(unsigned internalformat, gfx::BufferFormat format) {
-  switch (internalformat) {
-    case GL_RGB:
-      return format == gfx::BufferFormat::BGR_565 ||
-             format == gfx::BufferFormat::RGBX_8888 ||
-             format == gfx::BufferFormat::BGRX_8888;
-    case GL_RGB_YCRCB_420_CHROMIUM:
-      return format == gfx::BufferFormat::YVU_420;
-    case GL_RGB_YCBCR_420V_CHROMIUM:
-      return format == gfx::BufferFormat::YUV_420_BIPLANAR;
-    case GL_RGBA:
-      return format == gfx::BufferFormat::RGBA_8888;
-    case GL_BGRA_EXT:
-      return format == gfx::BufferFormat::BGRA_8888;
-    case GL_RED_EXT:
-      return format == gfx::BufferFormat::R_8;
-    case GL_R16_EXT:
-      return format == gfx::BufferFormat::R_16;
-    case GL_RG_EXT:
-      return format == gfx::BufferFormat::RG_88;
-    default:
-      return false;
-  }
-}
-
 bool ValidFormat(gfx::BufferFormat format) {
   switch (format) {
     case gfx::BufferFormat::R_8:
@@ -118,12 +93,49 @@ EGLint FourCC(gfx::BufferFormat format) {
   return 0;
 }
 
+// TODO(dshwang): merge it with gpu::BufferFormatToInternalFormat()
+GLenum GetInternalFormat(gfx::BufferFormat format) {
+  DCHECK(ValidFormat(format));
+  switch (format) {
+    case gfx::BufferFormat::R_8:
+      return GL_RED_EXT;
+    case gfx::BufferFormat::R_16:
+      return GL_R16_EXT;
+    case gfx::BufferFormat::RG_88:
+      return GL_RG_EXT;
+    case gfx::BufferFormat::BGR_565:
+    case gfx::BufferFormat::RGBX_8888:
+    case gfx::BufferFormat::BGRX_8888:
+      return GL_RGB;
+    case gfx::BufferFormat::RGBA_8888:
+      return GL_RGBA;
+    case gfx::BufferFormat::BGRA_8888:
+      return GL_BGRA_EXT;
+    case gfx::BufferFormat::YVU_420:
+      return GL_RGB_YCRCB_420_CHROMIUM;
+    case gfx::BufferFormat::YUV_420_BIPLANAR:
+      return GL_RGB_YCBCR_420V_CHROMIUM;
+    case gfx::BufferFormat::ATC:
+    case gfx::BufferFormat::ATCIA:
+    case gfx::BufferFormat::DXT1:
+    case gfx::BufferFormat::DXT5:
+    case gfx::BufferFormat::ETC1:
+    case gfx::BufferFormat::RGBA_4444:
+    case gfx::BufferFormat::RGBA_F16:
+    case gfx::BufferFormat::UYVY_422:
+      NOTREACHED();
+      return GL_NONE;
+  }
+
+  NOTREACHED();
+  return GL_NONE;
+}
+
 }  // namespace
 
-GLImageNativePixmap::GLImageNativePixmap(const gfx::Size& size,
-                                         unsigned internalformat)
+GLImageNativePixmap::GLImageNativePixmap(const gfx::Size& size)
     : GLImageEGL(size),
-      internalformat_(internalformat),
+      format_(gfx::BufferFormat::RGBA_8888),
       has_image_flush_external_(
           gl::GLSurfaceEGL::HasEGLExtension("EGL_EXT_image_flush_external")) {}
 
@@ -132,6 +144,7 @@ GLImageNativePixmap::~GLImageNativePixmap() {}
 bool GLImageNativePixmap::Initialize(gfx::NativePixmap* pixmap,
                                      gfx::BufferFormat format) {
   DCHECK(!pixmap_);
+  format_ = format;
   if (pixmap->GetEGLClientBuffer()) {
     EGLint attrs[] = {EGL_IMAGE_PRESERVED_KHR, EGL_TRUE, EGL_NONE};
     if (!GLImageEGL::Initialize(EGL_NATIVE_PIXMAP_KHR,
@@ -141,12 +154,6 @@ bool GLImageNativePixmap::Initialize(gfx::NativePixmap* pixmap,
   } else if (pixmap->AreDmaBufFdsValid()) {
     if (!ValidFormat(format)) {
       LOG(ERROR) << "Invalid format: " << static_cast<int>(format);
-      return false;
-    }
-
-    if (!ValidInternalFormat(internalformat_, format)) {
-      LOG(ERROR) << "Invalid internalformat: " << internalformat_
-                 << " for format: " << static_cast<int>(format);
       return false;
     }
 
@@ -203,7 +210,7 @@ bool GLImageNativePixmap::Initialize(gfx::NativePixmap* pixmap,
 }
 
 unsigned GLImageNativePixmap::GetInternalFormat() {
-  return internalformat_;
+  return GetInternalFormat(format_);
 }
 
 bool GLImageNativePixmap::CopyTexImage(unsigned target) {
@@ -247,45 +254,6 @@ void GLImageNativePixmap::OnMemoryDump(
     uint64_t process_tracing_id,
     const std::string& dump_name) {
   // TODO(ericrk): Implement GLImage OnMemoryDump. crbug.com/514914
-}
-
-// static
-unsigned GLImageNativePixmap::GetInternalFormatForTesting(
-    gfx::BufferFormat format) {
-  DCHECK(ValidFormat(format));
-  switch (format) {
-    case gfx::BufferFormat::R_8:
-      return GL_RED_EXT;
-    case gfx::BufferFormat::R_16:
-      return GL_R16_EXT;
-    case gfx::BufferFormat::RG_88:
-      return GL_RG_EXT;
-    case gfx::BufferFormat::BGR_565:
-    case gfx::BufferFormat::RGBX_8888:
-    case gfx::BufferFormat::BGRX_8888:
-      return GL_RGB;
-    case gfx::BufferFormat::RGBA_8888:
-      return GL_RGBA;
-    case gfx::BufferFormat::BGRA_8888:
-      return GL_BGRA_EXT;
-    case gfx::BufferFormat::YVU_420:
-      return GL_RGB_YCRCB_420_CHROMIUM;
-    case gfx::BufferFormat::YUV_420_BIPLANAR:
-      return GL_RGB_YCBCR_420V_CHROMIUM;
-    case gfx::BufferFormat::ATC:
-    case gfx::BufferFormat::ATCIA:
-    case gfx::BufferFormat::DXT1:
-    case gfx::BufferFormat::DXT5:
-    case gfx::BufferFormat::ETC1:
-    case gfx::BufferFormat::RGBA_4444:
-    case gfx::BufferFormat::RGBA_F16:
-    case gfx::BufferFormat::UYVY_422:
-      NOTREACHED();
-      return GL_NONE;
-  }
-
-  NOTREACHED();
-  return GL_NONE;
 }
 
 }  // namespace gl

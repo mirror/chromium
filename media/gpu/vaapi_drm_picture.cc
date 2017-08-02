@@ -40,23 +40,6 @@ VaapiDrmPicture::~VaapiDrmPicture() {
   }
 }
 
-static unsigned BufferFormatToInternalFormat(gfx::BufferFormat format) {
-  switch (format) {
-    case gfx::BufferFormat::BGRX_8888:
-      return GL_RGB;
-
-    case gfx::BufferFormat::BGRA_8888:
-      return GL_BGRA_EXT;
-
-    case gfx::BufferFormat::YVU_420:
-      return GL_RGB_YCRCB_420_CHROMIUM;
-
-    default:
-      NOTREACHED();
-      return GL_BGRA_EXT;
-  }
-}
-
 bool VaapiDrmPicture::Initialize() {
   DCHECK(pixmap_);
 
@@ -75,8 +58,8 @@ bool VaapiDrmPicture::Initialize() {
 
     gfx::BufferFormat format = pixmap_->GetBufferFormat();
 
-    scoped_refptr<gl::GLImageNativePixmap> image(new gl::GLImageNativePixmap(
-        size_, BufferFormatToInternalFormat(format)));
+    scoped_refptr<gl::GLImageNativePixmap> image(
+        new gl::GLImageNativePixmap(size_));
     if (!image->Initialize(pixmap_.get(), format)) {
       LOG(ERROR) << "Failed to create GLImage";
       return false;
