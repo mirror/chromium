@@ -89,12 +89,14 @@ std::unique_ptr<SearchController> CreateSearchController(
       base::MakeUnique<AppSearchProvider>(
           profile, list_controller, base::MakeUnique<base::DefaultClock>(),
           model->top_level_item_list()));
-  controller->AddProvider(
-      omnibox_group_id,
-      base::MakeUnique<OmniboxProvider>(profile, list_controller));
-  controller->AddProvider(
-      webstore_group_id,
-      base::MakeUnique<WebstoreProvider>(profile, list_controller));
+  controller->AddProvider(omnibox_group_id, base::MakeUnique<OmniboxProvider>(
+                                                profile, list_controller));
+  if (!features::IsPlayStoreAppSearchEnabled()) {
+    controller->AddProvider(
+        webstore_group_id,
+        base::MakeUnique<WebstoreProvider>(profile, list_controller));
+  }
+
   if (features::IsAnswerCardEnabled()) {
     controller->AddProvider(
         answer_card_group_id,
@@ -102,6 +104,7 @@ std::unique_ptr<SearchController> CreateSearchController(
             profile, model, list_controller,
             base::MakeUnique<AnswerCardWebContents>(profile)));
   }
+
   if (IsSuggestionsSearchProviderEnabled()) {
     size_t suggestions_group_id =
         controller->AddGroup(kMaxSuggestionsResults, 1.0);
