@@ -76,7 +76,7 @@ class WebIDBKey {
   BLINK_EXPORT double Date() const;          // Only valid for DateType.
   BLINK_EXPORT double Number() const;        // Only valid for NumberType.
 
-#if BLINK_IMPLEMENTATION
+#if INSIDE_BLINK
   WebIDBKey(IDBKey* value) : private_(value) {}
   WebIDBKey& operator=(IDBKey* value) {
     private_ = value;
