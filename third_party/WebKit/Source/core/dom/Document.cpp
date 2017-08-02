@@ -1683,6 +1683,11 @@ bool Document::hidden() const {
 }
 
 void Document::DidChangeVisibilityState() {
+if (GetFrame() && GetFrame()->IsMainFrame())
+  TRACE_EVENT_INSTANT2("lifetime", "VisibilityChange",
+                       TRACE_EVENT_SCOPE_THREAD, "state",
+                       GetPageVisibilityState(), "url",
+                       TRACE_STR_COPY(Url().GetString().Ascii().data()));
   DispatchEvent(Event::CreateBubble(EventTypeNames::visibilitychange));
   // Also send out the deprecated version until it can be removed.
   DispatchEvent(Event::CreateBubble(EventTypeNames::webkitvisibilitychange));
@@ -3249,6 +3254,10 @@ bool Document::DispatchBeforeUnloadEvent(ChromeClient& chrome_client,
   BeforeUnloadEvent* before_unload_event = BeforeUnloadEvent::Create();
   before_unload_event->initEvent(EventTypeNames::beforeunload, false, true);
   load_event_progress_ = kBeforeUnloadEventInProgress;
+  if (GetFrame() && GetFrame()->IsMainFrame())
+  TRACE_EVENT_INSTANT1("lifetime", "nDispatchBeforeUnloadEvent {dom_window} [beforeunload]",
+                       TRACE_EVENT_SCOPE_THREAD, "url",
+                       TRACE_STR_COPY(Url().GetString().Ascii().data()));
   dom_window_->DispatchEvent(before_unload_event, this);
   load_event_progress_ = kBeforeUnloadEventCompleted;
   if (!before_unload_event->defaultPrevented())
@@ -3295,9 +3304,14 @@ void Document::DispatchUnloadEvents() {
       toHTMLInputElement(*current_focused_element).EndEditing();
     if (load_event_progress_ < kPageHideInProgress) {
       load_event_progress_ = kPageHideInProgress;
-      if (LocalDOMWindow* window = domWindow())
+      if (LocalDOMWindow* window = domWindow()) {
+        if (GetFrame() && GetFrame()->IsMainFrame())
+          TRACE_EVENT_INSTANT1("lifetime", "DispatchUnloadEvents {window} [pagehide]",
+                       TRACE_EVENT_SCOPE_THREAD, "url",
+                       TRACE_STR_COPY(Url().GetString().Ascii().data()));
         window->DispatchEvent(
             PageTransitionEvent::Create(EventTypeNames::pagehide, false), this);
+      }
       if (!frame_)
         return;
 
@@ -3306,6 +3320,11 @@ void Document::DispatchUnloadEvents() {
       if (visibility_state != kPageVisibilityStateHidden) {
         // Dispatch visibilitychange event, but don't bother doing
         // other notifications as we're about to be unloaded.
+        if (GetFrame() && GetFrame()->IsMainFrame())
+        TRACE_EVENT_INSTANT2("lifetime", "DispatchUnloadEvents [visibilitychange]",
+                       TRACE_EVENT_SCOPE_THREAD, "state",
+                       GetPageVisibilityState(),"url",
+                       TRACE_STR_COPY(Url().GetString().Ascii().data()));
         DispatchEvent(Event::CreateBubble(EventTypeNames::visibilitychange));
         DispatchEvent(
             Event::CreateBubble(EventTypeNames::webkitvisibilitychange));
@@ -3322,9 +3341,18 @@ void Document::DispatchUnloadEvents() {
         DocumentLoadTiming& timing = document_loader->GetTiming();
         DCHECK(timing.NavigationStart());
         timing.MarkUnloadEventStart();
+        if (GetFrame() && GetFrame()->IsMainFrame())
+        TRACE_EVENT_INSTANT1("lifetime", "DispatchUnloadEvents {frame->DomWindow()} [unload]",
+                       TRACE_EVENT_SCOPE_THREAD, "url",
+                       TRACE_STR_COPY(Url().GetString().Ascii().data()));
+
         frame_->DomWindow()->DispatchEvent(unload_event, this);
         timing.MarkUnloadEventEnd();
       } else {
+        if (GetFrame() && GetFrame()->IsMainFrame())
+        TRACE_EVENT_INSTANT1("lifetime", "DispatchUnloadEvents {frame->DomWindow()} [unload]",
+                       TRACE_EVENT_SCOPE_THREAD, "url",
+                       TRACE_STR_COPY(Url().GetString().Ascii().data()));
         frame_->DomWindow()->DispatchEvent(unload_event, frame_->GetDocument());
       }
     }
