@@ -19,6 +19,7 @@
 #include "ash/system/tray/tray_popup_utils.h"
 #include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "base/command_line.h"
+#include "base/i18n/rtl.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/user_metrics.h"
 #include "base/metrics/user_metrics_action.h"
@@ -66,7 +67,8 @@ AppListButton::AppListButton(InkDropButtonListener* listener,
       background_color_(kShelfDefaultBaseColor),
       listener_(listener),
       shelf_view_(shelf_view),
-      shelf_(shelf) {
+      shelf_(shelf),
+      is_rtl_(base::i18n::IsRTL()) {
   DCHECK(listener_);
   DCHECK(shelf_view_);
   DCHECK(shelf_);
@@ -241,8 +243,10 @@ void AppListButton::GetAccessibleNodeData(ui::AXNodeData* node_data) {
 
 std::unique_ptr<views::InkDropRipple> AppListButton::CreateInkDropRipple()
     const {
-  gfx::Point center = last_event_is_back_event_ ? GetBackButtonCenterPoint()
-                                                : GetAppListButtonCenterPoint();
+  gfx::Point center =
+      last_event_is_back_event_
+          ? GetBackButtonCenterPoint(false /* called_by_draw_function */)
+          : GetAppListButtonCenterPoint(false /* called_by_draw_function */);
   gfx::Rect bounds(center.x() - kAppListButtonRadius,
                    center.y() - kAppListButtonRadius, 2 * kAppListButtonRadius,
                    2 * kAppListButtonRadius);
@@ -276,8 +280,9 @@ std::unique_ptr<views::InkDrop> AppListButton::CreateInkDrop() {
 std::unique_ptr<views::InkDropMask> AppListButton::CreateInkDropMask() const {
   return base::MakeUnique<views::CircleInkDropMask>(
       size(),
-      last_event_is_back_event_ ? GetBackButtonCenterPoint()
-                                : GetAppListButtonCenterPoint(),
+      last_event_is_back_event_
+          ? GetBackButtonCenterPoint(false /* called_by_draw_function */)
+          : GetAppListButtonCenterPoint(false /* called_by_draw_function */),
       kAppListButtonRadius);
 }
 
@@ -285,7 +290,8 @@ void AppListButton::PaintButtonContents(gfx::Canvas* canvas) {
   const bool is_tablet_mode = Shell::Get()
                                   ->tablet_mode_controller()
                                   ->IsTabletModeWindowManagerEnabled();
-  gfx::PointF circle_center(GetAppListButtonCenterPoint());
+  gfx::PointF circle_center(
+      GetAppListButtonCenterPoint(true /* called_by_draw_function */));
 
   // Paint the circular background.
   cc::PaintFlags bg_flags;
@@ -315,7 +321,8 @@ void AppListButton::PaintButtonContents(gfx::Canvas* canvas) {
     //   (1)       (2)        |         |
     //    |_________|         |         |
     //                        |___(2)___|
-    gfx::PointF back_center(GetBackButtonCenterPoint());
+    gfx::PointF back_center(
+        GetBackButtonCenterPoint(true /* called_by_draw_function */));
     gfx::RectF background_bounds(
         shelf_->PrimaryAxisValue(back_center.x(),
                                  back_center.x() - kAppListButtonRadius),
@@ -387,7 +394,8 @@ void AppListButton::PaintButtonContents(gfx::Canvas* canvas) {
   }
 }
 
-gfx::Point AppListButton::GetAppListButtonCenterPoint() const {
+gfx::Point AppListButton::GetAppListButtonCenterPoint(
+    bool called_by_draw_function) const {
   // For a bottom-aligned shelf, the button bounds could have a larger height
   // than width (in the case of touch-dragging the shelf upwards) or a larger
   // width than height (in the case of a shelf hide/show animation), so adjust
@@ -405,6 +413,10 @@ gfx::Point AppListButton::GetAppListButtonCenterPoint() const {
   if (alignment == SHELF_ALIGNMENT_BOTTOM ||
       alignment == SHELF_ALIGNMENT_BOTTOM_LOCKED) {
     if (is_tablet_mode) {
+      // If we are in rtl the app list circle is in front of the back button.
+      if (is_rtl_ && !called_by_draw_function)
+        return gfx::Point(kShelfButtonSize / 2.f, kShelfButtonSize / 2.f);
+
       return gfx::Point(width() - kShelfButtonSize / 2.f,
                         kShelfButtonSize / 2.f);
     }
@@ -425,13 +437,24 @@ gfx::Point AppListButton::GetAppListButtonCenterPoint() const {
   }
 }
 
-gfx::Point AppListButton::GetBackButtonCenterPoint() const {
+gfx::Point AppListButton::GetBackButtonCenterPoint(
+    bool called_by_draw_function) const {
   DCHECK(Shell::Get()
              ->tablet_mode_controller()
              ->IsTabletModeWindowManagerEnabled());
 
-  if (shelf_->alignment() == SHELF_ALIGNMENT_LEFT)
+  ShelfAlignment alignment = shelf_->alignment();
+  if (alignment == SHELF_ALIGNMENT_LEFT)
     return gfx::Point(width() - kShelfButtonSize / 2.f, kShelfButtonSize / 2.f);
+
+  // If we are in rtl the back button is behind the app list circle.
+  if (alignment == SHELF_ALIGNMENT_BOTTOM ||
+      alignment == SHELF_ALIGNMENT_BOTTOM_LOCKED) {
+    if (is_rtl_ && !called_by_draw_function) {
+      return gfx::Point(width() - kShelfButtonSize / 2.f,
+                        kShelfButtonSize / 2.f);
+    }
+  }
 
   return gfx::Point(kShelfButtonSize / 2.f, kShelfButtonSize / 2.f);
 }
@@ -480,8 +503,12 @@ bool AppListButton::IsBackEvent(const gfx::Point& location) {
     return false;
   }
 
-  return (location - GetBackButtonCenterPoint()).LengthSquared() <
-         (location - GetAppListButtonCenterPoint()).LengthSquared();
+  return (location -
+          GetBackButtonCenterPoint(false /* called_by_draw_function */))
+             .LengthSquared() <
+         (location -
+          GetAppListButtonCenterPoint(false /* called_by_draw_function */))
+             .LengthSquared();
 }
 
 void AppListButton::GenerateAndSendBackEvent(
