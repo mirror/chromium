@@ -67,12 +67,9 @@ ImageBitmap::ParsedOptions ParseOptions(const ImageBitmapOptions& options,
   }
 
   if (options.colorSpaceConversion() != kImageBitmapOptionNone) {
-    parsed_options.color_canvas_extensions_enabled =
-        RuntimeEnabledFeatures::ColorCanvasExtensionsEnabled();
-    if (!parsed_options.color_canvas_extensions_enabled) {
+    if (!CanvasColorParams::TrueColorRendering()) {
       DCHECK_EQ(options.colorSpaceConversion(), kImageBitmapOptionDefault);
       parsed_options.color_params.SetCanvasColorSpace(kLegacyCanvasColorSpace);
-      parsed_options.color_canvas_extensions_enabled = true;
     } else {
       if (options.colorSpaceConversion() == kImageBitmapOptionDefault ||
           options.colorSpaceConversion() ==
@@ -303,12 +300,12 @@ RefPtr<StaticBitmapImage> ApplyColorSpaceConversion(
     RefPtr<StaticBitmapImage>&& image,
     ImageBitmap::ParsedOptions& options) {
   if (options.color_params.UsesOutputSpaceBlending() &&
-      RuntimeEnabledFeatures::ColorCorrectRenderingEnabled()) {
+      CanvasColorParams::ColorCorrectRendering()) {
     image = image->ConvertToColorSpace(options.color_params.GetSkColorSpace(),
                                        SkTransferFunctionBehavior::kIgnore);
   }
   sk_sp<SkImage> skia_image = image->PaintImageForCurrentFrame().GetSkImage();
-  if (!options.color_canvas_extensions_enabled || !skia_image->colorSpace())
+  if (!CanvasColorParams::TrueColorRendering() || !skia_image->colorSpace())
     return image;
 
   sk_sp<SkColorSpace> dst_color_space =
@@ -474,9 +471,9 @@ ImageBitmap::ImageBitmap(ImageElementBase* image,
   if (!sk_image->isTextureBacked() && !sk_image->peekPixels(&pixmap)) {
     sk_sp<SkColorSpace> dst_color_space = nullptr;
     SkColorType dst_color_type = kN32_SkColorType;
-    if (parsed_options.color_canvas_extensions_enabled ||
+    if (CanvasColorParams::TrueColorRendering() ||
         (parsed_options.color_params.UsesOutputSpaceBlending() &&
-         RuntimeEnabledFeatures::ColorCorrectRenderingEnabled())) {
+         CanvasColorParams::ColorCorrectRendering())) {
       dst_color_space = parsed_options.color_params.GetSkColorSpace();
       dst_color_type = parsed_options.color_params.GetSkColorType();
     }
@@ -656,6 +653,12 @@ ImageBitmap::ImageBitmap(ImageData* data,
       kUnpremul_SkAlphaType,
       cropped_data->GetCanvasColorParams().GetSkColorSpaceForSkSurfaces());
 
+  // If we are in color correct rendering mode, we don't do any color
+  // conversion when transferring the pixels from ImageData to the image to
+  // avoid double gamma correction. We tag the image with SRGB color space
+  // later in ApplyColorSpaceConversion().
+  if (CanvasColorParams::ColorCorrectRendering())
+    info = info.makeColorSpace(nullptr);
   image_ = NewImageFromRaster(info, std::move(image_pixels));
 
   // swizzle back

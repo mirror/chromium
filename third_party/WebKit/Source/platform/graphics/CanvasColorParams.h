@@ -45,6 +45,9 @@ class PLATFORM_EXPORT CanvasColorParams {
   // not linear space colors).
   bool UsesOutputSpaceBlending() const;
 
+  static bool TrueColorRendering();
+  static bool ColorCorrectRendering();
+
   // The SkColorSpace to use in the SkImageInfo for allocated SkSurfaces. This
   // is nullptr in legacy rendering mode.
   sk_sp<SkColorSpace> GetSkColorSpaceForSkSurfaces() const;
