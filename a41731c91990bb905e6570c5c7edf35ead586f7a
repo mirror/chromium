@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8fb45c20_220ae75a",
+        "filename": "ash/system/update/tray_update.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-02T00:47:51Z",
+      "side": 1,
+      "message": "This should not be required. ash::Shell is completely torn down between tests, so the TrayUpdate will be deleted. The only thing this method needs to do is clear the statics.",
+      "revId": "a41731c91990bb905e6570c5c7edf35ead586f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dc44e9e_af29ee80",
+        "filename": "ash/system/update/tray_update.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-02T00:47:51Z",
+      "side": 1,
+      "message": "just make this public (it has \"ForTesting\" in the same) and skip the FRIEND_TEST\n\nAlso, make it static",
+      "revId": "a41731c91990bb905e6570c5c7edf35ead586f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
