@@ -65,6 +65,7 @@ class MediaQueryList;
 class MessageEvent;
 class Modulator;
 class Navigator;
+class PerformanceObserver;
 class PostMessageTimer;
 class Screen;
 class ScriptState;
@@ -261,6 +262,9 @@ class CORE_EXPORT LocalDOMWindow final : public DOMWindow,
 
   void RegisterEventListenerObserver(EventListenerObserver*);
 
+  void AddPerformanceObserver(PerformanceObserver*);
+  void RemovePerformanceObserver(PerformanceObserver*);
+
   void FrameDestroyed();
   void Reset();
 
@@ -377,6 +381,8 @@ class CORE_EXPORT LocalDOMWindow final : public DOMWindow,
 
   HeapHashSet<Member<PostMessageTimer>> post_message_timers_;
   HeapHashSet<WeakMember<EventListenerObserver>> event_listener_observers_;
+  // List of observers to this window that need to be kept alive.
+  HeapHashSet<TraceWrapperMember<PerformanceObserver>> performance_observers_;
 };
 
 DEFINE_TYPE_CASTS(LocalDOMWindow,
