@@ -129,6 +129,30 @@
       "revId": "a72089701ae0757b60af15e72226210cabfcb70a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c57ab63_39c63c9e",
+        "filename": "ui/base/win/shell.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-02T20:05:37Z",
+      "side": 1,
+      "message": "If I understand correctly, the bug being fixed is that the obvious way to loop (i in [0-N): SetValue(i, empty)) is wrong. The first fix did SetValue(0, empty) N times. This works if you\u0027re guaranteed that every SetValue succeeds *and* that every one deletes the value at index 0. By counting down from N-1, it doesn\u0027t matter -- you visit each element exactly once. I think this is the way to go.\n\nI knew that Peter wouldn\u0027t like my DCHECK suggestion, but I stand by it. It\u0027s not worth a CHECK, but it would be nice to know in a debug build. If you think this is just wrong, then let\u0027s get rid of the NOTREACHED and early exit here in the product, and have a unit/browser test that asserts that the properties are removed. WDYT?",
+      "parentUuid": "9036222f_f963e3ca",
+      "range": {
+        "startLine": 182,
+        "startChar": 7,
+        "endLine": 182,
+        "endChar": 10
+      },
+      "revId": "a72089701ae0757b60af15e72226210cabfcb70a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
