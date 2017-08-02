@@ -7,6 +7,7 @@
 
 #include "ash/ash_export.h"
 #include "ash/system/tray/tray_image_item.h"
+#include "base/gtest_prod_util.h"
 #include "base/macros.h"
 #include "base/strings/string16.h"
 
@@ -47,8 +48,10 @@ class ASH_EXPORT TrayUpdate : public TrayImageItem {
   // Expose label information for testing.
   views::Label* GetLabelForTesting();
 
- private:
+  // Resets everything for testing.
+  static void ResetForTesting();
 
+ private:
   class UpdateView;
 
   // Overridden from TrayImageItem.
