@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4fdc1069_6498f44f",
+        "filename": "components/sync/protocol/user_event_specifics.proto",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-02T00:17:02Z",
+      "side": 1,
+      "message": "Sorry, I just realize there is one more case: if we won\u0027t be able to compute reputation for the URL (e.g. local IP address, localhost, not-yet-assigned by ICANN gTLD, etc. \n\nhttps://cs.chromium.org/chromium/src/components/safe_browsing/password_protection/password_protection_service.h?rcl\u003d20b8daba463043cbcb8272a007370792f412da3a\u0026l\u003d169",
+      "revId": "f52a7c6cf2eefca9535539aee12d99986cd020c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
