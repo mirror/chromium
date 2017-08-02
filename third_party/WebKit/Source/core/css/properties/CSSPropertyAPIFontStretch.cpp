@@ -9,9 +9,10 @@
 namespace blink {
 
 const CSSValue* CSSPropertyAPIFontStretch::ParseSingleValue(
+    CSSPropertyID,
     CSSParserTokenRange& range,
     const CSSParserContext&,
-    const CSSParserLocalContext&) {
+    const CSSParserLocalContext&) const {
   return CSSPropertyFontUtils::ConsumeFontStretch(range);
 }
 
