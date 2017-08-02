@@ -152,6 +152,8 @@ class CONTENT_EXPORT InputRouterImpl
   void OnDidOverscroll(const ui::DidOverscrollParams& params);
   void OnHasTouchEventHandlers(bool has_handlers);
   void OnSetTouchAction(cc::TouchAction touch_action);
+  void OnSetWhiteListedTouchAction(cc::TouchAction white_listed_touch_action,
+                                   uint32_t unique_touch_event_id);
   void OnDidStopFlinging();
 
   // Dispatches the ack'ed event to |ack_handler_|.
