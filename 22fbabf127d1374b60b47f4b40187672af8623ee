@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "474631c4_402e89e1",
+        "filename": "ios/chrome/content_widget_extension/content_widget_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-08-02T09:27:21Z",
+      "side": 1,
+      "message": "I don\u0027t like changing the name to \"setCompact\" or some variation thereof because it makes the fact that this modifies the view both ways less clear. I\u0027ve made the comment clearer hopefully.",
+      "parentUuid": "16af531a_0a50aa4f",
+      "range": {
+        "startLine": 23,
+        "startChar": 8,
+        "endLine": 23,
+        "endChar": 16
+      },
+      "revId": "22fbabf127d1374b60b47f4b40187672af8623ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72f054ce_21839842",
         "filename": "ios/chrome/content_widget_extension/content_widget_view.h",
         "patchSetId": 1
