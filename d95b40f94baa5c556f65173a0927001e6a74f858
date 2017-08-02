@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "2566d5ff_40afe526",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-02T06:05:03Z",
+      "side": 1,
+      "message": "I still think it would be helpful to put all the params (including the experiment base::Feature variable) related to a single experiment in a struct.",
+      "parentUuid": "8f6fba66_14cdba3e",
+      "range": {
+        "startLine": 197,
+        "startChar": 9,
+        "endLine": 197,
+        "endChar": 59
+      },
+      "revId": "d95b40f94baa5c556f65173a0927001e6a74f858",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e89ef9bf_3711df60",
         "filename": "content/browser/loader/resource_scheduler_unittest.cc",
         "patchSetId": 11

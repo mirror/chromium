@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f781b3e4_c23b04f5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-02T06:05:03Z",
+      "side": 1,
+      "message": "Add the link to design doc here.",
+      "range": {
+        "startLine": 13,
+        "startChar": 28,
+        "endLine": 13,
+        "endChar": 42
+      },
+      "revId": "ed9a3bf6b380e6580d6e97b740514fcdf516c37d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cf99ab7_8d8b5988",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-02T06:05:03Z",
+      "side": 1,
+      "message": "It is confusing to refer to kNonDelayableThrottlesDelayable here since it\u0027s defined in .cc file. One option is to move kNonDelayableThrottlesDelayable along with these two params in a separate struct.\n\nWe can also move GetCurrentNonDelayableThrottlesDelayableMultiplier() to that struct.",
+      "range": {
+        "startLine": 197,
+        "startChar": 6,
+        "endLine": 197,
+        "endChar": 37
+      },
+      "revId": "ed9a3bf6b380e6580d6e97b740514fcdf516c37d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38c9ce90_7ff160f5",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-02T06:05:03Z",
+      "side": 1,
+      "message": "s/multiplier/non_delayable_weight/\nhere, and everywhere else in this CL.",
+      "range": {
+        "startLine": 377,
+        "startChar": 13,
+        "endLine": 377,
+        "endChar": 23
+      },
+      "revId": "ed9a3bf6b380e6580d6e97b740514fcdf516c37d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "100ec8f7_203b503f",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-02T06:05:03Z",
+      "side": 1,
+      "message": "reverse the order:\nEXPECT_EQ(max_ect, ResourceScheduler::\n                  GetMaxECTForMaxDelayableRequestsNetworkOverrideForTests());\n\n\nThe style is to set the first value to the expected value, second to the actual value.",
+      "range": {
+        "startLine": 429,
+        "startChar": 4,
+        "endLine": 431,
+        "endChar": 23
+      },
+      "revId": "ed9a3bf6b380e6580d6e97b740514fcdf516c37d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60dccf73_acd18986",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 944,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-02T06:05:03Z",
+      "side": 1,
+      "message": "can we move these unrelated changes to a different CL?",
+      "range": {
+        "startLine": 944,
+        "startChar": 12,
+        "endLine": 944,
+        "endChar": 52
+      },
+      "revId": "ed9a3bf6b380e6580d6e97b740514fcdf516c37d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2629835_e0be4b19",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1619,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-02T06:05:03Z",
+      "side": 1,
+      "message": "const double kNonDelayableWeight \u003d 2;\nand, use that everywhere.",
+      "range": {
+        "startLine": 1619,
+        "startChar": 52,
+        "endLine": 1619,
+        "endChar": 55
+      },
+      "revId": "ed9a3bf6b380e6580d6e97b740514fcdf516c37d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cea784e7_7e213540",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1637,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-02T06:05:03Z",
+      "side": 1,
+      "message": "s/2/kNonDelayableWeight/",
+      "range": {
+        "startLine": 1637,
+        "startChar": 40,
+        "endLine": 1637,
+        "endChar": 41
+      },
+      "revId": "ed9a3bf6b380e6580d6e97b740514fcdf516c37d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53b23d07_80016916",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1640,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-02T06:05:03Z",
+      "side": 1,
+      "message": "s/2/kNonDelayableWeight/",
+      "range": {
+        "startLine": 1640,
+        "startChar": 49,
+        "endLine": 1640,
+        "endChar": 50
+      },
+      "revId": "ed9a3bf6b380e6580d6e97b740514fcdf516c37d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e286c223_4fd4fcae",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1701,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-02T06:05:03Z",
+      "side": 1,
+      "message": "This vector comparison is slightly unreadable.\n\nMay be define histogram_tester as a unique_ptr. Verify the first count, then reset |histogram_tester|, That will clear all the sampples.\n\nNext, run the 2 low requests and then check histogram_tester again.",
+      "range": {
+        "startLine": 1701,
+        "startChar": 23,
+        "endLine": 1701,
+        "endChar": 36
+      },
+      "revId": "ed9a3bf6b380e6580d6e97b740514fcdf516c37d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
