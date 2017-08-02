@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31402acd_df2403f4",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/automation_predicate.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-02T16:30:36Z",
+      "side": 1,
+      "message": "Please add a TODO to switch to using EDITABLE_ROOT,\nwhich Nektarios is landing in this change:\n\nhttps://chromium-review.googlesource.com/c/565769",
+      "revId": "875fbef56a89f5954ec49a28eca26e9e0568c3e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13cbb08e_b266c7a1",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/automation_predicate.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-02T16:30:36Z",
+      "side": 1,
+      "message": "Or maybe the TODO should be here. EIther way that should\nsimplify this logic.",
+      "revId": "875fbef56a89f5954ec49a28eca26e9e0568c3e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08232f3a_02dcece1",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/automation_predicate.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-02T16:30:36Z",
+      "side": 1,
+      "message": "Or maybe the TODO should be here. EIther way that should\nsimplify this logic.",
+      "revId": "875fbef56a89f5954ec49a28eca26e9e0568c3e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53acb375_bda3165b",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/output.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 831,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-02T16:30:36Z",
+      "side": 1,
+      "message": "Does this need a TODO? Do you know why this is throwing an\nexception?",
+      "revId": "875fbef56a89f5954ec49a28eca26e9e0568c3e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ddb2d97_b3dca688",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/output.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 831,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-02T16:30:36Z",
+      "side": 1,
+      "message": "Does this need a TODO? Do you know why this is throwing an\nexception?",
+      "revId": "875fbef56a89f5954ec49a28eca26e9e0568c3e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4728506d_10513387",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/output.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 831,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-02T16:30:36Z",
+      "side": 1,
+      "message": "Does this need a TODO? Do you know why this is throwing an\nexception?",
+      "revId": "875fbef56a89f5954ec49a28eca26e9e0568c3e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
