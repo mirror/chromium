@@ -22,6 +22,30 @@
       "revId": "8edaf02f294d3d519da439de8d92405a6e4692a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36843179_c0b48525",
+        "filename": "components/offline_pages/core/renovations/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1225649
+      },
+      "writtenOn": "2017-08-02T00:48:03Z",
+      "side": 1,
+      "message": "That\u0027s my bad, I included it in my next CL instead of this one by mistake. In the latest patchset, you can see exactly where it\u0027s used.",
+      "parentUuid": "1165b752_a9fee20d",
+      "range": {
+        "startLine": 23,
+        "startChar": 6,
+        "endLine": 23,
+        "endChar": 13
+      },
+      "revId": "8edaf02f294d3d519da439de8d92405a6e4692a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
