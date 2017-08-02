@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "077e42f5_d9ef1eaf",
+        "filename": "chrome/browser/safe_browsing/download_protection_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1921,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-08-02T17:53:37Z",
+      "side": 1,
+      "message": "Does this need to be on a particular thread?",
+      "revId": "a898badfa5ed54f17cd7f7549af3dd2e550f889a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "702de38c_04a1e19c",
+        "filename": "chrome/browser/safe_browsing/download_protection_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1932,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-08-02T17:53:37Z",
+      "side": 1,
+      "message": "nit: Is this just for uncommon downloads?",
+      "range": {
+        "startLine": 1932,
+        "startChar": 20,
+        "endLine": 1932,
+        "endChar": 28
+      },
+      "revId": "a898badfa5ed54f17cd7f7549af3dd2e550f889a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
