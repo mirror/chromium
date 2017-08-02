@@ -55,38 +55,60 @@ class MemoryDumpSchedulerTest : public testing::Test {
 };
 
 TEST_F(MemoryDumpSchedulerTest, SingleTrigger) {
+  LOG(ERROR) << "a0";
   const uint32_t kPeriodMs = 1;
+  LOG(ERROR) << "a1";
   const auto kLevelOfDetail = MemoryDumpLevelOfDetail::DETAILED;
+  LOG(ERROR) << "a2";
   const uint32_t kTicks = 5;
+  LOG(ERROR) << "a3";
   WaitableEvent evt(WaitableEvent::ResetPolicy::MANUAL,
                     WaitableEvent::InitialState::NOT_SIGNALED);
+  LOG(ERROR) << "a4";
   MemoryDumpScheduler::Config config;
+  LOG(ERROR) << "a5";
   config.triggers.push_back({kLevelOfDetail, kPeriodMs});
+  LOG(ERROR) << "a5";
   config.callback = Bind(&CallbackWrapper::OnTick, Unretained(&on_tick_));
+  LOG(ERROR) << "a6";
 
   testing::InSequence sequence;
+  LOG(ERROR) << "a7";
   EXPECT_CALL(on_tick_, OnTick(_)).Times(kTicks - 1);
+  LOG(ERROR) << "a8";
   EXPECT_CALL(on_tick_, OnTick(_))
       .WillRepeatedly(Invoke(
           [&evt, kLevelOfDetail](MemoryDumpLevelOfDetail level_of_detail) {
+          LOG(ERROR) << "a9";
             EXPECT_EQ(kLevelOfDetail, level_of_detail);
+          LOG(ERROR) << "a10";
             evt.Signal();
+          LOG(ERROR) << "a11";
           }));
 
+          LOG(ERROR) << "a12";
   // Check that Stop() before Start() doesn't cause any error.
   scheduler_->Stop();
+          LOG(ERROR) << "a13";
 
   const TimeTicks tstart = TimeTicks::Now();
+          LOG(ERROR) << "a14";
   scheduler_->Start(config, bg_thread_->task_runner());
+          LOG(ERROR) << "a15";
   evt.Wait();
+          LOG(ERROR) << "a16";
   const double time_ms = (TimeTicks::Now() - tstart).InMillisecondsF();
+          LOG(ERROR) << "a17";
 
   // It takes N-1 ms to perform N ticks of 1ms each.
   EXPECT_GE(time_ms, kPeriodMs * (kTicks - 1));
+          LOG(ERROR) << "a18";
 
   // Check that stopping twice doesn't cause any problems.
   scheduler_->Stop();
+          LOG(ERROR) << "a19";
   scheduler_->Stop();
+          LOG(ERROR) << "a20";
 }
 
 TEST_F(MemoryDumpSchedulerTest, MultipleTriggers) {
