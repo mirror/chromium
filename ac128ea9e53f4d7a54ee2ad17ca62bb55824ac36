@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "503d5237_f1bf2dcb",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_win.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-08-02T19:27:00Z",
+      "side": 1,
+      "message": "nit: add an empty line before this line.",
+      "range": {
+        "startLine": 220,
+        "startChar": 21,
+        "endLine": 220,
+        "endChar": 0
+      },
+      "revId": "ac128ea9e53f4d7a54ee2ad17ca62bb55824ac36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "728f6d94_bea7b6d0",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_win.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1232105
+      },
+      "writtenOn": "2017-08-02T19:27:00Z",
+      "side": 1,
+      "message": "Please initialize prompt_delegate_ to nullptr.",
+      "range": {
+        "startLine": 80,
+        "startChar": 48,
+        "endLine": 80,
+        "endChar": 0
+      },
+      "revId": "ac128ea9e53f4d7a54ee2ad17ca62bb55824ac36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
