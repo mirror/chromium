@@ -577,6 +577,10 @@ void AutofillManager::OnQueryFormFieldAutofillImpl(
   // Log interactions of forms that are autofillable.
   if (got_autofillable_form) {
     if (autofill_field->Type().group() == CREDIT_CARD) {
+      if (IsAutofillCreditCardSuggestionRestriction() &&
+          !form_structure->ShouldFillCreditCardForm()) {
+        return;
+      }
       is_filling_credit_card = true;
       driver()->DidInteractWithCreditCardForm();
       credit_card_form_event_logger_->OnDidInteractWithAutofillableForm();

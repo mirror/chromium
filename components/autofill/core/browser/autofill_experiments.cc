@@ -48,6 +48,9 @@ const base::Feature kAutofillUpstreamUseAutofillProfileComparator{
 const base::Feature kAutofillUpstreamUseNotRecentlyUsedAutofillProfile{
     "AutofillUpstreamUseNotRecentlyUsedAutofillProfile",
     base::FEATURE_DISABLED_BY_DEFAULT};
+const base::Feature kAutofillCreditCardSuggestionRestriction{
+    "kAutofillCreditCardSuggestionRestriction",
+    base::FEATURE_DISABLED_BY_DEFAULT};
 const char kCreditCardSigninPromoImpressionLimitParamKey[] = "impression_limit";
 const char kAutofillCreditCardPopupBackgroundColorKey[] = "background_color";
 const char kAutofillCreditCardPopupDividerColorKey[] = "dropdown_divider_color";
@@ -261,6 +264,10 @@ bool IsAutofillUpstreamRequestCvcIfMissingExperimentEnabled() {
 #else
   return base::FeatureList::IsEnabled(kAutofillUpstreamRequestCvcIfMissing);
 #endif
+}
+
+bool IsAutofillCreditCardSuggestionRestriction() {
+  return base::FeatureList::IsEnabled(kAutofillCreditCardSuggestionRestriction);
 }
 
 base::TimeDelta GetMaxTimeSinceAutofillProfileUseForCardUpload() {
