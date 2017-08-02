@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f420f01b_92a183c7",
+        "filename": "content/common/message_port.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-02T20:50:26Z",
+      "side": 1,
+      "message": "Ah yes, accidental left-over from an earlier version of this CL. Done. Also got rid of the no longer needed string16.h include.",
+      "parentUuid": "ac6ac626_aef18989",
+      "revId": "775df61f3b8d97bf1515f050959f90a6282a20a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eab4f01d_1d685cf1",
         "filename": "content/common/message_port_message_struct_traits.h",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "775df61f3b8d97bf1515f050959f90a6282a20a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "184442c8_b8f2b02b",
+        "filename": "content/common/message_port_message_struct_traits.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-02T20:50:26Z",
+      "side": 1,
+      "message": "No, I don\u0027t believe it is normal. And I agree that it is non-obvious. As you say it seemed a bit excessive, but it\u0027s probably cleaner anyway, so I move the struct to its own message_port_message.h/.cc file",
+      "parentUuid": "eab4f01d_1d685cf1",
+      "revId": "775df61f3b8d97bf1515f050959f90a6282a20a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
