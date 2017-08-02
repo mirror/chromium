@@ -16,6 +16,24 @@
       "revId": "7a69d48636737f6c3571f3ed715b37d3b5b9962e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8d1d7ad_54d9729e",
+        "filename": "base/strings/string_number_conversions.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-08-02T17:00:57Z",
+      "side": 1,
+      "message": "Sure thing, I\u0027ll move it back to net/.  Thanks.",
+      "parentUuid": "044fa76a_c2b98797",
+      "revId": "7a69d48636737f6c3571f3ed715b37d3b5b9962e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
