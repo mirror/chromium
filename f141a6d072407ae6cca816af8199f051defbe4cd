@@ -22,6 +22,30 @@
       "revId": "f141a6d072407ae6cca816af8199f051defbe4cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4da0f368_8a9cd463",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-08-02T21:30:11Z",
+      "side": 1,
+      "message": "This will be addressed soon in another CL which addresses all animations when side shelf is present.",
+      "parentUuid": "2af8f78d_3f44b22f",
+      "range": {
+        "startLine": 437,
+        "startChar": 10,
+        "endLine": 437,
+        "endChar": 20
+      },
+      "revId": "f141a6d072407ae6cca816af8199f051defbe4cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
