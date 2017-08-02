@@ -256,7 +256,8 @@ BlinkTestRunner::BlinkTestRunner(RenderView* render_view)
       test_config_(mojom::ShellTestConfiguration::New()),
       is_main_window_(false),
       focus_on_next_commit_(false),
-      leak_detector_(new LeakDetector(this)) {}
+      leak_detector_(
+          new LeakDetector(this, render_view->GetWebView()->MainFrame())) {}
 
 BlinkTestRunner::~BlinkTestRunner() {
 }
@@ -1023,12 +1024,11 @@ void BlinkTestRunner::OnTryLeakDetection() {
   blink::WebFrame* main_frame = render_view()->GetWebView()->MainFrame();
 
   DCHECK(!main_frame->IsLoading());
-  if (main_frame->IsWebLocalFrame()) {
-    DCHECK_EQ(GURL(url::kAboutBlankURL),
-              GURL(main_frame->ToWebLocalFrame()->GetDocument().Url()));
-  }
+  DCHECK(main_frame->IsWebLocalFrame());
+  DCHECK_EQ(GURL(url::kAboutBlankURL),
+            GURL(main_frame->ToWebLocalFrame()->GetDocument().Url()));
 
-  leak_detector_->TryLeakDetection(main_frame);
+  leak_detector_->TryLeakDetection();
 }
 
 void BlinkTestRunner::OnReplyBluetoothManualChooserEvents(
