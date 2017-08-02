@@ -71,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "f2f9e679_009b6eeb",
+        "filename": "chrome/browser/resources/chromeos/keyboard_overlay.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 852,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-02T22:42:15Z",
+      "side": 1,
+      "message": "Ack. If there is precedent that\u0027s fine, I\u0027ll shut up now :)",
+      "parentUuid": "9e331b19_0cdd578b",
+      "revId": "439ef77fd13e0601a4eef70bc1d6e11af40b47ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16f2777b_34191048",
         "filename": "chrome/browser/resources/chromeos/keyboard_overlay.js",
         "patchSetId": 6
