@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09b6badd_de7afec3",
+        "filename": "third_party/WebKit/Source/core/editing/FrameSelectionTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-02T17:36:34Z",
+      "side": 1,
+      "message": "It seems too verbose to add SetShouldCloseTyping and SetShouldClearTypingStyle in all FrameSelection::SetSelection calls. The two options also seem low-level details that is not interesting to all callers.\n\nShould we hide them somehow by, say, default parameters?",
+      "range": {
+        "startLine": 309,
+        "startChar": 6,
+        "endLine": 312,
+        "endChar": 36
+      },
+      "revId": "d8fb24ad898fc25ef6bfad515a938d858d1ef0c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
