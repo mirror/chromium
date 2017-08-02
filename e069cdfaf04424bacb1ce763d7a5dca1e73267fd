@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8401e635_083f7f71",
+        "filename": "net/http2/hpack/decoder/hpack_varint_decoder_test.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-08-02T00:00:09Z",
+      "side": 0,
+      "message": "I might address this divergence in a follow-up CL, but definitely not now since there is no Hex() in Chromium.",
+      "range": {
+        "startLine": 153,
+        "startChar": 5,
+        "endLine": 158,
+        "endChar": 32
+      },
+      "revId": "e069cdfaf04424bacb1ce763d7a5dca1e73267fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3eab732_4cf36cf3",
+        "filename": "net/http2/http2_structures.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-08-02T00:00:09Z",
+      "side": 0,
+      "message": "This is a no-op on HexEncode output.",
+      "range": {
+        "startLine": 101,
+        "startChar": 8,
+        "endLine": 101,
+        "endChar": 31
+      },
+      "revId": "e069cdfaf04424bacb1ce763d7a5dca1e73267fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
