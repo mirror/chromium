@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "686eb4b4_3cef2653",
+        "filename": "chrome/browser/ui/cocoa/browser/exclusive_access_controller_views.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-02T01:31:04Z",
+      "side": 1,
+      "message": "You\u0027d probably need to wrap it.. (inheritance would lead to a complex dance..). But even that might get weird with move-only types.\n\n\n\nclass ExclusiveAccessBubbleHideCallback {\n public:\n  using HideCallback \u003d base::OnceCallback\u003cvoid(ExclusiveAccessBubbleHideReason)\u003e;\n\n  // explicit? Conversion for move-only types probably doesn\u0027t work as expected.\n  ExclusiveAccessBubbleHideCallback(HideCallback callback) : callback_(std::move(callback)) {}\n\n  // Movable only. Pretty sure `\u003d default` will do the Right Thing.\n  ExclusiveAccessBubbleHideCallback(ExclusiveAccessBubbleHideCallback\u0026\u0026 other) \u003d default;\n\n  void FireOnce(ExclusiveAccessBubbleHideReason reason) {\n    if (callback_)\n      std::move(callback_).Run(reason);\n  }\n\n  ~ExclusiveAccessBubbleHideCallback() {\n    FireOnce(ExclusiveAccessBubbleHideReason::kNotShown);\n  }\n\n private:\n  HideCallback callback_;\n\n  DISALLOW..\n};",
+      "parentUuid": "7d56a747_744208b9",
+      "range": {
+        "startLine": 86,
+        "startChar": 4,
+        "endLine": 86,
+        "endChar": 25
+      },
+      "revId": "69a5e63bbe34d873d627133e4dfdb13f8ce7c719",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7e206689_9ef2f4fb",
         "filename": "chrome/browser/ui/exclusive_access/exclusive_access_bubble_hide_callback.h",
         "patchSetId": 8
