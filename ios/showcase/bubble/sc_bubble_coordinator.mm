@@ -39,7 +39,7 @@
   // the origin to be two-thirds of the container's width.
   UIView* elementView = [[UIView alloc]
       initWithFrame:CGRectMake(containerView.frame.size.width * 2.0f / 3.0f,
-                               20.0f, 20.0f, 20.0f)];
+                               200.0f, 20.0f, 20.0f)];
   elementView.backgroundColor = [UIColor grayColor];
   [containerView addSubview:elementView];
   // Maximum width of the bubble such that it stays within |containerView|.
@@ -69,10 +69,10 @@
   [self.containerViewController
       addChildViewController:self.bubbleViewController];
   self.bubbleViewController.view.frame = bubbleFrame;
-  self.bubbleViewController.view.backgroundColor = [UIColor blueColor];
   [self.containerViewController.view addSubview:self.bubbleViewController.view];
   [self.bubbleViewController
       didMoveToParentViewController:self.containerViewController];
+  [self.bubbleViewController animateContentIn];
 }
 
 // Calculate the bubble's frame using bubble_util methods. Depends on the target
