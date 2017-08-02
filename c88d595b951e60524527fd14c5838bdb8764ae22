@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7049e28_d7923139",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionEditor.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-02T02:05:07Z",
+      "side": 0,
+      "message": "Could you change this to DCHECK_NE(selection_, new_selection)?",
+      "revId": "c88d595b951e60524527fd14c5838bdb8764ae22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
