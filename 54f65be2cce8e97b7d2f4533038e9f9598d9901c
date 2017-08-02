@@ -86,6 +86,24 @@
       "revId": "54f65be2cce8e97b7d2f4533038e9f9598d9901c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baf984cd_a02ef25d",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-02T09:45:32Z",
+      "side": 1,
+      "message": "Could you explain why |NodeAsRangeFirstNode()| is bad?\nAnd give me more explanation why we can\u0027t use EphemeralRangeInFlatTree::Nodes()?\n\nEphemeralRangeInFlatTree::Nodes() returns all nodes in the range and\npainted selection should be in the range.",
+      "parentUuid": "80433cb1_921993ce",
+      "revId": "54f65be2cce8e97b7d2f4533038e9f9598d9901c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
