@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ed310e0_7c0f0fd3",
+        "filename": "third_party/WebKit/LayoutTests/fast/workers/resources/dedicated-worker-lifecycle.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-08-02T10:58:36Z",
+      "side": 1,
+      "message": "FYI: Changed this test here. LMK if you feel that this is wrong.",
+      "range": {
+        "startLine": 28,
+        "startChar": 15,
+        "endLine": 28,
+        "endChar": 24
+      },
+      "revId": "e34d33b78701fa21d887d37fd84f8f968a798b9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
