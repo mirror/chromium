@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c057379d_dc3f4488",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyFontUtils.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-08-02T14:57:42Z",
+      "side": 1,
+      "message": "Would you mind expanding on *why* we\u0027re not consuming the first value here and quickly note the meaning of each value?",
+      "parentUuid": "a65803f8_e403a697",
+      "revId": "ab58609746744ecae2d4962dcacc65e0ffd094f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6004cb70_0dd9b461",
         "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyFontUtils.cpp",
         "patchSetId": 7
