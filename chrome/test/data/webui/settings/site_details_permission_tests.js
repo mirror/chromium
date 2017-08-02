@@ -219,6 +219,7 @@ suite('SiteDetailsPermission', function() {
           testElement.$.permissionItem.innerText.trim());
       assertTrue(testElement.$.permissionItem.classList.contains('two-line'));
       assertTrue(testElement.$.permission.disabled);
+      assertEquals(testSetting, testElement.$.permission.value);
     };
 
     // Permissions that have been set by enterprise policy.
@@ -242,6 +243,7 @@ suite('SiteDetailsPermission', function() {
           testElement.$.permissionItem.innerText.trim());
       assertTrue(testElement.$.permissionItem.classList.contains('two-line'));
       assertTrue(testElement.$.permission.disabled);
+      assertEquals(testSetting, testElement.$.permission.value);
     };
 
     // Finally, check if changing the source from a non-user-controlled setting
