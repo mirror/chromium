@@ -2579,6 +2579,8 @@ static_library("test_support") {
     "test/url_request/ssl_certificate_error_job.h",
     "test/url_request/url_request_failed_job.cc",
     "test/url_request/url_request_failed_job.h",
+    "test/url_request/url_request_hanging_get_job.cc",
+    "test/url_request/url_request_hanging_get_job.h",
     "test/url_request/url_request_hanging_read_job.cc",
     "test/url_request/url_request_hanging_read_job.h",
     "test/url_request/url_request_mock_data_job.cc",

@@ -11,6 +11,7 @@
 #include "jni/MockUrlRequestJobFactory_jni.h"
 #include "net/test/url_request/ssl_certificate_error_job.h"
 #include "net/test/url_request/url_request_failed_job.h"
+#include "net/test/url_request/url_request_hanging_get_job.h"
 #include "net/test/url_request/url_request_hanging_read_job.h"
 #include "net/test/url_request/url_request_mock_data_job.h"
 #include "net/url_request/url_request_context.h"
@@ -84,6 +85,7 @@ jlong AddUrlInterceptors(JNIEnv* env,
   net::URLRequestMockDataJob::AddUrlHandler();
   net::URLRequestFailedJob::AddUrlHandler();
   net::URLRequestHangingReadJob::AddUrlHandler();
+  net::URLRequestHangingGetJob::AddUrlHandler();
   net::SSLCertificateErrorJob::AddUrlHandler();
   return reinterpret_cast<jlong>(
       new UrlInterceptorJobFactoryHandle(jcontext_adapter));
@@ -137,6 +139,13 @@ ScopedJavaLocalRef<jstring> GetMockUrlForHangingRead(
     JNIEnv* jenv,
     const JavaParamRef<jclass>& jcaller) {
   GURL url(net::URLRequestHangingReadJob::GetMockHttpUrl());
+  return base::android::ConvertUTF8ToJavaString(jenv, url.spec());
+}
+
+ScopedJavaLocalRef<jstring> GetMockUrlForHangingGet(
+    JNIEnv* jenv,
+    const JavaParamRef<jclass>& jcaller) {
+  GURL url(net::URLRequestHangingGetJob::GetMockHttpUrl());
   return base::android::ConvertUTF8ToJavaString(jenv, url.spec());
 }
 
