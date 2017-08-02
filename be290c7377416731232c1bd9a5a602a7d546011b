@@ -211,6 +211,30 @@
       "revId": "be290c7377416731232c1bd9a5a602a7d546011b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "737e01d0_ef8fda7c",
+        "filename": "chrome/browser/net/system_network_context_manager.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-02T19:40:41Z",
+      "side": 1,
+      "message": "I believe there was a reason enterprises wanted that behavior, though I\u0027d certainly love to see it removed.",
+      "parentUuid": "1b0f868f_890a9700",
+      "range": {
+        "startLine": 78,
+        "startChar": 31,
+        "endLine": 78,
+        "endChar": 0
+      },
+      "revId": "be290c7377416731232c1bd9a5a602a7d546011b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
