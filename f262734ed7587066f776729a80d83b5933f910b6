@@ -16,6 +16,24 @@
       "revId": "f262734ed7587066f776729a80d83b5933f910b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6eb2ab2_dd2ef9ed",
+        "filename": "ui/accessibility/platform/ax_snapshot_node_android_platform.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-08-02T22:20:37Z",
+      "side": 1,
+      "message": "Ok, but I\u0027d prefer to keep these helpers in here for readability. They can forward the call. Is that ok?",
+      "parentUuid": "4d256b4d_dc5b7de1",
+      "revId": "f262734ed7587066f776729a80d83b5933f910b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
