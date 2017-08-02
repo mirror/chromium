@@ -13,17 +13,26 @@
 
 #if defined(OS_WIN)
 #include "base/win/scoped_handle.h"
-#endif
+#elif defined(OS_MACOSX)
+#include <mach/mach.h>
 
-#if defined(OS_POSIX)
+#include <list>
+#include <memory>
+
+#include "base/callback_forward.h"
+#include "base/mac/scoped_mach_port.h"
+#include "base/memory/ref_counted.h"
+#elif defined(OS_POSIX)
 #include <list>
 #include <utility>
+
 #include "base/memory/ref_counted.h"
 #include "base/synchronization/lock.h"
 #endif
 
 namespace base {
 
+class Lock;
 class TimeDelta;
 class TimeTicks;
 
@@ -154,6 +163,62 @@ class BASE_EXPORT WaitableEvent {
 
 #if defined(OS_WIN)
   win::ScopedHandle handle_;
+#elif defined(OS_MACOSX)
+  // Prior to macOS 10.12, a TYPE_MACH_RECV dispatch source may not be invoked
+  // immediately. If a WaitableEventWatcher is used on a manual-reset event,
+  // and another thread that is Wait()ing on the event calls Reset()
+  // immediately after waking up, the watcher may not receive the callback.
+  // On macOS 10.12 and higher, dispatch delivery is reliable. But for OSes
+  // prior, a lock-protected list of callbacks is used for manual-reset event
+  // watchers. Automatic-reset events are not prone to this issue, since the
+  // first thread to wake will claim the event.
+  static bool UseSlowWatchList(ResetPolicy policy);
+
+  // Peeks the message queue named by |port| and returns true if a message
+  // is present and false if not. If |dequeue| is true, the messsage will be
+  // drained from the queue. If |dequeue| is false, the queue will only be
+  // peeked. |port| must be a receive right.
+  static bool PeekPort(mach_port_t port, bool dequeue);
+
+  // The Mach receive right is waited on by both WaitableEvent and
+  // WaitableEventWatcher. It is valid to signal and then delete an event, and
+  // a watcher should still be notified. If the right were to be destroyed
+  // immediately, the watcher would not receive the signal. Because Mach
+  // receive rights cannot have a user refcount greater than one, the right
+  // must be reference-counted manually.
+  class ReceiveRight : public RefCountedThreadSafe<ReceiveRight> {
+   public:
+    explicit ReceiveRight(mach_port_t name);
+
+    mach_port_t Name() const { return right_.get(); };
+
+   private:
+    friend class RefCountedThreadSafe<ReceiveRight>;
+    ~ReceiveRight();
+
+    mac::ScopedMachReceiveRight right_;
+
+    DISALLOW_COPY_AND_ASSIGN(ReceiveRight);
+  };
+
+  const ResetPolicy policy_;
+
+  // The receive right for the event.
+  scoped_refptr<ReceiveRight> receive_right_;
+
+  // The send right used to signal the event. This can be disposed of with
+  // the event, unlike the receive right, since a deleted event cannot be
+  // signaled.
+  mac::ScopedMachSendRight send_right_;
+
+  // These objects are non-null iff UseSlowWatchList() is true.
+  // The lock protects a list of closures to be run when the event is
+  // Signal()ed. The closures are invoked on the signaling thread, so they
+  // must be safe to be called from any thread.
+  // These objects are allocated on the heap to avoid extra initialization
+  // when not taking the slow path.
+  std::unique_ptr<Lock> watch_list_lock_;
+  std::unique_ptr<std::list<OnceClosure>> watch_list_;
 #else
   // On Windows, you must not close a HANDLE which is currently being waited on.
   // The MSDN documentation says that the resulting behaviour is 'undefined'.
