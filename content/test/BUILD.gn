@@ -161,6 +161,8 @@ static_library("test_support") {
     "content_browser_sanity_checker.h",
     "content_test_suite.cc",
     "content_test_suite.h",
+    "did_commit_provisional_load_interceptor.cc",
+    "did_commit_provisional_load_interceptor.h",
     "dummy_render_widget_host_delegate.h",
     "dwrite_font_fake_sender_win.cc",
     "dwrite_font_fake_sender_win.h",
@@ -478,7 +480,11 @@ static_library("browsertest_support") {
 mojom("content_test_mojo_bindings") {
   sources = [
     "../public/test/test_service.mojom",
+    "frame_host_test_interface.mojom",
     "test_browser_associated_interfaces.mojom",
+  ]
+  public_deps = [
+    "//url/mojo:url_mojom_gurl",
   ]
 }
 
@@ -1159,6 +1165,7 @@ test("content_unittests") {
     "../browser/frame_host/navigation_handle_impl_unittest.cc",
     "../browser/frame_host/navigator_impl_unittest.cc",
     "../browser/frame_host/render_frame_host_feature_policy_unittest.cc",
+    "../browser/frame_host/render_frame_host_interface_provider_unittest.cc",
     "../browser/frame_host/render_frame_host_manager_unittest.cc",
     "../browser/frame_host/render_widget_host_view_child_frame_unittest.cc",
     "../browser/frame_host/render_widget_host_view_guest_unittest.cc",
@@ -1887,11 +1894,22 @@ test("content_unittests") {
 service_manifest("content_unittests_manifest") {
   name = "content_unittests"
   source = "unittests_manifest.json"
-  packaged_services = [ "//services/file:manifest" ]
+}
+
+service_manifest("content_browser_for_unittests_overlay") {
+  source = "content_browser_for_unittest_overlay.json"
+}
+
+service_manifest("content_browser_for_unittests_manifest") {
+  source_manifest = "//content/public/app:browser_manifest"
+  overlays = [ ":content_browser_for_unittests_overlay" ]
 }
 
 catalog("content_unittests_catalog") {
-  embedded_services = [ ":content_unittests_manifest" ]
+  embedded_services = [
+    ":content_unittests_manifest",
+    ":content_browser_for_unittests_manifest",
+  ]
 }
 
 catalog_cpp_source("content_unittests_catalog_source") {
