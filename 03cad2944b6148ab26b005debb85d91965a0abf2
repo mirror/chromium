@@ -211,6 +211,30 @@
       "revId": "03cad2944b6148ab26b005debb85d91965a0abf2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e6b6ef4_87683794",
+        "filename": "chrome/test/data/webui/settings/passwords_a11y_test.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1230575
+      },
+      "writtenOn": "2017-08-02T00:59:31Z",
+      "side": 1,
+      "message": "Sorry, ignore that last comment! -- forgot it was drafted.",
+      "parentUuid": "ff239a9b_64e20aa1",
+      "range": {
+        "startLine": 44,
+        "startChar": 54,
+        "endLine": 44,
+        "endChar": 58
+      },
+      "revId": "03cad2944b6148ab26b005debb85d91965a0abf2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
