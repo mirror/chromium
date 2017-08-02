@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "924ee6e3_78da1358",
+        "filename": "ios/web/navigation/navigation_manager_impl_unittest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 1476,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-02T01:15:21Z",
+      "side": 1,
+      "message": "We generally have replaced usage of |-arrayWithObjects:| with ObjC literal syntax:\n\nmock_wk_list_.backList \u003d @[wk_item0];",
+      "revId": "ac97713e104376134f6a6d351ecb8e91099fd862",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
