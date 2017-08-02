@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b8861f6_59da5563",
+        "filename": "build/mac_toolchain.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-08-02T19:50:25Z",
+      "side": 1,
+      "message": "Will this break non-corp, non-golo machines, which can\u0027t get the toolchain?",
+      "revId": "7cda6d3f449ae5e29ef068e19529feed223e3093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
