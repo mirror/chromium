@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "299b5481_f8a714f8",
+        "filename": "content/renderer/service_worker/web_service_worker_installed_scripts_manager_impl.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-02T03:16:00Z",
+      "side": 1,
+      "message": "The comment is a little confusing: Does \"crafted\"  mean something like \"malicious\"? \"exceeds the total size\" sounds like the message itself is over a size limit. I think probably the comment isn\u0027t needed.",
+      "revId": "94c398a66dde02048d713ea188dc57447ab7feb5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
