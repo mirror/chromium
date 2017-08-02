@@ -20,10 +20,17 @@ namespace ui {
 
 namespace {
 
+bool HasState(uint32_t node_state, ui::AXState test_state) {
+  return (node_state & (1 << test_state)) != 0;
+}
+
+bool HasState(const AXNode* node, ui::AXState test_state) {
+  return HasState(node->data().state, test_state);
+}
+
 bool HasFocusableChild(const AXNode* node) {
   for (auto* child : node->children()) {
-    if ((child->data().state & ui::AX_STATE_FOCUSABLE) != 0 ||
-        HasFocusableChild(child)) {
+    if (HasState(child, ui::AX_STATE_FOCUSABLE) || HasFocusableChild(child)) {
       return true;
     }
   }
@@ -45,7 +52,7 @@ bool IsSimpleTextControl(AXRole role, uint32_t state) {
     case ui::AX_ROLE_SEARCH_BOX:
       return true;
     case ui::AX_ROLE_TEXT_FIELD:
-      return (state & ui::AX_STATE_RICHLY_EDITABLE) == 0;
+      return !HasState(state, ui::AX_STATE_RICHLY_EDITABLE);
     default:
       return false;
   }
@@ -53,9 +60,8 @@ bool IsSimpleTextControl(AXRole role, uint32_t state) {
 
 bool IsRichTextEditable(const AXNode* node) {
   const AXNode* parent = node->parent();
-  return (node->data().state & ui::AX_STATE_RICHLY_EDITABLE) != 0 &&
-         (!parent ||
-          (parent->data().state & ui::AX_STATE_RICHLY_EDITABLE) == 0);
+  return HasState(node, ui::AX_STATE_RICHLY_EDITABLE) &&
+         (!parent || !HasState(parent, ui::AX_STATE_RICHLY_EDITABLE));
 }
 
 bool IsNativeTextControl(const AXNode* node) {
@@ -118,7 +124,7 @@ base::string16 GetValue(const AXNode* node, bool show_password) {
     value = GetInnerText(node);
   }
 
-  if ((node->data().state & ui::AX_STATE_PROTECTED) != 0) {
+  if (HasState(node, ui::AX_STATE_PROTECTED)) {
     if (!show_password) {
       value = base::string16(value.size(), kSecurePasswordBullet);
     }
@@ -143,7 +149,7 @@ bool IsFocusable(const AXNode* node) {
       (node->data().role == ui::AX_ROLE_ROOT_WEB_AREA && node->parent())) {
     return node->data().HasStringAttribute(ui::AX_ATTR_NAME);
   }
-  return (node->data().state & ui::AX_STATE_FOCUSABLE) != 0;
+  return HasState(node, ui::AX_STATE_FOCUSABLE);
 }
 
 base::string16 GetText(const AXNode* node, bool show_password) {
@@ -163,7 +169,7 @@ base::string16 GetText(const AXNode* node, bool show_password) {
   base::string16 value = GetValue(node, show_password);
 
   if (!value.empty()) {
-    if ((node->data().state & ui::AX_STATE_EDITABLE) != 0)
+    if (HasState(node, ui::AX_STATE_EDITABLE))
       return value;
 
     switch (node->data().role) {
