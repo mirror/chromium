@@ -134,4 +134,9 @@ SBChunkDelete::SBChunkDelete(const SBChunkDelete& other) = default;
 
 SBChunkDelete::~SBChunkDelete() {}
 
+void RecordCountOfWhitelistedDownload(WhitelistType type) {
+  UMA_HISTOGRAM_ENUMERATION("SBClientDownload.CheckWhitelistResult", type,
+                            WHITELIST_TYPE_MAX);
+}
+
 }  // namespace safe_browsing
