@@ -166,6 +166,24 @@
     },
     {
       "key": {
+        "uuid": "c868544f_0e80a6a3",
+        "filename": "chrome/profiling/memlog_connection_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-08-02T18:09:02Z",
+      "side": 1,
+      "message": "Can we just add a function on BacktraceStorage to stop and resume it? It already has a lock there that will prevent anything from being used, and this will save us from hacing to lock for every data packet received.",
+      "parentUuid": "8248c4cd_8b64a70c",
+      "revId": "65687eb9653c66b06ab5a6a52a5157ae9f37afba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9cd953d8_44d39357",
         "filename": "chrome/profiling/memlog_impl.cc",
         "patchSetId": 3
