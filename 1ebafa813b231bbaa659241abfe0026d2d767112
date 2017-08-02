@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "979ef493_e11d53d1",
+        "filename": "base/sync_socket_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-02T20:52:18Z",
+      "side": 1,
+      "message": "My main argument is not that the world is already bad, but that the is no better way to test it. We sleep here not to advance time, but to ensure that something happens on another thread. Since \"something\" in this case is recv() being called and blocked, there is no good way to wait for it here without adding something in the recv() implementation, which is not feasible.\n\nThis is a case where we can choose between no test and a test that sleeps. Second option is better IMO.",
+      "parentUuid": "7bd12cd0_cededc43",
+      "range": {
+        "startLine": 150,
+        "startChar": 18,
+        "endLine": 150,
+        "endChar": 34
+      },
+      "revId": "1ebafa813b231bbaa659241abfe0026d2d767112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e267a6dc_72ac5006",
         "filename": "base/sync_socket_unittest.cc",
         "patchSetId": 2
