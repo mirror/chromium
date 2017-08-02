@@ -31,8 +31,10 @@
 #include "content/public/browser/web_ui_message_handler.h"
 #include "ui/base/ime/chromeos/ime_keyboard.h"
 #include "ui/base/ime/chromeos/input_method_manager.h"
+#include "ui/chromeos/events/event_rewriter_chromeos.h"
 #include "ui/chromeos/events/pref_names.h"
 #include "ui/display/manager/display_manager.h"
+#include "ui/events/devices/input_device_manager.h"
 
 using chromeos::input_method::ModifierKey;
 using content::WebUIMessageHandler;
@@ -65,6 +67,13 @@ struct I18nContentToMessage {
   const char* i18n_content;
   int message;
 } kI18nContentToMessage[] = {
+    {"keyboardOverlayAssistantKeyLabel",
+     IDS_KEYBOARD_OVERLAY_ASSISTANT_KEY_LABEL},
+    {"keyboardOverlayPlayPauseKeyLabel",
+     IDS_KEYBOARD_OVERLAY_PLAY_PAUSE_KEY_LABEL},
+    {"keyboardOverlaySystemMenuKeyLabel",
+     IDS_KEYBOARD_OVERLAY_SYSTEM_MENU_KEY_LABEL},
+    {"keyboardOverlayHomeKeyLabel", IDS_KEYBOARD_OVERLAY_HOME_KEY_LABEL},
     {"keyboardOverlayLearnMore", IDS_KEYBOARD_OVERLAY_LEARN_MORE},
     {"keyboardOverlayTitle", IDS_KEYBOARD_OVERLAY_TITLE},
     {"keyboardOverlayEscKeyLabel", IDS_KEYBOARD_OVERLAY_ESC_KEY_LABEL},
@@ -286,6 +295,19 @@ bool TopRowKeysAreFunctionKeys(Profile* profile) {
   return prefs ? prefs->GetBoolean(prefs::kLanguageSendFunctionKeys) : false;
 }
 
+bool UsesEveKeyboardLayout() {
+  for (const ui::InputDevice& keyboard :
+       ui::InputDeviceManager::GetInstance()->GetKeyboardDevices()) {
+    if (keyboard.type == ui::InputDeviceType::INPUT_DEVICE_INTERNAL &&
+        ui::EventRewriterChromeOS::GetKeyboardTopRowLayout(keyboard.sys_path) ==
+            ui::EventRewriterChromeOS::kKbdTopRowLayout2) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
 std::string ModifierKeyToLabel(ModifierKey modifier) {
   for (size_t i = 0; i < arraysize(kModifierToLabels); ++i) {
     if (modifier == kModifierToLabels[i].modifier) {
@@ -313,6 +335,7 @@ content::WebUIDataSource* CreateKeyboardOverlayUIHTMLSource(Profile* profile) {
                      TopRowKeysAreFunctionKeys(profile));
   source->AddBoolean("voiceInteractionEnabled",
                      chromeos::switches::IsVoiceInteractionEnabled());
+  source->AddBoolean("keyboardOverlayUsesEveLayout", UsesEveKeyboardLayout());
   ash::Shell* shell = ash::Shell::Get();
   display::DisplayManager* display_manager = shell->display_manager();
   source->AddBoolean("keyboardOverlayIsDisplayUIScalingEnabled",
