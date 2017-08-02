@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "9457f668_af444752",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/service/reconnect-during.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-08-02T03:40:51Z",
+      "side": 1,
+      "message": "I wouldn\u0027t be against having all the setup code be in the iframe but we will need the fake objects in the test i.e. main frame, so we can\u0027t :/ \n\nI agree that the setup should be in getHealthThermometerDeviceWithServicesDiscovered, just not in the iframe.\n\n(Currently, we don\u0027t need the fake objects in the test but we\u0027ll probably need them for the GATT Operations variants of this test).",
+      "parentUuid": "48487171_11f8d415",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 80
+      },
+      "revId": "3535a8a5a248d59a95320af2e2fa21b2e0b31257",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc2fed24_159d312b",
         "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/service/reconnect-during.js",
         "patchSetId": 8
