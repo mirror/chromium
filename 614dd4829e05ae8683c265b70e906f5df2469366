@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66bdc0ee_3d314987",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerGlobalScope.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-02T05:22:20Z",
+      "side": 1,
+      "message": "nit: move this in the case kSuccess part and just have NOTREACHED() after the switch",
+      "revId": "614dd4829e05ae8683c265b70e906f5df2469366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78bdf635_7047b50d",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerGlobalScope.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-02T05:22:20Z",
+      "side": 1,
+      "message": "Does this TODO comment mean... we want to factor out these methods into the separate class that is dedicated to provide the worker scripts without exposing these details to WorkerGlobalScope?",
+      "revId": "614dd4829e05ae8683c265b70e906f5df2469366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22f5e6f3_13b401db",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerGlobalScope.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-02T05:22:20Z",
+      "side": 1,
+      "message": "Do we need to prefix these methods with \u0027Try\u0027?  Doesn\u0027t look we need it at least for the latter one, and maybe just fine with not having it for the former one as well?",
+      "revId": "614dd4829e05ae8683c265b70e906f5df2469366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78df99e8_62499e19",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-02T05:22:20Z",
+      "side": 1,
+      "message": "It\u0027s probably worth having some comment for kTaken case for main script",
+      "revId": "614dd4829e05ae8683c265b70e906f5df2469366",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
