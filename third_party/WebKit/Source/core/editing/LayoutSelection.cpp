@@ -198,6 +198,17 @@ struct PaintInvalidationSet {
     return *this;
   }
 
+  void InsertLayoutObjectAndAncestorBlocks(LayoutObject* layout_object) {
+    layout_objects.insert(layout_object);
+    for (LayoutBlock* containing_block = layout_object->ContainingBlock();
+         containing_block && !containing_block->IsLayoutView();
+         containing_block = containing_block->ContainingBlock()) {
+      auto result = layout_blocks.insert(containing_block);
+      if (!result.is_new_entry)
+        break;
+    }
+  }
+
  private:
   DISALLOW_COPY_AND_ASSIGN(PaintInvalidationSet);
 };
@@ -208,16 +219,8 @@ static PaintInvalidationSet CollectInvalidationSet(
     return PaintInvalidationSet();
 
   PaintInvalidationSet invalidation_set;
-  for (LayoutObject* runner : range) {
-    invalidation_set.layout_objects.insert(runner);
-    for (LayoutBlock* containing_block = runner->ContainingBlock();
-         containing_block && !containing_block->IsLayoutView();
-         containing_block = containing_block->ContainingBlock()) {
-      auto result = invalidation_set.layout_blocks.insert(containing_block);
-      if (!result.is_new_entry)
-        break;
-    }
-  }
+  for (LayoutObject* runner : range)
+    invalidation_set.InsertLayoutObjectAndAncestorBlocks(runner);
   return invalidation_set;
 }
 
@@ -290,27 +293,6 @@ class SelectionMarkingRange {
  private:
   DISALLOW_COPY_AND_ASSIGN(SelectionMarkingRange);
 };
-
-// Update the selection status of all LayoutObjects in |range|.
-static void SetSelectionState(const SelectionPaintRange& range) {
-  if (range.IsNull())
-    return;
-
-  if (range.StartLayoutObject() == range.EndLayoutObject()) {
-    range.StartLayoutObject()->SetSelectionStateIfNeeded(
-        SelectionState::kStartAndEnd);
-  } else {
-    range.StartLayoutObject()->SetSelectionStateIfNeeded(
-        SelectionState::kStart);
-    range.EndLayoutObject()->SetSelectionStateIfNeeded(SelectionState::kEnd);
-  }
-
-  for (LayoutObject* runner : range) {
-    if (runner != range.StartLayoutObject() &&
-        runner != range.EndLayoutObject() && runner->CanBeSelectionLeaf())
-      runner->SetSelectionStateIfNeeded(SelectionState::kInside);
-  }
-}
 
 // Set ShouldInvalidateSelection flag of LayoutObjects
 // comparing them in |new_range| and |old_range|.
@@ -392,6 +374,111 @@ void LayoutSelection::ClearSelection() {
   paint_range_ = SelectionPaintRange();
 }
 
+Node* ComputeNodeAfterPosition(const PositionInFlatTree& position) {
+  if (!position.AnchorNode())
+    return 0;
+
+  Node& anchor_node = *position.AnchorNode();
+  switch (position.AnchorType()) {
+    case PositionAnchorType::kBeforeChildren: {
+      if (Node* first_child = FlatTreeTraversal::FirstChild(anchor_node))
+        return first_child;
+      FlatTreeTraversal::NextSkippingChildren(anchor_node);
+    }
+    case PositionAnchorType::kAfterChildren:
+      return FlatTreeTraversal::NextSkippingChildren(anchor_node);
+    case PositionAnchorType::kOffsetInAnchor: {
+      if (anchor_node.IsCharacterDataNode())
+        return FlatTreeTraversal::Next(anchor_node);
+      if (Node* child_at = FlatTreeTraversal::ChildAt(
+              anchor_node, position.OffsetInContainerNode()))
+        return child_at;
+      return FlatTreeTraversal::Next(anchor_node);
+    }
+    case PositionAnchorType::kBeforeAnchor:
+      return FlatTreeTraversal::Next(anchor_node);
+    case PositionAnchorType::kAfterAnchor:
+      return FlatTreeTraversal::NextSkippingChildren(anchor_node);
+  }
+  NOTREACHED();
+  return 0;
+}
+
+static Node* ComputeStopNode(const PositionInFlatTree& position) {
+  if (!position.AnchorNode())
+    return 0;
+
+  Node& anchor_node = *position.AnchorNode();
+  switch (position.AnchorType()) {
+    case PositionAnchorType::kBeforeChildren: {
+      if (Node* first_child = FlatTreeTraversal::FirstChild(anchor_node))
+        return first_child;
+      FlatTreeTraversal::NextSkippingChildren(anchor_node);
+    }
+    case PositionAnchorType::kAfterChildren:
+      return FlatTreeTraversal::NextSkippingChildren(anchor_node);
+    case PositionAnchorType::kOffsetInAnchor: {
+      if (anchor_node.IsCharacterDataNode())
+        return &anchor_node;
+      if (Node* child_at = FlatTreeTraversal::ChildAt(
+              anchor_node, position.OffsetInContainerNode()))
+        return child_at;
+      return FlatTreeTraversal::Next(anchor_node);
+    }
+    case PositionAnchorType::kBeforeAnchor:
+      return &anchor_node;
+    case PositionAnchorType::kAfterAnchor:
+      return FlatTreeTraversal::NextSkippingChildren(anchor_node);
+  }
+  NOTREACHED();
+  return 0;
+}
+
+static HeapVector<Member<Node>> GetAncestors(Node* node) {
+  HeapVector<Member<Node>> ancestors;
+  for (Node* runner = node; runner;) {
+    ancestors.push_back(runner);
+    Node* next = FlatTreeTraversal::Parent(*runner);
+    if (runner == next)
+      break;
+    runner = next;
+  }
+  return ancestors;
+}
+
+static Optional<int> Compare(Node* a, Node* b) {
+  if (!a || !b)
+    return {};
+  if (a == b)
+    return {0};
+  const HeapVector<Member<Node>>& a_ancestors = GetAncestors(a);
+  const HeapVector<Member<Node>>& b_ancestors = GetAncestors(b);
+  if (a_ancestors[a_ancestors.size() - 1] !=
+      b_ancestors[b_ancestors.size() - 1])
+    return {};
+  Node* recentAncestor = a_ancestors[a_ancestors.size() - 1];
+  size_t i = 0;
+  for (; i < std::min(a_ancestors.size(), b_ancestors.size()); ++i) {
+    if (a_ancestors[a_ancestors.size() - 1 - i] !=
+        b_ancestors[b_ancestors.size() - 1 - i])
+      break;
+    recentAncestor = a_ancestors[a_ancestors.size() - 1 - i];
+  }
+
+  if (i == a_ancestors.size())
+    return {-1};  // a is ancestor of b
+  if (i == b_ancestors.size())
+    return {1};  // b is ancestor of a
+  Node* const a_child_of_RA = a_ancestors[a_ancestors.size() - 1 - i];
+  Node* const b_child_of_RA = b_ancestors[b_ancestors.size() - 1 - i];
+  for (Node* runner = a_child_of_RA; runner;
+       runner = FlatTreeTraversal::Next(*runner)) {
+    if (runner == b_child_of_RA)
+      return {-1};
+  }
+  return {1};
+}
+
 static SelectionMarkingRange CalcSelectionRangeAndSetSelectionState(
     const FrameSelection& frame_selection) {
   const SelectionInDOMTree& selection_in_dom =
@@ -405,8 +492,7 @@ static SelectionMarkingRange CalcSelectionRangeAndSetSelectionState(
     return {};
 
   // Find first/last LayoutObject and its offset.
-  // TODO(yoichio): This traverse and marking(L405-L427) should be on Flat tree
-  // rather than Layout tree.
+  // TODO(yoichio): Find LayoutObject w/o canonicalization.
   const PositionInFlatTree& start_pos =
       FindFirstVisiblePosition(selection.StartPosition());
   const PositionInFlatTree& end_pos =
@@ -417,21 +503,52 @@ static SelectionMarkingRange CalcSelectionRangeAndSetSelectionState(
   // <div>foo<div style="visibility:hidden">^bar|</div>baz</div>.
   if (start_pos >= end_pos)
     return {};
-  LayoutObject* start_layout_object = start_pos.AnchorNode()->GetLayoutObject();
-  LayoutObject* end_layout_object = end_pos.AnchorNode()->GetLayoutObject();
+
+  LayoutObject* const start_layout_object =
+      start_pos.AnchorNode()->GetLayoutObject();
+  LayoutObject* const end_layout_object =
+      end_pos.AnchorNode()->GetLayoutObject();
   DCHECK(start_layout_object);
   DCHECK(end_layout_object);
   DCHECK(start_layout_object->View() == end_layout_object->View());
   if (!start_layout_object || !end_layout_object)
     return {};
 
-  SelectionPaintRange range = {
-      start_layout_object, start_pos.ComputeEditingOffset(), end_layout_object,
-      end_pos.ComputeEditingOffset()};
-  SetSelectionState(range);
+  // Marking and collect invalidation candidate LayoutObjects.
+  PaintInvalidationSet invalidation_set;
+  Node* const node_after_start_pos = ComputeNodeAfterPosition(start_pos);
+  Node* const node_stop = ComputeStopNode(end_pos);
+  Optional<int> order = Compare(node_after_start_pos, node_stop);
+  if (order.has_value() && order.value() < 0) {
+    for (Node* runner = node_after_start_pos; runner && runner != node_stop;
+         runner = FlatTreeTraversal::Next(*runner)) {
+      LayoutObject* const layout_object = runner->GetLayoutObject();
+      if (!layout_object || !layout_object->CanBeSelectionLeaf())
+        continue;
+      layout_object->SetSelectionStateIfNeeded(SelectionState::kInside);
+      invalidation_set.InsertLayoutObjectAndAncestorBlocks(layout_object);
+    }
+  }
+  if (start_layout_object == end_layout_object) {
+    start_layout_object->SetSelectionStateIfNeeded(
+        SelectionState::kStartAndEnd);
+    invalidation_set.InsertLayoutObjectAndAncestorBlocks(start_layout_object);
+  } else {
+    start_layout_object->SetSelectionStateIfNeeded(SelectionState::kStart);
+    invalidation_set.InsertLayoutObjectAndAncestorBlocks(start_layout_object);
+    end_layout_object->SetSelectionStateIfNeeded(SelectionState::kEnd);
+    invalidation_set.InsertLayoutObjectAndAncestorBlocks(end_layout_object);
+  }
+
+  DCHECK(start_layout_object->GetSelectionState() == SelectionState::kStart ||
+         start_layout_object->GetSelectionState() ==
+             SelectionState::kStartAndEnd);
+  DCHECK(end_layout_object->GetSelectionState() == SelectionState::kEnd ||
+         end_layout_object->GetSelectionState() ==
+             SelectionState::kStartAndEnd);
   return {start_layout_object, start_pos.ComputeEditingOffset(),
           end_layout_object, end_pos.ComputeEditingOffset(),
-          CollectInvalidationSet(range)};
+          std::move(invalidation_set)};
 }
 
 void LayoutSelection::SetHasPendingSelection() {
