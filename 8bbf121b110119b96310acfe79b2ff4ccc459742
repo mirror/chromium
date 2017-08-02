@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa2b92e7_0045132d",
+        "filename": "chrome/common/profiling/memlog.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-02T08:01:13Z",
+      "side": 1,
+      "message": "I would feel more comfortable if this was split into a separate interface not exposed to anything except browser process (even though I know this is behind a flag atm).\n\nIf that\u0027s too much trouble for this CL, maybe add a TODO? ajwong, rockot, and I had a discussion of how to broker this so that this wouldn\u0027t be exposed to anything except the browser.",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 51
+      },
+      "revId": "8bbf121b110119b96310acfe79b2ff4ccc459742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aeb81f28_fa4a49a8",
+        "filename": "chrome/profiling/memlog_connection_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-02T08:01:13Z",
+      "side": 1,
+      "message": "Any particular reason not to use DLOG instead?",
+      "range": {
+        "startLine": 100,
+        "startChar": 4,
+        "endLine": 100,
+        "endChar": 7
+      },
+      "revId": "8bbf121b110119b96310acfe79b2ff4ccc459742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b7fddfe_82b6f1b7",
+        "filename": "chrome/profiling/memlog_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-02T08:01:13Z",
+      "side": 1,
+      "message": "Ditto. I guess it\u0027s because we want to profile release/official builds?",
+      "range": {
+        "startLine": 41,
+        "startChar": 4,
+        "endLine": 41,
+        "endChar": 7
+      },
+      "revId": "8bbf121b110119b96310acfe79b2ff4ccc459742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91caf1dc_76e91ad2",
+        "filename": "chrome/profiling/memlog_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-02T08:01:13Z",
+      "side": 1,
+      "message": "Why is it safe for this to be unretained?\n\n(Oh, never mind... I see this documented above. I wish we had a better way to document this...)",
+      "range": {
+        "startLine": 47,
+        "startChar": 32,
+        "endLine": 47,
+        "endChar": 74
+      },
+      "revId": "8bbf121b110119b96310acfe79b2ff4ccc459742",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
