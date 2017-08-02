@@ -87,6 +87,24 @@
       "revId": "aa0f340823c1d2f7bf11373f38fc314c62f05875",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "dd753a4c_311a6e0b",
+        "filename": "tools/gritsettings/resource_ids",
+        "patchSetId": 11
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-02T20:17:46Z",
+      "side": 1,
+      "message": "The difference between this and the next number is how many resources fit in this section. This is fine, but if the one below reaches ~20000, then we have a problem. We actually ran out of resource numbers at one point, so I defragmented this file.",
+      "parentUuid": "af4f4b75_5d70eb72",
+      "revId": "aa0f340823c1d2f7bf11373f38fc314c62f05875",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
