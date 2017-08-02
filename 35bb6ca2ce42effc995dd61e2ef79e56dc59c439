@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cef8ad2d_37be923f",
+        "filename": "chrome/browser/ui/views/tabs/tab_strip_controller.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-02T17:50:17Z",
+      "side": 1,
+      "message": "Nit: TabStrip.",
+      "range": {
+        "startLine": 131,
+        "startChar": 45,
+        "endLine": 131,
+        "endChar": 53
+      },
+      "revId": "35bb6ca2ce42effc995dd61e2ef79e56dc59c439",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

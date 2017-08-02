@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "9827fb40_67eade16",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-02T17:50:17Z",
+      "side": 1,
+      "message": "Nit: Remove this. It\u0027s implicit as this is in the change description.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 18
+      },
+      "revId": "fc253c93028c64494dd89332a9b4f65d859bef89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "83071904_0dfd8659",
         "filename": "chrome/browser/ui/views/tabs/tab_strip_controller.h",
         "patchSetId": 4
