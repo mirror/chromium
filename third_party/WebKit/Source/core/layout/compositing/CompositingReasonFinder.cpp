@@ -232,13 +232,21 @@ bool CompositingReasonFinder::RequiresCompositingForScrollDependentPosition(
        layer->CompositesWithTransform() || layer->CompositesWithOpacity())) {
     return false;
   }
-  // Don't promote fixed position elements that are descendants of a non-view
-  // container, e.g. transformed elements.  They will stay fixed wrt the
-  // container rather than the enclosing frame.
   EPosition position = layer->GetLayoutObject().Style()->GetPosition();
-  if (position == EPosition::kFixed)
-    return layer->FixedToViewport() &&
-           layout_view_.GetFrameView()->IsScrollable();
+  if (position == EPosition::kFixed) {
+    // Don't promote fixed position elements that are descendants of a non-view
+    // container, e.g. transformed elements.  They will stay fixed wrt the
+    // container rather than the enclosing frame.
+    if (!layer->FixedToViewport())
+      return false;
+
+    // If the view isn't scrollable, we might as well just paint right into it.
+    // The exception is if the view isn't the effective root scroller. In that
+    // case, we want to appear as if the layer is fixed wrt the that scroller
+    // so we need to composite to ensure the correct paint order.
+    return layout_view_.GetFrameView()->IsScrollable() ||
+           !RootScrollerUtil::IsEffective(layout_view_);
+  }
   DCHECK_EQ(position, EPosition::kSticky);
 
   // Don't promote sticky position elements that cannot move with scrolls.
