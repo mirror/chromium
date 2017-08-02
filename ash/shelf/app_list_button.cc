@@ -19,6 +19,7 @@
 #include "ash/system/tray/tray_popup_utils.h"
 #include "ash/wm/tablet_mode/tablet_mode_controller.h"
 #include "base/command_line.h"
+#include "base/i18n/rtl.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/user_metrics.h"
 #include "base/metrics/user_metrics_action.h"
@@ -66,7 +67,8 @@ AppListButton::AppListButton(InkDropButtonListener* listener,
       background_color_(kShelfDefaultBaseColor),
       listener_(listener),
       shelf_view_(shelf_view),
-      shelf_(shelf) {
+      shelf_(shelf),
+      is_rtl_(base::i18n::IsRTL()) {
   DCHECK(listener_);
   DCHECK(shelf_view_);
   DCHECK(shelf_);
@@ -90,6 +92,11 @@ AppListButton::AppListButton(InkDropButtonListener* listener,
   } else {
     voice_interaction_overlay_ = nullptr;
   }
+
+  // Disable canvas flipping for this view, otherwise there will be a lot of
+  // edge cases with ink drops, events, etc. in tablet mode where we have two
+  // buttons in one.
+  EnableCanvasFlippingForRTLUI(false);
 }
 
 AppListButton::~AppListButton() {
@@ -318,15 +325,28 @@ void AppListButton::PaintButtonContents(gfx::Canvas* canvas) {
     //    |_________|         |         |
     //                        |___(2)___|
     gfx::PointF back_center(GetBackButtonCenterPoint());
+    gfx::PointF center_with_smaller_x = back_center;
+    gfx::PointF center_with_larger_x = circle_center;
+
+    // This is the case for rtl layout.
+    if (back_center.x() > circle_center.x()) {
+      center_with_smaller_x = circle_center;
+      center_with_larger_x = back_center;
+    }
+
     gfx::RectF background_bounds(
-        shelf_->PrimaryAxisValue(back_center.x(),
-                                 back_center.x() - kAppListButtonRadius),
-        shelf_->PrimaryAxisValue(back_center.y() - kAppListButtonRadius,
-                                 back_center.y()),
-        shelf_->PrimaryAxisValue(circle_center.x() - back_center.x(),
-                                 2 * kAppListButtonRadius),
-        shelf_->PrimaryAxisValue(2 * kAppListButtonRadius,
-                                 circle_center.y() - back_center.y()));
+        shelf_->PrimaryAxisValue(
+            center_with_smaller_x.x(),
+            center_with_smaller_x.x() - kAppListButtonRadius),
+        shelf_->PrimaryAxisValue(
+            center_with_smaller_x.y() - kAppListButtonRadius,
+            center_with_smaller_x.y()),
+        shelf_->PrimaryAxisValue(
+            center_with_larger_x.x() - center_with_smaller_x.x(),
+            2 * kAppListButtonRadius),
+        shelf_->PrimaryAxisValue(
+            2 * kAppListButtonRadius,
+            center_with_larger_x.y() - center_with_smaller_x.y()));
 
     // Create the path by drawing two circles, one around the back button and
     // one around the app list circle. Join them with the rectangle calculated
@@ -339,7 +359,8 @@ void AppListButton::PaintButtonContents(gfx::Canvas* canvas) {
     canvas->DrawPath(path, bg_flags);
 
     // Draw the back button icon.
-    // TODO(sammiequon): Check if the back button should be flipped in RTL.
+    // TODO(sammiequon): Use a right arrow for the back icon for RTL once that
+    // is available.
     gfx::ImageSkia back_button =
         CreateVectorIcon(kShelfBackIcon, SK_ColorTRANSPARENT);
 
@@ -403,7 +424,7 @@ gfx::Point AppListButton::GetAppListButtonCenterPoint() const {
   // width than height (in the case of a shelf hide/show animation), so adjust
   // the y-position of the circle's center to ensure correct layout. Similarly
   // adjust the x-position for a left- or right-aligned shelf. In tablet
-  // mode, the button will increase it's primary axis size to accommodate the
+  // mode, the button will increase its primary axis size to accommodate the
   // back button arrow in addition to the app list button circle.
   const int x_mid = width() / 2.f;
   const int y_mid = height() / 2.f;
@@ -417,6 +438,10 @@ gfx::Point AppListButton::GetAppListButtonCenterPoint() const {
   if (alignment == SHELF_ALIGNMENT_BOTTOM ||
       alignment == SHELF_ALIGNMENT_BOTTOM_LOCKED) {
     if (is_tablet_mode || is_animating) {
+      // If we are in rtl the app list circle is in front of the back button.
+      if (is_rtl_)
+        return gfx::Point(kShelfButtonSize / 2.f, kShelfButtonSize / 2.f);
+
       return gfx::Point(width() - kShelfButtonSize / 2.f,
                         kShelfButtonSize / 2.f);
     }
@@ -438,8 +463,18 @@ gfx::Point AppListButton::GetAppListButtonCenterPoint() const {
 }
 
 gfx::Point AppListButton::GetBackButtonCenterPoint() const {
-  if (shelf_->alignment() == SHELF_ALIGNMENT_LEFT)
+  ShelfAlignment alignment = shelf_->alignment();
+  if (alignment == SHELF_ALIGNMENT_LEFT)
     return gfx::Point(width() - kShelfButtonSize / 2.f, kShelfButtonSize / 2.f);
+
+  // If we are in rtl the back button is behind the app list circle.
+  if (alignment == SHELF_ALIGNMENT_BOTTOM ||
+      alignment == SHELF_ALIGNMENT_BOTTOM_LOCKED) {
+    if (is_rtl_) {
+      return gfx::Point(width() - kShelfButtonSize / 2.f,
+                        kShelfButtonSize / 2.f);
+    }
+  }
 
   return gfx::Point(kShelfButtonSize / 2.f, kShelfButtonSize / 2.f);
 }

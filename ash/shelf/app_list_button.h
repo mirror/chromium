@@ -104,6 +104,9 @@ class ASH_EXPORT AppListButton : public views::ImageButton,
   // then used to render the ink drop in the right location.
   bool last_event_is_back_event_ = false;
 
+  // Cached flag that states whether the program is ltr or rtl.
+  const bool is_rtl_ = false;
+
   DISALLOW_COPY_AND_ASSIGN(AppListButton);
 };
 
