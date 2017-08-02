@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83e8d70b_2c27764f",
+        "filename": "third_party/WebKit/Source/core/exported/WebPluginContainerImpl.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 400,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-02T19:13:29Z",
+      "side": 1,
+      "message": "See the impl of ExecuteEditCommand? it looks for Copy... the two param version of this method is likely flawed to.. I think it should work with ExecuteEditCommand(\"Copy\", \"\") passed in.",
+      "range": {
+        "startLine": 400,
+        "startChar": 15,
+        "endLine": 400,
+        "endChar": 19
+      },
+      "revId": "b75c683850d84bd6b859d4f9823d46b12d269f4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94eff345_2a019563",
+        "filename": "third_party/WebKit/public/web/WebPlugin.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-02T19:13:29Z",
+      "side": 1,
+      "message": "I\u0027d prefer that ExecuteEditCommand was just called.. but it looks like pepper doesn\u0027t implement those... is it possible to implement those?",
+      "range": {
+        "startLine": 163,
+        "startChar": 15,
+        "endLine": 163,
+        "endChar": 31
+      },
+      "revId": "b75c683850d84bd6b859d4f9823d46b12d269f4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
