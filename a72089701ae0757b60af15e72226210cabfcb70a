@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3655546_5c5f75f6",
+        "filename": "ui/base/win/shell.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-02T10:33:51Z",
+      "side": 1,
+      "message": "could you do the same in browser_window_property_manager_browsertest_win.cc?",
+      "revId": "a72089701ae0757b60af15e72226210cabfcb70a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e951ea57_13a007f7",
+        "filename": "ui/base/win/shell.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-02T10:33:51Z",
+      "side": 1,
+      "message": "i imagine this DWORD -\u003e int conversion will trigger an unsigned -\u003e signed error. why not early-exit if GetCount fails? there\u0027s no reason to call GetCount a second time below. if you care to, you could do something like this up above:\n\n  if (FAILED(result)) {\n    // Ordinarily, we wouldn\u0027t handle a failure case like this, but it would be\n    // nice to know in a debug build when there might be a potential leak\n    // resulting from not being able to remove properties set by Chrome.\n    NOTREACHED();\n    return;\n  }",
+      "range": {
+        "startLine": 182,
+        "startChar": 7,
+        "endLine": 182,
+        "endChar": 10
+      },
+      "revId": "a72089701ae0757b60af15e72226210cabfcb70a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
