@@ -9,10 +9,13 @@
 #include <new>
 
 #include "base/atomicops.h"
+#include "base/bind.h"
 #include "base/logging.h"
 #include "base/macros.h"
+#include "base/process/process.h"
 #include "base/process/process_metrics.h"
 #include "base/threading/platform_thread.h"
+#include "base/threading/thread.h"
 #include "build/build_config.h"
 
 #if !defined(OS_WIN)
@@ -35,6 +38,60 @@
 namespace {
 
 using namespace base;
+
+struct MetricsPrinter {
+  class ScopedUpdate {
+   public:
+    ScopedUpdate(MetricsPrinter* mp) :mp_(mp), start_(base::TimeTicks::Now()) {
+    }
+
+    ~ScopedUpdate() {
+      if (mp_) {
+        TimeDelta delta = TimeTicks::Now() - start_;
+        mp_->time_spent.fetch_add(delta.InNanoseconds(), std::memory_order_relaxed);
+        mp_->num_calls.fetch_add(1, std::memory_order_relaxed);
+      }
+    }
+
+   private:
+    MetricsPrinter* mp_;
+    base::TimeTicks start_;
+  };
+
+  MetricsPrinter(base::ProcessId pid)
+      : metrics_thread("metrics_printer") {
+    metrics_thread.Start();
+    PrintStats(pid, base::TimeDelta::FromSeconds(10));
+  }
+
+  void PrintStats(base::ProcessId pid, base::TimeDelta next_print) {
+    std::uint_fast64_t local_time_spent = time_spent;
+    std::uint_fast64_t local_num_calls = num_calls;
+    LOG(ERROR) << "  -- shim stats -- for (" << pid
+               << "): total time: " << local_time_spent
+               << " calls: " << local_num_calls
+               << " average: " << static_cast<double>(local_time_spent) / local_num_calls;
+
+    metrics_thread.task_runner()->PostDelayedTask(
+        FROM_HERE,
+        base::Bind(&MetricsPrinter::PrintStats,
+                   base::Unretained(this),
+                   pid,
+                   next_print),
+        next_print);
+  }
+
+  std::atomic_uint_fast64_t time_spent{0};
+  std::atomic_uint_fast64_t num_calls{0};
+
+  base::Thread metrics_thread;
+};
+
+MetricsPrinter* g_metrics_printer;
+
+MetricsPrinter::ScopedUpdate MeasureFunction() {
+  return MetricsPrinter::ScopedUpdate(g_metrics_printer);
+}
 
 subtle::AtomicWord g_chain_head = reinterpret_cast<subtle::AtomicWord>(
     &allocator::AllocatorDispatch::default_dispatch);
@@ -109,6 +166,10 @@ void* UncheckedAlloc(size_t size) {
 }
 
 void InsertAllocatorDispatch(AllocatorDispatch* dispatch) {
+  if (!g_metrics_printer) {
+    g_metrics_printer = new MetricsPrinter(base::Process::Current().Pid());
+  }
+
   // Loop in case of (an unlikely) race on setting the list head.
   size_t kMaxRetries = 7;
   for (size_t i = 0; i < kMaxRetries; ++i) {
@@ -166,6 +227,7 @@ extern "C" {
 //     - Assume it did succeed if it returns, in which case reattempt the alloc.
 
 ALWAYS_INLINE void* ShimCppNew(size_t size) {
+  MetricsPrinter::ScopedUpdate update = MeasureFunction();
   const allocator::AllocatorDispatch* const chain_head = GetChainHead();
   void* ptr;
   do {
@@ -179,6 +241,7 @@ ALWAYS_INLINE void* ShimCppNew(size_t size) {
 }
 
 ALWAYS_INLINE void ShimCppDelete(void* address) {
+  MetricsPrinter::ScopedUpdate update = MeasureFunction();
   void* context = nullptr;
 #if defined(OS_MACOSX)
   context = malloc_default_zone();
@@ -188,6 +251,7 @@ ALWAYS_INLINE void ShimCppDelete(void* address) {
 }
 
 ALWAYS_INLINE void* ShimMalloc(size_t size, void* context) {
+  MetricsPrinter::ScopedUpdate update = MeasureFunction();
   const allocator::AllocatorDispatch* const chain_head = GetChainHead();
   void* ptr;
   do {
@@ -198,6 +262,7 @@ ALWAYS_INLINE void* ShimMalloc(size_t size, void* context) {
 }
 
 ALWAYS_INLINE void* ShimCalloc(size_t n, size_t size, void* context) {
+  MetricsPrinter::ScopedUpdate update = MeasureFunction();
   const allocator::AllocatorDispatch* const chain_head = GetChainHead();
   void* ptr;
   do {
@@ -209,6 +274,7 @@ ALWAYS_INLINE void* ShimCalloc(size_t n, size_t size, void* context) {
 }
 
 ALWAYS_INLINE void* ShimRealloc(void* address, size_t size, void* context) {
+  MetricsPrinter::ScopedUpdate update = MeasureFunction();
   // realloc(size == 0) means free() and might return a nullptr. We should
   // not call the std::new_handler in that case, though.
   const allocator::AllocatorDispatch* const chain_head = GetChainHead();
@@ -221,6 +287,7 @@ ALWAYS_INLINE void* ShimRealloc(void* address, size_t size, void* context) {
 }
 
 ALWAYS_INLINE void* ShimMemalign(size_t alignment, size_t size, void* context) {
+  MetricsPrinter::ScopedUpdate update = MeasureFunction();
   const allocator::AllocatorDispatch* const chain_head = GetChainHead();
   void* ptr;
   do {
@@ -260,6 +327,7 @@ ALWAYS_INLINE void* ShimPvalloc(size_t size) {
 }
 
 ALWAYS_INLINE void ShimFree(void* address, void* context) {
+  MetricsPrinter::ScopedUpdate update = MeasureFunction();
   const allocator::AllocatorDispatch* const chain_head = GetChainHead();
   return chain_head->free_function(chain_head, address, context);
 }
@@ -274,6 +342,7 @@ ALWAYS_INLINE unsigned ShimBatchMalloc(size_t size,
                                        void** results,
                                        unsigned num_requested,
                                        void* context) {
+  MetricsPrinter::ScopedUpdate update = MeasureFunction();
   const allocator::AllocatorDispatch* const chain_head = GetChainHead();
   return chain_head->batch_malloc_function(chain_head, size, results,
                                            num_requested, context);
@@ -282,12 +351,14 @@ ALWAYS_INLINE unsigned ShimBatchMalloc(size_t size,
 ALWAYS_INLINE void ShimBatchFree(void** to_be_freed,
                                  unsigned num_to_be_freed,
                                  void* context) {
+  MetricsPrinter::ScopedUpdate update = MeasureFunction();
   const allocator::AllocatorDispatch* const chain_head = GetChainHead();
   return chain_head->batch_free_function(chain_head, to_be_freed,
                                          num_to_be_freed, context);
 }
 
 ALWAYS_INLINE void ShimFreeDefiniteSize(void* ptr, size_t size, void* context) {
+  MetricsPrinter::ScopedUpdate update = MeasureFunction();
   const allocator::AllocatorDispatch* const chain_head = GetChainHead();
   return chain_head->free_definite_size_function(chain_head, ptr, size,
                                                  context);
