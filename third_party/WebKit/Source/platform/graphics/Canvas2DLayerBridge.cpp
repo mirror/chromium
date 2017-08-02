@@ -65,11 +65,18 @@ enum {
                                   // two animation frames behind.
 };
 
-static void ReleaseMailboxImageResource(gpu::gles2::GLES2Interface* gl,
-                                        const gpu::SyncToken& sync_token,
-                                        sk_sp<SkImage> skImage,
-                                        const gpu::Mailbox& mailbox,
-                                        bool lost_resource) {
+static void ReleaseMailboxImageResource(
+    WeakPtr<blink::WebGraphicsContext3DProviderWrapper>
+        context_provider_wrapper,
+    const gpu::SyncToken& sync_token,
+    sk_sp<SkImage> skImage,
+    const gpu::Mailbox& mailbox,
+    bool lost_resource) {
+  gpu::gles2::GLES2Interface* gl =
+      (context_provider_wrapper && context_provider_wrapper->ContextProvider())
+          ? context_provider_wrapper->ContextProvider()->ContextGL()
+          : nullptr;
+
   if (sync_token.HasData() && gl)
     gl->WaitSyncTokenCHROMIUM(sync_token.GetConstData());
   GrTexture* texture = skImage->getTexture();
@@ -106,7 +113,7 @@ static void DeleteCHROMIUMImage(
     std::unique_ptr<gfx::GpuMemoryBuffer> gpu_memory_buffer,
     const GLuint& image_id,
     const GLuint& texture_id) {
-  if (!context_provider_wrapper->ContextProvider())
+  if (!context_provider_wrapper || !context_provider_wrapper->ContextProvider())
     return;
   gpu::gles2::GLES2Interface* gl =
       context_provider_wrapper->ContextProvider()->ContextGL();
