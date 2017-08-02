@@ -14,9 +14,7 @@
 #include "base/timer/timer.h"
 #include "components/keyed_service/core/keyed_service.h"
 
-namespace url {
-class Origin;
-}
+class GURL;
 
 namespace payments {
 
@@ -26,12 +24,15 @@ class CanMakePaymentQuery : public KeyedService {
   CanMakePaymentQuery();
   ~CanMakePaymentQuery() override;
 
-  // Returns whether |frame_origin| can call canMakePayment() with |query|,
-  // which is a mapping of payment method names to the corresponding
-  // JSON-stringified payment method data. Remembers the frame-to-query mapping
-  // for 30 minutes to enforce the quota.
-  bool CanQuery(const url::Origin& top_level_origin,
-                const url::Origin& frame_origin,
+  // Returns whether |top_level_origin| and |frame_origin| can call
+  // canMakePayment() with |query|, which is a mapping of payment method names
+  // to the corresponding JSON-stringified payment method data. Remembers the
+  // origins-to-query mapping for 30 minutes to enforce the quota. GURL is used
+  // instead of url::Origin to represent origins because they need to be
+  // serialized into map keys and url::Origin serializations must not be relied
+  // upon for security checks, according to url/origin.h.
+  bool CanQuery(const GURL& top_level_origin,
+                const GURL& frame_origin,
                 const std::map<std::string, std::set<std::string>>& query);
 
  private:

@@ -64,7 +64,6 @@
 #include "third_party/libaddressinput/chromium/chrome_metadata_source.h"
 #include "third_party/libaddressinput/chromium/chrome_storage_impl.h"
 #include "url/gurl.h"
-#include "url/origin.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -471,7 +470,8 @@ struct PendingPaymentResponse {
     pageFavicon = navigationItem->GetFavicon().image.ToUIImage();
   NSString* pageTitle = base::SysUTF16ToNSString(_activeWebState->GetTitle());
   NSString* pageHost =
-      base::SysUTF8ToNSString(_activeWebState->GetLastCommittedURL().host());
+      base::SysUTF8ToNSString(url_formatter::FormatUrlForSecurityDisplay(
+          _activeWebState->GetLastCommittedURL()));
   BOOL connectionSecure =
       _activeWebState->GetLastCommittedURL().SchemeIs(url::kHttpsScheme);
   autofill::AutofillManager* autofillManager =
@@ -547,8 +547,10 @@ struct PendingPaymentResponse {
   DCHECK(canMakePaymentQuery);
   // iOS PaymentRequest does not support iframes.
   if (canMakePaymentQuery->CanQuery(
-          url::Origin(_activeWebState->GetLastCommittedURL().GetOrigin()),
-          url::Origin(_activeWebState->GetLastCommittedURL().GetOrigin()),
+          url_formatter::FormatUrlForSecurityDisplay(
+              _activeWebState->GetLastCommittedURL()),
+          url_formatter::FormatUrlForSecurityDisplay(
+              _activeWebState->GetLastCommittedURL()),
           paymentRequest->stringified_method_data())) {
     [_paymentRequestJsManager
         resolveCanMakePaymentPromiseWithValue:canMakePayment
