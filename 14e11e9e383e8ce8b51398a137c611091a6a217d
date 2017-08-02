@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc6d8b52_8177af5d",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-02T00:24:26Z",
+      "side": 1,
+      "message": "nit: Generally, we don\u0027t place newlines between cases, but I think it makes sense here, since this is difficult to read otherwise.\n\ncase A:\ncase B:\ncase C:\n  return foo;\n\ncase D:\ncase E:\n  return bar;",
+      "range": {
+        "startLine": 282,
+        "startChar": 0,
+        "endLine": 282,
+        "endChar": 58
+      },
+      "revId": "14e11e9e383e8ce8b51398a137c611091a6a217d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "585c5599_9c52e8f5",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-02T00:24:26Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think it\u0027s strictly necessary to include the \"TetherTechnologyStateAndReason::\" prefix here. Can you remove it? I think it would aid readability.",
+      "range": {
+        "startLine": 283,
+        "startChar": 9,
+        "endLine": 283,
+        "endChar": 41
+      },
+      "revId": "14e11e9e383e8ce8b51398a137c611091a6a217d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3551d81_31f0b187",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-02T00:24:26Z",
+      "side": 1,
+      "message": "NOTREACHED()",
+      "range": {
+        "startLine": 302,
+        "startChar": 6,
+        "endLine": 303,
+        "endChar": 33
+      },
+      "revId": "14e11e9e383e8ce8b51398a137c611091a6a217d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c20e805_ae4c02b3",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-02T00:24:26Z",
+      "side": 1,
+      "message": "nit: No need for else clauses. Also, some whitespace would help readability a lot.\n\nif (shut_down_ || suspended_)\n  return OTHER_OR_UNKNOWN;\n\nif (!is_ble_advertising_supported_)\n  return UNAVAILABLE_BLE_ADVERTISING_NOT_SUPPORTED;\n\n...etc.",
+      "range": {
+        "startLine": 386,
+        "startChar": 0,
+        "endLine": 386,
+        "endChar": 33
+      },
+      "revId": "14e11e9e383e8ce8b51398a137c611091a6a217d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2cdfbf9_85ca6cbb",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-02T00:24:26Z",
+      "side": 1,
+      "message": "Where is this actually called? I see your test verifies that it is called, but I\u0027m not seeing it myself.",
+      "range": {
+        "startLine": 411,
+        "startChar": 20,
+        "endLine": 411,
+        "endChar": 52
+      },
+      "revId": "14e11e9e383e8ce8b51398a137c611091a6a217d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fa98cfb_8efc9b6a",
+        "filename": "chrome/browser/chromeos/tether/tether_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-02T00:24:26Z",
+      "side": 1,
+      "message": "This name is a bit cumbersome. Additionally, I\u0027m not sure we want to tightly couple the reason with the TechnologyState, since this could possibly be changed later. Instead, can we just change this to TetherStateTrigger and not include the prefixes (e.g., UNAVAILABLE_BLE_ADVERTISING_NOT_SUPPORTED --\u003e BLE_ADVERTISING_NOT_SUPPORTED)?\n\nSame change with enums.xml.",
+      "range": {
+        "startLine": 145,
+        "startChar": 7,
+        "endLine": 145,
+        "endChar": 37
+      },
+      "revId": "14e11e9e383e8ce8b51398a137c611091a6a217d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
