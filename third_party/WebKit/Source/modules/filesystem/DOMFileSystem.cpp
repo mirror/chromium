@@ -226,4 +226,9 @@ DEFINE_TRACE(DOMFileSystem) {
   ContextClient::Trace(visitor);
 }
 
+STATIC_ASSERT_ENUM(WebFileSystem::kTypeTemporary, kFileSystemTypeTemporary);
+STATIC_ASSERT_ENUM(WebFileSystem::kTypePersistent, kFileSystemTypePersistent);
+STATIC_ASSERT_ENUM(WebFileSystem::kTypeExternal, kFileSystemTypeExternal);
+STATIC_ASSERT_ENUM(WebFileSystem::kTypeIsolated, kFileSystemTypeIsolated);
+
 }  // namespace blink

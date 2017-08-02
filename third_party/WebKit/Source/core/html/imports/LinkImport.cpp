@@ -43,7 +43,9 @@
 #include "platform/weborigin/KURL.h"
 #include "platform/weborigin/ReferrerPolicy.h"
 #include "platform/weborigin/SecurityPolicy.h"
+#include "platform/wtf/Assertions.h"
 #include "platform/wtf/text/AtomicString.h"
+#include "public/platform/WebReferrerPolicy.h"
 
 namespace blink {
 
@@ -151,5 +153,19 @@ DEFINE_TRACE(LinkImport) {
   HTMLImportChildClient::Trace(visitor);
   LinkResource::Trace(visitor);
 }
+
+STATIC_ASSERT_ENUM(kWebReferrerPolicyAlways, kReferrerPolicyAlways);
+STATIC_ASSERT_ENUM(kWebReferrerPolicyDefault, kReferrerPolicyDefault);
+STATIC_ASSERT_ENUM(kWebReferrerPolicyNoReferrerWhenDowngrade,
+                   kReferrerPolicyNoReferrerWhenDowngrade);
+STATIC_ASSERT_ENUM(kWebReferrerPolicyNever, kReferrerPolicyNever);
+STATIC_ASSERT_ENUM(kWebReferrerPolicyOrigin, kReferrerPolicyOrigin);
+STATIC_ASSERT_ENUM(kWebReferrerPolicyOriginWhenCrossOrigin,
+                   kReferrerPolicyOriginWhenCrossOrigin);
+STATIC_ASSERT_ENUM(kWebReferrerPolicySameOrigin, kReferrerPolicySameOrigin);
+STATIC_ASSERT_ENUM(kWebReferrerPolicyStrictOrigin, kReferrerPolicyStrictOrigin);
+STATIC_ASSERT_ENUM(
+    kWebReferrerPolicyNoReferrerWhenDowngradeOriginWhenCrossOrigin,
+    kReferrerPolicyNoReferrerWhenDowngradeOriginWhenCrossOrigin);
 
 }  // namespace blink

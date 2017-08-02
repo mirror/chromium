@@ -31,7 +31,9 @@
 #include "build/build_config.h"
 #include "platform/RuntimeEnabledFeatures.h"
 #include "platform/scroll/ScrollbarTheme.h"
+#include "platform/wtf/Assertions.h"
 #include "platform/wtf/PtrUtil.h"
+#include "public/web/WebSettings.h"
 
 namespace blink {
 
@@ -106,5 +108,12 @@ void Settings::SetMockScrollbarsEnabled(bool flag) {
 bool Settings::MockScrollbarsEnabled() {
   return ScrollbarTheme::MockScrollbarsEnabled();
 }
+
+STATIC_ASSERT_ENUM(WebSettings::PassiveEventListenerDefault::kFalse,
+                   PassiveListenerDefault::kFalse);
+STATIC_ASSERT_ENUM(WebSettings::PassiveEventListenerDefault::kTrue,
+                   PassiveListenerDefault::kTrue);
+STATIC_ASSERT_ENUM(WebSettings::PassiveEventListenerDefault::kForceAllTrue,
+                   PassiveListenerDefault::kForceAllTrue);
 
 }  // namespace blink
