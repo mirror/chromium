@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a28da98a_6a3d9df2",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-08-02T23:58:10Z",
+      "side": 0,
+      "message": "\u003e There is ongoing work to 1. prevent CLs with red upstream PRs from landing\n\nThis work is not currently ongoing and it\u0027s undecided whether it will ever be implemented[1]. I think we should also remove this line.\n\n[1] To elaborate, the way I understand the current status of that discussion is: we haven\u0027t been seeing a ton of problems arise since people are presumably following our instructions and checking upstream PRs before landing, as well as the WPT infrastructure becoming more robust over time. It\u0027s currently debatable whether introducing a new CQ builder for this would be worth the engineering effort.",
+      "revId": "f2f6d8de2a633c4fe3c63fec01a869f452a2514b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
