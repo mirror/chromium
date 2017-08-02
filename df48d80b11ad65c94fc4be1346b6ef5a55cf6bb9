@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6bc949e3_083341fb",
+        "filename": "chrome/browser/ui/webui/snippets_internals_message_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T13:20:27Z",
+      "side": 1,
+      "message": "nit: maybe\nbool success \u003d ...;\nDCHECK(success);\n?",
+      "revId": "df48d80b11ad65c94fc4be1346b6ef5a55cf6bb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3988c06f_6f45e1c1",
+        "filename": "chrome/browser/ui/webui/snippets_internals_message_handler.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 568,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-02T13:20:27Z",
+      "side": 1,
+      "message": "Should probably also check that suggestions isn\u0027t null.",
+      "revId": "df48d80b11ad65c94fc4be1346b6ef5a55cf6bb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
