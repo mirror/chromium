@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "44708e98_e561397b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 33
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-02T23:08:34Z",
+      "side": 1,
+      "message": "nit: s/not/no/?",
+      "range": {
+        "startLine": 20,
+        "startChar": 50,
+        "endLine": 20,
+        "endChar": 53
+      },
+      "revId": "412161926908cf7093ac11e019d7e4a847b8fb96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73b4e757_fac4e6c9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 33
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-02T23:08:34Z",
+      "side": 1,
+      "message": "s/is/be/",
+      "range": {
+        "startLine": 27,
+        "startChar": 33,
+        "endLine": 27,
+        "endChar": 35
+      },
+      "revId": "412161926908cf7093ac11e019d7e4a847b8fb96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36258b85_c0d1fdaf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 33
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-02T23:08:34Z",
+      "side": 1,
+      "message": "allow?",
+      "range": {
+        "startLine": 38,
+        "startChar": 21,
+        "endLine": 38,
+        "endChar": 24
+      },
+      "revId": "412161926908cf7093ac11e019d7e4a847b8fb96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c46e3e6c_6290172e",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 33
@@ -48,6 +117,115 @@
       "writtenOn": "2017-08-02T15:59:30Z",
       "side": 1,
       "message": "This line is failing as the InterfaceRequest is never delivered to the registered binder.",
+      "revId": "412161926908cf7093ac11e019d7e4a847b8fb96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbb1f098_df230ff7",
+        "filename": "content/common/content_message_generator.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-02T23:08:34Z",
+      "side": 1,
+      "message": "Why is this include needed? Especially since it is after the frame_messages.h is already included, which will declare the params struct.",
+      "revId": "412161926908cf7093ac11e019d7e4a847b8fb96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5e59b52_fe9dae2e",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 33
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-02T23:08:34Z",
+      "side": 1,
+      "message": "Why do we have this as a separate method call? It feels like any setup needed for the initial empty document should be done as part of CreateFrame in FrameFactory.",
+      "range": {
+        "startLine": 106,
+        "startChar": 2,
+        "endLine": 106,
+        "endChar": 46
+      },
+      "revId": "412161926908cf7093ac11e019d7e4a847b8fb96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "233719e0_3538667d",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 33
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-02T23:08:34Z",
+      "side": 1,
+      "message": "I find the name \"request\" to be a bit misleading, given that the type is InterfaceProvider. Not sure if this is to keep it consistent with other APIs that make Mojo interface requests.",
+      "range": {
+        "startLine": 116,
+        "startChar": 48,
+        "endLine": 116,
+        "endChar": 55
+      },
+      "revId": "412161926908cf7093ac11e019d7e4a847b8fb96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3698c6d_3f10279e",
+        "filename": "content/common/frame_messages_forward.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-02T23:08:34Z",
+      "side": 1,
+      "message": "nit: Please spell out the full word.",
+      "range": {
+        "startLine": 8,
+        "startChar": 3,
+        "endLine": 8,
+        "endChar": 6
+      },
+      "revId": "412161926908cf7093ac11e019d7e4a847b8fb96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6d52d6d_901da859",
+        "filename": "content/renderer/media/media_factory.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-02T23:08:34Z",
+      "side": 1,
+      "message": "nit: s/is it might/it can/?",
+      "range": {
+        "startLine": 141,
+        "startChar": 32,
+        "endLine": 141,
+        "endChar": 34
+      },
       "revId": "412161926908cf7093ac11e019d7e4a847b8fb96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
