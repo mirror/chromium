@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "68c252e0_c51a1fc7",
+        "filename": "chrome/browser/extensions/extension_apitest.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-02T15:17:38Z",
+      "side": 1,
+      "message": "Long term, I think I\u0027d prefer the struct, but that\u0027s fine to relegate to a another CL.  A flag entry would be fine here.",
+      "parentUuid": "260a5552_35614614",
+      "revId": "401d1fe7cfac07d81849f31e6380e50531868ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7803ceb6_9d7c4f51",
         "filename": "chrome/browser/extensions/extension_apitest.h",
         "patchSetId": 6
