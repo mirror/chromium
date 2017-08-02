@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85ea68e7_dee73cb1",
+        "filename": "ui/app_list/views/page_switcher_vertical.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-08-02T03:04:32Z",
+      "side": 0,
+      "message": "I am worrying about other usages of PageSwitcherButton, not only as in your scenario.\n\nCould you use triggerable_event_flags() to control your behavior?",
+      "range": {
+        "startLine": 75,
+        "startChar": 7,
+        "endLine": 75,
+        "endChar": 25
+      },
+      "revId": "fd6a90946d898d4b0a2caee68fbcd99bd89aca86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
