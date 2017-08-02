@@ -268,6 +268,7 @@ void DemuxerStreamAdapter::OnNewBuffer(
 
   switch (status) {
     case DemuxerStream::kAborted:
+    case DemuxerStream::kError:
       DCHECK(!input);
       SendReadAck();
       return;

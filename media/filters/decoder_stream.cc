@@ -595,12 +595,21 @@ void DecoderStream<StreamType>::OnBufferReady(
         pending_buffers_.clear();
         break;
       case DemuxerStream::kAborted:
-        // |this| will read from the demuxer stream again in OnDecoderSelected()
-        // and receive a kAborted then.
+      case DemuxerStream::kError:
+        // Will read from the demuxer stream again in OnDecoderSelected().
         pending_buffers_.clear();
         break;
     }
     return;
+  }
+
+  if (status == DemuxerStream::kError) {
+    FUNCTION_DVLOG(1) << ": Demuxer stream read error!";
+    state_ = STATE_ERROR;
+    pending_buffers_.clear();
+    ready_outputs_.clear();
+    if (!read_cb_.is_null())
+      SatisfyRead(DECODE_ERROR, nullptr);
   }
 
   // Decoding has been stopped.
