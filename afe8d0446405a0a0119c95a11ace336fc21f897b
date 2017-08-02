@@ -16,6 +16,24 @@
       "revId": "afe8d0446405a0a0119c95a11ace336fc21f897b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afe7a59b_459aa355",
+        "filename": "content/browser/frame_host/render_frame_host_impl.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-02T23:06:07Z",
+      "side": 0,
+      "message": "The API already documents itself.",
+      "parentUuid": "0d3b33e9_37ea7a7a",
+      "revId": "afe8d0446405a0a0119c95a11ace336fc21f897b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

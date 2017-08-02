@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "db37858f_c1a44378",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 19
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-02T23:06:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02d51bbd_27cde4e9",
+      "range": {
+        "startLine": 11,
+        "startChar": 9,
+        "endLine": 11,
+        "endChar": 10
+      },
+      "revId": "e8d15b79e153c9fc8bf5f30f23a2c8fbf9f317e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7bd62502_ef1f7a2a",
         "filename": "/COMMIT_MSG",
         "patchSetId": 19
@@ -39,6 +63,24 @@
       "revId": "e8d15b79e153c9fc8bf5f30f23a2c8fbf9f317e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83d0a647_e04b0195",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 19
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-02T23:06:07Z",
+      "side": 1,
+      "message": "It actually returns nullptr already without this change. This change is a fix for cases when service manager connection is not available.",
+      "parentUuid": "7bd62502_ef1f7a2a",
+      "revId": "e8d15b79e153c9fc8bf5f30f23a2c8fbf9f317e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "48aa0383_415fa7d0",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_impl.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-02T23:06:07Z",
+      "side": 1,
+      "message": "Done\n\nIt was supposed to be in protected, thanks for catching this.",
+      "parentUuid": "fb50fb02_2efbcc61",
+      "revId": "e8d15b79e153c9fc8bf5f30f23a2c8fbf9f317e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17e20e09_923bdfa2",
         "filename": "services/resource_coordinator/coordination_unit/coordination_unit_impl.h",
         "patchSetId": 19
@@ -73,6 +133,24 @@
       "revId": "e8d15b79e153c9fc8bf5f30f23a2c8fbf9f317e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88f35663_97e34f8b",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_impl.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-02T23:06:07Z",
+      "side": 1,
+      "message": "Done\n\nI personally don\u0027t think it matters since it\u0027s simple enough, but point taken.",
+      "parentUuid": "17e20e09_923bdfa2",
+      "revId": "e8d15b79e153c9fc8bf5f30f23a2c8fbf9f317e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -96,6 +174,30 @@
       "revId": "e8d15b79e153c9fc8bf5f30f23a2c8fbf9f317e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4206e255_ae7167ef",
+        "filename": "services/resource_coordinator/coordination_unit/web_contents_coordination_unit_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-02T23:06:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29d81754_076dc76c",
+      "range": {
+        "startLine": 58,
+        "startChar": 9,
+        "endLine": 58,
+        "endChar": 20
+      },
+      "revId": "e8d15b79e153c9fc8bf5f30f23a2c8fbf9f317e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
