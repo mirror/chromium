@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53021749_d0b15471",
+        "filename": "chrome/renderer/chrome_render_frame_observer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-02T08:08:55Z",
+      "side": 1,
+      "message": "Could you help me understand why this should be associated? The way I understand it, it seems like we should be calling this before triggering any load of the WebUI to guarantee that the script persists in the context?\n\n(It may very well be that this requires association with loading, but I\u0027m not 100% sure that URLLoader is associated with the legacy IPC channel, which is what I think this interface is currently associated with)",
+      "range": {
+        "startLine": 138,
+        "startChar": 8,
+        "endLine": 138,
+        "endChar": 28
+      },
+      "revId": "f7b4895286106adc668d76c26564679c2f70abd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
