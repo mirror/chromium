@@ -70,6 +70,30 @@
       "revId": "e4b3c4e5daeee5e79c04b981ea8bcb4ac9582040",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "612c809a_006e9a58",
+        "filename": "cc/trees/layer_tree_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1512,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-08-02T14:45:43Z",
+      "side": 1,
+      "message": "Discoveries so far:\n\n1. RootScrollBegin calls DistributeScrollDelta (via ScrollBeginImpl), so likely don\u0027t need to call both.\n2. However for viewport scroll nodes it looks like DistributeScrollDelta skips any checks of scrollable - https://cs.chromium.org/chromium/src/cc/trees/layer_tree_host_impl.cc?gsn\u003dCanConsumeDelta\u0026l\u003d3437 :\n\nfor (...) {\n  if (scroll_node \u003d\u003d viewport_scroll_node) {\n    // Add to the current scroll chain\n    break;\n  }\n \n  if (!scroll_node-\u003escrollable) {\n    break; // Without adding to chain\n  }\n\n  if (CanConsumeDelta(scroll_node, *scroll_state)) { // This checks user_scrollable_*.\n\n    // Add to chain.\n  }\n...\n}\n...\nscroll_state-\u003eDistributeToScrollChainDescendant();\n\n\nIt is feasible that DistributeToScrollChainDescendant somehow absorbs the delta if layers aren\u0027t scrollable, but I haven\u0027t been able to follow that logic all the way yet.\n\nI\u0027m going to dig into DistributeToScrollChainDescendant next, let me know if you have any ideas around this area. It\u0027s getting complicated fast! :)",
+      "parentUuid": "d5793477_594f1e9a",
+      "range": {
+        "startLine": 1511,
+        "startChar": 1,
+        "endLine": 1512,
+        "endChar": 42
+      },
+      "revId": "e4b3c4e5daeee5e79c04b981ea8bcb4ac9582040",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
