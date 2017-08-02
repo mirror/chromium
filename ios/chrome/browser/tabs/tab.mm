@@ -996,9 +996,11 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
   [readerModeController_ detachFromWebState];
   readerModeController_ = nil;
 
-  // Invalidate any snapshot stored for this session.
-  DCHECK(self.tabId);
-  [_snapshotManager removeImageWithSessionID:self.tabId];
+  if (!GetApplicationContext()->IsShuttingDown()) {
+    // Invalidate any snapshot stored for this session.
+    DCHECK(self.tabId);
+    [_snapshotManager removeImageWithSessionID:self.tabId];
+  }
 
   // Cancel any queued dialogs.
   [self.dialogDelegate cancelDialogForTab:self];
