@@ -112,7 +112,7 @@ NSString* const kHostSessionPin = @"kHostSessionPin";
 
   // TODO(nicholss): I am not sure about the following fields yet.
   // info.capabilities =
-  // info.flags =
+  info.flags = "useWebrtc";
 
   remoting::protocol::ClientAuthenticationConfig client_auth_config;
   client_auth_config.host_id = info.host_id;
