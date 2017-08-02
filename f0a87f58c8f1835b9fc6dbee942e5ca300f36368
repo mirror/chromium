@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "5c4223e9_32616b11",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-02T21:14:11Z",
+      "side": 1,
+      "message": "supernit, also optional: maybe update this to mention clipping if bounds are provided instead of just being scoped to SVGMaskPainter.",
+      "revId": "f0a87f58c8f1835b9fc6dbee942e5ca300f36368",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3cfd5d98_9d1ef9d6",
         "filename": "cc/blink/web_display_item_list_impl_unittest.cc",
         "patchSetId": 6
