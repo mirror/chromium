@@ -10,7 +10,7 @@ PaintImageBuilder::PaintImageBuilder() = default;
 PaintImageBuilder::~PaintImageBuilder() = default;
 
 PaintImage PaintImageBuilder::TakePaintImage() const {
-  DCHECK(!paint_image_.sk_image_ || !paint_image_.paint_record_);
+  paint_image_.SanityCheckData();
   return std::move(paint_image_);
 }
 

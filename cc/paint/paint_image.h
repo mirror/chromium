@@ -7,11 +7,13 @@
 
 #include "base/logging.h"
 #include "cc/paint/paint_export.h"
+#include "cc/paint/skia_paint_image_generator.h"
 #include "third_party/skia/include/core/SkImage.h"
 #include "ui/gfx/geometry/rect.h"
 
 namespace cc {
 
+class PaintImageGenerator;
 class PaintOpBuffer;
 using PaintRecord = PaintOpBuffer;
 
@@ -73,6 +75,7 @@ class CC_PAINT_EXPORT PaintImage {
   bool IsLazyGenerated() const { return GetSkImage()->isLazyGenerated(); }
   int width() const { return GetSkImage()->width(); }
   int height() const { return GetSkImage()->height(); }
+  SkIRect bounds() const { return GetSkImage()->bounds(); }
 
   // Returns a PaintImage that has the same fields as this PaintImage, except
   // with a replaced sk_image_. This can be used to swap out a specific SkImage
@@ -83,9 +86,14 @@ class CC_PAINT_EXPORT PaintImage {
  private:
   friend class PaintImageBuilder;
 
+  void SanityCheckData() const;
+
   sk_sp<SkImage> sk_image_;
+
   sk_sp<PaintRecord> paint_record_;
   gfx::Rect paint_record_rect_;
+
+  sk_sp<PaintImageGenerator> paint_image_generator_;
 
   Id id_ = kUnknownStableId;
   AnimationType animation_type_ = AnimationType::UNKNOWN;
