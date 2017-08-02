@@ -125,6 +125,24 @@
     },
     {
       "key": {
+        "uuid": "296f0b0e_3bb1ba84",
+        "filename": "ios/chrome/browser/ui/authentication/signin_interaction_controller_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1183785
+      },
+      "writtenOn": "2017-08-02T18:16:19Z",
+      "side": 1,
+      "message": "Cannot open the link: (.  I\u0027ll add the grey_interactable() matcher to be more safe.",
+      "parentUuid": "afae0c8e_36e10a6e",
+      "revId": "0ecc6106182bf46dc22fcef5e80079bb077e4934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24938957_8fd117c9",
         "filename": "ios/chrome/browser/ui/authentication/signin_interaction_controller_egtest.mm",
         "patchSetId": 1
@@ -278,6 +296,24 @@
       "side": 1,
       "message": "Sounds good. Do we have a bug for it? Or is the CL in progress?",
       "parentUuid": "4b536fd1_50c4fdc4",
+      "revId": "0ecc6106182bf46dc22fcef5e80079bb077e4934",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae272e0d_2d699f7d",
+        "filename": "ios/chrome/test/earl_grey/chrome_matchers.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1183785
+      },
+      "writtenOn": "2017-08-02T18:16:19Z",
+      "side": 1,
+      "message": "Filed the bug at crbug.com/751336",
+      "parentUuid": "4a0e1344_52704085",
       "revId": "0ecc6106182bf46dc22fcef5e80079bb077e4934",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
