@@ -88,8 +88,8 @@ SettingsAccessibilityTest.prototype = {
 
 // TODO(quacht): Enable in separate CL.
 // Test disabled since it doesn't work on all platforms.
-TEST_F('SettingsAccessibilityTest', 'All', function() {
-  mocha.run();
-});
+// TEST_F('SettingsAccessibilityTest', 'All', function() {
+//   mocha.run();
+// });
 
 GEN('#endif  // defined(NDEBUG)');
