@@ -16,6 +16,24 @@
       "revId": "03d1cae315bb53864b27701b6dab360881d667f0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecf319de_e7e3efdb",
+        "filename": "content/child/service_worker/service_worker_network_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-02T09:39:58Z",
+      "side": 1,
+      "message": "We hoped we\u0027d be using it soon, but it didn\u0027t happen (yet) :(",
+      "parentUuid": "5447ebeb_4b2dd4dc",
+      "revId": "03d1cae315bb53864b27701b6dab360881d667f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
