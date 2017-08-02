@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "e8fd4bb0_a1609225",
+        "filename": "components/google/core/browser/google_url_tracker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-08-02T12:34:23Z",
+      "side": 1,
+      "message": "OK, I will move mentioning this policy to the comments.",
+      "parentUuid": "5db89b0e_f503c56a",
+      "revId": "ea6fc4b0dbfdcdd1d416f4856949ce014eb59cd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "94bbe402_689072c4",
         "filename": "content/browser/download/save_file_manager.cc",
         "patchSetId": 2
@@ -338,6 +356,30 @@
       "side": 1,
       "message": "This is indeed interesting situation - are we documenting this for the  product \u0027Chrome\u0027 or for the users of this code whoever they might be? My comments were always from the point of the product but this is indeed an important question to answer first.",
       "parentUuid": "20714759_eb8f769e",
+      "range": {
+        "startLine": 179,
+        "startChar": 19,
+        "endLine": 179,
+        "endChar": 28
+      },
+      "revId": "ea6fc4b0dbfdcdd1d416f4856949ce014eb59cd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdb623d9_53d5fca9",
+        "filename": "net/proxy/proxy_script_fetcher_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-08-02T12:34:23Z",
+      "side": 1,
+      "message": "The goal is annotating Chrome, but it should be done without creating layering violations in modules that are supposed to stay independent.\nOne solution for both net and content would be having delegates that give the required annotations. I will prepare a design doc for it and share it with you.",
+      "parentUuid": "63ac8f43_df91777d",
       "range": {
         "startLine": 179,
         "startChar": 19,
