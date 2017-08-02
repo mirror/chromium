@@ -34,6 +34,24 @@
       "revId": "7cda6d3f449ae5e29ef068e19529feed223e3093",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5db4aba6_f81e9e25",
+        "filename": "build/mac_toolchain.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-02T20:34:40Z",
+      "side": 1,
+      "message": "Let me clarify - for non-corp, non-golo machines, by default, this logic will have no effect because DownloadHermeticBuild will early out at _UseHermeticToolchain.\n\nThe only use case this affects is if a user has a non-corp machine, with gcs credentials, and wants the iOS toolchain. Which I think is exactly 0 people, since the iOS hermetic toolchain doesn\u0027t work for developrs.",
+      "parentUuid": "c74abf46_22ecd9ed",
+      "revId": "7cda6d3f449ae5e29ef068e19529feed223e3093",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
