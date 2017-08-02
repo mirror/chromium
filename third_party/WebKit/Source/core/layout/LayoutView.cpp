@@ -551,6 +551,8 @@ bool LayoutView::MapToVisualRectInAncestorSpaceInternal(
           return false;
         }
       } else {
+        LOG(ERROR) << "intersect:" << rect.ToString() << " with "
+                   << view_rectangle.ToString();
         rect.Intersect(view_rectangle);
       }
 
