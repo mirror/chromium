@@ -97,6 +97,11 @@ class FormStructure {
   // field.
   bool IsCompleteCreditCardForm() const;
 
+  // Returns whether |this| form should be filled with credit card information.
+  // A fillable form should contain a credit card number and any other credit
+  // card field.
+  bool ShouldFillCreditCardForm() const;
+
   // Resets |autofill_count_| and counts the number of auto-fillable fields.
   // This is used when we receive server data for form fields.  At that time,
   // we may have more known fields than just the number of fields we matched
