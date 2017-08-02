@@ -1,5 +1,3 @@
-// This file is being deprecated and is moving to front_end/bindings_test_runner/AutomappingTestRunner.js
-// Please see crbug.com/667560 for more details
 
 var initialize_AutomappingTest = function() {
 

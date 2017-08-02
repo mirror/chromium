@@ -1,5 +1,3 @@
-// This file is being deprecated and is moving to front_end/performance_test_runner/TimelineTestRunner.js
-// Please see crbug.com/667560 for more details
 
 function wrapCallFunctionForTimeline(f)
 {

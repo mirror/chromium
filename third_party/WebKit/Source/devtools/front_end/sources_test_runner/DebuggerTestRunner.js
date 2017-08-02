@@ -1,5 +1,3 @@
-// This file is being deprecated and is moving to front_end/sources_test_runner/DebuggerTestRunner.js
-// Please see crbug.com/667560 for more details
 
 function scheduleTestFunction()
 {

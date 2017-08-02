@@ -1,5 +1,3 @@
-// This file is being deprecated and is moving to front_end/audits_test_runner/AuditsTestRunner.js
-// Please see crbug.com/667560 for more details
 
 function initialize_AuditTests()
 {
