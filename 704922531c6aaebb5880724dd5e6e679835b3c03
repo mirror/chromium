@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "425c2861_9c5dd8df",
+        "filename": "net/socket/ssl_client_socket_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-08-02T20:12:15Z",
+      "side": 1,
+      "message": "(This should be the only changed line.)",
+      "revId": "704922531c6aaebb5880724dd5e6e679835b3c03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
