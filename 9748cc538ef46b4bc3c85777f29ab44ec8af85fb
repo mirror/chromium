@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bda41ea4_35b4f6fb",
+        "filename": "services/device/generic_sensor/README.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-02T19:49:53Z",
+      "side": 1,
+      "message": "implementing a low-pass-filter over the values returned by the ACCELEROMETER in order to remove the contribution of the gravitational force.",
+      "range": {
+        "startLine": 63,
+        "startChar": 48,
+        "endLine": 64,
+        "endChar": 30
+      },
+      "revId": "9748cc538ef46b4bc3c85777f29ab44ec8af85fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
