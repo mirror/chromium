@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "54121a78_2112eb8f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-02T18:46:34Z",
+      "side": 1,
+      "message": "+wkorman for the paint behavior change.\n\nCould you verify whether this behavior change is desired?\n\nAnyway, I checked the revision history. It seems that prior to r354200 (by wkorman@) all list markers are highlighted, but after that, only some are highlighted (with an unclear criterion to me as I can\u0027t understand the patch description).",
+      "range": {
+        "startLine": 18,
+        "startChar": 1,
+        "endLine": 18,
+        "endChar": 78
+      },
+      "revId": "54f65be2cce8e97b7d2f4533038e9f9598d9901c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbcfc40c_c0affeeb",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-02T18:46:34Z",
+      "side": 1,
+      "message": "The style guide prohibits non-trivial member functions of structs:\n\nhttps://google.github.io/styleguide/cppguide.html#Structs_vs._Classes\n\nPlease make it a static function.",
+      "revId": "54f65be2cce8e97b7d2f4533038e9f9598d9901c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8cc655c6_afffe9f4",
         "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
         "patchSetId": 11
