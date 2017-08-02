@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ac7152fe_9361865c",
+        "filename": "components/password_manager/core/browser/mock_password_store.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-02T12:23:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6efeb5c5_9780e850",
+      "range": {
+        "startLine": 14,
+        "startChar": 5,
+        "endLine": 14,
+        "endChar": 22
+      },
+      "revId": "0339290b2bdecb76a47de50d4dbe0e8ad1556623",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "444fdd22_a0e50100",
         "filename": "components/password_manager/core/browser/mock_password_store.h",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "1a60db0c_335cf925",
+        "filename": "components/password_manager/core/browser/mock_password_store.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-02T12:23:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "444fdd22_a0e50100",
+      "range": {
+        "startLine": 24,
+        "startChar": 4,
+        "endLine": 24,
+        "endChar": 8
+      },
+      "revId": "0339290b2bdecb76a47de50d4dbe0e8ad1556623",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "727ddd36_3be7a641",
         "filename": "components/password_manager/core/browser/password_store_unittest.cc",
         "patchSetId": 6
@@ -68,6 +116,30 @@
       "revId": "0339290b2bdecb76a47de50d4dbe0e8ad1556623",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac1a9ece_e5bbf961",
+        "filename": "components/password_manager/core/browser/password_store_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1002737
+      },
+      "writtenOn": "2017-08-02T12:23:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "727ddd36_3be7a641",
+      "range": {
+        "startLine": 245,
+        "startChar": 2,
+        "endLine": 245,
+        "endChar": 13
+      },
+      "revId": "0339290b2bdecb76a47de50d4dbe0e8ad1556623",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
