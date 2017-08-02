@@ -52,6 +52,24 @@
       "revId": "fdcc05ed799f9ac1a8e28be24e4bd4cdfbc1a6be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1887a464_3c173ca8",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/RootScrollerController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-08-02T11:46:33Z",
+      "side": 1,
+      "message": "Aside from mixing up main thread and main frame, this was pretty confusing. I\u0027ve reworded the whole comment, wdyt?",
+      "parentUuid": "92e4ae37_12dd728f",
+      "revId": "fdcc05ed799f9ac1a8e28be24e4bd4cdfbc1a6be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
