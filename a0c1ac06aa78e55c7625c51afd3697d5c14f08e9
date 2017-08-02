@@ -22,6 +22,30 @@
       "revId": "a0c1ac06aa78e55c7625c51afd3697d5c14f08e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "953dcaf2_601cbb9b",
+        "filename": "services/viz/compositing/privileged/interfaces/frame_sink_manager.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-02T21:49:38Z",
+      "side": 1,
+      "message": "Yea this |active_handle_index| is used to determine which one of |active_handle| and |idle_handle| to read from, not which element inside |active_handle| (or |idle_handle|). The two handles are going to be stored in an array when received so this index tells us which one is the currently active one.",
+      "parentUuid": "98e02c2b_a50eec19",
+      "range": {
+        "startLine": 116,
+        "startChar": 42,
+        "endLine": 116,
+        "endChar": 47
+      },
+      "revId": "a0c1ac06aa78e55c7625c51afd3697d5c14f08e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
