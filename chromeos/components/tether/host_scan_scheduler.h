@@ -43,6 +43,7 @@ class HostScanScheduler : public NetworkStateHandlerObserver,
 
   void EnsureScan();
   bool IsNetworkConnectingOrConnected(const NetworkState* network);
+  bool IsTetherNetworkConnectingOrConnected();
 
   NetworkStateHandler* network_state_handler_;
   HostScanner* host_scanner_;
