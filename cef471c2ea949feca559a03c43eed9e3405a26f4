@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67a48ac1_6defb562",
+        "filename": "cc/quads/render_pass.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-08-02T15:55:08Z",
+      "side": 1,
+      "message": "DCHECK the quad list is empty too?",
+      "revId": "cef471c2ea949feca559a03c43eed9e3405a26f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef5b0186_7e2bb1aa",
+        "filename": "cc/quads/render_pass.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-08-02T15:55:08Z",
+      "side": 1,
+      "message": "DCHECK the SQS list not empty, here and in CopyFromAndAppendDrawQuad?",
+      "revId": "cef471c2ea949feca559a03c43eed9e3405a26f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
