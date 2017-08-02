@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72946391_d97ca5e9",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontCache.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-08-02T08:06:36Z",
+      "side": 1,
+      "message": "Can we do this only when outside the mainthread?\n\nI believe this will overwrite the existing behavior when local and global settings becomes different, since the caller resolves generic font family earlier but we resolve again using the global copy, which may be older.\n\n...or maybe my memory of the order of resolving generic family incorrect?",
+      "revId": "fb3166b40cf246339f3238180af2401f004dc877",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
