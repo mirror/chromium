@@ -136,7 +136,8 @@ ExpandArrowView::CreateInkDropHighlight() const {
 void ExpandArrowView::TransitToFullscreenAllAppsState() {
   UMA_HISTOGRAM_ENUMERATION(kPageOpenedHistogram, AppListModel::STATE_APPS,
                             AppListModel::STATE_LAST);
-
+  UMA_HISTOGRAM_ENUMERATION(kAppListPeekingToFullscreenHistogram, EXPAND_ARROW,
+                            MAX_PEEKING_TO_FULLSCREEN);
   contents_view_->SetActiveState(AppListModel::STATE_APPS);
   app_list_view_->SetState(AppListView::FULLSCREEN_ALL_APPS);
 }
