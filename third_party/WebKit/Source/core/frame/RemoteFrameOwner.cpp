@@ -52,4 +52,11 @@ void RemoteFrameOwner::DispatchLoad() {
   web_frame->Client()->DispatchLoad();
 }
 
+STATIC_ASSERT_ENUM(WebFrameOwnerProperties::ScrollingMode::kAuto,
+                   kScrollbarAuto);
+STATIC_ASSERT_ENUM(WebFrameOwnerProperties::ScrollingMode::kAlwaysOff,
+                   kScrollbarAlwaysOff);
+STATIC_ASSERT_ENUM(WebFrameOwnerProperties::ScrollingMode::kAlwaysOn,
+                   kScrollbarAlwaysOn);
+
 }  // namespace blink

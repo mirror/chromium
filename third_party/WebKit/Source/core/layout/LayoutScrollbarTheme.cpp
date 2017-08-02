@@ -31,6 +31,7 @@
 #include "platform/graphics/paint/DrawingRecorder.h"
 #include "platform/scroll/Scrollbar.h"
 #include "platform/wtf/StdLibExtras.h"
+#include "public/web/WebFrameOwnerProperties.h"
 
 namespace blink {
 
@@ -172,5 +173,12 @@ void LayoutScrollbarTheme::PaintTickmarks(GraphicsContext& context,
                                           const IntRect& rect) {
   ScrollbarTheme::GetTheme().PaintTickmarks(context, scrollbar, rect);
 }
+
+STATIC_ASSERT_ENUM(WebFrameOwnerProperties::ScrollingMode::kAuto,
+                   kScrollbarAuto);
+STATIC_ASSERT_ENUM(WebFrameOwnerProperties::ScrollingMode::kAlwaysOff,
+                   kScrollbarAlwaysOff);
+STATIC_ASSERT_ENUM(WebFrameOwnerProperties::ScrollingMode::kAlwaysOn,
+                   kScrollbarAlwaysOn);
 
 }  // namespace blink
