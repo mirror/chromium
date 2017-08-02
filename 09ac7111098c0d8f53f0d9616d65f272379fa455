@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9840a55e_be044201",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-02T21:12:13Z",
+      "side": 1,
+      "message": "I have a mixed feeling on this :/, since 0 might be a valid value. How about `bool GetProperty(const mojom::PropertyType property_type, int64_t* out) const?",
+      "range": {
+        "startLine": 369,
+        "startChar": 60,
+        "endLine": 369,
+        "endChar": 61
+      },
+      "revId": "09ac7111098c0d8f53f0d9616d65f272379fa455",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
