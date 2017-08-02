@@ -2,6 +2,166 @@
   "comments": [
     {
       "key": {
+        "uuid": "9b4d6131_b43b91f0",
+        "filename": "third_party/WebKit/LayoutTests/inspector/console/console-filter-test-expected.txt",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-02T17:59:52Z",
+      "side": 1,
+      "message": "Why do groups appear for context1?",
+      "revId": "d2d7b1ecb2f071b5cda9e5d0293599ef2a7afc97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d03d7f1_09025824",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-02T17:59:52Z",
+      "side": 1,
+      "message": "This return blocks like 85, which is important.",
+      "revId": "d2d7b1ecb2f071b5cda9e5d0293599ef2a7afc97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2247394d_a9a85a0b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-02T17:59:52Z",
+      "side": 1,
+      "message": "Will there be more items here? Should we just have Console.AllContextsFilter constant?",
+      "revId": "d2d7b1ecb2f071b5cda9e5d0293599ef2a7afc97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "587d9be6_e612523f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-02T17:59:52Z",
+      "side": 1,
+      "message": "Let\u0027s not create split when running without experiment.",
+      "range": {
+        "startLine": 47,
+        "startChar": 9,
+        "endLine": 47,
+        "endChar": 21
+      },
+      "revId": "d2d7b1ecb2f071b5cda9e5d0293599ef2a7afc97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "557fa70e_9789a4e8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-02T17:59:52Z",
+      "side": 1,
+      "message": "Can we instead add contexts one by one? Replacing everything it a big hammer :)",
+      "range": {
+        "startLine": 386,
+        "startChar": 18,
+        "endLine": 386,
+        "endChar": 34
+      },
+      "revId": "d2d7b1ecb2f071b5cda9e5d0293599ef2a7afc97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f06ac74c_e918cae3",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-02T17:59:52Z",
+      "side": 1,
+      "message": "e.g. update sidebar from here?",
+      "revId": "d2d7b1ecb2f071b5cda9e5d0293599ef2a7afc97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01f5096e_e6ea2887",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/consoleSidebar.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-02T17:59:52Z",
+      "side": 1,
+      "message": "Copyright please.",
+      "range": {
+        "startLine": 1,
+        "startChar": 1,
+        "endLine": 1,
+        "endChar": 5
+      },
+      "revId": "d2d7b1ecb2f071b5cda9e5d0293599ef2a7afc97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30d3bd45_4c4f9035",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/consoleView.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-02T17:59:52Z",
+      "side": 1,
+      "message": "Why this?",
+      "range": {
+        "startLine": 40,
+        "startChar": 23,
+        "endLine": 40,
+        "endChar": 26
+      },
+      "revId": "d2d7b1ecb2f071b5cda9e5d0293599ef2a7afc97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a596d2d3_0c8eb9ee",
         "filename": "third_party/WebKit/Source/devtools/front_end/console_model/ConsoleModel.js",
         "patchSetId": 3
@@ -13,6 +173,29 @@
       "writtenOn": "2017-08-01T19:22:01Z",
       "side": 1,
       "message": "For `console.context(\"foo\")`, V8 generates a context name with a hashtag, e.g. \u0027foo#1\u0027.\n\nThis is to distinguish contexts created with the same name\nconsole.context(\"foo\")    // context: \u0027foo#1\u0027\nconsole.context(\"foo\")    // context: \u0027foo#2\u0027\n\nIn this CL, I\u0027m treating these the same, even though we could differentiate them in the future.",
+      "revId": "d2d7b1ecb2f071b5cda9e5d0293599ef2a7afc97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec710d6f_f86d1780",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console_model/ConsoleModel.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-02T17:59:52Z",
+      "side": 1,
+      "message": "substring?",
+      "range": {
+        "startLine": 450,
+        "startChar": 29,
+        "endLine": 450,
+        "endChar": 34
+      },
       "revId": "d2d7b1ecb2f071b5cda9e5d0293599ef2a7afc97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
