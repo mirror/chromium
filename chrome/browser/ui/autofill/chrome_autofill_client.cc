@@ -273,7 +273,6 @@ void ChromeAutofillClient::ShowAutofillPopup(
                                                web_contents()->GetNativeView(),
                                                element_bounds_in_screen_space,
                                                text_direction);
-
   popup_controller_->Show(suggestions);
 }
 
@@ -384,6 +383,8 @@ void ChromeAutofillClient::ExecuteCommand(int id) {
     chrome::ShowSettingsSubPage(
         chrome::FindBrowserWithWebContents(web_contents()),
         chrome::kPasswordManagerSubPage);
+#else
+    chrome::android::PreferencesLauncher::ShowPasswordSettings();
 #endif
   } else if (id == autofill::POPUP_ITEM_ID_CREDIT_CARD_SIGNIN_PROMO) {
 #if defined(OS_ANDROID)

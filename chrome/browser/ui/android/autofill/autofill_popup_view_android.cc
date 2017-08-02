@@ -35,6 +35,7 @@ AutofillPopupViewAndroid::AutofillPopupViewAndroid(
 AutofillPopupViewAndroid::~AutofillPopupViewAndroid() {}
 
 void AutofillPopupViewAndroid::Show() {
+  LOG(ERROR) << "AutofillPopupViewAndroid::Show";
   JNIEnv* env = base::android::AttachCurrentThread();
   ui::ViewAndroid* view_android = controller_->container_view();
 
