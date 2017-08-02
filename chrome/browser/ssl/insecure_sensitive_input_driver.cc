@@ -22,9 +22,9 @@ InsecureSensitiveInputDriver::InsecureSensitiveInputDriver(
 
 InsecureSensitiveInputDriver::~InsecureSensitiveInputDriver() {}
 
-void InsecureSensitiveInputDriver::BindSensitiveInputVisibilityServiceRequest(
-    blink::mojom::SensitiveInputVisibilityServiceRequest request) {
-  sensitive_input_visibility_bindings_.AddBinding(this, std::move(request));
+void InsecureSensitiveInputDriver::BindInsecureInputServiceRequest(
+    blink::mojom::InsecureInputServiceRequest request) {
+  insecure_input_bindings_.AddBinding(this, std::move(request));
 }
 
 void InsecureSensitiveInputDriver::PasswordFieldVisibleInInsecureContext() {
@@ -38,4 +38,8 @@ void InsecureSensitiveInputDriver::
   VisiblePasswordObserver* observer = VisiblePasswordObserver::FromWebContents(
       content::WebContents::FromRenderFrameHost(render_frame_host_));
   observer->RenderFrameHasNoVisiblePasswordFields(render_frame_host_);
+}
+
+void InsecureSensitiveInputDriver::FieldEditedInInsecureContext() {
+  // TODO(elawrence): Implement handler in https://crbug.com/720094
 }
