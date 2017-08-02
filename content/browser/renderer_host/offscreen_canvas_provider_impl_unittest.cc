@@ -206,7 +206,9 @@ TEST_F(OffscreenCanvasProviderImplTest,
 
   // Renderer submits a CompositorFrame with |local_id|.
   const viz::LocalSurfaceId local_id(1, base::UnguessableToken::Create());
-  compositor_frame_sink->SubmitCompositorFrame(local_id, MakeCompositorFrame());
+  compositor_frame_sink->SubmitCompositorFrame(
+      local_id, MakeCompositorFrame(),
+      base::TimeTicks::Now().since_origin().InMicroseconds());
 
   RunUntilIdle();
 

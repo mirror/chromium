@@ -34,7 +34,8 @@ class GpuCompositorFrameSink
   // mojom::CompositorFrameSink:
   void SetNeedsBeginFrame(bool needs_begin_frame) override;
   void SubmitCompositorFrame(const LocalSurfaceId& local_surface_id,
-                             cc::CompositorFrame frame) override;
+                             cc::CompositorFrame frame,
+                             uint64_t submit_time) override;
   void DidNotProduceFrame(const BeginFrameAck& begin_frame_ack) override;
 
  private:
