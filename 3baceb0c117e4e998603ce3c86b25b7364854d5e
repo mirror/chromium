@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "eaed99cc_906a09c8",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 8331,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-02T07:54:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c096b45_18332d1a",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1738f75_6daaeef2",
         "filename": "chrome/app/generated_resources.grd",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27e9e57e_368adc00",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 8332,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-02T07:54:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1738f75_6daaeef2",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "dbeaf161_f402166b",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 8340,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-02T07:54:06Z",
+      "side": 1,
+      "message": "The link is missing. Fixed + reworded sentence.",
+      "parentUuid": "a4bfb6aa_aad7b07a",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "626b4d93_64cbcaf0",
         "filename": "chrome/browser/resources/local_ntp/local_ntp.html",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "837dfa0b_3c9f34b0",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-02T07:54:06Z",
+      "side": 1,
+      "message": "Renaming everything to \"voice\".",
+      "parentUuid": "626b4d93_64cbcaf0",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "c0876fd9_17db2140",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-02T07:54:06Z",
+      "side": 1,
+      "message": "I\u0027ll rename everything to \"voice\".",
+      "parentUuid": "f78334d8_80013832",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "75d264ed_de144cb8",
         "filename": "chrome/browser/resources/local_ntp/local_ntp.html",
         "patchSetId": 2
@@ -98,6 +188,24 @@
       "writtenOn": "2017-07-31T13:39:05Z",
       "side": 1,
       "message": "The icon should probably be included via url() in the css file",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b610a8e0_45897b86",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-02T07:54:06Z",
+      "side": 1,
+      "message": "That is what I originally did. The problem is, that way, we can\u0027t change it\u0027s fill color in CSS, as far as my experiments show. Any suggestions?",
+      "parentUuid": "75d264ed_de144cb8",
       "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "710f3823_a0d99e0a",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-02T07:54:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1211bc0_3ba685bb",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3cd743c7_7293f835",
         "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
         "patchSetId": 2
@@ -135,6 +261,24 @@
       "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "622c1243_6d013dc1",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-02T07:54:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3cd743c7_7293f835",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "1080e68b_41035575",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-02T07:54:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b6045e1_d51d22bd",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8effe2f_8557be5c",
         "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
         "patchSetId": 2
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "81aa6643_983f368e",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-02T07:54:06Z",
+      "side": 1,
+      "message": "The searchBox doesn\u0027t have such a method.",
+      "parentUuid": "e8effe2f_8557be5c",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77e8258e_af6614ea",
         "filename": "chrome/browser/resources/local_ntp/voice_search.js",
         "patchSetId": 2
@@ -183,6 +363,24 @@
       "writtenOn": "2017-07-31T13:39:05Z",
       "side": 1,
       "message": "Oh wow, this is a lot of code. Have you checked that everything is actually used/required?",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e0f446d_dbfb8e57",
+        "filename": "chrome/browser/resources/local_ntp/voice_search.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-02T07:54:06Z",
+      "side": 1,
+      "message": "As far as I can tell, yes. I deleted as much irrelevant code as I could find. Overall, I guess it could be shortened using local functions, possibly other language features in a few places?\n\nWe might be able to remove the LogReason/LogSource code, but I feel we will want something similar anyway in the future, possibly for UMA.",
+      "parentUuid": "77e8258e_af6614ea",
       "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "afa85617_3d9ef1a5",
+        "filename": "chrome/browser/resources/local_ntp/voice_search.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-02T07:54:06Z",
+      "side": 1,
+      "message": "Just a util method. I can inline it if you want.",
+      "parentUuid": "319c964d_2c2e5137",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "019f8260_1ff84b4a",
         "filename": "chrome/browser/resources/local_ntp/voice_search.js",
         "patchSetId": 2
@@ -220,6 +436,24 @@
       "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1db67e9d_1f917f70",
+        "filename": "chrome/browser/resources/local_ntp/voice_search.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-02T07:54:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "019f8260_1ff84b4a",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -240,6 +474,24 @@
     },
     {
       "key": {
+        "uuid": "9a5b08af_04bd887c",
+        "filename": "chrome/browser/resources/local_ntp/voice_search.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-02T07:54:06Z",
+      "side": 1,
+      "message": "I don\u0027t think we will need them, removed.",
+      "parentUuid": "aec7abdb_989c5fea",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3205bb9a_968e9506",
         "filename": "chrome/browser/resources/local_ntp/voice_search.js",
         "patchSetId": 2
@@ -254,6 +506,24 @@
       "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "734d26b3_29d16abc",
+        "filename": "chrome/browser/resources/local_ntp/voice_search.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-02T07:54:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3205bb9a_968e9506",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -274,6 +544,24 @@
     },
     {
       "key": {
+        "uuid": "596ad130_12ac40fc",
+        "filename": "chrome/browser/resources/local_ntp/voice_search.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-02T07:54:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e47b38cb_475608b1",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "815a8b48_6d51dc10",
         "filename": "chrome/browser/resources/local_ntp/voice_search.js",
         "patchSetId": 2
@@ -288,6 +576,24 @@
       "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66626f9c_d893704a",
+        "filename": "chrome/browser/resources/local_ntp/voice_search.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-02T07:54:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "815a8b48_6d51dc10",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -308,6 +614,24 @@
     },
     {
       "key": {
+        "uuid": "b5e5ab2a_537a00d9",
+        "filename": "chrome/browser/resources/local_ntp/voice_search.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-02T07:54:06Z",
+      "side": 1,
+      "message": "Removed checks and added TODO to test element presence.",
+      "parentUuid": "0da286c6_699ed4ca",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f72203e_425fc4d1",
         "filename": "chrome/browser/resources/local_ntp/voice_search.js",
         "patchSetId": 2
@@ -322,6 +646,24 @@
       "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a03300a0_3ea21a32",
+        "filename": "chrome/browser/resources/local_ntp/voice_search.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-02T07:54:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f72203e_425fc4d1",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -342,6 +684,24 @@
     },
     {
       "key": {
+        "uuid": "e4aa5b56_f7c919bf",
+        "filename": "chrome/browser/resources/local_ntp/voice_search.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-02T07:54:06Z",
+      "side": 1,
+      "message": "I\u0027ve removed it for now, as I have not witnessed it so far. Added TODO for tests.",
+      "parentUuid": "ffa2c252_e907afac",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe9e933a_30bb98c6",
         "filename": "chrome/browser/resources/local_ntp/voice_search.js",
         "patchSetId": 2
@@ -356,6 +716,24 @@
       "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b288769_9591a654",
+        "filename": "chrome/browser/resources/local_ntp/voice_search.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-02T07:54:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe9e933a_30bb98c6",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -376,6 +754,24 @@
     },
     {
       "key": {
+        "uuid": "53327b35_ab23d56b",
+        "filename": "chrome/browser/resources/local_ntp/voice_search.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-02T07:54:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5852c84_1ec9e0e0",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf69c17f_e6b414f1",
         "filename": "chrome/browser/resources/local_ntp/voice_search.js",
         "patchSetId": 2
@@ -390,6 +786,24 @@
       "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59e466ea_eb7e0a14",
+        "filename": "chrome/browser/resources/local_ntp/voice_search.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 575,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-02T07:54:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf69c17f_e6b414f1",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -416,6 +830,30 @@
     },
     {
       "key": {
+        "uuid": "aefd7027_8b992988",
+        "filename": "chrome/browser/resources/local_ntp/voice_search.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-02T07:54:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d0f4370_d82f1298",
+      "range": {
+        "startLine": 614,
+        "startChar": 18,
+        "endLine": 614,
+        "endChar": 0
+      },
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2cd6c0b_d3d8a80c",
         "filename": "chrome/browser/resources/local_ntp/voice_search.js",
         "patchSetId": 2
@@ -430,6 +868,24 @@
       "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61cbaa06_65705d43",
+        "filename": "chrome/browser/resources/local_ntp/voice_search.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 638,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-02T07:54:06Z",
+      "side": 1,
+      "message": "There\u0027s a TODO comment above for removing all of this later, or at disabling this in official builds, like you said.",
+      "parentUuid": "a2cd6c0b_d3d8a80c",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -450,6 +906,24 @@
     },
     {
       "key": {
+        "uuid": "7ce96d15_f7e7bacb",
+        "filename": "chrome/browser/resources/local_ntp/voice_search.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 688,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-02T07:54:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ee62d7d6_b6caebe9",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5696b36b_d5bf90a3",
         "filename": "chrome/browser/resources/local_ntp/voice_search.js",
         "patchSetId": 2
@@ -464,6 +938,24 @@
       "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c4494fe_7596c330",
+        "filename": "chrome/browser/resources/local_ntp/voice_search.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 706,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-02T07:54:06Z",
+      "side": 1,
+      "message": "Removed for now, added TODO for tests.",
+      "parentUuid": "5696b36b_d5bf90a3",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -484,6 +976,24 @@
     },
     {
       "key": {
+        "uuid": "093504ce_c3f4f1e5",
+        "filename": "chrome/browser/resources/local_ntp/voice_search.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 725,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-02T07:54:06Z",
+      "side": 1,
+      "message": "I think we can. Lets hope so :)",
+      "parentUuid": "ca36046d_b0067836",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec36b362_c15a849e",
         "filename": "chrome/browser/resources/local_ntp/voice_search.js",
         "patchSetId": 2
@@ -501,6 +1011,24 @@
     },
     {
       "key": {
+        "uuid": "e5517eac_fc81e172",
+        "filename": "chrome/browser/resources/local_ntp/voice_search.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 890,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-02T07:54:06Z",
+      "side": 1,
+      "message": "Removed checks and added TODO to test element presence.",
+      "parentUuid": "ec36b362_c15a849e",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88aa980f_19365c92",
         "filename": "chrome/browser/resources/local_ntp/voice_search.js",
         "patchSetId": 2
@@ -515,6 +1043,24 @@
       "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a400550_5e158842",
+        "filename": "chrome/browser/resources/local_ntp/voice_search.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 909,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-02T07:54:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "88aa980f_19365c92",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -541,6 +1087,30 @@
     },
     {
       "key": {
+        "uuid": "0b84628d_4d8a44f5",
+        "filename": "chrome/browser/resources/local_ntp/voice_search.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 1060,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-02T07:54:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1eb3fd0a_141571e7",
+      "range": {
+        "startLine": 1060,
+        "startChar": 70,
+        "endLine": 1060,
+        "endChar": 0
+      },
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ca46221_c606bee5",
         "filename": "chrome/browser/search/BUILD.gn",
         "patchSetId": 2
@@ -555,6 +1125,24 @@
       "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77ba6999_a734dfba",
+        "filename": "chrome/browser/search/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-02T07:54:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ca46221_c606bee5",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -575,6 +1163,24 @@
     },
     {
       "key": {
+        "uuid": "b1317d57_59012a59",
+        "filename": "chrome/browser/search/local_ntp_source.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-02T07:54:06Z",
+      "side": 1,
+      "message": "Kept the placeholders, but removed dynamic substitution.",
+      "parentUuid": "8f36a706_61ed05f9",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db4c6773_abd9cf82",
         "filename": "chrome/browser/search/local_ntp_source.cc",
         "patchSetId": 2
@@ -589,6 +1195,24 @@
       "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a05c483_2283041a",
+        "filename": "chrome/browser/search/local_ntp_source.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-02T07:54:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "db4c6773_abd9cf82",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -609,6 +1233,24 @@
     },
     {
       "key": {
+        "uuid": "aeaa595f_5d1e7344",
+        "filename": "chrome/browser/search/local_ntp_source.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-02T07:54:06Z",
+      "side": 1,
+      "message": "Yes, there is. I looked into it briefly last week, but couldn\u0027t really figure it out in a few minutes, so I skipped it for now. I\u0027ll look into this once we fix other issues with this CL. Keeping this comment unresolved as a reminder.",
+      "parentUuid": "6834b3c3_1724ec85",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6deed73_eca49cf4",
         "filename": "chrome/browser/search/local_ntp_source.cc",
         "patchSetId": 2
@@ -623,6 +1265,24 @@
       "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21a9354b_6e7d8eb8",
+        "filename": "chrome/browser/search/local_ntp_source.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-02T07:54:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6deed73_eca49cf4",
+      "revId": "3baceb0c117e4e998603ce3c86b25b7364854d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
