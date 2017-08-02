@@ -520,8 +520,6 @@ void GLRenderer::ClearFramebuffer() {
   else
     gl_->ClearColor(0, 0, 1, 1);
 
-  gl_->ClearStencil(0);
-
   bool always_clear = overdraw_feedback_;
 #ifndef NDEBUG
   always_clear = true;
@@ -529,8 +527,10 @@ void GLRenderer::ClearFramebuffer() {
   if (always_clear ||
       current_frame()->current_render_pass->has_transparent_background) {
     GLbitfield clear_bits = GL_COLOR_BUFFER_BIT;
-    if (always_clear)
+    if (always_clear) {
+      gl_->ClearStencil(0);
       clear_bits |= GL_STENCIL_BUFFER_BIT;
+    }
     gl_->Clear(clear_bits);
   }
 }
