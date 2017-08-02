@@ -25,6 +25,47 @@
     },
     {
       "key": {
+        "uuid": "ec64ebd4_5f4366af",
+        "filename": "content/browser/frame_host/frame_tree.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-02T15:06:06Z",
+      "side": 1,
+      "message": "I\u0027m not entirely sure this is correct. Should I be testing if widget is non-null here? My concern is that I\u0027m asked to return a RenderViewHost that already exists but isn\u0027t bound to a frame.",
+      "revId": "71cf1fcf662a25f58266994b3b8abe0bd107d32e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f92280c_2b6a77ae",
+        "filename": "content/browser/frame_host/frame_tree.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-02T15:06:06Z",
+      "side": 1,
+      "message": "A RVHI can be allocated without a widget ptr via the call to CreateRenderFrameProxy that calls CreateRenderViewHost and passes nullptr in.  \n\nSo it is possible to return a RVHI that doesn\u0027t have the widget\u0027s widget set.",
+      "parentUuid": "60064178_7b773c1f",
+      "range": {
+        "startLine": 328,
+        "startChar": 4,
+        "endLine": 328,
+        "endChar": 60
+      },
+      "revId": "71cf1fcf662a25f58266994b3b8abe0bd107d32e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "480da962_c864897c",
         "filename": "content/browser/frame_host/render_frame_host_impl.cc",
         "patchSetId": 8
@@ -48,6 +89,30 @@
     },
     {
       "key": {
+        "uuid": "8411d1ea_a71760c6",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-02T15:06:06Z",
+      "side": 1,
+      "message": "Hmm; yes. I wanted to always provide a WidgetPtr to the construction of a RWHI...\n\nBeing that you can\u0027t copy a WidgetPtr and move it. The widgetptr either needs to come into this class as a parameter or be passed into the places where the RWHI is created.  The common case is where the RWHI is created in the RVHF and not here so it seemed to make sense to pass the widget ptr into there. Otherwise I guess I could pass nullptr into the RWHI but that isn\u0027t ideal since then I need to deal with a null widgetptr in that object and if anyone calls mojo methods they won\u0027t get queued as it will if I pass it into the ctor.\n\nBut I added a CHECK(false) in this code path and it is never hit so there is always an existing RWHI. And if avi\u0027s comment that the main frame owns the RWHI is always true then the widget_request parameter could just be removed and this allocation could just be done here.",
+      "parentUuid": "480da962_c864897c",
+      "range": {
+        "startLine": 523,
+        "startChar": 0,
+        "endLine": 525,
+        "endChar": 3
+      },
+      "revId": "71cf1fcf662a25f58266994b3b8abe0bd107d32e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5e32e72f_73105e7a",
         "filename": "content/browser/frame_host/render_frame_host_manager.cc",
         "patchSetId": 8
@@ -59,6 +124,30 @@
       "writtenOn": "2017-08-02T09:22:56Z",
       "side": 1,
       "message": "I\u0027m pretty sure the main render frame should always have a non-zero widget routing ID? Is there some case where that\u0027s not true?\n\n(Maybe it\u0027s because of that hack that\u0027s mentioned below?)",
+      "range": {
+        "startLine": 1679,
+        "startChar": 0,
+        "endLine": 1681,
+        "endChar": 5
+      },
+      "revId": "71cf1fcf662a25f58266994b3b8abe0bd107d32e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b83e1e8_3f1b030a",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1681,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-08-02T15:06:06Z",
+      "side": 1,
+      "message": "This is the common case in fact when the browser first starts.\nThe call stack is:\n#7 0x7fcc0730939f content::RenderFrameHostManager::CreateRenderFrameHost()\n#8 0x7fcc0730f3b9 content::RenderFrameHostManager::CreateRenderFrame()\n#9 0x7fcc0730eff0 content::RenderFrameHostManager::CreatePendingRenderFrameHost()\n#10 0x7fcc0730a072 content::RenderFrameHostManager::UpdateStateForNavigate()\n#11 0x7fcc07309b98 content::RenderFrameHostManager::Navigate()\n#12 0x7fcc072e4a28 content::NavigatorImpl::NavigateToEntry()\n#13 0x7fcc072e54f5 content::NavigatorImpl::NavigateToPendingEntry()\n\nAnd it doesn\u0027t end up passing this check (in CreateRenderFrame)\n  if (frame_tree_node_-\u003eparent() \u0026\u0026\n      frame_tree_node_-\u003eparent()-\u003ecurrent_frame_host()-\u003eGetSiteInstance() !\u003d\n          instance) {\n\nso a widget routing id \u0026 widget/widget_channel_request isn\u0027t allocated. And a routing id for the render view will be allocated here: https://cs.chromium.org/chromium/src/content/browser/renderer_host/render_view_host_factory.cc?sq\u003dpackage:chromium\u0026l\u003d37",
+      "parentUuid": "5e32e72f_73105e7a",
       "range": {
         "startLine": 1679,
         "startChar": 0,
