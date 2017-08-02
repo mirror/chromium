@@ -40,6 +40,9 @@ source_set("unit_tests") {
     "logo_cache_unittest.cc",
     "logo_tracker_unittest.cc",
   ]
+  data = [
+    "//chrome/test/data/search_provider_logos/",
+  ]
   deps = [
     ":search_provider_logos",
     "//base/test:test_support",
