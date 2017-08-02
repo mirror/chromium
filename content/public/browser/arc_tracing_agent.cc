@@ -148,13 +148,18 @@ class ArcTracingAgentImpl : public ArcTracingAgent {
       return;
     }
 
-    BrowserThread::PostTask(
-        BrowserThread::IO, FROM_HERE,
-        base::Bind(&ArcTracingReader::StartTracing, reader_.GetWeakPtr(),
-                   base::Passed(&read_fd)));
+    success =
+        delegate_->StartTracing(trace_config, std::move(write_fd),
+                                base::Bind(callback, GetTracingAgentName()));
 
-    delegate_->StartTracing(trace_config, std::move(write_fd),
-                            base::Bind(callback, GetTracingAgentName()));
+    if (success) {
+      BrowserThread::PostTask(
+          BrowserThread::IO, FROM_HERE,
+          base::Bind(&ArcTracingReader::StartTracing, reader_.GetWeakPtr(),
+                     base::Passed(&read_fd)));
+    }
+    // In the event of a failure, we don't use PostTask, because the
+    // delegate_->StartTracing call will have already done it.
   }
 
   void StopAgentTracing(const StopAgentTracingCallback& callback) override {
