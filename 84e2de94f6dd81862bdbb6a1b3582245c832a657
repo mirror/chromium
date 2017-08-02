@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "80af6b64_ce4cbc1b",
+        "filename": "testing/libfuzzer/fuzzers/mojo_fuzzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1155789
+      },
+      "writtenOn": "2017-08-02T16:56:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0282e0cf_20af90da",
+      "revId": "84e2de94f6dd81862bdbb6a1b3582245c832a657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41d9f69b_9e2efcab",
         "filename": "testing/libfuzzer/fuzzers/mojo_fuzzer.cc",
         "patchSetId": 2
@@ -62,6 +80,30 @@
       "revId": "84e2de94f6dd81862bdbb6a1b3582245c832a657",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2af78abb_57ca105a",
+        "filename": "testing/libfuzzer/fuzzers/mojo_fuzzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1155789
+      },
+      "writtenOn": "2017-08-02T16:56:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "41d9f69b_9e2efcab",
+      "range": {
+        "startLine": 12,
+        "startChar": 10,
+        "endLine": 12,
+        "endChar": 48
+      },
+      "revId": "84e2de94f6dd81862bdbb6a1b3582245c832a657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "bd921d6a_fd3c50b5",
+        "filename": "testing/libfuzzer/fuzzers/mojo_fuzzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1155789
+      },
+      "writtenOn": "2017-08-02T16:56:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "04490ddc_49a4df58",
+      "range": {
+        "startLine": 17,
+        "startChar": 16,
+        "endLine": 17,
+        "endChar": 31
+      },
+      "revId": "84e2de94f6dd81862bdbb6a1b3582245c832a657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fcaadada_45b00e81",
         "filename": "testing/libfuzzer/fuzzers/mojo_fuzzer.cc",
         "patchSetId": 2
@@ -99,6 +165,30 @@
       "writtenOn": "2017-08-02T05:47:10Z",
       "side": 1,
       "message": "can this just inherit from mojo::internal::BindingState\u003cInterface, ImplRefTraits\u003e instead, since router_ is protected?",
+      "range": {
+        "startLine": 19,
+        "startChar": 3,
+        "endLine": 19,
+        "endChar": 9
+      },
+      "revId": "84e2de94f6dd81862bdbb6a1b3582245c832a657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f53bd681_f1b9ce06",
+        "filename": "testing/libfuzzer/fuzzers/mojo_fuzzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1155789
+      },
+      "writtenOn": "2017-08-02T16:56:19Z",
+      "side": 1,
+      "message": "Unfortunately not, because router_ lives in BindingStateBase, and protected fields are only exposed to direct subclasses.",
+      "parentUuid": "fcaadada_45b00e81",
       "range": {
         "startLine": 19,
         "startChar": 3,
@@ -134,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "75de55d9_dadcf036",
+        "filename": "testing/libfuzzer/fuzzers/mojo_fuzzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1155789
+      },
+      "writtenOn": "2017-08-02T16:56:19Z",
+      "side": 1,
+      "message": "Agreed that duplicating code is not a good idea here. I\u0027ll go ahead and modify these classes to expose what I need, and if there is pushback later I can come up with a more maintainable way to access these fields externally.",
+      "parentUuid": "6f9dbfab_6393f488",
+      "range": {
+        "startLine": 60,
+        "startChar": 6,
+        "endLine": 60,
+        "endChar": 15
+      },
+      "revId": "84e2de94f6dd81862bdbb6a1b3582245c832a657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e0e2e360_2f087f32",
         "filename": "testing/libfuzzer/fuzzers/mojo_fuzzer.cc",
         "patchSetId": 2
@@ -157,6 +271,30 @@
     },
     {
       "key": {
+        "uuid": "4110a410_7ed2b6ed",
+        "filename": "testing/libfuzzer/fuzzers/mojo_fuzzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1155789
+      },
+      "writtenOn": "2017-08-02T16:56:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e0e2e360_2f087f32",
+      "range": {
+        "startLine": 119,
+        "startChar": 58,
+        "endLine": 119,
+        "endChar": 91
+      },
+      "revId": "84e2de94f6dd81862bdbb6a1b3582245c832a657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8f58384_386fdd70",
         "filename": "testing/libfuzzer/fuzzers/mojo_fuzzer.cc",
         "patchSetId": 2
@@ -177,6 +315,30 @@
       "revId": "84e2de94f6dd81862bdbb6a1b3582245c832a657",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaadc899_f8a8de1c",
+        "filename": "testing/libfuzzer/fuzzers/mojo_fuzzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1155789
+      },
+      "writtenOn": "2017-08-02T16:56:19Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c8f58384_386fdd70",
+      "range": {
+        "startLine": 159,
+        "startChar": 23,
+        "endLine": 159,
+        "endChar": 28
+      },
+      "revId": "84e2de94f6dd81862bdbb6a1b3582245c832a657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
