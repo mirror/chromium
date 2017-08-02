@@ -22,6 +22,8 @@ SyntheticPointerActionParams::PointerActionType ToSyntheticPointerActionType(
     return SyntheticPointerActionParams::PointerActionType::MOVE;
   if (action_type == "pointerUp")
     return SyntheticPointerActionParams::PointerActionType::RELEASE;
+  if (action_type == "pointerLeave")
+    return SyntheticPointerActionParams::PointerActionType::LEAVE;
   if (action_type == "pause")
     return SyntheticPointerActionParams::PointerActionType::IDLE;
   return SyntheticPointerActionParams::PointerActionType::NOT_INITIALIZED;
@@ -247,6 +249,7 @@ bool ActionsParser::ParseAction(
       action_param.set_button(button);
       break;
     case SyntheticPointerActionParams::PointerActionType::MOVE:
+    case SyntheticPointerActionParams::PointerActionType::LEAVE:
       action_param.set_position(gfx::PointF(position_x, position_y));
       break;
     case SyntheticPointerActionParams::PointerActionType::RELEASE:
