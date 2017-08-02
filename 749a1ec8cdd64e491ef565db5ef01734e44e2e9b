@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ff8cde4_7a243d27",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/ScrollingCoordinator.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 787,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-08-02T17:33:29Z",
+      "side": 1,
+      "message": "So taking a closer look, it seems that EnclosingLayerForPaintInvalidationCrossingFrameBoundaries shouldn\u0027t ever return null (If its a PaintInvalidationContainer, it\u0027ll return itself. If not it\u0027ll return the first PaintInvalidationContainer in its ancestor chain. The root layer should always be a PaintInvalidationContainer I believe. Perhaps if a layer is destroyed/removed from the tree we can somehow still get here? Could you add some CHECKs on layer_rect.key to make sure its still valid? PDR might know better what to look for that might cause a null EnclosingLayerForPaintInvalidationCrossingFrameBoundaries \n\nAside from that, I\u0027d use:\n\nif (!composited_layer)\n  continue;\n\nAnd chromium style says don\u0027t handle a failing DCHECK so I\u0027d remove DCHECK(composited_layer).\n\nlgtm to land this to fix crashes in the wild but I think we should make sure we understand why we\u0027re getting here to make sure we\u0027re not masking a deeper bug.",
+      "range": {
+        "startLine": 787,
+        "startChar": 10,
+        "endLine": 787,
+        "endChar": 26
+      },
+      "revId": "749a1ec8cdd64e491ef565db5ef01734e44e2e9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
