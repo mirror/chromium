@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "33693ce7_dff5b86c",
+        "filename": "chrome/browser/resources/snippets_internals.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-08-02T13:45:36Z",
+      "side": 1,
+      "message": "I simplified this to make it consistent with the existing style.\nThe url input bar is now full width, like all the tables.",
+      "parentUuid": "f36f684f_7781137d",
+      "revId": "2c1b583ff66a8cbb149c10af6eeb099eddbffc3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "875731e9_f7233169",
         "filename": "chrome/browser/resources/snippets_internals.html",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "2c1b583ff66a8cbb149c10af6eeb099eddbffc3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ad3ff21_c5fa8ace",
+        "filename": "chrome/browser/resources/snippets_internals.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-08-02T13:45:36Z",
+      "side": 1,
+      "message": "AFAIK the default way to include load time data. https://www.chromium.org/developers/webui\nIn this case, load time data contains the bool (flag) contextualSuggestionsEnabled.\nThe filename is defined in https://chromium-review.googlesource.com/c/595974/2/chrome/browser/ui/webui/snippets_internals_ui.cc#26",
+      "parentUuid": "875731e9_f7233169",
+      "revId": "2c1b583ff66a8cbb149c10af6eeb099eddbffc3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "c1fdaf83_8de7c83a",
+        "filename": "chrome/browser/resources/snippets_internals.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-08-02T13:45:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3452471e_497e6db0",
+      "range": {
+        "startLine": 227,
+        "startChar": 61,
+        "endLine": 227,
+        "endChar": 0
+      },
+      "revId": "2c1b583ff66a8cbb149c10af6eeb099eddbffc3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee8e480f_d5848688",
         "filename": "chrome/browser/resources/snippets_internals.js",
         "patchSetId": 2
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "817bec69_dd1c22a9",
+        "filename": "chrome/browser/resources/snippets_internals.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-08-02T13:45:36Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "ee8e480f_d5848688",
+      "revId": "2c1b583ff66a8cbb149c10af6eeb099eddbffc3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ad48670b_cedba5f3",
         "filename": "chrome/browser/resources/snippets_internals.js",
         "patchSetId": 2
@@ -90,6 +168,24 @@
       "revId": "2c1b583ff66a8cbb149c10af6eeb099eddbffc3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b691c49f_f5cb06fa",
+        "filename": "chrome/browser/resources/snippets_internals.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-08-02T13:45:36Z",
+      "side": 1,
+      "message": "Ok, let\u0027s reuse displayList (and jstemplate), this gives the details for free.",
+      "parentUuid": "ad48670b_cedba5f3",
+      "revId": "2c1b583ff66a8cbb149c10af6eeb099eddbffc3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -116,6 +212,30 @@
     },
     {
       "key": {
+        "uuid": "c5d26369_57882403",
+        "filename": "chrome/browser/ui/webui/snippets_internals_message_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-08-02T13:45:36Z",
+      "side": 1,
+      "message": "Done, also for the other Handles.",
+      "parentUuid": "95444371_84ac67a8",
+      "range": {
+        "startLine": 199,
+        "startChar": 51,
+        "endLine": 199,
+        "endChar": 77
+      },
+      "revId": "2c1b583ff66a8cbb149c10af6eeb099eddbffc3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0050ed50_a99628f2",
         "filename": "chrome/browser/ui/webui/snippets_internals_message_handler.cc",
         "patchSetId": 2
@@ -133,6 +253,24 @@
     },
     {
       "key": {
+        "uuid": "3b815930_32a1de27",
+        "filename": "chrome/browser/ui/webui/snippets_internals_message_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-08-02T13:45:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0050ed50_a99628f2",
+      "revId": "2c1b583ff66a8cbb149c10af6eeb099eddbffc3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c8c6000_a5b8cb2d",
         "filename": "chrome/browser/ui/webui/snippets_internals_ui.cc",
         "patchSetId": 2
@@ -147,6 +285,24 @@
       "revId": "2c1b583ff66a8cbb149c10af6eeb099eddbffc3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deda6b4b_56578ac1",
+        "filename": "chrome/browser/ui/webui/snippets_internals_ui.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-08-02T13:45:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c8c6000_a5b8cb2d",
+      "revId": "2c1b583ff66a8cbb149c10af6eeb099eddbffc3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
