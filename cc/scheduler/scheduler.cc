@@ -379,9 +379,12 @@ void Scheduler::BeginImplFrameWithDeadline(const viz::BeginFrameArgs& args) {
   base::TimeDelta bmf_to_activate_estimate_critical =
       bmf_start_to_activate +
       compositor_timing_history_->BeginMainFrameQueueDurationCriticalEstimate();
+  base::TimeDelta bmf_to_activate_interval =
+      adjusted_args.interval -
+      compositor_timing_history_->DrawDurationEstimate() - kDeadlineFudgeFactor;
 
   state_machine_.SetCriticalBeginMainFrameToActivateIsFast(
-      bmf_to_activate_estimate_critical < adjusted_args.interval);
+      bmf_to_activate_estimate_critical < bmf_to_activate_interval);
 
   // Update the BeginMainFrame args now that we know whether the main
   // thread will be on the critical path or not.
