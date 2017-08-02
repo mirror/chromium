@@ -262,9 +262,34 @@ def main():
   parser.add_argument(
       '--tool-args', nargs='*',
       help='optional arguments passed to the tool')
+  parser.add_argument(
+      '--tool-path', nargs='?',
+      help='optional path for the tool')
   args = parser.parse_args(argv)
 
   os.environ['PATH'] = '%s%s%s' % (
+      os.path.abspath(os.path.join(
+          os.path.dirname(__file__),
+          '../../../third_party/llvm-build/Release+Asserts/bin')),
+      os.pathsep,
+      os.environ['PATH'])
+
+  if args.tool_path:
+    os.environ['PATH'] = '%s%s%s' % (
+      os.path.abspath(args.tool_path),
+      os.pathsep,
+      os.environ['PATH'])
+    # The path to clang's builtin headers is passed as an argument because
+    # otherwise clang tries to find its builtin headers from a relative position
+    # to where the tool is.
+    if not args.tool_args:
+      args.tool_args = []
+    args.tool_args.append('--extra-arg')
+    args.tool_args.append('-resource-dir=%s' % (
+        os.path.abspath(os.path.join(os.path.dirname(__file__),
+          '../../../third_party/llvm-build/Release+Asserts/lib/clang/6.0.0'))))
+  else:
+    os.environ['PATH'] = '%s%s%s' % (
       os.path.abspath(os.path.join(
           os.path.dirname(__file__),
           '../../../third_party/llvm-build/Release+Asserts/bin')),
