@@ -2,19 +2,18 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "core/css/properties/CSSPropertyAPIColorNoQuirks.h"
+#include "core/css/properties/CSSPropertyAPIOpacityNonInherited.h"
 
-#include "core/css/parser/CSSParserContext.h"
 #include "core/css/parser/CSSPropertyParserHelpers.h"
 
 class CSSParserLocalContext;
 namespace blink {
 
-const CSSValue* CSSPropertyAPIColorNoQuirks::parseSingleValue(
+const CSSValue* CSSPropertyAPIOpacityNonInherited::parseSingleValue(
     CSSParserTokenRange& range,
     const CSSParserContext& context,
     const CSSParserLocalContext&) {
-  return CSSPropertyParserHelpers::ConsumeColor(range, context.Mode());
+  return CSSPropertyParserHelpers::ConsumeNumber(range, kValueRangeAll);
 }
 
 }  // namespace blink
