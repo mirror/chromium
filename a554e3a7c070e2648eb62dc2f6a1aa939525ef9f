@@ -22,6 +22,30 @@
       "revId": "a554e3a7c070e2648eb62dc2f6a1aa939525ef9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6d6b89b_e78f5569",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-02T23:22:13Z",
+      "side": 0,
+      "message": "This has been fixed by lesliewatkins@\u0027s work. The weird behavior of \"toggle is clickable but immediately becomes disabled after enabling it\" doesn\u0027t seem to happen anymore.",
+      "parentUuid": "6ce5217d_f9ca9552",
+      "range": {
+        "startLine": 280,
+        "startChar": 0,
+        "endLine": 283,
+        "endChar": 53
+      },
+      "revId": "a554e3a7c070e2648eb62dc2f6a1aa939525ef9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
