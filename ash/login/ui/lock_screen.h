@@ -33,7 +33,7 @@ class LockScreen {
   // Destroys an existing lock screen instance.
   void Destroy();
 
-  // Enables/disables background blur.
+  // Enables/disables background blur. Used for debugging purpose.
   void ToggleBlur();
 
   // Enable or disable PIN for the given user.
