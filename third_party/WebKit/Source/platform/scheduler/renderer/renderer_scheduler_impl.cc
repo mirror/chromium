@@ -598,6 +598,10 @@ void RendererSchedulerImpl::SetRendererBackgrounded(bool backgrounded) {
     main_thread_only().renderer_paused = false;
 
   main_thread_only().background_status_changed_at = tick_clock()->NowTicks();
+  seqlock_queueing_time_estimator_.seqlock.WriteBegin();
+  seqlock_queueing_time_estimator_.data.OnRendererStateChanged(
+      backgrounded, main_thread_only().background_status_changed_at);
+  seqlock_queueing_time_estimator_.seqlock.WriteEnd();
 
   UpdatePolicy();
 
@@ -1932,6 +1936,7 @@ void RendererSchedulerImpl::WillProcessTask(double start_time) {
   base::TimeTicks start_time_ticks =
       MonotonicTimeInSecondsToTimeTicks(start_time);
   main_thread_only().current_task_start_time = start_time_ticks;
+
   seqlock_queueing_time_estimator_.seqlock.WriteBegin();
   seqlock_queueing_time_estimator_.data.OnTopLevelTaskStarted(start_time_ticks);
   seqlock_queueing_time_estimator_.seqlock.WriteEnd();
@@ -2216,7 +2221,7 @@ void RendererSchedulerImpl::RemoveTaskTimeObserver(
 
 void RendererSchedulerImpl::OnQueueingTimeForWindowEstimated(
     base::TimeDelta queueing_time,
-    base::TimeTicks window_start_time) {
+    bool report_to_uma) {
   main_thread_only().most_recent_expected_queueing_time = queueing_time;
 
   if (main_thread_only().has_navigated) {
@@ -2231,24 +2236,20 @@ void RendererSchedulerImpl::OnQueueingTimeForWindowEstimated(
     }
   }
 
-  // RendererScheduler reports the queueing time once per window's duration.
+  // RendererScheduler reports the queueing time once per disjoint window.
   //          |stepEQT|stepEQT|stepEQT|stepEQT|stepEQT|stepEQT|
   // Report:  |-------window EQT------|
   // Discard:         |-------window EQT------|
   // Discard:                 |-------window EQT------|
   // Report:                          |-------window EQT------|
-  if (window_start_time -
-          main_thread_only().uma_last_queueing_time_report_window_start_time <
-      kQueueingTimeWindowDuration) {
+  if (!report_to_uma)
     return;
-  }
+
   UMA_HISTOGRAM_TIMES("RendererScheduler.ExpectedTaskQueueingDuration",
                       queueing_time);
   TRACE_COUNTER1(TRACE_DISABLED_BY_DEFAULT("renderer.scheduler"),
                  "estimated_queueing_time_for_window",
                  queueing_time.InMillisecondsF());
-  main_thread_only().uma_last_queueing_time_report_window_start_time =
-      window_start_time;
 }
 
 AutoAdvancingVirtualTimeDomain* RendererSchedulerImpl::GetVirtualTimeDomain() {
