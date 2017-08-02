@@ -141,6 +141,30 @@
       "revId": "26dbd95d540375390e72335d62234d6c8da97eeb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0360837e_d2cd05b8",
+        "filename": "ui/app_list/views/search_result_answer_card_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-08-02T22:01:44Z",
+      "side": 1,
+      "message": "IIUC mouse click is dispatched by hack in https://chromium-review.googlesource.com/c/592750.\nIs it correct?\nIf yes, then we can discard hack in that CL and call OpenResult() from here and from there/",
+      "parentUuid": "48879d50_32b84bf2",
+      "range": {
+        "startLine": 95,
+        "startChar": 11,
+        "endLine": 95,
+        "endChar": 23
+      },
+      "revId": "26dbd95d540375390e72335d62234d6c8da97eeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
