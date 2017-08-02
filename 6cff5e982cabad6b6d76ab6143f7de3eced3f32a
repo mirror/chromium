@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "adc91e02_e7322fcc",
+        "filename": "cc/animation/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002110
+      },
+      "writtenOn": "2017-08-02T15:50:24Z",
+      "side": 1,
+      "message": "The group_id concept is intended to coordinate the animation of multiple properties (on the same target). The idea is that the animations only start when all animations in the group can start, and finished notifications are only sent when all animations in the group are done. I don\u0027t think Blink currently uses this, but UI does.",
+      "revId": "6cff5e982cabad6b6d76ab6143f7de3eced3f32a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e741ef5d_4a809ec5",
+        "filename": "cc/animation/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002110
+      },
+      "writtenOn": "2017-08-02T15:50:24Z",
+      "side": 1,
+      "message": "We could theoretically animate things like color which would trigger re-raster but not re-layout, if we added support for re-rastering during animations.",
+      "revId": "6cff5e982cabad6b6d76ab6143f7de3eced3f32a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
