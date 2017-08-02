@@ -34,7 +34,7 @@
 #include "public/platform/WebMediaStreamTrack.h"
 #include "public/platform/WebPrivatePtr.h"
 
-#if BLINK_IMPLEMENTATION
+#if INSIDE_BLINK
 #include "platform/wtf/PassRefPtr.h"
 #endif
 
@@ -67,7 +67,7 @@ class WebDOMMediaStreamTrack {
   BLINK_EXPORT WebMediaStreamTrack Component() const;
 
  private:
-#if BLINK_IMPLEMENTATION
+#if INSIDE_BLINK
   WebDOMMediaStreamTrack(MediaStreamTrack*);
 #endif
 
