@@ -35,6 +35,8 @@
 #include "content/test/test_content_browser_client.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
+using blink_common::MessagePort;
+
 namespace content {
 
 namespace {

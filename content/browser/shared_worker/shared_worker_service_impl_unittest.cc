@@ -30,6 +30,8 @@
 #include "ipc/ipc_sync_message.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
+using blink_common::MessagePort;
+
 namespace content {
 
 class SharedWorkerServiceImplTest : public testing::Test {

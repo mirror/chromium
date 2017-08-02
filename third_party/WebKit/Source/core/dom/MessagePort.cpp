@@ -65,7 +65,7 @@ void MessagePort::postMessage(ScriptState* script_state,
   if (!IsEntangled())
     return;
   DCHECK(GetExecutionContext());
-  DCHECK(entangled_channel_);
+  DCHECK(port_);
 
   // Make sure we aren't connected to any of the passed-in ports.
   for (unsigned i = 0; i < ports.size(); ++i) {
@@ -76,42 +76,21 @@ void MessagePort::postMessage(ScriptState* script_state,
       return;
     }
   }
-  MessagePortChannelArray channels = MessagePort::DisentanglePorts(
+  auto channels = MessagePort::DisentanglePorts(
       ExecutionContext::From(script_state), ports, exception_state);
   if (exception_state.HadException())
     return;
 
   StringView wire_data = message->GetWireData();
-  WebMessagePortChannelArray web_channels =
-      ToWebMessagePortChannelArray(std::move(channels));
-  entangled_channel_->PostMessage(
-      reinterpret_cast<const uint8_t*>(wire_data.Characters8()),
-      wire_data.length(), std::move(web_channels));
+  port_->PostMessage(reinterpret_cast<const uint8_t*>(wire_data.Characters8()),
+                     wire_data.length(), std::move(channels));
 }
 
-// static
-WebMessagePortChannelArray MessagePort::ToWebMessagePortChannelArray(
-    MessagePortChannelArray channels) {
-  WebMessagePortChannelArray web_channels(channels.size());
-  for (size_t i = 0; i < channels.size(); ++i)
-    web_channels[i] = std::move(channels[i]);
-  return web_channels;
-}
-
-// static
-MessagePortArray* MessagePort::ToMessagePortArray(
-    ExecutionContext* context,
-    WebMessagePortChannelArray web_channels) {
-  MessagePortChannelArray channels(web_channels.size());
-  for (size_t i = 0; i < web_channels.size(); ++i)
-    channels[i] = std::move(web_channels[i]);
-  return MessagePort::EntanglePorts(*context, std::move(channels));
-}
-
-std::unique_ptr<WebMessagePortChannel> MessagePort::Disentangle() {
-  DCHECK(entangled_channel_);
-  entangled_channel_->SetClient(nullptr);
-  return std::move(entangled_channel_);
+blink_common::MessagePort MessagePort::Disentangle() {
+  DCHECK(port_);
+  auto result = std::move(*port_);
+  port_.reset();
+  return result;
 }
 
 // Invoked to notify us that there are messages available for this port.
@@ -137,52 +116,54 @@ void MessagePort::start() {
   if (started_)
     return;
 
-  entangled_channel_->SetClient(this);
+  port_->SetCallback(ConvertToBaseCallback(CrossThreadBind(
+      &MessagePort::MessageAvailable, WrapCrossThreadWeakPersistent(this))));
   started_ = true;
   MessageAvailable();
 }
 
 void MessagePort::close() {
-  if (IsEntangled())
-    entangled_channel_->SetClient(nullptr);
+  // A closed port should not be neutered, so rather than merely disconnecting
+  // from the mojo message pipe, also entangle with a new dangling message pipe.
+  if (IsEntangled()) {
+    port_.reset();
+    Entangle(mojo::MessagePipe().handle0);
+  }
   closed_ = true;
 }
 
-void MessagePort::Entangle(std::unique_ptr<WebMessagePortChannel> remote) {
+void MessagePort::Entangle(mojo::ScopedMessagePipeHandle handle) {
   // Only invoked to set our initial entanglement.
-  DCHECK(!entangled_channel_);
+  DCHECK(!port_);
   DCHECK(GetExecutionContext());
 
-  entangled_channel_ = std::move(remote);
+  port_ = WTF::MakeUnique<blink_common::MessagePort>(std::move(handle));
+}
+
+void MessagePort::Entangle(blink_common::MessagePort port) {
+  // Only invoked to set our initial entanglement.
+  DCHECK(!port_);
+  DCHECK(GetExecutionContext());
+
+  port_ = WTF::MakeUnique<blink_common::MessagePort>(std::move(port));
 }
 
 const AtomicString& MessagePort::InterfaceName() const {
   return EventTargetNames::MessagePort;
 }
 
-static bool TryGetMessageFrom(WebMessagePortChannel& web_channel,
-                              RefPtr<SerializedScriptValue>& message,
-                              MessagePortChannelArray& channels) {
-  WebVector<uint8_t> message_data;
-  WebMessagePortChannelArray web_channels;
-  if (!web_channel.TryGetMessage(&message_data, web_channels))
-    return false;
-
-  if (web_channels.size()) {
-    channels.resize(web_channels.size());
-    for (size_t i = 0; i < web_channels.size(); ++i)
-      channels[i] = std::move(web_channels[i]);
-  }
-  message = SerializedScriptValue::Create(
-      reinterpret_cast<const char*>(message_data.Data()), message_data.size());
-  return true;
-}
-
 bool MessagePort::TryGetMessage(RefPtr<SerializedScriptValue>& message,
                                 MessagePortChannelArray& channels) {
-  if (!entangled_channel_)
+  if (!port_)
     return false;
-  return TryGetMessageFrom(*entangled_channel_, message, channels);
+
+  std::vector<uint8_t> message_data;
+  if (!port_->GetMessage(&message_data, &channels))
+    return false;
+
+  message = SerializedScriptValue::Create(
+      reinterpret_cast<const char*>(message_data.data()), message_data.size());
+  return true;
 }
 
 void MessagePort::DispatchMessages() {
@@ -283,6 +264,12 @@ MessagePortArray* MessagePort::EntanglePorts(ExecutionContext& context,
     (*port_array)[i] = port;
   }
   return port_array;
+}
+
+MojoHandle MessagePort::EntangledHandleForTesting() const {
+  if (!port_)
+    return MOJO_HANDLE_INVALID;
+  return port_->GetHandle().get().value();
 }
 
 DEFINE_TRACE(MessagePort) {

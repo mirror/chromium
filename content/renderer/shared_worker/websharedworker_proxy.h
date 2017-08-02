@@ -8,16 +8,12 @@
 #include <set>
 
 #include "base/macros.h"
-#include "content/common/message_port.h"
 #include "ipc/ipc_listener.h"
+#include "third_party/WebKit/common/message_port/message_port.h"
 #include "third_party/WebKit/public/web/WebSharedWorkerConnectListener.h"
 #include "third_party/WebKit/public/web/WebSharedWorkerCreationErrors.h"
 
 struct ViewHostMsg_CreateWorker_Params;
-
-namespace blink {
-class WebMessagePortChannel;
-}
 
 namespace IPC {
 class MessageRouter;
@@ -34,12 +30,12 @@ class WebSharedWorkerProxy : private IPC::Listener {
   WebSharedWorkerProxy(
       std::unique_ptr<blink::WebSharedWorkerConnectListener> listener,
       ViewHostMsg_CreateWorker_Params params,
-      std::unique_ptr<blink::WebMessagePortChannel> channel);
+      blink_common::MessagePort channel);
   ~WebSharedWorkerProxy() override;
 
  private:
   void connect(ViewHostMsg_CreateWorker_Params params,
-               std::unique_ptr<blink::WebMessagePortChannel> channel);
+               blink_common::MessagePort channel);
 
   // IPC::Listener implementation.
   bool OnMessageReceived(const IPC::Message& message) override;
@@ -58,7 +54,7 @@ class WebSharedWorkerProxy : private IPC::Listener {
 
   IPC::MessageRouter* const router_;
 
-  MessagePort message_port_;
+  blink_common::MessagePort message_port_;
   std::unique_ptr<blink::WebSharedWorkerConnectListener> listener_;
 
   DISALLOW_COPY_AND_ASSIGN(WebSharedWorkerProxy);

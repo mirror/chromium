@@ -20,7 +20,6 @@
 #include "content/common/content_param_traits.h"
 #include "content/common/date_time_suggestion.h"
 #include "content/common/frame_replication_state.h"
-#include "content/common/message_port.h"
 #include "content/common/navigation_gesture.h"
 #include "content/common/resize_params.h"
 #include "content/common/text_input_state.h"
@@ -41,6 +40,7 @@
 #include "media/capture/ipc/capture_param_traits.h"
 #include "net/base/network_change_notifier.h"
 #include "ppapi/features/features.h"
+#include "third_party/WebKit/common/message_port/message_port.h"  // nogncheck
 #include "third_party/WebKit/public/platform/WebDisplayMode.h"
 #include "third_party/WebKit/public/platform/WebFloatPoint.h"
 #include "third_party/WebKit/public/platform/WebFloatRect.h"
@@ -694,7 +694,7 @@ IPC_MESSAGE_CONTROL1(ViewHostMsg_DocumentDetached, uint64_t /* document_id */)
 // worker.
 IPC_MESSAGE_CONTROL2(ViewHostMsg_ConnectToWorker,
                      int32_t /* worker_route_id */,
-                     content::MessagePort /* port */)
+                     blink_common::MessagePort /* port */)
 
 // Tells the browser that a specific Appcache manifest in the current page
 // was accessed.

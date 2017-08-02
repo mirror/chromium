@@ -43,6 +43,7 @@
 #include "url/gurl.h"
 
 using blink::WebServiceWorkerError;
+using blink_common::MessagePort;
 
 namespace content {
 
