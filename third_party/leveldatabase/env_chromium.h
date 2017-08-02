@@ -72,6 +72,17 @@ struct ChromiumOptions : public leveldb::Options {
   ChromiumOptions();
 };
 
+enum class SharedReadCache {
+  // Use the default shared read cache.
+  Default,
+  // Use the shared read cache for public web facing API's.
+  Web,
+};
+
+// Return the shared leveldb block cache for web API's. The caller *does not*
+// own the returned instance.
+extern leveldb::Cache* SharedWebBlockCache();
+
 const char* MethodIDToString(MethodID method);
 
 leveldb::Status MakeIOError(leveldb::Slice filename,
