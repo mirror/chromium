@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "746986b8_1117d00e",
+        "filename": "remoting/ios/app/host_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-08-02T21:19:29Z",
+      "side": 1,
+      "message": "Just fixed a rebase churn in a previous CL.",
+      "range": {
+        "startLine": 454,
+        "startChar": 0,
+        "endLine": 454,
+        "endChar": 30
+      },
+      "revId": "c7284ea8830b41020383c87395a155c05cd8ae46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
