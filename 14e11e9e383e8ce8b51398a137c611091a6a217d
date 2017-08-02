@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1c9cda88_355f8b46",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-02T23:48:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc6d8b52_8177af5d",
+      "range": {
+        "startLine": 282,
+        "startChar": 0,
+        "endLine": 282,
+        "endChar": 58
+      },
+      "revId": "14e11e9e383e8ce8b51398a137c611091a6a217d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "585c5599_9c52e8f5",
         "filename": "chrome/browser/chromeos/tether/tether_service.cc",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "ffa1a8d3_46643602",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-02T23:48:04Z",
+      "side": 1,
+      "message": "Nice! Looks way better.",
+      "parentUuid": "585c5599_9c52e8f5",
+      "range": {
+        "startLine": 283,
+        "startChar": 9,
+        "endLine": 283,
+        "endChar": 41
+      },
+      "revId": "14e11e9e383e8ce8b51398a137c611091a6a217d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3551d81_31f0b187",
         "filename": "chrome/browser/chromeos/tether/tether_service.cc",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-02T00:24:26Z",
       "side": 1,
       "message": "NOTREACHED()",
+      "range": {
+        "startLine": 302,
+        "startChar": 6,
+        "endLine": 303,
+        "endChar": 33
+      },
+      "revId": "14e11e9e383e8ce8b51398a137c611091a6a217d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc5b0641_f39e293c",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-02T23:48:04Z",
+      "side": 1,
+      "message": "Unfortunately this gives a \"control may reach end of non-void function\" :/ Any thoughts of how to get around that?",
+      "parentUuid": "c3551d81_31f0b187",
       "range": {
         "startLine": 302,
         "startChar": 6,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "c2d2692d_5c07e6bd",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-02T23:48:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c20e805_ae4c02b3",
+      "range": {
+        "startLine": 386,
+        "startChar": 0,
+        "endLine": 386,
+        "endChar": 33
+      },
+      "revId": "14e11e9e383e8ce8b51398a137c611091a6a217d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2cdfbf9_85ca6cbb",
         "filename": "chrome/browser/chromeos/tether/tether_service.cc",
         "patchSetId": 4
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "411592de_d93cf872",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-02T23:48:04Z",
+      "side": 1,
+      "message": "It\u0027s called in Shutdown().",
+      "parentUuid": "a2cdfbf9_85ca6cbb",
+      "range": {
+        "startLine": 411,
+        "startChar": 20,
+        "endLine": 411,
+        "endChar": 52
+      },
+      "revId": "14e11e9e383e8ce8b51398a137c611091a6a217d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4fa98cfb_8efc9b6a",
         "filename": "chrome/browser/chromeos/tether/tether_service.h",
         "patchSetId": 4
@@ -137,6 +257,30 @@
       "revId": "14e11e9e383e8ce8b51398a137c611091a6a217d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a91d72a0_35b5279c",
+        "filename": "chrome/browser/chromeos/tether/tether_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-02T23:48:04Z",
+      "side": 1,
+      "message": "Good call. Done (used a slightly different name that I felt made reading the histogram easier).",
+      "parentUuid": "4fa98cfb_8efc9b6a",
+      "range": {
+        "startLine": 145,
+        "startChar": 7,
+        "endLine": 145,
+        "endChar": 37
+      },
+      "revId": "14e11e9e383e8ce8b51398a137c611091a6a217d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
