@@ -25,6 +25,7 @@
 #include "third_party/WebKit/public/platform/FilePathConversion.h"
 #include "third_party/WebKit/public/platform/WebFileInfo.h"
 #include "third_party/WebKit/public/platform/WebFileSystemCallbacks.h"
+#include "third_party/WebKit/public/platform/WebFileWriterClient.h"
 #include "third_party/WebKit/public/platform/WebString.h"
 #include "third_party/WebKit/public/platform/WebURL.h"
 #include "url/gurl.h"

@@ -10,6 +10,7 @@
 #include "chrome/browser/profiles/profile.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/resource_context.h"
+#include "net/cert/nss_cert_database.h"
 
 using content::BrowserThread;
 
@@ -54,4 +55,3 @@ void GetNSSCertDatabaseForProfile(
       base::BindOnce(&GetCertDBOnIOThread, profile->GetResourceContext(),
                      base::ThreadTaskRunnerHandle::Get(), callback));
 }
-

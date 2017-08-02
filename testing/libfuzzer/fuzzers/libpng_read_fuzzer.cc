@@ -108,8 +108,8 @@ extern "C" int LLVMFuzzerTestOneInput(const uint8_t* data, size_t size) {
   // Reading.
   png_read_info(png_ptr, info_ptr);
   png_voidp row = png_malloc(png_ptr, png_get_rowbytes(png_ptr, info_ptr));
-  base::ScopedClosureRunner png_deleter(base::Bind(
-        &png_free, png_ptr, row));
+  base::ScopedClosureRunner png_deleter(
+      base::Bind(&png_free, base::Unretained(png_ptr), row));
 
   // reset error handler to put png_deleter into scope.
   if (setjmp(png_jmpbuf(png_ptr))) {

@@ -11,6 +11,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/threading/thread_checker.h"
 #include "base/threading/thread_task_runner_handle.h"
+#include "net/base/network_delegate.h"
 #include "net/proxy/network_delegate_error_observer.h"
 #include "net/proxy/proxy_resolver.h"
 #include "net/proxy/proxy_resolver_factory.h"

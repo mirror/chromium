@@ -72,7 +72,8 @@ namespace {
 int DefaultX11ErrorHandler(XDisplay* d, XErrorEvent* e) {
   if (base::MessageLoop::current()) {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
-        FROM_HERE, base::Bind(&LogErrorEventDescription, d, *e));
+        FROM_HERE,
+        base::Bind(&LogErrorEventDescription, base::Unretained(d), *e));
   } else {
     LOG(ERROR)
         << "X error received: "

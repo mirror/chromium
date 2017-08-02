@@ -9,6 +9,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/trace_event/trace_event.h"
 #include "content/browser/appcache/appcache_navigation_handle.h"
+#include "content/browser/appcache/appcache_navigation_handle_core.h"
 #include "content/browser/appcache/appcache_request_handler.h"
 #include "content/browser/blob_storage/chrome_blob_storage_context.h"
 #include "content/browser/frame_host/frame_tree_node.h"

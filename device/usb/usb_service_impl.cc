@@ -442,7 +442,7 @@ void UsbServiceImpl::EnumerateDevice(PlatformUsbDevice platform_device,
                    refresh_complete, device);
     base::Closure enumeration_failed = base::Bind(
         &UsbServiceImpl::EnumerationFailed, weak_factory_.GetWeakPtr(),
-        platform_device, refresh_complete);
+        base::Unretained(platform_device), refresh_complete);
     bool read_bos_descriptors = descriptor.bcdUSB >= kUsbVersion2_1;
 
     if (descriptor.iManufacturer == 0 && descriptor.iProduct == 0 &&
@@ -513,14 +513,16 @@ int LIBUSB_CALL UsbServiceImpl::HotplugCallback(libusb_context* context,
     case LIBUSB_HOTPLUG_EVENT_DEVICE_ARRIVED:
       libusb_ref_device(device);  // Released in OnPlatformDeviceAdded.
       self->task_runner()->PostTask(
-          FROM_HERE, base::Bind(&UsbServiceImpl::OnPlatformDeviceAdded,
-                                base::Unretained(self), device));
+          FROM_HERE,
+          base::Bind(&UsbServiceImpl::OnPlatformDeviceAdded,
+                     base::Unretained(self), base::Unretained(device)));
       break;
     case LIBUSB_HOTPLUG_EVENT_DEVICE_LEFT:
       libusb_ref_device(device);  // Released in OnPlatformDeviceRemoved.
       self->task_runner()->PostTask(
-          FROM_HERE, base::Bind(&UsbServiceImpl::OnPlatformDeviceRemoved,
-                                base::Unretained(self), device));
+          FROM_HERE,
+          base::Bind(&UsbServiceImpl::OnPlatformDeviceRemoved,
+                     base::Unretained(self), base::Unretained(device)));
       break;
     default:
       NOTREACHED();

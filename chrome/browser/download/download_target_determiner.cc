@@ -28,6 +28,7 @@
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/download_interrupt_reasons.h"
+#include "content/public/browser/resource_context.h"
 #include "extensions/common/constants.h"
 #include "extensions/features/features.h"
 #include "net/base/filename_util.h"

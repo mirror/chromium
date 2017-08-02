@@ -809,8 +809,8 @@ UsbDeviceHandleImpl::~UsbDeviceHandleImpl() {
   if (blocking_task_runner_->RunsTasksInCurrentSequence()) {
     libusb_close(handle_);
   } else {
-    blocking_task_runner_->PostTask(FROM_HERE,
-                                    base::Bind(&libusb_close, handle_));
+    blocking_task_runner_->PostTask(
+        FROM_HERE, base::Bind(&libusb_close, base::Unretained(handle_)));
   }
 }
 
