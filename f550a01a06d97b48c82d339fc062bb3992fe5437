@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5b3e2690_832fac92",
+        "filename": "third_party/WebKit/Source/controller/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1151889
+      },
+      "writtenOn": "2017-08-02T08:34:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "551225cd_0d38fbe2",
+      "revId": "f550a01a06d97b48c82d339fc062bb3992fe5437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "76ba137b_fb6c10c8",
         "filename": "third_party/WebKit/Source/controller/LeakDetector.h",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "f550a01a06d97b48c82d339fc062bb3992fe5437",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c8788bd_cd1fc71d",
+        "filename": "third_party/WebKit/Source/controller/LeakDetector.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1151889
+      },
+      "writtenOn": "2017-08-02T08:34:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76ba137b_fb6c10c8",
+      "revId": "f550a01a06d97b48c82d339fc062bb3992fe5437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "740392a2_c2ad9a52",
+        "filename": "third_party/WebKit/Source/controller/LeakDetectorClient.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1151889
+      },
+      "writtenOn": "2017-08-02T08:34:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b631f93b_56413d78",
+      "revId": "f550a01a06d97b48c82d339fc062bb3992fe5437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a679e505_7c1d8604",
         "filename": "third_party/WebKit/Source/controller/LeakDetectorClient.h",
         "patchSetId": 8
@@ -67,6 +121,24 @@
       "revId": "f550a01a06d97b48c82d339fc062bb3992fe5437",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bba3831_284e2c89",
+        "filename": "third_party/WebKit/Source/controller/LeakDetectorClient.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1151889
+      },
+      "writtenOn": "2017-08-02T08:34:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a679e505_7c1d8604",
+      "revId": "f550a01a06d97b48c82d339fc062bb3992fe5437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "25fe1e9f_218e43f2",
+        "filename": "third_party/WebKit/Source/controller/WebLeakDetector.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1151889
+      },
+      "writtenOn": "2017-08-02T08:34:05Z",
+      "side": 1,
+      "message": "Since LeakDetectorClient is going to be inherited by another class when implementing the real-world detector, I would like to keep this client class.",
+      "parentUuid": "cf70cbf6_f33bf3d2",
+      "revId": "f550a01a06d97b48c82d339fc062bb3992fe5437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb365948_33e128c7",
         "filename": "third_party/WebKit/Source/modules/ModulesInitializer.cpp",
         "patchSetId": 8
@@ -101,6 +191,24 @@
       "revId": "f550a01a06d97b48c82d339fc062bb3992fe5437",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a71d341a_f762cc99",
+        "filename": "third_party/WebKit/Source/modules/ModulesInitializer.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1151889
+      },
+      "writtenOn": "2017-08-02T08:34:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb365948_33e128c7",
+      "revId": "f550a01a06d97b48c82d339fc062bb3992fe5437",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
