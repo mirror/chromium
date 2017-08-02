@@ -117,6 +117,30 @@
       "revId": "2816f127d23601f67562ccafc057512ca2572f5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c88b1e01_514f38d5",
+        "filename": "chrome/browser/android/logo_service_factory.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-02T15:50:39Z",
+      "side": 1,
+      "message": "Not really? :)",
+      "parentUuid": "9a1ef88f_353036c2",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 0
+      },
+      "revId": "2816f127d23601f67562ccafc057512ca2572f5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

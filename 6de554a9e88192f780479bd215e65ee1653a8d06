@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63dda24e_403bccd5",
+        "filename": "chrome/browser/android/logo_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-02T15:50:39Z",
+      "side": 1,
+      "message": "Is there actually a difference between \u0027\u003d default\u0027 and just an empty implementation? If not, I would try to only use one of them, if only just for (visual) consistency.",
+      "revId": "6de554a9e88192f780479bd215e65ee1653a8d06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fd7abb1_ec6a350e",
+        "filename": "chrome/browser/android/logo_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-02T15:50:39Z",
+      "side": 1,
+      "message": "Nit: no need for explicit anymore.",
+      "revId": "6de554a9e88192f780479bd215e65ee1653a8d06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
