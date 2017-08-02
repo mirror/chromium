@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e7c9390f_cf531e31",
+        "filename": "chrome/browser/ui/browser_dialogs.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-02T19:26:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "240f10bb_942c1136",
+      "revId": "4d4a908395c7872ce3e580b522a3720c90808e7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d83e7d6_d9bfb751",
         "filename": "chrome/browser/ui/cocoa/browser_dialogs_views_mac.h",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-01T01:40:53Z",
       "side": 1,
       "message": "I don\u0027t really get why we have this method when the implementation calls through to the views code with no #ifdef.  It seems like from a linking perspective we\u0027re not buying much with that, and it\u0027s confusing when we also have the global chrome::ShowFirstRunBubble().  And we\u0027re trying to remove chrome::, so it would be nice to not add more things to it.  However, I know you and Trent have been working a lot on a consistent dialog invocation method for Mac, so maybe this makes sense in a larger context I don\u0027t have.",
+      "revId": "4d4a908395c7872ce3e580b522a3720c90808e7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef7d2e2b_fe377b5a",
+        "filename": "chrome/browser/ui/cocoa/browser_dialogs_views_mac.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-02T19:26:10Z",
+      "side": 1,
+      "message": "This file (browser_dialogs_views_mac) is basically a \"funnel\" for all the Views dialog invocations in the Cocoa code, since we don\u0027t want random Cocoa files to start including from c/b/ui/views; instead, they include c/b/ui/c/browser_dialogs_views_mac.h and call through one of these shims.",
+      "parentUuid": "1d83e7d6_d9bfb751",
       "revId": "4d4a908395c7872ce3e580b522a3720c90808e7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "fa24fe01_8e0149ed",
+        "filename": "chrome/browser/ui/first_run_bubble_presenter.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-02T19:26:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe96f959_70920864",
+      "revId": "4d4a908395c7872ce3e580b522a3720c90808e7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "efba0154_acb86839",
         "filename": "chrome/browser/ui/first_run_bubble_presenter.cc",
         "patchSetId": 10
@@ -67,6 +121,24 @@
       "revId": "4d4a908395c7872ce3e580b522a3720c90808e7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3137efea_4ead1a62",
+        "filename": "chrome/browser/ui/first_run_bubble_presenter.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-02T19:26:10Z",
+      "side": 1,
+      "message": "Done\n\ntil ScopedObserver, thanks :D",
+      "parentUuid": "efba0154_acb86839",
+      "revId": "4d4a908395c7872ce3e580b522a3720c90808e7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "ecd98b3b_80481d0a",
+        "filename": "chrome/browser/ui/first_run_bubble_presenter.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-02T19:26:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7aefee4a_6ad8cb8c",
+      "revId": "4d4a908395c7872ce3e580b522a3720c90808e7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d60cbbb7_c42f2f66",
         "filename": "chrome/browser/ui/views/browser_dialogs_views.cc",
         "patchSetId": 10
@@ -101,6 +191,24 @@
       "revId": "4d4a908395c7872ce3e580b522a3720c90808e7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c94ba20_ad49c72d",
+        "filename": "chrome/browser/ui/views/browser_dialogs_views.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-02T19:26:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d60cbbb7_c42f2f66",
+      "revId": "4d4a908395c7872ce3e580b522a3720c90808e7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "afefee2f_ce633748",
+        "filename": "chrome/browser/ui/views/first_run_bubble.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-02T19:26:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20b588f3_d0c53d8c",
+      "revId": "4d4a908395c7872ce3e580b522a3720c90808e7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df77799d_9e75c0c7",
         "filename": "chrome/browser/ui/views/first_run_bubble.cc",
         "patchSetId": 10
@@ -135,6 +261,24 @@
       "revId": "4d4a908395c7872ce3e580b522a3720c90808e7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66fff4a7_1169ddc2",
+        "filename": "chrome/browser/ui/views/first_run_bubble.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-02T19:26:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "df77799d_9e75c0c7",
+      "revId": "4d4a908395c7872ce3e580b522a3720c90808e7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "8374c071_f2f2a8c9",
+        "filename": "chrome/browser/ui/views/first_run_bubble.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-02T19:26:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9582327_52d589b1",
+      "revId": "4d4a908395c7872ce3e580b522a3720c90808e7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22dda187_53be3716",
         "filename": "chrome/browser/ui/views/first_run_bubble.h",
         "patchSetId": 10
@@ -169,6 +331,24 @@
       "revId": "4d4a908395c7872ce3e580b522a3720c90808e7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c93eded_8043b9b9",
+        "filename": "chrome/browser/ui/views/first_run_bubble.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-02T19:26:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22dda187_53be3716",
+      "revId": "4d4a908395c7872ce3e580b522a3720c90808e7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "f2e43772_8de9be91",
+        "filename": "chrome/browser/ui/views/first_run_bubble.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-02T19:26:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2cafbbe2_aad6f4cc",
+      "revId": "4d4a908395c7872ce3e580b522a3720c90808e7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55f7c98b_a09a450b",
         "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
         "patchSetId": 10
@@ -203,6 +401,24 @@
       "revId": "4d4a908395c7872ce3e580b522a3720c90808e7b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74398471_0de4f7a0",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-02T19:26:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55f7c98b_a09a450b",
+      "revId": "4d4a908395c7872ce3e580b522a3720c90808e7b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
