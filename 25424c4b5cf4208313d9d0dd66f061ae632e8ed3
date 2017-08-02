@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7cd2d9c9_d98d0aa9",
+        "filename": "third_party/WebKit/Source/core/paint/PaintTiming.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-08-02T14:14:12Z",
+      "side": 1,
+      "message": "I think we were thinking we don\u0027t want people to depend on these functions going forward - that most code should only need to know about the post-swap time getters.\n\nIt\u0027s not totally clear how this should impact FMPDetector. Do you see it being possible for FMPDetector to ever not need to know about the post-swap time getters? Ideally FMPDetector wouldn\u0027t need these either and the methods could just be removed.\n\nMy inclination would be to leave them as private for now and once we have a clearer sense of the proper way to update FMPDetector, we can figure out how to modify the code. How does that sound?",
+      "parentUuid": "59bfd117_cfe9837e",
+      "revId": "25424c4b5cf4208313d9d0dd66f061ae632e8ed3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "980add63_1d1979ad",
         "filename": "third_party/WebKit/Source/core/paint/PaintTiming.h",
         "patchSetId": 13
