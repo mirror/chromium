@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4dfc53ce_dfe7fce5",
+        "filename": "components/ui_devtools/views/ui_devtools_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-02T18:36:05Z",
+      "side": 1,
+      "message": "Thanks, good catch.",
+      "parentUuid": "d38396a2_7cd77ee6",
+      "range": {
+        "startLine": 375,
+        "startChar": 15,
+        "endLine": 375,
+        "endChar": 24
+      },
+      "revId": "1b867a92ebab7e4a5f1bed6ec6983aad8317c264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0475e1c5_c79d82be",
         "filename": "components/ui_devtools/views/ui_devtools_unittest.cc",
         "patchSetId": 13
@@ -45,6 +69,30 @@
       "revId": "1b867a92ebab7e4a5f1bed6ec6983aad8317c264",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73bde758_4f8468da",
+        "filename": "components/ui_devtools/views/ui_devtools_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-02T18:36:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0475e1c5_c79d82be",
+      "range": {
+        "startLine": 380,
+        "startChar": 16,
+        "endLine": 380,
+        "endChar": 20
+      },
+      "revId": "1b867a92ebab7e4a5f1bed6ec6983aad8317c264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "dcf146f4_3f50c439",
+        "filename": "components/ui_devtools/views/ui_devtools_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-02T18:36:05Z",
+      "side": 1,
+      "message": "Done. Nice, this is good to have!",
+      "parentUuid": "47b7212f_4f5ecb5e",
+      "range": {
+        "startLine": 406,
+        "startChar": 2,
+        "endLine": 406,
+        "endChar": 11
+      },
+      "revId": "1b867a92ebab7e4a5f1bed6ec6983aad8317c264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10f72500_8a650b1d",
         "filename": "components/ui_devtools/views/ui_devtools_unittest.cc",
         "patchSetId": 13
@@ -91,6 +163,30 @@
       "revId": "1b867a92ebab7e4a5f1bed6ec6983aad8317c264",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa829980_4feb4e64",
+        "filename": "components/ui_devtools/views/ui_devtools_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 408,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-02T18:36:05Z",
+      "side": 1,
+      "message": "Thanks Terry. I think we don\u0027t need to test this case here since we know the inspect mode has exited and no highlight notification or inspect node notification was sent as we added 2 EXPECT_EQ in your comment above. Again, Chrome Devtools should have tested this. We could remove this setInspecteMode(\"none\") here as well but I prefer to leave it here for completeness in case someone wants to do this test in the future which I have one for a upcoming CL.",
+      "parentUuid": "10f72500_8a650b1d",
+      "range": {
+        "startLine": 408,
+        "startChar": 19,
+        "endLine": 408,
+        "endChar": 33
+      },
+      "revId": "1b867a92ebab7e4a5f1bed6ec6983aad8317c264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
