@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "47e7ade7_19b0d52e",
+        "filename": "components/autofill/content/common/autofill_driver.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-08-02T09:56:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0bf53c7e_516b2482",
+      "range": {
+        "startLine": 117,
+        "startChar": 2,
+        "endLine": 117,
+        "endChar": 26
+      },
+      "revId": "75016c08de39a3bea33f39526bcaff3d1ce14903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a4d29c8_c2ab5f55",
         "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-01T15:04:17Z",
       "side": 1,
       "message": "It looks like simple \"return Can...\" is better.",
+      "range": {
+        "startLine": 1746,
+        "startChar": 7,
+        "endLine": 1746,
+        "endChar": 10
+      },
+      "revId": "75016c08de39a3bea33f39526bcaff3d1ce14903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8023f0ec_dee6de5e",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1746,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-08-02T09:56:14Z",
+      "side": 1,
+      "message": "sorry, left over from debugging",
+      "parentUuid": "3a4d29c8_c2ab5f55",
       "range": {
         "startLine": 1746,
         "startChar": 7,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "c83643fe_f8a90afa",
+        "filename": "components/autofill/content/renderer/password_autofill_agent.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-08-02T09:56:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6c12789_c98fcc11",
+      "range": {
+        "startLine": 117,
+        "startChar": 7,
+        "endLine": 117,
+        "endChar": 31
+      },
+      "revId": "75016c08de39a3bea33f39526bcaff3d1ce14903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ee53cd7_56c8202d",
         "filename": "components/password_manager/core/browser/password_autofill_manager.h",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "75016c08de39a3bea33f39526bcaff3d1ce14903",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6def775b_2d391e13",
+        "filename": "components/password_manager/core/browser/password_autofill_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-08-02T09:56:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ee53cd7_56c8202d",
+      "range": {
+        "startLine": 68,
+        "startChar": 7,
+        "endLine": 68,
+        "endChar": 33
+      },
+      "revId": "75016c08de39a3bea33f39526bcaff3d1ce14903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "11b9dc85_4c78b756",
+        "filename": "components/password_manager/core/browser/password_autofill_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 963,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-08-02T09:56:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "345589bd_f3f95ea9",
+      "range": {
+        "startLine": 963,
+        "startChar": 30,
+        "endLine": 963,
+        "endChar": 54
+      },
+      "revId": "75016c08de39a3bea33f39526bcaff3d1ce14903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fdead0ce_c06ef871",
         "filename": "components/password_manager/core/browser/password_autofill_manager_unittest.cc",
         "patchSetId": 5
@@ -137,6 +257,30 @@
       "revId": "75016c08de39a3bea33f39526bcaff3d1ce14903",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbeb4aa9_07bd8d4c",
+        "filename": "components/password_manager/core/browser/password_autofill_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1013,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-08-02T09:56:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fdead0ce_c06ef871",
+      "range": {
+        "startLine": 1013,
+        "startChar": 30,
+        "endLine": 1013,
+        "endChar": 54
+      },
+      "revId": "75016c08de39a3bea33f39526bcaff3d1ce14903",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
