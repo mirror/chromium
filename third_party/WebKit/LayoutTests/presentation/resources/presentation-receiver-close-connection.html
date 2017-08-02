@@ -2,24 +2,37 @@
 <html>
 <body>
 <script src="../../resources/testharness.js"></script>
-<script src="../../resources/mojo-helpers.js"></script>
+<script src="file:///gen/layout_test_data/mojo/public/js/mojo_bindings.js"></script>
+<script src="file:///gen/third_party/WebKit/public/platform/modules/presentation/presentation.mojom.js"></script>
 <script src="presentation-service-mock.js"></script>
 <script>
 
 // Parent window sets parameter for this page.
-assert_not_equals(controllerConnectionPtr, null);
-assert_not_equals(receiverConnectionRequest, null);
 assert_not_equals(shouldCallClose, null);
 
 internals.settings.setPresentationReceiver(true);
 
-presentationServiceMock.then(mockService => {
-  const url = 'http://example.com/a.html';
-  const id = 'fakeSessionId';
+const pageUrl = 'http://example.com/a.html';
+const id = 'fakeSessionId';
 
-  mockService.onSetClient = () => {
-    mockService.onReceiverConnectionAvailable(
-        url, id, controllerConnectionPtr, receiverConnectionRequest);
+// Create a message pipe for transfering MojoHandles set by the opener to this
+// frame.
+let {handle0, handle1} = Mojo.createMessagePipe();
+
+handle0.writeMessage(new ArrayBuffer, [
+    controllerConnectionPtr.ptr.passInterface().handle,
+    receiverConnectionRequest.handle
+]);
+
+handle1.watch({readable: true}, () => {
+  let message = handle1.readMessage();
+  controllerConnectionPtr =
+      new blink.mojom.PresentationConnectionPtr(message.handles[0]);
+  receiverConnectionRequest = new mojo.InterfaceRequest(message.handles[1]);
+
+  presentationServiceMock.onSetClient = () => {
+    presentationServiceMock.onReceiverConnectionAvailable(
+        pageUrl, id, controllerConnectionPtr, receiverConnectionRequest);
   };
 
   navigator.presentation.receiver.connectionList.then(list => {
