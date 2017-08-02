@@ -4,10 +4,14 @@
 
 #include "chrome/browser/net/profile_network_context_service.h"
 
+#include "base/bind.h"
 #include "base/feature_list.h"
 #include "base/logging.h"
 #include "build/build_config.h"
+#include "chrome/browser/net/system_network_context_manager.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/common/pref_names.h"
+#include "components/pref_registry/pref_registry_syncable.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/network_service_instance.h"
@@ -39,7 +43,15 @@ content::mojom::NetworkContextParamsPtr CreateMainNetworkContextParams() {
 }  // namespace
 
 ProfileNetworkContextService::ProfileNetworkContextService(Profile* profile)
-    : profile_(profile) {}
+    : profile_(profile) {
+  quic_allowed_.Init(prefs::kQuicAllowed, profile->GetPrefs(),
+                     base::Bind(&ProfileNetworkContextService::CheckQuicAllowed,
+                                base::Unretained(this)));
+  // The system context must be initialized before any other network contexts.
+  // TODO(mmenke): Figure out a way to enforce this.
+  SystemNetworkContextManager::Context();
+  CheckQuicAllowed();
+}
 
 ProfileNetworkContextService::~ProfileNetworkContextService() {}
 
@@ -77,4 +89,20 @@ ProfileNetworkContextService::CreateMainNetworkContext() {
   content::GetNetworkService()->CreateNetworkContext(
       MakeRequest(&network_context), CreateMainNetworkContextParams());
   return network_context;
+}
+
+void ProfileNetworkContextService::RegisterProfilePrefs(
+    user_prefs::PrefRegistrySyncable* registry) {
+  registry->RegisterBooleanPref(prefs::kQuicAllowed, true);
+}
+
+void ProfileNetworkContextService::CheckQuicAllowed() {
+  if (!quic_allowed_.IsManaged())
+    return;
+
+  // If QUIC is allowed, do nothing (re-enabling QUIC is not supported).
+  if (quic_allowed_.GetValue())
+    return;
+
+  SystemNetworkContextManager::DisableQuic();
 }
