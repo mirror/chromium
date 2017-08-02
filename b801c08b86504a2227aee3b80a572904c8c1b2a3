@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d79ba25c_05fcf25e",
+        "filename": "third_party/WebKit/LayoutTests/accessibility/scroll-to-make-visible-with-subfocus.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-08-02T23:27:17Z",
+      "side": 1,
+      "message": "What is the significance of this change?",
+      "range": {
+        "startLine": 31,
+        "startChar": 71,
+        "endLine": 31,
+        "endChar": 72
+      },
+      "revId": "b801c08b86504a2227aee3b80a572904c8c1b2a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

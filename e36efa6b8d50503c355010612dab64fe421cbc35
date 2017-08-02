@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ee8ac25_7fc89aae",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1744,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-08-02T23:27:17Z",
+      "side": 0,
+      "message": "Are any of these comments still relevant?  Should they be incorporated into the documentation of ScrollRectToVisible?",
+      "range": {
+        "startLine": 1744,
+        "startChar": 33,
+        "endLine": 1744,
+        "endChar": 34
+      },
+      "revId": "e36efa6b8d50503c355010612dab64fe421cbc35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
