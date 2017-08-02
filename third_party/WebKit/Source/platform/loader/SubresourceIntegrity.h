@@ -50,41 +50,29 @@ class PLATFORM_EXPORT SubresourceIntegrity final {
     kIntegrityParseNoValidResult
   };
 
-  // The versions with the IntegrityMetadataSet passed as the first argument
-  // assume that the integrity attribute has already been parsed, and the
-  // IntegrityMetadataSet represents the result of that parsing.
+  // String version.
   static bool CheckSubresourceIntegrity(const String& integrity_attribute,
                                         const char* content,
                                         size_t,
                                         const KURL& resource_url,
-                                        const Resource&,
+                                        const Resource*,
                                         ReportInfo&);
+  // IntegrityMetadataSet version.
+  // Assumes that the integrity attribute has already been parsed, and the
+  // IntegrityMetadataSet represents the result of that parsing.
   static bool CheckSubresourceIntegrity(const IntegrityMetadataSet&,
                                         const char* content,
                                         size_t,
                                         const KURL& resource_url,
-                                        const Resource&,
-                                        ReportInfo&);
-  static bool CheckSubresourceIntegrity(const String&,
-                                        const char*,
-                                        size_t,
-                                        const KURL& resource_url,
-                                        ReportInfo&);
-  static bool CheckSubresourceIntegrity(const IntegrityMetadataSet&,
-                                        const char*,
-                                        size_t,
-                                        const KURL& resource_url,
+                                        const Resource*,
                                         ReportInfo&);
 
   // The IntegrityMetadataSet arguments are out parameters which contain the
   // set of all valid, parsed metadata from |attribute|.
   static IntegrityParseResult ParseIntegrityAttribute(
       const WTF::String& attribute,
-      IntegrityMetadataSet&);
-  static IntegrityParseResult ParseIntegrityAttribute(
-      const WTF::String& attribute,
       IntegrityMetadataSet&,
-      ReportInfo*);
+      ReportInfo* = nullptr);
 
  private:
   friend class SubresourceIntegrityTest;
