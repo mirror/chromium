@@ -8,6 +8,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
+#include "build/build_config.h"
 #include "media/base/audio_decoder_config.h"
 #include "media/base/cdm_config.h"
 #include "media/base/limits.h"
@@ -215,6 +216,8 @@ TEST_F(RendererControllerTest, ToggleRendererOnDisableChange) {
   EXPECT_FALSE(disable_pipeline_suspend_);
 }
 
+#if !defined(OS_ANDROID)
+
 TEST_F(RendererControllerTest, WithVP9VideoCodec) {
   const scoped_refptr<SharedSession> shared_session =
       FakeRemoterFactory::CreateSharedSession(false);
@@ -342,6 +345,8 @@ TEST_F(RendererControllerTest, WithOpusAudioCodec) {
   EXPECT_TRUE(activate_viewport_intersection_monitoring_);
   EXPECT_TRUE(disable_pipeline_suspend_);
 }
+
+#endif  // OS_ANDROID
 
 TEST_F(RendererControllerTest, StartFailed) {
   const scoped_refptr<SharedSession> shared_session =

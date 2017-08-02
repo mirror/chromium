@@ -18,9 +18,13 @@
 #include "modules/EventTargetModules.h"
 #include "modules/presentation/PresentationController.h"
 #include "modules/remoteplayback/AvailabilityCallbackWrapper.h"
+#include "modules/remoteplayback/RemotePlaybackConnectionCallbacks.h"
 #include "platform/MemoryCoordinator.h"
 #include "platform/wtf/text/Base64.h"
 #include "public/platform/modules/presentation/WebPresentationClient.h"
+#include "public/platform/modules/presentation/WebPresentationConnectionProxy.h"
+#include "public/platform/modules/presentation/WebPresentationError.h"
+#include "public/platform/modules/presentation/WebPresentationInfo.h"
 
 namespace blink {
 
@@ -44,8 +48,8 @@ const AtomicString& RemotePlaybackStateToString(WebRemotePlaybackState state) {
   return disconnected_value;
 }
 
-void RunNotifyInitialAvailabilityTask(ExecutionContext* context,
-                                      std::unique_ptr<WTF::Closure> task) {
+void RunRemotePlaybackTask(ExecutionContext* context,
+                           std::unique_ptr<WTF::Closure> task) {
   probe::AsyncTask async_task(context, task.get());
   (*task)();
 }
@@ -220,6 +224,33 @@ bool RemotePlayback::HasPendingActivity() const {
 }
 
 void RemotePlayback::PromptInternal() {
+  DCHECK(RuntimeEnabledFeatures::RemotePlaybackBackendEnabled());
+
+  if (RuntimeEnabledFeatures::NewRemotePlaybackPipelineEnabled()) {
+    WebPresentationClient* client =
+        PresentationController::ClientFromContext(GetExecutionContext());
+    if (client && !availability_urls_.IsEmpty()) {
+      client->StartPresentation(
+          availability_urls_,
+          WTF::MakeUnique<RemotePlaybackConnectionCallbacks>(this));
+    } else {
+      // TODO(yuryu): Wrapping PromptCancelled with WTF::Closure as
+      // InspectorInstrumentation requires a globally unique pointer to track
+      // tasks. We can remove the wrapper if InspectorInstrumentation returns a
+      // task id.
+      std::unique_ptr<WTF::Closure> task =
+          WTF::Bind(&RemotePlayback::PromptCancelled, WrapPersistent(this));
+      probe::AsyncTaskScheduled(GetExecutionContext(), "promptCancelled",
+                                task.get());
+      TaskRunnerHelper::Get(TaskType::kMediaElementEvent, GetExecutionContext())
+          ->PostTask(BLINK_FROM_HERE,
+                     WTF::Bind(RunRemotePlaybackTask,
+                               WrapPersistent(GetExecutionContext()),
+                               WTF::Passed(std::move(task))));
+    }
+    return;
+  }
+
   if (state_ == WebRemotePlaybackState::kDisconnected)
     media_element_->RequestRemotePlayback();
   else
@@ -251,7 +282,7 @@ int RemotePlayback::WatchAvailabilityInternal(
                             task.get());
   TaskRunnerHelper::Get(TaskType::kMediaElementEvent, GetExecutionContext())
       ->PostTask(BLINK_FROM_HERE,
-                 WTF::Bind(RunNotifyInitialAvailabilityTask,
+                 WTF::Bind(RunRemotePlaybackTask,
                            WrapPersistent(GetExecutionContext()),
                            WTF::Passed(std::move(task))));
 
@@ -280,12 +311,9 @@ void RemotePlayback::NotifyInitialAvailability(int callback_id) {
 }
 
 void RemotePlayback::StateChanged(WebRemotePlaybackState state) {
-  if (state_ == state)
-    return;
-
   if (prompt_promise_resolver_) {
-    // Changing state to Disconnected from "disconnected" or "connecting" means
-    // that establishing connection with remote playback device failed.
+    // Changing state to "disconnected" from "disconnected" or "connecting"
+    // means that establishing connection with remote playback device failed.
     // Changing state to anything else means the state change intended by
     // prompt() succeeded.
     if (state_ != WebRemotePlaybackState::kConnected &&
@@ -301,6 +329,9 @@ void RemotePlayback::StateChanged(WebRemotePlaybackState state) {
     }
     prompt_promise_resolver_ = nullptr;
   }
+
+  if (state_ == state)
+    return;
 
   state_ = state;
   switch (state_) {
@@ -399,8 +430,19 @@ void RemotePlayback::RemotePlaybackDisabled() {
   availability_callbacks_.clear();
   StopListeningForAvailability();
 
-  if (state_ != WebRemotePlaybackState::kDisconnected)
+  if (state_ == WebRemotePlaybackState::kDisconnected)
+    return;
+
+  if (RuntimeEnabledFeatures::NewRemotePlaybackPipelineEnabled()) {
+    WebPresentationClient* client =
+        PresentationController::ClientFromContext(GetExecutionContext());
+    if (client) {
+      client->CloseConnection(presentation_url_, presentation_id_,
+                              connection_proxy_.get());
+    }
+  } else {
     media_element_->RequestRemotePlaybackStop();
+  }
 }
 
 void RemotePlayback::AvailabilityChanged(
@@ -439,6 +481,58 @@ const WebVector<WebURL>& RemotePlayback::Urls() const {
   // TODO(avayvod): update the URL format and add frame url, mime type and
   // response headers when available.
   return availability_urls_;
+}
+
+void RemotePlayback::OnConnectionSuccess(
+    const WebPresentationInfo& presentation_info) {
+  DCHECK(RuntimeEnabledFeatures::NewRemotePlaybackPipelineEnabled());
+  presentation_id_ = presentation_info.id;
+  presentation_url_ = presentation_info.url;
+
+  StateChanged(WebRemotePlaybackState::kConnecting);
+}
+
+void RemotePlayback::OnConnectionError(const WebPresentationError& error) {
+  DCHECK(RuntimeEnabledFeatures::NewRemotePlaybackPipelineEnabled());
+  presentation_id_ = "";
+  presentation_url_ = KURL();
+  if (error.error_type ==
+      WebPresentationError::kErrorTypePresentationRequestCancelled) {
+    PromptCancelled();
+    return;
+  }
+
+  StateChanged(WebRemotePlaybackState::kDisconnected);
+}
+
+void RemotePlayback::BindProxy(
+    std::unique_ptr<WebPresentationConnectionProxy> proxy) {
+  DCHECK(proxy);
+  connection_proxy_ = std::move(proxy);
+}
+
+void RemotePlayback::DidReceiveTextMessage(const WebString& message) {
+  NOTREACHED();
+}
+
+void RemotePlayback::DidReceiveBinaryMessage(const uint8_t* data,
+                                             size_t length) {
+  NOTREACHED();
+}
+
+void RemotePlayback::DidChangeState(WebPresentationConnectionState state) {
+  WebRemotePlaybackState remote_playback_state =
+      WebRemotePlaybackState::kDisconnected;
+  if (state == WebPresentationConnectionState::kConnecting)
+    remote_playback_state = WebRemotePlaybackState::kConnecting;
+  else if (state == WebPresentationConnectionState::kConnected)
+    remote_playback_state = WebRemotePlaybackState::kConnected;
+
+  StateChanged(remote_playback_state);
+}
+
+void RemotePlayback::DidClose() {
+  StateChanged(WebRemotePlaybackState::kDisconnected);
 }
 
 void RemotePlayback::StopListeningForAvailability() {
