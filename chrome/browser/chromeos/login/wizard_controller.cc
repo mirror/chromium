@@ -1026,7 +1026,7 @@ void WizardController::ShowCurrentScreen() {
 
 void WizardController::SetCurrentScreenSmooth(BaseScreen* new_current,
                                               bool use_smoothing) {
-  VLOG(1) << "SetCurrentScreenrSmooth: "
+  VLOG(1) << "SetCurrentScreenSmooth: "
           << GetOobeScreenName(new_current->screen_id());
   if (current_screen_ == new_current || new_current == nullptr ||
       oobe_ui_ == nullptr) {
