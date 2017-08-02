@@ -10,6 +10,7 @@
 #include "ash/wm/window_util.h"
 #include "base/memory/ptr_util.h"
 #include "chrome/browser/ui/ash/launcher/chrome_launcher_controller.h"
+#include "chrome/browser/ui/ash/launcher/launcher_context_menu.h"
 #include "chrome/browser/ui/ash/launcher/launcher_controller_helper.h"
 #include "ui/aura/client/aura_constants.h"
 #include "ui/aura/window.h"
@@ -79,6 +80,10 @@ void AppWindowLauncherItemController::ItemSelected(
     int64_t display_id,
     ash::ShelfLaunchSource source,
     ItemSelectedCallback callback) {
+  LOG(ERROR) << "MSW AppWindowLauncherItemController::ItemSelected";
+  if (WillShowContextMenu(event.get(), display_id, &callback))
+    return;
+
   if (windows_.empty()) {
     std::move(callback).Run(ash::SHELF_ACTION_NONE, base::nullopt);
     return;
@@ -96,14 +101,18 @@ void AppWindowLauncherItemController::ItemSelected(
     action = ShowAndActivateOrMinimize(window_to_show);
   }
 
+  // TODO(msw): test: 
+  action = ash::SHELF_ACTION_SHOW_APPLICATION_MENU;
+
   std::move(callback).Run(
       action, GetAppMenuItems(event ? event->flags() : ui::EF_NONE));
 }
 
-void AppWindowLauncherItemController::ExecuteCommand(uint32_t command_id,
-                                                     int32_t event_flags) {
-  // This delegate does not support showing an application menu.
-  NOTIMPLEMENTED();
+std::unique_ptr<ui::MenuModel> AppWindowLauncherItemController::GetContextMenu(int64_t display_id) {
+  LOG(ERROR) << "MSW AppWindowLauncherItemController::GetContextMenu";
+  ChromeLauncherController* controller = ChromeLauncherController::instance();
+  const ash::ShelfItem* item = controller->GetItem(shelf_id());
+  return base::WrapUnique<LauncherContextMenu>(LauncherContextMenu::Create(controller, item, display_id));
 }
 
 void AppWindowLauncherItemController::Close() {

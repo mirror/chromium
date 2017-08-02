@@ -11,13 +11,6 @@
 #include "chrome/browser/ui/ash/launcher/launcher_context_menu.h"
 #include "extensions/common/constants.h"
 
-class ChromeLauncherController;
-
-namespace ash {
-class Shelf;
-struct ShelfItem;
-}
-
 namespace extensions {
 class ContextMenuMatcher;
 }
@@ -27,7 +20,7 @@ class ExtensionLauncherContextMenu : public LauncherContextMenu {
  public:
   ExtensionLauncherContextMenu(ChromeLauncherController* controller,
                                const ash::ShelfItem* item,
-                               ash::Shelf* shelf);
+                               int64_t display_id);
   ~ExtensionLauncherContextMenu() override;
 
   // ui::SimpleMenuModel::Delegate overrides:
@@ -36,6 +29,9 @@ class ExtensionLauncherContextMenu : public LauncherContextMenu {
   bool IsCommandIdChecked(int command_id) const override;
   bool IsCommandIdEnabled(int command_id) const override;
   void ExecuteCommand(int command_id, int event_flags) override;
+
+  // TODO(msw): Move everything to this pattern? 
+  // static ash::MenuItemList GetMenuItems(const ash::ShelfItem* item);
 
  private:
   void Init();

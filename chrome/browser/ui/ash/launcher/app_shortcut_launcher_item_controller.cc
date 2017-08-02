@@ -8,6 +8,7 @@
 
 #include <utility>
 
+#include "ash/shelf/shelf_context_menu_model.h"
 #include "ash/wm/window_util.h"
 #include "base/memory/ptr_util.h"
 #include "chrome/browser/extensions/launch_util.h"
@@ -34,6 +35,8 @@
 #include "ui/aura/window.h"
 #include "ui/events/event.h"
 #include "ui/wm/core/window_animations.h"
+
+#include "base/strings/utf_string_conversions.h"
 
 using extensions::Extension;
 using extensions::ExtensionRegistry;
@@ -93,6 +96,10 @@ void AppShortcutLauncherItemController::ItemSelected(
     int64_t display_id,
     ash::ShelfLaunchSource source,
     ItemSelectedCallback callback) {
+  LOG(ERROR) << "MSW AppShortcutLauncherItemController::ItemSelected A";
+  if (WillShowContextMenu(event.get(), display_id, &callback))
+    return;
+
   // In case of a keyboard event, we were called by a hotkey. In that case we
   // activate the next item in line if an item of our list is already active.
   if (event && event->type() == ui::ET_KEY_RELEASED && AdvanceToNextApp()) {
@@ -144,8 +151,22 @@ ash::MenuItemList AppShortcutLauncherItemController::GetAppMenuItems(
   return items;
 }
 
-void AppShortcutLauncherItemController::ExecuteCommand(uint32_t command_id,
-                                                       int32_t event_flags) {
+std::unique_ptr<ui::MenuModel> AppShortcutLauncherItemController::GetContextMenu(int64_t display_id) {
+  LOG(ERROR) << "MSW AppShortcutLauncherItemController::GetContextMenu";
+  ChromeLauncherController* controller = ChromeLauncherController::instance();
+  const ash::ShelfItem* item = controller->GetItem(shelf_id());
+  return base::WrapUnique<LauncherContextMenu>(LauncherContextMenu::Create(controller, item, display_id));
+}
+
+void AppShortcutLauncherItemController::ExecuteCommand(bool from_context_menu,
+                                                       int64_t command_id,
+                                                       int32_t event_flags,
+                                                       int64_t display_id) {
+  LOG(ERROR) << "MSW AppShortcutLauncherItemController::ExecuteCommand A";
+  if (from_context_menu && ExecuteContextMenuCommand(command_id, event_flags))
+    return;
+
+  LOG(ERROR) << "MSW AppShortcutLauncherItemController::ExecuteCommand B";
   if (static_cast<size_t>(command_id) >= app_menu_items_.size()) {
     app_menu_items_.clear();
     return;
