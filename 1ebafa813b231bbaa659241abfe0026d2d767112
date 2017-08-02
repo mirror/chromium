@@ -168,6 +168,30 @@
     },
     {
       "key": {
+        "uuid": "d3cdea3c_90b8ea43",
+        "filename": "base/sync_socket_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-02T23:02:05Z",
+      "side": 1,
+      "message": "You are right that sleep() doesn\u0027t guarantee anything. But it does make it much more likely that recv() is called before shutdown(), compared to what we had here before.\nEven when setting priority and CPU affinity we can\u0027t be sure that the thread gets enough cycles to call recv(). OTOH it would make the test code more complex.",
+      "parentUuid": "8a6be17c_a7c426ab",
+      "range": {
+        "startLine": 150,
+        "startChar": 18,
+        "endLine": 150,
+        "endChar": 34
+      },
+      "revId": "1ebafa813b231bbaa659241abfe0026d2d767112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e267a6dc_72ac5006",
         "filename": "base/sync_socket_unittest.cc",
         "patchSetId": 2
