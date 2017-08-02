@@ -34,6 +34,24 @@
       "revId": "78fb1ca8a8ce05359941fafb0442c1b8f9f2c410",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab71154b_3d2111e7",
+        "filename": "services/device/generic_sensor/absolute_orientation_euler_angles_fusion_algorithm_using_accelerometer_and_magnetometer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1182699
+      },
+      "writtenOn": "2017-08-02T08:21:14Z",
+      "side": 1,
+      "message": "I left comment in https://chromium-review.googlesource.com/c/594720#message-5789b109af57fbefbe265e453389fa1ac48848a7\n\nI think it would be good to change FusionSensor interface.\n\nbool GetLatestReading(size_t index, SensorReading* result); to\nbool GetLatestReading(mojom::SensorType type, SensorReading* result);\n\nwhat do you think?",
+      "parentUuid": "b6db9583_05cbdb22",
+      "revId": "78fb1ca8a8ce05359941fafb0442c1b8f9f2c410",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
