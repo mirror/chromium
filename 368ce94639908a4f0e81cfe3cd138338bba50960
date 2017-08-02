@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "13d3cf78_ff1856f6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-02T10:48:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8631ffd0_c14dcf55",
+      "revId": "368ce94639908a4f0e81cfe3cd138338bba50960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80a57da7_62f8ea34",
         "filename": "chromeos/dbus/virtual_file_provider_client.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "368ce94639908a4f0e81cfe3cd138338bba50960",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "680e877d_85f13b9e",
+        "filename": "chromeos/dbus/virtual_file_provider_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-02T10:48:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80a57da7_62f8ea34",
+      "revId": "368ce94639908a4f0e81cfe3cd138338bba50960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "469f243b_52f40860",
+        "filename": "chromeos/dbus/virtual_file_provider_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-02T10:48:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68318c91_2c30746e",
+      "revId": "368ce94639908a4f0e81cfe3cd138338bba50960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e565a252_629e4ad2",
         "filename": "chromeos/dbus/virtual_file_provider_client.cc",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "368ce94639908a4f0e81cfe3cd138338bba50960",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a221aecf_b281d992",
+        "filename": "chromeos/dbus/virtual_file_provider_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-02T10:48:08Z",
+      "side": 1,
+      "message": "Ack\nLet\u0027s do this later.",
+      "parentUuid": "e565a252_629e4ad2",
+      "revId": "368ce94639908a4f0e81cfe3cd138338bba50960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "baa27382_6e940f52",
+        "filename": "chromeos/dbus/virtual_file_provider_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-02T10:48:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3bbebfdd_b9b31dc8",
+      "revId": "368ce94639908a4f0e81cfe3cd138338bba50960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0300097_52a7dd33",
         "filename": "chromeos/dbus/virtual_file_provider_client.h",
         "patchSetId": 1
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "caf94a14_d85960f6",
+        "filename": "chromeos/dbus/virtual_file_provider_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-02T10:48:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0300097_52a7dd33",
+      "revId": "368ce94639908a4f0e81cfe3cd138338bba50960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8238578_a7d5ea42",
         "filename": "chromeos/dbus/virtual_file_provider_client.h",
         "patchSetId": 1
@@ -115,6 +223,30 @@
       "writtenOn": "2017-08-02T05:44:41Z",
       "side": 1,
       "message": "With what file the file descriptor is associated?",
+      "range": {
+        "startLine": 39,
+        "startChar": 24,
+        "endLine": 39,
+        "endChar": 34
+      },
+      "revId": "368ce94639908a4f0e81cfe3cd138338bba50960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24c828c8_cba1a5e3",
+        "filename": "chromeos/dbus/virtual_file_provider_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-08-02T10:48:08Z",
+      "side": 1,
+      "message": "There is no file associated with the file descriptor.\nWhen an application tries to read the FD, the request is just forwarded to chrome, and chrome will fetch the virtual file data and sends back the data.\n\nAdded sentences to the class comment to make it clear.",
+      "parentUuid": "c8238578_a7d5ea42",
       "range": {
         "startLine": 39,
         "startChar": 24,
