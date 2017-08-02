@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fefe54f_979e976f",
+        "filename": "net/disk_cache/backend_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 4006,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-02T14:42:10Z",
+      "side": 1,
+      "message": "nit:  would return",
+      "range": {
+        "startLine": 4006,
+        "startChar": 42,
+        "endLine": 4006,
+        "endChar": 50
+      },
+      "revId": "bd273cfeaba00925421a6c18e78363d0e6267156",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
