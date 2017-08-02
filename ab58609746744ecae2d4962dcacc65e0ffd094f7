@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a65803f8_e403a697",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyFontUtils.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-08-02T10:34:15Z",
+      "side": 1,
+      "message": "Compared to earlier patchsets, I added this check to avoid confusing a font-weight and a 0 (no-unit) font size.",
+      "revId": "ab58609746744ecae2d4962dcacc65e0ffd094f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6004cb70_0dd9b461",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyFontUtils.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-08-02T10:34:15Z",
+      "side": 1,
+      "message": "Also, I removed checking for start_weight and simplified the conditions below because it must be non-zero below here, and factored out CombineToRangeListOrNull().",
+      "revId": "ab58609746744ecae2d4962dcacc65e0ffd094f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
