@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "190284dd_0f95289b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-02T05:10:14Z",
+      "side": 1,
+      "message": "This isn\u0027t explain the reason.\nThe facts are:\n - pseudo elements aren\u0027t appeared in flat tree.\n - list style marker is pseudo element(?); I don\u0027t the details, generated content in pseudo element?\n - Does as same as Edge and Firefox",
+      "revId": "283d0c494631b1dfc223f7918c2233f57d16f7b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
