@@ -19,6 +19,9 @@ import org.chromium.media.mojom.AndroidOverlayClient;
 import org.chromium.media.mojom.AndroidOverlayConfig;
 import org.chromium.mojo.system.MojoException;
 
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.FutureTask;
+
 /**
  * Default AndroidOverlay impl.  Uses a separate (shared) overlay thread to own a Dialog instance,
  * probably via a separate object that operates only on that thread.  We will post messages to /
@@ -81,12 +84,23 @@ public class DialogOverlayImpl implements AndroidOverlay, DialogOverlayCore.Host
         final DialogOverlayCore dialogCore = mDialogCore;
         final Context context = ContextUtils.getApplicationContext();
         nativeGetCompositorOffset(mNativeHandle, config.rect);
-        mOverlayHandler.post(new Runnable() {
+        FutureTask<Void> initTask = new FutureTask<Void>(new Runnable() {
             @Override
             public void run() {
                 dialogCore.initialize(context, config, mHoppingHost, asPanel);
             }
-        });
+        }, null);
+        mOverlayHandler.post(initTask);
+        for (;;) {
+            try {
+                initTask.get();
+                break;
+            } catch (InterruptedException e) {
+            } catch (ExecutionException e) {
+                cleanup();
+                return;
+            }
+        }
 
         // Now that |mDialogCore| has been initialized, we are ready for token callbacks.
         nativeCompleteInit(mNativeHandle);
