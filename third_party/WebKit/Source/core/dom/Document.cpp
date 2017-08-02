@@ -272,6 +272,26 @@ namespace blink {
 
 using namespace HTMLNames;
 
+class DocumentLeakReporter : public ThreadStateObserver {
+ public:
+  DocumentLeakReporter()
+      : ThreadStateObserver(ThreadState::Current()), gc_count_(0) {}
+  ~DocumentLeakReporter() override {}
+  void OnCompleteSweepDone() override {
+    DEFINE_STATIC_LOCAL(BooleanHistogram, document_leak_histogram,
+                        ("Document.Leak"));
+    gc_count_++;
+    if (gc_count_ == kLeakReportThreshold) {
+      document_leak_histogram.Count(true);
+    }
+  }
+
+ private:
+  static const int kLeakReportThreshold = 10;
+
+  int gc_count_;
+};
+
 static const unsigned kCMaxWriteRecursionDepth = 21;
 
 // This amount of time must have elapsed before we will even consider scheduling
@@ -2738,6 +2758,7 @@ void Document::Shutdown() {
   // should be renamed, or this setting of the frame to 0 could be made
   // explicit in each of the callers of Document::detachLayoutTree().
   frame_ = nullptr;
+  document_leak_reporter_ = WTF::WrapUnique(new DocumentLeakReporter());
 }
 
 void Document::RemoveAllEventListeners() {

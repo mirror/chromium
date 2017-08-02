@@ -176,6 +176,7 @@ class WebMouseEvent;
 struct AnnotatedRegionValue;
 struct FocusParams;
 struct IconURL;
+class DocumentLeakReporter;
 
 using MouseEventWithHitTestResults = EventWithHitTestResults<WebMouseEvent>;
 using ExceptionCode = int;
@@ -1705,6 +1706,8 @@ class CORE_EXPORT Document : public ContainerNode,
   Member<NetworkStateObserver> network_state_observer_;
 
   bool has_high_media_engagement_;
+
+  std::unique_ptr<DocumentLeakReporter> document_leak_reporter_;
 };
 
 extern template class CORE_EXTERN_TEMPLATE_EXPORT Supplement<Document>;
