@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a404ea2a_48d699ea",
+        "filename": "ash/root_window_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-02T04:53:42Z",
+      "side": 1,
+      "message": "Terrifyingly, if this is not placed in the anonymous namespace then merely allocating a single instance in the test below causes memory corruption in ShelfView tests. I suspect that the linker gets confused about the two classes named TestShelfObserver and allocates the wrong one in the ShelfView tests. I put the other one in the anonymous namespace as well, just in case.",
+      "revId": "a502ceba183052c6716cdcbbe7525e8334cd93ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bce1f164_794e853b",
+        "filename": "ash/root_window_controller_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-02T04:53:42Z",
+      "side": 1,
+      "message": "I suspect this test will have to be either rewritten or thrown away when you move prefs loading into ash.",
+      "revId": "a502ceba183052c6716cdcbbe7525e8334cd93ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
