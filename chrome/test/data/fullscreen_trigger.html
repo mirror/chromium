@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<!--
+  The html/js to help testing keyboard events. It sets the /html/body/ to
+  fullscreen mode once KeyS is received.
+-->
+<html>
+  <head>
+    <title>Fullscreen Trigger Page</title>
+    <script>
+      document.addEventListener('keydown', (e) => {
+        if (e.code == 'KeyS') {
+          document.body.webkitRequestFullscreen();
+        }
+      });
+    </script>
+  </head>
+  <body></body>
+</html>
