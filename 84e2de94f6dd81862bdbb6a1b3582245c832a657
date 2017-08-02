@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97847b5e_c001a4fc",
+        "filename": "testing/libfuzzer/fuzzers/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2017-08-02T05:47:10Z",
+      "side": 1,
+      "message": "as discussed we generally want fuzzers to live in a directory that\u0027s owned by the same people as the code that\u0027s being fuzzed. It\u0027s fine to leave this CL as-is though, and ask the mojo owners where a better place would be once you send this to them.",
+      "range": {
+        "startLine": 472,
+        "startChar": 13,
+        "endLine": 472,
+        "endChar": 23
+      },
+      "revId": "84e2de94f6dd81862bdbb6a1b3582245c832a657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0282e0cf_20af90da",
+        "filename": "testing/libfuzzer/fuzzers/mojo_fuzzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2017-08-02T05:47:10Z",
+      "side": 1,
+      "message": "please make this fuzzer name a bit more descriptive. e.g. something like \"mojo_parse_message_fuzzer\"",
+      "revId": "84e2de94f6dd81862bdbb6a1b3582245c832a657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41d9f69b_9e2efcab",
+        "filename": "testing/libfuzzer/fuzzers/mojo_fuzzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2017-08-02T05:47:10Z",
+      "side": 1,
+      "message": "nit: alpha order.",
+      "range": {
+        "startLine": 12,
+        "startChar": 10,
+        "endLine": 12,
+        "endChar": 48
+      },
+      "revId": "84e2de94f6dd81862bdbb6a1b3582245c832a657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04490ddc_49a4df58",
+        "filename": "testing/libfuzzer/fuzzers/mojo_fuzzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2017-08-02T05:47:10Z",
+      "side": 1,
+      "message": "avoid using-directives as per https://google.github.io/styleguide/cppguide.html#Namespaces\n\nplease do \"git cl lint\"",
+      "range": {
+        "startLine": 17,
+        "startChar": 16,
+        "endLine": 17,
+        "endChar": 31
+      },
+      "revId": "84e2de94f6dd81862bdbb6a1b3582245c832a657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcaadada_45b00e81",
+        "filename": "testing/libfuzzer/fuzzers/mojo_fuzzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2017-08-02T05:47:10Z",
+      "side": 1,
+      "message": "can this just inherit from mojo::internal::BindingState\u003cInterface, ImplRefTraits\u003e instead, since router_ is protected?",
+      "range": {
+        "startLine": 19,
+        "startChar": 3,
+        "endLine": 19,
+        "endChar": 9
+      },
+      "revId": "84e2de94f6dd81862bdbb6a1b3582245c832a657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f9dbfab_6393f488",
+        "filename": "testing/libfuzzer/fuzzers/mojo_fuzzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2017-08-02T05:47:10Z",
+      "side": 1,
+      "message": "Same here, although internal_state_ is private in this case.\n\nIt might be OK to modify mojo::internal::Binding to change this though, or it may be fine to add something like InternalStateForTesting()/RouterForTesting() to the actual Binding/BindingState classes (depends on what mojo folks say). Duplicating code here doesn\u0027t seem great maintenance-wise.",
+      "range": {
+        "startLine": 60,
+        "startChar": 6,
+        "endLine": 60,
+        "endChar": 15
+      },
+      "revId": "84e2de94f6dd81862bdbb6a1b3582245c832a657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0e2e360_2f087f32",
+        "filename": "testing/libfuzzer/fuzzers/mojo_fuzzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2017-08-02T05:47:10Z",
+      "side": 1,
+      "message": "I think you need to run git cl format :) (this line seems too long)",
+      "range": {
+        "startLine": 119,
+        "startChar": 58,
+        "endLine": 119,
+        "endChar": 91
+      },
+      "revId": "84e2de94f6dd81862bdbb6a1b3582245c832a657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8f58384_386fdd70",
+        "filename": "testing/libfuzzer/fuzzers/mojo_fuzzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1129734
+      },
+      "writtenOn": "2017-08-02T05:47:10Z",
+      "side": 1,
+      "message": "let\u0027s follow the convention that chromium fuzzers have been using e.g. here:\n\nhttps://cs.chromium.org/chromium/src/testing/libfuzzer/fuzzers/empty_fuzzer.cc?q\u003dstruct+Environment+fuzzer\u0026dr\u003dCSs\u0026l\u003d17\n\nwhich is to define a `Environment` struct and initialize it in a global by calling new.",
+      "range": {
+        "startLine": 159,
+        "startChar": 23,
+        "endLine": 159,
+        "endChar": 28
+      },
+      "revId": "84e2de94f6dd81862bdbb6a1b3582245c832a657",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
