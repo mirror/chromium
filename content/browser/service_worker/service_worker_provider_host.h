@@ -33,13 +33,16 @@
 #include "content/public/common/service_worker_modes.h"
 #include "mojo/public/cpp/bindings/associated_binding.h"
 
+namespace blink_common {
+class MessagePort;
+}
+
 namespace storage {
 class BlobStorageContext;
 }
 
 namespace content {
 
-class MessagePort;
 class ResourceRequestBody;
 class ServiceWorkerContextCore;
 class ServiceWorkerDispatcherHost;
@@ -250,9 +253,10 @@ class CONTENT_EXPORT ServiceWorkerProviderHost
   bool IsContextAlive();
 
   // Dispatches message event to the document.
-  void PostMessageToClient(ServiceWorkerVersion* version,
-                           const base::string16& message,
-                           const std::vector<MessagePort>& sent_message_ports);
+  void PostMessageToClient(
+      ServiceWorkerVersion* version,
+      const base::string16& message,
+      const std::vector<blink_common::MessagePort>& sent_message_ports);
 
   // Notifies the client that its controller used a feature, for UseCounter
   // purposes. This can only be called if IsProviderForClient() is true.

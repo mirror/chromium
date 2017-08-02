@@ -226,12 +226,12 @@ void ServiceWorkerGlobalScopeProxy::DispatchExtendableMessageEvent(
     int event_id,
     const WebString& message,
     const WebSecurityOrigin& source_origin,
-    WebMessagePortChannelArray web_channels,
+    std::vector<blink_common::MessagePort> channels,
     const WebServiceWorkerClientInfo& client) {
   WebSerializedScriptValue value =
       WebSerializedScriptValue::FromString(message);
-  MessagePortArray* ports = MessagePort::ToMessagePortArray(
-      worker_global_scope_, std::move(web_channels));
+  MessagePortArray* ports =
+      MessagePort::EntanglePorts(*worker_global_scope_, std::move(channels));
   String origin;
   if (!source_origin.IsUnique())
     origin = source_origin.ToString();
@@ -252,12 +252,12 @@ void ServiceWorkerGlobalScopeProxy::DispatchExtendableMessageEvent(
     int event_id,
     const WebString& message,
     const WebSecurityOrigin& source_origin,
-    WebMessagePortChannelArray web_channels,
+    std::vector<blink_common::MessagePort> channels,
     std::unique_ptr<WebServiceWorker::Handle> handle) {
   WebSerializedScriptValue value =
       WebSerializedScriptValue::FromString(message);
-  MessagePortArray* ports = MessagePort::ToMessagePortArray(
-      worker_global_scope_, std::move(web_channels));
+  MessagePortArray* ports =
+      MessagePort::EntanglePorts(*worker_global_scope_, std::move(channels));
   String origin;
   if (!source_origin.IsUnique())
     origin = source_origin.ToString();

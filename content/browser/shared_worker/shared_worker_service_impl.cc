@@ -355,9 +355,10 @@ blink::WebWorkerCreationError SharedWorkerServiceImpl::CreateWorker(
   return ReserveRenderProcessToCreateWorker(std::move(pending_instance));
 }
 
-void SharedWorkerServiceImpl::ConnectToWorker(SharedWorkerMessageFilter* filter,
-                                              int worker_route_id,
-                                              const MessagePort& port) {
+void SharedWorkerServiceImpl::ConnectToWorker(
+    SharedWorkerMessageFilter* filter,
+    int worker_route_id,
+    const blink_common::MessagePort& port) {
   for (WorkerHostMap::const_iterator iter = worker_hosts_.begin();
        iter != worker_hosts_.end();
        ++iter) {

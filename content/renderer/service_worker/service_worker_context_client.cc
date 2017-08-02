@@ -32,7 +32,6 @@
 #include "content/child/thread_safe_sender.h"
 #include "content/child/web_data_consumer_handle_impl.h"
 #include "content/child/web_url_loader_impl.h"
-#include "content/child/webmessageportchannel_impl.h"
 #include "content/common/devtools_messages.h"
 #include "content/common/service_worker/embedded_worker_messages.h"
 #include "content/common/service_worker/service_worker_event_dispatcher.mojom.h"
@@ -60,7 +59,6 @@
 #include "storage/common/blob_storage/blob_handle.h"
 #include "third_party/WebKit/public/platform/InterfaceProvider.h"
 #include "third_party/WebKit/public/platform/URLConversion.h"
-#include "third_party/WebKit/public/platform/WebMessagePortChannel.h"
 #include "third_party/WebKit/public/platform/WebReferrerPolicy.h"
 #include "third_party/WebKit/public/platform/WebSecurityOrigin.h"
 #include "third_party/WebKit/public/platform/WebString.h"
@@ -1216,10 +1214,9 @@ ServiceWorkerContextClient::CreateServiceWorkerProvider() {
 void ServiceWorkerContextClient::PostMessageToClient(
     const blink::WebString& uuid,
     const blink::WebString& message,
-    blink::WebMessagePortChannelArray channels) {
+    std::vector<blink_common::MessagePort> ports) {
   Send(new ServiceWorkerHostMsg_PostMessageToClient(
-      GetRoutingID(), uuid.Utf8(), message.Utf16(),
-      WebMessagePortChannelImpl::ExtractMessagePorts(std::move(channels))));
+      GetRoutingID(), uuid.Utf8(), message.Utf16(), std::move(ports)));
 }
 
 void ServiceWorkerContextClient::Focus(
@@ -1460,15 +1457,14 @@ void ServiceWorkerContextClient::DispatchExtendableMessageEvent(
       base::MakeUnique<DispatchExtendableMessageEventCallback>(
           std::move(callback)));
 
-  blink::WebMessagePortChannelArray ports =
-      WebMessagePortChannelImpl::CreateFromMessagePipeHandles(
-          std::move(event->message_ports));
   if (event->source.client_info.IsValid()) {
     blink::WebServiceWorkerClientInfo web_client =
         ToWebServiceWorkerClientInfo(event->source.client_info);
     proxy_->DispatchExtendableMessageEvent(
         request_id, blink::WebString::FromUTF16(event->message),
-        event->source_origin, std::move(ports), web_client);
+        event->source_origin,
+        blink_common::MessagePort::BindHandles(std::move(event->message_ports)),
+        web_client);
     return;
   }
 
@@ -1483,7 +1479,8 @@ void ServiceWorkerContextClient::DispatchExtendableMessageEvent(
       dispatcher->GetOrCreateServiceWorker(std::move(handle));
   proxy_->DispatchExtendableMessageEvent(
       request_id, blink::WebString::FromUTF16(event->message),
-      event->source_origin, std::move(ports),
+      event->source_origin,
+      blink_common::MessagePort::BindHandles(std::move(event->message_ports)),
       WebServiceWorkerImpl::CreateHandle(worker));
 }
 

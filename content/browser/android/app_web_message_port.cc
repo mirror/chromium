@@ -24,10 +24,10 @@ void AppWebMessagePort::CreateAndBindToJavaObject(
 }
 
 // static
-std::vector<MessagePort> AppWebMessagePort::UnwrapJavaArray(
+std::vector<blink_common::MessagePort> AppWebMessagePort::UnwrapJavaArray(
     JNIEnv* env,
     const base::android::JavaRef<jobjectArray>& jports) {
-  std::vector<MessagePort> ports;
+  std::vector<blink_common::MessagePort> ports;
   if (!jports.is_null()) {
     jsize num_ports = env->GetArrayLength(jports.obj());
     for (jsize i = 0; i < num_ports; ++i) {
@@ -51,7 +51,7 @@ void AppWebMessagePort::CloseMessagePort(
     const base::android::JavaParamRef<jobject>& jcaller) {
   // Explicitly reset the port here to ensure that OnMessagesAvailable has
   // finished before we destroy this.
-  port_ = MessagePort();
+  port_ = blink_common::MessagePort();
 
   delete this;
 }
@@ -80,7 +80,7 @@ jboolean AppWebMessagePort::DispatchNextMessage(
           "<init>", "()V");
 
   std::vector<uint8_t> encoded_message;
-  std::vector<MessagePort> ports;
+  std::vector<blink_common::MessagePort> ports;
   if (!port_.GetMessage(&encoded_message, &ports))
     return false;
 

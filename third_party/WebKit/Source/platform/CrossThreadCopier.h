@@ -43,6 +43,7 @@
 #include "platform/wtf/ThreadSafeRefCounted.h"
 #include "platform/wtf/TypeTraits.h"
 #include "platform/wtf/WeakPtr.h"
+#include "third_party/WebKit/common/message_port/message_port.h"
 #include "third_party/skia/include/core/SkRefCnt.h"
 
 class SkRefCnt;
@@ -255,6 +256,24 @@ struct CrossThreadCopier<mojo::InterfaceRequest<Interface>> {
   using Type = mojo::InterfaceRequest<Interface>;
   static Type Copy(Type request) {
     return request;  // This is in fact a move.
+  }
+};
+
+template <>
+struct CrossThreadCopier<blink_common::MessagePort> {
+  STATIC_ONLY(CrossThreadCopier);
+  using Type = blink_common::MessagePort;
+  static Type Copy(Type pointer) {
+    return pointer;  // This is in fact a move.
+  }
+};
+
+template <>
+struct CrossThreadCopier<std::vector<blink_common::MessagePort>> {
+  STATIC_ONLY(CrossThreadCopier);
+  using Type = std::vector<blink_common::MessagePort>;
+  static Type Copy(Type pointer) {
+    return pointer;  // This is in fact a move.
   }
 };
 

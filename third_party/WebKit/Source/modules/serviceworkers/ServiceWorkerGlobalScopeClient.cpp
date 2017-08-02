@@ -247,8 +247,8 @@ void ServiceWorkerGlobalScopeClient::DidHandlePaymentRequestEvent(
 void ServiceWorkerGlobalScopeClient::PostMessageToClient(
     const WebString& client_uuid,
     const WebString& message,
-    WebMessagePortChannelArray web_channels) {
-  client_.PostMessageToClient(client_uuid, message, std::move(web_channels));
+    std::vector<blink_common::MessagePort> ports) {
+  client_.PostMessageToClient(client_uuid, message, std::move(ports));
 }
 
 void ServiceWorkerGlobalScopeClient::SkipWaiting(

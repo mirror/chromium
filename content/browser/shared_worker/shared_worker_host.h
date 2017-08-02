@@ -19,13 +19,16 @@
 
 class GURL;
 
+namespace blink_common {
+class MessagePort;
+}
+
 namespace IPC {
 class Message;
 }
 
 namespace content {
 
-class MessagePort;
 class SharedWorkerMessageFilter;
 class SharedWorkerInstance;
 
@@ -47,7 +50,7 @@ class SharedWorkerHost {
   // Returns true iff the given message from a renderer process was forwarded to
   // the worker.
   bool SendConnectToWorker(int worker_route_id,
-                           const MessagePort& port,
+                           const blink_common::MessagePort& port,
                            SharedWorkerMessageFilter* filter);
 
   // Handles the shutdown of the filter. If the worker has no other client,

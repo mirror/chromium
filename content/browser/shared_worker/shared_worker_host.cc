@@ -98,9 +98,10 @@ void SharedWorkerHost::Start(bool pause_on_start) {
     info.filter()->Send(new ViewMsg_WorkerCreated(info.route_id()));
 }
 
-bool SharedWorkerHost::SendConnectToWorker(int worker_route_id,
-                                           const MessagePort& port,
-                                           SharedWorkerMessageFilter* filter) {
+bool SharedWorkerHost::SendConnectToWorker(
+    int worker_route_id,
+    const blink_common::MessagePort& port,
+    SharedWorkerMessageFilter* filter) {
   if (!IsAvailable() || !HasFilter(filter, worker_route_id))
     return false;
 
