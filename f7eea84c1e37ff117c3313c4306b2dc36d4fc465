@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "1527fa1c_2ac7873a",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-02T22:57:38Z",
+      "side": 1,
+      "message": "Interesting; thanks :)",
+      "parentUuid": "4cb5e59d_d8c9d7b7",
+      "range": {
+        "startLine": 37,
+        "startChar": 33,
+        "endLine": 37,
+        "endChar": 0
+      },
+      "revId": "f7eea84c1e37ff117c3313c4306b2dc36d4fc465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9b16ec9_cbde947f",
         "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
         "patchSetId": 12
@@ -187,6 +211,30 @@
       "revId": "f7eea84c1e37ff117c3313c4306b2dc36d4fc465",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5d4a56c_e453c55f",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-02T22:57:38Z",
+      "side": 1,
+      "message": "I see. I think it\u0027s fine not to worry about this for now, but it might be something for us to follow up on later.",
+      "parentUuid": "75d2dd1e_81fb3c4c",
+      "range": {
+        "startLine": 78,
+        "startChar": 30,
+        "endLine": 78,
+        "endChar": 0
+      },
+      "revId": "f7eea84c1e37ff117c3313c4306b2dc36d4fc465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
