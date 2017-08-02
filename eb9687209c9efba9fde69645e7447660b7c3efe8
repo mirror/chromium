@@ -49,6 +49,46 @@
     },
     {
       "key": {
+        "uuid": "a1bb1843_e4491c20",
+        "filename": "base/task_scheduler/scheduler_single_thread_task_runner_manager.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-02T18:38:20Z",
+      "side": 1,
+      "message": "/* worker */\n\n(we do this for unused params in overrides to indicate to the reader it\u0027s not used anywhere below)",
+      "range": {
+        "startLine": 101,
+        "startChar": 35,
+        "endLine": 101,
+        "endChar": 41
+      },
+      "revId": "eb9687209c9efba9fde69645e7447660b7c3efe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95f8c876_cb69101f",
+        "filename": "base/task_scheduler/scheduler_worker.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-02T18:38:20Z",
+      "side": 1,
+      "message": "Since Thread::outer_ holds a ref to its SchedulerWorker, the only way to get in ~SchedulerWorker() while there\u0027s an alive Thread is at the very end of ThreadMain when we set outer_ \u003d nullptr, right?\n\nBut at that point that also means that it\u0027s fine for ~SchedulerWorker() to delete its |thread_| object (automatically per unique_ptr member) which will in turn release thread resources so I don\u0027t see why we need to detach?\n\nSo long as we add this comment in ThreadMain:\n\n// Break the ownership circle between SchedulerWorker and Thread.\n// This can result in deleting |this| and as such no more member accesses should\n// be made after this point.\nouter_ \u003d nullptr;",
+      "revId": "eb9687209c9efba9fde69645e7447660b7c3efe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8c3fe855_9889b8b4",
         "filename": "base/task_scheduler/scheduler_worker.cc",
         "patchSetId": 22
@@ -93,6 +133,23 @@
       "revId": "eb9687209c9efba9fde69645e7447660b7c3efe8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4829f623_130ec978",
+        "filename": "base/task_scheduler/scheduler_worker.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-02T18:38:20Z",
+      "side": 1,
+      "message": "This comment needs updating (|thread_| is never \"taken away\", i.e. detached, any more)\n\n(in fact, do we even need |thread_lock_| anymore, here, and everywhere else? |thread_| is constant after Start()? so long as everything has an \"happens-after\" relationship with Start() and there\u0027s synchronization around usage of SchedulerWorker, we\u0027re good? happy to keep this change for another CL..)",
+      "revId": "eb9687209c9efba9fde69645e7447660b7c3efe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -190,6 +247,46 @@
     },
     {
       "key": {
+        "uuid": "ff3a8283_be56d1f5",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-02T18:38:20Z",
+      "side": 1,
+      "message": "Why isn\u0027t this just logged directly below instead of setting last_get_work_returned_nullptr_ \u003d true and logging on wakeup? Maybe this was special cased because of detach logic but now it seems it could be inlined?",
+      "revId": "eb9687209c9efba9fde69645e7447660b7c3efe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "727ffaf7_2485c107",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-02T18:38:20Z",
+      "side": 1,
+      "message": "\"The cleanup step (triggered after GetSLeepTimeout() expires) may cause...\"\n\nor actually wait.. is this comment and code even still relevant? This was handling the case where a detached worker would still be on the idle stack (with no backing Thread), but now a cleaned up worker is not on the idle stack anymore so re-adding self to idle stack is unexpected? Or would GetWork() try to add it back to idle stack before it gets nullptr a second time and then decides to Cleanup()?\n\nBut then we can fix that by moving the if (CanCleanup()) Cleanup() logic in GetWork() above AddToIdleWorkersStack? Avoiding insert/remove from idle stack?",
+      "range": {
+        "startLine": 580,
+        "startChar": 5,
+        "endLine": 580,
+        "endChar": 14
+      },
+      "revId": "eb9687209c9efba9fde69645e7447660b7c3efe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "25004f15_3891c19c",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
         "patchSetId": 22
@@ -234,6 +331,57 @@
       "revId": "eb9687209c9efba9fde69645e7447660b7c3efe8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "06e80477_3fdcaffe",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-02T18:38:20Z",
+      "side": 1,
+      "message": "Why is this required now? Add a comment",
+      "revId": "eb9687209c9efba9fde69645e7447660b7c3efe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f624bf6d_33166fe0",
+        "filename": "base/task_scheduler/task_scheduler_impl_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-02T18:38:20Z",
+      "side": 1,
+      "message": "ditto for this flush? or were the lack of these always a problem?",
+      "revId": "eb9687209c9efba9fde69645e7447660b7c3efe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17904827_f1443d77",
+        "filename": "base/threading/sequenced_worker_pool_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-02T18:38:20Z",
+      "side": 1,
+      "message": "ditto for this flush?",
+      "revId": "eb9687209c9efba9fde69645e7447660b7c3efe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
