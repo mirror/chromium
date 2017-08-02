@@ -2,10 +2,12 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CONTENT_BROWSER_BACKGROUND_FETCH_REQUEST_INFO_H_
-#define CONTENT_BROWSER_BACKGROUND_FETCH_REQUEST_INFO_H_
+#ifndef CONTENT_BROWSER_BACKGROUND_FETCH_BACKGROUND_FETCH_REQUEST_INFO_H_
+#define CONTENT_BROWSER_BACKGROUND_FETCH_BACKGROUND_FETCH_REQUEST_INFO_H_
 
+#include <map>
 #include <memory>
+#include <string>
 #include <vector>
 
 #include "base/files/file_path.h"
@@ -33,10 +35,12 @@ class CONTENT_EXPORT BackgroundFetchRequestInfo
   BackgroundFetchRequestInfo(int request_index,
                              const ServiceWorkerFetchRequest& fetch_request);
 
-  // Populates the cached state for the in-progress |download_item|.
+  // Populates the cached state for the in-progress download.
   void PopulateDownloadStateOnUI(
-      DownloadItem* download_item,
-      DownloadInterruptReason download_interrupt_reason);
+      const std::vector<GURL>& url_chain,
+      const scoped_refptr<const net::HttpResponseHeaders>& headers);
+
+  void SetPathAndSize(base::FilePath path, uint64_t size);
 
   void SetDownloadStatePopulated();
 
@@ -119,4 +123,4 @@ class CONTENT_EXPORT BackgroundFetchRequestInfo
 
 }  // namespace content
 
-#endif  // CONTENT_BROWSER_BACKGROUND_FETCH_REQUEST_INFO_H_
+#endif  // CONTENT_BROWSER_BACKGROUND_FETCH_BACKGROUND_FETCH_REQUEST_INFO_H_

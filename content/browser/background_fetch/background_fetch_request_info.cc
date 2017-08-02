@@ -4,8 +4,6 @@
 
 #include "content/browser/background_fetch/background_fetch_request_info.h"
 
-#include <string>
-
 #include "base/strings/string_util.h"
 #include "base/threading/sequenced_task_runner_handle.h"
 #include "content/public/browser/browser_thread.h"
@@ -27,28 +25,29 @@ BackgroundFetchRequestInfo::~BackgroundFetchRequestInfo() {
 }
 
 void BackgroundFetchRequestInfo::PopulateDownloadStateOnUI(
-    DownloadItem* download_item,
-    DownloadInterruptReason download_interrupt_reason) {
+    const std::vector<GURL>& url_chain,
+    const scoped_refptr<const net::HttpResponseHeaders>& headers) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   DCHECK(!download_state_populated_);
 
-  download_guid_ = download_item->GetGuid();
-  download_state_ = download_item->GetState();
+  url_chain_ = url_chain;
 
   // The response code, text and headers all are stored in the
   // net::HttpResponseHeaders object, shared by the |download_item|.
-  if (download_item->GetResponseHeaders()) {
-    const auto& headers = download_item->GetResponseHeaders();
+  response_code_ = headers->response_code();
+  response_text_ = headers->GetStatusText();
 
-    response_code_ = headers->response_code();
-    response_text_ = headers->GetStatusText();
+  size_t iter = 0;
+  std::string name, value;
 
-    size_t iter = 0;
-    std::string name, value;
+  while (headers->EnumerateHeaderLines(&iter, &name, &value))
+    response_headers_[base::ToLowerASCII(name)] = value;
+}
 
-    while (headers->EnumerateHeaderLines(&iter, &name, &value))
-      response_headers_[base::ToLowerASCII(name)] = value;
-  }
+void BackgroundFetchRequestInfo::SetPathAndSize(base::FilePath path,
+                                                uint64_t size) {
+  file_path_ = path;
+  file_size_ = size;
 }
 
 void BackgroundFetchRequestInfo::SetDownloadStatePopulated() {
@@ -61,7 +60,6 @@ void BackgroundFetchRequestInfo::PopulateResponseFromDownloadItemOnUI(
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   DCHECK(!response_data_populated_);
 
-  url_chain_ = download_item->GetUrlChain();
   file_path_ = download_item->GetTargetFilePath();
   file_size_ = download_item->GetReceivedBytes();
   response_time_ = download_item->GetEndTime();
@@ -74,20 +72,20 @@ void BackgroundFetchRequestInfo::SetResponseDataPopulated() {
 
 int BackgroundFetchRequestInfo::GetResponseCode() const {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  DCHECK(download_state_populated_);
+  DCHECK(response_data_populated_);
   return response_code_;
 }
 
 const std::string& BackgroundFetchRequestInfo::GetResponseText() const {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  DCHECK(download_state_populated_);
+  DCHECK(response_data_populated_);
   return response_text_;
 }
 
 const std::map<std::string, std::string>&
 BackgroundFetchRequestInfo::GetResponseHeaders() const {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-  DCHECK(download_state_populated_);
+  DCHECK(response_data_populated_);
   return response_headers_;
 }
 
