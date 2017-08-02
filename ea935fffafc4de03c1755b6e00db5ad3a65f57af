@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "288735c7_51ed1bb6",
+        "filename": "components/variations/client_filterable_state.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-02T02:32:00Z",
+      "side": 1,
+      "message": "Unrelated to this CL, but should we break this into separate OS_LINUX and OS_POSIX-fallthrough cases, perhaps?",
+      "revId": "ea935fffafc4de03c1755b6e00db5ad3a65f57af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
