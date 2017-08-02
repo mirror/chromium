@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "03888ef9_c3d0efeb",
+        "filename": "ash/system/update/tray_update.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-08-02T01:35:31Z",
+      "side": 1,
+      "message": "Yes you are right, that works. Thanks.",
+      "parentUuid": "7f7496b1_6645ab9e",
+      "revId": "a41731c91990bb905e6570c5c7edf35ead586f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8dc44e9e_af29ee80",
         "filename": "ash/system/update/tray_update.h",
         "patchSetId": 1
@@ -69,6 +87,24 @@
       "revId": "a41731c91990bb905e6570c5c7edf35ead586f7a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5280927_8635eb52",
+        "filename": "ash/system/update/tray_update.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-08-02T01:35:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8dc44e9e_af29ee80",
+      "revId": "a41731c91990bb905e6570c5c7edf35ead586f7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
