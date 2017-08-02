@@ -33,6 +33,24 @@
       "revId": "ec1c121888f2ac509fcec83c1fa6b70007689693",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1cd2686_c844245b",
+        "filename": "services/ui/ws/modal_window_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-02T19:16:01Z",
+      "side": 1,
+      "message": "The main issue with that is that windows created by the window manager (which is *all* windows in mushrome) don\u0027t go through that mechanism. So, we can\u0027t rely on that.",
+      "parentUuid": "5b21e0bc_161f7345",
+      "revId": "ec1c121888f2ac509fcec83c1fa6b70007689693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
