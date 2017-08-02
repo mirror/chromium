@@ -41,6 +41,7 @@
 #include "content/common/image_downloader/image_downloader.mojom.h"
 #include "content/common/input/input_handler.mojom.h"
 #include "content/common/navigation_params.h"
+#include "content/common/widget.mojom.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/common/javascript_dialog_type.h"
 #include "content/public/common/previews_state.h"
