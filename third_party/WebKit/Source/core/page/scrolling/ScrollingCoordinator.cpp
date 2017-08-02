@@ -784,15 +784,17 @@ void ScrollingCoordinator::SetTouchEventTargetRects(
               ->EnclosingLayerForPaintInvalidationCrossingFrameBoundaries();
       DCHECK(composited_layer);
       layers_with_touch_rects_.insert(composited_layer);
-      GraphicsLayer* main_graphics_layer =
-          composited_layer->GraphicsLayerBacking(
-              &composited_layer->GetLayoutObject());
-      if (main_graphics_layer) {
-        TouchAction effective_touch_action =
-            TouchActionUtil::ComputeEffectiveTouchAction(
-                *(composited_layer->EnclosingNode()));
-        paint_layer_touch_action.insert(main_graphics_layer,
-                                        effective_touch_action);
+      if (composited_layer) {
+        GraphicsLayer* main_graphics_layer =
+            composited_layer->GraphicsLayerBacking(
+                &composited_layer->GetLayoutObject());
+        if (main_graphics_layer) {
+          TouchAction effective_touch_action =
+              TouchActionUtil::ComputeEffectiveTouchAction(
+                  *(composited_layer->EnclosingNode()));
+          paint_layer_touch_action.insert(main_graphics_layer,
+                                          effective_touch_action);
+        }
       }
     }
   }
