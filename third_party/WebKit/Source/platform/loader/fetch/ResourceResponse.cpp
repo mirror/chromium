@@ -28,11 +28,9 @@
 
 #include "platform/HTTPNames.h"
 #include "platform/network/HTTPParsers.h"
-#include "platform/wtf/Assertions.h"
 #include "platform/wtf/CurrentTime.h"
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/StdLibExtras.h"
-#include "public/platform/WebURLResponse.h"
 
 #include <memory>
 
@@ -643,14 +641,4 @@ bool ResourceResponse::Compare(const ResourceResponse& a,
   return true;
 }
 
-STATIC_ASSERT_ENUM(WebURLResponse::kHTTPVersionUnknown,
-                   ResourceResponse::kHTTPVersionUnknown);
-STATIC_ASSERT_ENUM(WebURLResponse::kHTTPVersion_0_9,
-                   ResourceResponse::kHTTPVersion_0_9);
-STATIC_ASSERT_ENUM(WebURLResponse::kHTTPVersion_1_0,
-                   ResourceResponse::kHTTPVersion_1_0);
-STATIC_ASSERT_ENUM(WebURLResponse::kHTTPVersion_1_1,
-                   ResourceResponse::kHTTPVersion_1_1);
-STATIC_ASSERT_ENUM(WebURLResponse::kHTTPVersion_2_0,
-                   ResourceResponse::kHTTPVersion_2_0);
 }  // namespace blink

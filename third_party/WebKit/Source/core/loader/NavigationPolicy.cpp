@@ -32,7 +32,6 @@
 
 #include "build/build_config.h"
 #include "platform/wtf/Assertions.h"
-#include "public/web/WebNavigationPolicy.h"
 
 namespace blink {
 
@@ -64,15 +63,5 @@ bool NavigationPolicyFromMouseEvent(unsigned short button,
   }
   return true;
 }
-
-STATIC_ASSERT_ENUM(kWebNavigationPolicyIgnore, kNavigationPolicyIgnore);
-STATIC_ASSERT_ENUM(kWebNavigationPolicyDownload, kNavigationPolicyDownload);
-STATIC_ASSERT_ENUM(kWebNavigationPolicyCurrentTab, kNavigationPolicyCurrentTab);
-STATIC_ASSERT_ENUM(kWebNavigationPolicyNewBackgroundTab,
-                   kNavigationPolicyNewBackgroundTab);
-STATIC_ASSERT_ENUM(kWebNavigationPolicyNewForegroundTab,
-                   kNavigationPolicyNewForegroundTab);
-STATIC_ASSERT_ENUM(kWebNavigationPolicyNewWindow, kNavigationPolicyNewWindow);
-STATIC_ASSERT_ENUM(kWebNavigationPolicyNewPopup, kNavigationPolicyNewPopup);
 
 }  // namespace blink

@@ -14,10 +14,8 @@
 #include "modules/permissions/PermissionUtils.h"
 #include "modules/quota/StorageEstimate.h"
 #include "platform/StorageQuotaCallbacks.h"
-#include "platform/wtf/Assertions.h"
 #include "platform/wtf/Functional.h"
 #include "public/platform/Platform.h"
-#include "public/platform/WebStorageQuotaError.h"
 
 namespace blink {
 
@@ -167,11 +165,5 @@ void StorageManager::PermissionRequestComplete(ScriptPromiseResolver* resolver,
     return;
   resolver->Resolve(status == PermissionStatus::GRANTED);
 }
-
-STATIC_ASSERT_ENUM(kWebStorageQuotaErrorNotSupported, kNotSupportedError);
-STATIC_ASSERT_ENUM(kWebStorageQuotaErrorInvalidModification,
-                   kInvalidModificationError);
-STATIC_ASSERT_ENUM(kWebStorageQuotaErrorInvalidAccess, kInvalidAccessError);
-STATIC_ASSERT_ENUM(kWebStorageQuotaErrorAbort, kAbortError);
 
 }  // namespace blink

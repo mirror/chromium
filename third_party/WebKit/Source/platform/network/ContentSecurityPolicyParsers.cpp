@@ -5,9 +5,7 @@
 #include "platform/network/ContentSecurityPolicyParsers.h"
 
 #include "platform/wtf/ASCIICType.h"
-#include "platform/wtf/Assertions.h"
 #include "platform/wtf/text/StringUTF8Adaptor.h"
-#include "public/platform/WebContentSecurityPolicy.h"
 
 namespace blink {
 
@@ -57,13 +55,4 @@ bool IsMediaTypeCharacter(UChar c) {
   return !IsASCIISpace(c) && c != '/';
 }
 
-STATIC_ASSERT_ENUM(kWebContentSecurityPolicyTypeReport,
-                   kContentSecurityPolicyHeaderTypeReport);
-STATIC_ASSERT_ENUM(kWebContentSecurityPolicyTypeEnforce,
-                   kContentSecurityPolicyHeaderTypeEnforce);
-
-STATIC_ASSERT_ENUM(kWebContentSecurityPolicySourceHTTP,
-                   kContentSecurityPolicyHeaderSourceHTTP);
-STATIC_ASSERT_ENUM(kWebContentSecurityPolicySourceMeta,
-                   kContentSecurityPolicyHeaderSourceMeta);
 }  // namespace blink
