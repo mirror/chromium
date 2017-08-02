@@ -105,6 +105,30 @@
       "revId": "a72089701ae0757b60af15e72226210cabfcb70a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d463ce3d_0e9cf2f0",
+        "filename": "ui/base/win/shell.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-02T20:04:15Z",
+      "side": 1,
+      "message": "One option is to CHECK instead of DCHECK and then watch to see if that CHECK is violated in the next couple months.  If not, change to DCHECK; otherwise, handle smartly.",
+      "parentUuid": "9036222f_f963e3ca",
+      "range": {
+        "startLine": 182,
+        "startChar": 7,
+        "endLine": 182,
+        "endChar": 10
+      },
+      "revId": "a72089701ae0757b60af15e72226210cabfcb70a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
