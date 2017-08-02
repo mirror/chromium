@@ -879,6 +879,61 @@ IN_PROC_BROWSER_TEST_F(SSLUITest, TestBrokenHTTPSWithActiveInsecureContent) {
                                  AuthState::RAN_INSECURE_CONTENT);
 }
 
+namespace {
+
+// A WebContentsObserver that allows the user to wait for a
+// DidChangeVisibleSecurityState event.
+class SecurityStateWebContentsObserver : public content::WebContentsObserver {
+ public:
+  explicit SecurityStateWebContentsObserver(content::WebContents* web_contents)
+      : content::WebContentsObserver(web_contents) {}
+  ~SecurityStateWebContentsObserver() override {}
+
+  void WaitForDidChangeVisibleSecurityState() { run_loop_.Run(); }
+
+  // WebContentsObserver:
+  void DidChangeVisibleSecurityState() override { run_loop_.Quit(); }
+
+ private:
+  base::RunLoop run_loop_;
+};
+
+}  // namespace
+
+// Tests that the mixed content flags are reset when going back to an existing
+// navigation entry that had mixed content. Regression test for
+// https://crbug.com/750649.
+IN_PROC_BROWSER_TEST_F(SSLUITest, GoBackToMixedContent) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+  ASSERT_TRUE(https_server_.Start());
+
+  // Navigate to a URL and dynamically load mixed content.
+  content::WebContents* tab =
+      browser()->tab_strip_model()->GetActiveWebContents();
+  ui_test_utils::NavigateToURL(browser(),
+                               https_server_.GetURL("/ssl/google.html"));
+  CheckAuthenticatedState(tab, AuthState::NONE);
+  SecurityStateWebContentsObserver observer(tab);
+  ASSERT_TRUE(content::ExecuteScript(tab,
+                                     "var i = document.createElement('img');"
+                                     "i.src = 'http://example.test';"
+                                     "document.body.appendChild(i);"));
+  observer.WaitForDidChangeVisibleSecurityState();
+  CheckSecurityState(tab, CertError::NONE, security_state::NONE,
+                     AuthState::DISPLAYED_INSECURE_CONTENT);
+
+  // Now navigate somewhere else, and then back to the page that dynamically
+  // loaded mixed content.
+  ui_test_utils::NavigateToURL(
+      browser(), embedded_test_server()->GetURL("/ssl/google.html"));
+  CheckUnauthenticatedState(
+      browser()->tab_strip_model()->GetActiveWebContents(), AuthState::NONE);
+  chrome::GoBack(browser(), WindowOpenDisposition::CURRENT_TAB);
+  content::WaitForLoadStop(tab);
+  // After going back, the mixed content indicator should no longer be present.
+  CheckAuthenticatedState(tab, AuthState::NONE);
+}
+
 // Tests that the WebContents's flag for displaying content with cert
 // errors get cleared upon navigation.
 IN_PROC_BROWSER_TEST_F(SSLUITest,
