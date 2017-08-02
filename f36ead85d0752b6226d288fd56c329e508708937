@@ -496,6 +496,30 @@
     },
     {
       "key": {
+        "uuid": "c57b15c3_baafdd18",
+        "filename": "chrome/browser/ui/cocoa/passwords/passwords_list_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-08-02T11:48:26Z",
+      "side": 1,
+      "message": "Oh. Didn\u0027t notice it was possible to enter multiple lines but turns out option+enter works for new line. Fixed, thanks! :)",
+      "parentUuid": "7c732f21_5f435004",
+      "range": {
+        "startLine": 337,
+        "startChar": 35,
+        "endLine": 337,
+        "endChar": 48
+      },
+      "revId": "f36ead85d0752b6226d288fd56c329e508708937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e334fe64_b7db5d01",
         "filename": "chrome/browser/ui/cocoa/passwords/passwords_list_view_controller.mm",
         "patchSetId": 1
@@ -555,6 +579,30 @@
       "side": 1,
       "message": "Sure? The article https://developer.apple.com/library/content/qa/qa1454/_index.html says that by default those keys aren\u0027t processed.",
       "parentUuid": "6ebd30a1_c2975685",
+      "range": {
+        "startLine": 338,
+        "startChar": 35,
+        "endLine": 338,
+        "endChar": 44
+      },
+      "revId": "f36ead85d0752b6226d288fd56c329e508708937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5e58d43e_49ca915b",
+        "filename": "chrome/browser/ui/cocoa/passwords/passwords_list_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-08-02T11:48:26Z",
+      "side": 1,
+      "message": "As I showed you in person, it doesn\u0027t accept it as a new line character but it just refocuses on itself. So i had to handle enter key here.",
+      "parentUuid": "4c712143_d47818a1",
       "range": {
         "startLine": 338,
         "startChar": 35,
@@ -682,6 +730,30 @@
       "revId": "f36ead85d0752b6226d288fd56c329e508708937",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "335927e8_47e33ccc",
+        "filename": "chrome/browser/ui/cocoa/passwords/passwords_list_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-08-02T11:48:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e52f24c_afa08d2c",
+      "range": {
+        "startLine": 340,
+        "startChar": 15,
+        "endLine": 340,
+        "endChar": 32
+      },
+      "revId": "f36ead85d0752b6226d288fd56c329e508708937",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

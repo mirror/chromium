@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "643debff_a45cfd8d",
+        "filename": "chrome/browser/ui/cocoa/passwords/password_item_views.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-08-02T11:48:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "612dfa93_7f323c86",
+      "range": {
+        "startLine": 74,
+        "startChar": 10,
+        "endLine": 74,
+        "endChar": 18
+      },
+      "revId": "618c879d9f18f3583e8949a60d8bccac77e782de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "726ffe82_859764ff",
         "filename": "chrome/browser/ui/cocoa/passwords/password_item_views.h",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "618c879d9f18f3583e8949a60d8bccac77e782de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca55689b_f02db61e",
+        "filename": "chrome/browser/ui/cocoa/passwords/password_item_views.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-08-02T11:48:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "726ffe82_859764ff",
+      "range": {
+        "startLine": 75,
+        "startChar": 3,
+        "endLine": 75,
+        "endChar": 5
+      },
+      "revId": "618c879d9f18f3583e8949a60d8bccac77e782de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "76bbc1c1_ca2e4c58",
+        "filename": "chrome/browser/ui/cocoa/passwords/passwords_list_view_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-08-02T11:48:26Z",
+      "side": 1,
+      "message": "Moved it into the save pending class.",
+      "parentUuid": "b68cad29_f2878008",
+      "range": {
+        "startLine": 225,
+        "startChar": 33,
+        "endLine": 225,
+        "endChar": 51
+      },
+      "revId": "618c879d9f18f3583e8949a60d8bccac77e782de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e639133d_8a3692f8",
         "filename": "chrome/browser/ui/cocoa/passwords/save_pending_password_view_controller.h",
         "patchSetId": 6
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "41591ab7_d4ee8710",
+        "filename": "chrome/browser/ui/cocoa/passwords/save_pending_password_view_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-08-02T11:48:26Z",
+      "side": 1,
+      "message": "Updated this variable to a container and decided to use it as a plain nsview.",
+      "parentUuid": "e639133d_8a3692f8",
+      "range": {
+        "startLine": 19,
+        "startChar": 31,
+        "endLine": 19,
+        "endChar": 56
+      },
+      "revId": "618c879d9f18f3583e8949a60d8bccac77e782de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32d8863a_c64cc383",
         "filename": "chrome/browser/ui/cocoa/passwords/save_pending_password_view_controller.mm",
         "patchSetId": 6
@@ -105,6 +201,30 @@
       "writtenOn": "2017-08-01T14:23:35Z",
       "side": 1,
       "message": "Isn\u0027t it default initially? What did you want to do?",
+      "range": {
+        "startLine": 64,
+        "startChar": 28,
+        "endLine": 64,
+        "endChar": 48
+      },
+      "revId": "618c879d9f18f3583e8949a60d8bccac77e782de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffbadfd2_618ca465",
+        "filename": "chrome/browser/ui/cocoa/passwords/save_pending_password_view_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-08-02T11:48:26Z",
+      "side": 1,
+      "message": "There are two cases here; user opens the bubble by clicking on the key icon or we pop up the bubble upon successful submission. If bubble is opened because of a user action, save button is set default button and is blue. But if we have opened the bubble over a submission, save button isn\u0027t default and all the buttons are gray. I thought, if user had an interaction with the bubble (clicking on edit button, editing username and hitting enter), we should set the save button default button now, because this wasn\u0027t a key window until user had an interaction but now it should be.",
+      "parentUuid": "32d8863a_c64cc383",
       "range": {
         "startLine": 64,
         "startChar": 28,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "f1b0ce9e_71d51e8e",
+        "filename": "chrome/browser/ui/cocoa/passwords/save_pending_password_view_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-08-02T11:48:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5049c2ef_159108aa",
+      "range": {
+        "startLine": 75,
+        "startChar": 36,
+        "endLine": 75,
+        "endChar": 59
+      },
+      "revId": "618c879d9f18f3583e8949a60d8bccac77e782de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2e9cdb6a_a021864f",
         "filename": "chrome/browser/ui/cocoa/passwords/save_pending_password_view_controller.mm",
         "patchSetId": 6
@@ -160,6 +304,30 @@
       "revId": "618c879d9f18f3583e8949a60d8bccac77e782de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50dd5d8c_15ccc490",
+        "filename": "chrome/browser/ui/cocoa/passwords/save_pending_password_view_controller.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-08-02T11:48:26Z",
+      "side": 1,
+      "message": "Updated",
+      "parentUuid": "2e9cdb6a_a021864f",
+      "range": {
+        "startLine": 83,
+        "startChar": 0,
+        "endLine": 83,
+        "endChar": 40
+      },
+      "revId": "618c879d9f18f3583e8949a60d8bccac77e782de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
