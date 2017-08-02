@@ -123,6 +123,22 @@ var TOP_ROW_KEY_LABEL_TO_FUNCTION_LABEL = {
 };
 
 /**
+ * The top row key labels are modified in the new keyboard layout.
+ */
+var TOP_ROW_KEY_LABEL_TO_FUNCTION_LABEL_NEW_LAYOUT_2 = {
+  'back': 'f1',
+  'reload': 'f2',
+  'full screen': 'f3',
+  'switch window': 'f4',
+  'bright down': 'f5',
+  'bright up': 'f6',
+  'play / pause': 'f7',
+  'mute': 'f8',
+  'vol. down': 'f9',
+  'vol. up': 'f10',
+};
+
+/**
  * Some key labels define actions (like for example 'vol. up' or 'mute').
  * These labels should be localized. (crbug.com/471025).
  */
@@ -142,6 +158,10 @@ var LABEL_TO_LOCALIZED_LABEL_ID = {
   'backspace': 'keyboardOverlayBackspaceKeyLabel',
   'tab': 'keyboardOverlayTabKeyLabel',
   'search': 'keyboardOverlaySearchKeyLabel',
+  'assistant': 'keyboardOverlayAssistantKeyLabel',
+  'play / pause': 'keyboardOverlayPlayPauseKeyLabel',
+  'system menu': 'keyboardOverlaySystemMenuKeyLabel',
+  'home': 'keyboardOverlayHomeKeyLabel',
   'enter': 'keyboardOverlayEnterKeyLabel',
   'shift': 'keyboardOverlayShiftKeyLabel',
   'ctrl': 'keyboardOverlayCtrlKeyLabel',
@@ -178,6 +198,26 @@ var identifierMap = {};
  * True after at least one keydown event has been received.
  */
 var gotKeyDown = false;
+
+/**
+ * Returns the actual key label based on the treatment of the top row setting,
+ * as well as whether this device has the new keyboard layout.
+ * @param {string} label The unmodified key label as read from
+ * keyboard_overlay_data.js.
+ */
+function getTopRowKeyActualLabel(label) {
+  if (!topRowKeysAreFunctionKeys())
+    return label;
+
+  var topRowMap = hasKeyboardLayout2() ?
+      TOP_ROW_KEY_LABEL_TO_FUNCTION_LABEL_NEW_LAYOUT_2 :
+      TOP_ROW_KEY_LABEL_TO_FUNCTION_LABEL;
+
+  if (!(label in topRowMap))
+    return label;
+
+  return topRowMap[label];
+}
 
 /**
  * Returns the layout name.
@@ -448,17 +488,12 @@ function remapIdentifier(identifier) {
  * @return {string} Label of the key.
  */
 function getKeyLabel(keyData, modifiers) {
-  if (!keyData) {
+  if (!keyData)
     return '';
-  }
-  if (keyData.label) {
-    if (topRowKeysAreFunctionKeys()) {
-      var topRowKeyLabel = TOP_ROW_KEY_LABEL_TO_FUNCTION_LABEL[keyData.label];
-      if (topRowKeyLabel)
-        return topRowKeyLabel;
-    }
-    return keyData.label;
-  }
+
+  if (keyData.label)
+    return getTopRowKeyActualLabel(keyData.label);
+
   var keyLabel = '';
   for (var j = 1; j <= 9; j++) {
     var pos = keyData['p' + j];
@@ -517,21 +552,11 @@ function getKeyTextValue(keyData) {
 
     // some key labels define actions such as 'mute' or 'vol. up'. Those actions
     // should be localized (crbug.com/471025).
-    var localizedLabelId = null;
-    var labelToBeLocalized = keyData.label;
-    if (topRowKeysAreFunctionKeys()) {
-      // If this is a top row key label, we need to convert that label to
-      // function-keys label (i.e. mute --> f8), and then use that label to get
-      // a localized one.
-      var topRowKeyAsFunctionLabel =
-          TOP_ROW_KEY_LABEL_TO_FUNCTION_LABEL[labelToBeLocalized];
-
-      labelToBeLocalized =
-          topRowKeyAsFunctionLabel ? topRowKeyAsFunctionLabel : keyData.label;
-    }
-
-    localizedLabelId = LABEL_TO_LOCALIZED_LABEL_ID[labelToBeLocalized];
-
+    // If this is a top row key label, we need to convert that label to
+    // function-keys label (i.e. mute --> f8), and then use that label to get
+    // a localized one.
+    var labelToBeLocalized = getTopRowKeyActualLabel(keyData.label);
+    var localizedLabelId = LABEL_TO_LOCALIZED_LABEL_ID[labelToBeLocalized];
     if (localizedLabelId)
       return loadTimeData.getString(localizedLabelId);
 
@@ -821,11 +846,59 @@ function hasDiamondKey() {
 }
 
 /**
+ * @return {boolean} True if the internal keyboard of the device has the new
+ * keyboard layout.
+ */
+function hasKeyboardLayout2() {
+  return loadTimeData.getBoolean('keyboardOverlayUsesLayout2');
+}
+
+/**
  * Returns true if display scaling feature is enabled.
  * @return {boolean} True if display scaling feature is enabled.
  */
 function isDisplayUIScalingEnabled() {
   return loadTimeData.getBoolean('keyboardOverlayIsDisplayUIScalingEnabled');
+}
+
+/**
+ * Modifies the current layout based on the given parameters.
+ *
+ * @param {Object<string, Array<number>>} newLayoutData The new or updated key
+ * layout positions and sizes. The keys are the key IDs, and the values are
+ * bounds of the corresponding keys.
+ * @param {Object<string, Object<string, string>>} newKeyData The updated key
+ * data such as labels and formats. The keys are the key IDs, and the values
+ * are the key data.
+ * @param {Object<string, boolean>} keyIdsToRemove The keys to remove from the
+ * current layout. The keys are the key IDs, and the values are ignored.
+ */
+function modifyLayoutAndKeyData(newLayoutData, newKeyData, keyIdsToRemove) {
+  var layout = getLayout();
+  var indicesToRemove = [];
+  for (var i = 0; i < layout.length; i++) {
+    var keyId = layout[i][0];
+    if (keyId in newLayoutData) {
+      layout[i] = [keyId].concat(newLayoutData[keyId]);
+      delete newLayoutData[keyId];
+    }
+
+    if (keyId in keyIdsToRemove)
+      indicesToRemove.push(i);
+  }
+
+  // Remove the desired keys.
+  for (var i in indicesToRemove)
+    layout.splice(indicesToRemove[i], 1);
+
+  // Add the new ones.
+  for (var keyId in newLayoutData)
+    layout.push([keyId].concat(newLayoutData[keyId]));
+
+  // Update the new key data.
+  var keyData = getKeyboardGlyphData()['keys'];
+  for (var keyId in newKeyData)
+    keyData[keyId] = newKeyData[keyId];
 }
 
 /**
@@ -841,34 +914,69 @@ function initDiamondKey() {
     '5B': [803.0, 6.0, 72.0, 35.0],       // lock key
     '5D': [5.0, 287.0, 60.0, 60.0]        // diamond key
   };
-
-  var layout = getLayout();
-  var powerKeyIndex = -1;
-  var powerKeyId = '00';
-  for (var i = 0; i < layout.length; i++) {
-    var keyId = layout[i][0];
-    if (keyId in newLayoutData) {
-      layout[i] = [keyId].concat(newLayoutData[keyId]);
-      delete newLayoutData[keyId];
-    }
-    if (keyId == powerKeyId)
-      powerKeyIndex = i;
-  }
-  for (var keyId in newLayoutData)
-    layout.push([keyId].concat(newLayoutData[keyId]));
-
-  // Remove the power key.
-  if (powerKeyIndex != -1)
-    layout.splice(powerKeyIndex, 1);
-
-  var keyData = getKeyboardGlyphData()['keys'];
   var newKeyData = {
     '3A': {'label': 'caps lock', 'format': 'left'},
     '5B': {'label': 'lock'},
     '5D': {'label': 'diamond', 'format': 'left'}
   };
-  for (var keyId in newKeyData)
-    keyData[keyId] = newKeyData[keyId];
+  var keysToRemove = {
+    '00': true,  // The power key.
+  };
+  modifyLayoutAndKeyData(newLayoutData, newKeyData, keysToRemove);
+}
+
+/**
+ * Initializes the layout for devices which have the new keyboard layout.
+ */
+function initNewKeyboardLayout2() {
+  var newLayoutData = {
+    '1D': [5.0, 287.0, 80.0, 60.0],    // left Ctrl
+    'D8': [85.0, 287.0, 80.0, 60.0],   // Assistant key
+    '38': [165.0, 287.0, 80.0, 60.0],  // left Alt
+    '5D': [803.0, 6.0, 72.0, 35.0],    // System menu
+  };
+  var newKeyData = {
+    'D8': {'label': 'assistant', 'format': 'left'},
+    '5D': {'label': 'system menu'},
+    'E0 5B': {'label': 'home', 'format': 'left'},
+    '3B': {'label': 'back'},
+    '3C': {'label': 'reload'},
+    '3D': {'label': 'full screen'},
+    '3E': {'label': 'switch window'},
+    '3F': {'label': 'bright down'},
+    '40': {'label': 'bright up'},
+    '41': {'label': 'play / pause'},
+    '42': {'label': 'mute'},
+    '43': {'label': 'vol. down'},
+    '44': {'label': 'vol. up'},
+  };
+  var keysToRemove = {
+    '00': true,  // The power key.
+  };
+  modifyLayoutAndKeyData(newLayoutData, newKeyData, keysToRemove);
+
+  // Modify the Search + top row keys shortcuts:
+  var newShortcuts = {
+    'bright down<>SEARCH': 'keyboardOverlayF5',
+    'bright up<>SEARCH': 'keyboardOverlayF6',
+    'f2<>SEARCH': 'keyboardOverlayReloadKeyLabel',
+    'f3<>SEARCH': 'keyboardOverlayFullScreenKeyLabel',
+    'f4<>SEARCH': 'keyboardOverlaySwitchWinKeyLabel',
+    'f5<>SEARCH': 'keyboardOverlayBrightDownKeyLabel',
+    'f6<>SEARCH': 'keyboardOverlayBrightUpKeyLabel',
+    'f7<>SEARCH': 'keyboardOverlayPlayPauseKeyLabel',
+    'full screen<>SEARCH': 'keyboardOverlayF3',
+    'play / pause<>SEARCH': 'keyboardOverlayF7',
+    'reload<>SEARCH': 'keyboardOverlayF2',
+    'switch window<>SEARCH': 'keyboardOverlayF4',
+  };
+  var shortcutDataCache = keyboardOverlayData['shortcut'];
+  for (var shortcutId in newShortcuts) {
+    shortcutDataCache[shortcutId] = newShortcuts[shortcutId];
+    delete newShortcuts[shortcutId];
+  }
+  for (var remainingId in newShortcuts)
+    shortcutDataCache[remainingId] = newShortcuts[remainingId];
 }
 
 /**
@@ -930,6 +1038,9 @@ function initKeyboardOverlayId(inputMethodId) {
   // that is quite diffrent from the physical layout that has a diamond key.
   if (hasDiamondKey() && getLayoutName() != 'J')
     initDiamondKey();
+  else if (hasKeyboardLayout2())
+    initNewKeyboardLayout2();
+
   initLayout();
   update([], []);
   window.webkitRequestAnimationFrame(function() {
