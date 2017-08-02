@@ -92,7 +92,8 @@ PasswordForm::PasswordForm()
       is_public_suffix_match(false),
       is_affiliation_based_match(false),
       does_look_like_signup_form(false),
-      submission_event(SubmissionIndicatorEvent::NONE) {}
+      submission_event(SubmissionIndicatorEvent::NONE),
+      username_edited_in_prompt(false) {}
 
 PasswordForm::PasswordForm(const PasswordForm& other) = default;
 

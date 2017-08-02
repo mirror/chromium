@@ -481,7 +481,15 @@ class PasswordFormManagerTest : public testing::Test {
 
     autofill::AutofillUploadContents::Field::UsernameVoteType
         expected_username_vote_type =
-            autofill::AutofillUploadContents::Field::CREDENTIALS_REUSED;
+            autofill::AutofillUploadContents::Field::NO_INFORMATION;
+    if (match.username_edited_in_prompt) {
+      expected_types[match.username_element] = autofill::USERNAME;
+      expected_available_field_types.insert(autofill::USERNAME);
+      expected_username_vote_type =
+          autofill::AutofillUploadContents::Field::USERNAME_EDITED;
+    } else
+      expected_username_vote_type =
+          autofill::AutofillUploadContents::Field::CREDENTIALS_REUSED;
 
     bool expect_generation_vote = false;
     if (field_type) {
@@ -519,7 +527,8 @@ class PasswordFormManagerTest : public testing::Test {
   // Test upload votes on change password forms. |field_type| is a vote that we
   // expect to be uploaded.
   void ChangePasswordUploadTest(autofill::ServerFieldType field_type,
-                                bool has_confirmation_field) {
+                                bool has_confirmation_field,
+                                bool username_edited_in_prompt) {
     SCOPED_TRACE(testing::Message()
                  << "field_type=" << field_type
                  << " has_confirmation_field=" << has_confirmation_field);
@@ -590,6 +599,17 @@ class PasswordFormManagerTest : public testing::Test {
       expected_available_field_types.insert(autofill::CONFIRMATION_PASSWORD);
     }
 
+    autofill::AutofillUploadContents::Field::UsernameVoteType
+        expected_username_vote_type =
+            autofill::AutofillUploadContents::Field::NO_INFORMATION;
+    if (username_edited_in_prompt) {
+      expected_types[observed_form_.confirmation_password_element] =
+          autofill::USERNAME;
+      expected_available_field_types.insert(autofill::USERNAME);
+      expected_username_vote_type =
+          autofill::AutofillUploadContents::Field::USERNAME_EDITED;
+    }
+
     std::string observed_form_signature =
         autofill::FormStructure(observed_form()->form_data)
             .FormSignatureAsStr();
@@ -600,14 +620,12 @@ class PasswordFormManagerTest : public testing::Test {
       expected_login_signature = pending_structure.FormSignatureAsStr();
     }
     EXPECT_CALL(*client()->mock_driver()->mock_autofill_download_manager(),
-                StartUploadRequest(
-                    CheckUploadedAutofillTypesAndSignature(
-                        observed_form_signature, expected_types,
-                        false /* expect_generation_vote */,
-                        autofill::AutofillUploadContents::Field::NO_INFORMATION
-                        /* expected_username_vote_type */),
-                    false, expected_available_field_types,
-                    expected_login_signature, true));
+                StartUploadRequest(CheckUploadedAutofillTypesAndSignature(
+                                       observed_form_signature, expected_types,
+                                       false /* expect_generation_vote */,
+                                       expected_username_vote_type),
+                                   false, expected_available_field_types,
+                                   expected_login_signature, true));
 
     switch (field_type) {
       case autofill::NEW_PASSWORD:
@@ -660,13 +678,15 @@ class PasswordFormManagerTest : public testing::Test {
                                bool is_change_password_form,
                                bool has_generated_password,
                                bool generated_password_changed,
-                               SavePromptInteraction interaction) {
+                               SavePromptInteraction interaction,
+                               bool username_edited_in_prompt) {
     SCOPED_TRACE(testing::Message()
                  << "is_manual_generation=" << is_manual_generation
                  << " is_change_password_form=" << is_change_password_form
                  << " has_generated_password=" << has_generated_password
                  << " generated_password_changed=" << generated_password_changed
-                 << " interaction=" << interaction);
+                 << " interaction=" << interaction
+                 << " username_edited_in_prompt=" << username_edited_in_prompt);
     PasswordForm form(*observed_form());
     form.form_data = saved_match()->form_data;
 
@@ -726,6 +746,9 @@ class PasswordFormManagerTest : public testing::Test {
     expected_generation_types[generation_element] = expected_generation_type;
 
     autofill::FormStructure form_structure(submitted_form.form_data);
+
+    if (username_edited_in_prompt)
+      expected_available_field_types.insert(autofill::USERNAME);
 
     EXPECT_CALL(
         *client()->mock_driver()->mock_autofill_download_manager(),
@@ -1981,6 +2004,7 @@ TEST_F(PasswordFormManagerTest, UploadFormData_NewPassword) {
 
   autofill::ServerFieldTypeSet expected_available_field_types;
   expected_available_field_types.insert(autofill::PASSWORD);
+  expected_available_field_types.insert(autofill::USERNAME);
   EXPECT_CALL(
       *client()->mock_driver()->mock_autofill_download_manager(),
       StartUploadRequest(_, false, expected_available_field_types, _, true));
@@ -2553,8 +2577,12 @@ TEST_F(PasswordFormManagerTest, UploadChangePasswordForm) {
       autofill::NOT_NEW_PASSWORD};
   bool kFalseTrue[] = {false, true};
   for (autofill::ServerFieldType vote : kChangePasswordVotes) {
-    for (bool has_confirmation_field : kFalseTrue)
-      ChangePasswordUploadTest(vote, has_confirmation_field);
+    for (bool has_confirmation_field : kFalseTrue) {
+      for (bool username_edited_in_prompt : kFalseTrue) {
+        ChangePasswordUploadTest(vote, has_confirmation_field,
+                                 username_edited_in_prompt);
+      }
+    }
   }
 }
 
@@ -2917,11 +2945,13 @@ TEST_F(PasswordFormManagerTest, GeneratedVoteUpload) {
     for (bool is_change_password_form : kFalseTrue) {
       for (bool has_generated_password : kFalseTrue) {
         for (bool generated_password_changed : kFalseTrue) {
-          for (SavePromptInteraction interaction : kSavePromptInterations) {
-            GeneratedVoteUploadTest(is_manual_generation,
-                                    is_change_password_form,
-                                    has_generated_password,
-                                    generated_password_changed, interaction);
+          for (bool username_edited_in_prompt : kFalseTrue) {
+            for (SavePromptInteraction interaction : kSavePromptInterations) {
+              GeneratedVoteUploadTest(
+                  is_manual_generation, is_change_password_form,
+                  has_generated_password, generated_password_changed,
+                  interaction, username_edited_in_prompt);
+            }
           }
         }
       }
@@ -3133,14 +3163,24 @@ TEST_F(PasswordFormManagerTest, ProbablyAccountCreationUpload) {
   expected_types[saved_match()->password_element] =
       autofill::PROBABLY_ACCOUNT_CREATION_PASSWORD;
 
-  EXPECT_CALL(*client()->mock_driver()->mock_autofill_download_manager(),
-              StartUploadRequest(
-                  CheckUploadedAutofillTypesAndSignature(
-                      pending_structure.FormSignatureAsStr(), expected_types,
-                      false /* expect_generation_vote */,
-                      autofill::AutofillUploadContents::Field::NO_INFORMATION
-                      /* expected_username_vote_type */),
-                  false, expected_available_field_types, std::string(), true));
+  // Checks the username vote type is saved.
+  autofill::AutofillUploadContents::Field::UsernameVoteType
+      expected_username_vote_type =
+          autofill::AutofillUploadContents::Field::NO_INFORMATION;
+  if (saved_match()->username_edited_in_prompt) {
+    expected_types[saved_match()->username_element] = autofill::USERNAME;
+    expected_available_field_types.insert(autofill::USERNAME);
+    expected_username_vote_type =
+        autofill::AutofillUploadContents::Field::USERNAME_EDITED;
+  }
+
+  EXPECT_CALL(
+      *client()->mock_driver()->mock_autofill_download_manager(),
+      StartUploadRequest(
+          CheckUploadedAutofillTypesAndSignature(
+              pending_structure.FormSignatureAsStr(), expected_types,
+              false /* expect_generation_vote */, expected_username_vote_type),
+          false, expected_available_field_types, std::string(), true));
 
   form_manager.ProvisionallySave(
       form_to_save, PasswordFormManager::IGNORE_OTHER_POSSIBLE_USERNAMES);
