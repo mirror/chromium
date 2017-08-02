@@ -22,6 +22,30 @@
       "revId": "285da8b960c66d1284bf95487f847b504c0afb66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6953bc7d_eca45b37",
+        "filename": "third_party/WebKit/Source/core/html/canvas/CanvasRenderingContext.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-08-02T19:53:57Z",
+      "side": 1,
+      "message": "Bad naming. I will correct it in the next patch.",
+      "parentUuid": "5031d6e4_07cd9f04",
+      "range": {
+        "startLine": 42,
+        "startChar": 25,
+        "endLine": 42,
+        "endChar": 43
+      },
+      "revId": "285da8b960c66d1284bf95487f847b504c0afb66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
