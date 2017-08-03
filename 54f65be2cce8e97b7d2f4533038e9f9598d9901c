@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "e80c3323_805e70bc",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-08-03T08:08:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbcfc40c_c0affeeb",
+      "revId": "54f65be2cce8e97b7d2f4533038e9f9598d9901c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8cc655c6_afffe9f4",
         "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
         "patchSetId": 11
@@ -117,6 +135,30 @@
     },
     {
       "key": {
+        "uuid": "303f9e78_7aad4395",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-08-03T08:08:52Z",
+      "side": 1,
+      "message": "O.K. I added LayoutSelectionTest.cpp using EditingTestBase.",
+      "parentUuid": "cedd8b29_6da78a22",
+      "range": {
+        "startLine": 445,
+        "startChar": 29,
+        "endLine": 445,
+        "endChar": 67
+      },
+      "revId": "54f65be2cce8e97b7d2f4533038e9f9598d9901c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6f6fbcf0_8930ca17",
         "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
         "patchSetId": 11
@@ -164,6 +206,24 @@
       "side": 1,
       "message": "Could you explain why |NodeAsRangeFirstNode()| is bad?\nAnd give me more explanation why we can\u0027t use EphemeralRangeInFlatTree::Nodes()?\n\nEphemeralRangeInFlatTree::Nodes() returns all nodes in the range and\npainted selection should be in the range.",
       "parentUuid": "80433cb1_921993ce",
+      "revId": "54f65be2cce8e97b7d2f4533038e9f9598d9901c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "086a5399_d516a7b6",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1116070
+      },
+      "writtenOn": "2017-08-03T08:08:52Z",
+      "side": 1,
+      "message": "Thanks for suggestion. It works!",
+      "parentUuid": "baf984cd_a02ef25d",
       "revId": "54f65be2cce8e97b7d2f4533038e9f9598d9901c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
