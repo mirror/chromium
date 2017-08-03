@@ -36,6 +36,10 @@ void ElementId::AddToTracedValue(base::trace_event::TracedValue* res) const {
   res->SetInteger("id_", id_);
 }
 
+ElementIdType ElementId::ToRawType() const {
+  return id_;
+}
+
 std::unique_ptr<base::Value> ElementId::AsValue() const {
   std::unique_ptr<base::DictionaryValue> res(new base::DictionaryValue());
   res->SetInteger("id_", id_);
@@ -47,7 +51,7 @@ size_t ElementIdHash::operator()(ElementId key) const {
 }
 
 std::ostream& operator<<(std::ostream& out, const ElementId& id) {
-  return out << "(" << id.id_ << ")";
+  return out << "(" << id.ToRawType() << ")";
 }
 
 }  // namespace cc
