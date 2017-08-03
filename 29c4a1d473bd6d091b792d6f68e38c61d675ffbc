@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b13090b_e177552c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-08-03T01:44:25Z",
+      "side": 1,
+      "message": "Spurious \u003ctab\u003e at the end of the line in gerrit for me.",
+      "revId": "29c4a1d473bd6d091b792d6f68e38c61d675ffbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ea7ffdb_4b76b0ef",
+        "filename": "chrome/renderer/searchbox/search_bouncer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-08-03T01:44:25Z",
+      "side": 1,
+      "message": "Comment out-of-date here I think.  This is your mojo interface impl, right?   Convention would be to use \n\n  // chrome::mojom::SearchBouncer:\n\nhere in that case.",
+      "revId": "29c4a1d473bd6d091b792d6f68e38c61d675ffbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
