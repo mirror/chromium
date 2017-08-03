@@ -118,6 +118,10 @@ class PaymentShippingOption;
 // The delegate to be notified when the user confirms or cancels the request.
 @property(nonatomic, weak) id<PaymentRequestCoordinatorDelegate> delegate;
 
+// Sets the view controller to either pending or not pending, and sets
+// whether the user can cancel the PaymentRequest during either state.
+- (void)setPending:(BOOL)pending withCancelButtonEnabled:(BOOL)cancellable;
+
 // Initiates the UI that will request card details from the user.
 - (void)
 requestFullCreditCard:(const autofill::CreditCard&)card
