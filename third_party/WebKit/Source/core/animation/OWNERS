@@ -7,5 +7,5 @@ timloh@chromium.org
 
 per-file Compositor*=loyso@chromium.org
 
-# TEAM: style-dev@chromium.org
+# TEAM: style-dev+owners@chromium.org
 # COMPONENT: Blink>Animation
