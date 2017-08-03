@@ -1067,7 +1067,9 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
 
   // paintOffset is the offset from the origin of the GraphicsContext at which
   // to paint the current object.
-  virtual void Paint(const PaintInfo&, const LayoutPoint& paint_offset) const;
+  virtual void Paint(const PaintInfo&,
+                     const LayoutPoint& paint_offset,
+                     const LayoutSize& sub_pixel_accumulation) const;
 
   // Subclasses must reimplement this method to compute the size and position
   // of this object and all its descendants.

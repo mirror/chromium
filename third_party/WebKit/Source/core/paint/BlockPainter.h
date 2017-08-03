@@ -15,6 +15,7 @@ class LayoutBlock;
 class LayoutBox;
 class LayoutFlexibleBox;
 class LayoutPoint;
+class LayoutSize;
 
 class BlockPainter {
   STACK_ALLOCATED();
@@ -22,7 +23,9 @@ class BlockPainter {
  public:
   BlockPainter(const LayoutBlock& block) : layout_block_(block) {}
 
-  void Paint(const PaintInfo&, const LayoutPoint& paint_offset);
+  void Paint(const PaintInfo&,
+             const LayoutPoint& paint_offset,
+             const LayoutSize&);
   void PaintObject(const PaintInfo&, const LayoutPoint&);
   void PaintContents(const PaintInfo&, const LayoutPoint&);
   void PaintChildren(const PaintInfo&, const LayoutPoint&);

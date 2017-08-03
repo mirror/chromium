@@ -40,7 +40,7 @@ void TablePainter::PaintObject(const PaintInfo& paint_info,
           (child->IsTableSection() || child->IsTableCaption())) {
         LayoutPoint child_point = layout_table_.FlipForWritingModeForChild(
             ToLayoutBox(child), paint_offset);
-        child->Paint(paint_info_for_descendants, child_point);
+        child->Paint(paint_info_for_descendants, child_point, LayoutSize());
       }
     }
 

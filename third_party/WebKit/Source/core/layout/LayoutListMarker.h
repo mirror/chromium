@@ -76,7 +76,9 @@ class LayoutListMarker final : public LayoutBox {
     return type == kLayoutObjectListMarker || LayoutBox::IsOfType(type);
   }
 
-  void Paint(const PaintInfo&, const LayoutPoint&) const override;
+  void Paint(const PaintInfo&,
+             const LayoutPoint& paint_offset,
+             const LayoutSize& sub_pixel_accumulation) const override;
 
   void UpdateLayout() override;
 

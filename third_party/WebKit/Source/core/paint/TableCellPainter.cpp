@@ -20,7 +20,8 @@ namespace blink {
 
 void TableCellPainter::Paint(const PaintInfo& paint_info,
                              const LayoutPoint& paint_offset) {
-  BlockPainter(layout_table_cell_).Paint(paint_info, paint_offset);
+  BlockPainter(layout_table_cell_)
+      .Paint(paint_info, paint_offset, LayoutSize());
 }
 
 void TableCellPainter::PaintContainerBackgroundBehindCell(

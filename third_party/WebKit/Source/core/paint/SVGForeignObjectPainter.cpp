@@ -25,8 +25,10 @@ class BlockPainterDelegate : public LayoutBlock {
 
  private:
   void Paint(const PaintInfo& paint_info,
-             const LayoutPoint& paint_offset) const final {
-    BlockPainter(layout_svg_foreign_object_).Paint(paint_info, paint_offset);
+             const LayoutPoint& paint_offset,
+             const LayoutSize& sub_pixel_accumulation) const final {
+    BlockPainter(layout_svg_foreign_object_)
+        .Paint(paint_info, paint_offset, LayoutSize());
   }
   const LayoutSVGForeignObject& layout_svg_foreign_object_;
 };

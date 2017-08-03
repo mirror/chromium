@@ -29,7 +29,8 @@ namespace blink {
 
 DISABLE_CFI_PERF
 void BlockPainter::Paint(const PaintInfo& paint_info,
-                         const LayoutPoint& paint_offset) {
+                         const LayoutPoint& paint_offset,
+                         const LayoutSize& sub_pixel_accumulation) {
   ObjectPainter(layout_block_).CheckPaintOffset(paint_info, paint_offset);
   LayoutPoint adjusted_paint_offset = paint_offset + layout_block_.Location();
   if (!IntersectsPaintRect(paint_info, adjusted_paint_offset))
@@ -110,7 +111,7 @@ void BlockPainter::PaintChild(const LayoutBox& child,
       layout_block_.FlipForWritingModeForChild(&child, paint_offset);
   if (!child.HasSelfPaintingLayer() && !child.IsFloating() &&
       !child.IsColumnSpanAll())
-    child.Paint(paint_info, child_point);
+    child.Paint(paint_info, child_point, LayoutSize());
 }
 
 void BlockPainter::PaintChildrenOfFlexibleBox(

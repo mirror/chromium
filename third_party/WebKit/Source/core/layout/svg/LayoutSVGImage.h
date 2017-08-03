@@ -65,7 +65,9 @@ class LayoutSVGImage final : public LayoutSVGModelObject {
   void ImageChanged(WrappedImagePtr, const IntRect* = nullptr) override;
 
   void UpdateLayout() override;
-  void Paint(const PaintInfo&, const LayoutPoint&) const override;
+  void Paint(const PaintInfo&,
+             const LayoutPoint& paint_offset,
+             const LayoutSize& sub_pixel_accumulation) const override;
 
   bool UpdateBoundingBox();
 
