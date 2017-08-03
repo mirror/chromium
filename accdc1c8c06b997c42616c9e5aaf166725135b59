@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d546c774_adf90ff4",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_browsertest_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-08-03T15:29:09Z",
+      "side": 1,
+      "message": "Can you do the same trick as before with this expectation (please copy the comment as well).",
+      "range": {
+        "startLine": 97,
+        "startChar": 73,
+        "endLine": 97,
+        "endChar": 0
+      },
+      "revId": "accdc1c8c06b997c42616c9e5aaf166725135b59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca40780d_87728872",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_browsertest_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-08-03T15:29:09Z",
+      "side": 1,
+      "message": "Nit^2: please delete this empty line, so that this will have the sections as the previous test.",
+      "revId": "accdc1c8c06b997c42616c9e5aaf166725135b59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
