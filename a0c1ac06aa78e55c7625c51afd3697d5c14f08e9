@@ -2,6 +2,278 @@
   "comments": [
     {
       "key": {
+        "uuid": "7dd67046_dead1296",
+        "filename": "components/viz/host/hit_test/hit_test_query.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-03T08:32:23Z",
+      "side": 1,
+      "message": "HitTestAggregator retains both the ScopedSharedBufferMapping, and ScopedSharedBufferHandle. Here, you are letting the handle to be destroyed. If handle can be destroyed, and mapping still remains alive, then maybe HTA does not need to retain the handles too? (if so, can you make that change in a follow up CL?)",
+      "revId": "a0c1ac06aa78e55c7625c51afd3697d5c14f08e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45a65e08_4e202b1f",
+        "filename": "components/viz/host/hit_test/hit_test_query.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-03T08:32:23Z",
+      "side": 1,
+      "message": "NOTREACHED() for now?",
+      "revId": "a0c1ac06aa78e55c7625c51afd3697d5c14f08e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47a276e9_78cc7b83",
+        "filename": "components/viz/host/hit_test/hit_test_query.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-03T08:32:23Z",
+      "side": 1,
+      "message": "DCHECK that index is valid.",
+      "revId": "a0c1ac06aa78e55c7625c51afd3697d5c14f08e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a141518d_18e97278",
+        "filename": "components/viz/host/hit_test/hit_test_query.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-03T08:32:23Z",
+      "side": 1,
+      "message": "If only one of the handles is replaced, will this be called with both handles, or just one?",
+      "revId": "a0c1ac06aa78e55c7625c51afd3697d5c14f08e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e881a441_a68313a9",
+        "filename": "components/viz/service/frame_sinks/gpu_root_compositor_frame_sink.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-03T08:32:23Z",
+      "side": 1,
+      "message": "Why change to unique_ptr\u003c\u003e?",
+      "revId": "a0c1ac06aa78e55c7625c51afd3697d5c14f08e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95e43547_5c52ca1e",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-03T08:32:23Z",
+      "side": 1,
+      "message": "Document lifetime (i.e. will |delegate| always outlive HTA?)",
+      "revId": "a0c1ac06aa78e55c7625c51afd3697d5c14f08e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d285a7e_bc475491",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-03T08:32:23Z",
+      "side": 1,
+      "message": "Thanks!",
+      "revId": "a0c1ac06aa78e55c7625c51afd3697d5c14f08e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b851a58_a05e002d",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-03T08:32:23Z",
+      "side": 1,
+      "message": "Since delegate_ is set on ctor, and never changes, make it const. i.e.:\n\n  HitTestAggregatorDelegate* const delegate_;\n\nAlso, move this to private.\n\nAll the other members should be private too (style guide). But that can happen separately.\n\nIf test needs to access these attributes, then use friends (either FRIEND_TEST_* macros, or the TestApi pattern used in various parts of the code).",
+      "revId": "a0c1ac06aa78e55c7625c51afd3697d5c14f08e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1bc28ed_e93ecbf7",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-03T08:32:23Z",
+      "side": 1,
+      "message": "GpuRootCompositorFrameSink is-a HitTestAggregatorDelegate. The doc for HTADelegate should not mention a specific implementation (GpuRootCompositorFrameSink in this case). So something like:\n\n  // Called if any of the buffer that stores the aggregated hit-test data is updated (e.g.\n  // destroyed, reallocated etc.). |active_handle| and |idle_handle| both must be valid.",
+      "revId": "a0c1ac06aa78e55c7625c51afd3697d5c14f08e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02f8482e_70280f1e",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-03T08:32:23Z",
+      "side": 1,
+      "message": "dtor is protected so that HTA does not take ownership? Document?",
+      "revId": "a0c1ac06aa78e55c7625c51afd3697d5c14f08e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a800982_586b98ba",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-03T08:32:23Z",
+      "side": 1,
+      "message": "Why do you need to Reset() in the dtor here?",
+      "revId": "a0c1ac06aa78e55c7625c51afd3697d5c14f08e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9ef9333_26933d49",
+        "filename": "services/ui/ws/window_server.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 927,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-03T08:32:23Z",
+      "side": 1,
+      "message": "NOTREACHED()\n\nAlthough this probably may not always be a security issue. (e.g. display gets destroyed, but viz doesn\u0027t know it yet)",
+      "revId": "a0c1ac06aa78e55c7625c51afd3697d5c14f08e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "431edd7c_4f2e453c",
+        "filename": "services/ui/ws/window_server.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 941,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-03T08:32:23Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "a0c1ac06aa78e55c7625c51afd3697d5c14f08e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "503d93ed_dafa5bce",
+        "filename": "services/ui/ws/window_server.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 943,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-03T08:32:23Z",
+      "side": 1,
+      "message": "Validate the index too.",
+      "revId": "a0c1ac06aa78e55c7625c51afd3697d5c14f08e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3d98c37_e479c5f1",
+        "filename": "services/ui/ws/window_server.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-03T08:32:23Z",
+      "side": 1,
+      "message": "Use DisplayHitTestQueryMap as the return type.",
+      "revId": "a0c1ac06aa78e55c7625c51afd3697d5c14f08e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "433e29a3_d84f3854",
+        "filename": "services/ui/ws/window_server.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-03T08:32:23Z",
+      "side": 1,
+      "message": "const method",
+      "revId": "a0c1ac06aa78e55c7625c51afd3697d5c14f08e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "98e02c2b_a50eec19",
         "filename": "services/viz/compositing/privileged/interfaces/frame_sink_manager.mojom",
         "patchSetId": 5
