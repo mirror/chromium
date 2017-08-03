@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "612c2f5c_3b8d4d07",
+        "filename": "ash/app_list/app_list_presenter_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-03T19:19:14Z",
+      "side": 1,
+      "message": "Combine with if above, e.g. if (IsEnabled \u0026\u0026 is_visible_) ...",
+      "range": {
+        "startLine": 256,
+        "startChar": 6,
+        "endLine": 256,
+        "endChar": 17
+      },
+      "revId": "7e25de03dc6dbb2fbd5f6b89d3fd9018ba5cafe2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
