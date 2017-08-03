@@ -601,6 +601,10 @@ class ExtensionService
   // Uninstall extensions that have been migrated to component extensions.
   void UninstallMigratedExtensions();
 
+  // Unloads the extension and configures it as being blocked due to policy.
+  void BlockDueToPolicy(
+      const scoped_refptr<const extensions::Extension>& extension);
+
   const base::CommandLine* command_line_ = nullptr;
 
   // The normal profile associated with this ExtensionService.

@@ -232,6 +232,8 @@ class ExtensionPrefs : public ExtensionScopedPrefs, public KeyedService {
   void SetExtensionDisabled(const std::string& extension_id,
                             int disable_reasons);
 
+  void SetExtensionBlockedByPolicy(const std::string& extension_id);
+
   // Called to change the extension's BlacklistState. Currently only used for
   // non-malicious extensions.
   // TODO(oleg): replace SetExtensionBlacklisted by this function.
