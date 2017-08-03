@@ -8,6 +8,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/strings/string16.h"
 #include "base/strings/utf_string_conversions.h"
+#include "chrome/app/vector_icons/vector_icons.h"
 #include "chrome/browser/ui/chrome_pages.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/generated_resources.h"
@@ -15,6 +16,8 @@
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/color_palette.h"
 #include "ui/gfx/image/image.h"
+#include "ui/gfx/image/image_skia_operations.h"
+#include "ui/gfx/paint_vector_icon.h"
 #include "ui/message_center/message_center.h"
 #include "ui/message_center/notification_types.h"
 #include "ui/message_center/notifier_settings.h"
@@ -106,14 +109,35 @@ TetherNotificationPresenter::CreateNotification(
     const base::string16& message,
     const message_center::RichNotificationData rich_notification_data,
     int signal_strength) {
-  auto source = base::MakeUnique<ash::network_icon::SignalStrengthImageSource>(
-      ash::network_icon::BARS, gfx::kGoogleBlue500, kTetherSignalIconSize,
-      GetNormalizedSignalStrength(signal_strength));
+  return CreateNotificationWithBadge(id, title, message, rich_notification_data,
+                                     signal_strength, nullptr /* badge */);
+}
+
+// static
+std::unique_ptr<message_center::Notification>
+TetherNotificationPresenter::CreateNotificationWithBadge(
+    const std::string& id,
+    const base::string16& title,
+    const base::string16& message,
+    const message_center::RichNotificationData rich_notification_data,
+    int signal_strength,
+    const gfx::VectorIcon* badge) {
+  auto signal_source =
+      base::MakeUnique<ash::network_icon::SignalStrengthImageSource>(
+          ash::network_icon::BARS, gfx::kGoogleBlue500, kTetherSignalIconSize,
+          GetNormalizedSignalStrength(signal_strength));
+  gfx::ImageSkia icon(std::move(signal_source), kTetherSignalIconSize);
+
+  if (badge) {
+    gfx::ImageSkia badge_icon = gfx::CreateVectorIcon(
+        *badge, kTetherSignalIconSize.height(), gfx::kGoogleRed700);
+    icon = gfx::ImageSkiaOperations::CreateIconWithBadge(icon, badge_icon);
+  }
+
   return base::MakeUnique<message_center::Notification>(
       message_center::NotificationType::NOTIFICATION_TYPE_SIMPLE, id, title,
-      message,
-      gfx::Image(gfx::ImageSkia(std::move(source), kTetherSignalIconSize)),
-      base::string16() /* display_source */, GURL() /* origin_url */,
+      message, gfx::Image(icon), base::string16() /* display_source */,
+      GURL() /* origin_url */,
       message_center::NotifierId(
           message_center::NotifierId::NotifierType::SYSTEM_COMPONENT,
           kTetherNotifierId),
@@ -197,12 +221,14 @@ void TetherNotificationPresenter::NotifyConnectionToHostFailed() {
   PA_LOG(INFO) << "Displaying \"connection attempt failed\" notification. "
                << "Notification ID = " << kActiveHostNotificationId;
 
-  ShowNotification(CreateNotificationWithMediumSignalStrengthIcon(
+  ShowNotification(CreateNotificationWithBadge(
       kActiveHostNotificationId,
       l10n_util::GetStringUTF16(
           IDS_TETHER_NOTIFICATION_CONNECTION_FAILED_TITLE),
       l10n_util::GetStringUTF16(
-          IDS_TETHER_NOTIFICATION_CONNECTION_FAILED_MESSAGE)));
+          IDS_TETHER_NOTIFICATION_CONNECTION_FAILED_MESSAGE),
+      message_center::RichNotificationData(), kMediumSignalStrength,
+      &kWarningBadgeIcon));
 }
 
 void TetherNotificationPresenter::RemoveConnectionToHostFailedNotification() {
