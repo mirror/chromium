@@ -351,26 +351,6 @@ cr.define('extensions', function() {
         this.errorPageItem_ = assert(data);
 
       if (fromPage != toPage) {
-        var entry;
-        var exit;
-        if (fromPage == Page.LIST &&
-            (toPage == Page.DETAILS || toPage == Page.ERRORS)) {
-          this.$['items-list'].willShowItemSubpage(data.id);
-          entry = [extensions.Animation.HERO];
-          // The item grid can be larger than the detail view that we're
-          // hero'ing into, so we want to also fade out to avoid any jarring.
-          exit = [extensions.Animation.HERO, extensions.Animation.FADE_OUT];
-        } else if (toPage == Page.LIST) {
-          entry = [extensions.Animation.FADE_IN];
-          exit = [extensions.Animation.SCALE_DOWN];
-        } else {
-          assert(toPage == Page.DETAILS || toPage == Page.SHORTCUTS);
-          entry = [extensions.Animation.FADE_IN];
-          exit = [extensions.Animation.FADE_OUT];
-        }
-
-        this.getPage_(fromPage).animationHelper.setExitAnimations(exit);
-        this.getPage_(toPage).animationHelper.setEntryAnimations(entry);
         this.$.pages.selected = toPage;
       }
 
