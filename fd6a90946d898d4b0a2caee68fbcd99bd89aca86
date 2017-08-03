@@ -22,6 +22,30 @@
       "revId": "fd6a90946d898d4b0a2caee68fbcd99bd89aca86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03bffeb3_c3bafdbd",
+        "filename": "ui/app_list/views/page_switcher_vertical.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1199459
+      },
+      "writtenOn": "2017-08-03T01:24:09Z",
+      "side": 0,
+      "message": "page_switcher_vertical.cc is used only when is_fullscreen_app_list is enabled. I added IsTriggerableEvent in https://codereview.chromium.org/2942523002 because the UI specs say that it does not accept touch event. Now the specs changed to accept touch event. So I think may be just remove this function like in page_switcher_horizontal.cc which is used by old launcher.",
+      "parentUuid": "85ea68e7_dee73cb1",
+      "range": {
+        "startLine": 75,
+        "startChar": 7,
+        "endLine": 75,
+        "endChar": 25
+      },
+      "revId": "fd6a90946d898d4b0a2caee68fbcd99bd89aca86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
