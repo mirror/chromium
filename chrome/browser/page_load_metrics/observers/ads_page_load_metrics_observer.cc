@@ -20,6 +20,10 @@
 namespace {
 
 const base::Feature kAdsFeature{"AdsMetrics", base::FEATURE_ENABLED_BY_DEFAULT};
+const base::Feature kFrameSizeFeature{"FrameSizeFeature",
+                                      base::FEATURE_DISABLED_BY_DEFAULT};
+
+const int kMaxAdNetworkBytes = 100 * 1024;
 
 #define ADS_HISTOGRAM(suffix, hist_macro, ad_type, value)                  \
   switch (ad_type) {                                                       \
@@ -83,7 +87,8 @@ AdsPageLoadMetricsObserver::AdFrameData::AdFrameData(
     : frame_bytes(0u),
       frame_bytes_uncached(0u),
       frame_tree_node_id(frame_tree_node_id),
-      ad_types(ad_types) {}
+      ad_types(ad_types),
+      blocked(false) {}
 
 // static
 std::unique_ptr<AdsPageLoadMetricsObserver>
@@ -94,7 +99,9 @@ AdsPageLoadMetricsObserver::CreateIfNeeded() {
 }
 
 AdsPageLoadMetricsObserver::AdsPageLoadMetricsObserver()
-    : subresource_observer_(this) {}
+    : frame_size_feature_enabled_(
+          base::FeatureList::IsEnabled(kFrameSizeFeature)),
+      subresource_observer_(this) {}
 
 AdsPageLoadMetricsObserver::~AdsPageLoadMetricsObserver() = default;
 
@@ -120,6 +127,7 @@ AdsPageLoadMetricsObserver::OnCommit(
   DCHECK(ad_frames_data_.empty());
 
   committed_ = true;
+  web_contents_ = navigation_handle->GetWebContents();
 
   // The main frame is never considered an ad.
   ad_frames_data_[navigation_handle->GetFrameTreeNodeId()] = nullptr;
@@ -283,11 +291,26 @@ void AdsPageLoadMetricsObserver::ProcessLoadedResource(
   // bytes to the highest ad ancestor.
   AdFrameData* ancestor_data = id_and_data->second;
 
-  if (ancestor_data) {
-    ancestor_data->frame_bytes += extra_request_info.raw_body_bytes;
-    if (!extra_request_info.was_cached) {
-      ancestor_data->frame_bytes_uncached += extra_request_info.raw_body_bytes;
-    }
+  if (!ancestor_data)
+    return;
+  DCHECK(ancestor_data->ad_types.any());
+
+  ancestor_data->frame_bytes += extra_request_info.raw_body_bytes;
+  if (!extra_request_info.was_cached)
+    ancestor_data->frame_bytes_uncached += extra_request_info.raw_body_bytes;
+
+  if (frame_size_feature_enabled_ && !ancestor_data->blocked &&
+      ancestor_data->frame_bytes_uncached > kMaxAdNetworkBytes) {
+    DCHECK(web_contents_);
+    ancestor_data->blocked = true;
+    content::RenderFrameHost* render_frame_host =
+        web_contents_->UnsafeFindFrameByFrameTreeNodeId(
+            ancestor_data->frame_tree_node_id);
+
+    if (!render_frame_host || !render_frame_host->GetParent())
+      return;
+
+    render_frame_host->BlockRequestsForFrame();
   }
 }
 
