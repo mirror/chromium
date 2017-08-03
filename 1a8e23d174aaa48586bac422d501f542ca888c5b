@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "768a6b09_3f9734de",
+        "filename": "chrome/test/data/search_provider_logos/download_test_doodles.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-03T09:35:03Z",
+      "side": 1,
+      "message": "I don\u0027t have better answers than \"the owners\" (i.e. us) and \"occasionally\". Suggestions welcome.\n\nMaybe adding a comment to run this script when changing the parsing function would be good?",
+      "parentUuid": "3e5af525_017b3f30",
+      "revId": "1a8e23d174aaa48586bac422d501f542ca888c5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8c82df12_f8162187",
         "filename": "components/search_provider_logos/BUILD.gn",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-03T01:17:24Z",
       "side": 1,
       "message": "Does this need to be in chrome/, or could you move it to components/test/?",
+      "revId": "1a8e23d174aaa48586bac422d501f542ca888c5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3dfa2a8_c65ea8bf",
+        "filename": "components/search_provider_logos/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-03T09:35:03Z",
+      "side": 1,
+      "message": "Nope, no reason to be in chrome, I just blindly put it into \"the test data folder\". Moved.",
+      "parentUuid": "8c82df12_f8162187",
       "revId": "1a8e23d174aaa48586bac422d501f542ca888c5b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
