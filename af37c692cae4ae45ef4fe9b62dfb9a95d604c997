@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5941aad_ed470a1a",
+        "filename": "content/renderer/render_widget.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2416,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-08-03T17:29:03Z",
+      "side": 1,
+      "message": "Why this isn\u0027t just focused_frame-\u003efocused_plugin?",
+      "revId": "af37c692cae4ae45ef4fe9b62dfb9a95d604c997",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
