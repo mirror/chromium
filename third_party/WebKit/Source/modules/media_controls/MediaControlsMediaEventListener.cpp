@@ -32,6 +32,8 @@ void MediaControlsMediaEventListener::Attach() {
   GetMediaElement().addEventListener(EventTypeNames::pause, this, false);
   GetMediaElement().addEventListener(EventTypeNames::durationchange, this,
                                      false);
+  GetMediaElement().addEventListener(EventTypeNames::seeking, this, false);
+  GetMediaElement().addEventListener(EventTypeNames::seeked, this, false);
   GetMediaElement().addEventListener(EventTypeNames::error, this, false);
   GetMediaElement().addEventListener(EventTypeNames::loadedmetadata, this,
                                      false);
@@ -152,6 +154,14 @@ void MediaControlsMediaEventListener::handleEvent(
   }
   if (event->type() == EventTypeNames::pause) {
     media_controls_->OnPause();
+    return;
+  }
+  if (event->type() == EventTypeNames::seeking) {
+    media_controls_->OnSeeking();
+    return;
+  }
+  if (event->type() == EventTypeNames::seeked) {
+    media_controls_->OnSeeked();
     return;
   }
   if (event->type() == EventTypeNames::error) {
