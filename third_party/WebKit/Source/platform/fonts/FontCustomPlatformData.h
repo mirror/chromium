@@ -34,6 +34,7 @@
 
 #include "platform/PlatformExport.h"
 #include "platform/fonts/FontOrientation.h"
+#include "platform/fonts/FontSelectionTypes.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/Noncopyable.h"
@@ -59,10 +60,13 @@ class PLATFORM_EXPORT FontCustomPlatformData
                                                    String& ots_parse_message);
   ~FontCustomPlatformData();
 
+  // TODO: We probably want to remove bold and italic here.
   FontPlatformData GetFontPlatformData(
       float size,
       bool bold,
       bool italic,
+      const FontSelectionRequest&,
+      const FontSelectionCapabilities&,
       FontOrientation = FontOrientation::kHorizontal,
       const FontVariationSettings* = nullptr);
 
