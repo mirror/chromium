@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b6d07c0_ce8867da",
+        "filename": "tools/gritsettings/resource_ids",
+        "patchSetId": 7
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-03T21:57:35Z",
+      "side": 1,
+      "message": "I would bump this up to 16000 just to give components/components_strings.grd more breathing space. Then adjust the entries below accordingly. We are still a long way from reaching 20000.",
+      "revId": "fe2e06a06c1836c27a84dbfdc61c6952118aeb06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
