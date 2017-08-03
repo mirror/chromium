@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e0cc07a_6029409d",
+        "filename": "content/browser/loader/redirect_to_file_resource_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-03T20:50:06Z",
+      "side": 1,
+      "message": "Can we just replace two of these lines (last and third to last) with:\n\nOnResponseStarted(response.get(), ReleaseController());?  Prefer not to duplicate code, to protect against regression, particularly in potentially racy cases.",
+      "range": {
+        "startLine": 268,
+        "startChar": 19,
+        "endLine": 268,
+        "endChar": 36
+      },
+      "revId": "e5ccb33c611bb4744347b2cae075812e219287e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
