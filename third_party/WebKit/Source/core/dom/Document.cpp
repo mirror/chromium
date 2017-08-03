@@ -155,6 +155,7 @@
 #include "core/html/HTMLMetaElement.h"
 #include "core/html/HTMLPlugInElement.h"
 #include "core/html/HTMLScriptElement.h"
+#include "core/html/HTMLStyleElement.h"
 #include "core/html/HTMLTemplateElement.h"
 #include "core/html/HTMLTitleElement.h"
 #include "core/html/PluginDocument.h"
@@ -231,6 +232,7 @@
 #include "platform/bindings/Microtask.h"
 #include "platform/bindings/V8DOMWrapper.h"
 #include "platform/bindings/V8PerIsolateData.h"
+#include "platform/image-decoders/ImageDecoder.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/network/ContentSecurityPolicyParsers.h"
@@ -665,6 +667,100 @@ Document::~Document() {
   // cleared during detach.
   DCHECK(!ax_object_cache_);
   InstanceCounters::DecrementCounter(InstanceCounters::kDocumentCounter);
+}
+
+void Document::toggleImageDecode(bool enabled) {
+  ImageDecoder::SetDisabled(!enabled);
+}
+
+void Document::toggleFrames(bool enabled) {
+  if (!enabled) {
+    Frame* frame = GetFrame();
+    CHECK(frame);
+    for (Frame* child = frame->Tree().FirstChild(); child;
+         child = child->Tree().NextSibling()) {
+      child->Navigate(
+          FrameLoadRequest(nullptr, ResourceRequest("about:blank")));
+    }
+  }
+  HTMLFrameElementBase::SetDisabled(!enabled);
+}
+
+void Document::toggleCSS(bool enabled) {
+  StyleResolver::SetDisabled(!enabled);
+  if (!enabled) {
+    StaticElementList* style_list = QuerySelectorAll("style");
+    if (style_list) {
+      unsigned size = style_list->length();
+      for (unsigned i = 0; i < size; ++i) {
+        toHTMLStyleElement(style_list->item(i))->Poof();
+      }
+    }
+    StaticElementList* link_list = QuerySelectorAll("link");
+    if (link_list) {
+      unsigned size = link_list->length();
+      for (unsigned i = 0; i < size; ++i) {
+        LinkStyle* ls = toHTMLLinkElement(link_list->item(i))->GetLinkStyle();
+        if (ls) {
+          ls->OwnerRemoved();
+        }
+      }
+    }
+  }
+  SetNeedsStyleRecalc(kNeedsReattachStyleChange,
+                      StyleChangeReasonForTracing::Create("intervention"));
+}
+
+void Document::toggleBackgroundImage(bool enabled) {
+  StyleImage::SetDisabled(!enabled);
+  SetNeedsStyleRecalc(kNeedsReattachStyleChange,
+                      StyleChangeReasonForTracing::Create("intervention"));
+}
+
+void Document::trimDOM() {
+  // recalcLayout
+  int x = 0;
+  int y = 0;
+  HeapVector<Member<Node>> v;
+  HeapHashSet<Member<Node>> blacklist;
+  for (Node& c : NodeTraversal::DescendantsOf(*this)) {
+    if (!c.GetLayoutObject()) {
+      v.push_back(&c);
+    }
+    if (c.HasTagName(HTMLNames::styleTag) || c.HasTagName(HTMLNames::linkTag)) {
+      for (Node* a = &c; a; a = a->parentNode()) {
+        blacklist.insert(a);
+      }
+      for (Node& d : NodeTraversal::DescendantsOf(c)) {
+        blacklist.insert(&d);
+      }
+    }
+    // Keep <option> even if they don't have layoutObjects
+    if (c.GetLayoutObject() && c.HasTagName(HTMLNames::selectTag)) {
+      for (Node& d : NodeTraversal::DescendantsOf(c)) {
+        blacklist.insert(&d);
+      }
+    }
+    y++;
+  }
+  for (const auto& i : v) {
+    if (!blacklist.Contains(i)) {
+      i->remove();
+      x++;
+    }
+  }
+  /*
+  HTMLBodyElement* body = FirstBodyElement();
+  if (body) {
+    for (const auto& i : s) {
+      body->appendChild(i);
+    }
+  }*/
+  LOG(ERROR) << "trimmed " << x << "/" << y << " nodes";
+}
+
+void Document::pauseJS() {
+  frame_->GetPage()->SetPaused(true);
 }
 
 SelectorQueryCache& Document::GetSelectorQueryCache() {
