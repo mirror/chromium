@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0f33cf0_2df98c5b",
+        "filename": "extensions/shell/browser/shell_desktop_controller_aura.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-03T00:23:45Z",
+      "side": 1,
+      "message": "DCHECK(owner_) ?",
+      "range": {
+        "startLine": 71,
+        "startChar": 33,
+        "endLine": 71,
+        "endChar": 34
+      },
+      "revId": "083009677044e05a768549bf94c54d98ef0f4913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a1e8376_3c32de7e",
+        "filename": "extensions/shell/browser/shell_desktop_controller_aura.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-03T00:23:45Z",
+      "side": 1,
+      "message": "DCHECK_EQ(parent, owner_) ?",
+      "revId": "083009677044e05a768549bf94c54d98ef0f4913",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
