@@ -2639,6 +2639,7 @@ static_library("test_support") {
   }
 
   if (is_android) {
+    deps += [ ":test_support_bundle_data" ]
     sources += [
       "test/spawned_test_server/remote_test_server.cc",
       "test/spawned_test_server/remote_test_server.h",
