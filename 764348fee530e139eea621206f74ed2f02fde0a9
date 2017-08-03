@@ -69,6 +69,24 @@
       "revId": "764348fee530e139eea621206f74ed2f02fde0a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d18f90e2_70cce1a1",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-03T20:32:56Z",
+      "side": 1,
+      "message": "Well I know that content// keeps a RedirectChain, and we wanted to develop parity between the web// and content//.  If the WKBackForwardList automatically handles this correctly, then it\u0027s probably not a big deal for web//.  We do construct an artificial redirect chain in Tab when we add the items to the history database though.  It may be important there, but I don\u0027t know enough about that component to give a definitive answer.  At the very least, that logic can stay the same and we won\u0027t regress.  It would probably be worthwhile to contact someone who works on that component to verify that our redirect handling there is acceptable as a long-term solution.\n\nhttps://cs.chromium.org/chromium/src/ios/chrome/browser/tabs/tab.mm?q\u003dtab.mm\u0026sq\u003dpackage:chromium\u0026dr\u0026l\u003d859",
+      "parentUuid": "0b542fdf_97adc2be",
+      "revId": "764348fee530e139eea621206f74ed2f02fde0a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
