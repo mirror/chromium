@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1fedc00_6d5e12d2",
+        "filename": "ios/chrome/browser/ui/authentication/signin_interaction_controller_egtest.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1183785
+      },
+      "writtenOn": "2017-08-03T23:20:48Z",
+      "side": 1,
+      "message": "Haven\u0027t removed this one yet.  A lot of ntp tests share the method of home panel.  Refactor this later in case this CL grows too big.",
+      "revId": "73f233a1162d1758e55249302fa38eefdb3c649c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
