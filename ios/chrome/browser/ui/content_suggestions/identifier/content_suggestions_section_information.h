@@ -19,6 +19,7 @@ typedef NS_ENUM(NSInteger, ContentSuggestionsSectionLayout) {
 // different ID.
 typedef NS_ENUM(NSInteger, ContentSuggestionsSectionID) {
   ContentSuggestionsSectionLogo = 0,
+  ContentSuggestionsSectionPromo,
   ContentSuggestionsSectionMostVisited,
   ContentSuggestionsSectionArticles,
   ContentSuggestionsSectionReadingList,
