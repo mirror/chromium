@@ -16,6 +16,24 @@
       "revId": "919c4d93c8a84cc6a41a6c32b3d9aac780296bee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ae79668_75f9de87",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-08-03T18:07:16Z",
+      "side": 1,
+      "message": "Good point, I\u0027ve switched to using content::IsOriginSecure to match the existing behaviour.",
+      "parentUuid": "16e26608_b2c406d2",
+      "revId": "919c4d93c8a84cc6a41a6c32b3d9aac780296bee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
