@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "799f1850_1ee3a971",
+        "filename": "tools/accessibility/nvda/nvda_chrome_tests.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1002537
+      },
+      "writtenOn": "2017-08-03T07:45:33Z",
+      "side": 1,
+      "message": "Were these meant to stay in?",
+      "revId": "b49ff5788abe663be133722b8e2bc49ac0870d7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
