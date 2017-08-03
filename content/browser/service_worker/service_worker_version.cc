@@ -348,9 +348,6 @@ void ServiceWorkerVersion::SetStatus(Status status) {
       RestartTick(&skip_waiting_time_);
     } else if (status == ACTIVATED) {
       ClearTick(&skip_waiting_time_);
-      for (int request_id : pending_skip_waiting_requests_)
-        DidSkipWaiting(request_id);
-      pending_skip_waiting_requests_.clear();
     }
   }
 
@@ -1319,8 +1316,7 @@ void ServiceWorkerVersion::OnNavigateClientFinished(
 
 void ServiceWorkerVersion::OnSkipWaiting(int request_id) {
   skip_waiting_ = true;
-  if (status_ != INSTALLED)
-    return DidSkipWaiting(request_id);
+  DidSkipWaiting(request_id);
 
   if (!context_)
     return;
@@ -1330,9 +1326,7 @@ void ServiceWorkerVersion::OnSkipWaiting(int request_id) {
     return;
   if (skip_waiting_time_.is_null())
     RestartTick(&skip_waiting_time_);
-  pending_skip_waiting_requests_.push_back(request_id);
-  if (pending_skip_waiting_requests_.size() == 1)
-    registration->ActivateWaitingVersionWhenReady();
+  registration->ActivateWaitingVersionWhenReady();
 }
 
 void ServiceWorkerVersion::DidSkipWaiting(int request_id) {
