@@ -17,7 +17,7 @@ class AwTracingDelegate : public content::TracingDelegate {
   // content::TracingDelegate implementation:
   std::unique_ptr<content::TraceUploader> GetTraceUploader(
       net::URLRequestContextGetter* request_context) override;
-  void GenerateMetadataDict(base::DictionaryValue* metadata_dict) override;
+  std::unique_ptr<base::DictionaryValue> GenerateMetadataDict() override;
 };
 
 }  // namespace android_webview
