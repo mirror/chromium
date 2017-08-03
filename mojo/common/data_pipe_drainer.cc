@@ -33,8 +33,8 @@ void DataPipeDrainer::ReadData() {
   MojoResult rv = BeginReadDataRaw(source_.get(), &buffer, &num_bytes,
                                    MOJO_READ_DATA_FLAG_NONE);
   if (rv == MOJO_RESULT_OK) {
-    client_->OnDataAvailable(buffer, num_bytes);
-    EndReadDataRaw(source_.get(), num_bytes);
+    int bytes_consumed = client_->OnDataAvailable(buffer, num_bytes);
+    EndReadDataRaw(source_.get(), bytes_consumed);
   } else if (rv == MOJO_RESULT_FAILED_PRECONDITION) {
     client_->OnDataComplete();
   } else if (rv != MOJO_RESULT_SHOULD_WAIT) {

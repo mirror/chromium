@@ -13,6 +13,7 @@
 
 namespace content {
 
+class ChromeAppCacheService;
 class StoragePartitionImpl;
 
 // Holds on to URLLoaderFactory for a given StoragePartition and allows code
@@ -48,7 +49,8 @@ class URLLoaderFactoryGetter
 
   CONTENT_EXPORT ~URLLoaderFactoryGetter();
   void InitializeOnIOThread(mojom::URLLoaderFactoryPtrInfo network_factory,
-                            mojom::URLLoaderFactoryPtrInfo blob_factory);
+                            mojom::URLLoaderFactoryPtrInfo blob_factory,
+                            ChromeAppCacheService* appcache_service);
   void SetTestNetworkFactoryOnIOThread(
       mojom::URLLoaderFactoryPtrInfo test_factory);
 

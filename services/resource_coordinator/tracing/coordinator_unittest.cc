@@ -39,8 +39,9 @@ class CoordinatorTest : public testing::Test,
   }
 
   // mojo::common::DataPipeDrainer::Client
-  void OnDataAvailable(const void* data, size_t num_bytes) override {
+  int OnDataAvailable(const void* data, size_t num_bytes) override {
     output_.append(static_cast<const char*>(data), num_bytes);
+    return num_bytes;
   }
 
   // mojo::common::DataPipeDrainer::Client

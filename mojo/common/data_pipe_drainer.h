@@ -20,7 +20,7 @@ class MOJO_COMMON_EXPORT DataPipeDrainer {
  public:
   class Client {
    public:
-    virtual void OnDataAvailable(const void* data, size_t num_bytes) = 0;
+    virtual int OnDataAvailable(const void* data, size_t num_bytes) = 0;
     virtual void OnDataComplete() = 0;
 
    protected:
