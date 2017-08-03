@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "5b0ebe8e_c6e9e9c0",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-03T19:21:01Z",
+      "side": 1,
+      "message": "One note is that is in a unittest which isn\u0027t as strict wrt crashing.  Perhaps a TODO to re-evaluate it in the future is reasonable.",
+      "parentUuid": "96316ac0_b1a713a5",
+      "range": {
+        "startLine": 128,
+        "startChar": 5,
+        "endLine": 128,
+        "endChar": 14
+      },
+      "revId": "d2f255269c09098c1d37e2c1b92d40d063b32d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9fd5688_393d1740",
         "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
         "patchSetId": 17
@@ -225,6 +249,30 @@
       "side": 1,
       "message": "If I\u0027ve been understanding this code correctly, the VEA\u0027s Destroy() method should be called automatically when video_encode_accelerator_ is overwritten. See this:\n\nhttps://cs.chromium.org/chromium/src/media/video/video_encode_accelerator.h?rcl\u003da176d74f39a6c6a51b4c418b7d1832646b8f5055\u0026l\u003d186\n\n(another cool C++ thing I learned this summer!)",
       "parentUuid": "e7212043_f4c9ffe7",
+      "range": {
+        "startLine": 187,
+        "startChar": 2,
+        "endLine": 187,
+        "endChar": 27
+      },
+      "revId": "d2f255269c09098c1d37e2c1b92d40d063b32d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3108d67c_1bae9738",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-03T19:21:01Z",
+      "side": 1,
+      "message": "Excellent, thanks for checking!",
+      "parentUuid": "1e050329_5528002a",
       "range": {
         "startLine": 187,
         "startChar": 2,
