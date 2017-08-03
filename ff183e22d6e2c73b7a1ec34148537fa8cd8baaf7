@@ -231,6 +231,24 @@
     },
     {
       "key": {
+        "uuid": "26c7a17f_9063e2d4",
+        "filename": "chrome/installer/zucchini/label_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-03T16:13:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f7290d72_9a9c922f",
+      "revId": "ff183e22d6e2c73b7a1ec34148537fa8cd8baaf7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0eb0e7ef_d3018fee",
         "filename": "chrome/installer/zucchini/label_manager.h",
         "patchSetId": 8
