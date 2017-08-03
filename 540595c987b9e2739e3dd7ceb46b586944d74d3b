@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e5112574_8928fc42",
+        "filename": "third_party/WebKit/Source/core/css/properties/README.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-03T07:06:40Z",
+      "side": 1,
+      "message": "good attention to detail changing the README file too!",
+      "revId": "540595c987b9e2739e3dd7ceb46b586944d74d3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
