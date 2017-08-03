@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "618eb113_006013be",
+        "filename": "ash/system/power/power_event_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-03T23:07:13Z",
+      "side": 1,
+      "message": "nit: screen",
+      "range": {
+        "startLine": 106,
+        "startChar": 16,
+        "endLine": 106,
+        "endChar": 21
+      },
+      "revId": "9cfa5e65e9116b92311e3746ad580f3ccb60a032",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
