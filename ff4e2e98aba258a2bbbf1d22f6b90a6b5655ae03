@@ -66,6 +66,30 @@
     },
     {
       "key": {
+        "uuid": "663a2495_8ad6422a",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2207,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-08-03T03:15:27Z",
+      "side": 1,
+      "message": "Nope, I mean runtime constant. See a comment in https://cs.chromium.org/chromium/src/base/metrics/histogram_macros.h?l\u003d23.\n\nI\u0027d prefer having something like this:\n\nif (process_type \u003d\u003d REGULAR) {\n  UMA_...;\n} else {\n  UMA_...;\n}",
+      "parentUuid": "0bd8cd8d_7356e61e",
+      "range": {
+        "startLine": 2207,
+        "startChar": 12,
+        "endLine": 2207,
+        "endChar": 24
+      },
+      "revId": "ff4e2e98aba258a2bbbf1d22f6b90a6b5655ae03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1b7c9aab_d187cb43",
         "filename": "third_party/WebKit/public/platform/scheduler/renderer/renderer_scheduler.h",
         "patchSetId": 3
@@ -101,6 +125,30 @@
       "side": 1,
       "message": "You mean internally within the renderer_scheduler_impl.cc, correct? I think it was concluded in https://codereview.chromium.org/2922833002/ that we shouldn\u0027t use enums for process types within and below content. But yeah, using it internally in the implementation may probably be ok.",
       "parentUuid": "1b7c9aab_d187cb43",
+      "range": {
+        "startLine": 204,
+        "startChar": 15,
+        "endLine": 204,
+        "endChar": 37
+      },
+      "revId": "ff4e2e98aba258a2bbbf1d22f6b90a6b5655ae03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d16852c5_d4543dc8",
+        "filename": "third_party/WebKit/public/platform/scheduler/renderer/renderer_scheduler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-08-03T03:15:27Z",
+      "side": 1,
+      "message": "I had the following solution in mind:\n\npublic/platform/scheduler/process_type.h:\nenum class ProcessType { .. }:\n\npublic/platform/scheduler/renderer_scheduler.h:\nclass RendererScheduler {\n  ...\n  virtual void SetRendererProcessType(ProcessType);\n}\n\nAnd RenderThreadImpl::SetRendererProcessType method will convert a string to this enum.\n\nJochen, does this make sense from content/ point of view?",
+      "parentUuid": "f9c3ecc0_232e476f",
       "range": {
         "startLine": 204,
         "startChar": 15,
