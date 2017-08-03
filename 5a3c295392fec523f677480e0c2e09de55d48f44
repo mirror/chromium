@@ -66,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "c8c508e7_25df9883",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-03T21:14:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e60a4b9_ac8ce666",
+      "revId": "5a3c295392fec523f677480e0c2e09de55d48f44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82efa5d4_9fa91f73",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
         "patchSetId": 4
@@ -80,6 +98,24 @@
       "revId": "5a3c295392fec523f677480e0c2e09de55d48f44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b904310f_b101673a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-03T21:14:43Z",
+      "side": 1,
+      "message": "Right, done.",
+      "parentUuid": "82efa5d4_9fa91f73",
+      "revId": "5a3c295392fec523f677480e0c2e09de55d48f44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -147,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "a8e37ccc_d380af55",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-03T21:14:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe220ebb_c1eb1a8f",
+      "revId": "5a3c295392fec523f677480e0c2e09de55d48f44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fee83e1_23fa0945",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
         "patchSetId": 4
@@ -161,6 +215,24 @@
       "revId": "5a3c295392fec523f677480e0c2e09de55d48f44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5e1c115_a7d7e7a5",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-03T21:14:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fee83e1_23fa0945",
+      "revId": "5a3c295392fec523f677480e0c2e09de55d48f44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -245,6 +317,24 @@
     },
     {
       "key": {
+        "uuid": "a56f03ee_1a124918",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/consoleSidebar.css",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-03T21:14:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8421152a_b44bbf53",
+      "revId": "5a3c295392fec523f677480e0c2e09de55d48f44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4e41bb5_6f87bfe3",
         "filename": "third_party/WebKit/Source/devtools/front_end/console_model/ConsoleModel.js",
         "patchSetId": 4
@@ -259,6 +349,24 @@
       "revId": "5a3c295392fec523f677480e0c2e09de55d48f44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "820f0345_832d3e97",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console_model/ConsoleModel.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-03T21:14:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4e41bb5_6f87bfe3",
+      "revId": "5a3c295392fec523f677480e0c2e09de55d48f44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
