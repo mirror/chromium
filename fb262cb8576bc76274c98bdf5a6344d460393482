@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0dc66d28_c656c227",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-03T12:35:39Z",
+      "side": 1,
+      "message": "Who calls this?",
+      "revId": "fb262cb8576bc76274c98bdf5a6344d460393482",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
