@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9edab38b_016b1491",
+        "filename": "chrome/browser/resource_coordinator/resource_coordinator_render_process_probe.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-03T20:48:27Z",
+      "side": 1,
+      "message": "nit: Maybe declare this multiplier somewhere. This multiplier will be used on both the input and output path of GRC, and could be used by other double type properties.",
+      "range": {
+        "startLine": 58,
+        "startChar": 74,
+        "endLine": 58,
+        "endChar": 78
+      },
+      "revId": "1522a2baed6c9e5445912fbad693a169ae4664a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
