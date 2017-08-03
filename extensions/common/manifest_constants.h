@@ -490,6 +490,7 @@ extern const char kPermissionUnknownOrMalformed[];
 extern const char kReservedMessageFound[];
 extern const char kUnrecognizedManifestKey[];
 extern const char kUnrecognizedManifestProperty[];
+extern const char kUrlHandlersInHostedApps[];
 extern const char kWebRequestConflictsWithLazyBackground[];
 #if defined(OS_CHROMEOS)
 extern const char kDuplicateActionHandlerFound[];
