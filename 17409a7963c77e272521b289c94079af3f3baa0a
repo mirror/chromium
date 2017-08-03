@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7052ff3e_46cec6ea",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-03T00:14:50Z",
+      "side": 1,
+      "message": "These comments should be phrased imperatively.\n\nAdds the DesktopSessionDurationTracker observer.\n\nApply to the rest of the change.",
+      "range": {
+        "startLine": 41,
+        "startChar": 5,
+        "endLine": 41,
+        "endChar": 11
+      },
+      "revId": "17409a7963c77e272521b289c94079af3f3baa0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c0951fa_2f73ee77",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-03T00:14:50Z",
+      "side": 1,
+      "message": "These should be private and non-virtual.\n\nOutside callers shouldn\u0027t call these functions and subclasses are not expected to override these.",
+      "range": {
+        "startLine": 42,
+        "startChar": 2,
+        "endLine": 42,
+        "endChar": 10
+      },
+      "revId": "17409a7963c77e272521b289c94079af3f3baa0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
