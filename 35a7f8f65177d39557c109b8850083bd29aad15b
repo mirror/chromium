@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66b2f27d_f9d8ecfa",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-03T00:43:46Z",
+      "side": 1,
+      "message": "Mustafa and I have gone back and forth about whether or not we should search the common name of the issuer of the certificate by matching a regex, which is more exact, or by searching for a substring, which would allow us to catch more content filters. I left this as a regex for the time being, but Mustafa is you would still prefer a substring I am happy to change it.",
+      "revId": "35a7f8f65177d39557c109b8850083bd29aad15b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fb4ffe5_995fd26c",
+        "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-03T00:43:46Z",
+      "side": 1,
+      "message": "I would love some feedback about how I refactored this function. I added a cert_data parameter to include the option of loading a certificate from a string instead of from file. Do you like the way I did this? Or would you prefer there were two separate ResetErrorHandler() functions?",
+      "revId": "35a7f8f65177d39557c109b8850083bd29aad15b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

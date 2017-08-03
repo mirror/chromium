@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84e87135_98983882",
+        "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-03T00:43:46Z",
+      "side": 1,
+      "message": "Mustafa recommended that I store the certificates for testing as strings in this file, as the networking team doesn\u0027t like to add new certificates to the net/data/ssl/certificates folder. The McAfee and Cyberoam certificates are mock content filter certificates that have the issuer common names we are looking for.",
+      "revId": "8796f803ab32e899c832efd1c04f027cc8dcc7a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
