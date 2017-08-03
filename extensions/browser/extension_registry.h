@@ -42,7 +42,8 @@ class ExtensionRegistry : public KeyedService {
     TERMINATED = 1 << 2,
     BLACKLISTED = 1 << 3,
     BLOCKED = 1 << 4,
-    EVERYTHING = (1 << 5) - 1,
+    BLOCKED_POLICY = 1 << 5,
+    EVERYTHING = (1 << 6) - 1,
   };
 
   explicit ExtensionRegistry(content::BrowserContext* browser_context);
@@ -68,6 +69,10 @@ class ExtensionRegistry : public KeyedService {
     return blacklisted_extensions_;
   }
   const ExtensionSet& blocked_extensions() const { return blocked_extensions_; }
+  const ExtensionSet& blocked_by_policy_extensions() const {
+    return blocked_by_policy_extensions_;
+  }
+
   const ExtensionSet& ready_extensions() const { return ready_extensions_; }
 
   // Returns the set of all installed extensions, regardless of state (enabled,
@@ -171,6 +176,10 @@ class ExtensionRegistry : public KeyedService {
   bool AddBlocked(const scoped_refptr<const Extension>& extension);
   bool RemoveBlocked(const std::string& id);
 
+  // As above, but for the blocked by policy set.
+  bool AddBlockedByPolicy(const scoped_refptr<const Extension>& extension);
+  bool RemoveBlockedByPolicy(const std::string& id);
+
   // As above, but for the ready set.
   bool AddReady(const scoped_refptr<const Extension>& extension);
   bool RemoveReady(const std::string& id);
@@ -199,6 +208,10 @@ class ExtensionRegistry : public KeyedService {
 
   // Extensions that are installed and blocked. Will never be loaded.
   ExtensionSet blocked_extensions_;
+
+  // Extensions that are blocked by management policy. These can be reloaded if
+  // the policy changes.
+  ExtensionSet blocked_by_policy_extensions_;
 
   // Extensions that are ready for execution. This set is a non-exclusive
   // subset of |enabled_extensions_|.

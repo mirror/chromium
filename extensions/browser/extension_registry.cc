@@ -192,6 +192,15 @@ bool ExtensionRegistry::RemoveBlocked(const std::string& id) {
   return blocked_extensions_.Remove(id);
 }
 
+bool ExtensionRegistry::AddBlockedByPolicy(
+    const scoped_refptr<const Extension>& extension) {
+  return blocked_by_policy_extensions_.Insert(extension);
+}
+
+bool ExtensionRegistry::RemoveBlockedByPolicy(const std::string& id) {
+  return blocked_by_policy_extensions_.Remove(id);
+}
+
 bool ExtensionRegistry::AddReady(
     const scoped_refptr<const Extension>& extension) {
   return ready_extensions_.Insert(extension);
