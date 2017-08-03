@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2ba9cc71_39b4129e",
+        "filename": "chrome/installer/zucchini/rel32_finder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-03T17:39:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7cd174ee_730006f3",
+      "range": {
+        "startLine": 11,
+        "startChar": 10,
+        "endLine": 11,
+        "endChar": 32
+      },
+      "revId": "3aa26536a9b05d0d320e340b311ccfff322c59ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "195363d0_bc2361e5",
         "filename": "chrome/installer/zucchini/rel32_finder.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "3aa26536a9b05d0d320e340b311ccfff322c59ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11e8e2bc_3e2d3092",
+        "filename": "chrome/installer/zucchini/rel32_finder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-03T17:39:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "195363d0_bc2361e5",
+      "range": {
+        "startLine": 19,
+        "startChar": 6,
+        "endLine": 19,
+        "endChar": 17
+      },
+      "revId": "3aa26536a9b05d0d320e340b311ccfff322c59ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,54 @@
     },
     {
       "key": {
+        "uuid": "6f5f4151_218d16ed",
+        "filename": "chrome/installer/zucchini/rel32_finder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-03T17:39:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1856b33_d8641fc4",
+      "range": {
+        "startLine": 40,
+        "startChar": 57,
+        "endLine": 40,
+        "endChar": 65
+      },
+      "revId": "3aa26536a9b05d0d320e340b311ccfff322c59ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "74be773b_c397da07",
+        "filename": "chrome/installer/zucchini/rel32_finder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-03T17:39:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6df1a7aa_ea2b0965",
+      "range": {
+        "startLine": 40,
+        "startChar": 36,
+        "endLine": 40,
+        "endChar": 50
+      },
+      "revId": "3aa26536a9b05d0d320e340b311ccfff322c59ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ecbb61c2_631b75b5",
         "filename": "chrome/installer/zucchini/rel32_finder.cc",
         "patchSetId": 3
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "8a3944d9_21dfe5bb",
+        "filename": "chrome/installer/zucchini/rel32_finder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-03T17:39:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ecbb61c2_631b75b5",
+      "range": {
+        "startLine": 50,
+        "startChar": 5,
+        "endLine": 50,
+        "endChar": 13
+      },
+      "revId": "3aa26536a9b05d0d320e340b311ccfff322c59ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "358f162d_be3017d0",
         "filename": "chrome/installer/zucchini/rel32_finder.h",
         "patchSetId": 3
@@ -131,6 +251,24 @@
       "revId": "3aa26536a9b05d0d320e340b311ccfff322c59ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f59afa8_8373efa7",
+        "filename": "chrome/installer/zucchini/rel32_finder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-03T17:39:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "358f162d_be3017d0",
+      "revId": "3aa26536a9b05d0d320e340b311ccfff322c59ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "4e572920_461b93f5",
+        "filename": "chrome/installer/zucchini/rel32_finder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-03T17:39:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9689c4e_5806eed2",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 1
+      },
+      "revId": "3aa26536a9b05d0d320e340b311ccfff322c59ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "abfe3a9c_fcdb14e4",
         "filename": "chrome/installer/zucchini/rel32_finder.h",
         "patchSetId": 3
@@ -177,6 +339,30 @@
       "revId": "3aa26536a9b05d0d320e340b311ccfff322c59ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f068b26_d52a4511",
+        "filename": "chrome/installer/zucchini/rel32_finder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-03T17:39:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abfe3a9c_fcdb14e4",
+      "range": {
+        "startLine": 24,
+        "startChar": 43,
+        "endLine": 24,
+        "endChar": 51
+      },
+      "revId": "3aa26536a9b05d0d320e340b311ccfff322c59ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -203,6 +389,30 @@
     },
     {
       "key": {
+        "uuid": "cc897f6a_353575e7",
+        "filename": "chrome/installer/zucchini/rel32_finder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-03T17:39:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "acfbc953_be55e797",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 1
+      },
+      "revId": "3aa26536a9b05d0d320e340b311ccfff322c59ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "372f28ef_05efcae5",
         "filename": "chrome/installer/zucchini/rel32_finder.h",
         "patchSetId": 3
@@ -214,6 +424,30 @@
       "writtenOn": "2017-08-03T01:31:11Z",
       "side": 1,
       "message": "Still need some work to use Abs32GapFinder?  Per earlier recommendation, the base class can handle interaction with Abs32GapFinder, and let overridden virtual functions handle rel32 extraction.  I\u0027m also fine with doing this in a helper function.  However, instantiating a new Rel32Finder for every gap found might be too expensive.",
+      "range": {
+        "startLine": 47,
+        "startChar": 6,
+        "endLine": 47,
+        "endChar": 17
+      },
+      "revId": "3aa26536a9b05d0d320e340b311ccfff322c59ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8238b008_8ec5dd96",
+        "filename": "chrome/installer/zucchini/rel32_finder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-03T17:39:47Z",
+      "side": 1,
+      "message": "I think it is simpler to let the caller do the outer loop, so that Rel32Finder stays independant from GapFinder (and easier to test). Since you\u0027re concerned with cost of instantiating a new Rel32Finder, I\u0027m adding a Reset() method.",
+      "parentUuid": "372f28ef_05efcae5",
       "range": {
         "startLine": 47,
         "startChar": 6,
