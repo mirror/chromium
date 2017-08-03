@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fcf4f271_25d3175d",
+        "filename": "third_party/WebKit/Source/core/workers/DedicatedWorkerGlobalScope.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-03T21:18:32Z",
+      "side": 1,
+      "message": "Maybe this should be inside WorkerGlobalScope::SetWorkerSettings or similar, so that other kinds of worker global scope share it.",
+      "revId": "b427d1469a2927974a8cc30138582ed42ec62680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "671af6df_c7b36c08",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontCache.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-03T21:18:32Z",
+      "side": 1,
+      "message": "super-nit: remove superfluous newline?",
+      "revId": "b427d1469a2927974a8cc30138582ed42ec62680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6c830cf_b32482f7",
+        "filename": "third_party/WebKit/Source/platform/fonts/GenericFontFamilySettings.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-03T21:18:32Z",
+      "side": 1,
+      "message": "super-nit: for consistency, omit braces?",
+      "revId": "b427d1469a2927974a8cc30138582ed42ec62680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0423d285_399d5b93",
+        "filename": "third_party/WebKit/Source/platform/fonts/GenericFontFamilySettings.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-08-03T21:18:32Z",
+      "side": 1,
+      "message": "Comments about these, please.\n\nAlso, you might consider making MakeIsolated return a new GenericFontFamilySettings, rather than separately copying all the maps and then immediately dropping them. If so, \"IsolatedCopy\" or similar might be a suitable name for such a const member function.",
+      "revId": "b427d1469a2927974a8cc30138582ed42ec62680",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
