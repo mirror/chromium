@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "494a5ffe_62abec60",
+        "filename": "content/browser/gpu/gpu_process_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 384,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-03T23:08:04Z",
+      "side": 0,
+      "message": "I had to remove this DCHECK because this code runs on a thread other than the main thread and there isn\u0027t a good way to check for mus on a thread other than the main thread.",
+      "range": {
+        "startLine": 384,
+        "startChar": 20,
+        "endLine": 384,
+        "endChar": 34
+      },
+      "revId": "9cd0e036fdfe692b17d3bd12dc1d45a84b420073",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
