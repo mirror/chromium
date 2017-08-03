@@ -91,3 +91,24 @@ void Sample3() {
   context.CreateRequest(GURL(), net::RequestPriority::TEST_VALUE, delegate,
                         kTrafficAnnotation);
 }
+
+void Sample4() {
+  net::NetworkTrafficAnnotationTag({-1});
+  net::MutableNetworkTrafficAnnotationTag({-2});
+  net::PartialNetworkTrafficAnnotationTag({-1});
+  net::MutablePartialNetworkTrafficAnnotationTag({-2});
+  int i = 0;
+  net::NetworkTrafficAnnotationTag({i});
+
+  net::MutableNetworkTrafficAnnotationTag tag1;
+  tag1.unique_id_hash_code = 3;
+
+  net::MutablePartialNetworkTrafficAnnotationTag tag2;
+  tag2.unique_id_hash_code = 3;
+
+  struct something_else {
+    int unique_id_hash_code;
+  } x;
+
+  x.unique_id_hash_code = 7;
+}

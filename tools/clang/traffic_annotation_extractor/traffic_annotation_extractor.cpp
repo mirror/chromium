@@ -38,6 +38,8 @@ using namespace clang::ast_matchers;
 
 namespace {
 
+const std::string kAnnotationsHeader =
+    "net/traffic_annotation/network_traffic_annotation.h";
 // Information about location of a line of code.
 struct Location {
   std::string file_path;
@@ -112,10 +114,13 @@ struct CallInstance {
   std::string called_function_name;
 };
 
-// A structure to keep detected annotation and call instances.
+// A structure to keep detected annotation and call instances, and all code
+// locations that include a direct value assignment to annotations using list
+// expression constructors or mutable annotation's unique_id_hash_code
 struct Collector {
   std::vector<NetworkAnnotationInstance> annotations;
   std::vector<CallInstance> calls;
+  std::vector<Location> assignments;
 };
 
 // This class implements the call back functions for AST Matchers. The matchers
@@ -134,16 +139,23 @@ class NetworkAnnotationTagCallback : public MatchFinder::MatchCallback {
     if (const clang::CallExpr* call_expr =
             result.Nodes.getNodeAs<clang::CallExpr>("monitored_function")) {
       AddFunction(call_expr, result);
+    } else if (const clang::CXXConstructExpr* constructor_expr =
+                   result.Nodes.getNodeAs<clang::CXXConstructExpr>(
+                       "annotation_constructor")) {
+      AddConstructor(constructor_expr, result);
+    } else if (const clang::MemberExpr* member_expr =
+                   result.Nodes.getNodeAs<clang::MemberExpr>(
+                       "direct_assignment")) {
+      AddAssignment(member_expr, result);
     } else {
       AddAnnotation(result);
     }
   }
 
   void GetInstanceLocation(const MatchFinder::MatchResult& result,
-                           const clang::CallExpr* call_expr,
-                           const clang::FunctionDecl* ancestor,
+                           const clang::Expr* expr,
                            Location* instance_location) {
-    clang::SourceLocation source_location = call_expr->getLocStart();
+    clang::SourceLocation source_location = expr->getLocStart();
     if (source_location.isMacroID()) {
       source_location =
           result.SourceManager->getImmediateMacroCallerLoc(source_location);
@@ -152,6 +164,9 @@ class NetworkAnnotationTagCallback : public MatchFinder::MatchCallback {
         result.SourceManager->getFilename(source_location);
     instance_location->line_number =
         result.SourceManager->getSpellingLineNumber(source_location);
+
+    const clang::FunctionDecl* ancestor =
+        result.Nodes.getNodeAs<clang::FunctionDecl>("function_context");
     if (ancestor)
       instance_location->function_name = ancestor->getQualifiedNameAsString();
     else
@@ -173,14 +188,47 @@ class NetworkAnnotationTagCallback : public MatchFinder::MatchCallback {
                    const MatchFinder::MatchResult& result) {
     CallInstance instance;
 
-    const clang::FunctionDecl* ancestor =
-        result.Nodes.getNodeAs<clang::FunctionDecl>("function_context");
-    GetInstanceLocation(result, call_expr, ancestor, &instance.location);
+    GetInstanceLocation(result, call_expr, &instance.location);
     instance.called_function_name =
         call_expr->getDirectCallee()->getQualifiedNameAsString();
     instance.has_annotation =
         (result.Nodes.getNodeAs<clang::RecordDecl>("annotation") != nullptr);
     collector_->calls.push_back(instance);
+  }
+
+  bool IsFunctionWhitelisted(const std::string& function_name) {
+    return function_name == "net::DefineNetworkTrafficAnnotation" ||
+           function_name == "net::DefinePartialNetworkTrafficAnnotation" ||
+           function_name == "net::CompleteNetworkTrafficAnnotation" ||
+           function_name == "net::BranchedCompleteNetworkTrafficAnnotation" ||
+           function_name ==
+               "net::MutableNetworkTrafficAnnotationTag::operator "
+               "NetworkTrafficAnnotationTag" ||
+           function_name ==
+               "net::MutablePartialNetworkTrafficAnnotationTag::operator "
+               "PartialNetworkTrafficAnnotationTag";
+  }
+
+  // Stores an annotation constructor called with list expression.
+  void AddConstructor(const clang::CXXConstructExpr* constructor_expr,
+                      const MatchFinder::MatchResult& result) {
+    Location instance;
+
+    GetInstanceLocation(result, constructor_expr, &instance);
+    if (IsFunctionWhitelisted(instance.function_name))
+      return;
+    collector_->assignments.push_back(instance);
+  }
+
+  // Stores a value assignment to |unique_id_hash_code| of a mutable annotaton.
+  void AddAssignment(const clang::MemberExpr* member_expr,
+                     const MatchFinder::MatchResult& result) {
+    Location instance;
+
+    GetInstanceLocation(result, member_expr, &instance);
+    if (IsFunctionWhitelisted(instance.function_name))
+      return;
+    collector_->assignments.push_back(instance);
   }
 
   // Stores an annotation.
@@ -191,8 +239,6 @@ class NetworkAnnotationTagCallback : public MatchFinder::MatchCallback {
         result.Nodes.getNodeAs<clang::StringLiteral>("unique_id");
     const clang::StringLiteral* annotation_text =
         result.Nodes.getNodeAs<clang::StringLiteral>("annotation_text");
-    const clang::FunctionDecl* ancestor =
-        result.Nodes.getNodeAs<clang::FunctionDecl>("function_context");
     const clang::StringLiteral* group_id =
         result.Nodes.getNodeAs<clang::StringLiteral>("group_id");
     const clang::StringLiteral* completing_id =
@@ -223,7 +269,7 @@ class NetworkAnnotationTagCallback : public MatchFinder::MatchCallback {
     instance.annotation.unique_id = unique_id->getString();
     instance.annotation.text = annotation_text->getString();
 
-    GetInstanceLocation(result, call_expr, ancestor, &instance.location);
+    GetInstanceLocation(result, call_expr, &instance.location);
 
     collector_->annotations.push_back(instance);
   }
@@ -307,6 +353,37 @@ int RunMatchers(clang::tooling::ClangTool* clang_tool, Collector* collector) {
           .bind("monitored_function"),
       &callback);
 
+  // Setup patterns to find constructores of differet network traffic annotation
+  // tags that are initialized by list expressions.
+  match_finder.addMatcher(
+      cxxConstructExpr(
+          hasDeclaration(functionDecl(
+              anyOf(hasName("net::NetworkTrafficAnnotationTag::"
+                            "NetworkTrafficAnnotationTag"),
+                    hasName("net::PartialNetworkTrafficAnnotationTag::"
+                            "PartialNetworkTrafficAnnotationTag"),
+                    hasName("net::MutableNetworkTrafficAnnotationTag::"
+                            "MutableNetworkTrafficAnnotationTag"),
+                    hasName("net::MutablePartialNetworkTrafficAnnotationTag::"
+                            "MutablePartialNetworkTrafficAnnotationTag")))),
+          hasDescendant(initListExpr()), bind_function_context_if_present)
+          .bind("annotation_constructor"),
+      &callback);
+
+  // Setup pattern to find direct assignment of value to |unique_id_hash_code|
+  // of net::MutableNetworkTrafficAnnotationTag or
+  // net::MutablePartialNetworkTrafficAnnotationTag
+  match_finder.addMatcher(
+      memberExpr(
+          member(hasName("unique_id_hash_code")),
+          hasObjectExpression(hasType(cxxRecordDecl(anyOf(
+              hasName("net::MutableNetworkTrafficAnnotationTag"),
+              hasName("net::MutablePartialNetworkTrafficAnnotationTag"))))),
+          hasParent(binaryOperator(hasOperatorName("="))),
+          bind_function_context_if_present)
+          .bind("direct_assignment"),
+      &callback);
+
   std::unique_ptr<clang::tooling::FrontendActionFactory> frontend_factory =
       clang::tooling::newFrontendActionFactory(&match_finder);
   return clang_tool->run(frontend_factory.get());
@@ -353,6 +430,15 @@ int main(int argc, const char* argv[]) {
     llvm::outs() << instance.called_function_name << "\n";
     llvm::outs() << instance.has_annotation << "\n";
     llvm::outs() << "==== CALL ENDS ====\n";
+  }
+
+  // For each assignment, write relevant meta data.
+  for (const Location& instance : collector.assignments) {
+    llvm::outs() << "==== NEW ASSIGNMENT ====\n";
+    llvm::outs() << instance.file_path << "\n";
+    llvm::outs() << instance.function_name << "\n";
+    llvm::outs() << instance.line_number << "\n";
+    llvm::outs() << "==== ASSIGNMENT ENDS ====\n";
   }
 
   return 0;

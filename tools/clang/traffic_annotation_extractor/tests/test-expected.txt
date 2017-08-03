@@ -126,3 +126,38 @@ Sample3
 net::URLRequestContext::CreateRequest
 1
 ==== CALL ENDS ====
+==== NEW ASSIGNMENT ====
+/usr/local/google/home/rhalavati/workspace/chromium/src/tools/clang/traffic_annotation_extractor/tests/test-actual.cc
+Sample4
+96
+==== ASSIGNMENT ENDS ====
+==== NEW ASSIGNMENT ====
+/usr/local/google/home/rhalavati/workspace/chromium/src/tools/clang/traffic_annotation_extractor/tests/test-actual.cc
+Sample4
+97
+==== ASSIGNMENT ENDS ====
+==== NEW ASSIGNMENT ====
+/usr/local/google/home/rhalavati/workspace/chromium/src/tools/clang/traffic_annotation_extractor/tests/test-actual.cc
+Sample4
+98
+==== ASSIGNMENT ENDS ====
+==== NEW ASSIGNMENT ====
+/usr/local/google/home/rhalavati/workspace/chromium/src/tools/clang/traffic_annotation_extractor/tests/test-actual.cc
+Sample4
+99
+==== ASSIGNMENT ENDS ====
+==== NEW ASSIGNMENT ====
+/usr/local/google/home/rhalavati/workspace/chromium/src/tools/clang/traffic_annotation_extractor/tests/test-actual.cc
+Sample4
+101
+==== ASSIGNMENT ENDS ====
+==== NEW ASSIGNMENT ====
+/usr/local/google/home/rhalavati/workspace/chromium/src/tools/clang/traffic_annotation_extractor/tests/test-actual.cc
+Sample4
+104
+==== ASSIGNMENT ENDS ====
+==== NEW ASSIGNMENT ====
+/usr/local/google/home/rhalavati/workspace/chromium/src/tools/clang/traffic_annotation_extractor/tests/test-actual.cc
+Sample4
+107
+==== ASSIGNMENT ENDS ====
