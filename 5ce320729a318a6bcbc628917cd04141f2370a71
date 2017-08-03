@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "28ef4706_08fc9802",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-08-03T16:53:29Z",
+      "side": 1,
+      "message": "I changed it. With the bug there, it shouldn\u0027t matter one way or the other.",
+      "parentUuid": "8eeaeb08_676e5755",
+      "range": {
+        "startLine": 28,
+        "startChar": 8,
+        "endLine": 28,
+        "endChar": 14
+      },
+      "revId": "5ce320729a318a6bcbc628917cd04141f2370a71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b76a293_4c09af12",
         "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
         "patchSetId": 14
@@ -93,6 +117,30 @@
       "revId": "5ce320729a318a6bcbc628917cd04141f2370a71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36fcf51a_73a91003",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-08-03T16:53:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b76a293_4c09af12",
+      "range": {
+        "startLine": 34,
+        "startChar": 1,
+        "endLine": 34,
+        "endChar": 2
+      },
+      "revId": "5ce320729a318a6bcbc628917cd04141f2370a71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -119,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "0d5f3447_388f8650",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-08-03T16:53:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6611f7bb_4d995217",
+      "range": {
+        "startLine": 66,
+        "startChar": 1,
+        "endLine": 68,
+        "endChar": 0
+      },
+      "revId": "5ce320729a318a6bcbc628917cd04141f2370a71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0caa1373_57820219",
         "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
         "patchSetId": 14
@@ -139,6 +211,30 @@
       "revId": "5ce320729a318a6bcbc628917cd04141f2370a71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f157b28_ecca277c",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-08-03T16:53:29Z",
+      "side": 1,
+      "message": "Makes sense! Done!",
+      "parentUuid": "0caa1373_57820219",
+      "range": {
+        "startLine": 73,
+        "startChar": 5,
+        "endLine": 73,
+        "endChar": 62
+      },
+      "revId": "5ce320729a318a6bcbc628917cd04141f2370a71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -165,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "26d92b1e_7be3929e",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-08-03T16:53:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1224aebf_6c9dd06a",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 59
+      },
+      "revId": "5ce320729a318a6bcbc628917cd04141f2370a71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b827b874_6b867754",
         "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
         "patchSetId": 14
@@ -185,6 +305,30 @@
       "revId": "5ce320729a318a6bcbc628917cd04141f2370a71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "398682f8_ab7956b0",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-08-03T16:53:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b827b874_6b867754",
+      "range": {
+        "startLine": 93,
+        "startChar": 49,
+        "endLine": 93,
+        "endChar": 54
+      },
+      "revId": "5ce320729a318a6bcbc628917cd04141f2370a71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -235,6 +379,30 @@
     },
     {
       "key": {
+        "uuid": "956964d9_2c9aeb8e",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-08-03T16:53:29Z",
+      "side": 1,
+      "message": "Done - I\u0027m not sure why I chose LOG_ASSERT in the first place - DCHECK is more appropriate.",
+      "parentUuid": "56a81b1c_703ce93e",
+      "range": {
+        "startLine": 151,
+        "startChar": 2,
+        "endLine": 151,
+        "endChar": 12
+      },
+      "revId": "5ce320729a318a6bcbc628917cd04141f2370a71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a725049e_36f93056",
         "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
         "patchSetId": 14
@@ -255,6 +423,30 @@
       "revId": "5ce320729a318a6bcbc628917cd04141f2370a71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f5f0273_6a5e680c",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-08-03T16:53:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a725049e_36f93056",
+      "range": {
+        "startLine": 159,
+        "startChar": 2,
+        "endLine": 159,
+        "endChar": 6
+      },
+      "revId": "5ce320729a318a6bcbc628917cd04141f2370a71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -281,6 +473,30 @@
     },
     {
       "key": {
+        "uuid": "4cfceeef_47faed9f",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-08-03T16:53:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95c458d9_7c5dc3bc",
+      "range": {
+        "startLine": 162,
+        "startChar": 0,
+        "endLine": 162,
+        "endChar": 44
+      },
+      "revId": "5ce320729a318a6bcbc628917cd04141f2370a71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86bfaa89_e1d2bf96",
         "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
         "patchSetId": 14
@@ -292,6 +508,30 @@
       "writtenOn": "2017-08-03T15:27:51Z",
       "side": 1,
       "message": "Is it worth logging an error here that will show up on release builds?",
+      "range": {
+        "startLine": 183,
+        "startChar": 4,
+        "endLine": 183,
+        "endChar": 17
+      },
+      "revId": "5ce320729a318a6bcbc628917cd04141f2370a71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0424ba3_fd48ec11",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-08-03T16:53:29Z",
+      "side": 1,
+      "message": "(apologies for the terrible formatting - not sure why gerrit is discarding all my newlines) Currently, the only place initialize is called is in Encode, where we do:\n\nif (!Initialize()) {\n      DLOG(ERROR) \u003c\u003c \"Could not initialize encoder.\";\n      state_ \u003d INITIALIZATION_ERROR;\n      return;\n}\n\nSo in this case, the \"return false\" is handled by logging out the error. I see a number of changes that could be made:\n(1) as you suggested, I could LOG inside Initialize(), instead of DLOGing after running Initialize() and getting false.\n(2) If I do that, though, I could also see an argument for moving the \"state_ \u003d INITIALIZATION_ERROR;\" line to within Initialize().\n\nAny opinions on these ideas?",
+      "parentUuid": "86bfaa89_e1d2bf96",
       "range": {
         "startLine": 183,
         "startChar": 4,
@@ -324,6 +564,30 @@
       "revId": "5ce320729a318a6bcbc628917cd04141f2370a71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6160ef80_f386acaf",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-08-03T16:53:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13156fc8_0dacd3a2",
+      "range": {
+        "startLine": 200,
+        "startChar": 15,
+        "endLine": 200,
+        "endChar": 16
+      },
+      "revId": "5ce320729a318a6bcbc628917cd04141f2370a71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
