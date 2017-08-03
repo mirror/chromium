@@ -349,6 +349,30 @@
     },
     {
       "key": {
+        "uuid": "2d7034fe_9d9cd4df",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 33
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-03T19:03:58Z",
+      "side": 1,
+      "message": "Ah right, makes sense. I think what I\u0027d really like is for the empty document to share the InterfaceProvider its creator is using, but that\u0027s not quite feasible right now given how things are arranged on the browser side.\n\nThis message seems OK to me based on the rationale here. nasko@?",
+      "parentUuid": "0d5488e2_9f892cfb",
+      "range": {
+        "startLine": 106,
+        "startChar": 2,
+        "endLine": 106,
+        "endChar": 46
+      },
+      "revId": "412161926908cf7093ac11e019d7e4a847b8fb96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "233719e0_3538667d",
         "filename": "content/common/frame.mojom",
         "patchSetId": 33
