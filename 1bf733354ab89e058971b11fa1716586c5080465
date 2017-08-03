@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "5bc5f918_4d597879",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-03T11:29:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2512dfc6_44189b95",
+      "revId": "1bf733354ab89e058971b11fa1716586c5080465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "39ad5155_6390023f",
         "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
         "patchSetId": 15
@@ -140,6 +158,24 @@
       "revId": "1bf733354ab89e058971b11fa1716586c5080465",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c08d6d31_3d4adf41",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-03T11:29:02Z",
+      "side": 1,
+      "message": "\u003e Maybe add a comment explicitly stating that this is on purpose? Otherwise the next reader of the code might wonder, like I did.\n\nI\u0027ve added a TODO about (a metric and reconsidering scheduling sooner).\n\n2) At this point there is no difference between 5 minutes, 1 hours or 1 day :) We have no data and no clue whether this is possible at all.\n\n3) I was trying to say that priority of this bit is not high. Currently there are no pushed suggestions at all :) and whether the delay is 1 day or 1 hour makes no practical difference.\n\n\u003e If it\u0027s worth doing, it\u0027s worth doing properly :)\n\nThere are infinitely many things, which I could do. I would definitely prefer to get the entire thing somehow working ASAP and then improving bits and pieces, because I may discover new critical issues.\n\n4) Added a TODO.",
+      "parentUuid": "547b41e3_ce7e82ba",
+      "revId": "1bf733354ab89e058971b11fa1716586c5080465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -246,6 +282,24 @@
       "revId": "1bf733354ab89e058971b11fa1716586c5080465",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23238ab5_3ffa1ad5",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-03T11:29:02Z",
+      "side": 1,
+      "message": "Done.\n\nAh, true. Previously (when I used ValidateToken) it was a fake.",
+      "parentUuid": "31749661_02adbe3f",
+      "revId": "1bf733354ab89e058971b11fa1716586c5080465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -381,6 +435,24 @@
       "revId": "1bf733354ab89e058971b11fa1716586c5080465",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1148b8b6_ff33480b",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-03T11:29:02Z",
+      "side": 1,
+      "message": "Done.\n\nI\u0027ve used your comment.\n\n\u003e  since it\u0027s a StrictMock\n\nI would like to make this explicit. When I started writing this CL, I was hit badly by this discovery (I had everything finished with ValidateToken), so I expect that others would not expect this either :)",
+      "parentUuid": "109423f2_d7e27628",
+      "revId": "1bf733354ab89e058971b11fa1716586c5080465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
