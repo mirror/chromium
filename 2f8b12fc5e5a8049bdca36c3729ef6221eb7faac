@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c68adaf4_90174e9b",
+        "filename": "mojo/edk/system/node_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1239,
+      "author": {
+        "id": 1184709
+      },
+      "writtenOn": "2017-08-03T15:01:44Z",
+      "side": 1,
+      "message": "Should we keep the object we create on stack for NodeChannel::OnChannelError? Unless I\u0027m not reading it correctly, it seems that we shouldn\u0027t nest RequestContext objects: https://cs.chromium.org/chromium/src/mojo/edk/system/request_context.cc?l\u003d25",
+      "range": {
+        "startLine": 1239,
+        "startChar": 19,
+        "endLine": 1239,
+        "endChar": 34
+      },
+      "revId": "2f8b12fc5e5a8049bdca36c3729ef6221eb7faac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
