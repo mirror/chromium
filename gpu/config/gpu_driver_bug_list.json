@@ -1712,7 +1712,6 @@
           "vendor_id": "0x8086",
           "driver_vendor": "Mesa",
           "gl_vendor": "Intel.*",
-          "gl_renderer": ".*Intel.*(Braswell|Broadwell|Skylake).*",
           "gl_type": "gles",
           "gl_version": {
             "op": ">=",
