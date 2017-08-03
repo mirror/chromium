@@ -9,6 +9,8 @@
 #include <utility>
 #include <vector>
 
+#include "base/debug/stack_trace.h"
+
 #include "base/guid.h"
 #include "base/memory/ptr_util.h"
 #include "base/path_service.h"
@@ -91,6 +93,13 @@ HeadlessBrowserContextImpl::HeadlessBrowserContextImpl(
 
 HeadlessBrowserContextImpl::~HeadlessBrowserContextImpl() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+
+  // Inform observers that we're going away.
+  {
+    base::AutoLock lock(observers_lock_);
+    for (auto& observer : observers_)
+      observer.OnHeadlessBrowserContextDestruct();
+  }
 
   // Destroy all web contents before shutting down storage partitions.
   web_contents_map_.clear();
