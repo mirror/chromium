@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b2faed3_081354f4",
+        "filename": "chrome/browser/extensions/extension_apitest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-03T15:14:12Z",
+      "side": 1,
+      "message": "nit: base::FilePath\u0026 (or even const base::FilePath\u0026)",
+      "revId": "1b820efcec4bec8b0faa3a14fc6361b4138b4292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50319818_091b2d6f",
+        "filename": "chrome/browser/extensions/extension_apitest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-03T15:14:12Z",
+      "side": 1,
+      "message": "It\u0027s a bit strange that test_data_dir_ \u003d chrome/test/data/extensions/api_test and shared_test_data_dir \u003d extensions/test/data (not /api_test), but that\u0027s probably fine.",
+      "revId": "1b820efcec4bec8b0faa3a14fc6361b4138b4292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "015543e8_a60a0154",
+        "filename": "chrome/browser/extensions/extension_messages_apitest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-03T15:14:12Z",
+      "side": 1,
+      "message": "Do we need to enable file access?",
+      "revId": "1b820efcec4bec8b0faa3a14fc6361b4138b4292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b28e52c4_02b42936",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 2018,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-03T15:14:12Z",
+      "side": 1,
+      "message": "For my own knowledge, what does do?",
+      "revId": "1b820efcec4bec8b0faa3a14fc6361b4138b4292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6eec33c3_eb6471f9",
+        "filename": "extensions/test/data/messaging/connect_external/test.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-03T15:14:12Z",
+      "side": 1,
+      "message": "single quotes in js (this whole file)",
+      "revId": "1b820efcec4bec8b0faa3a14fc6361b4138b4292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d05c398_8363e11d",
+        "filename": "extensions/test/data/messaging/connect_external/test.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-03T15:14:12Z",
+      "side": 1,
+      "message": "It\u0027s not actually aliased; they just happen to have many of the same functions.",
+      "revId": "1b820efcec4bec8b0faa3a14fc6361b4138b4292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36164adc_13223a64",
+        "filename": "extensions/test/data/messaging/receiver/manifest.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-03T15:14:12Z",
+      "side": 1,
+      "message": "Why not just \"scripts\": [\"background.js\"]?",
+      "revId": "1b820efcec4bec8b0faa3a14fc6361b4138b4292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

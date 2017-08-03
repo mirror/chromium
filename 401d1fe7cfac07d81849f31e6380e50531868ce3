@@ -140,6 +140,24 @@
       "revId": "401d1fe7cfac07d81849f31e6380e50531868ce3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88ddecf1_8eccc471",
+        "filename": "extensions/test/data/messaging/connect_external/test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-03T15:14:12Z",
+      "side": 1,
+      "message": "Heh, I was asking if this file was just copy-pasted from the old one, but that answers my question. :)",
+      "parentUuid": "b220b449_93873f1e",
+      "revId": "401d1fe7cfac07d81849f31e6380e50531868ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
