@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cbf6ec76_80c5f262",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParser.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1385,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-03T06:19:11Z",
+      "side": 0,
+      "message": "This is the old version right? CSSPropertyInvalid is not used here. Are you talking about somewhere else?",
+      "revId": "29aa0d0a8eb8fbc6e0abde2c27af10dab9a9a3da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
