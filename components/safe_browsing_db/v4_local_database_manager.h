@@ -37,6 +37,10 @@ class V4LocalDatabaseManager : public SafeBrowsingDatabaseManager {
 
   // Populates the protobuf with the database data.
   void CollectDatabaseManagerInfo(DatabaseManagerInfo* v4_database_info) const;
+
+  // Populates the protobuf with the FullHashCache data.
+  void CollectFullHashCacheInfo(FullHashCacheInfo* full_hash_cache_info) const;
+
   // Return an instance of the V4LocalDatabaseManager object
   static const V4LocalDatabaseManager* current_local_database_manager() {
     return current_local_database_manager_;
