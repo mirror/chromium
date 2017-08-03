@@ -34,6 +34,24 @@
       "revId": "29aa0d0a8eb8fbc6e0abde2c27af10dab9a9a3da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ceba3b2_54af43ab",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParser.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1385,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-03T23:12:43Z",
+      "side": 0,
+      "message": "Ah, I see. Thanks for explaining :)",
+      "parentUuid": "48ebb3a2_4704d867",
+      "revId": "29aa0d0a8eb8fbc6e0abde2c27af10dab9a9a3da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
