@@ -16,6 +16,24 @@
       "revId": "591d40342a7b38d9977f824668f9282e18439af1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c03274f8_8fc6303f",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-03T15:46:00Z",
+      "side": 1,
+      "message": "the y value should always be equal or greater, but doesn\u0027t hurt to put it, and used std::abs to get rid of max_x variable above :-)",
+      "parentUuid": "1d9f4c95_836b53eb",
+      "revId": "591d40342a7b38d9977f824668f9282e18439af1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
