@@ -22,6 +22,30 @@
       "revId": "e57036181be5f48b1d0d1e5a1ca9710cdd58e30b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a618ddca_c4fd4284",
+        "filename": "ui/arc/notification/arc_notification_content_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000175
+      },
+      "writtenOn": "2017-08-03T01:30:04Z",
+      "side": 1,
+      "message": "Good catch. Thanks.",
+      "parentUuid": "df2dc210_058e0ba1",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 35
+      },
+      "revId": "e57036181be5f48b1d0d1e5a1ca9710cdd58e30b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
