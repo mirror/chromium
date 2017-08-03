@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4cd56341_feb0a0fe",
+        "filename": "tools/perf/page_sets/tough_video_cases.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-08-03T21:15:37Z",
+      "side": 1,
+      "message": "The bug says it is failing on Mac Air 10.11 and Mac Retina.\n\nIf those are the only failures, you could disable wit hthe scope:\n[story.expectations.MAC_10_11] \n\nwhich would make it not run on:\n  Mac 10.11 Perf,\n  Mac Retina Perf,\n  Mac Pro 10.11 Perf,\n  Mac Air 10.11 Perf\n\nThis would make it so this test runs in as many places as it can.",
+      "range": {
+        "startLine": 478,
+        "startChar": 13,
+        "endLine": 478,
+        "endChar": 25
+      },
+      "revId": "a4a36548f3052f8bc7643c230c09ad0e8a982a65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
