@@ -222,6 +222,10 @@ class TabManager : public TabStripModelObserver,
   // the first navigation.
   bool IsTabInSessionRestore(content::WebContents* web_contents) const;
 
+  // Returns true if the tab was created by session restore and initially in
+  // foreground.
+  bool IsTabRestoredInForeground(content::WebContents* web_contents) const;
+
  private:
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, PurgeBackgroundRenderer);
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, ActivateTabResetPurgeState);
