@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c8a5de1_6c044edc",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-08-03T22:49:19Z",
+      "side": 1,
+      "message": "nit: I feel the word \u0027longevity\u0027 doesn\u0027t suit for this purpose.\n\u0027outlive\u0027 \u0027survival\u0027 might be more suitable.  But please don\u0027t trust my English sense :D",
+      "revId": "ad97de677182cd49e75f43b154a609cff5b2d489",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6220faa1_68d333c3",
+        "filename": "third_party/WebKit/Source/core/dom/Document.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-08-03T22:49:19Z",
+      "side": 1,
+      "message": "Insert this line between DocumentLoader and DocumentMarkerController.",
+      "revId": "ad97de677182cd49e75f43b154a609cff5b2d489",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75fe19e5_3a7368bb",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-08-03T22:49:19Z",
+      "side": 1,
+      "message": "Can the |ThreadState| argument be nullptr?  Please add a comment.\nshould mention this object is automatically registered to the ThreadState.",
+      "revId": "ad97de677182cd49e75f43b154a609cff5b2d489",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "952dba66_d65f18e0",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-08-03T22:49:19Z",
+      "side": 1,
+      "message": "should mention that this object is automatically unregistered from the ThreadState.",
+      "revId": "ad97de677182cd49e75f43b154a609cff5b2d489",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d58d41c5_3d19e23f",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-08-03T22:49:19Z",
+      "side": 1,
+      "message": "Pure virtual is better because a subclass must implement this function.",
+      "revId": "ad97de677182cd49e75f43b154a609cff5b2d489",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e30bca7d_d9e663f2",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-08-03T22:49:19Z",
+      "side": 1,
+      "message": "Please add a comment why a raw pointer is safe.",
+      "revId": "ad97de677182cd49e75f43b154a609cff5b2d489",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "049982db_c00777fb",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-08-03T22:49:19Z",
+      "side": 1,
+      "message": "Is it ok to pass nullptr? Is it safe to call AddObserver() in ThreadStateObserver::OnCompleteSweepDone()? What happens if already-registered ThreadStateObserver is passed? What\u0027s the ownership of passed ThreadStateObserver?",
+      "revId": "ad97de677182cd49e75f43b154a609cff5b2d489",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba8cb709_3bd5286f",
+        "filename": "third_party/WebKit/Source/platform/heap/ThreadState.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 645,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-08-03T22:49:19Z",
+      "side": 1,
+      "message": "Is it ok to pass nullptr? Is it safe to call RemoveObserver() in ThreadStateObserver::OnCompleteSweepDone()? What happens if not-registered ThreadStateObserver is passed?",
+      "revId": "ad97de677182cd49e75f43b154a609cff5b2d489",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
