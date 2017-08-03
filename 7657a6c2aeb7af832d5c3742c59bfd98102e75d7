@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "05099911_694eb9f0",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceObserver.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-03T15:10:10Z",
+      "side": 1,
+      "message": "Generally followed by a colon, I think.",
+      "range": {
+        "startLine": 48,
+        "startChar": 5,
+        "endLine": 48,
+        "endChar": 20
+      },
+      "revId": "7657a6c2aeb7af832d5c3742c59bfd98102e75d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
