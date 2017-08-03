@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b896ef7_d0617b78",
+        "filename": "ios/web/navigation/navigation_manager_impl_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1846,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-03T15:26:23Z",
+      "side": 1,
+      "message": "Please use ObjC container literal syntax here and below:\n\n@[@\"http://www.url.com/0\"]",
+      "revId": "764348fee530e139eea621206f74ed2f02fde0a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f75d0776_81e6258f",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-03T15:26:23Z",
+      "side": 1,
+      "message": "CRWSessionController\u0027s implementation accounts for redirects here.  Does WKBackForwardListItem have WKBackForwardListItems for redirected navigations?  If so, we should copy that logic here and below, and add tests for that logic.  If not, then do we have a plan for correctly recording redirects in our NavigationItems?",
+      "revId": "764348fee530e139eea621206f74ed2f02fde0a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
