@@ -34,6 +34,24 @@
       "revId": "a9e9888e8dd87b8b3ea10dd590073cc0d15a284f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18c335fd_482ecc0f",
+        "filename": "third_party/WebKit/Source/bindings/templates/methods.cpp.tmpl",
+        "patchSetId": 4
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-08-03T13:34:22Z",
+      "side": 1,
+      "message": "Updated to use info.NewTarget()-\u003eCreationContext().\n\nBy the way, it turned out that info.Holder() \u003d\u003d info.NewTarget() is not guaranteed in general in constructors, while GetCurrentContext() \u003d\u003d info.NewTarget()-\u003eCreationContext() is satisfied in our codebase so far.",
+      "parentUuid": "b6abb88e_43a602eb",
+      "revId": "a9e9888e8dd87b8b3ea10dd590073cc0d15a284f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
