@@ -1135,8 +1135,7 @@ id<GREYMatcher> ActionSheet(Action action) {
 
   // Tap the Sign in button.
   [[EarlGrey
-      selectElementWithMatcher:grey_allOf(grey_accessibilityID(
-                                              kSigninPromoSecondaryButtonId),
+      selectElementWithMatcher:grey_allOf(chrome_test_util::SignInMenuButton(),
                                           grey_sufficientlyVisible(), nil)]
       performAction:grey_tap()];
 
