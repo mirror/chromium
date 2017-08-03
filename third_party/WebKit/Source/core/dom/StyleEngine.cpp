@@ -140,10 +140,9 @@ StyleEngine::StyleSheetsForStyleSheetList(TreeScope& tree_scope) {
 
 WebStyleSheetId StyleEngine::InjectAuthorSheet(
     StyleSheetContents* author_sheet) {
-  injected_author_style_sheets_.push_back(std::make_pair(
-      ++injected_author_sheets_id_count_,
-      TraceWrapperMember<CSSStyleSheet>(
-          this, CSSStyleSheet::Create(author_sheet, *document_))));
+  injected_author_style_sheets_.push_back(
+      std::make_pair(++injected_author_sheets_id_count_,
+                     CSSStyleSheet::Create(author_sheet, *document_)));
 
   MarkDocumentDirty();
   return injected_author_sheets_id_count_;

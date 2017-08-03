@@ -271,7 +271,7 @@ static void ActivateObserver(MutationObserver* observer) {
 
 void MutationObserver::EnqueueMutationRecord(MutationRecord* mutation) {
   DCHECK(IsMainThread());
-  records_.push_back(TraceWrapperMember<MutationRecord>(this, mutation));
+  records_.push_back(mutation);
   ActivateObserver(this);
   probe::AsyncTaskScheduled(delegate_->GetExecutionContext(), mutation->type(),
                             mutation);

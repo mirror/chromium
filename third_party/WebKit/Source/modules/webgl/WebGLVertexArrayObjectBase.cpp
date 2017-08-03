@@ -87,7 +87,7 @@ void WebGLVertexArrayObjectBase::SetArrayBufferForAttrib(GLuint index,
   if (array_buffer_list_[index])
     array_buffer_list_[index]->OnDetached(Context()->ContextGL());
 
-  array_buffer_list_[index] = TraceWrapperMember<WebGLBuffer>(this, buffer);
+  array_buffer_list_[index] = buffer;
   UpdateAttribBufferBoundStatus();
 }
 

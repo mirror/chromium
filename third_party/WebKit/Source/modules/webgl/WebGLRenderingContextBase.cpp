@@ -1727,17 +1727,13 @@ void WebGLRenderingContextBase::bindTexture(GLenum target,
   }
 
   if (target == GL_TEXTURE_2D) {
-    texture_units_[active_texture_unit_].texture2d_binding_ =
-        TraceWrapperMember<WebGLTexture>(this, texture);
+    texture_units_[active_texture_unit_].texture2d_binding_ = texture;
   } else if (target == GL_TEXTURE_CUBE_MAP) {
-    texture_units_[active_texture_unit_].texture_cube_map_binding_ =
-        TraceWrapperMember<WebGLTexture>(this, texture);
+    texture_units_[active_texture_unit_].texture_cube_map_binding_ = texture;
   } else if (IsWebGL2OrHigher() && target == GL_TEXTURE_2D_ARRAY) {
-    texture_units_[active_texture_unit_].texture2d_array_binding_ =
-        TraceWrapperMember<WebGLTexture>(this, texture);
+    texture_units_[active_texture_unit_].texture2d_array_binding_ = texture;
   } else if (IsWebGL2OrHigher() && target == GL_TEXTURE_3D) {
-    texture_units_[active_texture_unit_].texture3d_binding_ =
-        TraceWrapperMember<WebGLTexture>(this, texture);
+    texture_units_[active_texture_unit_].texture3d_binding_ = texture;
   } else {
     SynthesizeGLError(GL_INVALID_ENUM, "bindTexture", "invalid target");
     return;

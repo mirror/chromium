@@ -890,9 +890,8 @@ class MODULES_EXPORT WebGLRenderingContextBase : public CanvasRenderingContext,
   void RegisterExtension(Member<T>& extension_ptr,
                          ExtensionFlags flags = kApprovedExtension,
                          const char* const* prefixes = nullptr) {
-    extensions_.push_back(TraceWrapperMember<ExtensionTracker>(
-        this,
-        TypedExtensionTracker<T>::Create(extension_ptr, flags, prefixes)));
+    extensions_.push_back(
+        TypedExtensionTracker<T>::Create(extension_ptr, flags, prefixes));
   }
 
   bool ExtensionSupportedAndAllowed(const ExtensionTracker*);

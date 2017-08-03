@@ -107,8 +107,7 @@ bool WebGLTransformFeedback::SetBoundIndexedTransformFeedbackBuffer(
     bound_indexed_transform_feedback_buffers_[index]->OnDetached(
         Context()->ContextGL());
   }
-  bound_indexed_transform_feedback_buffers_[index] =
-      TraceWrapperMember<WebGLBuffer>(this, buffer);
+  bound_indexed_transform_feedback_buffers_[index] = buffer;
   // This also sets the generic binding point in the OpenGL state.
   SetBoundTransformFeedbackBuffer(buffer);
   return true;
