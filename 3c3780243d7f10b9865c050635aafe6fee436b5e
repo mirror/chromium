@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af1d2bf3_9eb43c49",
+        "filename": "components/viz/common/frame_sinks/begin_frame_source.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-08-03T22:34:06Z",
+      "side": 1,
+      "message": "nit: Add a comment saying that missed frame is sent only if returned args is valid.",
+      "revId": "3c3780243d7f10b9865c050635aafe6fee436b5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
