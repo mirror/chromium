@@ -22,6 +22,30 @@
       "revId": "c15a7b827e7f38d375cf6b9db55bf1775cfcda19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d684577_83664d63",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 855,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-03T16:13:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1765be6d_0a1f2f32",
+      "range": {
+        "startLine": 855,
+        "startChar": 26,
+        "endLine": 855,
+        "endChar": 31
+      },
+      "revId": "c15a7b827e7f38d375cf6b9db55bf1775cfcda19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
