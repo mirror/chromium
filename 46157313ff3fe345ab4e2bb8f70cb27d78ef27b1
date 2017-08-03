@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf0e1abd_6a02e6a7",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPIColorNoQuirksNonInherited.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-03T00:49:40Z",
+      "side": 1,
+      "message": "bikeshed: I prefer to name the grouped apis after the properties that use them where possible, and resort to the implementation details only when that\u0027s not possible. since it\u0027s all non-webkit properties that use this non-inherited api and all webkit properties that use the inherited version, I would call them ColorNoQuirks and WebkitColorNoQuirks respectively.",
+      "revId": "46157313ff3fe345ab4e2bb8f70cb27d78ef27b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "185b5e26_b81c3b10",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPIOpacityInherited.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-03T00:49:40Z",
+      "side": 1,
+      "message": "As above, I would prefer FillOrStrokeOpacity",
+      "revId": "46157313ff3fe345ab4e2bb8f70cb27d78ef27b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e1fc46d_c8cd2cf7",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPIOpacityNonInherited.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-03T00:49:40Z",
+      "side": 1,
+      "message": "As above, I would prefer Opacity",
+      "revId": "46157313ff3fe345ab4e2bb8f70cb27d78ef27b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
