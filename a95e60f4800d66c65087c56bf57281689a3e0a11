@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e69a27f4_f9e03361",
+        "filename": "ui/arc/notification/arc_notification_content_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-03T14:57:49Z",
+      "side": 1,
+      "message": "nit: const",
+      "revId": "a95e60f4800d66c65087c56bf57281689a3e0a11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "143f1369_ffe9c0d3",
+        "filename": "ui/arc/notification/arc_notification_content_view_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-03T14:57:49Z",
+      "side": 1,
+      "message": "nit: I don\u0027t think you should mark const here, as returned field is mutable.\nEither mark const to the returned ptr, or removing const is better, IMO.",
+      "revId": "a95e60f4800d66c65087c56bf57281689a3e0a11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
