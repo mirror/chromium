@@ -315,6 +315,14 @@ void ImageDecoder::CorrectAlphaWhenFrameBufferSawNoAlpha(size_t index) {
   }
 }
 
+static bool s_is_disabled = false;
+bool ImageDecoder::IsDisabled() {
+  return s_is_disabled;
+}
+void ImageDecoder::SetDisabled(bool disabled) {
+  s_is_disabled = disabled;
+}
+
 bool ImageDecoder::InitFrameBuffer(size_t frame_index) {
   DCHECK(frame_index < frame_buffer_cache_.size());
 

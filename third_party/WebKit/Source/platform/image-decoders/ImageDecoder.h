@@ -87,6 +87,9 @@ class PLATFORM_EXPORT ImageDecoder {
 
   virtual ~ImageDecoder() {}
 
+  static bool IsDisabled();
+  static void SetDisabled(bool disabled);
+
   // Returns a caller-owned decoder of the appropriate type.  Returns nullptr if
   // we can't sniff a supported type from the provided data (possibly
   // because there isn't enough data yet).

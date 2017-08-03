@@ -282,6 +282,13 @@ class CORE_EXPORT Document : public ContainerNode,
   using SecurityContext::GetContentSecurityPolicy;
   using TreeScope::getElementById;
 
+  void toggleImageDecode(bool enabled);
+  void toggleFrames(bool enabled);
+  void toggleBackgroundImage(bool enabled);
+  void toggleCSS(bool enabled);
+  void trimDOM();
+  void pauseJS();
+
   bool CanContainRangeEndPoint() const override { return true; }
 
   SelectorQueryCache& GetSelectorQueryCache();

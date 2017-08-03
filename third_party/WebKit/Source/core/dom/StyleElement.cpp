@@ -133,6 +133,9 @@ static bool ShouldBypassMainWorldCSP(const Element& element) {
 
 StyleElement::ProcessingResult StyleElement::CreateSheet(Element& element,
                                                          const String& text) {
+  if (StyleResolver::IsDisabled()) {
+    return kProcessingFatalError;
+  }
   DCHECK(element.isConnected());
   Document& document = element.GetDocument();
 
