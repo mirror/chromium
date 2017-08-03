@@ -16,6 +16,24 @@
       "revId": "3a7e45a0add0787df2bff6d438d9de12814a1cf4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc604f0b_3bdeeecc",
+        "filename": "content/browser/frame_host/cross_process_frame_connector.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1126745
+      },
+      "writtenOn": "2017-08-03T15:21:35Z",
+      "side": 1,
+      "message": "Ack. Thanks for pointing this out. I forgot to do this (replicate the null check in line 286 for nested views). For reference, in a page with an OOPIF which itself has an OOPIF, if we crash the process for inner most OOPIF then hide the parent frame (which is an OOPIF) the browser crashes due to frame_host-\u003eGetView() \u003d\u003d nullptr.",
+      "parentUuid": "ef517661_592fd3f8",
+      "revId": "3a7e45a0add0787df2bff6d438d9de12814a1cf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
