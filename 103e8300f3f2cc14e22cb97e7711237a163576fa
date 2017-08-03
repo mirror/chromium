@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "864e9ce3_74d39c8a",
+        "filename": "cc/resources/resource_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-03T01:44:44Z",
+      "side": 1,
+      "message": "|buffer_format| should be ignored if |is_overlay_candidate| is false, like in this case.\nI\u0027m not against this change, but I\u0027d rather set it to something like BufferFormat::UNKNOWN, than trying to infer buffer format from the resource format.\n\nFor example, we could have a resource that is R_8 and it is using a texture backed by an RGBX buffer. We\u0027d be incorrect in that case.\n\nMaybe |buffer_format| should be of type  Optional\u003cBufferFormat\u003e?\nWhat do you think about that?",
+      "revId": "103e8300f3f2cc14e22cb97e7711237a163576fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
