@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "797484c7_4c36bdd8",
+        "filename": "components/ui_devtools/views/ui_devtools_dom_agent.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-03T15:14:34Z",
+      "side": 1,
+      "message": "Done, thanks!",
+      "parentUuid": "6fbed22c_58d8df86",
+      "revId": "77f434b7f0090ba9d440960981461e10d8b961af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9ba6f6c_df9e7bf0",
         "filename": "components/ui_devtools/views/ui_devtools_overlay_agent.h",
         "patchSetId": 15
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "149f35f2_9a09a489",
+        "filename": "components/ui_devtools/views/ui_devtools_overlay_agent.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-03T15:14:34Z",
+      "side": 1,
+      "message": "Done. I added const dom_agent_ in ui_devtools_css_agent.h as well.",
+      "parentUuid": "e9ba6f6c_df9e7bf0",
+      "revId": "77f434b7f0090ba9d440960981461e10d8b961af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7c01cd10_d96de72d",
         "filename": "components/ui_devtools/views/ui_element.h",
         "patchSetId": 15
@@ -50,6 +86,24 @@
       "revId": "77f434b7f0090ba9d440960981461e10d8b961af",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2962c178_4766856c",
+        "filename": "components/ui_devtools/views/ui_element.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-03T15:14:34Z",
+      "side": 1,
+      "message": "Done, thanks! I need to const_cast\u003cUIElement*\u003e(this) in UIElement::FindUIElementIdForBackendElement() as well.",
+      "parentUuid": "7c01cd10_d96de72d",
+      "revId": "77f434b7f0090ba9d440960981461e10d8b961af",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
