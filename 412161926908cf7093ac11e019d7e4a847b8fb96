@@ -277,6 +277,30 @@
     },
     {
       "key": {
+        "uuid": "ccb7da9d_e8174275",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 33
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-08-03T17:12:22Z",
+      "side": 1,
+      "message": "There\u0027s a way to do that (secret: we can actually fuse pipes together) but I recommend against using it for this. The feature adds complexity to Mojo and I\u0027m still on the fence about whether or not we should remove it.\n\nIn any case, why does the empty frame actually need a functioning interface provider? Do we care about any of its interface requests? If not you can just drop the request side of the pipe when setting up the interface provider in the renderer, so all interface requests will safely be routed into the abyss.",
+      "parentUuid": "0f0b2940_c1e578c7",
+      "range": {
+        "startLine": 106,
+        "startChar": 2,
+        "endLine": 106,
+        "endChar": 46
+      },
+      "revId": "412161926908cf7093ac11e019d7e4a847b8fb96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "233719e0_3538667d",
         "filename": "content/common/frame.mojom",
         "patchSetId": 33
