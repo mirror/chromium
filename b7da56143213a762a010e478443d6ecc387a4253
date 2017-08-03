@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "83667252_ed86b546",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserObserverWrapper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-03T23:07:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12bba93e_4d64e5e0",
+      "revId": "b7da56143213a762a010e478443d6ecc387a4253",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e055725_4c053495",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSParserObserverWrapper.h",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-03T07:02:53Z",
       "side": 1,
       "message": "since you\u0027re introducing a new bool literal argument, this would be a good place to change it to an enum to comply with the style guide",
+      "revId": "b7da56143213a762a010e478443d6ecc387a4253",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02fc3f33_cbe29c65",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserObserverWrapper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-03T23:07:47Z",
+      "side": 1,
+      "message": "This is just forwarding to the range version of SkipCommentsBefore which takes a bool. Also, this class will be deleted in a future patch.",
+      "parentUuid": "7e055725_4c053495",
       "revId": "b7da56143213a762a010e478443d6ecc387a4253",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

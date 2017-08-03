@@ -16,6 +16,24 @@
       "revId": "951261afe8a65fd3496b49936edef72c77daa284",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84f68d6b_3cece0a7",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserTokenStream.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-08-03T23:07:47Z",
+      "side": 0,
+      "message": "Added comment and added explanation in CL desc (\"For this to work...\")",
+      "parentUuid": "b201ac9f_5978dad9",
+      "revId": "951261afe8a65fd3496b49936edef72c77daa284",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
