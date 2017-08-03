@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7403d6d7_8aa9a01f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-03T00:19:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e777901_167b8258",
+      "revId": "18141393ecf04281a3109524f9a76630948f6716",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "363806e8_7fa5b27b",
         "filename": "ios/chrome/browser/ui/bubble/bubble_util.h",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "18141393ecf04281a3109524f9a76630948f6716",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19bcc54a_ad4464ec",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-03T00:19:26Z",
+      "side": 1,
+      "message": "Per our conversation, the DivideRectAtPoint method is being combined with the MaxWidth method to create the BubbleMaxSize method.",
+      "parentUuid": "363806e8_7fa5b27b",
+      "revId": "18141393ecf04281a3109524f9a76630948f6716",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "51641080_3bdb7b19",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-03T00:19:26Z",
+      "side": 1,
+      "message": "Per above comment, this has been combined with MaxWidth.",
+      "parentUuid": "fcb2f58b_a8aff281",
+      "revId": "18141393ecf04281a3109524f9a76630948f6716",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff4e882f_bbefad66",
         "filename": "ios/chrome/browser/ui/bubble/bubble_util.mm",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "18141393ecf04281a3109524f9a76630948f6716",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "556e3af7_19d642c2",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-03T00:19:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff4e882f_bbefad66",
+      "revId": "18141393ecf04281a3109524f9a76630948f6716",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "2ca40733_c789e5e0",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-03T00:19:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bea327e4_34f5c13a",
+      "revId": "18141393ecf04281a3109524f9a76630948f6716",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "00f3d3c7_5da685e4",
         "filename": "ios/chrome/browser/ui/bubble/bubble_util.mm",
         "patchSetId": 3
@@ -101,6 +191,24 @@
       "revId": "18141393ecf04281a3109524f9a76630948f6716",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8b9a210_e3bdbf17",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_util.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1213246
+      },
+      "writtenOn": "2017-08-03T00:19:26Z",
+      "side": 1,
+      "message": "DivideRectAtPoint has been removed in favor of BubbleMaxSize, which is more intuitive.",
+      "parentUuid": "00f3d3c7_5da685e4",
+      "revId": "18141393ecf04281a3109524f9a76630948f6716",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
