@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4cbccfc_d295a65b",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPIFiles.h.tmpl",
+        "patchSetId": 18
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-08-03T03:03:09Z",
+      "side": 0,
+      "message": "There was some discussion about what this comment should say. Was the decision just to remove it in the end?",
+      "revId": "540595c987b9e2739e3dd7ceb46b586944d74d3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

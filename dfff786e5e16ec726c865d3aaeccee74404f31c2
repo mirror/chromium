@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bbc37070_a85c2ac5",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPI.cpp.tmpl",
+        "patchSetId": 18
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-08-03T03:03:09Z",
+      "side": 1,
+      "message": "Is this meant to be above the license?",
+      "revId": "dfff786e5e16ec726c865d3aaeccee74404f31c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26e10c75_673a3ed2",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPIHeaders.h.tmpl",
+        "patchSetId": 18
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-08-03T03:03:09Z",
+      "side": 1,
+      "message": "Not all static any more?",
+      "revId": "dfff786e5e16ec726c865d3aaeccee74404f31c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b1776ef_ff24021b",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSShorthandPropertyAPIOffset.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-08-03T03:03:09Z",
+      "side": 1,
+      "message": "Is it worth adding a bug in the issue tracker to make sure this gets done?",
+      "revId": "dfff786e5e16ec726c865d3aaeccee74404f31c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
