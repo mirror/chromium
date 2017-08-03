@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "469127aa_8bc57795",
+        "filename": "extensions/common/api/declarative_net_request/flat_ruleset_indexer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-08-03T11:02:11Z",
+      "side": 1,
+      "message": "nit: The IndexedRule type name is a bit misleading, because the rule isn\u0027t indexed before put into the indexer. Could you rename it to something like (Extension|Parsed)?UrlRule (and update https://chromium-review.googlesource.com/c/577287 accordingly, or create a follow-up CL), and also update the variable name (here and in other places)?",
+      "revId": "a93b5f11da01e59d6d317385a9e5f5cef2269942",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8aa98d94_432cb758",
+        "filename": "extensions/common/api/declarative_net_request/flat_ruleset_indexer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-08-03T11:02:11Z",
+      "side": 1,
+      "message": "Who makes sure the lists are sorted? Could you add a comment to the header, e.g. \"The rule should be canonicalized, i.e., its domain lists should be sorted.\".\n\nAlso, the domains should be sorted in a different way. See components/url_pattern_index/url_pattern_index.cc:CompareDomains. I guess, you could expose the CompareDomains in url_pattern_index.h and use it for sorting in DNR.",
+      "revId": "a93b5f11da01e59d6d317385a9e5f5cef2269942",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcc298ae_eae2d09b",
+        "filename": "extensions/common/api/declarative_net_request/flat_ruleset_indexer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-08-03T11:02:11Z",
+      "side": 1,
+      "message": "nit: This looks a bit out of place to me, because I think this class should neither have side effects (recording histograms), nor have knowledge about manifests. How about exposing a rules_count() method and recording the histogram 1 level above from the FinishAndGetData() call site?",
+      "revId": "a93b5f11da01e59d6d317385a9e5f5cef2269942",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc07390b_f4e756ea",
+        "filename": "extensions/common/api/declarative_net_request/flat_ruleset_indexer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-08-03T11:02:11Z",
+      "side": 1,
+      "message": "nit: Please don\u0027t shorten the word. Suggestions: number_of_rules_ and rules_count_",
+      "revId": "a93b5f11da01e59d6d317385a9e5f5cef2269942",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d871d755_09f2f4f9",
+        "filename": "extensions/common/api/declarative_net_request/flat_ruleset_indexer_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-08-03T11:02:11Z",
+      "side": 1,
+      "message": "If you exposed rules_count() method then you could simplify these tests by removing histograms logic.",
+      "revId": "a93b5f11da01e59d6d317385a9e5f5cef2269942",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2028abe1_93e54b1f",
+        "filename": "extensions/common/api/declarative_net_request/flat_ruleset_indexer_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-08-03T11:02:11Z",
+      "side": 1,
+      "message": "nit1: Parens are not needed.\n\nnit2: Could you make this just like this?\n\n        return indexed_rule-\u003eid \u003d\u003d rule-\u003eid()\n            \u0026\u0026 indexed_rule-\u003epriority \u003d\u003d rule-\u003epriority()\n            \u0026\u0026 ....;",
+      "revId": "a93b5f11da01e59d6d317385a9e5f5cef2269942",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bca512d_ccb21113",
+        "filename": "extensions/common/api/declarative_net_request/flat_ruleset_indexer_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-08-03T11:02:11Z",
+      "side": 1,
+      "message": "optional nit: Does vector::insert work here? Same below for the fallback list.\n  result.insert(result.end(), ngram_to_rules-\u003erule_list()-\u003ebegin(), ...-\u003eend());\n\nAlthough, might be also 2 lines, so I don\u0027t insist.",
+      "revId": "a93b5f11da01e59d6d317385a9e5f5cef2269942",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "193ebcf5_0dbf49ed",
+        "filename": "extensions/common/api/declarative_net_request/flat_ruleset_indexer_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-08-03T11:02:11Z",
+      "side": 1,
+      "message": "nit: How about just inlining GetAllRulesFromIndex(index) here?",
+      "revId": "a93b5f11da01e59d6d317385a9e5f5cef2269942",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
