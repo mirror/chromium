@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60df2852_b1def98e",
+        "filename": "third_party/WebKit/Source/core/dom/MessagePort.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-03T17:57:31Z",
+      "side": 1,
+      "message": "This probably shouldn\u0027t be a std::vector (and more specifically I don\u0027t like how MessagePortChannelArray, MessagePortArray, and some of the other typedefs like WebMessagePortChannelArray that I now at least can remove hide both the container type and the member type...), but I\u0027m not sure... it just gets pretty confusing when vectors of a type in WebKit/common are passed around:\n- inside WebKit/source/core (probably as a Vector?)\n- though an API defined in WebKit/public (probably as a WebVector?)\n- directly to an API in WebKit/common, from code in WebKit/source/core (will need to pass as a std::vector, but depending on where the thing came from we could be dealing with any of std::vector, WebVector or Vector)\n- directly to an API in WebKit/common from code in content (easyish case, we either have a WebVector or std::vector already, so passing them to a std::vector isn\u0027t too annoying).\n\nOne way or another the code in WebKit/source/core will have to deal with all three types though it seems, and all possible conversions between them, which feels suboptimal... but keeping it as std::vector all the way through doesn\u0027t feel right either.",
+      "revId": "53fad1d3348438e24f5b55e2926734923e360d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f70a49d_f8618a4b",
+        "filename": "third_party/WebKit/common/message_port/message_port.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-08-03T17:57:31Z",
+      "side": 1,
+      "message": "this should of course be namespace blink. But then I run into the issue that we already have the other blink::MessagePort. Not sure what the best way to resolve the conflict is. Assuming having different namespaces is indeed not a good idea, I\u0027ll have to renamed one or the other.\nI could rename this one to something like MessagePortChannel (similar to the WebMessagePortChannel interface that is being removed in this CL), or I could rename the other MessagePort to something like DOMMessagePort. Not sure what is nicer/less weird. Or maybe some entirely different names...",
+      "range": {
+        "startLine": 18,
+        "startChar": 10,
+        "endLine": 18,
+        "endChar": 22
+      },
+      "revId": "53fad1d3348438e24f5b55e2926734923e360d1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
