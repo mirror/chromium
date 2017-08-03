@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f67a3c8_0e8d6677",
+        "filename": "third_party/leveldatabase/env_chromium.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-03T03:12:52Z",
+      "side": 1,
+      "message": "Do you think we could get away with the name Options here? It\u0027d be leveldb_env::Options in most code, which doesn\u0027t seem less expressive than leveldb_env::ChromiumOptions.",
+      "revId": "f8e6f0d2845f263b23ad17cc6161effff387a497",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "244d12fc_1954cf51",
+        "filename": "third_party/leveldatabase/env_chromium.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-03T03:12:52Z",
+      "side": 1,
+      "message": "How about having this take a leveldb_env::{Chromium}Options instead of leveldb::Options, to make sure that all callers use it?",
+      "revId": "f8e6f0d2845f263b23ad17cc6161effff387a497",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
