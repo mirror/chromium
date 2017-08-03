@@ -70,6 +70,30 @@
       "revId": "a1c9e3262af4ab7980008e476d6712b1223fab3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4abdbb4_bc32342a",
+        "filename": "components/simple_url_loader/simple_url_loader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-03T21:01:27Z",
+      "side": 1,
+      "message": "Is the failure even guaranteed?  What if it sends the success message, while data is still pending, and then the other process crashes?  Are we guaranteed to receive the rest of the body successfully?",
+      "parentUuid": "af1ed13e_6d100f72",
+      "range": {
+        "startLine": 88,
+        "startChar": 0,
+        "endLine": 100,
+        "endChar": 7
+      },
+      "revId": "a1c9e3262af4ab7980008e476d6712b1223fab3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
