@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dad2afaa_012e767f",
+        "filename": "third_party/WebKit/Source/core/css/themeChromiumAndroid.css",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-08-03T08:50:07Z",
+      "side": 0,
+      "message": "This is unnecessary. Android never matches select:-internal-list-box selectors in other UA stylesheet files.",
+      "revId": "08d0d71f1c04ba3856599168977b0f9bf22e1d3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d228d6c6_cf1d031f",
+        "filename": "third_party/WebKit/Source/core/css/themeMac.css",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-08-03T08:50:07Z",
+      "side": 0,
+      "message": "This is covered by the block starting at line 6.",
+      "revId": "08d0d71f1c04ba3856599168977b0f9bf22e1d3a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
