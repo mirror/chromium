@@ -121,6 +121,7 @@ ThreadState::ThreadState()
       should_flush_heap_does_not_contain_cache_(false),
       gc_state_(kNoGCScheduled),
       isolate_(nullptr),
+      wrapper_tracing_in_progress_(false),
       trace_dom_wrappers_(nullptr),
       invalidate_dead_objects_in_wrappers_marking_deque_(nullptr),
 #if defined(ADDRESS_SANITIZER)
