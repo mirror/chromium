@@ -697,6 +697,10 @@ class QUIC_EXPORT_PRIVATE QuicConnection
     return last_packet_source_address_;
   }
 
+  bool WasEverUsed() const {
+    return stats_.bytes_sent > 0 || stats_.bytes_received > 0;
+  }
+
  protected:
   // Calls cancel() on all the alarms owned by this connection.
   void CancelAllAlarms();
