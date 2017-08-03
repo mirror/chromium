@@ -51,10 +51,24 @@ void LogLowEntropyValue(int low_entropy_source_value) {
                               low_entropy_source_value);
 }
 
+int64_t ReadInstallDate(PrefService* local_state) {
+  return local_state_->GetInt64(prefs::kInstallDate);
+}
+
 class MetricsStateMetricsProvider : public MetricsProvider {
  public:
   MetricsStateMetricsProvider(PrefService* local_state)
       : local_state_(local_state) {}
+
+  void ProvideSystemProfileMetrics(SystemProfileProto* system_profile) {
+    // Reduce granularity of the enabled_date field to nearest hour.
+    system_profile->set_uma_enabled_date(RoundSecondsToHour(
+        local_state_->GetInt64(prefs::kMetricsReportingEnabledTimestamp)));
+
+    // Reduce granularity of the install_date field to nearest hour.
+    system_profile->set_install_date(
+        RoundSecondsToHour(ReadInstallDate(local_state_)));
+  }
 
   // MetricsProvider:
   void ProvideCurrentSessionData(
@@ -89,6 +103,11 @@ MetricsStateManager::MetricsStateManager(
   if (enabled_state_provider_->IsConsentGiven())
     ForceClientIdCreation();
 
+  // Set the install date if this is our first run.
+  int64_t install_date = local_state_->GetInt64(prefs::kInstallDate);
+  if (install_date == 0)
+    local_state_->SetInt64(prefs::kInstallDate, base::Time::Now().ToTimeT());
+
   DCHECK(!instance_exists_);
   instance_exists_ = true;
 }
@@ -104,6 +123,10 @@ std::unique_ptr<MetricsProvider> MetricsStateManager::GetProvider() {
 
 bool MetricsStateManager::IsMetricsReportingEnabled() {
   return enabled_state_provider_->IsReportingEnabled();
+}
+
+int64_t MetricsStateManager::GetInstallDate() {
+  return ReadInstallDate(local_state_);
 }
 
 void MetricsStateManager::ForceClientIdCreation() {
@@ -236,6 +259,7 @@ void MetricsStateManager::RegisterPrefs(PrefRegistrySimple* registry) {
   registry->RegisterInt64Pref(prefs::kMetricsReportingEnabledTimestamp, 0);
   registry->RegisterIntegerPref(prefs::kMetricsLowEntropySource,
                                 kLowEntropySourceNotSet);
+  registry->RegisterInt64Pref(prefs::kInstallDate, 0);
 
   ClonedInstallDetector::RegisterPrefs(registry);
   CachingPermutedEntropyProvider::RegisterPrefs(registry);

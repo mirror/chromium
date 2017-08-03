@@ -93,9 +93,7 @@ class MetricsLog {
   // the specified |delegating_provider|. The current environment is
   // returned as a SystemProfileProto.
   const SystemProfileProto& RecordEnvironment(
-      DelegatingProvider* delegating_provider,
-      int64_t install_date,
-      int64_t metrics_reporting_enabled_date);
+      DelegatingProvider* delegating_provider);
 
   // Loads a saved system profile and the associated metrics into the log.
   // Returns true on success. Keep calling it with fresh logs until it returns

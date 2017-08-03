@@ -260,9 +260,7 @@ void MetricsLog::WriteRealtimeStabilityAttributes(
 }
 
 const SystemProfileProto& MetricsLog::RecordEnvironment(
-    DelegatingProvider* delegating_provider,
-    int64_t install_date,
-    int64_t metrics_reporting_enabled_date) {
+    DelegatingProvider* delegating_provider) {
   DCHECK(!HasEnvironment());
 
   SystemProfileProto* system_profile = uma_proto()->mutable_system_profile();
@@ -273,13 +271,6 @@ const SystemProfileProto& MetricsLog::RecordEnvironment(
   std::string brand_code;
   if (client_->GetBrand(&brand_code))
     system_profile->set_brand_code(brand_code);
-
-  // Reduce granularity of the enabled_date field to nearest hour.
-  system_profile->set_uma_enabled_date(
-      RoundSecondsToHour(metrics_reporting_enabled_date));
-
-  // Reduce granularity of the install_date field to nearest hour.
-  system_profile->set_install_date(RoundSecondsToHour(install_date));
 
   SystemProfileProto::Hardware::CPU* cpu =
       system_profile->mutable_hardware()->mutable_cpu();
