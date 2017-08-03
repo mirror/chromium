@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c6bfccb8_7894c656",
+        "filename": "chrome/browser/vr/elements/rrect.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-08-03T19:45:01Z",
+      "side": 1,
+      "message": "1. Yeah, it shouldn\u0027t. Any element should be able to resize to fit children. I\u0027ve removed this \n and also removed the padding stuff since it\u0027s related to fitting to children and shouldn\u0027t be here.\n2. Renamed to Rect per offline discussion.\n3. With this, I think rounded corners are available on elements that need them. Aggregating seems like a worse fit here since the shader for each element needs to be updated.",
+      "parentUuid": "b212377f_78c2904d",
+      "revId": "7fc53f2100181c0f5ad8927f0418b7f49a1ae07d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "65a88068_06b546ce",
         "filename": "chrome/browser/vr/elements/rrect.h",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-03T17:12:35Z",
       "side": 1,
       "message": "I can\u0027t remember if you said the gradient capabilities were moving in here temporarily or not.  Was it temporary?  Should we comment these?",
+      "revId": "7fc53f2100181c0f5ad8927f0418b7f49a1ae07d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "823e1662_b464e61f",
+        "filename": "chrome/browser/vr/elements/rrect.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-08-03T19:45:01Z",
+      "side": 1,
+      "message": "I was hoping to leave these here permanently, actually. I\u0027d like to use the new rect class as a generic background, and (subtle) radial gradients are common.",
+      "parentUuid": "65a88068_06b546ce",
       "revId": "7fc53f2100181c0f5ad8927f0418b7f49a1ae07d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
