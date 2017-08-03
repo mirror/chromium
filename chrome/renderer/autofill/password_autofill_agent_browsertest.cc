@@ -525,6 +525,11 @@ class PasswordAutofillAgentTest : public ChromeRenderViewTest {
     return fake_driver_.called_show_pw_suggestions();
   }
 
+  bool GetCalledManualFallbackSuggestion() {
+    base::RunLoop().RunUntilIdle();
+    return fake_driver_.called_manual_fallback_suggestion();
+  }
+
   void ExpectFormSubmittedWithUsernameAndPasswords(
       const std::string& username_value,
       const std::string& password_value,
@@ -3055,6 +3060,30 @@ TEST_F(PasswordAutofillAgentTest, GaiaReauthenticationFormIgnored) {
   // Check that no information about Gaia reauthentication is not sent.
   EXPECT_FALSE(fake_driver_.called_password_forms_parsed());
   EXPECT_FALSE(fake_driver_.called_password_forms_rendered());
+}
+
+// Tests that "Show all saved passwords" option is shown on a password field.
+TEST_F(PasswordAutofillAgentTest, ShowAllSavedPasswordsTest) {
+  LoadHTML(kFormHTML);
+  SetFocused(username_element_);
+  SimulateElementClick("username");
+  EXPECT_FALSE(GetCalledManualFallbackSuggestion());
+  SetFocused(password_element_);
+  SimulateElementClick("password");
+  EXPECT_TRUE(GetCalledManualFallbackSuggestion());
+}
+
+// Tests that "Show all saved passwords" option isn't shown on credit card
+// field.
+TEST_F(PasswordAutofillAgentTest,
+       NotShowAllSavedPasswordsOnCreditCardFormTest) {
+  LoadHTML(kCreditCardFormHTML);
+  SetFocused(username_element_);
+  SimulateElementClick("username");
+  EXPECT_FALSE(GetCalledManualFallbackSuggestion());
+  SetFocused(password_element_);
+  SimulateElementClick("password");
+  EXPECT_FALSE(GetCalledManualFallbackSuggestion());
 }
 
 }  // namespace autofill

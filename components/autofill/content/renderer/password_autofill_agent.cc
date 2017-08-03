@@ -1040,6 +1040,13 @@ bool PasswordAutofillAgent::ShowSuggestions(
                                                                 frame_url);
       }
 #endif
+      if (element.IsPasswordField() &&
+          !IsCreditCardVerificationPasswordField(element) &&
+          !HasCreditCardAutocompleteAttributes(element) &&
+          !was_password_autofilled_) {
+        ManualFallbackSuggestion(element);
+        return true;
+      }
       if (ShouldShowNotSecureWarning(element)) {
         autofill_agent_->ShowNotSecureWarning(element);
         return true;
@@ -1742,6 +1749,17 @@ bool PasswordAutofillAgent::ShowSuggestionPopup(
       render_frame()->GetRenderView()->ElementBoundsInWindow(user_input));
   username_query_prefix_ = username_string;
   return CanShowSuggestion(password_info.fill_data, username_string, show_all);
+}
+
+void PasswordAutofillAgent::ManualFallbackSuggestion(
+    const blink::WebInputElement& element) {
+  FormData form;
+  FormFieldData field;
+  form_util::FindFormAndFieldForFormControlElement(element, &form, &field);
+  GetPasswordManagerDriver()->ManualFallbackSuggestion(
+      field.text_direction,
+      render_frame()->GetRenderView()->ElementBoundsInWindow(element),
+      ShouldShowNotSecureWarning(element));
 }
 
 void PasswordAutofillAgent::FrameClosing() {
