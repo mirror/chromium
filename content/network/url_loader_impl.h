@@ -27,7 +27,7 @@ struct ResourceResponse;
 class CONTENT_EXPORT URLLoaderImpl : public mojom::URLLoader,
                                      public net::URLRequest::Delegate {
  public:
-  URLLoaderImpl(NetworkContext* context,
+  URLLoaderImpl(class NetworkContext* context,
                 mojom::URLLoaderRequest url_loader_request,
                 int32_t options,
                 const ResourceRequest& request,
