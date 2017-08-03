@@ -488,6 +488,30 @@
     },
     {
       "key": {
+        "uuid": "930ff610_bb6467be",
+        "filename": "ui/views/win/hwnd_message_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2915,
+      "author": {
+        "id": 1118546
+      },
+      "writtenOn": "2017-08-03T15:40:58Z",
+      "side": 1,
+      "message": "We decide to use PointerEvent instead, and we will have plumbing on browser side in a following patch. What do you think?",
+      "parentUuid": "1ed7ba9f_0bf91e56",
+      "range": {
+        "startLine": 2915,
+        "startChar": 64,
+        "endLine": 2915,
+        "endChar": 66
+      },
+      "revId": "1903c322639529fb8f6bfd771511a0ed73ebf2d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fdf1088c_96ec3fd2",
         "filename": "ui/views/win/hwnd_message_handler.cc",
         "patchSetId": 7
