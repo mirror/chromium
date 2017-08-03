@@ -39,6 +39,7 @@ include_rules = [
     "+mozilla",
     "+platform",
     "+public/platform",
+    "+public/web/WebKit.h",
     "+skia/ext",
     "+third_party/ced/src/compact_enc_det/compact_enc_det.h",
     "+third_party/khronos",
