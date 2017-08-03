@@ -17,12 +17,15 @@
 #include "media/base/gmock_callback_support.h"
 #include "media/base/media_util.h"
 #include "media/base/mock_filters.h"
+#include "media/base/mock_media_log.h"
 #include "media/base/test_helpers.h"
 #include "media/filters/decrypting_demuxer_stream.h"
 #include "testing/gmock/include/gmock/gmock.h"
 
 using ::testing::_;
+using ::testing::HasSubstr;
 using ::testing::IsNull;
+using ::testing::InSequence;
 using ::testing::Return;
 using ::testing::SaveArg;
 using ::testing::StrictMock;
@@ -217,11 +220,14 @@ class DecryptingDemuxerStreamTest : public testing::Test {
   }
 
   void EnterWaitingForKeyState() {
+    InSequence s;
     EXPECT_CALL(*input_audio_stream_, Read(_))
         .WillRepeatedly(ReturnBuffer(encrypted_buffer_));
     EXPECT_CALL(*decryptor_, Decrypt(_, encrypted_buffer_, _))
         .WillRepeatedly(RunCallback<2>(Decryptor::kNoKey,
                                        scoped_refptr<DecoderBuffer>()));
+    EXPECT_MEDIA_LOG(HasSubstr("DecryptingDemuxerStream: no key for key ID"))
+        .Times(1);
     EXPECT_CALL(*this, OnWaitingForDecryptionKey());
     demuxer_stream_->Read(base::Bind(&DecryptingDemuxerStreamTest::BufferReady,
                                      base::Unretained(this)));
@@ -254,7 +260,7 @@ class DecryptingDemuxerStreamTest : public testing::Test {
   MOCK_METHOD0(OnWaitingForDecryptionKey, void(void));
 
   base::MessageLoop message_loop_;
-  MediaLog media_log_;
+  StrictMock<MockMediaLog> media_log_;
   std::unique_ptr<DecryptingDemuxerStream> demuxer_stream_;
   std::unique_ptr<StrictMock<MockCdmContext>> cdm_context_;
   std::unique_ptr<StrictMock<MockDecryptor>> decryptor_;
@@ -308,6 +314,7 @@ TEST_F(DecryptingDemuxerStreamTest, Initialize_CdmWithoutDecryptor) {
   AudioDecoderConfig input_config(kCodecVorbis, kSampleFormatPlanarF32,
                                   CHANNEL_LAYOUT_STEREO, 44100,
                                   EmptyExtraData(), AesCtrEncryptionScheme());
+  EXPECT_MEDIA_LOG(HasSubstr("DecryptingDemuxerStream: no decryptor")).Times(1);
   InitializeAudioAndExpectStatus(input_config, DECODER_ERROR_NOT_SUPPORTED);
 }
 
@@ -340,7 +347,9 @@ TEST_F(DecryptingDemuxerStreamTest, Read_DecryptError) {
   EXPECT_CALL(*decryptor_, Decrypt(_, encrypted_buffer_, _))
       .WillRepeatedly(RunCallback<2>(Decryptor::kError,
                                      scoped_refptr<DecoderBuffer>()));
-  ReadAndExpectBufferReadyWith(DemuxerStream::kAborted, NULL);
+  EXPECT_MEDIA_LOG(HasSubstr("DecryptingDemuxerStream: decrypt error"))
+      .Times(1);
+  ReadAndExpectBufferReadyWith(DemuxerStream::kError, nullptr);
 }
 
 // Test the case where the input is an end-of-stream buffer.
@@ -362,6 +371,9 @@ TEST_F(DecryptingDemuxerStreamTest, KeyAdded_DuringWaitingForKey) {
   Initialize();
   EnterWaitingForKeyState();
 
+  EXPECT_MEDIA_LOG(
+      HasSubstr("DecryptingDemuxerStream: key was added, resuming decrypt"))
+      .Times(1);
   EXPECT_CALL(*decryptor_, Decrypt(_, encrypted_buffer_, _))
       .WillRepeatedly(RunCallback<2>(Decryptor::kSuccess, decrypted_buffer_));
   EXPECT_CALL(*this, BufferReady(DemuxerStream::kOk, decrypted_buffer_));
@@ -375,6 +387,11 @@ TEST_F(DecryptingDemuxerStreamTest, KeyAdded_DuringPendingDecrypt) {
   Initialize();
   EnterPendingDecryptState();
 
+  EXPECT_MEDIA_LOG(HasSubstr("DecryptingDemuxerStream: no key for key ID"))
+      .Times(1);
+  EXPECT_MEDIA_LOG(
+      HasSubstr("DecryptingDemuxerStream: key was added, resuming decrypt"))
+      .Times(1);
   EXPECT_CALL(*decryptor_, Decrypt(_, encrypted_buffer_, _))
       .WillRepeatedly(RunCallback<2>(Decryptor::kSuccess, decrypted_buffer_));
   EXPECT_CALL(*this, BufferReady(DemuxerStream::kOk, decrypted_buffer_));
