@@ -46,6 +46,30 @@
       "revId": "078c590a4e403f8d0fa6fb2632b129e65e189ad0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c923778a_1bed5ce6",
+        "filename": "components/ntp_snippets/content_suggestions_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-03T14:29:58Z",
+      "side": 1,
+      "message": "Hm, thinking more about it, you don\u0027t really lose much: It\u0027s also possible to (try to) call a OnceCallback twice; the second try will of course fail because the callback has been nulled out.\nWith this idiom, pretty much the same happens: The second try will fail, because the passed-in OnceCallback is null. The downside is just that things are less obvious.",
+      "parentUuid": "4283bdc4_6776d746",
+      "range": {
+        "startLine": 218,
+        "startChar": 74,
+        "endLine": 218,
+        "endChar": 0
+      },
+      "revId": "078c590a4e403f8d0fa6fb2632b129e65e189ad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

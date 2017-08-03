@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45b8a45a_4bb2078f",
+        "filename": "components/ntp_snippets/mock_content_suggestions_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-03T14:29:58Z",
+      "side": 1,
+      "message": "override?",
+      "range": {
+        "startLine": 65,
+        "startChar": 59,
+        "endLine": 65,
+        "endChar": 0
+      },
+      "revId": "c8fc2818452440633923f2d0e6853dfe4a8abd83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac72760b_67635d73",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_scheduler_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-03T14:29:58Z",
+      "side": 1,
+      "message": "Also here: override?",
+      "range": {
+        "startLine": 103,
+        "startChar": 60,
+        "endLine": 103,
+        "endChar": 0
+      },
+      "revId": "c8fc2818452440633923f2d0e6853dfe4a8abd83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
