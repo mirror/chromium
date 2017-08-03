@@ -39,6 +39,30 @@
       "revId": "c86a947f3ed9a4856e39e3bb2689770baaa20272",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed15f93b_9f71576b",
+        "filename": "chrome/browser/ui/omnibox/omnibox_view_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-03T19:54:25Z",
+      "side": 1,
+      "message": "It looks like the only reason we have observers at all is to quit runloops.\n\nIf we can replace the RunMessageLoop() calls in this test with some kind of \"run until idle\" calls, I think we can get rid of both the history observer and notification observer overrides, and eliminate the actual observer objects from this method and the class.",
+      "parentUuid": "af074067_2f64b79d",
+      "range": {
+        "startLine": 332,
+        "startChar": 6,
+        "endLine": 334,
+        "endChar": 36
+      },
+      "revId": "c86a947f3ed9a4856e39e3bb2689770baaa20272",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
