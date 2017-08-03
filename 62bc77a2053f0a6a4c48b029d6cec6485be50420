@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "839e5f42_faa906c8",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PropertyTreeManager.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-08-03T01:53:17Z",
+      "side": 1,
+      "message": "This loop is for ensure correctness because effects with exotic blend mode cannot share synthesized clip with its siblings. Comments added.\n\nLine 409~410 is for emitting the actual mask layer at the end of the masked group.",
+      "parentUuid": "9bb11392_d3a54e2b",
+      "revId": "62bc77a2053f0a6a4c48b029d6cec6485be50420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff6028c7_861989af",
         "filename": "third_party/WebKit/Source/platform/graphics/compositing/PropertyTreeManager.cpp",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "62bc77a2053f0a6a4c48b029d6cec6485be50420",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a22055b5_7146beca",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PropertyTreeManager.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-08-03T01:53:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff6028c7_861989af",
+      "revId": "62bc77a2053f0a6a4c48b029d6cec6485be50420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
