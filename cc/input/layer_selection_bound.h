@@ -22,6 +22,8 @@ struct CC_EXPORT LayerSelectionBound {
   gfx::Point edge_top;
   gfx::Point edge_bottom;
   int layer_id;
+  // Whether this bound is hidden (clipped out/occluded).
+  bool hidden;
 
   bool operator==(const LayerSelectionBound& other) const;
   bool operator!=(const LayerSelectionBound& other) const;
