@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8b5a4b3d_51ee2e24",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-08-03T02:55:59Z",
+      "side": 1,
+      "message": "Much better! Thanks :)",
+      "parentUuid": "53ce690c_6286bd02",
+      "revId": "be75385dcb56f6c064f1f70689b9859a05e77798",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8afd5234_520dd25e",
         "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "be75385dcb56f6c064f1f70689b9859a05e77798",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0924b47_06724f5c",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-08-03T02:55:59Z",
+      "side": 1,
+      "message": "Totally agree.",
+      "parentUuid": "8afd5234_520dd25e",
+      "revId": "be75385dcb56f6c064f1f70689b9859a05e77798",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6a621d42_bf6cac46",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-08-03T02:55:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41a3d3d3_2559e85c",
+      "revId": "be75385dcb56f6c064f1f70689b9859a05e77798",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b064ad0_cdb2fe16",
         "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
         "patchSetId": 10
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-02T16:19:33Z",
       "side": 1,
       "message": "Nit: I think rather than calling ResetLayout() here you could just RemoveAllChildViews(), which should empty the layout manager but leave the column definitions in place?  Then the code in ResetLayout() could be done in the constructor instead.  Not 100% sure on this.",
+      "revId": "be75385dcb56f6c064f1f70689b9859a05e77798",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccdf94d8_c24c0f4e",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-08-03T02:55:59Z",
+      "side": 1,
+      "message": "I tried but it didn\u0027t work. Even though we remove children from it\u0027s parent, GridLayout doesn\u0027t do anything to update it\u0027s columns or rows. \n\nhttps://cs.chromium.org/chromium/src/ui/views/layout/grid_layout.cc?sq\u003dpackage:chromium\u0026l\u003d761",
+      "parentUuid": "6b064ad0_cdb2fe16",
       "revId": "be75385dcb56f6c064f1f70689b9859a05e77798",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -84,6 +156,24 @@
       "revId": "be75385dcb56f6c064f1f70689b9859a05e77798",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d69940ae_218879c1",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-08-03T02:55:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7faa9c5_a8ef0cb1",
+      "revId": "be75385dcb56f6c064f1f70689b9859a05e77798",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

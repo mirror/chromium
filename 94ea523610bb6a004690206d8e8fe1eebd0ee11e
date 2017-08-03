@@ -230,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "d77ca4f1_37d95b42",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-08-03T02:55:59Z",
+      "side": 1,
+      "message": "I looked over table control but I\u0027m not sure table control is best for us. Like you said it\u0027s appearance is far from what we need here. And it\u0027s focusing on selecting cells needed for apps like spreadsheet. So I guess it would be too much to do. Instead, I think it\u0027d be great if GridLayout can update it\u0027s rows and columns on GridLayout::ViewRemoved(). This, I also tried, but was too complicated for me. Maybe need help from others.",
+      "parentUuid": "333a2893_97e0b16e",
+      "revId": "94ea523610bb6a004690206d8e8fe1eebd0ee11e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fea3d437_70daa2da",
         "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
         "patchSetId": 8
@@ -315,6 +333,24 @@
       "revId": "94ea523610bb6a004690206d8e8fe1eebd0ee11e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03a99b52_8d9b51a4",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1232454
+      },
+      "writtenOn": "2017-08-03T02:55:59Z",
+      "side": 1,
+      "message": "You\u0027re absolutely right. Done.",
+      "parentUuid": "f28ebb2d_572a5886",
+      "revId": "94ea523610bb6a004690206d8e8fe1eebd0ee11e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
