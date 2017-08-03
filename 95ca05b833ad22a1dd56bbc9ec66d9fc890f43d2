@@ -70,6 +70,30 @@
       "revId": "95ca05b833ad22a1dd56bbc9ec66d9fc890f43d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "311a884e_42cfc6f6",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 2046,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-08-03T22:15:01Z",
+      "side": 1,
+      "message": "As per the discussion / the main problem happens when native item is the last committed item, so this should be gated by that.",
+      "parentUuid": "f3909549_c4b3e774",
+      "range": {
+        "startLine": 2046,
+        "startChar": 29,
+        "endLine": 2046,
+        "endChar": 51
+      },
+      "revId": "95ca05b833ad22a1dd56bbc9ec66d9fc890f43d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
