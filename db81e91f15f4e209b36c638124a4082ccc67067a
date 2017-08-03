@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "3f3f7436_8c1b841e",
+        "filename": "base/process/process_util_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-03T05:19:06Z",
+      "side": 1,
+      "message": "If you wanted to test that these were the correct values rather than just a default stdin/stdout, maybe you could pipe() and write something from the parent instead.",
+      "revId": "db81e91f15f4e209b36c638124a4082ccc67067a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e389855_22146baa",
         "filename": "base/process/process_util_unittest.cc",
         "patchSetId": 1
@@ -13,6 +30,52 @@
       "writtenOn": "2017-08-03T01:45:32Z",
       "side": 1,
       "message": "This test doesn\u0027t actually catch the problem under Fuchsia, because Fuchsia\u0027s initialization automagically connects un-mapped stdio FDs to the null device - I can\u0027t see a way to test for that failure-mode, unfortunately.",
+      "revId": "db81e91f15f4e209b36c638124a4082ccc67067a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aa907b1_3ee6d685",
+        "filename": "base/process/process_util_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-03T05:19:06Z",
+      "side": 1,
+      "message": "Huh, I didn\u0027t know there was a /dev on Fuchsia. I guess it\u0027s probably needed for compat.",
+      "range": {
+        "startLine": 695,
+        "startChar": 23,
+        "endLine": 695,
+        "endChar": 32
+      },
+      "revId": "db81e91f15f4e209b36c638124a4082ccc67067a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfa89461_22d90f9d",
+        "filename": "base/process/process_util_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-08-03T05:19:06Z",
+      "side": 1,
+      "message": "fyi, ridiculous backwards style is no longer required, the arguments are just value1 and value2 now, not expected and actual.\n\nDo you mean to CHECK this rather than just ASSERT in this function for some reason?",
+      "range": {
+        "startLine": 696,
+        "startChar": 2,
+        "endLine": 696,
+        "endChar": 11
+      },
       "revId": "db81e91f15f4e209b36c638124a4082ccc67067a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
