@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "e139cddc_9f9dbd04",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-03T18:36:18Z",
+      "side": 1,
+      "message": "We wouldn\u0027t be losing data as the OnDataAvailable function only consumes what it can.",
+      "parentUuid": "7767dccd_e6813b4f",
+      "revId": "a37f401186870bdd4b561e853e30af5a9e5f7866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1bc31c56_c200116a",
         "filename": "content/browser/url_loader_factory_getter.cc",
         "patchSetId": 5
@@ -47,6 +65,24 @@
       "writtenOn": "2017-08-03T17:52:07Z",
       "side": 1,
       "message": "I think we can avoid making this class know about consumers who want to use it. i.e. ChromeAppCacheService can have an initialize method that StoragePartition calls to pass this in. Similar to how the service worker code does it:\nhttps://cs.chromium.org/chromium/src/content/browser/storage_partition_impl.cc?rcl\u003d891e65c5fcdd9e9639a60ee36a53bdbb4121319c\u0026l\u003d524",
+      "revId": "a37f401186870bdd4b561e853e30af5a9e5f7866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06f8f054_2d49712f",
+        "filename": "content/browser/url_loader_factory_getter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-03T18:36:18Z",
+      "side": 1,
+      "message": "Thanks. Will do that.",
+      "parentUuid": "1bc31c56_c200116a",
       "revId": "a37f401186870bdd4b561e853e30af5a9e5f7866",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
