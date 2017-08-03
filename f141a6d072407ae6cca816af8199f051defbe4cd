@@ -46,6 +46,30 @@
       "revId": "f141a6d072407ae6cca816af8199f051defbe4cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9daebf44_0b6b6b29",
+        "filename": "ui/app_list/views/app_list_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1136699
+      },
+      "writtenOn": "2017-08-03T00:14:14Z",
+      "side": 1,
+      "message": "Please add  TODO(bug): description here.\n\nand mark bug as stable release blocker.",
+      "parentUuid": "4da0f368_8a9cd463",
+      "range": {
+        "startLine": 437,
+        "startChar": 10,
+        "endLine": 437,
+        "endChar": 20
+      },
+      "revId": "f141a6d072407ae6cca816af8199f051defbe4cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
