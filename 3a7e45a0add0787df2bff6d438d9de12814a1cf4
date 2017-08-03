@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef517661_592fd3f8",
+        "filename": "content/browser/frame_host/cross_process_frame_connector.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-08-03T14:37:35Z",
+      "side": 1,
+      "message": "Are you sure the view is guaranteed to be non-null? Usually calls to the RWHV needs to check its existence, due to the lifetime being attached to the renderer process.",
+      "revId": "3a7e45a0add0787df2bff6d438d9de12814a1cf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
