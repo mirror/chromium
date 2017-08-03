@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2c31c3d2_decabd1a",
+        "filename": "chrome/browser/media/router/discovery/media_sink_discovery_metrics.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-03T00:42:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5556425_1b6ccf59",
+      "revId": "041d35fa530b9f5b98439f3b53b08cb23e7f8997",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f20bb79c_e3fe5d9c",
         "filename": "chrome/browser/media/router/discovery/media_sink_discovery_metrics.h",
         "patchSetId": 1
@@ -39,6 +57,30 @@
       "revId": "041d35fa530b9f5b98439f3b53b08cb23e7f8997",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b157855_9f28da15",
+        "filename": "chrome/browser/media/router/discovery/media_sink_discovery_metrics.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-03T00:42:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f20bb79c_e3fe5d9c",
+      "range": {
+        "startLine": 21,
+        "startChar": 7,
+        "endLine": 21,
+        "endChar": 37
+      },
+      "revId": "041d35fa530b9f5b98439f3b53b08cb23e7f8997",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -79,6 +121,48 @@
       "revId": "041d35fa530b9f5b98439f3b53b08cb23e7f8997",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "272faea4_4b8a50a0",
+        "filename": "chrome/browser/media/router/discovery/media_sink_discovery_metrics.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-03T00:42:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a517034_e77b82b6",
+      "range": {
+        "startLine": 25,
+        "startChar": 15,
+        "endLine": 25,
+        "endChar": 32
+      },
+      "revId": "041d35fa530b9f5b98439f3b53b08cb23e7f8997",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1b428194_c37158f8",
+        "filename": "chrome/browser/media/router/discovery/media_sink_discovery_metrics.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-08-03T00:42:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "603f9ca6_56b65b4f",
+      "revId": "041d35fa530b9f5b98439f3b53b08cb23e7f8997",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
