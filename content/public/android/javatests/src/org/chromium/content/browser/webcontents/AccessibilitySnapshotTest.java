@@ -308,7 +308,7 @@ public class AccessibilitySnapshotTest {
     @SmallTest
     public void testRequestAccessibilitySnapshotPasswordField() throws Throwable {
         final String data =
-                "<html><body><input id='input' type='password' value='foo'></body></html>";
+                "<html><body><input id='input' type='password' value='fooq'></body></html>";
         AccessibilitySnapshotNode root = receiveAccessibilitySnapshot(data, null);
         Assert.assertEquals(1, root.children.size());
         Assert.assertEquals("", root.text);
