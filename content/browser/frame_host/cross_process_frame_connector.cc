@@ -20,6 +20,7 @@
 #include "content/browser/renderer_host/render_widget_host_input_event_router.h"
 #include "content/browser/renderer_host/render_widget_host_view_base.h"
 #include "content/common/frame_messages.h"
+#include "content/public/browser/render_widget_host_view.h"
 #include "gpu/ipc/common/gpu_messages.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
 #include "ui/gfx/geometry/dip_util.h"
@@ -285,26 +286,33 @@ void CrossProcessFrameConnector::OnVisibilityChanged(bool visible) {
   if (!view_)
     return;
 
+  FrameTreeNode* proxy_node =
+      frame_proxy_in_parent_renderer_->frame_tree_node();
+
   // If there is an inner WebContents, it should be notified of the change in
   // the visibility. The Show/Hide methods will not be called if an inner
   // WebContents exists since the corresponding WebContents will itself call
   // Show/Hide on all the RenderWidgetHostViews (including this) one.
-  if (frame_proxy_in_parent_renderer_->frame_tree_node()
-          ->render_manager()
-          ->ForInnerDelegate()) {
+  if (proxy_node->render_manager()->ForInnerDelegate()) {
     RenderWidgetHostImpl::From(view_->GetRenderWidgetHost())
         ->delegate()
         ->OnRenderFrameProxyVisibilityChanged(visible);
     return;
   }
 
-  if (visible &&
-      !RenderWidgetHostImpl::From(view_->GetRenderWidgetHost())
-           ->delegate()
-           ->IsHidden()) {
-    view_->Show();
-  } else if (!visible) {
-    view_->Hide();
+  // Also notify the child frames' views.
+  for (auto* node : proxy_node->frame_tree()->SubtreeNodes(proxy_node)) {
+    RenderFrameHostImpl* frame_host = node->current_frame_host();
+    RenderWidgetHostView* view =
+        frame_host->is_local_root() ? frame_host->GetView() : nullptr;
+    if (view) {
+      if (visible &&
+          !frame_host->GetRenderWidgetHost()->delegate()->IsHidden()) {
+        view->Show();
+      } else {
+        view->Hide();
+      }
+    }
   }
 }
 
