@@ -202,13 +202,6 @@ void VrGLThread::SetWebVrMode(bool enabled, bool show_toast) {
                                      weak_scene_manager_, enabled, show_toast));
 }
 
-void VrGLThread::SetWebVrSecureOrigin(bool secure) {
-  WaitUntilThreadStarted();
-  task_runner()->PostTask(FROM_HERE,
-                          base::Bind(&vr::UiSceneManager::SetWebVrSecureOrigin,
-                                     weak_scene_manager_, secure));
-}
-
 void VrGLThread::SetAudioCapturingIndicator(bool enabled) {
   task_runner()->PostTask(
       FROM_HERE, base::Bind(&vr::UiSceneManager::SetAudioCapturingIndicator,

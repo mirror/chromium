@@ -25,10 +25,12 @@
 #include "chrome/browser/vr/elements/ui_texture.h"
 #include "chrome/browser/vr/elements/url_bar.h"
 #include "chrome/browser/vr/target_property.h"
+#include "chrome/browser/vr/toolbar_state.h"
 #include "chrome/browser/vr/ui_browser_interface.h"
 #include "chrome/browser/vr/ui_scene.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/vector_icons/vector_icons.h"
+#include "content/public/common/origin_util.h"
 #include "ui/gfx/transform_util.h"
 
 namespace vr {
@@ -803,6 +805,7 @@ void UiSceneManager::OnExitPromptChoice(bool chose_exit) {
 }
 
 void UiSceneManager::SetToolbarState(const ToolbarState& state) {
+  SetWebVrSecureOrigin(content::IsOriginSecure(state.gurl));
   url_bar_->SetToolbarState(state);
   transient_url_bar_->SetToolbarState(state);
 }
