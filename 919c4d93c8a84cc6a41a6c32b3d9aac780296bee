@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16e26608_b2c406d2",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 1117469
+      },
+      "writtenOn": "2017-08-03T17:15:57Z",
+      "side": 1,
+      "message": "Does this properly handle the localhost case?  Not showing the warnings on a locally-hosted test page used by developers was originally a requirement of Brandon\u0027s.  When I tried driving the warnings of SecurityLevel, I didn\u0027t think it was sensitive to this.",
+      "revId": "919c4d93c8a84cc6a41a6c32b3d9aac780296bee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
