@@ -240,10 +240,6 @@ class CORE_EXPORT EventHandler final
 
   void NotifyElementActivated();
 
-  RefPtr<UserGestureToken> TakeLastMouseDownGestureToken() {
-    return std::move(last_mouse_down_user_gesture_token_);
-  }
-
   SelectionController& GetSelectionController() const {
     return *selection_controller_;
   }
@@ -375,8 +371,6 @@ class CORE_EXPORT EventHandler final
   bool should_only_fire_drag_over_event_;
 
   Member<HTMLFrameSetElement> frame_set_being_resized_;
-
-  RefPtr<UserGestureToken> last_mouse_down_user_gesture_token_;
 
   Member<ScrollManager> scroll_manager_;
   Member<MouseEventManager> mouse_event_manager_;

@@ -430,11 +430,6 @@ void WebViewImpl::HandleMouseDown(LocalFrame& main_frame,
 
   PageWidgetEventHandler::HandleMouseDown(main_frame, event);
 
-  if (event.button == WebMouseEvent::Button::kLeft && mouse_capture_node_) {
-    mouse_capture_gesture_token_ =
-        main_frame.GetEventHandler().TakeLastMouseDownGestureToken();
-  }
-
   if (page_popup_ && page_popup &&
       page_popup_->HasSamePopupClient(page_popup.Get())) {
     // That click triggered a page popup that is the same as the one we just
@@ -2181,12 +2176,12 @@ WebInputEventResult WebViewImpl::HandleInputEvent(
         gesture_indicator =
             WTF::WrapUnique(new UserGestureIndicator(UserGestureToken::Create(
                 &node->GetDocument(), UserGestureToken::kNewGesture)));
-        mouse_capture_gesture_token_ = gesture_indicator->CurrentToken();
         break;
       case WebInputEvent::kMouseUp:
         event_type = EventTypeNames::mouseup;
-        gesture_indicator = WTF::WrapUnique(
-            new UserGestureIndicator(std::move(mouse_capture_gesture_token_)));
+        gesture_indicator =
+            WTF::WrapUnique(new UserGestureIndicator(UserGestureToken::Create(
+                &node->GetDocument(), UserGestureToken::kNewGesture)));
         break;
       default:
         NOTREACHED();

@@ -136,7 +136,6 @@ class CORE_EXPORT WebFrameWidgetBase
   LocalFrame* FocusedLocalFrameInWidget() const;
 
   static bool ignore_input_events_;
-  RefPtr<UserGestureToken> pointer_lock_gesture_token_;
 
   friend class WebViewImpl;
 };

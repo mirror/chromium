@@ -247,7 +247,6 @@ void WebFrameWidgetBase::DidNotAcquirePointerLock() {
 }
 
 void WebFrameWidgetBase::DidLosePointerLock() {
-  pointer_lock_gesture_token_.Clear();
   GetPage()->GetPointerLockController().DidLosePointerLock();
 }
 
@@ -289,12 +288,15 @@ void WebFrameWidgetBase::PointerLockMouseEvent(
                                         .GetElement()
                                         ->GetDocument(),
                                    UserGestureToken::kNewGesture)));
-      pointer_lock_gesture_token_ = gesture_indicator->CurrentToken();
       break;
     case WebInputEvent::kMouseUp:
       event_type = EventTypeNames::mouseup;
-      gesture_indicator = WTF::WrapUnique(
-          new UserGestureIndicator(std::move(pointer_lock_gesture_token_)));
+      gesture_indicator = WTF::WrapUnique(new UserGestureIndicator(
+          UserGestureToken::Create(&GetPage()
+                                        ->GetPointerLockController()
+                                        .GetElement()
+                                        ->GetDocument(),
+                                   UserGestureToken::kNewGesture)));
       break;
     case WebInputEvent::kMouseMove:
       event_type = EventTypeNames::mousemove;

@@ -81,7 +81,6 @@ class LinkHighlightImpl;
 class PageOverlay;
 class PageScaleConstraintsSet;
 class PaintLayerCompositor;
-class UserGestureToken;
 class ValidationMessageClient;
 class WebActiveGestureAnimation;
 class WebDevToolsAgentImpl;
@@ -655,7 +654,6 @@ class CORE_EXPORT WebViewImpl final
 
   // If set, the (plugin) node which has mouse capture.
   Persistent<Node> mouse_capture_node_;
-  RefPtr<UserGestureToken> mouse_capture_gesture_token_;
 
   WebLayerTreeView* layer_tree_view_;
   std::unique_ptr<CompositorAnimationHost> animation_host_;
