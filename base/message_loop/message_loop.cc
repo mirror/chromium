@@ -232,13 +232,9 @@ Closure MessageLoop::QuitWhenIdleClosure() {
 }
 
 void MessageLoop::SetNestableTasksAllowed(bool allowed) {
-  if (allowed) {
+  if (allowed)
     CHECK(RunLoop::IsNestingAllowedOnCurrentThread());
 
-    // Kick the native pump just in case we enter a OS-driven nested message
-    // loop.
-    pump_->ScheduleWork();
-  }
   nestable_tasks_allowed_ = allowed;
 }
 
@@ -347,6 +343,15 @@ void MessageLoop::ClearTaskRunnerForTesting() {
 
 void MessageLoop::Run() {
   DCHECK_EQ(this, current());
+
+  if (NestableTasksAllowed()) {
+    // Message pumps on other platforms like Mac need an explicit request to
+    // process work when nested, otherwise they'll only wait for OS messages.
+    ReloadWorkQueue();
+    if (!work_queue_.empty())
+      ScheduleWork();
+  }
+
   pump_->Run(this);
 }
 
