@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0cc14635_2cb52606",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1106664
+      },
+      "writtenOn": "2017-08-03T02:21:09Z",
+      "side": 1,
+      "message": "Could this be better named? It seems to be \"Document survived 10 GCs.\" That\u0027s probably fine in many pages.",
+      "revId": "da09175cb1ae5bd4debc04a91bc21d7da9733418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d667c15a_1fb10912",
+        "filename": "third_party/WebKit/Source/core/dom/Document.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1106664
+      },
+      "writtenOn": "2017-08-03T02:21:09Z",
+      "side": 1,
+      "message": "These need sorting.",
+      "revId": "da09175cb1ae5bd4debc04a91bc21d7da9733418",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
