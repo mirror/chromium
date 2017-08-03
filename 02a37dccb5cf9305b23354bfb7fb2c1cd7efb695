@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "f100977c_0be8c24c",
+        "filename": "components/ntp_tiles/popular_sites_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-08-03T08:42:34Z",
+      "side": 1,
+      "message": "The zero case is clearly an invalid section to propagate to upper layers. You might still want to parse the rest.",
+      "parentUuid": "90a95fb9_27e17ed5",
+      "range": {
+        "startLine": 176,
+        "startChar": 64,
+        "endLine": 176,
+        "endChar": 0
+      },
+      "revId": "02a37dccb5cf9305b23354bfb7fb2c1cd7efb695",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d0b3fae_74cb8ab0",
         "filename": "components/ntp_tiles/popular_sites_impl.cc",
         "patchSetId": 4
@@ -202,6 +226,30 @@
       "side": 1,
       "message": "I changed the WARNING to DFATAL. That way, tests which are not set up properly will crash. Stale cashes or spontaneous rollbacks to V5 will still work then.\n(I would be less persistent if server and client would always roll at the same time.)",
       "parentUuid": "065c72d3_bbb5b5df",
+      "range": {
+        "startLine": 211,
+        "startChar": 48,
+        "endLine": 211,
+        "endChar": 0
+      },
+      "revId": "02a37dccb5cf9305b23354bfb7fb2c1cd7efb695",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8da6332b_74578212",
+        "filename": "components/ntp_tiles/popular_sites_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1176649
+      },
+      "writtenOn": "2017-08-03T08:42:34Z",
+      "side": 1,
+      "message": "I have the impression this is too smart and unnecessary.\n- Stale cache: Do you mean from prefs? You\u0027re right about the need to handle that, but I think what we should do is to store the version in prefs (and discard prefs in case of version mismatch). WDYT?\n\n- Rollbacks to V5: I don\u0027t follow what you mean here unless it refers to stale caches / prefs.",
+      "parentUuid": "8c5e6a0b_cc4fa5c8",
       "range": {
         "startLine": 211,
         "startChar": 48,
