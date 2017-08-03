@@ -22,6 +22,30 @@
       "revId": "510c82ae53fddd09592d31eda20b4fea223984d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f442632_6ff85756",
+        "filename": "chrome/browser/ui/views/payments/shipping_address_editor_view_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-03T11:33:52Z",
+      "side": 1,
+      "message": "Indirectly, yes. Autofill profile uses i18n::addressinput::* formatting functions. The profile list does not use this particular function. It\u0027s the same implementation under the hood, though.",
+      "parentUuid": "94a27deb_606ba0eb",
+      "range": {
+        "startLine": 135,
+        "startChar": 4,
+        "endLine": 135,
+        "endChar": 57
+      },
+      "revId": "510c82ae53fddd09592d31eda20b4fea223984d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
