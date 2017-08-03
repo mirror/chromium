@@ -11,16 +11,17 @@
 namespace mojo {
 
 template <>
-struct StructTraits<blink_common::mojom::MessagePortMessage::DataView,
-                    blink_common::MessagePortMessage> {
+struct BLINK_COMMON_EXPORT
+    StructTraits<blink_common::mojom::MessagePortMessage::DataView,
+                 blink_common::MessagePortMessage> {
   static ConstCArray<uint8_t> encoded_message(
       blink_common::MessagePortMessage& input) {
     return input.encoded_message;
   }
 
-  static std::vector<mojo::ScopedMessagePipeHandle>& ports(
+  static std::vector<mojo::ScopedMessagePipeHandle> ports(
       blink_common::MessagePortMessage& input) {
-    return input.ports;
+    return blink_common::MessagePort::ReleaseHandles(input.ports);
   }
 
   static bool Read(blink_common::mojom::MessagePortMessage::DataView data,

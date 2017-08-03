@@ -24,9 +24,11 @@ class BroadcastChannelProvider::Connection
              blink::mojom::BroadcastChannelClientAssociatedRequest connection,
              BroadcastChannelProvider* service);
 
-  void OnMessage(const std::vector<uint8_t>& message) override;
-  void MessageToClient(const std::vector<uint8_t>& message) const {
-    client_->OnMessage(message);
+  void OnMessage(blink_common::MessagePortMessage message) override;
+  void MessageToClient(const blink_common::MessagePortMessage& message) const {
+    blink_common::MessagePortMessage msg;
+    msg.encoded_message = message.encoded_message;
+    client_->OnMessage(std::move(msg));
   }
   const url::Origin& origin() const { return origin_; }
   const std::string& name() const { return name_; }
@@ -59,7 +61,12 @@ BroadcastChannelProvider::Connection::Connection(
 }
 
 void BroadcastChannelProvider::Connection::OnMessage(
-    const std::vector<uint8_t>& message) {
+    blink_common::MessagePortMessage message) {
+  if (!message.ports.empty()) {
+    mojo::ReportBadMessage(
+        "BroadcastChannel messages should not contain ports");
+    return;
+  }
   service_->ReceivedMessageOnConnection(this, message);
 }
 
@@ -102,7 +109,7 @@ void BroadcastChannelProvider::UnregisterConnection(Connection* c) {
 
 void BroadcastChannelProvider::ReceivedMessageOnConnection(
     Connection* c,
-    const std::vector<uint8_t>& message) {
+    const blink_common::MessagePortMessage& message) {
   auto& connections = connections_[c->origin()];
   for (auto it = connections.lower_bound(c->name()),
             end = connections.upper_bound(c->name());
