@@ -3,8 +3,12 @@
 // found in the LICENSE file.
 
 #include "cc/paint/paint_image.h"
+
 #include "base/atomic_sequence_num.h"
+#include "base/memory/ptr_util.h"
+#include "cc/paint/paint_image_generator.h"
 #include "cc/paint/paint_record.h"
+#include "cc/paint/skia_paint_image_generator.h"
 #include "ui/gfx/skia_util.h"
 
 namespace cc {
@@ -24,7 +28,9 @@ PaintImage::PaintImage(Id id,
       animation_type_(animation_type),
       completion_state_(completion_state),
       frame_count_(frame_count),
-      is_multipart_(is_multipart) {}
+      is_multipart_(is_multipart) {
+  SanityCheckData();
+}
 PaintImage::PaintImage(const PaintImage& other) = default;
 PaintImage::PaintImage(PaintImage&& other) = default;
 PaintImage::~PaintImage() = default;
@@ -50,6 +56,7 @@ PaintImage PaintImage::CloneWithSkImage(sk_sp<SkImage> new_image) const {
   result.cached_sk_image_ = nullptr;
   result.paint_record_ = nullptr;
   result.paint_record_rect_ = gfx::Rect();
+  result.paint_image_generator_ = nullptr;
   return result;
 }
 
@@ -64,8 +71,26 @@ const sk_sp<SkImage>& PaintImage::GetSkImage() const {
         ToSkPicture(paint_record_, gfx::RectToSkRect(paint_record_rect_)),
         SkISize::Make(paint_record_rect_.width(), paint_record_rect_.height()),
         nullptr, nullptr, SkImage::BitDepth::kU8, SkColorSpace::MakeSRGB());
+  } else if (paint_image_generator_) {
+    cached_sk_image_ = SkImage::MakeFromGenerator(
+        base::MakeUnique<SkiaPaintImageGenerator>(paint_image_generator_));
   }
   return cached_sk_image_;
+}
+
+void PaintImage::SanityCheckData() const {
+#if DCHECK_IS_ON()
+  if (sk_image_) {
+    DCHECK(!paint_record_);
+    DCHECK(!paint_image_generator_);
+  } else if (paint_record_) {
+    DCHECK(!sk_image_);
+    DCHECK(!paint_image_generator_);
+  } else if (paint_image_generator_) {
+    DCHECK(!sk_image_);
+    DCHECK(!paint_record_);
+  }
+#endif
 }
 
 }  // namespace cc
