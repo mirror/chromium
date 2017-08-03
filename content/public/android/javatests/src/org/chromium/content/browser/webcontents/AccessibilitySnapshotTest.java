@@ -317,3 +317,4 @@ public class AccessibilitySnapshotTest {
         Assert.assertEquals("•••", grandchild.text);
     }
 }
+
