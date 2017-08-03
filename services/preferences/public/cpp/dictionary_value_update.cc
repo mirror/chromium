@@ -119,18 +119,6 @@ void DictionaryValueUpdate::SetDoubleWithoutPathExpansion(
   SetWithoutPathExpansion(path, base::MakeUnique<base::Value>(in_value));
 }
 
-void DictionaryValueUpdate::SetStringWithoutPathExpansion(
-    base::StringPiece path,
-    base::StringPiece in_value) {
-  SetWithoutPathExpansion(path, base::MakeUnique<base::Value>(in_value));
-}
-
-void DictionaryValueUpdate::SetStringWithoutPathExpansion(
-    base::StringPiece path,
-    const base::string16& in_value) {
-  SetWithoutPathExpansion(path, base::MakeUnique<base::Value>(in_value));
-}
-
 std::unique_ptr<DictionaryValueUpdate>
 DictionaryValueUpdate::SetDictionaryWithoutPathExpansion(
     base::StringPiece path,
