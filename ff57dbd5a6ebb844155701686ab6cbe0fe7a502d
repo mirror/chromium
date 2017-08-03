@@ -16,6 +16,24 @@
       "revId": "ff57dbd5a6ebb844155701686ab6cbe0fe7a502d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee10ad34_c3b9ff84",
+        "filename": "content/public/test/navigation_throttle_inserter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-08-03T16:29:42Z",
+      "side": 1,
+      "message": "Renamed to TestNavigationThrottleInserter.",
+      "parentUuid": "9b7e2487_e3057245",
+      "revId": "ff57dbd5a6ebb844155701686ab6cbe0fe7a502d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
