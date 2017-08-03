@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<body>
+<script src="../../../resources/testharness.js"></script>
+<script src="../../../resources/testharnessreport.js"></script>
+<script>
+test(t => {
+  var result = window.open('about:blank', '_blank');
+  assert_equals(result, undefined);
+}, "Test that presentation receiver pages have the popups sandboxing flag set.");
+
+<!-- test(t => { -->
+<!--   var result = alert("Yay!"); -->
+<!--   assert_equals(result, undefined); -->
+<!-- }, "Test that in presentation receiver pages, alert() returns synchronously without blocking on user input."); -->
+
+<!-- test(t => { -->
+<!--   var result = print(); -->
+<!--   assert_equals(result, undefined); -->
+<!-- }, "Test that in presentation receiver pages, print() returns synchronously without blocking on user input."); -->
+
+<!-- test(t => { -->
+<!--   var result = confirm("Question?"); -->
+<!--   assert_equals(result, true); -->
+<!-- }, "Test that in presentation receiver pages, confirm() returns 'true' (in our test environment)."); -->
+
+<!-- test(t => { -->
+<!--   var result = prompt("Question?"); -->
+<!--   assert_equals(result, null); -->
+<!-- }, "Test that in presentation receiver pages, prompt() returns 'null' synchronously without blocking on user input."); -->
+
+<!-- test(t => { -->
+<!--   try { -->
+<!--     top.location = "navigation-changed-iframe.html"; -->
+<!--     assert_unreached("Top navigation should have been blocked!"); -->
+<!--   } catch (e) { -->
+<!--     assert_equals(e.name, "SecurityError"); -->
+<!--   } -->
+<!-- }, "Test that in presentation receiver pages, top navigation is blocked."); -->
+</script>
+</body>
+</html>

@@ -208,6 +208,7 @@
 #include "third_party/WebKit/public/web/WebPluginContainer.h"
 #include "third_party/WebKit/public/web/WebPluginDocument.h"
 #include "third_party/WebKit/public/web/WebPluginParams.h"
+#include "third_party/WebKit/public/web/WebPresentationReceiverFlags.h"
 #include "third_party/WebKit/public/web/WebRange.h"
 #include "third_party/WebKit/public/web/WebScopedUserGesture.h"
 #include "third_party/WebKit/public/web/WebScriptSource.h"
@@ -277,6 +278,7 @@ using blink::WebPopupMenuInfo;
 using blink::WebRange;
 using blink::WebRect;
 using blink::WebReferrerPolicy;
+using blink::WebSandboxFlags;
 using blink::WebScriptSource;
 using blink::WebSearchableFormData;
 using blink::WebSecurityOrigin;
@@ -994,13 +996,19 @@ RenderFrameImpl* RenderFrameImpl::CreateMainFrame(
   RenderFrameImpl* render_frame =
       RenderFrameImpl::Create(render_view, routing_id);
   render_frame->InitializeBlameContext(nullptr);
+
+  WebSandboxFlags sandbox_flags = replicated_state.sandbox_flags;
+  ApplySandboxFlagsFromWebPreferences(render_view->GetWebkitPreferences(),
+                                      &sandbox_flags);
+
+  VLOG(2) << "Creating main frame " << replicated_state.name;
+
   WebLocalFrame* web_frame = WebLocalFrame::CreateMainFrame(
       render_view->webview(), render_frame,
       render_frame->blink_interface_registry_.get(), opener,
       // This conversion is a little sad, as this often comes from a
       // WebString...
-      WebString::FromUTF8(replicated_state.name),
-      replicated_state.sandbox_flags);
+      WebString::FromUTF8(replicated_state.name), sandbox_flags);
   render_frame->render_widget_ = RenderWidget::CreateForFrame(
       widget_routing_id, hidden, screen_info, compositor_deps, web_frame);
   // TODO(avi): This DCHECK is to track cleanup for https://crbug.com/545684
@@ -1008,6 +1016,18 @@ RenderFrameImpl* RenderFrameImpl::CreateMainFrame(
       << "Main frame is no longer reusing the RenderView as its widget! "
       << "Does the RenderFrame need to register itself with the RenderWidget?";
   return render_frame;
+}
+
+// static
+void RenderFrameImpl::ApplySandboxFlagsFromWebPreferences(
+    const WebPreferences& web_preferences,
+    WebSandboxFlags* sandbox_flags) {
+  // Pages loaded as presentations have default sandboxing flags set.
+  // https://www.w3.org/TR/presentation-api/#creating-a-receiving-browsing-context
+  if (web_preferences.presentation_receiver) {
+    *sandbox_flags |= blink::kPresentationReceiverSandboxFlags;
+    VLOG(2) << "Applying sandbox flags " << static_cast<int>(*sandbox_flags);
+  }
 }
 
 // static
@@ -1043,9 +1063,15 @@ void RenderFrameImpl::CreateFrame(
     render_frame->InitializeBlameContext(FromRoutingID(parent_routing_id));
     render_frame->unique_name_helper_.set_propagated_name(
         replicated_state.unique_name);
+
+    VLOG(2) << "Creating frame";
+    WebSandboxFlags sandbox_flags = replicated_state.sandbox_flags;
+    ApplySandboxFlagsFromWebPreferences(
+        parent_proxy->render_view()->GetWebkitPreferences(), &sandbox_flags);
+
     web_frame = parent_web_frame->CreateLocalChild(
         replicated_state.scope, WebString::FromUTF8(replicated_state.name),
-        replicated_state.sandbox_flags, render_frame,
+        sandbox_flags, render_frame,
         render_frame->blink_interface_registry_.get(),
         previous_sibling_web_frame,
         FeaturePolicyHeaderToWeb(replicated_state.container_policy),
