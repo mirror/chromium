@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "15b7aba9_7908c6a5",
+        "filename": "chrome/browser/resources/chromeos/keyboard_overlay.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-08-03T00:13:55Z",
+      "side": 1,
+      "message": "Agree. I think they decided that the \u0027forward\u0027 key is less important.\n\nI\u0027m happy that we decided to deprecate the keyboard overlay and hopefully replace it with something better.",
+      "parentUuid": "8d28637b_cbde7ea1",
+      "revId": "439ef77fd13e0601a4eef70bc1d6e11af40b47ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f498949e_2a4820f9",
         "filename": "chrome/browser/resources/chromeos/keyboard_overlay.js",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "439ef77fd13e0601a4eef70bc1d6e11af40b47ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad0d215e_9db007d0",
+        "filename": "chrome/browser/resources/chromeos/keyboard_overlay.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-08-03T00:13:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f498949e_2a4820f9",
+      "revId": "439ef77fd13e0601a4eef70bc1d6e11af40b47ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -100,6 +136,24 @@
       "writtenOn": "2017-08-02T22:19:45Z",
       "side": 1,
       "message": "Any reason to make this an object instead of just an array?",
+      "revId": "439ef77fd13e0601a4eef70bc1d6e11af40b47ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fa43e57_f6a166c6",
+        "filename": "chrome/browser/resources/chromeos/keyboard_overlay.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 924,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-08-03T00:13:55Z",
+      "side": 1,
+      "message": "I thought it looks nicer to do:\n\n  if (keyId in keyIdsToRemove)\n\nrather than:\n\n  if (keyIdsToRemove.indexOf(keyId) !\u003d -1)\n\nDone.",
+      "parentUuid": "16f2777b_34191048",
       "revId": "439ef77fd13e0601a4eef70bc1d6e11af40b47ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
