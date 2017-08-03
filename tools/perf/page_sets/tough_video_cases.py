@@ -473,6 +473,10 @@ class ToughVideoCasesDesktopStoryExpectations(
     story.expectations.StoryExpectations):
 
   def SetExpectations(self):
+    self.DisableStory(
+      'video.html?src=crowd.ogg&type=audio',
+      [story.expectations.ALL],
+      'crbug.com/752270')
     self.PermanentlyDisableBenchmark(
         [story.expectations.ALL_MOBILE], 'Desktop Benchmark')
 
