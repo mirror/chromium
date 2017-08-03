@@ -493,6 +493,30 @@
     },
     {
       "key": {
+        "uuid": "8e8840ab_cbe47c60",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 33
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-03T21:26:12Z",
+      "side": 1,
+      "message": "For now \u003d)\n\nThere\u0027s a non-trivial chance that this will change in the next quarter.",
+      "parentUuid": "9881c208_d2e525f6",
+      "range": {
+        "startLine": 106,
+        "startChar": 2,
+        "endLine": 106,
+        "endChar": 46
+      },
+      "revId": "412161926908cf7093ac11e019d7e4a847b8fb96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "233719e0_3538667d",
         "filename": "content/common/frame.mojom",
         "patchSetId": 33
@@ -605,6 +629,24 @@
       "side": 1,
       "message": "Right. Until then, would you rather we made a copy here and got rid of unique_ptr?",
       "parentUuid": "d69dfbc4_920735d3",
+      "revId": "412161926908cf7093ac11e019d7e4a847b8fb96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83928cb4_bd90e777",
+        "filename": "content/common/frame_messages.typemap",
+        "patchSetId": 33
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-03T21:26:12Z",
+      "side": 1,
+      "message": "I guess the old path won\u0027t be removed until M63, so this is fine for now. I\u0027ll make a mental note to revisit at that time...",
+      "parentUuid": "895d0cf2_5123e2a0",
       "revId": "412161926908cf7093ac11e019d7e4a847b8fb96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
