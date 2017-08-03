@@ -61,9 +61,11 @@
     }
 
     var localPathRegExp;
+    var isWPTTest = false;
     if (document.URL.startsWith("file:///")) {
         var index = document.URL.indexOf("/external/wpt");
         if (index >= 0) {
+            isWPTTest = true;
             var localPath = document.URL.substring("file:///".length, index + "/external/wpt".length);
             localPathRegExp = new RegExp(localPath.replace(/(\W)/g, "\\$1"), "g");
         }
@@ -156,6 +158,15 @@
         output_document = properties.output_document;
     });
 
+
+    function resultLine(test) {
+        let line = convertResult(test.status) + ' ' + sanitize(test.name);
+        if (!isWPTTest) {
+            line += ' ' + sanitize(test.message);
+        }
+        return line + '\n';
+    }
+
     // Using a callback function, test results will be added to the page in a
     // manner that allows dumpAsText to produce readable test results.
     add_completion_callback(function (tests, harness_status) {
@@ -178,7 +189,7 @@
 
         // Iterate through tests array and build string that contains
         // results for all tests.
-        let testResults = "";
+        const testResults = [];
         let resultCounter = [0, 0, 0, 0];
         // reflection tests contain huge number of tests, and Chromium code
         // review tool has the 1MB diff size limit. We merge PASS lines.
@@ -196,24 +207,19 @@
                         const numPasses = j - i;
                         if (numPasses > 1) {
                             resultCounter[0] += numPasses;
-                            testResults += convertResult(tests[i].status) +
-                                ` ${sanitize(prefix)} ${numPasses} tests\n`;
+                            testResults.push(convertResult(tests[i].status) + ` ${sanitize(prefix)} ${numPasses} tests\n`);
                             i = j - 1;
                             continue;
                         }
                     }
                 }
                 resultCounter[tests[i].status]++;
-                testResults += convertResult(tests[i].status) + " " +
-                    sanitize(tests[i].name) + " " +
-                    sanitize(tests[i].message) + "\n";
+                testResults.push(resultLine(tests[i]));
             }
         } else {
             for (var i = 0; i < tests.length; ++i) {
                 resultCounter[tests[i].status]++;
-                testResults += convertResult(tests[i].status) + " " +
-                    sanitize(tests[i].name) + " " +
-                    sanitize(tests[i].message) + "\n";
+                testResults.push(resultLine(tests[i]));
             }
         }
         if (output_document.URL.indexOf("http://web-platform.test") >= 0 &&
@@ -225,7 +231,8 @@
                 ` ${resultCounter[2]} TIMEOUT,` +
                 ` ${resultCounter[3]} NOTRUN.\n`;
         }
-        resultStr += testResults;
+        testResults.sort();
+        resultStr += testResults.join('');
 
         resultStr += "Harness: the test ran to completion.\n";
 
