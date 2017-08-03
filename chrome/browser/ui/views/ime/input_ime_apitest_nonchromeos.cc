@@ -91,7 +91,7 @@ IN_PROC_BROWSER_TEST_F(InputImeApiTest, BasicApiTest) {
   ui::CompositionText composition;
   composition.text = base::UTF8ToUTF16("test_set_composition");
   composition.underlines.push_back(
-      ui::CompositionUnderline(0, composition.text.length(), SK_ColorBLACK,
+      ui::CompositionUnderline(0, composition.text.length(), true, 0,
                                false /* thick */, SK_ColorTRANSPARENT));
   composition.selection = gfx::Range(2, 2);
   const std::vector<ui::CompositionText>& composition_history =

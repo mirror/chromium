@@ -41,20 +41,25 @@ struct WebCompositionUnderline {
   WebCompositionUnderline()
       : start_offset(0),
         end_offset(0),
+        use_text_color(true),
         color(0),
         thick(false),
         background_color(0) {}
 
   WebCompositionUnderline(unsigned s,
                           unsigned e,
+                          bool u,
                           WebColor c,
                           bool t,
                           WebColor bc)
       : start_offset(s),
         end_offset(e),
+        use_text_color(u),
         color(c),
         thick(t),
-        background_color(bc) {}
+        background_color(bc) {
+    DCHECK(u || c);
+  }
 
   bool operator<(const WebCompositionUnderline& other) const {
     return start_offset != other.start_offset
@@ -66,6 +71,7 @@ struct WebCompositionUnderline {
   // if members change.
   unsigned start_offset;
   unsigned end_offset;
+  bool use_text_color;
   WebColor color;
   bool thick;
   WebColor background_color;
