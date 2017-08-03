@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c41add12_9eb6d073",
+        "filename": "media/DEPS",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-03T01:39:49Z",
+      "side": 1,
+      "message": "See this comment; this is going to massively bloat the media target last I checked. Can you check the number of files compiled by media_unittests before and after this change?",
+      "revId": "7f01ed3e1093687ab1817df177ca9e56f6ba0b05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
