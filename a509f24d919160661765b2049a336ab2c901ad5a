@@ -1,0 +1,446 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6371584d_7c61248a",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-03T15:17:36Z",
+      "side": 1,
+      "message": "Add comment for |predecessor_lock|.\ne.g. |predecessor_lock| is a lock that is allowed to be held when calling ShouldCapacityIncreaseAfterBlock().",
+      "revId": "a509f24d919160661765b2049a336ab2c901ad5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29dfc3fe_0e4bc9c7",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-03T15:17:36Z",
+      "side": 1,
+      "message": "Since it\u0027s the delegate that decreases |worker_capacity_| (in ThreadUnblocked), I think it should also be responsible for increasing the worker capacity. I would replace this method with:\n\n// Increases |outer_-\u003eworker_capacity_| if the worker has been blocked for at least \n// |blocked_time_threshold|. Must be called within the scope of |outer_-\u003elock_|.\n// Any capacity increase will be reverted when ThreadUnblocked() is called.\nvoid IncreaseWorkerCapacityIfNeeded(TimeDelta blocked_time_threshold);",
+      "range": {
+        "startLine": 163,
+        "startChar": 2,
+        "endLine": 166,
+        "endChar": 74
+      },
+      "revId": "a509f24d919160661765b2049a336ab2c901ad5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de0be223_fce0c281",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-03T15:17:36Z",
+      "side": 1,
+      "message": "ThreadBlocked",
+      "range": {
+        "startLine": 196,
+        "startChar": 15,
+        "endLine": 196,
+        "endChar": 26
+      },
+      "revId": "a509f24d919160661765b2049a336ab2c901ad5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69490563_2371688f",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-03T15:17:36Z",
+      "side": 1,
+      "message": "ThreadUnblocked",
+      "range": {
+        "startLine": 196,
+        "startChar": 57,
+        "endLine": 196,
+        "endChar": 70
+      },
+      "revId": "a509f24d919160661765b2049a336ab2c901ad5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb328475_969be6df",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-03T15:17:36Z",
+      "side": 1,
+      "message": "increased_worker_capacity_since_blocked_",
+      "range": {
+        "startLine": 202,
+        "startChar": 7,
+        "endLine": 202,
+        "endChar": 40
+      },
+      "revId": "a509f24d919160661765b2049a336ab2c901ad5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68982dd1_9a257610",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-03T15:17:36Z",
+      "side": 1,
+      "message": "It\u0027s also impossible for a worker to get work when |lock_| is held (see call to RemoveFromIdleWorkersStack() at the end of GetWork()). Since this early lock release adds complexity and we\u0027re not getting much from it, I would get rid of it.",
+      "range": {
+        "startLine": 374,
+        "startChar": 4,
+        "endLine": 378,
+        "endChar": 45
+      },
+      "revId": "a509f24d919160661765b2049a336ab2c901ad5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c56d400_8c186dcd",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-03T15:17:36Z",
+      "side": 1,
+      "message": "Add:\n[empty line]\n// Increment |worker_capacity_| for each worker that has been blocked for BlockedThreshold().",
+      "revId": "a509f24d919160661765b2049a336ab2c901ad5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07244591_4c550d4e",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-03T15:17:36Z",
+      "side": 1,
+      "message": "What we really want is to wake up one worker for each pending sequence, capacity permitting. What do you think of replacing all of this with:\n\nsize_t num_pending_sequences \u003d shared_transaction-\u003eSize();\nfor (size_t i \u003d 0; i \u003c num_pending_sequences; ++i)\n  WakeUpOneWorkerAssertLockAcquired();\n\nThis automatically handles trying to pop a worker from the idle stack first, creating a new worker if the idle stack is empty and the pool is under capacity, and keeping an idle worker on the stack when possible. It also allows you to remove NumberOfSuspendedWorkers().",
+      "range": {
+        "startLine": 389,
+        "startChar": 0,
+        "endLine": 412,
+        "endChar": 3
+      },
+      "revId": "a509f24d919160661765b2049a336ab2c901ad5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c59d84e1_8eddc7ec",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-03T15:17:36Z",
+      "side": 1,
+      "message": "Put as much text as possible on each line.\n\n  DCHECK_NE(initial_worker_capacity_, 0U)\n      \u003c\u003c \"GetMaxConcurrentTasksDeprecated() should only be called after the \"\n      \u003c\u003c \"worker pool has started.\";",
+      "range": {
+        "startLine": 421,
+        "startChar": 6,
+        "endLine": 423,
+        "endChar": 20
+      },
+      "revId": "a509f24d919160661765b2049a336ab2c901ad5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc1013e8_e21da606",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-03T15:17:36Z",
+      "side": 1,
+      "message": "Replace these 2 calls with outer_-\u003eWorkerCanGetWork(worker). Merging both methods will avoid code duplication (e.g. you won\u0027t have to duplicate the code that computes |target_suspended_workers|).",
+      "range": {
+        "startLine": 543,
+        "startChar": 8,
+        "endLine": 543,
+        "endChar": 75
+      },
+      "revId": "a509f24d919160661765b2049a336ab2c901ad5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cec2b32_de921033",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 754,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-03T15:17:36Z",
+      "side": 1,
+      "message": "ThreadUnblocked",
+      "range": {
+        "startLine": 754,
+        "startChar": 16,
+        "endLine": 754,
+        "endChar": 29
+      },
+      "revId": "a509f24d919160661765b2049a336ab2c901ad5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0a390a1_e8e57c6d",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-03T15:17:36Z",
+      "side": 1,
+      "message": "task_runner_",
+      "range": {
+        "startLine": 894,
+        "startChar": 28,
+        "endLine": 894,
+        "endChar": 39
+      },
+      "revId": "a509f24d919160661765b2049a336ab2c901ad5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "230a04b2_0ab18d5e",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 897,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-03T15:17:36Z",
+      "side": 1,
+      "message": "blocking_thread_running_",
+      "range": {
+        "startLine": 897,
+        "startChar": 16,
+        "endLine": 897,
+        "endChar": 39
+      },
+      "revId": "a509f24d919160661765b2049a336ab2c901ad5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f477cf93_0a0c5a56",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 898,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-03T15:17:36Z",
+      "side": 1,
+      "message": "blocking_thread_continue_",
+      "range": {
+        "startLine": 898,
+        "startChar": 16,
+        "endLine": 898,
+        "endChar": 40
+      },
+      "revId": "a509f24d919160661765b2049a336ab2c901ad5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eab11266_67ab2782",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 917,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-03T15:17:36Z",
+      "side": 1,
+      "message": "The timeout is not important when a task is unblocked, right? Instead of sleeping, you should wait for all tasks to finish using task_tracker_.Flush().",
+      "range": {
+        "startLine": 917,
+        "startChar": 2,
+        "endLine": 917,
+        "endChar": 60
+      },
+      "revId": "a509f24d919160661765b2049a336ab2c901ad5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acabc21e_4ad6f8fd",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 918,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-03T15:17:36Z",
+      "side": 1,
+      "message": "Since worker capacity is decreased in ThreadUnblocked(), I don\u0027t think you should call AdjustWorkerCapacity() again.",
+      "range": {
+        "startLine": 918,
+        "startChar": 2,
+        "endLine": 918,
+        "endChar": 39
+      },
+      "revId": "a509f24d919160661765b2049a336ab2c901ad5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e154e94f_7fa2725a",
+        "filename": "base/task_scheduler/scheduler_worker_stack.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-03T15:17:36Z",
+      "side": 1,
+      "message": "ContainsAtBottom() is O(min(n, m))",
+      "revId": "a509f24d919160661765b2049a336ab2c901ad5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92ac6309_f9254924",
+        "filename": "base/task_scheduler/scheduler_worker_stack.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-03T15:17:36Z",
+      "side": 1,
+      "message": "Replace if -\u003e iff https://en.wikipedia.org/wiki/If_and_only_if\n\nAnd remove the second line of the comment.",
+      "range": {
+        "startLine": 44,
+        "startChar": 18,
+        "endLine": 44,
+        "endChar": 21
+      },
+      "revId": "a509f24d919160661765b2049a336ab2c901ad5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4917b009_7c6a51dd",
+        "filename": "base/task_scheduler/scheduler_worker_stack.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-03T15:17:36Z",
+      "side": 1,
+      "message": "Change n -\u003e m to match the class comment.",
+      "range": {
+        "startLine": 46,
+        "startChar": 59,
+        "endLine": 46,
+        "endChar": 60
+      },
+      "revId": "a509f24d919160661765b2049a336ab2c901ad5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afd7d07b_b61b4d8b",
+        "filename": "base/task_scheduler/scheduler_worker_stack.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-03T15:17:36Z",
+      "side": 1,
+      "message": "Not needed.",
+      "range": {
+        "startLine": 57,
+        "startChar": 2,
+        "endLine": 58,
+        "endChar": 30
+      },
+      "revId": "a509f24d919160661765b2049a336ab2c901ad5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
