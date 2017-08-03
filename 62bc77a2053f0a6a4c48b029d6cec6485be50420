@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9bb11392_d3a54e2b",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PropertyTreeManager.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-03T00:47:35Z",
+      "side": 1,
+      "message": "Why do you need this while loop as well as the one on 409-410?",
+      "revId": "62bc77a2053f0a6a4c48b029d6cec6485be50420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff6028c7_861989af",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/PropertyTreeManager.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-03T00:47:35Z",
+      "side": 1,
+      "message": "capitalize Build",
+      "revId": "62bc77a2053f0a6a4c48b029d6cec6485be50420",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
