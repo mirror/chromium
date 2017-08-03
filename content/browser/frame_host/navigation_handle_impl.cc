@@ -12,6 +12,7 @@
 #include "content/browser/appcache/appcache_service_impl.h"
 #include "content/browser/child_process_security_policy_impl.h"
 #include "content/browser/devtools/render_frame_devtools_agent_host.h"
+#include "content/browser/download/download_navigation_throttle.h"
 #include "content/browser/frame_host/ancestor_throttle.h"
 #include "content/browser/frame_host/data_url_navigation_throttle.h"
 #include "content/browser/frame_host/debug_urls.h"
@@ -1175,6 +1176,8 @@ void NavigationHandleImpl::RegisterNavigationThrottles() {
       MixedContentNavigationThrottle::CreateThrottleForNavigation(this));
 
   AddThrottle(RenderFrameDevToolsAgentHost::CreateThrottleForNavigation(this));
+
+  AddThrottle(DownloadNavigationThrottle::CreateThrottleForNavigation(this));
 
   // Insert all testing NavigationThrottles last.
   throttles_.insert(throttles_.end(),
