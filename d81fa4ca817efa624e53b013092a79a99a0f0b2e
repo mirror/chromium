@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8aabb0ad_e30c1f5e",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 2008,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-03T22:18:25Z",
+      "side": 1,
+      "message": "How about using self.webState-\u003eGetLastCommittedURL() ? CRWSessionController is deprecated and we should try not to use it in the new code.",
+      "range": {
+        "startLine": 2008,
+        "startChar": 15,
+        "endLine": 2008,
+        "endChar": 58
+      },
+      "revId": "d81fa4ca817efa624e53b013092a79a99a0f0b2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
