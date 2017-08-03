@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7570920_2b10892b",
+        "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_manager_atomic.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-03T07:34:04Z",
+      "side": 1,
+      "message": "This would break the fullscreen optimization, where we get RGBA buffers from android, we know they\u0027re covering the whole screen, and we can use them directly as primary plane.\n\nWith this change you\u0027d get a black screen in those cases, since often the alpha component is set to 0.",
+      "revId": "3e85190f11284f5bede0512dab810fff9c586851",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
