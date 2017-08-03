@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04498bdc_760744b4",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_arc_home_service_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-08-03T18:16:01Z",
+      "side": 1,
+      "message": "This fails because the following code thinks the div is focusable:\nhttps://cs.chromium.org/chromium/src/ui/accessibility/platform/ax_snapshot_node_android_platform.cc?q\u003dui/accessibility/platform/ax_snapshot_node_android_platform.cc\u0026sq\u003dpackage:chromium\u0026l\u003d206",
+      "revId": "5eb1cb2b8a32baee1f9dd063472247164cf28324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b2710732_2caf2900",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_arc_home_service_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-08-03T18:16:01Z",
+      "side": 1,
+      "message": "This fails because the option looks like it is password protected and sends back dot characters.",
+      "revId": "5eb1cb2b8a32baee1f9dd063472247164cf28324",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
