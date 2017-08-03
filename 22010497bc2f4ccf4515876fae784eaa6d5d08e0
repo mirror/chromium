@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "721c0d29_a0f375c5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-03T00:56:53Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "dfd0ea29_79d771f9",
+      "revId": "22010497bc2f4ccf4515876fae784eaa6d5d08e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "655cc497_d660f4c9",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSParserImpl.cpp",
         "patchSetId": 2
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "4e0407d1_56de3a11",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 857,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-03T00:56:53Z",
+      "side": 1,
+      "message": "eh, i would put it in a separate patch. might be useful to be able to revert a hacky solution separately :P",
+      "parentUuid": "d43a471f_bc92b15f",
+      "revId": "22010497bc2f4ccf4515876fae784eaa6d5d08e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9dd16ad2_8f9bcbbe",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSParserTokenStream.cpp",
         "patchSetId": 2
@@ -101,6 +137,24 @@
       "side": 1,
       "message": "lol yeah this is a bit of a hack so that we can do UncheckedConsume() in the loop body (calling AtEnd on L20 calls Peek, which allows us to do an UncheckedConsume). Without this, we can\u0027t do UncheckedConsume in the first iteration. I agree this is not obvious :(\n\nWe could have a function called \"EnsureSafeUncheckedConsumeOrPeek()\" or something? The problem is if AtEnd() is true (i.e. Peek returns a EOF), we can\u0027t actually do an UncheckedConsume() because the EOF token is never stored in the tokens buffer, which means UncheckedConsume will try to read past the tokens buffer :/\n\nThere might some way of restructuring the loop to fix this, but nothing comes to mind.\n\nAny ideas?",
       "parentUuid": "9dd16ad2_8f9bcbbe",
+      "revId": "22010497bc2f4ccf4515876fae784eaa6d5d08e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1ebaa32_8748dd36",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserTokenStream.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-03T00:56:53Z",
+      "side": 1,
+      "message": "hmm maybe add the unchecked version which can be called when you\u0027re already sure you\u0027re not AtEnd, then call that from here",
+      "parentUuid": "8a244467_d16a3cd4",
       "revId": "22010497bc2f4ccf4515876fae784eaa6d5d08e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -171,6 +225,24 @@
       "side": 1,
       "message": "If L30 is true, it means we\u0027ve reached the end of the tokens buffer. But since we\u0027re tokenizing on the fly, the tokens buffer may not contain all of the input yet (tokens buffer only contain the part we\u0027ve already tokenized). Hence we try tokenizing on L31 to see if there\u0027s any more input, so L31 may well return a valid token that\u0027s not EOF.",
       "parentUuid": "1cfc1694_6f72f97d",
+      "revId": "22010497bc2f4ccf4515876fae784eaa6d5d08e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "749ae89a_c102ea5a",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserTokenStream.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-03T00:56:53Z",
+      "side": 1,
+      "message": "interesting. I don\u0027t think that\u0027s intuitive, could you add a comment?",
+      "parentUuid": "4e1716f8_9cfc4c50",
       "revId": "22010497bc2f4ccf4515876fae784eaa6d5d08e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
