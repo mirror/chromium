@@ -22,6 +22,7 @@
 #include "chrome/browser/ui/app_list/search/suggestions/suggestions_search_provider.h"
 #include "chrome/browser/ui/app_list/search/webstore/webstore_provider.h"
 #include "chrome/common/chrome_switches.h"
+#include "components/arc/arc_util.cc"
 #include "ui/app_list/app_list_features.h"
 #include "ui/app_list/app_list_model.h"
 #include "ui/app_list/app_list_switches.h"
@@ -89,12 +90,13 @@ std::unique_ptr<SearchController> CreateSearchController(
       base::MakeUnique<AppSearchProvider>(
           profile, list_controller, base::MakeUnique<base::DefaultClock>(),
           model->top_level_item_list()));
-  controller->AddProvider(
-      omnibox_group_id,
-      base::MakeUnique<OmniboxProvider>(profile, list_controller));
-  controller->AddProvider(
-      webstore_group_id,
-      base::MakeUnique<WebstoreProvider>(profile, list_controller));
+  controller->AddProvider(omnibox_group_id, base::MakeUnique<OmniboxProvider>(
+                                                profile, list_controller));
+  if (arc::IsWebstoreSearchEnabled()) {
+    controller->AddProvider(
+        webstore_group_id,
+        base::MakeUnique<WebstoreProvider>(profile, list_controller));
+  }
   if (features::IsAnswerCardEnabled()) {
     controller->AddProvider(
         answer_card_group_id,
