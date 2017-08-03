@@ -12,6 +12,7 @@
 #include "chrome/common/chrome_content_client.h"
 #include "chrome/renderer/chrome_content_renderer_client.h"
 #include "chrome/test/base/chrome_unit_test_suite.h"
+#include "chrome/test/base/test_chrome_content_browser_client.h"
 #include "components/autofill/content/renderer/autofill_agent.h"
 #include "components/autofill/content/renderer/password_autofill_agent.h"
 #include "components/autofill/content/renderer/test_password_autofill_agent.h"
@@ -154,7 +155,7 @@ content::ContentClient* ChromeRenderViewTest::CreateContentClient() {
 
 content::ContentBrowserClient*
 ChromeRenderViewTest::CreateContentBrowserClient() {
-  return new ChromeContentBrowserClient();
+  return new TestChromeContentBrowserClient();
 }
 
 content::ContentRendererClient*
