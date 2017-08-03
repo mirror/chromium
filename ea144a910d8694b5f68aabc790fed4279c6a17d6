@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6acb35fa_e31a5250",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionTemplate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-03T18:11:08Z",
+      "side": 1,
+      "message": "This is broken by InvalidSelectionResetter.\n\nNevertheless, it\u0027s already broken in SelectionEditor, so it\u0027s fine to break it once more... Let\u0027s document the two exceptions (SelectionEditor \u0026 InvalidSelectionResetter) here.",
+      "range": {
+        "startLine": 21,
+        "startChar": 44,
+        "endLine": 22,
+        "endChar": 65
+      },
+      "revId": "ea144a910d8694b5f68aabc790fed4279c6a17d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37864b07_f91480b6",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionTemplate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-03T18:11:08Z",
+      "side": 1,
+      "message": "nit: I prefer |const SelectionTemplate\u0026|",
+      "range": {
+        "startLine": 80,
+        "startChar": 38,
+        "endLine": 80,
+        "endChar": 62
+      },
+      "revId": "ea144a910d8694b5f68aabc790fed4279c6a17d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d373f594_93710514",
+        "filename": "third_party/WebKit/Source/core/editing/SelectionTemplate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-03T18:11:08Z",
+      "side": 1,
+      "message": "nit: I prefer |SelectionTemplate\u0026|.",
+      "range": {
+        "startLine": 87,
+        "startChar": 4,
+        "endLine": 87,
+        "endChar": 28
+      },
+      "revId": "ea144a910d8694b5f68aabc790fed4279c6a17d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
