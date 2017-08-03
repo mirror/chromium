@@ -4,6 +4,7 @@
 
 module blink.mojom;
 
+import "third_party/WebKit/common/message_port/message_port.mojom";
 import "url/mojo/origin.mojom";
 
 // A pair of BroadcastChannelClient interfaces is used to represent a connection
@@ -11,8 +12,10 @@ import "url/mojo/origin.mojom";
 // messages sent from the renderer to the browser, and one client is implemented
 // in the renderer for messages from the browser to the renderer.
 interface BroadcastChannelClient {
-  // Messages are passed as SerializedScriptValue.
-  OnMessage(array<uint8> message);
+  // We can't pass MessagePorts over BroadcastChannels, but use the same struct
+  // to pass messages anyway, as it enables shared code. Passing a message with
+  // attached ports to this methid is an error.
+  OnMessage(blink_common.mojom.MessagePortMessage message);
 };
 
 // This interface is used to set up connections to broadcast channels. All

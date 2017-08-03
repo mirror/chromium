@@ -172,6 +172,7 @@ component("core") {
     "//skia",
     "//third_party/WebKit/Source/platform",
     "//third_party/WebKit/Source/platform/wtf",
+    "//third_party/WebKit/public:core_mojo_bindings_blink",
     "//url",
     "//v8",
   ]
@@ -214,6 +215,7 @@ component("core") {
     "//third_party/WebKit/Source/core/workers",
     "//third_party/WebKit/Source/core/xml",
     "//third_party/WebKit/Source/core/xmlhttprequest",
+    "//third_party/WebKit/common:blink_common",
   ]
 
   if (is_win && is_debug && is_component_build &&

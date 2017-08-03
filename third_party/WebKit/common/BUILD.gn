@@ -67,10 +67,22 @@ test("blink_common_unittests") {
 }
 
 mojom("mojo_bindings") {
-  # This interface is internal to blink_common.
-  visibility = [ "//third_party/WebKit/common/*" ]
+  visibility = [
+    "//chrome/*",
+    "//content/*",
+    "//third_party/WebKit/*",
+    ":*",
+  ]
 
   sources = [
     "message_port/message_port.mojom",
   ]
+
+  export_class_attribute = "BLINK_COMMON_EXPORT"
+  export_define = "BLINK_COMMON_IMPLEMENTATION=1"
+  export_header = "third_party/WebKit/common/common_export.h"
+
+  export_class_attribute_blink = "CORE_EXPORT"
+  export_define_blink = "BLINK_CORE_IMPLEMENTATION=1"
+  export_header_blink = "third_party/WebKit/Source/core/CoreExport.h"
 }

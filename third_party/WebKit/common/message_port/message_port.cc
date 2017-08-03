@@ -57,39 +57,23 @@ std::vector<MessagePort> MessagePort::BindHandles(
 void MessagePort::PostMessage(const uint8_t* encoded_message,
                               size_t encoded_message_size,
                               std::vector<MessagePort> ports) {
-  DCHECK(state_->handle().is_valid());
-
-  // NOTE: It is OK to ignore the return value of mojo::WriteMessageNew here.
-  // HTML MessagePorts have no way of reporting when the peer is gone.
 
   MessagePortMessage msg;
   msg.encoded_message =
       mojo::ConstCArray<uint8_t>(encoded_message_size, encoded_message);
-  msg.ports = ReleaseHandles(ports);
-  mojo::Message mojo_message =
-      mojom::MessagePortMessage::SerializeAsMessage(&msg);
-  mojo::WriteMessageNew(state_->handle().get(), mojo_message.TakeMojoMessage(),
-                        MOJO_WRITE_MESSAGE_FLAG_NONE);
+  msg.ports = std::move(ports);
+  PostMessage<mojom::MessagePortMessage>(&msg);
 }
 
 bool MessagePort::GetMessage(std::vector<uint8_t>* encoded_message,
                              std::vector<MessagePort>* ports) {
-  DCHECK(state_->handle().is_valid());
-  mojo::ScopedMessageHandle message_handle;
-  MojoResult rv = mojo::ReadMessageNew(state_->handle().get(), &message_handle,
-                                       MOJO_READ_MESSAGE_FLAG_NONE);
-  if (rv != MOJO_RESULT_OK)
-    return false;
-
-  mojo::Message message(std::move(message_handle));
   MessagePortMessage msg;
-  bool success = mojom::MessagePortMessage::DeserializeFromMessage(
-      std::move(message), &msg);
+  bool success = GetMessage<mojom::MessagePortMessage>(&msg);
   if (!success)
     return false;
 
   *encoded_message = std::move(msg.owned_encoded_message);
-  *ports = BindHandles(std::move(msg.ports));
+  *ports = std::move(msg.ports);
 
   return true;
 }
