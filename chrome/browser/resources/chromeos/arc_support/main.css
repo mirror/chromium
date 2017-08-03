@@ -129,6 +129,19 @@ webview,
   text-align: left;
 }
 
+.paper-progress-0:not([disabled]) #primaryProgress.indeterminate.paper-progress,
+.paper-progress-2:not([disabled])
+#primaryProgress.indeterminate.paper-progress {
+  animation: indeterminate-bar-fixed-fps 2s steps(20) infinite;
+}
+
+.paper-progress-0:not([disabled])
+#primaryProgress.indeterminate.paper-progress::after,
+.paper-progress-2:not([disabled])
+#primaryProgress.indeterminate.paper-progress::after {
+  animation: indeterminate-splitter-fixed-fps 2s steps(20) infinite;
+}
+
 .scrollable {
   flex: auto;
   margin: 0;
@@ -253,4 +266,34 @@ a:link {
 a:visited {
   color: rgb(51, 103, 214);
   text-decoration: none;
+}
+
+@keyframes indeterminate-bar-fixed-fps {
+  0% {
+    transform: scaleX(1) translateX(-100%);
+  }
+  50% {
+    transform: scaleX(1) translateX(0);
+  }
+  75% {
+    transform: scaleX(1) translateX(0);
+  }
+  100% {
+    transform: scaleX(0) translateX(0);
+  }
+}
+
+@keyframes indeterminate-splitter-fixed-fps {
+  0% {
+    transform: scaleX(.75) translateX(-125%);
+  }
+  30% {
+    transform: scaleX(.75) translateX(-125%);
+  }
+  90% {
+    transform: scaleX(.75) translateX(125%);
+  }
+  100% {
+    transform: scaleX(.75) translateX(125%);
+  }
 }
