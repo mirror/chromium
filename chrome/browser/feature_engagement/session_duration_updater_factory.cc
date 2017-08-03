@@ -2,12 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/feature_engagement/new_tab/new_tab_tracker_factory.h"
+#include "chrome/browser/feature_engagement/session_duration_updater_factory.h"
 
 #include "base/memory/singleton.h"
-#include "chrome/browser/feature_engagement/new_tab/new_tab_tracker.h"
 #include "chrome/browser/feature_engagement/session_duration_updater.h"
-#include "chrome/browser/feature_engagement/session_duration_updater_factory.h"
 #include "chrome/browser/feature_engagement/tracker_factory.h"
 #include "chrome/browser/profiles/incognito_helpers.h"
 #include "chrome/browser/profiles/profile.h"
@@ -17,34 +15,32 @@
 namespace feature_engagement {
 
 // static
-NewTabTrackerFactory* NewTabTrackerFactory::GetInstance() {
-  return base::Singleton<NewTabTrackerFactory>::get();
+SessionDurationUpdaterFactory* SessionDurationUpdaterFactory::GetInstance() {
+  return base::Singleton<SessionDurationUpdaterFactory>::get();
 }
 
-NewTabTracker* NewTabTrackerFactory::GetForProfile(Profile* profile) {
-  return static_cast<NewTabTracker*>(
+SessionDurationUpdater* SessionDurationUpdaterFactory::GetForProfile(
+    Profile* profile) {
+  return static_cast<SessionDurationUpdater*>(
       GetInstance()->GetServiceForBrowserContext(profile, true));
 }
 
-NewTabTrackerFactory::NewTabTrackerFactory()
+SessionDurationUpdaterFactory::SessionDurationUpdaterFactory()
     : BrowserContextKeyedServiceFactory(
-          "NewTabTracker",
+          "SessionDurationUpdater",
           BrowserContextDependencyManager::GetInstance()) {
   DependsOn(TrackerFactory::GetInstance());
 }
 
-NewTabTrackerFactory::~NewTabTrackerFactory() = default;
+SessionDurationUpdaterFactory::~SessionDurationUpdaterFactory() = default;
 
-KeyedService* NewTabTrackerFactory::BuildServiceInstanceFor(
+KeyedService* SessionDurationUpdaterFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {
-  return new NewTabTracker(
-      TrackerFactory::GetForBrowserContext(
-          Profile::FromBrowserContext(context)),
-      feature_engagement::SessionDurationUpdaterFactory::GetInstance()
-          ->GetForProfile(Profile::FromBrowserContext(context)));
+  return new SessionDurationUpdater(
+      Profile::FromBrowserContext(context)->GetPrefs());
 }
 
-content::BrowserContext* NewTabTrackerFactory::GetBrowserContextToUse(
+content::BrowserContext* SessionDurationUpdaterFactory::GetBrowserContextToUse(
     content::BrowserContext* context) const {
   return chrome::GetBrowserContextRedirectedInIncognito(context);
 }
