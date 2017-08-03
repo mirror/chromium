@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "d7fb7f7b_3b349e8f",
+        "filename": "chrome/common/logging_chrome.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2017-08-03T06:29:39Z",
+      "side": 1,
+      "message": "Nice, thank you.",
+      "parentUuid": "3d6ce2e9_96ea93ac",
+      "revId": "505221d1cb16abf889ab2d472d15c8218c33dcbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa880573_2d97f827",
         "filename": "chrome/common/logging_chrome.cc",
         "patchSetId": 1
@@ -47,6 +65,30 @@
       "writtenOn": "2017-08-03T00:35:10Z",
       "side": 1,
       "message": "nullptr in new code.",
+      "range": {
+        "startLine": 182,
+        "startChar": 66,
+        "endLine": 182,
+        "endChar": 70
+      },
+      "revId": "505221d1cb16abf889ab2d472d15c8218c33dcbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f829417f_1569ab8e",
+        "filename": "chrome/common/logging_chrome.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2017-08-03T06:29:39Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "fa880573_2d97f827",
       "range": {
         "startLine": 182,
         "startChar": 66,
@@ -87,6 +129,24 @@
       "writtenOn": "2017-08-03T00:35:10Z",
       "side": 1,
       "message": "Can we just make the function Chrome OS only? There\u0027s only 1 caller.",
+      "revId": "505221d1cb16abf889ab2d472d15c8218c33dcbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89742a90_077f058d",
+        "filename": "chrome/common/logging_chrome.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1000028
+      },
+      "writtenOn": "2017-08-03T06:29:39Z",
+      "side": 1,
+      "message": "That\u0027s fine with me, if it\u0027s OK to add an ifdef to the .h file.",
+      "parentUuid": "158f7787_652c10a6",
       "revId": "505221d1cb16abf889ab2d472d15c8218c33dcbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
