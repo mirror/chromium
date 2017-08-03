@@ -42,6 +42,23 @@
     },
     {
       "key": {
+        "uuid": "0b618eea_712aa6e7",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-03T12:17:58Z",
+      "side": 1,
+      "message": "The changes related to the existence of the flag and feature could easily go in first, even if they don\u0027t work yet.",
+      "revId": "5dc8de8bd1c6158e26eb0b9ae3db9684f9c9398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "83b10e17_021fe9c3",
         "filename": "chrome/browser/about_flags.cc",
         "patchSetId": 3
@@ -599,6 +616,23 @@
     },
     {
       "key": {
+        "uuid": "e88389f9_e29f9c0b",
+        "filename": "chrome/browser/search/tools/generate_integrity_header.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-03T12:17:58Z",
+      "side": 1,
+      "message": "I think this file and the corresponding changes in BUILD.gn would be a good candidate to carve off and submit first.",
+      "revId": "5dc8de8bd1c6158e26eb0b9ae3db9684f9c9398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6bc106e7_d167fd31",
         "filename": "chrome/browser/search/tools/generate_integrity_header.py",
         "patchSetId": 3
@@ -616,6 +650,23 @@
         "endLine": 26,
         "endChar": 0
       },
+      "revId": "5dc8de8bd1c6158e26eb0b9ae3db9684f9c9398a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d85bff5c_531f39b5",
+        "filename": "chrome/browser/search/tools/generate_integrity_header.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-03T12:17:58Z",
+      "side": 1,
+      "message": "argparse handles what you want to do just fine; all you need is \u0027nargs\u003d\"+\"\u0027 on add_argument(\u0027input_path\u0027, …) and then args.input_path will be a list.",
       "revId": "5dc8de8bd1c6158e26eb0b9ae3db9684f9c9398a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
