@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7bfe05b_5821a55b",
+        "filename": "chrome/browser/ui/cocoa/browser/exclusive_access_controller_views.mm",
+        "patchSetId": 11
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-03T00:47:14Z",
+      "side": 1,
+      "message": "nit: Comment? something like\n\n  // If |callback| was never passed to ExclusiveAccessBubbleViews, calls it\n  // with kNotShown, otherwise does nothing.",
+      "revId": "2578af1082365ebb69211ad54167eb4ec55ec9f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
