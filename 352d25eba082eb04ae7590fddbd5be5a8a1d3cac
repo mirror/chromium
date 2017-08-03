@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6f3e0621_c1650a45",
+        "filename": "third_party/WebKit/PRESUBMIT.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-08-03T02:47:33Z",
+      "side": 1,
+      "message": "There\u0027s a rule against using the chromium_namespaces list above from Webkit/Source except for files in black_list (so, you can use base/ from platform/, wtf/, web/ (not for long!) and now, controller/",
+      "parentUuid": "3ad904f4_7b8459e1",
+      "revId": "352d25eba082eb04ae7590fddbd5be5a8a1d3cac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cd7e7318_e459532a",
         "filename": "third_party/WebKit/Source/controller/tests/DEPS",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-03T01:58:54Z",
       "side": 1,
       "message": "Do we need these include_rules?",
+      "revId": "352d25eba082eb04ae7590fddbd5be5a8a1d3cac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d5e06e0_7fca13b5",
+        "filename": "third_party/WebKit/Source/controller/tests/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1210615
+      },
+      "writtenOn": "2017-08-03T02:47:33Z",
+      "side": 1,
+      "message": "probably not +web/tests !",
+      "parentUuid": "cd7e7318_e459532a",
       "revId": "352d25eba082eb04ae7590fddbd5be5a8a1d3cac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
