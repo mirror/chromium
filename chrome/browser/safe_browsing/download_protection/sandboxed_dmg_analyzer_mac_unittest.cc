@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/safe_browsing/sandboxed_dmg_analyzer_mac.h"
+#include "chrome/browser/safe_browsing/download_protection/sandboxed_dmg_analyzer_mac.h"
 
 #include <mach-o/loader.h>
 #include <stdint.h>
