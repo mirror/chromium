@@ -11,6 +11,8 @@
 #include "base/run_loop.h"
 #include "base/sequenced_task_runner.h"
 #include "base/test/scoped_feature_list.h"
+#include "chrome/browser/feature_engagement/feature_tracker.h"
+#include "chrome/browser/feature_engagement/session_duration_updater.h"
 #include "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker.h"
 #include "chrome/common/pref_names.h"
 #include "components/feature_engagement/public/event_constants.h"
@@ -48,7 +50,7 @@ class FakeNewTabTracker : public NewTabTracker {
       : feature_tracker_(feature_tracker),
         pref_service_(
             base::MakeUnique<sync_preferences::TestingPrefServiceSyncable>()) {
-    NewTabTracker::RegisterProfilePrefs(pref_service_->registry());
+    SessionDurationUpdater::RegisterProfilePrefs(pref_service_->registry());
   }
 
   // feature_engagement::NewTabTracker::
@@ -146,7 +148,7 @@ class NewTabTrackerFeatureEngagementTest : public testing::Test {
         "name:new_tab_opened;comparator:==0;window:3650;storage:3650";
     new_tab_params["event_omnibox_used"] =
         "name:omnibox_used;comparator:>=1;window:3650;storage:3650";
-    new_tab_params["event_session_time"] =
+    new_tab_params["event_new_tab_session_time_met"] =
         "name:session_time;comparator:>=1;window:3650;storage:3650";
     new_tab_params["event_trigger"] =
         "name:new_tab_trigger;comparator:any;window:3650;storage:3650";
