@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "afbfd9c9_37488d41",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-03T20:58:17Z",
+      "side": 1,
+      "message": "Can this just be forward declared?",
+      "revId": "a0fc25ccb30cfd7ad00389fb9d46c850bd510f96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af63d640_4597ed25",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-03T20:58:17Z",
+      "side": 1,
+      "message": "This KeyedService does not have it\u0027s own factory since it\u0027s virtual. Should there be a static \"AddDependencies(...)\" or something along those lines that subclass factories could use that depends on feature_engagement::Tracker?",
+      "revId": "a0fc25ccb30cfd7ad00389fb9d46c850bd510f96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59f31224_b3433f1b",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-03T20:58:17Z",
+      "side": 1,
+      "message": "Why is this constructor necessary?",
+      "revId": "a0fc25ccb30cfd7ad00389fb9d46c850bd510f96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95c91a00_47693b60",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-03T20:58:17Z",
+      "side": 1,
+      "message": "Could you maybe mention that this is a KeyedService?",
+      "revId": "a0fc25ccb30cfd7ad00389fb9d46c850bd510f96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86650fe2_5b8527b2",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-03T20:58:17Z",
+      "side": 1,
+      "message": "Why is this removed after the first call to OnSessionEnded?",
+      "revId": "a0fc25ccb30cfd7ad00389fb9d46c850bd510f96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9526560_fb012ebe",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-03T20:58:17Z",
+      "side": 1,
+      "message": "This durationtracker is shared among all all services that depend on it; when will you have a guarantee that no-one needs to be updated anymore?",
+      "revId": "a0fc25ccb30cfd7ad00389fb9d46c850bd510f96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "233cb28b_d67f5a72",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater_factory.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-03T20:58:17Z",
+      "side": 1,
+      "message": "Is this really a dependency nowadays?",
+      "revId": "a0fc25ccb30cfd7ad00389fb9d46c850bd510f96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c5c3605_9bde1556",
+        "filename": "components/feature_engagement/public/event_constants.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-03T20:58:17Z",
+      "side": 1,
+      "message": "This event is now being changed in the wild, is that OK? It will no longer match old user\u0027s config, etc. I guess in general it depends on whether we ever shipped the previous event name or not.",
+      "revId": "a0fc25ccb30cfd7ad00389fb9d46c850bd510f96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
