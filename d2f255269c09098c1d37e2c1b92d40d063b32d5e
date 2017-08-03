@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6733061c_bc47df29",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-03T18:43:09Z",
+      "side": 1,
+      "message": "Is it possible to use \u0027const webrtc::DesktopFrame\u0026 frame\u0027 here?",
+      "range": {
+        "startLine": 23,
+        "startChar": 16,
+        "endLine": 23,
+        "endChar": 66
+      },
+      "revId": "d2f255269c09098c1d37e2c1b92d40d063b32d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35698a99_762fedc7",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-03T18:43:09Z",
+      "side": 1,
+      "message": "Maybe rewrite this as \u0027state_ !\u003d INITIALIZED\u0027 to match the DCHECK below",
+      "range": {
+        "startLine": 87,
+        "startChar": 33,
+        "endLine": 87,
+        "endChar": 55
+      },
+      "revId": "d2f255269c09098c1d37e2c1b92d40d063b32d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46c4db4f_2486fc09",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-03T18:43:09Z",
+      "side": 1,
+      "message": "Should all LOG_ASSERTS be changed into DCHECKs?  Just wanted to make sure this was left intentionally.",
+      "range": {
+        "startLine": 128,
+        "startChar": 5,
+        "endLine": 128,
+        "endChar": 14
+      },
+      "revId": "d2f255269c09098c1d37e2c1b92d40d063b32d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9fd5688_393d1740",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-03T18:43:09Z",
+      "side": 1,
+      "message": "It\u0027s possible that we call this method because the frame size changed though so state_ would state be UNINITIALIZED here?  We can remove the DCHECK if it isn\u0027t enforceable...",
+      "range": {
+        "startLine": 177,
+        "startChar": 2,
+        "endLine": 177,
+        "endChar": 34
+      },
+      "revId": "d2f255269c09098c1d37e2c1b92d40d063b32d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7212043_f4c9ffe7",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-03T18:43:09Z",
+      "side": 1,
+      "message": "If this is called because the frame size changed, do we need to do anything special to clear the old object or will releasing it here (overwritten by assignment) be enough to release its resources?",
+      "range": {
+        "startLine": 187,
+        "startChar": 2,
+        "endLine": 187,
+        "endChar": 27
+      },
+      "revId": "d2f255269c09098c1d37e2c1b92d40d063b32d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
