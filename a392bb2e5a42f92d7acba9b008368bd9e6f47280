@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a5b7ee8_4f09dd3d",
+        "filename": "net/interfaces/ip_endpoint_struct_traits.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-03T18:37:00Z",
+      "side": 1,
+      "message": "Nit: return a const ref here.",
+      "range": {
+        "startLine": 15,
+        "startChar": 15,
+        "endLine": 15,
+        "endChar": 29
+      },
+      "revId": "a392bb2e5a42f92d7acba9b008368bd9e6f47280",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
