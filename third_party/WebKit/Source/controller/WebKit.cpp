@@ -37,7 +37,6 @@
 #include "core/layout/LayoutTheme.h"
 #include "core/page/Page.h"
 #include "core/workers/WorkerBackingThread.h"
-#include "gin/public/v8_platform.h"
 #include "platform/LayoutTestSupport.h"
 #include "platform/heap/Heap.h"
 #include "platform/wtf/Assertions.h"
