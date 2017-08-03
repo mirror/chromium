@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "431c9217_8abfbe65",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1030,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-03T15:46:16Z",
+      "side": 1,
+      "message": "The code path goes here.",
+      "range": {
+        "startLine": 1030,
+        "startChar": 12,
+        "endLine": 1030,
+        "endChar": 72
+      },
+      "revId": "5a9b50b04d7f8933c62445d1330a9c61cdda0f50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "550c59ce_f8a90257",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayer.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1037,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-03T15:46:16Z",
+      "side": 1,
+      "message": "and here of course.",
+      "range": {
+        "startLine": 1037,
+        "startChar": 6,
+        "endLine": 1037,
+        "endChar": 72
+      },
+      "revId": "5a9b50b04d7f8933c62445d1330a9c61cdda0f50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
