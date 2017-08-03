@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1ffe9bed_776ff484",
+        "filename": "ash/wallpaper/wallpaper_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-08-03T18:00:08Z",
+      "side": 1,
+      "message": "I\u0027ll replace it with SessionController::IsUserSessionBlocked(). We don\u0027t need a different behavior during unlock animation.",
+      "parentUuid": "6dc18891_69554a0f",
+      "revId": "669484557a5830460c7b8a48bf823d38139d5263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee1f2885_6e77a911",
         "filename": "ash/wallpaper/wallpaper_view.cc",
         "patchSetId": 3
@@ -48,6 +66,24 @@
       "side": 1,
       "message": "Previously we dimmed / blurred the screen via HTML background or via ash::ScreenDimmer. ash::ScreenDimmer works via layer()-\u003eSetColor(...).\n\nI\u0027m not familiar enough with layer() to know if the SetColor() call will cause another draw. But if it doesn\u0027t, then yes, we are most likely regressing here - it\u0027d be good to investigate if we can apply the color via layer instead of canvas-\u003eDrawColor.",
       "parentUuid": "ee1f2885_6e77a911",
+      "revId": "669484557a5830460c7b8a48bf823d38139d5263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e982fdd0_eb97e080",
+        "filename": "ash/wallpaper/wallpaper_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-08-03T18:00:08Z",
+      "side": 1,
+      "message": "Originally I wanted to use |wallpaper_widget-\u003eGetLayer()-\u003eSetLayerBlur()| and |wallpaper_widget-\u003eGetLayer()-\u003eSetColor()| together. Though |SetLayerBlur()| works, |SetColor()| doesn\u0027t display the color. I have changed the layer type to SOLID_COLOR and double check that layer blur won\u0027t conflict with layer color, so I\u0027m confused and may need some guidance on this.\n\nWe may use ScreenDimmer here, but there\u0027s a performance warning, considering OOBE/login/lock screens may use this for relatively long time: https://cs.chromium.org/chromium/src/ash/wm/screen_dimmer.h?dr\u003dCSs\u0026l\u003d25",
+      "parentUuid": "affcd348_8c0a6754",
       "revId": "669484557a5830460c7b8a48bf823d38139d5263",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
