@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5415da66_ac0cbed1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-03T23:57:21Z",
+      "side": 1,
+      "message": "Small nit: mark this final, so the compiler will check you assign one and only one value to it?",
+      "range": {
+        "startLine": 338,
+        "startChar": 14,
+        "endLine": 338,
+        "endChar": 32
+      },
+      "revId": "cd44e04b7f9888d5945a4bb62c3e4592d4312292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93348775_f9ed4169",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-03T23:57:21Z",
+      "side": 1,
+      "message": "Do we need a clamp at both ends here, or would Math.min(…, 1.0f) be sufficient? (We could assert that the value is \u003e 0, for clarity.)",
+      "range": {
+        "startLine": 341,
+        "startChar": 33,
+        "endLine": 341,
+        "endChar": 48
+      },
+      "revId": "cd44e04b7f9888d5945a4bb62c3e4592d4312292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
