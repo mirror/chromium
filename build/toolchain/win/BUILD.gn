@@ -177,7 +177,10 @@ template("msvc_toolchain") {
     }
 
     tool("rc") {
-      command = "$python_path $tool_wrapper_path rc-wrapper $env rc.exe {{defines}} {{include_dirs}} /fo{{output}} {{source}}"
+      # TODO(thakis): something like https://codereview.chromium.org/2628573003/
+      # instead, or wait for llvm-rc
+      #command = "$python_path $tool_wrapper_path rc-wrapper $env rc.exe {{defines}} {{include_dirs}} /fo{{output}} {{source}}"
+      command = "cp ../../empty.res {{output}}"
       outputs = [
         "$object_subdir/{{source_name_part}}.res",
       ]
