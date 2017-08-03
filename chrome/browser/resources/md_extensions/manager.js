@@ -79,10 +79,16 @@ cr.define('extensions', function() {
       navigationHelper_: Object,
 
       /**
-       * The current page being shown.
+       * The current page being shown. Default to empty object, and initPage
+       * will figure out the initial page based on url.
        * @private {!PageState}
        */
-      currentPage_: Object,
+      currentPage_: {
+        type: Object,
+        value: function() {
+          return {};
+        },
+      },
 
       /** @type {!Array<!chrome.developerPrivate.ExtensionInfo>} */
       extensions: {
@@ -128,7 +134,6 @@ cr.define('extensions', function() {
       this.listHelper_ = new ListHelper(this);
       this.sidebar.setListDelegate(this.listHelper_);
       this.readyPromiseResolver.resolve();
-      this.currentPage_ = {page: Page.LIST};
       this.navigationHelper_ = new extensions.NavigationHelper(newPage => {
         this.changePage(newPage, true);
       });
