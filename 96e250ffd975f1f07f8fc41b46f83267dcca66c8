@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "290a030d_744d395f",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2063,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-03T23:29:54Z",
+      "side": 1,
+      "message": "Other that the comment below, it took me a bit of cognitive load to convince myself that the function is doing the correct thing. I\u0027m unsure what exactly, but can you leave a couple of comments to help understand the flow?",
+      "revId": "96e250ffd975f1f07f8fc41b46f83267dcca66c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cbf81ad_65d3826e",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2066,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-03T23:29:54Z",
+      "side": 1,
+      "message": "There\u0027s a bit of an inconsistency here.\nThis is relying on your fix in Iterator::operator++ to ensure that once we reach the end iterator, and we dereference it, then we get nullptr. The inconsistency comes from the fact that Iterator::end() does not have this property and neither does creating a new iterator with no items (I\u0027m unsure about the top level OffsetIterator). Is that correct?\n\nIf so, I think there are two approaches to solve this. Either fix up the cases of end() and new iterator with no items and document that dereferencing end from any of these iterators returns nullptr, or just replace this line with\nPaintOp* op \u003d *this ? **this : nullptr;\n\nTBH, I prefer the second approach since this is also more in line with std:: container iterators where dereferencing end is undefined. But it\u0027s up to you which one you prefer.\n\nAlso, if I\u0027m not correct, then *\u003c_\u003c*",
+      "range": {
+        "startLine": 2065,
+        "startChar": 0,
+        "endLine": 2066,
+        "endChar": 13
+      },
+      "revId": "96e250ffd975f1f07f8fc41b46f83267dcca66c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c3838ff_5dddadaa",
+        "filename": "cc/paint/paint_op_buffer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1227,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-03T23:29:54Z",
+      "side": 1,
+      "message": "nit: So, initially I thought this would trigger this would trigger a dcheck on 1073. However, I don\u0027t think that it will because of the order in which you compare things. Always starting with top level and then checking in incremental depth. But! Could you leave a comment that explains this briefly?",
+      "range": {
+        "startLine": 1227,
+        "startChar": 6,
+        "endLine": 1227,
+        "endChar": 56
+      },
+      "revId": "96e250ffd975f1f07f8fc41b46f83267dcca66c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b586e33_4925cf17",
+        "filename": "cc/paint/paint_op_buffer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1155,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-03T23:29:54Z",
+      "side": 1,
+      "message": "Unary counting \\o/\n\nIt\u0027s kind of hard to tell, but does this also cover the test where a drawRecordOp that is internal contains no ops?",
+      "range": {
+        "startLine": 1153,
+        "startChar": 0,
+        "endLine": 1155,
+        "endChar": 49
+      },
+      "revId": "96e250ffd975f1f07f8fc41b46f83267dcca66c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
