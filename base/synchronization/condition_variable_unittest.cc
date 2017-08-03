@@ -255,22 +255,31 @@ TEST_F(ConditionVariableTest, DISABLED_TimeoutAcrossSetTimeOfDay) {
 #endif
 // Test serial task servicing, as well as two parallel task servicing methods.
 TEST_F(ConditionVariableTest, MAYBE_MultiThreadConsumerTest) {
+  LOG(ERROR) << "a0";
   const int kThreadCount = 10;
+  LOG(ERROR) << "a1";
   WorkQueue queue(kThreadCount);  // Start the threads.
+  LOG(ERROR) << "a2";
 
   const int kTaskCount = 10;  // Number of tasks in each mini-test here.
+  LOG(ERROR) << "a3";
 
   Time start_time;  // Used to time task processing.
+  LOG(ERROR) << "a4";
 
   {
+  LOG(ERROR) << "a5";
     base::AutoLock auto_lock(*queue.lock());
+  LOG(ERROR) << "a6";
     while (!queue.EveryIdWasAllocated())
       queue.all_threads_have_ids()->Wait();
+  LOG(ERROR) << "a7";
   }
 
   // If threads aren't in a wait state, they may start to gobble up tasks in
   // parallel, short-circuiting (breaking) this test.
   queue.SpinUntilAllThreadsAreWaiting();
+  LOG(ERROR) << "a8";
 
   {
     // Since we have no tasks yet, all threads should be waiting by now.
@@ -281,28 +290,41 @@ TEST_F(ConditionVariableTest, MAYBE_MultiThreadConsumerTest) {
     EXPECT_EQ(0, queue.GetMaxCompletionsByWorkerThread());
     EXPECT_EQ(0, queue.GetMinCompletionsByWorkerThread());
     EXPECT_EQ(0, queue.GetNumberOfCompletedTasks());
+  LOG(ERROR) << "a9";
 
     // Set up to make each task include getting help from another worker, so
     // so that the work gets done in paralell.
     queue.ResetHistory();
+  LOG(ERROR) << "a10";
     queue.SetTaskCount(kTaskCount);
+  LOG(ERROR) << "a11";
     queue.SetWorkTime(kThirtyMs);
+  LOG(ERROR) << "a12";
     queue.SetAllowHelp(true);
+  LOG(ERROR) << "a13";
 
     start_time = Time::Now();
+  LOG(ERROR) << "a14";
   }
 
+  LOG(ERROR) << "a15";
   queue.work_is_available()->Signal();  // But each worker can signal another.
+  LOG(ERROR) << "a16";
   // Wait till we at least start to handle tasks (and we're not all waiting).
   queue.SpinUntilTaskCountLessThan(kTaskCount);
+  LOG(ERROR) << "a17";
   // Wait to allow the all workers to get done.
   queue.SpinUntilAllThreadsAreWaiting();
+  LOG(ERROR) << "a18";
 
   {
+  LOG(ERROR) << "a19";
     // Wait until all work tasks have at least been assigned.
     base::AutoLock auto_lock(*queue.lock());
+  LOG(ERROR) << "a20";
     while (queue.task_count())
       queue.no_more_tasks()->Wait();
+  LOG(ERROR) << "a21";
 
     // To avoid racy assumptions, we'll just assert that at least 2 threads
     // did work.  We know that the first worker should have gone to sleep, and
@@ -311,37 +333,58 @@ TEST_F(ConditionVariableTest, MAYBE_MultiThreadConsumerTest) {
     EXPECT_EQ(kTaskCount, queue.GetNumberOfCompletedTasks());
 
     // Try to ask all workers to help, and only a few will do the work.
+  LOG(ERROR) << "a22";
     queue.ResetHistory();
+  LOG(ERROR) << "a22";
     queue.SetTaskCount(3);
+  LOG(ERROR) << "a23";
     queue.SetWorkTime(kThirtyMs);
+  LOG(ERROR) << "a24";
     queue.SetAllowHelp(false);
+  LOG(ERROR) << "a25";
   }
   queue.work_is_available()->Broadcast();  // Make them all try.
+  LOG(ERROR) << "a26";
   // Wait till we at least start to handle tasks (and we're not all waiting).
   queue.SpinUntilTaskCountLessThan(3);
+  LOG(ERROR) << "a27";
   // Wait to allow the 3 workers to get done.
   queue.SpinUntilAllThreadsAreWaiting();
+  LOG(ERROR) << "a28";
 
   {
     base::AutoLock auto_lock(*queue.lock());
+  LOG(ERROR) << "a29";
     EXPECT_EQ(3, queue.GetNumThreadsTakingAssignments());
+  LOG(ERROR) << "a30";
     EXPECT_EQ(3, queue.GetNumThreadsCompletingTasks());
+  LOG(ERROR) << "a31";
     EXPECT_EQ(0, queue.task_count());
     EXPECT_EQ(1, queue.GetMaxCompletionsByWorkerThread());
     EXPECT_EQ(0, queue.GetMinCompletionsByWorkerThread());
     EXPECT_EQ(3, queue.GetNumberOfCompletedTasks());
+  LOG(ERROR) << "a32";
 
     // Set up to make each task get help from another worker.
+  LOG(ERROR) << "a33";
     queue.ResetHistory();
+  LOG(ERROR) << "a34";
     queue.SetTaskCount(3);
+  LOG(ERROR) << "a35";
     queue.SetWorkTime(kThirtyMs);
+  LOG(ERROR) << "a36";
     queue.SetAllowHelp(true);  // Allow (unnecessary) help requests.
+  LOG(ERROR) << "a37";
   }
+  LOG(ERROR) << "a38";
   queue.work_is_available()->Broadcast();  // Signal all threads.
+  LOG(ERROR) << "a39";
   // Wait till we at least start to handle tasks (and we're not all waiting).
   queue.SpinUntilTaskCountLessThan(3);
   // Wait to allow the 3 workers to get done.
+  LOG(ERROR) << "a40";
   queue.SpinUntilAllThreadsAreWaiting();
+  LOG(ERROR) << "a41";
 
   {
     base::AutoLock auto_lock(*queue.lock());
@@ -352,15 +395,23 @@ TEST_F(ConditionVariableTest, MAYBE_MultiThreadConsumerTest) {
     EXPECT_EQ(0, queue.GetMinCompletionsByWorkerThread());
     EXPECT_EQ(3, queue.GetNumberOfCompletedTasks());
 
+  LOG(ERROR) << "a42";
     // Set up to make each task get help from another worker.
     queue.ResetHistory();
+  LOG(ERROR) << "a43";
     queue.SetTaskCount(20);  // 2 tasks per thread.
+  LOG(ERROR) << "a44";
     queue.SetWorkTime(kThirtyMs);
+  LOG(ERROR) << "a45";
     queue.SetAllowHelp(true);
+  LOG(ERROR) << "a46";
   }
+  LOG(ERROR) << "a47";
   queue.work_is_available()->Signal();  // But each worker can signal another.
+  LOG(ERROR) << "a48";
   // Wait till we at least start to handle tasks (and we're not all waiting).
   queue.SpinUntilTaskCountLessThan(20);
+  LOG(ERROR) << "a49";
   // Wait to allow the 10 workers to get done.
   queue.SpinUntilAllThreadsAreWaiting();  // Should take about 60 ms.
 
@@ -372,30 +423,43 @@ TEST_F(ConditionVariableTest, MAYBE_MultiThreadConsumerTest) {
     EXPECT_EQ(20, queue.GetNumberOfCompletedTasks());
 
     // Same as last test, but with Broadcast().
+  LOG(ERROR) << "a50";
     queue.ResetHistory();
+  LOG(ERROR) << "a51";
     queue.SetTaskCount(20);  // 2 tasks per thread.
+  LOG(ERROR) << "a52";
     queue.SetWorkTime(kThirtyMs);
+  LOG(ERROR) << "a53";
     queue.SetAllowHelp(true);
+  LOG(ERROR) << "a54";
   }
+  LOG(ERROR) << "a55";
   queue.work_is_available()->Broadcast();
+  LOG(ERROR) << "a56";
   // Wait till we at least start to handle tasks (and we're not all waiting).
   queue.SpinUntilTaskCountLessThan(20);
+  LOG(ERROR) << "a57";
   // Wait to allow the 10 workers to get done.
   queue.SpinUntilAllThreadsAreWaiting();  // Should take about 60 ms.
 
   {
+  LOG(ERROR) << "a58";
     base::AutoLock auto_lock(*queue.lock());
     EXPECT_EQ(10, queue.GetNumThreadsTakingAssignments());
     EXPECT_EQ(10, queue.GetNumThreadsCompletingTasks());
     EXPECT_EQ(0, queue.task_count());
     EXPECT_EQ(20, queue.GetNumberOfCompletedTasks());
 
+  LOG(ERROR) << "a59";
     queue.SetShutdown();
   }
+  LOG(ERROR) << "a60";
   queue.work_is_available()->Broadcast();  // Force check for shutdown.
 
+  LOG(ERROR) << "a61";
   SPIN_FOR_TIMEDELTA_OR_UNTIL_TRUE(TimeDelta::FromMinutes(1),
                                    queue.ThreadSafeCheckShutdown(kThreadCount));
+  LOG(ERROR) << "a62";
 }
 
 TEST_F(ConditionVariableTest, LargeFastTaskTest) {

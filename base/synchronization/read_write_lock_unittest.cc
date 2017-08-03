@@ -182,19 +182,28 @@ class WriterReadWriteLockTestThread : public PlatformThread::Delegate {
 };
 
 TEST(ReadWriteLockTest, MutexTwoThreads) {
+  LOG(ERROR) << "b0";
   ReadWriteLock lock;
+  LOG(ERROR) << "b1";
   int value = 0;
+  LOG(ERROR) << "b2";
 
   WriterReadWriteLockTestThread thread(&lock, &value);
+  LOG(ERROR) << "b3";
   PlatformThreadHandle handle;
+  LOG(ERROR) << "b4";
 
   ASSERT_TRUE(PlatformThread::Create(0, &thread, &handle));
+  LOG(ERROR) << "b5";
 
   WriterReadWriteLockTestThread::DoStuff(&lock, &value);
+  LOG(ERROR) << "b6";
 
   PlatformThread::Join(handle);
+  LOG(ERROR) << "b7";
 
   EXPECT_EQ(2 * 40, value);
+  LOG(ERROR) << "b8";
 }
 
 TEST(ReadWriteLockTest, MutexFourThreads) {
