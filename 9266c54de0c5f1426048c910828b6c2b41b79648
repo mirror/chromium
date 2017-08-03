@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fc493c4c_31c80442",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-08-03T01:15:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3843d5b5_89723a9d",
+      "revId": "9266c54de0c5f1426048c910828b6c2b41b79648",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0b71298_6b7cb0b3",
         "filename": "net/cert/internal/parse_certificate.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-03T00:45:34Z",
       "side": 1,
       "message": "It\u0027s too bad that this means allow_invalid_serial_numbers\u003dtrue results in not getting any warnings for bad serial numbers. Dunno how to handle that cleanly.. maybe could have something that wraps the CertErrors that you\u0027d pass in that could convert any Errors into Warnings?",
+      "revId": "9266c54de0c5f1426048c910828b6c2b41b79648",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4ff68a7_c4773c27",
+        "filename": "net/cert/internal/parse_certificate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-08-03T01:15:38Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "a0b71298_6b7cb0b3",
       "revId": "9266c54de0c5f1426048c910828b6c2b41b79648",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "9266c54de0c5f1426048c910828b6c2b41b79648",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56bb63ae_77bd49ce",
+        "filename": "net/cert/internal/parsed_certificate_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-08-03T01:15:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f74a0d72_526be114",
+      "revId": "9266c54de0c5f1426048c910828b6c2b41b79648",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
