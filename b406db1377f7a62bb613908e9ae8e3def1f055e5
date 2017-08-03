@@ -22,6 +22,30 @@
       "revId": "b406db1377f7a62bb613908e9ae8e3def1f055e5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0b93ee4_40482289",
+        "filename": "base/test/launcher/test_launcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 424,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-03T21:27:33Z",
+      "side": 1,
+      "message": "Good question. We delete the output file once we\u0027re done (see line 451), but failure to DeleteFile() isn\u0027t actually treated as fatal, so I suppose it is possible that the file may exist across batches. On the other hand, we use CreateTemporaryFile(), which on POSIX uses mkstemp(), which should ensure that we never re-use a temporary file name.\n\nWe could add O_TRUNC here, just to be absolutely sure, though.",
+      "parentUuid": "ebd083fd_bf86a6f0",
+      "range": {
+        "startLine": 424,
+        "startChar": 62,
+        "endLine": 424,
+        "endChar": 67
+      },
+      "revId": "b406db1377f7a62bb613908e9ae8e3def1f055e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
