@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "df2d750a_8db784e4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-03T18:54:45Z",
+      "side": 1,
+      "message": "Extra \u003d\u003e Extract",
+      "revId": "a392bb2e5a42f92d7acba9b008368bd9e6f47280",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "656a1b32_52dd76de",
         "filename": "net/interfaces/ip_endpoint_struct_traits.cc",
         "patchSetId": 1
