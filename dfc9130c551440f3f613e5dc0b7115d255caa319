@@ -22,6 +22,30 @@
       "revId": "dfc9130c551440f3f613e5dc0b7115d255caa319",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0356c6a6_f4a59990",
+        "filename": "components/network_session_configurator/browser/network_session_configurator_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-03T23:29:58Z",
+      "side": 0,
+      "message": "This is from a bad merge with the cache_config CL - moved this CL and the one it sits on between PCs, and somehow something I reverted in my change on the other CL came back in this one.  I, rightly or wrongly, blame the gerrit download workflow, as I did transfer the CL between PCs.\n\nAnyhow, reverted.",
+      "parentUuid": "f9b1333c_1060fd3d",
+      "range": {
+        "startLine": 498,
+        "startChar": 1,
+        "endLine": 498,
+        "endChar": 0
+      },
+      "revId": "dfc9130c551440f3f613e5dc0b7115d255caa319",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
