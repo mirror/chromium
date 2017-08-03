@@ -272,6 +272,21 @@ namespace blink {
 
 using namespace HTMLNames;
 
+class DocumentLongevityReporter : public ThreadStateObserver {
+ public:
+  DocumentLongevityReporter() : ThreadStateObserver(ThreadState::Current()) {}
+
+  ~DocumentLongevityReporter() override {
+    UMA_HISTOGRAM_CUSTOM_COUNTS("Document.LongevityAfterShutdown",
+                                gc_count_ + 1, 1, 100, 100);
+  }
+
+  void OnCompleteSweepDone() override { gc_count_++; }
+
+ private:
+  int gc_count_ = 0;
+};
+
 static const unsigned kCMaxWriteRecursionDepth = 21;
 
 // This amount of time must have elapsed before we will even consider scheduling
@@ -2738,6 +2753,9 @@ void Document::Shutdown() {
   // should be renamed, or this setting of the frame to 0 could be made
   // explicit in each of the callers of Document::detachLayoutTree().
   frame_ = nullptr;
+
+  document_longevity_reporter_ =
+      WTF::WrapUnique(new DocumentLongevityReporter());
 }
 
 void Document::RemoveAllEventListeners() {
