@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "fb3d10e7_4ba3bd43",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerGlobalScope.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-03T06:13:02Z",
+      "side": 1,
+      "message": "Acked. Such a script provider mechanism sounds reasonable to me.",
+      "parentUuid": "8d3ac77d_a872c4af",
+      "revId": "28ff909569964e9899fbdd5ed9c74fc511ab3e5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e12a3a2_49c51b7d",
         "filename": "third_party/WebKit/Source/core/workers/WorkerGlobalScope.cpp",
         "patchSetId": 6
