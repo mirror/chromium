@@ -363,6 +363,7 @@ RenderWidget::RenderWidget(int32_t widget_routing_id,
       text_input_type_(ui::TEXT_INPUT_TYPE_NONE),
       text_input_mode_(ui::TEXT_INPUT_MODE_DEFAULT),
       text_input_flags_(0),
+      next_previous_flags_(-1),
       can_compose_inline_(true),
       composition_range_(gfx::Range::InvalidRange()),
       popup_type_(popup_type),
@@ -1105,6 +1106,7 @@ void RenderWidget::ClearTextInputState() {
   text_input_mode_ = ui::TextInputMode::TEXT_INPUT_MODE_DEFAULT;
   can_compose_inline_ = false;
   text_input_flags_ = 0;
+  next_previous_flags_ = -1;
 }
 
 void RenderWidget::UpdateTextInputState() {
@@ -1147,6 +1149,21 @@ void RenderWidget::UpdateTextInputStateInternal(bool show_virtual_keyboard,
     params.type = new_type;
     params.mode = new_mode;
     params.flags = new_info.flags;
+    if (next_previous_flags_ == -1) {
+      // Due to a focus change, values will be reset by the frame.
+      // That case we only need fresh NEXT/PREVIOUS information.
+      // Also we won't send ViewHostMsg_TextInputStateChanged if next/previous
+      // focusable status is changed.
+      if (auto* controller = GetInputMethodController()) {
+        next_previous_flags_ =
+            controller->ComputeWebTextInputNextPreviousFlags();
+      } else {
+        // For safety in case GetInputMethodController() is null, because -1 is
+        // invalid value to send to browser process.
+        next_previous_flags_ = 0;
+      }
+    }
+    params.flags |= next_previous_flags_;
     params.value = new_info.value.Utf8();
     params.selection_start = new_info.selection_start;
     params.selection_end = new_info.selection_end;
