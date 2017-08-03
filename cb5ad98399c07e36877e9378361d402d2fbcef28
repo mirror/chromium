@@ -16,6 +16,24 @@
       "revId": "cb5ad98399c07e36877e9378361d402d2fbcef28",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebbeef24_f2ed34f2",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-08-03T17:49:33Z",
+      "side": 0,
+      "message": "It was to be removed in my another WIP CL 596769, which will be rebased and cleaned up later.",
+      "parentUuid": "4fd4a0e5_f6ea4beb",
+      "revId": "cb5ad98399c07e36877e9378361d402d2fbcef28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
