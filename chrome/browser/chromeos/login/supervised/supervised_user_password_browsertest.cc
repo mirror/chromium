@@ -94,9 +94,8 @@ IN_PROC_BROWSER_TEST_F(SupervisedUserPasswordTest,
       kSchemaVersion, SupervisedUserAuthentication::SCHEMA_SALT_HASHED);
   password.SetIntegerWithoutPathExpansion(kPasswordRevision, 2);
 
-  password.SetStringWithoutPathExpansion(kPasswordSignature, "signature");
-  password.SetStringWithoutPathExpansion(kEncryptedPassword,
-                                         "new-encrypted-password");
+  password.SetKey(kPasswordSignature, base::Value("signature"));
+  password.SetKey(kEncryptedPassword, base::Value("new-encrypted-password"));
 
   shared_settings_adapter_->AddChange(
       sync_id, supervised_users::kChromeOSPasswordData, password, true, false);
@@ -158,9 +157,8 @@ IN_PROC_BROWSER_TEST_F(SupervisedUserPasswordTest,
       kSchemaVersion, SupervisedUserAuthentication::SCHEMA_SALT_HASHED);
   password.SetIntegerWithoutPathExpansion(kPasswordRevision, 2);
 
-  password.SetStringWithoutPathExpansion(kPasswordSignature, "signature");
-  password.SetStringWithoutPathExpansion(kEncryptedPassword,
-                                         "new-encrypted-password");
+  password.SetKey(kPasswordSignature, base::Value("signature"));
+  password.SetKey(kEncryptedPassword, base::Value("new-encrypted-password"));
   shared_settings_adapter_->AddChange(
       sync_id, supervised_users::kChromeOSPasswordData, password, true, false);
   content::RunAllPendingInMessageLoop();
@@ -207,9 +205,8 @@ IN_PROC_BROWSER_TEST_F(SupervisedUserPasswordTest,
       kSchemaVersion, SupervisedUserAuthentication::SCHEMA_SALT_HASHED);
   password.SetIntegerWithoutPathExpansion(kPasswordRevision, 2);
 
-  password.SetStringWithoutPathExpansion(kPasswordSignature, "signature");
-  password.SetStringWithoutPathExpansion(kEncryptedPassword,
-                                         "new-encrypted-password");
+  password.SetKey(kPasswordSignature, base::Value("signature"));
+  password.SetKey(kEncryptedPassword, base::Value("new-encrypted-password"));
 
   shared_settings_adapter_->AddChange(
       sync_id, supervised_users::kChromeOSPasswordData, password, true, false);
@@ -248,9 +245,8 @@ IN_PROC_BROWSER_TEST_F(SupervisedUserPasswordTest,
       kSchemaVersion, SupervisedUserAuthentication::SCHEMA_SALT_HASHED);
   password.SetIntegerWithoutPathExpansion(kPasswordRevision, 2);
 
-  password.SetStringWithoutPathExpansion(kPasswordSignature, "signature");
-  password.SetStringWithoutPathExpansion(kEncryptedPassword,
-                                         "new-encrypted-password");
+  password.SetKey(kPasswordSignature, base::Value("signature"));
+  password.SetKey(kEncryptedPassword, base::Value("new-encrypted-password"));
   shared_settings_adapter_->AddChange(
       sync_id, supervised_users::kChromeOSPasswordData, password, true, false);
   content::RunAllPendingInMessageLoop();
