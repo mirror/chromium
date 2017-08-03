@@ -228,6 +228,17 @@ void ClearClipboardBuffer() {
                              WebClipboard::Buffer()));
 }
 
+void CreateAndHandleKeyboardEvent(WebElement* plugin_container_one_element,
+                                  WebInputEvent::Modifiers modifier_key,
+                                  int key_code) {
+  WebKeyboardEvent web_keyboard_event(WebInputEvent::kRawKeyDown, modifier_key,
+                                      WebInputEvent::kTimeStampForTesting);
+  web_keyboard_event.windows_key_code = key_code;
+  KeyboardEvent* key_event = KeyboardEvent::Create(web_keyboard_event, 0);
+  ToWebPluginContainerImpl(plugin_container_one_element->PluginContainer())
+      ->HandleEvent(key_event);
+}
+
 }  // namespace
 
 TEST_F(WebPluginContainerTest, WindowToLocalPointTest) {
@@ -467,26 +478,14 @@ TEST_F(WebPluginContainerTest, CopyInsertKeyboardEventsTest) {
       WebInputEvent::kMetaKey | WebInputEvent::kNumLockOn |
       WebInputEvent::kIsLeft);
 #endif
-  WebKeyboardEvent web_keyboard_event_c(WebInputEvent::kRawKeyDown,
-                                        modifier_key,
-                                        WebInputEvent::kTimeStampForTesting);
-  web_keyboard_event_c.windows_key_code = 67;
-  KeyboardEvent* key_event_c = KeyboardEvent::Create(web_keyboard_event_c, 0);
-  ToWebPluginContainerImpl(plugin_container_one_element.PluginContainer())
-      ->HandleEvent(key_event_c);
+  CreateAndHandleKeyboardEvent(&plugin_container_one_element, modifier_key,
+                               VKEY_C);
   EXPECT_EQ(WebString("x"), Platform::Current()->Clipboard()->ReadPlainText(
                                 WebClipboard::Buffer()));
 
   ClearClipboardBuffer();
-
-  WebKeyboardEvent web_keyboard_event_insert(
-      WebInputEvent::kRawKeyDown, modifier_key,
-      WebInputEvent::kTimeStampForTesting);
-  web_keyboard_event_insert.windows_key_code = 45;
-  KeyboardEvent* key_event_insert =
-      KeyboardEvent::Create(web_keyboard_event_insert, 0);
-  ToWebPluginContainerImpl(plugin_container_one_element.PluginContainer())
-      ->HandleEvent(key_event_insert);
+  CreateAndHandleKeyboardEvent(&plugin_container_one_element, modifier_key,
+                               VKEY_INSERT);
   EXPECT_EQ(WebString("x"), Platform::Current()->Clipboard()->ReadPlainText(
                                 WebClipboard::Buffer()));
 
@@ -555,6 +554,123 @@ TEST_F(WebPluginContainerTest, CutDeleteKeyboardEventsTest) {
 
   // Check that "Cut" command is invoked.
   EXPECT_TRUE(test_plugin->IsCutCalled());
+}
+
+// Verifies |Ctrl-V| and |Shift-Insert| keyboard events, results in pasting text
+// from the clipboard.
+TEST_F(WebPluginContainerTest, PasteInsertKeyboardEventsTest) {
+  RegisterMockedURL("plugin_container.html");
+  // Must outlive |web_view_helper|.
+  TestPluginWebFrameClient plugin_web_frame_client;
+  FrameTestHelpers::WebViewHelper web_view_helper;
+
+  // Use TestPluginWithEditableText for testing Cut().
+  plugin_web_frame_client.SetHasEditableText(true);
+
+  WebViewBase* web_view = web_view_helper.InitializeAndLoad(
+      base_url_ + "plugin_container.html", &plugin_web_frame_client);
+  EnablePlugins(web_view, WebSize(300, 300));
+
+  WebElement plugin_container_one_element =
+      web_view->MainFrameImpl()->GetDocument().GetElementById(
+          WebString::FromUTF8("translated-plugin"));
+  WebInputEvent::Modifiers modifier_key = static_cast<WebInputEvent::Modifiers>(
+      WebInputEvent::kControlKey | WebInputEvent::kNumLockOn |
+      WebInputEvent::kIsLeft);
+#if defined(OS_MACOSX)
+  modifier_key = static_cast<WebInputEvent::Modifiers>(
+      WebInputEvent::kMetaKey | WebInputEvent::kNumLockOn |
+      WebInputEvent::kIsLeft);
+#endif
+  // Set clipboard to contain "selected text".
+  CreateAndHandleKeyboardEvent(&plugin_container_one_element, modifier_key,
+                               VKEY_C);
+  EXPECT_EQ(
+      WebString("selected text"),
+      Platform::Current()->Clipboard()->ReadPlainText(WebClipboard::Buffer()));
+
+  // Test pasting when plugin has selected text.
+  CreateAndHandleKeyboardEvent(&plugin_container_one_element, modifier_key,
+                               VKEY_V);
+
+  // Check that pasted text matches what is in the clipboard and that selection
+  // is empty.
+  WebPlugin* plugin =
+      ToWebPluginContainerImpl(plugin_container_one_element.PluginContainer())
+          ->Plugin();
+  TestPluginWithEditableText* test_plugin =
+      static_cast<TestPluginWithEditableText*>(plugin);
+
+  EXPECT_EQ(
+      test_plugin->GetText(),
+      Platform::Current()->Clipboard()->ReadPlainText(WebClipboard::Buffer()));
+  EXPECT_FALSE(test_plugin->HasSelection());
+  EXPECT_EQ(WebString(), test_plugin->SelectionAsText());
+
+  // Test pasting when plugin has no selected text and has current text of
+  // "selected text".
+  CreateAndHandleKeyboardEvent(&plugin_container_one_element, modifier_key,
+                               VKEY_V);
+  EXPECT_EQ(test_plugin->GetText(), WebString("selected textselected text"));
+
+  // Reset text and text selection back to "selected text" for next time.
+  test_plugin->ResetTextAndTextSelection();
+
+  ClearClipboardBuffer();
+
+  // Set clipboard to contain "selected text".
+  CreateAndHandleKeyboardEvent(&plugin_container_one_element, modifier_key,
+                               VKEY_X);
+
+  // Test pasting when plugin has no selected text and current text is empty.
+  CreateAndHandleKeyboardEvent(&plugin_container_one_element, modifier_key,
+                               VKEY_V);
+  EXPECT_EQ(
+      test_plugin->GetText(),
+      Platform::Current()->Clipboard()->ReadPlainText(WebClipboard::Buffer()));
+
+  // Reset text selection back to "selected text" for next time.
+  test_plugin->ResetTextAndTextSelection();
+
+  modifier_key = static_cast<WebInputEvent::Modifiers>(
+      WebInputEvent::kShiftKey | WebInputEvent::kNumLockOn |
+      WebInputEvent::kIsLeft);
+
+  // Test pasting when plugin has selected text.
+  CreateAndHandleKeyboardEvent(&plugin_container_one_element, modifier_key,
+                               VKEY_INSERT);
+
+  // Check that pasted text matches what is in the clipboard and that selection
+  // is empty.
+  EXPECT_EQ(
+      test_plugin->GetText(),
+      Platform::Current()->Clipboard()->ReadPlainText(WebClipboard::Buffer()));
+  EXPECT_FALSE(test_plugin->HasSelection());
+  EXPECT_EQ(WebString(), test_plugin->SelectionAsText());
+
+  // Test pasting when plugin has no selected text and has current text of
+  // "selected text".
+  CreateAndHandleKeyboardEvent(&plugin_container_one_element, modifier_key,
+                               VKEY_INSERT);
+  EXPECT_EQ(test_plugin->GetText(), WebString("selected textselected text"));
+
+  // Reset text and text selection back to "selected text" for next time.
+  test_plugin->ResetTextAndTextSelection();
+
+  ClearClipboardBuffer();
+
+  // Set clipboard to contain "selected text".
+  CreateAndHandleKeyboardEvent(&plugin_container_one_element, modifier_key,
+                               VKEY_X);
+
+  // Test pasting when plugin has no selected text and current text is empty.
+  CreateAndHandleKeyboardEvent(&plugin_container_one_element, modifier_key,
+                               VKEY_INSERT);
+  EXPECT_EQ(
+      test_plugin->GetText(),
+      Platform::Current()->Clipboard()->ReadPlainText(WebClipboard::Buffer()));
+
+  ClearClipboardBuffer();
 }
 
 // A class to facilitate testing that events are correctly received by plugins.
