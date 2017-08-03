@@ -39,6 +39,30 @@
       "revId": "140119ea5868ca48064d460119b28dea7c959146",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a07dc97c_87887e98",
+        "filename": "third_party/libdrm/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1166470
+      },
+      "writtenOn": "2017-08-03T18:36:29Z",
+      "side": 1,
+      "message": "bug created here: https://bugs.freedesktop.org/show_bug.cgi?id\u003d102031",
+      "parentUuid": "44bfd86e_3400a27c",
+      "range": {
+        "startLine": 46,
+        "startChar": 19,
+        "endLine": 46,
+        "endChar": 33
+      },
+      "revId": "140119ea5868ca48064d460119b28dea7c959146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
