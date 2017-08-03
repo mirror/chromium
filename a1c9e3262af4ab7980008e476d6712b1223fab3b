@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f658bc7_d3afbb45",
+        "filename": "components/simple_url_loader/simple_url_loader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-03T20:39:16Z",
+      "side": 1,
+      "message": "I think that if you don\u0027t set MOJO_HANDLE_SIGNAL_PEER_CLOSED then you can guarantee that the only valid results of mojo::BeginReadRawData will be MOJO_RESULT_OK or MOJO_RESULT_SHOULD_WAIT. The URLLoader interface should guarantee that if the producer handle is closed one of the URLLoaderClient messages indicating the reason for the failure will also be sent so there is no need to handle failures here.",
+      "range": {
+        "startLine": 88,
+        "startChar": 0,
+        "endLine": 100,
+        "endChar": 7
+      },
+      "revId": "a1c9e3262af4ab7980008e476d6712b1223fab3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
