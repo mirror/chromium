@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "65fa1ad3_b142bbe8",
+        "filename": "chrome/installer/zucchini/rel32_finder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-03T16:34:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ce5cf100_c49c14a0",
+      "range": {
+        "startLine": 12,
+        "startChar": 36,
+        "endLine": 12,
+        "endChar": 75
+      },
+      "revId": "c29c55030f4b5ecdd160d6116b6291a4d3fe93b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16905351_d0425fe1",
         "filename": "chrome/installer/zucchini/rel32_finder.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "8821ecbb_af5dd0eb",
+        "filename": "chrome/installer/zucchini/rel32_finder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-03T16:34:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "16905351_d0425fe1",
+      "range": {
+        "startLine": 20,
+        "startChar": 44,
+        "endLine": 20,
+        "endChar": 58
+      },
+      "revId": "c29c55030f4b5ecdd160d6116b6291a4d3fe93b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35b1d086_279d3b97",
         "filename": "chrome/installer/zucchini/rel32_finder.cc",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "c29c55030f4b5ecdd160d6116b6291a4d3fe93b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08f27ffd_ad659a76",
+        "filename": "chrome/installer/zucchini/rel32_finder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-03T16:34:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "35b1d086_279d3b97",
+      "range": {
+        "startLine": 23,
+        "startChar": 37,
+        "endLine": 23,
+        "endChar": 0
+      },
+      "revId": "c29c55030f4b5ecdd160d6116b6291a4d3fe93b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +189,54 @@
     },
     {
       "key": {
+        "uuid": "8e448dde_b2afdf45",
+        "filename": "chrome/installer/zucchini/rel32_finder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-03T16:34:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "01aa2c57_4c4ae10d",
+      "range": {
+        "startLine": 25,
+        "startChar": 34,
+        "endLine": 25,
+        "endChar": 38
+      },
+      "revId": "c29c55030f4b5ecdd160d6116b6291a4d3fe93b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "47ff9531_91a0d85c",
+        "filename": "chrome/installer/zucchini/rel32_finder.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-03T16:34:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "18ac058f_69321eab",
+      "range": {
+        "startLine": 25,
+        "startChar": 60,
+        "endLine": 25,
+        "endChar": 64
+      },
+      "revId": "c29c55030f4b5ecdd160d6116b6291a4d3fe93b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21c6e0c2_087a9d85",
         "filename": "chrome/installer/zucchini/rel32_finder.h",
         "patchSetId": 2
@@ -134,6 +254,24 @@
     },
     {
       "key": {
+        "uuid": "0dfa8671_2424b840",
+        "filename": "chrome/installer/zucchini/rel32_finder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-03T16:34:35Z",
+      "side": 1,
+      "message": "Implementing Abs32GapFinder.\nNote that Rel32Finder only looks for location, and does not perform target lookup. As a result, locations may need additional filtering from the caller, so Rel32Finder still exposes Accept().\nTo keep Rel32Finder relatively independent from GapFinder, and to simplify its implementation, I\u0027m relying on the caller to do the outer loop on gaps. I\u0027m also using base::Optional\u003c\u003e with GetNext().\n\nAbs32GapFinder gap_finder(image, region, abs32_locations, abs32_width);\nfor (auto gap \u003d gap_finder.GetNext(); gap.has_value(); gap \u003d gap_finder.GetNext()) {\n  Rel32Finder* rel_finder(*gap);\n  for (auto location \u003d rel_finder.GetNext(); location; location \u003d rel_finder.GetNext()) {\n    // do some logic on location\n    rel_finder.Accept();\n  }\n}",
+      "parentUuid": "21c6e0c2_087a9d85",
+      "revId": "c29c55030f4b5ecdd160d6116b6291a4d3fe93b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d71d0a43_8994b1ce",
         "filename": "chrome/installer/zucchini/rel32_finder.h",
         "patchSetId": 2
@@ -145,6 +283,30 @@
       "writtenOn": "2017-08-02T07:28:26Z",
       "side": 1,
       "message": "(Might be Moot)\n\nPerhaps: \"is a sorted list of distinct abs32 reference locations, each spanning |abs32_width| bytes.\"  ?\n\nAlso, I\u0027m not sure how strict should we be in assuming that they (1) are distinct, (2) don\u0027t overlap. Presumably we can get a pathological PE file. Perhaps after the sort, we can check, and go to raw mode if something is weird?",
+      "range": {
+        "startLine": 26,
+        "startChar": 23,
+        "endLine": 26,
+        "endChar": 68
+      },
+      "revId": "c29c55030f4b5ecdd160d6116b6291a4d3fe93b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5495cd01_4f01f502",
+        "filename": "chrome/installer/zucchini/rel32_finder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-03T16:34:35Z",
+      "side": 1,
+      "message": "At this stage, I think we can assume (1) and (2), because Abs32 should not overlap anyways. We can rely on abs32 extracting logic to check that, and only have DCHECK here.",
+      "parentUuid": "d71d0a43_8994b1ce",
       "range": {
         "startLine": 26,
         "startChar": 23,
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "337b6f19_bf4e2f62",
+        "filename": "chrome/installer/zucchini/rel32_finder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-03T16:34:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f2e01a29_1e6b4bb1",
+      "range": {
+        "startLine": 36,
+        "startChar": 7,
+        "endLine": 36,
+        "endChar": 15
+      },
+      "revId": "c29c55030f4b5ecdd160d6116b6291a4d3fe93b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec7a7ee2_c0ecfa2a",
         "filename": "chrome/installer/zucchini/rel32_finder.h",
         "patchSetId": 2
@@ -200,6 +386,30 @@
       "revId": "c29c55030f4b5ecdd160d6116b6291a4d3fe93b0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b3ce902_535e9920",
+        "filename": "chrome/installer/zucchini/rel32_finder.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-03T16:34:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ec7a7ee2_c0ecfa2a",
+      "range": {
+        "startLine": 39,
+        "startChar": 10,
+        "endLine": 39,
+        "endChar": 14
+      },
+      "revId": "c29c55030f4b5ecdd160d6116b6291a4d3fe93b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
