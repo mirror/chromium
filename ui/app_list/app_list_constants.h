@@ -107,7 +107,39 @@ APP_LIST_EXPORT extern const size_t kMaxFolderNameChars;
 
 APP_LIST_EXPORT extern const ui::ResourceBundle::FontStyle kItemTextFontStyle;
 
+// The different ways that the app list can transition from PEEKING to
+// FULLSCREEN_ALL_APPS. This enum must not have its order altered as it is used
+// in histograms.
+enum kPeekingToFullscreen {
+  SWIPE = 0,
+  EXPAND_ARROW = 1,
+  MOUSEPAD_SCROLL = 2,
+  MOUSEWHEEL_SCROLL = 3,
+  MAX_PEEKING_TO_FULLSCREEN = 4,
+};
+
+// The different ways the app list can be shown. This enum must not have its
+// order altered as it is used in histograms.
+enum kAppListToggleMethod {
+  SEARCH_KEY = 0,
+  SHELF_BUTTON = 1,
+  SWIPE_FROM_SHELF = 2,
+  MAX_APP_LIST_TOGGLE_METHOD = 3,
+};
+
+// The two versions of folders. This enum must not have its order altered as it
+// is used in histograms.
+enum kAppListFolderOpened {
+  OLD_FOLDERS = 0,
+  FULLSCREEN_APP_LIST_FOLDERS = 1,
+  MAX_FOLDER_OPENED = 2,
+};
+
+APP_LIST_EXPORT extern const char kAppListFolderOpenedHistogram[];
+APP_LIST_EXPORT extern const char kAppListPeekingToFullscreenHistogram[];
+APP_LIST_EXPORT extern const char kAppListToggleMethodHistogram[];
 APP_LIST_EXPORT extern const char kPageOpenedHistogram[];
+
 APP_LIST_EXPORT extern const char kSearchResultOpenDisplayTypeHistogram[];
 APP_LIST_EXPORT extern const char kSearchQueryLength[];
 APP_LIST_EXPORT extern const char kSearchResultDistanceFromOrigin[];
