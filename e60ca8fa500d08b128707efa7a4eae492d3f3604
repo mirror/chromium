@@ -16,6 +16,24 @@
       "revId": "e60ca8fa500d08b128707efa7a4eae492d3f3604",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d7c11f6_8d623176",
+        "filename": "media/gpu/v4l2_slice_video_decode_accelerator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-03T03:25:54Z",
+      "side": 1,
+      "message": "Your concern makes sense.\nI investigated a little bit more. In our case, the message loop we post DropGLImage to is associated with the GPU child thread, where we do all the actual GL.\nIf that message loop is destroyed we\u0027d have bigger problems.\n\nIn the shutdown case we wait for DismissPictures to be done on the same message loop just after posting DropGLImage.\n\nIn the last patch this function also unbinds the gl_image from the client texture.",
+      "parentUuid": "4ac09fdb_d126127c",
+      "revId": "e60ca8fa500d08b128707efa7a4eae492d3f3604",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
