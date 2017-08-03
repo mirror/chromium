@@ -76,6 +76,10 @@ class CoordinationUnitImpl : public mojom::CoordinationUnit {
   void AddObserver(CoordinationUnitGraphObserver* observer);
   void RemoveObserver(CoordinationUnitGraphObserver* observer);
 
+  // Coordination unit graph traversal helper functions.
+  std::set<CoordinationUnitImpl*> GetParentCoordinationUnitsOfType(
+      CoordinationUnitType type);
+
   // Getters and setters.
   const CoordinationUnitID& id() const { return id_; }
   const std::set<CoordinationUnitImpl*>& children() const { return children_; }
@@ -95,8 +99,6 @@ class CoordinationUnitImpl : public mojom::CoordinationUnit {
 
   // Coordination unit graph traversal helper functions.
   std::set<CoordinationUnitImpl*> GetChildCoordinationUnitsOfType(
-      CoordinationUnitType type);
-  std::set<CoordinationUnitImpl*> GetParentCoordinationUnitsOfType(
       CoordinationUnitType type);
 
   const CoordinationUnitID id_;

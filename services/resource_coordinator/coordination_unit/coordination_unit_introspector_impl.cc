@@ -33,10 +33,16 @@ void CoordinationUnitIntrospectorImpl::GetProcessToURLMap(
         process_cu->GetAssociatedCoordinationUnitsOfType(
             CoordinationUnitType::kFrame);
     for (CoordinationUnitImpl* frame_cu : frame_cus) {
-      base::Value url_value = frame_cu->GetProperty(
-          resource_coordinator::mojom::PropertyType::kURL);
-      if (url_value.is_string()) {
-        urls.push_back(url_value.GetString());
+      bool is_root_frame =
+          frame_cu
+              ->GetParentCoordinationUnitsOfType(CoordinationUnitType::kFrame)
+              .empty();
+      if (is_root_frame) {
+        base::Value url_value = frame_cu->GetProperty(
+            resource_coordinator::mojom::PropertyType::kURL);
+        if (url_value.is_string()) {
+          urls.push_back(url_value.GetString());
+        }
       }
     }
     process_info->urls = std::move(urls);
