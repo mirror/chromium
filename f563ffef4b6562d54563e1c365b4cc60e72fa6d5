@@ -19,6 +19,47 @@
     },
     {
       "key": {
+        "uuid": "6f7b98cc_2ea78a6f",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1200,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-03T17:10:26Z",
+      "side": 1,
+      "message": "Can you test to verify? Alternatively, is there any harm in cleaning up anyway?",
+      "parentUuid": "0a584b06_ab48c700",
+      "revId": "f563ffef4b6562d54563e1c365b4cc60e72fa6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8b14274_d5a65877",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1594,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-03T17:10:26Z",
+      "side": 1,
+      "message": "It\u0027s a bit strange to log that we\u0027re relaunching and then call a function called relaunch_self that doesn\u0027t actually relaunch. I think it\u0027s only called from this one place, so maybe just delete the function and move the code here rather than have it misnamed.",
+      "range": {
+        "startLine": 1594,
+        "startChar": 44,
+        "endLine": 1594,
+        "endChar": 0
+      },
+      "revId": "f563ffef4b6562d54563e1c365b4cc60e72fa6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bbff7d09_88b7d077",
         "filename": "remoting/host/linux/remoting_user_session.cc",
         "patchSetId": 1
@@ -30,6 +71,24 @@
       "writtenOn": "2017-08-02T22:05:24Z",
       "side": 1,
       "message": "Random number that doesn\u0027t overlap with host return codes. (Not that it really matters if it does.)",
+      "revId": "f563ffef4b6562d54563e1c365b4cc60e72fa6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3fae9f8_e1951ca2",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-03T17:10:26Z",
+      "side": 1,
+      "message": "Why doesn\u0027t it matter? It seems like it would be worth documenting that it shouldn\u0027t overlap in the comment.",
+      "parentUuid": "bbff7d09_88b7d077",
       "revId": "f563ffef4b6562d54563e1c365b4cc60e72fa6d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +112,47 @@
     },
     {
       "key": {
+        "uuid": "9e2ddadf_63197970",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-03T17:10:26Z",
+      "side": 1,
+      "message": "Optional: Since you want this code anyway for the root scenario, you could just use it in both cases.",
+      "parentUuid": "6ba64318_d0208de9",
+      "revId": "f563ffef4b6562d54563e1c365b4cc60e72fa6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "11a22062_0fd422d7",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-03T17:10:26Z",
+      "side": 1,
+      "message": "If I\u0027m reading this correctly, this is to handle the case where the wrapper was launched at boot (because otherwise it\u0027s running setuid, and these variables should already be set), correct? If that\u0027s the case, I think it would be worth asserting that the real user id has been set, since it\u0027s not obvious from context and it\u0027s pretty important.",
+      "range": {
+        "startLine": 321,
+        "startChar": 72,
+        "endLine": 321,
+        "endChar": 0
+      },
+      "revId": "f563ffef4b6562d54563e1c365b4cc60e72fa6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "84374b49_5bcee312",
         "filename": "remoting/host/linux/remoting_user_session.cc",
         "patchSetId": 1
@@ -64,6 +164,24 @@
       "writtenOn": "2017-08-02T22:05:24Z",
       "side": 1,
       "message": "I now think that this might be better called relaunch for consistency with the Python script. Thoughts?",
+      "revId": "f563ffef4b6562d54563e1c365b4cc60e72fa6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cbafc21_19a36330",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-03T17:10:26Z",
+      "side": 1,
+      "message": "If you take my advice on removing that function, there\u0027s no longer anything to be consistent with :)",
+      "parentUuid": "84374b49_5bcee312",
       "revId": "f563ffef4b6562d54563e1c365b4cc60e72fa6d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
