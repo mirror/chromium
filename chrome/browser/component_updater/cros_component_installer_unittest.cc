@@ -63,11 +63,19 @@ TEST_F(CrOSComponentInstallerTest, BPPPCompatibleCrOSComponent) {
   ASSERT_EQ(bppp.IsCompatibleCrOSComponent("a"), true);
 }
 
-TEST_F(CrOSComponentInstallerTest, RegisterComponentSuccess) {
+TEST_F(CrOSComponentInstallerTest, RegisterComponentSuccess1) {
   CrOSMockComponentUpdateService cus;
   EXPECT_CALL(cus, RegisterComponent(testing::_)).Times(1);
   component_updater::CrOSComponent::InstallComponent(
       &cus, "epson-inkjet-printer-escpr", base::Bind(load_callback));
+  RunUntilIdle();
+}
+
+TEST_F(CrOSComponentInstallerTest, RegisterComponentSuccess2) {
+  CrOSMockComponentUpdateService cus;
+  EXPECT_CALL(cus, RegisterComponent(testing::_)).Times(1);
+  component_updater::CrOSComponent::InstallComponent(&cus, "star-cups-driver",
+                                                     base::Bind(load_callback));
   RunUntilIdle();
 }
 
