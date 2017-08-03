@@ -22,7 +22,7 @@ namespace {
 constexpr gfx::Rect g_large_rect(-200000, -200000, 400000, 400000);
 void AppendDisplayItemToCcDisplayItemList(const DisplayItem& display_item,
                                           cc::DisplayItemList& list) {
-  DCHECK(DisplayItem::IsDrawingType(display_item.GetType()));
+  DCHECK(display_item.IsDrawing());
 
   sk_sp<const PaintRecord> record =
       static_cast<const DrawingDisplayItem&>(display_item).GetPaintRecord();
