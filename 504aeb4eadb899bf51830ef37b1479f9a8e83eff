@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "169a2593_dc0b9b1a",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSShorthandPropertyAPIMarker.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-03T04:42:02Z",
+      "side": 1,
+      "message": "i don\u0027t think it\u0027s useful to comment on that the old state of the code was, except in commit messages. looking at this patch it doesn\u0027t seem to be true either, are you talking about a change that has already landed?",
+      "revId": "504aeb4eadb899bf51830ef37b1479f9a8e83eff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
