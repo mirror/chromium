@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "09f8c55c_d02f7ec1",
+        "filename": "chrome/browser/extensions/extension_apitest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-03T17:13:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b2faed3_081354f4",
+      "revId": "1b820efcec4bec8b0faa3a14fc6361b4138b4292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50319818_091b2d6f",
         "filename": "chrome/browser/extensions/extension_apitest.cc",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "1b820efcec4bec8b0faa3a14fc6361b4138b4292",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec2cf57f_10a1c24e",
+        "filename": "chrome/browser/extensions/extension_apitest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-03T17:13:26Z",
+      "side": 1,
+      "message": "I\u0027ll put the messaging extensions in the api_test directory.\n\n(It\u0027s also weird that |test_data_dir_| is a protected member of the base class ExtensionBrowserTest and this method mutates it. But there are 108 files using |test_data_dir_| (and half are API tests) so I\u0027m not touching that right now.)",
+      "parentUuid": "50319818_091b2d6f",
+      "revId": "1b820efcec4bec8b0faa3a14fc6361b4138b4292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "498592e8_601d8a37",
+        "filename": "chrome/browser/extensions/extension_messages_apitest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-03T17:13:26Z",
+      "side": 1,
+      "message": "No. RunExtensionTest() always adds this -- there\u0027s even a separate RunExtensionTestNoFileAccess() function -- but may as well omit it here.",
+      "parentUuid": "015543e8_a60a0154",
+      "revId": "1b820efcec4bec8b0faa3a14fc6361b4138b4292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b28e52c4_02b42936",
         "filename": "chrome/test/BUILD.gn",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "1b820efcec4bec8b0faa3a14fc6361b4138b4292",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cab50945_55e8de62",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 2018,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-03T17:13:26Z",
+      "side": 1,
+      "message": "This ensures isolated builds include this directory, otherwise tests will fail on the bots.\n\nIn gn, |data| lists runtime dependencies -- gn tracks this information, but doesn\u0027t use it at build time: https://chromium.googlesource.com/chromium/src/+/master/tools/gn/docs/reference.md#data\n\nIt comes into play because //tools/mb/mb.py uses gn to list these runtime deps, including the listed files in isolated builds.\n\nIf you\u0027re curious:\n\ngn desc out_linux/rel chrome/test:browser_tests runtime_deps | LC_COLLATE\u003dC sort",
+      "parentUuid": "b28e52c4_02b42936",
+      "revId": "1b820efcec4bec8b0faa3a14fc6361b4138b4292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "f8c035e9_b288f8b7",
+        "filename": "extensions/test/data/messaging/connect_external/test.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-03T17:13:26Z",
+      "side": 1,
+      "message": "Done (copy-pasted :-P)",
+      "parentUuid": "6eec33c3_eb6471f9",
+      "revId": "1b820efcec4bec8b0faa3a14fc6361b4138b4292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d05c398_8363e11d",
         "filename": "extensions/test/data/messaging/connect_external/test.js",
         "patchSetId": 7
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "99be21d8_ba19f048",
+        "filename": "extensions/test/data/messaging/connect_external/test.js",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-03T17:13:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d05c398_8363e11d",
+      "revId": "1b820efcec4bec8b0faa3a14fc6361b4138b4292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36164adc_13223a64",
         "filename": "extensions/test/data/messaging/receiver/manifest.json",
         "patchSetId": 7
@@ -118,6 +226,24 @@
       "revId": "1b820efcec4bec8b0faa3a14fc6361b4138b4292",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f8ae66d_f2877ab7",
+        "filename": "extensions/test/data/messaging/receiver/manifest.json",
+        "patchSetId": 7
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-03T17:13:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36164adc_13223a64",
+      "revId": "1b820efcec4bec8b0faa3a14fc6361b4138b4292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
