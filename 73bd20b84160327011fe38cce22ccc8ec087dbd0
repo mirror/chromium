@@ -22,6 +22,30 @@
       "revId": "73bd20b84160327011fe38cce22ccc8ec087dbd0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbb7c028_70a4afb6",
+        "filename": "content/browser/renderer_host/input/synthetic_mouse_driver.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1118546
+      },
+      "writtenOn": "2017-08-03T15:54:20Z",
+      "side": 1,
+      "message": "I want to set WebMouseEvent\u0027s Button, which is a single button, so I need a vector of buttons to keep track of what buttons are pressed.",
+      "parentUuid": "b3a8ced9_4673c3fd",
+      "range": {
+        "startLine": 42,
+        "startChar": 36,
+        "endLine": 42,
+        "endChar": 42
+      },
+      "revId": "73bd20b84160327011fe38cce22ccc8ec087dbd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
