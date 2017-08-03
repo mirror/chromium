@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eff40256_d8fe80eb",
+        "filename": "components/viz/client/client_layer_tree_frame_sink.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-03T08:59:46Z",
+      "side": 1,
+      "message": "Valery\u0027s CL has already landed. Once you merge with ToT, you can just call hit_test_data_provider_-\u003eGetHitTestData() here and remove the TODO [1].\n\n[1] https://cs.chromium.org/chromium/src/components/viz/client/client_layer_tree_frame_sink.cc?l\u003d124",
+      "revId": "ae811d0ba9ea36ba16c4f3b8b5c53d0379e8f0be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e5184a8_880b6588",
+        "filename": "components/viz/service/frame_sinks/gpu_compositor_frame_sink.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-03T08:59:46Z",
+      "side": 1,
+      "message": "Add TODO to plumb the hit-test data to the right HitTestAggregator.",
+      "revId": "ae811d0ba9ea36ba16c4f3b8b5c53d0379e8f0be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43e7341e_aa7b99d7",
+        "filename": "components/viz/service/frame_sinks/gpu_root_compositor_frame_sink.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-03T08:59:46Z",
+      "side": 1,
+      "message": "TODO",
+      "revId": "ae811d0ba9ea36ba16c4f3b8b5c53d0379e8f0be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e84c7ce7_b70d43ad",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2583,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-03T08:59:46Z",
+      "side": 1,
+      "message": "Add a TODO referring to https://bugs.chromium.org/p/chromium/issues/detail?id\u003d750755 here (although maybe there\u0027s a better bug for the work needed here to plumb the hit-test data to the appropriate HitTestAggregator).",
+      "revId": "ae811d0ba9ea36ba16c4f3b8b5c53d0379e8f0be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b83651d4_9682280d",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2606,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-03T08:59:46Z",
+      "side": 1,
+      "message": "I think we are going to need to store the hit-test data here too.\n\nAdd a TODO?",
+      "revId": "ae811d0ba9ea36ba16c4f3b8b5c53d0379e8f0be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
