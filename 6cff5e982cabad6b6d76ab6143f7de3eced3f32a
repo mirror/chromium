@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "3694814c_072452a2",
+        "filename": "cc/animation/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-08-03T14:48:36Z",
+      "side": 1,
+      "message": "So do we want to add a comment here regarding group ids? Conceptually speaking the group id does *not* mean that they are for the same target, it is just means they are related and will be started together/etc.\n\nSomething like: \"To coordinate the playback of multiple cc/animations (e.g. those that are animating multiple properties on the same target), animations have the concept of a group identifier. Animations that have the same group identifier are started together, and animation-finished notifications are only sent when all animations in the group have finished.\" ?",
+      "parentUuid": "3eab70e9_e6fe8ce9",
+      "revId": "6cff5e982cabad6b6d76ab6143f7de3eced3f32a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b1faeb72_26ec3c47",
         "filename": "cc/animation/README.md",
         "patchSetId": 6
@@ -48,6 +66,30 @@
       "writtenOn": "2017-08-02T18:14:54Z",
       "side": 1,
       "message": "Blink logic never references cc::AnimationTarget. Maybe it just uses the cc::Layer as the target? Requires further investigation. Would be fine IMO to add TODO to elaborate on this.",
+      "range": {
+        "startLine": 35,
+        "startChar": 1,
+        "endLine": 35,
+        "endChar": 17
+      },
+      "revId": "6cff5e982cabad6b6d76ab6143f7de3eced3f32a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5313abf0_99befd61",
+        "filename": "cc/animation/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-08-03T14:48:36Z",
+      "side": 1,
+      "message": "Hrm, I\u0027m perhaps being a little misleading here in my attempt to avoid talking about non-animation concepts. cc::AnimationTarget is actually implemented by cc::ElementAnimations. cc::ElementAnimations then passes it on to animation_host()-\u003emutator_host_client(), but cc::MutatorHostClient is a cc/trees concept and I wanted to avoid talking about that.\n\nSuggestions to improve the description welcome.",
+      "parentUuid": "b1faeb72_26ec3c47",
       "range": {
         "startLine": 35,
         "startChar": 1,
@@ -106,6 +148,30 @@
     },
     {
       "key": {
+        "uuid": "6a74475e_87720928",
+        "filename": "cc/animation/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-08-03T14:48:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb7acfcd_8bb596a8",
+      "range": {
+        "startLine": 91,
+        "startChar": 57,
+        "endLine": 91,
+        "endChar": 63
+      },
+      "revId": "6cff5e982cabad6b6d76ab6143f7de3eced3f32a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e741ef5d_4a809ec5",
         "filename": "cc/animation/README.md",
         "patchSetId": 6
@@ -120,6 +186,24 @@
       "revId": "6cff5e982cabad6b6d76ab6143f7de3eced3f32a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a913d74_b59d86f1",
+        "filename": "cc/animation/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-08-03T14:48:36Z",
+      "side": 1,
+      "message": "Ack, but I\u0027m not sure if that\u0027s pertinent information here?",
+      "parentUuid": "e741ef5d_4a809ec5",
+      "revId": "6cff5e982cabad6b6d76ab6143f7de3eced3f32a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
