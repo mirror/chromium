@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f47f94af_2cf55d2b",
+        "filename": "chrome/browser/chromeos/login/wizard_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-03T21:06:03Z",
+      "side": 1,
+      "message": "it doesn\u0027t seem like this code (in chrome) should be modifying ash\u0027s container windows like this.\n\ncan you just cancel the OOBE flow entirely when the screen is locked instead of hiding it like this?",
+      "revId": "1f5da8dda4d1fd99cdef5251d39ca4144287bc57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "045dbb9b_fc39f84c",
+        "filename": "chrome/browser/chromeos/login/wizard_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-03T21:06:03Z",
+      "side": 1,
+      "message": "it doesn\u0027t seem like this code (in chrome) should be modifying ash\u0027s container windows like this.\n\ncan you just cancel the OOBE flow entirely when the screen is locked instead of hiding it like this?",
+      "revId": "1f5da8dda4d1fd99cdef5251d39ca4144287bc57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c073f4c_d7ad30ce",
+        "filename": "chrome/browser/resources/chromeos/login/oobe_screen_voice_interaction_value_prop.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-03T21:06:03Z",
+      "side": 1,
+      "message": "please follow the commenting convention used elsewhere in chrome\u0027s js files. i think that\u0027d be:\n\n  /**\n   * Updates visibility of voice interaction prop screen.\n   * @param {boolean} hidden Whether the screen should be hidden.\n   */",
+      "revId": "1f5da8dda4d1fd99cdef5251d39ca4144287bc57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcc9554b_4b006c55",
+        "filename": "chrome/browser/resources/chromeos/login/oobe_screen_wait_for_container_ready.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-03T21:06:03Z",
+      "side": 1,
+      "message": "same here",
+      "revId": "1f5da8dda4d1fd99cdef5251d39ca4144287bc57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9113236d_31c69659",
+        "filename": "chrome/browser/ui/webui/chromeos/login/voice_interaction_value_prop_screen_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-03T21:06:03Z",
+      "side": 1,
+      "message": "nit: has",
+      "range": {
+        "startLine": 43,
+        "startChar": 24,
+        "endLine": 43,
+        "endChar": 28
+      },
+      "revId": "1f5da8dda4d1fd99cdef5251d39ca4144287bc57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2016bc3_e961a155",
+        "filename": "chrome/browser/ui/webui/chromeos/login/wait_for_container_ready_screen_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-03T21:06:03Z",
+      "side": 1,
+      "message": "nit: has",
+      "range": {
+        "startLine": 54,
+        "startChar": 24,
+        "endLine": 54,
+        "endChar": 28
+      },
+      "revId": "1f5da8dda4d1fd99cdef5251d39ca4144287bc57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
