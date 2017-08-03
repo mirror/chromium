@@ -8,38 +8,6 @@
 
 namespace content {
 
-namespace {
-constexpr net::NetworkTrafficAnnotationTag kTrafficAnnotation =
-    net::DefineNetworkTrafficAnnotation("appcache_update_job", R"(
-      semantics {
-        sender: "HTML5 AppCache System"
-        description:
-          "Web pages can include a link to a manifest file which lists "
-          "resources to be cached for offline access. The AppCache system"
-          "retrieves those resources in the background."
-        trigger:
-          "User visits a web page containing a <html manifest=manifestUrl> "
-          "tag, or navigates to a document retrieved from an existing appcache "
-          "and some resource should be updated."
-        data: "None"
-        destination: WEBSITE
-      }
-      policy {
-        cookies_allowed: YES
-        cookies_store: "user"
-        setting:
-          "Users can control this feature via the 'Cookies' setting under "
-          "'Privacy, Content settings'. If cookies are disabled for a single "
-          "site, appcaches are disabled for the site only. If they are totally "
-          "disabled, all appcache requests will be stopped."
-        chrome_policy {
-            DefaultCookiesSetting {
-              DefaultCookiesSetting: 2
-            }
-          }
-      })");
-}
-
 AppCacheUpdateJob::UpdateURLRequest::~UpdateURLRequest() {
   // To defend against URLRequest calling delegate methods during
   // destruction, we test for a !request_ in those methods.
@@ -150,7 +118,7 @@ AppCacheUpdateJob::UpdateURLRequest::UpdateURLRequest(
     : request_(request_context->CreateRequest(url,
                                               net::DEFAULT_PRIORITY,
                                               this,
-                                              kTrafficAnnotation)),
+                                              GetTrafficAnnotation())),
       fetcher_(fetcher) {}
 
 }  // namespace content
