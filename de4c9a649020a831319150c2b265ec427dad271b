@@ -16,6 +16,24 @@
       "revId": "de4c9a649020a831319150c2b265ec427dad271b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c306240a_91a7b83e",
+        "filename": "base/sync_socket_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-03T18:50:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45613847_48f06326",
+      "revId": "de4c9a649020a831319150c2b265ec427dad271b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
