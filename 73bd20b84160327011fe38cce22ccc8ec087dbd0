@@ -46,6 +46,30 @@
       "revId": "73bd20b84160327011fe38cce22ccc8ec087dbd0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "815e1180_efa8c4cb",
+        "filename": "content/browser/renderer_host/input/synthetic_mouse_driver.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-03T16:00:21Z",
+      "side": 1,
+      "message": "Isn\u0027t the point of WebPointerProperties::Buttons to keep track of what buttons are pressed?\n\n\n\nYou don\u0027t need an ordered list here, just a set.\nI guess there\u0027s no trivial way to convert between a Button entry and a Buttons entry, which is painful.\n\nIt might be worth determining if we actually need both - ideally Button would use powers of two, and you could just | things together.\n\nA vector of ints is pretty heavy weight for storing a set with a maximum of \u003c 10 elements.",
+      "parentUuid": "bbb7c028_70a4afb6",
+      "range": {
+        "startLine": 42,
+        "startChar": 36,
+        "endLine": 42,
+        "endChar": 42
+      },
+      "revId": "73bd20b84160327011fe38cce22ccc8ec087dbd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
