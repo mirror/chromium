@@ -22,7 +22,7 @@ class BlinkTestRunner;
 // LeakDetector counts DOM objects and compare them between two pages.
 class LeakDetector : public blink::WebLeakDetectorClient {
  public:
-  explicit LeakDetector(BlinkTestRunner* test_runner);
+  explicit LeakDetector(BlinkTestRunner* test_runner, blink::WebFrame* frame);
   virtual ~LeakDetector();
 
   // Counts DOM objects, compare the previous status and returns the result of
@@ -30,7 +30,7 @@ class LeakDetector : public blink::WebLeakDetectorClient {
   // specific page, like about:blank is loaded to compare the previous
   // circumstance of DOM objects. If the number of objects increses, there
   // should be a leak.
-  void TryLeakDetection(blink::WebFrame* frame);
+  void TryLeakDetection();
 
   // WebLeakDetectorClient:
   void OnLeakDetectionComplete(const Result& result) override;

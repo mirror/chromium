@@ -43,9 +43,9 @@ const int kInitialNumberOfLiveSuspendableObject = 2;
 // objects.
 const int kInitialNumberOfV8PerContextData = 2;
 
-LeakDetector::LeakDetector(BlinkTestRunner* test_runner)
+LeakDetector::LeakDetector(BlinkTestRunner* test_runner, blink::WebFrame* frame)
     : test_runner_(test_runner),
-      web_leak_detector_(blink::WebLeakDetector::Create(this)) {
+      web_leak_detector_(blink::WebLeakDetector::Create(this, frame)) {
   previous_result_.number_of_live_audio_nodes = kInitialNumberOfLiveAudioNodes;
   previous_result_.number_of_live_documents = kInitialNumberOfLiveDocuments;
   previous_result_.number_of_live_nodes = kInitialNumberOfLiveNodes;
@@ -66,8 +66,8 @@ LeakDetector::LeakDetector(BlinkTestRunner* test_runner)
 LeakDetector::~LeakDetector() {
 }
 
-void LeakDetector::TryLeakDetection(blink::WebFrame* frame) {
-  web_leak_detector_->PrepareForLeakDetection(frame);
+void LeakDetector::TryLeakDetection() {
+  web_leak_detector_->PrepareForLeakDetection();
   web_leak_detector_->CollectGarbageAndReport();
 }
 
