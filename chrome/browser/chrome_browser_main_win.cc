@@ -70,6 +70,7 @@
 #include "chrome/installer/util/installer_util_strings.h"
 #include "chrome/installer/util/l10n_string_util.h"
 #include "chrome/installer/util/shell_util.h"
+#include "chrome_elf/chrome_elf_main.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/main_function_params.h"
@@ -91,10 +92,7 @@ typedef HRESULT (STDAPICALLTYPE* RegisterApplicationRestartProc)(
 void InitializeWindowProcExceptions() {
   // Get the breakpad pointer from chrome.exe
   base::win::WinProcExceptionFilter exception_filter =
-      reinterpret_cast<base::win::WinProcExceptionFilter>(::GetProcAddress(
-          ::GetModuleHandle(chrome::kChromeElfDllName), "CrashForException"));
-  CHECK(exception_filter);
-  exception_filter = base::win::SetWinProcExceptionFilter(exception_filter);
+      base::win::SetWinProcExceptionFilter(&CrashForException);
   DCHECK(!exception_filter);
 }
 

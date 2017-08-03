@@ -11,48 +11,23 @@
 #include "base/time/time.h"
 #include "build/build_config.h"
 #include "chrome/common/chrome_constants.h"
+#include "chrome_elf/chrome_elf_main.h"
 #include "components/crash/content/app/crashpad.h"
 
 namespace {
 
 #if defined(OS_WIN)
-typedef void (*GetCrashReportsPointer)(
-    const crash_reporter::Report** reports,
-    size_t* report_count);
-typedef void (*RequestSingleCrashUploadPointer)(const std::string& local_id);
-
 void GetReportsThunk(
     std::vector<crash_reporter::Report>* reports) {
-  static GetCrashReportsPointer get_crash_reports = []() {
-    // The crash reporting is handled by chrome_elf.dll which loads early in
-    // the chrome process.
-    HMODULE elf_module = GetModuleHandle(chrome::kChromeElfDllName);
-    return reinterpret_cast<GetCrashReportsPointer>(
-        elf_module ? GetProcAddress(elf_module, "GetCrashReportsImpl")
-                   : nullptr);
-  }();
-
-  if (get_crash_reports) {
-    const crash_reporter::Report* reports_pointer;
-    size_t report_count;
-    get_crash_reports(&reports_pointer, &report_count);
-    *reports = std::vector<crash_reporter::Report>(
-        reports_pointer, reports_pointer + report_count);
-  }
+  const crash_reporter::Report* reports_pointer;
+  size_t report_count;
+  GetCrashReportsImpl(&reports_pointer, &report_count);
+  *reports = std::vector<crash_reporter::Report>(
+      reports_pointer, reports_pointer + report_count);
 }
 
 void RequestSingleCrashUploadThunk(const std::string& local_id) {
-  static RequestSingleCrashUploadPointer request_single_crash_upload = []() {
-    // The crash reporting is handled by chrome_elf.dll which loads early in
-    // the chrome process.
-    HMODULE elf_module = GetModuleHandle(chrome::kChromeElfDllName);
-    return reinterpret_cast<RequestSingleCrashUploadPointer>(
-        elf_module ? GetProcAddress(elf_module, "RequestSingleCrashUploadImpl")
-                   : nullptr);
-  }();
-
-  if (request_single_crash_upload)
-    request_single_crash_upload(local_id);
+  RequestSingleCrashUploadImpl(local_id);
 }
 
 #endif  // OS_WIN

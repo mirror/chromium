@@ -14,3 +14,20 @@ EXPORTS
   SignalInitializeCrashReporting
   SuccessfullyBlocked
   DumpProcessWithoutCrash
+
+  CrashForException
+  InjectDumpForHungInput
+  InjectDumpForHungInputNoCrashKeys
+
+  ; These are GetProcAddress()d from V8 binding code.
+  RegisterNonABICompliantCodeRange
+  UnregisterNonABICompliantCodeRange
+
+  ; Used to interface to Crashpad client and database.
+  GetCrashReportsImpl
+  SetMetricsClientId
+  SetUploadConsentImpl
+  SetCrashKeyValueImpl
+  ClearCrashKeyValueImpl
+  RequestSingleCrashUploadImpl
+
