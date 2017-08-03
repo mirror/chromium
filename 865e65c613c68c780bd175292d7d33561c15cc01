@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7b89c9c8_36b39863",
+        "filename": "ui/webui/resources/cr_elements/policy/cr_policy_indicator_behavior.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-03T18:43:52Z",
+      "side": 1,
+      "message": "This is adding a 3rd parameter to getIndicatorTooltip, but the definition of that function already has 3 parameters. See\n\n getIndicatorTooltip: function(type, name, opt_matches) {...}\n\nIt seems that here we accidentally pass |tooltipText| as |opt_matches|.\n\nSee usage of the existing 3rd param at https://cs.chromium.org/chromium/src/ui/webui/resources/cr_elements/policy/cr_policy_pref_indicator.js?type\u003dcs\u0026l\u003d75,76\n\nand tests at https://cs.chromium.org/chromium/src/chrome/test/data/webui/cr_elements/cr_policy_indicator_behavior_tests.js?l\u003d39-46",
+      "revId": "865e65c613c68c780bd175292d7d33561c15cc01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "635de746_3930f70a",
+        "filename": "ui/webui/resources/cr_elements/policy/cr_policy_indicator_behavior.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-03T18:43:52Z",
+      "side": 1,
+      "message": "Nit: maybe rename to forcedIndicatorTooltip?",
+      "revId": "865e65c613c68c780bd175292d7d33561c15cc01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
