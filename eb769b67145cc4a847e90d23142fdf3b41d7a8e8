@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "809fd006_aa024d7d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/LogoDelegateImpl.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-08-03T14:56:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd1b1151_f43a097e",
+      "range": {
+        "startLine": 49,
+        "startChar": 62,
+        "endLine": 49,
+        "endChar": 65
+      },
+      "revId": "eb769b67145cc4a847e90d23142fdf3b41d7a8e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9376a0b_e8a49251",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-24T11:01:32Z",
       "side": 1,
       "message": "Do we want to use a standard Material curve (specifically, fast out linear in) here?",
+      "range": {
+        "startLine": 351,
+        "startChar": 27,
+        "endLine": 351,
+        "endChar": 76
+      },
+      "revId": "eb769b67145cc4a847e90d23142fdf3b41d7a8e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c834c576_c2eb1b67",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBottomSheetContent.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-08-03T14:56:07Z",
+      "side": 1,
+      "message": "Maybe, I asked the designers about that but received no concrete reply. I\u0027ve added a TODO for following up on this. Once this has landed, I think the designers can take a look and make up their minds more easily.",
+      "parentUuid": "c9376a0b_e8a49251",
       "range": {
         "startLine": 351,
         "startChar": 27,
