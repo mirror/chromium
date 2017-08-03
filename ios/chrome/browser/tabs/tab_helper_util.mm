@@ -62,7 +62,7 @@ void AttachTabHelpers(web::WebState* web_state) {
   BlockedPopupTabHelper::CreateForWebState(web_state);
   FindTabHelper::CreateForWebState(web_state, tab.findInPageControllerDelegate);
   StoreKitTabHelper::CreateForWebState(web_state);
-  SadTabTabHelper::CreateForWebState(web_state, tab);
+  SadTabTabHelper::CreateForWebState(web_state);
 
   ReadingListModel* model =
       ReadingListModelFactory::GetForBrowserState(browser_state);

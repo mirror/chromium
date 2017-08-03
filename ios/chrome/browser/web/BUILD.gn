@@ -29,7 +29,6 @@ source_set("web") {
     "tab_id_tab_helper.mm",
   ]
   deps = [
-    ":sad_tab_tab_helper_delegate",
     "//base",
     "//components/strings",
     "//ios/chrome/app/strings:ios_strings_grit",
@@ -43,13 +42,6 @@ source_set("web") {
     "//ios/web:web_arc",
     "//ui/base",
     "//url",
-  ]
-}
-
-source_set("sad_tab_tab_helper_delegate") {
-  configs += [ "//build/config/compiler:enable_arc" ]
-  sources = [
-    "sad_tab_tab_helper_delegate.h",
   ]
 }
 
@@ -68,7 +60,6 @@ source_set("unit_tests") {
     "tab_id_tab_helper_unittest.mm",
   ]
   deps = [
-    ":sad_tab_tab_helper_delegate",
     ":test_support",
     ":web",
     "//base:base",
