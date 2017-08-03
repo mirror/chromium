@@ -4,7 +4,6 @@
 
 #include "chrome/browser/ui/views/harmony/harmony_typography_provider.h"
 
-#include "build/build_config.h"
 #include "chrome/browser/ui/views/harmony/chrome_typography.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/gfx/color_palette.h"
@@ -13,6 +12,8 @@
 #include "ui/native_theme/native_theme.h"
 
 #if defined(OS_WIN)
+#include "base/win/windows_version.h"
+#include "ui/gfx/platform_font_win.h"
 #include "ui/native_theme/native_theme_win.h"
 #endif
 
@@ -80,6 +81,18 @@ SkColor GetHarmonyTextColorForNonStandardNativeTheme(
 }
 
 }  // namespace
+
+#if defined(OS_WIN)
+// static
+bool HarmonyTypographyProvider::UseFallbackFontHeight() {
+  DLOG(WARNING) << "direct write enabled? "
+                << gfx::PlatformFontWin::IsDirectWriteEnabled()
+                << "windows version? "
+                << base::win::GetVersion();
+  return !gfx::PlatformFontWin::IsDirectWriteEnabled() ||
+         base::win::GetVersion() < base::win::VERSION_WIN10;
+}
+#endif
 
 const gfx::FontList& HarmonyTypographyProvider::GetFont(int context,
                                                         int style) const {
@@ -178,10 +191,13 @@ int HarmonyTypographyProvider::GetLineHeight(int context, int style) const {
   constexpr int kBodyTextLargePlatformHeight = 16;
   constexpr int kBodyTextSmallPlatformHeight = 15;
 #elif defined(OS_WIN)
-  constexpr int kHeadlinePlatformHeight = 28;
+  // The line height should be consistent regardless of the font height.
+  static const int kHeadlinePlatformHeight = UseFallbackFontHeight() ? 28 : 27;
   constexpr int kTitlePlatformHeight = 20;
-  constexpr int kBodyTextLargePlatformHeight = 17;
-  constexpr int kBodyTextSmallPlatformHeight = 15;
+  static const int kBodyTextLargePlatformHeight =
+      UseFallbackFontHeight() ? 17 : 18;
+  static const int kBodyTextSmallPlatformHeight =
+      UseFallbackFontHeight() ? 15 : 16;
 #else
   constexpr int kHeadlinePlatformHeight = 24;
   constexpr int kTitlePlatformHeight = 18;
@@ -198,12 +214,18 @@ int HarmonyTypographyProvider::GetLineHeight(int context, int style) const {
   static const int headline_height =
       GetFont(CONTEXT_HEADLINE, kTemplateStyle).GetHeight() -
       kHeadlinePlatformHeight + kHeadlineHeight;
-  static const int title_height =
-      GetFont(views::style::CONTEXT_DIALOG_TITLE, kTemplateStyle).GetHeight() -
+  const int title_font_height = GetFont(views::style::CONTEXT_DIALOG_TITLE, kTemplateStyle).GetHeight();
+  const int title_height =
+      title_font_height -
       kTitlePlatformHeight + kTitleHeight;
-  static const int body_large_height =
-      GetFont(CONTEXT_BODY_TEXT_LARGE, kTemplateStyle).GetHeight() -
+  DLOG(WARNING) << "title font height is " << title_font_height
+                << " resulting in a line height of " << title_height;
+  const int body_large_font_height = GetFont(CONTEXT_BODY_TEXT_LARGE, kTemplateStyle).GetHeight();
+  const int body_large_height =
+      body_large_font_height -
       kBodyTextLargePlatformHeight + kBodyHeight;
+  DLOG(WARNING) << "body large font height is " << body_large_font_height
+                << " resulting in a line height of " << body_large_height;
   static const int default_height =
       GetFont(CONTEXT_BODY_TEXT_SMALL, kTemplateStyle).GetHeight() -
       kBodyTextSmallPlatformHeight + kBodyHeight;
@@ -215,6 +237,7 @@ int HarmonyTypographyProvider::GetLineHeight(int context, int style) const {
     case views::style::CONTEXT_DIALOG_TITLE:
       return title_height;
     case CONTEXT_BODY_TEXT_LARGE:
+    case views::style::CONTEXT_TABLE_ROW:
       return body_large_height;
     case CONTEXT_HEADLINE:
       return headline_height;
