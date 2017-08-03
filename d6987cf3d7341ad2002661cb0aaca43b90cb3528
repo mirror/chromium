@@ -16,6 +16,24 @@
       "revId": "d6987cf3d7341ad2002661cb0aaca43b90cb3528",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a8ef7e7_ff1243c0",
+        "filename": "chrome/test/data/webui/settings/google_assistant_page_test.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1230564
+      },
+      "writtenOn": "2017-08-03T01:09:51Z",
+      "side": 1,
+      "message": "Ack, thanks",
+      "parentUuid": "bc03ded4_63bcc5a3",
+      "revId": "d6987cf3d7341ad2002661cb0aaca43b90cb3528",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
