@@ -947,6 +947,90 @@ TEST_F(PasswordAutofillManagerTest, ShowAllPasswordsOptionOnPasswordField) {
 #endif
 }
 
+TEST_F(PasswordAutofillManagerTest,
+       ShowStandaloneShowAllPasswordsAndNotSecureWarning) {
+  auto client = base::MakeUnique<TestPasswordManagerClient>();
+  auto autofill_client = base::MakeUnique<MockAutofillClient>();
+  InitializePasswordAutofillManager(client.get(), autofill_client.get());
+
+  gfx::RectF element_bounds;
+  autofill::PasswordFormFillData data;
+  data.username_field.value = test_username_;
+  data.password_field.value = test_password_;
+  data.origin = GURL("http://foo.test");
+
+  // String "Login not secure" shown as a warning messages if password form is
+  // on http sites.
+  const base::string16 warning_message =
+      l10n_util::GetStringUTF16(IDS_AUTOFILL_LOGIN_HTTP_WARNING_MESSAGE);
+  // String for the "Show all passwords" fallback.
+  base::string16 show_all_saved_row_text =
+      l10n_util::GetStringUTF16(IDS_AUTOFILL_SHOW_ALL_SAVED_FALLBACK);
+
+  SetManualFallbacksForFillingFeatureEnabled();
+
+#if !defined(OS_ANDROID)
+  auto elements = testing::ElementsAre(warning_message, base::string16(),
+                                       show_all_saved_row_text);
+#else
+  auto elements =
+      testing::ElementsAre(warning_message, show_all_saved_row_text);
+#endif
+
+  EXPECT_CALL(*autofill_client,
+              ShowAutofillPopup(element_bounds, _,
+                                SuggestionVectorValuesAre(elements), _));
+  password_autofill_manager_->OnManualFallbackSuggestion(
+      base::i18n::RIGHT_TO_LEFT, element_bounds, true);
+
+#if !defined(OS_ANDROID)
+  // Clicking at the "Show all passwords row" should trigger a call to open the
+  // Password Manager settings page and hide the popup.
+  EXPECT_CALL(
+      *autofill_client,
+      ExecuteCommand(autofill::POPUP_ITEM_ID_ALL_SAVED_PASSWORDS_ENTRY));
+  EXPECT_CALL(*autofill_client, HideAutofillPopup());
+  password_autofill_manager_->DidAcceptSuggestion(
+      base::string16(), autofill::POPUP_ITEM_ID_ALL_SAVED_PASSWORDS_ENTRY, 0);
+#endif
+}
+
+TEST_F(PasswordAutofillManagerTest, ShowStandaloneShowAllPasswords) {
+  auto client = base::MakeUnique<TestPasswordManagerClient>();
+  auto autofill_client = base::MakeUnique<MockAutofillClient>();
+  InitializePasswordAutofillManager(client.get(), autofill_client.get());
+
+  gfx::RectF element_bounds;
+  autofill::PasswordFormFillData data;
+  data.username_field.value = test_username_;
+  data.password_field.value = test_password_;
+  data.origin = GURL("http://foo.test");
+
+  // String for the "Show all passwords" fallback.
+  base::string16 show_all_saved_row_text =
+      l10n_util::GetStringUTF16(IDS_AUTOFILL_SHOW_ALL_SAVED_FALLBACK);
+
+  SetManualFallbacksForFillingFeatureEnabled();
+
+  auto elements = testing::ElementsAre(show_all_saved_row_text);
+
+  EXPECT_CALL(*autofill_client,
+              ShowAutofillPopup(element_bounds, _,
+                                SuggestionVectorValuesAre(elements), _));
+  password_autofill_manager_->OnManualFallbackSuggestion(
+      base::i18n::RIGHT_TO_LEFT, element_bounds, false);
+#if !defined(OS_ANDROID)
+  // Clicking at the "Show all passwords row" should trigger a call to open the
+  // Password Manager settings page and hide the popup.
+  EXPECT_CALL(
+      *autofill_client,
+      ExecuteCommand(autofill::POPUP_ITEM_ID_ALL_SAVED_PASSWORDS_ENTRY));
+  EXPECT_CALL(*autofill_client, HideAutofillPopup());
+  password_autofill_manager_->DidAcceptSuggestion(
+      base::string16(), autofill::POPUP_ITEM_ID_ALL_SAVED_PASSWORDS_ENTRY, 0);
+#endif
+}
+
 // Tests that the "Show all passwords" fallback doesn't shows up in non-password
 // fields of login forms.
 TEST_F(PasswordAutofillManagerTest,
