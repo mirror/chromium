@@ -306,9 +306,27 @@ public class AccessibilitySnapshotTest {
 
     @Test
     @SmallTest
+    public void testRequestAccessibilitySnapshotInputSelection() throws Throwable {
+        final String data = "<html><body><input id='input' value='Hello, world'></body></html>";
+        final String js = "var input = document.getElementById('input');"
+                + "input.select();"
+                + "input.selectionStart = 0;"
+                + "input.selectionEnd = 5;";
+        AccessibilitySnapshotNode root = receiveAccessibilitySnapshot(data, js);
+        Assert.assertEquals(1, root.children.size());
+        Assert.assertEquals("", root.text);
+        AccessibilitySnapshotNode child = root.children.get(0);
+        AccessibilitySnapshotNode grandchild = child.children.get(0);
+        Assert.assertEquals("Hello, world", grandchild.text);
+        Assert.assertEquals(0, grandchild.startSelection);
+        Assert.assertEquals(5, grandchild.endSelection);
+    }
+
+    @Test
+    @SmallTest
     public void testRequestAccessibilitySnapshotPasswordField() throws Throwable {
         final String data =
-                "<html><body><input id='input' type='password' value='foo'></body></html>";
+                "<html><body><input id='input' type='password' value='fooq'></body></html>";
         AccessibilitySnapshotNode root = receiveAccessibilitySnapshot(data, null);
         Assert.assertEquals(1, root.children.size());
         Assert.assertEquals("", root.text);
@@ -317,3 +335,4 @@ public class AccessibilitySnapshotTest {
         Assert.assertEquals("•••", grandchild.text);
     }
 }
+
