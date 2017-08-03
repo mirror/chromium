@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "c548b28e_b9bdc0fe",
+        "filename": "content/public/common/resource_devtools_info.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-03T18:09:11Z",
+      "side": 1,
+      "message": "Fair point, I\u0027ll change this to do the best effort.",
+      "parentUuid": "b63d626d_7db92667",
+      "revId": "0e7e846da8164ecd2605ab5077e0a2ced5afd87b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40eb3493_0b7a022c",
         "filename": "net/http/http_transaction_test_util.h",
         "patchSetId": 4
@@ -101,6 +119,24 @@
       "writtenOn": "2017-08-03T16:47:39Z",
       "side": 1,
       "message": "space between override and {} please",
+      "revId": "0e7e846da8164ecd2605ab5077e0a2ced5afd87b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d7fd670_2647fee9",
+        "filename": "net/http/http_transaction_test_util.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-03T18:09:11Z",
+      "side": 1,
+      "message": "I got this from git cl format and I wouldn\u0027t like to argue with it, I\u0027m afraid it\u0027s more persistent :-)",
+      "parentUuid": "40eb3493_0b7a022c",
       "revId": "0e7e846da8164ecd2605ab5077e0a2ced5afd87b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -130,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "d35b8777_79337cb6",
+        "filename": "net/url_request/url_request.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-03T18:09:11Z",
+      "side": 1,
+      "message": "Oh, I\u0027m actually glad to hear that -- I was somewhat uncomfortable with having two rather similar methods. GetFullRequestHeaders() seems to have quite some usage, though, and I wonder whether we would be ok with always retaining the headers and dropping the load flag or should just keep the old GetfullRequestHeaders() behavior when the flag is not set? Also, note I couldn\u0027t use HttpRequestHeaders because it\u0027s not happy with the names of QUIC and SPDY internal headers starting with \":\", so I assume we\u0027ll have to change the type GetfullRequestHeaders() returns.",
+      "parentUuid": "0daa61d1_bb7c9d21",
+      "range": {
+        "startLine": 391,
+        "startChar": 7,
+        "endLine": 391,
+        "endChar": 28
+      },
+      "revId": "0e7e846da8164ecd2605ab5077e0a2ced5afd87b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "812ec4a2_e7757665",
         "filename": "net/url_request/url_request_job.h",
         "patchSetId": 4
@@ -141,6 +201,24 @@
       "writtenOn": "2017-08-03T17:37:36Z",
       "side": 1,
       "message": "Don\u0027t you want to implement this in every subclass?",
+      "revId": "0e7e846da8164ecd2605ab5077e0a2ced5afd87b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80db64a3_a4eed0dc",
+        "filename": "net/url_request/url_request_job.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-03T18:09:11Z",
+      "side": 1,
+      "message": "It doesn\u0027t seem to be applicable for most of them.",
+      "parentUuid": "812ec4a2_e7757665",
       "revId": "0e7e846da8164ecd2605ab5077e0a2ced5afd87b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

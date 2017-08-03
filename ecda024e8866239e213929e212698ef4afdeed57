@@ -16,6 +16,24 @@
       "revId": "ecda024e8866239e213929e212698ef4afdeed57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdc1681a_aa5050c0",
+        "filename": "content/browser/loader/netlog_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-03T18:09:11Z",
+      "side": 0,
+      "message": "That\u0027s not the case, we\u0027ve event got a test for this.",
+      "parentUuid": "51396d28_83e28fc6",
+      "revId": "ecda024e8866239e213929e212698ef4afdeed57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
