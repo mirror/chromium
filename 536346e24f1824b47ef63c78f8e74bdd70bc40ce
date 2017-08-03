@@ -1,0 +1,334 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99f2796a_857e03d1",
+        "filename": "chrome/browser/ui/autofill/save_card_bubble_controller_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-03T03:02:08Z",
+      "side": 1,
+      "message": "save_card_bubble_view_ \u003d base::MakeUnique\u003cTestSaveCardBubbleView\u003e()?",
+      "range": {
+        "startLine": 42,
+        "startChar": 6,
+        "endLine": 42,
+        "endChar": 28
+      },
+      "revId": "536346e24f1824b47ef63c78f8e74bdd70bc40ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea5a820d_51e60a07",
+        "filename": "chrome/browser/ui/autofill/save_card_bubble_controller_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-03T03:02:08Z",
+      "side": 1,
+      "message": "huh, I guess this is still copyable :). But there should be `public:` before this",
+      "revId": "536346e24f1824b47ef63c78f8e74bdd70bc40ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "002e386c_3dfa1660",
+        "filename": "chrome/browser/ui/autofill/save_card_bubble_controller_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-03T03:02:08Z",
+      "side": 1,
+      "message": "nit: DISALLOW_COPY_AND_ASSIGN (you\u0027ll need a default constructor and some blank lines)",
+      "revId": "536346e24f1824b47ef63c78f8e74bdd70bc40ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8664b9b_f38d7d80",
+        "filename": "chrome/browser/ui/autofill/save_card_bubble_controller_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-03T03:02:08Z",
+      "side": 1,
+      "message": "nit: I\u0027d probably move this anonymous namespace a few lines down so that it\u0027s inside `namespace autofill {`, then drop the extra `autofill::` above",
+      "revId": "536346e24f1824b47ef63c78f8e74bdd70bc40ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db66757a_9cd93f33",
+        "filename": "chrome/browser/ui/autofill/save_card_bubble_controller_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-03T03:02:08Z",
+      "side": 1,
+      "message": "this probably isn\u0027t needed -- see comment in tab_dialogs.cc",
+      "revId": "536346e24f1824b47ef63c78f8e74bdd70bc40ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4889223_da01a2d4",
+        "filename": "chrome/browser/ui/cocoa/browser_window_cocoa.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-03T03:02:08Z",
+      "side": 1,
+      "message": "remove?",
+      "revId": "536346e24f1824b47ef63c78f8e74bdd70bc40ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cc5e4f8_d03ab3dd",
+        "filename": "chrome/browser/ui/cocoa/tab_dialogs_cocoa.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-03T03:02:08Z",
+      "side": 1,
+      "message": "web_contents_-\u003eGetTopLevelNativeWindow()\n\n(the comment on that specifically says it\u0027s the parent for dialog boxes :)",
+      "range": {
+        "startLine": 95,
+        "startChar": 40,
+        "endLine": 95,
+        "endChar": 77
+      },
+      "revId": "536346e24f1824b47ef63c78f8e74bdd70bc40ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bca3839f_9f136c99",
+        "filename": "chrome/browser/ui/cocoa/tab_dialogs_cocoa.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-03T03:02:08Z",
+      "side": 1,
+      "message": "I wonder if this should return unique_ptr... (haven\u0027t gotten to the call site yet)",
+      "revId": "536346e24f1824b47ef63c78f8e74bdd70bc40ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6ab219e_f6810efd",
+        "filename": "chrome/browser/ui/cocoa/tab_dialogs_views_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-03T03:02:08Z",
+      "side": 1,
+      "message": "nit: blank line after",
+      "revId": "536346e24f1824b47ef63c78f8e74bdd70bc40ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06b0d1ee_ac19f4ec",
+        "filename": "chrome/browser/ui/cocoa/tab_dialogs_views_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-03T03:02:08Z",
+      "side": 1,
+      "message": "I suspect under Harmony this will be the wrong anchor. We want to anchor flush with the omnibox edge instead. I think the right fix is to pull out the anchoring code in the TabDialogsViewsMac::ShowManagePasswordsBubble() method above into a helper function in an anonymous namespace.",
+      "range": {
+        "startLine": 110,
+        "startChar": 10,
+        "endLine": 110,
+        "endChar": 54
+      },
+      "revId": "536346e24f1824b47ef63c78f8e74bdd70bc40ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43de763d_a851e10c",
+        "filename": "chrome/browser/ui/cocoa/tab_dialogs_views_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-03T03:02:08Z",
+      "side": 1,
+      "message": "for consistency, can we put something in bubble_anchor_helper_views.mm? i.e. same as we do for GetManagePasswordDecoration()\n\ni.e.\n\nLocationBarDecoration* GetSaveCreditCardDecoration(gfx::NativeWindow window) {\n  BrowserWindowController* window_controller \u003d\n      [BrowserWindowController browserWindowControllerForWindow:window];\n  LocationBarViewMac* location_bar \u003d [window_controller locationBarBridge];\n  return location_bar ? location_bar-\u003esave_credit_card_decoration() : nullptr;\n}",
+      "revId": "536346e24f1824b47ef63c78f8e74bdd70bc40ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "146d7ca7_40078503",
+        "filename": "chrome/browser/ui/cocoa/tab_dialogs_views_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-03T03:02:08Z",
+      "side": 1,
+      "message": "for consistency, can we put something in bubble_anchor_helper_views.mm? i.e. same as we do for GetManagePasswordDecoration()\n\nlike\n\nLocationBarDecoration* GetSaveCreditCardDecoration(gfx::NativeWindow window) {\n  BrowserWindowController* window_controller \u003d\n      [BrowserWindowController browserWindowControllerForWindow:window];\n  LocationBarViewMac* location_bar \u003d [window_controller locationBarBridge];\n  return location_bar ? location_bar-\u003esave_credit_card_decoration() : nullptr;\n}\n\n\n(some #includes can probably be dropped then)",
+      "range": {
+        "startLine": 113,
+        "startChar": 29,
+        "endLine": 113,
+        "endChar": 72
+      },
+      "revId": "536346e24f1824b47ef63c78f8e74bdd70bc40ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7ab4485_f8a5e1df",
+        "filename": "chrome/browser/ui/tab_dialogs.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-03T03:02:08Z",
+      "side": 1,
+      "message": "I don\u0027t think this is the right pattern for injecting SupportsUserData things in tests. I think the test can just do, in SetUp() or SetUpOnMainThread() something like\n\n\n    browser()-\u003etab_strip_model()-\u003eGetWebContentsAt(0)-\u003eSetUserData(\n        TestTabDialogs::UserDataKey(),\n        base::MakeUnique\u003cSaveCardTestTabDialogs\u003e());\n\n\nthen we don\u0027t need this global or the *ForTest methods in release code.\n\nNote you\u0027ll need to have\n\n`using TabDialogs::UserDataKey;`\n\nin the public: second of TestTabDialogs (or something similar so that that code fragment can call the protected UserDataKey method)",
+      "revId": "536346e24f1824b47ef63c78f8e74bdd70bc40ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c39a8f66_520654f4",
+        "filename": "chrome/browser/ui/test_tab_dialogs.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-03T03:02:08Z",
+      "side": 1,
+      "message": "Alternatively, the TestTabDialogs constructor could take a WebContents* argument and do the web_contents-\u003eSetUSerData(UserDataKey(), base::WrapUnique(this)));\n\nexcept WrapUnique(this) is a bit quirky, you\u0027d end up with code like\n\n  // The constructor passes ownership of itself to the WebContents.\n  new SaveCardTestTabDialogs(..GetWebContentsAt(0));\n\n\nmaybe that\u0027s too gross",
+      "revId": "536346e24f1824b47ef63c78f8e74bdd70bc40ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c027bc4_16e37156",
+        "filename": "chrome/browser/ui/views/tab_dialogs_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-03T03:02:08Z",
+      "side": 1,
+      "message": "this one probably isn\u0027t needed with a comment below",
+      "revId": "536346e24f1824b47ef63c78f8e74bdd70bc40ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f306424a_84ce20f2",
+        "filename": "chrome/browser/ui/views/tab_dialogs_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-03T03:02:08Z",
+      "side": 1,
+      "message": "BrowserView* browser_view \u003d BrowserView::GetBrowserViewForNativeWindow(web_contents_-\u003eGetTopLeveLNativeWindow()); ?",
+      "revId": "536346e24f1824b47ef63c78f8e74bdd70bc40ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb5ab0b9_ca3b22ed",
+        "filename": "chrome/browser/ui/views/tab_dialogs_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-03T03:02:08Z",
+      "side": 1,
+      "message": "hm - this is something that\u0027s missing from the Cocoa implementation. The bubble might try to anchor off the window, or crash, if it\u0027s invoked inside a hosted app or while in HTML5 fullscreen. Doesn\u0027t need to be addressed in this CL though (and the --secondary-ui-md codepath on Mac shouldn\u0027t be affected anyway). \n\nThere\u0027s probably issues remaining for BrowserView too -- Hosted Apps don\u0027t have a visible app_menu_button() either, but could still want to show this dialog. I don\u0027t think you\u0027re regressing anything though.\n\n(I think toolbar-\u003eapp_menu_button() returns nullptr when the toolbar is hidden).",
+      "revId": "536346e24f1824b47ef63c78f8e74bdd70bc40ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78a599d7_fc0e684e",
+        "filename": "chrome/browser/ui/views/toolbar/toolbar_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-08-03T03:02:08Z",
+      "side": 1,
+      "message": "remove?\n\n(perhaps the one below too?)",
+      "revId": "536346e24f1824b47ef63c78f8e74bdd70bc40ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
