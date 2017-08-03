@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "123d1717_f73cd68b",
+        "filename": "chrome/browser/extensions/api/messaging/native_process_launcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-08-03T04:24:56Z",
+      "side": 1,
+      "message": "window_handle_ is intptr_t, so I\u0027m not sure %zd is correct here, since intptr_t may not be the same size as size_t.\nMaybe use PRIdPTR?",
+      "range": {
+        "startLine": 195,
+        "startChar": 43,
+        "endLine": 195,
+        "endChar": 45
+      },
+      "revId": "01921e084f7efb1bc740f2d8f2f9168cc8fe63a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
