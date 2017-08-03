@@ -112,6 +112,7 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
   };
 
   // NavigationHandle implementation:
+  int64_t GetNavigationId() const override;
   const GURL& GetURL() override;
   SiteInstance* GetStartingSiteInstance() override;
   bool IsInMainFrame() override;
@@ -552,6 +553,9 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
   std::unique_ptr<NavigationUIData> navigation_ui_data_;
 
   SSLStatus ssl_status_;
+
+  // The unique id to identify this to navigation with.
+  int64_t navigation_id_;
 
   // The id of the URLRequest tied to this navigation.
   GlobalRequestID request_id_;
