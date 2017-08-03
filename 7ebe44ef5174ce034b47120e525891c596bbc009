@@ -22,6 +22,30 @@
       "revId": "7ebe44ef5174ce034b47120e525891c596bbc009",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72aa1f0e_313b3b87",
+        "filename": "chrome/browser/search/instant_service_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-08-03T01:24:01Z",
+      "side": 0,
+      "message": "I totally agree that losing any test coverage is not a great outcome.\n\nI was not able to get this working with mojo .  The test does surprisingly little, and the code is invoked in other browser_tests, so although I\u0027m reluctant to delete any test, I think it is the best option here.\n\nIn the mojo code, getting a handle on the mojo client interface is done via the IPC::ChannelProxy returned from RenderProcessHost::GetChannel.  In the MockRenderProcessHost used for testing, the channel is not implemented (returns NULL).  Neither the MockRenderProcessHost, nor the ChannelProxy easily lend themselves easily to any sort of mocking / faking.\n\nWhist there might be some options to work around the mojo / channel issue, I noticed that this test is testing so little that it is of arguable overall value.  The test invokes InstantService::Observe with NOTIFICATION_RENDERER_PROCESS_CREATED and ensures that an IPC is sent as a result.  This amounts to validating that the switch statement at https://cs.chromium.org/chromium/src/chrome/browser/search/instant_service.cc?l\u003d245\u0026rcl\u003d3553b1fe42ecb18782876f185ebd03c08bfb8431 is working as intended.\n\nI have verified that this code is being invoked in other end-to-end browser tests which gives some assurance that any unintended code changes around this will be picked up.",
+      "parentUuid": "3d8feebf_ecf44e21",
+      "range": {
+        "startLine": 120,
+        "startChar": 1,
+        "endLine": 120,
+        "endChar": 0
+      },
+      "revId": "7ebe44ef5174ce034b47120e525891c596bbc009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

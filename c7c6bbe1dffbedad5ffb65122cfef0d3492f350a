@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fe9412e9_40678270",
+        "filename": "chrome/browser/search/instant_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-08-03T01:24:01Z",
+      "side": 1,
+      "message": "thanks - not needed indeed.",
+      "parentUuid": "ac9e1467_1fe78eac",
+      "range": {
+        "startLine": 30,
+        "startChar": 42,
+        "endLine": 30,
+        "endChar": 0
+      },
+      "revId": "c7c6bbe1dffbedad5ffb65122cfef0d3492f350a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9216876_f0017f6a",
         "filename": "chrome/browser/search/instant_service.cc",
         "patchSetId": 7
@@ -39,6 +63,24 @@
       "revId": "c7c6bbe1dffbedad5ffb65122cfef0d3492f350a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d82cc320_634d71e3",
+        "filename": "chrome/browser/search/instant_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-08-03T01:24:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9216876_f0017f6a",
+      "revId": "c7c6bbe1dffbedad5ffb65122cfef0d3492f350a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "7a4650dd_9a694861",
+        "filename": "chrome/common/search.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-08-03T01:24:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3be7712_454aac9f",
+      "revId": "c7c6bbe1dffbedad5ffb65122cfef0d3492f350a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b30b859_ed1d86ae",
         "filename": "chrome/common/search.mojom",
         "patchSetId": 7
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "618f0874_23b48515",
+        "filename": "chrome/common/search.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-08-03T01:24:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b30b859_ed1d86ae",
+      "revId": "c7c6bbe1dffbedad5ffb65122cfef0d3492f350a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7986e2f_cae7f4cf",
         "filename": "chrome/renderer/searchbox/search_bouncer.cc",
         "patchSetId": 7
@@ -90,6 +168,24 @@
       "revId": "c7c6bbe1dffbedad5ffb65122cfef0d3492f350a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "225995b9_f3c6541d",
+        "filename": "chrome/renderer/searchbox/search_bouncer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-08-03T01:24:01Z",
+      "side": 1,
+      "message": "Unretained is safe since this class is a leaky singleton.  I\u0027m inclined not to add a comment since using Unretained(this) is the most idomatic usage in mojo binders.",
+      "parentUuid": "c7986e2f_cae7f4cf",
+      "revId": "c7c6bbe1dffbedad5ffb65122cfef0d3492f350a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
