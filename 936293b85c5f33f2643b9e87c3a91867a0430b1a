@@ -16,6 +16,75 @@
       "revId": "936293b85c5f33f2643b9e87c3a91867a0430b1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "172f367d_9adba290",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-03T21:46:06Z",
+      "side": 1,
+      "message": "why is this friend needed? Is it because RS can access GetConfig()?",
+      "range": {
+        "startLine": 166,
+        "startChar": 17,
+        "endLine": 166,
+        "endChar": 34
+      },
+      "revId": "936293b85c5f33f2643b9e87c3a91867a0430b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d9ce21e_416e6529",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-03T21:46:06Z",
+      "side": 1,
+      "message": "s/max_requests_for_bdp_ranges/max_requests_for_bdp_ranges_/",
+      "range": {
+        "startLine": 169,
+        "startChar": 45,
+        "endLine": 169,
+        "endChar": 72
+      },
+      "revId": "936293b85c5f33f2643b9e87c3a91867a0430b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66e662ac_d3a7446c",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-03T21:46:06Z",
+      "side": 1,
+      "message": "Add comment:\nThis config implies that when BDP \u003c\u003d 150, then maximum number of non-delayable requests should be limited to 2. When BDP \u003e150 and \u003c\u003d200, it should be limited to 4. For BDP \u003e 200, the default value should be used.",
+      "range": {
+        "startLine": 175,
+        "startChar": 36,
+        "endLine": 175,
+        "endChar": 0
+      },
+      "revId": "936293b85c5f33f2643b9e87c3a91867a0430b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
