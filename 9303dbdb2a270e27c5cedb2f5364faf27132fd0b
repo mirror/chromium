@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25016c3c_f6327acc",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyFontUtils.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-03T06:42:24Z",
+      "side": 1,
+      "message": "no need to initialize to nullptr",
+      "revId": "9303dbdb2a270e27c5cedb2f5364faf27132fd0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "314a1551_0f2359b5",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyFontUtils.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-03T06:42:24Z",
+      "side": 1,
+      "message": "does passing in the kValueRangeNonNegative not guarantee you won\u0027t get a negative value? I would have expected it to, but it\u0027s not clear with the calc code :\\",
+      "revId": "9303dbdb2a270e27c5cedb2f5364faf27132fd0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5015a729_9cc11eac",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyFontUtils.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-03T06:42:24Z",
+      "side": 1,
+      "message": "to clean up the code a bit I would make this if condition \nif (parser_mode !\u003d kCSSFontFaceRuleMode || range.AtEnd())",
+      "revId": "9303dbdb2a270e27c5cedb2f5364faf27132fd0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51dbe50e_182997a7",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyFontUtils.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-03T06:42:24Z",
+      "side": 1,
+      "message": "with above suggestion this if statement can be removed",
+      "revId": "9303dbdb2a270e27c5cedb2f5364faf27132fd0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a3f7ffc_039529ff",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyFontUtils.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-03T06:42:24Z",
+      "side": 1,
+      "message": "with above suggestion this if statement can be removed",
+      "revId": "9303dbdb2a270e27c5cedb2f5364faf27132fd0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ed2be16_a8c88063",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyFontUtils.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-03T06:42:24Z",
+      "side": 1,
+      "message": "with above suggestion this return statement can be removed",
+      "revId": "9303dbdb2a270e27c5cedb2f5364faf27132fd0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
