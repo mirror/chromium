@@ -22,6 +22,30 @@
       "revId": "2f9120db781754240e1b062614e527542d861a2d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3612d64f_1b1f079a",
+        "filename": "ios/components/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-08-03T21:37:14Z",
+      "side": 1,
+      "message": "Yes, I spoke with Eugene and I will add him and also adding Sylvain since he already owns //components and so that we have OWNERS from more than MTV time zone.\n\nI don\u0027t think component is valuable here, but I agree probably in subfolders which I\u0027ll address separately.",
+      "parentUuid": "01838c76_7296112b",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 9
+      },
+      "revId": "2f9120db781754240e1b062614e527542d861a2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
