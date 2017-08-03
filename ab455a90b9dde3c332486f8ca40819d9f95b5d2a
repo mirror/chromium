@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b26178c6_c6bde17e",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_browsertest_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1236349
+      },
+      "writtenOn": "2017-08-03T15:02:57Z",
+      "side": 1,
+      "message": "As discussed offline, this needs to be here because of a DCHECK inside the dialog controller",
+      "parentUuid": "74f19e8f_f612f42b",
+      "range": {
+        "startLine": 53,
+        "startChar": 50,
+        "endLine": 53,
+        "endChar": 0
+      },
+      "revId": "ab455a90b9dde3c332486f8ca40819d9f95b5d2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bfbf35a8_eaa2f712",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_browsertest_win.cc",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "ab455a90b9dde3c332486f8ca40819d9f95b5d2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "648379fa_1f47c3cd",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_browsertest_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1236349
+      },
+      "writtenOn": "2017-08-03T15:02:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bfbf35a8_eaa2f712",
+      "range": {
+        "startLine": 57,
+        "startChar": 22,
+        "endLine": 57,
+        "endChar": 0
+      },
+      "revId": "ab455a90b9dde3c332486f8ca40819d9f95b5d2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3fc3be99_b06d0e74",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_browsertest_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1236349
+      },
+      "writtenOn": "2017-08-03T15:02:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3cad399_808597a0",
+      "range": {
+        "startLine": 77,
+        "startChar": 55,
+        "endLine": 77,
+        "endChar": 0
+      },
+      "revId": "ab455a90b9dde3c332486f8ca40819d9f95b5d2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95de5624_a2dd2271",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_browsertest_win.cc",
         "patchSetId": 7
@@ -91,6 +163,30 @@
       "revId": "ab455a90b9dde3c332486f8ca40819d9f95b5d2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e480093_df785c09",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_browsertest_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1236349
+      },
+      "writtenOn": "2017-08-03T15:02:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95de5624_a2dd2271",
+      "range": {
+        "startLine": 82,
+        "startChar": 61,
+        "endLine": 82,
+        "endChar": 0
+      },
+      "revId": "ab455a90b9dde3c332486f8ca40819d9f95b5d2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "f82a56fa_6c6581af",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_win.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1236349
+      },
+      "writtenOn": "2017-08-03T15:02:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37620c87_a258679d",
+      "range": {
+        "startLine": 74,
+        "startChar": 60,
+        "endLine": 74,
+        "endChar": 0
+      },
+      "revId": "ab455a90b9dde3c332486f8ca40819d9f95b5d2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "77ed7e5c_1f79fe69",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 7
@@ -131,6 +251,24 @@
       "revId": "ab455a90b9dde3c332486f8ca40819d9f95b5d2a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9fb8f0d_21fd5179",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 74970,
+      "author": {
+        "id": 1236349
+      },
+      "writtenOn": "2017-08-03T15:02:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "77ed7e5c_1f79fe69",
+      "revId": "ab455a90b9dde3c332486f8ca40819d9f95b5d2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
