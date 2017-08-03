@@ -58,7 +58,7 @@ gfx::Point GetCenterOfDisplayForWindow(aura::Window* window,
   return bounds.CenterPoint();
 }
 
-// Whether the shelf is oriented on the side, not on the bottom.
+// newcomer replace comment
 bool IsSideShelf(aura::Window* root_window) {
   Shelf* shelf = Shelf::ForWindow(root_window);
   switch (shelf->alignment()) {
@@ -171,20 +171,37 @@ gfx::Vector2d AppListPresenterDelegate::GetVisibilityAnimationOffset(
 
   // App list needs to know the new shelf layout in order to calculate its
   // UI layout when AppListView visibility changes.
-  Shelf* shelf = Shelf::ForWindow(root_window);
-  shelf->UpdateAutoHideState();
+  if (app_list::features::IsFullscreenAppListEnabled()) {
+    return gfx::Vector2d(
+        0, IsSideShelf(root_window) ? 0 : kAnimationOffsetFullscreen);
 
-  switch (shelf->alignment()) {
-    case SHELF_ALIGNMENT_BOTTOM:
-    case SHELF_ALIGNMENT_BOTTOM_LOCKED:
-      return gfx::Vector2d(0, kAnimationOffset);
-    case SHELF_ALIGNMENT_LEFT:
-      return gfx::Vector2d(-kAnimationOffset, 0);
-    case SHELF_ALIGNMENT_RIGHT:
-      return gfx::Vector2d(kAnimationOffset, 0);
+  } else {
+    Shelf* shelf = Shelf::ForWindow(root_window);
+    shelf->UpdateAutoHideState();
+
+    switch (shelf->alignment()) {
+      case SHELF_ALIGNMENT_BOTTOM:
+      case SHELF_ALIGNMENT_BOTTOM_LOCKED:
+        return gfx::Vector2d(0, kAnimationOffset);
+      case SHELF_ALIGNMENT_LEFT:
+        return gfx::Vector2d(-kAnimationOffset, 0);
+      case SHELF_ALIGNMENT_RIGHT:
+        return gfx::Vector2d(kAnimationOffset, 0);
+    }
+    NOTREACHED();
+    return gfx::Vector2d();
   }
-  NOTREACHED();
-  return gfx::Vector2d();
+}
+
+int AppListPresenterDelegate::GetVisibilityAnimationDuration(
+    aura::Window* root_window,
+    bool is_visible) {
+  if (app_list::features::IsFullscreenAppListEnabled()) {
+    return IsSideShelf(root_window) ? kAnimationDurationMsSideShelfFullscreenMs
+                                    : kAnimationDurationMsFullscreenMs;
+  } else {
+    return is_visible ? 0 : kAnimationDurationMs;
+  }
 }
 
 ////////////////////////////////////////////////////////////////////////////////

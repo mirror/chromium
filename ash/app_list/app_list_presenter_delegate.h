@@ -19,7 +19,7 @@ namespace app_list {
 class AppListPresenterImpl;
 class AppListView;
 class AppListViewDelegateFactory;
-}
+}  // namespace app_list
 
 namespace ui {
 class LocatedEvent;
@@ -54,6 +54,8 @@ class ASH_EXPORT AppListPresenterDelegate
   void UpdateBounds() override;
   gfx::Vector2d GetVisibilityAnimationOffset(
       aura::Window* root_window) override;
+  int GetVisibilityAnimationDuration(aura::Window* root_window,
+                                     bool is_visible) override;
 
  private:
   void ProcessLocatedEvent(ui::LocatedEvent* event);
