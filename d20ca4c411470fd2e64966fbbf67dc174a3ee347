@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b97d675d_17d701aa",
+        "filename": "chrome/browser/content_settings/content_settings_default_provider_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-03T23:08:12Z",
+      "side": 1,
+      "message": "Optional: instead of resetting the provider, you could put it into a scope and close the scope when you\u0027re done with it.",
+      "revId": "d20ca4c411470fd2e64966fbbf67dc174a3ee347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
