@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e499c63_faaebee9",
+        "filename": "ui/views/win/windows_session_change_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-03T20:58:18Z",
+      "side": 1,
+      "message": "I don\u0027t definitely know, but I wouldn\u0027t be surprised if WTSRegisterSessionNotification might block and require com. Should this include those traits?",
+      "range": {
+        "startLine": 72,
+        "startChar": 41,
+        "endLine": 72,
+        "endChar": 64
+      },
+      "revId": "7dacbee6ce988cd2b2f0d771845e16d3e9218d6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
