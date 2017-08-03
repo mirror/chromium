@@ -41,6 +41,10 @@ class ChromeIOSTranslateClient
  public:
   ~ChromeIOSTranslateClient() override;
 
+  // Performs "second phase" (i.e. after all tab helpers have been constructed)
+  // initialization of the translate client.
+  void Initialize();
+
   // Helper method to return a new TranslatePrefs instance.
   static std::unique_ptr<translate::TranslatePrefs> CreateTranslatePrefs(
       PrefService* prefs);
@@ -49,7 +53,7 @@ class ChromeIOSTranslateClient
   translate::TranslateManager* GetTranslateManager();
 
   // TranslateClient implementation.
-  translate::TranslateDriver* GetTranslateDriver() override;
+  translate::IOSTranslateDriver* GetTranslateDriver() override;
   PrefService* GetPrefs() override;
   std::unique_ptr<translate::TranslatePrefs> GetTranslatePrefs() override;
   translate::TranslateAcceptLanguages* GetTranslateAcceptLanguages() override;

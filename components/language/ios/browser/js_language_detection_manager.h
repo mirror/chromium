@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef COMPONENTS_TRANSLATE_IOS_BROWSER_JS_LANGUAGE_DETECTION_MANAGER_H_
-#define COMPONENTS_TRANSLATE_IOS_BROWSER_JS_LANGUAGE_DETECTION_MANAGER_H_
+#ifndef COMPONENTS_LANGUAGE_IOS_BROWSER_JS_LANGUAGE_DETECTION_MANAGER_H_
+#define COMPONENTS_LANGUAGE_IOS_BROWSER_JS_LANGUAGE_DETECTION_MANAGER_H_
 
 #import <Foundation/Foundation.h>
 #include <stddef.h>
@@ -37,4 +37,4 @@ using BufferedTextCallback = base::Callback<void(const base::string16&)>;
 
 @end
 
-#endif  // COMPONENTS_TRANSLATE_IOS_BROWSER_JS_LANGUAGE_DETECTION_MANAGER_H_
+#endif  // COMPONENTS_LANGUAGE_IOS_BROWSER_JS_LANGUAGE_DETECTION_MANAGER_H_

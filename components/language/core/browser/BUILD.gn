@@ -6,6 +6,8 @@ static_library("browser") {
   sources = [
     "url_language_histogram.cc",
     "url_language_histogram.h",
+    "language_detector.cc",
+    "language_detector.h",
   ]
 
   deps = [
@@ -13,6 +15,7 @@ static_library("browser") {
     "//components/keyed_service/core",
     "//components/pref_registry",
     "//components/prefs",
+    "//components/translate/core/common",
   ]
 }
 
@@ -27,6 +30,7 @@ source_set("unit_tests") {
     "//components/pref_registry:pref_registry",
     "//components/prefs",
     "//components/prefs:test_support",
+    "//components/translate/core/common",
     "//net:test_support",
     "//testing/gtest",
   ]

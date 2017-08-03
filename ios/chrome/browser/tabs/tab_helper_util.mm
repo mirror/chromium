@@ -12,6 +12,8 @@
 #include "components/history/core/browser/top_sites.h"
 #import "components/history/ios/browser/web_state_top_sites_observer.h"
 #include "components/keyed_service/core/service_access_type.h"
+#include "components/language/core/browser/url_language_histogram.h"
+#include "components/language/ios/browser/language_detection_controller.h"
 #import "components/signin/ios/browser/account_consistency_service.h"
 #include "ios/chrome/browser/bookmarks/bookmark_model_factory.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
@@ -20,6 +22,7 @@
 #include "ios/chrome/browser/history/history_service_factory.h"
 #include "ios/chrome/browser/history/top_sites_factory.h"
 #import "ios/chrome/browser/infobars/infobar_manager_impl.h"
+#include "ios/chrome/browser/language/url_language_histogram_factory.h"
 #include "ios/chrome/browser/reading_list/reading_list_model_factory.h"
 #import "ios/chrome/browser/reading_list/reading_list_web_state_observer.h"
 #import "ios/chrome/browser/sessions/ios_chrome_session_tab_helper.h"
@@ -40,6 +43,12 @@
 #import "ios/web/public/web_state/web_state.h"
 
 void AttachTabHelpers(web::WebState* web_state) {
+  // We initialize helpers in two phases: first construction, then
+  // communication between helpers once all have been constructed. This allows
+  // us to deal with the indeterminate order of helper construction.
+
+  // Phase 1: construction.
+
   // TabIdHelper sets up the tab ID which is required for the creation of the
   // Tab by LegacyTabHelper.
   TabIdTabHelper::CreateForWebState(web_state);
@@ -73,6 +82,8 @@ void AttachTabHelpers(web::WebState* web_state) {
               browser_state)) {
     account_consistency_service->SetWebStateHandler(web_state, tab);
   }
+
+  language::LanguageDetectionController::CreateForWebState(web_state);
   ChromeIOSTranslateClient::CreateForWebState(web_state);
 
   ios::ChromeBrowserState* original_browser_state =
@@ -94,4 +105,9 @@ void AttachTabHelpers(web::WebState* web_state) {
   // Allow the Tab to attach tab helper like objects (all those objects should
   // really be tab helpers and created above).
   [tab attachTabHelpers];
+
+  // Phase 2: communication.
+
+  ChromeIOSTranslateClient::FromWebState(web_state)->Initialize();
+  InitializeUrlLanguageHistogram(web_state);
 }

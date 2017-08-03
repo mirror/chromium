@@ -2,7 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "base/bind.h"
 #include "components/language/core/browser/url_language_histogram.h"
+#include "components/translate/core/common/language_detection_details.h"
 
 #include <algorithm>
 #include <map>
@@ -81,7 +83,8 @@ std::vector<UrlLanguageHistogram::LanguageInfo> GetAllLanguages(
 }  // namespace
 
 UrlLanguageHistogram::UrlLanguageHistogram(PrefService* pref_service)
-    : pref_service_(pref_service) {}
+    : pref_service_(pref_service),
+      weak_ptr_factory_(this) {}
 
 UrlLanguageHistogram::~UrlLanguageHistogram() = default;
 
@@ -121,7 +124,12 @@ float UrlLanguageHistogram::GetLanguageFrequency(
   return static_cast<float>(counter_value) / counters_sum;
 }
 
-void UrlLanguageHistogram::OnPageVisited(const std::string& language_code) {
+// TODO test
+void UrlLanguageHistogram::OnLanguageDetected(
+    const translate::LanguageDetectionDetails& details) {
+  if (!details.is_cld_reliable) return;
+  const std::string& language_code = details.cld_language;
+
   DictionaryPrefUpdate update(pref_service_, kUrlLanguageHistogramCounters);
   base::DictionaryValue* dict = update.Get();
   int counter_value = 0;
@@ -141,6 +149,10 @@ void UrlLanguageHistogram::ClearHistory(base::Time begin, base::Time end) {
   }
 
   pref_service_->ClearPref(kUrlLanguageHistogramCounters);
+}
+
+void UrlLanguageHistogram::ObserveLanguageDetection(LanguageDetector* const detector) {
+  detector->AddLanguageDetectionObserver(weak_ptr_factory_.GetWeakPtr());
 }
 
 }  // namespace language
