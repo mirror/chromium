@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b7e2487_e3057245",
+        "filename": "content/public/test/navigation_throttle_inserter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-03T15:50:35Z",
+      "side": 1,
+      "message": "I\u0027m wondering if we should put the word test in that class somehow, so that people immediately understand that it should only be used in tests.",
+      "revId": "ff57dbd5a6ebb844155701686ab6cbe0fe7a502d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
