@@ -117,6 +117,30 @@
     },
     {
       "key": {
+        "uuid": "65efb5a1_64daeec3",
+        "filename": "chrome/browser/net/profile_network_context_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-03T11:34:47Z",
+      "side": 1,
+      "message": "(Hm, sorry I wasn\u0027t fully sure why we need to keep this here- why isn\u0027t calling MakeRequest in SetUpProfileIODataMainContext enough?)",
+      "parentUuid": "709329b4_4dffd015",
+      "range": {
+        "startLine": 60,
+        "startChar": 40,
+        "endLine": 60,
+        "endChar": 72
+      },
+      "revId": "0d9082f9c09519757d387353618fece739e648c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2e08d054_2c7d2c64",
         "filename": "chrome/test/base/test_chrome_content_browser_client.h",
         "patchSetId": 8
@@ -157,6 +181,40 @@
         "endLine": 33,
         "endChar": 16
       },
+      "revId": "0d9082f9c09519757d387353618fece739e648c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1e0e89a_3056cbaf",
+        "filename": "content/browser/storage_partition_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-03T11:34:47Z",
+      "side": 1,
+      "message": "Would BrowserThread::DeleteSoon(BrowserThread::IO, FROM_HERE, std::move(...)) be enough?",
+      "revId": "0d9082f9c09519757d387353618fece739e648c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99f67572_adab96df",
+        "filename": "content/browser/storage_partition_impl.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-03T11:34:47Z",
+      "side": 1,
+      "message": "created -\u003e created by",
       "revId": "0d9082f9c09519757d387353618fece739e648c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
