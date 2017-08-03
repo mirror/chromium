@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bfdf96d3_290307ca",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 465,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-03T02:36:58Z",
+      "side": 1,
+      "message": "nit: blank line after TRACE_EVENT to be consistent with functions below",
+      "revId": "cb6bdfde6d7d4bb8410d3815aca95fabbc1b19bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
