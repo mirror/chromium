@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3f9976f_3783f083",
+        "filename": "ios/chrome/browser/translate/before_translate_infobar_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-03T15:09:46Z",
+      "side": 1,
+      "message": "Could you please document in the comments that these constants should not be used on iOS9 for testing.",
+      "range": {
+        "startLine": 11,
+        "startChar": 23,
+        "endLine": 11,
+        "endChar": 52
+      },
+      "revId": "acab41e0bfa97aa2fc461f0b50eae0596257bec6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

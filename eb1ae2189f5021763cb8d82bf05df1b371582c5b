@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0e94735_70cc4f43",
+        "filename": "ios/chrome/browser/translate/translate_egtest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-03T15:09:46Z",
+      "side": 0,
+      "message": "Do you want to move this comment to line 125?",
+      "range": {
+        "startLine": 618,
+        "startChar": 30,
+        "endLine": 618,
+        "endChar": 33
+      },
+      "revId": "eb1ae2189f5021763cb8d82bf05df1b371582c5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
