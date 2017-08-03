@@ -7119,43 +7119,59 @@ IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, ParentDetachRemoteChild) {
   EXPECT_TRUE(watcher.did_exit_normally());
 }
 
-IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, VisibilityChanged) {
+// This test verifies that changing the CSS visibility of a cross-origin
+// <iframe> is forwarded to its corresponding RenderWidgetHost and all other
+// RenderWidgetHosts corresponding to the nested cross-origin frame.
+IN_PROC_BROWSER_TEST_F(SitePerProcessBrowserTest, CSSVisibilityChanged) {
   GURL main_url(
       embedded_test_server()->GetURL("a.com", "/page_with_iframe.html"));
   EXPECT_TRUE(NavigateToURL(shell(), main_url));
   EXPECT_EQ(shell()->web_contents()->GetLastCommittedURL(), main_url);
 
-  GURL cross_site_url =
-      embedded_test_server()->GetURL("oopif.com", "/title1.html");
-
   FrameTreeNode* root = web_contents()->GetFrameTree()->root();
 
-  TestNavigationObserver observer(shell()->web_contents());
+  // Navigate the <iframe> to cross-origin.
+  GURL cross_site_url_b =
+      embedded_test_server()->GetURL("b.com", "/page_with_iframe.html");
+  NavigateFrameToURL(root->child_at(0), cross_site_url_b);
 
-  NavigateFrameToURL(root->child_at(0), cross_site_url);
-  EXPECT_EQ(cross_site_url, observer.last_navigation_url());
-  EXPECT_TRUE(observer.last_navigation_succeeded());
+  // Navigate the nested <iframe> to another cross-origin.
+  GURL cross_site_url_c =
+      embedded_test_server()->GetURL("c.com", "/title1.html");
+  NavigateFrameToURL(root->child_at(0)->child_at(0), cross_site_url_c);
 
-  RenderWidgetHostImpl* render_widget_host =
+  RenderWidgetHostImpl* child_b_widget_host =
       root->child_at(0)->current_frame_host()->GetRenderWidgetHost();
-  EXPECT_FALSE(render_widget_host->is_hidden());
+  EXPECT_FALSE(child_b_widget_host->is_hidden());
+
+  RenderWidgetHostImpl* child_c_widget_host = root->child_at(0)
+                                                  ->child_at(0)
+                                                  ->current_frame_host()
+                                                  ->GetRenderWidgetHost();
+  EXPECT_FALSE(child_c_widget_host->is_hidden());
 
   std::string show_script =
       "document.querySelector('iframe').style.visibility = 'visible';";
   std::string hide_script =
       "document.querySelector('iframe').style.visibility = 'hidden';";
 
-  // Verify that hiding leads to a notification from RenderWidgetHost.
-  RenderWidgetHostVisibilityObserver hide_observer(
-      root->child_at(0)->current_frame_host()->GetRenderWidgetHost(), false);
+  // Listen to the notification from RenderWidgetHosts when they become hidden.
+  RenderWidgetHostVisibilityObserver hide_child_b_observer(child_b_widget_host,
+                                                           false);
+  RenderWidgetHostVisibilityObserver hide_child_c_observer(child_c_widget_host,
+                                                           false);
   EXPECT_TRUE(ExecuteScript(shell(), hide_script));
-  EXPECT_TRUE(hide_observer.WaitUntilSatisfied());
+  EXPECT_TRUE(hide_child_b_observer.WaitUntilSatisfied());
+  EXPECT_TRUE(hide_child_c_observer.WaitUntilSatisfied());
 
-  // Verify showing leads to a notification as well.
-  RenderWidgetHostVisibilityObserver show_observer(
-      root->child_at(0)->current_frame_host()->GetRenderWidgetHost(), true);
+  // Listen to the notification from RenderWidgetHosts when they become shown.
+  RenderWidgetHostVisibilityObserver show_child_b_observer(child_b_widget_host,
+                                                           true);
+  RenderWidgetHostVisibilityObserver show_child_c_observer(child_c_widget_host,
+                                                           true);
   EXPECT_TRUE(ExecuteScript(shell(), show_script));
-  EXPECT_TRUE(show_observer.WaitUntilSatisfied());
+  EXPECT_TRUE(show_child_b_observer.WaitUntilSatisfied());
+  EXPECT_TRUE(show_child_c_observer.WaitUntilSatisfied());
 }
 
 // A class which counts the number of times a RenderWidgetHostViewChildFrame
