@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "8d95f91c_827d87f2",
+        "filename": "chrome/browser/chromeos/login/wizard_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-08-03T21:25:42Z",
+      "side": 1,
+      "message": "There are some usages already inside LoginDisplayHostImpl. Maybe we could set the opacity temporarily for now and switch to the layer ordering solution in M63.",
+      "parentUuid": "f47f94af_2cf55d2b",
+      "revId": "1f5da8dda4d1fd99cdef5251d39ca4144287bc57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7c073f4c_d7ad30ce",
         "filename": "chrome/browser/resources/chromeos/login/oobe_screen_voice_interaction_value_prop.js",
         "patchSetId": 2
@@ -50,6 +68,24 @@
       "revId": "1f5da8dda4d1fd99cdef5251d39ca4144287bc57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15ed00a6_ae385148",
+        "filename": "chrome/browser/resources/chromeos/login/oobe_screen_voice_interaction_value_prop.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-08-03T21:25:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c073f4c_d7ad30ce",
+      "revId": "1f5da8dda4d1fd99cdef5251d39ca4144287bc57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -90,6 +126,30 @@
       "revId": "1f5da8dda4d1fd99cdef5251d39ca4144287bc57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51e0a709_3cb035e3",
+        "filename": "chrome/browser/ui/webui/chromeos/login/voice_interaction_value_prop_screen_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1211724
+      },
+      "writtenOn": "2017-08-03T21:25:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9113236d_31c69659",
+      "range": {
+        "startLine": 43,
+        "startChar": 24,
+        "endLine": 43,
+        "endChar": 28
+      },
+      "revId": "1f5da8dda4d1fd99cdef5251d39ca4144287bc57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
