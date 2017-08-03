@@ -87,16 +87,14 @@ void ResourceCoordinatorWebContentsObserver::WasShown() {
   tab_resource_coordinator_->SendEvent(
       resource_coordinator::EventType::kOnWebContentsShown);
   tab_resource_coordinator_->SetProperty(
-      resource_coordinator::mojom::PropertyType::kVisible,
-      base::MakeUnique<base::Value>(true));
+      resource_coordinator::mojom::PropertyType::kVisible, true);
 }
 
 void ResourceCoordinatorWebContentsObserver::WasHidden() {
   tab_resource_coordinator_->SendEvent(
       resource_coordinator::EventType::kOnWebContentsHidden);
   tab_resource_coordinator_->SetProperty(
-      resource_coordinator::mojom::PropertyType::kVisible,
-      base::MakeUnique<base::Value>(false));
+      resource_coordinator::mojom::PropertyType::kVisible, false);
 }
 
 void ResourceCoordinatorWebContentsObserver::DidFinishNavigation(
