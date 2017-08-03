@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "31350ff6_cff4f066",
+        "filename": "media/filters/decoder_stream.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-08-03T22:34:34Z",
+      "side": 1,
+      "message": "Great information!\n\n1. I updated two unit tests to use StrictMock\u003cMockMediaLog\u003e to check MediaLog messages. Note that in VideoFrameStream test I ignored most existing logs and only added specific tests for the messages I touch in this CL. More work needs to be done in a future CL to check all media logs, which I added a TODO.\n\n2. I used InSequence only when the order of \u003e1 media logs matters.\n\n3. Currently there\u0027s no easy way to test the CDM \"decryption error\" in pipeline integration test unless we hack AesDecryptor to do so. Also I don\u0027t feel we should check all media logs in all layers of tests, which could end up with a big maintenance burden.\n\n4. As discussed offline, currently we don\u0027t have any media log checking in EME browser_tests. We should probably do so, at least to check EME related messages. Filed crbug.com/752321 to track this.",
+      "parentUuid": "b93bab79_9a2ad3bb",
+      "revId": "5c788adeaf678a9176308db258a87bc08c68af55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68ac7739_0abab56f",
         "filename": "media/filters/decrypting_demuxer_stream.cc",
         "patchSetId": 3
