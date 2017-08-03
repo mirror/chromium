@@ -34,6 +34,24 @@
       "revId": "669aaf3977523727352a4fb500a7802779a2edfe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d7b578f_f1e642cd",
+        "filename": "chrome/browser/resources/chromeos/internet_detail_dialog.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1003168
+      },
+      "writtenOn": "2017-08-03T20:49:05Z",
+      "side": 1,
+      "message": "Hmmm... We can check this later, but what usually doesn\u0027t work, is opening this dialog twice:\n\nOpen the dialog, close, go back to language selection, switch language, open this dialog again.",
+      "parentUuid": "03295f91_03a293fe",
+      "revId": "669aaf3977523727352a4fb500a7802779a2edfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
