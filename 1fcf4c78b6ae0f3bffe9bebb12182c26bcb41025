@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b040842f_3c3ba6b7",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_coordinator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-03T15:22:10Z",
+      "side": 1,
+      "message": "No need for a separate class here. See _webStateObserver in Tab.mm as an example of subscribing to WebStateObserver callbacks.",
+      "range": {
+        "startLine": 145,
+        "startChar": 14,
+        "endLine": 145,
+        "endChar": 17
+      },
+      "revId": "1fcf4c78b6ae0f3bffe9bebb12182c26bcb41025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4120f05_a7520e83",
+        "filename": "ios/web/public/web_state/ui/crw_native_content.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-03T15:22:10Z",
+      "side": 1,
+      "message": "Please add comments.",
+      "range": {
+        "startLine": 99,
+        "startChar": 11,
+        "endLine": 99,
+        "endChar": 23
+      },
+      "revId": "1fcf4c78b6ae0f3bffe9bebb12182c26bcb41025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7433c35f_cd28f1ac",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 3595,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-03T15:22:10Z",
+      "side": 1,
+      "message": "Absence of _webView does not mean that current page is backed up by native controller. So you want to have else like this: |} else if (self.nativeController) {|",
+      "range": {
+        "startLine": 3595,
+        "startChar": 4,
+        "endLine": 3595,
+        "endChar": 8
+      },
+      "revId": "1fcf4c78b6ae0f3bffe9bebb12182c26bcb41025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
