@@ -2,6 +2,74 @@
   "comments": [
     {
       "key": {
+        "uuid": "52935c1d_f2129e42",
+        "filename": "extensions/common/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-08-03T09:12:00Z",
+      "side": 1,
+      "message": "Is this dependency used anywhere now?",
+      "revId": "f6a3a7d1dcfb78457f850d3540895b463ef6fe69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f713b851_700f2089",
+        "filename": "extensions/common/api/declarative_net_request/flat/extension_ruleset.fbs",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-08-03T09:12:00Z",
+      "side": 1,
+      "message": "nit: ExtensionRuleMetadata sounds a bit generic. Maybe ExtensionUrlRuleMetadata? Maybe even UrlRuleMetadata since \"extensions\" is already in namespace?\n\nAlso, as I understand, this metadata is about actions in response to UrlRule matching events. Have you considered calling it even more specific, like UrlRule(Match(ing))Action(Data)? At least you could mention this specifics it in the comment above.",
+      "revId": "f6a3a7d1dcfb78457f850d3540895b463ef6fe69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63c417eb_b0b2104c",
+        "filename": "extensions/common/api/declarative_net_request/flat/extension_ruleset.fbs",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-08-03T09:12:00Z",
+      "side": 1,
+      "message": "nit: Shouldn\u0027t this be optional? I can imagine in some future you would want to extend this struct to support more action types apart from redirect. In that case |redirect_url| would be required only for redirects.\n\nBtw, making the |id| field above required sounds more reasonable to me. Does the \"key\" attribute implicitly add \"required\"?",
+      "revId": "f6a3a7d1dcfb78457f850d3540895b463ef6fe69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8424455c_0fdd0676",
+        "filename": "extensions/common/api/declarative_net_request/flat/extension_ruleset.fbs",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-08-03T09:12:00Z",
+      "side": 1,
+      "message": "nit: s/metdata/metadata/\n\nIn case you rename the class to something with *Action*, you could rename this field to |actions|.",
+      "revId": "f6a3a7d1dcfb78457f850d3540895b463ef6fe69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e68d368f_303bfaf7",
         "filename": "extensions/common/api/declarative_net_request/flat/extension_ruleset.fbs",
         "patchSetId": 1
@@ -37,6 +105,30 @@
       "side": 1,
       "message": "Normally a FlatBuffer\u0027s type cannot be identified from the buffer data, you must already know what type it is. As such, a file_identifier should be used whenever you want to be able to check that you really have the right buffer type, such as when using a FlatBuffer as a file format. It is not necessary when used entirely in memory, or networking between two fixed endpoints, etc. It only costs 4 bytes, so in case of doubt, add it :)",
       "parentUuid": "e68d368f_303bfaf7",
+      "range": {
+        "startLine": 39,
+        "startChar": 12,
+        "endLine": 39,
+        "endChar": 27
+      },
+      "revId": "f6a3a7d1dcfb78457f850d3540895b463ef6fe69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "845e184c_bf8d5003",
+        "filename": "extensions/common/api/declarative_net_request/flat/extension_ruleset.fbs",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-08-03T09:12:00Z",
+      "side": 1,
+      "message": "Btw, you could use this as a guard against incompatible changes. Whenever you introduce such change, alter the identifier.",
+      "parentUuid": "5c98bb66_0d02a8ae",
       "range": {
         "startLine": 39,
         "startChar": 12,
