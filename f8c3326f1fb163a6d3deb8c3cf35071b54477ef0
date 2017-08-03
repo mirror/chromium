@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1a09d55e_0a2a3fa7",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 4862,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2017-08-03T18:17:27Z",
+      "side": 1,
+      "message": "Yes.",
+      "parentUuid": "cc575ffa_f74c6dfb",
+      "revId": "f8c3326f1fb163a6d3deb8c3cf35071b54477ef0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "451cfd5c_e531e88b",
         "filename": "content/browser/web_contents/aura/gesture_nav_simple.cc",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-03T14:29:41Z",
       "side": 1,
       "message": "In degrees, I assume?",
+      "revId": "f8c3326f1fb163a6d3deb8c3cf35071b54477ef0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dea3427_28032616",
+        "filename": "content/browser/web_contents/aura/gesture_nav_simple.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2017-08-03T18:17:27Z",
+      "side": 1,
+      "message": "Yes. Transform::Rotate() accepts values in degrees.",
+      "parentUuid": "451cfd5c_e531e88b",
       "revId": "f8c3326f1fb163a6d3deb8c3cf35071b54477ef0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3777d971_2ad57959",
+        "filename": "content/browser/web_contents/aura/gesture_nav_simple.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2017-08-03T18:17:27Z",
+      "side": 1,
+      "message": "No, according to the current design: \"The refresh idicator works similarly to the back/forward indicators. On this time there is no opacity and no outset of the icon which stays centered.\"\n\n[https://gallery.googleplex.com/projects/MCHbtQVoQ2HCZZd_BbTuefIi/files/MCHAiNofHUBU94YAoU5HxBZ0wMSJbxAVNpw]",
+      "parentUuid": "fa835198_4f5cbe25",
+      "revId": "f8c3326f1fb163a6d3deb8c3cf35071b54477ef0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c30155c6_ea25cc0e",
         "filename": "content/browser/web_contents/aura/gesture_nav_simple.h",
         "patchSetId": 10
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-03T14:29:41Z",
       "side": 1,
       "message": "Sidenote: looking at OverscrollSource, this should probably be similar, i.e. OverscrollMode::NONE etc. (not in this CL of course)",
+      "revId": "f8c3326f1fb163a6d3deb8c3cf35071b54477ef0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "758594af_dc346ed8",
+        "filename": "content/browser/web_contents/aura/gesture_nav_simple.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2017-08-03T18:17:27Z",
+      "side": 1,
+      "message": "I was under the impression that this is kept as \"enum\" rather than \"enum class\" so it can be easily used in histograms (without need to cast explicitly to int). I might be wrong and that argument was for some other enums (e.g. UmaNavigationType). I\u0027ll take a look later...",
+      "parentUuid": "c30155c6_ea25cc0e",
       "revId": "f8c3326f1fb163a6d3deb8c3cf35071b54477ef0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
