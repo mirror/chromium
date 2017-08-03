@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "65dd2b1e_68d2c80a",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-03T01:06:30Z",
+      "side": 1,
+      "message": "I think my comment was badly-phrased. I should probably have said \"If you want to use base::Unretained, please add a comment explaining why it\u0027s safe.\" I always find base::Unretained suspicious without an explanatory comment, and even then it seems more future-proof to use a weak pointer, since there\u0027s nothing to enforce the semantics of a comment. You\u0027re right, though: in this case it\u0027s safe.",
+      "parentUuid": "ba69ef1b_19895ad0",
+      "range": {
+        "startLine": 61,
+        "startChar": 78,
+        "endLine": 61,
+        "endChar": 0
+      },
+      "revId": "f7eea84c1e37ff117c3313c4306b2dc36d4fc465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73504c1f_89ea29e5",
         "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
         "patchSetId": 12
