@@ -84,6 +84,29 @@
       "revId": "5c6452cbe865f140ea569f09be995da4a755d696",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b296317_3e9810d3",
+        "filename": "content/public/common/cookie.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-08-03T16:11:44Z",
+      "side": 1,
+      "message": "bikeshedding: I feel that it makes sense to use a name like \"CookieStore\" or \"CookieManager\". Because \"Cookie\" sounds like it represents \"a cookie\", while in fact it is a managing interface of cookies.",
+      "range": {
+        "startLine": 113,
+        "startChar": 10,
+        "endLine": 113,
+        "endChar": 16
+      },
+      "revId": "5c6452cbe865f140ea569f09be995da4a755d696",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
