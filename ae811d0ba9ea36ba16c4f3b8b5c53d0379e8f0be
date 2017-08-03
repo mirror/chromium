@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d61499d5_a7861183",
+        "filename": "components/viz/client/client_layer_tree_frame_sink.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-08-03T13:09:24Z",
+      "side": 1,
+      "message": "Thank you.  I plan to do this in a follow up CL and remove the TODO.",
+      "parentUuid": "eff40256_d8fe80eb",
+      "revId": "ae811d0ba9ea36ba16c4f3b8b5c53d0379e8f0be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2e5184a8_880b6588",
         "filename": "components/viz/service/frame_sinks/gpu_compositor_frame_sink.cc",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "cf56b198_bbc00fac",
+        "filename": "components/viz/service/frame_sinks/gpu_compositor_frame_sink.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-08-03T13:09:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e5184a8_880b6588",
+      "revId": "ae811d0ba9ea36ba16c4f3b8b5c53d0379e8f0be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "43e7341e_aa7b99d7",
         "filename": "components/viz/service/frame_sinks/gpu_root_compositor_frame_sink.cc",
         "patchSetId": 6
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-03T08:59:46Z",
       "side": 1,
       "message": "TODO",
+      "revId": "ae811d0ba9ea36ba16c4f3b8b5c53d0379e8f0be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf41ec92_3d03248c",
+        "filename": "components/viz/service/frame_sinks/gpu_root_compositor_frame_sink.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-08-03T13:09:24Z",
+      "side": 1,
+      "message": "As discussed as suggested in Rob\u0027s review for this case we don\u0027t expect valid hit test data and so I\u0027ve added a comment and DCHECK in place of a TODO.",
+      "parentUuid": "43e7341e_aa7b99d7",
       "revId": "ae811d0ba9ea36ba16c4f3b8b5c53d0379e8f0be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "72a208a4_3403fa27",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2583,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-08-03T13:09:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e84c7ce7_b70d43ad",
+      "revId": "ae811d0ba9ea36ba16c4f3b8b5c53d0379e8f0be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b83651d4_9682280d",
         "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
         "patchSetId": 6
@@ -84,6 +156,24 @@
       "revId": "ae811d0ba9ea36ba16c4f3b8b5c53d0379e8f0be",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58c8ae74_da57c78b",
+        "filename": "content/browser/renderer_host/render_widget_host_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2606,
+      "author": {
+        "id": 1231224
+      },
+      "writtenOn": "2017-08-03T13:09:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b83651d4_9682280d",
+      "revId": "ae811d0ba9ea36ba16c4f3b8b5c53d0379e8f0be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
