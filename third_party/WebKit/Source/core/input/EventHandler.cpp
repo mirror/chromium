@@ -371,19 +371,25 @@ void EventHandler::UpdateCursor() {
   }
 }
 
+bool EventHandler::ShouldShowResizeForNode(const Node* node,
+                                           const HitTestResult& result) {
+  if (LayoutObject* layout_object = node->GetLayoutObject()) {
+    PaintLayer* layer = layout_object->EnclosingLayer();
+    if (layer->GetScrollableArea() &&
+        layer->GetScrollableArea()->IsPointInResizeControl(
+            result.RoundedPointInMainFrame(), kResizerForPointer)) {
+      return true;
+    }
+  }
+  return false;
+}
+
 bool EventHandler::ShouldShowIBeamForNode(const Node* node,
                                           const HitTestResult& result) {
   if (!node)
     return false;
 
   if (LayoutObject* layout_object = node->GetLayoutObject()) {
-    PaintLayer* layer = layout_object->EnclosingLayer();
-    if (layer->GetScrollableArea() &&
-        layer->GetScrollableArea()->IsPointInResizeControl(
-            result.RoundedPointInMainFrame(), kResizerForPointer)) {
-      return false;
-    }
-
     if (layout_object->IsText() && node->CanStartSelection())
       return true;
   }
@@ -401,7 +407,7 @@ bool EventHandler::ShouldShowIBeamForNode(const Node* node,
            .IsNone();
   const bool mouse_selects_link = mouse_selection && result.IsOverLink();
 
-  return mouse_selects_link || HasEditableStyle(*node);
+  return mouse_selects_link;
 }
 
 OptionalCursor EventHandler::SelectCursor(const HitTestResult& result) {
@@ -420,6 +426,9 @@ OptionalCursor EventHandler::SelectCursor(const HitTestResult& result) {
   Node* node = result.InnerPossiblyPseudoNode();
   if (!node)
     return SelectAutoCursor(result, node, IBeamCursor());
+
+  if (ShouldShowResizeForNode(node, result))
+    return PointerCursor();
 
   LayoutObject* layout_object = node->GetLayoutObject();
   const ComputedStyle* style = layout_object ? layout_object->Style() : nullptr;
@@ -469,11 +478,11 @@ OptionalCursor EventHandler::SelectCursor(const HitTestResult& result) {
     }
   }
 
+  bool horizontal_text = !style || style->IsHorizontalWritingMode();
+  const Cursor& i_beam = horizontal_text ? IBeamCursor() : VerticalTextCursor();
+
   switch (style ? style->Cursor() : ECursor::kAuto) {
     case ECursor::kAuto: {
-      bool horizontal_text = !style || style->IsHorizontalWritingMode();
-      const Cursor& i_beam =
-          horizontal_text ? IBeamCursor() : VerticalTextCursor();
       return SelectAutoCursor(result, node, i_beam);
     }
     case ECursor::kCrosshair:
@@ -513,7 +522,7 @@ OptionalCursor EventHandler::SelectCursor(const HitTestResult& result) {
     case ECursor::kRowResize:
       return RowResizeCursor();
     case ECursor::kText:
-      return IBeamCursor();
+      return i_beam;
     case ECursor::kWait:
       return WaitCursor();
     case ECursor::kHelp:
@@ -553,12 +562,6 @@ OptionalCursor EventHandler::SelectCursor(const HitTestResult& result) {
 OptionalCursor EventHandler::SelectAutoCursor(const HitTestResult& result,
                                               Node* node,
                                               const Cursor& i_beam) {
-  const bool is_over_link =
-      !GetSelectionController().MouseDownMayStartSelect() &&
-      result.IsOverLink();
-  if (UseHandCursor(node, is_over_link))
-    return HandCursor();
-
   if (ShouldShowIBeamForNode(node, result))
     return i_beam;
 
