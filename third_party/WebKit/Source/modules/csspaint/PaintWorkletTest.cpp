@@ -29,6 +29,10 @@ class PaintWorkletTest : public ::testing::Test {
         .paintWorklet();
   }
 
+  size_t SelectGlobalScope(PaintWorklet* paint_worklet) {
+    return paint_worklet->SelectGlobalScope();
+  }
+
   PaintWorkletGlobalScopeProxy* GetProxy() {
     return PaintWorkletGlobalScopeProxy::From(proxy_.Get());
   }
@@ -78,6 +82,33 @@ TEST_F(PaintWorkletTest, GarbageCollectionOfCSSPaintDefinition) {
   ThreadState::Current()->CollectAllGarbage();
   V8GCController::CollectAllGarbageForTesting(isolate);
   DCHECK(handle.IsEmpty());
+}
+
+TEST_F(PaintWorkletTest, GlobalScopeSelection) {
+  PaintWorklet* paint_worklet = GetPaintWorklet();
+  const size_t update_life_cycle_count = 250u;
+  size_t global_scope_switch_count = 0u;
+  size_t previous_selected_global_scope = 0u;
+  Vector<size_t> selected_global_scope_count(PaintWorklet::kNumGlobalScopes, 0);
+  for (size_t i = 0; i < update_life_cycle_count; i++) {
+    paint_worklet->GetFrame()->View()->UpdateAllLifecyclePhases();
+    size_t selected_global_scope = SelectGlobalScope(paint_worklet);
+    DCHECK_LT(selected_global_scope, PaintWorklet::kNumGlobalScopes);
+    selected_global_scope_count[selected_global_scope]++;
+    if (selected_global_scope != previous_selected_global_scope) {
+      previous_selected_global_scope = selected_global_scope;
+      global_scope_switch_count++;
+    }
+  }
+  // Before access to index 0 and 1 in |selected_global_scope_count|, ensure
+  // that there are two entries.
+  DCHECK_EQ(PaintWorklet::kNumGlobalScopes, 2u);
+  EXPECT_EQ(selected_global_scope_count[0], 130u);
+  EXPECT_EQ(selected_global_scope_count[1], 120u);
+  EXPECT_EQ(global_scope_switch_count, 2u);
+
+  // Delete the page & associated objects.
+  Terminate();
 }
 
 }  // namespace blink
