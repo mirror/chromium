@@ -7,6 +7,7 @@
 #include <memory>
 
 #include "base/mac/foundation_util.h"
+#include "base/memory/ptr_util.h"
 #include "base/strings/sys_string_conversions.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #import "ios/chrome/browser/snapshots/snapshot_cache_factory.h"
@@ -17,6 +18,9 @@
 #import "ios/clean/chrome/browser/ui/commands/tab_grid_commands.h"
 #import "ios/clean/chrome/browser/ui/commands/tools_menu_commands.h"
 #import "ios/clean/chrome/browser/ui/context_menu/context_menu_context_impl.h"
+#import "ios/clean/chrome/browser/ui/overlays/overlay_service.h"
+#import "ios/clean/chrome/browser/ui/overlays/overlay_service_factory.h"
+#import "ios/clean/chrome/browser/ui/overlays/overlay_service_observer.h"
 #import "ios/clean/chrome/browser/ui/settings/settings_coordinator.h"
 #import "ios/clean/chrome/browser/ui/tab/tab_coordinator.h"
 #import "ios/clean/chrome/browser/ui/tab_grid/tab_grid_mediator.h"
@@ -34,10 +38,48 @@
 #error "This file requires ARC support."
 #endif
 
+namespace {
+// OverlayServiceObserver subclass that dispatches tab changing events to the
+// TabGridCoordinator.
+class TabGridOverlayServiceObserver : public OverlayServiceObserver {
+ public:
+  explicit TabGridOverlayServiceObserver(id<TabGridCommands> dispatcher,
+                                         WebStateList* web_state_list)
+      : dispatcher_(dispatcher), web_state_list_(web_state_list) {
+    DCHECK(dispatcher_);
+    DCHECK(web_state_list_);
+  }
+
+  // OverlayServiceObserver:
+  void OverlayServiceWillShowOverlay(OverlayService* service,
+                                     web::WebState* web_state,
+                                     Browser* browser) override {
+    // If the next queue requires a WebState's content area to be shown, switch
+    // the active WebState before starting the next overlay.
+    if (web_state && web_state_list_->GetActiveWebState() != web_state) {
+      int new_active_index = web_state_list_->GetIndexOfWebState(web_state);
+      DCHECK_NE(new_active_index, WebStateList::kInvalidIndex);
+      web_state_list_->ActivateWebStateAt(new_active_index);
+      [dispatcher_ showTabGridTabAtIndex:new_active_index];
+    }
+  }
+
+ private:
+  // The dispatcher passed on construction.
+  __weak id<TabGridCommands> dispatcher_;
+  // The WebStateList corresponding with the TabGrid that owns this helper.
+  WebStateList* web_state_list_;
+};
+}
+
 @interface TabGridCoordinator ()<ContextMenuCommands,
                                  SettingsCommands,
                                  TabGridCommands,
-                                 ToolsMenuCommands>
+                                 ToolsMenuCommands> {
+  // The OverlayServiceObserver that dispatches tab changing events.
+  std::unique_ptr<OverlayServiceObserver> overlay_service_observer_;
+}
+
 @property(nonatomic, strong) TabGridViewController* viewController;
 @property(nonatomic, weak) SettingsCoordinator* settingsCoordinator;
 @property(nonatomic, weak) ToolsCoordinator* toolsMenuCoordinator;
@@ -45,6 +87,7 @@
 @property(nonatomic, readonly) WebStateList& webStateList;
 @property(nonatomic, strong) TabGridMediator* mediator;
 @property(nonatomic, readonly) SnapshotCache* snapshotCache;
+
 @end
 
 @implementation TabGridCoordinator
@@ -82,6 +125,14 @@
 
   self.mediator.consumer = self.viewController;
 
+  id<TabGridCommands> tabGridDispatcher =
+      static_cast<id<TabGridCommands>>(self.browser->dispatcher());
+  overlay_service_observer_ = base::MakeUnique<TabGridOverlayServiceObserver>(
+      tabGridDispatcher, &self.browser->web_state_list());
+  OverlayServiceFactory::GetInstance()
+      ->GetForBrowserState(self.browser->browser_state())
+      ->AddObserver(overlay_service_observer_.get());
+
   [super start];
 }
 
@@ -89,6 +140,12 @@
   [super stop];
   [self.browser->dispatcher() stopDispatchingToTarget:self];
   [self.mediator disconnect];
+
+  OverlayServiceFactory::GetInstance()
+      ->GetForBrowserState(self.browser->browser_state())
+      ->RemoveObserver(overlay_service_observer_.get());
+  overlay_service_observer_.reset();
+
   // PLACEHOLDER: Remove child coordinators here for now. This might be handled
   // differently later on.
   for (BrowserCoordinator* child in self.children) {
