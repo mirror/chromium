@@ -13,8 +13,10 @@
 #include "base/memory/ptr_util.h"
 #include "base/path_service.h"
 #include "base/strings/string16.h"
+#include "base/time/default_tick_clock.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chromeos/lock_screen_apps/app_manager_impl.h"
+#include "chrome/browser/chromeos/lock_screen_apps/app_window_metrics_tracker.h"
 #include "chrome/browser/chromeos/note_taking_helper.h"
 #include "chrome/browser/chromeos/profiles/profile_helper.h"
 #include "chrome/browser/profiles/profile_manager.h"
@@ -93,6 +95,11 @@ StateController::~StateController() {
   g_instance = nullptr;
 }
 
+void StateController::SetTickClockForTesting(
+    std::unique_ptr<base::TickClock> clock) {
+  tick_clock_ = std::move(clock);
+}
+
 void StateController::SetTrayActionPtrForTesting(
     ash::mojom::TrayActionPtr tray_action_ptr) {
   tray_action_ptr_ = std::move(tray_action_ptr);
@@ -116,6 +123,10 @@ void StateController::SetAppManagerForTesting(
 }
 
 void StateController::Initialize() {
+  // Do not overrid clock that might have been set for testing.
+  if (!tick_clock_)
+    tick_clock_ = base::MakeUnique<base::DefaultTickClock>();
+
   // The tray action ptr might be set previously if the client was being created
   // for testing.
   if (!tray_action_ptr_) {
@@ -216,7 +227,7 @@ void StateController::InitializeWithCryptoKey(Profile* profile,
 
   // App manager might have been set previously by a test.
   if (!app_manager_)
-    app_manager_ = base::MakeUnique<AppManagerImpl>();
+    app_manager_ = base::MakeUnique<AppManagerImpl>(tick_clock_.get());
   app_manager_->Initialize(profile, lock_screen_profile_->GetOriginalProfile());
 
   input_devices_observer_.Add(ui::InputDeviceManager::GetInstance());
@@ -253,8 +264,12 @@ void StateController::RequestNewLockScreenNote() {
   // Update state to launching even if app fails to launch - this is to notify
   // listeners that a lock screen note request was handled.
   UpdateLockScreenNoteState(TrayActionState::kLaunching);
-  if (!app_manager_->LaunchNoteTaking())
+  if (!app_manager_->LaunchNoteTaking()) {
     UpdateLockScreenNoteState(TrayActionState::kAvailable);
+    return;
+  }
+
+  note_app_window_metrics_->AppLaunchRequested();
 }
 
 void StateController::OnSessionStateChanged() {
@@ -262,6 +277,7 @@ void StateController::OnSessionStateChanged() {
     lock_screen_data_->SetSessionLocked(false);
     app_manager_->Stop();
     ResetNoteTakingWindowAndMoveToNextState(true /*close_window*/);
+    note_app_window_metrics_.reset();
     return;
   }
 
@@ -271,6 +287,8 @@ void StateController::OnSessionStateChanged() {
   app_manager_->Start(
       base::Bind(&StateController::OnNoteTakingAvailabilityChanged,
                  base::Unretained(this)));
+  note_app_window_metrics_ =
+      base::MakeUnique<AppWindowMetricsTracker>(tick_clock_.get());
   lock_screen_data_->SetSessionLocked(true);
   OnNoteTakingAvailabilityChanged();
 }
@@ -322,14 +340,18 @@ extensions::AppWindow* StateController::CreateAppWindowForLockScreenAction(
       new extensions::AppWindow(context, app_delegate.release(), extension);
   app_window_observer_.Add(
       extensions::AppWindowRegistry::Get(lock_screen_profile_));
+  note_app_window_metrics_->AppWindowCreated(note_app_window_);
+
   UpdateLockScreenNoteState(TrayActionState::kActive);
   return note_app_window_;
 }
 
 void StateController::MoveToBackground() {
   if (GetLockScreenNoteState() == TrayActionState::kLaunching) {
+    note_app_window_metrics_->Reset();
     UpdateLockScreenNoteState(TrayActionState::kAvailable);
   } else if (GetLockScreenNoteState() == TrayActionState::kActive) {
+    note_app_window_metrics_->MovedToBackground();
     UpdateLockScreenNoteState(TrayActionState::kBackground);
   }
 }
@@ -337,6 +359,7 @@ void StateController::MoveToBackground() {
 void StateController::MoveToForeground() {
   if (GetLockScreenNoteState() != TrayActionState::kBackground)
     return;
+  note_app_window_metrics_->MovedToForeground();
   UpdateLockScreenNoteState(TrayActionState::kActive);
 }
 
@@ -361,6 +384,8 @@ void StateController::ResetNoteTakingWindowAndMoveToNextState(
       note_app_window_->GetBaseWindow()->Close();
     note_app_window_ = nullptr;
   }
+
+  note_app_window_metrics_->Reset();
 
   UpdateLockScreenNoteState(app_manager_->IsNoteTakingAppAvailable()
                                 ? TrayActionState::kAvailable
