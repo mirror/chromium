@@ -10,6 +10,7 @@
 #include <vector>
 
 #include "base/i18n/time_formatting.h"
+#include "base/json/json_string_value_serializer.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/time/time.h"
 #include "base/values.h"
@@ -97,6 +98,68 @@ void AddUpdateInfo(const DatabaseManagerInfo::UpdateInfo update_info,
             update_info.last_update_time_millis()));
   }
 }
+
+base::ListValue ParseFullHashCacheInfo(
+    const FullHashCacheInfo full_hash_cache_info_proto) {
+  // FullHashCacheInfo
+  base::ListValue full_hash_cache_info;
+
+  if (full_hash_cache_info_proto.has_number_of_cache_hits()) {
+    // Recording number_of_cache_hits.
+    base::DictionaryValue number_of_cache_hits;
+    number_of_cache_hits.SetInteger(
+        "Number of cache hits",
+        full_hash_cache_info_proto.number_of_cache_hits());
+    full_hash_cache_info.GetList().push_back(number_of_cache_hits);
+  }
+  // Record FullHashCache list.
+  for (auto full_hash_cache_it : full_hash_cache_info_proto.full_hash_cache()) {
+    base::ListValue full_hash_cache_list;
+    base::DictionaryValue full_hash_cache;  // negative expiry, hash prefix
+
+    if (full_hash_cache_it.has_hash_prefix())
+      full_hash_cache.SetString("Hash prefix",
+                                full_hash_cache_it.hash_prefix());
+
+    if (full_hash_cache_it.cached_hash_prefix_info().has_negative_expiry()) {
+      full_hash_cache.SetInteger(
+          "Negative expiry",
+          full_hash_cache_it.cached_hash_prefix_info().negative_expiry());
+    }
+    full_hash_cache_list.GetList().push_back(full_hash_cache);
+
+    for (auto cached_hash_prefix_element :
+         full_hash_cache_it.cached_hash_prefix_info().full_hash_info()) {
+      base::DictionaryValue full_hash_info_dict;
+      if (cached_hash_prefix_element.has_positive_expiry()) {
+        full_hash_info_dict.SetInteger(
+            "Positivie expiry", cached_hash_prefix_element.positive_expiry());
+        full_hash_info_dict.SetString("Full hash",
+                                      cached_hash_prefix_element.full_hash());
+      }
+      if (cached_hash_prefix_element.list_identifier().has_platform_type()) {
+        full_hash_info_dict.SetInteger(
+            "Platform type",
+            cached_hash_prefix_element.list_identifier().platform_type());
+      }
+      if (cached_hash_prefix_element.list_identifier()
+              .has_threat_entry_type()) {
+        full_hash_info_dict.SetInteger(
+            "Threat entry type",
+            cached_hash_prefix_element.list_identifier().threat_entry_type());
+      }
+      if (cached_hash_prefix_element.list_identifier().has_threat_type()) {
+        full_hash_info_dict.SetInteger(
+            "Threat type",
+            cached_hash_prefix_element.list_identifier().threat_type());
+      }
+      full_hash_cache_list.GetList().push_back(full_hash_info_dict);
+    }
+    full_hash_cache_info.GetList().push_back(full_hash_cache_list);
+  }
+
+  return full_hash_cache_info;
+}
 #endif
 
 }  // namespace
@@ -183,6 +246,35 @@ void SafeBrowsingUIHandler::GetDatabaseManagerInfo(
   ResolveJavascriptCallback(base::Value(callback_id), database_manager_info);
 }
 
+void SafeBrowsingUIHandler::GetFullHashCacheInfo(const base::ListValue* args) {
+  std::string full_hash_cache_parsed;
+
+#if SAFE_BROWSING_DB_LOCAL
+  const V4LocalDatabaseManager* local_database_manager_instance =
+      V4LocalDatabaseManager::current_local_database_manager();
+
+  if (local_database_manager_instance) {
+    FullHashCacheInfo full_hash_cache_info_proto;
+    local_database_manager_instance->CollectFullHashCacheInfo(
+        &full_hash_cache_info_proto);
+
+    base::ListValue full_hash_cache =
+        ParseFullHashCacheInfo(full_hash_cache_info_proto);
+
+    base::Value* full_hash_cache_tree = &full_hash_cache;
+
+    JSONStringValueSerializer serializer(&full_hash_cache_parsed);
+    serializer.set_pretty_print(true);
+    serializer.Serialize(*full_hash_cache_tree);
+  }
+#endif
+  AllowJavascript();
+  std::string callback_id;
+  args->GetString(0, &callback_id);
+  ResolveJavascriptCallback(base::Value(callback_id),
+                            base::Value(full_hash_cache_parsed));
+}
+
 void SafeBrowsingUIHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback(
       "getExperiments", base::Bind(&SafeBrowsingUIHandler::GetExperiments,
@@ -193,6 +285,10 @@ void SafeBrowsingUIHandler::RegisterMessages() {
   web_ui()->RegisterMessageCallback(
       "getDatabaseManagerInfo",
       base::Bind(&SafeBrowsingUIHandler::GetDatabaseManagerInfo,
+                 base::Unretained(this)));
+  web_ui()->RegisterMessageCallback(
+      "getFullHashCacheInfo",
+      base::Bind(&SafeBrowsingUIHandler::GetFullHashCacheInfo,
                  base::Unretained(this)));
 }
 
