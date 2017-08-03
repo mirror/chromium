@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "e734e7e0_126e2be7",
+        "filename": "chrome/browser/extensions/extension_apitest.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-03T03:53:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68c252e0_c51a1fc7",
+      "revId": "401d1fe7cfac07d81849f31e6380e50531868ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7803ceb6_9d7c4f51",
         "filename": "chrome/browser/extensions/extension_apitest.h",
         "patchSetId": 6
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "3654e039_fb044017",
+        "filename": "chrome/browser/extensions/extension_apitest.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-03T03:53:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7803ceb6_9d7c4f51",
+      "revId": "401d1fe7cfac07d81849f31e6380e50531868ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7fb28055_c90c6fac",
         "filename": "extensions/test/data/messaging/connect_external/test.js",
         "patchSetId": 6
@@ -83,6 +119,24 @@
       "writtenOn": "2017-07-31T16:01:41Z",
       "side": 1,
       "message": "Copy paste?",
+      "revId": "401d1fe7cfac07d81849f31e6380e50531868ce3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b220b449_93873f1e",
+        "filename": "extensions/test/data/messaging/connect_external/test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-03T03:53:04Z",
+      "side": 1,
+      "message": "I\u0027m not sure I understand what the question is.\n\nDo you want me to retain the original copyright header? (The file is fairly different from the old one.)",
+      "parentUuid": "7fb28055_c90c6fac",
       "revId": "401d1fe7cfac07d81849f31e6380e50531868ce3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
