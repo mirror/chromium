@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "54495f86_69ad11c7",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-08-03T19:13:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6733061c_bc47df29",
+      "range": {
+        "startLine": 23,
+        "startChar": 16,
+        "endLine": 23,
+        "endChar": 66
+      },
+      "revId": "d2f255269c09098c1d37e2c1b92d40d063b32d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35698a99_762fedc7",
         "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
         "patchSetId": 17
@@ -45,6 +69,30 @@
       "revId": "d2f255269c09098c1d37e2c1b92d40d063b32d5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e75051cb_4c538105",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-08-03T19:13:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35698a99_762fedc7",
+      "range": {
+        "startLine": 87,
+        "startChar": 33,
+        "endLine": 87,
+        "endChar": 55
+      },
+      "revId": "d2f255269c09098c1d37e2c1b92d40d063b32d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "96316ac0_b1a713a5",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-08-03T19:13:18Z",
+      "side": 1,
+      "message": "This one is intentional - if shared memory mapping fails, things shouldn\u0027t proceed. This is used in other VEA Clients too:\nhttps://cs.chromium.org/chromium/src/media/gpu/video_encode_accelerator_unittest.cc?rcl\u003d850e8aa588a8bec900bfb533dad9a1c63fb06091\u0026l\u003d1369\nThere are other ways to handle this, other than LOG_ASSERT, if we want to avoid it.",
+      "parentUuid": "46c4db4f_2486fc09",
+      "range": {
+        "startLine": 128,
+        "startChar": 5,
+        "endLine": 128,
+        "endChar": 14
+      },
+      "revId": "d2f255269c09098c1d37e2c1b92d40d063b32d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9fd5688_393d1740",
         "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
         "patchSetId": 17
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "c7d6ddc8_e6031c64",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-08-03T19:13:18Z",
+      "side": 1,
+      "message": "You\u0027re right - my bad. Need to pay more attention.",
+      "parentUuid": "f9fd5688_393d1740",
+      "range": {
+        "startLine": 177,
+        "startChar": 2,
+        "endLine": 177,
+        "endChar": 34
+      },
+      "revId": "d2f255269c09098c1d37e2c1b92d40d063b32d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7212043_f4c9ffe7",
         "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
         "patchSetId": 17
@@ -114,6 +210,30 @@
       "revId": "d2f255269c09098c1d37e2c1b92d40d063b32d5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e050329_5528002a",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-08-03T19:13:18Z",
+      "side": 1,
+      "message": "If I\u0027ve been understanding this code correctly, the VEA\u0027s Destroy() method should be called automatically when video_encode_accelerator_ is overwritten. See this:\n\nhttps://cs.chromium.org/chromium/src/media/video/video_encode_accelerator.h?rcl\u003da176d74f39a6c6a51b4c418b7d1832646b8f5055\u0026l\u003d186\n\n(another cool C++ thing I learned this summer!)",
+      "parentUuid": "e7212043_f4c9ffe7",
+      "range": {
+        "startLine": 187,
+        "startChar": 2,
+        "endLine": 187,
+        "endChar": 27
+      },
+      "revId": "d2f255269c09098c1d37e2c1b92d40d063b32d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
