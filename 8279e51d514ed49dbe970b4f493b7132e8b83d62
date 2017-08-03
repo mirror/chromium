@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "845270ba_7ec39e30",
+        "filename": "cc/trees/element_id.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-03T20:12:25Z",
+      "side": 1,
+      "message": "Re TODO: what do you mean?",
+      "revId": "8279e51d514ed49dbe970b4f493b7132e8b83d62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2643b05a_aabfd46a",
+        "filename": "cc/trees/element_id.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-03T20:12:25Z",
+      "side": 1,
+      "message": "Re TODO: not sure what fragility you mean.",
+      "revId": "8279e51d514ed49dbe970b4f493b7132e8b83d62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
