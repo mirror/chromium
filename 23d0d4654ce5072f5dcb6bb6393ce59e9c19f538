@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f184268_ff4974dd",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 1466,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-03T23:38:14Z",
+      "side": 1,
+      "message": "Since we don\u0027t expect null pointer from the renderer, can we verify it and kill the renderer process it is?",
+      "revId": "23d0d4654ce5072f5dcb6bb6393ce59e9c19f538",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "915a9c83_a25262fe",
+        "filename": "content/browser/frame_host/render_frame_host_impl.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 1484,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-03T23:38:14Z",
+      "side": 1,
+      "message": "Hmm, this is an interesting place for this call. Technically, we could ignore the navigation and we will be lying to the ResourceScheduler. I realize it is just moving code around and it is likely an existing bug, maybe at least add a check for same-document navigations or a TODO to revisit this.",
+      "revId": "23d0d4654ce5072f5dcb6bb6393ce59e9c19f538",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

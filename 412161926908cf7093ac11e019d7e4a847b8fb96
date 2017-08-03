@@ -517,6 +517,30 @@
     },
     {
       "key": {
+        "uuid": "8b9bc4c1_daa27bf6",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 33
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-03T23:38:14Z",
+      "side": 1,
+      "message": "Ok, I was mistaken with CreateFrame API above, as it is the one that the browser process uses to create frames in the renderer process. I meant the opposite direction - when creating a RenderFrameImpl, we send sync IPC to the browser process to get the routing ID, which is what I mistook the CreateFrame for. It is actually FrameHostMsg_CreateChildFrame and it is still old IPC. I think converting that one to Mojo and passing it the InterfaceProvider as part of the parameters it the better pattern to use here. \n\nI think the creation of the frame browser side and the establishment of the Mojo channel should be done all at once. It will account properly for the initial empty document state and we don\u0027t need a separate call of that case. In all other cases, the frame creation will be driven by the browser process, so sending the pipe down to the renderer makes sense in those.",
+      "parentUuid": "8e8840ab_cbe47c60",
+      "range": {
+        "startLine": 106,
+        "startChar": 2,
+        "endLine": 106,
+        "endChar": 46
+      },
+      "revId": "412161926908cf7093ac11e019d7e4a847b8fb96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "233719e0_3538667d",
         "filename": "content/common/frame.mojom",
         "patchSetId": 33
@@ -552,6 +576,30 @@
       "side": 1,
       "message": "The other popular term would be |interfaces|. Does that sound better?",
       "parentUuid": "233719e0_3538667d",
+      "range": {
+        "startLine": 116,
+        "startChar": 48,
+        "endLine": 116,
+        "endChar": 55
+      },
+      "revId": "412161926908cf7093ac11e019d7e4a847b8fb96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3085f0e6_46a7b931",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 33
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-03T23:38:14Z",
+      "side": 1,
+      "message": "interface_request? :)",
+      "parentUuid": "f518f64d_62650b23",
       "range": {
         "startLine": 116,
         "startChar": 48,
