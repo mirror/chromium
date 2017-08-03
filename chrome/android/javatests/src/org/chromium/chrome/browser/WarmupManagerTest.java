@@ -224,7 +224,7 @@ public class WarmupManagerTest {
 
             // Cannot use EmbeddedTestServer#createAndStartServer(), as we need to add the
             // connection listener.
-            server.initializeNative(mContext);
+            server.initializeNative(mContext, false);
             server.addDefaultHandlers("");
             server.setConnectionListener(new EmbeddedTestServer.ConnectionListener() {
                 @Override

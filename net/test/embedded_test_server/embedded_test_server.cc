@@ -56,8 +56,7 @@ EmbeddedTestServer::EmbeddedTestServer(Type type)
   if (is_using_ssl_) {
     base::ThreadRestrictions::ScopedAllowIO allow_io_for_importing_test_cert;
     TestRootCerts* root_certs = TestRootCerts::GetInstance();
-    base::FilePath certs_dir(GetTestCertsDirectory());
-    root_certs->AddFromFile(certs_dir.AppendASCII("root_ca_cert.pem"));
+    root_certs->AddFromFile(GetRootCertPemPath());
   }
 }
 
@@ -182,6 +181,12 @@ bool EmbeddedTestServer::ShutdownAndWaitUntilComplete() {
 
   return PostTaskToIOThreadAndWait(base::Bind(
       &EmbeddedTestServer::ShutdownOnIOThread, base::Unretained(this)));
+}
+
+// static
+base::FilePath EmbeddedTestServer::GetRootCertPemPath() {
+  base::FilePath certs_dir(GetTestCertsDirectory());
+  return certs_dir.AppendASCII("root_ca_cert.pem");
 }
 
 void EmbeddedTestServer::ShutdownOnIOThread() {
