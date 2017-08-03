@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35bd0599_a4c2d11a",
+        "filename": "third_party/WebKit/Source/core/timing/Performance.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-03T15:55:17Z",
+      "side": 1,
+      "message": "Maybe mention where we unsubscribe.",
+      "range": {
+        "startLine": 110,
+        "startChar": 49,
+        "endLine": 110,
+        "endChar": 50
+      },
+      "revId": "d7646eca145db69faed29e6f237d08822155fe73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89b6f5d0_c2687c11",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-03T15:55:17Z",
+      "side": 1,
+      "message": "No s.",
+      "range": {
+        "startLine": 249,
+        "startChar": 57,
+        "endLine": 249,
+        "endChar": 58
+      },
+      "revId": "d7646eca145db69faed29e6f237d08822155fe73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a380da5_cfa5d78f",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-03T15:55:17Z",
+      "side": 1,
+      "message": "We\u0027re copying the entries here, and then again in PerformanceObserver::deliver.\n\nCan we avoid at least one of these copies?",
+      "range": {
+        "startLine": 252,
+        "startChar": 9,
+        "endLine": 252,
+        "endChar": 16
+      },
+      "revId": "d7646eca145db69faed29e6f237d08822155fe73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b309ba36_12d5f505",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-03T15:55:17Z",
+      "side": 1,
+      "message": "Don\u0027t we need to check if the buffer is full?\n\nI assume we\u0027ll want a longtasktimingbufferfull event, like we have for ResourceTiming.",
+      "revId": "d7646eca145db69faed29e6f237d08822155fe73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb2c8e46_6268c6c2",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-03T15:55:17Z",
+      "side": 1,
+      "message": "Can you write a DCHECK for this, instead of a comment?",
+      "range": {
+        "startLine": 450,
+        "startChar": 5,
+        "endLine": 451,
+        "endChar": 16
+      },
+      "revId": "d7646eca145db69faed29e6f237d08822155fe73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
