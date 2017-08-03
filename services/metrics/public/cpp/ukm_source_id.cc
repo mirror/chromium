@@ -33,12 +33,16 @@ SourceId ConvertToSourceId(int64_t other_id, SourceIdType id_type) {
 
 SourceId ConvertSourceIdFromInstance(int64_t instance_id, int64_t source_id) {
   // Only convert source IDs from Create().
-  if ((kTypeMask & source_id) != static_cast<int64_t>(SourceIdType::UKM))
-    return source_id;
-
-  // Neither ID should get large enough to cause an issue, but explicitly
-  // discard down to 32 bits anyway.
-  return ((instance_id & kLowBitsMask) << 32) | (source_id & kLowBitsMask);
+  switch (static_cast<SourceIdType>(kTypeMask & source_id)) {
+    case SourceIdType::UKM:
+      // Neither ID should get large enough to cause an issue, but explicitly
+      // discard down to 32 bits anyway.
+      return ((instance_id & kLowBitsMask) << 32) | (source_id & kLowBitsMask);
+    case SourceIdType::RESOURCE_COORDINATOR:
+      return source_id;
+    default:
+      return source_id;
+  }
 }
 
 }  // namespace ukm
