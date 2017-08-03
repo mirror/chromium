@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c87729cf_b64df466",
+        "filename": "chrome/app/chrome_main_delegate.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-03T08:51:40Z",
+      "side": 1,
+      "message": "nice!",
+      "range": {
+        "startLine": 404,
+        "startChar": 18,
+        "endLine": 404,
+        "endChar": 34
+      },
+      "revId": "49a6941948262cb2bf49a27932ea2fe2ca27bd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2d73f38_f4135aae",
+        "filename": "chrome_elf/chrome_elf_main.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-03T08:51:40Z",
+      "side": 1,
+      "message": "feel free to ignore me, but why not:\n\n// \u003cSome comment explaining these exports.\u003e\nextern \"C\" {\n...\n}",
+      "revId": "49a6941948262cb2bf49a27932ea2fe2ca27bd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a13b144_f1c8728e",
+        "filename": "chrome_elf/chrome_elf_test_stubs.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-03T08:51:40Z",
+      "side": 1,
+      "message": "nit: move down to the other includes since this file isn\u0027t \"chrome_elf_main.cc\".",
+      "revId": "49a6941948262cb2bf49a27932ea2fe2ca27bd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d19e553c_402dbc0a",
+        "filename": "chrome_elf/chrome_elf_test_stubs.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-08-03T08:51:40Z",
+      "side": 1,
+      "message": "nit: flag -\u003e switch",
+      "range": {
+        "startLine": 23,
+        "startChar": 46,
+        "endLine": 23,
+        "endChar": 50
+      },
+      "revId": "49a6941948262cb2bf49a27932ea2fe2ca27bd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
