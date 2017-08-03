@@ -188,6 +188,17 @@ cast_test_group("cast_tests") {
   }
   filters += [ base_unittests_filter ]
 
+  cc_unittests_filter = {
+    test_name = "cc_unittests"
+    if (!is_cast_desktop_build) {
+      gtest_excludes = [
+        "ToColorSpace/ColorTransformPixelTest.*",
+        "ImageBackgroundFilter.*",
+      ]
+    }
+  }
+  filters += [ cc_unittests_filter ]
+
   content_unittests_filter = {
     test_name = "content_unittests"
 
