@@ -70,6 +70,23 @@
     },
     {
       "key": {
+        "uuid": "806d7af4_aa756c30",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-03T21:28:22Z",
+      "side": 1,
+      "message": "the observer needs to be removed in the destructor.",
+      "revId": "a0fc25ccb30cfd7ad00389fb9d46c850bd510f96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "86650fe2_5b8527b2",
         "filename": "chrome/browser/feature_engagement/session_duration_updater.cc",
         "patchSetId": 10
@@ -115,6 +132,29 @@
       "writtenOn": "2017-08-03T20:58:17Z",
       "side": 1,
       "message": "Is this really a dependency nowadays?",
+      "revId": "a0fc25ccb30cfd7ad00389fb9d46c850bd510f96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d751fbee_4d659f5c",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater_unittests.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-03T21:28:22Z",
+      "side": 1,
+      "message": "hm? is there a missing file here?",
+      "range": {
+        "startLine": 24,
+        "startChar": 23,
+        "endLine": 24,
+        "endChar": 24
+      },
       "revId": "a0fc25ccb30cfd7ad00389fb9d46c850bd510f96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
