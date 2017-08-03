@@ -108,27 +108,77 @@ def _ComputeTraceEventsThreadTimeForBlinkPerf(
     trace_cpu_time_metrics[t] = [0.0] * len(test_runs_bounds)
 
   for event_name in trace_events_to_measure:
-    curr_test_runs_bound_index = 0
-    prev_event = None
+    # Contains tuples of ("start", time, thread_start) or
+    #                    ("end", time, thread_end)
+    flattened_events = []
+
+    # Merge all trace events that overlap. This is O(N*log(N)), although this
+    # can be done in O(N) with fancy datastructures.
+    # Note: When merging multiple events, we approximate the thread_duration:
+    # dur = (last.thread_start + last.thread_duration) - first.thread_start
     for event in model.IterAllEventsOfName(event_name):
-      if prev_event and prev_event.end >= event.start:
-        continue
-      while (curr_test_runs_bound_index < len(test_runs_bounds) and
-             event.start > test_runs_bounds[curr_test_runs_bound_index].max):
-        curr_test_runs_bound_index += 1
-      if curr_test_runs_bound_index >= len(test_runs_bounds):
-        break
-      curr_test_bound = test_runs_bounds[curr_test_runs_bound_index]
-      intersect_wall_time = bounds.Bounds.GetOverlapBetweenBounds(
-          curr_test_bound, bounds.Bounds.CreateFromEvent(event))
-      if event.thread_duration and event.duration:
-        intersect_cpu_time = (
-            intersect_wall_time * event.thread_duration / event.duration)
+      # Handle events where thread duration is None (async events).
+      thread_start = event.thread_start
+      thread_duration = event.thread_duration
+      if thread_duration is None or thread_start is None:
+        thread_start = event.start
+        thread_duration = event.end - event.start
+      flattened_events.append(("start", event.start, thread_start))
+      flattened_events.append(
+        ("end", event.end, thread_start + thread_duration))
+
+    flattened_events.sort(key=lambda e: e[1])
+    event_counter = 0
+    curr_bounds = None
+    curr_thread_start = None
+    curr_test_runs_bound_index = 0
+    for flattened_event in flattened_events:
+      if flattened_event[0] == "start":
+        event_counter += 1
       else:
-        intersect_cpu_time = intersect_wall_time
-      trace_cpu_time_metrics[event_name][curr_test_runs_bound_index] += (
-          intersect_cpu_time)
-      prev_event = event
+        event_counter -= 1
+      # Initialization
+      if curr_bounds is None:
+        assert flattened_event[0] == "start"
+        curr_bounds = bounds.Bounds()
+        curr_bounds.AddValue(flattened_event[1])
+        curr_thread_start = flattened_event[2]
+        # Keep track of current relevant test.
+        while (curr_test_runs_bound_index < len(test_runs_bounds) and
+               flattened_event[1] >
+               test_runs_bounds[curr_test_runs_bound_index].max):
+          curr_test_runs_bound_index += 1
+        # Exit early if there are no more tests to consider.
+        if curr_test_runs_bound_index >= len(test_runs_bounds):
+          break
+        continue
+      # Create a the final bounds and thread duration when our event grouping
+      # is over.
+      # Note: the thread duration could be based on wall time if our input
+      # event didn't have thread duration (it was an async trace).
+      if event_counter == 0:
+        curr_bounds.AddValue(flattened_event[1])
+        event_thread_or_wall_duration = flattened_event[2] - curr_thread_start
+
+        # Add metrics for all intersecting tests, as there may be multiple
+        # tests that intersect with the event bounds.
+        start_index = curr_test_runs_bound_index
+        while (curr_test_runs_bound_index < len(test_runs_bounds) and
+               curr_bounds.Intersects(
+                   test_runs_bounds[curr_test_runs_bound_index])):
+          intersect_wall_time = bounds.Bounds.GetOverlapBetweenBounds(
+              test_runs_bounds[curr_test_runs_bound_index], curr_bounds)
+          intersect_cpu_or_wall_time = (
+              intersect_wall_time * event_thread_or_wall_duration /
+              curr_bounds.bounds)
+          trace_cpu_time_metrics[event_name][curr_test_runs_bound_index] += (
+              intersect_cpu_or_wall_time)
+          curr_test_runs_bound_index += 1
+        # Rewind to the last intersecting test as it might intersect with the
+        # next event.
+        curr_test_runs_bound_index = max(start_index,
+                                         curr_test_runs_bound_index - 1)
+        curr_bounds = None
   return trace_cpu_time_metrics
 
 
