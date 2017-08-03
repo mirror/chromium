@@ -126,6 +126,8 @@ class NET_EXPORT_PRIVATE QuicChromiumClientStream : public QuicSpdyStream {
     SpdyPriority priority() const;
     bool can_migrate();
 
+    NetLogWithSource net_log() const;
+
    private:
     friend class QuicChromiumClientStream;
 

@@ -116,6 +116,8 @@ class QUIC_EXPORT_PRIVATE QuicClientSessionBase
     return push_promise_index_;
   }
 
+  bool WasEverUsed() const { return connection()->WasEverUsed(); }
+
  private:
   // For QuicSpdyClientStream to detect that a response corresponds to a
   // promise.

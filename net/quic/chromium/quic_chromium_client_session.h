@@ -139,6 +139,10 @@ class NET_EXPORT_PRIVATE QuicChromiumClientSession
     // code.
     int GetPeerAddress(IPEndPoint* address) const;
 
+    // Copies the local udp address into |address| and returns a net error
+    // code.
+    int GetSelfAddress(IPEndPoint* address) const;
+
     // Returns the push promise index associated with the session.
     QuicClientPushPromiseIndex* GetPushPromiseIndex();
 
@@ -153,6 +157,11 @@ class NET_EXPORT_PRIVATE QuicChromiumClientSession
                    const SpdyHeaderBlock& promise_request,
                    const SpdyHeaderBlock& promise_response) override;
     void OnRendezvousResult(QuicSpdyStream* stream) override;
+
+    // Returns true if the session's connection has sent or received any bytes.
+    bool WasEverUsed() const;
+
+    int GetError() const { return error_; }
 
    private:
     friend class QuicChromiumClientSession;
@@ -172,7 +181,8 @@ class NET_EXPORT_PRIVATE QuicChromiumClientSession
     void OnSessionClosed(QuicVersion quic_version,
                          int error,
                          bool port_migration_detected,
-                         LoadTimingInfo::ConnectTiming connect_timing);
+                         LoadTimingInfo::ConnectTiming connect_timing,
+                         bool was_ever_used);
 
     // Called by |request| to create a stream.
     int TryCreateStream(StreamRequest* request);
@@ -204,6 +214,8 @@ class NET_EXPORT_PRIVATE QuicChromiumClientSession
     QuicClientPushPromiseIndex::TryHandle* push_handle_;
     CompletionCallback push_callback_;
     std::unique_ptr<QuicChromiumClientStream::Handle> push_stream_;
+
+    bool was_ever_used_;
   };
 
   // A helper class used to manage a request to create a stream.
