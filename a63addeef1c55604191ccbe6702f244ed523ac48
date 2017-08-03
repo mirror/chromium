@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13e5c3eb_402fc54a",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_mediator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-03T13:03:56Z",
+      "side": 1,
+      "message": "super NIT: in comment, \"What\u0027s New promo section\" for consistency with other comments.",
+      "range": {
+        "startLine": 72,
+        "startChar": 35,
+        "endLine": 72,
+        "endChar": 40
+      },
+      "revId": "a63addeef1c55604191ccbe6702f244ed523ac48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4046339_338c85ad",
+        "filename": "ios/chrome/browser/content_suggestions/content_suggestions_mediator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-03T13:03:56Z",
+      "side": 1,
+      "message": "Should this be done for the logoSection?",
+      "range": {
+        "startLine": 227,
+        "startChar": 18,
+        "endLine": 227,
+        "endChar": 26
+      },
+      "revId": "a63addeef1c55604191ccbe6702f244ed523ac48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16b4c0d6_262fb897",
+        "filename": "ios/chrome/browser/content_suggestions/mediator_util.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-03T13:03:56Z",
+      "side": 1,
+      "message": "is this git cl format?\nThe lonely [ seems odd.",
+      "range": {
+        "startLine": 25,
+        "startChar": 55,
+        "endLine": 25,
+        "endChar": 0
+      },
+      "revId": "a63addeef1c55604191ccbe6702f244ed523ac48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8ab76e2_c3cd2405",
+        "filename": "ios/chrome/browser/content_suggestions/mediator_util.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-03T13:03:56Z",
+      "side": 1,
+      "message": "nit: // namespace",
+      "range": {
+        "startLine": 34,
+        "startChar": 1,
+        "endLine": 34,
+        "endChar": 0
+      },
+      "revId": "a63addeef1c55604191ccbe6702f244ed523ac48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5577d21_e9416175",
+        "filename": "ios/chrome/browser/ui/content_suggestions/identifier/content_suggestions_section_information.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-03T13:03:56Z",
+      "side": 1,
+      "message": "All sections ?",
+      "range": {
+        "startLine": 18,
+        "startChar": 54,
+        "endLine": 18,
+        "endChar": 61
+      },
+      "revId": "a63addeef1c55604191ccbe6702f244ed523ac48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
