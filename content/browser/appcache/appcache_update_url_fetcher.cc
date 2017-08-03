@@ -29,9 +29,7 @@ AppCacheUpdateJob::URLFetcher::URLFetcher(const GURL& url,
       fetch_type_(fetch_type),
       retry_503_attempts_(0),
       buffer_(new net::IOBuffer(buffer_size)),
-      request_(UpdateRequestBase::Create(job->service_->request_context(),
-                                         url,
-                                         this)),
+      request_(UpdateRequestBase::Create(job->service_, url, this)),
       result_(AppCacheUpdateJob::UPDATE_OK),
       redirect_response_code_(-1),
       buffer_size_(buffer_size) {}
@@ -253,8 +251,7 @@ bool AppCacheUpdateJob::URLFetcher::MaybeRetryRequest() {
   }
   ++retry_503_attempts_;
   result_ = AppCacheUpdateJob::UPDATE_OK;
-  request_ =
-      UpdateRequestBase::Create(job_->service_->request_context(), url_, this);
+  request_ = UpdateRequestBase::Create(job_->service_, url_, this);
   Start();
   return true;
 }

@@ -5,6 +5,7 @@
 #include "content/browser/url_loader_factory_getter.h"
 
 #include "base/bind.h"
+#include "content/browser/appcache/chrome_appcache_service.h"
 #include "content/browser/storage_partition_impl.h"
 #include "content/public/common/network_service.mojom.h"
 
@@ -25,7 +26,8 @@ void URLLoaderFactoryGetter::Initialize(StoragePartitionImpl* partition) {
       BrowserThread::IO, FROM_HERE,
       base::BindOnce(&URLLoaderFactoryGetter::InitializeOnIOThread, this,
                      network_factory.PassInterface(),
-                     blob_factory.PassInterface()));
+                     blob_factory.PassInterface(),
+                     base::Unretained(partition->GetAppCacheService())));
 }
 
 mojom::URLLoaderFactoryPtr* URLLoaderFactoryGetter::GetNetworkFactory() {
@@ -53,9 +55,11 @@ URLLoaderFactoryGetter::~URLLoaderFactoryGetter() {}
 
 void URLLoaderFactoryGetter::InitializeOnIOThread(
     mojom::URLLoaderFactoryPtrInfo network_factory,
-    mojom::URLLoaderFactoryPtrInfo blob_factory) {
+    mojom::URLLoaderFactoryPtrInfo blob_factory,
+    ChromeAppCacheService* appcache_service) {
   network_factory_.Bind(std::move(network_factory));
   blob_factory_.Bind(std::move(blob_factory));
+  appcache_service->set_url_loader_factory_getter(this);
 }
 
 void URLLoaderFactoryGetter::SetTestNetworkFactoryOnIOThread(
