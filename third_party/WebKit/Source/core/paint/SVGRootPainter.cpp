@@ -6,6 +6,9 @@
 
 #include "core/layout/svg/LayoutSVGRoot.h"
 #include "core/layout/svg/SVGLayoutSupport.h"
+
+#include "core/layout/LayoutView.h"
+
 #include "core/paint/BoxClipper.h"
 #include "core/paint/BoxPainter.h"
 #include "core/paint/ObjectPaintProperties.h"
@@ -14,6 +17,31 @@
 #include "core/paint/SVGPaintContext.h"
 #include "core/svg/SVGSVGElement.h"
 #include "platform/wtf/Optional.h"
+
+#include <iostream>
+
+/////// WO SVG investigation. DO NOT SUBMIT.
+namespace {
+
+static int count = 0;
+static int visible = 0;
+static int width = 0;
+
+static bool isVisible(blink::LayoutRect rect) {
+  if (rect.IsEmpty())
+    return false;
+  if (rect.MaxX() < 0)  // left of screen
+    return false;
+  if (rect.MaxY() < 0)  // above screen
+    return false;
+  if (rect.X() > width)  // right of screen
+    return false;
+  // below is ok; we assume user could scroll there
+  return true;
+}
+
+}  // namespace
+///////// End WO
 
 namespace blink {
 
@@ -40,6 +68,8 @@ AffineTransform SVGRootPainter::TransformToPixelSnappedBorderBox(
 
 void SVGRootPainter::PaintReplaced(const PaintInfo& paint_info,
                                    const LayoutPoint& paint_offset) {
+  count++;
+
   // An empty viewport disables rendering.
   if (PixelSnappedSize(paint_offset).IsEmpty())
     return;
@@ -71,6 +101,28 @@ void SVGRootPainter::PaintReplaced(const PaintInfo& paint_info,
   if (paint_context.GetPaintInfo().phase == kPaintPhaseForeground &&
       !paint_context.ApplyClipMaskAndFilterIfNecessary())
     return;
+
+  /////// WO SVG investigation. Improperly indented on purpose. DO NOT SUBMIT.
+  LayoutBox const& box =
+      layout_svg_root_.GetDocument().GetLayoutView()->RootBox();
+  LayoutRect framerect = box.FrameRect();
+  // std::cout << "root box rect: " << framerect.ToString() << std::endl;
+  int nwidth = framerect.Width().ToInt();
+  if (nwidth != width) {
+    width = nwidth;
+  }
+
+  LayoutRect rect = layout_svg_root_.VisualRect();
+  LayoutRect prerect = rect;
+  layout_svg_root_.MapToVisualRectInAncestorSpace(&box, rect);
+  if (isVisible(rect)) {
+    visible++;
+    std::cout << ">>>WO_SVG visible paint (" << visible << " of " << count
+              << " paint calls, " << visible * 100 / count << "%) mapped "
+              << prerect.ToString() << " to: " << rect.ToString()
+              << " on width " << width << std::endl;
+  }
+  ///////// End WO
 
   BoxPainter(layout_svg_root_)
       .PaintChildren(paint_context.GetPaintInfo(), LayoutPoint());
