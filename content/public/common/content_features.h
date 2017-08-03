@@ -108,6 +108,7 @@ CONTENT_EXPORT extern const base::Feature
 
 #if defined(OS_WIN)
 CONTENT_EXPORT extern const base::Feature kWinSboxDisableExtensionPoints;
+CONTENT_EXPORT extern const base::Feature kWinSboxForceMsSigned;
 #endif  // defined(OS_WIN)
 
 #if defined(OS_MACOSX)
