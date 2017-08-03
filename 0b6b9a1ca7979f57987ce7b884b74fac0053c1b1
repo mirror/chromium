@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd6e1d40_6146dd12",
+        "filename": "media/base/demuxer_stream.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-03T00:33:14Z",
+      "side": 1,
+      "message": "Can you please document this a bit more? For instance, how does this differ from kAborted? Should the client treat kError as a permanent fatal stop condition, or retry Read()\u0027s indefinitely? (From the CL description, it looks like this is a fatal error.)",
+      "range": {
+        "startLine": 54,
+        "startChar": 14,
+        "endLine": 54,
+        "endChar": 40
+      },
+      "revId": "0b6b9a1ca7979f57987ce7b884b74fac0053c1b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8e5dd73_284ab77a",
+        "filename": "media/remoting/demuxer_stream_adapter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-03T00:33:14Z",
+      "side": 1,
+      "message": "You\u0027re right, that this shouldn\u0027t affect remoting right now. But just so we don\u0027t forget about this in the future, let\u0027s propagate the permanent fatal condition to the control logic. This will allow remoting to cleanly shut down, rather than just stall forever. In other words:\n\n  switch (status) {\n    case DemuxerStream::kAborted:\n      ...unchanged...\n    case DemuxerStream::kError:\n      OnFatalError(DECRYPTION_ERROR);\n      return;\n    ...other cases unchanged...\n  }",
+      "range": {
+        "startLine": 271,
+        "startChar": 24,
+        "endLine": 271,
+        "endChar": 30
+      },
+      "revId": "0b6b9a1ca7979f57987ce7b884b74fac0053c1b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
