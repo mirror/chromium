@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "83984f0a_078cd287",
+        "filename": "chrome/test/data/search_provider_logos/download_test_doodles.sh",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-03T11:46:06Z",
+      "side": 1,
+      "message": "\u003e \u003e I don\u0027t have better answers than \"the owners\" (i.e. us) and \"occasionally\". Suggestions welcome.\n\u003e \u003e \n\u003e \u003e Maybe adding a comment to run this script when changing the parsing function would be good?\n\u003e \n\u003e Hm, we wouldn\u0027t even need to run the script when changing the parsing function on the client, because we have unit tests against responses checked in to the repository, right? We would run the script if/when the server changes, to simplify the job of updating the canned responses.\n\nCorrect. I was only proposing changes to the client code as an arbitrary trigger to also run the script, since we won\u0027t necessarily be notified when something on the server changes.\n\n\u003e If you add a comment to that extent here, and maybe a comment to the canned responses that points to this file, I\u0027d be good.\n\nI wouldn\u0027t want to modify the actual canned response files, but I\u0027ve added a README in this folder.",
+      "parentUuid": "3d919d96_a513c11c",
+      "revId": "1a8e23d174aaa48586bac422d501f542ca888c5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c82df12_f8162187",
         "filename": "components/search_provider_logos/BUILD.gn",
         "patchSetId": 1
