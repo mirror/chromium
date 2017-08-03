@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e90eae49_be5fca36",
+        "filename": "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_arc_home_service_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-03T21:24:50Z",
+      "side": 1,
+      "message": "It\u0027s not clear how this relates to states, could you add\na comment explaining what this tests? Something that would\nhelp if somebody made a change that broke this test and they\nwere trying to debug it.",
+      "revId": "df62f08a92090d21d1c19f197e366fad0771b6b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ba23238_3f463185",
+        "filename": "ui/accessibility/platform/ax_snapshot_node_android_platform.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-03T21:24:50Z",
+      "side": 1,
+      "message": "nit: wrap to 80 columns or use git cl format",
+      "revId": "df62f08a92090d21d1c19f197e366fad0771b6b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
