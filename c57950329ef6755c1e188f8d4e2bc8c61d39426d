@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "407e237d_e35d08d8",
+        "filename": "ash/accelerators/accelerator_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-08-03T22:08:38Z",
+      "side": 1,
+      "message": "I agree, but I chose to do it this way because two of the methods to show the app list call ToggleAppList and one calls ShowAppList. If you think it\u0027s a good idea I can make both functions take an enum?",
+      "parentUuid": "d35182d5_d9cbebdc",
+      "range": {
+        "startLine": 452,
+        "startChar": 6,
+        "endLine": 452,
+        "endChar": 26
+      },
+      "revId": "c57950329ef6755c1e188f8d4e2bc8c61d39426d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "26e226db_6d735b0c",
         "filename": "ui/app_list/app_list_constants.h",
         "patchSetId": 10
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-03T19:34:07Z",
       "side": 1,
       "message": "I suspect you don\u0027t need the export for an enum. Also, style for enums if now kFoo.",
+      "range": {
+        "startLine": 113,
+        "startChar": 5,
+        "endLine": 113,
+        "endChar": 17
+      },
+      "revId": "c57950329ef6755c1e188f8d4e2bc8c61d39426d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62c61174_ee5063c4",
+        "filename": "ui/app_list/app_list_constants.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-08-03T22:08:38Z",
+      "side": 1,
+      "message": "Thanks! Done.",
+      "parentUuid": "26e226db_6d735b0c",
       "range": {
         "startLine": 113,
         "startChar": 5,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "1a6f633f_8c3305a1",
+        "filename": "ui/app_list/app_list_model.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-08-03T22:08:38Z",
+      "side": 1,
+      "message": "Currently we only support 1 level of folders in the launcher. After talking to UX this is most likely going to always be the case.",
+      "parentUuid": "032db437_88c4d3dd",
+      "range": {
+        "startLine": 329,
+        "startChar": 14,
+        "endLine": 329,
+        "endChar": 35
+      },
+      "revId": "c57950329ef6755c1e188f8d4e2bc8c61d39426d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea983fbf_c4a85849",
         "filename": "ui/app_list/app_list_model.cc",
         "patchSetId": 10
@@ -82,6 +154,30 @@
       "writtenOn": "2017-08-03T19:34:07Z",
       "side": 1,
       "message": "I believe you need to use two separate macros for this case.",
+      "range": {
+        "startLine": 337,
+        "startChar": 2,
+        "endLine": 337,
+        "endChar": 26
+      },
+      "revId": "c57950329ef6755c1e188f8d4e2bc8c61d39426d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69f0b36f_6e2c60c0",
+        "filename": "ui/app_list/app_list_model.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-08-03T22:08:38Z",
+      "side": 1,
+      "message": "You\u0027re right! Thanks. I just ended up refactoring this histogram to have two suffixes.",
+      "parentUuid": "ea983fbf_c4a85849",
       "range": {
         "startLine": 337,
         "startChar": 2,
