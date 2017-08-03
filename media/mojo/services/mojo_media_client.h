@@ -56,6 +56,9 @@ class MEDIA_MOJO_EXPORT MojoMediaClient {
   // |this| to connect to other services. It is guaranteed to outlive |this|.
   virtual void Initialize(service_manager::Connector* connector);
 
+  // Called by the MediaService after the CDM is preloaded.
+  virtual void OnCdmPreloaded();
+
   virtual std::unique_ptr<AudioDecoder> CreateAudioDecoder(
       scoped_refptr<base::SingleThreadTaskRunner> task_runner);
 

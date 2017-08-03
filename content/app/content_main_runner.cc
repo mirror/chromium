@@ -640,8 +640,12 @@ class ContentMainRunnerImpl : public ContentMainRunner {
 #if defined(OS_WIN)
     CHECK(InitializeSandbox(params.sandbox_info));
 #elif defined(OS_MACOSX)
+    // Pass this from the host, e.g. through command line args.
+    bool delay_utility_sandbox_initialization = true;
     if (process_type == switches::kRendererProcess ||
         process_type == switches::kPpapiPluginProcess ||
+        (process_type == switches::kUtilityProcess &&
+         delay_utility_sandbox_initialization) ||
         (delegate_ && delegate_->DelaySandboxInitialization(process_type))) {
       // On OS X the renderer sandbox needs to be initialized later in the
       // startup sequence in RendererMainPlatformDelegate::EnableSandbox().

@@ -49,6 +49,14 @@ void MediaService::Create(mojom::MediaServiceRequest request) {
   bindings_.AddBinding(this, std::move(request));
 }
 
+void MediaService::PreloadCdm(const base::FilePath& cdm_path) {
+  // TODO(xhwang): Make sure we only preload CDM once.
+  // TODO(xhwang): Preload CDM in CdmModule, and let CdmModule be owned by
+  // MediaService.
+  NOTIMPLEMENTED();
+  mojo_media_client_->OnCdmPreloaded();
+}
+
 void MediaService::CreateInterfaceFactory(
     mojom::InterfaceFactoryRequest request,
     service_manager::mojom::InterfaceProviderPtr host_interfaces) {

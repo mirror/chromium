@@ -25,5 +25,6 @@ interface InterfaceFactory {
   CreateRenderer(string audio_device_id, Renderer& renderer);
 
   // Creates a ContentDecryptionModule service.
+  // TODO(xhwang): Pass key system in this call.
   CreateCdm(ContentDecryptionModule& cdm);
 };

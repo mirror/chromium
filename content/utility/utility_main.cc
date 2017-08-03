@@ -26,6 +26,10 @@
 #include "sandbox/win/src/sandbox.h"
 #endif
 
+#if defined(OS_WIN)
+sandbox::TargetServices* g_utility_target_services = nullptr;
+#endif
+
 namespace content {
 
 // Mainline routine for running as the utility process.
@@ -40,6 +44,8 @@ int UtilityMain(const MainFunctionParams& parameters) {
   // Seccomp-BPF policy.
   if (parameters.zygote_child)
     LinuxSandbox::InitializeSandbox();
+#elif defined(OS_WIN)
+  g_utility_target_services = parameters.sandbox_info->target_services;
 #endif
 
   ChildProcess utility_process;
@@ -64,16 +70,18 @@ int UtilityMain(const MainFunctionParams& parameters) {
 
 #if defined(OS_WIN)
   bool no_sandbox = parameters.command_line.HasSwitch(switches::kNoSandbox);
-  if (!no_sandbox) {
-    sandbox::TargetServices* target_services =
-        parameters.sandbox_info->target_services;
-    if (!target_services)
+
+  // TODO(xhwang): This needs to be passed in somehow.
+  bool delay_sandbox = true;
+
+  if (!no_sandbox && !delay_sandbox) {
+    if (!g_utility_target_services)
       return false;
     char buffer;
     // Ensure RtlGenRandom is warm before the token is lowered; otherwise,
     // base::RandBytes() will CHECK fail when v8 is initialized.
     base::RandBytes(&buffer, sizeof(buffer));
-    target_services->LowerToken();
+    g_utility_target_services->LowerToken();
   }
 #endif
 
