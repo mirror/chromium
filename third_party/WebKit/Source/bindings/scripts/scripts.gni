@@ -54,6 +54,15 @@ idl_compiler_files = get_path_info([
                                      "v8_utilities.py",
                                    ],
                                    "abspath")
+web_idl_scripts = get_path_info([
+                                  "web_idl/idl_argument.py",
+                                  "web_idl/idl_definition.py",
+                                  "web_idl/idl_definitions.py",
+                                  "web_idl/idl_extended_attribute.py",
+                                  "web_idl/idl_literal.py",
+                                  "web_idl/idl_type.py",
+                                ],
+                                "abspath")
 
 # Calls the compute_interfaces_info_individual script.
 #
@@ -484,5 +493,56 @@ template("generate_conditional_features") {
     # http://crbug.com/358074
     deps = invoker.deps +
            [ "//third_party/WebKit/Source/bindings/modules:interfaces_info" ]
+  }
+}
+
+template("generate_idl_definitions") {
+  action(target_name) {
+    script = "//third_party/WebKit/Source/bindings/scripts/generate_idl_definitions.py"
+    output_dir = invoker.output_dir
+    output_file_name = invoker.output
+    output_path = "${output_dir}/${output_file_name}"
+    inputs = web_idl_scripts + invoker.sources
+    outputs = [
+      output_path,
+    ]
+
+    # List input file names in a temporary file.
+    response_file_contents = rebase_path(invoker.sources, root_build_dir)
+    args = [
+      "--idl-files-list",
+      "{{response_file_name}}",
+      "--output",
+      rebase_path(output_path, root_build_dir),
+    ]
+  }
+}
+
+template("generate_cpp_code") {
+  action(target_name) {
+    script = "//third_party/WebKit/Source/bindings/scripts/generate_cpp_code.py"
+    idl_definitions_file =
+        "${bindings_modules_output_dir}/IdlDefinitions.pickle"
+    inputs = [
+      "//third_party/WebKit/Source/bindings/scripts/web_idl/idl_argument.py",
+      "//third_party/WebKit/Source/bindings/scripts/web_idl/idl_definition.py",
+      "//third_party/WebKit/Source/bindings/scripts/web_idl/idl_definitions.py",
+      "//third_party/WebKit/Source/bindings/scripts/web_idl/idl_extended_attribute.py",
+      "//third_party/WebKit/Source/bindings/scripts/web_idl/idl_literal.py",
+      "//third_party/WebKit/Source/bindings/scripts/web_idl/idl_type.py",
+      idl_definitions_file,
+    ]
+    outputs = invoker.outputs
+    args = [
+      "--idl-definitions",
+      rebase_path(idl_definitions_file, root_build_dir),
+      "--output-dir",
+      rebase_path(invoker.output_dir, root_build_dir),
+      "--component",
+      invoker.component,
+    ]
+    deps = [
+      "//third_party/WebKit/Source/bindings/modules:idl_definitions",
+    ]
   }
 }

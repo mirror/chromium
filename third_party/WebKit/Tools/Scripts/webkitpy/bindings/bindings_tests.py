@@ -34,6 +34,11 @@ from webkitpy.common.system.executive import Executive
 from webkitpy.common import path_finder
 path_finder.add_bindings_scripts_dir_to_sys_path()
 
+import code_generator2
+from code_generator2 import V8CodeGenerator
+from web_idl.idl_definitions import IdlDefinitionStore
+from web_idl.idl_v8_bindings import IdlV8Bindings
+
 from code_generator_v8 import CodeGeneratorDictionaryImpl
 from code_generator_v8 import CodeGeneratorV8
 from code_generator_v8 import CodeGeneratorUnionType
@@ -101,27 +106,29 @@ def TemporaryDirectory():
         shutil.rmtree(name)
 
 
+def idl_paths_recursive(directory):
+    # This is slow, especially on Windows, due to os.walk making
+    # excess stat() calls. Faster versions may appear in Python 3.5 or
+    # later:
+    # https://github.com/benhoyt/scandir
+    # http://bugs.python.org/issue11406
+    idl_paths = []
+    for dirpath, _, files in os.walk(directory):
+        idl_paths.extend(os.path.join(dirpath, filename)
+                         for filename in fnmatch.filter(files, '*.idl'))
+    return idl_paths
+
+
+def collect_blink_idl_paths():
+    """Returns IDL file paths which blink actually uses."""
+    idl_paths = []
+    for component in COMPONENT_DIRECTORY:
+        directory = os.path.join(SOURCE_PATH, component)
+        idl_paths.extend(idl_paths_recursive(directory))
+    return idl_paths
+
+
 def generate_interface_dependencies():
-    def idl_paths_recursive(directory):
-        # This is slow, especially on Windows, due to os.walk making
-        # excess stat() calls. Faster versions may appear in Python 3.5 or
-        # later:
-        # https://github.com/benhoyt/scandir
-        # http://bugs.python.org/issue11406
-        idl_paths = []
-        for dirpath, _, files in os.walk(directory):
-            idl_paths.extend(os.path.join(dirpath, filename)
-                             for filename in fnmatch.filter(files, '*.idl'))
-        return idl_paths
-
-    def collect_blink_idl_paths():
-        """Returns IDL file paths which blink actually uses."""
-        idl_paths = []
-        for component in COMPONENT_DIRECTORY:
-            directory = os.path.join(SOURCE_PATH, component)
-            idl_paths.extend(idl_paths_recursive(directory))
-        return idl_paths
-
     def collect_interfaces_info(idl_path_list):
         info_collector = InterfaceInfoCollector()
         for idl_path in idl_path_list:
@@ -367,6 +374,106 @@ def bindings_tests(output_directory, verbose, suppress_diff):
     return 1
 
 
+def bindings_new_tests(output_directory, verbose, suppress_diff):
+    executive = Executive()
+
+    def list_files(directory):
+        files = []
+        for component in os.listdir(directory):
+            if component not in COMPONENT_DIRECTORY:
+                continue
+            directory_with_component = os.path.join(directory, component)
+            for filename in os.listdir(directory_with_component):
+                files.append(os.path.join(directory_with_component, filename))
+        return files
+
+    def diff(filename1, filename2):
+        # Python's difflib module is too slow, especially on long output, so
+        # run external diff(1) command
+        cmd = ['diff',
+               '-u',  # unified format
+               '-N',  # treat absent files as empty
+               filename1,
+               filename2]
+        # Return output and don't raise exception, even though diff(1) has
+        # non-zero exit if files differ.
+        return executive.run_command(cmd, error_handler=lambda x: None)
+
+    def identical_file(reference_filename, output_filename):
+        reference_basename = os.path.basename(reference_filename)
+
+        if not os.path.isfile(reference_filename):
+            print 'Missing reference file!'
+            print '(if adding new test, update reference files)'
+            print reference_basename
+            print
+            return False
+
+        if not filecmp.cmp(reference_filename, output_filename):
+            # cmp is much faster than diff, and usual case is "no difference",
+            # so only run diff if cmp detects a difference
+            print 'FAIL: %s' % reference_basename
+            if not suppress_diff:
+                print diff(reference_filename, output_filename)
+            return False
+
+        if verbose:
+            print 'PASS: %s' % reference_basename
+        return True
+
+    def identical_output_files(output_files):
+        reference_files = [os.path.join(REFERENCE_DIRECTORY,
+                                        os.path.relpath(path, output_directory))
+                           for path in output_files]
+        return all([identical_file(reference_filename, output_filename)
+                    for (reference_filename, output_filename) in zip(reference_files, output_files)])
+
+    def no_excess_files(output_files):
+        generated_files = set([os.path.relpath(path, output_directory)
+                               for path in output_files])
+        excess_files = []
+        for path in list_files(REFERENCE_DIRECTORY):
+            relpath = os.path.relpath(path, REFERENCE_DIRECTORY)
+            if relpath not in generated_files:
+                excess_files.append(relpath)
+        if excess_files:
+            print ('Excess reference files! '
+                   '(probably cruft from renaming or deleting):\n' +
+                   '\n'.join(excess_files))
+            return False
+        return True
+
+
+    try:
+        idl_definitions = IdlDefinitionStore()
+        idl_definitions.load_idl_files(collect_blink_idl_paths())
+        idl_definitions.load_idl_files(idl_paths_recursive(TEST_INPUT_DIRECTORY))
+        idl_bindings = IdlV8Bindings(idl_definitions)
+        for component in COMPONENT_DIRECTORY:
+            output_dir = os.path.join(output_directory, component)
+            generator = V8CodeGenerator(idl_bindings)
+            generator.generate_code([code_generator2.v8_code_generator.DICTIONARY],
+                                    output_dir=output_dir,
+                                    component=component,
+                                    test_only=True)
+    finally:
+        pass
+
+    # Detect all changes
+    output_files = list_files(output_directory)
+    passed = identical_output_files(output_files)
+    # passed &= no_excess_files(output_files)
+
+    if passed:
+        if verbose:
+            print
+            print PASS_MESSAGE
+        return 0
+    print
+    print FAIL_MESSAGE
+    return 1
+
+
 def run_bindings_tests(reset_results, verbose, suppress_diff):
     # Generate output into the reference directory if resetting results, or
     # a temp directory if not.
@@ -374,4 +481,5 @@ def run_bindings_tests(reset_results, verbose, suppress_diff):
         print 'Resetting results'
         return bindings_tests(REFERENCE_DIRECTORY, verbose, suppress_diff)
     with TemporaryDirectory() as temp_dir:
-        return bindings_tests(temp_dir, verbose, suppress_diff)
+        # return bindings_tests(temp_dir, verbose, suppress_diff)
+        return bindings_new_tests(temp_dir, verbose, suppress_diff)
