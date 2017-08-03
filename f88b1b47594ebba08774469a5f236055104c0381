@@ -70,6 +70,24 @@
       "revId": "f88b1b47594ebba08774469a5f236055104c0381",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2147a11f_736c7642",
+        "filename": "media/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1115461
+      },
+      "writtenOn": "2017-08-03T09:45:25Z",
+      "side": 0,
+      "message": "Revert all the dependencies in the patch.\n\nWhen all unit tests patches are landed then this target would not required. So at that time, we will take care.",
+      "parentUuid": "06a478cf_06a70ca0",
+      "revId": "f88b1b47594ebba08774469a5f236055104c0381",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
