@@ -568,6 +568,30 @@
     },
     {
       "key": {
+        "uuid": "afb1acf9_c5628154",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-08-03T17:17:05Z",
+      "side": 1,
+      "message": "Ah, so this may partly be a wording issue.\n\nInitialize() should maybe be called BeginInitialization() or something of the like.\n\nAny VideoEncodeAccelerator::Client isn\u0027t initialized and ready to send encode requests until it gets a call to RequireBitstreamBuffers. This call is made by the underlying VideoEncodeAccelerator when it gets up and running and is ready to receive encode requests. Thus, it\u0027s in RequireBitstreamBuffers that state_ gets set to INITIALIZED. \n\nInitialize() is not a good name because, by the end of Initialize(), the WebrtcVideoEncoderGpu will never actually be initialized - it only \"kicks off\" initialization. So maybe something like:\n\nbool BeginInitialization() {\n  if (state_ !\u003d UNINITIALZED) {\n    return state_ \u003d\u003d INITIALIZED || state_ \u003d\u003d INITIALIZING;\n  }\n\n  // Create VideoEncodeAccelerator, which will later call RequireBitstreamBuffers\n\n  if (VideoEncodeAccelerator couldn\u0027t be created) {\n    LOG(ERROR) \u003c\u003c \"Could not create VideoEncodeAccelerator\";\n    state_ \u003d INITIALIZATION_ERROR;\n    return false;\n  }\n\n  // We are now initializing; once RequireBitstreamBuffers is called and creates buffers\n  // successfully, we will be initialized.\n  state_ \u003d INITIALIZING;\n\n  return true;\n}",
+      "parentUuid": "970186ce_956982fd",
+      "range": {
+        "startLine": 183,
+        "startChar": 4,
+        "endLine": 183,
+        "endChar": 17
+      },
+      "revId": "5ce320729a318a6bcbc628917cd04141f2370a71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "13156fc8_0dacd3a2",
         "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
         "patchSetId": 14
