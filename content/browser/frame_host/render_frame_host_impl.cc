@@ -319,14 +319,13 @@ void NotifyForEachFrameFromUI(
                         const GlobalFrameRoutingId&)> frame_callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-  FrameTree* frame_tree = static_cast<RenderFrameHostImpl*>(root_frame_host)
-                              ->frame_tree_node()
-                              ->frame_tree();
-  DCHECK_EQ(root_frame_host, frame_tree->GetMainFrame());
+  FrameTreeNode* frame_tree_node =
+      static_cast<RenderFrameHostImpl*>(root_frame_host)->frame_tree_node();
+  FrameTree* frame_tree = frame_tree_node->frame_tree();
 
   std::unique_ptr<std::set<GlobalFrameRoutingId>> routing_ids(
       new std::set<GlobalFrameRoutingId>());
-  for (FrameTreeNode* node : frame_tree->Nodes()) {
+  for (FrameTreeNode* node : frame_tree->SubtreeNodes(frame_tree_node)) {
     RenderFrameHostImpl* frame_host = node->current_frame_host();
     RenderFrameHostImpl* pending_frame_host =
         IsBrowserSideNavigationEnabled()
