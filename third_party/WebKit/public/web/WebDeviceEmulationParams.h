@@ -5,6 +5,7 @@
 #ifndef WebDeviceEmulationParams_h
 #define WebDeviceEmulationParams_h
 
+#include "base/optional.h"
 #include "public/platform/WebFloatPoint.h"
 #include "public/platform/WebPoint.h"
 #include "public/platform/WebRect.h"
@@ -15,18 +16,16 @@ namespace blink {
 
 // All sizes are measured in device independent pixels.
 struct WebDeviceEmulationParams {
-  // For mobile, |screen_size| and |view_position| are used.
-  // For desktop, |screen_size| and |view_position| are preserved.
   enum ScreenPosition { kDesktop, kMobile, kScreenPositionLast = kMobile };
 
   ScreenPosition screen_position;
 
   // Emulated screen size. Typically full / physical size of the device screen
-  // in DIP. Used with |screen_position == Mobile|.
+  // in DIP. Empty size means no override.
   WebSize screen_size;
 
-  // Position of view on the screen. Used with |screen_position == Mobile|.
-  WebPoint view_position;
+  // Position of view on the screen. On mobile this adjusts the screen rect.
+  base::Optional<WebPoint> view_position;
 
   // Emulated view size. Empty size means no override.
   WebSize view_size;
