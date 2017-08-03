@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fabcbc0_4727e3b2",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-03T12:42:39Z",
+      "side": 1,
+      "message": "Well, my concern was not expecting on all of the numbers and that the numbers should change if you were to change the global scope count.",
+      "range": {
+        "startLine": 103,
+        "startChar": 5,
+        "endLine": 103,
+        "endChar": 68
+      },
+      "revId": "c5326aa2c90ade457d8b7e0643d6f339caf01d33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14779a47_def90ff2",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-03T12:42:39Z",
+      "side": 1,
+      "message": "nit: Use a check enabled in release",
+      "range": {
+        "startLine": 105,
+        "startChar": 2,
+        "endLine": 105,
+        "endChar": 11
+      },
+      "revId": "c5326aa2c90ade457d8b7e0643d6f339caf01d33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd3e22cb_1718b306",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-03T12:42:39Z",
+      "side": 1,
+      "message": "nit: Maybe run this test twice as long so that the switch count doesn\u0027t mysteriously look like it should be equal to number of global scopes.",
+      "range": {
+        "startLine": 108,
+        "startChar": 39,
+        "endLine": 108,
+        "endChar": 41
+      },
+      "revId": "c5326aa2c90ade457d8b7e0643d6f339caf01d33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
