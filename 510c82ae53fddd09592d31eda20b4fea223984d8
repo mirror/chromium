@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94a27deb_606ba0eb",
+        "filename": "chrome/browser/ui/views/payments/shipping_address_editor_view_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-03T00:43:32Z",
+      "side": 1,
+      "message": "Cool! Is this also what we use for display in the profile list UI?",
+      "range": {
+        "startLine": 135,
+        "startChar": 4,
+        "endLine": 135,
+        "endChar": 57
+      },
+      "revId": "510c82ae53fddd09592d31eda20b4fea223984d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
