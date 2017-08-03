@@ -52,6 +52,24 @@
       "revId": "a9e9888e8dd87b8b3ea10dd590073cc0d15a284f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3910cf4e_1c1f8461",
+        "filename": "third_party/WebKit/Source/bindings/templates/methods.cpp.tmpl",
+        "patchSetId": 4
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-03T13:37:17Z",
+      "side": 1,
+      "message": "Hmm. What is NewTarget? Do you know why it\u0027s needed?",
+      "parentUuid": "18c335fd_482ecc0f",
+      "revId": "a9e9888e8dd87b8b3ea10dd590073cc0d15a284f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
