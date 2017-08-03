@@ -29,6 +29,46 @@
         ]
     },
     {
+        "domain": "Counters",
+        "experimental": true,
+        "types": [
+            {
+                "id": "Counter",
+                "type": "object",
+                "properties": [
+                    { "name": "name", "type": "string", "description": "Counter name." },
+                    { "name": "value", "type": "number", "description": "Counter value." }
+                ],
+                "description": "Run-time execution counters as key value pairs."
+            }
+        ],
+        "commands": [
+            {
+                "name": "enableCounters",
+                "parameters": [
+                    { "name": "counters", "type": "array", "items": { "type": "string" }, "description": "List of counter names to enable." }
+                ],
+                "description": "Enable collecting and reporting specified counters."
+            },
+            {
+                "name": "getCounters",
+                "returns": [
+                    { "name": "counters", "type": "array", "items": { "$ref": "Counter" }, "description": "Current values for enabled Run-time counters." }
+                ],
+                "description": "Retrieve current values for enabled Run-time counters."
+            }
+        ],
+        "events": [
+            {
+                "name": "counters",
+                "parameters": [
+                    { "name": "counters", "type": "object", "description": "Run-time execution counters as key value pairs." }
+                ],
+                "description": "The event is fired upon request from the user code."
+            }
+        ]
+    },
+    {
         "domain": "Memory",
         "experimental": true,
         "types": [
