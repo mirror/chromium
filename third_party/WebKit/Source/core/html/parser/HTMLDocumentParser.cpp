@@ -131,7 +131,7 @@ HTMLDocumentParser::HTMLDocumentParser(Document& document,
       tokenizer_(sync_policy == kForceSynchronousParsing
                      ? HTMLTokenizer::Create(options_)
                      : nullptr),
-      script_runner_(this, nullptr),
+      script_runner_(nullptr),
       loading_task_runner_(
           TaskRunnerHelper::Get(TaskType::kNetworking, &document)),
       parser_scheduler_(

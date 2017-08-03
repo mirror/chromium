@@ -162,7 +162,7 @@ HTMLParserScriptRunner::HTMLParserScriptRunner(
     : reentry_permit_(reentry_permit),
       document_(document),
       host_(host),
-      parser_blocking_script_(this, nullptr) {
+      parser_blocking_script_(nullptr) {
   DCHECK(host_);
 }
 
@@ -563,8 +563,7 @@ void HTMLParserScriptRunner::RequestDeferredScript(
   // "Add the element to the end of the list of scripts that will execute
   //  when the document has finished parsing associated with the Document
   //  of the parser that created the element."
-  scripts_to_execute_after_parsing_.push_back(
-      TraceWrapperMember<PendingScript>(this, pending_script));
+  scripts_to_execute_after_parsing_.push_back(pending_script);
 }
 
 // The initial steps for 'An end tag whose tag name is "script"'

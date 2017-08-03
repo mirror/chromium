@@ -135,7 +135,7 @@ inline HTMLCanvasElement::HTMLCanvasElement(Document& document)
       ContextLifecycleObserver(&document),
       PageVisibilityObserver(document.GetPage()),
       size_(kDefaultWidth, kDefaultHeight),
-      context_(this, nullptr),
+      context_(nullptr),
       ignore_reset_(false),
       externally_allocated_memory_(0),
       origin_clean_(true),

@@ -874,7 +874,7 @@ class MODULES_EXPORT WebGLRenderingContextBase : public CanvasRenderingContext,
                           const char* const* prefixes)
         : ExtensionTracker(flags, prefixes),
           extension_field_(extension_field),
-          extension_(this, nullptr) {}
+          extension_(nullptr) {}
 
     GC_PLUGIN_IGNORE("http://crbug.com/519953")
     Member<T>& extension_field_;
@@ -890,9 +890,8 @@ class MODULES_EXPORT WebGLRenderingContextBase : public CanvasRenderingContext,
   void RegisterExtension(Member<T>& extension_ptr,
                          ExtensionFlags flags = kApprovedExtension,
                          const char* const* prefixes = nullptr) {
-    extensions_.push_back(TraceWrapperMember<ExtensionTracker>(
-        this,
-        TypedExtensionTracker<T>::Create(extension_ptr, flags, prefixes)));
+    extensions_.push_back(
+        TypedExtensionTracker<T>::Create(extension_ptr, flags, prefixes));
   }
 
   bool ExtensionSupportedAndAllowed(const ExtensionTracker*);

@@ -88,7 +88,7 @@ TextTrack::TextTrack(const AtomicString& kind,
                      const AtomicString& id,
                      TextTrackType type)
     : TrackBase(WebMediaPlayer::kTextTrack, kind, label, language, id),
-      cues_(this, nullptr),
+      cues_(nullptr),
       active_cues_(nullptr),
       track_list_(nullptr),
       mode_(DisabledKeyword()),

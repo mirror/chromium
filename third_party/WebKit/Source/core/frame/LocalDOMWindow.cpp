@@ -249,15 +249,15 @@ static void UntrackAllBeforeUnloadEventListeners(LocalDOMWindow* dom_window) {
 
 LocalDOMWindow::LocalDOMWindow(LocalFrame& frame)
     : DOMWindow(frame),
-      document_(this, nullptr),
+      document_(nullptr),
       visualViewport_(DOMVisualViewport::Create(this)),
       unused_preloads_timer_(
           TaskRunnerHelper::Get(TaskType::kUnspecedTimer, &frame),
           this,
           &LocalDOMWindow::WarnUnusedPreloads),
       should_print_when_finished_loading_(false),
-      custom_elements_(this, nullptr),
-      modulator_(this, nullptr) {}
+      custom_elements_(nullptr),
+      modulator_(nullptr) {}
 
 void LocalDOMWindow::ClearDocument() {
   if (!document_)

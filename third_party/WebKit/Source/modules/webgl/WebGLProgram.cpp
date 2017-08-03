@@ -40,8 +40,8 @@ WebGLProgram::WebGLProgram(WebGLRenderingContextBase* ctx)
       link_status_(false),
       link_count_(0),
       active_transform_feedback_count_(0),
-      vertex_shader_(this, nullptr),
-      fragment_shader_(this, nullptr),
+      vertex_shader_(nullptr),
+      fragment_shader_(nullptr),
       info_valid_(true) {
   SetObject(ctx->ContextGL()->CreateProgram());
 }

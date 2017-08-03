@@ -35,7 +35,7 @@ namespace blink {
 DOMWindow::DOMWindow(Frame& frame)
     : frame_(frame),
       window_proxy_manager_(frame.GetWindowProxyManager()),
-      location_(this, nullptr),
+      location_(nullptr),
       window_is_closing_(false) {}
 
 DOMWindow::~DOMWindow() {

@@ -27,7 +27,7 @@ WorkletGlobalScope::WorkletGlobalScope(const KURL& url,
     : WorkerOrWorkletGlobalScope(isolate, worker_clients),
       url_(url),
       user_agent_(user_agent),
-      modulator_(this, nullptr) {
+      modulator_(nullptr) {
   SetSecurityOrigin(std::move(security_origin));
 }
 

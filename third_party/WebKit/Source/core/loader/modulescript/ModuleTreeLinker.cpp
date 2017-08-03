@@ -84,7 +84,7 @@ ModuleTreeLinker::ModuleTreeLinker(const AncestorList& ancestor_list_with_url,
       client_(client),
       ancestor_list_with_url_(ancestor_list_with_url),
       level_(level),
-      module_script_(this, nullptr) {
+      module_script_(nullptr) {
   CHECK(modulator);
   CHECK(reached_url_set_);
   CHECK(registry);

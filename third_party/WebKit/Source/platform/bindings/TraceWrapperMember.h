@@ -22,9 +22,6 @@ class TraceWrapperMember : public Member<T> {
   DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
 
  public:
-  // TODO(mlippautz): Remove constructor taking |parent|.
-  TraceWrapperMember(void* parent, T* raw) : Member<T>(raw) {}
-
   TraceWrapperMember(T* raw) : Member<T>(raw) {
     // We don't require a write barrier here as TraceWrapperMember is used for
     // the following scenarios:
