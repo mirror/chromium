@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "215e7c93_3806a0ec",
+        "filename": "ios/chrome/app/chrome_app_startup_parameters.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-08-03T15:02:43Z",
+      "side": 1,
+      "message": "the only way to get to this function is from the extension?",
+      "revId": "692c187b736632df99cd98f01fe392af0b252ec9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
