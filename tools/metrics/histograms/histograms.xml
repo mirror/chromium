@@ -14917,6 +14917,16 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>Time taken to create a single download in the history DB.</summary>
 </histogram>
 
+<histogram name="Download.Database.IsAvailable" enum="BooleanAvailable">
+  <owner>xingliu@chromium.org</owner>
+  <summary>
+    Records whether the download database is available when database startup
+    completes, before starting any pending downloads.  If the database is
+    available, it will provide the next download id. Or no download history will
+    be persisted.
+  </summary>
+</histogram>
+
 <histogram name="Download.Database.QueryDownloadDuration" units="ms">
   <owner>asanka@chromium.org</owner>
   <summary>Time taken to query all downloads from history DB.</summary>
@@ -54434,9 +54444,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Pepper.SecureOrigin.MediaStreamRequest" enum="BooleanSecure">
-  <obsolete>
-    Deprecated as of 8/2017.
-  </obsolete>
   <owner>raymes@chromium.org</owner>
   <summary>
     Whether a Pepper media stream request (mic/cam access) comes from a plugin
@@ -63231,18 +63238,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="RendererScheduler.ExpectedQueueingTimeWhenQueueingTime"
-    units="ms">
-  <owner>tdresser@chromium.org</owner>
-  <summary>
-    Expected queueing time for events which were queued on the main thread
-    longer or shorter than a threshold, given by the QueueingTimeThreshold
-    suffix.
-
-    Team: input-dev@chromium.org.
-  </summary>
-</histogram>
-
 <histogram name="RendererScheduler.ExpectedTaskQueueingDuration" units="ms">
   <owner>tdresser@chromium.org</owner>
   <summary>
@@ -63338,10 +63333,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 
 <histogram name="RendererScheduler.QueueingDurationWhenExpectedQueueingTime"
     units="ms">
-  <obsolete>
-    Deprecated as of 08/2017. Replaced with
-    RendererScheduler.ExpectedQueueingTimeWhenQueueingTime.
-  </obsolete>
   <owner>tdresser@chromium.org</owner>
   <summary>
     Time between sending an event to the renderer main thread and when the
@@ -63353,24 +63344,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="RendererScheduler.RendererMainThreadLoad3" units="%">
-  <obsolete>
-    This metric still used 1-minute reporting chunks. Replaced with
-    RendererMainThreadLoad4 as of July 2017.
-  </obsolete>
-  <owner>altimin@chromium.org</owner>
-  <summary>
-    Renderer main thread load (percentage of time spent in tasks), reported in
-    one minute chunks.
-
-    See http://bit.ly/chromium-renderer-main-thread-load-metric for details.
-
-    This metric is emitted when the renderer main thread task is completed or
-    renderer is backgrounded or foregrounded, at most once per second per
-    renderer amortized.
-  </summary>
-</histogram>
-
-<histogram name="RendererScheduler.RendererMainThreadLoad4" units="%">
   <owner>altimin@chromium.org</owner>
   <summary>
     Renderer main thread load (percentage of time spent in tasks), reported in
@@ -90985,10 +90958,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 <histogram_suffixes name="CompositorPendingTreeType" separator=".">
   <suffix name="Main" label="Commit initiated pending tree"/>
   <suffix name="Impl" label="Impl side invalidation initiated pending tree"/>
-  <affected-histogram
-      name="Scheduling.Browser.ReadyToActivateToActivationDuration2"/>
-  <affected-histogram
-      name="Scheduling.Renderer.ReadyToActivateToActivationDuration2"/>
+  <affected-histogram name="Scheduling.ReadyToActivateToActivationDuration2"/>
 </histogram_suffixes>
 
 <histogram_suffixes name="CompositorTimingHistoryProcess" separator="."
@@ -92416,9 +92386,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram_suffixes>
 
 <histogram_suffixes name="ExpectedQueueingDurationThreshold" separator="_">
-  <obsolete>
-    Deprecated as of 08/2017. Replaced with ExpectedQueueingDurationThreshold.
-  </obsolete>
   <suffix name="GreaterThan.10ms"
       label="Expected Queueing Time greater than 10ms."/>
   <suffix name="GreaterThan.150ms"
@@ -97846,19 +97813,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <affected-histogram name="ShortcutsProvider.QueryIndexTime"/>
 </histogram_suffixes>
 
-<histogram_suffixes name="QueueingTimeThreshold" separator="_">
-  <suffix name="GreaterThan.10ms" label="Queueing Time greater than 10ms."/>
-  <suffix name="GreaterThan.150ms" label="Queueing Time greater than 150ms."/>
-  <suffix name="GreaterThan.300ms" label="Queueing Time greater than 300ms."/>
-  <suffix name="GreaterThan.450ms" label="Queueing Time greater than 450ms."/>
-  <suffix name="LessThan.10ms" label="Queueing Time less than 10ms."/>
-  <suffix name="LessThan.150ms" label="Queueing Time less than 150ms."/>
-  <suffix name="LessThan.300ms" label="Queueing Time less than 300ms."/>
-  <suffix name="LessThan.450ms" label="Queueing Time less than 450ms."/>
-  <affected-histogram
-      name="RendererScheduler.ExpectedQueueingTimeWhenQueueingTime"/>
-</histogram_suffixes>
-
 <histogram_suffixes name="QuicConnectionType" separator="">
   <owner>rch@chromium.org</owner>
   <suffix name="ForHTTP" label="Only insecure HTTP connections are counted.">
@@ -98121,7 +98075,7 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
       label="Main thread load when the renderer is foregrounded for longer
              than one minute. Most of loading tasks are expected to complete
              by then."/>
-  <affected-histogram name="RendererScheduler.RendererMainThreadLoad4"/>
+  <affected-histogram name="RendererScheduler.RendererMainThreadLoad3"/>
 </histogram_suffixes>
 
 <histogram_suffixes name="RendererScheduler.TaskCountPerTaskLength"

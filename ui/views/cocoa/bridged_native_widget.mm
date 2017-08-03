@@ -1275,8 +1275,7 @@ void BridgedNativeWidget::CreateCompositor() {
   compositor_.reset(new ui::Compositor(
       context_factory_private->AllocateFrameSinkId(), context_factory,
       context_factory_private, GetCompositorTaskRunner(),
-      false /* enable_surface_synchronization */,
-      false /* enable_pixel_canvas */));
+      false /* enable_surface_synchronization */));
   compositor_->SetAcceleratedWidget(compositor_widget_->accelerated_widget());
   compositor_widget_->SetNSView(this);
 }

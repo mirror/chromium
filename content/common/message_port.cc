@@ -8,7 +8,6 @@
 #include "base/logging.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "content/common/message_port.mojom.h"
-#include "content/common/message_port_message_struct_traits.h"
 #include "mojo/public/cpp/system/message_pipe.h"
 
 namespace content {
@@ -45,27 +44,28 @@ std::vector<mojo::ScopedMessagePipeHandle> MessagePort::ReleaseHandles(
   return handles;
 }
 
-void MessagePort::PostMessage(const uint8_t* encoded_message,
-                              size_t encoded_message_size,
+void MessagePort::PostMessage(const base::string16& encoded_message,
                               std::vector<MessagePort> ports) {
   DCHECK(state_->handle().is_valid());
+
+  uint32_t num_bytes = encoded_message.size() * sizeof(base::char16);
 
   // NOTE: It is OK to ignore the return value of mojo::WriteMessageNew here.
   // HTML MessagePorts have no way of reporting when the peer is gone.
 
-  MessagePortMessage msg;
-  msg.encoded_message =
-      mojo::ConstCArray<uint8_t>(encoded_message_size, encoded_message);
-  msg.ports.resize(ports.size());
+  mojom::MessagePortMessagePtr msg = mojom::MessagePortMessage::New();
+  msg->encoded_message.resize(num_bytes);
+  std::memcpy(msg->encoded_message.data(), encoded_message.data(), num_bytes);
+  msg->ports.resize(ports.size());
   for (size_t i = 0; i < ports.size(); ++i)
-    msg.ports[i] = ports[i].ReleaseHandle();
+    msg->ports[i] = ports[i].ReleaseHandle();
   mojo::Message mojo_message =
       mojom::MessagePortMessage::SerializeAsMessage(&msg);
   mojo::WriteMessageNew(state_->handle().get(), mojo_message.TakeMojoMessage(),
                         MOJO_WRITE_MESSAGE_FLAG_NONE);
 }
 
-bool MessagePort::GetMessage(std::vector<uint8_t>* encoded_message,
+bool MessagePort::GetMessage(base::string16* encoded_message,
                              std::vector<MessagePort>* ports) {
   DCHECK(state_->handle().is_valid());
   mojo::ScopedMessageHandle message_handle;
@@ -75,16 +75,19 @@ bool MessagePort::GetMessage(std::vector<uint8_t>* encoded_message,
     return false;
 
   mojo::Message message(std::move(message_handle));
-  MessagePortMessage msg;
+  mojom::MessagePortMessagePtr msg;
   bool success = mojom::MessagePortMessage::DeserializeFromMessage(
       std::move(message), &msg);
-  if (!success)
+  if (!success || !msg)
     return false;
 
-  *encoded_message = std::move(msg.owned_encoded_message);
-  ports->resize(msg.ports.size());
+  DCHECK_EQ(0u, msg->encoded_message.size() % sizeof(base::char16));
+  encoded_message->resize(msg->encoded_message.size() / sizeof(base::char16));
+  std::memcpy(&encoded_message->at(0), msg->encoded_message.data(),
+              msg->encoded_message.size());
+  ports->resize(msg->ports.size());
   for (size_t i = 0; i < ports->size(); ++i)
-    ports->at(i) = MessagePort(std::move(msg.ports[i]));
+    ports->at(i) = MessagePort(std::move(msg->ports[i]));
 
   return true;
 }

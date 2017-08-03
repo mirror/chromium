@@ -308,9 +308,9 @@ TEST_F(AutoConnectHandlerTest, ReconnectOnCertLoading) {
   // Applying the policy which restricts autoconnect should disconnect from the
   // shared, unmanaged network.
   base::DictionaryValue global_config;
-  global_config.SetKey(
+  global_config.SetBooleanWithoutPathExpansion(
       ::onc::global_network_config::kAllowOnlyPolicyNetworksToAutoconnect,
-      base::Value(true));
+      true);
 
   SetupPolicy(std::string(),            // no network configs
               base::DictionaryValue(),  // no global config
@@ -398,9 +398,9 @@ TEST_F(AutoConnectHandlerTest, DisconnectOnPolicyLoading) {
   EXPECT_EQ(shill::kStateIdle, GetServiceState("wifi1"));
 
   base::DictionaryValue global_config;
-  global_config.SetKey(
+  global_config.SetBooleanWithoutPathExpansion(
       ::onc::global_network_config::kAllowOnlyPolicyNetworksToAutoconnect,
-      base::Value(true));
+      true);
 
   // Applying the policy which restricts autoconnect should disconnect from the
   // shared, unmanaged network.
@@ -430,9 +430,8 @@ TEST_F(AutoConnectHandlerTest,
   EXPECT_EQ(shill::kStateIdle, GetServiceState("wifi1"));
 
   base::DictionaryValue global_config;
-  global_config.SetKey(
-      ::onc::global_network_config::kAllowOnlyPolicyNetworksToConnect,
-      base::Value(true));
+  global_config.SetBooleanWithoutPathExpansion(
+      ::onc::global_network_config::kAllowOnlyPolicyNetworksToConnect, true);
 
   // Applying the policy which restricts autoconnect should disconnect from the
   // shared, unmanaged network.

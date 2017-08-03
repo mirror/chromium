@@ -30,7 +30,7 @@
 
 namespace {
 using CSCollectionViewItem = CollectionViewItem<SuggestedContent>;
-const CGFloat kMaxCardWidth = 416;
+const CGFloat kMaxCardWidth = 432;
 
 // Returns whether the cells should be displayed using the full width.
 BOOL ShouldCellsBeFullWidth(UITraitCollection* collection) {
@@ -213,7 +213,6 @@ BOOL ShouldCellsBeFullWidth(UITraitCollection* collection) {
       ^(id<UIViewControllerTransitionCoordinatorContext> context) {
         [self.headerCommandHandler
             updateFakeOmniboxForScrollView:self.collectionView];
-        [self.collectionView.collectionViewLayout invalidateLayout];
       };
   [coordinator animateAlongsideTransition:alongsideBlock completion:nil];
 }
@@ -424,7 +423,6 @@ BOOL ShouldCellsBeFullWidth(UITraitCollection* collection) {
   [super scrollViewDidScroll:scrollView];
   [self.audience contentSuggestionsDidScroll];
   [self.overscrollActionsController scrollViewDidScroll:scrollView];
-  [self.headerCommandHandler unfocusOmniboxOnCollectionScroll];
   [self.headerCommandHandler updateFakeOmniboxForScrollView:scrollView];
   self.scrolledToTop =
       scrollView.contentOffset.y >= [self.suggestionsDelegate pinnedOffsetY];
@@ -478,17 +476,9 @@ BOOL ShouldCellsBeFullWidth(UITraitCollection* collection) {
   switch (type) {
     case ContentSuggestionTypeArticle:
       [self.suggestionCommandHandler
-          displayContextMenuForSuggestion:touchedItem
-                                  atPoint:touchLocation
-                              atIndexPath:touchedItemIndexPath
-                          readLaterAction:YES];
-      break;
-    case ContentSuggestionTypeReadingList:
-      [self.suggestionCommandHandler
-          displayContextMenuForSuggestion:touchedItem
-                                  atPoint:touchLocation
-                              atIndexPath:touchedItemIndexPath
-                          readLaterAction:NO];
+          displayContextMenuForArticle:touchedItem
+                               atPoint:touchLocation
+                           atIndexPath:touchedItemIndexPath];
       break;
     case ContentSuggestionTypeMostVisited:
       [self.suggestionCommandHandler

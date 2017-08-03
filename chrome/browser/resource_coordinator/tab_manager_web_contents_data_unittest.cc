@@ -11,7 +11,6 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/test/web_contents_tester.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "url/gurl.h"
 
 using content::WebContents;
 using content::WebContentsTester;
@@ -42,7 +41,7 @@ class TabManagerWebContentsDataTest : public ChromeRenderViewHostTestHarness {
   TabManager::WebContentsData* CreateWebContentsAndTabData(
       std::unique_ptr<WebContents>* web_contents) {
     web_contents->reset(
-        WebContentsTester::CreateTestWebContents(browser_context(), nullptr));
+        WebContents::Create(WebContents::CreateParams(profile())));
     TabManager::WebContentsData::CreateForWebContents(web_contents->get());
     return TabManager::WebContentsData::FromWebContents(web_contents->get());
   }
@@ -52,8 +51,6 @@ class TabManagerWebContentsDataTest : public ChromeRenderViewHostTestHarness {
   TabManager::WebContentsData* tab_data_;
   base::SimpleTestTickClock test_clock_;
 };
-
-const char kDefaultUrl[] = "https://www.google.com";
 
 }  // namespace
 
@@ -213,26 +210,6 @@ TEST_F(TabManagerWebContentsDataTest, HistogramsInactiveToReloadTime) {
             histograms.GetTotalCountsForPrefix(kHistogramName).begin()->second);
 
   histograms.ExpectBucketCount(kHistogramName, 12000, 1);
-}
-
-TEST_F(TabManagerWebContentsDataTest, IsInSessionRestoreWithTabLoading) {
-  EXPECT_FALSE(tab_data()->is_in_session_restore());
-  tab_data()->SetIsInSessionRestore(true);
-  EXPECT_TRUE(tab_data()->is_in_session_restore());
-
-  WebContents* contents = tab_data()->web_contents();
-  WebContentsTester::For(contents)->NavigateAndCommit(GURL(kDefaultUrl));
-  WebContentsTester::For(contents)->TestSetIsLoading(false);
-  EXPECT_FALSE(tab_data()->is_in_session_restore());
-}
-
-TEST_F(TabManagerWebContentsDataTest, IsInSessionRestoreWithTabClose) {
-  EXPECT_FALSE(tab_data()->is_in_session_restore());
-  tab_data()->SetIsInSessionRestore(true);
-  EXPECT_TRUE(tab_data()->is_in_session_restore());
-
-  tab_data()->WebContentsDestroyed();
-  EXPECT_FALSE(tab_data()->is_in_session_restore());
 }
 
 }  // namespace resource_coordinator

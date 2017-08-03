@@ -167,9 +167,7 @@ class CastChannelOpenFunction : public CastChannelAsyncApiFunction {
   static net::IPEndPoint* ParseConnectInfo(
       const api::cast_channel::ConnectInfo& connect_info);
 
-  // |socket|: raw pointer of newly created cast channel. Does not take
-  // ownership of |socket|.
-  void OnOpen(cast_channel::CastSocket* socket);
+  void OnOpen(int channel_id, cast_channel::ChannelError result);
 
   std::unique_ptr<api::cast_channel::Open::Params> params_;
   CastChannelAPI* api_;

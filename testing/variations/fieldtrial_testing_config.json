@@ -1024,24 +1024,6 @@
             ]
         }
     ],
-    "GuestViewCrossProcessFrames": [
-        {
-            "platforms": [
-                "chromeos",
-                "linux",
-                "mac",
-                "win"
-            ],
-            "experiments": [
-                {
-                    "name": "Enabled",
-                    "enable_features": [
-                        "GuestViewCrossProcessFrames"
-                    ]
-                }
-            ]
-        }
-    ],
     "Html5ByDefault": [
         {
             "platforms": [
@@ -1457,30 +1439,6 @@
             ]
         }
     ],
-    "NTPCondensedLayout": [
-        {
-            "platforms": [
-                "android"
-            ],
-            "experiments": [
-                {
-                    "name": "CondensedLayoutWithSmallLogo",
-                    "params": {
-                        "condensed_layout_logo_height": "50",
-                        "condensed_layout_show_logo": "true",
-                        "condensed_tile_layout_for_small_screens_enabled": "true"
-                    },
-                    "enable_features": [
-                        "NTPCondensedLayout",
-                        "NTPCondensedTileLayout"
-                    ],
-                    "disable_features": [
-                        "NTPShowGoogleGInOmnibox"
-                    ]
-                }
-            ]
-        }
-    ],
     "NTPFaviconsFromNewServer": [
         {
             "platforms": [
@@ -1751,31 +1709,6 @@
                     },
                     "enable_features": [
                         "NoStatePrefetch"
-                    ]
-                }
-            ]
-        }
-    ],
-    "OffMainThreadFetch": [
-        {
-            "platforms": [
-                "android",
-                "chromeos",
-                "linux",
-                "mac",
-                "win"
-            ],
-            "experiments": [
-                {
-                    "name": "Enabled",
-                    "enable_features": [
-                        "OffMainThreadFetch"
-                    ]
-                },
-                {
-                    "name": "Disabled",
-                    "disable_features": [
-                        "OffMainThreadFetch"
                     ]
                 }
             ]

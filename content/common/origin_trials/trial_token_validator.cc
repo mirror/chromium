@@ -21,8 +21,7 @@ namespace content {
 blink::WebOriginTrialTokenStatus TrialTokenValidator::ValidateToken(
     const std::string& token,
     const url::Origin& origin,
-    std::string* feature_name,
-    base::Time current_time) {
+    std::string* feature_name) {
   ContentClient* content_client = GetContentClient();
   const OriginTrialPolicy* origin_trial_policy =
       content_client->GetOriginTrialPolicy();
@@ -41,7 +40,7 @@ blink::WebOriginTrialTokenStatus TrialTokenValidator::ValidateToken(
   if (status != blink::WebOriginTrialTokenStatus::kSuccess)
     return status;
 
-  status = trial_token->IsValid(origin, current_time);
+  status = trial_token->IsValid(origin, base::Time::Now());
   if (status != blink::WebOriginTrialTokenStatus::kSuccess)
     return status;
 
@@ -55,20 +54,19 @@ blink::WebOriginTrialTokenStatus TrialTokenValidator::ValidateToken(
   return blink::WebOriginTrialTokenStatus::kSuccess;
 }
 
-bool TrialTokenValidator::RequestEnablesFeature(const net::URLRequest* request,
-                                                base::StringPiece feature_name,
-                                                base::Time current_time) {
+bool TrialTokenValidator::RequestEnablesFeature(
+    const net::URLRequest* request,
+    base::StringPiece feature_name) {
   // TODO(mek): Possibly cache the features that are availble for request in
   // UserData associated with the request.
   return RequestEnablesFeature(request->url(), request->response_headers(),
-                               feature_name, current_time);
+                               feature_name);
 }
 
 bool TrialTokenValidator::RequestEnablesFeature(
     const GURL& request_url,
     const net::HttpResponseHeaders* response_headers,
-    base::StringPiece feature_name,
-    base::Time current_time) {
+    base::StringPiece feature_name) {
   if (!base::FeatureList::IsEnabled(features::kOriginTrials))
     return false;
 
@@ -81,7 +79,7 @@ bool TrialTokenValidator::RequestEnablesFeature(
   while (response_headers->EnumerateHeader(&iter, "Origin-Trial", &token)) {
     std::string token_feature;
     // TODO(mek): Log the validation errors to histograms?
-    if (ValidateToken(token, origin, &token_feature, current_time) ==
+    if (ValidateToken(token, origin, &token_feature) ==
         blink::WebOriginTrialTokenStatus::kSuccess)
       if (token_feature == feature_name)
         return true;
@@ -92,8 +90,7 @@ bool TrialTokenValidator::RequestEnablesFeature(
 std::unique_ptr<TrialTokenValidator::FeatureToTokensMap>
 TrialTokenValidator::GetValidTokensFromHeaders(
     const url::Origin& origin,
-    const net::HttpResponseHeaders* headers,
-    base::Time current_time) {
+    const net::HttpResponseHeaders* headers) {
   std::unique_ptr<FeatureToTokensMap> tokens(
       base::MakeUnique<FeatureToTokensMap>());
   if (!base::FeatureList::IsEnabled(features::kOriginTrials))
@@ -106,8 +103,7 @@ TrialTokenValidator::GetValidTokensFromHeaders(
   std::string token;
   while (headers->EnumerateHeader(&iter, "Origin-Trial", &token)) {
     std::string token_feature;
-    if (TrialTokenValidator::ValidateToken(token, origin, &token_feature,
-                                           current_time) ==
+    if (TrialTokenValidator::ValidateToken(token, origin, &token_feature) ==
         blink::WebOriginTrialTokenStatus::kSuccess) {
       (*tokens)[token_feature].push_back(token);
     }
@@ -117,8 +113,7 @@ TrialTokenValidator::GetValidTokensFromHeaders(
 
 std::unique_ptr<TrialTokenValidator::FeatureToTokensMap>
 TrialTokenValidator::GetValidTokens(const url::Origin& origin,
-                                    const FeatureToTokensMap& tokens,
-                                    base::Time current_time) {
+                                    const FeatureToTokensMap& tokens) {
   std::unique_ptr<FeatureToTokensMap> out_tokens(
       base::MakeUnique<FeatureToTokensMap>());
   if (!base::FeatureList::IsEnabled(features::kOriginTrials))
@@ -130,8 +125,7 @@ TrialTokenValidator::GetValidTokens(const url::Origin& origin,
   for (const auto& feature : tokens) {
     for (const std::string& token : feature.second) {
       std::string token_feature;
-      if (TrialTokenValidator::ValidateToken(token, origin, &token_feature,
-                                             current_time) ==
+      if (TrialTokenValidator::ValidateToken(token, origin, &token_feature) ==
           blink::WebOriginTrialTokenStatus::kSuccess) {
         DCHECK_EQ(token_feature, feature.first);
         (*out_tokens)[feature.first].push_back(token);

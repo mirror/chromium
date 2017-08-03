@@ -71,8 +71,7 @@ void ScopedStyleResolver::AddFontFaceRules(const RuleSet& rule_set) {
     return;
 
   Document& document = GetTreeScope().GetDocument();
-  CSSFontSelector* css_font_selector =
-      document.GetStyleEngine().GetFontSelector();
+  CSSFontSelector* css_font_selector = document.GetStyleEngine().FontSelector();
   const HeapVector<Member<StyleRuleFontFace>> font_face_rules =
       rule_set.FontFaceRules();
   for (auto& font_face_rule : font_face_rules) {

@@ -56,7 +56,6 @@
 #include "core/probe/CoreProbes.h"
 #include "core/svg/SVGStyleElement.h"
 #include "platform/fonts/FontCache.h"
-#include "platform/fonts/FontSelector.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
 
 namespace blink {
@@ -623,7 +622,7 @@ void StyleEngine::CollectScopedStyleFeaturesTo(RuleFeatureSet& features) const {
   }
 }
 
-void StyleEngine::FontsNeedUpdate(FontSelector*) {
+void StyleEngine::FontsNeedUpdate(CSSFontSelector*) {
   if (!GetDocument().IsActive())
     return;
 
@@ -1210,7 +1209,7 @@ DEFINE_TRACE(StyleEngine) {
   visitor->Trace(text_to_sheet_cache_);
   visitor->Trace(sheet_to_text_cache_);
   visitor->Trace(tracker_);
-  FontSelectorClient::Trace(visitor);
+  CSSFontSelectorClient::Trace(visitor);
 }
 
 DEFINE_TRACE_WRAPPERS(StyleEngine) {

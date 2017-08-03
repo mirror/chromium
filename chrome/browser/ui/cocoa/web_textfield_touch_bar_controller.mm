@@ -31,10 +31,7 @@
 
   window_ = [popupView window];
 
-  // Remove any existing notifications before registering for new ones.
   NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
-  [center removeObserver:self name:NSWindowWillCloseNotification object:nil];
-
   [center addObserver:self
              selector:@selector(popupWindowWillClose:)
                  name:NSWindowWillCloseNotification

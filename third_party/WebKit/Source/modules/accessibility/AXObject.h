@@ -771,7 +771,7 @@ class MODULES_EXPORT AXObject : public GarbageCollectedFinalized<AXObject> {
   // Modify or take an action on an object.
   virtual void Increment() {}
   virtual void Decrement() {}
-  bool PerformDefaultAction();
+  bool PerformDefaultAction() { return Press(); }
   virtual bool Press();
   // Make this object visible by scrolling as many nested scrollable views as
   // needed.
@@ -861,9 +861,6 @@ class MODULES_EXPORT AXObject : public GarbageCollectedFinalized<AXObject> {
   }
 
   const AXObject* InertRoot() const;
-
-  // Returns true if the event was handled.
-  bool DispatchEventToAOMEventListeners(Event&, Element*);
 
   mutable Member<AXObject> parent_;
 

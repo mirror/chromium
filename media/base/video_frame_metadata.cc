@@ -31,7 +31,7 @@ bool VideoFrameMetadata::HasKey(Key key) const {
 }
 
 void VideoFrameMetadata::SetBoolean(Key key, bool value) {
-  dictionary_.SetKey(ToInternalKey(key), base::Value(value));
+  dictionary_.SetBooleanWithoutPathExpansion(ToInternalKey(key), value);
 }
 
 void VideoFrameMetadata::SetInteger(Key key, int value) {

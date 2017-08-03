@@ -140,9 +140,12 @@ void ServiceWorkerMessageFilter::OnStaleSetVersionAttributes(
 }
 
 void ServiceWorkerMessageFilter::OnStaleSetControllerServiceWorker(
-    const ServiceWorkerMsg_SetControllerServiceWorker_Params& params) {
-  SendServiceWorkerObjectDestroyed(thread_safe_sender(),
-                                   params.object_info.handle_id);
+    int thread_id,
+    int provider_id,
+    const ServiceWorkerObjectInfo& info,
+    bool should_notify_controllerchange,
+    const std::set<uint32_t>& used_features) {
+  SendServiceWorkerObjectDestroyed(thread_safe_sender(), info.handle_id);
 }
 
 void ServiceWorkerMessageFilter::OnStaleMessageToDocument(

@@ -33,9 +33,8 @@ const char kPaymentAppPrefix[] = "PaymentApp:";
 const char kPaymentInstrumentPrefix[] = "PaymentInstrument:";
 const char kPaymentInstrumentKeyInfoPrefix[] = "PaymentInstrumentKeyInfo:";
 
-// |pattern| is the scope URL of the service worker registration.
-std::string CreatePaymentAppKey(const std::string& pattern) {
-  return kPaymentAppPrefix + pattern;
+std::string CreatePaymentAppKey(const std::string& origin) {
+  return kPaymentAppPrefix + origin;
 }
 
 std::string CreatePaymentInstrumentKey(const std::string& instrument_key) {
@@ -284,7 +283,7 @@ void PaymentAppDatabase::DidFindRegistrationToWritePaymentAppInfo(
 
   service_worker_context_->StoreRegistrationUserData(
       registration->id(), registration->pattern().GetOrigin(),
-      {{CreatePaymentAppKey(registration->pattern().spec()),
+      {{CreatePaymentAppKey(registration->pattern().GetOrigin().spec()),
         serialized_payment_app}},
       base::Bind(&PaymentAppDatabase::DidWritePaymentApp,
                  weak_ptr_factory_.GetWeakPtr(),
@@ -336,7 +335,7 @@ void PaymentAppDatabase::DidReadAllPaymentApps(
     std::unique_ptr<StoredPaymentApp> app =
         ToStoredPaymentApp(item_of_raw_data.second);
     if (app)
-      apps[app->registration_id] = std::move(app);
+      apps[app->origin.GetURL()] = std::move(app);
   }
 
   if (apps.size() == 0U) {
@@ -367,12 +366,12 @@ void PaymentAppDatabase::DidReadAllPaymentInstruments(
     if (!instrument_proto.ParseFromString(item_of_raw_data.second))
       continue;
 
-    int64_t id = instrument_proto.registration_id();
-    if (!base::ContainsKey(apps, id))
+    GURL origin = GURL(instrument_proto.origin());
+    if (!base::ContainsKey(apps, origin))
       continue;
 
     for (const auto& method : instrument_proto.enabled_methods()) {
-      apps[id]->enabled_methods.push_back(method);
+      apps[origin]->enabled_methods.push_back(method);
     }
   }
 
@@ -549,9 +548,9 @@ void PaymentAppDatabase::DidFindRegistrationToWritePaymentInstrument(
   }
 
   StoredPaymentInstrumentProto instrument_proto;
-  instrument_proto.set_registration_id(registration->id());
   instrument_proto.set_decoded_instrument_icon(decoded_instrument_icon);
   instrument_proto.set_instrument_key(instrument_key);
+  instrument_proto.set_origin(registration->pattern().GetOrigin().spec());
   instrument_proto.set_name(instrument->name);
   for (const auto& method : instrument->enabled_methods) {
     instrument_proto.add_enabled_methods(method);
@@ -635,7 +634,7 @@ void PaymentAppDatabase::DidGetKeysToClearPaymentInstruments(
 
   // Clear payment app info after clearing all payment instruments.
   keys_with_prefix.push_back(
-      CreatePaymentAppKey(registration->pattern().spec()));
+      CreatePaymentAppKey(registration->pattern().GetOrigin().spec()));
 
   service_worker_context_->ClearRegistrationUserData(
       registration->id(), keys_with_prefix,

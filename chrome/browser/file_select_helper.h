@@ -92,7 +92,7 @@ class FileSelectHelper : public base::RefCountedThreadSafe<
 
   void RunFileChooser(content::RenderFrameHost* render_frame_host,
                       std::unique_ptr<content::FileChooserParams> params);
-  void GetFileTypesInThreadPool(
+  void GetFileTypesOnFileThread(
       std::unique_ptr<content::FileChooserParams> params);
   void GetSanitizedFilenameOnUIThread(
       std::unique_ptr<content::FileChooserParams> params);

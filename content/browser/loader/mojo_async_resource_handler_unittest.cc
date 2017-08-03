@@ -615,6 +615,8 @@ TEST_F(MojoAsyncResourceHandlerTest,
 TEST_F(MojoAsyncResourceHandlerTest, OnResponseCompleted) {
   ASSERT_TRUE(CallOnWillStartAndOnResponseStarted());
 
+  ResourceRequestInfoImpl::ForRequest(request_.get())
+      ->set_was_ignored_by_handler(false);
   net::URLRequestStatus status(net::URLRequestStatus::SUCCESS, net::OK);
 
   base::TimeTicks now1 = base::TimeTicks::Now();
@@ -625,6 +627,7 @@ TEST_F(MojoAsyncResourceHandlerTest, OnResponseCompleted) {
   url_loader_client_.RunUntilComplete();
   EXPECT_TRUE(url_loader_client_.has_received_completion());
   EXPECT_EQ(net::OK, url_loader_client_.completion_status().error_code);
+  EXPECT_FALSE(url_loader_client_.completion_status().was_ignored_by_handler);
   EXPECT_LE(now1, url_loader_client_.completion_status().completion_time);
   EXPECT_LE(url_loader_client_.completion_status().completion_time, now2);
   EXPECT_EQ(request_->GetTotalReceivedBytes(),
@@ -644,6 +647,8 @@ TEST_F(MojoAsyncResourceHandlerTest, OnResponseCompleted2) {
   ASSERT_FALSE(url_loader_client_.has_received_response());
   url_loader_client_.RunUntilResponseReceived();
 
+  ResourceRequestInfoImpl::ForRequest(request_.get())
+      ->set_was_ignored_by_handler(true);
   net::URLRequestStatus status(net::URLRequestStatus::CANCELED,
                                net::ERR_ABORTED);
 
@@ -656,6 +661,7 @@ TEST_F(MojoAsyncResourceHandlerTest, OnResponseCompleted2) {
   EXPECT_TRUE(url_loader_client_.has_received_completion());
   EXPECT_EQ(net::ERR_ABORTED,
             url_loader_client_.completion_status().error_code);
+  EXPECT_TRUE(url_loader_client_.completion_status().was_ignored_by_handler);
   EXPECT_LE(now1, url_loader_client_.completion_status().completion_time);
   EXPECT_LE(url_loader_client_.completion_status().completion_time, now2);
   EXPECT_EQ(request_->GetTotalReceivedBytes(),

@@ -56,7 +56,7 @@ class WebSelectElement final : public WebFormControlElement {
 
   BLINK_EXPORT WebVector<WebElement> GetListItems() const;
 
-#if INSIDE_BLINK
+#if BLINK_IMPLEMENTATION
   WebSelectElement(HTMLSelectElement*);
   WebSelectElement& operator=(HTMLSelectElement*);
   operator HTMLSelectElement*() const;

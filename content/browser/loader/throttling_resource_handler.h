@@ -50,6 +50,7 @@ class CONTENT_EXPORT ThrottlingResourceHandler
 
   // ResourceThrottle::Delegate implementation:
   void Cancel() override;
+  void CancelAndIgnore() override;
   void CancelWithError(int error_code) override;
   void Resume() override;
 

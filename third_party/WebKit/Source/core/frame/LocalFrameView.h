@@ -835,8 +835,6 @@ class CORE_EXPORT LocalFrameView final
 
   LayoutUnit CaretWidth() const;
 
-  size_t PaintFrameCount() const { return paint_frame_count_; };
-
  protected:
   // Scroll the content via the compositor.
   bool ScrollContentsFastPath(const IntSize& scroll_delta);
@@ -1214,9 +1212,6 @@ class CORE_EXPORT LocalFrameView final
   std::unique_ptr<CompositorAnimationHost> animation_host_;
 
   Member<PrintContext> print_context_;
-
-  // From the beginning of the document, how many frames have painted.
-  size_t paint_frame_count_;
 
   FRIEND_TEST_ALL_PREFIXES(WebViewTest, DeviceEmulationResetScrollbars);
 };

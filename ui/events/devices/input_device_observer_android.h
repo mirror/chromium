@@ -25,6 +25,8 @@ class EVENTS_DEVICES_EXPORT InputDeviceObserverAndroid {
   static InputDeviceObserverAndroid* GetInstance();
   ~InputDeviceObserverAndroid();
 
+  static bool RegisterInputDeviceObserver(JNIEnv* env);
+
   void AddObserver(ui::InputDeviceEventObserver* observer);
   void RemoveObserver(ui::InputDeviceEventObserver* observer);
 

@@ -210,30 +210,22 @@ VisibleSelectionTemplate<Strategy>::ToNormalizedEphemeralRange() const {
   return NormalizeRange(EphemeralRangeTemplate<Strategy>(Start(), End()));
 }
 
-// TODO(editing-dev): We should move |AdjustSelectionWithTrailingWhitespace()|
-// to "SelectionController.cpp" as file local function.
-SelectionInFlatTree AdjustSelectionWithTrailingWhitespace(
-    const SelectionInFlatTree& selection) {
-  if (selection.IsNone())
-    return selection;
-  if (!selection.IsRange())
-    return selection;
-  const bool base_is_first =
-      selection.Base() == selection.ComputeStartPosition();
-  const PositionInFlatTree& end =
-      base_is_first ? selection.Extent() : selection.Base();
-  DCHECK_EQ(end, selection.ComputeEndPosition());
-  const PositionInFlatTree& new_end = SkipWhitespace(end);
-  if (end == new_end)
-    return selection;
-  if (base_is_first) {
-    return SelectionInFlatTree::Builder(selection)
-        .SetBaseAndExtent(selection.Base(), new_end)
-        .Build();
-  }
-  return SelectionInFlatTree::Builder(selection)
-      .SetBaseAndExtent(new_end, selection.Extent())
-      .Build();
+template <typename Strategy>
+VisibleSelectionTemplate<Strategy>
+VisibleSelectionTemplate<Strategy>::AppendTrailingWhitespace() const {
+  if (IsNone())
+    return *this;
+  if (!IsRange())
+    return *this;
+  const PositionTemplate<Strategy>& new_end = SkipWhitespace(End());
+  if (End() == new_end)
+    return *this;
+  VisibleSelectionTemplate<Strategy> result = *this;
+  if (base_is_first_)
+    result.extent_ = new_end;
+  else
+    result.base_ = new_end;
+  return result;
 }
 
 template <typename Strategy>
@@ -813,7 +805,9 @@ static bool EqualSelectionsAlgorithm(
   const VisibleSelectionTemplate<Strategy> selection_wrapper1(selection1);
   const VisibleSelectionTemplate<Strategy> selection_wrapper2(selection2);
 
-  return selection_wrapper1.Base() == selection_wrapper2.Base() &&
+  return selection_wrapper1.Start() == selection_wrapper2.Start() &&
+         selection_wrapper1.End() == selection_wrapper2.End() &&
+         selection_wrapper1.Base() == selection_wrapper2.Base() &&
          selection_wrapper1.Extent() == selection_wrapper2.Extent();
 }
 

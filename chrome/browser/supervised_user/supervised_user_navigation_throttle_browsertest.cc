@@ -51,7 +51,7 @@ class SupervisedUserNavigationThrottleTest : public InProcessBrowserTest {
     SupervisedUserSettingsService* settings_service =
         SupervisedUserSettingsServiceFactory::GetForProfile(profile);
     auto dict = base::MakeUnique<base::DictionaryValue>();
-    dict->SetKey(host, base::Value(false));
+    dict->SetBooleanWithoutPathExpansion(host, false);
     settings_service->SetLocalSetting(
         supervised_users::kContentPackManualBehaviorHosts, std::move(dict));
   }

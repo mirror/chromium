@@ -13,6 +13,11 @@ using base::android::ScopedJavaLocalRef;
 
 namespace ui {
 
+// static
+bool PlatformImeControllerAndroid::Register(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}
+
 PlatformImeControllerAndroid::PlatformImeControllerAndroid() {
 }
 

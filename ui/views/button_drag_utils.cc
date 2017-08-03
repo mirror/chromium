@@ -18,7 +18,6 @@
 #include "ui/views/controls/button/label_button.h"
 #include "ui/views/controls/button/label_button_border.h"
 #include "ui/views/drag_utils.h"
-#include "ui/views/paint_info.h"
 #include "ui/views/widget/widget.h"
 #include "url/gurl.h"
 
@@ -84,11 +83,7 @@ void SetDragImage(const GURL& url,
   SkBitmap bitmap;
   float raster_scale = ScaleFactorForDragFromWidget(&widget);
   SkColor color = SK_ColorTRANSPARENT;
-  button.Paint(views::PaintInfo::CreateRootPaintInfo(
-      ui::CanvasPainter(&bitmap, size, raster_scale, color,
-                        widget.GetCompositor()->is_pixel_canvas())
-          .context(),
-      size));
+  button.Paint(ui::CanvasPainter(&bitmap, size, raster_scale, color).context());
   gfx::ImageSkia image(gfx::ImageSkiaRep(bitmap, raster_scale));
   data->provider().SetDragImage(image, press_point);
 }

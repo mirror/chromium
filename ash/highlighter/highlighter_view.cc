@@ -24,7 +24,7 @@ constexpr int kOutsetForAntialiasing = 1;
 
 constexpr float kStrokeScale = 1.2;
 
-constexpr int kStrokeFadeoutDelayMs = 100;
+constexpr int kStrokeFadeoutDelayMs = 500;
 constexpr int kStrokeFadeoutDurationMs = 500;
 constexpr int kStrokeScaleDurationMs = 300;
 
@@ -108,7 +108,7 @@ void HighlighterView::AddNewPoint(const gfx::PointF& point,
   RequestRedraw();
 }
 
-void HighlighterView::Animate(const gfx::PointF& pivot,
+void HighlighterView::Animate(const gfx::Point& pivot,
                               AnimationMode animation_mode) {
   animation_timer_.reset(new base::Timer(
       FROM_HERE, base::TimeDelta::FromMilliseconds(kStrokeFadeoutDelayMs),
@@ -118,7 +118,7 @@ void HighlighterView::Animate(const gfx::PointF& pivot,
   animation_timer_->Reset();
 }
 
-void HighlighterView::FadeOut(const gfx::PointF& pivot,
+void HighlighterView::FadeOut(const gfx::Point& pivot,
                               AnimationMode animation_mode) {
   ui::Layer* layer = GetWidget()->GetLayer();
 

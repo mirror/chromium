@@ -24,6 +24,7 @@ namespace {
 
 constexpr bool kIsRoot = true;
 constexpr bool kIsChildRoot = false;
+constexpr bool kHandlesFrameSinkIdInvalidation = true;
 constexpr bool kNeedsSyncPoints = true;
 
 const base::UnguessableToken kArbitraryToken = base::UnguessableToken::Create();
@@ -50,7 +51,7 @@ class SurfaceAggregatorPerfTest : public testing::Test {
     for (int i = 0; i < num_surfaces; i++) {
       child_supports[i] = CompositorFrameSinkSupport::Create(
           nullptr, &manager_, FrameSinkId(1, i + 1), kIsChildRoot,
-          kNeedsSyncPoints);
+          kHandlesFrameSinkIdInvalidation, kNeedsSyncPoints);
     }
     aggregator_ = base::MakeUnique<SurfaceAggregator>(
         manager_.surface_manager(), resource_provider_.get(), optimize_damage);
@@ -106,7 +107,7 @@ class SurfaceAggregatorPerfTest : public testing::Test {
 
     auto root_support = CompositorFrameSinkSupport::Create(
         nullptr, &manager_, FrameSinkId(1, num_surfaces + 1), kIsRoot,
-        kNeedsSyncPoints);
+        kHandlesFrameSinkIdInvalidation, kNeedsSyncPoints);
     timer_.Reset();
     do {
       auto pass = cc::RenderPass::Create();

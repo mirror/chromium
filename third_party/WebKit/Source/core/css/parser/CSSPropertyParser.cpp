@@ -658,6 +658,15 @@ const CSSValue* CSSPropertyParser::ParseSingleValue(
     case CSSPropertyHeight:
       return CSSPropertyLengthUtils::ConsumeWidthOrHeight(
           range_, *context_, UnitlessQuirk::kAllow);
+    case CSSPropertyInlineSize:
+    case CSSPropertyBlockSize:
+    case CSSPropertyMinInlineSize:
+    case CSSPropertyMinBlockSize:
+    case CSSPropertyWebkitMinLogicalWidth:
+    case CSSPropertyWebkitMinLogicalHeight:
+    case CSSPropertyWebkitLogicalWidth:
+    case CSSPropertyWebkitLogicalHeight:
+      return CSSPropertyLengthUtils::ConsumeWidthOrHeight(range_, *context_);
     case CSSPropertyTextDecoration:
       DCHECK(!RuntimeEnabledFeatures::CSS3TextDecorationsEnabled());
       return CSSPropertyTextDecorationLineUtils::ConsumeTextDecorationLine(
@@ -813,8 +822,7 @@ bool CSSPropertyParser::ParseFontFaceDescriptor(CSSPropertyID prop_id) {
       parsed_value = ConsumeFontDisplay(range_);
       break;
     case CSSPropertyFontStretch:
-      parsed_value = CSSPropertyFontUtils::ConsumeFontStretch(
-          range_, kCSSFontFaceRuleMode);
+      parsed_value = CSSPropertyFontUtils::ConsumeFontStretch(range_);
       break;
     case CSSPropertyFontStyle:
       parsed_value = CSSPropertyFontUtils::ConsumeFontStyle(range_);
@@ -823,8 +831,7 @@ bool CSSPropertyParser::ParseFontFaceDescriptor(CSSPropertyID prop_id) {
       parsed_value = ConsumeFontVariantList(range_);
       break;
     case CSSPropertyFontWeight:
-      parsed_value =
-          CSSPropertyFontUtils::ConsumeFontWeight(range_, kCSSFontFaceRuleMode);
+      parsed_value = CSSPropertyFontUtils::ConsumeFontWeight(range_);
       break;
     case CSSPropertyFontFeatureSettings:
       parsed_value = CSSPropertyFontUtils::ConsumeFontFeatureSettings(range_);
@@ -1379,6 +1386,18 @@ bool CSSPropertyParser::ParseShorthand(CSSPropertyID unresolved_property,
   }
 
   switch (property) {
+    case CSSPropertyMarker: {
+      const CSSValue* marker = ParseSingleValue(CSSPropertyMarkerStart);
+      if (!marker || !range_.AtEnd())
+        return false;
+      AddParsedProperty(CSSPropertyMarkerStart, CSSPropertyMarker, *marker,
+                        important);
+      AddParsedProperty(CSSPropertyMarkerMid, CSSPropertyMarker, *marker,
+                        important);
+      AddParsedProperty(CSSPropertyMarkerEnd, CSSPropertyMarker, *marker,
+                        important);
+      return true;
+    }
     case CSSPropertyBorder:
       return ConsumeBorder(important);
     case CSSPropertyBackgroundRepeat:
@@ -1403,6 +1422,23 @@ bool CSSPropertyParser::ParseShorthand(CSSPropertyID unresolved_property,
       return ConsumeBackgroundShorthand(backgroundShorthand(), important);
     case CSSPropertyWebkitMask:
       return ConsumeBackgroundShorthand(webkitMaskShorthand(), important);
+    case CSSPropertyGridGap: {
+      DCHECK(RuntimeEnabledFeatures::CSSGridLayoutEnabled());
+      DCHECK_EQ(shorthandForProperty(CSSPropertyGridGap).length(), 2u);
+      CSSValue* row_gap = ConsumeLengthOrPercent(range_, context_->Mode(),
+                                                 kValueRangeNonNegative);
+      CSSValue* column_gap = ConsumeLengthOrPercent(range_, context_->Mode(),
+                                                    kValueRangeNonNegative);
+      if (!row_gap || !range_.AtEnd())
+        return false;
+      if (!column_gap)
+        column_gap = row_gap;
+      AddParsedProperty(CSSPropertyGridRowGap, CSSPropertyGridGap, *row_gap,
+                        important);
+      AddParsedProperty(CSSPropertyGridColumnGap, CSSPropertyGridGap,
+                        *column_gap, important);
+      return true;
+    }
     case CSSPropertyGridTemplate:
       return ConsumeGridTemplateShorthand(CSSPropertyGridTemplate, important);
     case CSSPropertyGrid:

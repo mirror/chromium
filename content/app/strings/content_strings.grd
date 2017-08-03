@@ -686,7 +686,7 @@ below:
       <message name="IDS_FORM_VALIDATION_TYPE_MISMATCH_EMAIL_INVALID_LOCAL" desc="Heading or short sentence shown when there is an email field in a form and a user specified an invalid value like 'us,er@example.com'.">
         A part followed by '<ph name="ATSIGN">$1<ex>@</ex></ph>' should not contain the symbol '<ph name="INVALIDCHARACTER">$2<ex>,</ex></ph>'.
       </message>
-      <message name="IDS_FORM_VALIDATION_TYPE_MISMATCH_EMAIL_NO_AT_SIGN" desc="Heading or short sentence shown when there is an email field in a form and a user specified an invalid value like 'user'.">
+      <message name="IDS_FORM_VALIDATION_TYPE_MISMATCH_EMAIL_NO_AT_SIGN" desc="Heading or short sentence shown when there is an email field in a form and a user specified an invalid value liek 'user'.">
         Please include an '<ph name="ATSIGN">$1<ex>@</ex></ph>' in the email address. '<ph name="INVALIDADDRESS">$2<ex>user</ex></ph>' is missing an '<ph name="ATSIGN">$1<ex>@</ex></ph>'.
       </message>
       <message name="IDS_FORM_VALIDATION_TYPE_MISMATCH_MULTIPLE_EMAIL" desc="Heading or short sentence shown there is a field which accepts multiple e-mail addresses and a user specified a value which is not a comma-separated e-mail addresses.">
@@ -824,10 +824,7 @@ below:
       <message name="IDS_MEDIA_REMOTING_DISABLE_TEXT" desc="Media remoting disable button label.">
        Play on both screens
       </message>
-      <message name="IDS_MEDIA_REMOTING_CAST_TEXT" desc="Text message shown to the user when casting a video to a known remote device.">
-       Now casting to <ph name="DEVICE_FRIENDLY_NAME">$1<ex>Living Room TV</ex></ph>
-      </message>
-      <message name="IDS_MEDIA_REMOTING_CAST_TO_UNKNOWN_DEVICE_TEXT" desc="Text message shown to the user when casting a video to an unknown remote device.">
+      <message name="IDS_MEDIA_REMOTING_CAST_TEXT" desc="Media remoting cast video text message.">
        Now casting to your TV
       </message>
       <message name="IDS_MEDIA_TRACKS_NO_LABEL" desc="Menu item label for a text track that has no name specified. The number represents the track number in the list of tracks.">

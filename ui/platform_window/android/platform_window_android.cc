@@ -49,6 +49,11 @@ ui::EventType MotionEventActionToEventType(jint action) {
 ////////////////////////////////////////////////////////////////////////////////
 // PlatformWindowAndroid, public:
 
+// static
+bool PlatformWindowAndroid::Register(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}
+
 PlatformWindowAndroid::PlatformWindowAndroid(PlatformWindowDelegate* delegate)
     : delegate_(delegate),
       window_(NULL),

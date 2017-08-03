@@ -15,6 +15,8 @@ namespace ui {
 class ANDROID_WINDOW_EXPORT PlatformImeControllerAndroid :
     public PlatformImeController {
  public:
+  static bool Register(JNIEnv* env);
+
   PlatformImeControllerAndroid();
   ~PlatformImeControllerAndroid() override;
 

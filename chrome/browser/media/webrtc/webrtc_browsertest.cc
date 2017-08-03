@@ -52,7 +52,6 @@ class WebRtcBrowserTest : public WebRtcTestBase {
 
   void RunsAudioVideoWebRTCCallInTwoTabs(
       const std::string& video_codec = WebRtcTestBase::kUseDefaultVideoCodec,
-      bool prefer_hw_video_codec = false,
       const std::string& offer_cert_keygen_alg =
           WebRtcTestBase::kUseDefaultCertKeygen,
       const std::string& answer_cert_keygen_alg =
@@ -63,8 +62,8 @@ class WebRtcBrowserTest : public WebRtcTestBase {
     SetupPeerconnectionWithLocalStream(right_tab_, answer_cert_keygen_alg);
 
     if (!video_codec.empty()) {
-      SetDefaultVideoCodec(left_tab_, video_codec, prefer_hw_video_codec);
-      SetDefaultVideoCodec(right_tab_, video_codec, prefer_hw_video_codec);
+      SetDefaultVideoCodec(left_tab_, video_codec);
+      SetDefaultVideoCodec(right_tab_, video_codec);
     }
     NegotiateCall(left_tab_, right_tab_);
 
@@ -138,7 +137,7 @@ IN_PROC_BROWSER_TEST_F(WebRtcBrowserTest,
         "(test \"OK\")";
     return;
   }
-  RunsAudioVideoWebRTCCallInTwoTabs("H264", true /* prefer_hw_video_codec */);
+  RunsAudioVideoWebRTCCallInTwoTabs("H264");
 }
 
 #endif  // BUILDFLAG(RTC_USE_H264)
@@ -161,15 +160,15 @@ IN_PROC_BROWSER_TEST_F(WebRtcBrowserTest, TestWebAudioMediaStream) {
 IN_PROC_BROWSER_TEST_F(WebRtcBrowserTest,
                        RunsAudioVideoWebRTCCallInTwoTabsOfferRsaAnswerRsa) {
   RunsAudioVideoWebRTCCallInTwoTabs(WebRtcTestBase::kUseDefaultVideoCodec,
-                                    false /* prefer_hw_video_codec */,
-                                    kKeygenAlgorithmRsa, kKeygenAlgorithmRsa);
+                                    kKeygenAlgorithmRsa,
+                                    kKeygenAlgorithmRsa);
 }
 
 IN_PROC_BROWSER_TEST_F(WebRtcBrowserTest,
                        RunsAudioVideoWebRTCCallInTwoTabsOfferEcdsaAnswerEcdsa) {
-  RunsAudioVideoWebRTCCallInTwoTabs(
-      WebRtcTestBase::kUseDefaultVideoCodec, false /* prefer_hw_video_codec */,
-      kKeygenAlgorithmEcdsa, kKeygenAlgorithmEcdsa);
+  RunsAudioVideoWebRTCCallInTwoTabs(WebRtcTestBase::kUseDefaultVideoCodec,
+                                    kKeygenAlgorithmEcdsa,
+                                    kKeygenAlgorithmEcdsa);
 }
 
 IN_PROC_BROWSER_TEST_F(
@@ -187,15 +186,15 @@ IN_PROC_BROWSER_TEST_F(
 IN_PROC_BROWSER_TEST_F(WebRtcBrowserTest,
                        RunsAudioVideoWebRTCCallInTwoTabsOfferRsaAnswerEcdsa) {
   RunsAudioVideoWebRTCCallInTwoTabs(WebRtcTestBase::kUseDefaultVideoCodec,
-                                    false /* prefer_hw_video_codec */,
-                                    kKeygenAlgorithmRsa, kKeygenAlgorithmEcdsa);
+                                    kKeygenAlgorithmRsa,
+                                    kKeygenAlgorithmEcdsa);
 }
 
 IN_PROC_BROWSER_TEST_F(WebRtcBrowserTest,
                        RunsAudioVideoWebRTCCallInTwoTabsOfferEcdsaAnswerRsa) {
   RunsAudioVideoWebRTCCallInTwoTabs(WebRtcTestBase::kUseDefaultVideoCodec,
-                                    false /* prefer_hw_video_codec */,
-                                    kKeygenAlgorithmEcdsa, kKeygenAlgorithmRsa);
+                                    kKeygenAlgorithmEcdsa,
+                                    kKeygenAlgorithmRsa);
 }
 
 IN_PROC_BROWSER_TEST_F(WebRtcBrowserTest,

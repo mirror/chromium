@@ -333,7 +333,6 @@ class CC_PAINT_EXPORT AnnotateOp final : public PaintOp {
   static void Raster(const AnnotateOp* op,
                      SkCanvas* canvas,
                      const PlaybackParams& params);
-  bool IsValid() const { return true; }
   HAS_SERIALIZATION_FUNCTIONS();
 
   PaintCanvas::AnnotationType annotation_type;
@@ -354,7 +353,6 @@ class CC_PAINT_EXPORT ClipDeviceRectOp final : public PaintOp {
   static void Raster(const ClipDeviceRectOp* op,
                      SkCanvas* canvas,
                      const PlaybackParams& params);
-  bool IsValid() const { return IsValidSkClipOp(op); }
   HAS_SERIALIZATION_FUNCTIONS();
 
   SkIRect device_rect;
@@ -370,7 +368,6 @@ class CC_PAINT_EXPORT ClipPathOp final : public PaintOp {
   static void Raster(const ClipPathOp* op,
                      SkCanvas* canvas,
                      const PlaybackParams& params);
-  bool IsValid() const { return IsValidSkClipOp(op); }
   int CountSlowPaths() const;
   bool HasNonAAPaint() const { return !antialias; }
   HAS_SERIALIZATION_FUNCTIONS();
@@ -391,7 +388,6 @@ class CC_PAINT_EXPORT ClipRectOp final : public PaintOp {
   static void Raster(const ClipRectOp* op,
                      SkCanvas* canvas,
                      const PlaybackParams& params);
-  bool IsValid() const { return IsValidSkClipOp(op); }
   HAS_SERIALIZATION_FUNCTIONS();
 
   SkRect rect;
@@ -410,7 +406,6 @@ class CC_PAINT_EXPORT ClipRRectOp final : public PaintOp {
   static void Raster(const ClipRRectOp* op,
                      SkCanvas* canvas,
                      const PlaybackParams& params);
-  bool IsValid() const { return IsValidSkClipOp(op); }
   bool HasNonAAPaint() const { return !antialias; }
   HAS_SERIALIZATION_FUNCTIONS();
 
@@ -429,7 +424,6 @@ class CC_PAINT_EXPORT ConcatOp final : public PaintOp {
   static void Raster(const ConcatOp* op,
                      SkCanvas* canvas,
                      const PlaybackParams& params);
-  bool IsValid() const { return true; }
   HAS_SERIALIZATION_FUNCTIONS();
 
   ThreadsafeMatrix matrix;
@@ -456,7 +450,6 @@ class CC_PAINT_EXPORT DrawArcOp final : public PaintOpWithFlags {
                               const PaintFlags* flags,
                               SkCanvas* canvas,
                               const PlaybackParams& params);
-  bool IsValid() const { return flags.IsValid(); }
   HAS_SERIALIZATION_FUNCTIONS();
 
   SkRect oval;
@@ -481,7 +474,6 @@ class CC_PAINT_EXPORT DrawCircleOp final : public PaintOpWithFlags {
                               const PaintFlags* flags,
                               SkCanvas* canvas,
                               const PlaybackParams& params);
-  bool IsValid() const { return flags.IsValid(); }
   HAS_SERIALIZATION_FUNCTIONS();
 
   SkScalar cx;
@@ -500,7 +492,6 @@ class CC_PAINT_EXPORT DrawColorOp final : public PaintOp {
   static void Raster(const DrawColorOp* op,
                      SkCanvas* canvas,
                      const PlaybackParams& params);
-  bool IsValid() const { return IsValidDrawColorSkBlendMode(mode); }
   HAS_SERIALIZATION_FUNCTIONS();
 
   SkColor color;
@@ -522,9 +513,6 @@ class CC_PAINT_EXPORT DrawDRRectOp final : public PaintOpWithFlags {
                               const PaintFlags* flags,
                               SkCanvas* canvas,
                               const PlaybackParams& params);
-  bool IsValid() const {
-    return flags.IsValid() && outer.isValid() && inner.isValid();
-  }
   HAS_SERIALIZATION_FUNCTIONS();
 
   SkRRect outer;
@@ -547,7 +535,6 @@ class CC_PAINT_EXPORT DrawImageOp final : public PaintOpWithFlags {
                               const PaintFlags* flags,
                               SkCanvas* canvas,
                               const PlaybackParams& params);
-  bool IsValid() const { return flags.IsValid(); }
   bool HasDiscardableImages() const;
   bool HasNonAAPaint() const { return false; }
   HAS_SERIALIZATION_FUNCTIONS();
@@ -574,7 +561,6 @@ class CC_PAINT_EXPORT DrawImageRectOp final : public PaintOpWithFlags {
                               const PaintFlags* flags,
                               SkCanvas* canvas,
                               const PlaybackParams& params);
-  bool IsValid() const { return flags.IsValid(); }
   bool HasDiscardableImages() const;
   HAS_SERIALIZATION_FUNCTIONS();
 
@@ -597,7 +583,6 @@ class CC_PAINT_EXPORT DrawIRectOp final : public PaintOpWithFlags {
                               const PaintFlags* flags,
                               SkCanvas* canvas,
                               const PlaybackParams& params);
-  bool IsValid() const { return flags.IsValid(); }
   bool HasNonAAPaint() const { return false; }
   HAS_SERIALIZATION_FUNCTIONS();
 
@@ -621,7 +606,6 @@ class CC_PAINT_EXPORT DrawLineOp final : public PaintOpWithFlags {
                               const PaintFlags* flags,
                               SkCanvas* canvas,
                               const PlaybackParams& params);
-  bool IsValid() const { return flags.IsValid(); }
   HAS_SERIALIZATION_FUNCTIONS();
 
   int CountSlowPaths() const;
@@ -645,7 +629,6 @@ class CC_PAINT_EXPORT DrawOvalOp final : public PaintOpWithFlags {
                               const PaintFlags* flags,
                               SkCanvas* canvas,
                               const PlaybackParams& params);
-  bool IsValid() const { return flags.IsValid(); }
   HAS_SERIALIZATION_FUNCTIONS();
 
   SkRect oval;
@@ -664,7 +647,6 @@ class CC_PAINT_EXPORT DrawPathOp final : public PaintOpWithFlags {
                               const PaintFlags* flags,
                               SkCanvas* canvas,
                               const PlaybackParams& params);
-  bool IsValid() const { return flags.IsValid(); }
   int CountSlowPaths() const;
   HAS_SERIALIZATION_FUNCTIONS();
 
@@ -684,7 +666,6 @@ class CC_PAINT_EXPORT DrawPosTextOp final : public PaintOpWithArray<SkPoint> {
                               const PaintFlags* flags,
                               SkCanvas* canvas,
                               const PlaybackParams& params);
-  bool IsValid() const { return flags.IsValid(); }
   HAS_SERIALIZATION_FUNCTIONS();
 
   const void* GetData() const { return GetDataForThis(this); }
@@ -705,7 +686,6 @@ class CC_PAINT_EXPORT DrawRecordOp final : public PaintOp {
   static void Raster(const DrawRecordOp* op,
                      SkCanvas* canvas,
                      const PlaybackParams& params);
-  bool IsValid() const { return true; }
   size_t AdditionalBytesUsed() const;
   bool HasDiscardableImages() const;
   int CountSlowPaths() const;
@@ -728,7 +708,6 @@ class CC_PAINT_EXPORT DrawRectOp final : public PaintOpWithFlags {
                               const PaintFlags* flags,
                               SkCanvas* canvas,
                               const PlaybackParams& params);
-  bool IsValid() const { return flags.IsValid(); }
   HAS_SERIALIZATION_FUNCTIONS();
 
   SkRect rect;
@@ -747,7 +726,6 @@ class CC_PAINT_EXPORT DrawRRectOp final : public PaintOpWithFlags {
                               const PaintFlags* flags,
                               SkCanvas* canvas,
                               const PlaybackParams& params);
-  bool IsValid() const { return flags.IsValid() && rrect.isValid(); }
   HAS_SERIALIZATION_FUNCTIONS();
 
   SkRRect rrect;
@@ -766,7 +744,6 @@ class CC_PAINT_EXPORT DrawTextOp final : public PaintOpWithData {
                               const PaintFlags* flags,
                               SkCanvas* canvas,
                               const PlaybackParams& params);
-  bool IsValid() const { return flags.IsValid(); }
   HAS_SERIALIZATION_FUNCTIONS();
 
   void* GetData() { return GetDataForThis(this); }
@@ -792,7 +769,6 @@ class CC_PAINT_EXPORT DrawTextBlobOp final : public PaintOpWithFlags {
                               const PaintFlags* flags,
                               SkCanvas* canvas,
                               const PlaybackParams& params);
-  bool IsValid() const { return flags.IsValid(); }
   HAS_SERIALIZATION_FUNCTIONS();
 
   sk_sp<SkTextBlob> blob;
@@ -809,7 +785,6 @@ class CC_PAINT_EXPORT NoopOp final : public PaintOp {
   static void Raster(const NoopOp* op,
                      SkCanvas* canvas,
                      const PlaybackParams& params) {}
-  bool IsValid() const { return true; }
   HAS_SERIALIZATION_FUNCTIONS();
 };
 
@@ -819,7 +794,6 @@ class CC_PAINT_EXPORT RestoreOp final : public PaintOp {
   static void Raster(const RestoreOp* op,
                      SkCanvas* canvas,
                      const PlaybackParams& params);
-  bool IsValid() const { return true; }
   HAS_SERIALIZATION_FUNCTIONS();
 };
 
@@ -830,7 +804,6 @@ class CC_PAINT_EXPORT RotateOp final : public PaintOp {
   static void Raster(const RotateOp* op,
                      SkCanvas* canvas,
                      const PlaybackParams& params);
-  bool IsValid() const { return true; }
   HAS_SERIALIZATION_FUNCTIONS();
 
   SkScalar degrees;
@@ -845,7 +818,6 @@ class CC_PAINT_EXPORT SaveOp final : public PaintOp {
   static void Raster(const SaveOp* op,
                      SkCanvas* canvas,
                      const PlaybackParams& params);
-  bool IsValid() const { return true; }
   HAS_SERIALIZATION_FUNCTIONS();
 };
 
@@ -859,7 +831,6 @@ class CC_PAINT_EXPORT SaveLayerOp final : public PaintOpWithFlags {
                               const PaintFlags* flags,
                               SkCanvas* canvas,
                               const PlaybackParams& params);
-  bool IsValid() const { return flags.IsValid(); }
   bool HasNonAAPaint() const { return false; }
   HAS_SERIALIZATION_FUNCTIONS();
 
@@ -881,7 +852,6 @@ class CC_PAINT_EXPORT SaveLayerAlphaOp final : public PaintOp {
   static void Raster(const SaveLayerAlphaOp* op,
                      SkCanvas* canvas,
                      const PlaybackParams& params);
-  bool IsValid() const { return true; }
   HAS_SERIALIZATION_FUNCTIONS();
 
   SkRect bounds;
@@ -899,7 +869,6 @@ class CC_PAINT_EXPORT ScaleOp final : public PaintOp {
   static void Raster(const ScaleOp* op,
                      SkCanvas* canvas,
                      const PlaybackParams& params);
-  bool IsValid() const { return true; }
   HAS_SERIALIZATION_FUNCTIONS();
 
   SkScalar sx;
@@ -922,7 +891,6 @@ class CC_PAINT_EXPORT SetMatrixOp final : public PaintOp {
   static void Raster(const SetMatrixOp* op,
                      SkCanvas* canvas,
                      const PlaybackParams& params);
-  bool IsValid() const { return true; }
   HAS_SERIALIZATION_FUNCTIONS();
 
   ThreadsafeMatrix matrix;
@@ -938,7 +906,6 @@ class CC_PAINT_EXPORT TranslateOp final : public PaintOp {
   static void Raster(const TranslateOp* op,
                      SkCanvas* canvas,
                      const PlaybackParams& params);
-  bool IsValid() const { return true; }
   HAS_SERIALIZATION_FUNCTIONS();
 
   SkScalar dx;

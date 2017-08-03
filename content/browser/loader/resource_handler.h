@@ -154,6 +154,7 @@ class CONTENT_EXPORT ResourceHandler {
   // passed to HoldController and then destroy it.
   void Resume();
   void Cancel();
+  void CancelAndIgnore();
   void CancelWithError(int error_code);
 
   // Cancels the request when the class does not currently have ownership of the

@@ -1905,7 +1905,6 @@ test("browser_tests") {
         "../browser/extensions/background_scripts_apitest.cc",
         "../browser/extensions/background_xhr_browsertest.cc",
         "../browser/extensions/bookmark_app_helper_browsertest.cc",
-        "../browser/extensions/bookmark_app_url_redirector_browsertest.cc",
         "../browser/extensions/browsertest_util.cc",
         "../browser/extensions/browsertest_util.h",
         "../browser/extensions/browsertest_util_browsertest.cc",
@@ -3322,7 +3321,6 @@ test("unit_tests") {
     "../browser/status_icons/status_icon_unittest.cc",
     "../browser/status_icons/status_tray_unittest.cc",
     "../browser/storage/durable_storage_permission_context_unittest.cc",
-    "../browser/subresource_filter/subresource_filter_configuration_unittest.cc",
     "../browser/subresource_filter/subresource_filter_content_settings_manager_unittest.cc",
     "../browser/subresource_filter/subresource_filter_test_harness.cc",
     "../browser/subresource_filter/subresource_filter_test_harness.h",
@@ -4507,6 +4505,7 @@ test("unit_tests") {
       "../browser/signin/signin_manager_unittest.cc",
     ]
     sources += [
+      "../browser/task_manager/providers/arc/arc_process_filter_unittest.cc",
       "base/ash_test_environment_chrome.cc",
       "base/ash_test_environment_chrome.h",
     ]
@@ -4853,7 +4852,6 @@ test("unit_tests") {
       "../browser/ui/views/apps/app_info_dialog/app_info_dialog_views_unittest.cc",
       "../browser/ui/views/apps/app_info_dialog/app_info_permissions_panel_unittest.cc",
       "../browser/ui/views/confirm_bubble_views_unittest.cc",
-      "../browser/ui/views/first_run_bubble_unittest.cc",
       "../browser/ui/views/global_error_bubble_view_unittest.cc",
       "../browser/ui/views/harmony/layout_provider_unittest.cc",
       "../browser/ui/views/page_info/page_info_bubble_view_unittest.cc",
@@ -4916,6 +4914,7 @@ test("unit_tests") {
         # Get these compiling on Mac - see http://crbug.com/657883.
         "../browser/ui/views/crypto_module_password_dialog_view_unittest.cc",
         "../browser/ui/views/desktop_capture/desktop_media_picker_views_unittest.cc",
+        "../browser/ui/views/first_run_bubble_unittest.cc",
       ]
     }
   }
@@ -4972,7 +4971,6 @@ test("unit_tests") {
       "../browser/ui/app_list/extension_app_model_builder_unittest.cc",
       "../browser/ui/app_list/profile_loader_unittest.cc",
       "../browser/ui/app_list/search/answer_card/answer_card_result_unittest.cc",
-      "../browser/ui/app_list/search/answer_card/answer_card_search_provider_unittest.cc",
       "../browser/ui/app_list/search/app_search_provider_unittest.cc",
       "../browser/ui/app_list/search/arc/arc_playstore_search_provider_unittest.cc",
       "../browser/ui/app_list/search/history_unittest.cc",

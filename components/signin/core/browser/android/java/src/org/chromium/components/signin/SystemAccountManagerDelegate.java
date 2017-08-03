@@ -20,7 +20,6 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.PatternMatcher;
 import android.os.Process;
 import android.os.SystemClock;
 
@@ -54,12 +53,10 @@ public class SystemAccountManagerDelegate implements AccountManagerDelegate {
 
     private static final String TAG = "Auth";
 
-    @SuppressWarnings("deprecation")
     public SystemAccountManagerDelegate() {
-        Context context = ContextUtils.getApplicationContext();
-        mAccountManager = AccountManager.get(context);
+        mAccountManager = AccountManager.get(ContextUtils.getApplicationContext());
 
-        BroadcastReceiver receiver = new BroadcastReceiver() {
+        BroadcastReceiver accountsChangedBroadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(final Context context, final Intent intent) {
                 fireOnAccountsChangedNotification();
@@ -67,15 +64,8 @@ public class SystemAccountManagerDelegate implements AccountManagerDelegate {
         };
         IntentFilter accountsChangedIntentFilter = new IntentFilter();
         accountsChangedIntentFilter.addAction(AccountManager.LOGIN_ACCOUNTS_CHANGED_ACTION);
-        context.registerReceiver(receiver, accountsChangedIntentFilter);
-
-        IntentFilter gmsPackageReplacedFilter = new IntentFilter();
-        gmsPackageReplacedFilter.addAction(Intent.ACTION_PACKAGE_REPLACED);
-        gmsPackageReplacedFilter.addDataScheme("package");
-        gmsPackageReplacedFilter.addDataPath(
-                "com.google.android.gms", PatternMatcher.PATTERN_PREFIX);
-
-        context.registerReceiver(receiver, gmsPackageReplacedFilter);
+        ContextUtils.getApplicationContext().registerReceiver(
+                accountsChangedBroadcastReceiver, accountsChangedIntentFilter);
     }
 
     protected void checkCanUseGooglePlayServices() throws AccountManagerDelegateException {

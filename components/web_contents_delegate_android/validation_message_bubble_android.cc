@@ -14,6 +14,13 @@
 using base::android::ConvertUTF16ToJavaString;
 
 namespace {
+
+gfx::Rect ScaleToRoundedRect(const gfx::Rect& rect, float scale) {
+  gfx::RectF scaledRect(rect);
+  scaledRect.Scale(scale);
+  return ToNearestRect(scaledRect);
+}
+
 gfx::Size ScaleToRoundedSize(const gfx::SizeF& size, float scale) {
   return gfx::ToRoundedSize(gfx::ScaleSize(size, scale));
 }
@@ -48,9 +55,7 @@ void ValidationMessageBubbleAndroid::ShowAtPositionRelativeToAnchor(
 
   // Convert to physical unit before passing to Java.
   float scale = view->GetDipScale() * view->page_scale();
-  gfx::RectF anchor_f = gfx::RectF(anchor_in_screen);
-  anchor_f.Scale(scale);
-  gfx::Rect anchor = ToNearestRect(anchor_f);
+  gfx::Rect anchor = ScaleToRoundedRect(anchor_in_screen, scale);
   gfx::Size viewport = ScaleToRoundedSize(view->viewport_size(), scale);
 
   JNIEnv* env = base::android::AttachCurrentThread();

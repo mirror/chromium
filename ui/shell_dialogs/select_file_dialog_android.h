@@ -50,6 +50,8 @@ class SelectFileDialogImpl : public SelectFileDialog {
                       gfx::NativeWindow owning_window,
                       void* params) override;
 
+  static bool RegisterSelectFileDialog(JNIEnv* env);
+
  protected:
   ~SelectFileDialogImpl() override;
 

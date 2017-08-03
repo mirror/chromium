@@ -291,8 +291,8 @@ cr.define('extensions', function() {
     }
 
     /** @override */
-    packExtension(rootPath, keyPath, flag, callback) {
-      chrome.developerPrivate.packDirectory(rootPath, keyPath, flag, callback);
+    packExtension(rootPath, keyPath) {
+      chrome.developerPrivate.packDirectory(rootPath, keyPath);
     }
 
     /** @override */

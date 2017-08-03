@@ -176,19 +176,25 @@ void CastMediaSinkService::OpenChannelOnIOThread(
 
 void CastMediaSinkService::OnChannelOpenedOnIOThread(
     const DnsSdService& service,
-    cast_channel::CastSocket* socket) {
-  DCHECK(socket);
-  if (socket->error_state() != cast_channel::ChannelError::NONE) {
+    int channel_id,
+    cast_channel::ChannelError channel_error) {
+  if (channel_error != cast_channel::ChannelError::NONE) {
     DVLOG(2) << "Fail to open channel " << service.ip_address << ": "
-             << service.service_host_port.ToString() << " [ChannelError]: "
-             << cast_channel::ChannelErrorToString(socket->error_state());
+             << service.service_host_port.ToString()
+             << " [ChannelError]: " << (int)channel_error;
+    return;
+  }
+
+  auto* socket = cast_socket_service_->GetSocket(channel_id);
+  if (!socket) {
+    DVLOG(2) << "Fail to find socket with [channel_id]: " << channel_id;
     return;
   }
 
   content::BrowserThread::PostTask(
       content::BrowserThread::UI, FROM_HERE,
       base::Bind(&CastMediaSinkService::OnChannelOpenedOnUIThread, this,
-                 service, socket->id(), socket->audio_only()));
+                 service, channel_id, socket->audio_only()));
 }
 
 void CastMediaSinkService::OnChannelOpenedOnUIThread(

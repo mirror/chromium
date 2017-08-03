@@ -123,6 +123,10 @@ void BaseDateTimeView::ChildPreferredSizeChanged(views::View* child) {
   PreferredSizeChanged();
 }
 
+void BaseDateTimeView::OnLocaleChanged() {
+  UpdateText();
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 
 DateView::DateView(SystemTrayItem* owner)

@@ -2086,12 +2086,6 @@ const char kFullscreenToolbarRevealDescription[] =
     "Reveal the toolbar in fullscreen for a short period when the tab strip "
     "has changed.";
 
-const char kContentFullscreenName[] = "Improved Content Fullscreen";
-
-const char kContentFullscreenDescription[] =
-    "Fullscreen content window detaches from main browser window and goes to "
-    "a new space without moving or changing the original browser window.";
-
 const char kTabStripKeyboardFocusName[] = "Tab Strip Keyboard Focus";
 
 const char kTabStripKeyboardFocusDescription[] =
@@ -2450,7 +2444,8 @@ const char kEnableDesktopIosPromotionsDescription[] =
 
 #endif  // defined(OS_WIN)
 
-#if defined(OS_LINUX) || defined(OS_MACOSX) || defined(OS_WIN)
+#if defined(OS_CHROMEOS) || defined(OS_LINUX) || defined(OS_MACOSX) || \
+    defined(OS_WIN)
 
 const char kOmniboxEntitySuggestionsName[] = "Omnibox entity suggestions";
 const char kOmniboxEntitySuggestionsDescription[] =
@@ -2470,7 +2465,8 @@ const char kEnableNewAppMenuIconName[] = "Enable the New App Menu Icon";
 const char kEnableNewAppMenuIconDescription[] =
     "Use the new app menu icon with update notification animations.";
 
-#endif  // defined(OS_LINUX) || defined(OS_MACOSX) || defined(OS_WIN)
+#endif  // defined(OS_CHROMEOS) || defined(OS_LINUX) || defined(OS_MACOSX) ||
+        // defined(OS_WIN)
 
 #if defined(OS_CHROMEOS)
 

@@ -84,7 +84,13 @@ TEST_F(ToolsMenuViewControllerTest, TestUserAgentTypeDESKTOP) {
   ToolsMenuViewItem* mobile_item =
       GetToolsMenuViewItemWithTag(IDC_REQUEST_MOBILE_SITE);
 
-  EXPECT_FALSE(desktop_item);
-  ASSERT_TRUE(mobile_item);
-  EXPECT_TRUE(mobile_item.active);
+  if (experimental_flags::IsRequestMobileSiteEnabled()) {
+    EXPECT_FALSE(desktop_item);
+    ASSERT_TRUE(mobile_item);
+    EXPECT_TRUE(mobile_item.active);
+  } else {
+    ASSERT_TRUE(desktop_item);
+    EXPECT_FALSE(desktop_item.active);
+    EXPECT_FALSE(mobile_item);
+  }
 }

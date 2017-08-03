@@ -761,7 +761,9 @@ bool SelectorChecker::CheckPseudoClass(const SelectorCheckingContext& context,
         element.SetStyleAffectedByEmpty();
         if (context.in_rightmost_compound)
           element_style_->SetEmptyState(result);
-        else if (element.GetComputedStyle())
+        else if (element.GetComputedStyle() &&
+                 (element.GetDocument().GetStyleEngine().UsesSiblingRules() ||
+                  element.GetComputedStyle()->Unique()))
           element.MutableComputedStyle()->SetEmptyState(result);
       }
       return result;

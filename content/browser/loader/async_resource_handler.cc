@@ -364,11 +364,18 @@ void AsyncResourceHandler::OnResponseCompleted(
         sent_received_response_msg_);
 
   int error_code = status.error();
+  const ResourceRequestInfoImpl* info = GetRequestInfo();
+  bool was_ignored_by_handler = info->WasIgnoredByHandler();
 
   DCHECK(status.status() != net::URLRequestStatus::IO_PENDING);
+  // If this check fails, then we're in an inconsistent state because all
+  // requests ignored by the handler should be canceled (which should result in
+  // the ERR_ABORTED error code).
+  DCHECK(!was_ignored_by_handler || error_code == net::ERR_ABORTED);
 
   ResourceRequestCompletionStatus request_complete_data;
   request_complete_data.error_code = error_code;
+  request_complete_data.was_ignored_by_handler = was_ignored_by_handler;
   request_complete_data.exists_in_cache = request()->response_info().was_cached;
   request_complete_data.completion_time = TimeTicks::Now();
   request_complete_data.encoded_data_length =

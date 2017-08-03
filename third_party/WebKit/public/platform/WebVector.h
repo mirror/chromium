@@ -81,8 +81,6 @@ class WebVector {
 
   WebVector(WebVector<T>&& other) { Swap(other); }
 
-  WebVector(std::vector<T>&& other) : data_(std::move(other)) {}
-
   WebVector& operator=(const WebVector& other) {
     if (this != &other)
       Assign(other);
@@ -102,11 +100,6 @@ class WebVector {
     return *this;
   }
 
-  WebVector<T>& operator=(std::vector<T>&& other) {
-    data_ = std::move(other);
-    return *this;
-  }
-
   template <typename C>
   void Assign(const C& other) {
     data_.assign(other.begin(), other.end());
@@ -119,7 +112,7 @@ class WebVector {
 
   size_t size() const { return data_.size(); }
   bool empty() const { return data_.empty(); }
-  // TODO(slangley): Remove all uses of IsEmpty.
+  // TODO(slangley): Remove all uses of isEmpty.
   bool IsEmpty() const { return empty(); }
 
   T& operator[](size_t i) {

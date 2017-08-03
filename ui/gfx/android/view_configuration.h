@@ -26,6 +26,9 @@ class GFX_EXPORT ViewConfiguration {
   static int GetDoubleTapSlopInDips();
 
   static int GetMinScalingSpanInDips();
+
+  // Registers methods with JNI and returns true if succeeded.
+  static bool RegisterViewConfiguration(JNIEnv* env);
 };
 
 }  // namespace gfx

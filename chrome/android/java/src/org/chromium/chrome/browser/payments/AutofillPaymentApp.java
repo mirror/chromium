@@ -133,7 +133,7 @@ public class AutofillPaymentApp implements PaymentApp {
         result.add(CardType.UNKNOWN);
 
         Map<Integer, Integer> cardTypes = getCardTypes();
-        if (!isBasicCardTypeSpecified(data)) {
+        if (data == null || data.supportedTypes == null || data.supportedTypes.length == 0) {
             // Merchant website supports all card types.
             result.addAll(cardTypes.values());
         } else {
@@ -145,11 +145,6 @@ public class AutofillPaymentApp implements PaymentApp {
         }
 
         return result;
-    }
-
-    /** @return True if supported card type is specified in data for "basic-card" method. */
-    public static boolean isBasicCardTypeSpecified(PaymentMethodData data) {
-        return data != null && data.supportedTypes != null && data.supportedTypes.length != 0;
     }
 
     private static Map<Integer, String> getNetworks() {

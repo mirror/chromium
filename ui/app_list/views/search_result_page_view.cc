@@ -58,9 +58,6 @@ class SearchCardView : public views::View {
           GetShadowForZHeight(kSearchResultZHeight)));
       content_view->SetBackground(
           views::CreateSolidBackground(kCardBackgroundColor));
-    } else {
-      content_view->SetBackground(
-          views::CreateSolidBackground(kCardBackgroundColorFullscreen));
     }
     SetLayoutManager(new views::FillLayout());
     AddChildView(content_view);
@@ -98,8 +95,6 @@ class SearchResultPageBackground : public views::Background {
     flags.setColor(color_);
     canvas->DrawRoundRect(bounds, corner_radius_, flags);
 
-    if (bounds.height() <= kSearchBoxHeight)
-      return;
     // Draw a separator between SearchBoxView and SearchResultPageView.
     bounds.set_y(kSearchBoxHeight);
     bounds.set_height(kSeparatorThickness);
@@ -187,7 +182,8 @@ SearchResultPageView::SearchResultPageView()
   SetLayoutManager(new views::FillLayout);
 }
 
-SearchResultPageView::~SearchResultPageView() = default;
+SearchResultPageView::~SearchResultPageView() {
+}
 
 void SearchResultPageView::SetSelection(bool select) {
   if (select)

@@ -75,10 +75,6 @@ extern const base::Feature kClickToOpenPDFPlaceholder;
 extern const base::Feature kConsistentOmniboxGeolocation;
 #endif
 
-#if defined(OS_MACOSX)
-extern const base::Feature kContentFullscreen;
-#endif
-
 #if defined(OS_ANDROID)
 extern const base::Feature kCopylessPaste;
 #endif
@@ -95,10 +91,6 @@ extern const base::Feature kExpectCTReporting;
 
 extern const base::Feature kExperimentalAppBanners;
 extern const base::Feature kExperimentalKeyboardLockUI;
-
-#if defined(OS_MACOSX)
-extern const base::Feature kFullscreenToolbarReveal;
-#endif
 
 #if defined(OS_WIN)
 extern const base::Feature kGdiTextPrinting;

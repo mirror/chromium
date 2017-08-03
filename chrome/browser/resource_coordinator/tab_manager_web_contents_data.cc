@@ -63,7 +63,6 @@ void TabManager::WebContentsData::DidStartNavigation(
 
 void TabManager::WebContentsData::DidFinishNavigation(
     content::NavigationHandle* navigation_handle) {
-  SetIsInSessionRestore(false);
   g_browser_process->GetTabManager()->OnDidFinishNavigation(navigation_handle);
 }
 
@@ -84,7 +83,6 @@ void TabManager::WebContentsData::WebContentsDestroyed() {
   }
 
   SetTabLoadingState(TAB_IS_NOT_LOADING);
-  SetIsInSessionRestore(false);
   g_browser_process->GetTabManager()->OnWebContentsDestroyed(web_contents());
 }
 
@@ -211,8 +209,7 @@ TabManager::WebContentsData::Data::Data()
       last_inactive_time(TimeTicks::UnixEpoch()),
       engagement_score(-1.0),
       is_auto_discardable(true),
-      tab_loading_state(TAB_IS_NOT_LOADING),
-      is_in_session_restore(false) {}
+      tab_loading_state(TAB_IS_NOT_LOADING) {}
 
 bool TabManager::WebContentsData::Data::operator==(const Data& right) const {
   return is_discarded == right.is_discarded &&

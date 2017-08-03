@@ -60,7 +60,6 @@ Compositor::Compositor(const viz::FrameSinkId& frame_sink_id,
                        ui::ContextFactoryPrivate* context_factory_private,
                        scoped_refptr<base::SingleThreadTaskRunner> task_runner,
                        bool enable_surface_synchronization,
-                       bool enable_pixel_canvas,
                        bool external_begin_frames_enabled)
     : context_factory_(context_factory),
       context_factory_private_(context_factory_private),
@@ -71,13 +70,12 @@ Compositor::Compositor(const viz::FrameSinkId& frame_sink_id,
       layer_animator_collection_(this),
       scheduled_timeout_(base::TimeTicks()),
       allow_locks_to_extend_timeout_(false),
-      is_pixel_canvas_(enable_pixel_canvas),
       weak_ptr_factory_(this),
       lock_timeout_weak_ptr_factory_(this) {
   if (context_factory_private) {
-    auto* host_frame_sink_manager =
-        context_factory_private_->GetHostFrameSinkManager();
-    host_frame_sink_manager->RegisterFrameSinkId(frame_sink_id_, this);
+    context_factory_private->GetFrameSinkManager()
+        ->surface_manager()
+        ->RegisterFrameSinkId(frame_sink_id_);
   }
   root_web_layer_ = cc::Layer::Create();
 
@@ -229,7 +227,9 @@ Compositor::~Compositor() {
       host_frame_sink_manager->UnregisterFrameSinkHierarchy(frame_sink_id_,
                                                             client);
     }
-    host_frame_sink_manager->InvalidateFrameSinkId(frame_sink_id_);
+    context_factory_private_->GetFrameSinkManager()
+        ->surface_manager()
+        ->InvalidateFrameSinkId(frame_sink_id_);
   }
 }
 
@@ -336,8 +336,6 @@ void Compositor::SetScaleAndSize(float scale, const gfx::Size& size_in_pixel) {
   if (device_scale_factor_ != scale) {
     device_scale_factor_ = scale;
     host_->SetDeviceScaleFactor(scale);
-    if (is_pixel_canvas())
-      host_->SetRecordingScaleFactor(scale);
     if (root_layer_)
       root_layer_->OnDeviceScaleFactorChanged(scale);
   }
@@ -552,11 +550,6 @@ void Compositor::DidSubmitCompositorFrame() {
   base::TimeTicks start_time = base::TimeTicks::Now();
   for (auto& observer : observer_list_)
     observer.OnCompositingStarted(this, start_time);
-}
-
-void Compositor::OnSurfaceCreated(const viz::SurfaceInfo& surface_info) {
-  // TODO(fsamuel): Once surface synchronization is turned on, the fallback
-  // surface should be set here.
 }
 
 void Compositor::SetOutputIsSecure(bool output_is_secure) {

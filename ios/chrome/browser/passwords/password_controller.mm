@@ -686,8 +686,12 @@ bool GetPageURLAndCheckTrustLevel(web::WebState* web_state, GURL* page_url) {
   form->signon_realm = form->origin.ReplaceComponents(remove_path).spec();
 
   std::string action;
+  // Not checking the return value, as empty action is valid.
   dictionary->GetString("action", &action);
-  form->action = GURL(action);
+  GURL actionUrl = action.empty() ? originUrl : originUrl.Resolve(action);
+  if (!actionUrl.is_valid())
+    return NO;
+  form->action = stripURL(actionUrl);
 
   if (!dictionary->GetString("usernameElement", &form->username_element) ||
       !dictionary->GetString("usernameValue", &form->username_value) ||

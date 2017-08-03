@@ -38,12 +38,10 @@ class WebMessagePortChannelImpl final : public WebMessagePortChannel {
  public:
   // WebMessagePortChannel
   void SetClient(WebMessagePortChannelClient* client) override {}
-  void PostMessage(const uint8_t*, size_t, WebMessagePortChannelArray) {
+  void PostMessage(const WebString&, WebMessagePortChannelArray) {
     NOTIMPLEMENTED();
   }
-  bool TryGetMessage(WebVector<uint8_t>*, WebMessagePortChannelArray&) {
-    return false;
-  }
+  bool TryGetMessage(WebString*, WebMessagePortChannelArray&) { return false; }
 };
 
 }  // namespace

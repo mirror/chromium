@@ -24,6 +24,8 @@ class PlatformWindowDelegate;
 
 class ANDROID_WINDOW_EXPORT PlatformWindowAndroid : public PlatformWindow {
  public:
+  static bool Register(JNIEnv* env);
+
   explicit PlatformWindowAndroid(PlatformWindowDelegate* delegate);
   ~PlatformWindowAndroid() override;
 

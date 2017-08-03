@@ -96,8 +96,7 @@ void SoftwareOutputDeviceOzoneTest::SetUp() {
   compositor_.reset(
       new ui::Compositor(viz::FrameSinkId(1, 1), context_factory, nullptr,
                          base::ThreadTaskRunnerHandle::Get(),
-                         false /* enable_surface_synchronization */,
-                         false /* enable_pixel_canvas */));
+                         false /* enable_surface_synchronization */));
   compositor_->SetAcceleratedWidget(window_delegate_.GetAcceleratedWidget());
   compositor_->SetScaleAndSize(1.0f, size);
 

@@ -35,6 +35,11 @@ class InterceptingResourceHandler::Controller : public ResourceController {
     intercepting_handler_->Cancel();
   }
 
+  void CancelAndIgnore() override {
+    MarkAsUsed();
+    intercepting_handler_->CancelAndIgnore();
+  }
+
   void CancelWithError(int error_code) override {
     MarkAsUsed();
     intercepting_handler_->CancelWithError(error_code);

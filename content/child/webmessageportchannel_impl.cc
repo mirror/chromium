@@ -96,8 +96,7 @@ void WebMessagePortChannelImpl::SetClient(WebMessagePortChannelClient* client) {
 }
 
 void WebMessagePortChannelImpl::PostMessage(
-    const uint8_t* encoded_message,
-    size_t encoded_message_size,
+    const WebString& encoded_message,
     WebMessagePortChannelArray channels) {
   std::vector<MessagePort> ports;
   if (!channels.IsEmpty()) {
@@ -107,18 +106,18 @@ void WebMessagePortChannelImpl::PostMessage(
           ReleaseMessagePort();
     }
   }
-  port_.PostMessage(encoded_message, encoded_message_size, std::move(ports));
+  port_.PostMessage(encoded_message.Utf16(), std::move(ports));
 }
 
 bool WebMessagePortChannelImpl::TryGetMessage(
-    blink::WebVector<uint8_t>* encoded_message,
+    WebString* encoded_message,
     WebMessagePortChannelArray& channels) {
-  std::vector<uint8_t> buffer;
+  base::string16 buffer;
   std::vector<MessagePort> ports;
   if (!port_.GetMessage(&buffer, &ports))
     return false;
 
-  *encoded_message = std::move(buffer);
+  *encoded_message = WebString::FromUTF16(buffer);
 
   if (!ports.empty()) {
     channels = WebMessagePortChannelArray(ports.size());

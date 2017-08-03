@@ -1361,15 +1361,6 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
   }
 }
 
-- (void)showHistory {
-  _historyPanelViewController = [HistoryPanelViewController
-      controllerToPresentForBrowserState:_mainBrowserState
-                                  loader:self.currentBVC];
-  [self.currentBVC presentViewController:_historyPanelViewController
-                                animated:YES
-                              completion:nil];
-}
-
 #pragma mark - chromeExecuteCommand
 
 - (IBAction)chromeExecuteCommand:(id)sender {
@@ -1407,6 +1398,9 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
     case IDC_SHOW_SAVE_PASSWORDS_SETTINGS:
       [self showSavePasswordsSettings];
       break;
+    case IDC_SHOW_HISTORY:
+      [self showHistory];
+      break;
     case IDC_TOGGLE_TAB_SWITCHER: {
       DCHECK(!_tabSwitcherIsActive);
       if (!_isProcessingVoiceSearchCommand) {
@@ -1424,6 +1418,11 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
     case IDC_SHOW_MAIL_COMPOSER:
       [self.currentBVC chromeExecuteCommand:sender];
       break;
+    case IDC_VOICE_SEARCH: {
+      StartVoiceSearchCommand* command =
+          [[StartVoiceSearchCommand alloc] initWithOriginView:nil];
+      [self startVoiceSearch:command];
+    } break;
 
     case IDC_CLEAR_BROWSING_DATA_IOS: {
       // Clear both the main browser state and the associated incognito
@@ -2060,6 +2059,15 @@ enum class StackViewDismissalMode { NONE, NORMAL, INCOGNITO };
         _signinInteractionController = nil;
       }
                 viewController:self.mainViewController];
+}
+
+- (void)showHistory {
+  _historyPanelViewController = [HistoryPanelViewController
+      controllerToPresentForBrowserState:_mainBrowserState
+                                  loader:self.currentBVC];
+  [self.currentBVC presentViewController:_historyPanelViewController
+                                animated:YES
+                              completion:nil];
 }
 
 - (void)dismissSigninInteractionController {

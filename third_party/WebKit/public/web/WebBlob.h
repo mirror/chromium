@@ -37,6 +37,10 @@
 #include "public/platform/WebString.h"
 #include "public/platform/WebURL.h"
 
+#if BLINK_IMPLEMENTATION
+#include "platform/heap/Handle.h"
+#endif
+
 namespace v8 {
 class Isolate;
 class Object;
@@ -77,7 +81,7 @@ class WebBlob {
       v8::Local<v8::Object> creation_context,
       v8::Isolate*);
 
-#if INSIDE_BLINK
+#if BLINK_IMPLEMENTATION
   WebBlob(Blob*);
   WebBlob& operator=(Blob*);
 #endif

@@ -40,10 +40,6 @@
 namespace {
 
 const ui::Layer* GetRoot(const ui::Layer* layer) {
-  // Parent walk cannot be done on a layer that is being used as a mask. Get the
-  // layer to which this layer is a mask of.
-  if (layer->layer_mask_back_link())
-    layer = layer->layer_mask_back_link();
   while (layer->parent())
     layer = layer->parent();
   return layer;
@@ -319,7 +315,7 @@ void Layer::SetAnimator(LayerAnimator* animator) {
   Compositor* compositor = GetCompositor();
 
   if (animator_) {
-    if (compositor && !layer_mask_back_link())
+    if (compositor)
       animator_->DetachLayerAndTimeline(compositor);
     animator_->SetDelegate(nullptr);
   }
@@ -328,7 +324,7 @@ void Layer::SetAnimator(LayerAnimator* animator) {
 
   if (animator_) {
     animator_->SetDelegate(this);
-    if (compositor && !layer_mask_back_link())
+    if (compositor)
       animator_->AttachLayerAndTimeline(compositor);
   }
 }
@@ -947,9 +943,8 @@ scoped_refptr<cc::DisplayItemList> Layer::PaintContentsToDisplayList(
   paint_region_.Clear();
   auto display_list = make_scoped_refptr(new cc::DisplayItemList);
   if (delegate_) {
-    delegate_->OnPaintLayer(PaintContext(display_list.get(),
-                                         device_scale_factor_, invalidation,
-                                         GetCompositor()->is_pixel_canvas()));
+    delegate_->OnPaintLayer(
+        PaintContext(display_list.get(), device_scale_factor_, invalidation));
   }
   display_list->Finalize();
   // TODO(domlaskowski): Move mirror invalidation to Layer::SchedulePaint.

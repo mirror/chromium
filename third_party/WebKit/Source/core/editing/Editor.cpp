@@ -912,7 +912,7 @@ static void DispatchEditableContentChangedEvents(Element* start_root,
 }
 
 static SelectionInDOMTree CorrectedSelectionAfterCommand(
-    const SelectionForUndoStep& passed_selection,
+    const VisibleSelection& passed_selection,
     Document* document) {
   if (!passed_selection.Base().IsConnected() ||
       !passed_selection.Extent().IsConnected() ||
@@ -941,7 +941,7 @@ void Editor::AppliedEditing(CompositeEditCommand* cmd) {
       cmd->TextDataForInputEvent(), IsComposingFromCommand(cmd));
 
   const SelectionInDOMTree& new_selection = CorrectedSelectionAfterCommand(
-      cmd->EndingSelection(), GetFrame().GetDocument());
+      cmd->EndingVisibleSelection(), GetFrame().GetDocument());
 
   // Don't clear the typing style with this selection change. We do those things
   // elsewhere if necessary.
@@ -1494,10 +1494,10 @@ void Editor::ChangeSelectionAfterCommand(
   bool selection_did_not_change_dom_position =
       new_selection == GetFrame().Selection().GetSelectionInDOMTree();
   GetFrame().Selection().SetSelection(
-      new_selection,
-      SetSelectionData::Builder(options)
-          .SetShouldShowHandle(GetFrame().Selection().IsHandleVisible())
-          .Build());
+      SelectionInDOMTree::Builder(new_selection)
+          .SetIsHandleVisible(GetFrame().Selection().IsHandleVisible())
+          .Build(),
+      options);
 
   // Some editing operations change the selection visually without affecting its
   // position within the DOM. For example when you press return in the following

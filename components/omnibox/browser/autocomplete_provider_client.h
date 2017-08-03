@@ -19,7 +19,6 @@ class AutocompleteController;
 struct AutocompleteMatch;
 class AutocompleteClassifier;
 class AutocompleteSchemeClassifier;
-class ContextualSuggestionsService;
 class GURL;
 class InMemoryURLIndex;
 class KeywordProvider;
@@ -61,8 +60,6 @@ class AutocompleteProviderClient {
   virtual InMemoryURLIndex* GetInMemoryURLIndex() = 0;
   virtual TemplateURLService* GetTemplateURLService() = 0;
   virtual const TemplateURLService* GetTemplateURLService() const = 0;
-  virtual ContextualSuggestionsService* GetContextualSuggestionsService()
-      const = 0;
   virtual const SearchTermsData& GetSearchTermsData() const = 0;
   virtual scoped_refptr<ShortcutsBackend> GetShortcutsBackend() = 0;
   virtual scoped_refptr<ShortcutsBackend> GetShortcutsBackendIfExists() = 0;

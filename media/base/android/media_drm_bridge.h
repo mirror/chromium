@@ -250,7 +250,7 @@ class MEDIA_EXPORT MediaDrmBridge : public ContentDecryptionModule,
   // For DeleteSoon() in DeleteOnCorrectThread().
   friend class base::DeleteHelper<MediaDrmBridge>;
 
-  static scoped_refptr<MediaDrmBridge> CreateInternal(
+  static void CreateInternal(
       const std::vector<uint8_t>& scheme_uuid,
       SecurityLevel security_level,
       std::unique_ptr<MediaDrmStorageBridge> storage,
@@ -258,7 +258,8 @@ class MEDIA_EXPORT MediaDrmBridge : public ContentDecryptionModule,
       const SessionMessageCB& session_message_cb,
       const SessionClosedCB& session_closed_cb,
       const SessionKeysChangeCB& session_keys_change_cb,
-      const SessionExpirationUpdateCB& session_expiration_update_cb);
+      const SessionExpirationUpdateCB& session_expiration_update_cb,
+      CreatedCB bound_cdm_created_cb);
 
   // Constructs a MediaDrmBridge for |scheme_uuid| and |security_level|. The
   // default security level will be used if |security_level| is

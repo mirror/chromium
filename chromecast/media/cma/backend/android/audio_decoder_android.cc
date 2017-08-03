@@ -70,7 +70,7 @@ AudioDecoderAndroid::AudioDecoderAndroid(MediaPipelineBackendAndroid* backend)
       rate_shifter_output_(
           ::media::AudioBus::Create(kNumChannels, kDefaultFramesPerBuffer)),
       current_pts_(kInvalidTimestamp),
-      sink_(AudioSinkManager::GetDefaultSinkType()),
+      sink_(AudioSinkAndroid::kSinkTypeJavaBased),
       pending_output_frames_(kNoPendingOutput),
       volume_multiplier_(1.0f),
       pool_(new ::media::AudioBufferMemoryPool()),

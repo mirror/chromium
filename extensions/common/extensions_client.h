@@ -128,9 +128,6 @@ class ExtensionsClient {
   // Can be overridden in tests.
   virtual bool ExtensionAPIEnabledInExtensionServiceWorkers() const;
 
-  // Returns the user agent used by the content module.
-  virtual std::string GetUserAgent() const;
-
   // Return the extensions client.
   static ExtensionsClient* Get();
 

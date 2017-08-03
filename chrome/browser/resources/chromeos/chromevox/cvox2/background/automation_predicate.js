@@ -197,8 +197,7 @@ AutomationPredicate.object = function(node) {
   // Editable nodes are within a text-like field and don't make sense when
   // performing object navigation. Users should use line, word, or character
   // navigation. Only navigate to the top level node.
-  if (node.parent && node.parent.state.editable &&
-      !node.parent.state[State.RICHLY_EDITABLE])
+  if (node.parent && node.parent.state.editable)
     return false;
 
   // Descend into large nodes.
@@ -299,21 +298,8 @@ AutomationPredicate.root = function(node) {
     case Role.ROOT_WEB_AREA:
       return !node.parent || node.parent.root.role == Role.DESKTOP;
     default:
-      return false;
+      return node.state.richlyEditable && node.state.focused;
   }
-};
-
-/**
- * Returns whether the given node should not be crossed when performing
- * traversal inside of an editable. Note that this predicate should not be
- * applied everywhere since there would be no way for a user to exit the
- * editable.
- * @param {AutomationNode} node
- * @return {boolean}
- */
-AutomationPredicate.editableRoot = function(node) {
-  return AutomationPredicate.root(node) ||
-      node.state.richlyEditable && node.state.focused;
 };
 
 /**

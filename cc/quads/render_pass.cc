@@ -51,15 +51,16 @@ void QuadList::ReplaceExistingQuadWithOpaqueTransparentSolidColor(Iterator at) {
   // solid color quad needs to set |needs_blending| to false, and set both
   // |visible_rect| and |opaque_rect| to its quad rect so it is drawn and
   // ShouldDrawWithBlending() returns false so it is drawn without blending.
-  const gfx::Rect rect = at->rect;
+  const gfx::Rect& rect = at->rect;
+  const gfx::Rect& opaque_rect = at->rect;
+  const gfx::Rect& visible_rect = at->rect;
   bool needs_blending = false;
   const SharedQuadState* shared_quad_state = at->shared_quad_state;
 
   SolidColorDrawQuad* replacement =
       QuadList::ReplaceExistingElement<SolidColorDrawQuad>(at);
-  replacement->SetAll(shared_quad_state, rect, rect /* opaque_rect */,
-                      rect /* visible_rect */, needs_blending,
-                      SK_ColorTRANSPARENT, true);
+  replacement->SetAll(shared_quad_state, rect, opaque_rect, visible_rect,
+                      needs_blending, SK_ColorTRANSPARENT, true);
 }
 
 std::unique_ptr<RenderPass> RenderPass::Create() {
@@ -131,32 +132,31 @@ std::unique_ptr<RenderPass> RenderPass::DeepCopy() const {
                     filters, background_filters, color_space,
                     has_transparent_background, cache_render_pass,
                     has_damage_from_contributing_content);
-
-  if (shared_quad_state_list.empty()) {
-    DCHECK(quad_list.empty());
-    return copy_pass;
+  for (auto* shared_quad_state : shared_quad_state_list) {
+    SharedQuadState* copy_shared_quad_state =
+        copy_pass->CreateAndAppendSharedQuadState();
+    *copy_shared_quad_state = *shared_quad_state;
   }
-
   SharedQuadStateList::ConstIterator sqs_iter = shared_quad_state_list.begin();
-  SharedQuadState* copy_shared_quad_state =
-      copy_pass->CreateAndAppendSharedQuadState();
-  *copy_shared_quad_state = **sqs_iter;
+  SharedQuadStateList::Iterator copy_sqs_iter =
+      copy_pass->shared_quad_state_list.begin();
   for (auto* quad : quad_list) {
     while (quad->shared_quad_state != *sqs_iter) {
       ++sqs_iter;
+      ++copy_sqs_iter;
       DCHECK(sqs_iter != shared_quad_state_list.end());
-      copy_shared_quad_state = copy_pass->CreateAndAppendSharedQuadState();
-      *copy_shared_quad_state = **sqs_iter;
     }
     DCHECK(quad->shared_quad_state == *sqs_iter);
+
+    SharedQuadState* copy_shared_quad_state = *copy_sqs_iter;
 
     if (quad->material == DrawQuad::RENDER_PASS) {
       const RenderPassDrawQuad* pass_quad =
           RenderPassDrawQuad::MaterialCast(quad);
-      copy_pass->CopyFromAndAppendRenderPassDrawQuad(pass_quad,
-                                                     pass_quad->render_pass_id);
+      copy_pass->CopyFromAndAppendRenderPassDrawQuad(
+          pass_quad, copy_shared_quad_state, pass_quad->render_pass_id);
     } else {
-      copy_pass->CopyFromAndAppendDrawQuad(quad);
+      copy_pass->CopyFromAndAppendDrawQuad(quad, copy_shared_quad_state);
     }
   }
   return copy_pass;
@@ -261,17 +261,18 @@ SharedQuadState* RenderPass::CreateAndAppendSharedQuadState() {
 
 RenderPassDrawQuad* RenderPass::CopyFromAndAppendRenderPassDrawQuad(
     const RenderPassDrawQuad* quad,
+    const SharedQuadState* shared_quad_state,
     RenderPassId render_pass_id) {
-  DCHECK(!shared_quad_state_list.empty());
   RenderPassDrawQuad* copy_quad =
       CopyFromAndAppendTypedDrawQuad<RenderPassDrawQuad>(quad);
-  copy_quad->shared_quad_state = shared_quad_state_list.back();
+  copy_quad->shared_quad_state = shared_quad_state;
   copy_quad->render_pass_id = render_pass_id;
   return copy_quad;
 }
 
-DrawQuad* RenderPass::CopyFromAndAppendDrawQuad(const DrawQuad* quad) {
-  DCHECK(!shared_quad_state_list.empty());
+DrawQuad* RenderPass::CopyFromAndAppendDrawQuad(
+    const DrawQuad* quad,
+    const SharedQuadState* shared_quad_state) {
   switch (quad->material) {
     case DrawQuad::DEBUG_BORDER:
       CopyFromAndAppendTypedDrawQuad<DebugBorderDrawQuad>(quad);
@@ -303,7 +304,7 @@ DrawQuad* RenderPass::CopyFromAndAppendDrawQuad(const DrawQuad* quad) {
       LOG(FATAL) << "Invalid DrawQuad material " << quad->material;
       break;
   }
-  quad_list.back()->shared_quad_state = shared_quad_state_list.back();
+  quad_list.back()->shared_quad_state = shared_quad_state;
   return quad_list.back();
 }
 

@@ -31,7 +31,6 @@ import org.chromium.chrome.browser.signin.ConfirmImportSyncDataDialog.ImportSync
 import org.chromium.components.signin.AccountManagerDelegateException;
 import org.chromium.components.signin.AccountManagerFacade;
 import org.chromium.components.signin.AccountManagerResult;
-import org.chromium.components.signin.AccountsChangeObserver;
 import org.chromium.components.signin.GmsAvailabilityException;
 import org.chromium.components.signin.GmsJustUpdatedException;
 import org.chromium.ui.text.NoUnderlineClickableSpan;
@@ -121,7 +120,6 @@ public class AccountSigninView extends FrameLayout {
     /** "Undo" button calls {@link Listener#onAccountSelectionCanceled()}. */
     public static final int UNDO_ABORT = 2;
 
-    private final AccountsChangeObserver mAccountsChangedObserver;
     private final ProfileDataCache.Observer mProfileDataCacheObserver;
     private List<String> mAccountNames;
     private AccountSigninChooseView mSigninChooseView;
@@ -150,12 +148,6 @@ public class AccountSigninView extends FrameLayout {
 
     public AccountSigninView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        mAccountsChangedObserver = new AccountsChangeObserver() {
-            @Override
-            public void onAccountsChanged() {
-                triggerUpdateAccounts();
-            }
-        };
         mProfileDataCacheObserver = new ProfileDataCache.Observer() {
             @Override
             public void onProfileDataUpdated(String accountId) {
@@ -168,10 +160,10 @@ public class AccountSigninView extends FrameLayout {
      * Initializes the view from account selection page. After selecting the account, signin
      * confirmation page will be opened.
      *
-     * @param profileData ProfileDataCache that will be used to retrieve user account info.
+     * @param profileData    ProfileDataCache that will be used to retrieve user account info.
      * @param isChildAccount Whether this view is for a child account.
-     * @param delegate The UI object creation delegate.
-     * @param listener The account selection event listener.
+     * @param delegate       The UI object creation delegate.
+     * @param listener       The account selection event listener.
      */
     public void initFromSelectionPage(ProfileDataCache profileData, boolean isChildAccount,
             Delegate delegate, Listener listener) {
@@ -184,37 +176,16 @@ public class AccountSigninView extends FrameLayout {
     }
 
     /**
-     * Initializes the view from account selection page. After selecting the account, signin
-     * confirmation page will be opened.
-     *
-     * @param profileData ProfileDataCache that will be used to retrieve user account info.
-     * @param delegate The UI object creation delegate.
-     * @param listener The account selection event listener.
-     */
-    public void initFromAddAccountPage(
-            ProfileDataCache profileData, Delegate delegate, Listener listener) {
-        setProfileDataCache(profileData);
-        mIsChildAccount = false; // Children profiles can't add accounts.
-        mUndoBehavior = UNDO_ABORT;
-        mDelegate = delegate;
-        mListener = listener;
-        showSigninPage();
-
-        RecordUserAction.record("Signin_AddAccountToDevice");
-        mListener.onNewAccount();
-    }
-
-    /**
      * Initializes the view from signin confirmation page. The account name should be provided by
      * the caller.
      *
-     * @param profileData ProfileDataCache that will be used to retrieve user account info.
-     * @param isChildAccount Whether this view is for a child account.
-     * @param accountName An account that should be used for confirmation page and signin.
+     * @param profileData      ProfileDataCache that will be used to retrieve user account info.
+     * @param isChildAccount   Whether this view is for a child account.
+     * @param accountName      An account that should be used for confirmation page and signin.
      * @param isDefaultAccount Whether {@param accountName} is a default account, used for metrics.
-     * @param undoBehavior "Undo" button behavior (see {@link UndoBehavior}).
-     * @param delegate The UI object creation delegate.
-     * @param listener The account selection event listener.
+     * @param undoBehavior     "Undo" button behavior (see {@link UndoBehavior}).
+     * @param delegate         The UI object creation delegate.
+     * @param listener         The account selection event listener.
      */
     public void initFromConfirmationPage(ProfileDataCache profileData, boolean isChildAccount,
             String accountName, boolean isDefaultAccount, @UndoBehavior int undoBehavior,
@@ -272,7 +243,6 @@ public class AccountSigninView extends FrameLayout {
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         triggerUpdateAccounts();
-        AccountManagerFacade.get().addObserver(mAccountsChangedObserver);
         if (mProfileData != null) {
             mProfileData.addObserver(mProfileDataCacheObserver);
         }
@@ -283,7 +253,6 @@ public class AccountSigninView extends FrameLayout {
         if (mProfileData != null) {
             mProfileData.removeObserver(mProfileDataCacheObserver);
         }
-        AccountManagerFacade.get().removeObserver(mAccountsChangedObserver);
         super.onDetachedFromWindow();
     }
 

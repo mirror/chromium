@@ -49,7 +49,7 @@ function runTests() {
         if (req == "content_script") {
           navigate_to_fragment(sender.tab, do_execute);
         } else if (req == "execute_script") {
-          succeeded = true;
+          suceeded = true;
           chrome.test.succeed();
         }
       });

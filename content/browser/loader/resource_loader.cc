@@ -147,6 +147,11 @@ class ResourceLoader::Controller : public ResourceController {
     resource_loader_->Cancel();
   }
 
+  void CancelAndIgnore() override {
+    MarkAsUsed();
+    resource_loader_->CancelAndIgnore();
+  }
+
   void CancelWithError(int error_code) override {
     MarkAsUsed();
     resource_loader_->CancelWithError(error_code);
@@ -244,6 +249,12 @@ void ResourceLoader::CancelRequest(bool from_renderer) {
   TRACE_EVENT_WITH_FLOW0("loading", "ResourceLoader::CancelRequest", this,
                          TRACE_EVENT_FLAG_FLOW_IN);
   CancelRequestInternal(net::ERR_ABORTED, from_renderer);
+}
+
+void ResourceLoader::CancelAndIgnore() {
+  ResourceRequestInfoImpl* info = GetRequestInfo();
+  info->set_was_ignored_by_handler(true);
+  CancelRequest(false);
 }
 
 void ResourceLoader::CancelWithError(int error_code) {
@@ -349,7 +360,7 @@ void ResourceLoader::OnReceivedRedirect(net::URLRequest* unused,
   } else {
     *defer = false;
     if (delegate_->HandleExternalProtocol(this, redirect_info.new_url))
-      Cancel();
+      CancelAndIgnore();
   }
 }
 
@@ -555,7 +566,7 @@ void ResourceLoader::StartRequestInternal() {
   }
 
   if (delegate_->HandleExternalProtocol(this, request_->url())) {
-    Cancel();
+    CancelAndIgnore();
     return;
   }
 
@@ -616,7 +627,7 @@ void ResourceLoader::FollowDeferredRedirectInternal() {
   GURL redirect_url = deferred_redirect_url_;
   deferred_redirect_url_ = GURL();
   if (delegate_->HandleExternalProtocol(this, redirect_url)) {
-    Cancel();
+    CancelAndIgnore();
   } else {
     request_->FollowDeferredRedirect();
   }

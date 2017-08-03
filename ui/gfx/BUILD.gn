@@ -44,6 +44,8 @@ component("geometry_skia") {
 
 component("gfx") {
   sources = [
+    "android/gfx_jni_registrar.cc",
+    "android/gfx_jni_registrar.h",
     "android/java_bitmap.cc",
     "android/java_bitmap.h",
     "android/view_configuration.cc",
@@ -92,7 +94,6 @@ component("gfx") {
     "image/image_family.h",
     "image/image_ios.mm",
     "image/image_mac.mm",
-    "image/image_platform.h",
     "image/image_png_rep.cc",
     "image/image_png_rep.h",
     "image/image_skia.cc",
@@ -205,7 +206,6 @@ component("gfx") {
       "canvas_skia_paint.h",
       "image/canvas_image_source.cc",
       "image/canvas_image_source.h",
-      "image/image_generic.cc",
       "image/image_skia_operations.cc",
       "image/image_skia_operations.h",
       "paint_throbber.cc",
@@ -256,7 +256,7 @@ component("gfx") {
   ]
 
   # Text rendering conditions (complicated so separated out).
-  if (use_aura || is_mac || (is_android && enable_vr) || is_fuchsia) {
+  if (use_aura || is_mac || (is_android && enable_vr)) {
     # Mac doesn't use RenderTextHarfBuzz by default yet.
     sources += [
       "harfbuzz_font_skia.cc",
@@ -387,14 +387,6 @@ component("gfx") {
 
   if (use_cairo) {
     configs += [ "//build/config/linux/pangocairo" ]
-  }
-
-  if (is_fuchsia) {
-    sources += [
-      "font_fallback_fuchsia.cc",
-      "font_render_params_fuchsia.cc",
-      "platform_font_fuchsia.cc",
-    ]
   }
 }
 

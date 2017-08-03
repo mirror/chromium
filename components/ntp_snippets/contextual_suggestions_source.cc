@@ -43,17 +43,16 @@ void ContextualSuggestionsSource::FetchContextualSuggestions(
 
 void ContextualSuggestionsSource::FetchContextualSuggestionImage(
     const ContentSuggestion::ID& suggestion_id,
-    ImageFetchedCallback callback) {
+    const ImageFetchedCallback& callback) {
   const std::string& id_within_category = suggestion_id.id_within_category();
   auto image_url_iterator = image_url_by_id_.find(id_within_category);
   if (image_url_iterator != image_url_by_id_.end()) {
     GURL image_url = image_url_iterator->second;
-    image_fetcher_->FetchSuggestionImage(suggestion_id, image_url,
-                                         std::move(callback));
+    image_fetcher_->FetchSuggestionImage(suggestion_id, image_url, callback);
   } else {
     DVLOG(1) << "FetchContextualSuggestionImage unknown image"
              << " id_within_category: " << id_within_category;
-    std::move(callback).Run(gfx::Image());
+    callback.Run(gfx::Image());
   }
 }
 

@@ -524,13 +524,12 @@ bool HTMLParserScriptRunner::ExecuteScriptsWaitingForParsing() {
 }
 
 // 2nd Clause, Step 23 of https://html.spec.whatwg.org/#prepare-a-script
-void HTMLParserScriptRunner::RequestParsingBlockingScript(
-    ScriptLoader* script_loader) {
+void HTMLParserScriptRunner::RequestParsingBlockingScript(Element* element) {
   // "The element is the pending parsing-blocking script of the Document of
   //  the parser that created the element.
   //  (There can only be one such script per Document at a time.)"
   CHECK(!ParserBlockingScript());
-  parser_blocking_script_ = script_loader->CreatePendingScript();
+  parser_blocking_script_ = RequestPendingScript(element);
   if (!ParserBlockingScript())
     return;
 
@@ -547,9 +546,8 @@ void HTMLParserScriptRunner::RequestParsingBlockingScript(
 }
 
 // 1st Clause, Step 23 of https://html.spec.whatwg.org/#prepare-a-script
-void HTMLParserScriptRunner::RequestDeferredScript(
-    ScriptLoader* script_loader) {
-  PendingScript* pending_script = script_loader->CreatePendingScript();
+void HTMLParserScriptRunner::RequestDeferredScript(Element* element) {
+  PendingScript* pending_script = RequestPendingScript(element);
   if (!pending_script)
     return;
 
@@ -565,6 +563,13 @@ void HTMLParserScriptRunner::RequestDeferredScript(
   //  of the parser that created the element."
   scripts_to_execute_after_parsing_.push_back(
       TraceWrapperMember<PendingScript>(this, pending_script));
+}
+
+PendingScript* HTMLParserScriptRunner::RequestPendingScript(
+    Element* element) const {
+  ScriptElementBase* script_element =
+      ScriptElementBase::FromElementIfPossible(element);
+  return script_element->Loader()->CreatePendingScript();
 }
 
 // The initial steps for 'An end tag whose tag name is "script"'
@@ -611,7 +616,7 @@ void HTMLParserScriptRunner::ProcessScriptElementInternal(
 
     if (script_loader->WillExecuteWhenDocumentFinishedParsing()) {
       // 1st Clause of Step 23.
-      RequestDeferredScript(script_loader);
+      RequestDeferredScript(script);
     } else if (script_loader->ReadyToBeParserExecuted()) {
       // 5th Clause of Step 23.
       // "If ... it's an HTML parser
@@ -638,7 +643,7 @@ void HTMLParserScriptRunner::ProcessScriptElementInternal(
       }
     } else {
       // 2nd Clause of Step 23.
-      RequestParsingBlockingScript(script_loader);
+      RequestParsingBlockingScript(script);
     }
 
     // "Decrement the parser's script nesting level by one.

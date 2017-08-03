@@ -14,8 +14,6 @@ const char kTouchEventsCapability[] = "touchEvents";
 const char kSendInitialResolution[] = "sendInitialResolution";
 const char kRateLimitResizeRequests[] = "rateLimitResizeRequests";
 
-const char kFileTransferCapability[] = "fileTransfer";
-
 }  // namespace protocol
 }  // namespace remoting
 

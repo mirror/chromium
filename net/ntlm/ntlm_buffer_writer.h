@@ -46,11 +46,15 @@ class NET_EXPORT_PRIVATE NtlmBufferWriter {
   explicit NtlmBufferWriter(size_t buffer_len);
   ~NtlmBufferWriter();
 
-  size_t GetLength() const { return buffer_.size(); }
+  size_t GetLength() const { return buffer_len_; }
   size_t GetCursor() const { return cursor_; }
   bool IsEndOfBuffer() const { return cursor_ >= GetLength(); }
-  const Buffer& GetBuffer() const { return buffer_; }
-  Buffer Pass() const { return std::move(buffer_); }
+
+  // Gets a base::StringPiece view over the entire buffer.
+  base::StringPiece GetBuffer() const {
+    return base::StringPiece(reinterpret_cast<const char*>(buffer_.get()),
+                             buffer_len_);
+  }
 
   // Returns true if there are |len| more bytes between the current cursor
   // position and the end of the buffer.
@@ -155,16 +159,13 @@ class NET_EXPORT_PRIVATE NtlmBufferWriter {
   void AdvanceCursor(size_t count) { SetCursor(GetCursor() + count); }
 
   // Returns a pointer to the start of the buffer.
-  const uint8_t* GetBufferPtr() const { return &buffer_[0]; }
-  uint8_t* GetBufferPtr() { return &buffer_[0]; }
+  uint8_t* GetBufferPtr() const { return buffer_.get(); }
 
   // Returns pointer into the buffer at the current cursor location.
-  const uint8_t* GetBufferPtrAtCursor() const {
-    return GetBufferPtr() + GetCursor();
-  }
-  uint8_t* GetBufferPtrAtCursor() { return GetBufferPtr() + GetCursor(); }
+  uint8_t* GetBufferPtrAtCursor() const { return buffer_.get() + GetCursor(); }
 
-  Buffer buffer_;
+  std::unique_ptr<uint8_t[]> buffer_;
+  size_t buffer_len_;
   size_t cursor_;
 
   DISALLOW_COPY_AND_ASSIGN(NtlmBufferWriter);

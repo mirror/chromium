@@ -4,7 +4,7 @@
 
 #include "modules/canvas2d/CanvasRenderingContext2DState.h"
 
-#include <memory>
+#include "core/css/CSSFontSelector.h"
 #include "core/css/resolver/FilterOperationResolver.h"
 #include "core/css/resolver/StyleBuilder.h"
 #include "core/css/resolver/StyleResolverState.h"
@@ -17,7 +17,6 @@
 #include "modules/canvas2d/CanvasPattern.h"
 #include "modules/canvas2d/CanvasRenderingContext2D.h"
 #include "modules/canvas2d/CanvasStyle.h"
-#include "platform/fonts/FontSelector.h"
 #include "platform/graphics/DrawLooperBuilder.h"
 #include "platform/graphics/filters/FilterEffect.h"
 #include "platform/graphics/filters/SkiaImageFilterBuilder.h"
@@ -26,6 +25,7 @@
 #include "platform/graphics/skia/SkiaUtils.h"
 #include "third_party/skia/include/effects/SkDashPathEffect.h"
 #include "third_party/skia/include/effects/SkDropShadowImageFilter.h"
+#include <memory>
 
 static const char defaultFont[] = "10px sans-serif";
 static const char defaultFilter[] = "none";
@@ -69,7 +69,8 @@ CanvasRenderingContext2DState::CanvasRenderingContext2DState()
 CanvasRenderingContext2DState::CanvasRenderingContext2DState(
     const CanvasRenderingContext2DState& other,
     ClipListCopyMode mode)
-    : unrealized_save_count_(other.unrealized_save_count_),
+    : CSSFontSelectorClient(),
+      unrealized_save_count_(other.unrealized_save_count_),
       unparsed_stroke_color_(other.unparsed_stroke_color_),
       unparsed_fill_color_(other.unparsed_fill_color_),
       stroke_style_(other.stroke_style_),
@@ -113,13 +114,14 @@ CanvasRenderingContext2DState::CanvasRenderingContext2DState(
     clip_list_ = other.clip_list_;
   }
   if (realized_font_)
-    font_.GetFontSelector()->RegisterForInvalidationCallbacks(this);
+    static_cast<CSSFontSelector*>(font_.GetFontSelector())
+        ->RegisterForInvalidationCallbacks(this);
 }
 
 CanvasRenderingContext2DState::~CanvasRenderingContext2DState() {}
 
 void CanvasRenderingContext2DState::FontsNeedUpdate(
-    FontSelector* font_selector) {
+    CSSFontSelector* font_selector) {
   DCHECK_EQ(font_selector, font_.GetFontSelector());
   DCHECK(realized_font_);
 
@@ -133,7 +135,7 @@ DEFINE_TRACE(CanvasRenderingContext2DState) {
   visitor->Trace(stroke_style_);
   visitor->Trace(fill_style_);
   visitor->Trace(filter_value_);
-  FontSelectorClient::Trace(visitor);
+  CSSFontSelectorClient::Trace(visitor);
 }
 
 void CanvasRenderingContext2DState::SetLineDashOffset(double offset) {
@@ -252,7 +254,7 @@ void CanvasRenderingContext2DState::ClipPath(
 }
 
 void CanvasRenderingContext2DState::SetFont(const Font& font,
-                                            FontSelector* selector) {
+                                            CSSFontSelector* selector) {
   font_ = font;
   font_.Update(selector);
   realized_font_ = true;

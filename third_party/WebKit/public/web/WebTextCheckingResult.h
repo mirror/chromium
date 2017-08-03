@@ -55,7 +55,7 @@ struct WebTextCheckingResult {
         length(length),
         replacements(replacements) {}
 
-#if INSIDE_BLINK
+#if BLINK_IMPLEMENTATION
   operator TextCheckingResult() const;
 #endif
 

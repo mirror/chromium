@@ -42,7 +42,7 @@ struct WebColorSuggestion {
   WebColor color;
   WebString label;
 
-#if INSIDE_BLINK
+#if BLINK_IMPLEMENTATION
   BLINK_EXPORT WebColorSuggestion(const ColorSuggestion&);
   BLINK_EXPORT WebColorSuggestion& operator=(const ColorSuggestion&);
 #endif

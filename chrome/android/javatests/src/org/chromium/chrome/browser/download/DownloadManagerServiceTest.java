@@ -406,7 +406,6 @@ public class DownloadManagerServiceTest {
     @Test
     @MediumTest
     @Feature({"Download"})
-    @RetryOnFailure
     public void testDownloadCompletedIsCalled() throws InterruptedException {
         MockDownloadNotifier notifier = new MockDownloadNotifier(getTestContext());
         MockDownloadSnackbarController snackbarController = new MockDownloadSnackbarController();

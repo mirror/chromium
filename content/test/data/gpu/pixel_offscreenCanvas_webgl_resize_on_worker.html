@@ -60,13 +60,13 @@ function drawTriangle(gl)
 }
 
 self.onmessage = function(e) {
-  var transferred = e.data;
+  var transfered = e.data;
   // Resize the canvas from 200X200 to 40X50
   // The triangle should scale proportionately with edge softened
-  transferred.width = 40;
-  transferred.height = 50;
+  transfered.width = 40;
+  transfered.height = 50;
 
-  var gl = transferred.getContext('webgl');
+  var gl = transfered.getContext('webgl');
   drawTriangle(gl);
   gl.commit();
 

@@ -207,6 +207,7 @@ class FakeAutocompleteProviderClient
   }
 
  private:
+  base::test::ScopedTaskEnvironment scoped_task_environment_;
   base::SequencedWorkerPoolOwner pool_owner_;
   base::ScopedTempDir history_dir_;
   std::unique_ptr<history::HistoryService> history_service_;
@@ -260,7 +261,6 @@ class ShortcutsProviderTest : public testing::Test {
                      const ShortcutsDatabase::Shortcut& shortcut,
                      int max_relevance);
 
-  base::test::ScopedTaskEnvironment scoped_task_environment_;
   std::unique_ptr<FakeAutocompleteProviderClient> client_;
   scoped_refptr<ShortcutsProvider> provider_;
 };

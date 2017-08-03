@@ -175,8 +175,6 @@ class CC_ANIMATION_EXPORT AnimationPlayer
     return scroll_offset_animation_was_interrupted_;
   }
 
-  std::string ToString() const;
-
  private:
   friend class base::RefCounted<AnimationPlayer>;
 
@@ -201,8 +199,6 @@ class CC_ANIMATION_EXPORT AnimationPlayer
   void RemoveAnimationsCompletedOnMainThread(
       AnimationPlayer* animation_player_impl) const;
   void PushPropertiesToImplThread(AnimationPlayer* animation_player_impl);
-
-  std::string AnimationsToString() const;
 
   using Animations = std::vector<std::unique_ptr<Animation>>;
   Animations animations_;

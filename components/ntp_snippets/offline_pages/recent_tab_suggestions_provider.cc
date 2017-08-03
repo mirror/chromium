@@ -109,11 +109,11 @@ void RecentTabSuggestionsProvider::DismissSuggestion(
 
 void RecentTabSuggestionsProvider::FetchSuggestionImage(
     const ContentSuggestion::ID& suggestion_id,
-    ImageFetchedCallback callback) {
+    const ImageFetchedCallback& callback) {
   // TODO(vitaliii): Fetch proper thumbnail from OfflinePageModel once it's
   // available there.
   base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE, base::BindOnce(std::move(callback), gfx::Image()));
+      FROM_HERE, base::Bind(callback, gfx::Image()));
 }
 
 void RecentTabSuggestionsProvider::Fetch(

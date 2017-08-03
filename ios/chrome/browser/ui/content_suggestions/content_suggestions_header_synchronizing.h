@@ -11,9 +11,6 @@
 // synchronize with the header, containing the fake omnibox and the logo.
 @protocol ContentSuggestionsHeaderSynchronizing
 
-// Handles the scroll of the collection and unfocus the omnibox if needed.
-- (void)unfocusOmniboxOnCollectionScroll;
-
 // Updates the fake omnibox to adapt to the current scrolling.
 - (void)updateFakeOmniboxForScrollView:(nonnull UIScrollView*)scrollView;
 

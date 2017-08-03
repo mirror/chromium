@@ -38,4 +38,9 @@ void SurfaceTextureListener::FrameAvailable(JNIEnv* env,
   }
 }
 
+// static
+bool SurfaceTextureListener::RegisterSurfaceTextureListener(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}
+
 }  // namespace gl

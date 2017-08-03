@@ -42,7 +42,6 @@ namespace blink {
 class Document;
 class Element;
 class HTMLParserScriptRunnerHost;
-class ScriptLoader;
 
 // HTMLParserScriptRunner is responsible for for arranging the execution of
 // script elements inserted by the parser, according to the rules for
@@ -112,8 +111,9 @@ class HTMLParserScriptRunner final
                                             ScriptStreamer::Type);
   void ExecuteParsingBlockingScripts();
 
-  void RequestParsingBlockingScript(ScriptLoader*);
-  void RequestDeferredScript(ScriptLoader*);
+  void RequestParsingBlockingScript(Element*);
+  void RequestDeferredScript(Element*);
+  PendingScript* RequestPendingScript(Element*) const;
 
   // Processes the provided script element, but does not execute any
   // parsing-blocking scripts that may remain after execution.

@@ -349,8 +349,9 @@ void NavigationResourceThrottle::OnUIChecksPerformed(
     return;
   }
 
-  if (result == NavigationThrottle::CANCEL_AND_IGNORE ||
-      result == NavigationThrottle::CANCEL) {
+  if (result == NavigationThrottle::CANCEL_AND_IGNORE) {
+    CancelAndIgnore();
+  } else if (result == NavigationThrottle::CANCEL) {
     Cancel();
   } else if (result == NavigationThrottle::BLOCK_REQUEST ||
              result == NavigationThrottle::BLOCK_REQUEST_AND_COLLAPSE) {

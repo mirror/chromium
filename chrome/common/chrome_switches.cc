@@ -717,11 +717,6 @@ const char kSupervisedUserSyncToken[]       = "managed-user-sync-token";
 // testing purposes.
 const char kSystemLogUploadFrequency[] = "system-log-upload-frequency";
 
-// Sets the task manager to track extra renderer processes that might not
-// normally be displayed in the task manager.
-const char kTaskManagerShowExtraRenderers[] =
-    "task-manager-show-extra-renderers";
-
 // Passes the name of the current running automated test to Chrome.
 const char kTestName[]                      = "test-name";
 
@@ -1053,7 +1048,8 @@ extern const char kDisableInputImeAPI[] = "disable-input-ime-api";
 extern const char kEnableInputImeAPI[] = "enable-input-ime-api";
 #endif
 
-#if defined(OS_LINUX) || defined(OS_MACOSX) || defined(OS_WIN)
+#if defined(OS_CHROMEOS) || defined(OS_LINUX) || defined(OS_MACOSX) || \
+    defined(OS_WIN)
 extern const char kEnableNewAppMenuIcon[] = "enable-new-app-menu-icon";
 #endif
 

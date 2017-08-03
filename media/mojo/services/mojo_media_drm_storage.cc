@@ -25,10 +25,9 @@ MojoMediaDrmStorage::MojoMediaDrmStorage(
 
 MojoMediaDrmStorage::~MojoMediaDrmStorage() {}
 
-void MojoMediaDrmStorage::Initialize(InitCB init_cb) {
+void MojoMediaDrmStorage::Initialize(const url::Origin& origin) {
   DVLOG(1) << __func__;
-  media_drm_storage_ptr_->Initialize(
-      ScopedCallbackRunner(std::move(init_cb), base::UnguessableToken()));
+  media_drm_storage_ptr_->Initialize(origin);
 }
 
 void MojoMediaDrmStorage::OnProvisioned(ResultCB result_cb) {

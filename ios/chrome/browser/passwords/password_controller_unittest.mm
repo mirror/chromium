@@ -268,7 +268,7 @@ TEST_F(PasswordControllerTest, PopulatePasswordFormWithDictionary) {
     // to be stripped off. The password is recognized as an old password.
     {
       "http://john:doe@fakedomain.com/foo/bar?baz=quz#foobar",
-      "{ \"action\": \"http://fakedomain.com/foo/some/action\","
+      "{ \"action\": \"some/action?to=be&or=not#tobe\","
           "\"usernameElement\": \"account\","
           "\"usernameValue\": \"fakeaccount\","
           "\"name\": \"signup\","
@@ -289,7 +289,7 @@ TEST_F(PasswordControllerTest, PopulatePasswordFormWithDictionary) {
     // due to an origin mismatch.
     {
       "http://john:doe@fakedomain.com/foo/bar?baz=quz#foobar",
-      "{ \"action\": \"\","
+      "{ \"action\": \"some/action?to=be&or=not#tobe\","
           "\"usernameElement\": \"account\","
           "\"usernameValue\": \"fakeaccount\","
           "\"name\": \"signup\","
@@ -334,7 +334,7 @@ TEST_F(PasswordControllerTest, PopulatePasswordFormWithDictionary) {
     // to enter the old password and new password.
     {
       "http://fakedomain.com/foo",
-      "{ \"action\": \"http://fakedomain.com/foo\","
+      "{ \"action\": \"\","
           "\"usernameElement\": \"account\","
           "\"usernameValue\": \"fakeaccount\","
           "\"name\": \"signup\","
@@ -357,7 +357,7 @@ TEST_F(PasswordControllerTest, PopulatePasswordFormWithDictionary) {
     // does not make sense.
     {
       "http://fakedomain.com",
-      "{ \"action\": \"http://fakedomain.com/\","
+      "{ \"action\": \"\","
           "\"usernameElement\": \"account\","
           "\"usernameValue\": \"fakeaccount\","
           "\"name\": \"signup\","
@@ -381,7 +381,7 @@ TEST_F(PasswordControllerTest, PopulatePasswordFormWithDictionary) {
     // password is the old one.
     {
       "http://fakedomain.com",
-      "{ \"action\": \"http://fakedomain.com/\","
+      "{ \"action\": \"\","
           "\"usernameElement\": \"account\","
           "\"usernameValue\": \"fakeaccount\","
           "\"name\": \"signup\","
@@ -405,7 +405,7 @@ TEST_F(PasswordControllerTest, PopulatePasswordFormWithDictionary) {
     // password is the new one.
     {
       "http://fakedomain.com",
-      "{ \"action\": \"http://fakedomain.com/\","
+      "{ \"action\": \"\","
           "\"usernameElement\": \"account\","
           "\"usernameValue\": \"fakeaccount\","
           "\"name\": \"signup\","

@@ -175,4 +175,8 @@ int ViewConfiguration::GetMinScalingSpanInDips() {
   return g_view_configuration.Get().min_scaling_span_in_dips();
 }
 
+bool ViewConfiguration::RegisterViewConfiguration(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}
+
 }  // namespace gfx

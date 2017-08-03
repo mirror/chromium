@@ -1835,7 +1835,7 @@ void Document::UpdateStyleInvalidationIfNeeded() {
 
 void Document::SetupFontBuilder(ComputedStyle& document_style) {
   FontBuilder font_builder(this);
-  CSSFontSelector* selector = GetStyleEngine().GetFontSelector();
+  CSSFontSelector* selector = GetStyleEngine().FontSelector();
   font_builder.CreateFontForDocument(selector, document_style);
 }
 
@@ -6550,6 +6550,11 @@ void Document::UpdateActiveState(const HitTestRequest& request,
 
 void Document::UpdateHoverState(const HitTestRequest& request,
                                 Element* inner_element_in_document) {
+  // Do not set hover state if event is from touch and on mobile.
+  bool allow_hover_changes =
+      !(request.TouchEvent() && GetPage() &&
+        GetPage()->GetVisualViewport().ShouldDisableDesktopWorkarounds());
+
   Element* old_hover_element = HoverElement();
 
   // The passed in innerElement may not be a result of a hit test for the
@@ -6560,9 +6565,10 @@ void Document::UpdateHoverState(const HitTestRequest& request,
       SkipDisplayNoneAncestors(inner_element_in_document);
 
   // Update our current hover element.
-  SetHoverElement(new_hover_element);
+  if (allow_hover_changes)
+    SetHoverElement(new_hover_element);
 
-  if (old_hover_element == new_hover_element)
+  if (old_hover_element == new_hover_element || !allow_hover_changes)
     return;
 
   Node* ancestor_element = nullptr;

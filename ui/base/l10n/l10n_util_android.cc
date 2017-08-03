@@ -108,4 +108,8 @@ ScopedJavaLocalRef<jstring> GetDurationString(JNIEnv* env,
   return jtime_remaining;
 }
 
+bool RegisterLocalizationUtil(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}
+
 }  // namespace l10n_util

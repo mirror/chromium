@@ -31,7 +31,7 @@
 #ifndef WebTextDirection_h
 #define WebTextDirection_h
 
-#if INSIDE_BLINK
+#if BLINK_IMPLEMENTATION
 #include "platform/text/TextDirection.h"
 #endif
 
@@ -45,7 +45,7 @@ enum WebTextDirection {
   kWebTextDirectionLast = kWebTextDirectionRightToLeft
 };
 
-#if INSIDE_BLINK
+#if BLINK_IMPLEMENTATION
 inline WebTextDirection ToWebTextDirection(TextDirection direction) {
   switch (direction) {
     case TextDirection::kLtr:

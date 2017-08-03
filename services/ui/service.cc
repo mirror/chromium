@@ -144,13 +144,9 @@ Service::Service(const InProcessConfig* config)
       threaded_image_cursors_factory_(
           base::MakeUnique<ThreadedImageCursorsFactoryImpl>(config)),
       test_config_(false),
-      ime_registrar_(&ime_driver_),
-      discardable_shared_memory_manager_(config ? config->memory_manager
-                                                : nullptr) {}
+      ime_registrar_(&ime_driver_) {}
 
 Service::~Service() {
-  in_destructor_ = true;
-
   // Destroy |window_server_| first, since it depends on |event_source_|.
   // WindowServer (or more correctly its Displays) may have state that needs to
   // be destroyed before GpuState as well.
@@ -283,12 +279,9 @@ void Service::OnStart() {
 
   ime_driver_.Init(context()->connector(), test_config_);
 
-  if (!discardable_shared_memory_manager_) {
-    owned_discardable_shared_memory_manager_ =
-        base::MakeUnique<discardable_memory::DiscardableSharedMemoryManager>();
-    discardable_shared_memory_manager_ =
-        owned_discardable_shared_memory_manager_.get();
-  }
+  discardable_shared_memory_manager_ =
+      base::MakeUnique<discardable_memory::DiscardableSharedMemoryManager>();
+
   registry_.AddInterface<mojom::AccessibilityManager>(base::Bind(
       &Service::BindAccessibilityManagerRequest, base::Unretained(this)));
   registry_.AddInterface<mojom::Clipboard>(
@@ -361,13 +354,9 @@ void Service::OnFirstDisplayReady() {
 }
 
 void Service::OnNoMoreDisplays() {
-  // We may get here from the destructor. Don't try to use RequestQuit() when
-  // that happens as ServiceContext DCHECKs in this case.
-  if (in_destructor_)
-    return;
-
-  DCHECK(context());
-  context()->RequestQuit();
+  // We may get here from the destructor, in which case there is no messageloop.
+  if (base::RunLoop::IsRunningOnCurrentThread())
+    base::RunLoop::QuitCurrentWhenIdleDeprecated();
 }
 
 bool Service::IsTestConfig() const {

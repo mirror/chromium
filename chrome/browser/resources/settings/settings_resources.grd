@@ -714,12 +714,6 @@
       <structure name="IDR_SETTINGS_ADDRESS_EDIT_DIALOG_JS"
                  file="passwords_and_forms_page/address_edit_dialog.js"
                  type="chrome_html" />
-      <structure name="IDR_SETTINGS_SHOW_PASSWORD_BEHAVIOR_HTML"
-                 file="passwords_and_forms_page/show_password_behavior.html"
-                 type="chrome_html" />
-      <structure name="IDR_SETTINGS_SHOW_PASSWORD_BEHAVIOR_JS"
-                 file="passwords_and_forms_page/show_password_behavior.js"
-                 type="chrome_html" />
       <structure name="IDR_SETTINGS_PASSWORD_LIST_ITEM_HTML"
                  file="passwords_and_forms_page/password_list_item.html"
                  type="chrome_html" />
@@ -1125,6 +1119,12 @@
                    type="chrome_html" />
         <structure name="IDR_SETTINGS_ANDROID_SETTINGS_ELEMENT_JS"
                    file="android_apps_page/android_settings_element.js"
+                   type="chrome_html" />
+        <structure name="IDR_SETTINGS_BLUETOOTH_DEVICE_DIALOG_HTML"
+                   file="bluetooth_page/bluetooth_device_dialog.html"
+                   type="chrome_html" />
+        <structure name="IDR_SETTINGS_BLUETOOTH_DEVICE_DIALOG_JS"
+                   file="bluetooth_page/bluetooth_device_dialog.js"
                    type="chrome_html" />
         <structure name="IDR_SETTINGS_BLUETOOTH_DEVICE_LIST_ITEM_HTML"
                    file="bluetooth_page/bluetooth_device_list_item.html"

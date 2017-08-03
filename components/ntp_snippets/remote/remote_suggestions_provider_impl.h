@@ -101,7 +101,7 @@ class RemoteSuggestionsProviderImpl final : public RemoteSuggestionsProvider {
   CategoryInfo GetCategoryInfo(Category category) override;
   void DismissSuggestion(const ContentSuggestion::ID& suggestion_id) override;
   void FetchSuggestionImage(const ContentSuggestion::ID& suggestion_id,
-                            ImageFetchedCallback callback) override;
+                            const ImageFetchedCallback& callback) override;
   void Fetch(const Category& category,
              const std::set<std::string>& known_suggestion_ids,
              const FetchDoneCallback& callback) override;
@@ -141,9 +141,6 @@ class RemoteSuggestionsProviderImpl final : public RemoteSuggestionsProvider {
   // TODO(tschumann): remove this method as soon as we inject the fetcher into
   // the constructor.
   CachedImageFetcher& GetImageFetcherForTesting() { return image_fetcher_; }
-
-  void PushArticleSuggestionToTheFrontForDebugging(
-      std::unique_ptr<RemoteSuggestion> suggestion);
 
  private:
   friend class RemoteSuggestionsProviderImplTest;
@@ -288,10 +285,6 @@ class RemoteSuggestionsProviderImpl final : public RemoteSuggestionsProvider {
   void IntegrateSuggestions(Category category,
                             CategoryContent* content,
                             RemoteSuggestion::PtrVector new_suggestions);
-
-  // Adds newly available suggestion at the top of Articles category.
-  void PrependArticleSuggestion(
-      std::unique_ptr<RemoteSuggestion> remote_suggestion);
 
   // Dismisses a suggestion within a given category content.
   // Note that this modifies the suggestion datastructures of |content|

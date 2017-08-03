@@ -181,12 +181,9 @@ void WidgetInputHandlerManager::GenerateScrollBeginAndSendToMainThread(
 
 void WidgetInputHandlerManager::SetWhiteListedTouchAction(
     cc::TouchAction touch_action,
-    uint32_t unique_touch_event_id,
-    ui::InputHandlerProxy::EventDisposition event_disposition) {
-  InputEventAckState ack_state = InputEventDispositionToAck(event_disposition);
+    uint32_t unique_touch_event_id) {
   legacy_host_message_sender_->Send(new InputHostMsg_SetWhiteListedTouchAction(
-      legacy_host_message_routing_id_, touch_action, unique_touch_event_id,
-      ack_state));
+      legacy_host_message_routing_id_, touch_action, unique_touch_event_id));
 }
 
 void WidgetInputHandlerManager::ObserveGestureEventOnMainThread(

@@ -42,8 +42,6 @@ PipelineMetadata EncryptedMetadata() {
   return data;
 }
 
-const std::string kDefaultReceiver = "TestingChromeCast";
-
 mojom::RemotingSinkMetadata GetDefaultSinkMetadata(bool enable) {
   mojom::RemotingSinkMetadata metadata;
   if (enable) {
@@ -56,7 +54,6 @@ mojom::RemotingSinkMetadata GetDefaultSinkMetadata(bool enable) {
       mojom::RemotingSinkVideoCapability::CODEC_VP8);
   metadata.audio_capabilities.push_back(
       mojom::RemotingSinkAudioCapability::CODEC_BASELINE_SET);
-  metadata.friendly_name = kDefaultReceiver;
   return metadata;
 }
 
@@ -78,17 +75,10 @@ class RendererControllerTest : public ::testing::Test,
   static void RunUntilIdle() { base::RunLoop().RunUntilIdle(); }
 
   // MediaObserverClient implementation.
-  void SwitchToRemoteRenderer(
-      const std::string& remote_device_friendly_name) override {
-    is_rendering_remotely_ = true;
-    disable_pipeline_suspend_ = true;
-    sink_name_ = remote_device_friendly_name;
-  }
-
-  void SwitchToLocalRenderer() override {
-    is_rendering_remotely_ = false;
-    disable_pipeline_suspend_ = false;
-    sink_name_.clear();
+  void SwitchRenderer(bool disable_pipeline_auto_suspend) override {
+    is_rendering_remotely_ = disable_pipeline_auto_suspend;
+    disable_pipeline_suspend_ = disable_pipeline_auto_suspend;
+    decoded_bytes_ = 0;
   }
 
   void ActivateViewportIntersectionMonitoring(bool activate) override {
@@ -108,7 +98,6 @@ class RendererControllerTest : public ::testing::Test,
       const PipelineMetadata& pipeline_metadata,
       const mojom::RemotingSinkMetadata& sink_metadata) {
     EXPECT_FALSE(is_rendering_remotely_);
-    EXPECT_TRUE(sink_name_.empty());
     controller_ = base::MakeUnique<RendererController>(shared_session);
     clock_ = new base::SimpleTestTickClock();
     controller_->clock_.reset(clock_);
@@ -138,7 +127,7 @@ class RendererControllerTest : public ::testing::Test,
     RunUntilIdle();
   }
 
-  bool IsInDelayedStart() const {
+  bool IsInDelayedStart() {
     return controller_->delayed_start_stability_timer_.IsRunning();
   }
 
@@ -159,40 +148,16 @@ class RendererControllerTest : public ::testing::Test,
     controller_->delayed_start_stability_timer_.Stop();
   }
 
-  void ExpectInDelayedStart() const {
-    EXPECT_FALSE(is_rendering_remotely_);
-    EXPECT_FALSE(disable_pipeline_suspend_);
-    EXPECT_TRUE(sink_name_.empty());
-    EXPECT_TRUE(IsInDelayedStart());
-    EXPECT_TRUE(activate_viewport_intersection_monitoring_);
-  }
-
-  void ExpectInRemoting() const {
-    EXPECT_TRUE(is_rendering_remotely_);
-    EXPECT_TRUE(disable_pipeline_suspend_);
-    EXPECT_EQ(kDefaultReceiver, sink_name_);
-    EXPECT_FALSE(IsInDelayedStart());
-    EXPECT_TRUE(activate_viewport_intersection_monitoring_);
-  }
-
-  void ExpectInLocalRendering() const {
-    EXPECT_FALSE(is_rendering_remotely_);
-    EXPECT_FALSE(disable_pipeline_suspend_);
-    EXPECT_TRUE(sink_name_.empty());
-    EXPECT_FALSE(IsInDelayedStart());
-  }
-
   base::MessageLoop message_loop_;
 
  protected:
+  std::unique_ptr<RendererController> controller_;
   bool is_rendering_remotely_ = false;
   bool is_remoting_cdm_ = false;
   bool activate_viewport_intersection_monitoring_ = false;
   bool disable_pipeline_suspend_ = false;
   size_t decoded_bytes_ = 0;
   base::SimpleTestTickClock* clock_;  // Own by |controller_|;
-  std::string sink_name_;
-  std::unique_ptr<RendererController> controller_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(RendererControllerTest);
@@ -204,14 +169,19 @@ TEST_F(RendererControllerTest, ToggleRendererOnDominantChange) {
   InitializeControllerAndBecomeDominant(shared_session,
                                         DefaultMetadata(VideoCodec::kCodecVP8),
                                         GetDefaultSinkMetadata(true));
+  EXPECT_FALSE(is_rendering_remotely_);
+  EXPECT_TRUE(IsInDelayedStart());
   DelayedStartEnds(false);
   RunUntilIdle();
-  ExpectInRemoting();  // All requirements now satisfied.
+  EXPECT_TRUE(is_rendering_remotely_);  // All requirements now satisfied.
+  EXPECT_TRUE(disable_pipeline_suspend_);
 
   // Leaving fullscreen should shut down remoting.
   controller_->OnBecameDominantVisibleContent(false);
   RunUntilIdle();
-  ExpectInLocalRendering();
+  EXPECT_FALSE(is_rendering_remotely_);
+  EXPECT_FALSE(disable_pipeline_suspend_);
+  EXPECT_FALSE(activate_viewport_intersection_monitoring_);
 }
 
 TEST_F(RendererControllerTest, StartFailedWithTooHighBitrate) {
@@ -230,6 +200,7 @@ TEST_F(RendererControllerTest, StartFailedWithTooHighBitrate) {
 }
 
 TEST_F(RendererControllerTest, ToggleRendererOnSinkCapabilities) {
+  EXPECT_FALSE(is_rendering_remotely_);
   const scoped_refptr<SharedSession> shared_session =
       FakeRemoterFactory::CreateSharedSession(false);
   InitializeControllerAndBecomeDominant(shared_session,
@@ -237,10 +208,13 @@ TEST_F(RendererControllerTest, ToggleRendererOnSinkCapabilities) {
                                         GetDefaultSinkMetadata(false));
   // An available sink that does not support remote rendering should not cause
   // the controller to toggle remote rendering on.
-  ExpectInLocalRendering();
+  EXPECT_FALSE(is_rendering_remotely_);
+  EXPECT_FALSE(activate_viewport_intersection_monitoring_);
   shared_session->OnSinkGone();  // Bye-bye useless sink!
   RunUntilIdle();
-  ExpectInLocalRendering();
+  EXPECT_FALSE(is_rendering_remotely_);
+  EXPECT_FALSE(activate_viewport_intersection_monitoring_);
+  EXPECT_FALSE(disable_pipeline_suspend_);
   // A sink that *does* support remote rendering *does* cause the controller to
   // toggle remote rendering on.
   shared_session->OnSinkAvailable(GetDefaultSinkMetadata(true).Clone());
@@ -249,10 +223,13 @@ TEST_F(RendererControllerTest, ToggleRendererOnSinkCapabilities) {
   EXPECT_FALSE(is_rendering_remotely_);
   controller_->OnBecameDominantVisibleContent(true);
   RunUntilIdle();
-  ExpectInDelayedStart();
+  EXPECT_FALSE(is_rendering_remotely_);
+  EXPECT_FALSE(disable_pipeline_suspend_);
+  EXPECT_TRUE(IsInDelayedStart());
   DelayedStartEnds(false);
   RunUntilIdle();
-  ExpectInRemoting();  // All requirements now satisfied.
+  EXPECT_TRUE(is_rendering_remotely_);
+  EXPECT_TRUE(disable_pipeline_suspend_);
 }
 
 TEST_F(RendererControllerTest, ToggleRendererOnDisableChange) {
@@ -262,16 +239,20 @@ TEST_F(RendererControllerTest, ToggleRendererOnDisableChange) {
   InitializeControllerAndBecomeDominant(shared_session,
                                         DefaultMetadata(VideoCodec::kCodecVP8),
                                         GetDefaultSinkMetadata(true));
-  ExpectInDelayedStart();
+  EXPECT_TRUE(activate_viewport_intersection_monitoring_);
+  EXPECT_TRUE(IsInDelayedStart());
   DelayedStartEnds(false);
   RunUntilIdle();
-  ExpectInRemoting();  // All requirements now satisfied.
+  EXPECT_TRUE(is_rendering_remotely_);  // All requirements now satisfied.
+  EXPECT_TRUE(disable_pipeline_suspend_);
 
   // If the page disables remote playback (e.g., by setting the
   // disableRemotePlayback attribute), this should shut down remoting.
   controller_->OnRemotePlaybackDisabled(true);
   RunUntilIdle();
-  ExpectInLocalRendering();
+  EXPECT_FALSE(is_rendering_remotely_);
+  EXPECT_FALSE(activate_viewport_intersection_monitoring_);
+  EXPECT_FALSE(disable_pipeline_suspend_);
 }
 
 TEST_F(RendererControllerTest, WithVP9VideoCodec) {
@@ -282,7 +263,9 @@ TEST_F(RendererControllerTest, WithVP9VideoCodec) {
                                         GetDefaultSinkMetadata(true));
   // An available sink that does not support VP9 video codec should not cause
   // the controller to toggle remote rendering on.
-  ExpectInLocalRendering();
+  EXPECT_FALSE(is_rendering_remotely_);
+  EXPECT_FALSE(disable_pipeline_suspend_);
+  EXPECT_FALSE(activate_viewport_intersection_monitoring_);
 
   shared_session->OnSinkGone();  // Bye-bye useless sink!
   mojom::RemotingSinkMetadata sink_metadata = GetDefaultSinkMetadata(true);
@@ -292,10 +275,12 @@ TEST_F(RendererControllerTest, WithVP9VideoCodec) {
   // toggle remote rendering on.
   shared_session->OnSinkAvailable(sink_metadata.Clone());
   RunUntilIdle();
-  ExpectInDelayedStart();
+  EXPECT_TRUE(IsInDelayedStart());
   DelayedStartEnds(false);
   RunUntilIdle();
-  ExpectInRemoting();  // All requirements now satisfied.
+  EXPECT_TRUE(is_rendering_remotely_);  // All requirements now satisfied.
+  EXPECT_TRUE(activate_viewport_intersection_monitoring_);
+  EXPECT_TRUE(disable_pipeline_suspend_);
 }
 
 TEST_F(RendererControllerTest, WithHEVCVideoCodec) {
@@ -306,11 +291,15 @@ TEST_F(RendererControllerTest, WithHEVCVideoCodec) {
                                         GetDefaultSinkMetadata(true));
   // An available sink that does not support HEVC video codec should not cause
   // the controller to toggle remote rendering on.
-  ExpectInLocalRendering();
+  EXPECT_FALSE(is_rendering_remotely_);
+  EXPECT_FALSE(activate_viewport_intersection_monitoring_);
+  EXPECT_FALSE(disable_pipeline_suspend_);
 
   shared_session->OnSinkGone();  // Bye-bye useless sink!
   RunUntilIdle();
-  ExpectInLocalRendering();
+  EXPECT_FALSE(is_rendering_remotely_);
+  EXPECT_FALSE(activate_viewport_intersection_monitoring_);
+  EXPECT_FALSE(disable_pipeline_suspend_);
   mojom::RemotingSinkMetadata sink_metadata = GetDefaultSinkMetadata(true);
   sink_metadata.video_capabilities.push_back(
       mojom::RemotingSinkVideoCapability::CODEC_HEVC);
@@ -318,10 +307,12 @@ TEST_F(RendererControllerTest, WithHEVCVideoCodec) {
   // toggle remote rendering on.
   shared_session->OnSinkAvailable(sink_metadata.Clone());
   RunUntilIdle();
-  ExpectInDelayedStart();
+  EXPECT_TRUE(IsInDelayedStart());
   DelayedStartEnds(false);
   RunUntilIdle();
-  ExpectInRemoting();  // All requirements now satisfied.
+  EXPECT_TRUE(is_rendering_remotely_);  // All requirements now satisfied.
+  EXPECT_TRUE(activate_viewport_intersection_monitoring_);
+  EXPECT_TRUE(disable_pipeline_suspend_);
 }
 
 TEST_F(RendererControllerTest, WithAACAudioCodec) {
@@ -336,11 +327,14 @@ TEST_F(RendererControllerTest, WithAACAudioCodec) {
                                         GetDefaultSinkMetadata(true));
   // An available sink that does not support AAC audio codec should not cause
   // the controller to toggle remote rendering on.
-  ExpectInLocalRendering();
+  EXPECT_FALSE(is_rendering_remotely_);
+  EXPECT_FALSE(disable_pipeline_suspend_);
+  EXPECT_FALSE(activate_viewport_intersection_monitoring_);
 
   shared_session->OnSinkGone();  // Bye-bye useless sink!
   RunUntilIdle();
-  ExpectInLocalRendering();
+  EXPECT_FALSE(is_rendering_remotely_);
+  EXPECT_FALSE(disable_pipeline_suspend_);
   mojom::RemotingSinkMetadata sink_metadata = GetDefaultSinkMetadata(true);
   sink_metadata.audio_capabilities.push_back(
       mojom::RemotingSinkAudioCapability::CODEC_AAC);
@@ -348,10 +342,12 @@ TEST_F(RendererControllerTest, WithAACAudioCodec) {
   // toggle remote rendering on.
   shared_session->OnSinkAvailable(sink_metadata.Clone());
   RunUntilIdle();
-  ExpectInDelayedStart();
+  EXPECT_TRUE(IsInDelayedStart());
   DelayedStartEnds(false);
   RunUntilIdle();
-  ExpectInRemoting();  // All requirements now satisfied.
+  EXPECT_TRUE(is_rendering_remotely_);  // All requirements now satisfied.
+  EXPECT_TRUE(activate_viewport_intersection_monitoring_);
+  EXPECT_TRUE(disable_pipeline_suspend_);
 }
 
 TEST_F(RendererControllerTest, WithOpusAudioCodec) {
@@ -366,7 +362,9 @@ TEST_F(RendererControllerTest, WithOpusAudioCodec) {
                                         GetDefaultSinkMetadata(true));
   // An available sink that does not support Opus audio codec should not cause
   // the controller to toggle remote rendering on.
-  ExpectInLocalRendering();
+  EXPECT_FALSE(is_rendering_remotely_);
+  EXPECT_FALSE(activate_viewport_intersection_monitoring_);
+  EXPECT_FALSE(disable_pipeline_suspend_);
 
   shared_session->OnSinkGone();  // Bye-bye useless sink!
   RunUntilIdle();
@@ -377,10 +375,12 @@ TEST_F(RendererControllerTest, WithOpusAudioCodec) {
   // toggle remote rendering on.
   shared_session->OnSinkAvailable(sink_metadata.Clone());
   RunUntilIdle();
-  ExpectInDelayedStart();
+  EXPECT_TRUE(IsInDelayedStart());
   DelayedStartEnds(false);
   RunUntilIdle();
-  ExpectInRemoting();  // All requirements now satisfied.
+  EXPECT_TRUE(is_rendering_remotely_);  // All requirements now satisfied.
+  EXPECT_TRUE(activate_viewport_intersection_monitoring_);
+  EXPECT_TRUE(disable_pipeline_suspend_);
 }
 
 TEST_F(RendererControllerTest, StartFailed) {
@@ -390,10 +390,11 @@ TEST_F(RendererControllerTest, StartFailed) {
                                         DefaultMetadata(VideoCodec::kCodecVP8),
                                         GetDefaultSinkMetadata(true));
   RunUntilIdle();
-  ExpectInDelayedStart();
+  EXPECT_TRUE(IsInDelayedStart());
   DelayedStartEnds(false);
   RunUntilIdle();
-  ExpectInLocalRendering();
+  EXPECT_FALSE(is_rendering_remotely_);
+  EXPECT_FALSE(disable_pipeline_suspend_);
 }
 
 TEST_F(RendererControllerTest, EncryptedWithRemotingCdm) {

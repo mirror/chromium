@@ -5,7 +5,6 @@
 #ifndef GamepadButton_h
 #define GamepadButton_h
 
-#include "device/gamepad/public/cpp/gamepad.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Vector.h"
@@ -27,9 +26,6 @@ class GamepadButton final : public GarbageCollected<GamepadButton>,
 
   bool touched() const { return touched_; }
   void SetTouched(bool val) { touched_ = val; }
-
-  bool IsEqual(const device::GamepadButton&) const;
-  void UpdateValuesFrom(const device::GamepadButton&);
 
   DEFINE_INLINE_TRACE() {}
 

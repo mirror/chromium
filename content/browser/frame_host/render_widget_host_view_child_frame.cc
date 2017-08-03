@@ -66,7 +66,8 @@ RenderWidgetHostViewChildFrame::RenderWidgetHostViewChildFrame(
       background_color_(SK_ColorWHITE),
       weak_factory_(this) {
   if (!service_manager::ServiceManagerIsRemote()) {
-    GetHostFrameSinkManager()->RegisterFrameSinkId(frame_sink_id_, this);
+    GetFrameSinkManager()->surface_manager()->RegisterFrameSinkId(
+        frame_sink_id_);
     CreateCompositorFrameSinkSupport();
   }
 }
@@ -74,8 +75,10 @@ RenderWidgetHostViewChildFrame::RenderWidgetHostViewChildFrame(
 RenderWidgetHostViewChildFrame::~RenderWidgetHostViewChildFrame() {
   if (!service_manager::ServiceManagerIsRemote()) {
     ResetCompositorFrameSinkSupport();
-    if (GetHostFrameSinkManager())
-      GetHostFrameSinkManager()->InvalidateFrameSinkId(frame_sink_id_);
+    if (GetFrameSinkManager()) {
+      GetFrameSinkManager()->surface_manager()->InvalidateFrameSinkId(
+          frame_sink_id_);
+    }
   }
 }
 
@@ -766,12 +769,6 @@ void RenderWidgetHostViewChildFrame::OnBeginFramePausedChanged(bool paused) {
   renderer_compositor_frame_sink_->OnBeginFramePausedChanged(paused);
 }
 
-void RenderWidgetHostViewChildFrame::OnSurfaceCreated(
-    const viz::SurfaceInfo& surface_info) {
-  // TODO(fsamuel): Once surface synchronization is turned on, the fallback
-  // surface should be set here.
-}
-
 void RenderWidgetHostViewChildFrame::SetNeedsBeginFrames(
     bool needs_begin_frames) {
   if (support_)
@@ -848,9 +845,11 @@ void RenderWidgetHostViewChildFrame::CreateCompositorFrameSinkSupport() {
 
   DCHECK(!support_);
   constexpr bool is_root = false;
+  constexpr bool handles_frame_sink_id_invalidation = false;
   constexpr bool needs_sync_points = true;
   support_ = GetHostFrameSinkManager()->CreateCompositorFrameSinkSupport(
-      this, frame_sink_id_, is_root, needs_sync_points);
+      this, frame_sink_id_, is_root, handles_frame_sink_id_invalidation,
+      needs_sync_points);
   if (parent_frame_sink_id_.is_valid()) {
     GetHostFrameSinkManager()->RegisterFrameSinkHierarchy(parent_frame_sink_id_,
                                                           frame_sink_id_);

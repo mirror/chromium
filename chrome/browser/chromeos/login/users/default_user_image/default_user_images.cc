@@ -234,6 +234,16 @@ const int kDefaultImageDescriptions[] = {
 
 const int kDefaultImageDescriptionsMaxID = arraysize(kDefaultImageDescriptions);
 
+// Returns a string consisting of the prefix specified and the index of the
+// image if its valid.
+std::string GetDefaultImageString(int index, const std::string& prefix) {
+  if (index < 0 || index >= kDefaultImagesCount) {
+    DCHECK(!base::SysInfo::IsRunningOnChromeOS());
+    return std::string();
+  }
+  return base::StringPrintf("%s%d", prefix.c_str(), index);
+}
+
 // Returns true if the string specified consists of the prefix and one of
 // the default images indices. Returns the index of the image in |image_id|
 // variable.
@@ -266,9 +276,9 @@ void GetFirstLastIndex(int* first, int* last) {
 }  // namespace
 
 std::string GetDefaultImageUrl(int index) {
-  if (index <= 0 || index >= kDefaultImagesCount)
+  if (index == 0)
     return kZeroDefaultUrl;
-  return base::StringPrintf("%s%d", kDefaultUrlPrefix, index);
+  return GetDefaultImageString(index, kDefaultUrlPrefix);
 }
 
 bool IsDefaultImageUrl(const std::string& url, int* image_id) {

@@ -128,6 +128,16 @@ void AppendSwitchesFromExperimentalSettings(base::CommandLine* command_line) {
   if ([defaults boolForKey:@"TabStripAutoScrollNewTabsDisabled"])
     command_line->AppendSwitch(switches::kDisableTabStripAutoScrollNewTabs);
 
+  // Populate command line flag for the SnapshotLRUCache experiment from the
+  // configuration plist.
+  NSString* enableLRUSnapshotCache =
+      [defaults stringForKey:@"SnapshotLRUCache"];
+  if ([enableLRUSnapshotCache isEqualToString:@"Enabled"]) {
+    command_line->AppendSwitch(switches::kEnableLRUSnapshotCache);
+  } else if ([enableLRUSnapshotCache isEqualToString:@"Disabled"]) {
+    command_line->AppendSwitch(switches::kDisableLRUSnapshotCache);
+  }
+
   // Populate command line flags from PasswordGenerationEnabled.
   NSString* enablePasswordGenerationValue =
       [defaults stringForKey:@"PasswordGenerationEnabled"];
@@ -158,6 +168,23 @@ void AppendSwitchesFromExperimentalSettings(base::CommandLine* command_line) {
     command_line->AppendSwitchASCII(
         switches::kIOSHostResolverRules,
         "MAP * " + base::SysNSStringToUTF8(webPageReplayProxy));
+  }
+
+  NSString* autoReloadEnabledValue =
+      [defaults stringForKey:@"AutoReloadEnabled"];
+  if ([autoReloadEnabledValue isEqualToString:@"Enabled"]) {
+    command_line->AppendSwitch(switches::kEnableOfflineAutoReload);
+  } else if ([autoReloadEnabledValue isEqualToString:@"Disabled"]) {
+    command_line->AppendSwitch(switches::kDisableOfflineAutoReload);
+  }
+
+  // Populate command line flags from EnableFastWebScrollViewInsets.
+  NSString* enableFastWebScrollViewInsets =
+      [defaults stringForKey:@"EnableFastWebScrollViewInsets"];
+  if ([enableFastWebScrollViewInsets isEqualToString:@"Enabled"]) {
+    command_line->AppendSwitch(switches::kEnableIOSFastWebScrollViewInsets);
+  } else if ([enableFastWebScrollViewInsets isEqualToString:@"Disabled"]) {
+    command_line->AppendSwitch(switches::kDisableIOSFastWebScrollViewInsets);
   }
 
   // Populate command line flags from ReaderModeEnabled.
@@ -264,6 +291,11 @@ void AppendSwitchesFromExperimentalSettings(base::CommandLine* command_line) {
   } else if ([enableBookmarkReordering isEqualToString:@"Disabled"]) {
     command_line->AppendSwitch(switches::kDisableBookmarkReordering);
   }
+
+  // Populate command line flag for the request mobile site experiment from the
+  // configuration plist.
+  if ([defaults boolForKey:@"RequestMobileSiteDisabled"])
+    command_line->AppendSwitch(switches::kDisableRequestMobileSite);
 
   // Populate command line flag for 3rd party keyboard omnibox workaround.
   NSString* enableThirdPartyKeyboardWorkaround =

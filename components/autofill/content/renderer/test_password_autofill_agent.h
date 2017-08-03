@@ -11,8 +11,7 @@ namespace autofill {
 
 class TestPasswordAutofillAgent : public PasswordAutofillAgent {
  public:
-  TestPasswordAutofillAgent(content::RenderFrame* render_frame,
-                            service_manager::BinderRegistry* registry);
+  explicit TestPasswordAutofillAgent(content::RenderFrame* render_frame);
   ~TestPasswordAutofillAgent() override;
 
  private:

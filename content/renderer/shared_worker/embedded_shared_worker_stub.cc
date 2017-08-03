@@ -233,7 +233,9 @@ EmbeddedSharedWorkerStub::CreateServiceWorkerNetworkProvider() {
   // Create a content::ServiceWorkerNetworkProvider for this data source so
   // we can observe its requests.
   std::unique_ptr<ServiceWorkerNetworkProvider> provider(
-      ServiceWorkerNetworkProvider::CreateForSharedWorker(route_id_));
+      new ServiceWorkerNetworkProvider(
+          route_id_, SERVICE_WORKER_PROVIDER_FOR_SHARED_WORKER,
+          true /* is_parent_frame_secure */));
 
   // Blink is responsible for deleting the returned object.
   return base::MakeUnique<WebServiceWorkerNetworkProviderImpl>(

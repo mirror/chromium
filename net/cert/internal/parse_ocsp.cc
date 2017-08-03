@@ -62,8 +62,7 @@ bool ParseOCSPCertID(const der::Input& raw_tlv, OCSPCertID* out) {
     return false;
   if (!parser.ReadTag(der::kInteger, &(out->serial_number)))
     return false;
-  CertErrors errors;
-  if (!VerifySerialNumber(out->serial_number, false /*warnings_only*/, &errors))
+  if (!VerifySerialNumber(out->serial_number))
     return false;
 
   return !parser.HasMore();

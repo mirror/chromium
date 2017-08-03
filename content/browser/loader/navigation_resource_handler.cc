@@ -57,7 +57,7 @@ void NavigationResourceHandler::Cancel() {
   if (core_) {
     DetachFromCore();
     if (has_controller()) {
-      LayeredResourceHandler::Cancel();
+      CancelAndIgnore();
     } else {
       OutOfBandCancel(net::ERR_ABORTED, true /* tell_renderer */);
     }
@@ -92,7 +92,7 @@ void NavigationResourceHandler::OnRequestRedirected(
 
   // The UI thread already cancelled the navigation. Do not proceed.
   if (!core_) {
-    controller->Cancel();
+    controller->CancelAndIgnore();
     return;
   }
 
@@ -112,7 +112,7 @@ void NavigationResourceHandler::OnResponseStarted(
 
   // The UI thread already cancelled the navigation. Do not proceed.
   if (!core_) {
-    controller->Cancel();
+    controller->CancelAndIgnore();
     return;
   }
 

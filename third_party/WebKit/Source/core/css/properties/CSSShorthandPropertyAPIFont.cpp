@@ -115,8 +115,7 @@ bool ConsumeFont(bool important,
         continue;
     }
     if (!font_weight) {
-      font_weight =
-          CSSPropertyFontUtils::ConsumeFontWeight(range, context.Mode());
+      font_weight = CSSPropertyFontUtils::ConsumeFontWeight(range);
       if (font_weight)
         continue;
     }

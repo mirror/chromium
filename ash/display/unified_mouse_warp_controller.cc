@@ -35,6 +35,7 @@ AshWindowTreeHost* GetMirroringAshWindowTreeHostForDisplayId(
       ->GetAshWindowTreeHostForDisplayId(display_id);
 }
 
+#if defined(USE_OZONE)
 // Find a WindowTreeHost used for mirroring displays that contains
 // the |point_in_screen|. Returns nullptr if such WTH does not exist.
 aura::WindowTreeHost* FindMirroringWindowTreeHostFromScreenPoint(
@@ -48,6 +49,7 @@ aura::WindowTreeHost* FindMirroringWindowTreeHostFromScreenPoint(
   return GetMirroringAshWindowTreeHostForDisplayId(iter->id())
       ->AsWindowTreeHost();
 }
+#endif
 
 }  // namespace
 
@@ -93,6 +95,7 @@ bool UnifiedMouseWarpController::WarpMouseCursor(ui::MouseEvent* event) {
   gfx::Point point_in_native =
       ui::EventSystemLocationFromNative(event->native_event());
 
+#if defined(USE_OZONE)
   // TODO(dnicoara): crbug.com/415680 Move cursor warping into Ozone once Ozone
   // has access to the logical display layout.
   // Native events in Ozone are in the native window coordinate system. We need
@@ -103,6 +106,7 @@ bool UnifiedMouseWarpController::WarpMouseCursor(ui::MouseEvent* event) {
     return false;
   point_in_native.Offset(host->GetBoundsInPixels().x(),
                          host->GetBoundsInPixels().y());
+#endif
 
   return WarpMouseCursorInNativeCoords(point_in_native, point_in_unified_host,
                                        update_location_for_test_);

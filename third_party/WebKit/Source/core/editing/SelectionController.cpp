@@ -81,6 +81,7 @@ SelectionInDOMTree ConvertToSelectionInDOMTree(
       .SetBaseAndExtent(ToPositionInDOMTree(selection_in_flat_tree.Base()),
                         ToPositionInDOMTree(selection_in_flat_tree.Extent()))
       .SetIsDirectional(selection_in_flat_tree.IsDirectional())
+      .SetIsHandleVisible(selection_in_flat_tree.IsHandleVisible())
       .Build();
 }
 
@@ -561,14 +562,15 @@ bool SelectionController::SelectClosestWordFromHitTestResult(
     visibility = HandleVisibility::kVisible;
   }
 
-  const SelectionInFlatTree& adjusted_selection =
+  const VisibleSelectionInFlatTree& adjusted_selection =
       append_trailing_whitespace == AppendTrailingWhitespace::kShouldAppend
-          ? AdjustSelectionWithTrailingWhitespace(new_selection.AsSelection())
-          : new_selection.AsSelection();
+          ? new_selection.AppendTrailingWhitespace()
+          : new_selection;
 
   return UpdateSelectionForMouseDownDispatchingSelectStart(
       inner_node,
-      ExpandSelectionToRespectUserSelectAll(inner_node, adjusted_selection),
+      ExpandSelectionToRespectUserSelectAll(inner_node,
+                                            adjusted_selection.AsSelection()),
       TextGranularity::kWord, visibility);
 }
 
@@ -606,13 +608,14 @@ void SelectionController::SelectClosestMisspellingFromHitTestResult(
   const PositionInFlatTree end(container_node, marker->EndOffset());
   const VisibleSelectionInFlatTree& new_selection = CreateVisibleSelection(
       SelectionInFlatTree::Builder().Collapse(start).Extend(end).Build());
-  const SelectionInFlatTree& adjusted_selection =
+  const VisibleSelectionInFlatTree& adjusted_selection =
       append_trailing_whitespace == AppendTrailingWhitespace::kShouldAppend
-          ? AdjustSelectionWithTrailingWhitespace(new_selection.AsSelection())
-          : new_selection.AsSelection();
+          ? new_selection.AppendTrailingWhitespace()
+          : new_selection;
   UpdateSelectionForMouseDownDispatchingSelectStart(
       inner_node,
-      ExpandSelectionToRespectUserSelectAll(inner_node, adjusted_selection),
+      ExpandSelectionToRespectUserSelectAll(inner_node,
+                                            adjusted_selection.AsSelection()),
       TextGranularity::kWord, HandleVisibility::kNotVisible);
 }
 
@@ -803,12 +806,15 @@ void SelectionController::SetNonDirectionalSelectionIfNeeded(
     original_base_in_flat_tree_ = PositionInFlatTreeWithAffinity();
   }
 
+  builder.SetIsHandleVisible(handle_visibility == HandleVisibility::kVisible)
+      .SetIsDirectional(frame_->GetEditor()
+                            .Behavior()
+                            .ShouldConsiderSelectionAsDirectional() ||
+                        new_selection.IsDirectional());
   const SelectionInFlatTree& selection_in_flat_tree = builder.Build();
-  const bool should_show_handle =
-      handle_visibility == HandleVisibility::kVisible;
   if (Selection().ComputeVisibleSelectionInFlatTree() ==
           CreateVisibleSelection(selection_in_flat_tree) &&
-      Selection().IsHandleVisible() == should_show_handle)
+      Selection().IsHandleVisible() == selection_in_flat_tree.IsHandleVisible())
     return;
   Selection().SetSelection(
       ConvertToSelectionInDOMTree(selection_in_flat_tree),
@@ -817,7 +823,6 @@ void SelectionController::SetNonDirectionalSelectionIfNeeded(
           .SetShouldClearTypingStyle(true)
           .SetCursorAlignOnScroll(CursorAlignOnScroll::kIfNeeded)
           .SetGranularity(granularity)
-          .SetShouldShowHandle(should_show_handle)
           .Build());
 }
 

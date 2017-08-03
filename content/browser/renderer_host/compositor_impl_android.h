@@ -18,7 +18,6 @@
 #include "cc/trees/layer_tree_host_client.h"
 #include "cc/trees/layer_tree_host_single_thread_client.h"
 #include "components/viz/common/surfaces/frame_sink_id.h"
-#include "components/viz/host/host_frame_sink_client.h"
 #include "content/common/content_export.h"
 #include "content/public/browser/android/compositor.h"
 #include "gpu/command_buffer/common/capabilities.h"
@@ -58,8 +57,7 @@ class CONTENT_EXPORT CompositorImpl
       public cc::LayerTreeHostClient,
       public cc::LayerTreeHostSingleThreadClient,
       public ui::UIResourceProvider,
-      public ui::WindowAndroidCompositor,
-      public viz::HostFrameSinkClient {
+      public ui::WindowAndroidCompositor {
  public:
   CompositorImpl(CompositorClient* client, gfx::NativeWindow root_window);
   ~CompositorImpl() override;
@@ -122,9 +120,6 @@ class CONTENT_EXPORT CompositorImpl
   viz::FrameSinkId GetFrameSinkId() override;
   void AddChildFrameSink(const viz::FrameSinkId& frame_sink_id) override;
   void RemoveChildFrameSink(const viz::FrameSinkId& frame_sink_id) override;
-
-  // viz::HostFrameSinkClient implementation.
-  void OnSurfaceCreated(const viz::SurfaceInfo& surface_info) override;
 
   void SetVisible(bool visible);
   void CreateLayerTreeHost();

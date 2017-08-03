@@ -13,7 +13,6 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/string_util.h"
 #include "base/values.h"
-#include "chrome/common/chrome_content_client.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/extensions/api/api_features.h"
 #include "chrome/common/extensions/api/behavior_features.h"
@@ -335,10 +334,6 @@ std::set<base::FilePath> ChromeExtensionsClient::GetBrowserImagePaths(
 bool ChromeExtensionsClient::ExtensionAPIEnabledInExtensionServiceWorkers()
     const {
   return GetCurrentChannel() == version_info::Channel::UNKNOWN;
-}
-
-std::string ChromeExtensionsClient::GetUserAgent() const {
-  return ::GetUserAgent();
 }
 
 // static

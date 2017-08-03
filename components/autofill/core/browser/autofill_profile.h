@@ -49,9 +49,6 @@ class AutofillProfile : public AutofillDataModel {
 
     // The field is valid.
     VALID,
-
-    // The validation for the field is unsupported.
-    UNSUPPORTED,
   };
 
   AutofillProfile(const std::string& guid, const std::string& origin);
@@ -208,9 +205,6 @@ class AutofillProfile : public AutofillDataModel {
 
   // Sets the validity state of the specified autofill type.
   void SetValidityState(ServerFieldType type, ValidityState validity);
-
-  // Returns whether autofill does the validation of the specified |type|.
-  bool IsValidationSupportedForType(ServerFieldType type);
 
  private:
   typedef std::vector<const FormGroup*> FormGroupList;

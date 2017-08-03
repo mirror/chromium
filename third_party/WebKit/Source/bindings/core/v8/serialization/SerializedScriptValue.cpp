@@ -203,8 +203,7 @@ inline static bool IsByteSwappedWiredData(const uint8_t* data, size_t length) {
 }
 
 static void SwapWiredDataIfNeeded(uint8_t* buffer, size_t buffer_size) {
-  if (buffer_size % sizeof(UChar))
-    return;
+  DCHECK(!(buffer_size % sizeof(UChar)));
 
   if (!IsByteSwappedWiredData(buffer, buffer_size))
     return;

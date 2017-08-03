@@ -50,8 +50,8 @@ class DiscoveryNetworkMonitor
 
   static DiscoveryNetworkMonitor* GetInstance();
 
-  static std::unique_ptr<DiscoveryNetworkMonitor> CreateInstanceForTest(
-      NetworkInfoFunction strategy);
+  void RebindNetworkChangeObserverForTest();
+  void SetNetworkInfoFunctionForTest(NetworkInfoFunction);
 
   void AddObserver(Observer* const observer);
   void RemoveObserver(Observer* const observer);
@@ -67,13 +67,11 @@ class DiscoveryNetworkMonitor
   void GetNetworkId(NetworkIdCallback callback);
 
  private:
-  friend struct std::default_delete<DiscoveryNetworkMonitor>;
+  friend class DiscoveryNetworkMonitorTest;
   friend struct base::LazyInstanceTraitsBase<DiscoveryNetworkMonitor>;
 
   DiscoveryNetworkMonitor();
   ~DiscoveryNetworkMonitor() override;
-
-  void SetNetworkInfoFunctionForTest(NetworkInfoFunction strategy);
 
   // net::NetworkChangeNotifier::NetworkChangeObserver
   void OnNetworkChanged(

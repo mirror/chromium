@@ -892,7 +892,8 @@ const FeatureEntry::FeatureVariation
         {"Learning", kSpeculativeResourcePrefetchingLearning,
          arraysize(kSpeculativeResourcePrefetchingLearning), nullptr}};
 
-#if defined(OS_LINUX) || defined(OS_MACOSX) || defined(OS_WIN)
+#if defined(OS_CHROMEOS) || defined(OS_LINUX) || defined(OS_MACOSX) || \
+    defined(OS_WIN)
 const FeatureEntry::FeatureParam kPauseBackgroundTabsMinimalEngagment[] = {
     {pausetabs::kFeatureName, pausetabs::kModeParamMinimal}};
 
@@ -1820,12 +1821,12 @@ const FeatureEntry kFeatureEntries[] = {
      ENABLE_DISABLE_VALUE_TYPE(switches::kEnableTranslateNewUX,
                                switches::kDisableTranslateNewUX)},
 #endif  // OS_MACOSX
-#if defined(OS_LINUX) || defined(OS_WIN)
+#if defined(OS_LINUX) || defined(OS_WIN) || defined(OS_CHROMEOS)
     {"translate-2016q2-ui", flag_descriptions::kTranslate2016q2UiName,
      flag_descriptions::kTranslate2016q2UiDescription,
      kOsCrOS | kOsWin | kOsLinux,
      FEATURE_VALUE_TYPE(translate::kTranslateUI2016Q2)},
-#endif  // OS_LINUX || OS_WIN
+#endif  // OS_LINUX || OS_WIN || OS_CHROMEOS
     {"translate-lang-by-ulp", flag_descriptions::kTranslateLanguageByUlpName,
      flag_descriptions::kTranslateLanguageByUlpDescription, kOsAll,
      FEATURE_VALUE_TYPE(translate::kTranslateLanguageByULP)},
@@ -2583,13 +2584,10 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kTabDetachingInFullscreenDescription, kOsMac,
      ENABLE_DISABLE_VALUE_TYPE(switches::kEnableFullscreenTabDetaching,
                                switches::kDisableFullscreenTabDetaching)},
-    {"enable-content-fullscreen", flag_descriptions::kContentFullscreenName,
-     flag_descriptions::kContentFullscreenDescription, kOsMac,
-     FEATURE_VALUE_TYPE(features::kContentFullscreen)},
     {"enable-fullscreen-toolbar-reveal",
      flag_descriptions::kFullscreenToolbarRevealName,
      flag_descriptions::kFullscreenToolbarRevealDescription, kOsMac,
-     FEATURE_VALUE_TYPE(features::kFullscreenToolbarReveal)},
+     SINGLE_VALUE_TYPE(switches::kEnableFullscreenToolbarReveal)},
 #endif  // OS_MACOSX
     {"important-sites-in-cbd", flag_descriptions::kImportantSitesInCbdName,
      flag_descriptions::kImportantSitesInCbdDescription, kOsAll,
@@ -2917,7 +2915,8 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kNewOmniboxAnswerTypesDescription, kOsAll,
      FEATURE_VALUE_TYPE(omnibox::kNewOmniboxAnswerTypes)},
 
-#if defined(OS_LINUX) || defined(OS_MACOSX) || defined(OS_WIN)
+#if defined(OS_CHROMEOS) || defined(OS_LINUX) || defined(OS_MACOSX) || \
+    defined(OS_WIN)
     {"omnibox-entity-suggestions",
      flag_descriptions::kOmniboxEntitySuggestionsName,
      flag_descriptions::kOmniboxEntitySuggestionsDescription, kOsDesktop,
@@ -2928,7 +2927,8 @@ const FeatureEntry kFeatureEntries[] = {
     {"enable-new-app-menu-icon", flag_descriptions::kEnableNewAppMenuIconName,
      flag_descriptions::kEnableNewAppMenuIconDescription, kOsDesktop,
      SINGLE_VALUE_TYPE(switches::kEnableNewAppMenuIcon)},
-#endif  // defined(OS_LINUX) || defined(OS_MACOSX) || defined(OS_WIN)
+#endif  // defined(OS_CHROMEOS) || defined(OS_LINUX) || defined(OS_MACOSX) ||
+        // defined(OS_WIN)
 
 #if defined(OS_ANDROID)
     {"enable-custom-feedback-ui",
@@ -2995,7 +2995,8 @@ const FeatureEntry kFeatureEntries[] = {
      FEATURE_VALUE_TYPE(chrome::android::kCustomContextMenu)},
 #endif  // OS_ANDROID
 
-#if defined(OS_LINUX) || defined(OS_MACOSX) || defined(OS_WIN)
+#if defined(OS_CHROMEOS) || defined(OS_LINUX) || defined(OS_MACOSX) || \
+    defined(OS_WIN)
     {pausetabs::kFeatureName, flag_descriptions::kPauseBackgroundTabsName,
      flag_descriptions::kPauseBackgroundTabsDescription, kOsDesktop,
      FEATURE_WITH_PARAMS_VALUE_TYPE(pausetabs::kFeature,

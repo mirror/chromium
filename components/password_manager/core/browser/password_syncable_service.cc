@@ -340,7 +340,9 @@ PasswordSyncableService::PasswordSyncableService(
       clock_(new base::DefaultClock),
       is_processing_sync_changes_(false) {}
 
-PasswordSyncableService::~PasswordSyncableService() = default;
+PasswordSyncableService::~PasswordSyncableService() {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+}
 
 syncer::SyncMergeResult PasswordSyncableService::MergeDataAndStartSyncing(
     syncer::ModelType type,

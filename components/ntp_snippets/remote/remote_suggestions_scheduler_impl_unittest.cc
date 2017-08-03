@@ -96,14 +96,7 @@ class MockRemoteSuggestionsProvider : public RemoteSuggestionsProvider {
   MOCK_METHOD1(ClearCachedSuggestions, void(Category));
   MOCK_METHOD1(ClearDismissedSuggestionsForDebugging, void(Category));
   MOCK_METHOD1(DismissSuggestion, void(const ContentSuggestion::ID&));
-  // Because gmock cannot mock the movable-type callback ImageFetchedCallback,
-  // FetchSuggestionImage calls the mock method FetchSuggestionImageMock,
-  // which may then be checked with EXPECT_CALL.
-  void FetchSuggestionImage(const ContentSuggestion::ID& id,
-                            ImageFetchedCallback callback) override {
-    FetchSuggestionImageMock(id, callback);
-  }
-  MOCK_METHOD2(FetchSuggestionImageMock,
+  MOCK_METHOD2(FetchSuggestionImage,
                void(const ContentSuggestion::ID&, const ImageFetchedCallback&));
   MOCK_METHOD2(GetDismissedSuggestionsForDebugging,
                void(Category, const DismissedSuggestionsCallback&));

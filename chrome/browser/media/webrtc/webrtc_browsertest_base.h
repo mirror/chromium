@@ -193,13 +193,8 @@ class WebRtcTestBase : public InProcessBrowserTest {
   // Change the default audio/video codec in the offer SDP.
   void SetDefaultAudioCodec(content::WebContents* tab,
                             const std::string& audio_codec) const;
-  // |prefer_hw_codec| controls if the first or last codec with name
-  // |video_codec| should be selected. External video codecs are currently at
-  // the end of the SDP list. This parameter only matters if there are multiple
-  // codecs with the same name, which can be the case for H264.
   void SetDefaultVideoCodec(content::WebContents* tab,
-                            const std::string& video_codec,
-                            bool prefer_hw_codec = false) const;
+                            const std::string& video_codec) const;
 
   // Add 'usedtx=1' to the offer SDP.
   void EnableOpusDtx(content::WebContents* tab) const;

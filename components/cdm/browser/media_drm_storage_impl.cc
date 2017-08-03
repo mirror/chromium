@@ -6,7 +6,6 @@
 
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
-#include "base/value_conversions.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
 #include "components/prefs/scoped_user_pref_update.h"
@@ -18,7 +17,7 @@
 //
 // {
 //     $origin: {
-//         "origin_id": $unguessable_origin_id
+//         "origin_id": $origin_id
 //         "creation_time": $creation_time
 //         "sessions" : {
 //             $session_id: {
@@ -41,7 +40,13 @@ const char kCreationTime[] = "creation_time";
 const char kSessions[] = "sessions";
 const char kKeySetId[] = "key_set_id";
 const char kMimeType[] = "mime_type";
-const char kOriginId[] = "origin_id";
+
+std::unique_ptr<base::DictionaryValue> CreateOriginDictionary() {
+  auto dict = base::MakeUnique<base::DictionaryValue>();
+  // TODO(xhwang): Create |origin_id|.
+  dict->SetDouble(kCreationTime, base::Time::Now().ToDoubleT());
+  return dict;
+}
 
 std::unique_ptr<base::DictionaryValue> CreateSessionDictionary(
     const std::vector<uint8_t>& key_set_id,
@@ -69,47 +74,6 @@ bool GetSessionData(const base::DictionaryValue* sesssion_dict,
   return true;
 }
 
-// Return the origin ID stored in |origin_dict|. Return empty ID if:
-// 1. Origin ID doesn't exist, which may happen if the origin map is created
-// with an older version app.
-// 2. Data format is incorrect.
-base::UnguessableToken GetOriginId(const base::DictionaryValue* origin_dict) {
-  DCHECK(origin_dict);
-
-  const base::Value* origin_id_value = nullptr;
-  if (!origin_dict->Get(kOriginId, &origin_id_value)) {
-    return base::UnguessableToken();
-  }
-
-  DCHECK(origin_id_value);
-
-  base::UnguessableToken origin_id;
-  if (!base::GetValueAsUnguessableToken(*origin_id_value, &origin_id)) {
-    return base::UnguessableToken();
-  }
-
-  return origin_id;
-}
-
-void SetOriginId(base::DictionaryValue* origin_dict,
-                 const base::UnguessableToken& origin_id) {
-  DCHECK(origin_dict);
-  DCHECK(!origin_dict->HasKey(kOriginId));
-  DCHECK(origin_id);
-
-  origin_dict->Set(kOriginId, base::CreateUnguessableTokenValue(origin_id));
-}
-
-std::unique_ptr<base::DictionaryValue> CreateOriginDictionary(
-    const base::UnguessableToken& origin_id) {
-  DCHECK(origin_id);
-
-  auto dict = base::MakeUnique<base::DictionaryValue>();
-  dict->SetDouble(kCreationTime, base::Time::Now().ToDoubleT());
-  SetOriginId(dict.get(), origin_id);
-  return dict;
-}
-
 #if DCHECK_IS_ON()
 // Returns whether |dict| has a value assocaited with the |key|.
 bool HasEntry(const base::DictionaryValue& dict, const std::string& key) {
@@ -131,6 +95,7 @@ MediaDrmStorageImpl::MediaDrmStorageImpl(
     media::mojom::MediaDrmStorageRequest request)
     : render_frame_host_(render_frame_host),
       pref_service_(pref_service),
+      origin_(origin),
       origin_string_(origin.Serialize()),
       binding_(this, std::move(request)) {
   DVLOG(1) << __func__ << ": origin = " << origin;
@@ -148,43 +113,21 @@ MediaDrmStorageImpl::~MediaDrmStorageImpl() {
   DCHECK(thread_checker_.CalledOnValidThread());
 }
 
-void MediaDrmStorageImpl::Initialize(InitializeCallback callback) {
-  DVLOG(1) << __func__ << ": origin = " << origin_string_;
+// TODO(xhwang): Update this function to return an origin ID. If the origin is
+// not the same as |origin_|, return an empty origin ID.
+void MediaDrmStorageImpl::Initialize(const url::Origin& origin) {
+  DVLOG(1) << __func__ << ": origin = " << origin;
   DCHECK(thread_checker_.CalledOnValidThread());
-  DCHECK(!origin_id_);
+  DCHECK(!initialized_);
 
-  DictionaryPrefUpdate update(pref_service_, kMediaDrmStorage);
-  base::DictionaryValue* storage_dict = update.Get();
-  DCHECK(storage_dict);
-
-  base::DictionaryValue* origin_dict = nullptr;
-  // The origin string may contain dots. Do not use path expansion.
-  bool exist = storage_dict->GetDictionaryWithoutPathExpansion(origin_string_,
-                                                               &origin_dict);
-
-  base::UnguessableToken origin_id;
-  if (exist) {
-    DCHECK(origin_dict);
-    origin_id = GetOriginId(origin_dict);
-  }
-
-  // |origin_id| can be empty even if |origin_dict| exists. This can happen if
-  // |origin_dict| is created with an old version app.
-  if (origin_id.is_empty()) {
-    origin_id = base::UnguessableToken::Create();
-  }
-
-  origin_id_ = origin_id;
-
-  DCHECK(origin_id);
-  std::move(callback).Run(origin_id);
+  initialized_ = true;
 }
 
 void MediaDrmStorageImpl::OnProvisioned(OnProvisionedCallback callback) {
   DVLOG(1) << __func__;
   DCHECK(thread_checker_.CalledOnValidThread());
 
-  if (!IsInitialized()) {
+  if (!initialized_) {
     DVLOG(1) << __func__ << ": Not initialized.";
     std::move(callback).Run(false);
     return;
@@ -200,7 +143,7 @@ void MediaDrmStorageImpl::OnProvisioned(OnProvisionedCallback callback) {
       << " already exists and will be cleared";
 
   storage_dict->SetWithoutPathExpansion(origin_string_,
-                                        CreateOriginDictionary(origin_id_));
+                                        CreateOriginDictionary());
   std::move(callback).Run(true);
 }
 
@@ -211,7 +154,7 @@ void MediaDrmStorageImpl::SavePersistentSession(
   DVLOG(2) << __func__;
   DCHECK(thread_checker_.CalledOnValidThread());
 
-  if (!IsInitialized()) {
+  if (!initialized_) {
     DVLOG(1) << __func__ << ": Not initialized.";
     std::move(callback).Run(false);
     return;
@@ -227,14 +170,12 @@ void MediaDrmStorageImpl::SavePersistentSession(
 
   // This could happen if the profile is removed, but the device is still
   // provisioned for the origin. In this case, just create a new entry.
-  // Since we're using random origin ID in MediaDrm, it's rare to enter the if
-  // branch. Deleting the profile causes reprovisioning of the origin.
   if (!origin_dict) {
 
     DVLOG(1) << __func__ << ": Entry for origin " << origin_string_
              << " does not exist; create a new one.";
     storage_dict->SetWithoutPathExpansion(origin_string_,
-                                          CreateOriginDictionary(origin_id_));
+                                          CreateOriginDictionary());
     storage_dict->GetDictionaryWithoutPathExpansion(origin_string_,
                                                     &origin_dict);
     DCHECK(origin_dict);
@@ -264,7 +205,7 @@ void MediaDrmStorageImpl::LoadPersistentSession(
   DVLOG(2) << __func__;
   DCHECK(thread_checker_.CalledOnValidThread());
 
-  if (!IsInitialized()) {
+  if (!initialized_) {
     DVLOG(1) << __func__ << ": Not initialized.";
     std::move(callback).Run(nullptr);
     return;
@@ -279,7 +220,7 @@ void MediaDrmStorageImpl::LoadPersistentSession(
   if (!origin_dict) {
     DVLOG(1) << __func__
              << ": Failed to save persistent session data; entry for origin "
-             << origin_string_ << " does not exist.";
+             << origin_ << " does not exist.";
     std::move(callback).Run(nullptr);
     return;
   }
@@ -317,7 +258,7 @@ void MediaDrmStorageImpl::RemovePersistentSession(
   DVLOG(2) << __func__;
   DCHECK(thread_checker_.CalledOnValidThread());
 
-  if (!IsInitialized()) {
+  if (!initialized_) {
     DVLOG(1) << __func__ << ": Not initialized.";
     std::move(callback).Run(false);
     return;

@@ -34,15 +34,13 @@
   PanelBarView* _panelBarView;
 }
 
-+ (UIViewController*)
-controllerToPresentForBrowserState:(ios::ChromeBrowserState*)browserState
-                            loader:(id<UrlLoader>)loader
-                        dispatcher:(id<ApplicationCommands>)dispatcher {
++ (UIViewController*)controllerToPresentForBrowserState:
+                         (ios::ChromeBrowserState*)browserState
+                                                 loader:(id<UrlLoader>)loader {
   UIViewController* controller = [[RecentTabsWrapperViewController alloc] init];
   RecentTabsPanelViewController* rtpvc =
       [[RecentTabsPanelViewController alloc] initWithLoader:loader
-                                               browserState:browserState
-                                                 dispatcher:dispatcher];
+                                               browserState:browserState];
   [controller addChildViewController:rtpvc];
 
   PanelBarView* panelBarView = [[PanelBarView alloc] init];
@@ -82,14 +80,12 @@ controllerToPresentForBrowserState:(ios::ChromeBrowserState*)browserState
 }
 
 - (instancetype)initWithLoader:(id<UrlLoader>)loader
-                  browserState:(ios::ChromeBrowserState*)browserState
-                    dispatcher:(id<ApplicationCommands>)dispatcher {
+                  browserState:(ios::ChromeBrowserState*)browserState {
   self = [super initWithNibName:nil bundle:nil];
   if (self) {
     _recentTabsController =
         [[RecentTabsPanelController alloc] initWithLoader:loader
-                                             browserState:browserState
-                                               dispatcher:dispatcher];
+                                             browserState:browserState];
     if ([self respondsToSelector:@selector(edgesForExtendedLayout)])
       self.edgesForExtendedLayout = UIRectEdgeNone;
   }

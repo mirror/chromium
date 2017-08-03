@@ -201,6 +201,7 @@ void WriteAllocatorNodes(const UniqueAllocCount& alloc_counts,
 }  // namespace
 
 void ExportAllocationEventSetToJSON(int pid,
+                                    const BacktraceStorage* backtrace_storage,
                                     const AllocationEventSet& event_set,
                                     std::ostream& out) {
   out << "{ \"traceEvents\": [";

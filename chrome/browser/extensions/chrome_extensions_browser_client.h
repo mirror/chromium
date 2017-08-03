@@ -127,7 +127,6 @@ class ChromeExtensionsBrowserClient : public ExtensionsBrowserClient {
       net::URLRequest* request) override;
   KioskDelegate* GetKioskDelegate() override;
   bool IsLockScreenContext(content::BrowserContext* context) override;
-  std::string GetApplicationLocale() override;
 
   static void set_did_chrome_update_for_testing(bool did_update);
 

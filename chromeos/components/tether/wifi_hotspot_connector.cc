@@ -197,10 +197,11 @@ base::DictionaryValue WifiHotspotConnector::CreateWifiPropertyDictionary(
   shill_property_util::SetSSID(ssid, &properties);
   properties.SetStringWithoutPathExpansion(shill::kGuidProperty,
                                            wifi_network_guid_);
-  properties.SetKey(shill::kAutoConnectProperty, base::Value(false));
+  properties.SetBooleanWithoutPathExpansion(shill::kAutoConnectProperty, false);
   properties.SetStringWithoutPathExpansion(shill::kTypeProperty,
                                            shill::kTypeWifi);
-  properties.SetKey(shill::kSaveCredentialsProperty, base::Value(true));
+  properties.SetBooleanWithoutPathExpansion(shill::kSaveCredentialsProperty,
+                                            true);
 
   if (password.empty()) {
     properties.SetStringWithoutPathExpansion(shill::kSecurityClassProperty,

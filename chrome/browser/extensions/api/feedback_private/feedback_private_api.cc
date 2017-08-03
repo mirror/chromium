@@ -30,7 +30,6 @@
 #include "components/signin/core/browser/signin_manager.h"
 #include "components/strings/grit/components_strings.h"
 #include "extensions/browser/event_router.h"
-#include "extensions/browser/extensions_browser_client.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/webui/web_ui_util.h"
 #include "url/url_util.h"
@@ -241,8 +240,7 @@ ExtensionFunction::ResponseAction FeedbackPrivateGetStringsFunction::Run() {
              IDS_FEEDBACK_SRT_PROMPT_DECLINE_BUTTON);
 #undef SET_STRING
 
-  const std::string& app_locale =
-      ExtensionsBrowserClient::Get()->GetApplicationLocale();
+  const std::string& app_locale = g_browser_process->GetApplicationLocale();
   webui::SetLoadTimeDataDefaults(app_locale, dict.get());
 
 

@@ -28,8 +28,6 @@
 
 namespace chromeos {
 
-constexpr int kMetalayerSelectionDelayMs = 600;
-
 class VoiceInteractionSelectionObserver
     : public ash::HighlighterSelectionObserver {
  public:
@@ -39,18 +37,6 @@ class VoiceInteractionSelectionObserver
 
  private:
   void HandleSelection(const gfx::Rect& rect) override {
-    // Delay the actual voice interaction service invocation for better
-    // visual synchronization with the metalayer animation.
-    delay_timer_ = base::MakeUnique<base::Timer>(
-        FROM_HERE,
-        base::TimeDelta::FromMilliseconds(kMetalayerSelectionDelayMs),
-        base::Bind(&VoiceInteractionSelectionObserver::ReportSelection,
-                   base::Unretained(this), rect),
-        false /* not repeating */);
-    delay_timer_->Reset();
-  }
-
-  void ReportSelection(const gfx::Rect& rect) {
     auto* framework =
         arc::ArcVoiceInteractionFrameworkService::GetForBrowserContext(
             profile_);
@@ -60,8 +46,6 @@ class VoiceInteractionSelectionObserver
   }
 
   Profile* const profile_;  // Owned by ProfileManager.
-
-  std::unique_ptr<base::Timer> delay_timer_;
 
   DISALLOW_COPY_AND_ASSIGN(VoiceInteractionSelectionObserver);
 };

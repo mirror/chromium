@@ -824,7 +824,7 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
      * items and there is no search provider logo.
      */
     private void updateTileGridPlaceholderVisibility() {
-        boolean showPlaceholder = mTileGroup.hasReceivedData() && mTileGroup.getAllTiles().isEmpty()
+        boolean showPlaceholder = mTileGroup.hasReceivedData() && mTileGroup.getTiles().length == 0
                 && !mSearchProviderHasLogo;
 
         mNoSearchLogoSpacer.setVisibility(
@@ -909,7 +909,7 @@ public class NewTabPageView extends FrameLayout implements TileGroup.Observer {
 
     @Override
     public void onTileDataChanged() {
-        mTileGroup.renderTiles(mTileGridLayout);
+        mTileGroup.renderTileViews(mTileGridLayout);
         mSnapshotTileGridChanged = true;
 
         // The page contents are initially hidden; otherwise they'll be drawn centered on the page

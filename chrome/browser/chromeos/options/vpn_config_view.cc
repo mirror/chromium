@@ -17,6 +17,7 @@
 #include "chrome/browser/chromeos/enrollment_dialog_view.h"
 #include "chrome/browser/chromeos/net/shill_error.h"
 #include "chrome/browser/profiles/profile_manager.h"
+#include "chrome/common/net/x509_certificate_model.h"
 #include "chrome/grit/generated_resources.h"
 #include "chromeos/login/login_state.h"
 #include "chromeos/network/network_configuration_handler.h"
@@ -378,7 +379,8 @@ bool VPNConfigView::Login() {
     bool only_policy_autoconnect =
         onc::PolicyAllowsOnlyPolicyNetworksToAutoconnect(!shared);
     if (only_policy_autoconnect) {
-      properties.SetKey(shill::kAutoConnectProperty, base::Value(false));
+      properties.SetBooleanWithoutPathExpansion(shill::kAutoConnectProperty,
+                                                false);
     }
 
     NetworkConnect::Get()->CreateConfigurationAndConnect(&properties, shared);
@@ -905,8 +907,8 @@ void VPNConfigView::SetConfigProperties(
       NOTREACHED();
       break;
   }
-  properties->SetKey(shill::kSaveCredentialsProperty,
-                     base::Value(GetSaveCredentials()));
+  properties->SetBooleanWithoutPathExpansion(
+      shill::kSaveCredentialsProperty, GetSaveCredentials());
 }
 
 void VPNConfigView::Refresh() {

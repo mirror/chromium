@@ -19,6 +19,10 @@ using base::android::JavaParamRef;
 
 namespace ui {
 
+bool InputDeviceObserverAndroid::RegisterInputDeviceObserver(JNIEnv* env) {
+  return RegisterNativesImpl(env);
+}
+
 InputDeviceObserverAndroid::InputDeviceObserverAndroid() {}
 
 InputDeviceObserverAndroid::~InputDeviceObserverAndroid() {}

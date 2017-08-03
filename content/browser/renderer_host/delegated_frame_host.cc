@@ -54,9 +54,10 @@ DelegatedFrameHost::DelegatedFrameHost(const viz::FrameSinkId& frame_sink_id,
       frame_evictor_(new viz::FrameEvictor(this)) {
   ImageTransportFactory* factory = ImageTransportFactory::GetInstance();
   factory->GetContextFactory()->AddObserver(this);
-  viz::HostFrameSinkManager* host_frame_sink_manager =
-      factory->GetContextFactoryPrivate()->GetHostFrameSinkManager();
-  host_frame_sink_manager->RegisterFrameSinkId(frame_sink_id_, this);
+  factory->GetContextFactoryPrivate()
+      ->GetFrameSinkManager()
+      ->surface_manager()
+      ->RegisterFrameSinkId(frame_sink_id_);
   CreateCompositorFrameSinkSupport();
 }
 
@@ -513,12 +514,6 @@ void DelegatedFrameHost::OnBeginFramePausedChanged(bool paused) {
     renderer_compositor_frame_sink_->OnBeginFramePausedChanged(paused);
 }
 
-void DelegatedFrameHost::OnSurfaceCreated(
-    const viz::SurfaceInfo& surface_info) {
-  // TODO(fsamuel): Once surface synchronization is turned on, the fallback
-  // surface should be set here.
-}
-
 void DelegatedFrameHost::OnBeginFrame(const viz::BeginFrameArgs& args) {
   if (renderer_compositor_frame_sink_)
     renderer_compositor_frame_sink_->OnBeginFrame(args);
@@ -778,9 +773,10 @@ DelegatedFrameHost::~DelegatedFrameHost() {
 
   ResetCompositorFrameSinkSupport();
 
-  viz::HostFrameSinkManager* host_frame_sink_manager =
-      factory->GetContextFactoryPrivate()->GetHostFrameSinkManager();
-  host_frame_sink_manager->InvalidateFrameSinkId(frame_sink_id_);
+  factory->GetContextFactoryPrivate()
+      ->GetFrameSinkManager()
+      ->surface_manager()
+      ->InvalidateFrameSinkId(frame_sink_id_);
 
   DCHECK(!vsync_manager_.get());
 }
@@ -841,12 +837,14 @@ void DelegatedFrameHost::UnlockResources() {
 void DelegatedFrameHost::CreateCompositorFrameSinkSupport() {
   DCHECK(!support_);
   constexpr bool is_root = false;
+  constexpr bool handles_frame_sink_id_invalidation = false;
   constexpr bool needs_sync_points = true;
   ImageTransportFactory* factory = ImageTransportFactory::GetInstance();
   support_ = factory->GetContextFactoryPrivate()
                  ->GetHostFrameSinkManager()
-                 ->CreateCompositorFrameSinkSupport(this, frame_sink_id_,
-                                                    is_root, needs_sync_points);
+                 ->CreateCompositorFrameSinkSupport(
+                     this, frame_sink_id_, is_root,
+                     handles_frame_sink_id_invalidation, needs_sync_points);
   if (compositor_)
     compositor_->AddFrameSink(frame_sink_id_);
   if (needs_begin_frame_)

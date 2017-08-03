@@ -82,7 +82,7 @@ void BreakingNewsSuggestionsProvider::DismissSuggestion(
 
 void BreakingNewsSuggestionsProvider::FetchSuggestionImage(
     const ContentSuggestion::ID& suggestion_id,
-    ImageFetchedCallback callback) {
+    const ImageFetchedCallback& callback) {
   // TODO(mamir): implement.
 }
 

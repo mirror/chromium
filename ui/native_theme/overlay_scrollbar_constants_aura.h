@@ -19,7 +19,7 @@ constexpr float kOverlayScrollbarStrokeNormalAlpha = 0.3f;
 constexpr float kOverlayScrollbarStrokeHoverAlpha = 0.5f;
 
 constexpr base::TimeDelta kOverlayScrollbarFadeDelay =
-    base::TimeDelta::FromMilliseconds(500);
+    base::TimeDelta::FromMilliseconds(1000);
 constexpr base::TimeDelta kOverlayScrollbarFadeDuration =
     base::TimeDelta::FromMilliseconds(200);
 // TODO(bokan): This is still undetermined. crbug.com/652520.

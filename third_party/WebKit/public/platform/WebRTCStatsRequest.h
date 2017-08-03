@@ -49,14 +49,18 @@ class WebRTCStatsResponse;
 //
 // The typical usage pattern is:
 // WebRTCStatsRequest request = <from somewhere>
-// WebRTCStatsResponse response = request.CreateResponse();
+// WebRTCStatsResponse response = request.createResponse();
 //
 // For each item on which statistics are going to be reported:
-//   WebRTCLegacyStats stats(...);
-//   (configuration of stats object depends on item type)
-//   response.AddStats(stats);
+//   size_t reportIndex = response.addReport();
+//   Add local information:
+//   size_t elementIndex = response.addElement(reportIndex, true, dateNow());
+//   For each statistic being reported on:
+//     response.addStatistic(reportIndex, true, elementIndex,
+//                           "name of statistic", "statistic value");
+//   Remote information (typically RTCP-derived) is added in the same way.
 // When finished adding information:
-// request.RequestSucceeded(response);
+// request.requestSucceeded(response);
 
 class WebRTCStatsRequest {
  public:
@@ -76,9 +80,9 @@ class WebRTCStatsRequest {
   // This function returns true if a selector argument was given to getStats.
   BLINK_PLATFORM_EXPORT bool HasSelector() const;
 
-  // The Component() accessor give the information
+  // The component() accessor give the information
   // required to look up a MediaStreamTrack implementation.
-  // It is only useful to call it when HasSelector() returns true.
+  // It is only useful to call it when hasSelector() returns true.
   BLINK_PLATFORM_EXPORT const WebMediaStreamTrack Component() const;
 
   BLINK_PLATFORM_EXPORT void RequestSucceeded(const WebRTCStatsResponse&) const;

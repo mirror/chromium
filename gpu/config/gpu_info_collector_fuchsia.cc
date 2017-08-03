@@ -18,8 +18,4 @@ CollectInfoResult CollectDriverInfoGL(GPUInfo* gpu_info) {
   return kCollectInfoNonFatalFailure;
 }
 
-CollectInfoResult CollectContextGraphicsInfo(GPUInfo* gpu_info) {
-  return CollectBasicGraphicsInfo(gpu_info);
-}
-
 }  // namespace gpu

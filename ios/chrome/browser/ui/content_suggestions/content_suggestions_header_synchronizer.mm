@@ -151,14 +151,13 @@ initWithCollectionController:
 
 #pragma mark - ContentSuggestionsHeaderSynchronizing
 
-- (void)unfocusOmniboxOnCollectionScroll {
-  // Unfocus the omnibox when the scroll view is scrolled.
+- (void)updateFakeOmniboxForScrollView:(UIScrollView*)scrollView {
+  // Unfocus the omnibox when the scroll view is scrolled below the pinned
+  // offset.
   if ([self.headerController isOmniboxFocused] && !self.shouldAnimateHeader) {
     [self.headerController unfocusOmnibox];
   }
-}
 
-- (void)updateFakeOmniboxForScrollView:(UIScrollView*)scrollView {
   if (IsIPadIdiom()) {
     return;
   }

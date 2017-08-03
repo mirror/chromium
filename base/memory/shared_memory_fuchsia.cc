@@ -4,8 +4,6 @@
 
 #include "base/memory/shared_memory.h"
 
-#include <limits>
-
 #include <magenta/process.h>
 #include <magenta/rights.h>
 #include <magenta/syscalls.h>
@@ -36,12 +34,6 @@ bool SharedMemory::IsHandleValid(const SharedMemoryHandle& handle) {
 void SharedMemory::CloseHandle(const SharedMemoryHandle& handle) {
   DCHECK(handle.IsValid());
   handle.Close();
-}
-
-// static
-size_t SharedMemory::GetHandleLimit() {
-  // No documented limit, currently.
-  return std::numeric_limits<size_t>::max();
 }
 
 bool SharedMemory::CreateAndMapAnonymous(size_t size) {

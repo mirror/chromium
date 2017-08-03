@@ -40,11 +40,11 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling Skia
   # and whatever else without interference from each other.
-  'skia_revision': '698edfecef121d8575eee6af207ce8a9525032ee',
+  'skia_revision': '21171e50f486a7234e1d8edeb0977719c81d5d3b',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling V8
   # and whatever else without interference from each other.
-  'v8_revision': 'ee634fd9a978b9c4f1d0488d9b945ed9f8bcbc57',
+  'v8_revision': 'fca6d7563e4fad451e9bff85e96f6490596cc9dd',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling swarming_client
   # and whatever else without interference from each other.
@@ -52,7 +52,7 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling ANGLE
   # and whatever else without interference from each other.
-  'angle_revision': 'a0bcc50be0c726c14e9623b174e1bcbe61720428',
+  'angle_revision': '5788d24bb00c8bd148981b5a6680d0aadd8b8fc2',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling build tools
   # and whatever else without interference from each other.
@@ -64,7 +64,7 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling PDFium
   # and whatever else without interference from each other.
-  'pdfium_revision': 'd1a8458e6390103e123e9d265040b3d02c16955b',
+  'pdfium_revision': '33dd830890d38f9083b732cd908ef082f1d89d65',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling openmax_dl
   # and whatever else without interference from each other.
@@ -92,11 +92,11 @@ vars = {
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling freetype
   # and whatever else without interference from each other.
-  'freetype_revision': '7e50824288fac5a36c2938fdb3e1c949ea53f982',
+  'freetype_revision': '38bdf22bfe68432aebdd33c198a0bd11b4ebb96f',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling catapult
   # and whatever else without interference from each other.
-  'catapult_revision': '2857b6b6c8582e67f9d81360198a1dc9fa561c39',
+  'catapult_revision': '95988f7874231b1cfd67eaf9d6d97731de4d6e0a',
   # Three lines of non-changing comments so that
   # the commit queue can handle CLs rolling libFuzzer
   # and whatever else without interference from each other.
@@ -214,7 +214,7 @@ deps = {
     Var('chromium_git') + '/chromium/third_party/ffmpeg.git' + '@' + 'bcaa2585874573d486d94101e883cd2e5dfbca97',
 
   'src/third_party/usrsctp/usrsctplib':
-    Var('chromium_git') + '/external/github.com/sctplab/usrsctp' + '@' + '2f6478eb8d40f1766a96b5b033ed26c0c2244589',
+    Var('chromium_git') + '/external/github.com/sctplab/usrsctp' + '@' + '76bea922c32b742ecf5c4a0c64dcfb95ab5387c0',
 
   'src/third_party/libsrtp':
     Var('chromium_git') + '/chromium/deps/libsrtp.git' + '@' + '1d45b8e599dc2db6ea3ae22dbc94a8c504652423',
@@ -238,7 +238,7 @@ deps = {
     Var('chromium_git') + '/native_client/src/third_party/scons-2.0.1.git' + '@' + '1c1550e17fc26355d08627fbdec13d8291227067',
 
   'src/third_party/webrtc':
-    Var('chromium_git') + '/external/webrtc/trunk/webrtc.git' + '@' + '262f12e06b811d265a437d760a3add82477af106', # commit position 19232
+    Var('chromium_git') + '/external/webrtc/trunk/webrtc.git' + '@' + 'a7461e3086866272cb69fbfa23c7fc8b0321a425', # commit position 19097
 
   'src/third_party/openmax_dl':
     Var('chromium_git') + '/external/webrtc/deps/third_party/openmax.git' + '@' +  Var('openmax_dl_revision'),
@@ -253,7 +253,7 @@ deps = {
     Var('chromium_git') + '/external/smhasher.git' + '@' + 'e87738e57558e0ec472b2fc3a643b838e5b6e88f',
 
   'src/third_party/libaddressinput/src':
-    Var('chromium_git') + '/external/libaddressinput.git' + '@' + '3b4eb275c751739275d128a18db4287c3073be0b',
+    Var('chromium_git') + '/external/libaddressinput.git' + '@' + '4d18a0d4be9add0dc479e7b939ed8d39f6ec0d73',
 
   'src/third_party/libphonenumber/dist':
     Var('chromium_git') + '/external/libphonenumber.git' + '@' + 'a4da30df63a097d67e3c429ead6790ad91d36cf4',

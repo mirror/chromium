@@ -28,7 +28,6 @@
 #include "headless/lib/browser/headless_devtools_manager_delegate.h"
 #include "headless/lib/browser/headless_quota_permission_context.h"
 #include "headless/lib/headless_macros.h"
-#include "net/base/url_util.h"
 #include "storage/browser/quota/quota_settings.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/base/ui_base_switches.h"
@@ -255,18 +254,8 @@ void HeadlessContentBrowserClient::AllowCertificateError(
     bool expired_previous_decision,
     const base::Callback<void(content::CertificateRequestResultType)>&
         callback) {
-  if (!callback.is_null()) {
-    // If --allow-insecure-localhost is specified, and the request
-    // was for localhost, then the error was not fatal.
-    bool allow_localhost = base::CommandLine::ForCurrentProcess()->HasSwitch(
-        ::switches::kAllowInsecureLocalhost);
-    if (allow_localhost && net::IsLocalhost(request_url.host())) {
-      callback.Run(content::CERTIFICATE_REQUEST_RESULT_TYPE_CONTINUE);
-      return;
-    }
-
+  if (!callback.is_null())
     callback.Run(content::CERTIFICATE_REQUEST_RESULT_TYPE_DENY);
-  }
 }
 
 void HeadlessContentBrowserClient::ResourceDispatcherHostCreated() {

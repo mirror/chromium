@@ -61,8 +61,7 @@ const MenuItemInfo itemInfoList[kToolsMenuNumberOfItems] = {
     IDC_SHOW_OTHER_DEVICES, nullptr,      ToolbarTypeWebAll,
     kVisibleNotIncognitoOnly,             nil },
   { IDS_HISTORY_SHOW_HISTORY,             kToolsMenuHistoryId,
-    TOOLS_SHOW_HISTORY,
-    @selector(showHistory),               ToolbarTypeWebAll,
+    IDC_SHOW_HISTORY, nullptr,            ToolbarTypeWebAll,
     0,                                    nil },
   { IDS_IOS_OPTIONS_REPORT_AN_ISSUE,      kToolsMenuReportAnIssueId,
     IDC_REPORT_AN_ISSUE, nullptr,         ToolbarTypeAll,
@@ -114,9 +113,15 @@ bool ToolsMenuItemShouldBeVisible(const MenuItemInfo& item,
           ->GetUserFeedbackProvider()
           ->IsUserFeedbackEnabled();
     case IDS_IOS_TOOLS_MENU_REQUEST_DESKTOP_SITE:
-      return (configuration.userAgentType != web::UserAgentType::DESKTOP);
+      if (experimental_flags::IsRequestMobileSiteEnabled())
+        return (configuration.userAgentType != web::UserAgentType::DESKTOP);
+      else
+        return true;
     case IDS_IOS_TOOLS_MENU_REQUEST_MOBILE_SITE:
-      return (configuration.userAgentType == web::UserAgentType::DESKTOP);
+      if (experimental_flags::IsRequestMobileSiteEnabled())
+        return (configuration.userAgentType == web::UserAgentType::DESKTOP);
+      else
+        return false;
     default:
       return true;
   }

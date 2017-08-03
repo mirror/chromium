@@ -10,7 +10,6 @@
 #include "core/dom/Document.h"
 #include "core/dom/TaskRunnerHelper.h"
 #include "core/frame/LocalFrame.h"
-#include "core/loader/SubresourceIntegrityHelper.h"
 #include "platform/bindings/ScriptState.h"
 #include "platform/loader/fetch/MemoryCache.h"
 
@@ -125,8 +124,7 @@ void ClassicPendingScript::NotifyFinished(Resource* resource) {
   CheckState();
   ScriptElementBase* element = GetElement();
   if (element) {
-    SubresourceIntegrityHelper::DoReport(element->GetDocument(),
-                                         GetResource()->IntegrityReportInfo());
+    GetResource()->CheckResourceIntegrity(element->GetDocument());
 
     // It is possible to get back a script resource with integrity metadata
     // for a request with an empty integrity attribute. In that case, the

@@ -210,8 +210,6 @@
         <include name="IDR_MD_EXTENSIONS_OPTIONS_DIALOG_JS" file="resources\md_extensions\options_dialog.js" type="BINDATA" />
         <include name="IDR_MD_EXTENSIONS_PACK_DIALOG_HTML" file="resources\md_extensions\pack_dialog.html" type="BINDATA" />
         <include name="IDR_MD_EXTENSIONS_PACK_DIALOG_JS" file="resources\md_extensions\pack_dialog.js" type="BINDATA" />
-        <include name="IDR_MD_EXTENSIONS_PACK_DIALOG_ALERT_HTML" file="resources\md_extensions\pack_dialog_alert.html" type="BINDATA" />
-        <include name="IDR_MD_EXTENSIONS_PACK_DIALOG_ALERT_JS" file="resources\md_extensions\pack_dialog_alert.js" type="BINDATA" />
         <include name="IDR_MD_EXTENSIONS_SERVICE_HTML" file="resources\md_extensions\service.html" type="BINDATA" />
         <include name="IDR_MD_EXTENSIONS_SERVICE_JS" file="resources\md_extensions\service.js" type="BINDATA" />
         <include name="IDR_MD_EXTENSIONS_SHORTCUT_INPUT_HTML" file="resources\md_extensions\shortcut_input.html" type="BINDATA" />
@@ -521,8 +519,6 @@
         <include name="IDR_PROXY_SETTINGS_HTML" file="resources\chromeos\proxy_settings.html" flattenhtml="true" type="BINDATA" />
         <include name="IDR_CERT_MANAGER_DIALOG_HTML" file="resources\chromeos\certificate_manager_dialog.html" flattenhtml="true" type="BINDATA" />
         <include name="IDR_BLUETOOTH_PAIR_DEVICE_HTML" file="resources\chromeos\bluetooth_pair_device.html" flattenhtml="true" type="BINDATA" />
-        <include name="IDR_BLUETOOTH_DIALOG_HOST_HTML" file="resources\chromeos\bluetooth_dialog_host.html" flattenhtml="true" allowexternalscript="true" type="chrome_html" />
-        <include name="IDR_BLUETOOTH_DIALOG_HOST_JS" file="resources\chromeos\bluetooth_dialog_host.js" type="chrome_html" />
         <include name="IDR_SIM_UNLOCK_HTML" file="resources\chromeos\sim_unlock.html" flattenhtml="true" type="BINDATA" />
         <include name="IDR_SLOW_HTML" file="resources\chromeos\slow.html" flattenhtml="true" type="BINDATA" />
         <include name="IDR_SLOW_JS" file="resources\chromeos\slow.js" type="BINDATA" />

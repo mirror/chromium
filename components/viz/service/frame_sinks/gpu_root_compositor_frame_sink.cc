@@ -26,6 +26,7 @@ GpuRootCompositorFrameSink::GpuRootCompositorFrameSink(
           frame_sink_manager,
           frame_sink_id,
           true /* is_root */,
+          false /* handles_frame_sink_id_invalidation */,
           true /* needs_sync_points */)),
       display_begin_frame_source_(std::move(begin_frame_source)),
       display_(std::move(display)),

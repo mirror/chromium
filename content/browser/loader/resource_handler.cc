@@ -42,6 +42,10 @@ void ResourceHandler::Cancel() {
   ReleaseController()->Cancel();
 }
 
+void ResourceHandler::CancelAndIgnore() {
+  ReleaseController()->CancelAndIgnore();
+}
+
 void ResourceHandler::CancelWithError(int error_code) {
   ReleaseController()->CancelWithError(error_code);
 }

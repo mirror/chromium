@@ -9,21 +9,21 @@
 
 #include <string>
 
-#include "base/files/platform_file.h"
 #include "base/macros.h"
 #include "base/strings/string16.h"
+#include "mojo/edk/embedder/scoped_platform_handle.h"
 
 namespace profiling {
 
 class MemlogSenderPipe {
  public:
-  explicit MemlogSenderPipe(base::ScopedPlatformFile file);
+  explicit MemlogSenderPipe(mojo::edk::ScopedPlatformHandle handle);
   ~MemlogSenderPipe();
 
   bool Send(const void* data, size_t sz);
 
  private:
-  base::ScopedPlatformFile file_;
+  mojo::edk::ScopedPlatformHandle handle_;
 
   DISALLOW_COPY_AND_ASSIGN(MemlogSenderPipe);
 };

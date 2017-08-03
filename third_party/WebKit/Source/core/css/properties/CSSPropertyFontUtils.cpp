@@ -114,79 +114,29 @@ CSSIdentifierValue* CSSPropertyFontUtils::ConsumeFontStretchKeywordOnly(
   return nullptr;
 }
 
-static CSSValue* CombineToRangeListOrNull(const CSSPrimitiveValue* range_start,
-                                          const CSSPrimitiveValue* range_end) {
-  DCHECK(range_start);
-  DCHECK(range_end);
-  if (range_end->GetFloatValue() < range_start->GetFloatValue())
-    return nullptr;
-  CSSValueList* value_list = CSSValueList::CreateSpaceSeparated();
-  value_list->Append(*range_start);
-  value_list->Append(*range_end);
-  return value_list;
-}
-
-CSSValue* CSSPropertyFontUtils::ConsumeFontStretch(
-    CSSParserTokenRange& range,
-    const CSSParserMode& parser_mode) {
+CSSValue* CSSPropertyFontUtils::ConsumeFontStretch(CSSParserTokenRange& range) {
   CSSIdentifierValue* parsed_keyword = ConsumeFontStretchKeywordOnly(range);
   if (parsed_keyword)
     return parsed_keyword;
-
-  CSSPrimitiveValue* start_percent =
+  CSSPrimitiveValue* percent =
       CSSPropertyParserHelpers::ConsumePercent(range, kValueRangeNonNegative);
-  if (!start_percent || start_percent->GetFloatValue() <= 0)
+  if (!percent || percent->GetFloatValue() <= 0)
     return nullptr;
-
-  // In a non-font-face context, more than one percentage is not allowed.
-  if (parser_mode != kCSSFontFaceRuleMode || range.AtEnd())
-    return start_percent;
-
-  CSSPrimitiveValue* end_percent =
-      CSSPropertyParserHelpers::ConsumePercent(range, kValueRangeNonNegative);
-  if (!end_percent || end_percent->GetFloatValue() <= 0)
-    return nullptr;
-
-  return CombineToRangeListOrNull(start_percent, end_percent);
+  return percent;
 }
 
-CSSValue* CSSPropertyFontUtils::ConsumeFontWeight(
-    CSSParserTokenRange& range,
-    const CSSParserMode& parser_mode) {
+CSSValue* CSSPropertyFontUtils::ConsumeFontWeight(CSSParserTokenRange& range) {
   const CSSParserToken& token = range.Peek();
   if (token.Id() >= CSSValueNormal && token.Id() <= CSSValueLighter)
     return CSSPropertyParserHelpers::ConsumeIdent(range);
-
-  // Avoid consuming the first zero of font: 0/0; e.g. in the Acid3 test.  In
-  // font:0/0; the first zero is the font size, the second is the line height.
-  // In font: 100 0/0; we should parse the first 100 as font-weight, the 0
-  // before the slash as font size. We need to peek and check the token in order
-  // to avoid parsing a 0 font size as a font-weight. If we call ConsumeNumber
-  // straight away without Peek, then the parsing cursor advances too far and we
-  // parsed font-size as font-weight incorrectly.
-  if (token.GetType() == kNumberToken &&
-      (token.NumericValue() < 1 || token.NumericValue() > 1000))
+  if (token.GetType() != kNumberToken)
     return nullptr;
-
-  CSSPrimitiveValue* start_weight =
-      CSSPropertyParserHelpers::ConsumeNumber(range, kValueRangeNonNegative);
-  if (!start_weight || start_weight->GetFloatValue() < 1 ||
-      start_weight->GetFloatValue() > 1000)
+  float weight = token.NumericValue();
+  if (weight < 1 || weight > 1000)
     return nullptr;
-
-  // In a non-font-face context, more than one number is not allowed. Return
-  // what we have. If there is trailing garbage, the AtEnd() check in
-  // CSSPropertyParser::ParseValueStart will catch that.
-  if (parser_mode != kCSSFontFaceRuleMode || range.AtEnd())
-    return start_weight;
-
-  CSSPrimitiveValue* end_weight =
-      CSSPropertyParserHelpers::ConsumeNumber(range, kValueRangeNonNegative);
-  if (!end_weight || end_weight->GetFloatValue() < 1 ||
-      end_weight->GetFloatValue() > 1000)
-    return nullptr;
-
-  return CombineToRangeListOrNull(start_weight, end_weight);
+  range.ConsumeIncludingWhitespace();
+  return CSSPrimitiveValue::Create(weight,
+                                   CSSPrimitiveValue::UnitType::kNumber);
 }
 
 // TODO(bugsnash): move this to the FontFeatureSettings API when it is no longer

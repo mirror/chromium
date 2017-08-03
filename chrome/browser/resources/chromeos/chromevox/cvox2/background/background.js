@@ -487,6 +487,10 @@ Background.prototype = {
       if (!lca || lca.state[StateType.EDITABLE] ||
           !range.start.node.state[StateType.EDITABLE])
         range.select();
+
+      // Richly editable output gets handled by editing.js.
+      if (lca && lca.state.richlyEditable)
+        return;
     }
 
     o.withRichSpeechAndBraille(
@@ -634,14 +638,7 @@ Background.prototype = {
   brailleRoutingCommand_: function(text, position) {
     var actionNodeSpan = null;
     var selectionSpan = null;
-
-    // For a routing key press one cell beyond the last displayed character, use
-    // the node span for the last character. This enables routing selection to
-    // the length of the text, which is valid.
-    var nodePosition = position;
-    if (position == text.length && position > 0)
-      nodePosition--;
-    text.getSpans(nodePosition).forEach(function(span) {
+    text.getSpans(position).forEach(function(span) {
       if (span instanceof Output.SelectionSpan) {
         selectionSpan = span;
       } else if (span instanceof Output.NodeSpan) {

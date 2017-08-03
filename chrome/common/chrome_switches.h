@@ -207,7 +207,6 @@ extern const char kStartStackProfiler[];
 extern const char kSupervisedUserId[];
 extern const char kSupervisedUserSyncToken[];
 extern const char kSystemLogUploadFrequency[];
-extern const char kTaskManagerShowExtraRenderers[];
 extern const char kTestName[];
 extern const char kTrustedDownloadSources[];
 extern const char kTryChromeAgain[];
@@ -333,7 +332,8 @@ extern const char kDisableInputImeAPI[];
 extern const char kEnableInputImeAPI[];
 #endif
 
-#if defined(OS_LINUX) || defined(OS_MACOSX) || defined(OS_WIN)
+#if defined(OS_CHROMEOS) || defined(OS_LINUX) || defined(OS_MACOSX) || \
+    defined(OS_WIN)
 extern const char kEnableNewAppMenuIcon[];
 #endif
 

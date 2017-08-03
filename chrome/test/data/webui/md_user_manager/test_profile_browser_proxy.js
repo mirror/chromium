@@ -4,106 +4,105 @@
 
 /**
  * The mock signin.ProfileBrowserProxy.
+ *
+ * @constructor
  * @implements {signin.ProfileBrowserProxy}
+ * @extends {TestBrowserProxy}
  */
-class TestProfileBrowserProxy extends TestBrowserProxy {
-  constructor() {
-    super([
-      'getAvailableIcons',
-      'getSignedInUsers',
-      'launchGuestUser',
-      'createProfile',
-      'cancelCreateProfile',
-      'initializeUserManager',
-      'launchUser',
-      'getExistingSupervisedUsers',
-      'areAllProfilesLocked',
-    ]);
+var TestProfileBrowserProxy = function() {
+  TestBrowserProxy.call(this, [
+    'getAvailableIcons',
+    'getSignedInUsers',
+    'launchGuestUser',
+    'createProfile',
+    'cancelCreateProfile',
+    'initializeUserManager',
+    'launchUser',
+    'getExistingSupervisedUsers',
+    'areAllProfilesLocked',
+  ]);
 
-    /** @private {!Array<!AvatarIcon>} */
-    this.icons_ = [];
+  /** @private {!Array<!AvatarIcon>} */
+  this.icons_ = [];
 
-    /** @private {!Array<SignedInUser>} */
-    this.signedInUsers_ = [];
+  /** @private {!Array<SignedInUser>} */
+  this.signedInUsers_ = [];
 
-    /** @private {!ProfileInfo} */
-    this.defaultProfileInfo_ = {};
+  /** @private {!ProfileInfo} */
+  this.defaultProfileInfo_ = {};
 
-    /** @private {!Array<SupervisedUser>} */
-    this.existingSupervisedUsers_ = [];
+  /** @private {!Array<SupervisedUser>} */
+  this.existingSupervisedUsers_ = [];
 
-    /** @private {boolean} */
-    this.allProfilesLocked_ = false;
-  }
+  /** @private {boolean} */
+  this.allProfilesLocked_ = false;
+};
+
+TestProfileBrowserProxy.prototype = {
+  __proto__: TestBrowserProxy.prototype,
 
   /**
    * @param {!Array<!AvatarIcon>} icons
    */
-  setIcons(icons) {
+  setIcons: function(icons) {
     this.icons_ = icons;
-  }
+  },
 
   /**
    * @param {!Array<SignedInUser>} signedInUsers
    */
-  setSignedInUsers(signedInUsers) {
+  setSignedInUsers: function(signedInUsers) {
     this.signedInUsers_ = signedInUsers;
-  }
+  },
 
   /**
    * @param {!ProfileInfo} profileInfo
    */
-  setDefaultProfileInfo(profileInfo) {
+  setDefaultProfileInfo: function(profileInfo) {
     this.defaultProfileInfo_ = profileInfo;
-  }
+  },
 
   /**
    * @param {!Array<SupervisedUser>} supervisedUsers
    */
-  setExistingSupervisedUsers(supervisedUsers) {
+  setExistingSupervisedUsers: function(supervisedUsers) {
     this.existingSupervisedUsers_ = supervisedUsers;
-  }
+  },
 
   /**
    * @param {boolean} allProfilesLocked
    */
-  setAllProfilesLocked(allProfilesLocked) {
+  setAllProfilesLocked: function(allProfilesLocked) {
     this.allProfilesLocked_ = allProfilesLocked;
-  }
+  },
 
   /** @override */
-  getAvailableIcons() {
+  getAvailableIcons: function() {
     this.methodCalled('getAvailableIcons');
     cr.webUIListenerCallback('profile-icons-received', this.icons_);
     cr.webUIListenerCallback('profile-defaults-received',
                              this.defaultProfileInfo_);
-  }
+  },
 
   /** @override */
-  getSignedInUsers() {
+  getSignedInUsers: function() {
     this.methodCalled('getSignedInUsers');
     cr.webUIListenerCallback('signedin-users-received', this.signedInUsers_);
-  }
+  },
 
   /** @override */
-  cancelCreateProfile() {
+  cancelCreateProfile: function() {
     /**
      * Flag used to test whether this method was not called.
      * @type {boolean}
      */
     this.cancelCreateProfileCalled = true;
     this.methodCalled('cancelCreateProfile');
-  }
+  },
 
   /** @override */
-  createProfile(
-    profileName,
-    profileIconUrl,
-    createShortcut,
-    isSupervised,
-    supervisedUserId,
-    custodianProfilePath
-  ) {
+  createProfile: function(profileName, profileIconUrl, createShortcut,
+        isSupervised, supervisedUserId, custodianProfilePath) {
     this.methodCalled('createProfile',
                       {profileName: profileName,
                        profileIconUrl: profileIconUrl,
@@ -111,22 +110,22 @@ class TestProfileBrowserProxy extends TestBrowserProxy {
                        isSupervised: isSupervised,
                        supervisedUserId: supervisedUserId,
                        custodianProfilePath: custodianProfilePath});
-  }
+  },
 
   /** @override */
-  launchGuestUser() {
+  launchGuestUser: function() {
     this.methodCalled('launchGuestUser');
-  }
+  },
 
   /** @override */
-  getExistingSupervisedUsers() {
+  getExistingSupervisedUsers: function() {
     this.methodCalled('getExistingSupervisedUsers');
     return Promise.resolve(this.existingSupervisedUsers_);
-  }
+  },
 
   /** @override */
-  areAllProfilesLocked() {
+  areAllProfilesLocked: function() {
     this.methodCalled('areAllProfilesLocked');
     return Promise.resolve(this.allProfilesLocked_);
-  }
-}
+  },
+};

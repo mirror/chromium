@@ -64,6 +64,7 @@ namespace blink {
 // dependencies to core/.
 
 class DOMWindow;
+class EventListener;
 class EventTarget;
 class ExceptionState;
 class ExecutionContext;
@@ -181,21 +182,20 @@ inline void V8SetReturnValue(const CallbackInfo& callback_info,
   DCHECK(descriptor.has_writable());
   v8::Local<v8::Object> desc = v8::Object::New(callback_info.GetIsolate());
   desc->Set(callback_info.GetIsolate()->GetCurrentContext(),
-            V8AtomicString(callback_info.GetIsolate(), "configurable"),
+            V8String(callback_info.GetIsolate(), "configurable"),
             ToV8(descriptor.configurable(), callback_info.Holder(),
                  callback_info.GetIsolate()))
       .ToChecked();
   desc->Set(callback_info.GetIsolate()->GetCurrentContext(),
-            V8AtomicString(callback_info.GetIsolate(), "enumerable"),
+            V8String(callback_info.GetIsolate(), "enumerable"),
             ToV8(descriptor.enumerable(), callback_info.Holder(),
                  callback_info.GetIsolate()))
       .ToChecked();
   desc->Set(callback_info.GetIsolate()->GetCurrentContext(),
-            V8AtomicString(callback_info.GetIsolate(), "value"),
-            descriptor.value())
+            V8String(callback_info.GetIsolate(), "value"), descriptor.value())
       .ToChecked();
   desc->Set(callback_info.GetIsolate()->GetCurrentContext(),
-            V8AtomicString(callback_info.GetIsolate(), "writable"),
+            V8String(callback_info.GetIsolate(), "writable"),
             ToV8(descriptor.writable(), callback_info.Holder(),
                  callback_info.GetIsolate()))
       .ToChecked();
@@ -605,6 +605,12 @@ CORE_EXPORT bool IsValidEnum(const Vector<String>& values,
                              size_t length,
                              const String& enum_name,
                              ExceptionState&);
+
+CORE_EXPORT void MoveEventListenerToNewWrapper(v8::Isolate*,
+                                               v8::Local<v8::Object>,
+                                               EventListener* old_value,
+                                               v8::Local<v8::Value> new_value,
+                                               int cache_index);
 
 // Result values for platform object 'deleter' methods,
 // http://www.w3.org/TR/WebIDL/#delete

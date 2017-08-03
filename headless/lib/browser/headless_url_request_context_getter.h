@@ -30,9 +30,7 @@ namespace headless {
 class HeadlessBrowserContextOptions;
 class HeadlessBrowserContextImpl;
 
-class HeadlessURLRequestContextGetter
-    : public net::URLRequestContextGetter,
-      public HeadlessBrowserContext::Observer {
+class HeadlessURLRequestContextGetter : public net::URLRequestContextGetter {
  public:
   HeadlessURLRequestContextGetter(
       scoped_refptr<base::SingleThreadTaskRunner> io_task_runner,
@@ -49,9 +47,6 @@ class HeadlessURLRequestContextGetter
       const override;
 
   net::HostResolver* host_resolver() const;
-
-  // HeadlessBrowserContext::Observer implementation:
-  void OnHeadlessBrowserContextDestruct() override;
 
  protected:
   ~HeadlessURLRequestContextGetter() override;
@@ -71,9 +66,7 @@ class HeadlessURLRequestContextGetter
   std::unique_ptr<net::URLRequestContext> url_request_context_;
   content::ProtocolHandlerMap protocol_handlers_;
   content::URLRequestInterceptorScopedVector request_interceptors_;
-  net::NetLog* net_log_;  // Not owned
-
-  base::Lock lock_;  // Protects |headless_browser_context_|.
+  net::NetLog* net_log_;                                  // Not owned.
   HeadlessBrowserContextImpl* headless_browser_context_;  // Not owned.
 
   DISALLOW_COPY_AND_ASSIGN(HeadlessURLRequestContextGetter);

@@ -35,6 +35,17 @@ class KeyboardUI;
 // or hide animation finishes.
 constexpr int kAnimationDistance = 30;
 
+enum KeyboardMode {
+  // Invalid mode.
+  NONE,
+  // Full width virtual keyboard. The virtual keyboard window has the same width
+  // as the display.
+  FULL_WIDTH,
+  // Floating virtual keyboard. The virtual keyboard window has customizable
+  // width and is draggable.
+  FLOATING,
+};
+
 // Represents the current state of the keyboard managed by the controller.
 // Don't change the numeric value of the members because they are used in UMA
 // - VirtualKeyboard.ControllerStateTransition.
@@ -105,6 +116,10 @@ class KEYBOARD_EXPORT KeyboardController : public ui::InputMethodObserver,
   void set_keyboard_locked(bool lock) { keyboard_locked_ = lock; }
 
   bool keyboard_locked() const { return keyboard_locked_; }
+
+  KeyboardMode keyboard_mode() const { return keyboard_mode_; }
+
+  void SetKeyboardMode(KeyboardMode mode);
 
   // Immediately starts hiding animation of virtual keyboard and notifies
   // observers bounds change. This method forcibly sets keyboard_locked_
@@ -215,6 +230,7 @@ class KEYBOARD_EXPORT KeyboardController : public ui::InputMethodObserver,
   bool show_on_resize_;
   // If true, the keyboard is always visible even if no window has input focus.
   bool keyboard_locked_;
+  KeyboardMode keyboard_mode_;
   KeyboardEventFilter event_filter_;
 
   base::ObserverList<KeyboardControllerObserver> observer_list_;

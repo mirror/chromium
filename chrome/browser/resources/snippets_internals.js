@@ -38,25 +38,6 @@ cr.define('chrome.SnippetsInternals', function() {
       event.preventDefault();
     });
 
-    $('push-dummy-suggestion-10-seconds-button')
-        .addEventListener('click', function(event) {
-          chrome.send('pushDummySuggestionIn10Seconds');
-          event.preventDefault();
-        });
-
-    if (loadTimeData.getBoolean('contextualSuggestionsEnabled')) {
-      $('contextual-suggestions-section').classList.remove('hidden');
-    }
-
-    $('fetch-contextual-suggestions-button')
-        .addEventListener('click', function(event) {
-          let url = $('contextual-url').value;
-          $('contextual-suggestions-request-result').textContent =
-              'Fetching contextual suggestions for ' + url;
-          chrome.send('fetchContextualSuggestions', [url]);
-          event.preventDefault();
-        });
-
     window.addEventListener('focus', refreshContent);
     window.setInterval(refreshContent, 1000);
 
@@ -65,12 +46,6 @@ cr.define('chrome.SnippetsInternals', function() {
 
   function receiveProperty(propertyId, value) {
     $(propertyId).textContent = value;
-  }
-
-  function receiveContextualSuggestions(suggestions, status_msg) {
-    $('contextual-suggestions-request-result').textContent = status_msg;
-    displayList(
-        suggestions, 'contextual-suggestions', 'contextual-hidden-toggler');
   }
 
   function receiveContentSuggestions(categoriesList) {
@@ -203,7 +178,6 @@ cr.define('chrome.SnippetsInternals', function() {
     receiveRankerDebugData: receiveRankerDebugData,
     receiveLastRemoteSuggestionsBackgroundFetchTime:
         receiveLastRemoteSuggestionsBackgroundFetchTime,
-    receiveContextualSuggestions: receiveContextualSuggestions,
   };
 });
 

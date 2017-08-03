@@ -6,12 +6,17 @@
 
 #include <memory>
 
+#include "base/run_loop.h"
 #include "base/task_scheduler/task_scheduler.h"
-#include "base/test/scoped_task_environment.h"
+#include "content/public/browser/browser_thread.h"
+#include "content/public/test/test_browser_thread_bundle.h"
+#include "content/public/test/test_utils.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace {
+
+using content::BrowserThread;
 
 using testing::Invoke;
 using testing::_;
@@ -25,13 +30,19 @@ class MockDiscoveryObserver : public DiscoveryNetworkMonitor::Observer {
 
 class DiscoveryNetworkMonitorTest : public testing::Test {
  protected:
-  void SetUp() override { fake_network_info.clear(); }
+  void SetUp() override {
+    fake_network_info.clear();
+    discovery_network_monitor->SetNetworkInfoFunctionForTest(
+        &FakeGetNetworkInfo);
+  }
+
+  void TearDown() override { delete discovery_network_monitor; }
 
   static std::vector<DiscoveryNetworkInfo> FakeGetNetworkInfo() {
     return fake_network_info;
   }
 
-  base::test::ScopedTaskEnvironment scoped_task_environment;
+  content::TestBrowserThreadBundle test_browser_thread_bundle;
   MockDiscoveryObserver mock_observer;
 
   std::vector<DiscoveryNetworkInfo> fake_ethernet_info{
@@ -44,8 +55,10 @@ class DiscoveryNetworkMonitorTest : public testing::Test {
       base::WrapUnique(net::NetworkChangeNotifier::CreateMock());
 
   static std::vector<DiscoveryNetworkInfo> fake_network_info;
-  std::unique_ptr<DiscoveryNetworkMonitor> discovery_network_monitor =
-      DiscoveryNetworkMonitor::CreateInstanceForTest(&FakeGetNetworkInfo);
+  // A raw pointer is used here with the delete in TearDown to avoid making the
+  // destructor public.
+  DiscoveryNetworkMonitor* discovery_network_monitor =
+      new DiscoveryNetworkMonitor();
 };
 
 // static
@@ -66,7 +79,7 @@ TEST_F(DiscoveryNetworkMonitorTest, NetworkIdIsConsistent) {
 
   net::NetworkChangeNotifier::NotifyObserversOfNetworkChangeForTests(
       net::NetworkChangeNotifier::CONNECTION_ETHERNET);
-  scoped_task_environment.RunUntilIdle();
+  content::RunAllBlockingPoolTasksUntilIdle();
 
   std::string ethernet_network_id = current_network_id;
 
@@ -76,7 +89,7 @@ TEST_F(DiscoveryNetworkMonitorTest, NetworkIdIsConsistent) {
 
   net::NetworkChangeNotifier::NotifyObserversOfNetworkChangeForTests(
       net::NetworkChangeNotifier::CONNECTION_NONE);
-  scoped_task_environment.RunUntilIdle();
+  content::RunAllBlockingPoolTasksUntilIdle();
 
   fake_network_info = fake_wifi_info;
   EXPECT_CALL(mock_observer, OnNetworksChanged(_))
@@ -84,7 +97,7 @@ TEST_F(DiscoveryNetworkMonitorTest, NetworkIdIsConsistent) {
 
   net::NetworkChangeNotifier::NotifyObserversOfNetworkChangeForTests(
       net::NetworkChangeNotifier::CONNECTION_WIFI);
-  scoped_task_environment.RunUntilIdle();
+  content::RunAllBlockingPoolTasksUntilIdle();
 
   std::string wifi_network_id = current_network_id;
   fake_network_info = fake_ethernet_info;
@@ -93,7 +106,7 @@ TEST_F(DiscoveryNetworkMonitorTest, NetworkIdIsConsistent) {
 
   net::NetworkChangeNotifier::NotifyObserversOfNetworkChangeForTests(
       net::NetworkChangeNotifier::CONNECTION_ETHERNET);
-  scoped_task_environment.RunUntilIdle();
+  content::RunAllBlockingPoolTasksUntilIdle();
 
   EXPECT_EQ(ethernet_network_id, current_network_id);
   EXPECT_NE(ethernet_network_id, wifi_network_id);
@@ -109,14 +122,14 @@ TEST_F(DiscoveryNetworkMonitorTest, RemoveObserverStopsNotifications) {
 
   net::NetworkChangeNotifier::NotifyObserversOfNetworkChangeForTests(
       net::NetworkChangeNotifier::CONNECTION_ETHERNET);
-  scoped_task_environment.RunUntilIdle();
+  content::RunAllBlockingPoolTasksUntilIdle();
 
   discovery_network_monitor->RemoveObserver(&mock_observer);
   fake_network_info.clear();
 
   net::NetworkChangeNotifier::NotifyObserversOfNetworkChangeForTests(
       net::NetworkChangeNotifier::CONNECTION_NONE);
-  scoped_task_environment.RunUntilIdle();
+  content::RunAllBlockingPoolTasksUntilIdle();
 }
 
 TEST_F(DiscoveryNetworkMonitorTest, RefreshIndependentOfChangeObserver) {
@@ -132,7 +145,7 @@ TEST_F(DiscoveryNetworkMonitorTest, RefreshIndependentOfChangeObserver) {
   };
 
   discovery_network_monitor->Refresh(base::BindOnce(force_refresh_callback));
-  scoped_task_environment.RunUntilIdle();
+  content::RunAllBlockingPoolTasksUntilIdle();
 }
 
 TEST_F(DiscoveryNetworkMonitorTest, GetNetworkIdWithoutRefresh) {
@@ -142,7 +155,7 @@ TEST_F(DiscoveryNetworkMonitorTest, GetNetworkIdWithoutRefresh) {
     EXPECT_EQ(DiscoveryNetworkMonitor::kNetworkIdDisconnected, network_id);
   };
   discovery_network_monitor->GetNetworkId(base::BindOnce(check_network_id));
-  scoped_task_environment.RunUntilIdle();
+  content::RunAllBlockingPoolTasksUntilIdle();
 }
 
 TEST_F(DiscoveryNetworkMonitorTest, GetNetworkIdWithRefresh) {
@@ -159,7 +172,7 @@ TEST_F(DiscoveryNetworkMonitorTest, GetNetworkIdWithRefresh) {
   };
   discovery_network_monitor->Refresh(
       base::BindOnce(capture_network_id, &current_network_id));
-  scoped_task_environment.RunUntilIdle();
+  content::RunAllBlockingPoolTasksUntilIdle();
 
   auto check_network_id = [](const std::string& refresh_network_id,
                              const std::string& network_id) {
@@ -167,7 +180,7 @@ TEST_F(DiscoveryNetworkMonitorTest, GetNetworkIdWithRefresh) {
   };
   discovery_network_monitor->GetNetworkId(
       base::BindOnce(check_network_id, base::ConstRef(current_network_id)));
-  scoped_task_environment.RunUntilIdle();
+  content::RunAllBlockingPoolTasksUntilIdle();
 }
 
 TEST_F(DiscoveryNetworkMonitorTest, GetNetworkIdWithObserver) {
@@ -178,7 +191,7 @@ TEST_F(DiscoveryNetworkMonitorTest, GetNetworkIdWithObserver) {
 
   net::NetworkChangeNotifier::NotifyObserversOfNetworkChangeForTests(
       net::NetworkChangeNotifier::CONNECTION_ETHERNET);
-  scoped_task_environment.RunUntilIdle();
+  content::RunAllBlockingPoolTasksUntilIdle();
 
   std::string current_network_id;
   auto check_network_id = [](const std::string& network_id) {
@@ -188,5 +201,5 @@ TEST_F(DiscoveryNetworkMonitorTest, GetNetworkIdWithObserver) {
               network_id);
   };
   discovery_network_monitor->GetNetworkId(base::BindOnce(check_network_id));
-  scoped_task_environment.RunUntilIdle();
+  content::RunAllBlockingPoolTasksUntilIdle();
 }

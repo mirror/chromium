@@ -79,8 +79,7 @@ class CONTENT_EXPORT InputEventFilter : public InputHandlerManagerClient,
       const ui::LatencyInfo& latency_info) override;
   void SetWhiteListedTouchAction(int routing_id,
                                  cc::TouchAction touch_action,
-                                 uint32_t unique_touch_event_id,
-                                 InputEventAckState ack_state) override;
+                                 uint32_t unique_touch_event_id) override;
 
   // IPC::MessageFilter methods:
   void OnFilterAdded(IPC::Channel* channel) override;

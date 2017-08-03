@@ -273,14 +273,14 @@ public class TileGroupUnitTest {
         notifyTileUrlsAvailable(URLS);
 
         // Render them to the layout.
-        tileGroup.renderTiles(layout);
+        tileGroup.renderTileViews(layout);
         assertThat(layout.getChildCount(), is(2));
         assertThat(((TileView) layout.getChildAt(0)).getUrl(), is(URLS[0]));
         assertThat(((TileView) layout.getChildAt(1)).getUrl(), is(URLS[1]));
     }
 
     /** Check for https://crbug.com/703628: handle duplicated URLs by ignoring them. */
-    @Test(expected = IllegalStateException.class)
+    @Test
     public void testRenderTileViewWithDuplicatedUrl() {
         SuggestionsUiDelegate uiDelegate = mock(SuggestionsUiDelegate.class);
         when(uiDelegate.getImageFetcher()).thenReturn(mock(ImageFetcher.class));
@@ -293,8 +293,11 @@ public class TileGroupUnitTest {
         // Initialise the internal list of tiles
         notifyTileUrlsAvailable(URLS[0], URLS[1], URLS[0]);
 
-        // Render them to the layout. The duplicated URL should trigger the exception.
-        tileGroup.renderTiles(layout);
+        // Render them to the layout. The duplicated URL is skipped.
+        tileGroup.renderTileViews(layout);
+        assertThat(layout.getChildCount(), is(2));
+        assertThat(((TileView) layout.getChildAt(0)).getUrl(), is(URLS[0]));
+        assertThat(((TileView) layout.getChildAt(1)).getUrl(), is(URLS[1]));
     }
 
     @Test
@@ -316,7 +319,7 @@ public class TileGroupUnitTest {
         layout.addView(view2);
 
         // The tiles should be updated, the old ones removed.
-        tileGroup.renderTiles(layout);
+        tileGroup.renderTileViews(layout);
         assertThat(layout.getChildCount(), is(2));
         assertThat(layout.indexOfChild(view1), is(-1));
         assertThat(layout.indexOfChild(view2), is(-1));
@@ -344,7 +347,7 @@ public class TileGroupUnitTest {
         layout.addView(view2);
 
         // The tiles should be updated, the old ones reused.
-        tileGroup.renderTiles(layout);
+        tileGroup.renderTileViews(layout);
         assertThat(layout.getChildCount(), is(2));
         assertThat(layout.getChildAt(0), CoreMatchers.<View>is(view1));
         assertThat(layout.getChildAt(1), CoreMatchers.<View>is(view2));
@@ -374,7 +377,7 @@ public class TileGroupUnitTest {
         Tile tile = new Tile("title", URLS[0], "", 0, TileSource.POPULAR);
 
         ViewGroup layout = new FrameLayout(RuntimeEnvironment.application, null);
-        buildTileView(tile, layout, tileGroup);
+        tileGroup.buildTileView(tile, layout);
 
         // Ensure we run the callback for the new tile.
         assertEquals(1, mImageFetcher.getPendingIconCallbackCount());
@@ -392,7 +395,7 @@ public class TileGroupUnitTest {
         // Notify for a second set.
         notifyTileUrlsAvailable(URLS);
         ViewGroup layout = new FrameLayout(RuntimeEnvironment.application, null);
-        tileGroup.renderTiles(layout);
+        tileGroup.renderTileViews(layout);
         mImageFetcher.fulfillLargeIconRequests();
 
         // Data changed but no loading complete event is sent
@@ -411,7 +414,7 @@ public class TileGroupUnitTest {
         notifyTileUrlsAvailable(URLS);
         tileGroup.onSwitchToForeground(/* trackLoadTask: */ false);
         ViewGroup layout = new FrameLayout(RuntimeEnvironment.application, null);
-        tileGroup.renderTiles(layout);
+        tileGroup.renderTileViews(layout);
         mImageFetcher.fulfillLargeIconRequests();
 
         // Data changed but no loading complete event is sent (same as sync)
@@ -430,7 +433,7 @@ public class TileGroupUnitTest {
         notifyTileUrlsAvailable(URLS);
         tileGroup.onSwitchToForeground(/* trackLoadTask: */ true);
         ViewGroup layout = new FrameLayout(RuntimeEnvironment.application, null);
-        tileGroup.renderTiles(layout);
+        tileGroup.renderTileViews(layout);
         mImageFetcher.fulfillLargeIconRequests();
 
         // Data changed but no loading complete event is sent
@@ -479,15 +482,11 @@ public class TileGroupUnitTest {
         notifyTileUrlsAvailable(urls);
 
         ViewGroup layout = new FrameLayout(RuntimeEnvironment.application, null);
-        tileGroup.renderTiles(layout);
+        tileGroup.renderTileViews(layout);
 
         reset(mTileGroupObserver);
         reset(mTileGroupDelegate);
         return tileGroup;
-    }
-
-    private void buildTileView(Tile tile, ViewGroup layout, TileGroup tileGroup) {
-        tileGroup.getTileRenderer().buildTileView(tile, layout, tileGroup.getTileSetupDelegate());
     }
 
     private class FakeTileGroupDelegate implements TileGroup.Delegate {

@@ -6,6 +6,7 @@ from core import perf_benchmark
 
 from measurements import rasterize_and_record_micro
 import page_sets
+from telemetry import benchmark
 from telemetry import story
 
 
@@ -43,6 +44,10 @@ class _RasterizeAndRecordMicro(perf_benchmark.PerfBenchmark):
         options.record_repeat, options.timeout, options.report_detailed_results)
 
 
+# RasterizeAndRecord disabled on mac because of crbug.com/350684.
+# RasterizeAndRecord disabled on windows because of crbug.com/338057.
+@benchmark.Disabled('mac', 'win',
+                    'android')  # http://crbug.com/610018
 class RasterizeAndRecordMicroTop25(_RasterizeAndRecordMicro):
   """Measures rasterize and record performance on the top 25 web pages.
 
@@ -64,6 +69,10 @@ class RasterizeAndRecordMicroTop25(_RasterizeAndRecordMicro):
     return StoryExpectations()
 
 
+
+# New benchmark only enabled on Linux until we've observed behavior for a
+# reasonable period of time.
+@benchmark.Disabled('mac', 'win', 'android')
 class RasterizeAndRecordMicroPartialInvalidation(_RasterizeAndRecordMicro):
   """Measures rasterize and record performance for partial inval. on big pages.
 

@@ -12,6 +12,7 @@
 #include "content/public/renderer/render_view.h"
 #include "extensions/common/extension_messages.h"
 #include "extensions/common/stack_frame.h"
+#include "services/service_manager/public/cpp/binder_registry.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
 #include "third_party/WebKit/public/web/WebView.h"
 
@@ -77,11 +78,10 @@ StackTrace GetStackTraceFromMessage(base::string16* message,
 }  // namespace
 
 ExtensionsRenderFrameObserver::ExtensionsRenderFrameObserver(
-    content::RenderFrame* render_frame,
-    service_manager::BinderRegistry* registry)
+    content::RenderFrame* render_frame)
     : content::RenderFrameObserver(render_frame),
       webview_visually_deemphasized_(false) {
-  registry->AddInterface(
+  registry_.AddInterface(
       base::Bind(&ExtensionsRenderFrameObserver::BindAppWindowRequest,
                  base::Unretained(this)));
 }
@@ -103,6 +103,12 @@ void ExtensionsRenderFrameObserver::SetVisuallyDeemphasized(bool deemphasized) {
   SkColor color =
       deemphasized ? SkColorSetARGB(178, 0, 0, 0) : SK_ColorTRANSPARENT;
   render_frame()->GetRenderView()->GetWebView()->SetPageOverlayColor(color);
+}
+
+void ExtensionsRenderFrameObserver::OnInterfaceRequestForFrame(
+    const std::string& interface_name,
+    mojo::ScopedMessagePipeHandle* interface_pipe) {
+  registry_.TryBindInterface(interface_name, interface_pipe);
 }
 
 void ExtensionsRenderFrameObserver::DetailedConsoleMessageAdded(

@@ -8,14 +8,14 @@
  * See |setSdpDefaultCodec|.
  */
 function setSdpDefaultAudioCodec(sdp, codec) {
-  return setSdpDefaultCodec(sdp, 'audio', codec, false /* preferHwCodec */);
+  return setSdpDefaultCodec(sdp, 'audio', codec);
 }
 
 /**
  * See |setSdpDefaultCodec|.
  */
-function setSdpDefaultVideoCodec(sdp, codec, preferHwCodec) {
-  return setSdpDefaultCodec(sdp, 'video', codec, preferHwCodec);
+function setSdpDefaultVideoCodec(sdp, codec) {
+  return setSdpDefaultCodec(sdp, 'video', codec);
 }
 
 /**
@@ -55,17 +55,14 @@ function setOpusDtxEnabled(sdp) {
 /**
  * Returns a modified version of |sdp| where the |codec| has been promoted to be
  * the default codec, i.e. the codec whose ID is first in the list of codecs on
- * the 'm=|type|' line, where |type| is 'audio' or 'video'. If |preferHwCodec|
- * is true, it will select the last codec with the given name, and if false, it
- * will select the first codec with the given name, because HW codecs are listed
- * after SW codecs in the SDP list.
+ * the 'm=|type|' line, where |type| is 'audio' or 'video'.
  * @private
  */
-function setSdpDefaultCodec(sdp, type, codec, preferHwCodec) {
+function setSdpDefaultCodec(sdp, type, codec) {
   var sdpLines = splitSdpLines(sdp);
 
   // Find codec ID, e.g. 100 for 'VP8' if 'a=rtpmap:100 VP8/9000'.
-  var codecId = findRtpmapId(sdpLines, codec, preferHwCodec);
+  var codecId = findRtpmapId(sdpLines, codec);
   if (codecId === null) {
     failure('setSdpDefaultCodec',
             'Unknown ID for |codec| = \'' + codec + '\'.');
@@ -132,15 +129,13 @@ function getSdpDefaultCodec(sdp, type) {
 /**
  * Searches through all |sdpLines| for the 'a=rtpmap:' line for the codec of
  * the specified name, returning its ID as an int if found, or null otherwise.
- * |codec| is the case-sensitive name of the codec. If |lastInstance|
- * is true, it will return the last such ID, and if false, it will return the
- * first such ID.
+ * |codec| is the case-sensitive name of the codec.
  * For example, if |sdpLines| contains 'a=rtpmap:100 VP8/9000' and |codec| is
  * 'VP8', this function returns 100.
  * @private
  */
-function findRtpmapId(sdpLines, codec, lastInstance) {
-  var lineNo = findRtpmapLine(sdpLines, codec, lastInstance);
+function findRtpmapId(sdpLines, codec) {
+  var lineNo = findRtpmapLine(sdpLines, codec);
   if (lineNo === null)
     return null;
   // Parse <id> from 'a=rtpmap:<id> <codec>/<rate>'.
@@ -168,43 +163,25 @@ function findRtpmapCodec(sdpLines, id) {
 }
 
 /**
- * Finds a 'a=rtpmap:' line from |sdpLines| that contains |contains| and returns
- * its line index, or null if no such line was found. |contains| may be the
- * codec ID, codec name or bitrate. If |lastInstance| is true, it will return
- * the last such line index, and if false, it will return the first such line
- * index.
- * An 'a=rtpmap:' line looks like this: 'a=rtpmap:<id> <codec>/<rate>'.
+ * Finds the first 'a=rtpmap:' line from |sdpLines| that contains |contains| and
+ * returns its line index, or null if no such line was found. |contains| may be
+ * the codec ID, codec name or bitrate. An 'a=rtpmap:' line looks like this:
+ * 'a=rtpmap:<id> <codec>/<rate>'.
  */
-function findRtpmapLine(sdpLines, contains, lastInstance) {
-  if (lastInstance === true) {
-    for (var i = sdpLines.length - 1; i >= 0 ; i--) {
-      if (isRtpmapLine(sdpLines[i], contains))
-        return i;
-    }
-  } else {
-    for (var i = 0; i < sdpLines.length; i++) {
-      if (isRtpmapLine(sdpLines[i], contains))
-        return i;
+function findRtpmapLine(sdpLines, contains) {
+  for (var i = 0; i < sdpLines.length; i++) {
+    // Is 'a=rtpmap:' line containing |contains| string?
+    if (sdpLines[i].startsWith('a=rtpmap:') &&
+        sdpLines[i].indexOf(contains) != -1) {
+      // Expecting pattern 'a=rtpmap:<id> <codec>/<rate>'.
+      var pattern = new RegExp('a=rtpmap:(\\d+) \\w+\\/\\d+');
+      if (!sdpLines[i].match(pattern))
+        failure('findRtpmapLine', 'Unexpected "a=rtpmap:" pattern.');
+      // Return line index.
+      return i;
     }
   }
   return null;
-}
-
-/**
- * Returns true if |sdpLine| contains |contains| and is of pattern
- * 'a=rtpmap:<id> <codec>/<rate>'.
- */
-function isRtpmapLine(sdpLine, contains) {
-  // Is 'a=rtpmap:' line containing |contains| string?
-  if (sdpLine.startsWith('a=rtpmap:') &&
-      sdpLine.indexOf(contains) != -1) {
-    // Expecting pattern 'a=rtpmap:<id> <codec>/<rate>'.
-    var pattern = new RegExp('a=rtpmap:(\\d+) \\w+\\/\\d+');
-    if (!sdpLine.match(pattern))
-      failure('isRtpmapLine', 'Unexpected "a=rtpmap:" pattern.');
-    return true;
-  }
-  return false;
 }
 
 /**

@@ -104,7 +104,7 @@ class BLINK_EXPORT WebNode {
   template <typename T>
   const T ToConst() const;
 
-#if INSIDE_BLINK
+#if BLINK_IMPLEMENTATION
   WebNode(Node*);
   WebNode& operator=(Node*);
   operator Node*() const;
@@ -130,7 +130,7 @@ class BLINK_EXPORT WebNode {
   template <>                             \
   BLINK_EXPORT const type WebNode::ToConst<type>() const;
 
-#if INSIDE_BLINK
+#if BLINK_IMPLEMENTATION
 #define DEFINE_WEB_NODE_TYPE_CASTS(type, predicate)        \
   template <>                                              \
   BLINK_EXPORT type WebNode::To<type>() {                  \

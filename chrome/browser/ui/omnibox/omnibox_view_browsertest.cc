@@ -568,13 +568,7 @@ IN_PROC_BROWSER_TEST_F(OmniboxViewTest, DISABLED_BackspaceInKeywordMode) {
             UTF16ToUTF8(omnibox_view->GetText()));
 }
 
-// Flaky on Windows and Linux. http://crbug.com/751543
-#if defined(OS_WIN) || defined(OS_LINUX)
-#define MAYBE_Escape DISABLED_Escape
-#else
-#define MAYBE_Escape Escape
-#endif
-IN_PROC_BROWSER_TEST_F(OmniboxViewTest, MAYBE_Escape) {
+IN_PROC_BROWSER_TEST_F(OmniboxViewTest, Escape) {
   ui_test_utils::NavigateToURL(browser(), GURL(chrome::kChromeUIHistoryURL));
   chrome::FocusLocationBar(browser());
 
@@ -995,13 +989,7 @@ IN_PROC_BROWSER_TEST_F(OmniboxViewTest,
   EXPECT_FALSE(omnibox_view->model()->is_keyword_selected());
 }
 
-// Flaky on Windows and Linux. http://crbug.com/751543
-#if defined(OS_WIN) || defined(OS_LINUX)
-#define MAYBE_AcceptKeywordBySpace DISABLED_AcceptKeywordBySpace
-#else
-#define MAYBE_AcceptKeywordBySpace AcceptKeywordBySpace
-#endif
-IN_PROC_BROWSER_TEST_F(OmniboxViewTest, MAYBE_AcceptKeywordBySpace) {
+IN_PROC_BROWSER_TEST_F(OmniboxViewTest, AcceptKeywordBySpace) {
   OmniboxView* omnibox_view = NULL;
   ASSERT_NO_FATAL_FAILURE(GetOmniboxView(&omnibox_view));
 

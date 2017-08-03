@@ -271,8 +271,8 @@ void NetworkState::GetStateProperties(base::DictionaryValue* dictionary) const {
     dictionary->SetIntegerWithoutPathExpansion(kTetherBatteryPercentage,
                                                battery_percentage());
     dictionary->SetStringWithoutPathExpansion(kTetherCarrier, carrier());
-    dictionary->SetKey(kTetherHasConnectedToHost,
-                       base::Value(tether_has_connected_to_host()));
+    dictionary->SetBooleanWithoutPathExpansion(kTetherHasConnectedToHost,
+                                               tether_has_connected_to_host());
     dictionary->SetIntegerWithoutPathExpansion(kTetherSignalStrength,
                                                signal_strength());
 
@@ -286,7 +286,8 @@ void NetworkState::GetStateProperties(base::DictionaryValue* dictionary) const {
     return;
 
   if (visible()) {
-    dictionary->SetKey(shill::kConnectableProperty, base::Value(connectable()));
+    dictionary->SetBooleanWithoutPathExpansion(shill::kConnectableProperty,
+                                               connectable());
     dictionary->SetIntegerWithoutPathExpansion(shill::kSignalStrengthProperty,
                                                signal_strength());
   }
@@ -308,8 +309,8 @@ void NetworkState::GetStateProperties(base::DictionaryValue* dictionary) const {
                                               activation_state());
     dictionary->SetStringWithoutPathExpansion(shill::kRoamingStateProperty,
                                               roaming());
-    dictionary->SetKey(shill::kOutOfCreditsProperty,
-                       base::Value(cellular_out_of_credits()));
+    dictionary->SetBooleanWithoutPathExpansion(shill::kOutOfCreditsProperty,
+                                               cellular_out_of_credits());
   }
 }
 

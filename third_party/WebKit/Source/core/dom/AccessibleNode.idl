@@ -7,7 +7,7 @@
 // Spec: https://wicg.github.io/aom/spec/
 [
     RuntimeEnabled=AccessibilityObjectModel
- ] interface AccessibleNode : EventTarget {
+] interface AccessibleNode {
     attribute AccessibleNode? activeDescendant;
     attribute boolean? atomic;
     attribute DOMString? autocomplete;
@@ -55,6 +55,4 @@
     attribute double? valueMin;
     attribute double? valueNow;
     attribute DOMString? valueText;
-
-    attribute EventHandler onaccessibleclick;
 };

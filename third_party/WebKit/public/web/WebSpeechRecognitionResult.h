@@ -49,7 +49,7 @@ class WebSpeechRecognitionResult {
   BLINK_EXPORT void Assign(const WebSpeechRecognitionResult&);
   BLINK_EXPORT void Reset();
 
-#if INSIDE_BLINK
+#if BLINK_IMPLEMENTATION
   operator SpeechRecognitionResult*() const;
 #endif
 

@@ -14,7 +14,6 @@
 #include <utility>
 
 #include "base/bind.h"
-#include "base/json/json_writer.h"
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/memory/singleton.h"
@@ -88,22 +87,6 @@ constexpr base::TimeDelta kDiscoveryTimeout = base::TimeDelta::FromSeconds(120);
 // From https://www.bluetooth.com/specifications/assigned-numbers/baseband
 // The Class of Device for generic computer.
 constexpr uint32_t kBluetoothComputerClass = 0x100;
-// Timeout for Android to complete a disabling op to adapter.
-// In the case where an enabling op happens immediately after a disabling op,
-// Android takes the following enabling op as a no-op and waits 3~4 seconds for
-// the previous disabling op to finish, so the enabling op will never be
-// fulfilled by Android, and the disabling op will later routed back to Chrome
-// while Chrome's adapter is enabled. This results in the wrong power state
-// which should be enabled. Since the signaling from Android to Chrome for
-// Bluetooth is via Bluetooth HAL layer which run on the same process as
-// Bluetooth Service in Java space, so the signaling to Chrome about the
-// to-be-happen sleep cannot be done. This timeout tries to ensure the validity
-// and the order of toggles on power state sent to Android.
-// If Android takes more than 5 seconds to complete the intent initiated by
-// Chrome, Chrome will take EnableAdapter/DisableAdapter calls as a request from
-// Android to toggle the power state. The power state will be synced on both
-// Chrome and Android, but as a result, Bluetooth will be off.
-constexpr base::TimeDelta kPowerIntentTimeout = base::TimeDelta::FromSeconds(5);
 
 using GattStatusCallback =
     base::Callback<void(arc::mojom::BluetoothGattStatus)>;
@@ -298,12 +281,8 @@ ArcBluetoothBridge* ArcBluetoothBridge::GetForBrowserContext(
 
 ArcBluetoothBridge::ArcBluetoothBridge(content::BrowserContext* context,
                                        ArcBridgeService* bridge_service)
-    : arc_bridge_service_(bridge_service),
-      binding_(this),
-      intent_helper_observer_(this),
-      weak_factory_(this) {
+    : arc_bridge_service_(bridge_service), binding_(this), weak_factory_(this) {
   arc_bridge_service_->bluetooth()->AddObserver(this);
-  arc_bridge_service_->intent_helper()->AddObserver(&intent_helper_observer_);
 
   if (BluetoothAdapterFactory::IsBluetoothSupported()) {
     VLOG(1) << "Registering bluetooth adapter.";
@@ -320,14 +299,11 @@ ArcBluetoothBridge::~ArcBluetoothBridge() {
   if (bluetooth_adapter_)
     bluetooth_adapter_->RemoveObserver(this);
 
-  arc_bridge_service_->intent_helper()->RemoveObserver(
-      &intent_helper_observer_);
   arc_bridge_service_->bluetooth()->RemoveObserver(this);
 }
 
 void ArcBluetoothBridge::OnAdapterInitialized(
     scoped_refptr<BluetoothAdapter> adapter) {
-  DCHECK(adapter);
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
 
   // We can downcast here because we are always running on Chrome OS, and
@@ -335,8 +311,13 @@ void ArcBluetoothBridge::OnAdapterInitialized(
   bluetooth_adapter_ =
       static_cast<bluez::BluetoothAdapterBlueZ*>(adapter.get());
 
-  if (!bluetooth_adapter_->HasObserver(this))
+  // The ARC instance was ready before the Bluetooth adapter, hence we didn't
+  // register ourselves as an observer with it then. Since our adapter is
+  // ready, we should register it now.
+  if (!bluetooth_adapter_->HasObserver(this) &&
+      arc_bridge_service_->bluetooth()->has_instance()) {
     bluetooth_adapter_->AddObserver(this);
+  }
 }
 
 void ArcBluetoothBridge::OnInstanceReady() {
@@ -348,11 +329,16 @@ void ArcBluetoothBridge::OnInstanceReady() {
   binding_.Bind(mojo::MakeRequest(&host_proxy));
   bluetooth_instance->Init(std::move(host_proxy));
 
-  is_bluetooth_instance_up_ = true;
+  // The Bluetooth adapter was ready before the ARC instance, hence we didn't
+  // register ourselves as an observer with it then. Since our instance is
+  // ready, we should register it now.
+  if (bluetooth_adapter_ && !bluetooth_adapter_->HasObserver(this))
+    bluetooth_adapter_->AddObserver(this);
 }
 
 void ArcBluetoothBridge::OnInstanceClosed() {
-  is_bluetooth_instance_up_ = false;
+  if (bluetooth_adapter_)
+    bluetooth_adapter_->RemoveObserver(this);
 }
 
 void ArcBluetoothBridge::SendDevice(const BluetoothDevice* device) const {
@@ -396,29 +382,13 @@ void ArcBluetoothBridge::SendDevice(const BluetoothDevice* device) const {
   OnGattConnectStateChanged(std::move(addr), true);
 }
 
-void ArcBluetoothBridge::AdapterPoweredChanged(BluetoothAdapter* adapter,
-                                               bool powered) {
-  AdapterPowerState power_change =
-      powered ? AdapterPowerState::TURN_ON : AdapterPowerState::TURN_OFF;
-  if (IsPowerChangeInitiatedByRemote(power_change))
-    DequeueRemotePowerChange(power_change);
-  else
-    EnqueueLocalPowerChange(power_change);
-}
-
 void ArcBluetoothBridge::DeviceAdded(BluetoothAdapter* adapter,
                                      BluetoothDevice* device) {
-  if (!IsInstanceUp())
-    return;
-
   SendDevice(device);
 }
 
 void ArcBluetoothBridge::DeviceChanged(BluetoothAdapter* adapter,
                                        BluetoothDevice* device) {
-  if (!IsInstanceUp())
-    return;
-
   SendDevice(device);
 
   if (!(device->GetType() & device::BLUETOOTH_TRANSPORT_LE))
@@ -444,9 +414,6 @@ void ArcBluetoothBridge::DeviceChanged(BluetoothAdapter* adapter,
 void ArcBluetoothBridge::DeviceAddressChanged(BluetoothAdapter* adapter,
                                               BluetoothDevice* device,
                                               const std::string& old_address) {
-  if (!IsInstanceUp())
-    return;
-
   if (old_address == device->GetAddress())
     return;
 
@@ -476,9 +443,6 @@ void ArcBluetoothBridge::DeviceAddressChanged(BluetoothAdapter* adapter,
 void ArcBluetoothBridge::DevicePairedChanged(BluetoothAdapter* adapter,
                                              BluetoothDevice* device,
                                              bool new_paired_status) {
-  if (!IsInstanceUp())
-    return;
-
   DCHECK(adapter);
   DCHECK(device);
 
@@ -499,9 +463,6 @@ void ArcBluetoothBridge::DevicePairedChanged(BluetoothAdapter* adapter,
 
 void ArcBluetoothBridge::DeviceRemoved(BluetoothAdapter* adapter,
                                        BluetoothDevice* device) {
-  if (!IsInstanceUp())
-    return;
-
   DCHECK(adapter);
   DCHECK(device);
 
@@ -521,8 +482,6 @@ void ArcBluetoothBridge::DeviceRemoved(BluetoothAdapter* adapter,
 void ArcBluetoothBridge::GattServiceAdded(BluetoothAdapter* adapter,
                                           BluetoothDevice* device,
                                           BluetoothRemoteGattService* service) {
-  if (!IsInstanceUp())
-    return;
   // Placeholder for GATT client functionality
 }
 
@@ -530,16 +489,11 @@ void ArcBluetoothBridge::GattServiceRemoved(
     BluetoothAdapter* adapter,
     BluetoothDevice* device,
     BluetoothRemoteGattService* service) {
-  if (!IsInstanceUp())
-    return;
   // Placeholder for GATT client functionality
 }
 
 void ArcBluetoothBridge::GattServicesDiscovered(BluetoothAdapter* adapter,
                                                 BluetoothDevice* device) {
-  if (!IsInstanceUp())
-    return;
-
   auto* btle_instance = ARC_GET_INSTANCE_FOR_METHOD(
       arc_bridge_service_->bluetooth(), OnSearchComplete);
   if (!btle_instance)
@@ -555,48 +509,36 @@ void ArcBluetoothBridge::GattServicesDiscovered(BluetoothAdapter* adapter,
 void ArcBluetoothBridge::GattDiscoveryCompleteForService(
     BluetoothAdapter* adapter,
     BluetoothRemoteGattService* service) {
-  if (!IsInstanceUp())
-    return;
   // Placeholder for GATT client functionality
 }
 
 void ArcBluetoothBridge::GattServiceChanged(
     BluetoothAdapter* adapter,
     BluetoothRemoteGattService* service) {
-  if (!IsInstanceUp())
-    return;
   // Placeholder for GATT client functionality
 }
 
 void ArcBluetoothBridge::GattCharacteristicAdded(
     BluetoothAdapter* adapter,
     BluetoothRemoteGattCharacteristic* characteristic) {
-  if (!IsInstanceUp())
-    return;
   // Placeholder for GATT client functionality
 }
 
 void ArcBluetoothBridge::GattCharacteristicRemoved(
     BluetoothAdapter* adapter,
     BluetoothRemoteGattCharacteristic* characteristic) {
-  if (!IsInstanceUp())
-    return;
   // Placeholder for GATT client functionality
 }
 
 void ArcBluetoothBridge::GattDescriptorAdded(
     BluetoothAdapter* adapter,
     BluetoothRemoteGattDescriptor* descriptor) {
-  if (!IsInstanceUp())
-    return;
   // Placeholder for GATT client functionality
 }
 
 void ArcBluetoothBridge::GattDescriptorRemoved(
     BluetoothAdapter* adapter,
     BluetoothRemoteGattDescriptor* descriptor) {
-  if (!IsInstanceUp())
-    return;
   // Placeholder for GATT client functionality
 }
 
@@ -604,9 +546,6 @@ void ArcBluetoothBridge::GattCharacteristicValueChanged(
     BluetoothAdapter* adapter,
     BluetoothRemoteGattCharacteristic* characteristic,
     const std::vector<uint8_t>& value) {
-  if (!IsInstanceUp())
-    return;
-
   auto* btle_instance = ARC_GET_INSTANCE_FOR_METHOD(
       arc_bridge_service_->bluetooth(), OnGattNotify);
   if (!btle_instance)
@@ -635,8 +574,6 @@ void ArcBluetoothBridge::GattDescriptorValueChanged(
     BluetoothAdapter* adapter,
     BluetoothRemoteGattDescriptor* descriptor,
     const std::vector<uint8_t>& value) {
-  if (!IsInstanceUp())
-    return;
   // Placeholder for GATT client functionality
 }
 
@@ -739,13 +676,13 @@ void ArcBluetoothBridge::OnNotificationsStop(
 
 void ArcBluetoothBridge::EnableAdapter(const EnableAdapterCallback& callback) {
   DCHECK(bluetooth_adapter_);
-  if (IsPowerChangeInitiatedByLocal(AdapterPowerState::TURN_ON)) {
-    DequeueLocalPowerChange(AdapterPowerState::TURN_ON);
-  } else {
-    if (!bluetooth_adapter_->IsPowered()) {
-      EnqueueRemotePowerChange(AdapterPowerState::TURN_ON, callback);
-      return;
-    }
+  if (!bluetooth_adapter_->IsPowered()) {
+    bluetooth_adapter_->SetPowered(
+        true, base::Bind(&ArcBluetoothBridge::OnPoweredOn,
+                         weak_factory_.GetWeakPtr(), callback),
+        base::Bind(&ArcBluetoothBridge::OnPoweredError,
+                   weak_factory_.GetWeakPtr(), callback));
+    return;
   }
 
   OnPoweredOn(callback);
@@ -754,16 +691,11 @@ void ArcBluetoothBridge::EnableAdapter(const EnableAdapterCallback& callback) {
 void ArcBluetoothBridge::DisableAdapter(
     const DisableAdapterCallback& callback) {
   DCHECK(bluetooth_adapter_);
-  if (IsPowerChangeInitiatedByLocal(AdapterPowerState::TURN_OFF)) {
-    DequeueLocalPowerChange(AdapterPowerState::TURN_OFF);
-  } else {
-    if (bluetooth_adapter_->IsPowered()) {
-      EnqueueRemotePowerChange(AdapterPowerState::TURN_OFF, callback);
-      return;
-    }
-  }
-
-  OnPoweredOff(callback);
+  bluetooth_adapter_->SetPowered(
+      false, base::Bind(&ArcBluetoothBridge::OnPoweredOff,
+                        weak_factory_.GetWeakPtr(), callback),
+      base::Bind(&ArcBluetoothBridge::OnPoweredError,
+                 weak_factory_.GetWeakPtr(), callback));
 }
 
 void ArcBluetoothBridge::GetAdapterProperty(mojom::BluetoothPropertyType type) {
@@ -1388,25 +1320,6 @@ BluetoothRemoteGattDescriptor* ArcBluetoothBridge::FindGattDescriptor(
                                  desc_id->uuid);
 }
 
-void ArcBluetoothBridge::SendBluetoothPoweredStateBroadcast(
-    AdapterPowerState powered) const {
-  auto* intent_instance = ARC_GET_INSTANCE_FOR_METHOD(
-      arc_bridge_service_->intent_helper(), SendBroadcast);
-  if (!intent_instance)
-    return;
-
-  base::DictionaryValue extras;
-  extras.SetBoolean("enable", powered == AdapterPowerState::TURN_ON);
-  std::string extras_json;
-  bool write_success = base::JSONWriter::Write(extras, &extras_json);
-  DCHECK(write_success);
-
-  intent_instance->SendBroadcast(
-      "org.chromium.arc.intent_helper.SET_BLUETOOTH_STATE",
-      "org.chromium.arc.intent_helper",
-      "org.chromium.arc.intent_helper.SettingsReceiver", extras_json);
-}
-
 void ArcBluetoothBridge::ReadGattCharacteristic(
     mojom::BluetoothAddressPtr remote_addr,
     mojom::BluetoothGattServiceIDPtr service_id,
@@ -1963,97 +1876,6 @@ void ArcBluetoothBridge::OnForgetError(mojom::BluetoothAddressPtr addr) const {
   }
   bluetooth_instance->OnBondStateChanged(mojom::BluetoothStatus::FAIL,
                                          std::move(addr), bond_state);
-}
-
-ArcBluetoothBridge::IntentHelperObserver::IntentHelperObserver(
-    ArcBluetoothBridge* bluetooth_bridge)
-    : bluetooth_bridge_(bluetooth_bridge) {}
-
-ArcBluetoothBridge::IntentHelperObserver::~IntentHelperObserver() = default;
-
-void ArcBluetoothBridge::IntentHelperObserver::OnInstanceReady() {
-  bluetooth_bridge_->SendInitialPowerChange();
-}
-
-bool ArcBluetoothBridge::IsPowerChangeInitiatedByRemote(
-    ArcBluetoothBridge::AdapterPowerState powered) const {
-  return !remote_power_changes_.empty() &&
-         remote_power_changes_.front() == powered;
-}
-
-bool ArcBluetoothBridge::IsPowerChangeInitiatedByLocal(
-    ArcBluetoothBridge::AdapterPowerState powered) const {
-  return !local_power_changes_.empty() &&
-         local_power_changes_.front() == powered;
-}
-
-void ArcBluetoothBridge::SendInitialPowerChange() {
-  if (!bluetooth_adapter_ || !bluetooth_adapter_->IsPowered()) {
-    // The default power state of Bluetooth on Android is off, so there is no
-    // need to send an intent to turn off Bluetooth if the initial power state
-    // is off.
-    return;
-  }
-  EnqueueLocalPowerChange(AdapterPowerState::TURN_ON);
-}
-
-void ArcBluetoothBridge::EnqueueLocalPowerChange(
-    ArcBluetoothBridge::AdapterPowerState powered) {
-  local_power_changes_.push(powered);
-
-  if (power_intent_timer_.IsRunning())
-    return;
-
-  SendBluetoothPoweredStateBroadcast(local_power_changes_.front());
-  power_intent_timer_.Start(
-      FROM_HERE, kPowerIntentTimeout,
-      base::Bind(&ArcBluetoothBridge::DequeueLocalPowerChange,
-                 weak_factory_.GetWeakPtr(), powered));
-}
-
-void ArcBluetoothBridge::DequeueLocalPowerChange(
-    ArcBluetoothBridge::AdapterPowerState powered) {
-  power_intent_timer_.Stop();
-
-  if (!IsPowerChangeInitiatedByLocal(powered))
-    return;
-
-  AdapterPowerState current_change = local_power_changes_.front();
-  AdapterPowerState last_change = local_power_changes_.back();
-
-  // Compress the queue for power intent to reduce the amount of intents being
-  // sent to Android so that the powered state will be synced between Android
-  // and Chrome even if the state is toggled repeatedly on Chrome.
-  std::queue<AdapterPowerState> empty_queue;
-  std::swap(local_power_changes_, empty_queue);
-
-  if (last_change == current_change)
-    return;
-
-  local_power_changes_.push(last_change);
-
-  SendBluetoothPoweredStateBroadcast(last_change);
-  power_intent_timer_.Start(
-      FROM_HERE, kPowerIntentTimeout,
-      base::Bind(&ArcBluetoothBridge::DequeueLocalPowerChange,
-                 weak_factory_.GetWeakPtr(), last_change));
-}
-
-void ArcBluetoothBridge::EnqueueRemotePowerChange(
-    ArcBluetoothBridge::AdapterPowerState powered,
-    const EnableAdapterCallback& callback) {
-  remote_power_changes_.push(powered);
-  bluetooth_adapter_->SetPowered(
-      powered == AdapterPowerState::TURN_ON,
-      base::Bind(&ArcBluetoothBridge::OnPoweredOff, weak_factory_.GetWeakPtr(),
-                 callback),
-      base::Bind(&ArcBluetoothBridge::OnPoweredError,
-                 weak_factory_.GetWeakPtr(), callback));
-}
-
-void ArcBluetoothBridge::DequeueRemotePowerChange(
-    ArcBluetoothBridge::AdapterPowerState powered) {
-  remote_power_changes_.pop();
 }
 
 std::vector<mojom::BluetoothPropertyPtr>

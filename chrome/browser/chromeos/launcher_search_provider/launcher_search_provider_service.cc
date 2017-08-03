@@ -16,8 +16,6 @@
 #include "extensions/browser/extension_registry.h"
 #include "extensions/common/extension_set.h"
 #include "extensions/common/permissions/permissions_data.h"
-#include "ui/app_list/search/tokenized_string.h"
-#include "ui/app_list/search/tokenized_string_match.h"
 
 namespace api_launcher_search_provider =
     extensions::api::launcher_search_provider;
@@ -29,7 +27,11 @@ namespace launcher_search_provider {
 
 Service::Service(Profile* profile,
                  extensions::ExtensionRegistry* extension_registry)
-    : profile_(profile), extension_registry_(extension_registry) {
+    : profile_(profile),
+      extension_registry_(extension_registry),
+      provider_(nullptr),
+      query_id_(0),
+      is_query_running_(false) {
   extension_registry_->AddObserver(this);
 }
 
@@ -46,7 +48,6 @@ void Service::OnQueryStarted(app_list::LauncherSearchProvider* provider,
                              const std::string& query,
                              const int max_result) {
   DCHECK(!is_query_running_);
-  query_ = query;
   is_query_running_ = true;
   provider_ = provider;
 
@@ -131,21 +132,10 @@ void Service::SetSearchResults(
     const GURL icon_url =
         result.icon_url ? GURL(*result.icon_url.get()) : GURL();
 
-    // Calculate the relevance score by matching the query with the title.
-    // Results with a match score of 0 are discarded. This will also be used to
-    // set the title tags (highlighting which parts of the title matched the
-    // search query).
-    const base::string16 title = base::UTF8ToUTF16(result.title);
-    app_list::TokenizedString tokenized_title(title);
-    app_list::TokenizedStringMatch match;
-    app_list::TokenizedString tokenized_query(base::UTF8ToUTF16(query_));
-    if (!match.Calculate(tokenized_query, tokenized_title))
-      continue;
-
     auto search_result = base::MakeUnique<app_list::LauncherSearchResult>(
         result.item_id, icon_url, relevance, profile_, extension,
         error_reporter->Duplicate());
-    search_result->UpdateFromMatch(tokenized_title, match);
+    search_result->set_title(base::UTF8ToUTF16(result.title));
     search_results.push_back(std::move(search_result));
   }
   provider_->SetSearchResults(extension->id(), std::move(search_results));

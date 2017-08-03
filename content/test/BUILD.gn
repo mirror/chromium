@@ -257,7 +257,6 @@ static_library("test_support") {
     "//cc/ipc",
     "//cc/ipc:interfaces",
     "//components/leveldb/public/interfaces",
-    "//components/viz/host",
     "//components/viz/service",
     "//content/app:both_for_content_tests",
     "//content/browser:for_content_tests",
@@ -1527,7 +1526,6 @@ test("content_unittests") {
     "//cc/ipc",
     "//components/leveldb/public/cpp",
     "//components/metrics/proto",
-    "//components/network_session_configurator/common",
     "//components/offline_pages/features:features",
     "//components/rappor:test_support",
     "//components/ukm:test_support",
@@ -1889,10 +1887,7 @@ test("content_unittests") {
 service_manifest("content_unittests_manifest") {
   name = "content_unittests"
   source = "unittests_manifest.json"
-  packaged_services = [
-    "//content/network:manifest",
-    "//services/file:manifest",
-  ]
+  packaged_services = [ "//services/file:manifest" ]
 }
 
 catalog("content_unittests_catalog") {

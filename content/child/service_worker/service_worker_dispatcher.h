@@ -18,7 +18,6 @@
 #include "base/strings/string16.h"
 #include "content/common/service_worker/service_worker_types.h"
 #include "content/public/child/worker_thread.h"
-#include "mojo/public/cpp/system/message_pipe.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerError.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerProvider.h"
 #include "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerRegistration.h"
@@ -35,7 +34,6 @@ class Message;
 }
 
 struct ServiceWorkerMsg_MessageToDocument_Params;
-struct ServiceWorkerMsg_SetControllerServiceWorker_Params;
 
 namespace content {
 
@@ -292,8 +290,11 @@ class CONTENT_EXPORT ServiceWorkerDispatcher : public WorkerThread::Observer {
                               const ServiceWorkerVersionAttributes& attributes);
   void OnUpdateFound(int thread_id,
                      int registration_handle_id);
-  void OnSetControllerServiceWorker(
-      const ServiceWorkerMsg_SetControllerServiceWorker_Params& params);
+  void OnSetControllerServiceWorker(int thread_id,
+                                    int provider_id,
+                                    const ServiceWorkerObjectInfo& info,
+                                    bool should_notify_controllerchange,
+                                    const std::set<uint32_t>& used_features);
   void OnPostMessage(const ServiceWorkerMsg_MessageToDocument_Params& params);
   void OnCountFeature(int thread_id, int provider_id, uint32_t feature);
 
