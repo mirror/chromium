@@ -16,6 +16,24 @@
       "revId": "bd98a1f8c8647a2e1f4869bdddb68916710c65a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e356574_bc1830fa",
+        "filename": "ash/login/ui/login_auth_user_view.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-08-03T22:21:06Z",
+      "side": 1,
+      "message": "See comment - the animations get out of sync.",
+      "parentUuid": "670b19d1_18f01c9f",
+      "revId": "bd98a1f8c8647a2e1f4869bdddb68916710c65a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

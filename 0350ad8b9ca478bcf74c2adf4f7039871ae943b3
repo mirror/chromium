@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f28fb8f3_3d01272d",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-08-03T22:21:06Z",
+      "side": 1,
+      "message": "Looks like another change made it so this is not needed.",
+      "parentUuid": "c5392293_60242c37",
+      "revId": "0350ad8b9ca478bcf74c2adf4f7039871ae943b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "84cdb114_e283c950",
         "filename": "ash/login/ui/lock_contents_view.cc",
         "patchSetId": 4
@@ -624,6 +642,24 @@
       "side": 1,
       "message": "then what\u0027s the reason you need to use ScheduleAnimation? (as it\u0027s used to queue, which you don\u0027t want?)",
       "parentUuid": "80b8cbd3_07df5bbf",
+      "revId": "0350ad8b9ca478bcf74c2adf4f7039871ae943b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba13b47a_6ee3ebde",
+        "filename": "ash/login/ui/login_user_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-08-03T22:21:06Z",
+      "side": 1,
+      "message": "I\u0027ll switch to StartAnimation - both work.",
+      "parentUuid": "d9d6d000_54bcbe95",
       "revId": "0350ad8b9ca478bcf74c2adf4f7039871ae943b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
