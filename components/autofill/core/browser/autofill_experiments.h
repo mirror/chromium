@@ -36,6 +36,7 @@ extern const base::Feature kAutofillSuppressDisusedAddresses;
 extern const base::Feature kAutofillUpstreamRequestCvcIfMissing;
 extern const base::Feature kAutofillUpstreamUseAutofillProfileComparator;
 extern const base::Feature kAutofillUpstreamUseNotRecentlyUsedAutofillProfile;
+extern const base::Feature kAutofillCreditCardSuggestionStrictTriggering;
 extern const char kCreditCardSigninPromoImpressionLimitParamKey[];
 extern const char kAutofillCreditCardLastUsedDateShowExpirationDateKey[];
 extern const char kAutofillUpstreamMaxMinutesSinceAutofillProfileUseKey[];
@@ -124,6 +125,10 @@ bool IsAutofillOfferLocalSaveIfServerCardManuallyEnteredExperimentEnabled();
 // Returns whether the experiment is enabled where Chrome Upstream requests CVC
 // in the offer to save bubble if it was not detected during the checkout flow.
 bool IsAutofillUpstreamRequestCvcIfMissingExperimentEnabled();
+
+// Returns whether the expriment to be more strict in triggering the credit card
+// suggestion dialog is enabled.
+bool IsAutofillCreditCardSuggestionStrictTriggeringEnabled();
 
 // Returns the maximum time that could have elapsed since an address profile's
 // most recent use for the adress profile to be included in the candidate set
