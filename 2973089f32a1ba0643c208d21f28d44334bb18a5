@@ -16,6 +16,24 @@
       "revId": "2973089f32a1ba0643c208d21f28d44334bb18a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e294fb6c_5728d5da",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-08-03T21:15:15Z",
+      "side": 1,
+      "message": "Prior to this CL, the ProcessMemoryMetricsEmitter itself was sending the URL to UKM, and went through the ProcessMemoryMetricsEmitter::GetUkmRecorder() path which meant it already got set on the TestUkmRecorder. With this, the URL gets set by the RenderFrameHostImpl on the \"default\" UKM so this injection is needed to intercept the calls to the TestUkmRecorder instead. Ideally there\u0027s a better way to handle this but that means having alternatives in place instead of a UkmRecorder singleton (which I believe the UKM team has a TODO on).",
+      "parentUuid": "681472d8_f5c8a928",
+      "revId": "2973089f32a1ba0643c208d21f28d44334bb18a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
