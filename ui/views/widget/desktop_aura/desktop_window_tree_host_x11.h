@@ -159,6 +159,7 @@ class VIEWS_EXPORT DesktopWindowTreeHostX11
   gfx::AcceleratedWidget GetAcceleratedWidget() override;
   void ShowImpl() override;
   void HideImpl() override;
+  bool ShouldForceSoftwareCompositing() override;
   gfx::Rect GetBoundsInPixels() const override;
   void SetBoundsInPixels(const gfx::Rect& requested_bounds_in_pixels) override;
   gfx::Point GetLocationOnScreenInPixels() const override;
@@ -430,6 +431,8 @@ class VIEWS_EXPORT DesktopWindowTreeHostX11
   std::unique_ptr<aura::ScopedWindowTargeter> targeter_for_modal_;
 
   uint32_t modal_dialog_counter_;
+
+  bool should_force_software_compositing_;
 
   base::WeakPtrFactory<DesktopWindowTreeHostX11> close_widget_factory_;
   base::WeakPtrFactory<DesktopWindowTreeHostX11> weak_factory_;

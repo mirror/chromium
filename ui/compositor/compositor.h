@@ -150,8 +150,8 @@ class COMPOSITOR_EXPORT ContextFactory {
   // Creates an output surface for the given compositor. The factory may keep
   // per-compositor data (e.g. a shared context), that needs to be cleaned up
   // by calling RemoveCompositor when the compositor gets destroyed.
-  virtual void CreateLayerTreeFrameSink(
-      base::WeakPtr<Compositor> compositor) = 0;
+  virtual void CreateLayerTreeFrameSink(base::WeakPtr<Compositor> compositor,
+                                        bool force_software_compositor) = 0;
 
   // Return a reference to a shared offscreen context provider usable from the
   // main thread.
@@ -194,7 +194,8 @@ class COMPOSITOR_EXPORT Compositor
              ui::ContextFactoryPrivate* context_factory_private,
              scoped_refptr<base::SingleThreadTaskRunner> task_runner,
              bool enable_surface_synchronization,
-             bool external_begin_frames_enabled = false);
+             bool external_begin_frames_enabled = false,
+             bool force_software_compositor = false);
   ~Compositor() override;
 
   ui::ContextFactory* context_factory() { return context_factory_; }
@@ -451,6 +452,8 @@ class COMPOSITOR_EXPORT Compositor
   bool external_begin_frames_enabled_;
   ExternalBeginFrameClient* external_begin_frame_client_ = nullptr;
   bool needs_external_begin_frames_ = false;
+
+  bool force_software_compositor_;
 
   // The device scale factor of the monitor that this compositor is compositing
   // layers on.

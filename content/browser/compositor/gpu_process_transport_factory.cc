@@ -87,6 +87,7 @@
 #include "ui/ozone/public/ozone_switches.h"
 #elif defined(USE_X11)
 #include "content/browser/compositor/software_output_device_x11.h"
+#include "ui/base/x/x11_util.h"
 #elif defined(OS_MACOSX)
 #include "components/viz/service/display_embedder/compositor_overlay_candidate_validator_mac.h"
 #include "content/browser/compositor/gpu_output_surface_mac.h"
@@ -342,8 +343,7 @@ static bool ShouldCreateGpuLayerTreeFrameSink(ui::Compositor* compositor) {
 #if defined(OS_CHROMEOS)
   // Software fallback does not happen on Chrome OS.
   return true;
-#endif
-#if defined(OS_WIN)
+#elif defined(OS_WIN)
   if (::GetProp(compositor->widget(), kForceSoftwareCompositor) &&
       ::RemoveProp(compositor->widget(), kForceSoftwareCompositor))
     return false;
@@ -353,7 +353,8 @@ static bool ShouldCreateGpuLayerTreeFrameSink(ui::Compositor* compositor) {
 }
 
 void GpuProcessTransportFactory::CreateLayerTreeFrameSink(
-    base::WeakPtr<ui::Compositor> compositor) {
+    base::WeakPtr<ui::Compositor> compositor,
+    bool force_software_compositor) {
   DCHECK(!!compositor);
   PerCompositorData* data = per_compositor_data_[compositor.get()].get();
   if (!data) {
@@ -372,6 +373,7 @@ void GpuProcessTransportFactory::CreateLayerTreeFrameSink(
 
   const bool use_vulkan = static_cast<bool>(SharedVulkanContextProvider());
   const bool create_gpu_output_surface =
+      force_software_compositor ||
       ShouldCreateGpuLayerTreeFrameSink(compositor.get());
   if (create_gpu_output_surface && !use_vulkan) {
     gpu::GpuChannelEstablishedCallback callback(

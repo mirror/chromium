@@ -226,6 +226,10 @@ class AURA_EXPORT WindowTreeHost : public ui::internal::InputMethodDelegate,
   // Hides the WindowTreeHost.
   virtual void HideImpl() = 0;
 
+  // Whether we should force CPU rendering when we would have
+  // otherwise used the GPU.
+  virtual bool ShouldForceSoftwareCompositing();
+
   // Overridden from ui::EventSource:
   ui::EventSink* GetEventSink() override;
 

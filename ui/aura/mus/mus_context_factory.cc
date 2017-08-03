@@ -68,7 +68,9 @@ void MusContextFactory::OnEstablishedGpuChannel(
 }
 
 void MusContextFactory::CreateLayerTreeFrameSink(
-    base::WeakPtr<ui::Compositor> compositor) {
+    base::WeakPtr<ui::Compositor> compositor,
+    bool force_software_compositor) {
+  DCHECK(!force_software_compositor);
   gpu_->EstablishGpuChannel(
       base::Bind(&MusContextFactory::OnEstablishedGpuChannel,
                  weak_ptr_factory_.GetWeakPtr(), compositor));

@@ -165,9 +165,9 @@ DesktopWindowTreeHostX11::DesktopWindowTreeHostX11(
       has_window_focus_(false),
       has_pointer_focus_(false),
       modal_dialog_counter_(0),
+      should_force_software_compositing_(false),
       close_widget_factory_(this),
-      weak_factory_(this) {
-}
+      weak_factory_(this) {}
 
 DesktopWindowTreeHostX11::~DesktopWindowTreeHostX11() {
   window()->ClearProperty(kHostForRootWindow);
@@ -1182,6 +1182,10 @@ void DesktopWindowTreeHostX11::HideImpl() {
   native_widget_delegate_->OnNativeWidgetVisibilityChanged(false);
 }
 
+bool DesktopWindowTreeHostX11::ShouldForceSoftwareCompositing() {
+  return should_force_software_compositing_;
+}
+
 gfx::Rect DesktopWindowTreeHostX11::GetBoundsInPixels() const {
   return bounds_in_pixels_;
 }
@@ -1509,6 +1513,11 @@ void DesktopWindowTreeHostX11::InitX11Window(
     ui::SetHideTitlebarWhenMaximizedProperty(xwindow_,
                                              ui::HIDE_TITLEBAR_WHEN_MAXIMIZED);
   }
+
+  // Disable compositing on tooltips as a workaround for
+  // https://crbug.com/442111.
+  should_force_software_compositing_ =
+      params.type == Widget::InitParams::TYPE_TOOLTIP;
 
   // If we have a parent, record the parent/child relationship. We use this
   // data during destruction to make sure that when we try to close a parent

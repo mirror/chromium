@@ -43,8 +43,8 @@ class AURA_EXPORT MusContextFactory : public ui::ContextFactory {
                                scoped_refptr<gpu::GpuChannelHost> gpu_channel);
 
   // ContextFactory:
-  void CreateLayerTreeFrameSink(
-      base::WeakPtr<ui::Compositor> compositor) override;
+  void CreateLayerTreeFrameSink(base::WeakPtr<ui::Compositor> compositor,
+                                bool force_software_compositor) override;
   scoped_refptr<viz::ContextProvider> SharedMainThreadContextProvider()
       override;
   void RemoveCompositor(ui::Compositor* compositor) override;

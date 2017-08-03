@@ -46,14 +46,14 @@ class GpuProcessTransportFactory : public ui::ContextFactory,
                                    public ui::ContextFactoryPrivate,
                                    public ImageTransportFactory {
  public:
-  explicit GpuProcessTransportFactory(
+  GpuProcessTransportFactory(
       scoped_refptr<base::SingleThreadTaskRunner> resize_task_runner);
 
   ~GpuProcessTransportFactory() override;
 
   // ui::ContextFactory implementation.
-  void CreateLayerTreeFrameSink(
-      base::WeakPtr<ui::Compositor> compositor) override;
+  void CreateLayerTreeFrameSink(base::WeakPtr<ui::Compositor> compositor,
+                                bool force_software_compositor) override;
   scoped_refptr<viz::ContextProvider> SharedMainThreadContextProvider()
       override;
   double GetRefreshRate() const override;
