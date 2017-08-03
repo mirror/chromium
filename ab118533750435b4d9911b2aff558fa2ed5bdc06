@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f9b53ee_d68d8307",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position-3/position-sticky-margins-ref.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-03T11:54:13Z",
+      "side": 1,
+      "message": "It\u0027s a bit unfortunate with these indicator tests that the ref is so different than the actual test. Since sticky is basically position: relative; with a calculated top it\u0027s nice when the ref just replaces all position: sticky with relative plus a top value.",
+      "revId": "ab118533750435b4d9911b2aff558fa2ed5bdc06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb44ffab_c074683c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position-3/position-sticky-margins.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-03T11:54:13Z",
+      "side": 1,
+      "message": "I found this confusing at first, that we need to clip the indicator. Can we make the .scroller position: relative so it contains the absolute and then position the absolute pos elements relative to the top of the scrollable area?",
+      "range": {
+        "startLine": 83,
+        "startChar": 46,
+        "endLine": 83,
+        "endChar": 59
+      },
+      "revId": "ab118533750435b4d9911b2aff558fa2ed5bdc06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
