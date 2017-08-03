@@ -130,7 +130,7 @@ public class SmartSelectionClient implements SelectionClient {
     @CalledByNative
     private void onSurroundingTextReceived(
             @RequestType int callbackData, String text, int start, int end) {
-        if (TextUtils.isEmpty(text)) {
+        if (TextUtils.isEmpty(text) || start >= end) {
             mCallback.onClassified(new SmartSelectionProvider.Result());
             return;
         }
