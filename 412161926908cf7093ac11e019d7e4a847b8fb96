@@ -421,6 +421,30 @@
     },
     {
       "key": {
+        "uuid": "7bf939dd_17193322",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 33
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-03T19:36:51Z",
+      "side": 1,
+      "message": "Hmm, I don\u0027t see how that will work for child frames created by the renderer, in the edge case scenario where the parent immediate calls document.write on the subframe? Could you please elaborate?\n\nIn my naive view, it looks like the renderer would need to `pull` the InterfaceProvider with the response to the sync FrameHostMsg_CreateChildFrame message, which would again mix pull/push semantics.\n\nIn addition, my understanding is that Mojo/IPC interop does not currently support adding InterfaceRequests to legacy IPC like FrameHostMsg_CreateChildFrame, and Mojofying that seems tricky (?) as it is handled on the IO thread.",
+      "parentUuid": "0efa2029_ad49bf3c",
+      "range": {
+        "startLine": 106,
+        "startChar": 2,
+        "endLine": 106,
+        "endChar": 46
+      },
+      "revId": "412161926908cf7093ac11e019d7e4a847b8fb96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "233719e0_3538667d",
         "filename": "content/common/frame.mojom",
         "patchSetId": 33
@@ -479,6 +503,24 @@
       "writtenOn": "2017-08-03T19:09:42Z",
       "side": 1,
       "message": "Why unique_ptr? It seems like it\u0027s just adding an indirection.",
+      "revId": "412161926908cf7093ac11e019d7e4a847b8fb96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8379bc34_985b9492",
+        "filename": "content/common/frame_messages.typemap",
+        "patchSetId": 33
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-03T19:36:51Z",
+      "side": 1,
+      "message": "This struct is huge, so I wanted to save some copies and/or member-wise moves.\n\nWhile in most places we can pass it by const\u0026, the RFHI implementation wants to modify the incoming parameters in place...\n\nMaking it `move_only` would solve this, but would force member-wise moves in all other places, making those places less efficient.\n\nUsing the naked type also makes it impossible to use this type as a Mojo struct member (because of the IPC macro multiple-inclusion-but-at-most-once-per-translation-unit trickery).",
+      "parentUuid": "967525c7_3b8bd462",
       "revId": "412161926908cf7093ac11e019d7e4a847b8fb96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
