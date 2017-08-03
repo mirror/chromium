@@ -472,16 +472,26 @@ void TrayAccessibility::OnAccessibilityModeChanged(
         l10n_util::GetStringUTF16(IDS_ASH_STATUS_TRAY_SPOKEN_FEEDBACK_ENABLED);
   }
 
-  std::unique_ptr<message_center::Notification> notification =
-      base::MakeUnique<message_center::Notification>(
-          message_center::NOTIFICATION_TYPE_SIMPLE, kNotificationId, title,
-          text,
-          gfx::Image(gfx::CreateVectorIcon(GetNotificationIcon(being_enabled),
-                                           kMenuIconSize, kMenuIconColor)),
-          base::string16(), GURL(),
-          message_center::NotifierId(message_center::NotifierId::APPLICATION,
-                                     system_notifier::kNotifierAccessibility),
-          message_center::RichNotificationData(), nullptr);
+  std::unique_ptr<message_center::Notification> notification;
+  if (message_center::MessageCenter::IsNewStyleNotificationEnabled()) {
+    notification = message_center::Notification::CreateSystemNotification(
+        message_center::NOTIFICATION_TYPE_SIMPLE, kNotificationId, title, text,
+        gfx::Image(), base::string16(), GURL(),
+        message_center::NotifierId(message_center::NotifierId::APPLICATION,
+                                   system_notifier::kNotifierAccessibility),
+        message_center::RichNotificationData(), nullptr,
+        GetNotificationIcon(being_enabled),
+        message_center::SystemNotificationWarningLevel::NORMAL);
+  } else {
+    notification = base::MakeUnique<message_center::Notification>(
+        message_center::NOTIFICATION_TYPE_SIMPLE, kNotificationId, title, text,
+        gfx::Image(gfx::CreateVectorIcon(GetNotificationIcon(being_enabled),
+                                         kMenuIconSize, kMenuIconColor)),
+        base::string16(), GURL(),
+        message_center::NotifierId(message_center::NotifierId::APPLICATION,
+                                   system_notifier::kNotifierAccessibility),
+        message_center::RichNotificationData(), nullptr);
+  }
   message_center->AddNotification(std::move(notification));
 }
 
