@@ -1,0 +1,608 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6864d4cb_b4bb4bc5",
+        "filename": "components/autofill/core/browser/address_validation_util.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-03T15:53:18Z",
+      "side": 1,
+      "message": "Anonymous functions need documentation, certainly mentioning the parameters if these are not obvious.",
+      "revId": "4e745c3a9800ace9c75563db8c8c325162f4b3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21b018db_29ecab6e",
+        "filename": "components/autofill/core/browser/address_validation_util.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-03T15:53:18Z",
+      "side": 1,
+      "message": "/*billing\u003d*/false",
+      "range": {
+        "startLine": 48,
+        "startChar": 67,
+        "endLine": 48,
+        "endChar": 72
+      },
+      "revId": "4e745c3a9800ace9c75563db8c8c325162f4b3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76898f18_a2195d4c",
+        "filename": "components/autofill/core/browser/address_validation_util.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-03T15:53:18Z",
+      "side": 1,
+      "message": "Use CamelCasing for the function names please.",
+      "revId": "4e745c3a9800ace9c75563db8c8c325162f4b3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a44d1a7_def82e37",
+        "filename": "components/autofill/core/browser/address_validation_util.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-03T15:53:18Z",
+      "side": 1,
+      "message": "I would add a comment here such as \"|filter| will make sure that the validation only returns problems that are relevant\".",
+      "revId": "4e745c3a9800ace9c75563db8c8c325162f4b3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5724e371_b9fcf995",
+        "filename": "components/autofill/core/browser/address_validation_util.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-03T15:53:18Z",
+      "side": 1,
+      "message": "Can you expand on this, perhaps with a crbug.com/xxxxxx entry? It\u0027s easy to lose track of \"for now\" and the context",
+      "revId": "4e745c3a9800ace9c75563db8c8c325162f4b3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88a7d6de_8b9307a8",
+        "filename": "components/autofill/core/browser/address_validation_util.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-03T15:53:18Z",
+      "side": 1,
+      "message": "nit: I would remove this blank line",
+      "revId": "4e745c3a9800ace9c75563db8c8c325162f4b3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e32ab18e_37b82d7f",
+        "filename": "components/autofill/core/browser/address_validation_util.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-03T15:53:18Z",
+      "side": 1,
+      "message": "nit: I would add a blank line here",
+      "revId": "4e745c3a9800ace9c75563db8c8c325162f4b3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf348a6d_153e1bce",
+        "filename": "components/autofill/core/browser/address_validation_util_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-03T15:53:18Z",
+      "side": 1,
+      "message": "it\u0027s now owned if you don\u0027t manage its lifetime. I would suggest making this a regular member, and in the constructor above:\n\nvalidator_(std::unique_ptr\u003cSource\u003e(new ValidationTestDataSource()),\n            std::unique_ptr\u003cStorage\u003e(new NullStorage),\n            this)",
+      "revId": "4e745c3a9800ace9c75563db8c8c325162f4b3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ef1d43f_ab49aa55",
+        "filename": "components/autofill/core/browser/address_validation_util_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-03T15:53:18Z",
+      "side": 1,
+      "message": "NULL -\u003e nullptr",
+      "range": {
+        "startLine": 103,
+        "startChar": 62,
+        "endLine": 103,
+        "endChar": 66
+      },
+      "revId": "4e745c3a9800ace9c75563db8c8c325162f4b3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4aa41615_e0acbdfd",
+        "filename": "components/autofill/core/browser/address_validation_util_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-03T15:53:18Z",
+      "side": 1,
+      "message": "Aren\u0027t country codes independent of rules, and baked into country_data.cc? Could we use that?",
+      "revId": "4e745c3a9800ace9c75563db8c8c325162f4b3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b5468c3_62ea77e8",
+        "filename": "components/autofill/core/browser/address_validation_util_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-03T15:53:18Z",
+      "side": 1,
+      "message": "Could you also add a test with Nouveau-Brunswick? Quebec is special because it\u0027s only different because of the accent.",
+      "revId": "4e745c3a9800ace9c75563db8c8c325162f4b3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e77ad466_902806f0",
+        "filename": "components/autofill/core/browser/address_validation_util_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-03T15:53:18Z",
+      "side": 1,
+      "message": "Can you test for a valid postal code that has a space/no-space?",
+      "revId": "4e745c3a9800ace9c75563db8c8c325162f4b3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e846e44_193327eb",
+        "filename": "components/autofill/core/browser/autofill_profile_validator.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-03T15:53:18Z",
+      "side": 1,
+      "message": "include \u003cutility\u003e here instead",
+      "revId": "4e745c3a9800ace9c75563db8c8c325162f4b3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32881ab5_f3838097",
+        "filename": "components/autofill/core/browser/autofill_profile_validator.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-03T15:53:18Z",
+      "side": 1,
+      "message": "please document anonymous class",
+      "revId": "4e745c3a9800ace9c75563db8c8c325162f4b3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0887e35_5dabc6ee",
+        "filename": "components/autofill/core/browser/autofill_profile_validator.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-03T15:53:18Z",
+      "side": 1,
+      "message": "is \u0026OnRulesLoaded sufficient here?",
+      "revId": "4e745c3a9800ace9c75563db8c8c325162f4b3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75627935_fa5ba7f5",
+        "filename": "components/autofill/core/browser/autofill_profile_validator.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-03T15:53:18Z",
+      "side": 1,
+      "message": "see comment below. This could then be DCHECK(profile);",
+      "revId": "4e745c3a9800ace9c75563db8c8c325162f4b3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b12df17_871005ae",
+        "filename": "components/autofill/core/browser/autofill_profile_validator.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-03T15:53:18Z",
+      "side": 1,
+      "message": "Have kRulesLoadingTimeoutSeconds in the anonymous namespace above and get rid of this.",
+      "range": {
+        "startLine": 73,
+        "startChar": 12,
+        "endLine": 73,
+        "endChar": 27
+      },
+      "revId": "4e745c3a9800ace9c75563db8c8c325162f4b3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32f87d7e_b150a5bd",
+        "filename": "components/autofill/core/browser/autofill_profile_validator.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-03T15:53:18Z",
+      "side": 1,
+      "message": "bool has_responded_ \u003d false;",
+      "revId": "4e745c3a9800ace9c75563db8c8c325162f4b3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f5bd311_477d041d",
+        "filename": "components/autofill/core/browser/autofill_profile_validator.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-03T15:53:18Z",
+      "side": 1,
+      "message": "why not move this to the top of the function? Also\n\nif (!profile) {\n  std::move(cb).Run(AutofillProfile::UNVALIDATED);\n  return;\n}\n\nso then you don\u0027t need to have it on line 42",
+      "revId": "4e745c3a9800ace9c75563db8c8c325162f4b3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e460e6e7_5fafb04f",
+        "filename": "components/autofill/core/browser/autofill_profile_validator.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-03T15:53:18Z",
+      "side": 1,
+      "message": "what if region_code is garbage in the profile? Do we handle this well? If we do, I would explicitly write what happens in that case in the comments, so that the next person modifying this file knows.",
+      "range": {
+        "startLine": 99,
+        "startChar": 49,
+        "endLine": 99,
+        "endChar": 60
+      },
+      "revId": "4e745c3a9800ace9c75563db8c8c325162f4b3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cad30ba_ed30c1b9",
+        "filename": "components/autofill/core/browser/autofill_profile_validator.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-03T15:53:18Z",
+      "side": 1,
+      "message": "fix double space here",
+      "revId": "4e745c3a9800ace9c75563db8c8c325162f4b3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57c236e6_4be38e98",
+        "filename": "components/autofill/core/browser/autofill_profile_validator.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-03T15:53:18Z",
+      "side": 1,
+      "message": "used?",
+      "range": {
+        "startLine": 13,
+        "startChar": 10,
+        "endLine": 13,
+        "endChar": 17
+      },
+      "revId": "4e745c3a9800ace9c75563db8c8c325162f4b3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61daa4f3_aaf93e6b",
+        "filename": "components/autofill/core/browser/autofill_profile_validator.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-03T15:53:18Z",
+      "side": 1,
+      "message": "I could see us forgetting to update this comment in the future. You could word it as, \"...will set the ValidityState of serveral fields in the profile, such as country, admininistrative [...] See implementation for details.\".",
+      "revId": "4e745c3a9800ace9c75563db8c8c325162f4b3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c38e837_c5d746dc",
+        "filename": "components/autofill/core/browser/autofill_profile_validator.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-03T15:53:18Z",
+      "side": 1,
+      "message": "can this class definition be private?",
+      "revId": "4e745c3a9800ace9c75563db8c8c325162f4b3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6e2f35b_8428ac8b",
+        "filename": "components/autofill/core/browser/autofill_profile_validator_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-03T15:53:18Z",
+      "side": 1,
+      "message": "can your remove ::autofill::?",
+      "revId": "4e745c3a9800ace9c75563db8c8c325162f4b3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "767a7c1f_f4514568",
+        "filename": "components/autofill/core/browser/autofill_profile_validator_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-03T15:53:18Z",
+      "side": 1,
+      "message": "nit: recommend expected_validity_state_",
+      "range": {
+        "startLine": 95,
+        "startChar": 33,
+        "endLine": 95,
+        "endChar": 47
+      },
+      "revId": "4e745c3a9800ace9c75563db8c8c325162f4b3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2968a1f2_5aa4e684",
+        "filename": "components/autofill/core/browser/autofill_profile_validator_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-03T15:53:18Z",
+      "side": 1,
+      "message": "NULL -\u003e nullptr",
+      "range": {
+        "startLine": 106,
+        "startChar": 30,
+        "endLine": 106,
+        "endChar": 31
+      },
+      "revId": "4e745c3a9800ace9c75563db8c8c325162f4b3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13224e79_633d93e7",
+        "filename": "components/autofill/core/browser/autofill_profile_validator_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-03T15:53:18Z",
+      "side": 1,
+      "message": "valid",
+      "range": {
+        "startLine": 108,
+        "startChar": 14,
+        "endLine": 108,
+        "endChar": 22
+      },
+      "revId": "4e745c3a9800ace9c75563db8c8c325162f4b3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df26f420_10acb14c",
+        "filename": "components/autofill/core/browser/autofill_profile_validator_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-03T15:53:18Z",
+      "side": 1,
+      "message": "I thought the rules were not loaded? Sorry I\u0027m confused.",
+      "range": {
+        "startLine": 110,
+        "startChar": 30,
+        "endLine": 111,
+        "endChar": 34
+      },
+      "revId": "4e745c3a9800ace9c75563db8c8c325162f4b3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "496aad2a_3c1b32f3",
+        "filename": "components/autofill/core/browser/autofill_profile_validator_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-03T15:53:18Z",
+      "side": 1,
+      "message": "Is this function only used in tests? If so, we should make it private in AutofillProfileValidator and friend this test class",
+      "range": {
+        "startLine": 118,
+        "startChar": 31,
+        "endLine": 118,
+        "endChar": 54
+      },
+      "revId": "4e745c3a9800ace9c75563db8c8c325162f4b3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e513e664_0981c5e2",
+        "filename": "components/autofill/core/browser/autofill_profile_validator_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-03T15:53:18Z",
+      "side": 1,
+      "message": "same comment about this being private in the validator class",
+      "revId": "4e745c3a9800ace9c75563db8c8c325162f4b3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9deac2bb_1db6f2e2",
+        "filename": "components/autofill/core/browser/autofill_profile_validator_unittest.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-03T15:53:18Z",
+      "side": 1,
+      "message": "blank line after this",
+      "revId": "4e745c3a9800ace9c75563db8c8c325162f4b3a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
