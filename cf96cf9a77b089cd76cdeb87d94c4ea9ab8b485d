@@ -801,6 +801,30 @@
     },
     {
       "key": {
+        "uuid": "7fa58ede_4c28cb34",
+        "filename": "components/cryptauth/device_capability_manager_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-03T21:09:10Z",
+      "side": 1,
+      "message": "Oops, my mistake!",
+      "parentUuid": "f07d53b6_15016ccf",
+      "range": {
+        "startLine": 140,
+        "startChar": 0,
+        "endLine": 140,
+        "endChar": 28
+      },
+      "revId": "cf96cf9a77b089cd76cdeb87d94c4ea9ab8b485d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db581d9c_a7eaadca",
         "filename": "components/cryptauth/device_capability_manager_unittest.cc",
         "patchSetId": 16
@@ -883,6 +907,30 @@
       "side": 1,
       "message": "I actually tried doing that before, but stl calls involving .find (for both unordered_set and vector) do not work for ExternalDeviceInfo.  This is also how some other unit tests in the codebase verify that a device_info exists.",
       "parentUuid": "7113bc2a_9a2ca28b",
+      "range": {
+        "startLine": 148,
+        "startChar": 0,
+        "endLine": 153,
+        "endChar": 5
+      },
+      "revId": "cf96cf9a77b089cd76cdeb87d94c4ea9ab8b485d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bc8b7c8_65b1877b",
+        "filename": "components/cryptauth/device_capability_manager_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-03T21:09:10Z",
+      "side": 1,
+      "message": "That\u0027s just because there is no operator\u003d\u003d for that class. To fix, that, please use std::find_if() instead of find().",
+      "parentUuid": "f2f21cfa_293e172e",
       "range": {
         "startLine": 148,
         "startChar": 0,
