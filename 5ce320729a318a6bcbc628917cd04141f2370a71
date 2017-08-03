@@ -592,6 +592,30 @@
     },
     {
       "key": {
+        "uuid": "b8c60b22_864c81b9",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-03T17:21:42Z",
+      "side": 1,
+      "message": "That sounds like a solid change, let\u0027s go with it.  Would it make sense to add a DCHECK to RequireBitstreamBuffers() with the expected states (i.e. initializing).\n\nOne last bit, a comment about the init / usage flow at the top of the file *may* be warranted.  Only if you think someone reading the file for the first time might have trouble understanding the flow purely from the code.",
+      "parentUuid": "afb1acf9_c5628154",
+      "range": {
+        "startLine": 183,
+        "startChar": 4,
+        "endLine": 183,
+        "endChar": 17
+      },
+      "revId": "5ce320729a318a6bcbc628917cd04141f2370a71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "13156fc8_0dacd3a2",
         "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
         "patchSetId": 14
