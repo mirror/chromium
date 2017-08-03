@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "64b4b90c_b993d63c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeFeatureList.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-08-03T15:29:20Z",
+      "side": 1,
+      "message": "This is technically referring to the ntp_tiles component where the feature is defined. I am not sure it makes sense to use double terminology as the component will probably not get renamed soon. Feel free to insist :)",
+      "parentUuid": "0e8572b2_677a9ca4",
+      "range": {
+        "startLine": 203,
+        "startChar": 13,
+        "endLine": 203,
+        "endChar": 44
+      },
+      "revId": "2f4be0bdcea12f07c36adce96520a5e88f03ed0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "955180f9_8106a923",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileRenderer.java",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "29702236_e7adf17b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileRenderer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-08-03T15:29:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "955180f9_8106a923",
+      "range": {
+        "startLine": 81,
+        "startChar": 12,
+        "endLine": 81,
+        "endChar": 19
+      },
+      "revId": "2f4be0bdcea12f07c36adce96520a5e88f03ed0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "483c3da8_a5587b6a",
         "filename": "chrome/browser/about_flags.cc",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "2f4be0bdcea12f07c36adce96520a5e88f03ed0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc227620_4997281e",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 2440,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-08-03T15:29:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "483c3da8_a5587b6a",
+      "range": {
+        "startLine": 2440,
+        "startChar": 0,
+        "endLine": 2440,
+        "endChar": 67
+      },
+      "revId": "2f4be0bdcea12f07c36adce96520a5e88f03ed0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
