@@ -78,12 +78,6 @@ cr.define('extensions', function() {
        */
       navigationHelper_: Object,
 
-      /**
-       * The current page being shown.
-       * @private {!PageState}
-       */
-      currentPage_: Object,
-
       /** @type {!Array<!chrome.developerPrivate.ExtensionInfo>} */
       extensions: {
         type: Array,
@@ -115,6 +109,13 @@ cr.define('extensions', function() {
       'items-list.extension-item-show-errors': 'onShouldShowItemErrors_',
     },
 
+    /**
+     * The current page being shown. Default to null, and initPage will figure
+     * out the initial page based on url.
+     * @private {!PageState}
+     */
+    currentPage_: null,
+
     created: function() {
       this.readyPromiseResolver = new PromiseResolver();
     },
@@ -128,7 +129,6 @@ cr.define('extensions', function() {
       this.listHelper_ = new ListHelper(this);
       this.sidebar.setListDelegate(this.listHelper_);
       this.readyPromiseResolver.resolve();
-      this.currentPage_ = {page: Page.LIST};
       this.navigationHelper_ = new extensions.NavigationHelper(newPage => {
         this.changePage(newPage, true);
       });
@@ -137,7 +137,7 @@ cr.define('extensions', function() {
         // still on the details page. We could be on a different page if the
         // user hit back while the options dialog was visible; in that case, the
         // new page is already correct.
-        if (this.currentPage_.page == Page.DETAILS) {
+        if (this.currentPage_ && this.currentPage_.page == Page.DETAILS) {
           // This will update the currentPage_ and the NavigationHelper; since
           // the active page is already the details page, no main page
           // transition occurs.
@@ -329,7 +329,7 @@ cr.define('extensions', function() {
      *     of the change.
      */
     changePage: function(newPage, isSilent) {
-      if (this.currentPage_.page == newPage.page &&
+      if (this.currentPage_ && this.currentPage_.page == newPage.page &&
           this.currentPage_.subpage == newPage.subpage &&
           this.currentPage_.extensionId == newPage.extensionId) {
         return;
