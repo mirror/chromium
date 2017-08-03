@@ -68,9 +68,9 @@ class InputEventAckWaiter
         desired_ack_type_received_(false) {}
   ~InputEventAckWaiter() override {}
 
-  void OnInputEventAck(const blink::WebInputEvent& event) override {
+  bool OnInputEventAck(const blink::WebInputEvent& event) override {
     if (event.GetType() != ack_type_waiting_for_)
-      return;
+      return false;
 
     // Ignore synthetic GestureScrollBegin/Ends.
     if ((event.GetType() == blink::WebInputEvent::kGestureScrollBegin &&
@@ -79,12 +79,13 @@ class InputEventAckWaiter
         (event.GetType() == blink::WebInputEvent::kGestureScrollEnd &&
          static_cast<const blink::WebGestureEvent&>(event)
              .data.scroll_end.synthetic)) {
-      return;
+      return false;
     }
 
     desired_ack_type_received_ = true;
     if (message_loop_runner_->loop_running())
       message_loop_runner_->Quit();
+    return false;
   }
 
   void Wait() {

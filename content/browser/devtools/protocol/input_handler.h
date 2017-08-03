@@ -5,6 +5,7 @@
 #ifndef CONTENT_BROWSER_DEVTOOLS_PROTOCOL_INPUT_HANDLER_H_
 #define CONTENT_BROWSER_DEVTOOLS_PROTOCOL_INPUT_HANDLER_H_
 
+#include "base/containers/flat_set.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "content/browser/devtools/protocol/devtools_domain_handler.h"
@@ -65,6 +66,13 @@ class InputHandler : public DevToolsDomainHandler,
       Maybe<int> click_count,
       std::unique_ptr<DispatchMouseEventCallback> callback) override;
 
+  void DispatchTouchEvent(
+      const std::string& type,
+      std::unique_ptr<Array<Input::TouchPoint>> touch_points,
+      protocol::Maybe<int> modifiers,
+      protocol::Maybe<double> timestamp,
+      std::unique_ptr<DispatchTouchEventCallback> callback) override;
+
   Response EmulateTouchFromMouseEvent(const std::string& type,
                                       int x,
                                       int y,
@@ -111,7 +119,7 @@ class InputHandler : public DevToolsDomainHandler,
  private:
   // InputEventObserver
   void OnInputEvent(const blink::WebInputEvent& event) override;
-  void OnInputEventAck(const blink::WebInputEvent& event) override;
+  bool OnInputEventAck(const blink::WebInputEvent& event) override;
 
   void SynthesizeRepeatingScroll(
       SyntheticSmoothScrollGestureParams gesture_params,
@@ -140,10 +148,13 @@ class InputHandler : public DevToolsDomainHandler,
   std::deque<std::unique_ptr<DispatchKeyEventCallback>> pending_key_callbacks_;
   std::deque<std::unique_ptr<DispatchMouseEventCallback>>
       pending_mouse_callbacks_;
+  std::deque<std::unique_ptr<DispatchTouchEventCallback>>
+      pending_touch_callbacks_;
   float page_scale_factor_;
   gfx::SizeF scrollable_viewport_size_;
   int last_id_;
   bool ignore_input_events_ = false;
+  base::flat_set<int> touch_point_ids_;
   base::WeakPtrFactory<InputHandler> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(InputHandler);
