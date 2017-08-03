@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d17fdc1_bc488067",
+        "filename": "ash/shelf/voice_interaction_overlay.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-08-03T00:31:58Z",
+      "side": 1,
+      "message": "Only change is here.  Remove the use the since_origin() since it does not exist in M61.",
+      "range": {
+        "startLine": 171,
+        "startChar": 7,
+        "endLine": 171,
+        "endChar": 53
+      },
+      "revId": "9f4cdb60c10b97be463d79f9c1d0e080b05425e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
