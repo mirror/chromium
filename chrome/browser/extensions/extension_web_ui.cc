@@ -524,14 +524,14 @@ void ExtensionWebUI::GetFaviconForURL(
 
     ui::ScaleFactor resource_scale_factor = ui::GetSupportedScaleFactor(scale);
     info_list.push_back(extensions::ImageLoader::ImageRepresentation(
-        icon_resource,
+        std::move(icon_resource),
         extensions::ImageLoader::ImageRepresentation::ALWAYS_RESIZE,
-        gfx::Size(pixel_size, pixel_size),
-        resource_scale_factor));
+        gfx::Size(pixel_size, pixel_size), resource_scale_factor));
   }
 
   // LoadImagesAsync actually can run callback synchronously. We want to force
   // async.
   extensions::ImageLoader::Get(profile)->LoadImagesAsync(
-      extension, info_list, base::Bind(&RunFaviconCallbackAsync, callback));
+      extension, std::move(info_list),
+      base::Bind(&RunFaviconCallbackAsync, callback));
 }

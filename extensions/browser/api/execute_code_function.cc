@@ -237,16 +237,16 @@ bool ExecuteCodeFunction::LoadFile(const std::string& file) {
                        resource_.relative_path().AsUTF8Unsafe(),
                        true /* We assume this call always succeeds */));
   } else {
-    FileReader::OptionalFileSequenceTask get_file_and_l10n_callback =
-        base::Bind(&ExecuteCodeFunction::GetFileURLAndMaybeLocalizeInBackground,
-                   this, extension_id, extension_path, extension_default_locale,
-                   might_require_localization);
+    // FileReader::OptionalFileSequenceTask get_file_and_l10n_callback =
+    //     base::Bind(&ExecuteCodeFunction::GetFileURLAndMaybeLocalizeInBackground,
+    //                this, extension_id, extension_path, extension_default_locale,
+    //                might_require_localization);
 
-    scoped_refptr<FileReader> file_reader(new FileReader(
-        resource_, get_file_and_l10n_callback,
-        base::Bind(&ExecuteCodeFunction::DidLoadAndLocalizeFile, this,
-                   resource_.relative_path().AsUTF8Unsafe())));
-    file_reader->Start();
+    // scoped_refptr<FileReader> file_reader(new FileReader(
+    //     resource_, get_file_and_l10n_callback,
+    //     base::Bind(&ExecuteCodeFunction::DidLoadAndLocalizeFile, this,
+    //                resource_.relative_path().AsUTF8Unsafe())));
+    // file_reader->Start();
   }
 
   return true;

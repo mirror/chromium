@@ -107,12 +107,10 @@ class ExecuteCodeFunction : public AsyncExtensionFunction {
   // true on success. If true is returned, this does an AddRef.
   bool Execute(const std::string& code_string);
 
-  // Contains extension resource built from path of file which is
-  // specified in JSON arguments.
-  ExtensionResource resource_;
-
   // The URL of the file being injected into the page.
   GURL file_url_;
+
+  ExtensionResource resource_;
 
   // The ID of the injection host.
   HostID host_id_;

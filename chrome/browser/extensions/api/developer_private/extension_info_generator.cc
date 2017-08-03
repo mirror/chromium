@@ -561,7 +561,7 @@ void ExtensionInfoGenerator::CreateExtensionInfoHelper(
     // used by the url is 48x48).
     gfx::Size max_size(128, 128);
     image_loader_->LoadImageAsync(
-        &extension, icon, max_size,
+        &extension, std::move(icon), max_size,
         base::Bind(&ExtensionInfoGenerator::OnImageLoaded,
                    weak_factory_.GetWeakPtr(), base::Passed(&info)));
   }

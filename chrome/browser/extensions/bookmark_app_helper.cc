@@ -819,13 +819,16 @@ void GetWebApplicationInfoFromApp(
         extension->GetResource(iter.second);
     if (!resource.empty()) {
       info_list.push_back(extensions::ImageLoader::ImageRepresentation(
-          resource, extensions::ImageLoader::ImageRepresentation::ALWAYS_RESIZE,
+          std::move(resource),
+          extensions::ImageLoader::ImageRepresentation::ALWAYS_RESIZE,
           gfx::Size(iter.first, iter.first), ui::SCALE_FACTOR_100P));
     }
   }
 
-  extensions::ImageLoader::Get(browser_context)->LoadImageFamilyAsync(
-      extension, info_list, base::Bind(&OnIconsLoaded, web_app_info, callback));
+  extensions::ImageLoader::Get(browser_context)
+      ->LoadImageFamilyAsync(
+          extension, std::move(info_list),
+          base::Bind(&OnIconsLoaded, web_app_info, callback));
 }
 
 bool IsValidBookmarkAppUrl(const GURL& url) {

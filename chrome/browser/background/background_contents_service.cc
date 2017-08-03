@@ -210,13 +210,9 @@ void ShowBalloon(const Extension* extension, Profile* profile) {
   // However, it's possible that the extension went away during the interim,
   // so we'll bind all the pertinent data here.
   extensions::ImageLoader::Get(profile)->LoadImageAsync(
-      extension,
-      resource,
-      gfx::Size(size, size),
+      extension, std::move(resource), gfx::Size(size, size),
       base::Bind(
-          &NotificationImageReady,
-          extension->name(),
-          message,
+          &NotificationImageReady, extension->name(), message,
           make_scoped_refptr(new CrashNotificationDelegate(profile, extension)),
           profile));
 }

@@ -15,7 +15,7 @@ namespace declarative_net_request {
 // Manifest data required for the kDeclarativeNetRequestKey manifest
 // key.
 struct DNRManifestData : Extension::ManifestData {
-  explicit DNRManifestData(const ExtensionResource& resource);
+  explicit DNRManifestData(ExtensionResource resource);
   ~DNRManifestData() override;
 
   // Returns ExtensionResource corresponding to the kDeclarativeNetRequestKey

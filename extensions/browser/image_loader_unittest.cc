@@ -108,18 +108,17 @@ TEST_F(ImageLoaderTest, LoadImage) {
       CreateExtension("image_loader", Manifest::INVALID_LOCATION));
   ASSERT_TRUE(extension.get() != NULL);
 
-  ExtensionResource image_resource =
-      IconsInfo::GetIconResource(extension.get(),
-                                 extension_misc::EXTENSION_ICON_SMALLISH,
-                                 ExtensionIconSet::MATCH_EXACTLY);
   gfx::Size max_size(extension_misc::EXTENSION_ICON_SMALLISH,
                      extension_misc::EXTENSION_ICON_SMALLISH);
   ImageLoader loader;
-  loader.LoadImageAsync(extension.get(),
-                        image_resource,
-                        max_size,
-                        base::Bind(&ImageLoaderTest::OnImageLoaded,
-                                   base::Unretained(this)));
+  {
+    ExtensionResource image_resource = IconsInfo::GetIconResource(
+        extension.get(), extension_misc::EXTENSION_ICON_SMALLISH,
+        ExtensionIconSet::MATCH_EXACTLY);
+    loader.LoadImageAsync(
+        extension.get(), std::move(image_resource), max_size,
+        base::Bind(&ImageLoaderTest::OnImageLoaded, base::Unretained(this)));
+  }
 
   // The image isn't cached, so we should not have received notification.
   EXPECT_EQ(0, image_loaded_count());
@@ -142,20 +141,19 @@ TEST_F(ImageLoaderTest, DeleteExtensionWhileWaitingForCache) {
       CreateExtension("image_loader", Manifest::INVALID_LOCATION));
   ASSERT_TRUE(extension.get() != NULL);
 
-  ExtensionResource image_resource =
-      IconsInfo::GetIconResource(extension.get(),
-                                 extension_misc::EXTENSION_ICON_SMALLISH,
-                                 ExtensionIconSet::MATCH_EXACTLY);
   gfx::Size max_size(extension_misc::EXTENSION_ICON_SMALLISH,
                      extension_misc::EXTENSION_ICON_SMALLISH);
   ImageLoader loader;
   std::set<int> sizes;
   sizes.insert(extension_misc::EXTENSION_ICON_SMALLISH);
-  loader.LoadImageAsync(extension.get(),
-                        image_resource,
-                        max_size,
-                        base::Bind(&ImageLoaderTest::OnImageLoaded,
-                                   base::Unretained(this)));
+  {
+    ExtensionResource image_resource = IconsInfo::GetIconResource(
+        extension.get(), extension_misc::EXTENSION_ICON_SMALLISH,
+        ExtensionIconSet::MATCH_EXACTLY);
+    loader.LoadImageAsync(
+        extension.get(), std::move(image_resource), max_size,
+        base::Bind(&ImageLoaderTest::OnImageLoaded, base::Unretained(this)));
+  }
 
   // The image isn't cached, so we should not have received notification.
   EXPECT_EQ(0, image_loaded_count());
@@ -192,14 +190,15 @@ TEST_F(ImageLoaderTest, MultipleImages) {
     ExtensionResource resource = IconsInfo::GetIconResource(
         extension.get(), sizes[i], ExtensionIconSet::MATCH_EXACTLY);
     info_list.push_back(ImageLoader::ImageRepresentation(
-        resource, ImageLoader::ImageRepresentation::RESIZE_WHEN_LARGER,
+        std::move(resource),
+        ImageLoader::ImageRepresentation::RESIZE_WHEN_LARGER,
         gfx::Size(sizes[i], sizes[i]), 1.f));
   }
 
   ImageLoader loader;
-  loader.LoadImagesAsync(extension.get(), info_list,
-                         base::Bind(&ImageLoaderTest::OnImageLoaded,
-                                    base::Unretained(this)));
+  loader.LoadImagesAsync(
+      extension.get(), std::move(info_list),
+      base::Bind(&ImageLoaderTest::OnImageLoaded, base::Unretained(this)));
 
   // The image isn't cached, so we should not have received notification.
   EXPECT_EQ(0, image_loaded_count());
@@ -235,25 +234,25 @@ TEST_F(ImageLoaderTest, LoadImageFamily) {
     ExtensionResource resource = IconsInfo::GetIconResource(
         extension.get(), sizes[i], ExtensionIconSet::MATCH_EXACTLY);
     info_list.push_back(ImageLoader::ImageRepresentation(
-        resource, ImageLoader::ImageRepresentation::NEVER_RESIZE,
+        std::move(resource), ImageLoader::ImageRepresentation::NEVER_RESIZE,
         gfx::Size(sizes[i], sizes[i]), 1.f));
   }
 
   // Add a second icon of 200P which should get grouped with the smaller icon's
   // ImageSkia.
-  ExtensionResource resource =
-      IconsInfo::GetIconResource(extension.get(),
-                                 extension_misc::EXTENSION_ICON_SMALLISH,
-                                 ExtensionIconSet::MATCH_EXACTLY);
-  info_list.push_back(ImageLoader::ImageRepresentation(
-      resource, ImageLoader::ImageRepresentation::NEVER_RESIZE,
-      gfx::Size(extension_misc::EXTENSION_ICON_BITTY,
-                extension_misc::EXTENSION_ICON_BITTY),
-      2.f));
+  {
+    ExtensionResource resource = IconsInfo::GetIconResource(
+        extension.get(), extension_misc::EXTENSION_ICON_SMALLISH,
+        ExtensionIconSet::MATCH_EXACTLY);
+    info_list.push_back(ImageLoader::ImageRepresentation(
+        std::move(resource), ImageLoader::ImageRepresentation::NEVER_RESIZE,
+        gfx::Size(extension_misc::EXTENSION_ICON_BITTY,
+                  extension_misc::EXTENSION_ICON_BITTY),
+        2.f));
+  }
 
   ImageLoader loader;
-  loader.LoadImageFamilyAsync(extension.get(),
-                              info_list,
+  loader.LoadImageFamilyAsync(extension.get(), std::move(info_list),
                               base::Bind(&ImageLoaderTest::OnImageFamilyLoaded,
                                          base::Unretained(this)));
 

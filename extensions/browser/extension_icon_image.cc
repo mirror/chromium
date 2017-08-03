@@ -187,12 +187,12 @@ void IconImage::LoadImageForScaleAsync(float scale) {
   if (!resource.empty()) {
     std::vector<ImageLoader::ImageRepresentation> info_list;
     info_list.push_back(ImageLoader::ImageRepresentation(
-        resource, ImageLoader::ImageRepresentation::ALWAYS_RESIZE,
+        std::move(resource), ImageLoader::ImageRepresentation::ALWAYS_RESIZE,
         gfx::Size(resource_size_in_pixel, resource_size_in_pixel), scale));
 
     extensions::ImageLoader* loader =
         extensions::ImageLoader::Get(browser_context_);
-    loader->LoadImagesAsync(extension_.get(), info_list,
+    loader->LoadImagesAsync(extension_.get(), std::move(info_list),
                             base::Bind(&IconImage::OnImageLoaded,
                                        weak_ptr_factory_.GetWeakPtr(), scale));
   } else {

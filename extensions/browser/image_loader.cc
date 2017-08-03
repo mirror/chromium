@@ -132,11 +132,11 @@ std::vector<SkBitmap> LoadResourceBitmaps(
 // ImageLoader::ImageRepresentation
 
 ImageLoader::ImageRepresentation::ImageRepresentation(
-    const ExtensionResource& resource,
+    ExtensionResource resource,
     ResizeCondition resize_condition,
     const gfx::Size& desired_size,
     float scale_factor)
-    : resource(resource),
+    : resource(std::move(resource)),
       resize_condition(resize_condition),
       desired_size(desired_size),
       scale_factor(scale_factor) {}
@@ -144,62 +144,70 @@ ImageLoader::ImageRepresentation::ImageRepresentation(
 ImageLoader::ImageRepresentation::~ImageRepresentation() {
 }
 
+ImageLoader::ImageRepresentation::ImageRepresentation(ImageRepresentation&&) =
+    default;
+ImageLoader::ImageRepresentation& ImageLoader::ImageRepresentation::operator=(
+    ImageRepresentation&&) = default;
+
 ////////////////////////////////////////////////////////////////////////////////
 // ImageLoader::LoadResult
 
 struct ImageLoader::LoadResult  {
   LoadResult(const SkBitmap& bitmap,
              const gfx::Size& original_size,
-             const ImageRepresentation& image_representation);
+             ImageRepresentation image_representation);
   ~LoadResult();
+  LoadResult(LoadResult&&);
+  LoadResult& operator=(LoadResult&&);
 
   SkBitmap bitmap;
   gfx::Size original_size;
   ImageRepresentation image_representation;
 };
 
-ImageLoader::LoadResult::LoadResult(
-    const SkBitmap& bitmap,
-    const gfx::Size& original_size,
-    const ImageLoader::ImageRepresentation& image_representation)
+ImageLoader::LoadResult::LoadResult(const SkBitmap& bitmap,
+                                    const gfx::Size& original_size,
+                                    ImageRepresentation image_representation)
     : bitmap(bitmap),
       original_size(original_size),
-      image_representation(image_representation) {
-}
+      image_representation(std::move(image_representation)) {}
 
 ImageLoader::LoadResult::~LoadResult() {
 }
+
+ImageLoader::LoadResult::LoadResult(LoadResult&&) = default;
+ImageLoader::LoadResult& ImageLoader::LoadResult::operator=(LoadResult&&) =
+    default;
 
 namespace {
 
 // Need to be after ImageRepresentation and LoadResult are defined.
 std::vector<ImageLoader::LoadResult> LoadImagesBlocking(
-    const std::vector<ImageLoader::ImageRepresentation>& info_list,
+    std::vector<ImageLoader::ImageRepresentation> info_list,
     const std::vector<SkBitmap>& bitmaps) {
   std::vector<ImageLoader::LoadResult> load_result;
 
   for (size_t i = 0; i < info_list.size(); ++i) {
-    const ImageLoader::ImageRepresentation& image = info_list[i];
-
     // If we don't have a path there isn't anything we can do, just skip it.
-    if (image.resource.relative_path().empty())
+    if (info_list[i].resource.relative_path().empty())
       continue;
 
     SkBitmap bitmap;
     if (bitmaps[i].isNull())
-      LoadImageBlocking(image, &bitmap);
+      LoadImageBlocking(info_list[i], &bitmap);
     else
       bitmap = bitmaps[i];
 
-    // If the image failed to load, skip it.
+    // If info_list[i] failed to load, skip it.
     if (bitmap.isNull() || bitmap.empty())
       continue;
 
     gfx::Size original_size(bitmap.width(), bitmap.height());
-    bitmap = ResizeIfNeeded(bitmap, image);
+    bitmap = ResizeIfNeeded(bitmap, info_list[i]);
 
-    load_result.push_back(
-        ImageLoader::LoadResult(bitmap, original_size, image));
+    // This needs an ImageRepresentation copy.
+    load_result.push_back(ImageLoader::LoadResult(bitmap, original_size,
+                                                  std::move(info_list[i])));
   }
 
   return load_result;
@@ -223,13 +231,14 @@ ImageLoader* ImageLoader::Get(content::BrowserContext* context) {
 }
 
 void ImageLoader::LoadImageAsync(const Extension* extension,
-                                 const ExtensionResource& resource,
+                                 ExtensionResource resource,
                                  const gfx::Size& max_size,
                                  const ImageLoaderImageCallback& callback) {
   std::vector<ImageRepresentation> info_list;
   info_list.push_back(ImageRepresentation(
-      resource, ImageRepresentation::RESIZE_WHEN_LARGER, max_size, 1.f));
-  LoadImagesAsync(extension, info_list, callback);
+      std::move(resource), ImageRepresentation::RESIZE_WHEN_LARGER, max_size,
+      1.f));
+  LoadImagesAsync(extension, std::move(info_list), callback);
 }
 
 void ImageLoader::LoadImageAtEveryScaleFactorAsync(
@@ -254,35 +263,38 @@ void ImageLoader::LoadImageAtEveryScaleFactorAsync(
     ExtensionResource image = IconsInfo::GetIconResource(
         extension, px_size.width(), ExtensionIconSet::MATCH_BIGGER);
     info_list.push_back(ImageRepresentation(
-        image, ImageRepresentation::ALWAYS_RESIZE, px_size, scale));
+        std::move(image), ImageRepresentation::ALWAYS_RESIZE, px_size, scale));
   }
-  LoadImagesAsync(extension, info_list, callback);
+  LoadImagesAsync(extension, std::move(info_list), callback);
 }
 
-void ImageLoader::LoadImagesAsync(
-    const Extension* extension,
-    const std::vector<ImageRepresentation>& info_list,
-    const ImageLoaderImageCallback& callback) {
+void ImageLoader::LoadImagesAsync(const Extension* extension,
+                                  std::vector<ImageRepresentation> info_list,
+                                  const ImageLoaderImageCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  std::vector<SkBitmap> bitmaps = LoadResourceBitmaps(extension, info_list);
+  // TODO check.
   base::PostTaskWithTraitsAndReplyWithResult(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::USER_VISIBLE},
-      base::Bind(LoadImagesBlocking, info_list,
-                 LoadResourceBitmaps(extension, info_list)),
-      base::Bind(&ImageLoader::ReplyBack, weak_ptr_factory_.GetWeakPtr(),
-                 callback));
+      base::BindOnce(LoadImagesBlocking, std::move(info_list),
+                     std::move(bitmaps)),
+      base::BindOnce(&ImageLoader::ReplyBack, weak_ptr_factory_.GetWeakPtr(),
+                     callback));
 }
 
 void ImageLoader::LoadImageFamilyAsync(
     const Extension* extension,
-    const std::vector<ImageRepresentation>& info_list,
+    std::vector<ImageRepresentation> info_list,
     const ImageLoaderImageFamilyCallback& callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  std::vector<SkBitmap> bitmaps = LoadResourceBitmaps(extension, info_list);
+  // TODO check.
   base::PostTaskWithTraitsAndReplyWithResult(
       FROM_HERE, {base::MayBlock(), base::TaskPriority::USER_VISIBLE},
-      base::Bind(LoadImagesBlocking, info_list,
-                 LoadResourceBitmaps(extension, info_list)),
-      base::Bind(&ImageLoader::ReplyBackWithImageFamily,
-                 weak_ptr_factory_.GetWeakPtr(), callback));
+      base::BindOnce(LoadImagesBlocking, std::move(info_list),
+                     std::move(bitmaps)),
+      base::BindOnce(&ImageLoader::ReplyBackWithImageFamily,
+                     weak_ptr_factory_.GetWeakPtr(), callback));
 }
 
 void ImageLoader::ReplyBack(const ImageLoaderImageCallback& callback,
