@@ -45,6 +45,30 @@
       "revId": "929e248ed968c02488616417d8fc2300241ce364",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83abee55_273c0ee0",
+        "filename": "ios/components/captive_portal/features.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-08-03T15:08:36Z",
+      "side": 1,
+      "message": "You\u0027re right, this can be removed. It was remnant from originally adding the flag to //components. It looks like when I moved it to ios/components, I forgot to remove the guards. I will do so in a follow up CL.",
+      "parentUuid": "1048fafd_075f620a",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 19
+      },
+      "revId": "929e248ed968c02488616417d8fc2300241ce364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
