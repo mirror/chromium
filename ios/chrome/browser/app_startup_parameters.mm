@@ -14,8 +14,10 @@
   GURL _externalURL;
 }
 
+@synthesize externalURLParams = _externalURLParams;
 @synthesize postOpeningAction = _postOpeningAction;
 @synthesize launchInIncognito = _launchInIncognito;
+@synthesize launchPaymentRequest = _launchPaymentRequest;
 
 - (const GURL&)externalURL {
   return _externalURL;
@@ -49,6 +51,10 @@
       break;
     default:
       break;
+  }
+
+  if (self.launchPaymentRequest) {
+    [description appendString:@", should launch payment request"];
   }
 
   return description;

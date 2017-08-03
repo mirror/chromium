@@ -7,6 +7,8 @@
 
 #import <Foundation/Foundation.h>
 
+#include <map>
+
 enum NTPTabOpeningPostOpeningAction {
   // No action should be done
   NO_ACTION = 0,
@@ -25,6 +27,12 @@ class GURL;
 // The URL received that should be opened.
 @property(nonatomic, readonly, assign) const GURL& externalURL;
 
+// The URL query string parameters in the case that the app was launched as a
+// result of Universal Link navigation. The map associates query string
+// parameters with their corresponding value.
+@property(nonatomic, assign) std::map<std::string, std::string>
+    externalURLParams;
+
 //// Boolean to track if a voice search is requested at startup.
 //@property(nonatomic, readwrite, assign) BOOL launchVoiceSearch;
 // Boolean to track if the app should launch in incognito mode.
@@ -35,6 +43,8 @@ class GURL;
 //@property(nonatomic, readwrite, assign) BOOL launchQRScanner;
 @property(nonatomic, readwrite, assign)
     NTPTabOpeningPostOpeningAction postOpeningAction;
+// Boolean to track if a Payment Request is requested at startup.
+@property(nonatomic, readwrite, assign) BOOL launchPaymentRequest;
 
 - (instancetype)init NS_UNAVAILABLE;
 
