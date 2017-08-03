@@ -16,6 +16,24 @@
       "revId": "2f0c71661a41d1831f452ae4a4903080cb3feab6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df073d75_674167b8",
+        "filename": "extensions/browser/api/networking_private/networking_private_chromeos.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1000212
+      },
+      "writtenOn": "2017-08-03T18:11:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "023708f1_96b44851",
+      "revId": "2f0c71661a41d1831f452ae4a4903080cb3feab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
