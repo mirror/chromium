@@ -75,11 +75,13 @@ class CORE_EXPORT NGLineBreaker {
     }
   };
 
+  // bool Thing();
   void BreakLine(NGLineInfo*);
 
   void PrepareNextLine(NGLineInfo*);
 
-  void UpdateAvailableWidth();
+  void FindNextLayoutOpportunity();
+  void FindNextLayoutOpportunityWithMinimumInlineSize(LayoutUnit);
 
   void ComputeLineLocation(NGLineInfo*) const;
 
@@ -134,6 +136,9 @@ class CORE_EXPORT NGLineBreaker {
   LazyLineBreakIterator break_iterator_;
   HarfBuzzShaper shaper_;
   ShapeResultSpacing<String> spacing_;
+
+  // Keep track of handled float items. See HandleFloat().
+  unsigned handled_floats_end_item_index_ = 0;
 
   // True when current box allows line wrapping.
   bool auto_wrap_ = false;
