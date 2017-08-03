@@ -153,6 +153,40 @@
     },
     {
       "key": {
+        "uuid": "08511e76_ec996b2e",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-08-03T19:01:12Z",
+      "side": 1,
+      "message": "kStartCommand and kForegroundFlag",
+      "revId": "f563ffef4b6562d54563e1c365b4cc60e72fa6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "549dd582_e4d6008f",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1000540
+      },
+      "writtenOn": "2017-08-03T19:01:12Z",
+      "side": 1,
+      "message": "I wonder if this cleanup could be moved into RAII PamHandle?",
+      "revId": "f563ffef4b6562d54563e1c365b4cc60e72fa6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "84374b49_5bcee312",
         "filename": "remoting/host/linux/remoting_user_session.cc",
         "patchSetId": 1
