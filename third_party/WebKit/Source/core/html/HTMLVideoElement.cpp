@@ -524,9 +524,9 @@ void HTMLVideoElement::MediaRemotingStarted(
 }
 
 void HTMLVideoElement::MediaRemotingStopped() {
-  DCHECK(media_remoting_status_ == MediaRemotingStatus::kDisabled ||
-         media_remoting_status_ == MediaRemotingStatus::kStarted);
-  if (media_remoting_status_ != MediaRemotingStatus::kDisabled)
+  if (media_remoting_status_ == MediaRemotingStatus::kNotStarted)
+    return;
+  if (media_remoting_status_ == MediaRemotingStatus::kStarted)
     media_remoting_status_ = MediaRemotingStatus::kNotStarted;
   DCHECK(remoting_interstitial_);
   remoting_interstitial_->Hide();
