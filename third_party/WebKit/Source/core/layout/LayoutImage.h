@@ -94,7 +94,9 @@ class CORE_EXPORT LayoutImage : public LayoutReplaced {
 
   void ImageChanged(WrappedImagePtr, const IntRect* = nullptr) override;
 
-  void Paint(const PaintInfo&, const LayoutPoint&) const final;
+  void Paint(const PaintInfo&,
+             const LayoutPoint&,
+             const LayoutSize&) const final;
 
   bool IsOfType(LayoutObjectType type) const override {
     return type == kLayoutObjectLayoutImage || LayoutReplaced::IsOfType(type);

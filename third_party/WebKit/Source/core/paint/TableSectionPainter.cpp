@@ -378,7 +378,7 @@ void TableSectionPainter::PaintCell(const LayoutTableCell& cell,
   if (!cell.HasSelfPaintingLayer() && !cell.Row()->HasSelfPaintingLayer()) {
     LayoutPoint cell_point =
         layout_table_section_.FlipForWritingModeForChild(&cell, paint_offset);
-    cell.Paint(paint_info_for_cells, cell_point);
+    cell.Paint(paint_info_for_cells, cell_point, LayoutSize());
   }
 }
 

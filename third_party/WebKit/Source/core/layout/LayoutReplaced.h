@@ -75,7 +75,9 @@ class CORE_EXPORT LayoutReplaced : public LayoutBox {
     return Style()->GetObjectFit() != ComputedStyle::InitialObjectFit();
   }
 
-  void Paint(const PaintInfo&, const LayoutPoint&) const override;
+  void Paint(const PaintInfo&,
+             const LayoutPoint&,
+             const LayoutSize&) const override;
 
   // Replaced objects often have contents to paint.
   bool PaintedOutputOfObjectHasNoEffectRegardlessOfSize() const override {

@@ -278,7 +278,9 @@ class CORE_EXPORT LayoutInline : public LayoutBoxModelObject {
 
   void UpdateLayout() final { NOTREACHED(); }  // Do nothing for layout()
 
-  void Paint(const PaintInfo&, const LayoutPoint&) const final;
+  void Paint(const PaintInfo&,
+             const LayoutPoint&,
+             const LayoutSize&) const final;
 
   bool NodeAtPoint(HitTestResult&,
                    const HitTestLocation& location_in_container,

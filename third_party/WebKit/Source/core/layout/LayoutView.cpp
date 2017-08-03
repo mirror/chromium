@@ -455,7 +455,8 @@ PaintInvalidationReason LayoutView::InvalidatePaint(
 }
 
 void LayoutView::Paint(const PaintInfo& paint_info,
-                       const LayoutPoint& paint_offset) const {
+                       const LayoutPoint& paint_offset,
+                       const LayoutSize&) const {
   ViewPainter(*this).Paint(paint_info, paint_offset);
 }
 

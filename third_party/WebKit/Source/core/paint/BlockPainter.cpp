@@ -110,7 +110,7 @@ void BlockPainter::PaintChild(const LayoutBox& child,
       layout_block_.FlipForWritingModeForChild(&child, paint_offset);
   if (!child.HasSelfPaintingLayer() && !child.IsFloating() &&
       !child.IsColumnSpanAll())
-    child.Paint(paint_info, child_point);
+    child.Paint(paint_info, child_point, LayoutSize());
 }
 
 void BlockPainter::PaintChildrenOfFlexibleBox(

@@ -51,7 +51,8 @@ HTMLFrameSetElement* LayoutFrameSet::FrameSet() const {
 }
 
 void LayoutFrameSet::Paint(const PaintInfo& paint_info,
-                           const LayoutPoint& paint_offset) const {
+                           const LayoutPoint& paint_offset,
+                           const LayoutSize& sub_pixel_accumulation) const {
   FrameSetPainter(*this).Paint(paint_info, paint_offset);
 }
 

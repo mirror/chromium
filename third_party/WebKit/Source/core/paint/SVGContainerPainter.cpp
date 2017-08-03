@@ -64,7 +64,7 @@ void SVGContainerPainter::Paint(const PaintInfo& paint_info) {
     if (continue_rendering) {
       for (LayoutObject* child = layout_svg_container_.FirstChild(); child;
            child = child->NextSibling())
-        child->Paint(paint_context.GetPaintInfo(), IntPoint());
+        child->Paint(paint_context.GetPaintInfo(), IntPoint(), LayoutSize());
     }
   }
 

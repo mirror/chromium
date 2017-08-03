@@ -148,7 +148,9 @@ class CORE_EXPORT LayoutTableRow final : public LayoutTableBoxComponent {
     return kNoPaintLayer;
   }
 
-  void Paint(const PaintInfo&, const LayoutPoint&) const override;
+  void Paint(const PaintInfo&,
+             const LayoutPoint&,
+             const LayoutSize&) const override;
 
   void StyleDidChange(StyleDifference, const ComputedStyle* old_style) override;
 

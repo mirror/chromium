@@ -42,7 +42,8 @@ bool LayoutSVGForeignObject::IsChildAllowed(LayoutObject* child,
 }
 
 void LayoutSVGForeignObject::Paint(const PaintInfo& paint_info,
-                                   const LayoutPoint&) const {
+                                   const LayoutPoint&,
+                                   const LayoutSize&) const {
   SVGForeignObjectPainter(*this).Paint(paint_info);
 }
 
