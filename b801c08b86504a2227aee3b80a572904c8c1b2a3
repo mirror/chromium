@@ -22,6 +22,30 @@
       "revId": "b801c08b86504a2227aee3b80a572904c8c1b2a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f4e12fe_7bb0a3ef",
+        "filename": "third_party/WebKit/LayoutTests/accessibility/scroll-to-make-visible-with-subfocus.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-08-03T00:36:37Z",
+      "side": 1,
+      "message": "From speaking offline with dmazzoni, this test was not testing what it claimed to test.  scrollToMakeVisibleWithSubFocus takes a rect argument which is in the local coordinate space of the element, and it ensures that the target rect is in the window viewport.\n\nIt\u0027s unclear what the correct behavior is when the argument rect is bigger than the viewport, so to avoid testing unspecified behavior, we agreed to modify the test to make the argument rect fit inside the viewport.",
+      "parentUuid": "d79ba25c_05fcf25e",
+      "range": {
+        "startLine": 31,
+        "startChar": 71,
+        "endLine": 31,
+        "endChar": 72
+      },
+      "revId": "b801c08b86504a2227aee3b80a572904c8c1b2a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

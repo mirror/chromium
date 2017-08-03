@@ -22,6 +22,30 @@
       "revId": "e36efa6b8d50503c355010612dab64fe421cbc35",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca8c7228_5f51eba5",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1744,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-08-03T00:36:37Z",
+      "side": 0,
+      "message": "No, AXObject::Scroll* methods will now use the same ScrollAlignment-defined behavior as Element::ScrollIntoView.  These comments are obsolete.",
+      "parentUuid": "6ee8ac25_7fc89aae",
+      "range": {
+        "startLine": 1744,
+        "startChar": 33,
+        "endLine": 1744,
+        "endChar": 34
+      },
+      "revId": "e36efa6b8d50503c355010612dab64fe421cbc35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
