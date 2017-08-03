@@ -342,8 +342,7 @@ static bool ShouldCreateGpuLayerTreeFrameSink(ui::Compositor* compositor) {
 #if defined(OS_CHROMEOS)
   // Software fallback does not happen on Chrome OS.
   return true;
-#endif
-#if defined(OS_WIN)
+#elif defined(OS_WIN)
   if (::GetProp(compositor->widget(), kForceSoftwareCompositor) &&
       ::RemoveProp(compositor->widget(), kForceSoftwareCompositor))
     return false;
@@ -372,6 +371,7 @@ void GpuProcessTransportFactory::CreateLayerTreeFrameSink(
 
   const bool use_vulkan = static_cast<bool>(SharedVulkanContextProvider());
   const bool create_gpu_output_surface =
+      !compositor->force_software_compositor() &&
       ShouldCreateGpuLayerTreeFrameSink(compositor.get());
   if (create_gpu_output_surface && !use_vulkan) {
     gpu::GpuChannelEstablishedCallback callback(

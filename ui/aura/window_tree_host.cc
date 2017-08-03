@@ -270,7 +270,8 @@ void WindowTreeHost::CreateCompositor(const viz::FrameSinkId& frame_sink_id) {
           ? frame_sink_id
           : context_factory_private->AllocateFrameSinkId(),
       context_factory, context_factory_private,
-      base::ThreadTaskRunnerHandle::Get(), enable_surface_synchronization));
+      base::ThreadTaskRunnerHandle::Get(), enable_surface_synchronization,
+      false, ShouldForceSoftwareCompositing()));
   if (!dispatcher()) {
     window()->Init(ui::LAYER_NOT_DRAWN);
     window()->set_host(this);
@@ -339,6 +340,10 @@ void WindowTreeHost::OnHostLostWindowCapture() {
   Window* capture_window = client::GetCaptureWindow(window());
   if (capture_window && capture_window->GetRootWindow() == window())
     capture_window->ReleaseCapture();
+}
+
+bool WindowTreeHost::ShouldForceSoftwareCompositing() {
+  return false;
 }
 
 ui::EventSink* WindowTreeHost::GetEventSink() {
