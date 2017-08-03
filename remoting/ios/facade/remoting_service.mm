@@ -28,6 +28,8 @@
 #include "net/url_request/url_request_context_getter.h"
 #include "remoting/base/oauth_token_getter.h"
 #include "remoting/base/oauth_token_getter_impl.h"
+#include "remoting/base/string_resources.h"
+#include "ui/base/l10n/l10n_util.h"
 
 static NSString* const kCRDAuthenticatedUserEmailKey =
     @"kCRDAuthenticatedUserEmailKey";
@@ -190,16 +192,16 @@ NSString* const kUserInfo = @"kUserInfo";
             break;
           case RemotingAuthenticationStatusNetworkError:
             [MDCSnackbarManager
-                showMessage:
-                    [MDCSnackbarMessage
-                        messageWithText:@"[Network Error] Please try again."]];
+                showMessage:[MDCSnackbarMessage
+                                messageWithText:l10n_util::GetNSString(
+                                                    IDS_ERROR_NETWORK_ERROR)]];
             break;
           case RemotingAuthenticationStatusAuthError:
             [MDCSnackbarManager
                 showMessage:
                     [MDCSnackbarMessage
-                        messageWithText:
-                            @"[Authentication Failed] Please login again."]];
+                        messageWithText:l10n_util::GetNSString(
+                                            IDS_ERROR_OAUTH_TOKEN_INVALID)]];
             break;
         }
       }];
