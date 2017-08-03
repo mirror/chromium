@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "61b6a0ab_f212f7a1",
+        "filename": "cc/animation/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-08-03T17:12:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b470038_870ff7d4",
+      "revId": "6cff5e982cabad6b6d76ab6143f7de3eced3f32a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1faeb72_26ec3c47",
         "filename": "cc/animation/README.md",
         "patchSetId": 6
@@ -237,6 +255,24 @@
       "side": 1,
       "message": "Only in that the animation system itself doesn\u0027t require texture reuse, that\u0027s just how two clients (Blink and ui) happen to use the system right now. I believe vr uses it differently and does animate sizes for example. Maybe re-word so it\u0027s clear that this is just about clients that use cc::Layers?",
       "parentUuid": "2a913d74_b59d86f1",
+      "revId": "6cff5e982cabad6b6d76ab6143f7de3eced3f32a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d87a5af0_2bf6fc53",
+        "filename": "cc/animation/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-08-03T17:12:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "108f02aa_6c6aaea1",
       "revId": "6cff5e982cabad6b6d76ab6143f7de3eced3f32a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
