@@ -1,64 +1,44 @@
-// Copyright 2014 The Chromium Authors. All rights reserved.
+// Copyright 2017 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
+#ifndef COMPONENTS_PASSWORD_MANAGER_CORE_BROWSER_CREDENTIAL_MANAGER_IMPL_H_
+#define COMPONENTS_PASSWORD_MANAGER_CORE_BROWSER_CREDENTIAL_MANAGER_IMPL_H_
 
-#ifndef COMPONENTS_PASSWORD_MANAGER_CONTENT_BROWSER_CONTENT_CREDENTIAL_MANAGER_IMPL_H_
-#define COMPONENTS_PASSWORD_MANAGER_CONTENT_BROWSER_CONTENT_CREDENTIAL_MANAGER_IMPL_H_
-
-#include <memory>
-
-#include "base/callback.h"
-#include "base/macros.h"
-#include "base/memory/weak_ptr.h"
 #include "components/password_manager/core/browser/credential_manager_password_form_manager.h"
 #include "components/password_manager/core/browser/credential_manager_pending_prevent_silent_access_task.h"
 #include "components/password_manager/core/browser/credential_manager_pending_request_task.h"
-#include "components/password_manager/core/browser/password_store_consumer.h"
 #include "components/password_manager/core/common/credential_manager_types.h"
 #include "components/prefs/pref_member.h"
-#include "content/public/browser/web_contents_observer.h"
-#include "mojo/public/cpp/bindings/associated_binding.h"
-#include "third_party/WebKit/public/platform/modules/credentialmanager/credential_manager.mojom.h"
-
-class GURL;
-
-namespace autofill {
-struct PasswordForm;
-}
-
-namespace content {
-class WebContents;
-}
 
 namespace password_manager {
-class CredentialManagerPasswordFormManager;
-class PasswordManagerClient;
-class PasswordManagerDriver;
-class PasswordStore;
-struct CredentialInfo;
+
+class CredentialManagerImplDelegate {
+ public:
+  virtual GURL GetLastCommittedURL() const = 0;
+  virtual GURL GetOrigin() const = 0;
+};
+
+using StoreCallback = base::OnceCallback<void()>;
+using PreventSilentAccessCallback = base::OnceCallback<void()>;
+using GetCallback =
+    base::OnceCallback<void(CredentialManagerError,
+                            const base::Optional<CredentialInfo>&)>;
 
 class CredentialManagerImpl
-    : public mojom::CredentialManager,
-      public content::WebContentsObserver,
-      public CredentialManagerPasswordFormManagerDelegate,
+    : public CredentialManagerPendingPreventSilentAccessTaskDelegate,
       public CredentialManagerPendingRequestTaskDelegate,
-      public CredentialManagerPendingPreventSilentAccessTaskDelegate {
+      public CredentialManagerPasswordFormManagerDelegate {
  public:
-  CredentialManagerImpl(content::WebContents* web_contents,
+  CredentialManagerImpl(CredentialManagerImplDelegate* delegate,
                         PasswordManagerClient* client);
   ~CredentialManagerImpl() override;
 
-  void BindRequest(mojom::CredentialManagerAssociatedRequest request);
-  bool HasBinding() const;
-  void DisconnectBinding();
-
-  // mojom::CredentialManager methods:
-  void Store(const CredentialInfo& credential, StoreCallback callback) override;
-  void PreventSilentAccess(PreventSilentAccessCallback callback) override;
+  void Store(const CredentialInfo& credential, StoreCallback callback);
+  void PreventSilentAccess(PreventSilentAccessCallback callback);
   void Get(CredentialMediationRequirement mediation,
            bool include_passwords,
            const std::vector<GURL>& federations,
-           GetCallback callback) override;
+           GetCallback callback);
 
   // CredentialManagerPendingRequestTaskDelegate:
   bool IsZeroClickAllowed() const override;
@@ -70,7 +50,7 @@ class CredentialManagerImpl
                         const autofill::PasswordForm* form) override;
   PasswordManagerClient* client() const override;
 
-  // CredentialManagerPendingSignedOutTaskDelegate:
+  // CredentialManagerPendingPreventSilentAccessTaskDelegate:
   PasswordStore* GetPasswordStore() override;
   void DoneRequiringUserMediation() override;
 
@@ -81,31 +61,24 @@ class CredentialManagerImpl
   PasswordStore::FormDigest GetSynthesizedFormForOrigin() const;
 
  private:
-  // Returns the driver for the current main frame.
-  // Virtual for testing.
-  virtual base::WeakPtr<PasswordManagerDriver> GetDriver();
+  GURL GetLastCommittedURL() const;
 
+  CredentialManagerImplDelegate* delegate_;
   PasswordManagerClient* client_;
   std::unique_ptr<CredentialManagerPasswordFormManager> form_manager_;
 
   // Set to false to disable automatic signing in.
   BooleanPrefMember auto_signin_enabled_;
 
-  // When 'OnRequestCredential' is called, it in turn calls out to the
+  // When 'Get' is called, it in turn calls out to the
   // PasswordStore; we push enough data into Pending*Task objects so that
   // they can properly respond to the request once the PasswordStore gives
   // us data.
   std::unique_ptr<CredentialManagerPendingRequestTask> pending_request_;
   std::unique_ptr<CredentialManagerPendingPreventSilentAccessTask>
       pending_require_user_mediation_;
-
-  mojo::AssociatedBinding<mojom::CredentialManager> binding_;
-
-  base::WeakPtrFactory<CredentialManagerImpl> weak_factory_;
-
-  DISALLOW_COPY_AND_ASSIGN(CredentialManagerImpl);
 };
 
 }  // namespace password_manager
 
-#endif  // COMPONENTS_PASSWORD_MANAGER_CONTENT_BROWSER_CONTENT_CREDENTIAL_MANAGER_IMPL_H_
+#endif  // COMPONENTS_PASSWORD_MANAGER_CORE_BROWSER_CREDENTIAL_MANAGER_IMPL_H_
