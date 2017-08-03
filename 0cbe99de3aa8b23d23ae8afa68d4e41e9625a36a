@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9dd098b9_c637d696",
+        "filename": "chrome/browser/page_load_metrics/page_load_tracker.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-08-03T15:45:15Z",
+      "side": 1,
+      "message": "given that not all navigation handles are allowed to report UKM, we might consider changing this method signature slightly, to something like:\nukm::GetSourceId(navigation_handle, ukm::SourceIdType::NAVIGATION_ID);\n\nthen, internally to GetSourceId, we can DCHECK that the navigation handle is a main frame navhandle, and enforce any other ukm-specific policy related to nav handle.",
+      "revId": "0cbe99de3aa8b23d23ae8afa68d4e41e9625a36a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
