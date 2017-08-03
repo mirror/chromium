@@ -156,6 +156,30 @@
       "revId": "f6a3a7d1dcfb78457f850d3540895b463ef6fe69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1976c525_1637dc92",
+        "filename": "extensions/common/api/declarative_net_request/flat/extension_ruleset.fbs",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1236730
+      },
+      "writtenOn": "2017-08-03T16:18:47Z",
+      "side": 1,
+      "message": "You could use it for that, but that\u0027s not really what it is meant for :)\n\nTo guard against incompatible changes, run `flatc --conform` on the old and new schema. Ideally, you run this as part of your CI if you have that ability.",
+      "parentUuid": "845e184c_bf8d5003",
+      "range": {
+        "startLine": 39,
+        "startChar": 12,
+        "endLine": 39,
+        "endChar": 27
+      },
+      "revId": "f6a3a7d1dcfb78457f850d3540895b463ef6fe69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
