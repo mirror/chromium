@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7ccbf262_a7e1d360",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/scripting-1/the-script-element/module/instantiation-error-6.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1197619
+      },
+      "writtenOn": "2017-08-03T20:39:46Z",
+      "side": 1,
+      "message": "It took me a while to figure out why these evaluated; only with Adam\u0027s help did I realize that these lines were coming from the evaluation of the second module script (starting at 6b). I\u0027d suggest a comment explaining the situation if possible, emphasizing that only 6a.js gets \"blamed\" (recorded as errored), because it did the bad thing of importing foo. Just exporting two ambiguous things in this manner is fine, so 6b is not errored, and so the evaluation of the second graph proceeds with no issues.",
+      "revId": "49553484032721e6fc7d765e74611673cd89206d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51bf113c_a29ff711",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/scripting-1/the-script-element/module/instantiation-error-7.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1197619
+      },
+      "writtenOn": "2017-08-03T20:39:46Z",
+      "side": 1,
+      "message": "I guess also a comment here, even if it\u0027s just referring people to check out the -6.html test for background.",
+      "revId": "49553484032721e6fc7d765e74611673cd89206d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
