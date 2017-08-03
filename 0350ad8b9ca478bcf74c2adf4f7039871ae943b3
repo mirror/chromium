@@ -663,6 +663,24 @@
       "revId": "0350ad8b9ca478bcf74c2adf4f7039871ae943b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "255b0d22_c5437355",
+        "filename": "ash/login/ui/login_user_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-08-03T23:56:09Z",
+      "side": 1,
+      "message": "So you can now use IMMEDIATELY_ANIMATE_TO_NEW_TARGET?",
+      "parentUuid": "ba13b47a_6ee3ebde",
+      "revId": "0350ad8b9ca478bcf74c2adf4f7039871ae943b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
