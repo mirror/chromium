@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01838c76_7296112b",
+        "filename": "ios/components/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-08-03T15:17:38Z",
+      "side": 1,
+      "message": "Please set up more than one owner. Can you add a back up?\n\nOwner files also should now contain the component to file bugs against, I\u0027m not sure if it is valuable for this folder, but probably relevant for the two subfolders.",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 9
+      },
+      "revId": "2f9120db781754240e1b062614e527542d861a2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
