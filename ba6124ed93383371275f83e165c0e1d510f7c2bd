@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "d4c4f228_5f9166b9",
+        "filename": "base/strings/string_number_conversions.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-08-03T11:40:59Z",
+      "side": 1,
+      "message": "Oh no, double oh no!  I have to revert part of this, because (1) unfortunately the internal StringToHexASCIIDump() implementation prints a \u0027.\u0027 for 0x20 (space), even though technically it is a printable character; (2) 0x7f never was printable in the first place, so the original code was correct.  This is checked in quic/platform/api/quic_text_utils_test.cc.",
+      "parentUuid": "7ddc89e4_f5ed800f",
+      "range": {
+        "startLine": 486,
+        "startChar": 42,
+        "endLine": 486,
+        "endChar": 43
+      },
+      "revId": "ba6124ed93383371275f83e165c0e1d510f7c2bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b9601e5b_4a283543",
         "filename": "net/spdy/PRESUBMIT.py",
         "patchSetId": 2

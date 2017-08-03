@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff2342a2_5cd6beed",
+        "filename": "net/spdy/core/hpack/hpack_decoder_adapter_test.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-08-03T11:40:59Z",
+      "side": 1,
+      "message": "Oh no, I have to revert this change, because std::string is apparently unsigned on Windows, so these two lines both fail to compile with warning C4309: truncation of constant value.\n\nThat\u0027s why there was some divergence here in the first place.  I\u0027ll backport this to the internal codebase.",
+      "range": {
+        "startLine": 666,
+        "startChar": 2,
+        "endLine": 667,
+        "endChar": 24
+      },
+      "revId": "2ab184c62331ce57391778b80ba817b797721aff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
