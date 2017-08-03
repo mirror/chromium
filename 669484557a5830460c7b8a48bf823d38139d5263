@@ -87,6 +87,24 @@
       "revId": "669484557a5830460c7b8a48bf823d38139d5263",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55c19d80_04073ce0",
+        "filename": "ash/wallpaper/wallpaper_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-03T18:30:23Z",
+      "side": 1,
+      "message": "I wonder if it\u0027s cheaper to draw the entire screen in software and blend each pixel or whether it\u0027s cheaper to add another SOLID_COLOR layer on top and let the GPU composite things. reveman@ might know.\n\nIf the wallpaper widget\u0027s layer contains the pixels of the wallpaper image then I suspect you won\u0027t be able to set it to SOLID_COLOR, or maybe it will get switched back.",
+      "parentUuid": "e982fdd0_eb97e080",
+      "revId": "669484557a5830460c7b8a48bf823d38139d5263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
