@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15eaec14_16d17db7",
+        "filename": "cc/layers/layer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 598,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-08-03T23:10:04Z",
+      "side": 1,
+      "message": "Add a comment explaining the meaning of this bit.",
+      "revId": "c7ef8e23dce15758eec78f1a9dba138402e206db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2a0d25a_e3d4c795",
+        "filename": "third_party/WebKit/Source/core/page/ChromeClient.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-08-03T23:10:04Z",
+      "side": 1,
+      "message": "Since shown ratio is a type of state, could we just add a param to SetBrowserControlsState instead of a new method?",
+      "range": {
+        "startLine": 287,
+        "startChar": 44,
+        "endLine": 287,
+        "endChar": 49
+      },
+      "revId": "c7ef8e23dce15758eec78f1a9dba138402e206db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
