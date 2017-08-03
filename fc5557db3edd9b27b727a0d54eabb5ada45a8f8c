@@ -16,6 +16,24 @@
       "revId": "fc5557db3edd9b27b727a0d54eabb5ada45a8f8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c3edb66_e40c6bbd",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-08-03T01:15:58Z",
+      "side": 1,
+      "message": "the purpose is to send it over to Performance Observer, let\u0027s add that to this patch (I previously suggested splitting into separate CL).\nthis data will be surfaced as attribution for Long Tasks. For details see:\nhttps://docs.google.com/document/d/1iUmC6zb9jPG5Tk1jJ2vcRL1V0xSeVRM1_zR04GKMOYE/edit",
+      "parentUuid": "9fd663b8_88f66121",
+      "revId": "fc5557db3edd9b27b727a0d54eabb5ada45a8f8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
