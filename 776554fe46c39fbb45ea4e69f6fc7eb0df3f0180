@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77281168_9fedc9c6",
+        "filename": "chrome/test/data/webui/settings/accessibility_browsertest.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-03T18:46:57Z",
+      "side": 1,
+      "message": "nit: needs some rewording. maybe \"is resolved when\"?",
+      "revId": "776554fe46c39fbb45ea4e69f6fc7eb0df3f0180",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
