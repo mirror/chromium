@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ee8e57df_ce41d3f8",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 2130,
+      "author": {
+        "id": 1212729
+      },
+      "writtenOn": "2017-08-03T09:00:49Z",
+      "side": 1,
+      "message": "So, off-hand it seems you\u0027re recalculating the styles for descendants only if `LayoutObjectIsNeeded` returns true, is that right?\n\nIf so, this is wrong in presence of `display: contents`, because descendants of `display: contents` elements still need their style up to date even though the element doesn\u0027t need a layout object.\n\nSo I think the check here needs to change to something like `LayoutObjectIsNeeded || IsDisplayContents`.",
+      "revId": "7062bfa6822788bbf41162f3cfe4edc8350c6914",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
