@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "399c06d3_3b14fc8e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-03T16:38:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38a034f3_69af660a",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 147
+      },
+      "revId": "49bcfd50fcbc9dc67f9ad75b20238acba0de60d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1ae627a_0e065f9e",
         "filename": "content/renderer/media/media_stream_constraints_util.cc",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e3d64550_f5bed18f",
+        "filename": "content/renderer/media/media_stream_constraints_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-03T16:38:55Z",
+      "side": 1,
+      "message": "Done. Wasn\u0027t aware of value_or() :)",
+      "parentUuid": "b1ae627a_0e065f9e",
+      "range": {
+        "startLine": 286,
+        "startChar": 26,
+        "endLine": 286,
+        "endChar": 38
+      },
+      "revId": "49bcfd50fcbc9dc67f9ad75b20238acba0de60d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee295a02_202475ca",
         "filename": "content/renderer/media/media_stream_constraints_util.cc",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-03T02:12:25Z",
       "side": 1,
       "message": "Do we also need to do this sanity-check before these LOC (or is it already being done upstream of here?):\n\n  if (frame_rate_set.IsEmpty()) {  // Check that min \u003c\u003d max.\n    ...handle error condition...\n  }",
+      "range": {
+        "startLine": 289,
+        "startChar": 0,
+        "endLine": 292,
+        "endChar": 51
+      },
+      "revId": "49bcfd50fcbc9dc67f9ad75b20238acba0de60d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0028947_eaaa9de8",
+        "filename": "content/renderer/media/media_stream_constraints_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-03T16:38:55Z",
+      "side": 1,
+      "message": "This check is necessary.\nWhen an ideal value is given, the ideal value should be used unless it\u0027s outside [min,max], in which case the value in [min,max] closest to ideal should be used.",
+      "parentUuid": "ee295a02_202475ca",
       "range": {
         "startLine": 289,
         "startChar": 0,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "6a360cae_bde5f36c",
+        "filename": "content/renderer/media/media_stream_constraints_util_sets.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-03T16:38:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c11752d_4bda3ca5",
+      "range": {
+        "startLine": 31,
+        "startChar": 20,
+        "endLine": 31,
+        "endChar": 74
+      },
+      "revId": "49bcfd50fcbc9dc67f9ad75b20238acba0de60d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "59722de1_a88b60c2",
         "filename": "content/renderer/media/media_stream_constraints_util_sets.h",
         "patchSetId": 4
@@ -114,6 +210,30 @@
       "revId": "49bcfd50fcbc9dc67f9ad75b20238acba0de60d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49ea4f54_4955e0e3",
+        "filename": "content/renderer/media/media_stream_constraints_util_sets.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-03T16:38:55Z",
+      "side": 1,
+      "message": "Oops!.  Done.",
+      "parentUuid": "59722de1_a88b60c2",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 19
+      },
+      "revId": "49bcfd50fcbc9dc67f9ad75b20238acba0de60d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "f5dc5401_c59a20d9",
+        "filename": "content/renderer/media/media_stream_constraints_util_sets.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-03T16:38:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b285eee_39e408ee",
+      "range": {
+        "startLine": 44,
+        "startChar": 19,
+        "endLine": 44,
+        "endChar": 31
+      },
+      "revId": "49bcfd50fcbc9dc67f9ad75b20238acba0de60d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1c48074_325ad34c",
         "filename": "content/renderer/media/media_stream_constraints_util_sets.h",
         "patchSetId": 4
@@ -160,6 +304,30 @@
       "revId": "49bcfd50fcbc9dc67f9ad75b20238acba0de60d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2ae27ff_2569cb95",
+        "filename": "content/renderer/media/media_stream_constraints_util_sets.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-03T16:38:55Z",
+      "side": 1,
+      "message": "Done. Renamed \"absolutes\" to lower_bound/upper_bound and replaced decltype with T.",
+      "parentUuid": "d1c48074_325ad34c",
+      "range": {
+        "startLine": 58,
+        "startChar": 29,
+        "endLine": 59,
+        "endChar": 68
+      },
+      "revId": "49bcfd50fcbc9dc67f9ad75b20238acba0de60d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "d51357ac_574ee433",
+        "filename": "content/renderer/media/media_stream_constraints_util_video_content.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-03T16:38:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe1c5896_1f4f073c",
+      "range": {
+        "startLine": 296,
+        "startChar": 30,
+        "endLine": 298,
+        "endChar": 63
+      },
+      "revId": "49bcfd50fcbc9dc67f9ad75b20238acba0de60d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "160d8892_1d312ded",
         "filename": "content/renderer/media/media_stream_constraints_util_video_device.cc",
         "patchSetId": 4
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "31f34f93_ae6b0510",
+        "filename": "content/renderer/media/media_stream_constraints_util_video_device.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-03T16:38:55Z",
+      "side": 1,
+      "message": "Done.\nThe current patchset ensures that maxFrameRate will be \u003e\u003d 1.0 by rejecting getUserMedia() if the mandatory maxFrameRate is \u003c\u003d 1.0 (and ignoring optional sets where maxFrameRate is \u003c\u003d 1.0).",
+      "parentUuid": "160d8892_1d312ded",
+      "range": {
+        "startLine": 36,
+        "startChar": 39,
+        "endLine": 36,
+        "endChar": 42
+      },
+      "revId": "49bcfd50fcbc9dc67f9ad75b20238acba0de60d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b289cb6_05dccbc0",
         "filename": "content/renderer/media/media_stream_constraints_util_video_device.cc",
         "patchSetId": 4
@@ -220,6 +436,30 @@
       "writtenOn": "2017-08-03T02:12:25Z",
       "side": 1,
       "message": "Side note: I wonder if the lower-bounds here should be 2 instead of 1, since it\u0027s most common for video to be in I420 format?",
+      "range": {
+        "startLine": 118,
+        "startChar": 32,
+        "endLine": 118,
+        "endChar": 33
+      },
+      "revId": "49bcfd50fcbc9dc67f9ad75b20238acba0de60d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f688c7dc_3ff6d41d",
+        "filename": "content/renderer/media/media_stream_constraints_util_video_device.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-03T16:38:55Z",
+      "side": 1,
+      "message": "Let\u0027s keep it as 1 for now in order to avoid unexpected side effects in other parts of the constraints-processing algorithm.",
+      "parentUuid": "9b289cb6_05dccbc0",
       "range": {
         "startLine": 118,
         "startChar": 32,
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "1edcea14_c2e25911",
+        "filename": "content/renderer/media/media_stream_constraints_util_video_device.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-03T16:38:55Z",
+      "side": 1,
+      "message": "I don\u0027t see a problem with using HUGE_VAL here.\nIn practice there will be no difference.",
+      "parentUuid": "12eb3e01_8a7fda13",
+      "range": {
+        "startLine": 123,
+        "startChar": 32,
+        "endLine": 123,
+        "endChar": 40
+      },
+      "revId": "49bcfd50fcbc9dc67f9ad75b20238acba0de60d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "63969456_3f5ba867",
         "filename": "content/renderer/media/media_stream_constraints_util_video_device.cc",
         "patchSetId": 4
@@ -275,6 +539,30 @@
       "revId": "49bcfd50fcbc9dc67f9ad75b20238acba0de60d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2f9cd23_800d0cdf",
+        "filename": "content/renderer/media/media_stream_constraints_util_video_device.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-03T16:38:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63969456_3f5ba867",
+      "range": {
+        "startLine": 145,
+        "startChar": 2,
+        "endLine": 145,
+        "endChar": 24
+      },
+      "revId": "49bcfd50fcbc9dc67f9ad75b20238acba0de60d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -324,6 +612,30 @@
     },
     {
       "key": {
+        "uuid": "6f968a69_c977cb42",
+        "filename": "content/renderer/media/media_stream_constraints_util_video_device.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-03T16:38:55Z",
+      "side": 1,
+      "message": "Done. Let\u0027s hope there are no crazy cameras that report negative frame rates :)",
+      "parentUuid": "3d846da4_63c62b2f",
+      "range": {
+        "startLine": 163,
+        "startChar": 9,
+        "endLine": 164,
+        "endChar": 60
+      },
+      "revId": "49bcfd50fcbc9dc67f9ad75b20238acba0de60d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "14e92387_ab952cfa",
         "filename": "content/renderer/media/media_stream_constraints_util_video_device.cc",
         "patchSetId": 4
@@ -347,6 +659,30 @@
     },
     {
       "key": {
+        "uuid": "aeab25c0_89caaf26",
+        "filename": "content/renderer/media/media_stream_constraints_util_video_device.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-03T16:38:55Z",
+      "side": 1,
+      "message": "In this case I\u0027m going with your suggestion, but keeping the epsilon on the rhs of the inequality.",
+      "parentUuid": "14e92387_ab952cfa",
+      "range": {
+        "startLine": 317,
+        "startChar": 8,
+        "endLine": 319,
+        "endChar": 72
+      },
+      "revId": "49bcfd50fcbc9dc67f9ad75b20238acba0de60d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0b61714_164841fa",
         "filename": "content/renderer/media/media_stream_constraints_util_video_device.cc",
         "patchSetId": 4
@@ -367,6 +703,30 @@
       "revId": "49bcfd50fcbc9dc67f9ad75b20238acba0de60d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7abdc9c6_a5791022",
+        "filename": "content/renderer/media/media_stream_constraints_util_video_device.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-08-03T16:38:55Z",
+      "side": 1,
+      "message": "Going for the second option. This value_or() is great :)",
+      "parentUuid": "f0b61714_164841fa",
+      "range": {
+        "startLine": 593,
+        "startChar": 6,
+        "endLine": 593,
+        "endChar": 70
+      },
+      "revId": "49bcfd50fcbc9dc67f9ad75b20238acba0de60d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
