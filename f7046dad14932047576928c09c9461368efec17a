@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aca406a_a8bbcd83",
+        "filename": "chrome/browser/resources/settings/passwords_and_forms_page/passwords_section.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-03T20:44:32Z",
+      "side": 1,
+      "message": "Nit: Seem more concise similar implementation at https://cs.chromium.org/chromium/src/chrome/browser/resources/settings/search_engines_page/search_engines_page.js?q\u003dsearch_engines_page.js\u0026sq\u003dpackage:chromium\u0026dr\u0026l\u003d144-148.\n\nBasically\n\nreturn savedPasswords.filter(p \u003d\u003e {\n  return [p.loginPair.urls.shown, p.loginPair.username].some(\n       term \u003d\u003e term.toLowerCase().includes(filter));\n});",
+      "revId": "f7046dad14932047576928c09c9461368efec17a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
