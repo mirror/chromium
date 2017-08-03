@@ -16,6 +16,24 @@
       "revId": "a613a7ef943b66521d4120184c2b31a91f9866ca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05d368a0_4abc4cff",
+        "filename": "ios/chrome/app/spotlight/spotlight_manager_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-03T15:30:20Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "011745ed_85bf610d",
+      "revId": "a613a7ef943b66521d4120184c2b31a91f9866ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
