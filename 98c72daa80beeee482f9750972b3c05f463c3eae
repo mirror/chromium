@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "42770213_7525bceb",
+        "filename": "cc/paint/paint_image.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-03T00:50:47Z",
+      "side": 1,
+      "message": "I thought the origin mattered in the PaintRecord case. Didn\u0027t realize that internally SkImage is just constructing a rect using the dimensions.\nDone.",
+      "parentUuid": "0b18a551_49221703",
+      "range": {
+        "startLine": 78,
+        "startChar": 2,
+        "endLine": 78,
+        "endChar": 24
+      },
+      "revId": "98c72daa80beeee482f9750972b3c05f463c3eae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b168f71c_486363fc",
         "filename": "cc/paint/paint_image_builder.h",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "98c72daa80beeee482f9750972b3c05f463c3eae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff6576a8_77f0ef01",
+        "filename": "cc/paint/paint_image_builder.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-03T00:50:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b168f71c_486363fc",
+      "range": {
+        "startLine": 46,
+        "startChar": 42,
+        "endLine": 46,
+        "endChar": 51
+      },
+      "revId": "98c72daa80beeee482f9750972b3c05f463c3eae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "ac220307_4ffd04f5",
+        "filename": "cc/paint/paint_image_builder.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-03T00:50:47Z",
+      "side": 1,
+      "message": "Makes sense. Done.",
+      "parentUuid": "29253d09_d0717f92",
+      "range": {
+        "startLine": 50,
+        "startChar": 4,
+        "endLine": 50,
+        "endChar": 48
+      },
+      "revId": "98c72daa80beeee482f9750972b3c05f463c3eae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69ae50e5_3f10958f",
         "filename": "cc/paint/paint_image_builder.h",
         "patchSetId": 8
@@ -117,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "e8cd374b_2a9a035a",
+        "filename": "cc/paint/paint_image_builder.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-03T00:50:47Z",
+      "side": 1,
+      "message": "This is necessary right now because caching of image frames in cc depends on the SkImage id. I was planning on adding a generator id (updated when the data for a PaintImage packed in the generator changes) to PaintImageGenerator and frame_index to PaintImage so the cache key can be based on [paint_image_id, generator_id, frame_index].\n\nNow while that helps with the cache in cc, for images we don\u0027t capture, not generating an id here will mess up skia\u0027s caching. So I think we\u0027d need to fix both before we remove this. FWIW, we still have the generator and SkImage both in the cc cache now. So we can always just use the id as the key, while still directly going to the generator for getting the actual decode, instead of going through the cached_sk_image_.",
+      "parentUuid": "69ae50e5_3f10958f",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 54,
+        "endChar": 61
+      },
+      "revId": "98c72daa80beeee482f9750972b3c05f463c3eae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c78d990f_f1218f1c",
         "filename": "cc/paint/paint_image_generator.h",
         "patchSetId": 8
@@ -134,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "49293fb6_17c16c44",
+        "filename": "cc/paint/paint_image_generator.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-03T00:50:47Z",
+      "side": 1,
+      "message": "I added a comment to link back to the SkImageGenerator. These functions are basically pass through to the SkImageGenerator functionality right now, so not much benefit from duplicating those comments. We can add more details as the interface is expanded.",
+      "parentUuid": "c78d990f_f1218f1c",
+      "revId": "98c72daa80beeee482f9750972b3c05f463c3eae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "efb917ea_9606418e",
         "filename": "cc/paint/skia_paint_image_generator.h",
         "patchSetId": 8
@@ -145,6 +259,30 @@
       "writtenOn": "2017-08-02T22:53:56Z",
       "side": 1,
       "message": "Why not just use PaintImageGenerator and later remove the fact that it derives from SkImageGenerator",
+      "range": {
+        "startLine": 15,
+        "startChar": 22,
+        "endLine": 15,
+        "endChar": 45
+      },
+      "revId": "98c72daa80beeee482f9750972b3c05f463c3eae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa08c268_4b424978",
+        "filename": "cc/paint/skia_paint_image_generator.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-03T00:50:47Z",
+      "side": 1,
+      "message": "This is only meant to be a utility class for code that needs to create an SkImage from PaintImageGenerator and provide to skia (similar to SkiaPaintCanvas). Such uses should eventually be very limited (only code that has to decode outside of cc).",
+      "parentUuid": "efb917ea_9606418e",
       "range": {
         "startLine": 15,
         "startChar": 22,
@@ -180,6 +318,30 @@
     },
     {
       "key": {
+        "uuid": "b8ed7af8_6ca1a953",
+        "filename": "media/renderers/skcanvas_video_renderer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-03T00:50:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fcc0419_84e38d2d",
+      "range": {
+        "startLine": 389,
+        "startChar": 17,
+        "endLine": 389,
+        "endChar": 35
+      },
+      "revId": "98c72daa80beeee482f9750972b3c05f463c3eae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa0f0360_2da2f6b0",
         "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
         "patchSetId": 8
@@ -200,6 +362,30 @@
       "revId": "98c72daa80beeee482f9750972b3c05f463c3eae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56b1cb10_e2cbe8ba",
+        "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-03T00:50:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa0f0360_2da2f6b0",
+      "range": {
+        "startLine": 109,
+        "startChar": 2,
+        "endLine": 110,
+        "endChar": 28
+      },
+      "revId": "98c72daa80beeee482f9750972b3c05f463c3eae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -226,6 +412,30 @@
     },
     {
       "key": {
+        "uuid": "7540c2d0_a83b5a9a",
+        "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-03T00:50:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9640a4c_634611e1",
+      "range": {
+        "startLine": 394,
+        "startChar": 9,
+        "endLine": 394,
+        "endChar": 14
+      },
+      "revId": "98c72daa80beeee482f9750972b3c05f463c3eae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2683f317_91c41417",
         "filename": "third_party/WebKit/Source/platform/graphics/BitmapImageTest.cpp",
         "patchSetId": 8
@@ -237,6 +447,24 @@
       "writtenOn": "2017-08-02T22:53:56Z",
       "side": 1,
       "message": "I\u0027m not really sure what this is doing. FrameAtIndex doesn\u0027t really say that it will cache anything?",
+      "revId": "98c72daa80beeee482f9750972b3c05f463c3eae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f267b77a_902feb78",
+        "filename": "third_party/WebKit/Source/platform/graphics/BitmapImageTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1145109
+      },
+      "writtenOn": "2017-08-03T00:50:47Z",
+      "side": 1,
+      "message": "It just makes sure that the DeferredFrameData is initialized in DeferredImageDecoder. I don\u0027t know what the test is trying to verify though. The |actual_decoder_| gets reset after all_data_received_ (https://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/graphics/DeferredImageDecoder.cpp?sq\u003dpackage:chromium\u0026l\u003d307), which is why you see frame_bytes_ being reported to a non-zero value. Otherwise, there shouldn\u0027t be any decoded data cached in BitmapImage at all.",
+      "parentUuid": "2683f317_91c41417",
       "revId": "98c72daa80beeee482f9750972b3c05f463c3eae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
