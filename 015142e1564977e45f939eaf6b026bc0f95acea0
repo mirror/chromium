@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "af7110d7_6685743c",
+        "filename": "chrome/browser/ssl/insecure_sensitive_input_driver.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-08-03T13:33:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08d74530_cd3d565c",
+      "range": {
+        "startLine": 15,
+        "startChar": 48,
+        "endLine": 15,
+        "endChar": 61
+      },
+      "revId": "015142e1564977e45f939eaf6b026bc0f95acea0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "693b61c9_12093ada",
         "filename": "third_party/WebKit/public/platform/modules/insecure_input/insecure_input_service.mojom",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-03T00:51:49Z",
       "side": 1,
       "message": "Nit: can we leave this out for now, and just include it in the CL that implements the actual handler?",
+      "range": {
+        "startLine": 11,
+        "startChar": 2,
+        "endLine": 11,
+        "endChar": 30
+      },
+      "revId": "015142e1564977e45f939eaf6b026bc0f95acea0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e645b3f_373c5196",
+        "filename": "third_party/WebKit/public/platform/modules/insecure_input/insecure_input_service.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1166820
+      },
+      "writtenOn": "2017-08-03T13:33:39Z",
+      "side": 1,
+      "message": "Done. See you again soon. :)",
+      "parentUuid": "693b61c9_12093ada",
       "range": {
         "startLine": 11,
         "startChar": 2,
