@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "767fc78f_bdc9aa0b",
+        "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-03T20:51:38Z",
+      "side": 1,
+      "message": "Got it. Thank you! These are fake certs. I made them myself using this OpenSSL command:\n\nopenssl req -new -x509 -keyout server.pem -out server.pem -days 365 -nodes",
+      "parentUuid": "b6440881_015d3b57",
+      "range": {
+        "startLine": 53,
+        "startChar": 15,
+        "endLine": 53,
+        "endChar": 16
+      },
+      "revId": "35a7f8f65177d39557c109b8850083bd29aad15b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1fb4ffe5_995fd26c",
         "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
         "patchSetId": 3
@@ -74,6 +98,24 @@
       "revId": "35a7f8f65177d39557c109b8850083bd29aad15b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36c16ccb_8acf05f7",
+        "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-03T20:51:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef3ed4d0_2a7e47ed",
+      "revId": "35a7f8f65177d39557c109b8850083bd29aad15b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
