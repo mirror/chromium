@@ -70,7 +70,7 @@ class MouseLatencyBrowserTest : public ContentBrowserTest {
       base::RefCountedString* trace_data_string) {
     std::unique_ptr<base::Value> trace_data =
         base::JSONReader::Read(trace_data_string->data());
-    ASSERT_TRUE(trace_data);
+    ASSERT_TRUE(trace_data) << trace_data_string->data();
     trace_data_ = *trace_data;
     runner_->Quit();
   }
@@ -121,7 +121,7 @@ class MouseLatencyBrowserTest : public ContentBrowserTest {
 
   const base::Value& StopTracing() {
     bool success = TracingController::GetInstance()->StopTracing(
-        TracingController::CreateStringSink(
+        TracingController::CreateStringEndpoint(
             base::Bind(&MouseLatencyBrowserTest::OnTraceDataCollected,
                        base::Unretained(this))));
     EXPECT_TRUE(success);

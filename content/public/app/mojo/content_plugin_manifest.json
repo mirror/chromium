@@ -13,6 +13,7 @@
         ]
       },
       "requires": {
+        "*": [ "app" ],
         "content_browser": [ "plugin" ],
         "device": [ "device:power_monitor" ],
         "ui": [ "discardable_memory" ]
