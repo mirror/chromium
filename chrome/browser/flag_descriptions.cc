@@ -255,6 +255,10 @@ const char kEnableAutofillCreditCardUploadCvcPromptDescription[] =
     "If enabled, requests missing CVC when offering to upload credit cards to "
     "Google Payments.";
 
+const char kEnableBreakingNewsPushName[] = "Breaking News Push";
+const char kEnableBreakingNewsPushDescription[] =
+    "Listen for BreakingNews content suggestions (e.g. for NTP) through GCM.";
+
 const char kEnableBrotliName[] = "Brotli Content-Encoding.";
 const char kEnableBrotliDescription[] =
     "Enable Brotli Content-Encoding support.";
