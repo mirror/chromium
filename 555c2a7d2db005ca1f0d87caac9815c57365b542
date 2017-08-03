@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cdf0f2c6_17d1b9e5",
+        "filename": "third_party/WebKit/LayoutTests/fast/events/autoscroll-over-scrollbar.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-08-03T22:12:43Z",
+      "side": 1,
+      "message": "This is the slop region for autoscroll right? Just add a comment here pointing out where in code this is coming from.",
+      "range": {
+        "startLine": 58,
+        "startChar": 6,
+        "endLine": 58,
+        "endChar": 38
+      },
+      "revId": "555c2a7d2db005ca1f0d87caac9815c57365b542",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21ab8b0a_f1f90571",
+        "filename": "third_party/WebKit/Source/core/exported/WebFrameTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 4208,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-08-03T22:12:43Z",
+      "side": 1,
+      "message": "The default constructor passes nullptr for all these so Initialize() is enough",
+      "range": {
+        "startLine": 4207,
+        "startChar": 29,
+        "endLine": 4208,
+        "endChar": 57
+      },
+      "revId": "555c2a7d2db005ca1f0d87caac9815c57365b542",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc150084_61593881",
+        "filename": "third_party/WebKit/Source/core/exported/WebFrameTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 4230,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-08-03T22:12:43Z",
+      "side": 1,
+      "message": "Does it matter that it\u0027s an overlay? It doesn\u0027t look like it so I\u0027d just remove this.",
+      "range": {
+        "startLine": 4230,
+        "startChar": 9,
+        "endLine": 4230,
+        "endChar": 67
+      },
+      "revId": "555c2a7d2db005ca1f0d87caac9815c57365b542",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4db75020_3046dfec",
+        "filename": "third_party/WebKit/Source/core/exported/WebFrameTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 4242,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-08-03T22:12:43Z",
+      "side": 1,
+      "message": "You could also test that passing the GSB to to VerticalScrollbar()-\u003eGestureEvent and make sure it returns false",
+      "range": {
+        "startLine": 4241,
+        "startChar": 2,
+        "endLine": 4242,
+        "endChar": 19
+      },
+      "revId": "555c2a7d2db005ca1f0d87caac9815c57365b542",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
