@@ -256,7 +256,6 @@ PipelineStatus PipelineIntegrationTestBase::StartInternal(
                    base::Bind(&PipelineIntegrationTestBase::OnStatusCallback,
                               base::Unretained(this)));
   base::RunLoop().Run();
-  scoped_task_environment_.RunUntilIdle();
   return pipeline_status_;
 }
 
