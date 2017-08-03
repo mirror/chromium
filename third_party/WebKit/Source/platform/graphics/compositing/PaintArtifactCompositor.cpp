@@ -99,6 +99,21 @@ PaintArtifactCompositor::ClientForPaintChunk(const PaintChunk& paint_chunk) {
   return client;
 }
 
+// TODO(pdr): Temporary helper for whether a pending layer is for scroll hit
+// testing. This should be replaced with code to create scrollable Layers for
+// hit testing (crbug.com/738613).
+bool PaintArtifactCompositor::PendingLayerForScrollHitTesting(
+    const PaintArtifact& paint_artifact,
+    const PendingLayer& pending_layer) {
+  const PaintChunk& first_paint_chunk = *pending_layer.paint_chunks[0];
+  DCHECK(first_paint_chunk.size());
+  if (first_paint_chunk.size() != 1)
+    return false;
+  const auto& display_item =
+      paint_artifact.GetDisplayItemList()[first_paint_chunk.begin_index];
+  return display_item.IsScrollHitTest();
+}
+
 scoped_refptr<cc::Layer>
 PaintArtifactCompositor::CompositedLayerForPendingLayer(
     const PaintArtifact& paint_artifact,
@@ -106,6 +121,7 @@ PaintArtifactCompositor::CompositedLayerForPendingLayer(
     gfx::Vector2dF& layer_offset,
     Vector<std::unique_ptr<ContentLayerClientImpl>>& new_content_layer_clients,
     bool store_debug_info) {
+  DCHECK(!PendingLayerForScrollHitTesting(paint_artifact, pending_layer));
   DCHECK(pending_layer.paint_chunks.size());
   const PaintChunk& first_paint_chunk = *pending_layer.paint_chunks[0];
   DCHECK(first_paint_chunk.size());
@@ -133,17 +149,17 @@ PaintArtifactCompositor::CompositedLayerForPendingLayer(
 
 PaintArtifactCompositor::PendingLayer::PendingLayer(
     const PaintChunk& first_paint_chunk,
-    bool chunk_is_foreign)
+    bool chunk_requires_own_layer)
     : bounds(first_paint_chunk.bounds),
       known_to_be_opaque(first_paint_chunk.known_to_be_opaque),
       backface_hidden(first_paint_chunk.properties.backface_hidden),
       property_tree_state(first_paint_chunk.properties.property_tree_state),
-      is_foreign(chunk_is_foreign) {
+      requires_own_layer(chunk_requires_own_layer) {
   paint_chunks.push_back(&first_paint_chunk);
 }
 
 void PaintArtifactCompositor::PendingLayer::Merge(const PendingLayer& guest) {
-  DCHECK(!is_foreign && !guest.is_foreign);
+  DCHECK(!requires_own_layer && !guest.requires_own_layer);
   DCHECK_EQ(backface_hidden, guest.backface_hidden);
 
   paint_chunks.AppendVector(guest.paint_chunks);
@@ -163,7 +179,7 @@ static bool CanUpcastTo(const PropertyTreeState& guest,
                         const PropertyTreeState& home);
 bool PaintArtifactCompositor::PendingLayer::CanMerge(
     const PendingLayer& guest) const {
-  if (is_foreign || guest.is_foreign)
+  if (requires_own_layer || guest.requires_own_layer)
     return false;
   if (backface_hidden != guest.backface_hidden)
     return false;
@@ -174,7 +190,7 @@ bool PaintArtifactCompositor::PendingLayer::CanMerge(
 
 void PaintArtifactCompositor::PendingLayer::Upcast(
     const PropertyTreeState& new_state) {
-  DCHECK(!is_foreign);
+  DCHECK(!requires_own_layer);
   FloatClipRect float_clip_rect(bounds);
   GeometryMapper::LocalToAncestorVisualRect(property_tree_state, new_state,
                                             float_clip_rect);
@@ -263,7 +279,7 @@ bool PaintArtifactCompositor::CanDecompositeEffect(
   // did not allow to decomposite intermediate effects.
   if (layer.property_tree_state.Effect() != effect)
     return false;
-  if (layer.is_foreign)
+  if (layer.requires_own_layer)
     return false;
   // TODO(trchen): Exotic blending layer may be decomposited only if it could
   // be merged into the first layer of the current group.
@@ -349,11 +365,14 @@ void PaintArtifactCompositor::LayerizeGroup(
         chunk_it->properties.property_tree_state.Effect();
     if (chunk_effect == &current_group) {
       // Case A: The next chunk belongs to the current group but no subgroup.
-      bool is_foreign =
-          paint_artifact.GetDisplayItemList()[chunk_it->begin_index]
-              .IsForeignLayer();
-      pending_layers.push_back(PendingLayer(*chunk_it++, is_foreign));
-      if (is_foreign)
+      const auto& last_display_item =
+          paint_artifact.GetDisplayItemList()[chunk_it->begin_index];
+      bool requires_own_layer = last_display_item.IsForeignLayer() ||
+                                // TODO(pdr): This should require a direct
+                                // compositing reason.
+                                last_display_item.IsScrollHitTest();
+      pending_layers.push_back(PendingLayer(*chunk_it++, requires_own_layer));
+      if (requires_own_layer)
         continue;
     } else {
       const EffectPaintPropertyNode* subgroup =
@@ -388,7 +407,7 @@ void PaintArtifactCompositor::LayerizeGroup(
     // processed. Now determine whether it could be merged into a previous
     // layer.
     const PendingLayer& new_layer = pending_layers.back();
-    DCHECK(!new_layer.is_foreign);
+    DCHECK(!new_layer.requires_own_layer);
     DCHECK_EQ(&current_group, new_layer.property_tree_state.Effect());
     // This iterates pendingLayers[firstLayerInCurrentGroup:-1] in reverse.
     for (size_t candidate_index = pending_layers.size() - 1;
@@ -460,6 +479,12 @@ void PaintArtifactCompositor::Update(
 
   for (const PendingLayer& pending_layer : pending_layers) {
     gfx::Vector2dF layer_offset;
+
+    // TODO(pdr): Until scroll hit test layers are created (crbug.com/738613),
+    // temporarily discard paint chunks for hit testing.
+    if (PendingLayerForScrollHitTesting(paint_artifact, pending_layer))
+      continue;
+
     scoped_refptr<cc::Layer> layer = CompositedLayerForPendingLayer(
         paint_artifact, pending_layer, layer_offset, new_content_layer_clients,
         store_debug_info);

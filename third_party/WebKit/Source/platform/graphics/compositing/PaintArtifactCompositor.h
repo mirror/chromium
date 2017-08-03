@@ -91,7 +91,7 @@ class PLATFORM_EXPORT PaintArtifactCompositor {
   // A pending layer is a collection of paint chunks that will end up in
   // the same cc::Layer.
   struct PLATFORM_EXPORT PendingLayer {
-    PendingLayer(const PaintChunk& first_paint_chunk, bool chunk_is_foreign);
+    PendingLayer(const PaintChunk& first_paint_chunk, bool requires_own_layer);
     // Merge another pending layer after this one, appending all its paint
     // chunks after chunks in this layer, with appropriate space conversion
     // applied. The merged layer must have a property tree state that's deeper
@@ -110,7 +110,7 @@ class PLATFORM_EXPORT PaintArtifactCompositor {
     bool known_to_be_opaque;
     bool backface_hidden;
     PropertyTreeState property_tree_state;
-    bool is_foreign;
+    bool requires_own_layer;
   };
 
   PaintArtifactCompositor();
@@ -157,6 +157,12 @@ class PLATFORM_EXPORT PaintArtifactCompositor {
       Vector<std::unique_ptr<ContentLayerClientImpl>>&
           new_content_layer_clients,
       bool store_debug_info);
+
+  // TODO(pdr): Temporary helper for whether a pending layer is for scroll hit
+  // testing. This should be replaced with code to create scrollable Layers for
+  // hit testing (crbug.com/738613).
+  bool PendingLayerForScrollHitTesting(const PaintArtifact&,
+                                       const PendingLayer&);
 
   // Finds a client among the current vector of clients that matches the paint
   // chunk's id, or otherwise allocates a new one.
