@@ -445,6 +445,30 @@
     },
     {
       "key": {
+        "uuid": "ac121823_016e37bc",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 33
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-03T20:51:16Z",
+      "side": 1,
+      "message": "This would have to pass a raw message pipe handle (for now) if we don\u0027t mojofy it.\n\nSemantic-wise, I never really thought of it as \u0027pull\u0027, though I agree that\u0027s certainly one way to view it. However, using those semantics, the renderer already \u0027pulls\u0027 the new routing ID from the browser process, and I think pulling a new InterfaceProvider along with it is a pretty analogous operation.",
+      "parentUuid": "7bf939dd_17193322",
+      "range": {
+        "startLine": 106,
+        "startChar": 2,
+        "endLine": 106,
+        "endChar": 46
+      },
+      "revId": "412161926908cf7093ac11e019d7e4a847b8fb96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "233719e0_3538667d",
         "filename": "content/common/frame.mojom",
         "patchSetId": 33
@@ -521,6 +545,24 @@
       "side": 1,
       "message": "This struct is huge, so I wanted to save some copies and/or member-wise moves.\n\nWhile in most places we can pass it by const\u0026, the RFHI implementation wants to modify the incoming parameters in place...\n\nMaking it `move_only` would solve this, but would force member-wise moves in all other places, making those places less efficient.\n\nUsing the naked type also makes it impossible to use this type as a Mojo struct member (because of the IPC macro multiple-inclusion-but-at-most-once-per-translation-unit trickery).",
       "parentUuid": "967525c7_3b8bd462",
+      "revId": "412161926908cf7093ac11e019d7e4a847b8fb96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d69dfbc4_920735d3",
+        "filename": "content/common/frame_messages.typemap",
+        "patchSetId": 33
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-03T20:51:16Z",
+      "side": 1,
+      "message": "Looking at how it\u0027s used (https://cs.chromium.org/chromium/src/content/browser/frame_host/render_frame_host_impl.cc?l\u003d1453\u0026gs\u003dcpp%253Acontent%253A%253Aclass-RenderFrameHostImpl%253A%253AOnDidCommitProvisionalLoad(const%2BIPC%253A%253AMessage%2B%2526)%253A%253Avalidated_params%2540chromium%252F..%252F..%252Fcontent%252Fbrowser%252Fframe_host%252Frender_frame_host_impl.cc%253A60405%257Cdef\u0026gsn\u003dvalidated_params\u0026ct\u003dxref_usages), it looks like there\u0027s only one thing modifying it, and that can go away once the legacy non-PlzNavigate path is deleted.",
+      "parentUuid": "8379bc34_985b9492",
       "revId": "412161926908cf7093ac11e019d7e4a847b8fb96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
