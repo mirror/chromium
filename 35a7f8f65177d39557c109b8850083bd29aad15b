@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "b6440881_015d3b57",
+        "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-03T01:06:42Z",
+      "side": 1,
+      "message": "Do not include the private keys. Just the certificate section is sufficient.\n\nAlso, we should probably use fake certs here that contain dummy strings.",
+      "range": {
+        "startLine": 53,
+        "startChar": 15,
+        "endLine": 53,
+        "endChar": 16
+      },
+      "revId": "35a7f8f65177d39557c109b8850083bd29aad15b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1fb4ffe5_995fd26c",
         "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
         "patchSetId": 3
@@ -30,6 +53,24 @@
       "writtenOn": "2017-08-03T00:43:46Z",
       "side": 1,
       "message": "I would love some feedback about how I refactored this function. I added a cert_data parameter to include the option of loading a certificate from a string instead of from file. Do you like the way I did this? Or would you prefer there were two separate ResetErrorHandler() functions?",
+      "revId": "35a7f8f65177d39557c109b8850083bd29aad15b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef3ed4d0_2a7e47ed",
+        "filename": "chrome/browser/ssl/ssl_error_handler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-03T01:06:42Z",
+      "side": 1,
+      "message": "You can make this method private and pass this a X509 cert, and then have two different methods (one for files, another one for cert names). That\u0027ll be slightly easier to read.",
+      "parentUuid": "1fb4ffe5_995fd26c",
       "revId": "35a7f8f65177d39557c109b8850083bd29aad15b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
