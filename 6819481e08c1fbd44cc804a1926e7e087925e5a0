@@ -128,6 +128,30 @@
       "revId": "6819481e08c1fbd44cc804a1926e7e087925e5a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfd105ba_c99c45b1",
+        "filename": "net/socket/ssl_client_socket_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1621,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-08-03T20:44:42Z",
+      "side": 1,
+      "message": "okay, I suppose it\u0027s fine then.",
+      "parentUuid": "e35bffa9_f0525968",
+      "range": {
+        "startLine": 1621,
+        "startChar": 6,
+        "endLine": 1621,
+        "endChar": 24
+      },
+      "revId": "6819481e08c1fbd44cc804a1926e7e087925e5a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
