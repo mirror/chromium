@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52b45b1e_c715514c",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-03T12:23:44Z",
+      "side": 1,
+      "message": "If/when current_paint_frame_count overflows this can be negative. Perhaps we should go to a size_t on frame count or else we need to handle the overflow.",
+      "range": {
+        "startLine": 43,
+        "startChar": 9,
+        "endLine": 43,
+        "endChar": 78
+      },
+      "revId": "33f7f193f7ac27c9601c8e8be854463a2bc3c12c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2644b58c_ef14964d",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletTest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-03T12:23:44Z",
+      "side": 1,
+      "message": "You should probably assert that kNumGlobalScopes is 2, otherwise this test needs to be updated. Alternately you could assert that the number of calls to each global scope is within some threshold after many runs but this is more complicated.",
+      "revId": "33f7f193f7ac27c9601c8e8be854463a2bc3c12c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
