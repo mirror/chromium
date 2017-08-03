@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99b334e5_eee62717",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 541,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-08-03T16:28:32Z",
+      "side": 1,
+      "message": "is it possible that |drain_type_| is not empty at this point?  like if somebody starts a reset, then a destroy?",
+      "revId": "d2c9f05d589ad3ccda34a0ea59c6ad33c98ea1b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a773ba3_e3f6e004",
+        "filename": "media/gpu/android/media_codec_video_decoder.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-08-03T16:28:32Z",
+      "side": 1,
+      "message": "ah, i missed this entirely.  i like this.",
+      "revId": "d2c9f05d589ad3ccda34a0ea59c6ad33c98ea1b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
