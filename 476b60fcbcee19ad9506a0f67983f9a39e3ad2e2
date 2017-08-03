@@ -1,0 +1,205 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fa3570bb_827f93e5",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-03T16:09:01Z",
+      "side": 1,
+      "message": "Is it really important to check that the DelayedTaskManager is started?\n\nTaskSchedulerImpl::Start() starts DelayedTaskManager before SchedulerWorkerPoolImpls and SchedulerWorkerPoolImpl::WakeUpOneWorker() returns early when called before SchedulerWorkerPoolImpl::Start() https://chromium.googlesource.com/chromium/src/+/af38db52e9cedeca6a7ad920339bf09b36c65255/base/task_scheduler/scheduler_worker_pool_impl.cc#567",
+      "range": {
+        "startLine": 687,
+        "startChar": 2,
+        "endLine": 689,
+        "endChar": 38
+      },
+      "revId": "476b60fcbcee19ad9506a0f67983f9a39e3ad2e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d35dc5e_b4ac1682",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-03T16:09:01Z",
+      "side": 1,
+      "message": "if (NumberOfUnsuspendedIdleWorkers() \u003d\u003d 0 \u0026\u0026 ...)",
+      "range": {
+        "startLine": 690,
+        "startChar": 6,
+        "endLine": 690,
+        "endChar": 35
+      },
+      "revId": "476b60fcbcee19ad9506a0f67983f9a39e3ad2e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5b25674_09990595",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-03T16:09:01Z",
+      "side": 1,
+      "message": "I would rename this to HasAvailableIdleWorker().\n\nThe code would then just be:\n\nint num_suspended_workers \u003d std::max\u003cint\u003e(0, workers_.size() - worker_capacity_);\nreturn idle_workers_stack_.Size() \u003e num_suspended_workers;",
+      "range": {
+        "startLine": 792,
+        "startChar": 32,
+        "endLine": 792,
+        "endChar": 62
+      },
+      "revId": "476b60fcbcee19ad9506a0f67983f9a39e3ad2e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a54fe65_ce8b6ff3",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-03T16:09:01Z",
+      "side": 1,
+      "message": "num_suspended_workers",
+      "range": {
+        "startLine": 798,
+        "startChar": 6,
+        "endLine": 798,
+        "endChar": 19
+      },
+      "revId": "476b60fcbcee19ad9506a0f67983f9a39e3ad2e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a3f09e0_651ae7ff",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-03T16:09:01Z",
+      "side": 1,
+      "message": "Instead of creating a Task and using the DelayedTaskManager, I would:\n1. Pass a scoped_refptr\u003cTaskRunner\u003e to the service thread to SchedulerWorkerPoolImpl::Start().\n2. Here:\n\nservice_thread_task_runner_-\u003ePostDelayedTask(\n  FROM_HERE,\n  base::BindOnce(\n     [] (SchedulerWorkerPoolImpl* worker_pool) {\n    worker_pool-\u003eAdjustWorkerCapacity();\n\n    AutoSchedulerLock auto_lock(worker_pool-\u003elock_);\n    DCHECK(worker_pool-\u003epolling_worker_capacity_);\n\n    if (worker_pool-\u003eNumberOfUnsuspendedIdleWorkers() \u003d\u003d 0)\n      worker_pool-\u003ePostAdjustWorkerCapacityPollingTask();\n    else\n      worker_pool-\u003epolling_worker_capacity_ \u003d false;\n  }, delay);",
+      "revId": "476b60fcbcee19ad9506a0f67983f9a39e3ad2e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51993889_21e06609",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-03T16:09:01Z",
+      "side": 1,
+      "message": "Use a constexpr global variable instead.\n\nconstexpr TimeDelta kBlockedWorkersPollPeriod \u003d TimeDelta::FromMilliseconds(30);",
+      "range": {
+        "startLine": 195,
+        "startChar": 2,
+        "endLine": 197,
+        "endChar": 3
+      },
+      "revId": "476b60fcbcee19ad9506a0f67983f9a39e3ad2e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64d40266_bed6878c",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-03T16:09:01Z",
+      "side": 1,
+      "message": "|polling_worker_capacity_|",
+      "range": {
+        "startLine": 213,
+        "startChar": 39,
+        "endLine": 213,
+        "endChar": 63
+      },
+      "revId": "476b60fcbcee19ad9506a0f67983f9a39e3ad2e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d25e06cf_1ace741b",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 898,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-03T16:09:01Z",
+      "side": 1,
+      "message": "ExpectWorkerCapacityAfterDelay",
+      "range": {
+        "startLine": 898,
+        "startChar": 7,
+        "endLine": 898,
+        "endChar": 28
+      },
+      "revId": "476b60fcbcee19ad9506a0f67983f9a39e3ad2e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0bd7755_5bc4df7b",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 904,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-03T16:09:01Z",
+      "side": 1,
+      "message": "A test shouldn\u0027t log warnings. We don\u0027t look at logs regularly and people who do won\u0027t know if they should notify us.\n\nIt is preferable to have a loop that checks the capacity a bounded number of times, and to make the test fail if we don\u0027t get the expected capacity after that.\n\nconstexpr int kMaxAttempts \u003d 4;\nfor (int i \u003d 0;\n     i \u003c kMaxAttempts \u0026\u0026\n     worker_pool_-\u003eWorkerCapacityForTesting() !\u003d expected_worker_capacity;\n     ++i) {\n  PlatformThread::Sleep(GetWorkerCapacityChangeSleepTime());\n}\n\nEXPECT_EQ(worker_pool_-\u003eWorkerCapacityForTesting(), expected_worker_capacity);",
+      "range": {
+        "startLine": 902,
+        "startChar": 0,
+        "endLine": 904,
+        "endChar": 63
+      },
+      "revId": "476b60fcbcee19ad9506a0f67983f9a39e3ad2e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
