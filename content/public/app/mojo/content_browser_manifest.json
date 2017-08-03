@@ -4,12 +4,13 @@
   "interface_provider_specs": {
     "service_manager:connector": {
       "provides": {
+        "app": [
+          "memory_instrumentation::mojom::Coordinator",
+          "tracing::mojom::AgentRegistry"
+        ],
         "gpu": [
           "content::mojom::FieldTrialRecorder",
           "media::mojom::AndroidOverlayProvider"
-        ],
-        "memory_instrumentation": [
-          "memory_instrumentation::mojom::Coordinator"
         ],
         "plugin": [
           "discardable_memory::mojom::DiscardableSharedMemoryManager",
@@ -55,9 +56,11 @@
         "service_manager:service_factory": [
           "service_manager::mojom::ServiceFactory"
         ],
+        "tracing": [
+          "tracing::mojom::Coordinator"
+        ],
         "utility": [
-          "discardable_memory::mojom::DiscardableSharedMemoryManager",
-          "memory_instrumentation::mojom::Coordinator"
+          "discardable_memory::mojom::DiscardableSharedMemoryManager"
         ]
       },
       "requires": {
@@ -67,7 +70,7 @@
         "content_browser": [
           "ash",
           "display",
-          "memory_instrumentation",
+          "tracing",
           "url_keyed_metrics",
           "geolocation_config"
         ],
