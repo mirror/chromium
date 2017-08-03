@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1435dce3_df13e813",
+        "filename": "content/browser/payments/payment_app_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-03T18:11:07Z",
+      "side": 1,
+      "message": "CanMakePayment?",
+      "range": {
+        "startLine": 241,
+        "startChar": 25,
+        "endLine": 241,
+        "endChar": 39
+      },
+      "revId": "a509ca6f75ba6e9a9754a7163649822a53779515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
