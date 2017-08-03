@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1eb7579c_6c240255",
+        "filename": "chrome/browser/net/android_status_listener.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-08-03T19:34:57Z",
+      "side": 1,
+      "message": "move after the constructor to match the header order",
+      "range": {
+        "startLine": 7,
+        "startChar": 22,
+        "endLine": 7,
+        "endChar": 23
+      },
+      "revId": "d1caaa1c7427754c296ae893aa08331e15d39079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5deb2ad3_a3ec5675",
+        "filename": "chrome/browser/net/android_status_listener.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-08-03T19:34:57Z",
+      "side": 1,
+      "message": "\u003d default",
+      "revId": "d1caaa1c7427754c296ae893aa08331e15d39079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fdace7f_58ef546a",
+        "filename": "chrome/browser/net/android_status_listener.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-08-03T19:34:57Z",
+      "side": 1,
+      "message": "I feel like the similarity between \"AndroidStatusListener\" and \"android::ApplicationStatusListener\" could be confusing. I guess some things in chrome/browser/net do use chrome_browser_net namespace, that could help disambiguate..",
+      "revId": "d1caaa1c7427754c296ae893aa08331e15d39079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f891124_8d6ceb33",
+        "filename": "net/extras/status_listener.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-08-03T19:34:57Z",
+      "side": 1,
+      "message": "typo: s/SetApplicaitonStoppedCallback/SetApplicationStoppedCallback",
+      "revId": "d1caaa1c7427754c296ae893aa08331e15d39079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
