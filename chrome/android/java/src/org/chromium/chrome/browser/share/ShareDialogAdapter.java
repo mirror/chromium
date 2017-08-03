@@ -70,5 +70,4 @@ class ShareDialogAdapter extends ArrayAdapter<ResolveInfo> {
         }
         return info.loadIcon(mManager);
     }
-
 }

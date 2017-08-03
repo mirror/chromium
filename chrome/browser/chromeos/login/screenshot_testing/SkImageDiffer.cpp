@@ -19,5 +19,4 @@ SkImageDiffer::SkImageDiffer() {
 SkImageDiffer::~SkImageDiffer() {
 }
 
-SkImageDiffer::Result::Result() {
-}
+SkImageDiffer::Result::Result() {}

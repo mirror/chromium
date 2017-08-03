@@ -150,5 +150,4 @@ public class TabModelUtils {
     public static void setIndex(TabModel model, int index) {
         model.setIndex(index, TabSelectionType.FROM_USER);
     }
-
 }
