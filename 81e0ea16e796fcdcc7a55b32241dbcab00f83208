@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b9e27fd4_6c7f0c2b",
+        "filename": "content/browser/renderer_host/input/touch_disposition_gesture_filter_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-03T00:38:46Z",
+      "side": 1,
+      "message": "Please add a class level comments, describe what this class is for.",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 56
+      },
+      "revId": "81e0ea16e796fcdcc7a55b32241dbcab00f83208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
