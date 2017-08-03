@@ -22,6 +22,30 @@
       "revId": "9638cc26c24f09efd847fe6c9ca5cfc4a3ee672a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d651e5b_e284298a",
+        "filename": "content/renderer/media/audio_renderer_mixer_manager_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 631,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-03T01:29:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "791a7ef9_6e65879b",
+      "range": {
+        "startLine": 631,
+        "startChar": 15,
+        "endLine": 631,
+        "endChar": 16
+      },
+      "revId": "9638cc26c24f09efd847fe6c9ca5cfc4a3ee672a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

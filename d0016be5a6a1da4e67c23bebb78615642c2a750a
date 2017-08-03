@@ -261,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "6a6335ff_f72aee71",
+        "filename": "media/renderers/audio_renderer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-03T01:29:03Z",
+      "side": 1,
+      "message": "Correct. Practically that means we typically see very small requests, but if the larger request they are fulfilling is larger than our initial buffer size, we\u0027ll still run out of data before we can refill.",
+      "parentUuid": "ffd19e98_8281cb4d",
+      "range": {
+        "startLine": 397,
+        "startChar": 13,
+        "endLine": 397,
+        "endChar": 17
+      },
+      "revId": "d0016be5a6a1da4e67c23bebb78615642c2a750a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "283b2f53_4740e619",
         "filename": "media/renderers/audio_renderer_impl.cc",
         "patchSetId": 1
