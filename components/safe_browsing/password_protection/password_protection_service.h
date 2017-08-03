@@ -193,7 +193,6 @@ class PasswordProtectionService : public history::HistoryServiceObserver {
   // Record UMA stats and trigger event logger when warning UI is shown.
   virtual void OnWarningShown(content::WebContents* web_contents,
                               WarningUIType ui_type);
-
   // If we want to show softer warnings based on Finch parameters.
   static bool ShouldShowSofterWarning();
 
