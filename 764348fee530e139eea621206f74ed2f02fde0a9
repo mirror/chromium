@@ -123,6 +123,24 @@
       "revId": "764348fee530e139eea621206f74ed2f02fde0a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "068f4b9f_14697297",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-08-03T23:59:19Z",
+      "side": 1,
+      "message": "I dug around this a bit more and found something promising: it seems that in the client redirect case, the WKBackForwardListItem stayed the same (same memory address), but its URL and initialURL properties were both changed to the redirected page. This looks like a potential bug, I\u0027ll file it on WebKit bugzilla.\n\nBut since it\u0027s the same WKBackForwardListItem object, we can detect this case in didCommitNavigation if |currentItem| already has an associated NavigationItem object. We can set OriginalRequestURL there as well.",
+      "parentUuid": "810ba4db_9b115d31",
+      "revId": "764348fee530e139eea621206f74ed2f02fde0a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
