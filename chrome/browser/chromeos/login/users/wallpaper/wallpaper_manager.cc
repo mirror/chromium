@@ -490,7 +490,7 @@ void WallpaperManager::EnsureLoggedInUserWallpaperLoaded() {
   WallpaperInfo info;
   if (GetLoggedInUserWallpaperInfo(&info)) {
     UMA_HISTOGRAM_ENUMERATION("Ash.Wallpaper.Type", info.type,
-                              user_manager::User::WALLPAPER_TYPE_COUNT);
+                              wallpaper::WALLPAPER_TYPE_COUNT);
     RecordWallpaperAppType();
     if (info == current_user_wallpaper_info_)
       return;
@@ -636,7 +636,7 @@ void WallpaperManager::SetCustomWallpaper(
     const wallpaper::WallpaperFilesId& wallpaper_files_id,
     const std::string& file,
     wallpaper::WallpaperLayout layout,
-    user_manager::User::WallpaperType type,
+    wallpaper::WallpaperType type,
     const gfx::ImageSkia& image,
     bool update_wallpaper) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
@@ -646,7 +646,7 @@ void WallpaperManager::SetCustomWallpaper(
     return;
 
   // Don't allow custom wallpapers while policy is in effect.
-  if (type != user_manager::User::POLICY && IsPolicyControlled(account_id))
+  if (type != wallpaper::POLICY && IsPolicyControlled(account_id))
     return;
 
   base::FilePath wallpaper_path = GetCustomWallpaperPath(
@@ -665,7 +665,7 @@ void WallpaperManager::SetCustomWallpaper(
   const bool is_persistent =
       !user_manager::UserManager::Get()->IsUserNonCryptohomeDataEphemeral(
           account_id) ||
-      (type == user_manager::User::POLICY &&
+      (type == wallpaper::POLICY &&
        user->GetType() == user_manager::USER_TYPE_PUBLIC_ACCOUNT);
 
   WallpaperInfo wallpaper_info = {
@@ -767,8 +767,7 @@ void WallpaperManager::DoSetDefaultWallpaper(
     layout = wallpaper::WALLPAPER_LAYOUT_STRETCH;
 
   WallpaperInfo info(default_wallpaper_image_->file_path().value(), layout,
-                     user_manager::User::DEFAULT,
-                     base::Time::Now().LocalMidnight());
+                     wallpaper::DEFAULT, base::Time::Now().LocalMidnight());
   SetWallpaper(default_wallpaper_image_->image(), info);
 }
 
@@ -862,11 +861,10 @@ void WallpaperManager::ScheduleSetUserWallpaper(const AccountId& account_id,
       return;
     }
 
-    if (info.type == user_manager::User::CUSTOMIZED ||
-        info.type == user_manager::User::POLICY ||
-        info.type == user_manager::User::DEVICE) {
+    if (info.type == wallpaper::CUSTOMIZED || info.type == wallpaper::POLICY ||
+        info.type == wallpaper::DEVICE) {
       base::FilePath wallpaper_path;
-      if (info.type != user_manager::User::DEVICE) {
+      if (info.type != wallpaper::DEVICE) {
         const char* sub_dir = GetCustomWallpaperSubdirForCurrentResolution();
         // Wallpaper is not resized when layout is
         // wallpaper::WALLPAPER_LAYOUT_CENTER.
@@ -1065,7 +1063,7 @@ void WallpaperManager::SetPolicyControlledWallpaper(
 
   SetCustomWallpaper(account_id, wallpaper_files_id, "policy-controlled.jpeg",
                      wallpaper::WALLPAPER_LAYOUT_CENTER_CROPPED,
-                     user_manager::User::POLICY, user_image->image(),
+                     wallpaper::POLICY, user_image->image(),
                      true /* update wallpaper */);
 }
 
@@ -1159,7 +1157,7 @@ void WallpaperManager::OnDeviceWallpaperDecoded(
     std::unique_ptr<user_manager::UserImage> user_image) {
   WallpaperInfo wallpaper_info = {GetDeviceWallpaperFilePath().value(),
                                   wallpaper::WALLPAPER_LAYOUT_CENTER_CROPPED,
-                                  user_manager::User::DEVICE,
+                                  wallpaper::DEVICE,
                                   base::Time::Now().LocalMidnight()};
   DCHECK(!user_manager::UserManager::Get()->IsUserLoggedIn());
   // In the login screen set the device wallpaper as the wallpaper.
@@ -1238,7 +1236,7 @@ bool WallpaperManager::GetUserWallpaperInfo(const AccountId& account_id,
 
   info->location = location;
   info->layout = static_cast<wallpaper::WallpaperLayout>(layout);
-  info->type = static_cast<user_manager::User::WallpaperType>(type);
+  info->type = static_cast<wallpaper::WallpaperType>(type);
   info->date = base::Time::FromInternalValue(date_val);
   return true;
 }
@@ -1294,8 +1292,8 @@ void WallpaperManager::OnWallpaperDecoded(
   if (user_image->image().isNull()) {
     // Updates user pref to default wallpaper.
     wallpaper::WallpaperInfo default_info(
-        "", wallpaper::WALLPAPER_LAYOUT_CENTER_CROPPED,
-        user_manager::User::DEFAULT, base::Time::Now().LocalMidnight());
+        "", wallpaper::WALLPAPER_LAYOUT_CENTER_CROPPED, wallpaper::DEFAULT,
+        base::Time::Now().LocalMidnight());
     SetUserWallpaperInfo(account_id, default_info, true);
 
     if (update_wallpaper)
@@ -1447,7 +1445,7 @@ void WallpaperManager::OnDefaultWallpaperDecoded(
   }
 
   *result_out = std::move(user_image);
-  WallpaperInfo info(path.value(), layout, user_manager::User::DEFAULT,
+  WallpaperInfo info(path.value(), layout, wallpaper::DEFAULT,
                      base::Time::Now().LocalMidnight());
   SetWallpaper((*result_out)->image(), info);
 }

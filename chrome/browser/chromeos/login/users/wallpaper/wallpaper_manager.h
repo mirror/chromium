@@ -88,7 +88,7 @@ class WallpaperManager
                           const wallpaper::WallpaperFilesId& wallpaper_files_id,
                           const std::string& file,
                           wallpaper::WallpaperLayout layout,
-                          user_manager::User::WallpaperType type,
+                          wallpaper::WallpaperType type,
                           const gfx::ImageSkia& image,
                           bool update_wallpaper) override;
   void SetDefaultWallpaperNow(const AccountId& account_id) override;
