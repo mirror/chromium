@@ -367,6 +367,9 @@ bool {{class_name}}StubDispatch::Accept(
   switch (message->header()->name) {
 {%-   for method in interface.methods %}
     case internal::k{{class_name}}_{{method.name}}_Name: {
+{%-     if class_name == "URLLoader" %}
+      TRACE_EVENT0("loading", "xyz_URLLoader_{{method.name}}");
+{%-     endif %}
 {%-     if method.response_parameters == None %}
       mojo::internal::MessageDispatchContext context(message);
 {%-       if method|method_supports_lazy_serialization %}

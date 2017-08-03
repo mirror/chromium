@@ -121,10 +121,13 @@ class BlobURLLoader : public mojom::URLLoader {
 
  private:
   // mojom::URLLoader implementation:
-  void FollowRedirect() override { NOTREACHED(); }
+  void FollowRedirect() override {
+    NOTREACHED();
+  }
 
   void SetPriority(net::RequestPriority priority,
-                   int32_t intra_priority_value) override {}
+                   int32_t intra_priority_value) override {
+  }
 
   // Notifies the client that the request completed. Takes care of deleting this
   // object now if possible (i.e. no outstanding data pipe), otherwise this

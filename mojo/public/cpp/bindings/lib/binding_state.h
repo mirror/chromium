@@ -16,6 +16,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/sequenced_task_runner.h"
+#include "base/trace_event/trace_event.h"
 #include "mojo/public/cpp/bindings/bindings_export.h"
 #include "mojo/public/cpp/bindings/connection_error_callback.h"
 #include "mojo/public/cpp/bindings/filter_chain.h"
@@ -29,8 +30,26 @@
 #include "mojo/public/cpp/bindings/scoped_interface_endpoint_handle.h"
 #include "mojo/public/cpp/system/core.h"
 
+namespace content {
+namespace mojom {
+class URLLoader;
+}
+}
+
 namespace mojo {
 namespace internal {
+
+template <class T>
+struct EventTraits {
+  static void OnBind() {}
+};
+
+template <>
+struct EventTraits<content::mojom::URLLoader> {
+  static void OnBind() {
+    TRACE_EVENT0("loading", "xyz_URLLoader_Bind");
+  }
+};
 
 class MOJO_CPP_BINDINGS_EXPORT BindingStateBase {
  public:
@@ -104,6 +123,7 @@ class BindingState : public BindingStateBase {
 
   void Bind(ScopedMessagePipeHandle handle,
             scoped_refptr<base::SingleThreadTaskRunner> runner) {
+    EventTraits<Interface>::OnBind();
     BindingStateBase::BindInternal(
         std::move(handle), runner, Interface::Name_,
         base::MakeUnique<typename Interface::RequestValidator_>(),
