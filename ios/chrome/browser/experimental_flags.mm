@@ -146,16 +146,9 @@ bool IsPageIconForDowngradedHTTPSEnabled() {
 }
 
 bool IsPasswordGenerationEnabled() {
-  // This call activates the field trial, if needed, so it must come before any
-  // early returns.
-  std::string group_name =
-      base::FieldTrialList::FindFullName("PasswordGeneration");
-  base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
-  if (command_line->HasSwitch(switches::kEnableIOSPasswordGeneration))
-    return true;
-  if (command_line->HasSwitch(switches::kDisableIOSPasswordGeneration))
-    return false;
-  return group_name != "Disabled";
+  // TODO(crbug.com/752077): Remove this function and its associated code.
+  // Either by replacing it with a base::Feature or by removing all its uses.
+  return YES;
 }
 
 bool IsPhysicalWebEnabled() {
