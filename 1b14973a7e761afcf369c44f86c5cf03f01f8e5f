@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f64b5e47_d90cefd9",
+        "filename": "third_party/WebKit/Source/core/layout/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 588,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-03T00:29:10Z",
+      "side": 1,
+      "message": "local_visual_rect does not include the bounds of descendant elements,\nunfortunately.\n\nI think you should use LocalToAncestorQuad of composited_bounds.",
+      "revId": "1b14973a7e761afcf369c44f86c5cf03f01f8e5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
