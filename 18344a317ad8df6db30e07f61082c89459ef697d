@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29cf7c66_a33443eb",
+        "filename": "tools/perf/page_sets/system_health/expectations.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1132400
+      },
+      "writtenOn": "2017-08-03T22:55:59Z",
+      "side": 1,
+      "message": "We could limit this to just 10.11 bots. Retina is 10.11.",
+      "range": {
+        "startLine": 31,
+        "startChar": 36,
+        "endLine": 31,
+        "endChar": 43
+      },
+      "revId": "18344a317ad8df6db30e07f61082c89459ef697d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
