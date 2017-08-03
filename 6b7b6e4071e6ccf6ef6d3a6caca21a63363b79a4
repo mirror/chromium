@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8a66f46c_fc894fc6",
+        "filename": "net/disk_cache/backend_cleanup_tracker_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-08-03T15:09:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "1fb5eba5_c2f4c65e",
+      "range": {
+        "startLine": 79,
+        "startChar": 23,
+        "endLine": 79,
+        "endChar": 43
+      },
+      "revId": "6b7b6e4071e6ccf6ef6d3a6caca21a63363b79a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0c6a138_ce6e2233",
         "filename": "net/disk_cache/backend_unittest.cc",
         "patchSetId": 15
@@ -45,6 +69,30 @@
       "revId": "6b7b6e4071e6ccf6ef6d3a6caca21a63363b79a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "218797b1_9dbe8371",
+        "filename": "net/disk_cache/backend_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-08-03T15:09:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0c6a138_ce6e2233",
+      "range": {
+        "startLine": 71,
+        "startChar": 48,
+        "endLine": 71,
+        "endChar": 55
+      },
+      "revId": "6b7b6e4071e6ccf6ef6d3a6caca21a63363b79a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "2c6fd174_5eaebc97",
+        "filename": "net/disk_cache/disk_cache_perftest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-08-03T15:09:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91f49671_88d01545",
+      "range": {
+        "startLine": 329,
+        "startChar": 43,
+        "endLine": 329,
+        "endChar": 50
+      },
+      "revId": "6b7b6e4071e6ccf6ef6d3a6caca21a63363b79a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dcb17d11_35f98301",
         "filename": "net/disk_cache/disk_cache_test_base.cc",
         "patchSetId": 15
@@ -85,6 +157,24 @@
       "revId": "6b7b6e4071e6ccf6ef6d3a6caca21a63363b79a4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91f0ee20_411c47ff",
+        "filename": "net/disk_cache/disk_cache_test_base.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-08-03T15:09:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dcb17d11_35f98301",
+      "revId": "6b7b6e4071e6ccf6ef6d3a6caca21a63363b79a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "fc8d63b8_03dc3901",
+        "filename": "net/disk_cache/simple/simple_backend_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-08-03T15:09:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b43c5f9_beed8579",
+      "range": {
+        "startLine": 283,
+        "startChar": 15,
+        "endLine": 283,
+        "endChar": 18
+      },
+      "revId": "6b7b6e4071e6ccf6ef6d3a6caca21a63363b79a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08c46375_84705429",
         "filename": "net/disk_cache/simple/simple_index.cc",
         "patchSetId": 15
@@ -122,6 +236,30 @@
       "writtenOn": "2017-08-03T14:33:16Z",
       "side": 1,
       "message": "I\u0027m not seeing the argument against using a scoped_refptr here.",
+      "range": {
+        "startLine": 539,
+        "startChar": 22,
+        "endLine": 539,
+        "endChar": 28
+      },
+      "revId": "6b7b6e4071e6ccf6ef6d3a6caca21a63363b79a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6452a496_cfce23e9",
+        "filename": "net/disk_cache/simple/simple_index.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-08-03T15:09:50Z",
+      "side": 1,
+      "message": "A bit of paranoia from semantics change in https://codereview.chromium.org/2657603004/ (one that possibly forgot to update the docs, following up with the CL\u0027s author about that). \n\nProbably unwarranted though, so done, since I think changing where reply gets destroyed would blow stuff up spectacularly. Well, or rather in a subtle, hard-to-debug way, since it probably also includes scoped_refptr\u0027s to objects with non-threadsafe refcounts.",
+      "parentUuid": "08c46375_84705429",
       "range": {
         "startLine": 539,
         "startChar": 22,
