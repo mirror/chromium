@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0b9a89a_bc719910",
+        "filename": "ash/shelf/shelf_context_menu_model.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-03T23:17:36Z",
+      "side": 1,
+      "message": "The old code checks if the pref is modifiable, so this might regress policy pref restrictions; we should test it... or land the ash-side shelf prefs usage ahead of this CL. https://cs.chromium.org/chromium/src/chrome/browser/ui/ash/launcher/launcher_context_menu.cc?rcl\u003d7b688d7b7a6e9ce4d720028b198a099bd760ead8\u0026l\u003d36",
+      "revId": "a6cf7028900f16003696cf890661845f49d33e31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
