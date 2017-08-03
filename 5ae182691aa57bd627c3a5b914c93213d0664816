@@ -22,6 +22,30 @@
       "revId": "5ae182691aa57bd627c3a5b914c93213d0664816",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24b27326_8196e5c6",
+        "filename": "base/synchronization/waitable_event_mac.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-03T15:30:50Z",
+      "side": 1,
+      "message": "\u003e You’re kind of relying on the fact that the receive will want to write a trailer but won’t have room for it, but you haven’t actually asked for a trailer. mach_msg_empty_rcv_t is just a header and a trailer. I guess this is a little dangerous, since I don’t think that anyone’s promised to write a trailer (or require space for a trailer) if you haven’t asked for one.\n\nMACH_RCV_TRAILER_NULL is default and would fill out the mach_msg_trailer_t with length of zero. I think this is pretty standard, since typical mach_msg calls don\u0027t utilize the trailer but space for it is still required in the rcv_limit.",
+      "parentUuid": "6211a79c_04f20168",
+      "range": {
+        "startLine": 137,
+        "startChar": 16,
+        "endLine": 137,
+        "endChar": 34
+      },
+      "revId": "5ae182691aa57bd627c3a5b914c93213d0664816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
