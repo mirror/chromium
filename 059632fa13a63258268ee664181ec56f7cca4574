@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6362817c_0dff5018",
+        "filename": "ios/chrome/common/app_group/app_group_metrics_mainapp.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-08-03T13:35:58Z",
+      "side": 1,
+      "message": "use the GetGroupUserDefaults function?",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 25,
+        "endChar": 68
+      },
+      "revId": "059632fa13a63258268ee664181ec56f7cca4574",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
