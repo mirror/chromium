@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7dc7773_074c907b",
+        "filename": "headless/app/headless_shell.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-08-03T09:47:15Z",
+      "side": 1,
+      "message": "nit: Let\u0027s move this two lines up, above the DeterministicHttpProtocolHandler variables definitions, so that the variable definitions are close to the kDeterministicFetch if-block where they\u0027re set :)",
+      "range": {
+        "startLine": 89,
+        "startChar": 2,
+        "endLine": 93,
+        "endChar": 3
+      },
+      "revId": "2ee3cdb7e3c700196fb709f6dbd2c3f0b8f13111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
