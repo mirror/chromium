@@ -105,6 +105,24 @@
       "revId": "764348fee530e139eea621206f74ed2f02fde0a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "810ba4db_9b115d31",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-08-03T23:05:45Z",
+      "side": 1,
+      "message": "Actually I was wrong... For |initialURL| appears to always be equal to |URL|, even for client-side redirects (I misread my instrumentation logs). So the only difference between a client-side redirect and a normal navigation is that after |-didCommitNavigation|, WKBackForwardList length does not grow. There is already a heuristic in CRWWebController to guess if a navigation is a client-side redirect: https://cs.chromium.org/chromium/src/ios/web/web_state/ui/crw_web_controller.mm?type\u003dcs\u0026q\u003dPAGE_TRANSITION_CLIENT_REDIRECT+file:ios+-file:test\u0026l\u003d1486\n\nI think our best bet would be to piggy back on that heuristic and call SetOriginalRequestURL there.\n\nServer-side redirect can be captured more easily using didReceiveServerRedirect, like Eugene suggested.\n\nThat said, it looks like that redirect chain in tab may already be broken today, because OriginalRequestURL is always set to the same value as RequestURL:\nhttps://cs.chromium.org/chromium/src/ios/web/navigation/crw_session_controller.mm?type\u003dcs\u0026rcl\u003daaf382944437a3ab5a18ffce1b0b57b62ac4d547\u0026l\u003d677\n\nGiven that this is not a one-line fix, I\u0027ll make GetOriginalRequestURL work in a subsequent CL.",
+      "parentUuid": "33a9d93f_7e75aea9",
+      "revId": "764348fee530e139eea621206f74ed2f02fde0a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
