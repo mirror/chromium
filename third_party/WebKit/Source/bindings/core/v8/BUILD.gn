@@ -240,3 +240,19 @@ fuzzer_test("v8_serialized_script_value_fuzzer") {
     "//third_party/WebKit/Source/platform:blink_fuzzer_test_support",
   ]
 }
+
+generate_cpp_code("generate_bindings_core_cpp_files") {
+  # generated_cpp_files_ =
+  #     process_file_template(
+  #         core_dictionary_idl_files,
+  #         [
+  #           "$bindings_core_v8_output_dir/V8{{source_name_part}}.cpp",
+  #           "$bindings_core_v8_output_dir/V8{{source_name_part}}.h",
+  #         ])
+
+  outputs = [
+    "$bindings_core_v8_output_dir/Dummy.cpp",
+  ]  # generated_cpp_files_
+  output_dir = bindings_core_v8_output_dir
+  component = "core"
+}

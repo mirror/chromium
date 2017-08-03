@@ -108,3 +108,19 @@ blink_modules_sources("bindings_modules_impl") {
     split_count = 5
   }
 }
+
+generate_cpp_code("generate_bindings_modules_cpp_files") {
+  # generated_cpp_files_ =
+  #     process_file_template(
+  #         core_dictionary_idl_files,
+  #         [
+  #           "$bindings_modules_v8_output_dir/V8{{source_name_part}}.cpp",
+  #           "$bindings_modules_v8_output_dir/V8{{source_name_part}}.h",
+  #         ])
+
+  outputs = [
+    "$bindings_modules_v8_output_dir/Dummy.cpp",
+  ]  # generated_cpp_files_
+  output_dir = bindings_modules_v8_output_dir
+  component = "modules"
+}
