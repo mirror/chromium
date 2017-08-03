@@ -373,6 +373,30 @@
     },
     {
       "key": {
+        "uuid": "97506b7f_b7390c89",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 33
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-03T19:09:42Z",
+      "side": 1,
+      "message": "Why can\u0027t we just send this InterfaceProvider in the messages that create new frames?",
+      "parentUuid": "2d7034fe_9d9cd4df",
+      "range": {
+        "startLine": 106,
+        "startChar": 2,
+        "endLine": 106,
+        "endChar": 46
+      },
+      "revId": "412161926908cf7093ac11e019d7e4a847b8fb96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "233719e0_3538667d",
         "filename": "content/common/frame.mojom",
         "patchSetId": 33
@@ -414,6 +438,23 @@
         "endLine": 116,
         "endChar": 55
       },
+      "revId": "412161926908cf7093ac11e019d7e4a847b8fb96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "967525c7_3b8bd462",
+        "filename": "content/common/frame_messages.typemap",
+        "patchSetId": 33
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-03T19:09:42Z",
+      "side": 1,
+      "message": "Why unique_ptr? It seems like it\u0027s just adding an indirection.",
       "revId": "412161926908cf7093ac11e019d7e4a847b8fb96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
