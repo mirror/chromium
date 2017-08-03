@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e44504c4_b6881258",
+        "filename": "remoting/codec/DEPS",
+        "patchSetId": 19
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-08-03T22:01:03Z",
+      "side": 1,
+      "message": "Done - thanks for pointing that out.",
+      "parentUuid": "c527bb58_a3ba0d2a",
+      "revId": "b9203f987d576831d0dcb66884d46c0ed2fd57d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b0eaafc_741e05f8",
         "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
         "patchSetId": 19
