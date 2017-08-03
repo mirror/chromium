@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e70b9e00_e34d34d9",
+        "filename": "components/ntp_snippets/content_suggestions_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-03T12:33:48Z",
+      "side": 1,
+      "message": "Hm, so this pattern is required when binding a OnceCallback to a RepeatingCallback, and it only works if the RepeatingCallback is actually only called once (so should really be a OnceCallback), right?\nThat\u0027s a bit ugly, but nothing to be done about it I guess. Can\u0027t fix everything. (I think there was some talk at some point of automatically converting Callback to OnceCallback across the codebase, but I don\u0027t know if anything came of that.)",
+      "range": {
+        "startLine": 218,
+        "startChar": 74,
+        "endLine": 218,
+        "endChar": 0
+      },
+      "revId": "078c590a4e403f8d0fa6fb2632b129e65e189ad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
