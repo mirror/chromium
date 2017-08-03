@@ -22,6 +22,14 @@ extern NSString* const kPendingLogFileDirectory;
 // Offsets the sessionID to avoid collision. The sessionID is limited to 1<<23.
 int AppGroupSessionID(int sessionID, AppGroupApplications application);
 
+// An app_group key to the number of times Search Extension was displayed since
+// last Chrome launch.
+extern NSString* const kSearchExtensionDisplayCount;
+
+// An app_group key to the number of times Content Extension was displayed since
+// last Chrome launch.
+extern NSString* const kContentExtensionDisplayCount;
+
 }  // namespace app_group
 
 #endif  // IOS_CHROME_COMMON_APP_GROUP_APP_GROUP_METRICS_H_

@@ -7,6 +7,7 @@
 #include <stdint.h>
 
 #include "base/logging.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/threading/thread_restrictions.h"
 #include "ios/chrome/common/app_group/app_group_constants.h"
 #include "ios/chrome/common/app_group/app_group_metrics.h"
@@ -20,6 +21,19 @@ namespace app_group {
 namespace main_app {
 
 void ProcessPendingLogs(ProceduralBlockWithData callback) {
+  NSUserDefaults* shared_defaults =
+      [[NSUserDefaults alloc] initWithSuiteName:ApplicationGroup()];
+  int content_extension_count =
+      [shared_defaults integerForKey:kContentExtensionDisplayCount];
+  UMA_HISTOGRAM_COUNTS("IOS.ContentExtension.DisplayCount",
+                       content_extension_count);
+  [shared_defaults setInteger:0 forKey:kContentExtensionDisplayCount];
+  int search_extension_count =
+      [shared_defaults integerForKey:kSearchExtensionDisplayCount];
+  UMA_HISTOGRAM_COUNTS("IOS.SearchExtension.DisplayCount",
+                       search_extension_count);
+  [shared_defaults setInteger:0 forKey:kSearchExtensionDisplayCount];
+
   base::ThreadRestrictions::AssertIOAllowed();
   NSFileManager* file_manager = [NSFileManager defaultManager];
   NSURL* store_url = [file_manager
@@ -67,6 +81,8 @@ void DisableMetrics() {
   NSUserDefaults* shared_defaults =
       [[NSUserDefaults alloc] initWithSuiteName:ApplicationGroup()];
   [shared_defaults removeObjectForKey:@(kChromeAppClientID)];
+  [shared_defaults removeObjectForKey:kContentExtensionDisplayCount];
+  [shared_defaults removeObjectForKey:kSearchExtensionDisplayCount];
 }
 
 }  // namespace main_app

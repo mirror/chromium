@@ -12,6 +12,7 @@
 #import "ios/chrome/browser/ui/ntp/ntp_tile.h"
 #import "ios/chrome/browser/ui/util/constraints_ui_util.h"
 #include "ios/chrome/common/app_group/app_group_constants.h"
+#include "ios/chrome/common/app_group/app_group_metrics.h"
 #include "ios/chrome/content_widget_extension/content_widget_view.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -37,6 +38,10 @@ const CGFloat widgetCompactHeightIOS9 = 110;
 - (BOOL)updateWidget;
 // Opens the main application with the given |URL|.
 - (void)openAppWithURL:(NSString*)URL;
+// Register a display of the widget in the app_group NSUserDefaults.
+// Metrics on the widget usage will be sent (if enabled) on the next Chrome
+// startup.
+- (void)registerWidgetDisplay;
 @end
 
 @implementation ContentWidgetViewController
@@ -83,6 +88,7 @@ const CGFloat widgetCompactHeightIOS9 = 110;
 - (void)viewWillAppear:(BOOL)animated {
   [super viewWillAppear:animated];
   [self updateWidget];
+  [self registerWidgetDisplay];
 }
 
 - (void)widgetPerformUpdateWithCompletionHandler:
@@ -131,8 +137,7 @@ const CGFloat widgetCompactHeightIOS9 = 110;
 #pragma mark - internal
 
 - (BOOL)updateWidget {
-  NSUserDefaults* sharedDefaults =
-      [[NSUserDefaults alloc] initWithSuiteName:app_group::ApplicationGroup()];
+  NSUserDefaults* sharedDefaults = app_group::GetGroupUserDefaults();
   NSDictionary<NSURL*, NTPTile*>* newSites = [NSKeyedUnarchiver
       unarchiveObjectWithData:[sharedDefaults
                                   objectForKey:app_group::kSuggestedItems]];
@@ -141,6 +146,14 @@ const CGFloat widgetCompactHeightIOS9 = 110;
   }
   self.sites = newSites;
   return YES;
+}
+
+- (void)registerWidgetDisplay {
+  NSUserDefaults* sharedDefaults = app_group::GetGroupUserDefaults();
+  NSInteger numberOfDisplay =
+      [sharedDefaults integerForKey:app_group::kContentExtensionDisplayCount];
+  [sharedDefaults setInteger:numberOfDisplay + 1
+                      forKey:app_group::kContentExtensionDisplayCount];
 }
 
 - (void)openAppWithURL:(NSString*)URL {
