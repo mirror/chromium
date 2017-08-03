@@ -16,6 +16,24 @@
       "revId": "a922574e0ec20ac648b75b170f497b9398ae3583",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48fa1436_2a9cc9a2",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-03T11:52:27Z",
+      "side": 1,
+      "message": "Done.\n\nIndeed there are only 50 DCHECKs with !\u003d nullptr in the codebase.",
+      "parentUuid": "09dc7933_07c3845a",
+      "revId": "a922574e0ec20ac648b75b170f497b9398ae3583",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
