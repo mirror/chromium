@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1765be6d_0a1f2f32",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 855,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-08-03T15:55:25Z",
+      "side": 1,
+      "message": "I think it would be cleaner to have a private FlushInternal() with no args. The the virtual Flush(FlushReason would just be a wrapper that discards the arg).  That way, no need for all these kFlushReasonUnknown, which are distracting to the reader for no good reason.",
+      "range": {
+        "startLine": 855,
+        "startChar": 26,
+        "endLine": 855,
+        "endChar": 31
+      },
+      "revId": "c15a7b827e7f38d375cf6b9db55bf1775cfcda19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
