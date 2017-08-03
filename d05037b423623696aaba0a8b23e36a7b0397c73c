@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a390e25_364fbe17",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position-3/position-sticky-stacking-context.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-03T12:09:09Z",
+      "side": 1,
+      "message": "Technically the current spec implies it should not, but this will likely change soon:\nhttps://github.com/w3c/csswg-drafts/issues/1053",
+      "revId": "d05037b423623696aaba0a8b23e36a7b0397c73c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27c73d55_5d27d56d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position-3/position-sticky-stacking-context.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-03T12:09:09Z",
+      "side": 1,
+      "message": "Why a fixed pos container? This shouldn\u0027t affect the test afaict if you also remove the top:0; left:0; on the abs pos indicator so that it gets its in flow position and then you can actually read the help text.",
+      "revId": "d05037b423623696aaba0a8b23e36a7b0397c73c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
