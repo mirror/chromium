@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef COMPONENTS_SAFE_BROWSING_WEBUI_SAFE_BROWSING_UI_H_
-#define COMPONENTS_SAFE_BROWSING_WEBUI_SAFE_BROWSING_UI_H_
+#ifndef COMPONENTS_SAFE_BROWSING_WEBUI_WEBUI_H_
+#define COMPONENTS_SAFE_BROWSING_WEBUI_WEBUI_H_
 
 #include "base/macros.h"
 #include "components/safe_browsing/web_ui/webui.pb.h"
@@ -44,4 +44,4 @@ class SafeBrowsingUI : public content::WebUIController {
 };
 }  // namespace safe_browsing
 
-#endif  // COMPONENTS_SAFE_BROWSING_WEBUI_SAFE_BROWSING_UI_H_
+#endif  // COMPONENTS_SAFE_BROWSING_WEBUI_WEBUI_H_

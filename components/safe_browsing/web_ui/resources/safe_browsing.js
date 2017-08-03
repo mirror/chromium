@@ -40,7 +40,6 @@ cr.define('safe_browsing', function() {
       $('preferences-list').innerHTML = preferencesListFormatted;
   }
 
-
   function addDatabaseManagerInfo(result) {
       var resLength = result.length;
       var preferencesListFormatted = "";
