@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97f630db_e967c334",
+        "filename": "third_party/WebKit/Source/platform/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-03T06:17:06Z",
+      "side": 1,
+      "message": "This is okay in this CL but in a follow-up CL would you move the public APIs to more relevant files? Now that WebKit.cpp doesn\u0027t exist, it doesn\u0027t make sense to keep WebKit.h. Also it looks strange to make platform/ depend on public/\"web\"/.\n\nFor example, you can move DecommitFreeableMemory() to WebMemoryCoordinator.h, ResetPluginCache() to WebPage.h etc.\n\nLet\u0027s add a TODO at the moment.",
+      "revId": "7f88ee326ee977529d91e683af463ceefdb8f9f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
