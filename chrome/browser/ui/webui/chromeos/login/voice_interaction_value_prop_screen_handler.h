@@ -40,6 +40,9 @@ class VoiceInteractionValuePropScreenHandler
   // Whether the screen should be shown right after initialization.
   bool show_on_init_ = false;
 
+  // Whether the screen have already been shown.
+  bool shown_ = false;
+
   DISALLOW_COPY_AND_ASSIGN(VoiceInteractionValuePropScreenHandler);
 };
 

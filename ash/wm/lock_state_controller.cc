@@ -422,6 +422,8 @@ void LockStateController::CancelPreLockAnimation() {
       SessionStateAnimator::ANIMATION_SPEED_UNDO_MOVE_WINDOWS,
       animation_sequence);
 
+  ShellPort::Get()->OnLockStateEvent(
+      LockStateObserver::EVENT_PRELOCK_ANIMATION_CANCELLED);
   animation_sequence->EndSequence();
 }
 
@@ -530,6 +532,8 @@ void LockStateController::PostLockAnimationFinished() {
 }
 
 void LockStateController::UnlockAnimationAfterUIDestroyedFinished() {
+  ShellPort::Get()->OnLockStateEvent(
+      LockStateObserver::EVENT_UNLOCK_ANIMATION_FINISHED);
   RestoreUnlockedProperties();
 }
 
