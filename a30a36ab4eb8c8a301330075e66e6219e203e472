@@ -110,6 +110,24 @@
     },
     {
       "key": {
+        "uuid": "3bb71fe4_028c3219",
+        "filename": "third_party/WebKit/common/origin_trials/trial_token.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-03T13:47:33Z",
+      "side": 1,
+      "message": "Not necessary, per https://chromium-review.googlesource.com/c/599252",
+      "parentUuid": "0283e89d_2a98b37b",
+      "revId": "a30a36ab4eb8c8a301330075e66e6219e203e472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7685e4b7_00752a7c",
         "filename": "third_party/WebKit/common/origin_trials/trial_token.cc",
         "patchSetId": 2
@@ -124,6 +142,24 @@
       "revId": "a30a36ab4eb8c8a301330075e66e6219e203e472",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6dc96a5_c14c673c",
+        "filename": "third_party/WebKit/common/origin_trials/trial_token.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-03T13:47:33Z",
+      "side": 1,
+      "message": "Not necessary, per https://chromium-review.googlesource.com/c/599252",
+      "parentUuid": "7685e4b7_00752a7c",
+      "revId": "a30a36ab4eb8c8a301330075e66e6219e203e472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -147,6 +183,30 @@
       "revId": "a30a36ab4eb8c8a301330075e66e6219e203e472",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "103e2af8_fc7e1506",
+        "filename": "third_party/WebKit/common/origin_trials/trial_token.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-03T13:47:33Z",
+      "side": 1,
+      "message": "In light of https://chromium-review.googlesource.com/c/599252, I take back this comment, and many of the others relating to blink vs chromium style.",
+      "parentUuid": "ef8326b8_07da2417",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 62
+      },
+      "revId": "a30a36ab4eb8c8a301330075e66e6219e203e472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -248,6 +308,30 @@
     },
     {
       "key": {
+        "uuid": "54d9918d_ee430931",
+        "filename": "third_party/WebKit/common/origin_trials/trial_token_validator.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-03T13:47:33Z",
+      "side": 1,
+      "message": "Not necessary, per https://chromium-review.googlesource.com/c/599252",
+      "parentUuid": "4a70c736_63362266",
+      "range": {
+        "startLine": 5,
+        "startChar": 1,
+        "endLine": 5,
+        "endChar": 7
+      },
+      "revId": "a30a36ab4eb8c8a301330075e66e6219e203e472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a8c4268_301fdd26",
         "filename": "third_party/WebKit/common/origin_trials/trial_token_validator.h",
         "patchSetId": 2
@@ -285,6 +369,30 @@
       "revId": "a30a36ab4eb8c8a301330075e66e6219e203e472",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5f5b81a_c1a1e321",
+        "filename": "third_party/WebKit/common/origin_trials/trial_token_validator_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-03T13:47:33Z",
+      "side": 1,
+      "message": "Not necessary, per https://chromium-review.googlesource.com/c/599252",
+      "parentUuid": "e0f01381_a8664b13",
+      "range": {
+        "startLine": 5,
+        "startChar": 10,
+        "endLine": 5,
+        "endChar": 28
+      },
+      "revId": "a30a36ab4eb8c8a301330075e66e6219e203e472",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
