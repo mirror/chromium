@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "023708f1_96b44851",
+        "filename": "extensions/browser/api/networking_private/networking_private_chromeos.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-03T17:55:54Z",
+      "side": 1,
+      "message": "We should report an error here (this API may be used by kiosk apps):\n\nif (!require_pin) {\n  failure_callback.Run(networking_private::kErrorInvalidArguments);\n  return;\n}\n\n(You\u0027ll need to add kErrorInvalidArguments to networking_private_api.cc/h)",
+      "revId": "2f0c71661a41d1831f452ae4a4903080cb3feab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
