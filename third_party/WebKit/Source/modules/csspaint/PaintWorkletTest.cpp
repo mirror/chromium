@@ -29,6 +29,10 @@ class PaintWorkletTest : public ::testing::Test {
         .paintWorklet();
   }
 
+  int SelecteGlobalScope(PaintWorklet* paint_worklet) {
+    return paint_worklet->SelecteGlobalScope();
+  }
+
   PaintWorkletGlobalScopeProxy* GetProxy() {
     return PaintWorkletGlobalScopeProxy::From(proxy_.Get());
   }
@@ -78,6 +82,31 @@ TEST_F(PaintWorkletTest, GarbageCollectionOfCSSPaintDefinition) {
   ThreadState::Current()->CollectAllGarbage();
   V8GCController::CollectAllGarbageForTesting(isolate);
   DCHECK(handle.IsEmpty());
+}
+
+TEST_F(PaintWorkletTest, GlobalScopeSelection) {
+  PaintWorklet* paint_worklet = GetPaintWorklet();
+  const int update_life_cycle_count = 250;
+  int global_scope_switch_count = 0;
+  int previous_selected_global_scope = 0u;
+  Vector<int> selected_global_scope_count = {0, 0};
+  for (int i = 0; i < update_life_cycle_count; i++) {
+    paint_worklet->GetFrame()->View()->UpdateAllLifecyclePhases();
+    int selected_global_scope = SelecteGlobalScope(paint_worklet);
+    DCHECK_LT(selected_global_scope,
+              static_cast<int>(PaintWorklet::kNumGlobalScopes));
+    selected_global_scope_count[selected_global_scope]++;
+    if (selected_global_scope != previous_selected_global_scope) {
+      previous_selected_global_scope = selected_global_scope;
+      global_scope_switch_count++;
+    }
+  }
+  EXPECT_EQ(selected_global_scope_count[0], 130);
+  EXPECT_EQ(selected_global_scope_count[1], 120);
+  EXPECT_EQ(global_scope_switch_count, 2);
+
+  // Delete the page & associated objects.
+  Terminate();
 }
 
 }  // namespace blink
