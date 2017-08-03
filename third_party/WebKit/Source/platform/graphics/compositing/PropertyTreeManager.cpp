@@ -32,16 +32,22 @@ static constexpr int kSecondaryRootNodeId = 1;
 
 }  // namespace
 
-PropertyTreeManager::PropertyTreeManager(cc::PropertyTrees& property_trees,
-                                         cc::Layer* root_layer,
+PropertyTreeManager::PropertyTreeManager(PropertyTreeManagerClient& client,
+                                         cc::PropertyTrees& property_trees,
                                          int sequence_number)
-    : property_trees_(property_trees),
-      root_layer_(root_layer),
+    : client_(client),
+      property_trees_(property_trees),
+      root_layer_(client.RootLayer()),
       sequence_number_(sequence_number) {
   SetupRootTransformNode();
   SetupRootClipNode();
   SetupRootEffectNode();
   SetupRootScrollNode();
+}
+
+void PropertyTreeManager::Finalize() {
+  while (effect_stack_.size())
+    CloseCcEffect();
 }
 
 cc::TransformTree& PropertyTreeManager::GetTransformTree() {
@@ -58,10 +64,6 @@ cc::EffectTree& PropertyTreeManager::GetEffectTree() {
 
 cc::ScrollTree& PropertyTreeManager::GetScrollTree() {
   return property_trees_.scroll_tree;
-}
-
-const EffectPaintPropertyNode* PropertyTreeManager::CurrentEffectNode() const {
-  return effect_stack_.back().effect;
 }
 
 void PropertyTreeManager::SetupRootTransformNode() {
@@ -124,10 +126,11 @@ void PropertyTreeManager::SetupRootEffectNode() {
   effect_node.transform_id = kRealRootNodeId;
   effect_node.clip_id = kSecondaryRootNodeId;
   effect_node.has_render_surface = true;
-
-  effect_stack_.push_back(
-      BlinkEffectAndCcIdPair{EffectPaintPropertyNode::Root(), effect_node.id});
   root_layer_->SetEffectTreeIndex(effect_node.id);
+
+  current_effect_ = EffectPaintPropertyNode::Root();
+  current_clip_ = current_effect_->OutputClip();
+  current_effect_id_ = effect_node.id;
 }
 
 void PropertyTreeManager::SetupRootScrollNode() {
@@ -213,7 +216,6 @@ int PropertyTreeManager::EnsureCompositorClipNode(
 
   cc::ClipNode& compositor_node = *GetClipTree().Node(id);
 
-  // TODO(jbroman): Don't discard rounded corners.
   compositor_node.clip = clip_node->ClipRect().Rect();
   compositor_node.transform_id =
       EnsureCompositorTransformNode(clip_node->LocalTransformSpace());
@@ -329,39 +331,150 @@ void PropertyTreeManager::UpdateLayerScrollMapping(
   }
 }
 
-int PropertyTreeManager::SwitchToEffectNode(
-    const EffectPaintPropertyNode& next_effect) {
-  const auto& ancestor =
-      LowestCommonAncestor(*CurrentEffectNode(), next_effect);
-  while (CurrentEffectNode() != &ancestor)
-    effect_stack_.pop_back();
+void PropertyTreeManager::EmitClipMaskLayer() {
+  int clip_id = EnsureCompositorClipNode(current_clip_);
 
-  // Now the current effect is the lowest common ancestor of previous effect
-  // and the next effect. That implies it is an existing node that already has
-  // at least one paint chunk or child effect, and we are going to either attach
-  // another paint chunk or child effect to it. We can no longer omit render
-  // surface for it even for opacity-only nodes.
-  // See comments in PropertyTreeManager::buildEffectNodesRecursively().
-  // TODO(crbug.com/504464): Remove premature optimization here.
-  if (CurrentEffectNode() && CurrentEffectNode()->Opacity() != 1.f) {
-    GetEffectTree()
-        .Node(GetCurrentCompositorEffectNodeIndex())
-        ->has_render_surface = true;
-  }
+  cc::EffectNode& mask_target = *GetEffectTree().Node(current_effect_id_);
+  cc::EffectNode& mask_effect = *GetEffectTree().Node(
+      GetEffectTree().Insert(cc::EffectNode(), current_effect_id_));
+  mask_effect.clip_id = clip_id;
+  mask_effect.has_render_surface = true;
+  mask_effect.blend_mode = SkBlendMode::kDstIn;
 
-  BuildEffectNodesRecursively(&next_effect);
+  const TransformPaintPropertyNode* clip_space =
+      current_clip_->LocalTransformSpace();
 
-  return GetCurrentCompositorEffectNodeIndex();
+  CompositorElementId ids[2];
+  cc::Layer* mask_layer = client_.SynthesizeClip(current_clip_, ids);
+  root_layer_->AddChild(mask_layer);
+  mask_layer->set_property_tree_sequence_number(sequence_number_);
+  mask_layer->SetTransformTreeIndex(EnsureCompositorTransformNode(clip_space));
+  mask_layer->SetClipTreeIndex(clip_id);
+  mask_layer->SetEffectTreeIndex(mask_effect.id);
+  UpdateLayerScrollMapping(mask_layer, clip_space);
+  mask_target.stable_id = ids[0].id_;
+  mask_effect.stable_id = ids[1].id_;
 }
 
-void PropertyTreeManager::BuildEffectNodesRecursively(
+void PropertyTreeManager::CloseCcEffect() {
+  DCHECK(effect_stack_.size());
+  const EffectStackEntry& previous_state = effect_stack_.back();
+
+  // An effect node with exotic blend mode cannot share synthesized clips
+  // with its siblings, because the blend mode is applied by the outermost
+  // synthesized clip. Close all synthesized clips immediately after if
+  // such effect is getting closed.
+  bool clear_synthetic_effects =
+      !IsCurrentCcEffectSynthetic() &&
+      current_effect_->BlendMode() != SkBlendMode::kSrcOver;
+
+  // We are about to close an effect that was synthesized for isolating
+  // a clip mask. Now emit the actual clip mask that will be composited on
+  // top of masked contents with SkBlendMode::kDstIn.
+  if (IsCurrentCcEffectSynthetic())
+    EmitClipMaskLayer();
+
+  current_effect_ = previous_state.effect;
+  current_clip_ = previous_state.clip;
+  current_effect_id_ = previous_state.effect_id;
+  effect_stack_.pop_back();
+
+  if (clear_synthetic_effects) {
+    while (IsCurrentCcEffectSynthetic())
+      CloseCcEffect();
+  }
+}
+
+int PropertyTreeManager::SwitchToEffectNodeWithSynthesizedClip(
+    const EffectPaintPropertyNode& next_effect,
+    const ClipPaintPropertyNode& next_clip) {
+  const auto& ancestor = LowestCommonAncestor(*current_effect_, next_effect);
+  while (current_effect_ != &ancestor)
+    CloseCcEffect();
+
+  bool newly_built = BuildEffectNodesRecursively(&next_effect);
+  SynthesizeCcEffectForClipIfNeeded(&next_clip, SkBlendMode::kSrcOver,
+                                    newly_built);
+
+  return current_effect_id_;
+}
+
+bool PropertyTreeManager::IsCurrentCcEffectSynthetic() const {
+  return effect_stack_.size() && effect_stack_.back().type ==
+                                     EffectStackEntry::EffectType::kRoundedClip;
+}
+
+SkBlendMode PropertyTreeManager::SynthesizeCcEffectForClipIfNeeded(
+    const ClipPaintPropertyNode* target_clip,
+    SkBlendMode delegated_blend,
+    bool effect_is_newly_built) {
+  if (delegated_blend != SkBlendMode::kSrcOver) {
+    // Exit all synthetic effect node for rounded clip if the next child has
+    // exotic blending mode because it has to access the backdrop of enclosing
+    // effect.
+    while (IsCurrentCcEffectSynthetic())
+      CloseCcEffect();
+
+    // An effect node can't omit render surface if it has child with exotic
+    // blending mode. See comments below for more detail.
+    // TODO(crbug.com/504464): Remove premature optimization here.
+    GetEffectTree().Node(current_effect_id_)->has_render_surface = true;
+  } else {
+    // TODO: This is O(d^2). :(
+    while (!current_clip_->IsAncestorOf(*target_clip)) {
+      DCHECK(IsCurrentCcEffectSynthetic());
+      CloseCcEffect();
+    }
+
+    // If the effect is an existing node, i.e. already has at least one paint
+    // chunk or child effect, and by reaching here it implies we are going to
+    // attach either another paint chunk or child effect to it. We can no longer
+    // omit render surface for it even for opacity-only node.
+    // See comments in PropertyTreeManager::BuildEffectNodesRecursively().
+    // TODO(crbug.com/504464): Remove premature optimization here.
+    if (!effect_is_newly_built && !IsCurrentCcEffectSynthetic() &&
+        current_effect_->Opacity() != 1.f)
+      GetEffectTree().Node(current_effect_id_)->has_render_surface = true;
+  }
+
+  DCHECK(current_clip_->IsAncestorOf(*target_clip));
+
+  Vector<const ClipPaintPropertyNode*> pending_clips;
+  for (; target_clip != current_clip_; target_clip = target_clip->Parent()) {
+    DCHECK(target_clip);
+    if (target_clip->ClipRect().IsRounded())
+      pending_clips.push_back(target_clip);
+  }
+
+  for (size_t i = pending_clips.size(); i--;) {
+    const ClipPaintPropertyNode* next_clip = pending_clips[i];
+
+    cc::EffectNode& mask_target = *GetEffectTree().Node(
+        GetEffectTree().Insert(cc::EffectNode(), current_effect_id_));
+
+    mask_target.clip_id = EnsureCompositorClipNode(next_clip);
+    mask_target.has_render_surface = true;
+    mask_target.blend_mode = delegated_blend;
+    delegated_blend = SkBlendMode::kSrcOver;
+
+    effect_stack_.emplace_back(
+        EffectStackEntry{EffectStackEntry::EffectType::kRoundedClip,
+                         current_effect_, current_clip_, current_effect_id_});
+    current_clip_ = next_clip;
+    current_effect_id_ = mask_target.id;
+  }
+
+  return delegated_blend;
+}
+
+bool PropertyTreeManager::BuildEffectNodesRecursively(
     const EffectPaintPropertyNode* next_effect) {
-  if (next_effect == CurrentEffectNode())
-    return;
+  if (next_effect == current_effect_)
+    return false;
   DCHECK(next_effect);
 
-  BuildEffectNodesRecursively(next_effect->Parent());
-  DCHECK_EQ(next_effect->Parent(), CurrentEffectNode());
+  bool newly_built = BuildEffectNodesRecursively(next_effect->Parent());
+  DCHECK_EQ(next_effect->Parent(), current_effect_);
 
 #if DCHECK_IS_ON()
   DCHECK(!effect_nodes_converted_.Contains(next_effect))
@@ -370,14 +483,8 @@ void PropertyTreeManager::BuildEffectNodesRecursively(
   effect_nodes_converted_.insert(next_effect);
 #endif
 
-  // An effect node can't omit render surface if it has child with exotic
-  // blending mode. See comments below for more detail.
-  // TODO(crbug.com/504464): Remove premature optimization here.
-  if (next_effect->BlendMode() != SkBlendMode::kSrcOver) {
-    GetEffectTree()
-        .Node(GetCurrentCompositorEffectNodeIndex())
-        ->has_render_surface = true;
-  }
+  SkBlendMode used_blend_mode = SynthesizeCcEffectForClipIfNeeded(
+      next_effect->OutputClip(), next_effect->BlendMode(), newly_built);
 
   // We currently create dummy layers to host effect nodes and corresponding
   // render surfaces. This should be removed once cc implements better support
@@ -387,8 +494,8 @@ void PropertyTreeManager::BuildEffectNodesRecursively(
 
   int output_clip_id = EnsureCompositorClipNode(next_effect->OutputClip());
 
-  cc::EffectNode& effect_node = *GetEffectTree().Node(GetEffectTree().Insert(
-      cc::EffectNode(), GetCurrentCompositorEffectNodeIndex()));
+  cc::EffectNode& effect_node = *GetEffectTree().Node(
+      GetEffectTree().Insert(cc::EffectNode(), current_effect_id_));
   effect_node.stable_id = next_effect->GetCompositorElementId().id_;
   effect_node.clip_id = output_clip_id;
   // Every effect is supposed to have render surface enabled for grouping,
@@ -402,21 +509,21 @@ void PropertyTreeManager::BuildEffectNodesRecursively(
   // decision until later phase of the pipeline. Remove premature optimization
   // here once the work is ready.
   if (!next_effect->Filter().IsEmpty() ||
-      next_effect->BlendMode() != SkBlendMode::kSrcOver)
+      used_blend_mode != SkBlendMode::kSrcOver)
     effect_node.has_render_surface = true;
   effect_node.opacity = next_effect->Opacity();
   if (next_effect->GetColorFilter() != kColorFilterNone) {
     // Currently color filter is only used by SVG masks.
     // We are cutting corner here by support only specific configuration.
     DCHECK(next_effect->GetColorFilter() == kColorFilterLuminanceToAlpha);
-    DCHECK(next_effect->BlendMode() == SkBlendMode::kDstIn);
+    DCHECK(used_blend_mode == SkBlendMode::kDstIn);
     DCHECK(next_effect->Filter().IsEmpty());
     effect_node.filters.Append(cc::FilterOperation::CreateReferenceFilter(
         SkColorFilterImageFilter::Make(SkLumaColorFilter::Make(), nullptr)));
   } else {
     effect_node.filters = next_effect->Filter().AsCcFilterOperations();
   }
-  effect_node.blend_mode = next_effect->BlendMode();
+  effect_node.blend_mode = used_blend_mode;
   CompositorElementId compositor_element_id =
       next_effect->GetCompositorElementId();
   if (compositor_element_id) {
@@ -426,13 +533,20 @@ void PropertyTreeManager::BuildEffectNodesRecursively(
     property_trees_.element_id_to_effect_node_index[compositor_element_id] =
         effect_node.id;
   }
-  effect_stack_.push_back(BlinkEffectAndCcIdPair{next_effect, effect_node.id});
+  effect_stack_.emplace_back(
+      EffectStackEntry{EffectStackEntry::EffectType::kEffect, current_effect_,
+                       current_clip_, current_effect_id_});
+  current_effect_ = next_effect;
+  current_clip_ = next_effect->OutputClip();
+  current_effect_id_ = effect_node.id;
 
   dummy_layer->set_property_tree_sequence_number(sequence_number_);
   dummy_layer->SetTransformTreeIndex(kSecondaryRootNodeId);
   dummy_layer->SetClipTreeIndex(output_clip_id);
   dummy_layer->SetEffectTreeIndex(effect_node.id);
   dummy_layer->SetScrollTreeIndex(kRealRootNodeId);
+
+  return true;
 }
 
 }  // namespace blink
