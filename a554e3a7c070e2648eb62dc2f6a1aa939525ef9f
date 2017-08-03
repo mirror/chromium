@@ -94,6 +94,30 @@
       "revId": "a554e3a7c070e2648eb62dc2f6a1aa939525ef9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27d5dfda_704ab700",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-03T00:55:16Z",
+      "side": 0,
+      "message": "The bug you mentioned is for settings. Please file one for quick settings.",
+      "parentUuid": "d5c208a3_9ee28bed",
+      "range": {
+        "startLine": 280,
+        "startChar": 0,
+        "endLine": 283,
+        "endChar": 53
+      },
+      "revId": "a554e3a7c070e2648eb62dc2f6a1aa939525ef9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
