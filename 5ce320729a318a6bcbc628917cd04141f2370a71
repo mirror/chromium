@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d7e4d19d_2ef6bb5c",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-03T16:09:30Z",
+      "side": 1,
+      "message": "Actually, it\u0027s more about where to go for more context. Putting a (soon to be) Xoogler there isn\u0027t very helpful in the long term. Probably the best option is a bug reference, which can accumulate details over time if necessary.",
+      "parentUuid": "aaa1d2f9_d000e6cd",
+      "range": {
+        "startLine": 28,
+        "startChar": 8,
+        "endLine": 28,
+        "endChar": 14
+      },
+      "revId": "5ce320729a318a6bcbc628917cd04141f2370a71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b76a293_4c09af12",
         "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
         "patchSetId": 14
@@ -151,6 +175,30 @@
       "writtenOn": "2017-08-03T15:27:51Z",
       "side": 1,
       "message": "I haven\u0027t used this macro before but it looks like this will terminate the process on release builds.  We typically reserve that behavior for cases where the integrity of the process has been compromised or we know that we can no longer function correctly.  \n\nIs that the case here?  Or should this be a DLOG_ASSERT()?",
+      "range": {
+        "startLine": 151,
+        "startChar": 2,
+        "endLine": 151,
+        "endChar": 12
+      },
+      "revId": "5ce320729a318a6bcbc628917cd04141f2370a71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56a81b1c_703ce93e",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-03T16:09:30Z",
+      "side": 1,
+      "message": "Or just DCHECK, for that matter.",
+      "parentUuid": "bcb68523_a77f56d2",
       "range": {
         "startLine": 151,
         "startChar": 2,
