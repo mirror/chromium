@@ -17,6 +17,7 @@
 #include "chromeos/network/network_connect.h"
 #include "chromeos/network/network_state.h"
 #include "components/cryptauth/remote_device.h"
+#include "ui/gfx/vector_icon_types.h"
 #include "ui/message_center/message_center_observer.h"
 #include "ui/message_center/notification.h"
 
