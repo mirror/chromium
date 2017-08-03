@@ -16,15 +16,19 @@ class TaskAttributionTiming final : public PerformanceEntry {
   DEFINE_WRAPPERTYPEINFO();
 
  public:
-  static TaskAttributionTiming* Create(String type,
+  static TaskAttributionTiming* Create(String script_URL,
+                                       String type,
                                        String container_type,
                                        String container_src,
                                        String container_id,
-                                       String container_name) {
-    return new TaskAttributionTiming(type, container_type, container_src,
-                                     container_id, container_name);
+                                       String container_name,
+                                       double start_time,
+                                       double end_time) {
+    return new TaskAttributionTiming(script_URL, type, container_type,
+                                     container_src, container_id,
+                                     container_name, start_time, end_time);
   }
-
+  String scriptURL() const;
   String containerType() const;
   String containerSrc() const;
   String containerId() const;
@@ -35,12 +39,15 @@ class TaskAttributionTiming final : public PerformanceEntry {
   ~TaskAttributionTiming() override;
 
  private:
-  TaskAttributionTiming(String type,
+  TaskAttributionTiming(String script_URL,
+                        String type,
                         String container_type,
                         String container_src,
                         String container_id,
-                        String container_name);
-
+                        String container_name,
+                        double start_time,
+                        double end_time);
+  String script_URL_;
   String container_type_;
   String container_src_;
   String container_id_;
