@@ -537,6 +537,8 @@ FrameReference::~FrameReference() {}
 void FrameReference::Reset(blink::WebLocalFrame* frame) {
   if (frame) {
     view_ = frame->View();
+    // Make sure this isn't called too early in the |frame| lifecycle...
+    DCHECK(view_);
     frame_ = frame;
   } else {
     view_ = NULL;
@@ -587,16 +589,19 @@ void PrintRenderFrameHelper::PrintHeaderAndFooter(
       mojo::MakeRequest(&provider);
       interface_provider_.Bind(std::move(provider));
     }
-    void FrameDetached(blink::WebLocalFrame* frame,
-                       DetachType detach_type) override {
-      frame->FrameWidget()->Close();
-      frame->Close();
+    // WebFrameClient:
+    void BindToFrame(blink::WebLocalFrame* frame) override { frame_ = frame; }
+    void FrameDetached(DetachType detach_type) override {
+      frame_->FrameWidget()->Close();
+      frame_->Close();
+      frame_ = nullptr;
     }
     service_manager::InterfaceProvider* GetInterfaceProvider() override {
       return &interface_provider_;
     }
 
    private:
+    blink::WebLocalFrame* frame_;
     service_manager::InterfaceProvider interface_provider_;
   };
   HeaderAndFooterClient frame_client;
@@ -697,8 +702,7 @@ class PrepareFrameAndViewForPrint : public blink::WebViewClient,
       blink::WebSandboxFlags sandbox_flags,
       const blink::WebParsedFeaturePolicy& container_policy,
       const blink::WebFrameOwnerProperties& frame_owner_properties) override;
-  void FrameDetached(blink::WebLocalFrame* frame,
-                     DetachType detach_type) override;
+  void FrameDetached(DetachType detach_type) override;
   std::unique_ptr<blink::WebURLLoader> CreateURLLoader(
       const blink::WebURLRequest& request,
       base::SingleThreadTaskRunner* task_runner) override;
@@ -835,8 +839,8 @@ void PrepareFrameAndViewForPrint::CopySelection(
   content::RenderView::ApplyWebPreferences(prefs, web_view);
   blink::WebLocalFrame* main_frame =
       blink::WebLocalFrame::CreateMainFrame(web_view, this, nullptr, nullptr);
+  frame_.Reset(main_frame);
   blink::WebFrameWidget::Create(this, main_frame);
-  frame_.Reset(web_view->MainFrame()->ToWebLocalFrame());
   node_to_print_.Reset();
 
   // When loading is done this will call didStopLoading() and that will do the
@@ -873,10 +877,12 @@ blink::WebLocalFrame* PrepareFrameAndViewForPrint::CreateChildFrame(
   return nullptr;
 }
 
-void PrepareFrameAndViewForPrint::FrameDetached(blink::WebLocalFrame* frame,
-                                                DetachType detach_type) {
+void PrepareFrameAndViewForPrint::FrameDetached(DetachType detach_type) {
+  blink::WebLocalFrame* frame = frame_.GetFrame();
+  DCHECK(frame);
   frame->FrameWidget()->Close();
   frame->Close();
+  frame_.Reset(nullptr);
 }
 
 std::unique_ptr<blink::WebURLLoader>

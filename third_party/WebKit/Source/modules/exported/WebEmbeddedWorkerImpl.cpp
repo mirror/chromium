@@ -331,13 +331,6 @@ void WebEmbeddedWorkerImpl::LoadShadowPage() {
                        SubstituteData(buffer)));
 }
 
-void WebEmbeddedWorkerImpl::FrameDetached(WebLocalFrame* frame,
-                                          DetachType type) {
-  DCHECK(type == DetachType::kRemove && frame->Parent());
-  DCHECK(frame->FrameWidget());
-  frame->Close();
-}
-
 void WebEmbeddedWorkerImpl::DidFinishDocumentLoad() {
   DCHECK(!main_script_loader_);
   DCHECK(main_frame_);
