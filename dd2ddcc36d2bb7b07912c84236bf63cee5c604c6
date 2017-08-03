@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fd657fd4_5616e79c",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-03T01:25:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "500d936f_f3f6db4f",
+      "revId": "dd2ddcc36d2bb7b07912c84236bf63cee5c604c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2a0147e_5909d257",
         "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-02T09:11:50Z",
       "side": 1,
       "message": "nit: could we rename Mode -\u003e FetchMode (it\u0027s private enum so it\u0027s fine, but just for our readability)",
+      "revId": "dd2ddcc36d2bb7b07912c84236bf63cee5c604c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a03d58ac_e4ca1a09",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-03T01:25:05Z",
+      "side": 1,
+      "message": "Done. Went with \"ResponseMode\".",
+      "parentUuid": "f2a0147e_5909d257",
       "revId": "dd2ddcc36d2bb7b07912c84236bf63cee5c604c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f7570f52_9ab5a198",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-03T01:25:05Z",
+      "side": 1,
+      "message": "Oops that broke ASAN. Done.",
+      "parentUuid": "a726352d_9b464f44",
+      "revId": "dd2ddcc36d2bb7b07912c84236bf63cee5c604c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f09fe3b8_247d4677",
         "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "dd2ddcc36d2bb7b07912c84236bf63cee5c604c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6456008_dca0a18d",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-03T01:25:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f09fe3b8_247d4677",
+      "revId": "dd2ddcc36d2bb7b07912c84236bf63cee5c604c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "83d0efbf_9c630254",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-03T01:25:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a59a79b7_1fc50473",
+      "revId": "dd2ddcc36d2bb7b07912c84236bf63cee5c604c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ecd0f1c0_8d0f56e7",
         "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
         "patchSetId": 1
@@ -98,6 +188,24 @@
       "writtenOn": "2017-08-02T09:11:50Z",
       "side": 1,
       "message": "Whoa, we append this 1024 times... (I see that the code is from the old test)",
+      "revId": "dd2ddcc36d2bb7b07912c84236bf63cee5c604c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee922b13_8353bd41",
+        "filename": "content/browser/service_worker/service_worker_url_loader_job_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-03T01:25:05Z",
+      "side": 1,
+      "message": "Yea... Kinda weird.  I think I tried to make it big in https://codereview.chromium.org/293083002 to exercise the multi-function async blob reading path in SWURLRequestJob. Now SWURLLoaderJob is just calling    BlobURLLoaderFactory::CreateLoaderAndStart and ending, so we don\u0027t really need to exercise any path.\n\nI\u0027ll just make this a \"simple\" blob then.",
+      "parentUuid": "ecd0f1c0_8d0f56e7",
       "revId": "dd2ddcc36d2bb7b07912c84236bf63cee5c604c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
