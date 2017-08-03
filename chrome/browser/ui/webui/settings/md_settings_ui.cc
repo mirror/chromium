@@ -17,6 +17,7 @@
 #include "chrome/browser/ui/webui/settings/about_handler.h"
 #include "chrome/browser/ui/webui/settings/appearance_handler.h"
 #include "chrome/browser/ui/webui/settings/browser_lifetime_handler.h"
+#include "chrome/browser/ui/webui/settings/change_password_handler.h"
 #include "chrome/browser/ui/webui/settings/downloads_handler.h"
 #include "chrome/browser/ui/webui/settings/extension_control_handler.h"
 #include "chrome/browser/ui/webui/settings/font_handler.h"
@@ -93,6 +94,11 @@
 #elif defined(OS_WIN) || defined(OS_MACOSX)
 #include "chrome/browser/ui/webui/settings/native_certificates_handler.h"
 #endif  // defined(USE_NSS_CERTS)
+
+#if defined(SAFE_BROWSING_DB_LOCAL)
+#include "chrome/browser/safe_browsing/chrome_password_protection_service.h"
+#include "components/safe_browsing/features.h"
+#endif
 
 namespace settings {
 
@@ -207,6 +213,14 @@ MdSettingsUI::MdSettingsUI(content::WebUI* web_ui)
 #endif  // defined(GOOGLE_CHROME_BUILD)
   }
 #endif  // defined(OS_WIN)
+
+#if defined(SAFE_BROWSING_DB_LOCAL)
+  if (base::FeatureList::IsEnabled(safe_browsing::kGoogleBrandedPhishingWarning)) {
+    AddSettingsPageUIHandler(base::MakeUnique<ChangePasswordHandler>(profile));
+    html_source->AddBoolean("changePasswordEnabled",
+        safe_browsing::ChromePasswordProtectionService::ShouldShowChangePasswordSettingUI(profile));
+  }
+#endif
 
 #if defined(OS_CHROMEOS)
   chromeos::settings::EasyUnlockSettingsHandler* easy_unlock_handler =
