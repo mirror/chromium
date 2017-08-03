@@ -16,6 +16,24 @@
       "revId": "719d7e0bd327a010af081654876685cf0e466359",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16f5e34b_c3b2b43d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-08-03T20:38:32Z",
+      "side": 1,
+      "message": "Bug 477480 is totally unrelated, so I suspect a typo. I didn\u0027t not hunt down initially what the right bug is, but I found it eventually - 477840.",
+      "parentUuid": "8167b3f8_699562fd",
+      "revId": "719d7e0bd327a010af081654876685cf0e466359",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
