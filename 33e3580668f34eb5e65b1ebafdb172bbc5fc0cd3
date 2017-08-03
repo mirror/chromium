@@ -1,0 +1,395 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6ae7b7d_69db9c3b",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 6931,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-03T15:45:20Z",
+      "side": 1,
+      "message": "?",
+      "range": {
+        "startLine": 6931,
+        "startChar": 20,
+        "endLine": 6931,
+        "endChar": 41
+      },
+      "revId": "33e3580668f34eb5e65b1ebafdb172bbc5fc0cd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06c4f228_340565e9",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 996,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-03T15:45:20Z",
+      "side": 1,
+      "message": "Clarify why this is needed.",
+      "range": {
+        "startLine": 996,
+        "startChar": 4,
+        "endLine": 996,
+        "endChar": 41
+      },
+      "revId": "33e3580668f34eb5e65b1ebafdb172bbc5fc0cd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44b2766a_8ff102d7",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-03T15:45:20Z",
+      "side": 1,
+      "message": ".",
+      "range": {
+        "startLine": 14,
+        "startChar": 16,
+        "endLine": 15,
+        "endChar": 32
+      },
+      "revId": "33e3580668f34eb5e65b1ebafdb172bbc5fc0cd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc5dc28a_36635ebb",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-03T15:45:20Z",
+      "side": 1,
+      "message": "Is this the correct timer type?",
+      "range": {
+        "startLine": 40,
+        "startChar": 42,
+        "endLine": 40,
+        "endChar": 56
+      },
+      "revId": "33e3580668f34eb5e65b1ebafdb172bbc5fc0cd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f80978e0_4784d147",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-03T15:45:20Z",
+      "side": 1,
+      "message": "If we do this, I think we can get rid of the place in DocumentLoader where we instantiate an InteractiveDetector, and then don\u0027t do anything with it.",
+      "range": {
+        "startLine": 44,
+        "startChar": 51,
+        "endLine": 44,
+        "endChar": 73
+      },
+      "revId": "33e3580668f34eb5e65b1ebafdb172bbc5fc0cd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63166332_8f68c72a",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-03T15:45:20Z",
+      "side": 1,
+      "message": "Can\u0027t we read the time the timer is going to fire at from the timer?",
+      "range": {
+        "startLine": 76,
+        "startChar": 24,
+        "endLine": 76,
+        "endChar": 43
+      },
+      "revId": "33e3580668f34eb5e65b1ebafdb172bbc5fc0cd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "997d3e30_e5f5446d",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-03T15:45:20Z",
+      "side": 1,
+      "message": "That\u0027s weird, but I think we\u0027d want to avoid the timer of delay 0 anyways. A timer of delay 0 will still be a new task, but if possible, we might as well do this in the same task.",
+      "range": {
+        "startLine": 82,
+        "startChar": 2,
+        "endLine": 84,
+        "endChar": 26
+      },
+      "revId": "33e3580668f34eb5e65b1ebafdb172bbc5fc0cd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3f32766_d848cfa3",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-03T15:45:20Z",
+      "side": 1,
+      "message": "Use a range based for here.\n\nOr possibly better, use std::find_if.",
+      "range": {
+        "startLine": 110,
+        "startChar": 7,
+        "endLine": 111,
+        "endChar": 61
+      },
+      "revId": "33e3580668f34eb5e65b1ebafdb172bbc5fc0cd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35818a07_a2e48fdb",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-03T15:45:20Z",
+      "side": 1,
+      "message": "kConsistentlyInteracitveWindowSeconds \nkConsistentlyInteractiveWindowSeconds",
+      "range": {
+        "startLine": 127,
+        "startChar": 33,
+        "endLine": 127,
+        "endChar": 70
+      },
+      "revId": "33e3580668f34eb5e65b1ebafdb172bbc5fc0cd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fe334ab_d52455ab",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-03T15:45:20Z",
+      "side": 1,
+      "message": "Should this be a WeakMember?\nI can\u0027t imagine a situation where this should keep the document alive.\n\nOr can we guarantee that this never outlives the document, and just keep a raw pointer and document the lifetime constraints?",
+      "range": {
+        "startLine": 38,
+        "startChar": 4,
+        "endLine": 38,
+        "endChar": 10
+      },
+      "revId": "33e3580668f34eb5e65b1ebafdb172bbc5fc0cd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1a1ec25_04cd32f4",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-03T15:45:20Z",
+      "side": 1,
+      "message": "Should this be private?",
+      "range": {
+        "startLine": 50,
+        "startChar": 7,
+        "endLine": 50,
+        "endChar": 40
+      },
+      "revId": "33e3580668f34eb5e65b1ebafdb172bbc5fc0cd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebbc414b_a495faee",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-03T15:45:20Z",
+      "side": 1,
+      "message": "Should we have a getter, or just an observer mechanism?",
+      "range": {
+        "startLine": 53,
+        "startChar": 9,
+        "endLine": 53,
+        "endChar": 39
+      },
+      "revId": "33e3580668f34eb5e65b1ebafdb172bbc5fc0cd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30b6cb35_25a9a921",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-03T15:45:20Z",
+      "side": 1,
+      "message": "I\u0027d consider grouping together the bits of state you get from elsewhere into a struct, to clearly separate them from the state you\u0027re keeping track of.",
+      "range": {
+        "startLine": 71,
+        "startChar": 9,
+        "endLine": 71,
+        "endChar": 18
+      },
+      "revId": "33e3580668f34eb5e65b1ebafdb172bbc5fc0cd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e188459d_89073d29",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-03T15:45:20Z",
+      "side": 1,
+      "message": "candidate already implies \"maybe\".\n\nI\u0027m not sure what the right name is here, perhaps we should chat about it.",
+      "range": {
+        "startLine": 74,
+        "startChar": 9,
+        "endLine": 74,
+        "endChar": 14
+      },
+      "revId": "33e3580668f34eb5e65b1ebafdb172bbc5fc0cd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9de0a6f5_c759dfd3",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-03T15:45:20Z",
+      "side": 1,
+      "message": "Can this just be a unique_ptr, instead of being garbage collected?",
+      "range": {
+        "startLine": 79,
+        "startChar": 9,
+        "endLine": 79,
+        "endChar": 31
+      },
+      "revId": "33e3580668f34eb5e65b1ebafdb172bbc5fc0cd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bd860f2_d56fdbe3",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-03T15:45:20Z",
+      "side": 1,
+      "message": "Where are these coming form?",
+      "range": {
+        "startLine": 85,
+        "startChar": 0,
+        "endLine": 86,
+        "endChar": 28
+      },
+      "revId": "33e3580668f34eb5e65b1ebafdb172bbc5fc0cd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44cc6fe9_46e60ebd",
+        "filename": "third_party/WebKit/Source/core/loader/InteractiveDetectorTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-03T15:45:20Z",
+      "side": 1,
+      "message": "Spelling",
+      "range": {
+        "startLine": 123,
+        "startChar": 43,
+        "endLine": 123,
+        "endChar": 80
+      },
+      "revId": "33e3580668f34eb5e65b1ebafdb172bbc5fc0cd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
