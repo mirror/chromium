@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c5c86749_444888fb",
+        "filename": "cc/layers/surface_layer_impl.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-08-03T03:16:13Z",
+      "side": 1,
+      "message": "If I do that, the DCHECK fails inside SetNew where it tries to set opaque_rect to the empty rect. I will add a TODO to remind myself to change it back in the future.",
+      "parentUuid": "0669dba4_2cdeb551",
+      "revId": "9bfe0bd24e0838149d0cf819bcfb0cbecc72a279",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce26f017_3d1aa7e0",
         "filename": "content/renderer/android/synchronous_layer_tree_frame_sink.cc",
         "patchSetId": 37
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-02T22:22:43Z",
       "side": 1,
       "message": "I think this is a typo, and you meant to just pass is_contents_opaque ?",
+      "revId": "9bfe0bd24e0838149d0cf819bcfb0cbecc72a279",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b78ee5e_8adf7b82",
+        "filename": "content/renderer/android/synchronous_layer_tree_frame_sink.cc",
+        "patchSetId": 37
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1158749
+      },
+      "writtenOn": "2017-08-03T03:16:13Z",
+      "side": 1,
+      "message": "yes, yes, I mean to use the bool I created! It\u0027s weird that i did not get an unused variable exception for this.",
+      "parentUuid": "ce26f017_3d1aa7e0",
       "revId": "9bfe0bd24e0838149d0cf819bcfb0cbecc72a279",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
