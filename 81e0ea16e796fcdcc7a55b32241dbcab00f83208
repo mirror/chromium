@@ -22,6 +22,30 @@
       "revId": "81e0ea16e796fcdcc7a55b32241dbcab00f83208",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f094c6c_f48abb06",
+        "filename": "content/browser/renderer_host/input/touch_disposition_gesture_filter_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1223669
+      },
+      "writtenOn": "2017-08-03T13:19:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9e27fd4_6c7f0c2b",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 56
+      },
+      "revId": "81e0ea16e796fcdcc7a55b32241dbcab00f83208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
