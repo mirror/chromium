@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f3aef938_289b1c03",
+        "filename": "chrome/browser/extensions/api/messaging/native_process_launcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-08-03T18:25:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "123d1717_f73cd68b",
+      "range": {
+        "startLine": 195,
+        "startChar": 43,
+        "endLine": 195,
+        "endChar": 45
+      },
+      "revId": "01921e084f7efb1bc740f2d8f2f9168cc8fe63a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "489a224b_4a38ea61",
         "filename": "tools/gn/command_clean.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "01921e084f7efb1bc740f2d8f2f9168cc8fe63a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7feef3c8_a3984f03",
+        "filename": "tools/gn/command_clean.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-08-03T18:25:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "489a224b_4a38ea61",
+      "range": {
+        "startLine": 49,
+        "startChar": 35,
+        "endLine": 49,
+        "endChar": 36
+      },
+      "revId": "01921e084f7efb1bc740f2d8f2f9168cc8fe63a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
