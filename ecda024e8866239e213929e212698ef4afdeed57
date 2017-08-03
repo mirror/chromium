@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51396d28_83e28fc6",
+        "filename": "content/browser/loader/netlog_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-03T17:37:36Z",
+      "side": 0,
+      "message": "Looks like we were able to get request headers for quic and http2, but not anymore?",
+      "revId": "ecda024e8866239e213929e212698ef4afdeed57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

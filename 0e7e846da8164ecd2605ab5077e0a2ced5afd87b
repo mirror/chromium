@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "cdd742d0_8231051a",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1376,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-03T17:37:36Z",
+      "side": 1,
+      "message": "Should we change load_flags here instead and not pass report_raw_headers around?",
+      "revId": "0e7e846da8164ecd2605ab5077e0a2ced5afd87b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecd611ec_52d7428e",
+        "filename": "content/public/common/resource_devtools_info.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-03T17:37:36Z",
+      "side": 1,
+      "message": "Why this? Can\u0027t we still fill in request headers information?",
+      "revId": "0e7e846da8164ecd2605ab5077e0a2ced5afd87b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40eb3493_0b7a022c",
         "filename": "net/http/http_transaction_test_util.h",
         "patchSetId": 4
@@ -13,6 +47,23 @@
       "writtenOn": "2017-08-03T16:47:39Z",
       "side": 1,
       "message": "space between override and {} please",
+      "revId": "0e7e846da8164ecd2605ab5077e0a2ced5afd87b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "812ec4a2_e7757665",
+        "filename": "net/url_request/url_request_job.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-03T17:37:36Z",
+      "side": 1,
+      "message": "Don\u0027t you want to implement this in every subclass?",
       "revId": "0e7e846da8164ecd2605ab5077e0a2ced5afd87b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
