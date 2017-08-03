@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d25d6cd1_7b9c8454",
+        "filename": "ui/webui/resources/js/cr/ui/list.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-03T15:01:09Z",
+      "side": 1,
+      "message": "Now I have tried to replace mouse* with pointer* events, but I found that touchmove and pointermove are different.\nFrom what I observed, touchmove is not sent when tapping (without significantly large motion), whereas pointermove is sent even with smaller motion with the current implementation of Chrome.\nI think it\u0027s not something guaranteed, but I think touchmove gives event in the more suitable granularity of events for our specific use case.",
+      "parentUuid": "b42c8d33_a5f2880c",
+      "revId": "8a43a358430fe4b1218fd2e9c3c3bf81f6a9c124",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a932073_b7c68557",
         "filename": "ui/webui/resources/js/cr/ui/list.js",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "8a43a358430fe4b1218fd2e9c3c3bf81f6a9c124",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42cf1e83_5aefbae3",
+        "filename": "ui/webui/resources/js/cr/ui/list.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 570,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-03T15:01:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a932073_b7c68557",
+      "revId": "8a43a358430fe4b1218fd2e9c3c3bf81f6a9c124",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
