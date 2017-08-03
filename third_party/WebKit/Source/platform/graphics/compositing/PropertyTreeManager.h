@@ -5,10 +5,12 @@
 #ifndef PropertyTreeManager_h
 #define PropertyTreeManager_h
 
+#include "platform/graphics/CompositorElementId.h"
 #include "platform/wtf/HashMap.h"
 #include "platform/wtf/HashSet.h"
 #include "platform/wtf/Noncopyable.h"
 #include "platform/wtf/Vector.h"
+#include "third_party/skia/include/core/SkBlendMode.h"
 
 namespace cc {
 class ClipTree;
@@ -26,15 +28,26 @@ class EffectPaintPropertyNode;
 class ScrollPaintPropertyNode;
 class TransformPaintPropertyNode;
 
+class PropertyTreeManagerClient {
+ public:
+  virtual cc::Layer* RootLayer() const = 0;
+  virtual cc::Layer* SynthesizeClip(const ClipPaintPropertyNode*,
+                                    CompositorElementId (&)[2]) = 0;
+};
+
 // Mutates a cc property tree to reflect Blink paint property tree
 // state. Intended for use by PaintArtifactCompositor.
 class PropertyTreeManager {
   WTF_MAKE_NONCOPYABLE(PropertyTreeManager);
 
  public:
-  PropertyTreeManager(cc::PropertyTrees&,
-                      cc::Layer* root_layer,
+  PropertyTreeManager(PropertyTreeManagerClient&,
+                      cc::PropertyTrees&,
                       int sequence_number);
+  ~PropertyTreeManager() {
+    DCHECK(!effect_stack_.size()) << "PropertyTreeManager::Finalize() must be "
+                                     "called at the end of tree conversion.";
+  }
 
   void SetupRootTransformNode();
   void SetupRootClipNode();
@@ -79,13 +92,20 @@ class PropertyTreeManager {
   // until |owning_layer_id| is removed from the scroll node.
   void UpdateLayerScrollMapping(cc::Layer*, const TransformPaintPropertyNode*);
 
-  int SwitchToEffectNode(const EffectPaintPropertyNode& next_effect);
-  int GetCurrentCompositorEffectNodeIndex() const {
-    return effect_stack_.back().id;
-  }
+  int SwitchToEffectNodeWithSynthesizedClip(
+      const EffectPaintPropertyNode& next_effect,
+      const ClipPaintPropertyNode& next_clip);
+  void Finalize();
 
  private:
-  void BuildEffectNodesRecursively(const EffectPaintPropertyNode* next_effect);
+  bool BuildEffectNodesRecursively(const EffectPaintPropertyNode* next_effect);
+  SkBlendMode SynthesizeCcEffectForClipIfNeeded(
+      const ClipPaintPropertyNode* target_clip,
+      SkBlendMode delegated_blend,
+      bool effect_is_newly_built);
+  void EmitClipMaskLayer();
+  void CloseCcEffect();
+  bool IsCurrentCcEffectSynthetic() const;
 
   cc::TransformTree& GetTransformTree();
   cc::ClipTree& GetClipTree();
@@ -94,10 +114,10 @@ class PropertyTreeManager {
 
   int EnsureCompositorScrollNode(const ScrollPaintPropertyNode*);
 
-  const EffectPaintPropertyNode* CurrentEffectNode() const;
-
   // Scroll translation has special treatment in the transform and scroll trees.
   void UpdateScrollAndScrollTranslationNodes(const TransformPaintPropertyNode*);
+
+  PropertyTreeManagerClient& client_;
 
   // Property trees which should be updated by the manager.
   cc::PropertyTrees& property_trees_;
@@ -111,13 +131,17 @@ class PropertyTreeManager {
   HashMap<const ClipPaintPropertyNode*, int> clip_node_map_;
   HashMap<const ScrollPaintPropertyNode*, int> scroll_node_map_;
 
-  struct BlinkEffectAndCcIdPair {
+  struct EffectStackEntry {
+    enum class EffectType : char { kRoundedClip, kEffect } type;
     const EffectPaintPropertyNode* effect;
-    // The cc property tree effect node id, or 'node index', for the cc effect
-    // node corresponding to the above Blink effect paint property node.
-    int id;
+    const ClipPaintPropertyNode* clip;
+    int effect_id;
   };
-  Vector<BlinkEffectAndCcIdPair> effect_stack_;
+  Vector<EffectStackEntry> effect_stack_;
+  const EffectPaintPropertyNode* current_effect_;
+  const ClipPaintPropertyNode* current_clip_;
+  int current_effect_id_;
+
   int sequence_number_;
 
 #if DCHECK_IS_ON()
