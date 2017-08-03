@@ -7,33 +7,19 @@
 
 #include "public/platform/WebCommon.h"
 
-#include <memory>
-
 namespace blink {
-
-enum class WebPresentationConnectionState;
-class WebPresentationConnectionProxy;
-class WebString;
 
 // Implemented by the embedder for a PresentationConnection.
 class WebPresentationConnection {
  public:
   virtual ~WebPresentationConnection() = default;
 
-  // Takes ownership of |proxy| and stores it in connection object. Should be
-  // called only once.
-  virtual void BindProxy(std::unique_ptr<WebPresentationConnectionProxy>) = 0;
-
-  // Notifies the presentation about new message.
-  virtual void DidReceiveTextMessage(const WebString& message) = 0;
-  virtual void DidReceiveBinaryMessage(const uint8_t* data, size_t length) = 0;
-
-  // Notifies the connection about its state change.
-  virtual void DidChangeState(WebPresentationConnectionState) = 0;
-
-  // Notifies the connection about its state change to 'closed' with "Closed"
-  // reason.
-  virtual void DidClose() = 0;
+  // Initializes a controller PresentationConnection. It is an error to call
+  // this for a receiver PresentationConnection.
+  // Note: This is a bit hacky considering this interface is also used
+  // for receiver PresentationConnections, but this interface will be removed
+  // altogether once crbug.com/749327 is fixed.
+  virtual void InitForController() = 0;
 };
 
 }  // namespace blink

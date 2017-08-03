@@ -12,6 +12,7 @@
 #include "modules/presentation/PresentationRequest.h"
 #include "platform/wtf/PtrUtil.h"
 #include "public/platform/modules/presentation/WebPresentationError.h"
+#include "public/platform/modules/presentation/presentation.mojom-blink.h"
 
 namespace blink {
 
@@ -39,15 +40,16 @@ void PresentationConnectionCallbacks::OnSuccess(
   }
 
   // Reconnect to existing connection.
-  if (connection_ &&
-      connection_->GetState() == WebPresentationConnectionState::kClosed) {
-    connection_->DidChangeState(WebPresentationConnectionState::kConnecting);
+  if (connection_ && connection_->GetState() ==
+                         mojom::blink::PresentationConnectionState::CLOSED) {
+    connection_->DidChangeState(
+        mojom::blink::PresentationConnectionState::CONNECTING);
   }
 
   // Create a new connection.
   if (!connection_ && request_) {
-    connection_ = PresentationConnection::Take(resolver_.Get(),
-                                               presentation_info, request_);
+    connection_ = ControllerPresentationConnection::Take(
+        resolver_.Get(), presentation_info, request_);
   }
   resolver_->Resolve(connection_);
 }

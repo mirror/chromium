@@ -7,6 +7,7 @@
 
 #include "core/dom/ContextLifecycleObserver.h"
 #include "core/frame/LocalFrame.h"
+#include "core/frame/LocalFrameClient.h"
 #include "modules/ModulesExport.h"
 #include "modules/presentation/Presentation.h"
 #include "modules/presentation/PresentationRequest.h"
@@ -14,6 +15,8 @@
 #include "platform/heap/Handle.h"
 #include "public/platform/modules/presentation/WebPresentationClient.h"
 #include "public/platform/modules/presentation/WebPresentationController.h"
+#include "public/platform/modules/presentation/presentation.mojom-blink.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 
 namespace blink {
 
@@ -75,6 +78,8 @@ class MODULES_EXPORT PresentationController final
       const blink::WebVector<blink::WebURL>& presentation_urls,
       const blink::WebString& presentation_id);
 
+  mojom::blink::PresentationServicePtr& GetPresentationService();
+
  private:
   PresentationController(LocalFrame&, WebPresentationClient*);
 
@@ -96,6 +101,8 @@ class MODULES_EXPORT PresentationController final
 
   // The presentation connections associated with that frame.
   HeapHashSet<WeakMember<PresentationConnection>> connections_;
+
+  mojom::blink::PresentationServicePtr presentation_service_;
 };
 
 }  // namespace blink
