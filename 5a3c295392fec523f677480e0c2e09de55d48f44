@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c576e3d3_d26d8231",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-03T20:01:32Z",
+      "side": 1,
+      "message": "Don\u0027t you have to say UI.ListDelegate\u003cConsole.ConsoleSidebar.GroupItem\u003e for things to compile?",
+      "range": {
+        "startLine": 6,
+        "startChar": 18,
+        "endLine": 6,
+        "endChar": 30
+      },
+      "revId": "5a3c295392fec523f677480e0c2e09de55d48f44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e60a4b9_ac8ce666",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-03T20:01:32Z",
+      "side": 1,
+      "message": "Same for model and list?",
+      "revId": "5a3c295392fec523f677480e0c2e09de55d48f44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c347b475_a244acb1",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-03T20:01:32Z",
+      "side": 1,
+      "message": "Should do the same from onResize.",
+      "range": {
+        "startLine": 39,
+        "startChar": 15,
+        "endLine": 39,
+        "endChar": 30
+      },
+      "revId": "5a3c295392fec523f677480e0c2e09de55d48f44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ed31b1b_8d347022",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-03T20:01:32Z",
+      "side": 1,
+      "message": "Why this change? I don\u0027t see where it\u0027s used.",
+      "range": {
+        "startLine": 58,
+        "startChar": 9,
+        "endLine": 58,
+        "endChar": 16
+      },
+      "revId": "5a3c295392fec523f677480e0c2e09de55d48f44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
