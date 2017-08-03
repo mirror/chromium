@@ -16,6 +16,24 @@
       "revId": "3e85190f11284f5bede0512dab810fff9c586851",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "128f5c47_497d536d",
+        "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_manager_atomic.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1112153
+      },
+      "writtenOn": "2017-08-03T23:02:33Z",
+      "side": 1,
+      "message": "That\u0027s interesting. Would you mind if I ask did you test Android with this CL?\n\nOn i915, when PRI plane supports RGBA, OVL plane always supports RGBA.\nDo you mean some Android devices support RGBA for OVL plane, but not support RGBA for PRI plane?",
+      "parentUuid": "c7570920_2b10892b",
+      "revId": "3e85190f11284f5bede0512dab810fff9c586851",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
