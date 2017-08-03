@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "159ccf67_45ee0a26",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-03T00:10:54Z",
+      "side": 1,
+      "message": "unchecked consume/peeks can be added to the existing code though right? what is the other benefit of replacing the ranges with streams? is it going to be more performant in future?",
+      "revId": "22010497bc2f4ccf4515876fae784eaa6d5d08e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "655cc497_d660f4c9",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 857,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-03T00:10:54Z",
+      "side": 1,
+      "message": "how does this work? what prevents use_observer being true here?",
+      "revId": "22010497bc2f4ccf4515876fae784eaa6d5d08e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dd16ad2_8f9bcbbe",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserTokenStream.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-03T00:10:54Z",
+      "side": 1,
+      "message": "does this ever need to be called after AtEnd is true? could make this unchecked too and replace this with a dcheck?",
+      "revId": "22010497bc2f4ccf4515876fae784eaa6d5d08e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d39e8c94_602a4c79",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserTokenStream.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-03T00:10:54Z",
+      "side": 1,
+      "message": "Please add information about what is blocking this todo (i.e. converting other methods?)",
+      "revId": "22010497bc2f4ccf4515876fae784eaa6d5d08e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cfc1694_6f72f97d",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserTokenStream.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-03T00:10:54Z",
+      "side": 1,
+      "message": "doesn\u0027t one of these if conditions being true guarantee that the other is true?",
+      "revId": "22010497bc2f4ccf4515876fae784eaa6d5d08e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3878ea0c_3c7aa25a",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserTokenStream.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-03T00:10:54Z",
+      "side": 1,
+      "message": "call UncheckedPeek here instead of dupicating code",
+      "revId": "22010497bc2f4ccf4515876fae784eaa6d5d08e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
