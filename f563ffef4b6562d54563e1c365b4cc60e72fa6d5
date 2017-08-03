@@ -102,6 +102,30 @@
     },
     {
       "key": {
+        "uuid": "ed514f7b_15f7c9ec",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1594,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-03T23:41:40Z",
+      "side": 1,
+      "message": "No, I like your explanation. Maybe add a comment in relaunch_self to that effect?",
+      "parentUuid": "09cc3b01_15677815",
+      "range": {
+        "startLine": 1594,
+        "startChar": 44,
+        "endLine": 1594,
+        "endChar": 0
+      },
+      "revId": "f563ffef4b6562d54563e1c365b4cc60e72fa6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bbff7d09_88b7d077",
         "filename": "remoting/host/linux/remoting_user_session.cc",
         "patchSetId": 1
@@ -152,6 +176,24 @@
       "revId": "f563ffef4b6562d54563e1c365b4cc60e72fa6d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c80ce6f_9e10472a",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-08-03T23:41:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fc04bd51_7ddef922",
+      "revId": "f563ffef4b6562d54563e1c365b4cc60e72fa6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
