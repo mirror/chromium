@@ -19,6 +19,29 @@
     },
     {
       "key": {
+        "uuid": "9287543b_c39f4bfd",
+        "filename": "tools/perf/disable_story",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-08-03T01:21:24Z",
+      "side": 1,
+      "message": "what if there are multiple \u0027def SetExpectations\u0027 in the file?\n\ne.g: there are 10 of them in https://cs.chromium.org/chromium/src/tools/perf/benchmarks/blink_perf.py",
+      "range": {
+        "startLine": 43,
+        "startChar": 39,
+        "endLine": 43,
+        "endChar": 0
+      },
+      "revId": "0fb59bcf8259695a958b178eaa25a5c98c2e43b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7b75d32c_1d4fff37",
         "filename": "tools/perf/disable_story",
         "patchSetId": 4
