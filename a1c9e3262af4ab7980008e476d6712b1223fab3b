@@ -94,6 +94,30 @@
       "revId": "a1c9e3262af4ab7980008e476d6712b1223fab3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28386130_be3bb77f",
+        "filename": "components/simple_url_loader/simple_url_loader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-03T21:04:10Z",
+      "side": 1,
+      "message": "We are guaranteed to observe the pipe closure but we won\u0027t be able to determine whether it closed because the body was completely written to data data pipe or because the producing process crashed. We will have to check the body length against the ResourceRequestCompletionStatus to determine that.",
+      "parentUuid": "f4abdbb4_bc32342a",
+      "range": {
+        "startLine": 88,
+        "startChar": 0,
+        "endLine": 100,
+        "endChar": 7
+      },
+      "revId": "a1c9e3262af4ab7980008e476d6712b1223fab3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
