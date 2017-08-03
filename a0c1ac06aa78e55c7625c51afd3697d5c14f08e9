@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "191bbca9_3b402f98",
+        "filename": "components/viz/host/hit_test/hit_test_query.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-03T18:03:00Z",
+      "side": 1,
+      "message": "HTA creates handles and maps to get mappings when we AllocateHitTestRegionArray. We are not sending handles out to the HTQ immediately tho, but rather with every begin-frame so these handles have to be stored in HTA?",
+      "parentUuid": "7dd67046_dead1296",
+      "revId": "a0c1ac06aa78e55c7625c51afd3697d5c14f08e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "45a65e08_4e202b1f",
         "filename": "components/viz/host/hit_test/hit_test_query.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "a0c1ac06aa78e55c7625c51afd3697d5c14f08e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dba09770_dd91ae7f",
+        "filename": "components/viz/host/hit_test/hit_test_query.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-03T18:03:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45a65e08_4e202b1f",
+      "revId": "a0c1ac06aa78e55c7625c51afd3697d5c14f08e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b9ac2b8f_298eda40",
+        "filename": "components/viz/host/hit_test/hit_test_query.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-03T18:03:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47a276e9_78cc7b83",
+      "revId": "a0c1ac06aa78e55c7625c51afd3697d5c14f08e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a141518d_18e97278",
         "filename": "components/viz/host/hit_test/hit_test_query.h",
         "patchSetId": 5
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-03T08:32:23Z",
       "side": 1,
       "message": "If only one of the handles is replaced, will this be called with both handles, or just one?",
+      "revId": "a0c1ac06aa78e55c7625c51afd3697d5c14f08e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce055e13_8c0b85b9",
+        "filename": "components/viz/host/hit_test/hit_test_query.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-03T18:03:00Z",
+      "side": 1,
+      "message": "It will be called with both handles. Because we always send read_handle first and then write_handle, read_handle would be the one that got replaced (after swapping in HTA) so if we only replace read_handle we\u0027ll not be pointing to the new write_handle anymore in HTQ. I could use |active_handle_index| to determine whether to send (read, write) or (write, read) from HTA to HTQ but that gets harder to understand so I kept it this way. WDYT?",
+      "parentUuid": "a141518d_18e97278",
       "revId": "a0c1ac06aa78e55c7625c51afd3697d5c14f08e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "85e3443a_f0f00362",
+        "filename": "components/viz/service/frame_sinks/gpu_root_compositor_frame_sink.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-03T18:03:00Z",
+      "side": 1,
+      "message": "I can\u0027t remember the reason why I changed it, changed back.",
+      "parentUuid": "e881a441_a68313a9",
+      "revId": "a0c1ac06aa78e55c7625c51afd3697d5c14f08e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95e43547_5c52ca1e",
         "filename": "components/viz/service/hit_test/hit_test_aggregator.h",
         "patchSetId": 5
@@ -101,6 +191,24 @@
       "revId": "a0c1ac06aa78e55c7625c51afd3697d5c14f08e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c134b47_dfb17d10",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-03T18:03:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95e43547_5c52ca1e",
+      "revId": "a0c1ac06aa78e55c7625c51afd3697d5c14f08e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "5ffe05dc_b30fe0cb",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-03T18:03:00Z",
+      "side": 1,
+      "message": "Made it const.\n\nYea the TestHitTestAggregator is accessing all these variables, moving all of them together in another CL?",
+      "parentUuid": "0b851a58_a05e002d",
+      "revId": "a0c1ac06aa78e55c7625c51afd3697d5c14f08e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f1bc28ed_e93ecbf7",
         "filename": "components/viz/service/hit_test/hit_test_aggregator_delegate.h",
         "patchSetId": 5
@@ -152,6 +278,24 @@
       "revId": "a0c1ac06aa78e55c7625c51afd3697d5c14f08e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d94889a2_949b22c9",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-03T18:03:00Z",
+      "side": 1,
+      "message": "Good point, done.",
+      "parentUuid": "f1bc28ed_e93ecbf7",
+      "revId": "a0c1ac06aa78e55c7625c51afd3697d5c14f08e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -172,6 +316,24 @@
     },
     {
       "key": {
+        "uuid": "19ea718a_d1554eec",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator_delegate.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-03T18:03:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02f8482e_70280f1e",
+      "revId": "a0c1ac06aa78e55c7625c51afd3697d5c14f08e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a800982_586b98ba",
         "filename": "components/viz/service/hit_test/hit_test_aggregator_unittest.cc",
         "patchSetId": 5
@@ -189,6 +351,24 @@
     },
     {
       "key": {
+        "uuid": "8ec5f7b8_8d2f3aac",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-03T18:03:00Z",
+      "side": 1,
+      "message": "Right, deleted.",
+      "parentUuid": "7a800982_586b98ba",
+      "revId": "a0c1ac06aa78e55c7625c51afd3697d5c14f08e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9ef9333_26933d49",
         "filename": "services/ui/ws/window_server.cc",
         "patchSetId": 5
@@ -200,6 +380,24 @@
       "writtenOn": "2017-08-03T08:32:23Z",
       "side": 1,
       "message": "NOTREACHED()\n\nAlthough this probably may not always be a security issue. (e.g. display gets destroyed, but viz doesn\u0027t know it yet)",
+      "revId": "a0c1ac06aa78e55c7625c51afd3697d5c14f08e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3939ca6_220a3239",
+        "filename": "services/ui/ws/window_server.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 927,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-03T18:03:00Z",
+      "side": 1,
+      "message": "Added NOTREACHED() and TODO.",
+      "parentUuid": "b9ef9333_26933d49",
       "revId": "a0c1ac06aa78e55c7625c51afd3697d5c14f08e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -223,6 +421,24 @@
     },
     {
       "key": {
+        "uuid": "4f69a6bb_5c9f8e2c",
+        "filename": "services/ui/ws/window_server.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 941,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-03T18:03:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "431edd7c_4f2e453c",
+      "revId": "a0c1ac06aa78e55c7625c51afd3697d5c14f08e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "503d93ed_dafa5bce",
         "filename": "services/ui/ws/window_server.cc",
         "patchSetId": 5
@@ -234,6 +450,24 @@
       "writtenOn": "2017-08-03T08:32:23Z",
       "side": 1,
       "message": "Validate the index too.",
+      "revId": "a0c1ac06aa78e55c7625c51afd3697d5c14f08e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbe9eaa3_5f5ad662",
+        "filename": "services/ui/ws/window_server.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 943,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-03T18:03:00Z",
+      "side": 1,
+      "message": "Do you mean |active_handle_index|? Validated in HTQ.",
+      "parentUuid": "503d93ed_dafa5bce",
       "revId": "a0c1ac06aa78e55c7625c51afd3697d5c14f08e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -257,6 +491,24 @@
     },
     {
       "key": {
+        "uuid": "938e1e6a_e28b50c6",
+        "filename": "services/ui/ws/window_server.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-03T18:03:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3d98c37_e479c5f1",
+      "revId": "a0c1ac06aa78e55c7625c51afd3697d5c14f08e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "433e29a3_d84f3854",
         "filename": "services/ui/ws/window_server.h",
         "patchSetId": 5
@@ -271,6 +523,24 @@
       "revId": "a0c1ac06aa78e55c7625c51afd3697d5c14f08e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52a4b3fb_3bf4fc4f",
+        "filename": "services/ui/ws/window_server.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-03T18:03:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "433e29a3_d84f3854",
+      "revId": "a0c1ac06aa78e55c7625c51afd3697d5c14f08e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
