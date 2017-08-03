@@ -139,8 +139,6 @@ class PLATFORM_EXPORT WrapperVisitor {
     }
   }
 
-  virtual bool TracingInProgress() const = 0;
-
  protected:
   template <typename T>
   void TraceWrappers(const T* traceable) const {

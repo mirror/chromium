@@ -37,6 +37,7 @@ void ScriptWrappableVisitor::TracePrologue() {
   CHECK(marking_deque_.IsEmpty());
   CHECK(verifier_deque_.IsEmpty());
   tracing_in_progress_ = true;
+  ThreadState::Current()->SetWrapperTracingInProgress(true);
 }
 
 void ScriptWrappableVisitor::EnterFinalPause() {
@@ -58,6 +59,7 @@ void ScriptWrappableVisitor::TraceEpilogue() {
 
   should_cleanup_ = true;
   tracing_in_progress_ = false;
+  ThreadState::Current()->SetWrapperTracingInProgress(false);
   ScheduleIdleLazyCleanup();
 }
 
@@ -65,6 +67,7 @@ void ScriptWrappableVisitor::AbortTracing() {
   CHECK(ThreadState::Current());
   should_cleanup_ = true;
   tracing_in_progress_ = false;
+  ThreadState::Current()->SetWrapperTracingInProgress(false);
   PerformCleanup();
 }
 
@@ -222,16 +225,12 @@ void ScriptWrappableVisitor::MarkWrappersInAllWorlds(
 void ScriptWrappableVisitor::WriteBarrier(
     v8::Isolate* isolate,
     const TraceWrapperV8Reference<v8::Value>* dst_object) {
-  if (!dst_object || dst_object->IsEmpty()) {
+  if (!dst_object || dst_object->IsEmpty() ||
+      !ThreadState::Current()->WrapperTracingInProgress()) {
     return;
   }
 
   WrapperVisitor* const current = CurrentVisitor(isolate);
-
-  // Bail out if tracing is not in progress.
-  if (!current->TracingInProgress())
-    return;
-
   // Conservatively assume that the source object containing |dst_object| is
   // marked.
   current->MarkWrapper(
@@ -241,7 +240,8 @@ void ScriptWrappableVisitor::WriteBarrier(
 void ScriptWrappableVisitor::WriteBarrier(
     v8::Isolate* isolate,
     const v8::Persistent<v8::Object>* dst_object) {
-  if (!dst_object || dst_object->IsEmpty()) {
+  if (!dst_object || dst_object->IsEmpty() ||
+      !ThreadState::Current()->WrapperTracingInProgress()) {
     return;
   }
   CurrentVisitor(isolate)->MarkWrapper(&(dst_object->As<v8::Value>()));
