@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1084d557_b1d18c91",
+        "filename": "chrome/browser/net/android_status_listener.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-08-03T18:41:28Z",
+      "side": 1,
+      "message": "I don\u0027t think this works.. if OnApplicationStateChange and the destructor both try to run on different threads, and the destructor wins the race and grabs the callback_lock_, the OnApplicationStateChange will block until the destructor returns, and then OnApplicationStateChange will run during/after the object is torn down.\n\nI think if you move app_status_listener_ to be the last member of the class it will automatically work, since it uses ObserverListThreadSafe internally.\nIf OnApplicationStateChange is already running, the destructor will block until OnApplicationStateChange returns. If the destructor runs before OnApplicationStateChange gets called, it will not be called.\n\nThough you may still need the lock to ensure stopped_callback_ isn\u0027t modified and read on different threads if SetApplicationStoppedCallback is called at the same time as OnApplicationStateChange.\n\nThough, CookieMonster is already non-thread-safe, so is this all really a concern anyway? Could you just make the class non-thread-safe and require it to be constructed on the same thread that SetApplicationStoppedCallback is called and that it is destructed on?",
+      "range": {
+        "startLine": 37,
+        "startChar": 29,
+        "endLine": 37,
+        "endChar": 39
+      },
+      "revId": "ccc7c27e1b94ebefb38176e2fc4ab9f0cfd9e835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a72cc7d_3fafdb51",
+        "filename": "net/cookies/cookie_monster.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-08-03T18:41:28Z",
+      "side": 1,
+      "message": "CalledOnValidThread?",
+      "revId": "ccc7c27e1b94ebefb38176e2fc4ab9f0cfd9e835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
