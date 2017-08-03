@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d6d507cb_1a7b0bff",
+        "filename": "tools/mb/mb.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-08-03T01:23:25Z",
+      "side": 1,
+      "message": "Documented in the MB user guide and added a reference here.",
+      "parentUuid": "17ec2227_3cc6bf82",
+      "revId": "eae4c032ae2bb969ac06928a2e1e6d2fb73f771d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0efb7885_5f02b6e9",
         "filename": "tools/mb/mb.py",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-07-23T22:20:15Z",
       "side": 1,
       "message": "Can you add this to mb_config.pyl instead so we don\u0027t need the special case logic here?",
+      "revId": "eae4c032ae2bb969ac06928a2e1e6d2fb73f771d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db71c93d_2afc20fb",
+        "filename": "tools/mb/mb.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 379,
+      "author": {
+        "id": 1125980
+      },
+      "writtenOn": "2017-08-03T01:23:25Z",
+      "side": 1,
+      "message": "Done. I needed to add a separate map for luci in mb_config.py because the bucket names begin with \"luci.\" instead of \"master.\".",
+      "parentUuid": "0efb7885_5f02b6e9",
       "revId": "eae4c032ae2bb969ac06928a2e1e6d2fb73f771d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
