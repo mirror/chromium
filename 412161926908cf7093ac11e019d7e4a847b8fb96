@@ -301,6 +301,30 @@
     },
     {
       "key": {
+        "uuid": "e63c20b3_3a4454c6",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 33
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-03T18:59:34Z",
+      "side": 1,
+      "message": "We need it for the scenario where an \u003ciframe\u003e is dynamically inserted, and then before it would commit a real load, the parent uses document.write() to write a \u003cscript\u003e into it that calls Web APIs backed by Mojo.\n\nIn this case, the message loop is not pumped between CreateChildFrame and the invocations of said Web APIs from the newly created child.",
+      "parentUuid": "ccb7da9d_e8174275",
+      "range": {
+        "startLine": 106,
+        "startChar": 2,
+        "endLine": 106,
+        "endChar": 46
+      },
+      "revId": "412161926908cf7093ac11e019d7e4a847b8fb96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "233719e0_3538667d",
         "filename": "content/common/frame.mojom",
         "patchSetId": 33
