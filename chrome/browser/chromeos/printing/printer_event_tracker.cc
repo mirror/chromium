@@ -4,6 +4,9 @@
 
 #include "chrome/browser/chromeos/printing/printer_event_tracker.h"
 
+#include <string>
+#include <vector>
+
 #include "components/keyed_service/core/keyed_service.h"
 #include "components/metrics/proto/printer_event.pb.h"
 
@@ -19,6 +22,9 @@ void SetEventType(metrics::PrinterEventProto* event,
       break;
     case PrinterEventTracker::kAutomatic:
       event->set_event_type(metrics::PrinterEventProto::SETUP_AUTOMATIC);
+      break;
+    case PrinterEventTracker::kUnknownMode:
+      event->set_event_type(metrics::PrinterEventProto::UNKNOWN);
       break;
   }
 }
