@@ -20,6 +20,7 @@
 #include "content/browser/renderer_host/render_widget_host_input_event_router.h"
 #include "content/browser/renderer_host/render_widget_host_view_base.h"
 #include "content/common/frame_messages.h"
+#include "content/public/browser/render_widget_host_view.h"
 #include "gpu/ipc/common/gpu_messages.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
 #include "ui/gfx/geometry/dip_util.h"
@@ -298,13 +299,15 @@ void CrossProcessFrameConnector::OnVisibilityChanged(bool visible) {
     return;
   }
 
-  if (visible &&
-      !RenderWidgetHostImpl::From(view_->GetRenderWidgetHost())
-           ->delegate()
-           ->IsHidden()) {
-    view_->Show();
-  } else if (!visible) {
-    view_->Hide();
+  // Also notify the child frame's views.
+  for (auto* view : GetAllSubViews()) {
+    if (visible && !RenderWidgetHostImpl::From(view->GetRenderWidgetHost())
+                        ->delegate()
+                        ->IsHidden()) {
+      view->Show();
+    } else if (!visible) {
+      view->Hide();
+    }
   }
 }
 
@@ -376,6 +379,18 @@ CrossProcessFrameConnector::GetParentRenderWidgetHostView() {
   }
 
   return nullptr;
+}
+
+std::unordered_set<RenderWidgetHostView*>
+CrossProcessFrameConnector::GetAllSubViews() {
+  std::unordered_set<RenderWidgetHostView*> views;
+  FrameTreeNode* proxy_node =
+      frame_proxy_in_parent_renderer_->frame_tree_node();
+  for (FrameTreeNode* node :
+       proxy_node->frame_tree()->SubtreeNodes(proxy_node)) {
+    views.insert(node->current_frame_host()->GetView());
+  }
+  return views;
 }
 
 }  // namespace content
