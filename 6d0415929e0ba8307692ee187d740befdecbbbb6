@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f080c7b_1e918308",
+        "filename": "base/task_scheduler/task_tracker_posix_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-03T18:40:03Z",
+      "side": 1,
+      "message": "Preivously, these tests created nested ScopedSetSequenceLocalStorageMapForCurrentThread instances (in MessageLoopForIO and in TaskTracker::RunNextTask(). Since we don\u0027t want to allow nested ScopedSetSequenceLocalStorageMapForCurrentThread instances, I had to refactor the tests.",
+      "revId": "6d0415929e0ba8307692ee187d740befdecbbbb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
