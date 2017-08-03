@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6da983e_efb14be2",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/output.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-03T18:41:57Z",
+      "side": 1,
+      "message": "Spanning multiple lines is cool.\n\nDo you want to also switch to using the template literal\nstring interpolation syntax and substitution features,\nlike ${role} instead of $role? Doesn\u0027t have to be for this\nchange, just curious if you think that\u0027d be a win.",
+      "revId": "fbd3d12f733366d87725c2b0ce8a0523161c9ad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64a481a7_2f36160b",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/output.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 921,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-03T18:41:57Z",
+      "side": 1,
+      "message": "remove before landing",
+      "revId": "fbd3d12f733366d87725c2b0ce8a0523161c9ad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
