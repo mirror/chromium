@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "667deffc_7c99e71a",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-08-03T05:42:30Z",
+      "side": 1,
+      "message": "I actually decided that adding this check and keeping the one above are probably too silly to bother with. They will only avoid a handful of PumpCodec calls in a few cases.",
+      "parentUuid": "593f053f_985da900",
+      "revId": "ce31b3d76372604996219926b551554e568230fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "918b751f_17269520",
         "filename": "media/gpu/android/media_codec_video_decoder.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-03T05:23:52Z",
       "side": 1,
       "message": "here and elsewhere, not sure this works now that kFlush is not a drain type.",
+      "revId": "ce31b3d76372604996219926b551554e568230fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f81de62_b774dd5a",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 522,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-08-03T05:42:30Z",
+      "side": 1,
+      "message": "Now:\n\n\n* drain_type_.has_value() means we\u0027re draining for reset or destroy: discard buffers and flush or destroy as soon as it finishes.\n\n\n* StartDrainingCodec is only called for reset or destroy. OnCodecDrained is only called if drain_type_.has_value() (for reset or destroy).\n\n\n* If the codec outputs EOS and !drain_type_.has_value() it was a natural drain due to decoding EOS. This is what AVDA called drain for flush. I think it\u0027s clearer for the drain machinery to not handle this case.",
+      "parentUuid": "918b751f_17269520",
       "revId": "ce31b3d76372604996219926b551554e568230fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
