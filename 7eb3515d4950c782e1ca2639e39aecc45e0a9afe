@@ -1,0 +1,415 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "926b1889_67a60b68",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-03T01:54:22Z",
+      "side": 1,
+      "message": "You did this nice split of a per-feature thing, but here we\u0027re moving them together again, sharing the state for kSessionTime. Maybe call out to the subclass here? Or at least get the event name from the subclass?",
+      "range": {
+        "startLine": 23,
+        "startChar": 35,
+        "endLine": 23,
+        "endChar": 55
+      },
+      "revId": "7eb3515d4950c782e1ca2639e39aecc45e0a9afe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb46fc71_7d04c498",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-03T01:54:22Z",
+      "side": 1,
+      "message": "I\u0027m assuming there\u0027s no ordering guarantee for this and SessionDurationUpdater, so I guess there\u0027s no guarantee that this will in fact be the exact right time. But it\u0027ll be correct next time of course, since at that time. If you end up explaining that this class might easily be used with a SesssionDurationTracker, maybe explain that particular piece as a comment here too?",
+      "revId": "7eb3515d4950c782e1ca2639e39aecc45e0a9afe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4d67205_d92835b1",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-03T01:54:22Z",
+      "side": 1,
+      "message": "Could this take Tracker* instead?\nIf you do in fact need to provide a public API to retrieve prefs through this class, maybe just take in PrefService*?",
+      "revId": "7eb3515d4950c782e1ca2639e39aecc45e0a9afe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9117e9f5_acdb8857",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-03T01:54:22Z",
+      "side": 1,
+      "message": "Is this supposed to be private?",
+      "revId": "7eb3515d4950c782e1ca2639e39aecc45e0a9afe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37c4c9e1_ed2f352b",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-03T01:54:22Z",
+      "side": 1,
+      "message": "Does this need to be in this class?",
+      "revId": "7eb3515d4950c782e1ca2639e39aecc45e0a9afe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52a2f163_0d2050fe",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-03T01:54:22Z",
+      "side": 1,
+      "message": "Nit: When you go through, maybe update this to not refer to prefs anymore?",
+      "revId": "7eb3515d4950c782e1ca2639e39aecc45e0a9afe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee054a06_8d69782f",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-03T01:54:22Z",
+      "side": 1,
+      "message": "This class doesn\u0027t seem to use the PrefService* anymore. If it\u0027s needed by subclasses, could they get it instead of exposing it through this class?",
+      "revId": "7eb3515d4950c782e1ca2639e39aecc45e0a9afe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc48a774_d0d14e08",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-03T01:54:22Z",
+      "side": 1,
+      "message": "Just Tracker* instead?",
+      "range": {
+        "startLine": 50,
+        "startChar": 2,
+        "endLine": 50,
+        "endChar": 26
+      },
+      "revId": "7eb3515d4950c782e1ca2639e39aecc45e0a9afe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72b00dc1_cfd1716d",
+        "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-03T01:54:22Z",
+      "side": 1,
+      "message": "I guess this is the preference that goes away soon?",
+      "revId": "7eb3515d4950c782e1ca2639e39aecc45e0a9afe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8526904a_5929a36e",
+        "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-03T01:54:22Z",
+      "side": 1,
+      "message": "Should retrieving this integer pref be moved out to the SessionDurationTracker instead? That way you don\u0027t have to deal with prefs at all in this class.\nYou can probably keep the kTwoHoursInMinutes here though.",
+      "revId": "7eb3515d4950c782e1ca2639e39aecc45e0a9afe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79104c89_00044889",
+        "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-03T01:54:22Z",
+      "side": 1,
+      "message": "Should the NewTabTrackerFactory DependsOn(SessionDurationUpdaterFactory::GetInstance())?",
+      "revId": "7eb3515d4950c782e1ca2639e39aecc45e0a9afe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77262d7b_26989722",
+        "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-03T01:54:22Z",
+      "side": 1,
+      "message": "Does this need Profile* at all? Could it maybe just take the SessionDurationTracker* instead?",
+      "range": {
+        "startLine": 20,
+        "startChar": 25,
+        "endLine": 20,
+        "endChar": 41
+      },
+      "revId": "7eb3515d4950c782e1ca2639e39aecc45e0a9afe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "046eb8af_c8f07ba6",
+        "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-03T01:54:22Z",
+      "side": 1,
+      "message": "PrefRegistrySimple*?",
+      "range": {
+        "startLine": 23,
+        "startChar": 35,
+        "endLine": 23,
+        "endChar": 67
+      },
+      "revId": "7eb3515d4950c782e1ca2639e39aecc45e0a9afe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4fc58ad_367152dc",
+        "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-03T01:54:22Z",
+      "side": 1,
+      "message": "Should this be called from prod code as well?",
+      "range": {
+        "startLine": 53,
+        "startChar": 4,
+        "endLine": 53,
+        "endChar": 76
+      },
+      "revId": "7eb3515d4950c782e1ca2639e39aecc45e0a9afe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b085548_115544b5",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-03T01:54:22Z",
+      "side": 1,
+      "message": "Does this need Profile*, or just PrefsService*?",
+      "range": {
+        "startLine": 28,
+        "startChar": 34,
+        "endLine": 28,
+        "endChar": 50
+      },
+      "revId": "7eb3515d4950c782e1ca2639e39aecc45e0a9afe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e305980_aca3a34c",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-03T01:54:22Z",
+      "side": 1,
+      "message": "Can this just take PrefRegistrySimple*?",
+      "range": {
+        "startLine": 32,
+        "startChar": 35,
+        "endLine": 32,
+        "endChar": 67
+      },
+      "revId": "7eb3515d4950c782e1ca2639e39aecc45e0a9afe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0a854da_f7709db1",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-03T01:54:22Z",
+      "side": 1,
+      "message": "Should this class expose the current total session time, i.e. prefs::kSessionTimeTotal?",
+      "revId": "7eb3515d4950c782e1ca2639e39aecc45e0a9afe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6768ec7f_d536957c",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-03T01:54:22Z",
+      "side": 1,
+      "message": "If you store PrefService* as a member, do you need this?",
+      "revId": "7eb3515d4950c782e1ca2639e39aecc45e0a9afe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "268eca80_031d9b64",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-03T01:54:22Z",
+      "side": 1,
+      "message": "ScopedObserver?",
+      "revId": "7eb3515d4950c782e1ca2639e39aecc45e0a9afe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "654b490e_309aeb09",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-03T01:54:22Z",
+      "side": 1,
+      "message": "Just PrefsService*?",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 25
+      },
+      "revId": "7eb3515d4950c782e1ca2639e39aecc45e0a9afe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53620ef1_55d816fa",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-08-03T01:54:22Z",
+      "side": 1,
+      "message": "Just the PrefsService*?",
+      "range": {
+        "startLine": 39,
+        "startChar": 36,
+        "endLine": 39,
+        "endChar": 72
+      },
+      "revId": "7eb3515d4950c782e1ca2639e39aecc45e0a9afe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
