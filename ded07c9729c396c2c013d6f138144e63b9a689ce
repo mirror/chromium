@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c92408e1_b1268ee2",
+        "filename": "base/synchronization/waitable_event_mac.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-03T16:32:02Z",
+      "side": 1,
+      "message": "This is now changed.",
+      "parentUuid": "7224744e_4bf60f6d",
+      "range": {
+        "startLine": 70,
+        "startChar": 6,
+        "endLine": 70,
+        "endChar": 39
+      },
+      "revId": "ded07c9729c396c2c013d6f138144e63b9a689ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d6c1bafa_f09f102f",
         "filename": "base/synchronization/waitable_event_watcher_mac.cc",
         "patchSetId": 8
@@ -39,6 +63,24 @@
       "revId": "ded07c9729c396c2c013d6f138144e63b9a689ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1b1f6bc_ede1a9e2",
+        "filename": "base/synchronization/waitable_event_watcher_mac.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-03T16:32:02Z",
+      "side": 1,
+      "message": "That race is in theory possible. Unfortunately taking the lock through mach_msg() isn\u0027t viable because a waiting thread could immediately delete the event, which would destroy the lock with the lock while it is held. I moved it all into ReceiveRight.",
+      "parentUuid": "d6c1bafa_f09f102f",
+      "revId": "ded07c9729c396c2c013d6f138144e63b9a689ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
