@@ -61,6 +61,17 @@ struct CC_EXPORT ElementId {
   void AddToTracedValue(base::trace_event::TracedValue* res) const;
   std::unique_ptr<base::Value> AsValue() const;
 
+  // Returns the element id as its underlying representation. In
+  // general the element id is intended to be an opaque identifier, so
+  // this should only be used in rare circumstances such as tracing,
+  // debug logging, or repurposing this id for use as a generic stable
+  // identifier. TODO(wkorman): The last use case above seems
+  // fragile. See references in Blink paint property node/tree logic.
+  ElementIdType ToRawType() const;
+
+ private:
+  friend struct ElementIdHash;
+
   // The compositor treats this as an opaque handle and should not know how to
   // interpret these bits. Non-blink cc clients typically operate in terms of
   // layers and may set this value to match the client's layer id.
