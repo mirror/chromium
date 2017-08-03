@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d67385c9_0cb07c0c",
+        "filename": "base/trace_event/memory_dump_scheduler_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-03T16:01:22Z",
+      "side": 1,
+      "message": "Whenever there\u0027s member ordering dependencies for lifetime I much prefer to rely on RAII than manual code (members are initialized from first to last and destroyed from last to first by default).\n\nPlease put all of these on the stack in order and get rid of manual reset(new ...) / reset() in SetUp() / TearDown().",
+      "revId": "3a058225c3cc2847fafafb446759e099060f1220",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
