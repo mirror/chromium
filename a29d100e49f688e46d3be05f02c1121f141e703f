@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf3ee73c_a0d593ae",
+        "filename": "third_party/WebKit/LayoutTests/resources/testharnessreport.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-08-03T21:23:09Z",
+      "side": 1,
+      "message": "The style guide indicates we should use JSDoc annotation.  So a function comment should start with \"/**\" not \"/*\".",
+      "revId": "a29d100e49f688e46d3be05f02c1121f141e703f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "379c55a9_536151ec",
+        "filename": "third_party/WebKit/LayoutTests/resources/testharnessreport.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-08-03T21:23:09Z",
+      "side": 1,
+      "message": "Use JSDoc comment; /** ... */",
+      "revId": "a29d100e49f688e46d3be05f02c1121f141e703f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "919ce993_27f13de3",
+        "filename": "third_party/WebKit/LayoutTests/resources/testharnessreport.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-08-03T21:23:09Z",
+      "side": 1,
+      "message": "Use JSDoc comment; /** ... */",
+      "revId": "a29d100e49f688e46d3be05f02c1121f141e703f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07a029a9_3932695a",
+        "filename": "third_party/WebKit/LayoutTests/resources/testharnessreport.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-08-03T21:23:09Z",
+      "side": 1,
+      "message": "Use JSDoc comment; /** ... */",
+      "revId": "a29d100e49f688e46d3be05f02c1121f141e703f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
