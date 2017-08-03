@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7c1744f_3c8305b6",
+        "filename": "net/disk_cache/disk_cache.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-08-03T21:08:51Z",
+      "side": 1,
+      "message": "This sentence makes it seems like post_cleanup_callback would normally be called for memory caches during cleanup, just not if creation fails. But my understanding is that the memory cache completely ignores the callback and never runs it. This isn\u0027t intuitive to me.\n\nI think we actually want the same behavior regardless of backend type. Let\u0027s run the post_cleanup_callback for memory caches.",
+      "range": {
+        "startLine": 90,
+        "startChar": 48,
+        "endLine": 90,
+        "endChar": 73
+      },
+      "revId": "c905448ee1c30ad0fda7b6dc248d025dd33a1218",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
