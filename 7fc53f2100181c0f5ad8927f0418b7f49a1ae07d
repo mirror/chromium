@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b212377f_78c2904d",
+        "filename": "chrome/browser/vr/elements/rrect.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1117469
+      },
+      "writtenOn": "2017-08-03T17:12:35Z",
+      "side": 1,
+      "message": "A few high-level comments:\n- Why should rounded rectangle mention (or care about) sizing and children?  Any element might want rounded corners.\n- Rounded corners will probably be on most/all elements soon.  Hence RRect is probably the new base class for anything visible.  Should it be named more generically?\n- I feel like rounded corners is more of a capability that other elements may want to compose from.  Is there a way to do that without too much hackery?  Similar to how an element can employ the TransienceManager without having to derive from it.  Food for thought.",
+      "revId": "7fc53f2100181c0f5ad8927f0418b7f49a1ae07d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65a88068_06b546ce",
+        "filename": "chrome/browser/vr/elements/rrect.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1117469
+      },
+      "writtenOn": "2017-08-03T17:12:35Z",
+      "side": 1,
+      "message": "I can\u0027t remember if you said the gradient capabilities were moving in here temporarily or not.  Was it temporary?  Should we comment these?",
+      "revId": "7fc53f2100181c0f5ad8927f0418b7f49a1ae07d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d82d2ef_8fd9f691",
+        "filename": "chrome/browser/vr/ui_scene_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1117469
+      },
+      "writtenOn": "2017-08-03T17:12:35Z",
+      "side": 1,
+      "message": "IMO \u0027auto\u0027 is actually better in this case as the type is explicitly stated on the same line (we\u0027ve been doing this elsewhere).",
+      "revId": "7fc53f2100181c0f5ad8927f0418b7f49a1ae07d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
