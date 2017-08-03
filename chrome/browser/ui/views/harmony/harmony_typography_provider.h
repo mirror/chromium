@@ -6,12 +6,19 @@
 #define CHROME_BROWSER_UI_VIEWS_HARMONY_HARMONY_TYPOGRAPHY_PROVIDER_H_
 
 #include "base/macros.h"
+#include "build/build_config.h"
 #include "ui/views/style/typography_provider.h"
 
 // TypographyProvider implementing the Harmony spec.
 class HarmonyTypographyProvider : public views::TypographyProvider {
  public:
   HarmonyTypographyProvider() = default;
+
+#if defined(OS_WIN)
+  // When falling back to GDI or on pre-10 versions of Windows font heights are
+  // slightly different in some cases.
+  static bool UseFallbackFontHeight();
+#endif
 
   // TypographyProvider:
   const gfx::FontList& GetFont(int context, int style) const override;
