@@ -92,6 +92,8 @@ class TabletModeWindowState : public wm::WindowState::State {
   // If true, the state will not process events.
   bool ignore_wm_events_ = false;
 
+  bool originally_fullscreen_ = false;
+
   DISALLOW_COPY_AND_ASSIGN(TabletModeWindowState);
 };
 

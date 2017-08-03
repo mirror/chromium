@@ -137,14 +137,23 @@ void WMHelperAsh::OnCursorDisplayChanged(const display::Display& display) {
 }
 
 void WMHelperAsh::OnTabletModeStarted() {
+  if (ash::Shell::Get()->tablet_mode_controller()->ShouldHideTitlebars())
+    return;
+
   NotifyTabletModeStarted();
 }
 
 void WMHelperAsh::OnTabletModeEnding() {
+  if (ash::Shell::Get()->tablet_mode_controller()->ShouldHideTitlebars())
+    return;
+
   NotifyTabletModeEnding();
 }
 
 void WMHelperAsh::OnTabletModeEnded() {
+  if (ash::Shell::Get()->tablet_mode_controller()->ShouldHideTitlebars())
+    return;
+
   NotifyTabletModeEnded();
 }
 
