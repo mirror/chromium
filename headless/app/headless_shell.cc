@@ -31,6 +31,7 @@
 #include "net/base/ip_address.h"
 #include "net/base/net_errors.h"
 #include "net/http/http_util.h"
+#include "ui/base/ui_base_switches.h"
 #include "ui/gfx/geometry/size.h"
 
 #if defined(OS_WIN)
@@ -83,6 +84,11 @@ void HeadlessShell::OnStart(HeadlessBrowser* browser) {
       browser_->CreateBrowserContextBuilder();
   // TODO(eseckler): These switches should also affect BrowserContexts that
   // are created via DevTools later.
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(::switches::kLang)) {
+    context_builder.SetAcceptLanguage(
+        base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
+            ::switches::kLang));
+  }
   DeterministicHttpProtocolHandler* http_handler = nullptr;
   DeterministicHttpProtocolHandler* https_handler = nullptr;
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
