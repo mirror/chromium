@@ -397,3 +397,15 @@ index b079ea6a80f5..80375b8b6109 100644
  
  #ifdef Z_SOLO
     typedef long ptrdiff_t;  /* guess -- will be caught if guess is wrong */
+diff --git a/inflate.c b/inflate.c
+index ac333e8c2eda..f1dfb4765715 100644
+--- a/inflate.c
++++ b/inflate.c
+@@ -228,6 +228,7 @@ int stream_size;
+     state->strm = strm;
+     state->window = Z_NULL;
+     state->mode = HEAD;     /* to pass state test in inflateReset2() */
++    state->check = crc32(0L, Z_NULL, 0);;
+     ret = inflateReset2(strm, windowBits);
+     if (ret != Z_OK) {
+         ZFREE(strm, state);
