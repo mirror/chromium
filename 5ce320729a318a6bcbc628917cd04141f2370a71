@@ -616,6 +616,30 @@
     },
     {
       "key": {
+        "uuid": "50a36d51_99c60af2",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-08-03T18:31:19Z",
+      "side": 1,
+      "message": "Joe - I opted to use a DCHECK in BeginInitialization, as it shouldn\u0027t be called unless state_ \u003d\u003d INITIALIZED. Other than that, the changes are as advertised.",
+      "parentUuid": "b8c60b22_864c81b9",
+      "range": {
+        "startLine": 183,
+        "startChar": 4,
+        "endLine": 183,
+        "endChar": 17
+      },
+      "revId": "5ce320729a318a6bcbc628917cd04141f2370a71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13156fc8_0dacd3a2",
         "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
         "patchSetId": 14
