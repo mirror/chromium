@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f859d79a_cb551b6b",
+        "filename": "chrome/browser/android/logo_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-08-03T17:22:35Z",
+      "side": 1,
+      "message": "I have no idea why the old code used UIThreadSearchTermsData(profile_) here; its header gives no explanation of why I\u0027d prefer that SearchTermsData to the one that TemplateURLService returns. There are some extra things in its implementation, like a command-line flag and an override for testing, but --google-base-url still works now and for testing TemplateURLService can be injected now.",
+      "revId": "4bb1cec57612409c47e73dd28502843706d8360d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
