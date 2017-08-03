@@ -68,6 +68,23 @@
       "revId": "1fcf4c78b6ae0f3bffe9bebb12182c26bcb41025",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3835cfe6_046210cb",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 3596,
+      "author": {
+        "id": 1133065
+      },
+      "writtenOn": "2017-08-03T15:33:12Z",
+      "side": 1,
+      "message": "Native controllers in the old architecture are presented via CRWContentView, which already exposes a |scrollView| property.  What is the motivation for adding additional API to get the scroll offset here?  Is the CRWContentView API insufficient here?  This code was created before CRWContentView was introduced; it might be possible to simply remove the \"if (_webView) {...}\" condition altogether and just return a display state based on the CRWContentViewProxy.",
+      "revId": "1fcf4c78b6ae0f3bffe9bebb12182c26bcb41025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
