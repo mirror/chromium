@@ -34,6 +34,24 @@
       "revId": "7a69d48636737f6c3571f3ed715b37d3b5b9962e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0efa4544_0e86c51d",
+        "filename": "base/strings/string_number_conversions.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1222405
+      },
+      "writtenOn": "2017-08-03T18:58:34Z",
+      "side": 1,
+      "message": "Ack, resolving. Thanks!",
+      "parentUuid": "c8d1d7ad_54d9729e",
+      "revId": "7a69d48636737f6c3571f3ed715b37d3b5b9962e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

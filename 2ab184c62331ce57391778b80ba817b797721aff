@@ -22,6 +22,30 @@
       "revId": "2ab184c62331ce57391778b80ba817b797721aff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86dcf284_21919ed8",
+        "filename": "net/spdy/core/hpack/hpack_decoder_adapter_test.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1222405
+      },
+      "writtenOn": "2017-08-03T18:58:34Z",
+      "side": 1,
+      "message": "Oh bah. Thanks for explaining and backporting!",
+      "parentUuid": "ff2342a2_5cd6beed",
+      "range": {
+        "startLine": 666,
+        "startChar": 2,
+        "endLine": 667,
+        "endChar": 24
+      },
+      "revId": "2ab184c62331ce57391778b80ba817b797721aff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
