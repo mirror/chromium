@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0e742e88_31a58ad0",
+        "filename": "extensions/common/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-08-03T09:18:36Z",
+      "side": 1,
+      "message": "Also, maybe you could put it deeper in extensions/common/api/BUILD.gn?",
+      "parentUuid": "52935c1d_f2129e42",
+      "revId": "f6a3a7d1dcfb78457f850d3540895b463ef6fe69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f713b851_700f2089",
         "filename": "extensions/common/api/declarative_net_request/flat/extension_ruleset.fbs",
         "patchSetId": 1
