@@ -24,6 +24,8 @@ namespace mojo {
 
 class MessageReceiver;
 
+
+
 // Represents the binding of an interface implementation to a message pipe.
 // When the |Binding| object is destroyed, the binding between the message pipe
 // and the interface is torn down and the message pipe is closed, leaving the
