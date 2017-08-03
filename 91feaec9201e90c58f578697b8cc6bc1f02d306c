@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67de0384_f4280a00",
+        "filename": "components/safe_browsing/web_ui/resources/safe_browsing.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-03T23:21:33Z",
+      "side": 0,
+      "message": "This fie can be reverted",
+      "range": {
+        "startLine": 41,
+        "startChar": 3,
+        "endLine": 41,
+        "endChar": 0
+      },
+      "revId": "91feaec9201e90c58f578697b8cc6bc1f02d306c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
