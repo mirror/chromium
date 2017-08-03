@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "74f19e8f_f612f42b",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_browsertest_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1130491
+      },
+      "writtenOn": "2017-08-03T02:17:03Z",
+      "side": 1,
+      "message": "Please move this expectation to each individual test. Even though today all tests here are for calls to OnInfected, this expectation is not valid for all methods in this class (and I\u0027m sure distracted Fabio will bang his head for 30 minutes before figuring out that tests don\u0027t pass because of this).\n\nThe next few lines can stay here though, since they are applicable to all methods for which we could add tests in the future.",
+      "range": {
+        "startLine": 53,
+        "startChar": 50,
+        "endLine": 53,
+        "endChar": 0
+      },
+      "revId": "ab455a90b9dde3c332486f8ca40819d9f95b5d2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bfbf35a8_eaa2f712",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_browsertest_win.cc",
         "patchSetId": 7
