@@ -270,7 +270,7 @@ class EventDispatcherTest : public testing::TestWithParam<bool>,
   bool IsMouseButtonDown() const;
   bool IsWindowPointerTarget(const ServerWindow* window) const;
   int NumberPointerTargetsForWindow(ServerWindow* window) const;
-  ServerWindow* GetActiveSystemModalWindow() const;
+  const ServerWindow* GetActiveSystemModalWindow() const;
 
  protected:
   // testing::TestWithParam<bool>:
@@ -381,7 +381,7 @@ int EventDispatcherTest::NumberPointerTargetsForWindow(
       .NumberPointerTargetsForWindow(window);
 }
 
-ServerWindow* EventDispatcherTest::GetActiveSystemModalWindow() const {
+const ServerWindow* EventDispatcherTest::GetActiveSystemModalWindow() const {
   ModalWindowController* mwc =
       EventDispatcherTestApi(event_dispatcher_.get()).modal_window_controller();
   return ModalWindowControllerTestApi(mwc).GetActiveSystemModalWindow();
