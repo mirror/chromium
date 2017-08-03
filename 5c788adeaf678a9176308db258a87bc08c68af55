@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "737d1d97_8cf756d0",
+        "filename": "media/filters/decoder_stream.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-08-03T20:03:48Z",
+      "side": 1,
+      "message": "Added error reporting in DDS.\n\nIn this file, we also report error on decode error. I am debating whether we should only report the error when it first happened, or also report it in a central place (e.g. DecoderStream) to make sure everything is covered. Currently I am doing the latter.",
+      "parentUuid": "dc314eb3_2b1ad85e",
+      "revId": "5c788adeaf678a9176308db258a87bc08c68af55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68ac7739_0abab56f",
         "filename": "media/filters/decrypting_demuxer_stream.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "81927b6d_ca29985d",
+        "filename": "media/filters/decrypting_demuxer_stream.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-08-03T20:03:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68ac7739_0abab56f",
+      "revId": "5c788adeaf678a9176308db258a87bc08c68af55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ae883fa6_30f663f2",
         "filename": "media/filters/decrypting_demuxer_stream.cc",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-03T19:04:41Z",
       "side": 1,
       "message": "Is this sufficient for you to debug in the field?",
+      "revId": "5c788adeaf678a9176308db258a87bc08c68af55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddc8c9e7_8c93356c",
+        "filename": "media/filters/decrypting_demuxer_stream.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-08-03T20:03:48Z",
+      "side": 1,
+      "message": "This is pretty much the best we could have now, unless we pass error messages along side with \nour result callbacks (e.g. InitCB, DecryptCB and DecodeCB), which might be a good idea.",
+      "parentUuid": "ae883fa6_30f663f2",
       "revId": "5c788adeaf678a9176308db258a87bc08c68af55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
