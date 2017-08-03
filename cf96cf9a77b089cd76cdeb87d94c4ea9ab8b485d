@@ -636,6 +636,30 @@
     },
     {
       "key": {
+        "uuid": "922c41aa_2e674368",
+        "filename": "components/cryptauth/device_capability_manager_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-08-03T21:00:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa264c78_6251fcd8",
+      "range": {
+        "startLine": 33,
+        "startChar": 46,
+        "endLine": 33,
+        "endChar": 72
+      },
+      "revId": "cf96cf9a77b089cd76cdeb87d94c4ea9ab8b485d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1ad3a25_096135b7",
         "filename": "components/cryptauth/device_capability_manager_unittest.cc",
         "patchSetId": 16
@@ -656,6 +680,30 @@
       "revId": "cf96cf9a77b089cd76cdeb87d94c4ea9ab8b485d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6adfae7_b7deaa0e",
+        "filename": "components/cryptauth/device_capability_manager_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-08-03T21:00:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1ad3a25_096135b7",
+      "range": {
+        "startLine": 72,
+        "startChar": 54,
+        "endLine": 72,
+        "endChar": 72
+      },
+      "revId": "cf96cf9a77b089cd76cdeb87d94c4ea9ab8b485d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -682,6 +730,30 @@
     },
     {
       "key": {
+        "uuid": "39be3562_50e68ab0",
+        "filename": "components/cryptauth/device_capability_manager_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-08-03T21:00:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "096c5aae_1a5255ea",
+      "range": {
+        "startLine": 132,
+        "startChar": 7,
+        "endLine": 132,
+        "endChar": 46
+      },
+      "revId": "cf96cf9a77b089cd76cdeb87d94c4ea9ab8b485d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f16ac9d9_36ad811f",
         "filename": "components/cryptauth/device_capability_manager_unittest.cc",
         "patchSetId": 16
@@ -693,6 +765,30 @@
       "writtenOn": "2017-08-03T18:44:36Z",
       "side": 1,
       "message": "You shouldn\u0027t need this extra mutable_device() call.",
+      "range": {
+        "startLine": 140,
+        "startChar": 0,
+        "endLine": 140,
+        "endChar": 28
+      },
+      "revId": "cf96cf9a77b089cd76cdeb87d94c4ea9ab8b485d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f07d53b6_15016ccf",
+        "filename": "components/cryptauth/device_capability_manager_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-08-03T21:00:45Z",
+      "side": 1,
+      "message": ".add_ineligible_devices() returns a pointer to an IneligibleDevice rather than ExternalDeviceInfo.  IneligibleDevice have a field mutable_device() which returns a pointer to the associated ExternalDeviceInfo.",
+      "parentUuid": "f16ac9d9_36ad811f",
       "range": {
         "startLine": 140,
         "startChar": 0,
@@ -728,6 +824,30 @@
     },
     {
       "key": {
+        "uuid": "1c6625c7_c05ef4ac",
+        "filename": "components/cryptauth/device_capability_manager_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-08-03T21:00:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db581d9c_a7eaadca",
+      "range": {
+        "startLine": 145,
+        "startChar": 7,
+        "endLine": 145,
+        "endChar": 28
+      },
+      "revId": "cf96cf9a77b089cd76cdeb87d94c4ea9ab8b485d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7113bc2a_9a2ca28b",
         "filename": "components/cryptauth/device_capability_manager_unittest.cc",
         "patchSetId": 16
@@ -739,6 +859,30 @@
       "writtenOn": "2017-08-03T18:44:36Z",
       "side": 1,
       "message": "Instead of comparing the public keys, you can just compare the actual objects.\n\nfor (const auto\u0026 device_info : eligible_device_infos) {\n  EXPECT_NE(test_eligible_external_devices_infos_.find(device_info),\n            test_eligible_external_devices_infos_.end());\n}\n\nAlso, note that I used the variable \"device_info\" instead of \"remote_device\". These aren\u0027t RemoteDevice objects.",
+      "range": {
+        "startLine": 148,
+        "startChar": 0,
+        "endLine": 153,
+        "endChar": 5
+      },
+      "revId": "cf96cf9a77b089cd76cdeb87d94c4ea9ab8b485d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2f21cfa_293e172e",
+        "filename": "components/cryptauth/device_capability_manager_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-08-03T21:00:45Z",
+      "side": 1,
+      "message": "I actually tried doing that before, but stl calls involving .find (for both unordered_set and vector) do not work for ExternalDeviceInfo.  This is also how some other unit tests in the codebase verify that a device_info exists.",
+      "parentUuid": "7113bc2a_9a2ca28b",
       "range": {
         "startLine": 148,
         "startChar": 0,
@@ -774,6 +918,30 @@
     },
     {
       "key": {
+        "uuid": "f17572f7_c778881d",
+        "filename": "components/cryptauth/device_capability_manager_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-08-03T21:00:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23c6e676_03e6ab46",
+      "range": {
+        "startLine": 159,
+        "startChar": 0,
+        "endLine": 159,
+        "endChar": 41
+      },
+      "revId": "cf96cf9a77b089cd76cdeb87d94c4ea9ab8b485d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "633cea56_8e6e983c",
         "filename": "components/cryptauth/device_capability_manager_unittest.cc",
         "patchSetId": 16
@@ -794,6 +962,30 @@
       "revId": "cf96cf9a77b089cd76cdeb87d94c4ea9ab8b485d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e28e22d9_9ec81d34",
+        "filename": "components/cryptauth/device_capability_manager_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-08-03T21:00:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "633cea56_8e6e983c",
+      "range": {
+        "startLine": 223,
+        "startChar": 7,
+        "endLine": 223,
+        "endChar": 46
+      },
+      "revId": "cf96cf9a77b089cd76cdeb87d94c4ea9ab8b485d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -820,6 +1012,30 @@
     },
     {
       "key": {
+        "uuid": "3fc60e5b_5c8e4669",
+        "filename": "components/cryptauth/device_capability_manager_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-08-03T21:00:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d255f16_9e6a39fd",
+      "range": {
+        "startLine": 257,
+        "startChar": 0,
+        "endLine": 257,
+        "endChar": 68
+      },
+      "revId": "cf96cf9a77b089cd76cdeb87d94c4ea9ab8b485d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0fd86299_431c3403",
         "filename": "components/cryptauth/device_capability_manager_unittest.cc",
         "patchSetId": 16
@@ -840,6 +1056,30 @@
       "revId": "cf96cf9a77b089cd76cdeb87d94c4ea9ab8b485d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a45558f2_c707154e",
+        "filename": "components/cryptauth/device_capability_manager_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-08-03T21:00:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0fd86299_431c3403",
+      "range": {
+        "startLine": 263,
+        "startChar": 6,
+        "endLine": 263,
+        "endChar": 38
+      },
+      "revId": "cf96cf9a77b089cd76cdeb87d94c4ea9ab8b485d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -866,6 +1106,30 @@
     },
     {
       "key": {
+        "uuid": "d6bb234d_2dbf38d0",
+        "filename": "components/cryptauth/device_capability_manager_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-08-03T21:00:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1349689b_72a16383",
+      "range": {
+        "startLine": 278,
+        "startChar": 0,
+        "endLine": 278,
+        "endChar": 19
+      },
+      "revId": "cf96cf9a77b089cd76cdeb87d94c4ea9ab8b485d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "893a1ba6_112e294d",
         "filename": "components/cryptauth/device_capability_manager_unittest.cc",
         "patchSetId": 16
@@ -889,6 +1153,30 @@
     },
     {
       "key": {
+        "uuid": "2728d8a4_6fef5a53",
+        "filename": "components/cryptauth/device_capability_manager_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-08-03T21:00:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "893a1ba6_112e294d",
+      "range": {
+        "startLine": 314,
+        "startChar": 48,
+        "endLine": 314,
+        "endChar": 56
+      },
+      "revId": "cf96cf9a77b089cd76cdeb87d94c4ea9ab8b485d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9923a555_c506e168",
         "filename": "components/cryptauth/device_capability_manager_unittest.cc",
         "patchSetId": 16
@@ -909,6 +1197,30 @@
       "revId": "cf96cf9a77b089cd76cdeb87d94c4ea9ab8b485d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35a93838_0a453227",
+        "filename": "components/cryptauth/device_capability_manager_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1226899
+      },
+      "writtenOn": "2017-08-03T21:00:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9923a555_c506e168",
+      "range": {
+        "startLine": 315,
+        "startChar": 0,
+        "endLine": 315,
+        "endChar": 1
+      },
+      "revId": "cf96cf9a77b089cd76cdeb87d94c4ea9ab8b485d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
