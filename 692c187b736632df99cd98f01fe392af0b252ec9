@@ -34,6 +34,24 @@
       "revId": "692c187b736632df99cd98f01fe392af0b252ec9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee7e993e_0349313b",
+        "filename": "ios/chrome/app/chrome_app_startup_parameters.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-08-03T15:20:50Z",
+      "side": 1,
+      "message": "I see, I hadn\u0027t noticed the check for the source app below so this is fine (I was wondering how you were sure the actions were coming from the extensions)",
+      "parentUuid": "80d0d36b_73b21132",
+      "revId": "692c187b736632df99cd98f01fe392af0b252ec9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
