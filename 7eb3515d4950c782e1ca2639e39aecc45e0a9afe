@@ -646,6 +646,30 @@
     },
     {
       "key": {
+        "uuid": "b091f157_3a793930",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-08-03T20:37:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f12a9676_4555608d",
+      "range": {
+        "startLine": 32,
+        "startChar": 35,
+        "endLine": 32,
+        "endChar": 67
+      },
+      "revId": "7eb3515d4950c782e1ca2639e39aecc45e0a9afe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0a854da_f7709db1",
         "filename": "chrome/browser/feature_engagement/session_duration_updater.h",
         "patchSetId": 8
