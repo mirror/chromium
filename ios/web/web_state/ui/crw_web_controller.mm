@@ -2040,10 +2040,13 @@ registerLoadRequestForURL:(const GURL&)requestURL
   _lastUserInteraction.reset();
   base::RecordAction(UserMetricsAction("Reload"));
   GURL url = self.currentNavItem->GetURL();
-  // Reloading shouldn't create create a new pending item, instead set the
-  // pending item index to the last committed item.
-  self.sessionController.pendingItemIndex =
-      self.sessionController.lastCommittedItemIndex;
+  // If there is a previously committed item then reloading shouldn't create
+  // create a new pending item, instead set the pending item index to
+  // the last committed item.
+  if (self.sessionController.lastCommittedItemIndex) {
+    self.sessionController.pendingItemIndex =
+        self.sessionController.lastCommittedItemIndex;
+  }
   if ([self shouldLoadURLInNativeView:url]) {
     std::unique_ptr<web::NavigationContextImpl> navigationContext = [self
         registerLoadRequestForURL:url
