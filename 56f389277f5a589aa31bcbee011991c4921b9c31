@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49c03c91_e8c67788",
+        "filename": "third_party/WebKit/Source/devtools/front_end/elements/breadcrumbs.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-03T18:33:07Z",
+      "side": 1,
+      "message": "It looks like \u0027.crumb\u0027 elements inherit this \u0027line-height: 17px\u0027 from their parent \u0027.crumbs\u0027.  Can we just change this one to 18px instead of adding a rule?",
+      "range": {
+        "startLine": 11,
+        "startChar": 16,
+        "endLine": 11,
+        "endChar": 17
+      },
+      "revId": "56f389277f5a589aa31bcbee011991c4921b9c31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
