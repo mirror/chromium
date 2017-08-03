@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8153d5f_0848b893",
+        "filename": "ui/app_list/views/tile_item_view.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-03T18:41:41Z",
+      "side": 1,
+      "message": "Move this above line 234, near where it is first used.",
+      "revId": "c802b8abb25cf45f2d48a2490821419ca9fd3cad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
