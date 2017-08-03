@@ -52,6 +52,7 @@ void DrawQuad::SetAll(const SharedQuadState* shared_quad_state,
 
   DCHECK(shared_quad_state);
   DCHECK(material != INVALID);
+  DCHECK(opaque_rect.IsEmpty() != shared_quad_state->is_contents_opaque);
 }
 
 DrawQuad::~DrawQuad() {
