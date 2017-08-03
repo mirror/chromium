@@ -19,6 +19,10 @@
 #include "components/ukm/ukm_source.h"
 #include "net/http/http_response_info.h"
 
+namespace content {
+class WebContents;
+}  // namespace content
+
 // This observer labels each sub-frame as an ad or not, and keeps track of
 // relevant per-frame and whole-page byte statistics.
 class AdsPageLoadMetricsObserver
@@ -65,6 +69,7 @@ class AdsPageLoadMetricsObserver
     size_t frame_bytes_uncached;
     const FrameTreeNodeId frame_tree_node_id;
     AdTypes ad_types;
+    bool blocked;
   };
 
   // subresource_filter::SubresourceFilterObserver:
@@ -118,6 +123,8 @@ class AdsPageLoadMetricsObserver
   size_t page_bytes_ = 0u;
   size_t uncached_page_bytes_ = 0u;
   bool committed_ = false;
+
+  content::WebContents* web_contents_ = nullptr;
 
   ScopedObserver<subresource_filter::SubresourceFilterObserverManager,
                  subresource_filter::SubresourceFilterObserver>
