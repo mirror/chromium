@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "0bd8cd8d_7356e61e",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2207,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-03T02:58:58Z",
+      "side": 1,
+      "message": "Did you mean compile time constant?\n\nAside, yeah I had alluded to this in my first patch set comment and suggested maintaining a HistogramBase instance if necessary.",
+      "parentUuid": "bc035828_a62e9d17",
+      "range": {
+        "startLine": 2207,
+        "startChar": 12,
+        "endLine": 2207,
+        "endChar": 24
+      },
+      "revId": "ff4e2e98aba258a2bbbf1d22f6b90a6b5655ae03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1b7c9aab_d187cb43",
         "filename": "third_party/WebKit/public/platform/scheduler/renderer/renderer_scheduler.h",
         "patchSetId": 3
@@ -53,6 +77,30 @@
       "writtenOn": "2017-08-01T15:06:38Z",
       "side": 1,
       "message": "I\u0027d prefer having an enum here in public/platform/scheduler and using it internally in the scheduler.",
+      "range": {
+        "startLine": 204,
+        "startChar": 15,
+        "endLine": 204,
+        "endChar": 37
+      },
+      "revId": "ff4e2e98aba258a2bbbf1d22f6b90a6b5655ae03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9c3ecc0_232e476f",
+        "filename": "third_party/WebKit/public/platform/scheduler/renderer/renderer_scheduler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-03T02:58:58Z",
+      "side": 1,
+      "message": "You mean internally within the renderer_scheduler_impl.cc, correct? I think it was concluded in https://codereview.chromium.org/2922833002/ that we shouldn\u0027t use enums for process types within and below content. But yeah, using it internally in the implementation may probably be ok.",
+      "parentUuid": "1b7c9aab_d187cb43",
       "range": {
         "startLine": 204,
         "startChar": 15,
