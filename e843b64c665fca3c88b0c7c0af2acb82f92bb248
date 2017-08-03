@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eeb3a5d5_24bbfb7e",
+        "filename": "services/preferences/pref_service_factory_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-08-03T17:48:56Z",
+      "side": 1,
+      "message": "While this test likely would still pass due to the builtin implicit conversions between ints and doubles, I changed this to a double literal so that there is no functionality change at all.",
+      "range": {
+        "startLine": 409,
+        "startChar": 57,
+        "endLine": 409,
+        "endChar": 59
+      },
+      "revId": "e843b64c665fca3c88b0c7c0af2acb82f92bb248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adf87c04_c2c49766",
+        "filename": "services/preferences/public/cpp/tests/persistent_pref_store_client_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-08-03T17:48:56Z",
+      "side": 1,
+      "message": "Same here.",
+      "range": {
+        "startLine": 188,
+        "startChar": 44,
+        "endLine": 188,
+        "endChar": 46
+      },
+      "revId": "e843b64c665fca3c88b0c7c0af2acb82f92bb248",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
