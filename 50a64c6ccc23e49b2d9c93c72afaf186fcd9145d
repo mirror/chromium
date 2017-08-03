@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "53eb896f_7864bf5c",
+        "filename": "chrome/browser/ui/views/frame/browser_window_property_manager_browsertest_win.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-08-03T22:58:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7bab68b2_6a97b2f4",
+      "range": {
+        "startLine": 57,
+        "startChar": 11,
+        "endLine": 57,
+        "endChar": 24
+      },
+      "revId": "50a64c6ccc23e49b2d9c93c72afaf186fcd9145d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cfa21fb7_17efad8f",
         "filename": "ui/base/win/shell.cc",
         "patchSetId": 16
@@ -45,6 +69,30 @@
       "revId": "50a64c6ccc23e49b2d9c93c72afaf186fcd9145d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8577828c_54a6f89d",
+        "filename": "ui/base/win/shell.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-08-03T22:58:55Z",
+      "side": 1,
+      "message": "Oops, this was circuitously arriving back at the original code. Reverted.",
+      "parentUuid": "cfa21fb7_17efad8f",
+      "range": {
+        "startLine": 177,
+        "startChar": 5,
+        "endLine": 177,
+        "endChar": 18
+      },
+      "revId": "50a64c6ccc23e49b2d9c93c72afaf186fcd9145d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "2cd229dd_7958f9c3",
+        "filename": "ui/base/win/shell.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-08-03T22:58:55Z",
+      "side": 1,
+      "message": "Hmm... I suppose we do, to the same extent as the other calls in this method. Added another return.",
+      "parentUuid": "71c96f20_0ce05857",
+      "range": {
+        "startLine": 189,
+        "startChar": 3,
+        "endLine": 189,
+        "endChar": 14
+      },
+      "revId": "50a64c6ccc23e49b2d9c93c72afaf186fcd9145d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ab312ce_3c3fff41",
         "filename": "ui/base/win/shell.cc",
         "patchSetId": 16
@@ -91,6 +163,30 @@
       "revId": "50a64c6ccc23e49b2d9c93c72afaf186fcd9145d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13869204_c4b9859f",
+        "filename": "ui/base/win/shell.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-08-03T22:58:55Z",
+      "side": 1,
+      "message": "This method is only called by the destructor of BrowserWindowPropertyManager, of which there is only one per hwnd. So nothing should be changing the properties out from under us. I believe we restrict COM operations to a single thread anyway. Since we will leak resources if we reach this point with properties remaining, I think the DCHECK is worth doing.",
+      "parentUuid": "3ab312ce_3c3fff41",
+      "range": {
+        "startLine": 192,
+        "startChar": 6,
+        "endLine": 192,
+        "endChar": 22
+      },
+      "revId": "50a64c6ccc23e49b2d9c93c72afaf186fcd9145d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
