@@ -3,27 +3,20 @@
      Use of this source code is governed by a BSD-style license that can be
      found in the LICENSE file. -->
 
-<org.chromium.chrome.browser.signin.SigninPromoView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/signin_promo_view_container"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="?android:attr/selectableItemBackground"
-    android:gravity="center_horizontal"
-    android:orientation="vertical"
-    android:padding="16dp">
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginStart="12dp">
 
         <ImageView
             android:id="@+id/signin_promo_image"
             android:layout_width="@dimen/signin_promo_account_image_size"
             android:layout_height="@dimen/signin_promo_account_image_size"
             android:layout_gravity="center"
-            android:layout_marginBottom="12dp"
-            android:layout_marginTop="12dp"
             android:contentDescription="@null"
             android:scaleType="fitCenter"/>
 
@@ -48,7 +41,6 @@
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
         android:gravity="center"
-        android:text="@string/signin_promo_settings"
         android:textColor="#FF333333"
         android:textSize="14sp"/>
 
@@ -61,6 +53,8 @@
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="6dp"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:text="@string/signin_promo_continue_as"/>
 
     <Button
@@ -68,7 +62,12 @@
         style="@style/SigninButtonBorderlessRegular"
         android:layout_width="match_parent"
         android:layout_height="36dp"
+        android:layout_marginBottom="6dp"
         android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
-        android:text="@string/signin_promo_choose_account" />
-</org.chromium.chrome.browser.signin.SigninPromoView>
+        android:layout_marginTop="6dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/signin_promo_choose_account"/>
+
+</merge>
