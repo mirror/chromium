@@ -88,7 +88,9 @@ TEST_F('SettingsPasswordSectionBrowserTest', 'uiTests', function() {
       assertEquals(
           exception.urls.shown,
           node.querySelector('#exception').textContent.trim());
-      assertEquals(exception.urls.link, node.querySelector('#exception').href);
+      assertEquals(
+          exception.urls.link.toLowerCase(),
+          node.querySelector('#exception').href);
     }
   }
 
@@ -291,7 +293,7 @@ TEST_F('SettingsPasswordSectionBrowserTest', 'uiTests', function() {
 
     test('verifyFilterPasswords', function() {
       var passwordList = [
-        FakeDataMaker.passwordEntry('one.com', 'show', 5),
+        FakeDataMaker.passwordEntry('one.com', 'SHOW', 5),
         FakeDataMaker.passwordEntry('two.com', 'shower', 3),
         FakeDataMaker.passwordEntry('three.com/show', 'four', 1),
         FakeDataMaker.passwordEntry('four.com', 'three', 2),
@@ -301,11 +303,11 @@ TEST_F('SettingsPasswordSectionBrowserTest', 'uiTests', function() {
 
       var passwordsSection = createPasswordsSection(
           passwordManager, passwordList, []);
-      passwordsSection.filter = 'show';
+      passwordsSection.filter = 'SHow';
       Polymer.dom.flush();
 
       var expectedList = [
-        FakeDataMaker.passwordEntry('one.com', 'show', 5),
+        FakeDataMaker.passwordEntry('one.com', 'SHOW', 5),
         FakeDataMaker.passwordEntry('two.com', 'shower', 3),
         FakeDataMaker.passwordEntry('three.com/show', 'four', 1),
         FakeDataMaker.passwordEntry('six-show.com', 'one', 6),
@@ -316,7 +318,7 @@ TEST_F('SettingsPasswordSectionBrowserTest', 'uiTests', function() {
 
     test('verifyFilterPasswordExceptions', function() {
       var exceptionList = [
-        FakeDataMaker.exceptionEntry('docsshow.google.com'),
+        FakeDataMaker.exceptionEntry('docsshoW.google.com'),
         FakeDataMaker.exceptionEntry('showmail.com'),
         FakeDataMaker.exceptionEntry('google.com'),
         FakeDataMaker.exceptionEntry('inbox.google.com'),
@@ -326,11 +328,11 @@ TEST_F('SettingsPasswordSectionBrowserTest', 'uiTests', function() {
 
       var passwordsSection = createPasswordsSection(
           passwordManager, [], exceptionList);
-      passwordsSection.filter = 'show';
+      passwordsSection.filter = 'shOW';
       Polymer.dom.flush();
 
       var expectedExceptionList = [
-        FakeDataMaker.exceptionEntry('docsshow.google.com'),
+        FakeDataMaker.exceptionEntry('docsshoW.google.com'),
         FakeDataMaker.exceptionEntry('showmail.com'),
         FakeDataMaker.exceptionEntry('mapsshow.google.com'),
         FakeDataMaker.exceptionEntry('plus.google.comshow'),
