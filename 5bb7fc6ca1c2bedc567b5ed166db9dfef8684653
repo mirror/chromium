@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "149e802d_fdbdc563",
+        "filename": "extensions/common/file_util_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-03T18:51:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "89dfbdf8_462ac405",
+      "revId": "5bb7fc6ca1c2bedc567b5ed166db9dfef8684653",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c975a1b_b9ff7ec3",
         "filename": "extensions/common/file_util_unittest.cc",
         "patchSetId": 14
@@ -33,6 +51,24 @@
       "revId": "5bb7fc6ca1c2bedc567b5ed166db9dfef8684653",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83a2ee05_beba907f",
+        "filename": "extensions/common/file_util_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-03T18:51:04Z",
+      "side": 1,
+      "message": "As discussed, Optional implementation doesn\u0027t handle char[] -\u003e std::string -\u003e optional\u003cstd::string\u003e. Doing something like RunTest(std::string(\"foo\")) will work.",
+      "parentUuid": "8c975a1b_b9ff7ec3",
+      "revId": "5bb7fc6ca1c2bedc567b5ed166db9dfef8684653",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
