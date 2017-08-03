@@ -1,0 +1,463 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1cbc4877_be649371",
+        "filename": "chrome/installer/zucchini/README.md",
+        "patchSetId": 31
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-03T20:02:15Z",
+      "side": 1,
+      "message": "I find it bizarre that the file size is int32, but stuff inside can have int64 size. Can we just make everything int32, and when the need arises, find other way to extend?  If you follows this, will also need to change unit tests.",
+      "range": {
+        "startLine": 237,
+        "startChar": 6,
+        "endLine": 237,
+        "endChar": 12
+      },
+      "revId": "df00e854a145120c33636ce82a50a1caa94f1a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d3670d1_1aa66a96",
+        "filename": "chrome/installer/zucchini/patch_reader.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-03T20:02:15Z",
+      "side": 1,
+      "message": "Consider making this 32-bit?",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 20
+      },
+      "revId": "df00e854a145120c33636ce82a50a1caa94f1a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a7ea40b_cade2c62",
+        "filename": "chrome/installer/zucchini/patch_utils.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-03T20:02:15Z",
+      "side": 1,
+      "message": "successful",
+      "range": {
+        "startLine": 109,
+        "startChar": 3,
+        "endLine": 109,
+        "endChar": 13
+      },
+      "revId": "df00e854a145120c33636ce82a50a1caa94f1a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "029c5a83_acf170c2",
+        "filename": "chrome/installer/zucchini/patch_utils_unittest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-03T20:02:15Z",
+      "side": 1,
+      "message": "constexpr uint32_t kUninit \u003d static_cast\u003cuint32_t\u003e(-1);\n\nand use it below.",
+      "range": {
+        "startLine": 113,
+        "startChar": 19,
+        "endLine": 113,
+        "endChar": 31
+      },
+      "revId": "df00e854a145120c33636ce82a50a1caa94f1a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c0ba2f4_b25761e0",
+        "filename": "chrome/installer/zucchini/patch_utils_unittest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-03T20:02:15Z",
+      "side": 1,
+      "message": "constexpr uint64_t kUninit \u003d static_cast\u003cuint64_t\u003e(-1LL);\n\nand use it below.",
+      "range": {
+        "startLine": 143,
+        "startChar": 19,
+        "endLine": 143,
+        "endChar": 31
+      },
+      "revId": "df00e854a145120c33636ce82a50a1caa94f1a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91510c26_5c004ac0",
+        "filename": "chrome/installer/zucchini/patch_writer.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-03T20:02:15Z",
+      "side": 1,
+      "message": "Consider making this 32-bit?",
+      "range": {
+        "startLine": 39,
+        "startChar": 24,
+        "endLine": 39,
+        "endChar": 32
+      },
+      "revId": "df00e854a145120c33636ce82a50a1caa94f1a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6ecf363_cb607ec1",
+        "filename": "chrome/installer/zucchini/patch_writer.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-03T20:02:15Z",
+      "side": 1,
+      "message": "Consider making this 32-bit?",
+      "range": {
+        "startLine": 44,
+        "startChar": 16,
+        "endLine": 44,
+        "endChar": 24
+      },
+      "revId": "df00e854a145120c33636ce82a50a1caa94f1a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c7260d5_fd8cb029",
+        "filename": "chrome/installer/zucchini/patch_writer.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-03T20:02:15Z",
+      "side": 1,
+      "message": "Equivalences",
+      "range": {
+        "startLine": 68,
+        "startChar": 5,
+        "endLine": 68,
+        "endChar": 16
+      },
+      "revId": "df00e854a145120c33636ce82a50a1caa94f1a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b19424c9_618ea8e8",
+        "filename": "chrome/installer/zucchini/patch_writer.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-03T20:02:15Z",
+      "side": 1,
+      "message": "Move to start of function?",
+      "range": {
+        "startLine": 69,
+        "startChar": 2,
+        "endLine": 69,
+        "endChar": 11
+      },
+      "revId": "df00e854a145120c33636ce82a50a1caa94f1a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21e37a4c_bfd62f40",
+        "filename": "chrome/installer/zucchini/patch_writer.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-03T20:02:15Z",
+      "side": 1,
+      "message": "NIT: Remove space",
+      "revId": "df00e854a145120c33636ce82a50a1caa94f1a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b4307c0_944c5730",
+        "filename": "chrome/installer/zucchini/patch_writer.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-03T20:02:15Z",
+      "side": 1,
+      "message": "NIT: Move this up, to match order in declaration.  Same for the next 3 classes.",
+      "revId": "df00e854a145120c33636ce82a50a1caa94f1a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "861cffde_7d6fe6a3",
+        "filename": "chrome/installer/zucchini/patch_writer.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-03T20:02:15Z",
+      "side": 1,
+      "message": "Use these everywhere in patch_reader.h / patch_writer.h, or don\u0027t use it?",
+      "range": {
+        "startLine": 195,
+        "startChar": 31,
+        "endLine": 195,
+        "endChar": 39
+      },
+      "revId": "df00e854a145120c33636ce82a50a1caa94f1a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e956427_9c606698",
+        "filename": "chrome/installer/zucchini/patch_writer.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-03T20:02:15Z",
+      "side": 1,
+      "message": "Can remove {}.",
+      "range": {
+        "startLine": 214,
+        "startChar": 52,
+        "endLine": 214,
+        "endChar": 0
+      },
+      "revId": "df00e854a145120c33636ce82a50a1caa94f1a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87e5e52a_9524a79f",
+        "filename": "chrome/installer/zucchini/patch_writer.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-03T20:02:15Z",
+      "side": 1,
+      "message": "Use stricter cast?",
+      "range": {
+        "startLine": 228,
+        "startChar": 32,
+        "endLine": 228,
+        "endChar": 43
+      },
+      "revId": "df00e854a145120c33636ce82a50a1caa94f1a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "791f702d_b3761705",
+        "filename": "chrome/installer/zucchini/patch_writer.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-03T20:02:15Z",
+      "side": 1,
+      "message": "This does same thing as line 221, but in a different way. Make these consistent?",
+      "revId": "df00e854a145120c33636ce82a50a1caa94f1a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5046dccd_97da5a77",
+        "filename": "chrome/installer/zucchini/patch_writer.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-03T20:02:15Z",
+      "side": 1,
+      "message": ", and |sink| will be in an undefined state.",
+      "range": {
+        "startLine": 35,
+        "startChar": 32,
+        "endLine": 35,
+        "endChar": 33
+      },
+      "revId": "df00e854a145120c33636ce82a50a1caa94f1a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8279210_78bbffe4",
+        "filename": "chrome/installer/zucchini/patch_writer.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-03T20:02:15Z",
+      "side": 1,
+      "message": "Would be nice if this matches the comments in patch_reader.h.  Recommendation:\n\n// Each of *Sink classes below has an associated \"main type\", and performs the following:\n// - Receives multiple \"main type\" elements (hence \"Sink\" in the name).\n// - Encodes list of received data, and writes them to internal storage (e.g., applying delta encoding).\n// - Writes encoded data to BufferSink.\n//\n// Common \"core functions\" implemented for *Sink classes are:\n// - void PutNext(const MAIN_TYPE\u0026 inst): Encodes and writes an instance of MAIN_TYPE to internal storage. Assumptions may be applied to successive |inst| provided.\n// - size_t SerializedSize() const: Returns the serialized size in bytes of internal storage.\n// - bool SerializeInto(BufferSink* sink) const: If |sink| has enough space, serializes internal storage into |sink|, and returns true. Otherwise returns false.\n//\n// Usage of *Sink instances don\u0027t mix, and PuttNext() have dissimilar interfaces. Therefore we do not use inheritance to relate *Sink classes,  simply implement \"core functions\" with matching names.",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 78
+      },
+      "revId": "df00e854a145120c33636ce82a50a1caa94f1a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c9bb396_4a98bacb",
+        "filename": "chrome/installer/zucchini/patch_writer.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-03T20:02:15Z",
+      "side": 1,
+      "message": "// Core functions.\n// Equivalences must be given by increasing |dst_offset|.\nvoid PutNext(...);",
+      "revId": "df00e854a145120c33636ce82a50a1caa94f1a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "852daebf_ab1d969a",
+        "filename": "chrome/installer/zucchini/patch_writer.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-03T20:02:15Z",
+      "side": 1,
+      "message": "bias of -1, using new convention? 2 more instances of this.",
+      "range": {
+        "startLine": 135,
+        "startChar": 32,
+        "endLine": 135,
+        "endChar": 41
+      },
+      "revId": "df00e854a145120c33636ce82a50a1caa94f1a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "290659b4_8e7b04ed",
+        "filename": "chrome/installer/zucchini/patch_writer.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-03T20:02:15Z",
+      "side": 1,
+      "message": "Make these regular member functions, and add Getters to retrieve pointers to them? Note that |extra_targets_| already does this.",
+      "range": {
+        "startLine": 238,
+        "startChar": 1,
+        "endLine": 238,
+        "endChar": 16
+      },
+      "revId": "df00e854a145120c33636ce82a50a1caa94f1a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9827a5c_5e7ff434",
+        "filename": "chrome/installer/zucchini/patch_writer.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-03T20:02:15Z",
+      "side": 1,
+      "message": "Maybe std::vector\u003cunique_ptr\u003cPatchElementWriter\u003e \u003e elements_?\n\nAlternatively, instead of ReserveElements(), just pass number of elements at constructor, then add getter to access elements, given the index.",
+      "range": {
+        "startLine": 279,
+        "startChar": 7,
+        "endLine": 279,
+        "endChar": 13
+      },
+      "revId": "df00e854a145120c33636ce82a50a1caa94f1a29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
