@@ -214,7 +214,6 @@ void EventHandler::Clear() {
   frame_set_being_resized_ = nullptr;
   drag_target_ = nullptr;
   should_only_fire_drag_over_event_ = false;
-  last_mouse_down_user_gesture_token_.Clear();
   capturing_mouse_events_node_ = nullptr;
   pointer_event_manager_->Clear();
   scroll_manager_->Clear();
@@ -626,10 +625,6 @@ WebInputEventResult EventHandler::HandleMousePressEvent(
 
   UserGestureIndicator gesture_indicator(
       UserGestureToken::Create(frame_->GetDocument()));
-  frame_->LocalFrameRoot()
-      .GetEventHandler()
-      .last_mouse_down_user_gesture_token_ =
-      UserGestureIndicator::CurrentToken();
 
   if (RuntimeEnabledFeatures::MiddleClickAutoscrollEnabled()) {
     // We store whether middle click autoscroll is in progress before calling
@@ -993,23 +988,8 @@ WebInputEventResult EventHandler::HandleMouseReleaseEvent(
   if (subframe)
     return PassMouseReleaseEventToSubframe(mev, subframe);
 
-  // Mouse events will be associated with the Document where mousedown
-  // occurred. If, e.g., there is a mousedown, then a drag to a different
-  // Document and mouseup there, the mouseup's gesture will be associated with
-  // the mousedown's Document. It's not absolutely certain that this is the
-  // correct behavior.
-  std::unique_ptr<UserGestureIndicator> gesture_indicator;
-  if (frame_->LocalFrameRoot()
-          .GetEventHandler()
-          .last_mouse_down_user_gesture_token_) {
-    gesture_indicator = WTF::WrapUnique(new UserGestureIndicator(
-        std::move(frame_->LocalFrameRoot()
-                      .GetEventHandler()
-                      .last_mouse_down_user_gesture_token_)));
-  } else {
-    gesture_indicator = WTF::WrapUnique(new UserGestureIndicator(
-        UserGestureToken::Create(frame_->GetDocument())));
-  }
+  UserGestureIndicator gesture_indicator(
+      UserGestureToken::Create(frame_->GetDocument()));
 
   WebInputEventResult event_result = UpdatePointerTargetAndDispatchEvents(
       EventTypeNames::mouseup, mev.InnerNode(), mev.CanvasRegionId(),

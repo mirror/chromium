@@ -3562,7 +3562,7 @@ TEST_P(WebViewTest, FirstUserGestureObservedMouseEvent) {
   mouse_event.SetType(WebInputEvent::kMouseUp);
   web_view->HandleInputEvent(WebCoalescedInputEvent(mouse_event));
 
-  EXPECT_EQ(1, client.GetUserGestureNotificationsCount());
+  EXPECT_EQ(2, client.GetUserGestureNotificationsCount());
   frame->SetAutofillClient(0);
 }
 
