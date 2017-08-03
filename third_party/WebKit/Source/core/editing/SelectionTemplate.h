@@ -71,6 +71,24 @@ class CORE_EXPORT SelectionTemplate final {
     DISALLOW_COPY_AND_ASSIGN(Builder);
   };
 
+  // Resets selection at end of life time of the object when base and extent are
+  // disconnected or moved to another document.
+  class InvalidSelectionResetter final {
+    DISALLOW_NEW();
+
+   public:
+    explicit InvalidSelectionResetter(const SelectionTemplate*);
+    ~InvalidSelectionResetter();
+
+    DECLARE_TRACE();
+
+   private:
+    const Member<const Document> document_;
+    SelectionTemplate* const selection_;
+
+    DISALLOW_COPY_AND_ASSIGN(InvalidSelectionResetter);
+  };
+
   SelectionTemplate(const SelectionTemplate& other);
   SelectionTemplate();
 
@@ -109,6 +127,7 @@ class CORE_EXPORT SelectionTemplate final {
   friend class SelectionEditor;
 
   Document* GetDocument() const;
+  bool IsValidFor(const Document&) const;
 
   PositionTemplate<Strategy> base_;
   PositionTemplate<Strategy> extent_;
