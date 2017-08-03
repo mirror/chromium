@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f66c22a_c4570850",
+        "filename": "components/viz/service/surfaces/surface.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-08-03T22:43:21Z",
+      "side": 1,
+      "message": "What does \"created\" mean in SurfaceCreated? Can we rename it to SurfaceActivated or SurfaceFirstActivated?",
+      "range": {
+        "startLine": 261,
+        "startChar": 22,
+        "endLine": 261,
+        "endChar": 36
+      },
+      "revId": "3a52b0d09ea2bf6d66419613ebbd98443a240ea6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
