@@ -70,6 +70,24 @@
       "revId": "a9e9888e8dd87b8b3ea10dd590073cc0d15a284f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "734bc3e7_a04be012",
+        "filename": "third_party/WebKit/Source/bindings/templates/methods.cpp.tmpl",
+        "patchSetId": 4
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-08-03T13:43:50Z",
+      "side": 1,
+      "message": "info.NewTarget() is a new value being constructed.\n\nI\u0027m not 100% sure why it\u0027s needed.  Maybe it\u0027s because ECMAScript defines \"new.target\" as a different concept from \"receiver object\".  Maybe it\u0027s because it\u0027s possible that \"foo.Func()\" (without the \"new\" keyword) can create a new object (in this case, I guess that \"foo\" is a receiver object, \"Func\" is a constructor function, and the \"new.target\" is different from either of them).",
+      "parentUuid": "3910cf4e_1c1f8461",
+      "revId": "a9e9888e8dd87b8b3ea10dd590073cc0d15a284f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
