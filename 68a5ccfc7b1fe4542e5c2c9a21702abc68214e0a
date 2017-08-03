@@ -22,6 +22,30 @@
       "revId": "68a5ccfc7b1fe4542e5c2c9a21702abc68214e0a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e02c0a5b_8ef192a0",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-08-03T13:36:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7bd8627b_a14be31c",
+      "range": {
+        "startLine": 40,
+        "startChar": 63,
+        "endLine": 40,
+        "endChar": 65
+      },
+      "revId": "68a5ccfc7b1fe4542e5c2c9a21702abc68214e0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
