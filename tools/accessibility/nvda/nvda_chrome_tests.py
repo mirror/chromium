@@ -191,9 +191,7 @@ class NvdaChromeTest(unittest.TestCase):
         return True
 
       if time.time() - start_time >= WAIT_FOR_SPEECH_TIMEOUT_SECS:
-        self.fail("Test for expected speech failed.\n\nExpected:\n" +
-          str(expected) +
-          ".\n\nActual:\n" + str(lines));
+        self.fail("Test for expected speech failed.\n\nExpected:\n" + str(expected) + ".\n\nActual:\n" + str(lines));
         return False
       time.sleep(0.1)
 
@@ -202,38 +200,38 @@ class NvdaChromeTest(unittest.TestCase):
   #
 
   def testTypingInOmnibox(self):
+    print("Running testTypingInOmnibox")
+
     # Ctrl+A: Select all.
-    self._pywinauto_window.TypeKeys('^A')
-    self._TestForSpeech('selecting about:blank')
+    self._pywinauto_window.TypeKeys('^l')
+    self._TestForSpeech(["main tool bar"]);
 
-    # Type three characters.
     self._pywinauto_window.TypeKeys('xyz')
-    self._TestForSpeech(['x', 'y', 'z'])
-
-    # Arrow back over two characters.
-    self._pywinauto_window.TypeKeys('{LEFT}')
-    self._TestForSpeech(['z', 'z', 'unselecting'])
-
-    self._pywinauto_window.TypeKeys('{LEFT}')
-    self._TestForSpeech('y')
+    self._pywinauto_window.TypeKeys('^a')
+    self._TestForSpeech(["selected about:blank"]);
 
   def testFocusToolbarButton(self):
+    print("Running testFocusToolbarButton")
+
     # Alt+Shift+T.
     self._pywinauto_window.TypeKeys('%+T')
     self._TestForSpeech('Reload button Reload this page')
+    # this is flakey because sometimes this will be a stop button too.
 
   def testReadAllOnPageLoad(self):
-    # Ctrl+A: Select all
-    self._pywinauto_window.TypeKeys('^A')
-    self._TestForSpeech('selecting about:blank')
-
+    print("Running testReadAllOnPageLoad")
     # Load data url.
+
+    # Focus the url bar with control-L
+    self._pywinauto_window.TypeKeys('^l')
+
+    self._pywinauto_window.TypeKeys('^a')
+
     self._pywinauto_window.TypeKeys('data:text/html,Hello<p>World.')
-    self._TestForSpeech('dot')
     self._pywinauto_window.TypeKeys('{ENTER}')
+
     self._TestForSpeech(
-        ['document',
-         'Hello',
+        ['Hello',
          'World.'])
 
 if __name__ == '__main__':
