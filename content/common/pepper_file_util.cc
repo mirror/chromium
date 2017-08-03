@@ -21,9 +21,4 @@ storage::FileSystemType PepperFileSystemTypeToFileSystemType(
   }
 }
 
-int IntegerFromSyncSocketHandle(
-    const base::SyncSocket::Handle& socket_handle) {
-  return ppapi::PlatformFileToInt(socket_handle);
-}
-
 }  // namespace content

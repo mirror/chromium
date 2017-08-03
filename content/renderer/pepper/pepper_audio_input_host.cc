@@ -21,14 +21,6 @@
 
 namespace content {
 
-namespace {
-
-base::PlatformFile ConvertSyncSocketHandle(const base::SyncSocket& socket) {
-  return socket.handle();
-}
-
-}  // namespace
-
 PepperAudioInputHost::PepperAudioInputHost(RendererPpapiHostImpl* host,
                                            PP_Instance instance,
                                            PP_Resource resource)
@@ -63,12 +55,13 @@ void PepperAudioInputHost::StreamCreated(
     base::SharedMemoryHandle shared_memory_handle,
     size_t shared_memory_size,
     base::SyncSocket::Handle socket) {
-  OnOpenComplete(PP_OK, shared_memory_handle, shared_memory_size, socket);
+  OnOpenComplete(PP_OK, shared_memory_handle, shared_memory_size,
+                 std::move(socket));
 }
 
 void PepperAudioInputHost::StreamCreationFailed() {
   OnOpenComplete(PP_ERROR_FAILED, base::SharedMemoryHandle(), 0,
-                 base::SyncSocket::kInvalidHandle);
+                 base::SyncSocket::Handle());
 }
 
 int32_t PepperAudioInputHost::OnOpen(ppapi::host::HostMessageContext* context,
@@ -124,8 +117,7 @@ void PepperAudioInputHost::OnOpenComplete(
     base::SharedMemoryHandle shared_memory_handle,
     size_t shared_memory_size,
     base::SyncSocket::Handle socket_handle) {
-  // Make sure the handles are cleaned up.
-  base::SyncSocket scoped_socket(socket_handle);
+  // Make sure the handle is cleaned up.
   base::SharedMemory scoped_shared_memory(shared_memory_handle, false);
 
   if (!open_context_.is_valid()) {
@@ -139,11 +131,10 @@ void PepperAudioInputHost::OnOpenComplete(
       ppapi::proxy::SerializedHandle::SHARED_MEMORY);
 
   if (result == PP_OK) {
-    IPC::PlatformFileForTransit temp_socket =
-        IPC::InvalidPlatformFileForTransit();
+    IPC::PlatformFileForTransit temp_socket;
     base::SharedMemoryHandle temp_shmem;
-    result = GetRemoteHandles(
-        scoped_socket, scoped_shared_memory, &temp_socket, &temp_shmem);
+    result = CreateRemoteHandles(std::move(socket_handle), scoped_shared_memory,
+                                 &temp_socket, &temp_shmem);
 
     serialized_socket_handle.set_socket(temp_socket);
     serialized_shared_memory_handle.set_shmem(temp_shmem, shared_memory_size);
@@ -159,13 +150,13 @@ void PepperAudioInputHost::OnOpenComplete(
   SendOpenReply(result);
 }
 
-int32_t PepperAudioInputHost::GetRemoteHandles(
-    const base::SyncSocket& socket,
+int32_t PepperAudioInputHost::CreateRemoteHandles(
+    base::SyncSocket::Handle socket_handle,
     const base::SharedMemory& shared_memory,
     IPC::PlatformFileForTransit* remote_socket_handle,
     base::SharedMemoryHandle* remote_shared_memory_handle) {
   *remote_socket_handle = renderer_ppapi_host_->ShareHandleWithRemote(
-      ConvertSyncSocketHandle(socket), false);
+      socket_handle.release(), false);
   if (*remote_socket_handle == IPC::InvalidPlatformFileForTransit())
     return PP_ERROR_FAILED;
 

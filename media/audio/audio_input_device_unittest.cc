@@ -100,7 +100,7 @@ TEST(AudioInputDeviceTest, FailToCreateStream) {
 
 ACTION_P5(ReportOnStreamCreated, device, handle, socket, length, segments) {
   static_cast<AudioInputIPCDelegate*>(device)->OnStreamCreated(
-      handle, socket, length, segments, false);
+      handle, std::move(*socket), length, segments, false);
 }
 
 TEST(AudioInputDeviceTest, CreateStream) {
@@ -118,9 +118,7 @@ TEST(AudioInputDeviceTest, CreateStream) {
 
   ASSERT_TRUE(
       CancelableSyncSocket::CreatePair(&browser_socket, &renderer_socket));
-  SyncSocket::TransitDescriptor audio_device_socket_descriptor;
-  ASSERT_TRUE(renderer_socket.PrepareTransitDescriptor(
-      base::GetCurrentProcessHandle(), &audio_device_socket_descriptor));
+  SyncSocket::Handle audio_device_socket_handle = renderer_socket.Release();
   base::SharedMemoryHandle duplicated_memory_handle =
       shared_memory.handle().Duplicate();
   ASSERT_TRUE(duplicated_memory_handle.IsValid());
@@ -134,10 +132,9 @@ TEST(AudioInputDeviceTest, CreateStream) {
   device->Start();
 
   EXPECT_CALL(*input_ipc, CreateStream(_, _, _, _, _))
-      .WillOnce(ReportOnStreamCreated(
-          device.get(), duplicated_memory_handle,
-          SyncSocket::UnwrapHandle(audio_device_socket_descriptor), memory_size,
-          1));
+      .WillOnce(ReportOnStreamCreated(device.get(), duplicated_memory_handle,
+                                      &audio_device_socket_handle, memory_size,
+                                      1));
   EXPECT_CALL(*input_ipc, RecordStream());
   EXPECT_CALL(callback, OnCaptureStarted())
       .WillOnce(QuitLoop(io_loop.task_runner()));

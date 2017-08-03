@@ -14,14 +14,9 @@
 
 namespace base {
 
-const SyncSocket::Handle SyncSocket::kInvalidHandle = -1;
-
-SyncSocket::SyncSocket() : handle_(kInvalidHandle) {
-}
-
-SyncSocket::~SyncSocket() {
-  Close();
-}
+SyncSocket::SyncSocket() {}
+SyncSocket::SyncSocket(Handle handle) : handle_(std::move(handle)) {}
+SyncSocket::~SyncSocket() {}
 
 // static
 bool SyncSocket::CreatePair(SyncSocket* socket_a, SyncSocket* socket_b) {
@@ -34,7 +29,7 @@ SyncSocket::Handle SyncSocket::UnwrapHandle(
   // TODO(xians): Still unclear how NaCl uses SyncSocket.
   // See http://crbug.com/409656
   NOTIMPLEMENTED();
-  return SyncSocket::kInvalidHandle;
+  return Handle();
 }
 
 bool SyncSocket::PrepareTransitDescriptor(
@@ -46,22 +41,17 @@ bool SyncSocket::PrepareTransitDescriptor(
   return false;
 }
 
-bool SyncSocket::Close() {
-  if (handle_ != kInvalidHandle) {
-    if (close(handle_) < 0)
-      DPLOG(ERROR) << "close";
-    handle_ = kInvalidHandle;
-  }
-  return true;
+void SyncSocket::Close() {
+  handle_.reset();
 }
 
 size_t SyncSocket::Send(const void* buffer, size_t length) {
-  const ssize_t bytes_written = write(handle_, buffer, length);
+  const ssize_t bytes_written = write(handle_.get(), buffer, length);
   return bytes_written > 0 ? bytes_written : 0;
 }
 
 size_t SyncSocket::Receive(void* buffer, size_t length) {
-  const ssize_t bytes_read = read(handle_, buffer, length);
+  const ssize_t bytes_read = read(handle_.get(), buffer, length);
   return bytes_read > 0 ? bytes_read : 0;
 }
 
@@ -76,24 +66,21 @@ size_t SyncSocket::Peek() {
 }
 
 SyncSocket::Handle SyncSocket::Release() {
-  Handle r = handle_;
-  handle_ = kInvalidHandle;
-  return r;
+  return std::move(handle_);
 }
 
-CancelableSyncSocket::CancelableSyncSocket() {
-}
+CancelableSyncSocket::CancelableSyncSocket() {}
 
 CancelableSyncSocket::CancelableSyncSocket(Handle handle)
-    : SyncSocket(handle) {
-}
+    : SyncSocket(std::move(handle)) {}
 
 size_t CancelableSyncSocket::Send(const void* buffer, size_t length) {
   return SyncSocket::Send(buffer, length);
 }
 
 bool CancelableSyncSocket::Shutdown() {
-  return SyncSocket::Close();
+  SyncSocket::Close();
+  return true;
 }
 
 // static

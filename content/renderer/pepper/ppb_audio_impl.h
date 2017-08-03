@@ -46,7 +46,7 @@ class PPB_Audio_Impl : public ppapi::Resource,
   PP_Bool StopPlayback() override;
   int32_t Open(PP_Resource config_id,
                scoped_refptr<ppapi::TrackedCallback> create_callback) override;
-  int32_t GetSyncSocket(int* sync_socket) override;
+  int32_t GetSyncSocket(base::SyncSocket::Handle* sync_socket) override;
   int32_t GetSharedMemory(base::SharedMemory** shm,
                           uint32_t* shm_size) override;
 

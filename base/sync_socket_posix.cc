@@ -32,70 +32,55 @@ const size_t kMaxMessageLength = static_cast<size_t>(INT_MAX);
 
 // Writes |length| of |buffer| into |handle|.  Returns the number of bytes
 // written or zero on error.  |length| must be greater than 0.
-size_t SendHelper(SyncSocket::Handle handle,
-                  const void* buffer,
-                  size_t length) {
+size_t SendHelper(int fd, const void* buffer, size_t length) {
   DCHECK_GT(length, 0u);
   DCHECK_LE(length, kMaxMessageLength);
-  DCHECK_NE(handle, SyncSocket::kInvalidHandle);
+  DCHECK_NE(fd, 0);
   const char* charbuffer = static_cast<const char*>(buffer);
-  return WriteFileDescriptor(handle, charbuffer, length)
+  return WriteFileDescriptor(fd, charbuffer, length)
              ? static_cast<size_t>(length)
              : 0;
 }
 
-bool CloseHandle(SyncSocket::Handle handle) {
-  if (handle != SyncSocket::kInvalidHandle && close(handle) < 0) {
-    DPLOG(ERROR) << "close";
-    return false;
-  }
-
-  return true;
-}
-
 }  // namespace
 
-const SyncSocket::Handle SyncSocket::kInvalidHandle = -1;
-
-SyncSocket::SyncSocket() : handle_(kInvalidHandle) {}
-
-SyncSocket::~SyncSocket() {
-  Close();
-}
+SyncSocket::SyncSocket() {}
+SyncSocket::SyncSocket(Handle handle) : handle_(std::move(handle)) {}
+SyncSocket::~SyncSocket() {}
 
 // static
 bool SyncSocket::CreatePair(SyncSocket* socket_a, SyncSocket* socket_b) {
   DCHECK_NE(socket_a, socket_b);
-  DCHECK_EQ(socket_a->handle_, kInvalidHandle);
-  DCHECK_EQ(socket_b->handle_, kInvalidHandle);
+  DCHECK(!socket_a->handle_.is_valid());
+  DCHECK(!socket_b->handle_.is_valid());
 
 #if defined(OS_MACOSX)
   int nosigpipe = 1;
 #endif  // defined(OS_MACOSX)
 
-  Handle handles[2] = { kInvalidHandle, kInvalidHandle };
+  int handles[2] = {-1, -1};
   if (socketpair(AF_UNIX, SOCK_STREAM, 0, handles) != 0) {
-    CloseHandle(handles[0]);
-    CloseHandle(handles[1]);
+    DCHECK(handles[0] == -1 && handles[1] == -1);
     return false;
   }
+
+  Handle socket_1(handles[0]);
+  Handle socket_2(handles[1]);
 
 #if defined(OS_MACOSX)
   // On OSX an attempt to read or write to a closed socket may generate a
   // SIGPIPE rather than returning -1.  setsockopt will shut this off.
-  if (0 != setsockopt(handles[0], SOL_SOCKET, SO_NOSIGPIPE,
-                      &nosigpipe, sizeof nosigpipe) ||
-      0 != setsockopt(handles[1], SOL_SOCKET, SO_NOSIGPIPE,
-                      &nosigpipe, sizeof nosigpipe)) {
-    CloseHandle(handles[0]);
-    CloseHandle(handles[1]);
+  if (0 != setsockopt(socket_1.get(), SOL_SOCKET, SO_NOSIGPIPE, &nosigpipe,
+                      sizeof nosigpipe) ||
+      0 != setsockopt(socket_1.get(), SOL_SOCKET, SO_NOSIGPIPE, &nosigpipe,
+                      sizeof nosigpipe)) {
     return false;
   }
 #endif
 
   // Copy the handles out for successful return.
-  socket_a->handle_ = handles[0];
-  socket_b->handle_ = handles[1];
+  socket_a->handle_ = std::move(socket_1);
+  socket_b->handle_ = std::move(socket_2);
 
   return true;
 }
@@ -103,34 +88,36 @@ bool SyncSocket::CreatePair(SyncSocket* socket_a, SyncSocket* socket_b) {
 // static
 SyncSocket::Handle SyncSocket::UnwrapHandle(
     const TransitDescriptor& descriptor) {
-  return descriptor.fd;
+  // Verify that we can take ownership of the descriptor.
+  CHECK(descriptor.auto_close);
+  return ScopedFD(descriptor.fd);
 }
 
 bool SyncSocket::PrepareTransitDescriptor(ProcessHandle peer_process_handle,
                                           TransitDescriptor* descriptor) {
-  descriptor->fd = handle();
+  if (!handle_.is_valid())
+    return false;
+  descriptor->fd = handle_.get();
   descriptor->auto_close = false;
-  return descriptor->fd != kInvalidHandle;
+  return true;
 }
 
-bool SyncSocket::Close() {
-  const bool retval = CloseHandle(handle_);
-  handle_ = kInvalidHandle;
-  return retval;
+void SyncSocket::Close() {
+  handle_.reset();
 }
 
 size_t SyncSocket::Send(const void* buffer, size_t length) {
   ThreadRestrictions::AssertIOAllowed();
-  return SendHelper(handle_, buffer, length);
+  return SendHelper(handle_.get(), buffer, length);
 }
 
 size_t SyncSocket::Receive(void* buffer, size_t length) {
   ThreadRestrictions::AssertIOAllowed();
   DCHECK_GT(length, 0u);
   DCHECK_LE(length, kMaxMessageLength);
-  DCHECK_NE(handle_, kInvalidHandle);
+  DCHECK(handle_.is_valid());
   char* charbuffer = static_cast<char*>(buffer);
-  if (ReadFromFD(handle_, charbuffer, length))
+  if (ReadFromFD(handle_.get(), charbuffer, length))
     return length;
   return 0;
 }
@@ -141,7 +128,7 @@ size_t SyncSocket::ReceiveWithTimeout(void* buffer,
   ThreadRestrictions::AssertIOAllowed();
   DCHECK_GT(length, 0u);
   DCHECK_LE(length, kMaxMessageLength);
-  DCHECK_NE(handle_, kInvalidHandle);
+  DCHECK(handle_.is_valid());
 
   // Only timeouts greater than zero and less than one second are allowed.
   DCHECK_GT(timeout.InMicroseconds(), 0);
@@ -153,7 +140,7 @@ size_t SyncSocket::ReceiveWithTimeout(void* buffer,
   const TimeTicks finish_time = start_time + timeout;
 
   struct pollfd pollfd;
-  pollfd.fd = handle_;
+  pollfd.fd = handle_.get();
   pollfd.events = POLLIN;
   pollfd.revents = 0;
 
@@ -196,9 +183,9 @@ size_t SyncSocket::ReceiveWithTimeout(void* buffer,
 }
 
 size_t SyncSocket::Peek() {
-  DCHECK_NE(handle_, kInvalidHandle);
+  DCHECK(handle_.is_valid());
   int number_chars = 0;
-  if (ioctl(handle_, FIONREAD, &number_chars) == -1) {
+  if (ioctl(handle_.get(), FIONREAD, &number_chars) == -1) {
     // If there is an error in ioctl, signal that the channel would block.
     return 0;
   }
@@ -207,38 +194,35 @@ size_t SyncSocket::Peek() {
 }
 
 SyncSocket::Handle SyncSocket::Release() {
-  Handle r = handle_;
-  handle_ = kInvalidHandle;
-  return r;
+  return std::move(handle_);
 }
 
 CancelableSyncSocket::CancelableSyncSocket() {}
 CancelableSyncSocket::CancelableSyncSocket(Handle handle)
-    : SyncSocket(handle) {
-}
+    : SyncSocket(std::move(handle)) {}
 
 bool CancelableSyncSocket::Shutdown() {
-  DCHECK_NE(handle_, kInvalidHandle);
-  return HANDLE_EINTR(shutdown(handle_, SHUT_RDWR)) >= 0;
+  DCHECK(handle_.is_valid());
+  return HANDLE_EINTR(shutdown(handle_.get(), SHUT_RDWR)) >= 0;
 }
 
 size_t CancelableSyncSocket::Send(const void* buffer, size_t length) {
   DCHECK_GT(length, 0u);
   DCHECK_LE(length, kMaxMessageLength);
-  DCHECK_NE(handle_, kInvalidHandle);
+  DCHECK(handle_.is_valid());
 
-  const int flags = fcntl(handle_, F_GETFL);
+  const int flags = fcntl(handle_.get(), F_GETFL);
   if (flags != -1 && (flags & O_NONBLOCK) == 0) {
     // Set the socket to non-blocking mode for sending if its original mode
     // is blocking.
-    fcntl(handle_, F_SETFL, flags | O_NONBLOCK);
+    fcntl(handle_.get(), F_SETFL, flags | O_NONBLOCK);
   }
 
-  const size_t len = SendHelper(handle_, buffer, length);
+  const size_t len = SendHelper(handle_.get(), buffer, length);
 
   if (flags != -1 && (flags & O_NONBLOCK) == 0) {
     // Restore the original flags.
-    fcntl(handle_, F_SETFL, flags);
+    fcntl(handle_.get(), F_SETFL, flags);
   }
 
   return len;

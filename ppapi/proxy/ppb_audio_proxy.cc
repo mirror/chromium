@@ -51,7 +51,7 @@ class Audio : public Resource, public PPB_Audio_Shared {
   PP_Bool StopPlayback() override;
   int32_t Open(PP_Resource config_id,
                scoped_refptr<TrackedCallback> create_callback) override;
-  int32_t GetSyncSocket(int* sync_socket) override;
+  int32_t GetSyncSocket(base::SyncSocket::Handle* sync_socket) override;
   int32_t GetSharedMemory(base::SharedMemory** shm,
                           uint32_t* shm_size) override;
 
@@ -121,7 +121,7 @@ int32_t Audio::Open(PP_Resource config_id,
   return PP_ERROR_NOTSUPPORTED;  // Don't proxy the trusted interface.
 }
 
-int32_t Audio::GetSyncSocket(int* sync_socket) {
+int32_t Audio::GetSyncSocket(base::SyncSocket::Handle* sync_socket) {
   return PP_ERROR_NOTSUPPORTED;  // Don't proxy the trusted interface.
 }
 
@@ -281,14 +281,14 @@ int32_t PPB_Audio_Proxy::GetAudioConnectedHandles(
     return PP_ERROR_NOINTERFACE;
 
   // Get the socket handle for signaling.
-  int32_t socket_handle;
+  base::SyncSocket::Handle socket_handle;
   int32_t result = enter.object()->GetSyncSocket(&socket_handle);
   if (result != PP_OK)
     return result;
 
   // socket_handle doesn't belong to us: don't close it.
-  *foreign_socket_handle = dispatcher()->ShareHandleWithRemote(
-      IntToPlatformFile(socket_handle), false);
+  *foreign_socket_handle =
+      dispatcher()->ShareHandleWithRemote(socket_handle.release(), true);
   if (*foreign_socket_handle == IPC::InvalidPlatformFileForTransit())
     return PP_ERROR_FAILED;
 
@@ -313,27 +313,27 @@ int32_t PPB_Audio_Proxy::GetAudioConnectedHandles(
 void PPB_Audio_Proxy::OnMsgNotifyAudioStreamCreated(
     const HostResource& audio_id,
     int32_t result_code,
-    SerializedHandle socket_handle,
-    SerializedHandle handle) {
-  CHECK(socket_handle.is_socket());
-  CHECK(handle.is_shmem());
+    SerializedHandle serialized_socket_handle,
+    SerializedHandle serialized_shmem_handle) {
+  CHECK(serialized_socket_handle.is_socket());
+  CHECK(serialized_shmem_handle.is_shmem());
   EnterPluginFromHostResource<PPB_Audio_API> enter(audio_id);
-  if (enter.failed() || result_code != PP_OK) {
-    // The caller may still have given us these handles in the failure case.
-    // The easiest way to clean these up is to just put them in the objects
-    // and then close them. This failure case is not performance critical.
-    base::SyncSocket temp_socket(
-        IPC::PlatformFileForTransitToPlatformFile(socket_handle.descriptor()));
-    base::SharedMemory temp_mem(handle.shmem(), false);
-  } else {
-    EnterResourceNoLock<PPB_AudioConfig_API> config(
-        static_cast<Audio*>(enter.object())->GetCurrentConfig(), true);
-    static_cast<Audio*>(enter.object())->SetStreamInfo(
-        enter.resource()->pp_instance(), handle.shmem(), handle.size(),
-        IPC::PlatformFileForTransitToPlatformFile(socket_handle.descriptor()),
-        config.object()->GetSampleRate(),
-        config.object()->GetSampleFrameCount());
-  }
+
+  base::SyncSocket::Handle socket_handle(
+      IPC::PlatformFileForTransitToPlatformFile(
+          serialized_socket_handle.descriptor()));
+  base::SharedMemoryHandle shmem_handle(serialized_shmem_handle.shmem());
+
+  if (enter.failed() || result_code != PP_OK)
+    return;
+
+  EnterResourceNoLock<PPB_AudioConfig_API> config(
+      static_cast<Audio*>(enter.object())->GetCurrentConfig(), true);
+  static_cast<Audio*>(enter.object())
+      ->SetStreamInfo(enter.resource()->pp_instance(), std::move(shmem_handle),
+                      serialized_shmem_handle.size(), std::move(socket_handle),
+                      config.object()->GetSampleRate(),
+                      config.object()->GetSampleFrameCount());
 }
 
 }  // namespace proxy

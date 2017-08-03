@@ -63,7 +63,9 @@ void AudioDeviceThread::Callback::InitializeOnAudioThread() {
 AudioDeviceThread::AudioDeviceThread(Callback* callback,
                                      base::SyncSocket::Handle socket,
                                      const char* thread_name)
-    : callback_(callback), thread_name_(thread_name), socket_(socket) {
+    : callback_(callback),
+      thread_name_(thread_name),
+      socket_(std::move(socket)) {
   CHECK(base::PlatformThread::CreateWithPriority(0, this, &thread_handle_,
                                                  GetAudioThreadPriority()));
   DCHECK(!thread_handle_.is_null());

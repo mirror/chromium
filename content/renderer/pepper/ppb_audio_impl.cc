@@ -148,7 +148,7 @@ int32_t PPB_Audio_Impl::Open(PP_Resource config,
   return PP_OK_COMPLETIONPENDING;
 }
 
-int32_t PPB_Audio_Impl::GetSyncSocket(int* sync_socket) {
+int32_t PPB_Audio_Impl::GetSyncSocket(base::SyncSocket::Handle* sync_socket) {
   return GetSyncSocketImpl(sync_socket);
 }
 
@@ -162,11 +162,8 @@ void PPB_Audio_Impl::OnSetStreamInfo(
     size_t shared_memory_size,
     base::SyncSocket::Handle socket_handle) {
   EnterResourceNoLock<PPB_AudioConfig_API> enter(config_, true);
-  SetStreamInfo(pp_instance(),
-                shared_memory_handle,
-                shared_memory_size,
-                socket_handle,
-                enter.object()->GetSampleRate(),
+  SetStreamInfo(pp_instance(), shared_memory_handle, shared_memory_size,
+                std::move(socket_handle), enter.object()->GetSampleRate(),
                 enter.object()->GetSampleFrameCount());
 }
 

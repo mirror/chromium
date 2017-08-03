@@ -20,33 +20,6 @@
 
 namespace content {
 
-namespace {
-
-base::SyncSocket::Handle DuplicateHandle(base::SyncSocket::Handle handle) {
-  base::SyncSocket::Handle out_handle = base::SyncSocket::kInvalidHandle;
-#if defined(OS_WIN)
-  DWORD options = DUPLICATE_SAME_ACCESS;
-  if (!::DuplicateHandle(::GetCurrentProcess(),
-                         handle,
-                         ::GetCurrentProcess(),
-                         &out_handle,
-                         0,
-                         FALSE,
-                         options)) {
-    out_handle = base::SyncSocket::kInvalidHandle;
-  }
-#elif defined(OS_POSIX)
-  // If asked to close the source, we can simply re-use the source fd instead of
-  // dup()ing and close()ing.
-  out_handle = ::dup(handle);
-#else
-#error Not implemented.
-#endif
-  return out_handle;
-}
-
-}  // namespace
-
 PepperBrokerDispatcherWrapper::PepperBrokerDispatcherWrapper() {}
 
 PepperBrokerDispatcherWrapper::~PepperBrokerDispatcherWrapper() {}
@@ -78,7 +51,7 @@ int32_t PepperBrokerDispatcherWrapper::SendHandleToBroker(
     PP_Instance instance,
     base::SyncSocket::Handle handle) {
   IPC::PlatformFileForTransit foreign_socket_handle =
-      dispatcher_->ShareHandleWithRemote(handle, false);
+      dispatcher_->ShareHandleWithRemote(handle.release(), false);
   if (foreign_socket_handle == IPC::InvalidPlatformFileForTransit())
     return PP_ERROR_FAILED;
 
@@ -89,8 +62,8 @@ int32_t PepperBrokerDispatcherWrapper::SendHandleToBroker(
     // The easiest way to clean it up is to just put it in an object
     // and then close it. This failure case is not performance critical.
     // The handle could still leak if Send succeeded but the IPC later failed.
-    base::SyncSocket temp_socket(
-        IPC::PlatformFileForTransitToPlatformFile(foreign_socket_handle));
+    base::SyncSocket temp_socket(base::SyncSocket::Handle(
+        IPC::PlatformFileForTransitToPlatformFile(foreign_socket_handle)));
     return PP_ERROR_FAILED;
   }
 
@@ -181,9 +154,7 @@ void PepperBroker::OnBrokerPermissionResult(PPB_Broker_Impl* client,
 
   if (!result) {
     // Report failure.
-    client->BrokerConnected(
-        ppapi::PlatformFileToInt(base::SyncSocket::kInvalidHandle),
-        PP_ERROR_NOACCESS);
+    client->BrokerConnected(base::kInvalidPlatformFile, PP_ERROR_NOACCESS);
     pending_connects_.erase(entry);
     return;
   }
@@ -209,21 +180,19 @@ PepperBroker::PendingConnection::~PendingConnection() {}
 
 void PepperBroker::ReportFailureToClients(int error_code) {
   DCHECK_NE(PP_OK, error_code);
-  for (ClientMap::iterator i = pending_connects_.begin();
-       i != pending_connects_.end();
-       ++i) {
-    base::WeakPtr<PPB_Broker_Impl>& weak_ptr = i->second.client;
+  for (auto& client : pending_connects_) {
+    base::WeakPtr<PPB_Broker_Impl>& weak_ptr = client.second.client;
     if (weak_ptr.get()) {
-      weak_ptr->BrokerConnected(
-          ppapi::PlatformFileToInt(base::SyncSocket::kInvalidHandle),
-          error_code);
+      base::SyncSocket::Handle invalid_handle;
+      weak_ptr->BrokerConnected(ppapi::PlatformFileToInt(invalid_handle.get()),
+                                error_code);
     }
   }
   pending_connects_.clear();
 }
 
 void PepperBroker::ConnectPluginToBroker(PPB_Broker_Impl* client) {
-  base::SyncSocket::Handle plugin_handle = base::SyncSocket::kInvalidHandle;
+  base::SyncSocket::Handle plugin_handle;
   int32_t result = PP_OK;
 
   // The socket objects will be deleted when this function exits, closing the
@@ -232,12 +201,10 @@ void PepperBroker::ConnectPluginToBroker(PPB_Broker_Impl* client) {
   std::unique_ptr<base::SyncSocket> plugin_socket(new base::SyncSocket());
   if (base::SyncSocket::CreatePair(broker_socket.get(), plugin_socket.get())) {
     result = dispatcher_->SendHandleToBroker(client->pp_instance(),
-                                             broker_socket->handle());
+                                             broker_socket->Release());
 
-    // If the broker has its pipe handle, duplicate the plugin's handle.
-    // Otherwise, the plugin's handle will be automatically closed.
     if (result == PP_OK)
-      plugin_handle = DuplicateHandle(plugin_socket->handle());
+      plugin_handle = plugin_socket->Release();
   } else {
     result = PP_ERROR_FAILED;
   }
@@ -247,7 +214,8 @@ void PepperBroker::ConnectPluginToBroker(PPB_Broker_Impl* client) {
   // That message handler will then call client->BrokerConnected() with the
   // saved pipe handle.
   // Temporarily, just call back.
-  client->BrokerConnected(ppapi::PlatformFileToInt(plugin_handle), result);
+  client->BrokerConnected(ppapi::PlatformFileToInt(plugin_handle.release()),
+                          result);
 }
 
 }  // namespace content

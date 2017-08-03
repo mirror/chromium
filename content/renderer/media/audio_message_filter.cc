@@ -216,10 +216,9 @@ void AudioMessageFilter::OnStreamCreated(
     DLOG(WARNING) << "Got OnStreamCreated() event for a non-existent or removed"
                   << " audio renderer. (stream_id=" << stream_id << ").";
     base::SharedMemory::CloseHandle(handle);
-    base::SyncSocket socket(socket_handle);
     return;
   }
-  delegate->OnStreamCreated(handle, socket_handle, length);
+  delegate->OnStreamCreated(handle, std::move(socket_handle), length);
 }
 
 void AudioMessageFilter::OnStreamError(int stream_id) {

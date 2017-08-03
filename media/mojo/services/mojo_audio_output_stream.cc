@@ -80,7 +80,7 @@ void MojoAudioOutputStream::OnStreamCreated(
   mojo::ScopedSharedBufferHandle buffer_handle = mojo::WrapSharedMemoryHandle(
       foreign_memory_handle, shared_memory->requested_size(), false);
   mojo::ScopedHandle socket_handle =
-      mojo::WrapPlatformFile(foreign_socket->Release());
+      mojo::WrapPlatformFile(foreign_socket->Release().release());
 
   DCHECK(buffer_handle.is_valid());
   DCHECK(socket_handle.is_valid());

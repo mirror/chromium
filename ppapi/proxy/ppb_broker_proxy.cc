@@ -55,14 +55,9 @@ class Broker : public PPB_Broker_API, public Resource {
 };
 
 Broker::Broker(const HostResource& resource)
-    : Resource(OBJECT_IS_PROXY, resource),
-      called_connect_(false),
-      socket_handle_(base::SyncSocket::kInvalidHandle) {
-}
+    : Resource(OBJECT_IS_PROXY, resource), called_connect_(false) {}
 
-Broker::~Broker() {
-  socket_handle_ = base::SyncSocket::kInvalidHandle;
-}
+Broker::~Broker() {}
 
 PPB_Broker_API* Broker::AsPPB_Broker_API() {
   return this;
@@ -84,23 +79,20 @@ int32_t Broker::Connect(scoped_refptr<TrackedCallback> connect_callback) {
 }
 
 int32_t Broker::GetHandle(int32_t* handle) {
-  if (socket_handle_ == base::SyncSocket::kInvalidHandle)
+  if (!socket_handle_.is_valid())
     return PP_ERROR_FAILED;
-  *handle = PlatformFileToInt(socket_handle_);
+  *handle = PlatformFileToInt(socket_handle_.release());
   return PP_OK;
 }
 
 void Broker::ConnectComplete(IPC::PlatformFileForTransit socket_handle,
                              int32_t result) {
+  base::SyncSocket::Handle owned_handle(
+      IPC::PlatformFileForTransitToPlatformFile(socket_handle));
+
   if (result == PP_OK) {
-    DCHECK(socket_handle_ == base::SyncSocket::kInvalidHandle);
-    socket_handle_ = IPC::PlatformFileForTransitToPlatformFile(socket_handle);
-  } else {
-    // The caller may still have given us a handle in the failure case.
-    // The easiest way to clean it up is to just put it in an object
-    // and then close them. This failure case is not performance critical.
-    base::SyncSocket temp_socket(
-        IPC::PlatformFileForTransitToPlatformFile(socket_handle));
+    DCHECK(!socket_handle_.is_valid());
+    socket_handle_ = std::move(owned_handle);
   }
 
   if (!TrackedCallback::IsPending(current_connect_callback_)) {
@@ -181,7 +173,7 @@ void PPB_Broker_Proxy::OnMsgConnectComplete(
   EnterPluginFromHostResource<PPB_Broker_API> enter(resource);
   if (enter.failed()) {
     // As in Broker::ConnectComplete, we need to close the resource on error.
-    base::SyncSocket temp_socket(
+    base::SyncSocket::Handle owned_handle(
         IPC::PlatformFileForTransitToPlatformFile(socket_handle));
   } else {
     static_cast<Broker*>(enter.object())->ConnectComplete(socket_handle,
@@ -197,18 +189,16 @@ void PPB_Broker_Proxy::ConnectCompleteInHost(int32_t result,
   IPC::PlatformFileForTransit foreign_socket_handle =
       IPC::InvalidPlatformFileForTransit();
   if (result == PP_OK) {
-    int32_t socket_handle = PlatformFileToInt(base::SyncSocket::kInvalidHandle);
+    int32_t socket_handle = PlatformFileToInt(base::kInvalidPlatformFile);
     EnterHostFromHostResource<PPB_Broker_API> enter(broker);
     if (enter.succeeded())
       result = enter.object()->GetHandle(&socket_handle);
     DCHECK(result == PP_OK ||
-           socket_handle ==
-               PlatformFileToInt(base::SyncSocket::kInvalidHandle));
+           socket_handle == PlatformFileToInt(base::kInvalidPlatformFile));
 
     if (result == PP_OK) {
-      foreign_socket_handle =
-          dispatcher()->ShareHandleWithRemote(IntToPlatformFile(socket_handle),
-                                              true);
+      foreign_socket_handle = dispatcher()->ShareHandleWithRemote(
+          IntToPlatformFile(socket_handle), true);
       if (foreign_socket_handle == IPC::InvalidPlatformFileForTransit()) {
         result = PP_ERROR_FAILED;
         // Assume the local handle was closed even if the foreign handle could
@@ -227,7 +217,7 @@ void PPB_Broker_Proxy::ConnectCompleteInHost(int32_t result,
       // The easiest way to clean it up is to just put it in an object
       // and then close it. This failure case is not performance critical.
       // The handle could still leak if Send succeeded but the IPC later failed.
-      base::SyncSocket temp_socket(
+      base::SyncSocket::Handle temp_socket_handle(
           IPC::PlatformFileForTransitToPlatformFile(foreign_socket_handle));
   }
 }

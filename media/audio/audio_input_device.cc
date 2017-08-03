@@ -156,11 +156,7 @@ void AudioInputDevice::OnStreamCreated(base::SharedMemoryHandle handle,
                                        bool initially_muted) {
   DCHECK(task_runner()->BelongsToCurrentThread());
   DCHECK(base::SharedMemory::IsHandleValid(handle));
-#if defined(OS_WIN)
-  DCHECK(socket_handle);
-#else
-  DCHECK_GE(socket_handle, 0);
-#endif
+  DCHECK(socket_handle.is_valid());
   DCHECK_GT(length, 0);
 
   if (state_ != CREATING_STREAM)
@@ -182,8 +178,8 @@ void AudioInputDevice::OnStreamCreated(base::SharedMemoryHandle handle,
   audio_callback_.reset(new AudioInputDevice::AudioThreadCallback(
       audio_parameters_, handle, length, total_segments, callback_,
       base::BindRepeating(&AudioInputDevice::SetLastCallbackTimeToNow, this)));
-  audio_thread_.reset(new AudioDeviceThread(audio_callback_.get(),
-                                            socket_handle, "AudioInputDevice"));
+  audio_thread_.reset(new AudioDeviceThread(
+      audio_callback_.get(), std::move(socket_handle), "AudioInputDevice"));
 
   state_ = RECORDING;
   ipc_->RecordStream();

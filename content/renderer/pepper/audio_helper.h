@@ -36,7 +36,7 @@ class AudioHelper {
   // TODO(viettrungluu): This is all very poorly thought out. Refactor.
 
   // To be called by implementations of |PPB_Audio_API|/|PPB_AudioInput_API|.
-  int32_t GetSyncSocketImpl(int* sync_socket);
+  int32_t GetSyncSocketImpl(base::SyncSocket::Handle* sync_socket);
   int32_t GetSharedMemoryImpl(base::SharedMemory** shm, uint32_t* shm_size);
 
   // To be implemented by subclasses to call their |SetStreamInfo()|.

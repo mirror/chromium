@@ -8,6 +8,8 @@
 #include <stdint.h>
 
 #include "base/memory/ref_counted.h"
+#include "base/memory/shared_memory.h"
+#include "base/sync_socket.h"
 #include "ppapi/c/pp_completion_callback.h"
 #include "ppapi/c/ppb_audio.h"
 #include "ppapi/thunk/ppapi_thunk_export.h"
@@ -31,10 +33,9 @@ class PPAPI_THUNK_EXPORT PPB_Audio_API {
   virtual PP_Bool StopPlayback() = 0;
 
   // Trusted API.
-  virtual int32_t Open(
-      PP_Resource config_id,
-      scoped_refptr<TrackedCallback> create_callback) = 0;
-  virtual int32_t GetSyncSocket(int* sync_socket) = 0;
+  virtual int32_t Open(PP_Resource config_id,
+                       scoped_refptr<TrackedCallback> create_callback) = 0;
+  virtual int32_t GetSyncSocket(base::SyncSocket::Handle* sync_socket) = 0;
   virtual int32_t GetSharedMemory(base::SharedMemory** shm,
                                   uint32_t* shm_size) = 0;
 };
