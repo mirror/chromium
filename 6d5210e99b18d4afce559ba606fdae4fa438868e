@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b68eb35a_a42a3946",
+        "filename": "chrome/browser/media/router/discovery/mdns/cast_media_sink_service_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-08-03T21:10:10Z",
+      "side": 1,
+      "message": "Two things to think about to improve reliability during flaky network conditions:\n1) Porting over the reconnect-on-error logic from the extension will help keep the sink around instead of waiting for next signal from mDNS.\n2) Dynamically adjusting the connect timeout / ping timeout values for a reconnect could help in some cases. Since this is speculative, it might be best to implement this under an experiment and observe whether metrics show a positive impact (e.g. channel open success rate, ping timeout rate, etc.)",
+      "range": {
+        "startLine": 76,
+        "startChar": 39,
+        "endLine": 76,
+        "endChar": 0
+      },
+      "revId": "6d5210e99b18d4afce559ba606fdae4fa438868e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
