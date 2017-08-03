@@ -545,6 +545,7 @@ code_generator("make_core_generated_css_property_apis") {
     "$blink_core_output_dir/css/properties/CSSPropertyAPIMargin.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIMarker.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIMaskSourceType.h",
+    "$blink_core_output_dir/css/properties/CSSPropertyAPIMaxWidthOrHeight.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIObjectPosition.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIOffsetAnchor.h",
     "$blink_core_output_dir/css/properties/CSSPropertyAPIOffsetDistance.h",

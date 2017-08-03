@@ -1752,6 +1752,8 @@
     },
     {
       name: "max-height",
+      api_class: "CSSPropertyAPIMaxWidthOrHeight",
+      api_methods: ["parseSingleValue"],
       converter: "ConvertLengthMaxSizing",
       is_descriptor: true,
       interpolable: true,
@@ -1761,6 +1763,8 @@
     },
     {
       name: "max-width",
+      api_class: "CSSPropertyAPIMaxWidthOrHeight",
+      api_methods: ["parseSingleValue"],
       converter: "ConvertLengthMaxSizing",
       is_descriptor: true,
       interpolable: true,

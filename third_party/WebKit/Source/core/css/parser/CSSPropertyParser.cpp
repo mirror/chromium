@@ -648,10 +648,6 @@ const CSSValue* CSSPropertyParser::ParseSingleValue(
 
   CSSPropertyID property = resolveCSSPropertyID(unresolved_property);
   switch (property) {
-    case CSSPropertyMaxWidth:
-    case CSSPropertyMaxHeight:
-      return CSSPropertyLengthUtils::ConsumeMaxWidthOrHeight(
-          range_, *context_, UnitlessQuirk::kAllow);
     case CSSPropertyMinWidth:
     case CSSPropertyMinHeight:
     case CSSPropertyWidth:

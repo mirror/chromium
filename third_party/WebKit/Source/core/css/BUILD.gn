@@ -442,6 +442,7 @@ blink_core_sources("css") {
     "properties/CSSPropertyAPIMargin.cpp",
     "properties/CSSPropertyAPIMarker.cpp",
     "properties/CSSPropertyAPIMaskSourceType.cpp",
+    "properties/CSSPropertyAPIMaxWidthOrHeight.cpp",
     "properties/CSSPropertyAPIObjectPosition.cpp",
     "properties/CSSPropertyAPIOffsetAnchor.cpp",
     "properties/CSSPropertyAPIOffsetDistance.cpp",
