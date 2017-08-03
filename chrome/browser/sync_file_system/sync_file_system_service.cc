@@ -666,6 +666,7 @@ void SyncFileSystemService::OnExtensionUnloaded(
     content::BrowserContext* browser_context,
     const Extension* extension,
     extensions::UnloadedExtensionReason reason) {
+  // COMMENT: This seems weird.
   if (reason != extensions::UnloadedExtensionReason::DISABLE)
     return;
 
