@@ -457,4 +457,13 @@ AutomationPredicate.makeHeadingPredicate = function(level) {
 AutomationPredicate.supportsImageData =
     AutomationPredicate.roles([Role.CANVAS, Role.IMAGE, Role.VIDEO]);
 
+/**
+ * Matches against a node that forces showing surrounding in line
+ * nodes for braille.
+ * @param {!AutomationNode} node
+ * @return {boolean}
+ */
+AutomationPredicate.inLineBraille =
+    AutomationPredicate.roles([Role.CELL, Role.COLUMN_HEADER, Role.ROW_HEADER]);
+
 });  // goog.scope

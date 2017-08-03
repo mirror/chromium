@@ -300,18 +300,35 @@ Output.RULES = {
           '$role'
     },
     cell: {
-      enter: '@cell_summary($if($ariaCellRowIndex, $ariaCellRowIndex, ' +
-          '$tableCellRowIndex), ' +
-          '$if($ariaCellColumnIndex, $ariaCellColumnIndex, ' +
-          '$tableCellColumnIndex)) $node(tableColumnHeader)',
+      enter: {
+        speak: '@cell_summary($if($ariaCellRowIndex, $ariaCellRowIndex, ' +
+            '$tableCellRowIndex), ' +
+            '$if($ariaCellColumnIndex, $ariaCellColumnIndex, ' +
+            '$tableCellColumnIndex)) $node(tableColumnHeader)',
+        braille:
+            '$state @cell_summary($if($ariaCellRowIndex, $ariaCellRowIndex, ' +
+            '$tableCellRowIndex), ' +
+            '$if($ariaCellColumnIndex, $ariaCellColumnIndex, ' +
+            '$tableCellColumnIndex)) $node(tableColumnHeader)',
+      },
       speak: '$name @cell_summary($if($ariaCellRowIndex, $ariaCellRowIndex, ' +
           '$tableCellRowIndex), ' +
           '$if($ariaCellColumnIndex, $ariaCellColumnIndex, ' +
-          '$tableCellColumnIndex)) $node(tableColumnHeader) $state $description'
+          '$tableCellColumnIndex)) $node(tableColumnHeader) ' +
+          '$state $description',
+      braille: '$state ' +
+          '$name @cell_summary($if($ariaCellRowIndex, $ariaCellRowIndex, ' +
+          '$tableCellRowIndex), ' +
+          '$if($ariaCellColumnIndex, $ariaCellColumnIndex, ' +
+          '$tableCellColumnIndex)) $node(tableColumnHeader) $description'
     },
     checkBox: {
       speak: '$if($checked, $earcon(CHECK_ON), $earcon(CHECK_OFF)) ' +
           '$name $role $checked $description $state $restriction'
+    },
+    comboBox: {
+      speak: '$name $value $node(activeDescendant) ' +
+          '$state $restriction $role $description',
     },
     client: {speak: '$name'},
     date: {enter: '$nameFromNode $role $state $restriction $description'},
@@ -321,7 +338,11 @@ Output.RULES = {
       speak: '$nameOrTextContent $description $state'
     },
     embeddedObject: {speak: '$name'},
-    grid: {enter: '$nameFromNode $role $description'},
+    grid: {
+      enter: '$nameFromNode $role $description',
+      speak: '$name $node(activeDescendant) $role $state $restriction ' +
+          '$description'
+    },
     group: {
       enter: '$nameFromNode $state $restriction $description',
       speak: '$nameOrDescendants $value $state $restriction $description',
@@ -428,6 +449,10 @@ Output.RULES = {
           '$node(tableHeader)'
     },
     tableHeaderContainer: {speak: '$nameOrTextContent $state $description'},
+    tabList: {
+      speak: '$name $node(activeDescendant) $state $restriction $role ' +
+          ' $description',
+    },
     textField: {
       speak: '$name $value $if($multiline, @tag_textarea, $if(' +
           '$inputType, $inputType, $role)) $description $state $restriction',
@@ -639,6 +664,21 @@ Output.prototype = {
    */
   withBraille: function(range, prevRange, type) {
     this.formatOptions_ = {speech: false, braille: true, auralStyle: false};
+
+    // Braille sometimes shows in line context depending on role.
+    if (range.start.equals(range.end) && range.start.node &&
+        AutomationPredicate.inLineBraille(range.start.node) &&
+        range.start.node.parent) {
+      var start = range.start.node.parent;
+      while (start.firstChild)
+        start = start.firstChild;
+      var end = range.start.node.parent;
+      while (end.lastChild)
+        end = end.lastChild;
+      prevRange = cursors.Range.fromNode(range.start.node.parent);
+      range = new cursors.Range(
+          cursors.Cursor.fromNode(start), cursors.Cursor.fromNode(end));
+    }
     this.render_(range, prevRange, type, this.brailleBuffer_);
     return this;
   },
@@ -1052,8 +1092,9 @@ Output.prototype = {
           if (node.state) {
             Object.getOwnPropertyNames(node.state).forEach(function(s) {
               var stateInfo = Output.STATE_INFO_[s];
-              if (stateInfo && !stateInfo.isRoleSpecific && stateInfo.on)
-                this.format_(node, '@' + stateInfo.on.msgId, buff);
+              if (stateInfo && !stateInfo.isRoleSpecific && stateInfo.on) {
+                this.format_(node, '$' + s, buff);
+              }
             }.bind(this));
           }
         } else if (token == 'find') {
@@ -1173,6 +1214,9 @@ Output.prototype = {
               resolvedInfo.msgId + '_brl' :
               resolvedInfo.msgId;
           var msg = Msgs.getMsg(msgId);
+          if (token == StateType.SELECTED)
+            options.annotation.push(new Output.SelectionSpan(
+                buff.length, buff.length + msg.length));
           this.append_(buff, msg, options);
         } else if (tree.firstChild) {
           // Custom functions.
