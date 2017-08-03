@@ -16,6 +16,24 @@
       "revId": "29aa0d0a8eb8fbc6e0abde2c27af10dab9a9a3da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48ebb3a2_4704d867",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParser.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1385,
+      "author": {
+        "id": 1215104
+      },
+      "writtenOn": "2017-08-03T09:14:11Z",
+      "side": 0,
+      "message": "I was referring to the ParseSingleValue(CSSPropertyMarkerStart) above. It doesn\u0027t set the 2nd argument (current_shorthand), and so the default CSSPropertyInvalid is used as the default value. Here is the code: https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/css/parser/CSSPropertyParser.h?l\u003d68",
+      "parentUuid": "cbf6ec76_80c5f262",
+      "revId": "29aa0d0a8eb8fbc6e0abde2c27af10dab9a9a3da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
