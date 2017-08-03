@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d58adbb1_eabee7ee",
+        "filename": "content/network/cookie_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-03T04:47:45Z",
+      "side": 1,
+      "message": "A bit silly question (sorry), but just wanted to make sure-- is the \u0027WrapperWrapper\u0027 part intentional? This looked to be a wrapper of MojoCookie",
+      "revId": "5c6452cbe865f140ea569f09be995da4a755d696",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb582641_cb891881",
+        "filename": "content/network/cookie_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-03T04:47:45Z",
+      "side": 1,
+      "message": "nit: const method",
+      "revId": "5c6452cbe865f140ea569f09be995da4a755d696",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe2b5ea8_11fffb07",
+        "filename": "content/public/common/cookie.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-03T04:47:45Z",
+      "side": 1,
+      "message": "Just wondered if we could just use combination of CookieSameSite (maybe make it bitfield) as a filter- but rather we want to keep them aligned with the existing code?",
+      "revId": "5c6452cbe865f140ea569f09be995da4a755d696",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f877d8d_4e93dadc",
+        "filename": "content/public/common/cookie.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-03T04:47:45Z",
+      "side": 1,
+      "message": "nit: would exclude_http_only look better? (while it looks it\u0027s also coming from the existing code, so it\u0027s really up to you)",
+      "revId": "5c6452cbe865f140ea569f09be995da4a755d696",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2fb03cc_de524af2",
+        "filename": "content/public/common/cookie.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-03T04:47:45Z",
+      "side": 1,
+      "message": "Would this likely also be the interface that the out-of-browser code is using?  For example today renderers talk to the cookie store via RenderFrameMessageFilter::{Get,Set}Cookie, which is an interface that is layered on top of cookies store but with additional access check with ChildProcessSecurityPolicy. I imagine a frame will be eventually just given a pipe to this interface which indicates the frame has access to the cookies.  (While, one foreseeable issue I can imagine is that currently it uses sync IPC to get cookies)",
+      "revId": "5c6452cbe865f140ea569f09be995da4a755d696",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
