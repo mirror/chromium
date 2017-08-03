@@ -155,6 +155,27 @@ void Notification::CopyState(Notification* base) {
   optional_fields_.never_timeout = base->never_timeout();
 }
 
+void Notification::SetSmallImageWithWarningLevel(
+    const gfx::VectorIcon& small_image,
+    SystemNotificationWarningLevel color_type) {
+  SkColor color = message_center::kSystemNotificationColorNormal;
+  switch (color_type) {
+    case SystemNotificationWarningLevel::NORMAL:
+      color = message_center::kSystemNotificationColorNormal;
+      break;
+    case SystemNotificationWarningLevel::WARNING:
+      color = message_center::kSystemNotificationColorWarning;
+      break;
+    case SystemNotificationWarningLevel::CRITICAL_WARNING:
+      color = message_center::kSystemNotificationColorCriticalWarning;
+      break;
+  }
+  set_accent_color(color);
+  set_small_image(small_image.is_empty()
+                      ? gfx::Image()
+                      : gfx::Image(gfx::CreateVectorIcon(small_image, color)));
+}
+
 void Notification::SetButtonIcon(size_t index, const gfx::Image& icon) {
   if (index >= optional_fields_.buttons.size())
     return;

@@ -310,6 +310,9 @@ class MESSAGE_CENTER_EXPORT Notification {
     optional_fields_.small_image = image;
   }
 
+  void SetSmallImageWithWarningLevel(const gfx::VectorIcon& small_image,
+                                     SystemNotificationWarningLevel color_type);
+
   // Buttons, with icons fetched asynchronously.
   const std::vector<ButtonInfo>& buttons() const {
     return optional_fields_.buttons;

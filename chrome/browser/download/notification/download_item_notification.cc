@@ -502,9 +502,18 @@ void DownloadItemNotification::UpdateNotificationIcon() {
                             ? IDR_DOWNLOAD_NOTIFICATION_WARNING_BAD
                             : IDR_DOWNLOAD_NOTIFICATION_WARNING_UNWANTED);
 #else
-    SetNotificationVectorIcon(
-        vector_icons::kWarningIcon,
-        model.MightBeMalicious() ? gfx::kGoogleRed700 : gfx::kGoogleYellow700);
+    if (message_center::MessageCenter::IsNewStyleNotificationEnabled()) {
+      notification_->SetSmallImageWithWarningLevel(
+          vector_icons::kWarningIcon,
+          model.MightBeMalicious()
+              ? message_center::SystemNotificationWarningLevel::CRITICAL_WARNING
+              : message_center::SystemNotificationWarningLevel::WARNING);
+    } else {
+      SetNotificationVectorIcon(vector_icons::kWarningIcon,
+                                model.MightBeMalicious()
+                                    ? gfx::kGoogleRed700
+                                    : gfx::kGoogleYellow700);
+    }
 #endif
     return;
   }
@@ -518,11 +527,23 @@ void DownloadItemNotification::UpdateNotificationIcon() {
 #if defined(OS_MACOSX)
         SetNotificationIcon(IDR_DOWNLOAD_NOTIFICATION_INCOGNITO);
 #else
-        SetNotificationVectorIcon(kFileDownloadIncognitoIcon,
-                                  gfx::kChromeIconGrey);
+        if (message_center::MessageCenter::IsNewStyleNotificationEnabled()) {
+          notification_->SetSmallImageWithWarningLevel(
+              kFileDownloadIncognitoIcon,
+              message_center::SystemNotificationWarningLevel::NORMAL);
+        } else {
+          SetNotificationVectorIcon(kFileDownloadIncognitoIcon,
+                                    gfx::kChromeIconGrey);
+        }
 #endif
       } else {
-        SetNotificationVectorIcon(kFileDownloadIcon, gfx::kGoogleBlue500);
+        if (message_center::MessageCenter::IsNewStyleNotificationEnabled()) {
+          notification_->SetSmallImageWithWarningLevel(
+              kFileDownloadIcon,
+              message_center::SystemNotificationWarningLevel::NORMAL);
+        } else {
+          SetNotificationVectorIcon(kFileDownloadIcon, gfx::kGoogleBlue500);
+        }
       }
       break;
 
@@ -530,8 +551,14 @@ void DownloadItemNotification::UpdateNotificationIcon() {
 #if defined(OS_MACOSX)
       SetNotificationIcon(IDR_DOWNLOAD_NOTIFICATION_ERROR);
 #else
-      SetNotificationVectorIcon(vector_icons::kErrorCircleIcon,
-                                gfx::kGoogleRed700);
+      if (message_center::MessageCenter::IsNewStyleNotificationEnabled()) {
+        notification_->SetSmallImageWithWarningLevel(
+            vector_icons::kErrorCircleIcon,
+            message_center::SystemNotificationWarningLevel::CRITICAL_WARNING);
+      } else {
+        SetNotificationVectorIcon(vector_icons::kErrorCircleIcon,
+                                  gfx::kGoogleRed700);
+      }
 #endif
       break;
 
