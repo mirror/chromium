@@ -986,7 +986,7 @@ TEST_F(MetricsWebContentsObserverTest, OnLoadedResource_MainFrame) {
       main_resource_url, net::HostPortPair(), frame_tree_node_id, request_id,
       web_contents()->GetMainFrame(),
       content::ResourceType::RESOURCE_TYPE_MAIN_FRAME, false, nullptr, 0, 0,
-      base::TimeTicks::Now(), net::OK);
+      base::TimeTicks::Now(), net::OK, nullptr);
   EXPECT_EQ(1u, loaded_resources().size());
   EXPECT_EQ(main_resource_url, loaded_resources().back().url);
 
@@ -998,7 +998,7 @@ TEST_F(MetricsWebContentsObserverTest, OnLoadedResource_MainFrame) {
       main_resource_url, net::HostPortPair(), frame_tree_node_id, request_id,
       web_contents()->GetMainFrame(),
       content::ResourceType::RESOURCE_TYPE_MAIN_FRAME, false, nullptr, 0, 0,
-      base::TimeTicks::Now(), net::OK);
+      base::TimeTicks::Now(), net::OK, nullptr);
   EXPECT_EQ(1u, loaded_resources().size());
   EXPECT_EQ(main_resource_url, loaded_resources().back().url);
 }
@@ -1013,7 +1013,7 @@ TEST_F(MetricsWebContentsObserverTest, OnLoadedResource_Subresource) {
       web_contents()->GetMainFrame()->GetFrameTreeNodeId(),
       content::GlobalRequestID(), web_contents()->GetMainFrame(),
       content::RESOURCE_TYPE_SCRIPT, false, nullptr, 0, 0,
-      base::TimeTicks::Now(), net::OK);
+      base::TimeTicks::Now(), net::OK, nullptr);
 
   EXPECT_EQ(1u, loaded_resources().size());
   EXPECT_EQ(loaded_resource_url, loaded_resources().back().url);
@@ -1039,7 +1039,7 @@ TEST_F(MetricsWebContentsObserverTest,
       other_web_contents->GetMainFrame()->GetFrameTreeNodeId(),
       content::GlobalRequestID(), other_web_contents->GetMainFrame(),
       content::RESOURCE_TYPE_SCRIPT, false, nullptr, 0, 0,
-      base::TimeTicks::Now(), net::OK);
+      base::TimeTicks::Now(), net::OK, nullptr);
 
   EXPECT_TRUE(loaded_resources().empty());
 }
@@ -1055,7 +1055,7 @@ TEST_F(MetricsWebContentsObserverTest,
       web_contents()->GetMainFrame()->GetFrameTreeNodeId(),
       content::GlobalRequestID(), web_contents()->GetMainFrame(),
       content::RESOURCE_TYPE_SCRIPT, false, nullptr, 0, 0,
-      base::TimeTicks::Now(), net::OK);
+      base::TimeTicks::Now(), net::OK, nullptr);
 
   EXPECT_TRUE(loaded_resources().empty());
 }
