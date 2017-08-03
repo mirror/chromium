@@ -15,7 +15,10 @@ namespace {
 
 class TouchEventHandler : public ui::EventHandler {
  public:
-  TouchEventHandler() : num_touch_presses_(0), num_pointers_down_(0) {}
+  TouchEventHandler()
+      : num_touch_presses_(0),
+        num_pointers_down_(0),
+        recursion_enabled_(false) {}
 
   ~TouchEventHandler() override {}
 
@@ -31,9 +34,16 @@ class TouchEventHandler : public ui::EventHandler {
 
   int num_pointers_down() const { return num_pointers_down_; }
 
+  void ForceRecursionInEventHandler() { recursion_enabled_ = true; }
+
  private:
   // ui::EventHandler:
   void OnTouchEvent(ui::TouchEvent* event) override {
+    if (recursion_enabled_) {
+      recursion_enabled_ = false;
+      ui_controls::SendTouchEvents(ui_controls::PRESS, 1, event->x(),
+                                   event->y());
+    }
     switch (event->type()) {
       case ui::ET_TOUCH_PRESSED:
         num_touch_presses_++;
@@ -51,6 +61,7 @@ class TouchEventHandler : public ui::EventHandler {
 
   int num_touch_presses_;
   int num_pointers_down_;
+  bool recursion_enabled_;
   base::Closure quit_closure_;
   DISALLOW_COPY_AND_ASSIGN(TouchEventHandler);
 };
@@ -99,6 +110,12 @@ class TouchEventsViewTest : public ViewEventTestBase {
     touch_event_handler.WaitForEvents();
     EXPECT_EQ(touch_pointer_count, touch_event_handler.num_touch_presses());
     EXPECT_EQ(0, touch_event_handler.num_pointers_down());
+
+    touch_event_handler.ForceRecursionInEventHandler();
+    ASSERT_TRUE(ui_controls::SendTouchEvents(ui_controls::PRESS,
+                                             touch_pointer_count,
+                                             in_content.x(), in_content.y()));
+    touch_event_handler.WaitForEvents();
 
     GetWidget()->GetNativeWindow()->GetHost()->window()->RemovePreTargetHandler(
         &touch_event_handler);

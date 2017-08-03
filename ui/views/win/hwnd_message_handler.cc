@@ -2336,7 +2336,7 @@ LRESULT HWNDMessageHandler::OnTouchEvent(UINT message,
           touch_ids_.erase(input[i].dwID);
           GenerateTouchEvent(ui::ET_TOUCH_RELEASED, touch_point, touch_id,
                              event_time, &touch_events);
-          id_generator_.ReleaseNumber(input[i].dwID);
+          id_generator_.MaybeReleaseNumber(input[i].dwID);
         }
       }
     }
@@ -2746,7 +2746,7 @@ LRESULT HWNDMessageHandler::HandlePointerEventTypeTouch(UINT message,
   delegate_->HandleTouchEvent(event);
 
   if (event_type == ui::ET_TOUCH_RELEASED)
-    id_generator_.ReleaseNumber(pointer_id);
+    id_generator_.MaybeReleaseNumber(pointer_id);
   if (ref)
     SetMsgHandled(TRUE);
   return 0;
@@ -2807,7 +2807,7 @@ LRESULT HWNDMessageHandler::HandlePointerEventTypePen(UINT message,
       } else {
         flag = ui::EF_LEFT_MOUSE_BUTTON;
       }
-      id_generator_.ReleaseNumber(pointer_id);
+      id_generator_.MaybeReleaseNumber(pointer_id);
       click_count = 1;
       break;
     case WM_POINTERUPDATE:
@@ -2827,7 +2827,7 @@ LRESULT HWNDMessageHandler::HandlePointerEventTypePen(UINT message,
       break;
     case WM_POINTERLEAVE:
       event_type = ui::ET_MOUSE_EXITED;
-      id_generator_.ReleaseNumber(pointer_id);
+      id_generator_.MaybeReleaseNumber(pointer_id);
       break;
     default:
       NOTREACHED();
