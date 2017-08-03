@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7773d47c_756c25cf",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 6
+      },
+      "lineNbr": 4433,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-08-03T01:57:39Z",
+      "side": 1,
+      "message": "Thanks for catching that! I spoke with Alex, Tom, and Omri. We might rename it to \"launcher / home\". But they want to run it by UI review first.",
+      "parentUuid": "25e2485d_58e75625",
+      "range": {
+        "startLine": 4433,
+        "startChar": 4,
+        "endLine": 4433,
+        "endChar": 8
+      },
+      "revId": "439ef77fd13e0601a4eef70bc1d6e11af40b47ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d28637b_cbde7ea1",
         "filename": "chrome/browser/resources/chromeos/keyboard_overlay.js",
         "patchSetId": 6
@@ -180,6 +204,24 @@
       "revId": "439ef77fd13e0601a4eef70bc1d6e11af40b47ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd98f556_0cdee94b",
+        "filename": "chrome/browser/resources/chromeos/keyboard_overlay.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 924,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-08-03T01:57:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3fa43e57_f6a166c6",
+      "revId": "439ef77fd13e0601a4eef70bc1d6e11af40b47ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
