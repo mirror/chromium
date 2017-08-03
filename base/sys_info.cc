@@ -91,4 +91,9 @@ base::TimeDelta SysInfo::Uptime() {
   return base::TimeDelta::FromMicroseconds(uptime_in_microseconds);
 }
 
+// static
+void SysInfo::SetLowEndDeviceForTesting(bool is_low_end) {
+  g_lazy_low_end_device.Get().SetValueForTesting(is_low_end);
+}
+
 }  // namespace base

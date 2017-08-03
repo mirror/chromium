@@ -144,6 +144,7 @@ bool g_egl_context_priority_supported = false;
 bool g_egl_khr_colorspace = false;
 bool g_egl_ext_colorspace_display_p3_linear = false;
 bool g_use_direct_composition = false;
+bool g_driver_program_binary_cache_in_use = false;
 
 class EGLSyncControlVSyncProvider : public SyncControlVSyncProvider {
  public:
@@ -603,6 +604,9 @@ bool GLSurfaceEGL::InitializeOneOff(EGLNativeDisplayType native_display) {
     }
   }
 #endif
+
+  g_driver_program_binary_cache_in_use =
+      HasEGLExtension("EGL_ANDROID_blob_cache");
   initialized_ = true;
 
   return true;
@@ -675,6 +679,16 @@ bool GLSurfaceEGL::IsEGLContextPrioritySupported() {
 // static
 bool GLSurfaceEGL::IsDirectCompositionSupported() {
   return g_use_direct_composition;
+}
+
+// static
+bool GLSurfaceEGL::IsDriverProgramBinaryCacheInUse() {
+  return g_driver_program_binary_cache_in_use;
+}
+
+// static
+void GLSurfaceEGL::SetDriverProgramBinaryCacheInUseForTesting(bool in_use) {
+  g_driver_program_binary_cache_in_use = in_use;
 }
 
 GLSurfaceEGL::~GLSurfaceEGL() {}

@@ -14,6 +14,7 @@
 #include "base/metrics/histogram_macros.h"
 #include "base/sha1.h"
 #include "base/strings/string_number_conversions.h"
+#include "base/sys_info.h"
 #include "gpu/command_buffer/common/activity_flags.h"
 #include "gpu/command_buffer/common/constants.h"
 #include "gpu/command_buffer/service/disk_cache_proto.pb.h"
@@ -22,6 +23,10 @@
 #include "gpu/command_buffer/service/gpu_preferences.h"
 #include "gpu/command_buffer/service/shader_manager.h"
 #include "ui/gl/gl_bindings.h"
+
+#if defined(USE_EGL)
+#include "ui/gl/gl_surface_egl.h"
+#endif
 
 namespace gpu {
 namespace gles2 {
@@ -203,10 +208,25 @@ void RunShaderCallback(GLES2DecoderClient* client,
   client->CacheShader(key, shader);
 }
 
-bool ProgramBinaryExtensionsAvailable() {
-  return gl::g_current_gl_driver &&
-         (gl::g_current_gl_driver->ext.b_GL_ARB_get_program_binary ||
-          gl::g_current_gl_driver->ext.b_GL_OES_get_program_binary);
+bool ShouldUseProgramCache() {
+  // We use the program cache if:
+  //   a) Program binary support is available.
+  //   b) We are on a low-end, memory-sensitive device, and no alternative
+  //   driver-level cache is already in use.
+  bool program_binary_support_available =
+      gl::g_current_gl_driver &&
+      (gl::g_current_gl_driver->ext.b_GL_ARB_get_program_binary ||
+       gl::g_current_gl_driver->ext.b_GL_OES_get_program_binary);
+
+  bool low_end_with_existing_driver_cache = false;
+#if defined(USE_EGL)
+  low_end_with_existing_driver_cache =
+      base::SysInfo::IsLowEndDevice() &&
+      gl::GLSurfaceEGL::IsDriverProgramBinaryCacheInUse();
+#endif
+
+  return program_binary_support_available &&
+         !low_end_with_existing_driver_cache;
 }
 
 }  // namespace
@@ -239,8 +259,7 @@ ProgramCache::ProgramLoadResult MemoryProgramCache::LoadLinkedProgram(
     const std::vector<std::string>& transform_feedback_varyings,
     GLenum transform_feedback_buffer_mode,
     GLES2DecoderClient* client) {
-  if (!ProgramBinaryExtensionsAvailable()) {
-    // Early exit if this context can't support program binaries
+  if (!ShouldUseProgramCache()) {
     return PROGRAM_LOAD_FAILURE;
   }
 
@@ -314,8 +333,7 @@ void MemoryProgramCache::SaveLinkedProgram(
     const std::vector<std::string>& transform_feedback_varyings,
     GLenum transform_feedback_buffer_mode,
     GLES2DecoderClient* client) {
-  if (!ProgramBinaryExtensionsAvailable()) {
-    // Early exit if this context can't support program binaries
+  if (!ShouldUseProgramCache()) {
     return;
   }
   if (disable_program_caching_for_transform_feedback_ &&
