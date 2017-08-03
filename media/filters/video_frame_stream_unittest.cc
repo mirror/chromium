@@ -617,6 +617,15 @@ TEST_P(VideoFrameStreamTest, Read_DuringEndOfStreamDecode) {
       frame_read_->metadata()->IsTrue(VideoFrameMetadata::END_OF_STREAM));
 }
 
+TEST_P(VideoFrameStreamTest, Read_DemuxerStreamReadError) {
+  Initialize();
+  EnterPendingState(DEMUXER_READ_NORMAL);
+  demuxer_stream_->Error();
+  base::RunLoop().RunUntilIdle();
+  ASSERT_FALSE(pending_read_);
+  EXPECT_EQ(last_read_status_, VideoFrameStream::DECODE_ERROR);
+}
+
 // No Reset() before initialization is successfully completed.
 TEST_P(VideoFrameStreamTest, Reset_AfterInitialization) {
   Initialize();
