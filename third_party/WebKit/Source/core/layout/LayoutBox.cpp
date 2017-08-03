@@ -1537,18 +1537,12 @@ bool LayoutBox::NodeAtPoint(HitTestResult& result,
       return false;
   }
 
-  bool should_hit_test_self = IsInSelfHitTestingPhase(action);
-
-  if (should_hit_test_self && HasOverflowClip() &&
-      HitTestOverflowControl(result, location_in_container, adjusted_location))
-    return true;
-
   // TODO(pdr): We should also check for css clip in the !isSelfPaintingLayer
   //            case, similar to overflow clip below.
   bool skip_children = false;
   if (ShouldClipOverflow() && !HasSelfPaintingLayer()) {
     if (!location_in_container.Intersects(OverflowClipRect(
-            adjusted_location, kExcludeOverlayScrollbarSizeForHitTesting))) {
+            adjusted_location, kIgnorePlatformOverlayScrollbarSize))) {
       skip_children = true;
     } else if (Style()->HasBorderRadius()) {
       LayoutRect bounds_rect(adjusted_location, Size());
@@ -1569,6 +1563,7 @@ bool LayoutBox::NodeAtPoint(HitTestResult& result,
     return false;
 
   // Now hit test ourselves.
+  bool should_hit_test_self = IsInSelfHitTestingPhase(action);
   if (should_hit_test_self &&
       VisibleToHitTestRequest(result.GetHitTestRequest())) {
     LayoutRect bounds_rect(adjusted_location, Size());

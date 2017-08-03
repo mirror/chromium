@@ -86,6 +86,8 @@ class PLATFORM_EXPORT ScrollbarThemeOverlay : public ScrollbarTheme {
 
   int MinimumThumbLength(const ScrollbarThemeClient&) override;
 
+  void SetHitTestEnabledForTesting(bool);
+
   static ScrollbarThemeOverlay& MobileTheme();
 
  private:
