@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "537c2476_23229e6c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position-3/position-sticky-stacking-context.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-08-03T13:50:19Z",
+      "side": 1,
+      "message": "Yes... the tests marked \u0027not currently in spec\u0027 in the position: sticky upstreaming document were never commented on, so I wasn\u0027t sure whether you had seen them and approved or just missed them.\n\nThis was the only one of the three that had solid consensus (afaik) that it should be in the spec, so I chose to start with it. Happy to revert this CL.",
+      "parentUuid": "0a390e25_364fbe17",
+      "revId": "d05037b423623696aaba0a8b23e36a7b0397c73c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "27c73d55_5d27d56d",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position-3/position-sticky-stacking-context.html",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-03T12:09:09Z",
       "side": 1,
       "message": "Why a fixed pos container? This shouldn\u0027t affect the test afaict if you also remove the top:0; left:0; on the abs pos indicator so that it gets its in flow position and then you can actually read the help text.",
+      "revId": "d05037b423623696aaba0a8b23e36a7b0397c73c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60f86be1_aecf7bc2",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position-3/position-sticky-stacking-context.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-08-03T13:50:19Z",
+      "side": 1,
+      "message": "Ahah! Thanks, fixed.",
+      "parentUuid": "27c73d55_5d27d56d",
       "revId": "d05037b423623696aaba0a8b23e36a7b0397c73c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
