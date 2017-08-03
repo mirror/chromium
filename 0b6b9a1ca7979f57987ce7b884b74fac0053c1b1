@@ -45,6 +45,30 @@
       "revId": "0b6b9a1ca7979f57987ce7b884b74fac0053c1b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcde2db6_3707f05f",
+        "filename": "media/remoting/demuxer_stream_adapter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-08-03T17:51:32Z",
+      "side": 1,
+      "message": "Thanks! Done.\n\nFYI, in the future we might have other reasons than DECRYPT_ERROR for DemuxerStream::kError to happen.",
+      "parentUuid": "e8e5dd73_284ab77a",
+      "range": {
+        "startLine": 271,
+        "startChar": 24,
+        "endLine": 271,
+        "endChar": 30
+      },
+      "revId": "0b6b9a1ca7979f57987ce7b884b74fac0053c1b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
