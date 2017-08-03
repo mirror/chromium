@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7bab68b2_6a97b2f4",
+        "filename": "chrome/browser/ui/views/frame/browser_window_property_manager_browsertest_win.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-03T20:46:53Z",
+      "side": 1,
+      "message": "It isn\u0027t obvious why this is needed, please add a comment.",
+      "range": {
+        "startLine": 57,
+        "startChar": 11,
+        "endLine": 57,
+        "endChar": 24
+      },
+      "revId": "50a64c6ccc23e49b2d9c93c72afaf186fcd9145d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfa21fb7_17efad8f",
+        "filename": "ui/base/win/shell.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-03T20:46:53Z",
+      "side": 1,
+      "message": "I\u0027m curious, you don\u0027t seem to care about result, so how come you moved the inlining?",
+      "range": {
+        "startLine": 177,
+        "startChar": 5,
+        "endLine": 177,
+        "endChar": 18
+      },
+      "revId": "50a64c6ccc23e49b2d9c93c72afaf186fcd9145d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71c96f20_0ce05857",
+        "filename": "ui/base/win/shell.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-03T20:46:53Z",
+      "side": 1,
+      "message": "Do you care about the return value here?",
+      "range": {
+        "startLine": 189,
+        "startChar": 3,
+        "endLine": 189,
+        "endChar": 14
+      },
+      "revId": "50a64c6ccc23e49b2d9c93c72afaf186fcd9145d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ab312ce_3c3fff41",
+        "filename": "ui/base/win/shell.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-03T20:46:53Z",
+      "side": 1,
+      "message": "Might someone else have modified the properties? Is this DCHECK worth it?",
+      "range": {
+        "startLine": 192,
+        "startChar": 6,
+        "endLine": 192,
+        "endChar": 22
+      },
+      "revId": "50a64c6ccc23e49b2d9c93c72afaf186fcd9145d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
