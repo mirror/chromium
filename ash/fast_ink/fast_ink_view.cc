@@ -345,7 +345,7 @@ void FastInkView::UpdateSurface() {
       /*quad_layer_rect=*/quad_rect,
       /*visible_quad_layer_rect=*/quad_rect,
       /*clip_rect=*/gfx::Rect(),
-      /*is_clipped=*/false, /*opacity=*/1.f,
+      /*is_clipped=*/false, /*is_contents_opaque=*/false, /*opacity=*/1.f,
       /*blend_mode=*/SkBlendMode::kSrcOver, /*sorting_context_id=*/0);
 
   cc::CompositorFrame frame;
