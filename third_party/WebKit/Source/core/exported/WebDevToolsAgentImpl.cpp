@@ -49,6 +49,7 @@
 #include "core/inspector/InspectorAnimationAgent.h"
 #include "core/inspector/InspectorApplicationCacheAgent.h"
 #include "core/inspector/InspectorCSSAgent.h"
+#include "core/inspector/InspectorCountersAgent.h"
 #include "core/inspector/InspectorDOMAgent.h"
 #include "core/inspector/InspectorDOMDebuggerAgent.h"
 #include "core/inspector/InspectorDOMSnapshotAgent.h"
@@ -333,6 +334,8 @@ InspectorSession* WebDevToolsAgentImpl::InitializeSession(int session_id,
                                               css_agent, session->V8Session()));
 
   session->Append(InspectorMemoryAgent::Create());
+
+  session->Append(InspectorCountersAgent::Create());
 
   session->Append(
       InspectorApplicationCacheAgent::Create(inspected_frames_.Get()));
