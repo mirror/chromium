@@ -598,7 +598,7 @@
   gn format /abspath/some/BUILD.gn
   gn format --stdin
 ```
-### <a name="gen:"></a>**gn gen**: Generate ninja files.
+### <a name="gen"></a>**gn gen**: Generate ninja files.
 
 ```
   gn gen [--check] [<ide options>] <out_dir>
