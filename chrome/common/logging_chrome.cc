@@ -162,19 +162,29 @@ base::FilePath SetUpSymlinkIfNeeded(const base::FilePath& symlink_path,
   DCHECK(!symlink_path.empty());
 
   // If not starting a new log, then just log through the existing
-  // symlink, but if the symlink doesn't exist, create it.  If
-  // starting a new log, then delete the old symlink and make a new
-  // one to a fresh log file.
+  // symlink, but if the symlink doesn't exist, create it.
+  //
+  // If starting a new log, then save the old symlink as symlink_path.PREVIOUS
+  // and make a new one to a fresh log file.
   base::FilePath target_path;
   bool symlink_exists = base::PathExists(symlink_path);
   if (new_log || !symlink_exists) {
     target_path = GenerateTimestampedName(symlink_path, base::Time::Now());
 
-    // We don't care if the unlink fails; we're going to continue anyway.
-    if (::unlink(symlink_path.value().c_str()) == -1) {
-      if (symlink_exists) // only warn if we might expect it to succeed.
+    if (symlink_exists) {
+      base::FilePath previous_symlink_path =
+        symlink_path.ReplaceExtension(".PREVIOUS");
+      // Remove existing .PREVIOUS symlink if it exists.
+      if (::unlink(previous_symlink_path.value().c_str()) == -1) {
         DPLOG(WARNING) << "Unable to unlink " << symlink_path.value();
+      }
+      // Rename symlink to .PREVIOUS.
+      if (!base::ReplaceFile(symlink_path, previous_symlink_path, NULL)) {
+        DPLOG(WARNING) << "Cannot rename " << symlink_path.value()
+                       << " to " << previous_symlink_path.value();
+      }
     }
+    // If all went well, the symlink no longer exists.  Recreate it.
     if (!base::CreateSymbolicLink(target_path, symlink_path)) {
       DPLOG(ERROR) << "Unable to create symlink " << symlink_path.value()
                    << " pointing at " << target_path.value();
@@ -231,13 +241,13 @@ void InitChromeLogging(const base::CommandLine& command_line,
   DCHECK(!chrome_logging_initialized_) <<
     "Attempted to initialize logging when it was already initialized.";
 
+
   LoggingDestination logging_dest = DetermineLoggingDestination(command_line);
   LogLockingState log_locking_state = LOCK_LOG_FILE;
   base::FilePath log_path;
 #if defined(OS_CHROMEOS)
   base::FilePath target_path;
 #endif
-
   // Don't resolve the log path unless we need to. Otherwise we leave an open
   // ALPC handle after sandbox lockdown on Windows.
   if ((logging_dest & LOG_TO_FILE) != 0) {
@@ -381,6 +391,16 @@ base::FilePath GenerateTimestampedName(const base::FilePath& base_path,
                                        base::Time timestamp) {
   base::Time::Exploded time_deets;
   timestamp.LocalExplode(&time_deets);
+  base::FilePath new_path = base_path;
+#if defined(OS_CHROMEOS)
+  // Although at this time this function is only used by Chrome OS, we still
+  // special-case it, assuming that the base_path is "chrome.LATEST", and
+  // removing the extension (which isn't really used as an extension.  This
+  // ensures that this code is still usable outside Chrome OS.  Ideally we
+  // would also check the value of base_path, but we cannot reliably log
+  // anything here, and aborting seems too harsh a choice.
+  new_path = new_path.ReplaceExtension("");
+#endif
   std::string suffix = base::StringPrintf("_%02d%02d%02d-%02d%02d%02d",
                                           time_deets.year,
                                           time_deets.month,
@@ -388,7 +408,7 @@ base::FilePath GenerateTimestampedName(const base::FilePath& base_path,
                                           time_deets.hour,
                                           time_deets.minute,
                                           time_deets.second);
-  return base_path.InsertBeforeExtensionASCII(suffix);
+  return new_path.InsertBeforeExtensionASCII(suffix);
 }
 
 }  // namespace logging
