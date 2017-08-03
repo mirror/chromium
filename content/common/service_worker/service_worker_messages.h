@@ -330,13 +330,10 @@ IPC_MESSAGE_ROUTED1(ServiceWorkerHostMsg_ClaimClients,
 // extract it and dispatch the message to the correct ServiceWorkerDispatcher
 // on the correct thread.
 
-// Informs the child process that the given provider gets associated or
-// disassociated with the registration.
-IPC_MESSAGE_CONTROL4(ServiceWorkerMsg_AssociateRegistration,
-                     int /* thread_id */,
-                     int /* provider_id */,
-                     content::ServiceWorkerRegistrationObjectInfo,
-                     content::ServiceWorkerVersionAttributes)
+// Informs the child process that the given provider gets disassociated with the
+// registration.
+// TODO(falken): Remove this once PlzNavigate ships and the cross-site transfer
+// code is removed.
 IPC_MESSAGE_CONTROL2(ServiceWorkerMsg_DisassociateRegistration,
                      int /* thread_id */,
                      int /* provider_id */)

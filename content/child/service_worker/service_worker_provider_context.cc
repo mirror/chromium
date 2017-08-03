@@ -36,8 +36,7 @@ class ServiceWorkerProviderContext::Delegate {
 };
 
 // Delegate class for ServiceWorker client (Document, SharedWorker, etc) to
-// keep the associated registration and the controller until
-// ServiceWorkerContainer is initialized.
+// keep the controller until ServiceWorkerContainer is initialized.
 class ServiceWorkerProviderContext::ControlleeDelegate
     : public ServiceWorkerProviderContext::Delegate {
  public:
@@ -49,24 +48,24 @@ class ServiceWorkerProviderContext::ControlleeDelegate
       std::unique_ptr<ServiceWorkerHandleReference> /* installing */,
       std::unique_ptr<ServiceWorkerHandleReference> /* waiting */,
       std::unique_ptr<ServiceWorkerHandleReference> /* active */) override {
-    DCHECK(!registration_);
-    registration_ = std::move(registration);
+    NOTREACHED();
   }
 
   void DisassociateRegistration() override {
     controller_.reset();
-    registration_.reset();
   }
 
   void SetController(
       std::unique_ptr<ServiceWorkerHandleReference> controller) override {
-    DCHECK(registration_);
     DCHECK(!controller ||
            controller->handle_id() != kInvalidServiceWorkerHandleId);
     controller_ = std::move(controller);
   }
 
-  bool HasAssociatedRegistration() override { return !!registration_; }
+  bool HasAssociatedRegistration() override {
+    NOTREACHED();
+    return false;
+  }
 
   void GetAssociatedRegistration(
       ServiceWorkerRegistrationObjectInfo* /* info */,
@@ -79,7 +78,6 @@ class ServiceWorkerProviderContext::ControlleeDelegate
   }
 
  private:
-  std::unique_ptr<ServiceWorkerRegistrationHandleReference> registration_;
   std::unique_ptr<ServiceWorkerHandleReference> controller_;
 
   DISALLOW_COPY_AND_ASSIGN(ControlleeDelegate);
