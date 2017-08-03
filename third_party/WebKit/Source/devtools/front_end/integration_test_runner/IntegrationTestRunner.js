@@ -518,6 +518,281 @@ TestRunner.runWhenPageLoads = function(callback) {
   TestRunner._pageLoadedCallback = TestRunner.safeWrap(chainedCallback);
 };
 
+/**
+ * @param {!Array<function(function():void)>} testSuite
+ */
+TestRunner.runTestSuite = function(testSuite) {
+  var testSuiteTests = testSuite.slice();
+
+  function runner() {
+    if (!testSuiteTests.length) {
+      TestRunner.completeTest();
+      return;
+    }
+    var nextTest = testSuiteTests.shift();
+    TestRunner.addResult('');
+    TestRunner.addResult(
+        'Running: ' +
+        /function\s([^(]*)/.exec(nextTest)[1]);
+    TestRunner.safeWrap(nextTest)(runner);
+  }
+  runner();
+};
+
+/**
+ * @param {*} expected
+ * @param {*} found
+ * @param {string} message
+ */
+TestRunner.assertEquals = function(expected, found, message) {
+  if (expected === found)
+    return;
+
+  var error;
+  if (message)
+    error = 'Failure (' + message + '):';
+  else
+    error = 'Failure:';
+  throw new Error(error + ' expected <' + expected + '> found <' + found + '>');
+};
+
+/**
+ * @param {*} found
+ * @param {string} message
+ */
+TestRunner.assertTrue = function(found, message) {
+  TestRunner.assertEquals(true, !!found, message);
+};
+
+/**
+ * @param {!Function} func
+ * @return {!Function}
+ */
+TestRunner.wrapListener = function(func) {
+  /**
+   * @this {*}
+   */
+  function wrapper() {
+    var wrapArgs = arguments;
+    var wrapThis = this;
+    // Give a chance to other listeners.
+    setTimeout(apply, 0);
+
+    function apply() {
+      func.apply(wrapThis, wrapArgs);
+    }
+  }
+  return wrapper;
+};
+
+/**
+ * @param {!Object} receiver
+ * @param {string} methodName
+ * @param {!Function} override
+ * @param {boolean=} opt_sticky
+ * @return {!Function}
+ */
+TestRunner.override = function(receiver, methodName, override, opt_sticky) {
+  override = TestRunner.safeWrap(override);
+
+  var original = receiver[methodName];
+  if (typeof original !== 'function')
+    throw new Error('Cannot find method to override: ' + methodName);
+
+  receiver[methodName] = function(var_args) {
+    try {
+      try {
+        var result = override.apply(this, arguments);
+      } catch (e) {
+        throw new Error('Exception in overriden method \'' + methodName + '\': ' + e);
+      }
+    } finally {
+      if (!opt_sticky)
+        receiver[methodName] = original;
+    }
+    return result;
+  };
+
+  return original;
+};
+
+/**
+ * @param {string} text
+ * @return {string}
+ */
+TestRunner.clearSpecificInfoFromStackFrames = function(text) {
+  var buffer = text.replace(/\(file:\/\/\/(?:[^)]+\)|[\w\/:-]+)/g, '(...)');
+  buffer = buffer.replace(/\(<anonymous>:[^)]+\)/g, '(...)');
+  buffer = buffer.replace(/VM\d+/g, 'VM');
+  return buffer.replace(/\s*at[^()]+\(native\)/g, '');
+};
+
+TestRunner.hideInspectorView = function() {
+  UI.inspectorView.element.setAttribute('style', 'display:none !important');
+};
+
+/**
+ * @return {?SDK.ResourceTreeFrame}
+ */
+TestRunner.mainFrame = function() {
+  return TestRunner.resourceTreeModel.mainFrame;
+};
+
+
+TestRunner.StringOutputStream = class {
+  /**
+   * @param {function(string):void} callback
+   */
+  constructor(callback) {
+    this._callback = callback;
+    this._buffer = '';
+  }
+
+  /**
+   * @param {string} fileName
+   * @return {!Promise<boolean>}
+   */
+  async open(fileName) {
+    return true;
+  }
+
+  /**
+   * @param {string} chunk
+   */
+  async write(chunk) {
+    this._buffer += chunk;
+  }
+
+  async close() {
+    this._callback(this._buffer);
+  }
+};
+
+TestRunner.MockSetting = class {
+  /**
+   * @param {*} value
+   */
+  constructor(value) {
+    this._value = value;
+  }
+
+  /**
+   * @return {*}
+   */
+  get() {
+    return this._value;
+  }
+
+  /**
+   * @param {*} value
+   */
+  set(value) {
+    this._value = value;
+  }
+};
+
+/**
+ * @return {!Array<!Runtime.Module>}
+ */
+TestRunner.loadedModules = function() {
+  return self.runtime._modules.filter(module => module._loadedForTest);
+};
+
+/**
+ * @param {!Array<!Runtime.Module>} relativeTo
+ * @return {!Array<!Runtime.Module>}
+ */
+TestRunner.dumpLoadedModules = function(relativeTo) {
+  var previous = new Set(relativeTo || []);
+  function moduleSorter(left, right) {
+    return String.naturalOrderComparator(left._descriptor.name, right._descriptor.name);
+  }
+
+  TestRunner.addResult('Loaded modules:');
+  var loadedModules = TestRunner.loadedModules().sort(moduleSorter);
+  for (var module of loadedModules) {
+    if (previous.has(module))
+      continue;
+    TestRunner.addResult('    ' + module._descriptor.name);
+  }
+  return loadedModules;
+};
+
+
+TestRunner.TimeoutMock = class {
+  constructor() {
+    this._timeoutId = 0;
+    this._timeoutIdToProcess = {};
+    this._timeoutIdToMillis = {};
+    this.setTimeout = this.setTimeout.bind(this);
+    this.clearTimeout = this.clearTimeout.bind(this);
+  }
+
+  /**
+     * @param {!Function} operation
+     * @param {number} timeout
+     */
+  setTimeout(operation, timeout) {
+    this._timeoutIdToProcess[++this._timeoutId] = operation;
+    this._timeoutIdToMillis[this._timeoutId] = timeout;
+    return this._timeoutId;
+  }
+
+  /**
+     *
+     * @param {number} timeoutId
+     */
+  clearTimeout(timeoutId) {
+    delete this._timeoutIdToProcess[timeoutId];
+    delete this._timeoutIdToMillis[timeoutId];
+  }
+
+  /**
+     * @return {!Array<number>}
+     */
+  activeTimersTimeouts() {
+    return Object.values(this._timeoutIdToMillis);
+  }
+
+  fireAllTimers() {
+    for (const timeoutId in this._timeoutIdToProcess)
+      this._timeoutIdToProcess[timeoutId].call(window);
+    this._timeoutIdToProcess = {};
+    this._timeoutIdToMillis = {};
+  }
+};
+
+/**
+ * @param {!SDK.Target} target
+ * @return {boolean}
+ */
+TestRunner.isDedicatedWorker = function(target) {
+  return target && !target.hasBrowserCapability() && target.hasJSCapability() && !target.hasTargetCapability();
+};
+
+/**
+ * @param {!SDK.Target} target
+ * @return {boolean}
+ */
+TestRunner.isServiceWorker = function(target) {
+  return target && !target.hasBrowserCapability() && !target.hasJSCapability() && target.hasNetworkCapability() &&
+      target.hasTargetCapability();
+};
+
+/**
+ * @param {!SDK.Target} target
+ * @return {string}
+ */
+TestRunner.describeTargetType = function(target) {
+  if (TestRunner.isDedicatedWorker(target))
+    return 'worker';
+  if (TestRunner.isServiceWorker(target))
+    return 'service-worker';
+  if (!target.parentTarget())
+    return 'page';
+  return 'frame';
+};
+
 /** @type {boolean} */
 IntegrationTestRunner._startedTest = false;
 
