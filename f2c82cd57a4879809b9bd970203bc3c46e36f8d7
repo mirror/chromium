@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd2e6e7f_b2f6ee4f",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 995,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-03T17:48:31Z",
+      "side": 1,
+      "message": "Those two can be combined in one test.",
+      "range": {
+        "startLine": 979,
+        "startChar": 0,
+        "endLine": 995,
+        "endChar": 1
+      },
+      "revId": "f2c82cd57a4879809b9bd970203bc3c46e36f8d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06333fa4_943c9e74",
+        "filename": "chrome/browser/resource_coordinator/tab_manager_web_contents_data.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1112850
+      },
+      "writtenOn": "2017-08-03T17:48:31Z",
+      "side": 1,
+      "message": "I think you should also check is_restored_in_foreground in operator\u003d\u003d.\n\nI noticed that the check for is_in_session_restore is also missing, which was added by your earlier CL. Can you also add that?",
+      "revId": "f2c82cd57a4879809b9bd970203bc3c46e36f8d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
