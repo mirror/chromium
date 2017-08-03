@@ -14,6 +14,7 @@
 #include "base/macros.h"
 #include "base/metrics/field_trial.h"
 #include "base/metrics/field_trial_params.h"
+#include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
 #include "components/subresource_filter/core/browser/subresource_filter_features_test_support.h"
 #include "components/variations/variations_associated_data.h"
@@ -678,6 +679,52 @@ TEST(SubresourceFilterFeaturesTest,
           Configuration::MakePresetForPerformanceTestingDryRunOnAllSites()));
   EXPECT_EQ(kTestRulesetFlavor,
             config_list->lexicographically_greatest_ruleset_flavor());
+}
+
+TEST(SubresourceFilterFeaturesTest, ParseAndValidate) {
+  const struct {
+    std::string params;
+    bool invalid;
+  } kTestCases[] = {
+      {"activation_scope:all_sites,activation_state:enabled", true},
+      {"activation_scope:all_sites,activation_state:dryrun", false},
+      {"activation_scope:all_sites,activation_state:disabled", false},
+
+      {"activation_scope:activation_list,activation_state:enabled", true},
+      {"activation_scope:activation_list,activation_state:dryrun", true},
+      {"activation_scope:activation_list,activation_state:disabled", true},
+      {"activation_scope:activation_list,activation_state:enabled,"
+       "activation_lists:phishing_interstitial",
+       false},
+
+      {"activation_scope:activation_list,activation_state:enabled,"
+       "activation_lists:phishing_interstitial,suppress_notifications:true",
+       true},
+      {"activation_scope:activation_list,activation_state:enabled,"
+       "activation_lists:phishing_interstitial,whitelist_site_on_reload:true",
+       true},
+      {"activation_scope:activation_list,activation_state:enabled,"
+       "activation_lists:phishing_interstitial,whitelist_site_on_reload:true,"
+       "suppress_notifications:true",
+       false},
+  };
+  for (const auto& test_case : kTestCases) {
+    SCOPED_TRACE(::testing::Message() << test_case.params);
+    testing::GetAndSetActivateConfigurations(nullptr);
+
+    base::StringPairs pairs;
+    EXPECT_TRUE(
+        base::SplitStringIntoKeyValuePairs(test_case.params, ':', ',', &pairs));
+    std::map<std::string, std::string> param_map;
+    for (const auto& it : pairs)
+      param_map[it.first] = it.second;
+    base::test::ScopedFeatureList scoped_features;
+    scoped_features.InitAndEnableFeatureWithParameters(
+        kSafeBrowsingSubresourceFilter, param_map);
+    scoped_refptr<ConfigurationList> config_list = GetEnabledConfigurations();
+    EXPECT_EQ(test_case.invalid,
+              config_list->configs_by_decreasing_priority().empty());
+  }
 }
 
 }  // namespace subresource_filter

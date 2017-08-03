@@ -14,6 +14,8 @@
 #include "base/lazy_instance.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/field_trial_params.h"
+#include "base/metrics/histogram_macros.h"
+#include "base/stl_util.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_split.h"
 #include "base/strings/string_util.h"
@@ -186,6 +188,37 @@ Configuration ParseExperimentalConfiguration(
   return configuration;
 }
 
+bool IsInvalidConfig(Configuration config) {
+  const Configuration::ActivationOptions& options = config.activation_options;
+  const Configuration::ActivationConditions& conditions =
+      config.activation_conditions;
+  if (conditions.activation_scope == ActivationScope::ALL_SITES) {
+    // If the scope is all sites, ensure that enabled implies suppressing
+    // notifications.
+    if (options.activation_level == ActivationLevel::ENABLED &&
+        !options.should_suppress_notifications) {
+      return true;
+    }
+  } else if (conditions.activation_scope == ActivationScope::ACTIVATION_LIST) {
+    // A list of None doesn't make sense for activation list scope. If that's
+    // what you want, just use disabled activation.
+    if (conditions.activation_list == ActivationList::NONE)
+      return true;
+  }
+  // Suppress notifications iff whitelist on reload.
+  // TODO(csharrison,bmcquade): It might make sense to consolidate these into a
+  // single parameter.
+  if (options.should_suppress_notifications &&
+      !options.should_whitelist_site_on_reload) {
+    return true;
+  }
+  if (options.should_whitelist_site_on_reload &&
+      !options.should_suppress_notifications) {
+    return true;
+  }
+  return false;
+}
+
 std::vector<Configuration> ParseEnabledConfigurations() {
   std::map<std::string, std::string> params;
   base::GetFieldTrialParamsByFeature(kSafeBrowsingSubresourceFilter, &params);
@@ -194,7 +227,10 @@ std::vector<Configuration> ParseEnabledConfigurations() {
 
   Configuration experimental_config = ParseExperimentalConfiguration(&params);
   configs.push_back(std::move(experimental_config));
-
+  size_t original_size = configs.size();
+  base::EraseIf(configs, IsInvalidConfig);
+  UMA_HISTOGRAM_BOOLEAN("SubresourceFilter.InvalidConfiguration",
+                        configs.size() != original_size);
   return configs;
 }
 
