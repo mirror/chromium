@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba582e5b_b96de514",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-03T17:02:48Z",
+      "side": 1,
+      "message": "nit: I was thinking this could just be \u0027const webrtc::DesktopFrame\u0026 frame\u0027 since you don\u0027t need a pointer.",
+      "range": {
+        "startLine": 23,
+        "startChar": 16,
+        "endLine": 23,
+        "endChar": 60
+      },
+      "revId": "fea8cc0b2dcf4bfe8bf27b71b61b971be6f191dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

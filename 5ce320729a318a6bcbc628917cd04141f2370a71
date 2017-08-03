@@ -544,6 +544,30 @@
     },
     {
       "key": {
+        "uuid": "970186ce_956982fd",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-03T17:02:48Z",
+      "side": 1,
+      "message": "option #2 makes a lot of sense.  As a follow-up, I would have thought Intialize() would set state_ to \u0027INITIALIZED\u0027 on success but that happens in RequireBitstreamBuffers() which isn\u0027t directly called by Initialize() (it may be called as part of the CreateVEA() function but that wasn\u0027t apparent to me).\n\nIs it possible for the Initialize method to look something like this:\n\nbool Initialize() {\n  if (state_ !\u003d UNINITIALZED) {\n    return state_ \u003d\u003d INITIALIZED;\n  }\n  state_ \u003d INITIALIZING;\n\n  // DO INIT STUFF\n\n  if (init_failed) {\n    state_ \u003d INITIALIZATION_ERROR;\n    return false;\n  }\n\n  state_ \u003d INITIALIZED;\n  return true;\n}",
+      "parentUuid": "e0424ba3_fd48ec11",
+      "range": {
+        "startLine": 183,
+        "startChar": 4,
+        "endLine": 183,
+        "endChar": 17
+      },
+      "revId": "5ce320729a318a6bcbc628917cd04141f2370a71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "13156fc8_0dacd3a2",
         "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
         "patchSetId": 14
