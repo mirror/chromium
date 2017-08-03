@@ -237,7 +237,7 @@ void MessageLoop::SetNestableTasksAllowed(bool allowed) {
     CHECK(RunLoop::IsNestingAllowedOnCurrentThread());
 
     // Kick the native pump just in case we enter a OS-driven nested message
-    // loop.
+    // loop that does not go through MessageLoop::Run().
     pump_->ScheduleWork();
   }
   nestable_tasks_allowed_ = allowed;
@@ -348,6 +348,15 @@ void MessageLoop::ClearTaskRunnerForTesting() {
 
 void MessageLoop::Run() {
   DCHECK_EQ(this, current());
+
+  if (NestableTasksAllowed()) {
+    // Message pumps on other platforms like Mac need an explicit request to
+    // process work when nested, otherwise they'll only wait for OS messages.
+    ReloadWorkQueue();
+    if (!work_queue_.empty())
+      ScheduleWork();
+  }
+
   pump_->Run(this);
 }
 
