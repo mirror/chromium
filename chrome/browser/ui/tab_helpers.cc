@@ -69,6 +69,7 @@
 #include "components/dom_distiller/core/dom_distiller_switches.h"
 #include "components/history/content/browser/web_contents_top_sites_observer.h"
 #include "components/history/core/browser/top_sites.h"
+#include "components/offline_pages/content/renovations/web_contents_loading_observer.h"
 #include "components/offline_pages/features/features.h"
 #include "components/password_manager/core/browser/password_manager.h"
 #include "components/subresource_filter/content/browser/content_subresource_filter_driver_factory.h"
@@ -277,6 +278,8 @@ void TabHelpers::AttachTabHelpers(WebContents* web_contents) {
     (defined(OS_LINUX) && !defined(OS_CHROMEOS))
   metrics::DesktopSessionDurationObserver::CreateForWebContents(web_contents);
 #endif
+
+  offline_pages::WebContentsLoadingObserver::CreateForWebContents(web_contents);
 
 // --- Feature tab helpers behind flags ---
 

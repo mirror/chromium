@@ -1,4 +1,7 @@
 include_rules = [
   "+content/public/browser",
   "+content/public/common",
+  "+mojo/public/cpp",
+  "+services/resource_coordinator/public",
+  "+services/service_manager/public",
 ]

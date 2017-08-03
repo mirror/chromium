@@ -17,3 +17,17 @@ source_set("renovations") {
     "//content/public/browser",
   ]
 }
+
+source_set("loading_observer") {
+  sources = [
+    "web_contents_loading_observer.cc",
+    "web_contents_loading_observer.h",
+  ]
+
+  deps = [
+    "//content/public/browser",
+    "//mojo/public/cpp/bindings",
+    "//services/resource_coordinator/public/cpp:resource_coordinator_cpp",
+    "//services/service_manager/public/cpp",
+  ]
+}

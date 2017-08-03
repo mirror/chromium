@@ -11,6 +11,7 @@
 #include "base/values.h"
 #include "chrome/browser/offline_pages/resource_loading_observer.h"
 #include "components/offline_pages/content/background_loader/background_loader_contents.h"
+#include "components/offline_pages/content/renovations/web_contents_loading_observer.h"
 #include "components/offline_pages/core/background/load_termination_listener.h"
 #include "components/offline_pages/core/background/offliner.h"
 #include "components/offline_pages/core/offline_page_types.h"
