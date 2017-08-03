@@ -313,7 +313,7 @@ void TextInputController::SetComposition(const std::string& text) {
 
   std::vector<blink::WebCompositionUnderline> underlines;
   underlines.push_back(blink::WebCompositionUnderline(
-      0, textLength, SK_ColorBLACK, false, SK_ColorTRANSPARENT));
+      0, textLength, true, 0, false, SK_ColorTRANSPARENT));
   if (auto* controller = GetInputMethodController()) {
     controller->SetComposition(
         newText, blink::WebVector<blink::WebCompositionUnderline>(underlines),

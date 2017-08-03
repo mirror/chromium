@@ -17,16 +17,19 @@ class CORE_EXPORT StyleableMarker : public DocumentMarker {
 
   StyleableMarker(unsigned start_offset,
                   unsigned end_offset,
+                  bool use_text_color,
                   Color underline_color,
                   Thickness,
                   Color background_color);
 
   // StyleableMarker-specific
+  bool UseTextColor() const;
   Color UnderlineColor() const;
   bool IsThick() const;
   Color BackgroundColor() const;
 
  private:
+  const bool use_text_color_;
   const Color underline_color_;
   const Color background_color_;
   const Thickness thickness_;
