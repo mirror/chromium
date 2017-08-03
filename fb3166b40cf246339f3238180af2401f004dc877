@@ -16,6 +16,24 @@
       "revId": "fb3166b40cf246339f3238180af2401f004dc877",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d258e19_47134bfb",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontCache.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-08-03T20:06:40Z",
+      "side": 1,
+      "message": "we rolled that back to a better solution.",
+      "parentUuid": "72946391_d97ca5e9",
+      "revId": "fb3166b40cf246339f3238180af2401f004dc877",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
