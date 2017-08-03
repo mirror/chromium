@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8322be9a_b7e3422b",
+        "filename": "ios/web/navigation/navigation_manager_impl_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 1846,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-08-03T19:20:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b896ef7_d0617b78",
+      "revId": "764348fee530e139eea621206f74ed2f02fde0a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f75d0776_81e6258f",
         "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-03T15:26:23Z",
       "side": 1,
       "message": "CRWSessionController\u0027s implementation accounts for redirects here.  Does WKBackForwardListItem have WKBackForwardListItems for redirected navigations?  If so, we should copy that logic here and below, and add tests for that logic.  If not, then do we have a plan for correctly recording redirects in our NavigationItems?",
+      "revId": "764348fee530e139eea621206f74ed2f02fde0a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b542fdf_97adc2be",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-08-03T19:20:30Z",
+      "side": 1,
+      "message": "WKBackForwardList does not have a separate WKBackForwardListItem for redirect items, regardless whether it\u0027s a 30X server-side redirect or client-side redirect (e.g. \u003cscript\u003elocation.href\u003d\"...\"\u003c/script\u003e). In the latter case however, WKBackForwardListItem\u0027s |initialURL| property will contain the original request URL before the client-side redirect.\n\nDo we need to record redirects in our NavigationItems? As far as I can tell, all the places where we current check if a NavigationItem is a redirect is to ignore the redirect ones:\n\n1) Tab |-IsItemRedirectItem|: used in Tab |-reloadWithUserAgentType| to find the last non-redirect item \nhttps://cs.chromium.org/chromium/src/ios/chrome/browser/tabs/tab.mm?type\u003dcs\u0026q\u003dPAGE_TRANSITION_IS_REDIRECT_MASK+file:ios+-file:test\u0026l\u003d191\n\n2) Tab |-webWillAddPendingURL|: only do something if the URL is not a redirect\nhttps://cs.chromium.org/chromium/src/ios/chrome/browser/tabs/tab.mm?type\u003dcs\u0026q\u003dPAGE_TRANSITION_IS_REDIRECT_MASK+file:ios+-file:test\u0026l\u003d1356\n\n3) Tab |-webDidUpdateSessionForLoadWithParams|: record any explicit, non-redirect navigation\nhttps://cs.chromium.org/chromium/src/ios/chrome/browser/tabs/tab.mm?type\u003dcs\u0026q\u003dPAGE_TRANSITION_IS_REDIRECT_MASK+file:ios+-file:test\u0026l\u003d934\n\n4) CRWWebController |-registerLoadRequestForURL|: inform delegate if not redirect\nhttps://cs.chromium.org/chromium/src/ios/web/web_state/ui/crw_web_controller.mm?type\u003dcs\u0026q\u003dPAGE_TRANSITION_IS_REDIRECT_MASK+file:ios+-file:test\u0026l\u003d1505\n\n5) navigation_manager_util: find the last committed non-redirect item\nhttps://cs.chromium.org/chromium/src/ios/chrome/browser/web/navigation_manager_util.mm?type\u003dcs\u0026q\u003dPAGE_TRANSITION_IS_REDIRECT_MASK+file:ios+-file:test\u0026l\u003d19\n\n6) LegacyNavigationManagerImpl::IsRedirectItemAtIndex: skip redirect items when computing offset for GetIndexForOffset\nhttps://cs.chromium.org/chromium/src/ios/web/navigation/legacy_navigation_manager_impl.mm?type\u003dcs\u0026q\u003dPAGE_TRANSITION_IS_REDIRECT_MASK+file:ios+-file:test\u0026l\u003d310\n\nSo moving to WKBackForwardList, I think we can simplify the navigation logic to ignore the redirect concept. WDYT?",
+      "parentUuid": "f75d0776_81e6258f",
       "revId": "764348fee530e139eea621206f74ed2f02fde0a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
