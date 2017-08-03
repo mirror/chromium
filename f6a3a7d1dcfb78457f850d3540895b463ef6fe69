@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "3a5c2cce_7b4b0bdb",
+        "filename": "extensions/common/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-03T20:29:24Z",
+      "side": 1,
+      "message": "No it\u0027s not used anywhere. However it\u0027s nice to have the schema compiled to check for errors etc.\n\ne/c/api/BUILD.gn target is meant for generated api schemas. I think it\u0027s fine here.",
+      "parentUuid": "0e742e88_31a58ad0",
+      "revId": "f6a3a7d1dcfb78457f850d3540895b463ef6fe69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f713b851_700f2089",
         "filename": "extensions/common/api/declarative_net_request/flat/extension_ruleset.fbs",
         "patchSetId": 1
@@ -51,6 +69,24 @@
       "revId": "f6a3a7d1dcfb78457f850d3540895b463ef6fe69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91bd626f_d9919b3f",
+        "filename": "extensions/common/api/declarative_net_request/flat/extension_ruleset.fbs",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-03T20:29:24Z",
+      "side": 1,
+      "message": "changed to UrlRuleMetadata. Don\u0027t want to put constraints that the metadata is necessarily related to actions.",
+      "parentUuid": "f713b851_700f2089",
+      "revId": "f6a3a7d1dcfb78457f850d3540895b463ef6fe69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "5f53e704_eed8401f",
+        "filename": "extensions/common/api/declarative_net_request/flat/extension_ruleset.fbs",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-03T20:29:24Z",
+      "side": 1,
+      "message": "Good point, changed to optional.\n\nFor id, required is not supported for scalar fields- https://google.github.io/flatbuffers/flatbuffers_guide_writing_schema.html. \n\nAs regards key implicitly adding required, I wouldn\u0027t expect that to be the case.",
+      "parentUuid": "63c417eb_b0b2104c",
+      "revId": "f6a3a7d1dcfb78457f850d3540895b463ef6fe69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8424455c_0fdd0676",
         "filename": "extensions/common/api/declarative_net_request/flat/extension_ruleset.fbs",
         "patchSetId": 1
@@ -85,6 +139,24 @@
       "revId": "f6a3a7d1dcfb78457f850d3540895b463ef6fe69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7041ccd1_a79ecd12",
+        "filename": "extensions/common/api/declarative_net_request/flat/extension_ruleset.fbs",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-03T20:29:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8424455c_0fdd0676",
+      "revId": "f6a3a7d1dcfb78457f850d3540895b463ef6fe69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -180,6 +252,30 @@
       "revId": "f6a3a7d1dcfb78457f850d3540895b463ef6fe69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30fd2e4a_824b168a",
+        "filename": "extensions/common/api/declarative_net_request/flat/extension_ruleset.fbs",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-03T20:29:24Z",
+      "side": 1,
+      "message": "Thanks for the tip related to flatc --conform. Using a file identifier now.",
+      "parentUuid": "1976c525_1637dc92",
+      "range": {
+        "startLine": 39,
+        "startChar": 12,
+        "endLine": 39,
+        "endChar": 27
+      },
+      "revId": "f6a3a7d1dcfb78457f850d3540895b463ef6fe69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
