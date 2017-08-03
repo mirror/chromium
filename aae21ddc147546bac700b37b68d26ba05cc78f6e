@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "664a885c_2efe12ba",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-08-03T05:05:28Z",
+      "side": 1,
+      "message": "It\u0027s a bit confusing. The main reason is that mojo callbacks all DCHECK that they were called before they are destructed. But also because other decoders like GVD do this too. I don\u0027t think anything relies on it and I don\u0027t like the pattern personally.",
+      "parentUuid": "97900c37_44118a44",
+      "revId": "aae21ddc147546bac700b37b68d26ba05cc78f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b7bb8f3c_4eb1ac68",
         "filename": "media/gpu/android/media_codec_video_decoder.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-02T15:05:22Z",
       "side": 1,
       "message": "what about |reset_cb_|?  is it guaranteed that all transitions to kError will have a pending decode to signal the error on?\n\nin particular, a failure in DequeueOutput while might HandleError \u003d\u003e set state to error \u003d\u003e do nothing here.  from the outside, i think the transition to the error state would be invisible, and no reset callback would be sent.  maybe HandleError should signal the reset cb with an error or something?\n\nor maybe i\u0027m wrong, and this can\u0027t happen.",
+      "revId": "aae21ddc147546bac700b37b68d26ba05cc78f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "255b6713_99829614",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 572,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-08-03T05:05:28Z",
+      "side": 1,
+      "message": "No it\u0027s not guaranteed. Yeah I think that\u0027s a good idea to complete the reset in case of an error and then the next decode can signal the error. Done",
+      "parentUuid": "b7bb8f3c_4eb1ac68",
       "revId": "aae21ddc147546bac700b37b68d26ba05cc78f6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ee887b3f_f39b413f",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-08-03T05:05:28Z",
+      "side": 1,
+      "message": "Done, moved this around a bit",
+      "parentUuid": "2c979f35_ee0ea1e7",
+      "revId": "aae21ddc147546bac700b37b68d26ba05cc78f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c0236c9_6b03a349",
         "filename": "media/gpu/android/media_codec_video_decoder.cc",
         "patchSetId": 5
@@ -64,6 +118,24 @@
       "writtenOn": "2017-08-02T22:40:00Z",
       "side": 1,
       "message": "if |!codec_|, i think that we can skip this.  i\u0027m not sure that it gets called for that case, but StartDrainingCodec checks for it explicitly, so i\u0027ll assume so.",
+      "revId": "aae21ddc147546bac700b37b68d26ba05cc78f6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0723ce5f_9d36d61f",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-08-03T05:05:28Z",
+      "side": 1,
+      "message": "Shouldn\u0027t be possible. But now I\u0027ve removed this flag. Hopefully it\u0027s clearer now",
+      "parentUuid": "1c0236c9_6b03a349",
       "revId": "aae21ddc147546bac700b37b68d26ba05cc78f6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
