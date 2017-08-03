@@ -23,11 +23,13 @@
 #include "ui/gfx/color_space.h"
 #include "ui/latency/latency_info.h"
 
+#include "cc/resources/display_resource_provider.h"
+
 namespace cc {
 class DirectRenderer;
 class OutputSurface;
 class RendererSettings;
-class ResourceProvider;
+class DisplayResourceProvider;
 class SoftwareRenderer;
 class TextureMailboxDeleter;
 }  // namespace cc
@@ -132,7 +134,7 @@ class VIZ_SERVICE_EXPORT Display : public DisplaySchedulerClient,
 
   std::unique_ptr<cc::OutputSurface> output_surface_;
   std::unique_ptr<DisplayScheduler> scheduler_;
-  std::unique_ptr<cc::ResourceProvider> resource_provider_;
+  std::unique_ptr<cc::DisplayResourceProvider> resource_provider_;
   std::unique_ptr<SurfaceAggregator> aggregator_;
   std::unique_ptr<cc::TextureMailboxDeleter> texture_mailbox_deleter_;
   std::unique_ptr<cc::DirectRenderer> renderer_;
