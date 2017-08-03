@@ -368,6 +368,7 @@ public class BidirectionalStreamTest extends CronetTestBase {
         callback.setAutoAdvance(false);
         stream.start();
         callback.waitForNextWriteStep(); // onStreamReady
+        callback.setAutoAdvance(true);
 
         assertEquals(0, stream.getPendingDataForTesting().size());
         assertEquals(0, stream.getFlushDataForTesting().size());
@@ -379,7 +380,6 @@ public class BidirectionalStreamTest extends CronetTestBase {
         // Write 6, but do not flush. 6 will be in pending queue.
         callback.startNextWrite(stream);
 
-        callback.setAutoAdvance(true);
         callback.blockForDone();
         assertEquals(200, callback.mResponseInfo.getHttpStatusCode());
         assertEquals("123456", callback.mResponseAsString);
