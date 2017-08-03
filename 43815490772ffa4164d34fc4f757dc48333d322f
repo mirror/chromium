@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "5dc86e14_73910985",
+        "filename": "ui/arc/notification/arc_notification_content_view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-03T02:17:28Z",
+      "side": 1,
+      "message": "Move this to L218 (just before used).",
+      "revId": "43815490772ffa4164d34fc4f757dc48333d322f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef2d66b5_8d0a9b9f",
+        "filename": "ui/arc/notification/arc_notification_content_view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-03T02:17:28Z",
+      "side": 1,
+      "message": "As these are initialized before |notification_view_|, |wrapper_widget_|, how about moving them between L252 and L253?",
+      "revId": "43815490772ffa4164d34fc4f757dc48333d322f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3051849c_170787b7",
         "filename": "ui/arc/notification/arc_notification_content_view_unittest.cc",
         "patchSetId": 3
