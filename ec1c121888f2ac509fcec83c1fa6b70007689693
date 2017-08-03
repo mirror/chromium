@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "719675e7_794f3cd8",
+        "filename": "services/ui/public/interfaces/window_manager.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-03T18:19:40Z",
+      "side": 1,
+      "message": "Excellent idea. Done.",
+      "parentUuid": "c2c6dbe5_73839c48",
+      "revId": "ec1c121888f2ac509fcec83c1fa6b70007689693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d03d128b_ce1c571f",
         "filename": "services/ui/public/interfaces/window_manager.mojom",
         "patchSetId": 5
@@ -71,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "aaf5b7bb_56eb8cde",
+        "filename": "services/ui/ws/modal_window_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-03T18:19:40Z",
+      "side": 1,
+      "message": "Agreed. I got this code from window_modality_controller.",
+      "parentUuid": "e37f8bdf_11e3b7b5",
+      "revId": "ec1c121888f2ac509fcec83c1fa6b70007689693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c2d131a_a11f34e2",
         "filename": "services/ui/ws/modal_window_controller.cc",
         "patchSetId": 5
@@ -85,6 +121,24 @@
       "revId": "ec1c121888f2ac509fcec83c1fa6b70007689693",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "314f1617_fe0c616e",
+        "filename": "services/ui/ws/modal_window_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-03T18:19:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c2d131a_a11f34e2",
+      "revId": "ec1c121888f2ac509fcec83c1fa6b70007689693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -141,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "d465ce2d_4ec164ed",
+        "filename": "services/ui/ws/modal_window_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-03T18:19:40Z",
+      "side": 1,
+      "message": "I don\u0027t think we want the same code. For example, this code should not consider minimized. Also, this code is used for determining modality/targetting, which shouldn\u0027t have the same code. For example, the can_focus check doesn\u0027t make sense here.",
+      "parentUuid": "7d291cd1_0dbc7aa9",
+      "revId": "ec1c121888f2ac509fcec83c1fa6b70007689693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a5cc9d7b_c658964c",
         "filename": "services/ui/ws/window_tree.cc",
         "patchSetId": 5
@@ -158,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "402008f3_13e7a796",
+        "filename": "services/ui/ws/window_tree.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2538,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-03T18:19:40Z",
+      "side": 1,
+      "message": "Function was nuked.",
+      "parentUuid": "a5cc9d7b_c658964c",
+      "revId": "ec1c121888f2ac509fcec83c1fa6b70007689693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1fd55d94_2c2b4ba7",
         "filename": "ui/aura/mus/window_tree_client.cc",
         "patchSetId": 5
@@ -169,6 +259,24 @@
       "writtenOn": "2017-08-03T07:47:32Z",
       "side": 1,
       "message": "This can be a DCHECK()?",
+      "revId": "ec1c121888f2ac509fcec83c1fa6b70007689693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9867faed_d8971fe0",
+        "filename": "ui/aura/mus/window_tree_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1561,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-03T18:19:40Z",
+      "side": 1,
+      "message": "Function was nuked.",
+      "parentUuid": "1fd55d94_2c2b4ba7",
       "revId": "ec1c121888f2ac509fcec83c1fa6b70007689693",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
