@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "45ffacb5_f8c86aa4",
+        "filename": "chrome/app/chromeos_strings.grdp",
+        "patchSetId": 6
+      },
+      "lineNbr": 4433,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-08-03T18:55:53Z",
+      "side": 1,
+      "message": "UI review agreed to just name it \"launcher\". Done.",
+      "parentUuid": "7773d47c_756c25cf",
+      "range": {
+        "startLine": 4433,
+        "startChar": 4,
+        "endLine": 4433,
+        "endChar": 8
+      },
+      "revId": "439ef77fd13e0601a4eef70bc1d6e11af40b47ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d28637b_cbde7ea1",
         "filename": "chrome/browser/resources/chromeos/keyboard_overlay.js",
         "patchSetId": 6
