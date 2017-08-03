@@ -360,6 +360,75 @@ dropped.
 
 ---
 
+## Array Static & Prototype Methods
+
+**Usage Example:**
+
+```js
+// Array.from
+// Array.of
+
+// Array.prototype.copyWithin
+// Array.prototype.find
+// Array.prototype.findIndex
+// Array.prototype.fill
+// Array.prototype.keys
+// Array.prototype.values
+// Array.prototype.entries
+```
+
+**Documentation:** [link](http://www.ecma-international.org/ecma-262/6.0/#sec-properties-of-the-array-constructor)
+
+**Discussion Notes / Link to Thread:** [link](https://groups.google.com/a/chromium.org/d/msg/chromium-dev/d_2zUYQZJTg/-_PSji_OAQAJ)
+
+---
+
+## Number Properties
+
+**Usage Example:**
+
+```js
+// Number.isFinite
+// Number.isInteger
+// Number.isSafeInteger
+// Number.isNaN
+// Number.EPSILON
+// Number.MIN_SAFE_INTEGER
+// Number.MAX_SAFE_INTEGER
+```
+
+**Documentation:** [link](http://www.ecma-international.org/ecma-262/6.0/#sec-isfinite-number)
+
+**Discussion Notes / Link to Thread:** [link](https://groups.google.com/a/chromium.org/d/msg/chromium-dev/d_2zUYQZJTg/-_PSji_OAQAJ)
+
+---
+
+## Object Static Methods
+
+**Usage Example:**
+
+```js
+// Object.assign
+var o = Object.assign({a:true}, {b:true}, {c:true});  // {a: true, b: true, c: true}
+'a' in o && 'b' in o && 'c' in o;  // true
+
+// Object.setPrototypeOf
+Object.setPrototypeOf({}, Array.prototype) instanceof Array;  // true
+
+// Object.is
+Object.is(null, null)  // true
+Object.is(NaN, NaN)  // true
+Object.is(-0, +0)  // false, btw: -0 === +0 is true
+
+// Object.getOwnPropertySymbols
+```
+
+**Documentation:** [link](http://www.ecma-international.org/ecma-262/6.0/#sec-properties-of-the-object-constructor)
+
+**Discussion Notes / Link to Thread:** [link](https://groups.google.com/a/chromium.org/d/msg/chromium-dev/d_2zUYQZJTg/-_PSji_OAQAJ)
+
+---
+
 # Banned Features
 
 The following features are banned for Chromium development.
@@ -705,32 +774,6 @@ for (var n of fibonacci) {
 
 ---
 
-## Object Static Methods
-
-**Usage Example:**
-
-```js
-// Object.assign
-var o = Object.assign({a:true}, {b:true}, {c:true});  // {a: true, b: true, c: true}
-'a' in o && 'b' in o && 'c' in o;  // true
-
-// Object.setPrototypeOf
-Object.setPrototypeOf({}, Array.prototype) instanceof Array;  // true
-
-// Object.is
-Object.is(null, null)  // true
-Object.is(NaN, NaN)  // true
-Object.is(-0, +0)  // false, btw: -0 === +0 is true
-
-// Object.getOwnPropertySymbols
-```
-
-**Documentation:** [link](http://www.ecma-international.org/ecma-262/6.0/#sec-properties-of-the-object-constructor)
-
-**Discussion Notes / Link to Thread:**
-
----
-
 ## String Static & Prototype methods
 
 **Usage Example:**
@@ -748,49 +791,6 @@ Object.is(-0, +0)  // false, btw: -0 === +0 is true
 ```
 
 **Documentation:** [link](http://www.ecma-international.org/ecma-262/6.0/#sec-properties-of-the-string-constructor)
-
-**Discussion Notes / Link to Thread:**
-
----
-
-## Array Static & Prototype Methods
-
-**Usage Example:**
-
-```js
-// Array.from
-// Array.of
-
-// Array.prototype.copyWithin
-// Array.prototype.find
-// Array.prototype.findIndex
-// Array.prototype.fill
-// Array.prototype.keys
-// Array.prototype.values
-// Array.prototype.entries
-```
-
-**Documentation:** [link](http://www.ecma-international.org/ecma-262/6.0/#sec-properties-of-the-array-constructor)
-
-**Discussion Notes / Link to Thread:**
-
----
-
-## Number Properties
-
-**Usage Example:**
-
-```js
-// Number.isFinite
-// Number.isInteger
-// Number.isSafeInteger
-// Number.isNaN
-// Number.EPSILON
-// Number.MIN_SAFE_INTEGER
-// Number.MAX_SAFE_INTEGER
-```
-
-**Documentation:** [link](http://www.ecma-international.org/ecma-262/6.0/#sec-isfinite-number)
 
 **Discussion Notes / Link to Thread:**
 
