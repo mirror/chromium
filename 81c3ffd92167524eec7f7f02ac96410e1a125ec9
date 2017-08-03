@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4831acca_20f8c731",
+        "filename": "tools/clang/traffic_annotation_extractor/tests/test-original.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-03T21:54:23Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we just disallow this by marking the field const? Are there reasons people should be able to do this?",
+      "revId": "81c3ffd92167524eec7f7f02ac96410e1a125ec9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
