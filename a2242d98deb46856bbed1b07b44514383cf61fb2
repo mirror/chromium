@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9592ce99_d7a0dc79",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/common.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-08-03T22:10:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "244fc1bc_8664dc0f",
+      "revId": "a2242d98deb46856bbed1b07b44514383cf61fb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9aaafd4f_a0595023",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/common_unittest.py",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "061ffbaa_3536a7fc",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/common_unittest.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-08-03T22:10:48Z",
+      "side": 1,
+      "message": "Good point! I decided to use a simple stub here and add another set of unit tests for WPTGitHub using MockExecutive. By doing so, the unit tests are more independent.",
+      "parentUuid": "9aaafd4f_a0595023",
+      "revId": "a2242d98deb46856bbed1b07b44514383cf61fb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9652ab91_f22353ec",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/local_wpt.py",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "a2242d98deb46856bbed1b07b44514383cf61fb2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cdeafc7_d9d4cd72",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/local_wpt.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-08-03T22:10:48Z",
+      "side": 1,
+      "message": "I was trying to keep the behaviour the same and ended up in an unnecessarily convoluted way. Good point! I\u0027ve cleaned this part up.\n\nBTW, I think there\u0027s another possible way to produce empty diff -- the commit has already been merged upstream. This, along with the case that the patch is somehow empty, is not a surprise and hence silently ignored.",
+      "parentUuid": "9652ab91_f22353ec",
+      "revId": "a2242d98deb46856bbed1b07b44514383cf61fb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -85,6 +139,24 @@
       "revId": "a2242d98deb46856bbed1b07b44514383cf61fb2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fd71abf_754d3689",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_importer.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1231539
+      },
+      "writtenOn": "2017-08-03T22:10:48Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "fb4a20c6_a96269a6",
+      "revId": "a2242d98deb46856bbed1b07b44514383cf61fb2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
