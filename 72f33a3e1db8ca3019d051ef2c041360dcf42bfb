@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65e4c573_8c7cf48e",
+        "filename": "third_party/WebKit/Source/core/workers/Worklet.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-03T09:40:53Z",
+      "side": 1,
+      "message": "Right now, always returning the first is presumably a bug (as per the TODO). How about we clean this TODO up now by documenting that if the worklet uses more than one global scope it must override this function and define the selection behavior and we can assert in Worklet::SelectGlobalScope that there is only one.",
+      "range": {
+        "startLine": 72,
+        "startChar": 34,
+        "endLine": 72,
+        "endChar": 66
+      },
+      "revId": "72f33a3e1db8ca3019d051ef2c041360dcf42bfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6e33218_544dffa7",
+        "filename": "third_party/WebKit/Source/core/workers/Worklet.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-03T09:40:53Z",
+      "side": 1,
+      "message": "This can be documented in PaintWorklet, but here we can say that specific worklets can define their own selection behavior.",
+      "range": {
+        "startLine": 73,
+        "startChar": 43,
+        "endLine": 73,
+        "endChar": 80
+      },
+      "revId": "72f33a3e1db8ca3019d051ef2c041360dcf42bfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18c49e97_c2d1f33b",
+        "filename": "third_party/WebKit/Source/core/workers/Worklet.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-03T09:40:53Z",
+      "side": 1,
+      "message": "nit: s/Selecte/Select",
+      "range": {
+        "startLine": 76,
+        "startChar": 14,
+        "endLine": 76,
+        "endChar": 21
+      },
+      "revId": "72f33a3e1db8ca3019d051ef2c041360dcf42bfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "292c5c27_e7481d09",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorklet.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-03T09:40:53Z",
+      "side": 1,
+      "message": "The spec has a clarification on the use of unsigned types:\nhttps://google.github.io/styleguide/cppguide.html#Integer_Types\n\"When appropriate, you are welcome to use standard types like size_t and ptrdiff_t.\"\n\nI think this is a case where it is appropriate to use a size_t since it is selecting an index into a Vector. The Vector accessor takes type size_t.",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 54,
+        "endChar": 5
+      },
+      "revId": "72f33a3e1db8ca3019d051ef2c041360dcf42bfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9355fb0_76110b68",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-03T09:40:53Z",
+      "side": 1,
+      "message": "this is coercing unsigned int to signed.",
+      "range": {
+        "startLine": 91,
+        "startChar": 39,
+        "endLine": 91,
+        "endChar": 41
+      },
+      "revId": "72f33a3e1db8ca3019d051ef2c041360dcf42bfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
