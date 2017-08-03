@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "14208b61_8e59b3d2",
+        "filename": "content/browser/frame_host/navigation_handle_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-08-03T22:52:54Z",
+      "side": 1,
+      "message": "Could have sworn I changed that.  Must not have saved the file or something.",
+      "parentUuid": "17e25dad_422ff0ad",
+      "range": {
+        "startLine": 48,
+        "startChar": 48,
+        "endLine": 48,
+        "endChar": 54
+      },
+      "revId": "c4872deffb6b875c53917d2f8cde976981b385f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ede62034_91d4e634",
         "filename": "content/browser/frame_host/navigation_handle_impl.h",
         "patchSetId": 15
@@ -60,6 +84,30 @@
       "side": 1,
       "message": "This appears to be modeled off of NavigationEntryImpl::unique_id_, which is also 32-bit.  I suppose both could be 64-bit, but I don\u0027t see why they would need to differ.",
       "parentUuid": "ede62034_91d4e634",
+      "range": {
+        "startLine": 558,
+        "startChar": 2,
+        "endLine": 558,
+        "endChar": 5
+      },
+      "revId": "c4872deffb6b875c53917d2f8cde976981b385f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cfd5ac8_d151e82a",
+        "filename": "content/browser/frame_host/navigation_handle_impl.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 558,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-08-03T22:52:54Z",
+      "side": 1,
+      "message": "Changed it to int64_t",
+      "parentUuid": "f7dc7c64_6241b178",
       "range": {
         "startLine": 558,
         "startChar": 2,
