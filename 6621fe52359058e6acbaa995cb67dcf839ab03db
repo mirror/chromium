@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "0101bef9_cc2abc6a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-08-03T14:53:59Z",
+      "side": 1,
+      "message": "Not exactly. This file contains additional information about policies, such as source (e.g. cloud, platform), level (e.g. mandatory, recommended) and what it applies to (machine, user, profile). So, for every policy, the corresponding value contains several things, and the actual value of the policy is in the \u0027value\u0027 field.\n\nAlso, all Chrome\u0027s native policies are bundled under \"chromePolicies\".",
+      "parentUuid": "3c262d74_f0f1afe1",
+      "range": {
+        "startLine": 10,
+        "startChar": 16,
+        "endLine": 10,
+        "endChar": 27
+      },
+      "revId": "6621fe52359058e6acbaa995cb67dcf839ab03db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6fb1c61d_240507d3",
         "filename": "chrome/browser/resources/policy.css",
         "patchSetId": 2
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "2110a6ea_7d351408",
+        "filename": "chrome/browser/resources/policy.css",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-08-03T14:53:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6fb1c61d_240507d3",
+      "range": {
+        "startLine": 76,
+        "startChar": 4,
+        "endLine": 76,
+        "endChar": 22
+      },
+      "revId": "6621fe52359058e6acbaa995cb67dcf839ab03db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab536eaf_768a9b27",
         "filename": "chrome/browser/resources/policy.html",
         "patchSetId": 2
@@ -82,6 +130,30 @@
       "writtenOn": "2017-07-28T09:06:45Z",
       "side": 1,
       "message": "s/JSON/Json/ we don\u0027t capitalize abbreviations completely.",
+      "range": {
+        "startLine": 38,
+        "startChar": 54,
+        "endLine": 38,
+        "endChar": 70
+      },
+      "revId": "6621fe52359058e6acbaa995cb67dcf839ab03db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a235b90_c8979a6a",
+        "filename": "chrome/browser/resources/policy.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-08-03T14:53:59Z",
+      "side": 1,
+      "message": "JSON abbreviation might be an exception because both existing functions in policy_ui_handler and even base functions (e.g. base::JSONReader::Read) seem to capitalize it.",
+      "parentUuid": "ab536eaf_768a9b27",
       "range": {
         "startLine": 38,
         "startChar": 54,
@@ -117,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "e36f5e97_afa588b1",
+        "filename": "chrome/browser/ui/webui/policy_ui_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-08-03T14:53:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "474feacb_816305ab",
+      "range": {
+        "startLine": 138,
+        "startChar": 0,
+        "endLine": 139,
+        "endChar": 40
+      },
+      "revId": "6621fe52359058e6acbaa995cb67dcf839ab03db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c83eec7c_a1c2892f",
         "filename": "chrome/browser/ui/webui/policy_ui_browsertest.cc",
         "patchSetId": 2
@@ -128,6 +224,30 @@
       "writtenOn": "2017-07-28T09:06:45Z",
       "side": 1,
       "message": "I would suggest VerifySavedPolicies instead.",
+      "range": {
+        "startLine": 263,
+        "startChar": 19,
+        "endLine": 263,
+        "endChar": 37
+      },
+      "revId": "6621fe52359058e6acbaa995cb67dcf839ab03db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9d397d4_d6aade81",
+        "filename": "chrome/browser/ui/webui/policy_ui_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-08-03T14:53:59Z",
+      "side": 1,
+      "message": "This function doesn\u0027t only check saved policies, it saves them first. So, how about VerifyExportingPolicies?",
+      "parentUuid": "c83eec7c_a1c2892f",
       "range": {
         "startLine": 263,
         "startChar": 19,
@@ -163,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "74111bb1_5d497cda",
+        "filename": "chrome/browser/ui/webui/policy_ui_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-08-03T14:53:59Z",
+      "side": 1,
+      "message": "Done.\n\nHowever, a nearby function VerifyPolicies, which checks displaying policies on a web page, uses both ASSERT and EXPECT. Is there some logic behind choosing whether to use an ASSERT or EXPECT?",
+      "parentUuid": "d32f2de1_c66280ad",
+      "range": {
+        "startLine": 273,
+        "startChar": 2,
+        "endLine": 273,
+        "endChar": 13
+      },
+      "revId": "6621fe52359058e6acbaa995cb67dcf839ab03db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff00bdf4_564591a4",
         "filename": "chrome/browser/ui/webui/policy_ui_browsertest.cc",
         "patchSetId": 2
@@ -186,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "e30ab6be_8e4c418b",
+        "filename": "chrome/browser/ui/webui/policy_ui_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-08-03T14:53:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff00bdf4_564591a4",
+      "range": {
+        "startLine": 277,
+        "startChar": 2,
+        "endLine": 288,
+        "endChar": 3
+      },
+      "revId": "6621fe52359058e6acbaa995cb67dcf839ab03db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6fd26057_2f75c611",
         "filename": "chrome/browser/ui/webui/policy_ui_browsertest.cc",
         "patchSetId": 2
@@ -197,6 +365,30 @@
       "writtenOn": "2017-07-28T09:06:45Z",
       "side": 1,
       "message": "Don\u0027t remember the cppjson lib by heart but doesn\u0027t this have to be a unique_ptr too?",
+      "range": {
+        "startLine": 295,
+        "startChar": 2,
+        "endLine": 295,
+        "endChar": 51
+      },
+      "revId": "6621fe52359058e6acbaa995cb67dcf839ab03db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67af343f_f898a4a9",
+        "filename": "chrome/browser/ui/webui/policy_ui_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-08-03T14:53:59Z",
+      "side": 1,
+      "message": "No, see https://cs.chromium.org/chromium/src/base/values.h?q\u003dgetasdictionary\u0026sq\u003dpackage:chromium\u0026l\u003d214",
+      "parentUuid": "6fd26057_2f75c611",
       "range": {
         "startLine": 295,
         "startChar": 2,
@@ -232,6 +424,30 @@
     },
     {
       "key": {
+        "uuid": "8edf5222_2b413088",
+        "filename": "chrome/browser/ui/webui/policy_ui_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-08-03T14:53:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc97b2ee_68e23305",
+      "range": {
+        "startLine": 189,
+        "startChar": 29,
+        "endLine": 189,
+        "endChar": 43
+      },
+      "revId": "6621fe52359058e6acbaa995cb67dcf839ab03db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4309155c_04e6c536",
         "filename": "chrome/browser/ui/webui/policy_ui_handler.cc",
         "patchSetId": 2
@@ -252,6 +468,30 @@
       "revId": "6621fe52359058e6acbaa995cb67dcf839ab03db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51435552_d3dc2855",
+        "filename": "chrome/browser/ui/webui/policy_ui_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-08-03T14:53:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4309155c_04e6c536",
+      "range": {
+        "startLine": 192,
+        "startChar": 35,
+        "endLine": 192,
+        "endChar": 54
+      },
+      "revId": "6621fe52359058e6acbaa995cb67dcf839ab03db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -278,6 +518,30 @@
     },
     {
       "key": {
+        "uuid": "d72524ab_1f221703",
+        "filename": "chrome/browser/ui/webui/policy_ui_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 834,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-08-03T14:53:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1090262b_91de0e08",
+      "range": {
+        "startLine": 834,
+        "startChar": 5,
+        "endLine": 834,
+        "endChar": 24
+      },
+      "revId": "6621fe52359058e6acbaa995cb67dcf839ab03db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7893dd63_ea64ae50",
         "filename": "chrome/browser/ui/webui/policy_ui_handler.cc",
         "patchSetId": 2
@@ -301,6 +565,30 @@
     },
     {
       "key": {
+        "uuid": "3627857b_50eb48da",
+        "filename": "chrome/browser/ui/webui/policy_ui_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 836,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-08-03T14:53:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7893dd63_ea64ae50",
+      "range": {
+        "startLine": 835,
+        "startChar": 2,
+        "endLine": 836,
+        "endChar": 51
+      },
+      "revId": "6621fe52359058e6acbaa995cb67dcf839ab03db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d8a054b_3481fa16",
         "filename": "chrome/browser/ui/webui/policy_ui_handler.cc",
         "patchSetId": 2
@@ -312,6 +600,30 @@
       "writtenOn": "2017-07-28T09:06:45Z",
       "side": 1,
       "message": "I think you don\u0027t have to do this. Rather leave the default location (Documents on windows, ~/ on linux). And only set the proposed filename.",
+      "range": {
+        "startLine": 869,
+        "startChar": 0,
+        "endLine": 872,
+        "endChar": 27
+      },
+      "revId": "6621fe52359058e6acbaa995cb67dcf839ab03db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aa23572_267359b4",
+        "filename": "chrome/browser/ui/webui/policy_ui_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 872,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-08-03T14:53:59Z",
+      "side": 1,
+      "message": "I didn\u0027t find an easy way to do that.\n\nI suspect you are proposing to leave the initial directory empty. This doesn\u0027t seem like a very good solution, because on windows it seems to default to the directory where the .exe is, which is not a very reasonable initial directory.",
+      "parentUuid": "8d8a054b_3481fa16",
       "range": {
         "startLine": 869,
         "startChar": 0,
@@ -344,6 +656,30 @@
       "revId": "6621fe52359058e6acbaa995cb67dcf839ab03db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "240c0cd1_f144aea9",
+        "filename": "chrome/browser/ui/webui/policy_ui_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 879,
+      "author": {
+        "id": 1233031
+      },
+      "writtenOn": "2017-08-03T14:53:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28859406_94d08e3f",
+      "range": {
+        "startLine": 876,
+        "startChar": 0,
+        "endLine": 879,
+        "endChar": 11
+      },
+      "revId": "6621fe52359058e6acbaa995cb67dcf839ab03db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
