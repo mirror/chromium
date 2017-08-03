@@ -5,6 +5,8 @@
 source_set("metrics") {
   sources = [
     "metrics_recorder.h",
+    "metrics_test_util.h",
+    "metrics_test_util.mm",
   ]
 
   configs += [ "//build/config/compiler:enable_arc" ]
