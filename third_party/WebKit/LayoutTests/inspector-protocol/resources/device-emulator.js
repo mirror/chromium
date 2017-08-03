@@ -4,14 +4,14 @@
     this._session = session;
   }
 
-  async emulate(width, height, deviceScaleFactor, insets) {
+  async emulate(width, height, deviceScaleFactor, insets, mobile=true) {
     this._testRunner.log(`Emulating device: ${width}x${height}x${deviceScaleFactor}`);
     var full = !!width && !!height && !!deviceScaleFactor;
     var params = {
       width,
       height,
       deviceScaleFactor,
-      mobile: true,
+      mobile: mobile,
       fitWindow: false,
       scale: 1,
       screenWidth: width,
