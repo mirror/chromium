@@ -62,6 +62,9 @@ class NavigationItem;
 // Navigate back/forward to the selected entry in the tab's history.
 - (void)navigateToHistoryItem:(const web::NavigationItem*)item;
 
+// Preloads voice search on the current BVC.
+- (void)preloadVoiceSearch;
+
 @end
 
 #endif  // IOS_CHROME_BROWSER_UI_COMMANDS_BROWSER_COMMANDS_H_

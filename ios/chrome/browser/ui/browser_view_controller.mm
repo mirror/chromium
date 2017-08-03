@@ -4101,6 +4101,13 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
   [_toolbarController dismissTabHistoryPopup];
 }
 
+- (void)preloadVoiceSearch {
+  // Preload VoiceSearchController and views and view controllers needed
+  // for voice search.
+  [self ensureVoiceSearchControllerCreated];
+  _voiceSearchController->PrepareToAppear();
+}
+
 #pragma mark - Command Handling
 
 - (IBAction)chromeExecuteCommand:(id)sender {
@@ -4140,12 +4147,6 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
       break;
     case IDC_HELP_PAGE_VIA_MENU:
       [self showHelpPage];
-      break;
-    case IDC_PRELOAD_VOICE_SEARCH:
-      // Preload VoiceSearchController and views and view controllers needed
-      // for voice search.
-      [self ensureVoiceSearchControllerCreated];
-      _voiceSearchController->PrepareToAppear();
       break;
     case IDC_SHOW_MAIL_COMPOSER:
       [self showMailComposer:sender];
@@ -4243,7 +4244,6 @@ applicationCommandEndpoint:(id<ApplicationCommands>)applicationCommandEndpoint {
         });
   }
 }
-
 
 - (void)sharePageWithData:(ShareToData*)data {
   id<ShareProtocol> controller = [_dependencyFactory shareControllerInstance];
