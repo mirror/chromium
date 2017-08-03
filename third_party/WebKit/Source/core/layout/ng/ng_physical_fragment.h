@@ -11,6 +11,7 @@
 #include "core/layout/ng/geometry/ng_physical_offset.h"
 #include "core/layout/ng/geometry/ng_physical_size.h"
 #include "core/layout/ng/ng_break_token.h"
+#include "core/style/ComputedStyle.h"
 #include "platform/LayoutUnit.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/RefPtr.h"
@@ -65,7 +66,10 @@ class CORE_EXPORT NGPhysicalFragment : public RefCounted<NGPhysicalFragment> {
   }
 
   NGBreakToken* BreakToken() const { return break_token_.Get(); }
-  const ComputedStyle& Style() const;
+  const ComputedStyle& Style() const {
+    DCHECK(style_);
+    return *style_;
+  }
 
   // GetLayoutObject should only be used when necessary for compatibility
   // with LegacyLayout.
@@ -93,11 +97,13 @@ class CORE_EXPORT NGPhysicalFragment : public RefCounted<NGPhysicalFragment> {
 
  protected:
   NGPhysicalFragment(LayoutObject* layout_object,
+                     const ComputedStyle& style,
                      NGPhysicalSize size,
                      NGFragmentType type,
                      RefPtr<NGBreakToken> break_token = nullptr);
 
   LayoutObject* layout_object_;
+  RefPtr<const ComputedStyle> style_;
   NGPhysicalSize size_;
   NGPhysicalOffset offset_;
   RefPtr<NGBreakToken> break_token_;

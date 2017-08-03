@@ -140,12 +140,13 @@ bool NGInlineLayoutAlgorithm::PlaceItems(
   NGLineHeightMetrics line_metrics(line_style, baseline_type_);
   NGLineHeightMetrics line_metrics_with_leading = line_metrics;
   line_metrics_with_leading.AddLeading(line_style.ComputedLineHeightAsFixed());
-  NGLineBoxFragmentBuilder line_box(Node());
-  line_box.SetWritingMode(ConstraintSpace().WritingMode());
+  NGLineBoxFragmentBuilder line_box(Node(), line_style,
+                                    ConstraintSpace().WritingMode(),
+                                    Node().BaseDirection());
 
   // Compute heights of all inline items by placing the dominant baseline at 0.
   // The baseline is adjusted after the height of the line box is computed.
-  NGTextFragmentBuilder text_builder(Node());
+  NGTextFragmentBuilder text_builder(Node(), line_style);
   NGInlineBoxState* box =
       box_states_.OnBeginPlaceItems(&line_style, baseline_type_);
 
@@ -171,6 +172,7 @@ bool NGInlineLayoutAlgorithm::PlaceItems(
       } else {
         DCHECK(!item.TextShapeResult());  // kControl or unit tests.
       }
+      text_builder.SetStyle(*item.Style());
       RefPtr<NGPhysicalTextFragment> text_fragment =
           text_builder.ToTextFragment(item_result.item_index,
                                       item_result.start_offset,
@@ -308,6 +310,7 @@ NGInlineBoxState* NGInlineLayoutAlgorithm::PlaceAtomicInline(
   // requires a text fragment.
   text_builder->SetSize({fragment.InlineSize(), metrics.LineHeight()});
   LayoutUnit line_top = item_result->margins.block_start - metrics.ascent;
+  text_builder->SetStyle(style);
   RefPtr<NGPhysicalTextFragment> text_fragment = text_builder->ToTextFragment(
       item_result->item_index, item_result->start_offset,
       item_result->end_offset);

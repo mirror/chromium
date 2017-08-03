@@ -14,6 +14,7 @@ namespace blink {
 NGConstraintSpace::NGConstraintSpace(
     NGWritingMode writing_mode,
     TextDirection direction,
+    bool use_first_line_style,
     NGLogicalSize available_size,
     NGLogicalSize percentage_resolution_size,
     Optional<LayoutUnit> parent_percentage_resolution_inline_size,
@@ -52,6 +53,7 @@ NGConstraintSpace::NGConstraintSpace(
       is_anonymous_(is_anonymous),
       writing_mode_(writing_mode),
       direction_(static_cast<unsigned>(direction)),
+      use_first_line_style_(use_first_line_style),
       margin_strut_(margin_strut),
       bfc_offset_(bfc_offset),
       floats_bfc_offset_(floats_bfc_offset),

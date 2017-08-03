@@ -33,6 +33,7 @@ class CORE_EXPORT NGConstraintSpaceBuilder final {
   }
 
   NGConstraintSpaceBuilder& SetTextDirection(TextDirection);
+  NGConstraintSpaceBuilder& SetUseFirstLineStyle(bool);
 
   NGConstraintSpaceBuilder& SetIsFixedSizeInline(bool is_fixed_size_inline);
   NGConstraintSpaceBuilder& SetIsFixedSizeBlock(bool is_fixed_size_block);
@@ -92,6 +93,7 @@ class CORE_EXPORT NGConstraintSpaceBuilder final {
   unsigned is_new_fc_ : 1;
   unsigned is_anonymous_ : 1;
   unsigned text_direction_ : 1;
+  unsigned use_first_line_style_ : 1;
 
   NGMarginStrut margin_strut_;
   NGLogicalOffset bfc_offset_;

@@ -58,6 +58,8 @@ class CORE_EXPORT NGConstraintSpace final
     return static_cast<NGWritingMode>(writing_mode_);
   }
 
+  bool UseFirstLineStyle() const { return use_first_line_style_; }
+
   void AddExclusion(const NGExclusion& exclusion);
 
   // The size to use for percentage resolution.
@@ -181,6 +183,7 @@ class CORE_EXPORT NGConstraintSpace final
   NGConstraintSpace(
       NGWritingMode,
       TextDirection,
+      bool use_first_line_style,
       NGLogicalSize available_size,
       NGLogicalSize percentage_resolution_size,
       Optional<LayoutUnit> parent_percentage_resolution_inline_size,
@@ -231,6 +234,7 @@ class CORE_EXPORT NGConstraintSpace final
 
   unsigned writing_mode_ : 3;
   unsigned direction_ : 1;
+  unsigned use_first_line_style_ : 1;
 
   NGMarginStrut margin_strut_;
   NGLogicalOffset bfc_offset_;
