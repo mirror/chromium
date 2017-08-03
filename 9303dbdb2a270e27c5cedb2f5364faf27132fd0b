@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "818d61ae_18fbc4b1",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyFontUtils.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-08-03T09:41:13Z",
+      "side": 1,
+      "message": "Oups, done.",
+      "parentUuid": "25016c3c_f6327acc",
+      "revId": "9303dbdb2a270e27c5cedb2f5364faf27132fd0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "314a1551_0f2359b5",
         "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyFontUtils.cpp",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-03T06:42:24Z",
       "side": 1,
       "message": "does passing in the kValueRangeNonNegative not guarantee you won\u0027t get a negative value? I would have expected it to, but it\u0027s not clear with the calc code :\\",
+      "revId": "9303dbdb2a270e27c5cedb2f5364faf27132fd0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2bb3886_a2625c67",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyFontUtils.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-08-03T09:41:13Z",
+      "side": 1,
+      "message": "Yes, it ensure non negative, but 0 needs to be excluded, too - and, after adding a test, I see that it\u0027s needed for calc, too.",
+      "parentUuid": "314a1551_0f2359b5",
       "revId": "9303dbdb2a270e27c5cedb2f5364faf27132fd0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8fc6703a_49cb6e60",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyFontUtils.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-08-03T09:41:13Z",
+      "side": 1,
+      "message": "Good idea, done. I\u0027ll change that for ConsumeFontWeight accordingly as well.",
+      "parentUuid": "5015a729_9cc11eac",
+      "revId": "9303dbdb2a270e27c5cedb2f5364faf27132fd0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "51dbe50e_182997a7",
         "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyFontUtils.cpp",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "9303dbdb2a270e27c5cedb2f5364faf27132fd0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e9bbe40_5a392894",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyFontUtils.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-08-03T09:41:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51dbe50e_182997a7",
+      "revId": "9303dbdb2a270e27c5cedb2f5364faf27132fd0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "97872429_77f43ad6",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyFontUtils.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-08-03T09:41:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a3f7ffc_039529ff",
+      "revId": "9303dbdb2a270e27c5cedb2f5364faf27132fd0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ed2be16_a8c88063",
         "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyFontUtils.cpp",
         "patchSetId": 4
@@ -101,6 +191,24 @@
       "revId": "9303dbdb2a270e27c5cedb2f5364faf27132fd0b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e908e1c2_66bb7909",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyFontUtils.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-08-03T09:41:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ed2be16_a8c88063",
+      "revId": "9303dbdb2a270e27c5cedb2f5364faf27132fd0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
