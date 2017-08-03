@@ -16,6 +16,29 @@
       "revId": "c86a947f3ed9a4856e39e3bb2689770baaa20272",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af074067_2f64b79d",
+        "filename": "chrome/browser/ui/omnibox/omnibox_view_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1103784
+      },
+      "writtenOn": "2017-08-03T11:01:17Z",
+      "side": 1,
+      "message": "Come to think of this, why do we need to have additional observer here? We already have observer_ observing history_service. Do we really need to receive notifications twice?\n\nWe don\u0027t hit \"duplicate observer\" assertion for this, because observer_ and observer happen to present |this| as pointers having different addresses (observer_ gives |this| as OmniboxViewTest*, while observer gives |this| as HistoryServiceObserver*).\n\nAccording to my local testing, the flakiness in question is caused by the observer here (not observer_). If we can get rid of this, the flakiness can be fixed, too.",
+      "range": {
+        "startLine": 332,
+        "startChar": 6,
+        "endLine": 334,
+        "endChar": 36
+      },
+      "revId": "c86a947f3ed9a4856e39e3bb2689770baaa20272",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
