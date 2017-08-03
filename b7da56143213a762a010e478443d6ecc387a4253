@@ -69,6 +69,24 @@
       "revId": "b7da56143213a762a010e478443d6ecc387a4253",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6762a95f_d7238d6f",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserObserverWrapper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-03T23:37:41Z",
+      "side": 1,
+      "message": "Hmm. I did know that it was forwarding to the other method and wanted you to change them both :P since it will be deleted i\u0027m ok with you leaving it as is, but please add a todo to delete this class :)",
+      "parentUuid": "02fc3f33_cbe29c65",
+      "revId": "b7da56143213a762a010e478443d6ecc387a4253",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
