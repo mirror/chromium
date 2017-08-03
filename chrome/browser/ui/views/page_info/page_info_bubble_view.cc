@@ -52,6 +52,7 @@
 #include "ui/views/border.h"
 #include "ui/views/bubble/bubble_frame_view.h"
 #include "ui/views/controls/button/image_button.h"
+#include "ui/views/controls/button/label_button.h"
 #include "ui/views/controls/button/md_text_button.h"
 #include "ui/views/controls/image_view.h"
 #include "ui/views/controls/label.h"
@@ -190,7 +191,12 @@ class BubbleHeaderView : public views::View {
 
   void AddResetDecisionsLabel();
 
+  void AddChangePasswordButton();
+
  private:
+  // The listener for the buttons in this view.
+  views::ButtonListener* button_listener_;
+
   // The listener for the styled labels in this view.
   views::StyledLabelListener* styled_label_listener_;
 
@@ -204,6 +210,12 @@ class BubbleHeaderView : public views::View {
   // where to place it (if needed).
   views::View* reset_decisions_label_container_;
   views::StyledLabel* reset_cert_decisions_label_;
+
+  // A container for the label buttons used to change password or mark the site
+  // as safe.
+  views::View* change_password_button_container_;
+  views::LabelButton* change_password_button_;
+  views::LabelButton* ignore_warning_button_;
 
   DISALLOW_COPY_AND_ASSIGN(BubbleHeaderView);
 };
@@ -240,10 +252,14 @@ BubbleHeaderView::BubbleHeaderView(
     views::ButtonListener* button_listener,
     views::StyledLabelListener* styled_label_listener,
     int side_margin)
-    : styled_label_listener_(styled_label_listener),
+    : button_listener_(button_listener),
+      styled_label_listener_(styled_label_listener),
       security_details_label_(nullptr),
       reset_decisions_label_container_(nullptr),
-      reset_cert_decisions_label_(nullptr) {
+      reset_cert_decisions_label_(nullptr),
+      change_password_button_container_(nullptr),
+      change_password_button_(nullptr),
+      ignore_warning_button_(nullptr) {
   views::GridLayout* layout = new views::GridLayout(this);
   SetLayoutManager(layout);
 
@@ -263,6 +279,13 @@ BubbleHeaderView::BubbleHeaderView(
   reset_decisions_label_container_->SetLayoutManager(
       new views::BoxLayout(views::BoxLayout::kHorizontal));
   layout->AddView(reset_decisions_label_container_, 1, 1,
+                  views::GridLayout::FILL, views::GridLayout::LEADING);
+
+  layout->StartRow(0, label_column_status);
+  change_password_button_container_ = new views::View();
+  change_password_button_container_->SetLayoutManager(
+      new views::BoxLayout(views::BoxLayout::kHorizontal));
+  layout->AddView(change_password_button_container_, 1, 1,
                   views::GridLayout::FILL, views::GridLayout::LEADING);
 
   layout->AddPaddingRow(1, kHeaderPaddingBottom);
@@ -323,6 +346,24 @@ void BubbleHeaderView::AddResetDecisionsLabel() {
 
   // Now that it contains a label, the container needs padding at the top.
   reset_decisions_label_container_->SetBorder(
+      views::CreateEmptyBorder(8, 0, 0, 0));
+
+  InvalidateLayout();
+}
+
+void BubbleHeaderView::AddChangePasswordButton() {
+  change_password_button_ = views::MdTextButton::CreateSecondaryUiBlueButton(
+      button_listener_,
+      l10n_util::GetStringUTF16(IDS_PAGE_INFO_CHANGE_PASSWORD_BUTTON));
+  change_password_button_->set_id(VIEW_ID_PAGE_INFO_BUTTON_CHANGE_PASSWORD);
+  ignore_warning_button_ = views::MdTextButton::CreateSecondaryUiButton(
+      button_listener_,
+      l10n_util::GetStringUTF16(IDS_PAGE_INFO_IGNORE_PASSWORD_WARNING_BUTTON));
+  ignore_warning_button_->set_id(
+      VIEW_ID_PAGE_INFO_BUTTON_IGNORE_PASSWORD_WARNING);
+  change_password_button_container_->AddChildView(change_password_button_);
+  change_password_button_container_->AddChildView(ignore_warning_button_);
+  change_password_button_container_->SetBorder(
       views::CreateEmptyBorder(8, 0, 0, 0));
 
   InvalidateLayout();
@@ -572,8 +613,21 @@ int PageInfoBubbleView::GetDialogButtons() const {
 
 void PageInfoBubbleView::ButtonPressed(views::Button* button,
                                        const ui::Event& event) {
-  DCHECK_EQ(VIEW_ID_PAGE_INFO_BUTTON_CLOSE, button->id());
-  GetWidget()->Close();
+  switch (button->id()) {
+    case VIEW_ID_PAGE_INFO_BUTTON_CLOSE:
+      GetWidget()->Close();
+      break;
+    case VIEW_ID_PAGE_INFO_BUTTON_CHANGE_PASSWORD:
+      LOG(ERROR) << "Change password button pressed.";
+      presenter_->OnChangePasswordButtonPressed(web_contents());
+      break;
+    case VIEW_ID_PAGE_INFO_BUTTON_IGNORE_PASSWORD_WARNING:
+      LOG(ERROR) << "Ignore warning button pressed.";
+      presenter_->OnIgnorePasswordWarningButtonPressed(web_contents());
+      break;
+    default:
+      NOTREACHED();
+  }
 }
 
 void PageInfoBubbleView::LinkClicked(views::Link* source, int event_flags) {
@@ -743,6 +797,10 @@ void PageInfoBubbleView::SetIdentityInfo(const IdentityInfo& identity_info) {
                                    certificate_viewer_link),
           0);
     }
+  }
+
+  if (identity_info.show_change_password_button) {
+    header_->AddChangePasswordButton();
   }
 
   header_->SetDetails(security_description->details);
