@@ -439,6 +439,7 @@ class CORE_EXPORT Element : public ContainerNode {
   virtual LayoutObject* CreateLayoutObject(const ComputedStyle&);
   virtual bool LayoutObjectIsNeeded(const ComputedStyle&);
   void RecalcStyle(StyleRecalcChange);
+  void RecalcStyleForReattach();
   bool NeedsRebuildLayoutTree(
       const WhitespaceAttacher& whitespace_attacher) const {
     return NeedsReattachLayoutTree() || ChildNeedsReattachLayoutTree() ||
@@ -839,6 +840,8 @@ class CORE_EXPORT Element : public ContainerNode {
   // TODO(tkent): Rename this to isFocusableStyle.
   virtual bool LayoutObjectIsFocusable() const;
 
+  virtual bool ChildrenCanHaveStyle() const { return true; }
+
   // classAttributeChanged() exists to share code between
   // parseAttribute (called via setAttribute()) and
   // svgAttributeChanged (called when element.className.baseValue is set)
@@ -887,6 +890,10 @@ class CORE_EXPORT Element : public ContainerNode {
   RefPtr<ComputedStyle> PropagateInheritedProperties(StyleRecalcChange);
 
   StyleRecalcChange RecalcOwnStyle(StyleRecalcChange);
+  void RecalcOwnStyleForReattach();
+  void RecalcContainedStyleForReattach();
+  void RecalcShadowRootStylesForReattach();
+
   void RebuildPseudoElementLayoutTree(PseudoId, WhitespaceAttacher&);
   void RebuildShadowRootLayoutTree(WhitespaceAttacher&);
   inline void CheckForEmptyStyleChange();

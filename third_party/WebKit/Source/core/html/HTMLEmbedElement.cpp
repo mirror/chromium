@@ -198,10 +198,8 @@ bool HTMLEmbedElement::LayoutObjectIsNeeded(const ComputedStyle& style) {
   //   fallback content.
   ContainerNode* p = parentNode();
   if (isHTMLObjectElement(p)) {
-    DCHECK(p->GetLayoutObject());
     if (!toHTMLObjectElement(p)->WillUseFallbackContentAtLayout() &&
         !toHTMLObjectElement(p)->UseFallbackContent()) {
-      DCHECK(!p->GetLayoutObject()->IsEmbeddedObject());
       return false;
     }
   }
