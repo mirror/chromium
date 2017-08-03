@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc575ffa_f74c6dfb",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 4862,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-03T14:29:41Z",
+      "side": 1,
+      "message": "Are these changes because the delta_y did not cross the threshold?",
+      "revId": "f8c3326f1fb163a6d3deb8c3cf35071b54477ef0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "451cfd5c_e531e88b",
+        "filename": "content/browser/web_contents/aura/gesture_nav_simple.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-03T14:29:41Z",
+      "side": 1,
+      "message": "In degrees, I assume?",
+      "revId": "f8c3326f1fb163a6d3deb8c3cf35071b54477ef0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa835198_4f5cbe25",
+        "filename": "content/browser/web_contents/aura/gesture_nav_simple.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-03T14:29:41Z",
+      "side": 1,
+      "message": "Do we not want to change the opacity of the reload icon?",
+      "revId": "f8c3326f1fb163a6d3deb8c3cf35071b54477ef0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c30155c6_ea25cc0e",
+        "filename": "content/browser/web_contents/aura/gesture_nav_simple.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-03T14:29:41Z",
+      "side": 1,
+      "message": "Sidenote: looking at OverscrollSource, this should probably be similar, i.e. OverscrollMode::NONE etc. (not in this CL of course)",
+      "revId": "f8c3326f1fb163a6d3deb8c3cf35071b54477ef0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
