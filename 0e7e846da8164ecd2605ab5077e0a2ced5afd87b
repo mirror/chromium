@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "b63d626d_7db92667",
+        "filename": "content/public/common/resource_devtools_info.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-03T17:45:09Z",
+      "side": 1,
+      "message": "We don\u0027t always have headers.  File URLs don\u0027t have them, for instance, nor requests that failed before we got headers.  I think all HTTP/HTTPS requests do, but there may be some code path where they don\u0027t (Offline pages? HSTS redirects?)",
+      "parentUuid": "ecd611ec_52d7428e",
+      "revId": "0e7e846da8164ecd2605ab5077e0a2ced5afd87b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40eb3493_0b7a022c",
         "filename": "net/http/http_transaction_test_util.h",
         "patchSetId": 4
@@ -47,6 +65,29 @@
       "writtenOn": "2017-08-03T16:47:39Z",
       "side": 1,
       "message": "space between override and {} please",
+      "revId": "0e7e846da8164ecd2605ab5077e0a2ced5afd87b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0daa61d1_bb7c9d21",
+        "filename": "net/url_request/url_request.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-03T17:45:09Z",
+      "side": 1,
+      "message": "This is what GetFullRequestHeaders was meant to do, but it was never finished (So production code is using a buggy method...Joy!).  Anyhow, we don\u0027t need both this and the new methods, so we should merge them.  I\u0027m fine with either name.",
+      "range": {
+        "startLine": 391,
+        "startChar": 7,
+        "endLine": 391,
+        "endChar": 28
+      },
       "revId": "0e7e846da8164ecd2605ab5077e0a2ced5afd87b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
