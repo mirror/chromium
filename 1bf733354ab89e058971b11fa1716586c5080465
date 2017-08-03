@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "638b8d5f_71acc0e4",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-03T08:17:49Z",
+      "side": 1,
+      "message": "It is ASSERT based and does not work for non-void functions.\n\nI restored EXPECT_TRUE(false) and the comment explaining why.",
+      "parentUuid": "533d8058_92560cb5",
+      "revId": "1bf733354ab89e058971b11fa1716586c5080465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c1053d75_9075dd36",
         "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler_unittest.cc",
         "patchSetId": 15
