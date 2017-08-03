@@ -16,6 +16,24 @@
       "revId": "ce8f4087542eeb33bd9493ccfd7778119e3c260a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "436116f7_239f9169",
+        "filename": "media/mojo/clients/mojo_decryptor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-08-03T17:11:41Z",
+      "side": 1,
+      "message": "That works! Thanks for the suggestion!\n\nI also make a helper function ToOnceCallback() and make it available to all users of ScopedCallbackRunner.",
+      "parentUuid": "628a210d_fa94d0ea",
+      "revId": "ce8f4087542eeb33bd9493ccfd7778119e3c260a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
