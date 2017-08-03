@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "c3b67f8b_65e9e7e3",
+        "filename": "content/public/common/resource_devtools_info.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-03T17:52:44Z",
+      "side": 1,
+      "message": "Sorry, wasn\u0027t very precise. My question was about \"why don\u0027t we try to fill request headers, even if response headers are not available?\"",
+      "parentUuid": "b63d626d_7db92667",
+      "revId": "0e7e846da8164ecd2605ab5077e0a2ced5afd87b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40eb3493_0b7a022c",
         "filename": "net/http/http_transaction_test_util.h",
         "patchSetId": 4
