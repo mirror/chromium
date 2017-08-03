@@ -16,6 +16,24 @@
       "revId": "7062bfa6822788bbf41162f3cfe4edc8350c6914",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdce44d9_ed9a2365",
+        "filename": "third_party/WebKit/Source/core/dom/Element.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 2130,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-08-03T15:11:51Z",
+      "side": 1,
+      "message": "yup that was the issue indeed and the understanding I was lacking. Thank you made that change. :)",
+      "parentUuid": "ee8e57df_ce41d3f8",
+      "revId": "7062bfa6822788bbf41162f3cfe4edc8350c6914",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
