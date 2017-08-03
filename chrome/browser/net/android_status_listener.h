@@ -1,0 +1,41 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#ifndef CHROME_BROWSER_NET_ANDROID_STATUS_LISTENER_H_
+#define CHROME_BROWSER_NET_ANDROID_STATUS_LISTENER_H_
+
+#include "base/android/application_status_listener.h"
+#include "base/synchronization/lock.h"
+#include "net/extras/status_listener.h"
+
+// AndroidStatusListener provides an android-specific implementation of
+// net::StatusListener. It listens for the android application entering the
+// Stopped state
+// (https://developer.android.com/guide/components/activities/activity-lifecycle.html)
+// and calls the callback set in SetApplicationStoppedCallback.
+class AndroidStatusListener : public net::StatusListener {
+ public:
+  AndroidStatusListener();
+  ~AndroidStatusListener() override;
+
+  void SetApplicationStoppedCallback(base::RepeatingClosure callback) override;
+
+ private:
+  void OnApplicationStateChange(base::android::ApplicationState state);
+
+  std::unique_ptr<base::android::ApplicationStatusListener>
+      app_status_listener_;
+
+  base::RepeatingClosure stopped_callback_;
+
+  // StatusListener guarantees that |stopped_callback_| will not be running
+  // after this object is destroyed. If AndroidStatusListener receives a
+  // state-change signal on a different thread than the one it gets destroyed
+  // on, the callback could still be running when the destructor gets called on
+  // a different thread. |callback_lock_| is held whenever running a callback,
+  // changing a callback, or destroying the object.
+  base::Lock callback_lock_;
+};
+
+#endif  // CHROME_BROWSER_NET_ANDROID_STATUS_LISTENER_H_

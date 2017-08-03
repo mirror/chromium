@@ -779,6 +779,7 @@ component("net") {
       "dns/record_rdata.h",
       "dns/serial_worker.cc",
       "dns/serial_worker.h",
+      "extras/status_listener.h",
       "filter/filter_source_stream.cc",
       "filter/filter_source_stream.h",
       "filter/gzip_header.cc",

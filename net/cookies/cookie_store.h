@@ -19,6 +19,7 @@
 #include "net/base/net_export.h"
 #include "net/cookies/canonical_cookie.h"
 #include "net/cookies/cookie_options.h"
+#include "net/extras/status_listener.h"
 
 class GURL;
 
@@ -248,6 +249,11 @@ class NET_EXPORT CookieStore {
       const GURL& url,
       const std::string& name,
       const CookieChangedCallback& callback) = 0;
+
+  // Provides a StatusListener so that a CookieStore can respond to application
+  // state changes, e.g. by flushing a backing store to disk when the
+  // application is no lonber visible.
+  virtual void SetStatusListener(std::unique_ptr<StatusListener> listener) {}
 
   // Returns true if this cookie store is ephemeral, and false if it is backed
   // by some sort of persistence layer.

@@ -30,6 +30,7 @@
 #include "net/cookies/canonical_cookie.h"
 #include "net/cookies/cookie_constants.h"
 #include "net/cookies/cookie_store.h"
+#include "net/extras/status_listener.h"
 #include "url/gurl.h"
 
 namespace base {
@@ -225,6 +226,8 @@ class NET_EXPORT CookieMonster : public CookieStore {
       const GURL& url,
       const std::string& name,
       const CookieChangedCallback& callback) override;
+
+  void SetStatusListener(std::unique_ptr<StatusListener> listener) override;
 
   bool IsEphemeral() override;
 
@@ -738,6 +741,8 @@ class NET_EXPORT CookieMonster : public CookieStore {
   CookieChangedHookMap hook_map_;
 
   base::ThreadChecker thread_checker_;
+
+  std::unique_ptr<StatusListener> status_listener_;
 
   base::WeakPtrFactory<CookieMonster> weak_ptr_factory_;
 
