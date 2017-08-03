@@ -16,6 +16,57 @@
       "revId": "cf7e23e9b440d6fbae4e6c28213da0d6657b8e5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ad7ae72_dc8a3526",
+        "filename": "components/viz/service/frame_sinks/frame_sink_manager_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-03T21:20:35Z",
+      "side": 1,
+      "message": "std::move() active_handle and idle_handle here?",
+      "revId": "cf7e23e9b440d6fbae4e6c28213da0d6657b8e5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c86adee1_c98f6175",
+        "filename": "services/ui/ws/window_server.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 973,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-03T21:20:35Z",
+      "side": 1,
+      "message": "Can it just std::move(active_handle) (and idle_handle) here, instead of Clone()ing?",
+      "revId": "cf7e23e9b440d6fbae4e6c28213da0d6657b8e5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab52b22e_0beb7bf0",
+        "filename": "services/ui/ws/window_server.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 989,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-03T21:20:35Z",
+      "side": 1,
+      "message": "The validation of |active_handle_index| in HTQ is a DCHECK(). We don\u0027t want that to hit (e.g. a misbehaving viz could cause mus to crash). So you should explicitly validate the index here (i.e. NOTREACHED() + early-return if active_handle_index is invalid). The DCHECK() in HTQ is more of a precondition check than an actual validation.",
+      "revId": "cf7e23e9b440d6fbae4e6c28213da0d6657b8e5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

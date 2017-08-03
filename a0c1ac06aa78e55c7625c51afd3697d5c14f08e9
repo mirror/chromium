@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "606f3f65_7732b51f",
+        "filename": "components/viz/host/hit_test/hit_test_query.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-03T21:20:35Z",
+      "side": 1,
+      "message": "I see. Yeah, that makes sense.\n\nHTA can probably get rid of the handles after sending them over mojo I guess.",
+      "parentUuid": "191bbca9_3b402f98",
+      "revId": "a0c1ac06aa78e55c7625c51afd3697d5c14f08e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "45a65e08_4e202b1f",
         "filename": "components/viz/host/hit_test/hit_test_query.cc",
         "patchSetId": 5
@@ -136,6 +154,24 @@
       "side": 1,
       "message": "It will be called with both handles. Because we always send read_handle first and then write_handle, read_handle would be the one that got replaced (after swapping in HTA) so if we only replace read_handle we\u0027ll not be pointing to the new write_handle anymore in HTQ. I could use |active_handle_index| to determine whether to send (read, write) or (write, read) from HTA to HTQ but that gets harder to understand so I kept it this way. WDYT?",
       "parentUuid": "a141518d_18e97278",
+      "revId": "a0c1ac06aa78e55c7625c51afd3697d5c14f08e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18c50623_eb5a9aa4",
+        "filename": "components/viz/host/hit_test/hit_test_query.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-03T21:20:35Z",
+      "side": 1,
+      "message": "Sounds good. Update the doc here to say that both handles would be valid?",
+      "parentUuid": "ce055e13_8c0b85b9",
       "revId": "a0c1ac06aa78e55c7625c51afd3697d5c14f08e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -258,6 +294,24 @@
       "side": 1,
       "message": "Made it const.\n\nYea the TestHitTestAggregator is accessing all these variables, moving all of them together in another CL?",
       "parentUuid": "0b851a58_a05e002d",
+      "revId": "a0c1ac06aa78e55c7625c51afd3697d5c14f08e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1069a43_219c9c27",
+        "filename": "components/viz/service/hit_test/hit_test_aggregator.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-03T21:20:35Z",
+      "side": 1,
+      "message": "OK.",
+      "parentUuid": "5ffe05dc_b30fe0cb",
       "revId": "a0c1ac06aa78e55c7625c51afd3697d5c14f08e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
