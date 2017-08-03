@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "628a210d_fa94d0ea",
+        "filename": "media/mojo/clients/mojo_decryptor.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-08-03T15:56:18Z",
+      "side": 1,
+      "message": "i haven\u0027t tried, but i think that one can:\nusing DecryptOnceCB \u003d base::OnceCallback\u003cDecryptCB::RunType\u003e;\n\nthis will prevent the types from differing between the two callbacks.",
+      "revId": "ce8f4087542eeb33bd9493ccfd7778119e3c260a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
