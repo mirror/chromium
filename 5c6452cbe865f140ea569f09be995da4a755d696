@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f86d59ad_5c486e3f",
+        "filename": "content/network/cookie_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-03T21:02:01Z",
+      "side": 1,
+      "message": "Not a silly question, a silly mistake on my part as part of the last name change.  Thanks for catching this.  Done.",
+      "parentUuid": "d58adbb1_eabee7ee",
+      "revId": "5c6452cbe865f140ea569f09be995da4a755d696",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb582641_cb891881",
         "filename": "content/network/cookie_impl_unittest.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "5c6452cbe865f140ea569f09be995da4a755d696",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96bd5433_5130e6cd",
+        "filename": "content/network/cookie_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-03T21:02:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb582641_cb891881",
+      "revId": "5c6452cbe865f140ea569f09be995da4a755d696",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1096569b_8d413be2",
+        "filename": "content/public/common/cookie.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-03T21:02:01Z",
+      "side": 1,
+      "message": "So this was itching at me too, and I spent a bit of time trying to come up with a good unification of these two types.  I couldn\u0027t come up with something that I thought was as clear as the current set.  I didn\u0027t consider a bitfield, but thinking about it I\u0027m disinclined in that direction (because including strict but not lax in a filter doesn\u0027t really make sense given the nature of the semantics).  So: Agreed, but haven\u0027t thought of an improvement to date.\n\nI don\u0027t object to changing the existing code if we do come up with something, though.  I\u0027m going to assume that if we keep working on this, it\u0027ll be in a separate CL; let me know if you disagree with that choice.",
+      "parentUuid": "fe2b5ea8_11fffb07",
+      "revId": "5c6452cbe865f140ea569f09be995da4a755d696",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f877d8d_4e93dadc",
         "filename": "content/public/common/cookie.mojom",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "5c6452cbe865f140ea569f09be995da4a755d696",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0452f52_eaf54ed1",
+        "filename": "content/public/common/cookie.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-03T21:02:01Z",
+      "side": 1,
+      "message": "Right--here I\u0027d like to keep httponly as one word to match the existing code.",
+      "parentUuid": "1f877d8d_4e93dadc",
+      "revId": "5c6452cbe865f140ea569f09be995da4a755d696",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -98,6 +170,48 @@
       "writtenOn": "2017-08-03T16:11:44Z",
       "side": 1,
       "message": "bikeshedding: I feel that it makes sense to use a name like \"CookieStore\" or \"CookieManager\". Because \"Cookie\" sounds like it represents \"a cookie\", while in fact it is a managing interface of cookies.",
+      "range": {
+        "startLine": 113,
+        "startChar": 10,
+        "endLine": 113,
+        "endChar": 16
+      },
+      "revId": "5c6452cbe865f140ea569f09be995da4a755d696",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c9dc1af_d42dc5b4",
+        "filename": "content/public/common/cookie.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-03T21:02:01Z",
+      "side": 1,
+      "message": "Yes, that\u0027s the intent.  One of the cookie_impl.* files has a TODO around providing security checks on the exported interface for exactly this use case.",
+      "parentUuid": "d2fb03cc_de524af2",
+      "revId": "5c6452cbe865f140ea569f09be995da4a755d696",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4cf33ea5_35860a32",
+        "filename": "content/public/common/cookie.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-03T21:02:01Z",
+      "side": 1,
+      "message": "Sigh.  I wish I didn\u0027t agree with you :-} :-{.\n\nHaving said that, I actually think we\u0027re in reasonably good shape using \"CookieStore\", and relying on the mojo namespace to keep that separate from net::CookieStore. \n\nI\u0027ve started an email thread on this as I have no interest in doing another name change until I\u0027m sure it\u0027s my last.  But acknowledged, and I\u0027m going to try to come up with something reasonable.",
+      "parentUuid": "6b296317_3e9810d3",
       "range": {
         "startLine": 113,
         "startChar": 10,
