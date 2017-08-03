@@ -16,6 +16,24 @@
       "revId": "6d0415929e0ba8307692ee187d740befdecbbbb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e880445d_451847fb",
+        "filename": "base/task_scheduler/task_tracker_posix_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-03T22:40:54Z",
+      "side": 1,
+      "message": "Marking resolved.",
+      "parentUuid": "6f080c7b_1e918308",
+      "revId": "6d0415929e0ba8307692ee187d740befdecbbbb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
