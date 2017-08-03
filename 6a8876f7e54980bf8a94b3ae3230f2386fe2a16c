@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a5756d3_9e21d245",
+        "filename": "ash/shell/app_list.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-03T15:24:28Z",
+      "side": 1,
+      "message": "nit: It\u0027s a little odd for a delegate class to return a const\u0026 since it requires a non trivial implementation like this. I would suggest having the delegate return a const* instead and return nullptr here.",
+      "revId": "6a8876f7e54980bf8a94b3ae3230f2386fe2a16c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
