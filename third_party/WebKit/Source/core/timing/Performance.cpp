@@ -106,7 +106,11 @@ Performance::Performance(LocalFrame* frame)
     : PerformanceBase(
           ToTimeOrigin(frame),
           TaskRunnerHelper::Get(TaskType::kPerformanceTimeline, frame)),
-      DOMWindowClient(frame) {}
+      DOMWindowClient(frame) {
+  // Subscribe to long tasks from start to OnLoad.
+  GetFrame()->GetPerformanceMonitor()->Subscribe(
+      PerformanceMonitor::kLongTask, kLongTaskObserverThreshold, this);
+}
 
 Performance::~Performance() {
 }
