@@ -32,7 +32,7 @@ class AppCacheUpdateJob::UpdateRequestBase {
 
   // Creates an instance of the AppCacheUpdateRequestBase subclass.
   static std::unique_ptr<UpdateRequestBase> Create(
-      net::URLRequestContext* request_context,
+      AppCacheServiceImpl* appcache_service,
       const GURL& url,
       URLFetcher* fetcher);
 
@@ -96,6 +96,10 @@ class AppCacheUpdateJob::UpdateRequestBase {
 
  protected:
   UpdateRequestBase();
+
+  // Returns the traffic annotation information to be used for the outgoing
+  // request.
+  net::NetworkTrafficAnnotationTag GetTrafficAnnotation() const;
 };
 
 }  // namespace content
