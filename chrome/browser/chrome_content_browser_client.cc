@@ -112,6 +112,7 @@
 #include "chrome/common/chrome_features.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/chrome_switches.h"
+#include "chrome/common/constants.mojom.h"
 #include "chrome/common/env_vars.h"
 #include "chrome/common/features.h"
 #include "chrome/common/logging_chrome.h"
@@ -809,6 +810,26 @@ void InvokeCallbackOnThread(
   task_runner->PostTask(FROM_HERE, base::Bind(std::move(callback), result));
 }
 #endif
+
+class ChromeService : public service_manager::Service {
+ public:
+  explicit ChromeService(ChromeContentBrowserClient* client) {
+    registry_.AddInterface(
+        base::Bind(&startup_metric_utils::StartupMetricHostImpl::Create));
+  }
+  ~ChromeService() override = default;
+
+ private:
+  void OnBindInterface(const service_manager::BindSourceInfo& source,
+                       const std::string& interface_name,
+                       mojo::ScopedMessagePipeHandle interface_pipe) override {
+    registry_.TryBindInterface(interface_name, &interface_pipe);
+  }
+
+  service_manager::BinderRegistry registry_;
+
+  DISALLOW_COPY_AND_ASSIGN(ChromeService);
+};
 
 }  // namespace
 
@@ -2853,9 +2874,6 @@ void ChromeContentBrowserClient::ExposeInterfacesToRenderer(
       content::BrowserThread::GetTaskRunnerForThread(
           content::BrowserThread::UI);
   registry->AddInterface(
-      base::Bind(&startup_metric_utils::StartupMetricHostImpl::Create),
-      ui_task_runner);
-  registry->AddInterface(
       base::Bind(&BudgetServiceImpl::Create, render_process_host->GetID()),
       ui_task_runner);
 #if BUILDFLAG(ENABLE_SPELLCHECK)
@@ -2982,6 +3000,12 @@ void ChromeContentBrowserClient::BindInterfaceRequest(
 
 void ChromeContentBrowserClient::RegisterInProcessServices(
     StaticServiceMap* services) {
+  {
+    service_manager::EmbeddedServiceInfo info;
+    info.factory = base::Bind(&ChromeContentBrowserClient::CreateChromeService,
+                              base::Unretained(this));
+    services->insert(std::make_pair(chrome::mojom::kServiceName, info));
+  }
   if (g_browser_process->pref_service_factory()) {
     service_manager::EmbeddedServiceInfo info;
     info.factory =
@@ -3486,4 +3510,9 @@ ChromeContentBrowserClient::GetSafeBrowsingUrlCheckerDelegate() {
   }
 
   return safe_browsing_url_checker_delegate_.get();
+}
+
+std::unique_ptr<service_manager::Service>
+ChromeContentBrowserClient::CreateChromeService() {
+  return base::MakeUnique<ChromeService>(this);
 }

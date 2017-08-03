@@ -387,6 +387,8 @@ class ChromeContentBrowserClient : public content::ContentBrowserClient {
 
   safe_browsing::UrlCheckerDelegate* GetSafeBrowsingUrlCheckerDelegate();
 
+  std::unique_ptr<service_manager::Service> CreateChromeService();
+
 #if BUILDFLAG(ENABLE_PLUGINS)
   // Set of origins that can use TCP/UDP private APIs from NaCl.
   std::set<std::string> allowed_socket_origins_;
