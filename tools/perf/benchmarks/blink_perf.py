@@ -16,6 +16,7 @@ from telemetry.page import shared_page_state
 from telemetry import story
 from telemetry.timeline import bounds
 from telemetry.timeline import model as model_module
+from telemetry.timeline import event as event_module
 from telemetry.timeline import tracing_config
 
 from telemetry.value import list_of_scalar_values
@@ -96,6 +97,7 @@ def _ComputeTraceEventsThreadTimeForBlinkPerf(
     represents to total cpu time of that trace events in each blink_perf test.
   """
   trace_cpu_time_metrics = {}
+  merged_trace_events = {}
 
   # Collect the bounds of "blink_perf.runTest" events.
   test_runs_bounds = []
@@ -106,11 +108,60 @@ def _ComputeTraceEventsThreadTimeForBlinkPerf(
 
   for t in trace_events_to_measure:
     trace_cpu_time_metrics[t] = [0.0] * len(test_runs_bounds)
+    merged_trace_events[t] = []
+
+  # Merge all trace events that overlap. This is O(N*log(N)), athough we can
+  # do this in O(N) with fancy datastructures.
+  # Note: When merging multiple events, we approximate the thread_duration by:
+  # duration = (last.thread_start + last.thread_duration) - first.thread_start
+  for event_name in trace_events_to_measure:
+    # Tuple of ("start", time, thread_start, thread_duration) or
+    #          ("end", time, thread_end)
+    flattened_events = []
+    for event in model.IterAllEventsOfName(event_name):
+      # Handle events where thread duration is None (async events).
+      thread_start = event.thread_start
+      thread_duration = event.thread_duration
+      if thread_duration is None:
+        thread_start = event.start
+        thread_duration = event.end - event.start
+      flattened_events.append(("start", event.start, thread_start))
+      flattened_events.append(
+        ("end", event.end, thread_start + thread_duration))
+
+    flattened_events.sort(key=lambda e: e[1])
+    event_counter = 0
+    curr_start = None
+    curr_thread_start = None
+    for flattened_event in flattened_events:
+      if flattened_event[0] == "start":
+        event_counter += 1
+      else:
+        event_counter -= 1
+      # Initialization
+      if curr_start is None:
+        assert flattened_event[0] == "start"
+        curr_start = flattened_event[1]
+        curr_thread_start = flattened_event[2]
+        continue
+      # Create a merged event when our event grouping is over. Note that
+      # the thread start and duration could be based on wall time if our
+      # input event didn't have thread duration (it was an async trace).
+      if event_counter == 0:
+        merged_trace_events[event_name].append(
+          event_module.TimelineEvent(
+            None,
+            event_name,
+            curr_start,
+            flattened_event[1] - curr_start,
+            curr_thread_start,
+            flattened_event[2] - curr_thread_start))
+        curr_start = None
 
   for event_name in trace_events_to_measure:
     curr_test_runs_bound_index = 0
     prev_event = None
-    for event in model.IterAllEventsOfName(event_name):
+    for event in merged_trace_events[event_name]:
       if prev_event and prev_event.end >= event.start:
         continue
       while (curr_test_runs_bound_index < len(test_runs_bounds) and
