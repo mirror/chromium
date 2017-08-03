@@ -54,27 +54,6 @@ unsigned g_event_page_idle_time_msec = 10000;
 // sending a Suspend message.
 unsigned g_event_page_suspending_time_msec = 5000;
 
-std::string GetExtensionIdForSiteInstance(
-    content::SiteInstance* site_instance) {
-  if (!site_instance)
-    return std::string();
-
-  // This works for both apps and extensions because the site has been
-  // normalized to the extension URL for hosted apps.
-  const GURL& site_url = site_instance->GetSiteURL();
-
-  if (!site_url.SchemeIs(kExtensionScheme) &&
-      !site_url.SchemeIs(content::kGuestScheme))
-    return std::string();
-
-  return site_url.host();
-}
-
-std::string GetExtensionID(content::RenderFrameHost* render_frame_host) {
-  CHECK(render_frame_host);
-  return GetExtensionIdForSiteInstance(render_frame_host->GetSiteInstance());
-}
-
 bool IsFrameInExtensionHost(ExtensionHost* extension_host,
                             content::RenderFrameHost* render_frame_host) {
   return content::WebContents::FromRenderFrameHost(render_frame_host) ==
@@ -282,13 +261,19 @@ void ProcessManager::UnregisterRenderFrameHost(
       all_extension_frames_.find(render_frame_host);
 
   if (frame != all_extension_frames_.end()) {
-    std::string extension_id = GetExtensionID(render_frame_host);
+    // TODO: nullcheck needed?
+    const Extension* extension =
+        GetExtensionForRenderFrameHost(render_frame_host);
     // Keepalive count, balanced in RegisterRenderFrame.
     ReleaseLazyKeepaliveCountForFrame(render_frame_host);
     all_extension_frames_.erase(frame);
 
-    for (auto& observer : observer_list_)
-      observer.OnExtensionFrameUnregistered(extension_id, render_frame_host);
+    if (extension) {
+      for (auto& observer : observer_list_) {
+        observer.OnExtensionFrameUnregistered(extension->id(),
+                                              render_frame_host);
+      }
+    }
   }
 }
 
@@ -308,7 +293,9 @@ ProcessManager::FrameSet ProcessManager::GetRenderFrameHostsForExtension(
     const std::string& extension_id) {
   FrameSet result;
   for (const auto& key_value : all_extension_frames_) {
-    if (GetExtensionID(key_value.first) == extension_id)
+    const Extension* extension =
+        GetExtensionForRenderFrameHost(key_value.first);
+    if (extension && extension->id() == extension_id)
       result.insert(key_value.first);
   }
   return result;
@@ -434,16 +421,14 @@ bool ProcessManager::IsBackgroundHostClosing(const std::string& extension_id) {
 
 const Extension* ProcessManager::GetExtensionForRenderFrameHost(
     content::RenderFrameHost* render_frame_host) {
-  return extension_registry_->enabled_extensions().GetByID(
-      GetExtensionID(render_frame_host));
+  return extension_registry_->enabled_extensions().GetExtensionOrAppByURL(
+      render_frame_host->GetLastCommittedOrigin().GetURL());
 }
 
 const Extension* ProcessManager::GetExtensionForWebContents(
     const content::WebContents* web_contents) {
-  if (!web_contents->GetSiteInstance())
-    return nullptr;
-  return extension_registry_->enabled_extensions().GetByID(
-      GetExtensionIdForSiteInstance(web_contents->GetSiteInstance()));
+  return extension_registry_->enabled_extensions().GetExtensionOrAppByURL(
+      web_contents->GetLastCommittedURL());
 }
 
 int ProcessManager::GetLazyKeepaliveCount(const Extension* extension) {
@@ -488,8 +473,11 @@ void ProcessManager::OnSuspendAck(const std::string& extension_id) {
 void ProcessManager::OnNetworkRequestStarted(
     content::RenderFrameHost* render_frame_host,
     uint64_t request_id) {
-  ExtensionHost* host = GetBackgroundHostForExtension(
-      GetExtensionID(render_frame_host));
+  const Extension* extension =
+      GetExtensionForRenderFrameHost(render_frame_host);
+  if (!extension)
+    return;
+  ExtensionHost* host = GetBackgroundHostForExtension(extension->id());
   if (!host || !IsFrameInExtensionHost(host, render_frame_host))
     return;
 
@@ -755,10 +743,13 @@ void ProcessManager::CloseLazyBackgroundPageNow(const std::string& extension_id,
     // Close remaining views.
     std::vector<content::RenderFrameHost*> frames_to_close;
     for (const auto& key_value : all_extension_frames_) {
-      if (key_value.second.CanKeepalive() &&
-          GetExtensionID(key_value.first) == extension_id) {
-        DCHECK(!key_value.second.has_keepalive);
-        frames_to_close.push_back(key_value.first);
+      if (key_value.second.CanKeepalive()) {
+        const Extension* extension =
+            GetExtensionForRenderFrameHost(key_value.first);
+        if (extension && extension->id() == extension_id) {
+          DCHECK(!key_value.second.has_keepalive);
+          frames_to_close.push_back(key_value.first);
+        }
       }
     }
     for (content::RenderFrameHost* frame : frames_to_close) {
@@ -811,7 +802,8 @@ void ProcessManager::UnregisterExtension(const std::string& extension_id) {
   for (ExtensionRenderFrames::iterator it = all_extension_frames_.begin();
        it != all_extension_frames_.end(); ) {
     content::RenderFrameHost* host = it->first;
-    if (GetExtensionID(host) == extension_id) {
+    const Extension* extension = GetExtensionForRenderFrameHost(host);
+    if (extension && extension->id() == extension_id) {
       all_extension_frames_.erase(it++);
       for (auto& observer : observer_list_)
         observer.OnExtensionFrameUnregistered(extension_id, host);
@@ -832,12 +824,11 @@ void ProcessManager::ClearBackgroundPageData(const std::string& extension_id) {
   for (const auto& key_value : all_extension_frames_) {
     // Do not increment the count when |has_keepalive| is false
     // (i.e. ReleaseLazyKeepaliveCountForView() was called).
-    if (GetExtensionID(key_value.first) == extension_id &&
+    const Extension* extension =
+        GetExtensionForRenderFrameHost(key_value.first);
+    if (extension && extension->id() == extension_id &&
         key_value.second.has_keepalive) {
-      const Extension* extension =
-          GetExtensionForRenderFrameHost(key_value.first);
-      if (extension)
-        IncrementLazyKeepaliveCount(extension);
+      IncrementLazyKeepaliveCount(extension);
     }
   }
 }
