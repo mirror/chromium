@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc314eb3_2b1ad85e",
+        "filename": "media/filters/decoder_stream.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-03T19:04:41Z",
+      "side": 1,
+      "message": "I was thinking this would be fired earlier by the piece which is actually delivering this error so that we get more useful reports.",
+      "revId": "5c788adeaf678a9176308db258a87bc08c68af55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68ac7739_0abab56f",
+        "filename": "media/filters/decrypting_demuxer_stream.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-03T19:04:41Z",
+      "side": 1,
+      "message": "I.e. here would need a media log.",
+      "revId": "5c788adeaf678a9176308db258a87bc08c68af55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae883fa6_30f663f2",
+        "filename": "media/filters/decrypting_demuxer_stream.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-03T19:04:41Z",
+      "side": 1,
+      "message": "Is this sufficient for you to debug in the field?",
+      "revId": "5c788adeaf678a9176308db258a87bc08c68af55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
