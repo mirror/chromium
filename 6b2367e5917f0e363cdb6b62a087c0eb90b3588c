@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1eda09fd_694e8145",
+        "filename": "ios/chrome/browser/experimental_flags.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-08-03T12:35:59Z",
+      "side": 0,
+      "message": "I removed the field trial as well, there is no finch config for this name on iOS.",
+      "range": {
+        "startLine": 152,
+        "startChar": 0,
+        "endLine": 152,
+        "endChar": 63
+      },
+      "revId": "6b2367e5917f0e363cdb6b62a087c0eb90b3588c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
