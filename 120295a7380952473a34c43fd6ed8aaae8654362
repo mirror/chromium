@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dfde581b_cbd1f287",
+        "filename": "chrome/browser/resources/md_extensions/view-manager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-03T21:17:05Z",
+      "side": 1,
+      "message": "No need for assignment. Just use a function expression.\n\nfunction whenFinished(animation) {\n...\n}",
+      "revId": "120295a7380952473a34c43fd6ed8aaae8654362",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b5eef3c_de05ee72",
+        "filename": "chrome/browser/resources/md_extensions/view-manager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-03T21:17:05Z",
+      "side": 1,
+      "message": "Can we use a proper Map\u003cstring, function(): Promise\u003e instead of a plain object?",
+      "revId": "120295a7380952473a34c43fd6ed8aaae8654362",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83d25891_c822705a",
+        "filename": "chrome/browser/resources/md_extensions/view-manager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-03T21:17:05Z",
+      "side": 1,
+      "message": "Nit: Let\u0027s avoid non established abbreviations like |prev|.\n|previousPage| or just |previous| seems good enough. Also let\u0027s be consistent between the terms \"view\" and \"page\". Since we chose \"view-manager\", maybe rename everything else to use \"view\" too?",
+      "revId": "120295a7380952473a34c43fd6ed8aaae8654362",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33651c40_7691007c",
+        "filename": "chrome/browser/resources/md_extensions/view-manager.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-03T21:17:05Z",
+      "side": 1,
+      "message": "exit_() will always operate on the previously active view. Do we need to pass |prevPage| as a parameter. Can we simply do the querySelector() call here? Then you also don\u0027t need to assert.\n\nexit_(animation) {\n  var view \u003d this.querySelector(\u0027.active\u0027);\n  if (!view)\n    return;\n\n  .... \n}",
+      "revId": "120295a7380952473a34c43fd6ed8aaae8654362",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
