@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "a65778f8_0c011729",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position-3/position-sticky-stacking-context.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-08-03T13:53:45Z",
+      "side": 1,
+      "message": "I think it\u0027s fine. We can pull out the test if we actually decide not to do this but currently it\u0027s what every implementation does.",
+      "parentUuid": "537c2476_23229e6c",
+      "revId": "d05037b423623696aaba0a8b23e36a7b0397c73c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "27c73d55_5d27d56d",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position-3/position-sticky-stacking-context.html",
         "patchSetId": 1
