@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "7eb51921_a5021b5f",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1200,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-03T23:06:55Z",
+      "side": 1,
+      "message": "Verified. Relevant log output:\n2017-08-02 13:12:47,181:INFO:Relaunching self\n2017-08-02 13:12:47,181:INFO:Cleanup.\n2017-08-02 13:12:47,182:INFO:Terminating host\n[0802/131247.194876:INFO:remoting_user_session.cc(411)] Restarting session",
+      "parentUuid": "6f7b98cc_2ea78a6f",
+      "revId": "f563ffef4b6562d54563e1c365b4cc60e72fa6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b8b14274_d5a65877",
         "filename": "remoting/host/linux/linux_me2me_host.py",
         "patchSetId": 1
@@ -48,6 +66,30 @@
       "writtenOn": "2017-08-03T17:10:26Z",
       "side": 1,
       "message": "It\u0027s a bit strange to log that we\u0027re relaunching and then call a function called relaunch_self that doesn\u0027t actually relaunch. I think it\u0027s only called from this one place, so maybe just delete the function and move the code here rather than have it misnamed.",
+      "range": {
+        "startLine": 1594,
+        "startChar": 44,
+        "endLine": 1594,
+        "endChar": 0
+      },
+      "revId": "f563ffef4b6562d54563e1c365b4cc60e72fa6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09cc3b01_15677815",
+        "filename": "remoting/host/linux/linux_me2me_host.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 1594,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-03T23:06:55Z",
+      "side": 1,
+      "message": "Either way, the script gets relaunched. It just has to bubble up the chain one more level to do so when running under the wrapper. I kind of like having the details of how the relaunch is effected be abstracted, but I can inline it if you prefer.",
+      "parentUuid": "b8b14274_d5a65877",
       "range": {
         "startLine": 1594,
         "startChar": 44,
@@ -95,6 +137,24 @@
     },
     {
       "key": {
+        "uuid": "fc04bd51_7ddef922",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-03T23:06:55Z",
+      "side": 1,
+      "message": "It doesn\u0027t matter because the Python script will never return any of those error codes. It just logs the appropriate error message and returns 0. The parent process will then either exit with a 0 or 1, depending on whether it has seen the READY message or not.",
+      "parentUuid": "f3fae9f8_e1951ca2",
+      "revId": "f563ffef4b6562d54563e1c365b4cc60e72fa6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6ba64318_d0208de9",
         "filename": "remoting/host/linux/remoting_user_session.cc",
         "patchSetId": 1
@@ -130,6 +190,24 @@
     },
     {
       "key": {
+        "uuid": "3db2bb4d_f36496bb",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-03T23:06:55Z",
+      "side": 1,
+      "message": "The only thing that would really save is the call to base::ReadSymbolicLink in FindScriptPath, which probably isn\u0027t worth it. I think I\u0027ll move \"/proc/self/exe\" into a constant, and comment why we\u0027re not using ReadSymbolicLink, here. If we ever want to support FreeBSD or Solaris (which use different methods to determine the executable location), then it would be easy enough to abstract the logic out into a separate function at that time.",
+      "parentUuid": "9e2ddadf_63197970",
+      "revId": "f563ffef4b6562d54563e1c365b4cc60e72fa6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11a22062_0fd422d7",
         "filename": "remoting/host/linux/remoting_user_session.cc",
         "patchSetId": 1
@@ -153,6 +231,30 @@
     },
     {
       "key": {
+        "uuid": "4226e6f4_a150e979",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-03T23:06:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11a22062_0fd422d7",
+      "range": {
+        "startLine": 321,
+        "startChar": 72,
+        "endLine": 321,
+        "endChar": 0
+      },
+      "revId": "f563ffef4b6562d54563e1c365b4cc60e72fa6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08511e76_ec996b2e",
         "filename": "remoting/host/linux/remoting_user_session.cc",
         "patchSetId": 1
@@ -170,6 +272,24 @@
     },
     {
       "key": {
+        "uuid": "929e3ea6_6ae34f24",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-03T23:06:55Z",
+      "side": 1,
+      "message": "Nice catch!",
+      "parentUuid": "08511e76_ec996b2e",
+      "revId": "f563ffef4b6562d54563e1c365b4cc60e72fa6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "549dd582_e4d6008f",
         "filename": "remoting/host/linux/remoting_user_session.cc",
         "patchSetId": 1
@@ -181,6 +301,24 @@
       "writtenOn": "2017-08-03T19:01:12Z",
       "side": 1,
       "message": "I wonder if this cleanup could be moved into RAII PamHandle?",
+      "revId": "f563ffef4b6562d54563e1c365b4cc60e72fa6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23e13182_6b3edf36",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-03T23:06:55Z",
+      "side": 1,
+      "message": "Restart (which I\u0027ve now renamed Relaunch) never returns (it execs a new session), so having CloseSession get called in that case via RAII would require adding an extra nested scope. I don\u0027t think it\u0027s worth it, but I\u0027m open to being convinced.",
+      "parentUuid": "549dd582_e4d6008f",
       "revId": "f563ffef4b6562d54563e1c365b4cc60e72fa6d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -219,6 +357,24 @@
       "revId": "f563ffef4b6562d54563e1c365b4cc60e72fa6d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08336858_98eb5d0e",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-03T23:06:55Z",
+      "side": 1,
+      "message": "Renamed for now. Let me know if you think Restart is more clear.",
+      "parentUuid": "7cbafc21_19a36330",
+      "revId": "f563ffef4b6562d54563e1c365b4cc60e72fa6d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
