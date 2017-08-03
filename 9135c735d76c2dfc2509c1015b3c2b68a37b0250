@@ -16,6 +16,24 @@
       "revId": "9135c735d76c2dfc2509c1015b3c2b68a37b0250",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f85fef5_4b0f7a6f",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-03T14:06:20Z",
+      "side": 0,
+      "message": "The TODO was needed in case new workers were added during JoinForTesting (after |workers_copy| is made), which could happen because of new tasks being posted.\n\nInstead, it was easier and simpler to just require that someone who uses JoinForTesting cannot post a task after JoinForTesting is called. No one currently does this anyways (and it wouldn\u0027t really make sense to) - though it did require Flush() being called in case of nested tasks.",
+      "parentUuid": "0d00f603_95383847",
+      "revId": "9135c735d76c2dfc2509c1015b3c2b68a37b0250",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "6e5908b1_c6bc8d33",
+        "filename": "base/task_scheduler/scheduler_single_thread_task_runner_manager.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-03T14:06:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1bb1843_e4491c20",
+      "range": {
+        "startLine": 101,
+        "startChar": 35,
+        "endLine": 101,
+        "endChar": 41
+      },
+      "revId": "eb9687209c9efba9fde69645e7447660b7c3efe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95f8c876_cb69101f",
         "filename": "base/task_scheduler/scheduler_worker.cc",
         "patchSetId": 22
@@ -86,6 +110,24 @@
       "revId": "eb9687209c9efba9fde69645e7447660b7c3efe8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db9b9d71_b161dfee",
+        "filename": "base/task_scheduler/scheduler_worker.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-03T14:06:20Z",
+      "side": 1,
+      "message": "Done.\n\n|thread_| gets destroyed, but that doesn\u0027t automatically free some of the thread resources held by the OS.",
+      "parentUuid": "95f8c876_cb69101f",
+      "revId": "eb9687209c9efba9fde69645e7447660b7c3efe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -147,6 +189,24 @@
       "writtenOn": "2017-08-02T18:38:20Z",
       "side": 1,
       "message": "This comment needs updating (|thread_| is never \"taken away\", i.e. detached, any more)\n\n(in fact, do we even need |thread_lock_| anymore, here, and everywhere else? |thread_| is constant after Start()? so long as everything has an \"happens-after\" relationship with Start() and there\u0027s synchronization around usage of SchedulerWorker, we\u0027re good? happy to keep this change for another CL..)",
+      "revId": "eb9687209c9efba9fde69645e7447660b7c3efe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1667b151_f63f1993",
+        "filename": "base/task_scheduler/scheduler_worker.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-03T14:06:20Z",
+      "side": 1,
+      "message": "The lock is still needed for now b/c it is valid it call Cleanup before Start (so they could be running in parallel), so someone would be able to simultaneously read+write from |thread_| if there were no lock.",
+      "parentUuid": "4829f623_130ec978",
       "revId": "eb9687209c9efba9fde69645e7447660b7c3efe8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -264,6 +324,24 @@
     },
     {
       "key": {
+        "uuid": "536ce972_ec64b87b",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 442,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-03T14:06:20Z",
+      "side": 1,
+      "message": "Sounds good to me.",
+      "parentUuid": "ff3a8283_be56d1f5",
+      "revId": "eb9687209c9efba9fde69645e7447660b7c3efe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "727ffaf7_2485c107",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
         "patchSetId": 22
@@ -275,6 +353,30 @@
       "writtenOn": "2017-08-02T18:38:20Z",
       "side": 1,
       "message": "\"The cleanup step (triggered after GetSLeepTimeout() expires) may cause...\"\n\nor actually wait.. is this comment and code even still relevant? This was handling the case where a detached worker would still be on the idle stack (with no backing Thread), but now a cleaned up worker is not on the idle stack anymore so re-adding self to idle stack is unexpected? Or would GetWork() try to add it back to idle stack before it gets nullptr a second time and then decides to Cleanup()?\n\nBut then we can fix that by moving the if (CanCleanup()) Cleanup() logic in GetWork() above AddToIdleWorkersStack? Avoiding insert/remove from idle stack?",
+      "range": {
+        "startLine": 580,
+        "startChar": 5,
+        "endLine": 580,
+        "endChar": 14
+      },
+      "revId": "eb9687209c9efba9fde69645e7447660b7c3efe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1fdb53e_f7ad0e82",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 580,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-03T14:06:20Z",
+      "side": 1,
+      "message": "The comment needs fixing, but I can move the CanCleanup() Cleanup() logic to avoid an extra call to AddToIdleWorkersStack(). \n\nEven after moving the CanCleanup() stuff, the code is still relevant because it\u0027s possible that when I\u0027m calling GetWork() after not getting any work in the previous call (and therefore being on the idle workers stack), CanCleanup() returns false (e.g. due to a spurious wakeup, or this worker being at the top of the idle workers stack).",
+      "parentUuid": "727ffaf7_2485c107",
       "range": {
         "startLine": 580,
         "startChar": 5,
@@ -351,6 +453,24 @@
     },
     {
       "key": {
+        "uuid": "dd8f5e2c_3d409b66",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-03T14:06:20Z",
+      "side": 1,
+      "message": "In this CL, I changed JoinForTesting() to require that no tasks are posted after JoinForTesting() is called. \n\nOne way this could happen is due to a currently executing task posting a nested task. But, if all tasks have completed by the time I call JoinForTesting(), then that won\u0027t happen.\n\nI only needed to add Flush in certain cases (rather than in all usages of JoinForTesting) where it seems possible that we might have this nested task thing going on. (So e.g. if there\u0027s a single test that calls JoinForTesting on its own, but it never does anything w/ nested tasks, then I didn\u0027t add Flush)\n\n(I briefly mention the Flush() thing in the .h file as a comment for JoinForTesting())",
+      "parentUuid": "06e80477_3fdcaffe",
+      "revId": "eb9687209c9efba9fde69645e7447660b7c3efe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f624bf6d_33166fe0",
         "filename": "base/task_scheduler/task_scheduler_impl_unittest.cc",
         "patchSetId": 22
@@ -368,6 +488,24 @@
     },
     {
       "key": {
+        "uuid": "a6c0c876_935c4519",
+        "filename": "base/task_scheduler/task_scheduler_impl_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-03T14:06:20Z",
+      "side": 1,
+      "message": "See response here: https://chromium-review.googlesource.com/c/568579/22/base/task_scheduler/scheduler_worker_pool_impl_unittest.cc#72",
+      "parentUuid": "f624bf6d_33166fe0",
+      "revId": "eb9687209c9efba9fde69645e7447660b7c3efe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "17904827_f1443d77",
         "filename": "base/threading/sequenced_worker_pool_unittest.cc",
         "patchSetId": 22
@@ -379,6 +517,24 @@
       "writtenOn": "2017-08-02T18:38:20Z",
       "side": 1,
       "message": "ditto for this flush?",
+      "revId": "eb9687209c9efba9fde69645e7447660b7c3efe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d633554c_9a9d2558",
+        "filename": "base/threading/sequenced_worker_pool_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-03T14:06:20Z",
+      "side": 1,
+      "message": "See response here: https://chromium-review.googlesource.com/c/568579/22/base/task_scheduler/scheduler_worker_pool_impl_unittest.cc#72",
+      "parentUuid": "17904827_f1443d77",
       "revId": "eb9687209c9efba9fde69645e7447660b7c3efe8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
