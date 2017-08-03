@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89dfbdf8_462ac405",
+        "filename": "extensions/common/file_util_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-03T18:29:28Z",
+      "side": 1,
+      "message": "It\u0027s not clear from install_warnings() what type this will be, so prefer explicitly typing.  Additionally, with auto this would perform an unnecessary copy, which will be fixed if we use const std::vector\u003cInstallWarning\u003e\u0026.",
+      "revId": "5bb7fc6ca1c2bedc567b5ed166db9dfef8684653",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c975a1b_b9ff7ec3",
+        "filename": "extensions/common/file_util_unittest.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-03T18:29:28Z",
+      "side": 1,
+      "message": "I think base::Optional\u003cT\u003e is implicitly constructable from a T.  Does just passing the string literal work?\n\n  RunDirectoryTest(\n      {\"_metadata\"},\n      \"_metadata is a reserved directory that will \"\n      \"not be allowed at the time of Chrome Web Store upload.\"));",
+      "revId": "5bb7fc6ca1c2bedc567b5ed166db9dfef8684653",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
