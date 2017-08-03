@@ -515,6 +515,22 @@
             ]
         }
     ],
+    "ContentFilterInterstitial": [
+        {
+            "platforms": [
+                "chromeos",
+                "linux",
+                "mac",
+                "win",
+                "android"
+            ],
+            "experiments": [
+                {
+                    "name": "Enabled"
+                }
+            ]
+        }
+    ],
     "CopylessPaste": [
         {
             "platforms": [
