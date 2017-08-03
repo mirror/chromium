@@ -87,6 +87,24 @@
       "revId": "764348fee530e139eea621206f74ed2f02fde0a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33a9d93f_7e75aea9",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-03T20:50:00Z",
+      "side": 1,
+      "message": "Yeah, we should try implementing NavigationItem::GetOriginalRequestURL(). Seems like it\u0027s very easy for client side redirects and for server side redirects we can leverage |webView:didReceiveServerRedirectForProvisionalNavigation:| API.\n\nNavigationItem::GetOriginalRequestURL is something that we will need for \"Request Desktop Site\" feature, which reloads original URL, instead of final redirect URL.",
+      "parentUuid": "d18f90e2_70cce1a1",
+      "revId": "764348fee530e139eea621206f74ed2f02fde0a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
