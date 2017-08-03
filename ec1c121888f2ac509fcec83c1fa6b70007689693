@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "c2c6dbe5_73839c48",
+        "filename": "services/ui/public/interfaces/window_manager.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-03T07:47:32Z",
+      "side": 1,
+      "message": "Could we use this flag instead? This is what FocusController, for example, uses. And it looks like that is what we ultimately want as well for the child modal fix here.",
+      "revId": "ec1c121888f2ac509fcec83c1fa6b70007689693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d03d128b_ce1c571f",
         "filename": "services/ui/public/interfaces/window_manager.mojom",
         "patchSetId": 5
@@ -37,6 +54,40 @@
     },
     {
       "key": {
+        "uuid": "e37f8bdf_11e3b7b5",
+        "filename": "services/ui/ws/modal_window_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-03T07:47:32Z",
+      "side": 1,
+      "message": "|original| is a weird name here. Call it something else?",
+      "revId": "ec1c121888f2ac509fcec83c1fa6b70007689693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c2d131a_a11f34e2",
+        "filename": "services/ui/ws/modal_window_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-03T07:47:32Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "ec1c121888f2ac509fcec83c1fa6b70007689693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5b21e0bc_161f7345",
         "filename": "services/ui/ws/modal_window_controller.cc",
         "patchSetId": 5
@@ -66,6 +117,58 @@
       "side": 1,
       "message": "The main issue with that is that windows created by the window manager (which is *all* windows in mushrome) don\u0027t go through that mechanism. So, we can\u0027t rely on that.",
       "parentUuid": "5b21e0bc_161f7345",
+      "revId": "ec1c121888f2ac509fcec83c1fa6b70007689693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d291cd1_0dbc7aa9",
+        "filename": "services/ui/ws/modal_window_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-03T07:47:32Z",
+      "side": 1,
+      "message": "Could we use FocusController::CanBeActivated() here instead?",
+      "parentUuid": "b1cd2686_c844245b",
+      "revId": "ec1c121888f2ac509fcec83c1fa6b70007689693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5cc9d7b_c658964c",
+        "filename": "services/ui/ws/window_tree.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2538,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-03T07:47:32Z",
+      "side": 1,
+      "message": "Update log message.",
+      "revId": "ec1c121888f2ac509fcec83c1fa6b70007689693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fd55d94_2c2b4ba7",
+        "filename": "ui/aura/mus/window_tree_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1561,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-03T07:47:32Z",
+      "side": 1,
+      "message": "This can be a DCHECK()?",
       "revId": "ec1c121888f2ac509fcec83c1fa6b70007689693",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
