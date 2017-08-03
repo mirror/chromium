@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a7d616c8_0b14c1e0",
+        "filename": "services/resource_coordinator/coordination_unit/metrics_collector.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-03T23:15:46Z",
+      "side": 1,
+      "message": "Thanks for the suggestion, the histograms we are going to report have the same bucketing, I have another patch coming :) https://chromium-review.googlesource.com/c/585835\n\nIf you want to know more details on the histograms we want to report, please take a look at https://docs.google.com/document/d/17JxSi6c4pl9CT5MoDQ0jUydG9B5PhHOEUaN2BNdUzxU/edit?pli\u003d1#heading\u003dh.33ahqgyn47co",
+      "parentUuid": "d3a796c3_4c443648",
+      "revId": "0a140b4829cd754d46b8cac13b144024fa71730b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2c0e8aa_6981dee6",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 24
@@ -33,6 +51,24 @@
       "revId": "0a140b4829cd754d46b8cac13b144024fa71730b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "501aa5bf_954f0512",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 24
+      },
+      "lineNbr": 80101,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-03T23:15:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2c0e8aa_6981dee6",
+      "revId": "0a140b4829cd754d46b8cac13b144024fa71730b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
