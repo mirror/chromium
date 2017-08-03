@@ -1,0 +1,372 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38a034f3_69af660a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-03T02:12:25Z",
+      "side": 1,
+      "message": "style nit: 72 chars wrapping, please.",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 147
+      },
+      "revId": "49bcfd50fcbc9dc67f9ad75b20238acba0de60d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1ae627a_0e065f9e",
+        "filename": "content/renderer/media/media_stream_constraints_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-03T02:12:25Z",
+      "side": 1,
+      "message": "This looks like a good place to use value_or(). Example:\n\n  double track_max_frame_rate \u003d frame_rate_set.Max().value_or(0.0);",
+      "range": {
+        "startLine": 286,
+        "startChar": 26,
+        "endLine": 286,
+        "endChar": 38
+      },
+      "revId": "49bcfd50fcbc9dc67f9ad75b20238acba0de60d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee295a02_202475ca",
+        "filename": "content/renderer/media/media_stream_constraints_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-03T02:12:25Z",
+      "side": 1,
+      "message": "Do we also need to do this sanity-check before these LOC (or is it already being done upstream of here?):\n\n  if (frame_rate_set.IsEmpty()) {  // Check that min \u003c\u003d max.\n    ...handle error condition...\n  }",
+      "range": {
+        "startLine": 289,
+        "startChar": 0,
+        "endLine": 292,
+        "endChar": 51
+      },
+      "revId": "49bcfd50fcbc9dc67f9ad75b20238acba0de60d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c11752d_4bda3ca5",
+        "filename": "content/renderer/media/media_stream_constraints_util_sets.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-03T02:12:25Z",
+      "side": 1,
+      "message": "Looks like you can remove the initializer list for this ctor, since the default ctors for |min_| and |max_| will be called implicitly.",
+      "range": {
+        "startLine": 31,
+        "startChar": 20,
+        "endLine": 31,
+        "endChar": 74
+      },
+      "revId": "49bcfd50fcbc9dc67f9ad75b20238acba0de60d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59722de1_a88b60c2",
+        "filename": "content/renderer/media/media_stream_constraints_util_sets.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-03T02:12:25Z",
+      "side": 1,
+      "message": "nit: Return types here should be \"const base::Optional\u003cT\u003e\u0026\" to let the caller decide if a copy is needed.",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 19
+      },
+      "revId": "49bcfd50fcbc9dc67f9ad75b20238acba0de60d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b285eee_39e408ee",
+        "filename": "content/renderer/media/media_stream_constraints_util_sets.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-03T02:12:25Z",
+      "side": 1,
+      "message": "Up to you, but you could eliminate the .has_value() calls, and just use the implicit bool conversion:\n\n  if (other.Min())\n    min \u003d min ? std::max(...) : other.Min();",
+      "range": {
+        "startLine": 44,
+        "startChar": 19,
+        "endLine": 44,
+        "endChar": 31
+      },
+      "revId": "49bcfd50fcbc9dc67f9ad75b20238acba0de60d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1c48074_325ad34c",
+        "filename": "content/renderer/media/media_stream_constraints_util_sets.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-03T02:12:25Z",
+      "side": 1,
+      "message": "Where do these \"absolute\" come from? Looks like they are meant to be design limits/bounds for our implementation. Please describe in function comment.",
+      "range": {
+        "startLine": 58,
+        "startChar": 29,
+        "endLine": 59,
+        "endChar": 68
+      },
+      "revId": "49bcfd50fcbc9dc67f9ad75b20238acba0de60d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe1c5896_1f4f073c",
+        "filename": "content/renderer/media/media_stream_constraints_util_video_content.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-03T02:12:25Z",
+      "side": 1,
+      "message": "Another good place to use .value_or(kDefaultScreenCastFrameRate).",
+      "range": {
+        "startLine": 296,
+        "startChar": 30,
+        "endLine": 298,
+        "endChar": 63
+      },
+      "revId": "49bcfd50fcbc9dc67f9ad75b20238acba0de60d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "160d8892_1d312ded",
+        "filename": "content/renderer/media/media_stream_constraints_util_video_device.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-03T02:12:25Z",
+      "side": 1,
+      "message": "I think this should be zero. That would allow the client code to specify that the capturer is allowed to be idle (i.e., stop sending frames while no changes need to be sent). This is very important for screen capture of static content, and a common case.\n\nOn the other hand, the *max* frame rate should always be greater than zero, or else we\u0027d never be allowed to capture/send a frame. :-) I\u0027d suggest checking that the max frame rate is at least 1.0. An interface purist might say, \"why not 1e-3 or even 1e-6?\" but I don\u0027t think there exists such a ridiculous use case.",
+      "range": {
+        "startLine": 36,
+        "startChar": 39,
+        "endLine": 36,
+        "endChar": 42
+      },
+      "revId": "49bcfd50fcbc9dc67f9ad75b20238acba0de60d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b289cb6_05dccbc0",
+        "filename": "content/renderer/media/media_stream_constraints_util_video_device.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-03T02:12:25Z",
+      "side": 1,
+      "message": "Side note: I wonder if the lower-bounds here should be 2 instead of 1, since it\u0027s most common for video to be in I420 format?",
+      "range": {
+        "startLine": 118,
+        "startChar": 32,
+        "endLine": 118,
+        "endChar": 33
+      },
+      "revId": "49bcfd50fcbc9dc67f9ad75b20238acba0de60d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12eb3e01_8a7fda13",
+        "filename": "content/renderer/media/media_stream_constraints_util_video_device.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-03T02:12:25Z",
+      "side": 1,
+      "message": "Maybe this should be media::limits::kMaxDimension?\n\nref: https://cs.chromium.org/chromium/src/media/base/limits.h?rcl\u003d24401d686b03f1dd66041c18915ba7de46270514\u0026l\u003d18",
+      "range": {
+        "startLine": 123,
+        "startChar": 32,
+        "endLine": 123,
+        "endChar": 40
+      },
+      "revId": "49bcfd50fcbc9dc67f9ad75b20238acba0de60d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63969456_3f5ba867",
+        "filename": "content/renderer/media/media_stream_constraints_util_video_device.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-03T02:12:25Z",
+      "side": 1,
+      "message": "nit/ditto: \"const base::Optional\u003cdouble\u003e\u0026\" to let the caller decide if a copy is needed.",
+      "range": {
+        "startLine": 145,
+        "startChar": 2,
+        "endLine": 145,
+        "endChar": 24
+      },
+      "revId": "49bcfd50fcbc9dc67f9ad75b20238acba0de60d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "542174d0_49bb4566",
+        "filename": "content/renderer/media/media_stream_constraints_util_video_device.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-03T02:12:25Z",
+      "side": 1,
+      "message": "Consider replacing HUGE_VAL with media::limits::kMaxFramesPerSecond.",
+      "range": {
+        "startLine": 160,
+        "startChar": 64,
+        "endLine": 160,
+        "endChar": 72
+      },
+      "revId": "49bcfd50fcbc9dc67f9ad75b20238acba0de60d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d846da4_63c62b2f",
+        "filename": "content/renderer/media/media_stream_constraints_util_video_device.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-03T02:12:25Z",
+      "side": 1,
+      "message": "Suggestion for simpler code: The 3rd part here is equivalent to:\n\n  frame_rate_intersection.Min().value_or(0.0) \u003e native_frame_rate_",
+      "range": {
+        "startLine": 163,
+        "startChar": 9,
+        "endLine": 164,
+        "endChar": 60
+      },
+      "revId": "49bcfd50fcbc9dc67f9ad75b20238acba0de60d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14e92387_ab952cfa",
+        "filename": "content/renderer/media/media_stream_constraints_util_video_device.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-03T02:12:25Z",
+      "side": 1,
+      "message": "Suggestion (for 3rd part):\n\n  (constraint_min - epsilon) \u003e\n      constrained_format.MaxFrameRate().value_or(media::limits::kMaxFrameRate)\n\n...and below...",
+      "range": {
+        "startLine": 317,
+        "startChar": 8,
+        "endLine": 319,
+        "endChar": 72
+      },
+      "revId": "49bcfd50fcbc9dc67f9ad75b20238acba0de60d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0b61714_164841fa",
+        "filename": "content/renderer/media/media_stream_constraints_util_video_device.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 593,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-03T02:12:25Z",
+      "side": 1,
+      "message": "This could just be in-line in the if-statement\u0027s expression. Again, suggest shortening to:\n\n  max_frame_rate.value_or(native_frame_rate)\n\n...or you could just not change this function at all, and instead have the caller do this (L680).",
+      "range": {
+        "startLine": 593,
+        "startChar": 6,
+        "endLine": 593,
+        "endChar": 70
+      },
+      "revId": "49bcfd50fcbc9dc67f9ad75b20238acba0de60d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
