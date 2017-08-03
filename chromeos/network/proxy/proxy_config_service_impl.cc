@@ -261,11 +261,6 @@ void ProxyConfigServiceImpl::DetermineEffectiveConfigFromDefaultNetwork() {
   // when PrefProxyConfigTrackerImpl pushes it to ChromeProxyConfigService.
   if (effective_config_state == ProxyPrefs::CONFIG_SYSTEM)
     effective_config_state = ProxyPrefs::CONFIG_OTHER_PRECEDE;
-  // If config is manual, add rule to bypass local host.
-  if (effective_config.proxy_rules().type !=
-      net::ProxyConfig::ProxyRules::TYPE_NO_RULES) {
-    effective_config.proxy_rules().bypass_rules.AddRuleToBypassLocal();
-  }
   PrefProxyConfigTrackerImpl::OnProxyConfigChanged(effective_config_state,
                                                    effective_config);
   if (VLOG_IS_ON(1)) {

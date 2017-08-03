@@ -142,7 +142,7 @@ const struct TestParams {
     GURL(),                                  // pac_url
     net::ProxyRulesExpectation::Single(      // proxy_rules
         "www.google.com:80",                 // single proxy
-        "<local>"),                          // bypass rules
+        ""),                                 // bypass rules
   },
 
   {  // 5
@@ -159,7 +159,7 @@ const struct TestParams {
     GURL(),                                  // pac_url
     net::ProxyRulesExpectation::Single(      // proxy_rules
         "www.google.com:99",                 // single
-        "<local>"),                          // bypass rules
+        ""),                                 // bypass rules
   },
 
   {  // 6
@@ -176,7 +176,7 @@ const struct TestParams {
     GURL(),                                  // pac_url
     net::ProxyRulesExpectation::Single(      // proxy_rules
         "www.google.com:99",                 // single proxy
-        "<local>"),                          // bypass rules
+        ""),                                 // bypass rules
   },
 
   {  // 7
@@ -197,7 +197,7 @@ const struct TestParams {
         "https://www.foo.com:110",  // https
         "ftp.foo.com:121",          // ftp
         "socks5://socks.com:888",   // fallback proxy
-        "<local>"),                 // bypass rules
+        ""),                        // bypass rules
   },
 
   {  // 8
@@ -216,7 +216,7 @@ const struct TestParams {
     net::ProxyRulesExpectation::Single(  // proxy_rules
         "www.google.com:80",             // single proxy
         // bypass_rules
-        "*.google.com,*foo.com:99,1.2.3.4:22,127.0.0.1/8,<local>"),
+        "*.google.com,*foo.com:99,1.2.3.4:22,127.0.0.1/8"),
   },
 };  // tests
 
