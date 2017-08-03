@@ -220,6 +220,29 @@
     },
     {
       "key": {
+        "uuid": "dd2061da_253b2ddc",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 728,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-03T20:27:35Z",
+      "side": 1,
+      "message": "Avoid the broadcast when the worker isn\u0027t added to the idle stack:\n\nif (!idle_workers_stack_.Contains(worker)) {\n  !idle_workers_stack_.Contains(worker);\n  idle_workers_stack_cv_for_testing_-\u003eBroadcast();\n}\n\nDCHECK_LE(idle_workers_stack_.Size(), workers_.size());",
+      "range": {
+        "startLine": 723,
+        "startChar": 2,
+        "endLine": 728,
+        "endChar": 50
+      },
+      "revId": "a509f24d919160661765b2049a336ab2c901ad5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4cec2b32_de921033",
         "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
         "patchSetId": 3
