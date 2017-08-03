@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3051849c_170787b7",
+        "filename": "ui/arc/notification/arc_notification_content_view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1179631
+      },
+      "writtenOn": "2017-08-03T02:10:02Z",
+      "side": 1,
+      "message": "Commented out?",
+      "range": {
+        "startLine": 311,
+        "startChar": 15,
+        "endLine": 311,
+        "endChar": 17
+      },
+      "revId": "43815490772ffa4164d34fc4f757dc48333d322f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
