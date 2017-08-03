@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "40dbbcd2_4cecd449",
+        "filename": "media/filters/decoder_stream.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-08-03T20:23:02Z",
+      "side": 1,
+      "message": "Two general points:\n1) Since, I\u0027m a little unclear about the sequencing of when these kError logs occur, here\u0027s some guidance: make sure that the *first* MEDIA_LOG(ERROR) that occurs is the most detailed, with the most informative reason for the error included within it. e.g., if you know at a lower layer that the kError is due to decryption failure, put that into the log there (assuming that lower layer MEDIA_LOG(ERROR)\u0027s first then any resulting MediaError.message should contain that more detailed log entry). You can also repeatedly MEDIA_LOG(ERROR) later, but remember that only the *first* one is used as part of an app-visible message if there\u0027s an eventual MediaError populated on the element.\n\n2) To prevent rot, I recommend adding usage of StrictMock\u003cMockMediaLog\u003e to your unit tests to verify the expected logs get emitted. Combined with Insequence, your unit tests can also verify which, of potentially many, error logs get emitted. This works great when done at both the micro-unit test level, and also at the integration test level: is there some related pipeline integration test which could verify your new kError (and associated media logs)? See also a bunch of helpful matchers in test_helpers.h",
+      "parentUuid": "737d1d97_8cf756d0",
+      "revId": "5c788adeaf678a9176308db258a87bc08c68af55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68ac7739_0abab56f",
         "filename": "media/filters/decrypting_demuxer_stream.cc",
         "patchSetId": 3
