@@ -36,6 +36,40 @@
     },
     {
       "key": {
+        "uuid": "28461a22_659c4de2",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPICustom.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-03T03:29:32Z",
+      "side": 1,
+      "message": "why is this split from CSSPropertyParser? separetely, the name of this file implies to me that it\u0027s one of the property apis.",
+      "revId": "dfff786e5e16ec726c865d3aaeccee74404f31c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8daec253_26811615",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPICustomHelper.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-03T03:29:32Z",
+      "side": 1,
+      "message": "if this file is intended to be temporary, a todo would be good saying to move these methods to property apis",
+      "revId": "dfff786e5e16ec726c865d3aaeccee74404f31c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3b1776ef_ff24021b",
         "filename": "third_party/WebKit/Source/core/css/properties/CSSShorthandPropertyAPIOffset.cpp",
         "patchSetId": 18
@@ -47,6 +81,24 @@
       "writtenOn": "2017-08-03T03:03:09Z",
       "side": 1,
       "message": "Is it worth adding a bug in the issue tracker to make sure this gets done?",
+      "revId": "dfff786e5e16ec726c865d3aaeccee74404f31c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b0191ae_fca4bf84",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSShorthandPropertyAPIOffset.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-03T03:29:32Z",
+      "side": 1,
+      "message": "i think this should be a todo instead of a note, with mention of the reason it\u0027s currently blocked",
+      "parentUuid": "3b1776ef_ff24021b",
       "revId": "dfff786e5e16ec726c865d3aaeccee74404f31c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
