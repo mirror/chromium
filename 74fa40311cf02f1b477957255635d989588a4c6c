@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1cfd5ed_994e7d35",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/gerrit.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-08-03T16:41:17Z",
+      "side": 1,
+      "message": "Nit, closing triple-quotes for multiline docstrings go on their own line.",
+      "revId": "74fa40311cf02f1b477957255635d989588a4c6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
