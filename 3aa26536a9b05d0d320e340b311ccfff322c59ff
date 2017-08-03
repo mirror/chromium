@@ -1,0 +1,228 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7cd174ee_730006f3",
+        "filename": "chrome/installer/zucchini/rel32_finder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-03T01:31:11Z",
+      "side": 1,
+      "message": "Abs32GapFinder",
+      "range": {
+        "startLine": 11,
+        "startChar": 10,
+        "endLine": 11,
+        "endChar": 32
+      },
+      "revId": "3aa26536a9b05d0d320e340b311ccfff322c59ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "195363d0_bc2361e5",
+        "filename": "chrome/installer/zucchini/rel32_finder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-03T01:31:11Z",
+      "side": 1,
+      "message": "NIT: Might be easier to read to just assign this regularly below.",
+      "range": {
+        "startLine": 19,
+        "startChar": 6,
+        "endLine": 19,
+        "endChar": 17
+      },
+      "revId": "3aa26536a9b05d0d320e340b311ccfff322c59ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1856b33_d8641fc4",
+        "filename": "chrome/installer/zucchini/rel32_finder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-03T01:31:11Z",
+      "side": 1,
+      "message": "NIT: emit",
+      "range": {
+        "startLine": 40,
+        "startChar": 57,
+        "endLine": 40,
+        "endChar": 65
+      },
+      "revId": "3aa26536a9b05d0d320e340b311ccfff322c59ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6df1a7aa_ea2b0965",
+        "filename": "chrome/installer/zucchini/rel32_finder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-03T01:31:11Z",
+      "side": 1,
+      "message": "abs32_end",
+      "range": {
+        "startLine": 40,
+        "startChar": 36,
+        "endLine": 40,
+        "endChar": 50
+      },
+      "revId": "3aa26536a9b05d0d320e340b311ccfff322c59ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecbb61c2_631b75b5",
+        "filename": "chrome/installer/zucchini/rel32_finder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-03T01:31:11Z",
+      "side": 1,
+      "message": "Emit",
+      "range": {
+        "startLine": 50,
+        "startChar": 5,
+        "endLine": 50,
+        "endChar": 13
+      },
+      "revId": "3aa26536a9b05d0d320e340b311ccfff322c59ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "358f162d_be3017d0",
+        "filename": "chrome/installer/zucchini/rel32_finder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-03T01:31:11Z",
+      "side": 1,
+      "message": "Need more high-level comments, especially on why this exists. I recommend adding the following to README.md:\n\n**Abs32 references**: References whose targets are adjusted by the OS during program load. In an image, a **relocation table** typically provides locations of abs32 references. At abs32 location, the stored bytes then encodes semantic information about the target (e.g., as RVA).\n\n**Rel32 references**: References embedded within machine code, in which targets are encoded as some delta relative to the reference\u0027s location. Typical examples of rel32 references are branching instructions and instruction pointer-relative memory access.\n\nThen in the file:\n\n// See README.md for definitions on abs32 and rel32 references. We assume the following:\n// - Abs32 locations have a fixed length, and never overlap.\n// - Rel32 locations can be reasonably identified by heuristically disassembling machine code.\n// - Rel32 locations never overlap with each other, and never with abs32 locations.",
+      "revId": "3aa26536a9b05d0d320e340b311ccfff322c59ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9689c4e_5806eed2",
+        "filename": "chrome/installer/zucchini/rel32_finder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-03T01:31:11Z",
+      "side": 1,
+      "message": "// Abs32GapFinder is a class that iterates over all contiguous gaps in |region| that lie outside of |abs32_locations| elements, each taking up |abs_width| bytes. For example, given \n//   region \u003d [base_ + 8, base_ + 25),\n//   abs32_locations \u003d {2, 6, 15, 20, 27},\n//   abs32_width_ \u003d 4,\n// we obtain the following:\n//             111111111122222222223   -\u003e offsets\n//   0123456789012345678901234567890\n//   ........*****************......   -\u003e region \u003d *\n//     ^   ^        ^    ^      ^      -\u003e abs32 locations\n//     aaaaaaaa     aaaa aaaa   aaaa   -\u003e abs32 locations with width\n//   ........--*****----*----*......   -\u003e region excluding abs32 -\u003e 3 gaps\n// The resulting gaps (must be non-empty) are:\n//   [10, 15), [19, 20), [24, 25).\n// These gaps can then be passed to Rel32Finder (below) to find rel32 references that are guaranteed to not overlap with any abs32 references.",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 1
+      },
+      "revId": "3aa26536a9b05d0d320e340b311ccfff322c59ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abfe3a9c_fcdb14e4",
+        "filename": "chrome/installer/zucchini/rel32_finder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-03T01:31:11Z",
+      "side": 1,
+      "message": "non-overlapping",
+      "range": {
+        "startLine": 24,
+        "startChar": 43,
+        "endLine": 24,
+        "endChar": 51
+      },
+      "revId": "3aa26536a9b05d0d320e340b311ccfff322c59ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acfbc953_be55e797",
+        "filename": "chrome/installer/zucchini/rel32_finder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-03T01:31:11Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN(Abs32GapFinder);",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 1
+      },
+      "revId": "3aa26536a9b05d0d320e340b311ccfff322c59ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "372f28ef_05efcae5",
+        "filename": "chrome/installer/zucchini/rel32_finder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-03T01:31:11Z",
+      "side": 1,
+      "message": "Still need some work to use Abs32GapFinder?  Per earlier recommendation, the base class can handle interaction with Abs32GapFinder, and let overridden virtual functions handle rel32 extraction.  I\u0027m also fine with doing this in a helper function.  However, instantiating a new Rel32Finder for every gap found might be too expensive.",
+      "range": {
+        "startLine": 47,
+        "startChar": 6,
+        "endLine": 47,
+        "endChar": 17
+      },
+      "revId": "3aa26536a9b05d0d320e340b311ccfff322c59ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
