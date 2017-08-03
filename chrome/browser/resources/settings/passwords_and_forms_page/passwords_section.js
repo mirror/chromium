@@ -318,8 +318,10 @@ Polymer({
       return savedPasswords;
 
     return savedPasswords.filter(function(password) {
-      return password.loginPair.urls.shown.includes(filter) ||
-          password.loginPair.username.includes(filter);
+      return password.loginPair.urls.shown.toLowerCase().includes(
+                 filter.toLowerCase()) ||
+          password.loginPair.username.toLowerCase().includes(
+              filter.toLowerCase());
     });
   },
 
@@ -330,7 +332,7 @@ Polymer({
    */
   passwordExceptionFilter_: function(filter) {
     return function(exception) {
-      return exception.urls.shown.includes(filter);
+      return exception.urls.shown.toLowerCase().includes(filter.toLowerCase());
     };
   },
 
