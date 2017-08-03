@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08d74530_cd3d565c",
+        "filename": "chrome/browser/ssl/insecure_sensitive_input_driver.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-03T00:18:11Z",
+      "side": 1,
+      "message": "nit: \"insecure input events\"? \"InsecureInputService events\"?",
+      "range": {
+        "startLine": 15,
+        "startChar": 48,
+        "endLine": 15,
+        "endChar": 61
+      },
+      "revId": "015142e1564977e45f939eaf6b026bc0f95acea0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
