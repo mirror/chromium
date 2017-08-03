@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3625b618_1f6e978b",
+        "filename": "chrome/browser/net/android_status_listener.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1121934
+      },
+      "writtenOn": "2017-08-03T19:05:04Z",
+      "side": 1,
+      "message": "I removed the lock here and added a comment to StatusListener that implementations aren\u0027t thread-safe (that calls to the c\u0027tor, d\u0027tor, and SetApplicationStoppedCallback must all be on the same thread).",
+      "parentUuid": "1084d557_b1d18c91",
+      "range": {
+        "startLine": 37,
+        "startChar": 29,
+        "endLine": 37,
+        "endChar": 39
+      },
+      "revId": "ccc7c27e1b94ebefb38176e2fc4ab9f0cfd9e835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a72cc7d_3fafdb51",
         "filename": "net/cookies/cookie_monster.cc",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "ccc7c27e1b94ebefb38176e2fc4ab9f0cfd9e835",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5813ad00_de6ad960",
+        "filename": "net/cookies/cookie_monster.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1121934
+      },
+      "writtenOn": "2017-08-03T19:05:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a72cc7d_3fafdb51",
+      "revId": "ccc7c27e1b94ebefb38176e2fc4ab9f0cfd9e835",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
