@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f5295a8_e345ab48",
+        "filename": "ash/app_list/app_list_presenter_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-03T22:03:15Z",
+      "side": 1,
+      "message": "no else after return (see chromium style guide).",
+      "range": {
+        "startLine": 181,
+        "startChar": 3,
+        "endLine": 181,
+        "endChar": 10
+      },
+      "revId": "99f490fa721643b0ff833d5c361bad5c0ecbec45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d962fea_55512e18",
+        "filename": "ash/app_list/app_list_presenter_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-03T22:03:15Z",
+      "side": 1,
+      "message": "no else after return",
+      "range": {
+        "startLine": 205,
+        "startChar": 3,
+        "endLine": 205,
+        "endChar": 9
+      },
+      "revId": "99f490fa721643b0ff833d5c361bad5c0ecbec45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65edc066_3d216461",
+        "filename": "ash/app_list/app_list_presenter_delegate_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-03T22:03:15Z",
+      "side": 1,
+      "message": "Generally the order for expectations like this is expected, actual. You have the reverse. This comment applies to 269 and 274.",
+      "range": {
+        "startLine": 262,
+        "startChar": 14,
+        "endLine": 262,
+        "endChar": 25
+      },
+      "revId": "99f490fa721643b0ff833d5c361bad5c0ecbec45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06fc3899_0f10f043",
+        "filename": "ash/app_list/app_list_presenter_delegate_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-03T22:03:15Z",
+      "side": 1,
+      "message": "Where does the 100 ms come from?",
+      "range": {
+        "startLine": 268,
+        "startChar": 54,
+        "endLine": 268,
+        "endChar": 66
+      },
+      "revId": "99f490fa721643b0ff833d5c361bad5c0ecbec45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbc8b676_9100583c",
+        "filename": "ui/app_list/presenter/app_list_presenter_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-03T22:03:15Z",
+      "side": 1,
+      "message": "int -\u003e TimeDelta.",
+      "range": {
+        "startLine": 56,
+        "startChar": 9,
+        "endLine": 56,
+        "endChar": 14
+      },
+      "revId": "99f490fa721643b0ff833d5c361bad5c0ecbec45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08a757c7_befef04b",
+        "filename": "ui/app_list/presenter/app_list_presenter_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-03T22:03:15Z",
+      "side": 1,
+      "message": "These should be static constants.",
+      "range": {
+        "startLine": 61,
+        "startChar": 12,
+        "endLine": 61,
+        "endChar": 24
+      },
+      "revId": "99f490fa721643b0ff833d5c361bad5c0ecbec45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
