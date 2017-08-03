@@ -9,10 +9,15 @@
 #include <utility>
 
 #include "base/strings/utf_string_conversions.h"
+#include "components/exo/buffer.h"
+#include "components/exo/notification_surface.h"
+#include "components/exo/surface.h"
+#include "components/exo/test/exo_test_helper.h"
 #include "ui/arc/notification/arc_notification_content_view.h"
 #include "ui/arc/notification/arc_notification_delegate.h"
 #include "ui/arc/notification/arc_notification_item.h"
 #include "ui/arc/notification/arc_notification_surface.h"
+#include "ui/arc/notification/arc_notification_surface_manager_impl.h"
 #include "ui/arc/notification/arc_notification_view.h"
 #include "ui/aura/test/test_window_delegate.h"
 #include "ui/aura/window.h"
@@ -28,84 +33,6 @@ namespace arc {
 namespace {
 
 constexpr char kNotificationIdPrefix[] = "ARC_NOTIFICATION_";
-
-class MockNotificationSurface : public ArcNotificationSurface {
- public:
-  MockNotificationSurface(const std::string& notification_key,
-                          std::unique_ptr<aura::Window> window)
-      : notification_key_(notification_key), window_(std::move(window)) {}
-
-  gfx::Size GetSize() const override { return gfx::Size(100, 200); }
-
-  void Attach(views::NativeViewHost* nvh) override {
-    native_view_host_ = nvh;
-    nvh->Attach(window_.get());
-  }
-
-  void Detach() override {
-    EXPECT_TRUE(native_view_host_);
-    EXPECT_EQ(window_.get(), native_view_host_->native_view());
-    native_view_host_->Detach();
-    native_view_host_ = nullptr;
-  }
-
-  bool IsAttached() const override { return native_view_host_; }
-  views::NativeViewHost* GetAttachedHost() const override {
-    return native_view_host_;
-  }
-
-  aura::Window* GetWindow() const override { return window_.get(); }
-  aura::Window* GetContentWindow() const override { return window_.get(); }
-
-  const std::string& GetNotificationKey() const override {
-    return notification_key_;
-  }
-
- private:
-  std::string notification_key_;
-  std::unique_ptr<aura::Window> window_;
-  views::NativeViewHost* native_view_host_ = nullptr;
-
-  DISALLOW_COPY_AND_ASSIGN(MockNotificationSurface);
-};
-
-class TestNotificationSurfaceManager : public ArcNotificationSurfaceManager {
- public:
-  TestNotificationSurfaceManager() = default;
-
-  void PrepareSurface(std::string& notification_key) {
-    auto surface_window = base::MakeUnique<aura::Window>(&window_delegate_);
-    surface_window->SetType(aura::client::WINDOW_TYPE_CONTROL);
-    surface_window->Init(ui::LAYER_NOT_DRAWN);
-    surface_window->set_owned_by_parent(false);
-    surface_window->SetBounds(gfx::Rect(0, 0, 100, 200));
-
-    surface_map_[notification_key] = base::MakeUnique<MockNotificationSurface>(
-        notification_key, std::move(surface_window));
-  }
-  size_t surface_found_count() const { return surface_found_count_; }
-
-  ArcNotificationSurface* GetArcSurface(
-      const std::string& notification_key) const override {
-    auto it = surface_map_.find(notification_key);
-    if (it != surface_map_.end()) {
-      ++surface_found_count_;
-      return it->second.get();
-    }
-    return nullptr;
-  }
-  void AddObserver(Observer* observer) override {}
-  void RemoveObserver(Observer* observer) override {}
-
- private:
-  // Mutable for modifying in const method.
-  mutable int surface_found_count_ = 0;
-
-  aura::test::TestWindowDelegate window_delegate_;
-  std::map<std::string, std::unique_ptr<ArcNotificationSurface>> surface_map_;
-
-  DISALLOW_COPY_AND_ASSIGN(TestNotificationSurfaceManager);
-};
 
 }  // anonymous namespace
 
@@ -230,13 +157,16 @@ class ArcNotificationContentViewTest : public views::ViewsTestBase {
   void SetUp() override {
     views::ViewsTestBase::SetUp();
 
-    surface_manager_ = base::MakeUnique<TestNotificationSurfaceManager>();
+    surface_manager_ = base::MakeUnique<ArcNotificationSurfaceManagerImpl>();
   }
 
   void TearDown() override {
     // Widget and view need to be closed before TearDown() if have been created.
     EXPECT_FALSE(wrapper_widget_);
     EXPECT_FALSE(notification_view_);
+
+    notification_surface_.reset();
+    surface_.reset();
 
     surface_manager_.reset();
 
@@ -278,6 +208,20 @@ class ArcNotificationContentViewTest : public views::ViewsTestBase {
     notification_view_.reset();
   }
 
+  void PrepareSurface(std::string& notification_key) {
+    exo::test::ExoTestHelper exo_test_helper;
+
+    surface_ = base::MakeUnique<exo::Surface>();
+    notification_surface_ = base::MakeUnique<exo::NotificationSurface>(
+        surface_manager(), surface_.get(), notification_key);
+
+    const gfx::Rect bounds(100, 100, 300, 300);
+    exo::Buffer buffer(exo_test_helper.CreateGpuMemoryBuffer(bounds.size()));
+    surface_->Attach(&buffer);
+
+    surface_->Commit();
+  }
+
   message_center::Notification CreateNotification(
       MockArcNotificationItem* notification_item) {
     return message_center::Notification(
@@ -292,7 +236,7 @@ class ArcNotificationContentViewTest : public views::ViewsTestBase {
   }
 
   TestMessageCenterController* controller() { return &controller_; }
-  TestNotificationSurfaceManager* surface_manager() {
+  ArcNotificationSurfaceManagerImpl* surface_manager() const {
     return surface_manager_.get();
   }
   views::Widget* widget() { return notification_view_->GetWidget(); }
@@ -303,15 +247,13 @@ class ArcNotificationContentViewTest : public views::ViewsTestBase {
     return static_cast<ArcNotificationContentView*>(view);
   }
 
-  TestNotificationSurfaceManager* surface_manager() const {
-    return surface_manager_.get();
-  }
-
  private:
   TestMessageCenterController controller_;
-  std::unique_ptr<TestNotificationSurfaceManager> surface_manager_;
+  std::unique_ptr<ArcNotificationSurfaceManagerImpl> surface_manager_;
   std::unique_ptr<ArcNotificationView> notification_view_;
   std::unique_ptr<views::Widget> wrapper_widget_;
+  std::unique_ptr<exo::Surface> surface_;
+  std::unique_ptr<exo::NotificationSurface> notification_surface_;
 
   DISALLOW_COPY_AND_ASSIGN(ArcNotificationContentViewTest);
 };
@@ -324,7 +266,7 @@ TEST_F(ArcNotificationContentViewTest, CreateSurfaceAfterNotification) {
   message_center::Notification notification =
       CreateNotification(notification_item.get());
 
-  surface_manager()->PrepareSurface(notification_key);
+  PrepareSurface(notification_key);
 
   CreateAndShowNotificationView(notification);
   CloseNotificationView();
@@ -333,7 +275,7 @@ TEST_F(ArcNotificationContentViewTest, CreateSurfaceAfterNotification) {
 TEST_F(ArcNotificationContentViewTest, CreateSurfaceBeforeNotification) {
   std::string notification_key("notification id");
 
-  surface_manager()->PrepareSurface(notification_key);
+  PrepareSurface(notification_key);
 
   auto notification_item =
       base::MakeUnique<MockArcNotificationItem>(notification_key);
@@ -361,12 +303,12 @@ TEST_F(ArcNotificationContentViewTest, CloseButton) {
 
   auto notification_item =
       base::MakeUnique<MockArcNotificationItem>(notification_key);
-  surface_manager()->PrepareSurface(notification_key);
+  PrepareSurface(notification_key);
   message_center::Notification notification =
       CreateNotification(notification_item.get());
   CreateAndShowNotificationView(notification);
 
-  EXPECT_EQ(1u, surface_manager()->surface_found_count());
+  // EXPECT_EQ(1u, surface_manager()->surface_found_count());
   EXPECT_FALSE(controller()->IsRemoved(notification_item->GetNotificationId()));
   PressCloseButton();
   EXPECT_TRUE(controller()->IsRemoved(notification_item->GetNotificationId()));
@@ -382,7 +324,7 @@ TEST_F(ArcNotificationContentViewTest, ReuseSurfaceAfterClosing) {
   message_center::Notification notification =
       CreateNotification(notification_item.get());
 
-  surface_manager()->PrepareSurface(notification_key);
+  PrepareSurface(notification_key);
 
   // Use the created surface.
   CreateAndShowNotificationView(notification);
