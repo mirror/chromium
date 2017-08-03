@@ -1,0 +1,303 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47f06cd9_239fabec",
+        "filename": "components/cryptauth/device_capability_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-03T18:06:38Z",
+      "side": 1,
+      "message": "This DCHECK() should go in ProcessSetCapabilityRequest(). It already exists there, so go ahead and delete this line.",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 25,
+        "endChar": 58
+      },
+      "revId": "cf96cf9a77b089cd76cdeb87d94c4ea9ab8b485d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6512a29d_2c32780d",
+        "filename": "components/cryptauth/device_capability_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-03T18:06:38Z",
+      "side": 1,
+      "message": "This is already done in IsDeviceUnlockPromotable(). Leave it there; there\u0027s no reason to create an extra client and delete it in IsDeviceUnlockPromotable() when the new one is created.",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 75
+      },
+      "revId": "cf96cf9a77b089cd76cdeb87d94c4ea9ab8b485d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb4cb82f_08ce23c4",
+        "filename": "components/cryptauth/device_capability_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-03T18:06:38Z",
+      "side": 1,
+      "message": "nit: We should DCHECK() that current_cryptauth_client_ is null before creating a new one. Please create a helper function CreateNewCryptAuthClient() which performs the DCHECK() and assigns to |current_cryptauth_client_| like you do here, then call it from everywhere that you create a new client.",
+      "range": {
+        "startLine": 104,
+        "startChar": 0,
+        "endLine": 104,
+        "endChar": 75
+      },
+      "revId": "cf96cf9a77b089cd76cdeb87d94c4ea9ab8b485d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95cc131e_a834a703",
+        "filename": "components/cryptauth/device_capability_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-03T18:06:38Z",
+      "side": 1,
+      "message": "nit: Newline before you create the request and before you call ToggleEasyUnlock().\n\nSame below in IsDeviceUnlockPromotable().",
+      "range": {
+        "startLine": 105,
+        "startChar": 0,
+        "endLine": 105,
+        "endChar": 1
+      },
+      "revId": "cf96cf9a77b089cd76cdeb87d94c4ea9ab8b485d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f0d7a69_6391af1c",
+        "filename": "components/cryptauth/device_capability_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-03T18:06:38Z",
+      "side": 1,
+      "message": "nit: You can inline this in the FindEligibleUnlockDevices() call.",
+      "range": {
+        "startLine": 132,
+        "startChar": 0,
+        "endLine": 132,
+        "endChar": 43
+      },
+      "revId": "cf96cf9a77b089cd76cdeb87d94c4ea9ab8b485d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4d72bef_b61078d7",
+        "filename": "components/cryptauth/device_capability_manager.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-03T18:06:38Z",
+      "side": 1,
+      "message": "nit: Newline before this and before the switch.\n\nThere\u0027s no \"hard\" rule for when you need to use a newline, but generally you should try to break up your functions into smaller, related chunks.",
+      "range": {
+        "startLine": 189,
+        "startChar": 0,
+        "endLine": 189,
+        "endChar": 1
+      },
+      "revId": "cf96cf9a77b089cd76cdeb87d94c4ea9ab8b485d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35f58482_d6325182",
+        "filename": "components/cryptauth/device_capability_manager.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-03T18:06:38Z",
+      "side": 1,
+      "message": "IS_DEVICE_PROMOTABLE\n\nNote that you also wrote this in comments, so fix those places too since they won\u0027t be caught by the compiler.",
+      "range": {
+        "startLine": 63,
+        "startChar": 4,
+        "endLine": 63,
+        "endChar": 23
+      },
+      "revId": "cf96cf9a77b089cd76cdeb87d94c4ea9ab8b485d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1af8e3cc_0dc45619",
+        "filename": "components/cryptauth/device_capability_manager.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-03T18:06:38Z",
+      "side": 1,
+      "message": "Doesn\u0027t look like this is ever used - please remove.",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 14
+      },
+      "revId": "cf96cf9a77b089cd76cdeb87d94c4ea9ab8b485d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db17ffa0_f4ae5a82",
+        "filename": "components/cryptauth/device_capability_manager.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-03T18:06:38Z",
+      "side": 1,
+      "message": "Just use a bool. No need to use a const reference for a primitive.",
+      "range": {
+        "startLine": 90,
+        "startChar": 34,
+        "endLine": 90,
+        "endChar": 45
+      },
+      "revId": "cf96cf9a77b089cd76cdeb87d94c4ea9ab8b485d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7558de17_c8258f60",
+        "filename": "components/cryptauth/device_capability_manager.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-03T18:06:38Z",
+      "side": 1,
+      "message": "nit: Public fields don\u0027t need to be suffixed with \"_\".",
+      "range": {
+        "startLine": 95,
+        "startChar": 0,
+        "endLine": 95,
+        "endChar": 33
+      },
+      "revId": "cf96cf9a77b089cd76cdeb87d94c4ea9ab8b485d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc9baa5b_d86d0ba4",
+        "filename": "components/cryptauth/device_capability_manager.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-03T18:06:38Z",
+      "side": 1,
+      "message": "nit: Please group the similar function names together:\n\nvoid ProcessSetCapabilityRequest();\nvoid ProcessFindEligibleRequest();\nvoid ProcessIsDevicePromotableRequest();\n\nvoid SetUnlockKeyCapability();\nvoid FindEligibleUnlockDevices();\nvoid IsDeviceUnlockPromotable();\n\nvoid OnToggleEasyUnlockResponse(const ToggleEasyUnlockResponse\u0026 response);\nvoid OnFindEligibleUnlockDevicesResponse(\n    const FindEligibleUnlockDevicesResponse\u0026 response);\nvoid OnIsDeviceUnlockPromotableResponse(\n    const FindEligibleForPromotionResponse\u0026 response);\nvoid OnErrorResponse(const std::string\u0026 response);\n\nvoid ProcessRequestQueue();\n\nPlease also move them to that order in the .cc file.",
+      "range": {
+        "startLine": 116,
+        "startChar": 0,
+        "endLine": 116,
+        "endChar": 32
+      },
+      "revId": "cf96cf9a77b089cd76cdeb87d94c4ea9ab8b485d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a29db285_69b88571",
+        "filename": "components/cryptauth/device_capability_manager.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-03T18:06:38Z",
+      "side": 1,
+      "message": "nit: Newline between functions and fields.",
+      "range": {
+        "startLine": 139,
+        "startChar": 0,
+        "endLine": 139,
+        "endChar": 1
+      },
+      "revId": "cf96cf9a77b089cd76cdeb87d94c4ea9ab8b485d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cdc28c7_508ed79c",
+        "filename": "components/cryptauth/device_capability_manager.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-03T18:06:38Z",
+      "side": 1,
+      "message": "nit: Fields initialized in the constructor generally go before other fields.",
+      "range": {
+        "startLine": 143,
+        "startChar": 0,
+        "endLine": 143,
+        "endChar": 53
+      },
+      "revId": "cf96cf9a77b089cd76cdeb87d94c4ea9ab8b485d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
