@@ -101,7 +101,7 @@ void PPB_Audio_Shared::SetStreamInfo(
     base::SyncSocket::Handle socket_handle,
     PP_AudioSampleRate sample_rate,
     int sample_frame_count) {
-  socket_.reset(new base::CancelableSyncSocket(socket_handle));
+  socket_.reset(new base::CancelableSyncSocket(std::move(socket_handle)));
   shared_memory_.reset(new base::SharedMemory(shared_memory_handle, false));
   shared_memory_size_ = shared_memory_size;
   bytes_per_second_ =

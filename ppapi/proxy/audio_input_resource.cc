@@ -156,9 +156,9 @@ void AudioInputResource::OnPluginMsgOpenReply(
     IPC::PlatformFileForTransit socket_handle_for_transit =
         IPC::InvalidPlatformFileForTransit();
     params.TakeSocketHandleAtIndex(0, &socket_handle_for_transit);
-    base::SyncSocket::Handle socket_handle =
-        IPC::PlatformFileForTransitToPlatformFile(socket_handle_for_transit);
-    CHECK(socket_handle != base::SyncSocket::kInvalidHandle);
+    base::SyncSocket::Handle socket_handle(
+        IPC::PlatformFileForTransitToPlatformFile(socket_handle_for_transit));
+    CHECK(socket_handle.is_valid());
 
     SerializedHandle serialized_shared_memory_handle =
         params.TakeHandleOfTypeAtIndex(1, SerializedHandle::SHARED_MEMORY);
@@ -167,7 +167,7 @@ void AudioInputResource::OnPluginMsgOpenReply(
     open_state_ = OPENED;
     SetStreamInfo(serialized_shared_memory_handle.shmem(),
                   serialized_shared_memory_handle.size(),
-                  socket_handle);
+                  std::move(socket_handle));
   } else {
     capturing_ = false;
   }
@@ -181,7 +181,7 @@ void AudioInputResource::SetStreamInfo(
     base::SharedMemoryHandle shared_memory_handle,
     size_t shared_memory_size,
     base::SyncSocket::Handle socket_handle) {
-  socket_.reset(new base::CancelableSyncSocket(socket_handle));
+  socket_.reset(new base::CancelableSyncSocket(std::move(socket_handle)));
   shared_memory_.reset(new base::SharedMemory(shared_memory_handle, false));
   shared_memory_size_ = shared_memory_size;
   DCHECK(!shared_memory_->memory());

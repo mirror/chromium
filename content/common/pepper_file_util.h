@@ -20,9 +20,6 @@ namespace content {
 storage::FileSystemType PepperFileSystemTypeToFileSystemType(
     PP_FileSystemType type);
 
-int IntegerFromSyncSocketHandle(
-    const base::SyncSocket::Handle& socket_handle);
-
 }  // namespace content
 
 #endif  // CONTENT_COMMON_PEPPER_FILE_UTIL_H_

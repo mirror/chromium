@@ -34,8 +34,8 @@ const int kDefaultTimeoutMilliSeconds = 1000;
 
 bool CreatePairImpl(HANDLE* socket_a, HANDLE* socket_b, bool overlapped) {
   DCHECK_NE(socket_a, socket_b);
-  DCHECK_EQ(*socket_a, SyncSocket::kInvalidHandle);
-  DCHECK_EQ(*socket_b, SyncSocket::kInvalidHandle);
+  DCHECK_EQ(*socket_a, INVALID_HANDLE_VALUE);
+  DCHECK_EQ(*socket_b, INVALID_HANDLE_VALUE);
 
   wchar_t name[kPipePathMax];
   ScopedHandle handle_a;
@@ -128,7 +128,7 @@ size_t CancelableFileOperation(Function operation,
   static_assert(sizeof(buffer[0]) == sizeof(char), "incorrect buffer type");
   DCHECK_GT(length, 0u);
   DCHECK_LE(length, kMaxMessageLength);
-  DCHECK_NE(file, SyncSocket::kInvalidHandle);
+  DCHECK_NE(file, INVALID_HANDLE_VALUE);
 
   // Track the finish time so we can calculate the timeout as data is read.
   TimeTicks current_time, finish_time;
@@ -203,15 +203,9 @@ size_t CancelableFileOperation(Function operation,
 
 }  // namespace
 
-#if defined(COMPONENT_BUILD)
-const SyncSocket::Handle SyncSocket::kInvalidHandle = INVALID_HANDLE_VALUE;
-#endif
-
-SyncSocket::SyncSocket() : handle_(kInvalidHandle) {}
-
-SyncSocket::~SyncSocket() {
-  Close();
-}
+SyncSocket::SyncSocket() {}
+SyncSocket::SyncSocket(Handle handle) : handle_(std::move(handle)) {}
+SyncSocket::~SyncSocket() {}
 
 // static
 bool SyncSocket::CreatePair(SyncSocket* socket_a, SyncSocket* socket_b) {
@@ -221,34 +215,30 @@ bool SyncSocket::CreatePair(SyncSocket* socket_a, SyncSocket* socket_b) {
 // static
 SyncSocket::Handle SyncSocket::UnwrapHandle(
     const TransitDescriptor& descriptor) {
-  return descriptor;
+  return Handle(descriptor);
 }
 
 bool SyncSocket::PrepareTransitDescriptor(ProcessHandle peer_process_handle,
                                           TransitDescriptor* descriptor) {
   DCHECK(descriptor);
-  if (!::DuplicateHandle(GetCurrentProcess(), handle(), peer_process_handle,
-                         descriptor, 0, FALSE, DUPLICATE_SAME_ACCESS)) {
+  if (!::DuplicateHandle(GetCurrentProcess(), handle_.get(),
+                         peer_process_handle, descriptor, 0, FALSE,
+                         DUPLICATE_SAME_ACCESS)) {
     DPLOG(ERROR) << "Cannot duplicate socket handle for peer process.";
     return false;
   }
   return true;
 }
 
-bool SyncSocket::Close() {
-  if (handle_ == kInvalidHandle)
-    return true;
-
-  const BOOL result = CloseHandle(handle_);
-  handle_ = kInvalidHandle;
-  return result == TRUE;
+void SyncSocket::Close() {
+  handle_.reset();
 }
 
 size_t SyncSocket::Send(const void* buffer, size_t length) {
   ThreadRestrictions::AssertIOAllowed();
   DCHECK_GT(length, 0u);
   DCHECK_LE(length, kMaxMessageLength);
-  DCHECK_NE(handle_, kInvalidHandle);
+  DCHECK(!handle_.is_valid());
   size_t count = 0;
   while (count < length) {
     DWORD len;
@@ -273,7 +263,7 @@ size_t SyncSocket::Receive(void* buffer, size_t length) {
   ThreadRestrictions::AssertIOAllowed();
   DCHECK_GT(length, 0u);
   DCHECK_LE(length, kMaxMessageLength);
-  DCHECK_NE(handle_, kInvalidHandle);
+  DCHECK(handle_.is_valid());
   size_t count = 0;
   while (count < length) {
     DWORD len;
@@ -294,9 +284,11 @@ size_t SyncSocket::Peek() {
 }
 
 SyncSocket::Handle SyncSocket::Release() {
-  Handle r = handle_;
-  handle_ = kInvalidHandle;
-  return r;
+  return std::move(handle_);
+}
+
+TransitDescriptor SyncSocket::ReleaseAsTransitDescriptor() {
+  return TransitDescriptor(Release());
 }
 
 CancelableSyncSocket::CancelableSyncSocket()

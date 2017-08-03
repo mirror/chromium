@@ -19,10 +19,9 @@ AudioHelper::AudioHelper() : shared_memory_size_for_create_callback_(0) {}
 
 AudioHelper::~AudioHelper() {}
 
-int32_t AudioHelper::GetSyncSocketImpl(int* sync_socket) {
+int32_t AudioHelper::GetSyncSocketImpl(base::SyncSocket::Handle* sync_socket) {
   if (socket_for_create_callback_) {
-    *sync_socket = IntegerFromSyncSocketHandle(
-        socket_for_create_callback_->handle());
+    *sync_socket = socket_for_create_callback_->Release();
     return PP_OK;
   }
   return PP_ERROR_FAILED;
@@ -48,7 +47,8 @@ void AudioHelper::StreamCreated(base::SharedMemoryHandle shared_memory_handle,
     shared_memory_for_create_callback_.reset(
         new base::SharedMemory(shared_memory_handle, false));
     shared_memory_size_for_create_callback_ = shared_memory_size;
-    socket_for_create_callback_.reset(new base::SyncSocket(socket_handle));
+    socket_for_create_callback_.reset(
+        new base::SyncSocket(std::move(socket_handle)));
 
     create_callback_->Run(PP_OK);
 
@@ -60,7 +60,8 @@ void AudioHelper::StreamCreated(base::SharedMemoryHandle shared_memory_handle,
     // the I/O thread and back, but this extra complexity doesn't seem worth it
     // just to clean up these handles faster.
   } else {
-    OnSetStreamInfo(shared_memory_handle, shared_memory_size, socket_handle);
+    OnSetStreamInfo(shared_memory_handle, shared_memory_size,
+                    std::move(socket_handle));
   }
 }
 

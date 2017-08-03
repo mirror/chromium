@@ -376,17 +376,12 @@ void AudioOutputDevice::OnDeviceAuthorized(
   }
 }
 
-void AudioOutputDevice::OnStreamCreated(
-    base::SharedMemoryHandle handle,
-    base::SyncSocket::Handle socket_handle,
-    int length) {
+void AudioOutputDevice::OnStreamCreated(base::SharedMemoryHandle handle,
+                                        base::SyncSocket::Handle socket_handle,
+                                        int length) {
   DCHECK(task_runner()->BelongsToCurrentThread());
   DCHECK(base::SharedMemory::IsHandleValid(handle));
-#if defined(OS_WIN)
-  DCHECK(socket_handle);
-#else
-  DCHECK_GE(socket_handle, 0);
-#endif
+  DCHECK(socket_handle.is_valid());
   DCHECK_GT(length, 0);
 
   if (state_ != CREATING_STREAM)
@@ -415,7 +410,7 @@ void AudioOutputDevice::OnStreamCreated(
     audio_callback_.reset(new AudioOutputDevice::AudioThreadCallback(
         audio_parameters_, handle, length, callback_));
     audio_thread_.reset(new AudioDeviceThread(
-        audio_callback_.get(), socket_handle, "AudioOutputDevice"));
+        audio_callback_.get(), std::move(socket_handle), "AudioOutputDevice"));
     state_ = PAUSED;
 
     // We handle the case where Play() and/or Pause() may have been called

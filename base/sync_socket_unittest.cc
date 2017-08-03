@@ -93,9 +93,6 @@ void SendReceivePeek(SyncSocket* socket_a, SyncSocket* socket_b) {
 
   ASSERT_EQ(0u, socket_a->Peek());
   ASSERT_EQ(0u, socket_b->Peek());
-
-  ASSERT_TRUE(socket_a->Close());
-  ASSERT_TRUE(socket_b->Close());
 }
 
 }  // namespace

@@ -135,17 +135,17 @@ void AudioInputMessageFilter::OnStreamCreated(
 
   base::SyncSocket::Handle socket_handle =
       base::SyncSocket::UnwrapHandle(socket_descriptor);
+
   media::AudioInputIPCDelegate* delegate = delegates_.Lookup(stream_id);
   if (!delegate) {
     DLOG(WARNING) << "Got audio stream event for a non-existent or removed"
                   << " audio capturer (stream_id=" << stream_id << ").";
     base::SharedMemory::CloseHandle(handle);
-    base::SyncSocket socket(socket_handle);
     return;
   }
   // Forward message to the stream delegate.
-  delegate->OnStreamCreated(handle, socket_handle, length, total_segments,
-                            initially_muted);
+  delegate->OnStreamCreated(handle, std::move(socket_handle), length,
+                            total_segments, initially_muted);
 }
 
 void AudioInputMessageFilter::OnStreamError(int stream_id) {

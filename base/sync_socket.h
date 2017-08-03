@@ -13,6 +13,7 @@
 
 #include "base/base_export.h"
 #include "base/compiler_specific.h"
+#include "base/files/platform_file.h"
 #include "base/macros.h"
 #include "base/process/process_handle.h"
 #include "base/synchronization/waitable_event.h"
@@ -32,19 +33,20 @@ namespace base {
 
 class BASE_EXPORT SyncSocket {
  public:
+  typedef ScopedPlatformFile Handle;
+
+// TODO(sergeyu): Remove TransitDescriptor. Use IPC::PlatformFileForTransit
+// instead.
 #if defined(OS_WIN)
-  typedef HANDLE Handle;
-  typedef Handle TransitDescriptor;
+  typedef HANDLE TransitDescriptor;
 #else
-  typedef int Handle;
   typedef FileDescriptor TransitDescriptor;
 #endif
-  static const Handle kInvalidHandle;
 
   SyncSocket();
 
   // Creates a SyncSocket from a Handle.  Used in transport.
-  explicit SyncSocket(Handle handle) : handle_(handle)  {}
+  explicit SyncSocket(Handle handle);
   virtual ~SyncSocket();
 
   // Initializes and connects a pair of sockets.
@@ -61,8 +63,8 @@ class BASE_EXPORT SyncSocket {
   bool PrepareTransitDescriptor(ProcessHandle peer_process_handle,
                                 TransitDescriptor* descriptor);
 
-  // Closes the SyncSocket.  Returns true on success, false on failure.
-  virtual bool Close();
+  // Closes the SyncSocket.
+  virtual void Close();
 
   // Sends the message to the remote peer of the SyncSocket.
   // Note it is not safe to send messages from the same socket handle by
@@ -89,12 +91,12 @@ class BASE_EXPORT SyncSocket {
   // not block when called.
   virtual size_t Peek();
 
-  // Extracts the contained handle.  Used for transferring between
-  // processes.
-  Handle handle() const { return handle_; }
-
   // Extracts and takes ownership of the contained handle.
   Handle Release();
+
+  // Extracts and takes ownership of the contained handle to be passed to
+  // another process.
+  TransitDescriptor ReleaseAsTransitDescriptor();
 
  protected:
   Handle handle_;
@@ -128,7 +130,7 @@ class BASE_EXPORT CancelableSyncSocket : public SyncSocket {
   // and there isn't a way to cancel a blocking synchronous Read that is
   // supported on <Vista. So, for Windows only, we override these
   // SyncSocket methods in order to support shutting down the 'socket'.
-  bool Close() override;
+  void Close() override;
   size_t Receive(void* buffer, size_t length) override;
   size_t ReceiveWithTimeout(void* buffer,
                             size_t length,

@@ -55,8 +55,8 @@ class PepperAudioInputHost : public ppapi::host::ResourceHost {
                       size_t shared_memory_size,
                       base::SyncSocket::Handle socket_handle);
 
-  int32_t GetRemoteHandles(
-      const base::SyncSocket& socket,
+  int32_t CreateRemoteHandles(
+      base::SyncSocket::Handle socket_handle,
       const base::SharedMemory& shared_memory,
       IPC::PlatformFileForTransit* remote_socket_handle,
       base::SharedMemoryHandle* remote_shared_memory_handle);
