@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d35182d5_d9cbebdc",
+        "filename": "ash/accelerators/accelerator_controller.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 452,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-03T19:34:07Z",
+      "side": 1,
+      "message": "Would it make more sense for ToggleAppList to handle logging this? That is, should ToggleAppList take an enum of who is calling it?",
+      "range": {
+        "startLine": 452,
+        "startChar": 6,
+        "endLine": 452,
+        "endChar": 26
+      },
+      "revId": "c57950329ef6755c1e188f8d4e2bc8c61d39426d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26e226db_6d735b0c",
+        "filename": "ui/app_list/app_list_constants.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-03T19:34:07Z",
+      "side": 1,
+      "message": "I suspect you don\u0027t need the export for an enum. Also, style for enums if now kFoo.",
+      "range": {
+        "startLine": 113,
+        "startChar": 5,
+        "endLine": 113,
+        "endChar": 17
+      },
+      "revId": "c57950329ef6755c1e188f8d4e2bc8c61d39426d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "032db437_88c4d3dd",
+        "filename": "ui/app_list/app_list_model.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-03T19:34:07Z",
+      "side": 1,
+      "message": "I\u0027m not familiar with the model. Do we not support folders of folders?",
+      "range": {
+        "startLine": 329,
+        "startChar": 14,
+        "endLine": 329,
+        "endChar": 35
+      },
+      "revId": "c57950329ef6755c1e188f8d4e2bc8c61d39426d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea983fbf_c4a85849",
+        "filename": "ui/app_list/app_list_model.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-03T19:34:07Z",
+      "side": 1,
+      "message": "I believe you need to use two separate macros for this case.",
+      "range": {
+        "startLine": 337,
+        "startChar": 2,
+        "endLine": 337,
+        "endChar": 26
+      },
+      "revId": "c57950329ef6755c1e188f8d4e2bc8c61d39426d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
