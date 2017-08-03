@@ -260,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "70fa749b_164ca9ed",
+        "filename": "base/task_scheduler/scheduler_worker.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-08-03T16:23:17Z",
+      "side": 1,
+      "message": "You can write \"Called by *the* SchedulerWorker\u0027s thread...\" to make it clearer that it\u0027s called by the thread of the SchedulerWorker that owns this delegate and not by any SchedulerWorker\u0027s thread.",
+      "parentUuid": "b52ce63b_37db44e6",
+      "range": {
+        "startLine": 68,
+        "startChar": 7,
+        "endLine": 68,
+        "endChar": 43
+      },
+      "revId": "eb9687209c9efba9fde69645e7447660b7c3efe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a288878d_d30ac8ab",
         "filename": "base/task_scheduler/scheduler_worker.h",
         "patchSetId": 22
