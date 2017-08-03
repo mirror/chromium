@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "56110b85_1e9f89f8",
+        "filename": "third_party/WebKit/Source/core/editing/commands/SelectionForUndoStep.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-03T05:01:39Z",
+      "side": 1,
+      "message": "Added comment and filed http://crbug.com/cbug.com/751945",
+      "parentUuid": "c56f9a48_8c185680",
+      "range": {
+        "startLine": 20,
+        "startChar": 31,
+        "endLine": 20,
+        "endChar": 61
+      },
+      "revId": "db03bf2c0c07c8e2e086c06c910e9f7ceefa0377",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d5d08cf3_177b23f7",
         "filename": "third_party/WebKit/Source/core/editing/commands/SelectionForUndoStep.cpp",
         "patchSetId": 13
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "066a9652_729fcfff",
+        "filename": "third_party/WebKit/Source/core/editing/commands/SelectionForUndoStep.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-03T05:01:39Z",
+      "side": 1,
+      "message": "No, we can\u0027t compare |base| and |extent|, since they can be disconnect.\nThis is the reason why we introduce this member function.",
+      "parentUuid": "d5d08cf3_177b23f7",
+      "revId": "db03bf2c0c07c8e2e086c06c910e9f7ceefa0377",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd6c84dd_f65b442d",
         "filename": "third_party/WebKit/Source/core/editing/commands/SelectionForUndoStep.cpp",
         "patchSetId": 13
@@ -53,6 +95,24 @@
       "writtenOn": "2017-08-02T19:13:11Z",
       "side": 1,
       "message": "nit: DCHECK_LT(base, extent) seems better.",
+      "revId": "db03bf2c0c07c8e2e086c06c910e9f7ceefa0377",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8af0b247_acd4f6ad",
+        "filename": "third_party/WebKit/Source/core/editing/commands/SelectionForUndoStep.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-03T05:01:39Z",
+      "side": 1,
+      "message": "Ditto as SetBaseAndExtentAsBackwardSelection().\n\n|base| and |extent| can be disconnected.",
+      "parentUuid": "dd6c84dd_f65b442d",
       "revId": "db03bf2c0c07c8e2e086c06c910e9f7ceefa0377",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
