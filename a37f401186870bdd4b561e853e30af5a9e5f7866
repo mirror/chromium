@@ -178,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "cde3f777_09f2583c",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-03T22:55:14Z",
+      "side": 1,
+      "message": "net::ERR_FAILED in a net lib error code, it means the network library failed in some way (dns or socket error. malformed resonse head, etc). A 500 response from a server is differnt, the network library successfully sent the request and received a well formed response which happens to have a status code of 500.\n\nI think there\u0027s retry logic in the URLFetcher class the relies on this distinction.\n\n\u003e Additionally I have seen cases where OnResponseStarted gets called for errors.\n\nIt\u0027s just part of net::URLRequest contract to call OnResponseStarted like that, otherwise there is no way for the error to be reported to it\u0027s Delegate. The URLLoader api is different.",
+      "parentUuid": "c4c70550_f94b354b",
+      "revId": "a37f401186870bdd4b561e853e30af5a9e5f7866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3618b045_d5c0e156",
         "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
         "patchSetId": 5
