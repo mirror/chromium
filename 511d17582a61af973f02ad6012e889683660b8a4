@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9dab3a42_28700625",
+        "filename": "content/public/browser/arc_tracing_agent.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-08-03T22:39:29Z",
+      "side": 1,
+      "message": "I think I preferred the old structure (maybe swapping the order for error and EOF cases):\n\n  if (n \u003c 0) {\n    DPLOG(WARNING) \u003c\u003c \"Unexpected error while reading trace from client.\";\n    // Do nothing here as StopTracing will do the clean up and the existing\n    // trace logs will be returned.\n    return;\n  }\n\n  if (n \u003d\u003d 0) {\n    // When EOF is reached, stop listening for changes since there\u0027s never\n    // going to be any more data to be read. The rest of the cleanup will be\n    // done in StopTracing.\n    fd_watcher_.reset();\n    return;\n  }\n\nI\u0027m not 100% sure we should still reset it in case of errors, but if you think there\u0027s a case for it, add it in the second block (and update the comment accordingly).",
+      "range": {
+        "startLine": 71,
+        "startChar": 4,
+        "endLine": 73,
+        "endChar": 37
+      },
+      "revId": "511d17582a61af973f02ad6012e889683660b8a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
