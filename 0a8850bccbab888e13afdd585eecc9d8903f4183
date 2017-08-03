@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b80f70d_abed7eff",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-03T23:43:45Z",
+      "side": 1,
+      "message": "two static caches",
+      "revId": "0a8850bccbab888e13afdd585eecc9d8903f4183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de878ac9_944e14b3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-03T23:43:45Z",
+      "side": 1,
+      "message": "I think you can remove \"By default ... is used, but\" without a semantic change.",
+      "revId": "0a8850bccbab888e13afdd585eecc9d8903f4183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "010bacba_754c3171",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-03T23:43:45Z",
+      "side": 1,
+      "message": "data intensive pages slowing down the Chrome application too much -\u003e malicious Web pages from mounting a denial of service attack against Chrome\u0027s UI and internals?",
+      "revId": "0a8850bccbab888e13afdd585eecc9d8903f4183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6f11ada_4b5de19c",
+        "filename": "components/leveldb/leveldb_database_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-03T23:43:45Z",
+      "side": 1,
+      "message": "Databases now use one of two shared caches, so instances no longer own their caches?\n\nOut of curiosity: Why did this pass CQ? I thought std::unique_ptr would free the cache when the LevelDBDatabaseImpl is destroyed, so the first IndexedDB database close would kill the Web cache. Is the 2-second destruction delay enough to keep the impl alive throughout all the layout tests?",
+      "revId": "0a8850bccbab888e13afdd585eecc9d8903f4183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "908d1e7b_36c88d12",
+        "filename": "components/leveldb/leveldb_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-03T23:43:45Z",
+      "side": 1,
+      "message": "Would it be worth DCHECKing that options.block_cache is null, so we\u0027re guaranteed to get the default cache?",
+      "revId": "0a8850bccbab888e13afdd585eecc9d8903f4183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aab556dd_632f8f3e",
+        "filename": "components/leveldb/public/interfaces/leveldb.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-03T23:43:45Z",
+      "side": 1,
+      "message": "It might be useful to have clients specify an abstract access class / access pattern / isolation level instead of explicitly coupling the option to the block cache. This\u0027d let us use the same option to select the right pool if we implement file descriptor pooling.\n\nIf you prefer, I\u0027m OK with deferring a change to the point where we actually implement descriptor pooling, so we don\u0027t pay the mental cost of the extra abstraction until we\u0027re ready to get some benefits out of it.",
+      "revId": "0a8850bccbab888e13afdd585eecc9d8903f4183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46c3f40c_8cb69542",
+        "filename": "content/browser/service_worker/service_worker_database.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1195,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-03T23:43:45Z",
+      "side": 1,
+      "message": "instead of calling?",
+      "revId": "0a8850bccbab888e13afdd585eecc9d8903f4183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "353f3a4c_1b35503f",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-03T23:43:45Z",
+      "side": 1,
+      "message": "Nit: APIs",
+      "revId": "0a8850bccbab888e13afdd585eecc9d8903f4183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c43824a_8828d6b8",
+        "filename": "third_party/leveldatabase/env_chromium.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-03T23:43:45Z",
+      "side": 1,
+      "message": "How about \"This must be used when opening the databases accessible to Web-exposed APIs, so rogue pages can\u0027t mount a denial of service attack by hammering the block cache. Without separate caches, such an attack might slow down Chrome\u0027s UI to the point where the user can\u0027t close the offending page\u0027s tabs.\"\n\nThe key here (for me) is the \"must\" instead of \"can\", and drawing attention to this issue by stating the negative consequences that come from getting it wrong :)",
+      "revId": "0a8850bccbab888e13afdd585eecc9d8903f4183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a82f07f1_ca1d4ba2",
+        "filename": "third_party/leveldatabase/env_chromium.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-03T23:43:45Z",
+      "side": 1,
+      "message": "How about something like \"Use for databases whose access pattern is dictated by browser code.\"\n\nI\u0027m just trying to give clear instructions to potential future LevelDB users :)",
+      "revId": "0a8850bccbab888e13afdd585eecc9d8903f4183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08e979e5_aeb1cf82",
+        "filename": "third_party/leveldatabase/env_chromium.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-03T23:43:45Z",
+      "side": 1,
+      "message": "Use for databases whose access pattern is directly influenced by Web APIs, like IndexedDB?",
+      "revId": "0a8850bccbab888e13afdd585eecc9d8903f4183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f87fa82e_6fdbe53b",
+        "filename": "third_party/leveldatabase/env_chromium.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-08-03T23:43:45Z",
+      "side": 1,
+      "message": "Nit: APIs\n\nSources:\nhttps://afterdeadline.blogs.nytimes.com/2010/04/13/faqs-on-style/\nhttps://english.stackexchange.com/questions/55970/plurals-of-acronyms-letters-numbers-use-an-apostrophe-or-not",
+      "revId": "0a8850bccbab888e13afdd585eecc9d8903f4183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
