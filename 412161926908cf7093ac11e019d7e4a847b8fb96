@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "20629ce4_d3001498",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 33
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-03T12:19:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44708e98_e561397b",
+      "range": {
+        "startLine": 20,
+        "startChar": 50,
+        "endLine": 20,
+        "endChar": 53
+      },
+      "revId": "412161926908cf7093ac11e019d7e4a847b8fb96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73b4e757_fac4e6c9",
         "filename": "/COMMIT_MSG",
         "patchSetId": 33
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f11233c2_b5c5ba09",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 33
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-03T12:19:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73b4e757_fac4e6c9",
+      "range": {
+        "startLine": 27,
+        "startChar": 33,
+        "endLine": 27,
+        "endChar": 35
+      },
+      "revId": "412161926908cf7093ac11e019d7e4a847b8fb96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "36258b85_c0d1fdaf",
         "filename": "/COMMIT_MSG",
         "patchSetId": 33
@@ -68,6 +116,30 @@
       "revId": "412161926908cf7093ac11e019d7e4a847b8fb96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49413739_82561a34",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 33
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-03T12:19:38Z",
+      "side": 1,
+      "message": "Done. Sorry, I forgot to proofread.",
+      "parentUuid": "36258b85_c0d1fdaf",
+      "range": {
+        "startLine": 38,
+        "startChar": 21,
+        "endLine": 38,
+        "endChar": 24
+      },
+      "revId": "412161926908cf7093ac11e019d7e4a847b8fb96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "b3e6c13f_24838851",
+        "filename": "content/common/content_message_generator.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-03T12:19:38Z",
+      "side": 1,
+      "message": "No longer needed, I was playing around with things here and forgot to remove it.",
+      "parentUuid": "cbb1f098_df230ff7",
+      "revId": "412161926908cf7093ac11e019d7e4a847b8fb96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f5e59b52_fe9dae2e",
         "filename": "content/common/frame.mojom",
         "patchSetId": 33
@@ -151,6 +241,30 @@
       "writtenOn": "2017-08-02T23:08:34Z",
       "side": 1,
       "message": "Why do we have this as a separate method call? It feels like any setup needed for the initial empty document should be done as part of CreateFrame in FrameFactory.",
+      "range": {
+        "startLine": 106,
+        "startChar": 2,
+        "endLine": 106,
+        "endChar": 46
+      },
+      "revId": "412161926908cf7093ac11e019d7e4a847b8fb96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f0b2940_c1e578c7",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 33
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-03T12:19:38Z",
+      "side": 1,
+      "message": "Note that FrameFactory::CreateFrame merely creates the `Frame` Mojo interface, not the actual RenderFrameImpl itself. It is also not synchronized with the actual creation/initialization of the RFI, while there are already some interface requests issued against the InterfaceProvider during RFI::Init.\n\nI\u0027m not sure if we have infrastructure to queue these requests on the renderer side if the browser sends down the InterfaceProviderPtr. Ken?",
+      "parentUuid": "f5e59b52_fe9dae2e",
       "range": {
         "startLine": 106,
         "startChar": 2,
@@ -186,6 +300,30 @@
     },
     {
       "key": {
+        "uuid": "f518f64d_62650b23",
+        "filename": "content/common/frame.mojom",
+        "patchSetId": 33
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-03T12:19:38Z",
+      "side": 1,
+      "message": "The other popular term would be |interfaces|. Does that sound better?",
+      "parentUuid": "233719e0_3538667d",
+      "range": {
+        "startLine": 116,
+        "startChar": 48,
+        "endLine": 116,
+        "endChar": 55
+      },
+      "revId": "412161926908cf7093ac11e019d7e4a847b8fb96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f3698c6d_3f10279e",
         "filename": "content/common/frame_messages_forward.h",
         "patchSetId": 33
@@ -209,6 +347,30 @@
     },
     {
       "key": {
+        "uuid": "5f81742b_8ce26aad",
+        "filename": "content/common/frame_messages_forward.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-03T12:19:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3698c6d_3f10279e",
+      "range": {
+        "startLine": 8,
+        "startChar": 3,
+        "endLine": 8,
+        "endChar": 6
+      },
+      "revId": "412161926908cf7093ac11e019d7e4a847b8fb96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c6d52d6d_901da859",
         "filename": "content/renderer/media/media_factory.h",
         "patchSetId": 33
@@ -229,6 +391,30 @@
       "revId": "412161926908cf7093ac11e019d7e4a847b8fb96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8374033f_d08e6ae4",
+        "filename": "content/renderer/media/media_factory.h",
+        "patchSetId": 33
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-08-03T12:19:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c6d52d6d_901da859",
+      "range": {
+        "startLine": 141,
+        "startChar": 32,
+        "endLine": 141,
+        "endChar": 34
+      },
+      "revId": "412161926908cf7093ac11e019d7e4a847b8fb96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
