@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e353792e_b388ad99",
+        "filename": "chrome/browser/ui/views/payments/payment_request_item_list.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-08-03T15:41:41Z",
+      "side": 1,
+      "message": "nit: required?",
+      "revId": "412a85a8aa3b587cc74df431946472d5aeb9e73d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "591df0a9_2fa15ae1",
+        "filename": "chrome/browser/ui/views/payments/shipping_option_view_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-08-03T15:41:41Z",
+      "side": 1,
+      "message": "nit: required?",
+      "revId": "412a85a8aa3b587cc74df431946472d5aeb9e73d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
