@@ -1134,10 +1134,9 @@ id<GREYMatcher> ActionSheet(Action action) {
       assertWithMatcher:grey_notNil()];
 
   // Tap the Sign in button.
-  [[EarlGrey
-      selectElementWithMatcher:grey_allOf(grey_accessibilityID(
-                                              kSigninPromoSecondaryButtonId),
-                                          grey_sufficientlyVisible(), nil)]
+  [[EarlGrey selectElementWithMatcher:
+                 grey_allOf(chrome_test_util::SigninPromoSecondaryButton(),
+                            grey_sufficientlyVisible(), nil)]
       performAction:grey_tap()];
 
   // Tap the CANCEL button.
