@@ -596,6 +596,7 @@ mojom("mojo_bindings") {
     "associated_interfaces.mojom",
     "child.mojom",
     "child_memory_coordinator.mojom",
+    "download/download_stream.mojom",
     "field_trial_recorder.mojom",
     "frame.mojom",
     "frame_sink_provider.mojom",
