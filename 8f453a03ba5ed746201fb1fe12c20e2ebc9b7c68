@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7f1d7da_249a881e",
+        "filename": "extensions/common/file_util_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-03T16:19:44Z",
+      "side": 1,
+      "message": "We never expect an error, right?  So maybe just EXPECT_TRUE(error.empty())?",
+      "revId": "8f453a03ba5ed746201fb1fe12c20e2ebc9b7c68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ecef938_ebb94c5e",
+        "filename": "extensions/common/file_util_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-03T16:19:44Z",
+      "side": 1,
+      "message": "This would check that the error has exactly one character. :)",
+      "revId": "8f453a03ba5ed746201fb1fe12c20e2ebc9b7c68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "493db1ad_51761ea3",
+        "filename": "extensions/common/file_util_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-03T16:19:44Z",
+      "side": 1,
+      "message": "Is there a reason we need these two different methods?  file_util::LoadExtension runs file_util::ValidateExtension and adds the install warnings to the extension, so we could check them there...",
+      "revId": "8f453a03ba5ed746201fb1fe12c20e2ebc9b7c68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe6b1951_0e9454e5",
+        "filename": "extensions/common/file_util_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-03T16:19:44Z",
+      "side": 1,
+      "message": "Remove debug logs",
+      "revId": "8f453a03ba5ed746201fb1fe12c20e2ebc9b7c68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
