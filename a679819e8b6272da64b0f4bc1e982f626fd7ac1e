@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "862fa081_b3f04fff",
+        "filename": "content/network/cookie_service_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-03T00:39:03Z",
+      "side": 1,
+      "message": "Arggh, had these backwards, including in the Predicate body.  Thanks for catching this.  Done.",
+      "parentUuid": "7a0edf9d_f367e11c",
+      "revId": "a679819e8b6272da64b0f4bc1e982f626fd7ac1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8e0a3ca_b6cf99f9",
         "filename": "content/network/cookie_service_impl.h",
         "patchSetId": 4
@@ -39,6 +57,30 @@
       "revId": "a679819e8b6272da64b0f4bc1e982f626fd7ac1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fd3e64b_57c94403",
+        "filename": "content/network/cookie_service_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-03T00:39:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8e0a3ca_b6cf99f9",
+      "range": {
+        "startLine": 85,
+        "startChar": 34,
+        "endLine": 85,
+        "endChar": 0
+      },
+      "revId": "a679819e8b6272da64b0f4bc1e982f626fd7ac1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "2dc56c95_1a804c6c",
+        "filename": "content/network/cookie_service_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-03T00:39:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a15b0c6_a7aece42",
+      "range": {
+        "startLine": 88,
+        "startChar": 6,
+        "endLine": 88,
+        "endChar": 31
+      },
+      "revId": "a679819e8b6272da64b0f4bc1e982f626fd7ac1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac16b362_1971052a",
         "filename": "content/network/cookie_service_impl.h",
         "patchSetId": 4
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "e776bee8_64217134",
+        "filename": "content/network/cookie_service_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-03T00:39:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac16b362_1971052a",
+      "range": {
+        "startLine": 90,
+        "startChar": 2,
+        "endLine": 90,
+        "endChar": 26
+      },
+      "revId": "a679819e8b6272da64b0f4bc1e982f626fd7ac1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bfb21a38_1199be67",
         "filename": "content/network/cookie_service_impl_unittest.cc",
         "patchSetId": 4
@@ -102,6 +192,24 @@
       "revId": "a679819e8b6272da64b0f4bc1e982f626fd7ac1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "298b9349_18e6c89b",
+        "filename": "content/network/cookie_service_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-03T00:39:03Z",
+      "side": 1,
+      "message": "I think this and the last were due to query-replace failures on the last renaming.  Ooops.  Done.",
+      "parentUuid": "bfb21a38_1199be67",
+      "revId": "a679819e8b6272da64b0f4bc1e982f626fd7ac1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "235c5e5e_751fe76f",
+        "filename": "content/public/common/cookie.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-03T00:39:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eaf10ee3_ccf8c97e",
+      "range": {
+        "startLine": 18,
+        "startChar": 51,
+        "endLine": 18,
+        "endChar": 52
+      },
+      "revId": "a679819e8b6272da64b0f4bc1e982f626fd7ac1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96aae00e_66624926",
         "filename": "content/public/common/cookie.mojom",
         "patchSetId": 4
@@ -139,6 +271,24 @@
       "writtenOn": "2017-07-31T16:23:09Z",
       "side": 1,
       "message": "If the goal is to default to the most secure settings, should this be true, too?",
+      "revId": "a679819e8b6272da64b0f4bc1e982f626fd7ac1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b5ac918_156d5ddb",
+        "filename": "content/public/common/cookie.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-03T00:39:03Z",
+      "side": 1,
+      "message": "The goal was to match the defaults in canonical_cookie.cc, which now that I\u0027m looking at it should mean that secure is false.  Ooops.  Fixed that, but left this unresolved in case you\u0027d like to push me in the other direction.",
+      "parentUuid": "96aae00e_66624926",
       "revId": "a679819e8b6272da64b0f4bc1e982f626fd7ac1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -162,6 +312,24 @@
     },
     {
       "key": {
+        "uuid": "918d2190_6b0aa4b9",
+        "filename": "content/public/common/cookie.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-03T00:39:03Z",
+      "side": 1,
+      "message": "Thank you--I really messed up that name change.  Fixed.\n\nI wanted to call out that I found this paragraph and the next one redundant with each other, so I eliminated the next paragraph.",
+      "parentUuid": "00bbe962_986d84ea",
+      "revId": "a679819e8b6272da64b0f4bc1e982f626fd7ac1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "56b69ffe_f6f46c9d",
         "filename": "content/public/common/cookie.mojom",
         "patchSetId": 4
@@ -176,6 +344,24 @@
       "revId": "a679819e8b6272da64b0f4bc1e982f626fd7ac1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cc0eaf0_7096f1f5",
+        "filename": "content/public/common/cookie.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-03T00:39:03Z",
+      "side": 1,
+      "message": "My intent was what you describe, and I mis-executed it.  My apologies.  It *should* be fixed now, but if you wanted to give it another once over, I\u0027d be grateful.",
+      "parentUuid": "56b69ffe_f6f46c9d",
+      "revId": "a679819e8b6272da64b0f4bc1e982f626fd7ac1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -196,6 +382,24 @@
     },
     {
       "key": {
+        "uuid": "60e7de7a_6a611af1",
+        "filename": "content/public/common/cookie.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-03T00:39:03Z",
+      "side": 1,
+      "message": "Done, though I\u0027m a bit worried about the ambiguity of various entities named \"Cookie\".  It\u0027s mostly confined to content/network, but that means I\u0027ve been a bit inventive in content/public/common.  I also changed \"CookieService\" to \"MojoCookieWrapper\" in the unit test. \nLet me know what you think.",
+      "parentUuid": "3d0017ac_2dfd2c58",
+      "revId": "a679819e8b6272da64b0f4bc1e982f626fd7ac1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "105efe93_5f15e037",
         "filename": "content/public/common/cookie.mojom",
         "patchSetId": 4
@@ -213,6 +417,24 @@
     },
     {
       "key": {
+        "uuid": "aa7d18ee_1236d56d",
+        "filename": "content/public/common/cookie.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-03T00:39:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "105efe93_5f15e037",
+      "revId": "a679819e8b6272da64b0f4bc1e982f626fd7ac1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "118b2a80_a306c6e0",
         "filename": "content/public/common/cookie.mojom",
         "patchSetId": 4
@@ -224,6 +446,24 @@
       "writtenOn": "2017-07-31T15:48:36Z",
       "side": 1,
       "message": "in general, new interfaces in content/public are added with the first usage. That way it\u0027s easy for reviewers to see what the calling code looks like.\n\nI presume you added this code on its own first because it\u0027s still not hooked up? In that case, can you clarify how you picked which methods go into this interface? i.e. is this replacing existing IPC handlers in content/browser?",
+      "revId": "a679819e8b6272da64b0f4bc1e982f626fd7ac1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abece89a_a22dc00c",
+        "filename": "content/public/common/cookie.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-03T00:39:03Z",
+      "side": 1,
+      "message": "I\u0027m confused enough by your comment that I\u0027m tempted to directly fall over to IM or VC :-}.  But I\u0027ll take a swing at it in comment form, and if this doesn\u0027t make sense IM or VC me and we\u0027ll figure it out.  \n\nA bit of background, with apologies if this is stuff you understand perfectly well--all I know to do when I\u0027m confused is to expose more underlying assumptions in hopes we can identify the problematic assumption.  For context, the first paragraph below is background--it doesn\u0027t address your point, but is relevant to my attempt to address your point. \n\nThe main interface of this file (Cookie/CookieService) doesn\u0027t have any consumers yet--it\u0027s being implemented preparatory to switching CookieStore consumers over to it.  I have a lot of sympathy with the \"add interface (mojo or other) with first usage\" for the reason you described, but it\u0027s in tension with keeping CLs small.  If you\u0027d like me to hold this off for first consumer, I\u0027m willing, but it\u0027s complex enough that I\u0027d like to land it before the first consumer, again, to keep the CLs small and reasonably cohesive.\n\nI don\u0027t think your comment is about the Cookie/CookieService interface (because of the comment\u0027s position in the file), but if it is about Cookie/CookieService: The interface was described in my design doc, and was designed to be a simplified version of the CookieStore interface that all consumers of CookieStore could be easily retargeted to.   It\u0027s not replacing existing IPC, but it is intended to replace existing CookieStore C++ calls.\n\nIf your comment is about the CookieChangeNotification interface, that\u0027s a simple interface that\u0027s intended to be implemented by Cookie/CookieService *consumers* for when they want notifications from the cookie store.  It will be used instead of CookieStore::AddCallbackForCookie.\n\nHave I increased understanding or have I increased confusion?  :-} :-|",
+      "parentUuid": "118b2a80_a306c6e0",
       "revId": "a679819e8b6272da64b0f4bc1e982f626fd7ac1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -247,6 +487,24 @@
     },
     {
       "key": {
+        "uuid": "150fcb2a_23d9b62d",
+        "filename": "content/public/common/cookie_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-03T00:39:03Z",
+      "side": 1,
+      "message": "Whoops; thanks.  Done.",
+      "parentUuid": "37c2d7f7_38d0ccbe",
+      "revId": "a679819e8b6272da64b0f4bc1e982f626fd7ac1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5429857a_f760e709",
         "filename": "content/public/common/cookie_service.h",
         "patchSetId": 4
@@ -258,6 +516,24 @@
       "writtenOn": "2017-07-31T15:48:36Z",
       "side": 1,
       "message": "ditto with Service suffix. \"CreateCookie\" is also ambiguous I realize, so do you have any other alternatives?",
+      "revId": "a679819e8b6272da64b0f4bc1e982f626fd7ac1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe5cb96f_7b18e453",
+        "filename": "content/public/common/cookie_service.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-03T00:39:03Z",
+      "side": 1,
+      "message": "No, I\u0027m afraid I don\u0027t.  I went with \"CreateMojoCookieWrapper\" as a way to describe what the function is actually doing, but I could imagine that might run into similar objections from you, or might not.  Let me know what you think or if you have other ideas.",
+      "parentUuid": "5429857a_f760e709",
       "revId": "a679819e8b6272da64b0f4bc1e982f626fd7ac1e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
