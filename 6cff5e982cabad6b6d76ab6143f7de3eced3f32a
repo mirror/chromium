@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "5b470038_870ff7d4",
+        "filename": "cc/animation/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002110
+      },
+      "writtenOn": "2017-08-03T15:04:43Z",
+      "side": 1,
+      "message": "Something like that sounds good to me. In the second sentence, how about saying \"Animations that have the same group identifier and the same target are...\", just to reinforce that having the same group id but different target doesn\u0027t do anything.",
+      "parentUuid": "3694814c_072452a2",
+      "revId": "6cff5e982cabad6b6d76ab6143f7de3eced3f32a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b1faeb72_26ec3c47",
         "filename": "cc/animation/README.md",
         "patchSetId": 6
@@ -201,6 +219,24 @@
       "side": 1,
       "message": "Ack, but I\u0027m not sure if that\u0027s pertinent information here?",
       "parentUuid": "e741ef5d_4a809ec5",
+      "revId": "6cff5e982cabad6b6d76ab6143f7de3eced3f32a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "108f02aa_6c6aaea1",
+        "filename": "cc/animation/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002110
+      },
+      "writtenOn": "2017-08-03T15:04:43Z",
+      "side": 1,
+      "message": "Only in that the animation system itself doesn\u0027t require texture reuse, that\u0027s just how two clients (Blink and ui) happen to use the system right now. I believe vr uses it differently and does animate sizes for example. Maybe re-word so it\u0027s clear that this is just about clients that use cc::Layers?",
+      "parentUuid": "2a913d74_b59d86f1",
       "revId": "6cff5e982cabad6b6d76ab6143f7de3eced3f32a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
