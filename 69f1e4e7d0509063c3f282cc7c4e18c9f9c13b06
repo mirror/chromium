@@ -1,0 +1,199 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c86a0ec_31ab7734",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 2277,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-03T18:06:48Z",
+      "side": 1,
+      "message": "what is this check for?",
+      "revId": "69f1e4e7d0509063c3f282cc7c4e18c9f9c13b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d40c8856_b362d5c1",
+        "filename": "chrome/browser/ui/browser.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 985,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-03T18:06:48Z",
+      "side": 1,
+      "message": "ownership here seems weird - should this be a unique_ptr instead of a raw pointer, owned by the contents?",
+      "range": {
+        "startLine": 985,
+        "startChar": 6,
+        "endLine": 985,
+        "endChar": 14
+      },
+      "revId": "69f1e4e7d0509063c3f282cc7c4e18c9f9c13b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1be39c96_7f6302d9",
+        "filename": "chrome/browser/ui/cocoa/touchbar_web_contents_manager.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-03T18:06:48Z",
+      "side": 1,
+      "message": "this enum is marked deprecated: https://cs.chromium.org/chromium/src/ui/base/window_open_disposition.h?type\u003dcs\u0026q\u003dWindowOpenDisposition\u0026sq\u003dpackage:chromium\u0026l\u003d13",
+      "range": {
+        "startLine": 24,
+        "startChar": 45,
+        "endLine": 24,
+        "endChar": 56
+      },
+      "revId": "69f1e4e7d0509063c3f282cc7c4e18c9f9c13b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "934e7e59_1689206a",
+        "filename": "components/neterror/resources/offline.js",
+        "patchSetId": 15
+      },
+      "lineNbr": 2761,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-03T18:06:48Z",
+      "side": 1,
+      "message": "our js style appears to put the { on the same line as the function declaration\n\n(also we\u0027ll need a /components/neterror owner for this change so I really recommend we land the JS side separately)",
+      "range": {
+        "startLine": 2761,
+        "startChar": 18,
+        "endLine": 2761,
+        "endChar": 19
+      },
+      "revId": "69f1e4e7d0509063c3f282cc7c4e18c9f9c13b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "748489eb_e3ad1e37",
+        "filename": "content/browser/renderer_host/input/web_input_event_builders_mac.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-03T18:06:48Z",
+      "side": 1,
+      "message": "do there need to be non-10.12.2 defaults for these values?",
+      "range": {
+        "startLine": 276,
+        "startChar": 10,
+        "endLine": 276,
+        "endChar": 29
+      },
+      "revId": "69f1e4e7d0509063c3f282cc7c4e18c9f9c13b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4f7dc84_bcf012ec",
+        "filename": "content/browser/renderer_host/render_widget_host_view_mac.mm",
+        "patchSetId": 15
+      },
+      "lineNbr": 2485,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-03T18:06:48Z",
+      "side": 1,
+      "message": "do an early return after this for loop, then do an unconditional [responderDelegate_ touchesBeganWithEvent:event] at the end of the method?",
+      "range": {
+        "startLine": 2485,
+        "startChar": 7,
+        "endLine": 2485,
+        "endChar": 0
+      },
+      "revId": "69f1e4e7d0509063c3f282cc7c4e18c9f9c13b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87c29ebb_51fe5886",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 5540,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-03T18:06:48Z",
+      "side": 1,
+      "message": "this state tracking doesn\u0027t belong in WebContentsImpl, it belongs in //chrome somewhere - probably in the observer we added",
+      "range": {
+        "startLine": 5540,
+        "startChar": 22,
+        "endLine": 5540,
+        "endChar": 33
+      },
+      "revId": "69f1e4e7d0509063c3f282cc7c4e18c9f9c13b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b94576c0_e40c49a5",
+        "filename": "content/browser/web_contents/web_contents_impl.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 1519,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-03T18:06:48Z",
+      "side": 1,
+      "message": "we should not be storing these in WebContentsImpl; if we have to we can use a UserData for it (https://cs.chromium.org/chromium/src/base/supports_user_data.h) but we should not need to touch //content for this purpose",
+      "range": {
+        "startLine": 1519,
+        "startChar": 15,
+        "endLine": 1519,
+        "endChar": 30
+      },
+      "revId": "69f1e4e7d0509063c3f282cc7c4e18c9f9c13b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73f32122_84b880df",
+        "filename": "content/public/common/content_features.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-03T18:06:48Z",
+      "side": 1,
+      "message": "this is a //chrome feature, not a //content feature",
+      "revId": "69f1e4e7d0509063c3f282cc7c4e18c9f9c13b06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

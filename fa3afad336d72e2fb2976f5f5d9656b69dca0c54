@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3020122f_9c22c7ef",
+        "filename": "build/whitespace_file.txt",
+        "patchSetId": 15
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-08-03T18:06:48Z",
+      "side": 0,
+      "message": "this cl shouldn\u0027t delete the whitespace file",
+      "revId": "fa3afad336d72e2fb2976f5f5d9656b69dca0c54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
