@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63b16ff5_140cf109",
+        "filename": "third_party/WebKit/Source/core/exported/WebPluginContainerTest.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1229489
+      },
+      "writtenOn": "2017-08-03T06:22:59Z",
+      "side": 1,
+      "message": "@dtapuska: Another thing I wanted to ask about is how to handle this change in the test I added. Because with this approach we no longer have a WebPluginContainerImpl::Cut() function, and WebPluginContainerImpl::ExecuteEditCommand() is called instead, this presents an issue. The TestPluginWithEditableText class that I created is not a pepper web plugin, so the Cut functionality cannot be tested because the WebPlugin::ExecuteEditCommand() is called instead of PepperWebPluginImpl::ExecuteEditCommand(). \n\nWhat do you think would be the best way to handle this?\n\n**Note: the WebPluginContainerTest::CutDeleteKeyboardEventsTest is not passing right now because I wanted to ask you how to approach this before proceeding to edit it.",
+      "range": {
+        "startLine": 160,
+        "startChar": 2,
+        "endLine": 160,
+        "endChar": 47
+      },
+      "revId": "25f9c8cbb7ce8c309df2abdfe50b40bdcc5e5189",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

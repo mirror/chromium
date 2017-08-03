@@ -16,6 +16,24 @@
       "revId": "35ca1476fd93d8e578720211279f135b9bc5d585",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "081a38af_10b3705d",
+        "filename": "content/renderer/pepper/pepper_webplugin_impl.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1229489
+      },
+      "writtenOn": "2017-08-03T06:22:59Z",
+      "side": 1,
+      "message": "The problem with totally handling the copying of text to the clipboard here instead of in WebPluginContainerImpl.cpp (replacing the Copy() function and creating a PepperWebPluginImpl::ExecuteCopy() similar to ExecuteCut(), which I just added) is that existing code depends on WebPluginContainerImpl::Copy(). \n\nFor instance, I tried locally moving the Copy command into PepperWebPluginImpl and this caused tests in WebPluginContainerTest.cpp to fail (WebPluginContainerTest::Copy, WebPluginContainerTest::CopyFromContextMenu, and WebPluginContainerTest::CopyInsertKeyboardEventsTest).\n\nI\u0027m thinking that we should probably leave Copy() as is, but I can implement the Cut (and Paste) functionality within ppapi using PepperWebPluginImpl::ExecuteEditCommand(). With this change, if we want ExecuteCut() to be independent of the WebPluginContainerImpl::Copy() code, then I can just write directly to the clipboard in this function (see line 417).",
+      "parentUuid": "dc5d3b3c_65ae2927",
+      "revId": "35ca1476fd93d8e578720211279f135b9bc5d585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
