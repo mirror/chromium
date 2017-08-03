@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24e750d4_944fbb13",
+        "filename": "components/viz/service/frame_sinks/gpu_root_compositor_frame_sink.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-08-03T21:35:19Z",
+      "side": 1,
+      "message": "it occurs to me that my statement about this was only correct in internal window mode. You should remove this.",
+      "revId": "4f262d4c25b3235d51547b7e836b7c0ffacf33f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
