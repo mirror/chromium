@@ -46,6 +46,30 @@
       "revId": "e938e530c2464118a17d38fc489cf4380dfd2b63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86394c40_160185f8",
+        "filename": "chrome/browser/extensions/crx_installer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-03T16:28:13Z",
+      "side": 1,
+      "message": "the \"some of this file access should be safe\" guarantee: I would definitely like us make it a hard guarantee at some point, otherwise the installation flow from different pieces becomes more spaghetti code with the introduction of sequences.\n\nI worry that USER_VISIBLE might not enough for some cases at least: like when we are initializing ExtensionService or when user action is causing these installation but other tasks are getting higher priority... If the sequence/task that constructs ExtensionService runs with USER_BLOCKING priority, we would force the installations to lower priority USER_VISIBLE.\n\nEven if these sound hypothetical, we should still file a bug and add a TODO, specifically for installers.",
+      "parentUuid": "c010bbea_f04e68b0",
+      "range": {
+        "startLine": 136,
+        "startChar": 6,
+        "endLine": 136,
+        "endChar": 28
+      },
+      "revId": "e938e530c2464118a17d38fc489cf4380dfd2b63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
