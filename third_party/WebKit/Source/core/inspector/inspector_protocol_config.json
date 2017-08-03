@@ -21,6 +21,9 @@
                 "async": ["requestCacheNames", "requestEntries", "deleteCache", "deleteEntry", "requestCachedResponse"]
             },
             {
+                "domain": "Counters"
+            },
+            {
                 "domain": "CSS",
                 "async": ["enable"]
             },
@@ -70,7 +73,7 @@
             },
             {
                 "domain": "Memory",
-                "include": "getDOMCounters"
+                "include": ["getDOMCounters"]
             },
             {
                 "domain": "Tracing",

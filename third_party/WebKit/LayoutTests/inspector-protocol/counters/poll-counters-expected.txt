@@ -1,0 +1,6 @@
+Test that page counters are retrieved.
+["FrameCounter","NodeCounter"]
+["FrameCounter","NodeCounter"]
+["FrameCounter"]
+[]
+
