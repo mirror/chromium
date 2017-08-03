@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9f9354d_446d4737",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-03T17:43:10Z",
+      "side": 1,
+      "message": "nit: Typically we line wrap at 72 chars for commit messages.",
+      "revId": "2fc7688627620f4fc012501ad2e937f0f270ee2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "427cac70_728bc2c4",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2648,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-03T17:43:10Z",
+      "side": 1,
+      "message": "As noted in the XML, lets make this one .SRC since we\u0027re making a new one. This provides consistency with our other existing histograms.",
+      "revId": "2fc7688627620f4fc012501ad2e937f0f270ee2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86cf66e9_3b1d6b89",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 31349,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-03T17:43:10Z",
+      "side": 1,
+      "message": "Sorry, forgot one more thing. Since we\u0027re making a new one, lets go ahead and declare this just as Media.UnderflowDuration2 with \u003chistogram_suffixes\u003e set of \"EME, MSE, SRC\"",
+      "revId": "2fc7688627620f4fc012501ad2e937f0f270ee2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
