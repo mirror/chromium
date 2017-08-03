@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "50389f6b_9716b30a",
+        "filename": "content/browser/compositor/gpu_vsync_begin_frame_source.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1117489
+      },
+      "writtenOn": "2017-08-03T21:44:38Z",
+      "side": 1,
+      "message": "I think no additional check is needed here. last_begin_frame_args_ is now fast forwarded to a most recent one in VSync, so that should take care of a general v-sync delivery latency case. The only case when double tick could still be possible is if a tab was moved between two windows on different monitors. But there is already a lot of rendering triggered by a tab move so I wouldn\u0027t worry about a double tick in that particular case.",
+      "parentUuid": "12cea8aa_00e07515",
+      "revId": "35f4fe82a8032734a1e591261ebce625c2610b8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c347401b_31106485",
         "filename": "content/browser/compositor/gpu_vsync_begin_frame_source.cc",
         "patchSetId": 6
@@ -89,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "13a86307_5fbc23be",
+        "filename": "content/browser/compositor/gpu_vsync_begin_frame_source.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1117489
+      },
+      "writtenOn": "2017-08-03T21:44:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e1fc891_a1162511",
+      "revId": "35f4fe82a8032734a1e591261ebce625c2610b8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07fa0057_2cce2c5b",
         "filename": "content/browser/compositor/gpu_vsync_begin_frame_source.cc",
         "patchSetId": 6
@@ -121,6 +157,24 @@
       "revId": "35f4fe82a8032734a1e591261ebce625c2610b8e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d86e6f68_656ae11e",
+        "filename": "content/browser/compositor/gpu_vsync_begin_frame_source.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1117489
+      },
+      "writtenOn": "2017-08-03T21:44:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ebbe995_60162cb2",
+      "revId": "35f4fe82a8032734a1e591261ebce625c2610b8e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
