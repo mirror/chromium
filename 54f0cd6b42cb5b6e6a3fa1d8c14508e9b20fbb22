@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a8f73eb5_1d4ce491",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-08-03T18:43:00Z",
+      "side": 1,
+      "message": "Actually it\u0027s part of the MediaRouter interface.",
+      "parentUuid": "4f3e1933_8dfbf129",
+      "range": {
+        "startLine": 42,
+        "startChar": 16,
+        "endLine": 42,
+        "endChar": 17
+      },
+      "revId": "54f0cd6b42cb5b6e6a3fa1d8c14508e9b20fbb22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5aefc2c6_a29b96dc",
         "filename": "chrome/browser/media/router/mojo/media_router_desktop_unittest.cc",
         "patchSetId": 11
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-02T19:13:50Z",
       "side": 1,
       "message": "Base class SetUp should happen first.",
+      "range": {
+        "startLine": 90,
+        "startChar": 33,
+        "endLine": 90,
+        "endChar": 0
+      },
+      "revId": "54f0cd6b42cb5b6e6a3fa1d8c14508e9b20fbb22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2eabc8eb_4f34edd3",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-08-03T18:43:00Z",
+      "side": 1,
+      "message": "Moved the code above to the ctor.",
+      "parentUuid": "5aefc2c6_a29b96dc",
       "range": {
         "startLine": 90,
         "startChar": 33,
@@ -62,6 +110,24 @@
       "revId": "54f0cd6b42cb5b6e6a3fa1d8c14508e9b20fbb22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99fca925_0b3bc1a5",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-08-03T18:43:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2b65b62_c0d10576",
+      "revId": "54f0cd6b42cb5b6e6a3fa1d8c14508e9b20fbb22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

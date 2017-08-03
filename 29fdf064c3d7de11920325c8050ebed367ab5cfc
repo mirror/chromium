@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "439c9cbd_76f386b9",
+        "filename": "chrome/browser/media/router/mojo/media_router_desktop_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-08-03T18:43:00Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "26caed08_2716956c",
+      "range": {
+        "startLine": 54,
+        "startChar": 20,
+        "endLine": 54,
+        "endChar": 30
+      },
+      "revId": "29fdf064c3d7de11920325c8050ebed367ab5cfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b6e58e6_7993ce6a",
         "filename": "chrome/browser/media/router/mojo/media_router_desktop_impl.h",
         "patchSetId": 6
@@ -355,6 +379,30 @@
     },
     {
       "key": {
+        "uuid": "9ccf51ff_b1d05b16",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 831,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-08-03T18:43:00Z",
+      "side": 1,
+      "message": "We can, but I feel it\u0027d be a bit more confusing if in some cases we override Foo() and in other cases we override DoFoo() in MRDesktop. All the MRP calls currently are in MRMI::DoFoo() methods.",
+      "parentUuid": "4396101a_ec84a702",
+      "range": {
+        "startLine": 831,
+        "startChar": 32,
+        "endLine": 831,
+        "endChar": 0
+      },
+      "revId": "29fdf064c3d7de11920325c8050ebed367ab5cfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b35a0909_f7a134e2",
         "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.h",
         "patchSetId": 6
@@ -414,6 +462,30 @@
       "side": 1,
       "message": "My concern is that it leaves a larger surface for the subclass to override, and that makes it more prone to errors. For methods X() that have a DoX() version, can we make X() final? We should find a way to not require overriding both CreateRoute() and DoCreateRoute() in the desktop impl.",
       "parentUuid": "7d45bbb2_8816e0ed",
+      "range": {
+        "startLine": 59,
+        "startChar": 35,
+        "endLine": 59,
+        "endChar": 43
+      },
+      "revId": "29fdf064c3d7de11920325c8050ebed367ab5cfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c326b1e_b9a266eb",
+        "filename": "chrome/browser/media/router/mojo/media_router_mojo_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1190572
+      },
+      "writtenOn": "2017-08-03T18:43:00Z",
+      "side": 1,
+      "message": "Makes sense, thanks for explaining. Done.",
+      "parentUuid": "4a635469_a9d57b93",
       "range": {
         "startLine": 59,
         "startChar": 35,
