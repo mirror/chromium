@@ -37,27 +37,30 @@
 
 namespace blink {
 
+#define INSTANCE_COUNTERS_LIST(V) \
+  V(AudioHandler)                 \
+  V(Document)                     \
+  V(Frame)                        \
+  V(JSEventListener)              \
+  V(LayoutObject)                 \
+  V(MediaKeySession)              \
+  V(MediaKeys)                    \
+  V(Node)                         \
+  V(Resource)                     \
+  V(ScriptPromise)                \
+  V(SuspendableObject)            \
+  V(V8PerContextData)             \
+  V(WorkerGlobalScope)
+
 class InstanceCounters {
   STATIC_ONLY(InstanceCounters);
 
  public:
   enum CounterType {
-    kAudioHandlerCounter,
-    kDocumentCounter,
-    kFrameCounter,
-    kJSEventListenerCounter,
-    kLayoutObjectCounter,
-    kMediaKeySessionCounter,
-    kMediaKeysCounter,
-    kNodeCounter,
-    kResourceCounter,
-    kScriptPromiseCounter,
-    kSuspendableObjectCounter,
-    kV8PerContextDataCounter,
-    kWorkerGlobalScopeCounter,
-
-    // This value must be the last.
-    kCounterTypeLength,
+#define DECLARE_INSTANCE_COUNTER(name) k##name##Counter,
+    INSTANCE_COUNTERS_LIST(DECLARE_INSTANCE_COUNTER)
+#undef DECLARE_INSTANCE_COUNTER
+        kCounterTypeLength
   };
 
   static inline void IncrementCounter(CounterType type) {
@@ -72,19 +75,18 @@ class InstanceCounters {
 
   static inline void IncrementNodeCounter() {
     DCHECK(IsMainThread());
-    node_counter_++;
+    ++counters_[kNodeCounter];
   }
 
   static inline void DecrementNodeCounter() {
     DCHECK(IsMainThread());
-    node_counter_--;
+    --counters_[kNodeCounter];
   }
 
   PLATFORM_EXPORT static int CounterValue(CounterType);
 
  private:
   PLATFORM_EXPORT static int counters_[kCounterTypeLength];
-  PLATFORM_EXPORT static int node_counter_;
 };
 
 }  // namespace blink

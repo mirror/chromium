@@ -31,9 +31,12 @@
 #ifndef InspectorMemoryAgent_h
 #define InspectorMemoryAgent_h
 
+#include <unordered_map>
+#include <unordered_set>
 #include "core/CoreExport.h"
 #include "core/inspector/InspectorBaseAgent.h"
 #include "core/inspector/protocol/Memory.h"
+#include "platform/InstanceCounters.h"
 
 namespace blink {
 
@@ -48,9 +51,19 @@ class CORE_EXPORT InspectorMemoryAgent final
   protocol::Response getDOMCounters(int* documents,
                                     int* nodes,
                                     int* js_event_listeners) override;
+  protocol::Response enableCounters(
+      std::unique_ptr<protocol::Array<protocol::String>> counters) override;
+  protocol::Response disableCounters(
+      std::unique_ptr<protocol::Array<protocol::String>> counters) override;
+  protocol::Response pollCounters(
+      std::unique_ptr<protocol::Memory::Counters>* out_result) override;
 
  private:
   InspectorMemoryAgent();
+
+  std::unordered_set<InstanceCounters::CounterType> enabled_counters_;
+  std::unordered_map<String, InstanceCounters::CounterType> counter_names_map_;
+  static const char* counter_names_[];
 };
 
 }  // namespace blink

@@ -37,6 +37,11 @@
                 "type": "string",
                 "enum": ["moderate", "critical"],
                 "description": "Memory pressure level."
+            },
+            {
+                "id": "Counters",
+                "type": "object",
+                "description": "Run-time execution counters as key value pairs."
             }
         ],
         "commands": [
@@ -61,6 +66,39 @@
                 "parameters": [
                     { "name": "level", "$ref": "PressureLevel", "description": "Memory pressure level of the notification." }
                 ]
+            },
+            {
+                "name": "enableCounters",
+                "parameters": [
+                    { "name": "counters", "type": "array", "items": { "type": "string" }, "description": "List of counter names for collect." }
+                ],
+                "description": "Start collecting Run-time counters.",
+                "experimental": true
+            },
+            {
+                "name": "disableCounters",
+                "parameters": [
+                    { "name": "counters", "type": "array", "items": { "type": "string" }, "description": "List of counter names for stop collecting" }
+                ],
+                "description": "Stop collecting Run-time counters.",
+                "experimental": true
+            },
+            {
+                "name": "pollCounters",
+                "returns": [
+                    { "name": "counters", "$ref": "Counters", "description": "Current values for enabled Run-time counters." }
+                ],
+                "description": "Retrieve current values for enabled Run-time counters.",
+                "experimental": true
+            }
+        ],
+        "events": [
+            {
+                "name": "counters",
+                "parameters": [
+                    { "name": "counters", "type": "object", "description": "Run-time execution counters as key value pairs." }
+                ],
+                "description": "Run-time execution counters"
             }
         ]
     },

@@ -30,11 +30,17 @@
 
 #include "core/inspector/InspectorMemoryAgent.h"
 
-#include "platform/InstanceCounters.h"
+#include "platform/wtf/dtoa/utils.h"
 
 namespace blink {
 
 using protocol::Response;
+
+const char* InspectorMemoryAgent::counter_names_[] = {
+#define INSTANCE_COUNTER_NAME(name) #name "Counter",
+    INSTANCE_COUNTERS_LIST(INSTANCE_COUNTER_NAME)
+#undef INSTANCE_COUNTER_NAME
+};
 
 InspectorMemoryAgent::~InspectorMemoryAgent() {}
 
@@ -49,6 +55,41 @@ Response InspectorMemoryAgent::getDOMCounters(int* documents,
   return Response::OK();
 }
 
-InspectorMemoryAgent::InspectorMemoryAgent() = default;
+Response InspectorMemoryAgent::enableCounters(
+    std::unique_ptr<protocol::Array<protocol::String>> counters) {
+  for (size_t i = 0, c = counters->length(); i < c; ++i) {
+    auto it = counter_names_map_.find(counters->get(i));
+    if (it != counter_names_map_.end())
+      enabled_counters_.insert(it->second);
+  }
+  return Response::OK();
+}
+
+Response InspectorMemoryAgent::disableCounters(
+    std::unique_ptr<protocol::Array<protocol::String>> counters) {
+  for (size_t i = 0, c = counters->length(); i < c; ++i) {
+    auto it = counter_names_map_.find(counters->get(i));
+    if (it != counter_names_map_.end())
+      enabled_counters_.erase(it->second);
+  }
+  return Response::OK();
+}
+
+Response InspectorMemoryAgent::pollCounters(
+    std::unique_ptr<protocol::Memory::Counters>* out_result) {
+  std::unique_ptr<protocol::DictionaryValue> result =
+      protocol::DictionaryValue::create();
+  for (auto it : enabled_counters_)
+    result->setInteger(counter_names_[it], InstanceCounters::CounterValue(it));
+  *out_result = protocol::Object::fromValue(result.get(), nullptr);
+  return Response::OK();
+}
+
+InspectorMemoryAgent::InspectorMemoryAgent() {
+  for (size_t i = 0; i < ARRAY_SIZE(counter_names_); ++i) {
+    counter_names_map_.insert(std::make_pair(
+        counter_names_[i], static_cast<InstanceCounters::CounterType>(i)));
+  }
+}
 
 }  // namespace blink
