@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7d9fb0a1_a0b32565",
+        "filename": "chrome/browser/resources/settings/internet_page/network_proxy_section.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-03T15:45:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41473d6d_0cc717e3",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "bc8ad0a86d0b7f6637f38dba79951c63fca1b00d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "86f036ca_8222214e",
         "filename": "chrome/browser/resources/settings/internet_page/network_proxy_section.js",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-03T02:04:45Z",
       "side": 1,
       "message": "unused?",
+      "range": {
+        "startLine": 29,
+        "startChar": 4,
+        "endLine": 29,
+        "endChar": 12
+      },
+      "revId": "bc8ad0a86d0b7f6637f38dba79951c63fca1b00d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90e9f8af_8d6a0891",
+        "filename": "chrome/browser/resources/settings/internet_page/network_proxy_section.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-03T15:45:55Z",
+      "side": 1,
+      "message": "Thanks for catching. Removed.",
+      "parentUuid": "86f036ca_8222214e",
       "range": {
         "startLine": 29,
         "startChar": 4,
