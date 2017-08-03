@@ -32,8 +32,9 @@ class AppCacheUpdateJob::UpdateRequestBase {
 
   // Creates an instance of the AppCacheUpdateRequestBase subclass.
   static std::unique_ptr<UpdateRequestBase> Create(
-      net::URLRequestContext* request_context,
+      AppCacheServiceImpl* appcache_service,
       const GURL& url,
+      int buffer_size,
       URLFetcher* fetcher);
 
   // This method is called to start the request.
@@ -87,7 +88,7 @@ class AppCacheUpdateJob::UpdateRequestBase {
 
   // Initiates an asynchronous read. Could return net::ERR_IO_PENDING or the
   // number of bytes read.
-  virtual int Read(net::IOBuffer* buf, int max_bytes) = 0;
+  virtual int Read() = 0;
 
   // This method may be called at any time after Start() has been called to
   // cancel the request.
@@ -96,6 +97,10 @@ class AppCacheUpdateJob::UpdateRequestBase {
 
  protected:
   UpdateRequestBase();
+
+  // Returns the traffic annotation information to be used for the outgoing
+  // request.
+  net::NetworkTrafficAnnotationTag GetTrafficAnnotation() const;
 };
 
 }  // namespace content

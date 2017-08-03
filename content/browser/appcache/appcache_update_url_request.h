@@ -10,6 +10,7 @@
 
 #include "base/macros.h"
 #include "content/browser/appcache/appcache_update_request_base.h"
+#include "net/base/io_buffer.h"
 #include "net/url_request/url_request.h"
 
 namespace content {
@@ -36,7 +37,7 @@ class AppCacheUpdateJob::UpdateURLRequest
   int GetResponseCode() const override;
   net::HttpResponseInfo GetResponseInfo() const override;
   const net::URLRequestContext* GetRequestContext() const override;
-  int Read(net::IOBuffer* buf, int max_bytes) override;
+  int Read() override;
   int Cancel() override;
 
   // URLRequest::Delegate overrides
@@ -49,12 +50,15 @@ class AppCacheUpdateJob::UpdateURLRequest
  private:
   UpdateURLRequest(net::URLRequestContext* request_context,
                    const GURL& url,
+                   int buffer_size,
                    URLFetcher* fetcher);
 
   friend class AppCacheUpdateJob::UpdateRequestBase;
 
   std::unique_ptr<net::URLRequest> request_;
   URLFetcher* fetcher_;
+  scoped_refptr<net::IOBuffer> buffer_;
+  int buffer_size_;
 
   DISALLOW_COPY_AND_ASSIGN(UpdateURLRequest);
 };
