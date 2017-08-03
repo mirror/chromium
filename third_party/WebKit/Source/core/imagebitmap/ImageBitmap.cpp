@@ -67,13 +67,7 @@ ImageBitmap::ParsedOptions ParseOptions(const ImageBitmapOptions& options,
   }
 
   if (options.colorSpaceConversion() != kImageBitmapOptionNone) {
-    parsed_options.color_canvas_extensions_enabled =
-        RuntimeEnabledFeatures::ColorCanvasExtensionsEnabled();
-    if (!parsed_options.color_canvas_extensions_enabled) {
-      DCHECK_EQ(options.colorSpaceConversion(), kImageBitmapOptionDefault);
-      parsed_options.color_params.SetCanvasColorSpace(kLegacyCanvasColorSpace);
-      parsed_options.color_canvas_extensions_enabled = true;
-    } else {
+    if (CanvasColorParams::ColorCorrectAllColorSpaces()) {
       if (options.colorSpaceConversion() == kImageBitmapOptionDefault ||
           options.colorSpaceConversion() ==
               kSRGBImageBitmapColorSpaceConversion) {
@@ -96,6 +90,12 @@ ImageBitmap::ParsedOptions ParseOptions(const ImageBitmapOptions& options,
             << "Invalid ImageBitmap creation attribute colorSpaceConversion: "
             << options.colorSpaceConversion();
       }
+    } else if (CanvasColorParams::ColorCorrectSRGB()) {
+      DCHECK_EQ(options.colorSpaceConversion(), kImageBitmapOptionDefault);
+      parsed_options.color_params.SetCanvasColorSpace(kSRGBCanvasColorSpace);
+    } else {
+      DCHECK_EQ(options.colorSpaceConversion(), kImageBitmapOptionDefault);
+      parsed_options.color_params.SetCanvasColorSpace(kLegacyCanvasColorSpace);
     }
   }
 
@@ -302,13 +302,22 @@ RefPtr<StaticBitmapImage> ScaleImage(RefPtr<StaticBitmapImage>&& image,
 RefPtr<StaticBitmapImage> ApplyColorSpaceConversion(
     RefPtr<StaticBitmapImage>&& image,
     ImageBitmap::ParsedOptions& options) {
-  if (options.color_params.UsesOutputSpaceBlending() &&
-      RuntimeEnabledFeatures::ColorCorrectRenderingEnabled()) {
+  // Check if the color space in "options" is null and we need to flag the
+  // image as SRGB,
+  if (options.color_params.ColorCorrectNoColorSpaceToSRGB()) {
     image = image->ConvertToColorSpace(options.color_params.GetSkColorSpace(),
                                        SkTransferFunctionBehavior::kIgnore);
   }
+  // Check if we need to proceed to color correction. We don't need to check for
+  // CanvasColorParams::ColorCorrectSRGB() as if it returns true, the image must
+  // have SRGB color space already.
+  if (!CanvasColorParams::ColorCorrectAllColorSpaces())
+    return image;
+
+  // Skia does not support color correction on a SkImage with no color space
+  // info.
   sk_sp<SkImage> skia_image = image->PaintImageForCurrentFrame().GetSkImage();
-  if (!options.color_canvas_extensions_enabled || !skia_image->colorSpace())
+  if (!skia_image->colorSpace())
     return image;
 
   sk_sp<SkColorSpace> dst_color_space =
@@ -474,9 +483,8 @@ ImageBitmap::ImageBitmap(ImageElementBase* image,
   if (!sk_image->isTextureBacked() && !sk_image->peekPixels(&pixmap)) {
     sk_sp<SkColorSpace> dst_color_space = nullptr;
     SkColorType dst_color_type = kN32_SkColorType;
-    if (parsed_options.color_canvas_extensions_enabled ||
-        (parsed_options.color_params.UsesOutputSpaceBlending() &&
-         RuntimeEnabledFeatures::ColorCorrectRenderingEnabled())) {
+    if (CanvasColorParams::ColorCorrectAllColorSpaces() ||
+        parsed_options.color_params.ColorCorrectNoColorSpaceToSRGB()) {
       dst_color_space = parsed_options.color_params.GetSkColorSpace();
       dst_color_type = parsed_options.color_params.GetSkColorType();
     }
@@ -656,6 +664,12 @@ ImageBitmap::ImageBitmap(ImageData* data,
       kUnpremul_SkAlphaType,
       cropped_data->GetCanvasColorParams().GetSkColorSpaceForSkSurfaces());
 
+  // If we are in color correct rendering mode but we only color correct to
+  // SRGB, we don't do any color conversion when transferring the pixels from
+  // ImageData to image bitmap to avoid double gamma correction. We tag the
+  // image with SRGB color space later in ApplyColorSpaceConversion().
+  if (CanvasColorParams::ColorCorrectSRGB())
+    info = info.makeColorSpace(nullptr);
   image_ = NewImageFromRaster(info, std::move(image_pixels));
 
   // swizzle back
