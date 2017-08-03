@@ -918,6 +918,7 @@ void ExtensionService::EnableExtension(const std::string& extension_id) {
   // Move it over to the enabled list.
   registry_->AddEnabled(make_scoped_refptr(extension));
   registry_->RemoveDisabled(extension->id());
+  registry_->RemoveBlockedByPolicy(extension->id());
 
   NotifyExtensionLoaded(extension);
 
@@ -1203,15 +1204,16 @@ bool ExtensionService::is_ready() {
 }
 
 void ExtensionService::CheckManagementPolicy() {
-  std::vector<std::string> to_unload;
+  ExtensionSet block_due_to_policy;
   std::map<std::string, Extension::DisableReason> to_disable;
   std::vector<std::string> to_enable;
+  std::vector<std::string> to_load;
 
   // Loop through the extensions list, finding extensions we need to unload or
   // disable.
   for (const auto& extension : registry_->enabled_extensions()) {
     if (!system_->management_policy()->UserMayLoad(extension.get(), nullptr))
-      to_unload.push_back(extension->id());
+      block_due_to_policy.Insert(extension);
     Extension::DisableReason disable_reason = Extension::DISABLE_NONE;
     if (system_->management_policy()->MustRemainDisabled(
             extension.get(), &disable_reason, nullptr))
@@ -1238,8 +1240,8 @@ void ExtensionService::CheckManagementPolicy() {
 
   // Loop through the disabled extension list, find extensions to re-enable
   // automatically. These extensions are exclusive from the |to_disable| and
-  // |to_unload| lists constructed above, since disabled_extensions() and
-  // enabled_extensions() are supposed to be mutually exclusive.
+  // |block_due_to_policy| lists constructed above, since disabled_extensions()
+  // and enabled_extensions() are supposed to be mutually exclusive.
   for (const auto& extension : registry_->disabled_extensions()) {
     // Find all disabled extensions disabled due to minimum version requirement,
     // but now satisfying it.
@@ -1258,16 +1260,26 @@ void ExtensionService::CheckManagementPolicy() {
     }
   }
 
-  for (const std::string& id : to_unload)
-    UnloadExtension(id, UnloadedExtensionReason::DISABLE);
+  // Loop through all extensions blocked due to policy and reload if
+  // necessary.
+  for (const auto& extension : registry_->blocked_by_policy_extensions())
+    if (system_->management_policy()->UserMayLoad(extension.get(), nullptr))
+      to_load.push_back(extension->id());
+
+  for (const auto& extension : block_due_to_policy)
+    BlockDueToPolicy(extension);
 
   for (const auto& i : to_disable)
     DisableExtension(i.first, i.second);
 
   // No extension is getting re-enabled here after disabling/unloading
-  // because to_enable is mutually exclusive to to_disable + to_unload.
+  // because to_enable is mutually exclusive to to_disable +
+  // block_due_to_policy.
   for (const std::string& id : to_enable)
     EnableExtension(id);
+
+  for (const std::string& id : to_load)
+    ReloadExtension(id);
 
   if (updater_.get()) {
     // Find all extensions disabled due to minimum version requirement from
@@ -2580,14 +2592,10 @@ void ExtensionService::MaybeSpinUpLazyBackgroundPage(
                         base::Bind(&DoNothingWithExtensionHost));
 }
 
-void ExtensionService::UninstallMigratedExtensions() {
-  std::unique_ptr<ExtensionSet> installed_extensions =
-      registry_->GenerateInstalledExtensionsSet();
-
-  for (const std::string& extension_id : kMigratedExtensionIds) {
-    if (installed_extensions->Contains(extension_id)) {
-      UninstallExtension(extension_id, extensions::UNINSTALL_REASON_MIGRATED,
-                         base::Bind(&base::DoNothing), nullptr);
-    }
-  }
+void ExtensionService::BlockDueToPolicy(
+    const scoped_refptr<const Extension>& extension) {
+  UnloadExtension(extension->id(), UnloadedExtensionReason::BLOCKED_BY_POLICY);
+  DCHECK(!registry_->GetInstalledExtension(extension->id()));
+  registry_->AddBlockedByPolicy(extension);
+  extension_prefs_->SetExtensionBlockedByPolicy(extension->id());
 }

@@ -37,15 +37,13 @@ std::unique_ptr<ExtensionSet> ExtensionRegistry::GenerateInstalledExtensionsSet(
     installed_extensions->InsertAll(blacklisted_extensions_);
   if (include_mask & IncludeFlag::BLOCKED)
     installed_extensions->InsertAll(blocked_extensions_);
+  if (include_mask && IncludeFlag::BLOCKED_BY_POLICY)
+    installed_extensions->InsertAll(blocked_by_policy_extensions_);
   return installed_extensions;
 }
 
 base::Version ExtensionRegistry::GetStoredVersion(const ExtensionId& id) const {
-  int include_mask = ExtensionRegistry::ENABLED | ExtensionRegistry::DISABLED |
-                     ExtensionRegistry::TERMINATED |
-                     ExtensionRegistry::BLACKLISTED |
-                     ExtensionRegistry::BLOCKED;
-  const Extension* registry_extension = GetExtensionById(id, include_mask);
+  const Extension* registry_extension = GetInstalledExtension(id);
   return registry_extension ? *registry_extension->version() : base::Version();
 }
 
@@ -135,6 +133,12 @@ const Extension* ExtensionRegistry::GetExtensionById(const std::string& id,
     if (extension)
       return extension;
   }
+  if (include_mask & BLOCKED_BY_POLICY) {
+    const Extension* extension =
+        blocked_by_policy_extensions_.GetByID(lowercase_id);
+    if (extension)
+      return extension;
+  }
   return NULL;
 }
 
@@ -192,6 +196,15 @@ bool ExtensionRegistry::RemoveBlocked(const std::string& id) {
   return blocked_extensions_.Remove(id);
 }
 
+bool ExtensionRegistry::AddBlockedByPolicy(
+    const scoped_refptr<const Extension>& extension) {
+  return blocked_by_policy_extensions_.Insert(extension);
+}
+
+bool ExtensionRegistry::RemoveBlockedByPolicy(const std::string& id) {
+  return blocked_by_policy_extensions_.Remove(id);
+}
+
 bool ExtensionRegistry::AddReady(
     const scoped_refptr<const Extension>& extension) {
   return ready_extensions_.Insert(extension);
@@ -207,6 +220,7 @@ void ExtensionRegistry::ClearAll() {
   terminated_extensions_.Clear();
   blacklisted_extensions_.Clear();
   blocked_extensions_.Clear();
+  blocked_by_policy_extensions_.Clear();
   ready_extensions_.Clear();
 }
 
