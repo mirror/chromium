@@ -35,6 +35,7 @@
 #include "chrome/browser/download/save_package_file_picker.h"
 #include "chrome/browser/platform_util.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/safe_browsing/download_protection_service.h"
 #include "chrome/browser/safe_browsing/safe_browsing_service.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_finder.h"
@@ -529,6 +530,10 @@ void ChromeDownloadManagerDelegate::OpenDownload(DownloadItem* download) {
   if (!download->CanOpenDownload())
     return;
 
+  safe_browsing::DownloadProtectionService::
+      MaybeSendDangerousDownloadOpenedReport(
+          download, false /* show_download_in_folder */);
+
   if (!DownloadItemModel(download).ShouldPreferOpeningInBrowser()) {
     RecordDownloadOpenMethod(DOWNLOAD_OPEN_METHOD_DEFAULT_PLATFORM);
     OpenDownloadUsingPlatformHandler(download);
@@ -566,6 +571,11 @@ void ChromeDownloadManagerDelegate::ShowDownloadInShell(
     DownloadItem* download) {
   if (!download->CanShowInFolder())
     return;
+
+  safe_browsing::DownloadProtectionService::
+      MaybeSendDangerousDownloadOpenedReport(
+          download, true /* show_download_in_folder */);
+
   base::FilePath platform_path(
       GetPlatformDownloadPath(profile_, download, PLATFORM_CURRENT_PATH));
   DCHECK(!platform_path.empty());
