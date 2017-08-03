@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1691efb_ee3ecb05",
+        "filename": "ui/webui/resources/js/cr/ui/menu.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-03T02:42:53Z",
+      "side": 1,
+      "message": "should be {!cr.ui.MenuItem} because menuItem is never null",
+      "range": {
+        "startLine": 189,
+        "startChar": 14,
+        "endLine": 189,
+        "endChar": 30
+      },
+      "revId": "25bd06261253756ef9a8cc7aafcb4342bf5ff361",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5e77566_3e6bbb21",
+        "filename": "ui/webui/resources/js/cr/ui/menu.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-03T02:42:53Z",
+      "side": 1,
+      "message": "@private",
+      "range": {
+        "startLine": 191,
+        "startChar": 7,
+        "endLine": 191,
+        "endChar": 0
+      },
+      "revId": "25bd06261253756ef9a8cc7aafcb4342bf5ff361",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4108b0f8_ed9d5d8b",
+        "filename": "ui/webui/resources/js/cr/ui/menu.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-03T02:42:53Z",
+      "side": 1,
+      "message": "getComputedStyle can be slow, since it forces a style recalc and reflow. Testing offsetParent will almost always work (except for position: fixed items, which we probably won\u0027t have).\n\nSo, only because this is called inside loops of potentially lots of items, to avoid thrashing I would do:\n\n  // Run quick checks first.\n  if (menuItem.hidden) return false;\n  if (!!menuItem.offsetParent) return true;\n\n  // A \"position: fixed\" element won\u0027t have an offsetParent, so we have to do\n  // the full style computation.\n  return window.getComputedStyle(menuItem).display !\u003d \u0027none\u0027;",
+      "revId": "25bd06261253756ef9a8cc7aafcb4342bf5ff361",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af852ad6_0bfdd53b",
+        "filename": "ui/webui/resources/js/cr/ui/menu.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-03T02:42:53Z",
+      "side": 1,
+      "message": "nit: just .display to get the value. see: https://www.w3.org/TR/cssom-1/#dom-cssstyledeclaration-camel-cased-attribute",
+      "range": {
+        "startLine": 194,
+        "startChar": 43,
+        "endLine": 194,
+        "endChar": 71
+      },
+      "revId": "25bd06261253756ef9a8cc7aafcb4342bf5ff361",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "685c9596_2b7d22d4",
+        "filename": "ui/webui/resources/js/cr/ui/menu.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-03T02:42:53Z",
+      "side": 1,
+      "message": "put this condition last, since checking item.disabled is likely faster",
+      "range": {
+        "startLine": 248,
+        "startChar": 42,
+        "endLine": 248,
+        "endChar": 70
+      },
+      "revId": "25bd06261253756ef9a8cc7aafcb4342bf5ff361",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
