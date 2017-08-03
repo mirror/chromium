@@ -3201,11 +3201,6 @@ void RenderFrameImpl::FrameDetached(blink::WebLocalFrame* frame,
   // called on the parent frame.
   DCHECK_EQ(frame_, frame);
 
-#if BUILDFLAG(ENABLE_PLUGINS)
-  if (focused_pepper_plugin_)
-    GetRenderWidget()->set_focused_pepper_plugin(nullptr);
-#endif
-
   for (auto& observer : observers_)
     observer.FrameDetached();
 
@@ -6944,8 +6939,6 @@ void RenderFrameImpl::PepperFocusChanged(PepperPluginInstanceImpl* instance,
     focused_pepper_plugin_ = instance;
   else if (focused_pepper_plugin_ == instance)
     focused_pepper_plugin_ = nullptr;
-
-  GetRenderWidget()->set_focused_pepper_plugin(focused_pepper_plugin_);
 
   GetRenderWidget()->UpdateTextInputState();
   GetRenderWidget()->UpdateSelectionBounds();
