@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df2e1613_91fa6603",
+        "filename": "third_party/WebKit/public/platform/modules/insecure_input/insecure_input_service.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-03T17:35:51Z",
+      "side": 1,
+      "message": "Nit: 80 chars \u003dP\n\nI guess we should figure out how to autoformat Mojo files...",
+      "revId": "b6e8b19f0311c42143603db372a67bc30f8c5713",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
