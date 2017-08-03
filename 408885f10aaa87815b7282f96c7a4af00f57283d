@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "5410ccc6_32ad2212",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 444,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-03T18:49:34Z",
+      "side": 1,
+      "message": "Please fix the DCHECK hit in layout tests.",
+      "range": {
+        "startLine": 443,
+        "startChar": 4,
+        "endLine": 444,
+        "endChar": 76
+      },
+      "revId": "408885f10aaa87815b7282f96c7a4af00f57283d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "50df7098_35bea2a8",
         "filename": "third_party/WebKit/Source/core/editing/LayoutSelectionTest.cpp",
         "patchSetId": 15
@@ -42,6 +65,46 @@
         "endLine": 28,
         "endChar": 71
       },
+      "revId": "408885f10aaa87815b7282f96c7a4af00f57283d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9e272b1_e4ab3142",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelectionTest.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-03T18:49:34Z",
+      "side": 1,
+      "message": "nit: s/None/Hidden/",
+      "range": {
+        "startLine": 76,
+        "startChar": 66,
+        "endLine": 76,
+        "endChar": 70
+      },
+      "revId": "408885f10aaa87815b7282f96c7a4af00f57283d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0b0a83a_91079000",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelectionTest.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-03T18:49:34Z",
+      "side": 1,
+      "message": "Could you add another test case for selection crossing shadow boundaries?",
       "revId": "408885f10aaa87815b7282f96c7a4af00f57283d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
