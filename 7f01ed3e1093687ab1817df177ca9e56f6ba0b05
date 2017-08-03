@@ -16,6 +16,24 @@
       "revId": "7f01ed3e1093687ab1817df177ca9e56f6ba0b05",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d1fcfc4_a78d214e",
+        "filename": "media/DEPS",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-08-03T23:36:10Z",
+      "side": 1,
+      "message": "Thank you for bringing this up. It turned out that we decided to not move the switch used by DecodeCapabilities to ui/base due to other dependency issues. That\u0027s also why I didn\u0027t get any error without modifying the BUILD.gn file.\n\nBy deleting the change here and the include in decode_capabilities.cc, there\u0027s no more media changes. Feel free the still take a look at the CL or not.",
+      "parentUuid": "c41add12_9eb6d073",
+      "revId": "7f01ed3e1093687ab1817df177ca9e56f6ba0b05",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
