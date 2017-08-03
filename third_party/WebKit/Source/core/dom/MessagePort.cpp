@@ -32,6 +32,7 @@
 #include "bindings/core/v8/serialization/SerializedScriptValueFactory.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/dom/ExecutionContext.h"
+#include "core/dom/MessagePortMessageStructTraits.h"
 #include "core/dom/TaskRunnerHelper.h"
 #include "core/events/MessageEvent.h"
 #include "core/frame/LocalDOMWindow.h"
@@ -42,6 +43,7 @@
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/text/AtomicString.h"
 #include "public/platform/WebString.h"
+#include "third_party/WebKit/common/message_port/message_port.mojom-blink.h"
 
 namespace blink {
 
@@ -81,9 +83,10 @@ void MessagePort::postMessage(ScriptState* script_state,
   if (exception_state.HadException())
     return;
 
-  StringView wire_data = message->GetWireData();
-  port_->PostMessage(reinterpret_cast<const uint8_t*>(wire_data.Characters8()),
-                     wire_data.length(), std::move(channels));
+  BlinkMessagePortMessage msg;
+  msg.message = message;
+  msg.ports = std::move(channels);
+  port_->PostMessage<blink_common::mojom::blink::MessagePortMessage>(&msg);
 }
 
 blink_common::MessagePort MessagePort::Disentangle() {
@@ -157,12 +160,12 @@ bool MessagePort::TryGetMessage(RefPtr<SerializedScriptValue>& message,
   if (!port_)
     return false;
 
-  std::vector<uint8_t> message_data;
-  if (!port_->GetMessage(&message_data, &channels))
+  BlinkMessagePortMessage msg;
+  if (!port_->GetMessage<blink_common::mojom::blink::MessagePortMessage>(&msg))
     return false;
 
-  message = SerializedScriptValue::Create(
-      reinterpret_cast<const char*>(message_data.data()), message_data.size());
+  message = std::move(msg.message);
+  channels = std::move(msg.ports);
   return true;
 }
 
