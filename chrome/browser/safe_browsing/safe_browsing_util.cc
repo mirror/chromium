@@ -6,6 +6,7 @@
 
 #include <utility>
 
+#include "base/metrics/histogram_macros.h"
 #include "base/strings/string_util.h"
 #include "chrome/browser/safe_browsing/chunk.pb.h"
 #include "components/google/core/browser/google_util.h"
@@ -133,5 +134,10 @@ SBChunkDelete::SBChunkDelete() : is_sub_del(false) {}
 SBChunkDelete::SBChunkDelete(const SBChunkDelete& other) = default;
 
 SBChunkDelete::~SBChunkDelete() {}
+
+void RecordCountOfWhitelistedDownload(WhitelistType type) {
+  UMA_HISTOGRAM_ENUMERATION("SBClientDownload.CheckWhitelistResult", type,
+                            WHITELIST_TYPE_MAX);
+}
 
 }  // namespace safe_browsing
