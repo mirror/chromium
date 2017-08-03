@@ -34,6 +34,24 @@
       "revId": "866ea6d838a6c94b2b2bfb6bbd43515b27f09536",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1943dc88_ec8e80be",
+        "filename": "chrome/browser/ui/ash/palette_delegate_chromeos.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-03T02:15:48Z",
+      "side": 1,
+      "message": "Huh. I thought you could do it with base::Bind() like this:\n\nhttps://cs.chromium.org/chromium/src/media/remoting/renderer_controller.cc?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d412\n\n  delayed_start_stability_timer_.Start(\n      FROM_HERE, kDelayedStart,\n      base::Bind(\n          \u0026RendererController::OnDelayedStartTimerFired, base::Unretained(this),\n          start_trigger,\n          client_-\u003eAudioDecodedByteCount() + client_-\u003eVideoDecodedByteCount(),\n          clock_-\u003eNowTicks()));\n\ncalling\n\nvoid RendererController::OnDelayedStartTimerFired(\n    StartTrigger start_trigger,\n    size_t decoded_bytes_before_delay,\n    base::TimeTicks delayed_start_time) {}\n\nDid I miss something?\n\n(I wouldn\u0027t change your code -- it\u0027s fine, I just want to see if I\u0027m misunderstanding something.)",
+      "parentUuid": "1b0adeab_81600638",
+      "revId": "866ea6d838a6c94b2b2bfb6bbd43515b27f09536",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
