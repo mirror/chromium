@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d034c3d_01e19d82",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-03T03:44:40Z",
+      "side": 1,
+      "message": "Even though this is for analysis, I think we need a few tests to confirm the results are what we expect and want. What do you think of adding a few tests as LayoutTests that just dump the WO results in stdout/stderr as testname-expected.txt?",
+      "revId": "06ce5125319ad51a3525817c8dec688f2fdb5ad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a999e07f_ccea15c2",
+        "filename": "third_party/WebKit/Source/core/paint/SVGRootPainter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-03T03:44:40Z",
+      "side": 1,
+      "message": "SVGRootPainter won\u0027t get called for a lot of off-screen cases when it\u0027s really obvious to the paint system that it\u0027s clipped out. This might be better placed all the way up in LocalFrameView, depending on the goal.",
+      "revId": "06ce5125319ad51a3525817c8dec688f2fdb5ad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63ba209f_69ef0135",
+        "filename": "third_party/WebKit/Source/core/paint/SVGRootPainter.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-03T03:44:40Z",
+      "side": 1,
+      "message": "MapToVisualRectInAncestorSpace requires a bit of finessing to get it to convert all the way to physical pixels. I wonder if something like the following would be more robust? This relies on IntersectionObserver which is sort of a wrapper around MapToVisualRectInAncestorSpace and is pretty well tested:\n\n#include \"core/layout/IntersectionGeometry.h\"\n...\nIntersectionGeometry geometry(nullptr, *ToElement(layout_svg_root_.GetNode()), Vector\u003cLength\u003e(), true);\ngeometry.ComputeGeometry();\nLOG(INFO) \u003c\u003c \"intersection rect: \" \u003c\u003c geometry.IntersectionIntRect().ToString();\n\nIntersectionObserver is particularly useful for ads so it actually clips to the viewport which is a little different than your heuristic to not include scrolling, but it might be an easier starting point.",
+      "revId": "06ce5125319ad51a3525817c8dec688f2fdb5ad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
