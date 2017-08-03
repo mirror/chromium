@@ -342,6 +342,10 @@ class BlinkPerfLayout(_BlinkPerfBenchmark):
   def GetExpectations(self):
     class Expectations(story.expectations.StoryExpectations):
       def SetExpectations(self):
+        self.DisableStory(
+          'character_fallback.html',
+          [story.expectations.ALL],
+          'crbug.com/752207')
         self.PermanentlyDisableBenchmark(
             [story.expectations.ANDROID_SVELTE], 'crbug.com/551950')
     return Expectations()
