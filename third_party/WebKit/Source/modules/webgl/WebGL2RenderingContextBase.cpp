@@ -3908,7 +3908,7 @@ void WebGL2RenderingContextBase::bindSampler(GLuint unit,
     return;
   }
 
-  sampler_units_[unit] = TraceWrapperMember<WebGLSampler>(this, sampler);
+  sampler_units_[unit] = sampler;
 
   ContextGL()->BindSampler(unit, ObjectOrZero(sampler));
 }
@@ -5125,8 +5125,7 @@ bool WebGL2RenderingContextBase::ValidateAndUpdateBufferBindBaseTarget(
                           "index out of range");
         return false;
       }
-      bound_indexed_uniform_buffers_[index] =
-          TraceWrapperMember<WebGLBuffer>(this, buffer);
+      bound_indexed_uniform_buffers_[index] = buffer;
       bound_uniform_buffer_ = buffer;
 
       // Keep track of what the maximum bound uniform buffer index is
