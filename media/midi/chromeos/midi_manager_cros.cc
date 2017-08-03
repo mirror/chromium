@@ -4,14 +4,40 @@
 
 #include "media/midi/chromeos/midi_manager_cros.h"
 
+#include "chromeos/dbus/dbus_thread_manager.h"
+#include "chromeos/dbus/midis_client.h"
+#include "dbus/object_path.h"
 #include "media/midi/midi_manager_alsa.h"
 #include "media/midi/midi_switches.h"
+
+namespace {
+
+// TODO(pmalani): Reference these from system_api once name is finalized.
+constexpr char kMidisServiceName[] = "org.chromium.Midis";
+constexpr char kMidisObjectPath[] = "/org/chromium/Midis";
+
+}  // namespace
 
 namespace midi {
 
 MidiManagerCros::MidiManagerCros(MidiService* service) : MidiManager(service) {}
 
 MidiManagerCros::~MidiManagerCros() = default;
+
+bool MidiManagerCros::SetupMojoChannel() {
+  base::ScopedFD listen_fd =
+      chromeos::DBusThreadManager::Get()
+          ->GetMidisClient()
+          ->BootstrapMojoConnection(kMidisServiceName,
+                                    dbus::ObjectPath(kMidisObjectPath));
+
+  if (!listen_fd.is_valid()) {
+    return false;
+  }
+
+  // TODO(pmalani): Call code to boostrap the mojo IPC channel here.
+  return true;
+}
 
 MidiManager* MidiManager::Create(MidiService* service) {
   // Note: Because of crbug.com/719489, chrome://flags does not affect

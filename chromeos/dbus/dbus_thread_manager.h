@@ -40,6 +40,7 @@ class ImageBurnerClient;
 class ImageLoaderClient;
 class LorgnetteManagerClient;
 class MediaAnalyticsClient;
+class MidisClient;
 class ModemMessagingClient;
 class PermissionBrokerClient;
 class PowerManagerClient;
@@ -132,6 +133,7 @@ class CHROMEOS_EXPORT DBusThreadManager {
   ImageBurnerClient* GetImageBurnerClient();
   ImageLoaderClient* GetImageLoaderClient();
   MediaAnalyticsClient* GetMediaAnalyticsClient();
+  MidisClient* GetMidisClient();
   LorgnetteManagerClient* GetLorgnetteManagerClient();
   ModemMessagingClient* GetModemMessagingClient();
   PermissionBrokerClient* GetPermissionBrokerClient();

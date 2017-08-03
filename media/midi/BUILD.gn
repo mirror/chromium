@@ -161,6 +161,7 @@ component("midi") {
     # MIDI Service client library should be added here. We would have a separate
     # build flag, use_midis, to use the real MIDI Service on Chrome OS device
     # builds, and add a mocked service for unit tests to run on Linux.
+    deps += [ "//dbus" ]
     sources += [
       "chromeos/midi_manager_cros.cc",
       "chromeos/midi_manager_cros.h",
