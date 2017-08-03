@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2828697_f5b12a16",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-08-03T02:04:17Z",
+      "side": 1,
+      "message": "This is the tiniest nit in the history of nits but I don\u0027t think `bug 748876` is auto-linked outside of monorail - crbug.com/748876 would be better.",
+      "revId": "4ab9cca4fa043f3110d5ba554b403461571c98a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a441902a_53fcc10b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-08-03T02:04:17Z",
+      "side": 1,
+      "message": "This is great, thanks!",
+      "revId": "4ab9cca4fa043f3110d5ba554b403461571c98a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da5fb85b_2c6c9a5d",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_github.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-08-03T02:04:17Z",
+      "side": 1,
+      "message": "Now that this method becomes one line, I think it\u0027d be nice to remove it. The easiest way looks like it\u0027d be renaming pr_with_change_id to pr_for_chromium_commit.",
+      "revId": "4ab9cca4fa043f3110d5ba554b403461571c98a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
