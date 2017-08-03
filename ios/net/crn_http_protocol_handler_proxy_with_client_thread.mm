@@ -49,7 +49,6 @@
 
 // Performs the selector on |clientThread_| using |runLoopModes_|.
 - (void)runInvocationQueueOnClientThread;
-- (void)postToClientThread:(SEL)aSelector, ... NS_REQUIRES_NIL_TERMINATION;
 - (void)invokeOnClientThread:(NSInvocation*)invocation;
 // These functions are just wrappers around the corresponding
 // NSURLProtocolClient methods, used for task posting.
@@ -117,33 +116,18 @@
   }
 }
 
-- (void)postToClientThread:(SEL)aSelector, ... {
-  // Build an NSInvocation representing an invocation of |aSelector| on |self|
-  // with the supplied varargs passed as arguments to the invocation.
-  NSMethodSignature* sig = [self methodSignatureForSelector:aSelector];
-  DCHECK(sig != nil);
-  NSInvocation* inv = [NSInvocation invocationWithMethodSignature:sig];
-  [inv setTarget:self];
-  [inv setSelector:aSelector];
-  [inv retainArguments];
-
-  size_t arg_index = 2;
-  va_list args;
-  va_start(args, aSelector);
-  __unsafe_unretained NSObject* arg = va_arg(args, NSObject*);
-  while (arg != nil) {
-    [inv setArgument:&arg atIndex:arg_index];
-    arg = va_arg(args, NSObject*);
-    arg_index++;
-  }
-  va_end(args);
-
-  DCHECK(arg_index == sig.numberOfArguments);
-  [self performSelector:@selector(invokeOnClientThread:)
+- (void)postBlockToClientThread:(dispatch_block_t)block {
+  DCHECK(block);
+  [self performSelector:@selector(performBlock:)
                onThread:_clientThread
-             withObject:inv
+             withObject:[block copy]
           waitUntilDone:NO
                   modes:_runLoopModes];
+}
+
+- (void)performBlock:(dispatch_block_t)block {
+  DCHECK(block);
+  block();
 }
 
 - (void)invokeOnClientThread:(NSInvocation*)invocation {
@@ -165,23 +149,27 @@
     return;
   NSError* error =
       net::GetIOSError(nsErrorCode, netErrorCode, _url, _creationTime);
-  [self postToClientThread:@selector(didFailWithErrorOnClientThread:), error,
-                           nil];
+  [self performBlock:^{
+    [self didFailWithErrorOnClientThread:error];
+  }];
 }
 
 - (void)didLoadData:(NSData*)data {
   DCHECK(_clientThread);
   if (!_protocol)
     return;
-  [self postToClientThread:@selector(didLoadDataOnClientThread:), data, nil];
+  [self postBlockToClientThread:^{
+    [self didLoadDataOnClientThread:data];
+  }];
 }
 
 - (void)didReceiveResponse:(NSURLResponse*)response {
   DCHECK(_clientThread);
   if (!_protocol)
     return;
-  [self postToClientThread:@selector(didReceiveResponseOnClientThread:),
-                           response, nil];
+  [self postBlockToClientThread:^{
+    [self didReceiveResponseOnClientThread:response];
+  }];
 }
 
 - (void)wasRedirectedToRequest:(NSURLRequest*)request
@@ -190,16 +178,19 @@
   DCHECK(_clientThread);
   if (!_protocol)
     return;
-  [self postToClientThread:@selector(wasRedirectedToRequestOnClientThread:
-                                                         redirectResponse:),
-                           request, redirectResponse, nil];
+  [self postBlockToClientThread:^{
+    [self wasRedirectedToRequestOnClientThread:request
+                              redirectResponse:redirectResponse];
+  }];
 }
 
 - (void)didFinishLoading {
   DCHECK(_clientThread);
   if (!_protocol)
     return;
-  [self postToClientThread:@selector(didFinishLoadingOnClientThread), nil];
+  [self postBlockToClientThread:^{
+    [self didFinishLoadingOnClientThread];
+  }];
 }
 
 // Feature support methods that don't forward to the NSURLProtocolClient.
