@@ -22,6 +22,7 @@ struct CC_EXPORT LayerSelectionBound {
   gfx::Point edge_top;
   gfx::Point edge_bottom;
   int layer_id;
+  bool hidden;
 
   bool operator==(const LayerSelectionBound& other) const;
   bool operator!=(const LayerSelectionBound& other) const;
