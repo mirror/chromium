@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "df6c687e_73089372",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/favicon/FaviconHelper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-08-03T08:34:38Z",
+      "side": 1,
+      "message": "Done.\n\nCan you please double-check that the formatting now conforms to the java style?\n\nBtw. I tried to find a source of truth here and could not find much:\nhttps://chromium.googlesource.com/chromium/src/+/master/styleguide/java/java.md\n -\u003e\nhttps://source.android.com/source/code-style\n -\u003e\nhttp://www.oracle.com/technetwork/java/javase/documentation/index-137868.html\n (which shows alignment in its example)",
+      "parentUuid": "bb260837_4ecb5da1",
+      "revId": "91158e3cd41ad105a0fff93079702b48effa233a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4735d3ab_e8514307",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "91158e3cd41ad105a0fff93079702b48effa233a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d9142c9_c52442f5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-08-03T08:34:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4735d3ab_e8514307",
+      "revId": "91158e3cd41ad105a0fff93079702b48effa233a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
