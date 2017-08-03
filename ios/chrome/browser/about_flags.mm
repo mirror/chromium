@@ -34,8 +34,8 @@
 #include "components/strings/grit/components_strings.h"
 #include "ios/chrome/browser/chrome_switches.h"
 #include "ios/chrome/browser/ios_chrome_flag_descriptions.h"
+#include "ios/chrome/browser/ssl/captive_portal_features.h"
 #include "ios/chrome/grit/ios_strings.h"
-#include "ios/components/captive_portal/features.h"
 #include "ios/public/provider/chrome/browser/chrome_browser_provider.h"
 #include "ios/web/public/user_agent.h"
 #include "ios/web/public/web_view_creation_util.h"
@@ -110,7 +110,7 @@ const flags_ui::FeatureEntry kFeatureEntries[] = {
      FEATURE_VALUE_TYPE(payments::features::kWebPayments)},
     {"ios-captive-portal", flag_descriptions::kIosCaptivePortalName,
      flag_descriptions::kIosCaptivePortalDescription, flags_ui::kOsIos,
-     FEATURE_VALUE_TYPE(captive_portal::kIosCaptivePortal)},
+     FEATURE_VALUE_TYPE(captive_portal::features::kIosCaptivePortal)},
     {"in-product-help-demo-mode-choice",
      flag_descriptions::kInProductHelpDemoModeName,
      flag_descriptions::kInProductHelpDemoModeDescription, flags_ui::kOsIos,

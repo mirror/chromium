@@ -2,13 +2,15 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "ios/components/captive_portal/features.h"
+#include "ios/chrome/browser/ssl/captive_portal_features.h"
 
 namespace captive_portal {
 
-#if defined(OS_IOS)
+namespace features {
+
 const base::Feature kIosCaptivePortal{"IosCaptivePortal",
                                       base::FEATURE_DISABLED_BY_DEFAULT};
-#endif
+
+}  // namespace features
 
 }  // namespace captive_portal
