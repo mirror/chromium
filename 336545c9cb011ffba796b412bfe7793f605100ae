@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25519c03_63835de1",
+        "filename": "components/autofill/core/browser/autofill_experiments.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-03T13:59:44Z",
+      "side": 1,
+      "message": "*experiment",
+      "revId": "336545c9cb011ffba796b412bfe7793f605100ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31dd6f61_b2f06682",
+        "filename": "components/autofill/core/browser/autofill_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 589,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-03T13:59:44Z",
+      "side": 1,
+      "message": "BTW, it will be good to remember this nuance in our metrics. If the user interacts with a CC form (logged above), the next step of the funnel (Showing suggestions) is now a combination of (1) they had data and (2) the form was considered good enough. Should we document with a crbug.com/xxxx that we should perhaps have a metric for just (1)?",
+      "revId": "336545c9cb011ffba796b412bfe7793f605100ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
