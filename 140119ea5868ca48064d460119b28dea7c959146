@@ -16,6 +16,29 @@
       "revId": "140119ea5868ca48064d460119b28dea7c959146",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44bfd86e_3400a27c",
+        "filename": "third_party/libdrm/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-03T15:09:15Z",
+      "side": 1,
+      "message": "can we file an upstream bug for this and link to it here?",
+      "range": {
+        "startLine": 46,
+        "startChar": 19,
+        "endLine": 46,
+        "endChar": 33
+      },
+      "revId": "140119ea5868ca48064d460119b28dea7c959146",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
