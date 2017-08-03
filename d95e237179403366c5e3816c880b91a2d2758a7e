@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f17b65d9_f2e5a33e",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/BidirectionalStreamTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-08-03T13:02:41Z",
+      "side": 1,
+      "message": "Rather than add a new ConditionVariable and override onStreamReady(), what do you think about using the already existing TestBidirectionalStreamCallback logic:\n  callback.setAutoAdvance(false);\n  stream.start();\n  callback.waitForNextWriteStep();\n  callback.setAutoAdvance(true);",
+      "range": {
+        "startLine": 377,
+        "startChar": 34,
+        "endLine": 377,
+        "endChar": 0
+      },
+      "revId": "d95e237179403366c5e3816c880b91a2d2758a7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
