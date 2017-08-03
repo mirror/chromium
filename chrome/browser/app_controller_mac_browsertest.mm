@@ -24,10 +24,12 @@
 #include "chrome/browser/bookmarks/bookmark_model_factory.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/history/history_service_factory.h"
+#include "chrome/browser/printing/print_preview_dialog_controller.h"
 #include "chrome/browser/profiles/profile_attributes_entry.h"
 #include "chrome/browser/profiles/profile_attributes_storage.h"
 #include "chrome/browser/profiles/profile_manager.h"
 #include "chrome/browser/ui/browser.h"
+#include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/browser_list.h"
 #include "chrome/browser/ui/browser_navigator_params.h"
 #include "chrome/browser/ui/browser_window.h"
@@ -45,8 +47,10 @@
 #include "components/bookmarks/browser/bookmark_model.h"
 #include "components/bookmarks/test/bookmark_test_helpers.h"
 #include "components/prefs/pref_service.h"
+#include "components/printing/common/print_messages.h"
 #include "content/public/browser/navigation_controller.h"
 #include "content/public/browser/web_contents.h"
+#include "content/public/browser/web_contents_observer.h"
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/test_navigation_observer.h"
 #include "extensions/browser/app_window/app_window_registry.h"
@@ -450,6 +454,40 @@ IN_PROC_BROWSER_TEST_F(AppControllerReplaceNTPBrowserTest,
                 ->tab_strip_model()
                 ->GetActiveWebContents()
                 ->GetLastCommittedURL());
+}
+
+class AppControllerOpenAndPrintBrowserTest : public InProcessBrowserTest {
+ protected:
+  AppControllerOpenAndPrintBrowserTest() {}
+
+  void SetUpInProcessBrowserTestFixture() override {
+    ASSERT_TRUE(embedded_test_server()->Start());
+  }
+};
+
+// Tests that we can open and print a URL
+IN_PROC_BROWSER_TEST_F(AppControllerOpenAndPrintBrowserTest, OpenAndPrintURL) {
+  size_t num_browsers = chrome::GetTotalBrowserCount();
+
+  GURL simple(embedded_test_server()->GetURL("/simple.html"));
+  NSString* simpleNSString = base::SysUTF8ToNSString(simple.spec());
+
+  AppController* controller =
+      base::mac::ObjCCast<AppController>([NSApp delegate]);
+  // The -application:printFile: delegate method should always return YES
+  ASSERT_TRUE([controller application:NSApp printFile:simpleNSString]);
+
+  // Triggering a print should open up a new browser window
+  ASSERT_EQ(num_browsers + 1, chrome::GetTotalBrowserCount());
+  Browser* browser = chrome::FindLastActive();
+  content::WebContents* web_contents =
+      browser->tab_strip_model()->GetActiveWebContents();
+
+  // TODO: This fails because the dialog controller has not yet been created.
+  ASSERT_TRUE(printing::PrintPreviewDialogController::GetInstance()
+                  ->GetPrintPreviewForContents(web_contents) != NULL);
+
+  // TODO: Test opening/printing PDF.
 }
 
 class AppControllerMainMenuBrowserTest : public InProcessBrowserTest {

@@ -20,6 +20,7 @@
 #include "ui/base/work_area_watcher_observer.h"
 
 class AppControllerProfileObserver;
+class AppControllerWebContentsObserver;
 @class AppShimMenuController;
 class BookmarkMenuBridge;
 class CommandUpdater;
@@ -34,6 +35,10 @@ class ScopedKeepAlive;
 
 namespace ui {
 class WorkAreaWatcherObserver;
+}
+
+namespace content {
+class WebContents;
 }
 
 // The application controller object, created by loading the MainMenu nib.
@@ -54,6 +59,14 @@ class WorkAreaWatcherObserver;
   // when a profile has been deleted.
   std::unique_ptr<AppControllerProfileObserver>
       profileAttributesStorageObserver_;
+
+  // When we open a new browser for printing, we can't trigger the print until
+  // the WebContents has been set up. We use these observers to keep track of
+  // when each WebContents is ready, adding and removing observers when the OS
+  // requests a print and when the WebContents is ready, respectively.
+  std::map<content::WebContents*,
+           std::unique_ptr<AppControllerWebContentsObserver>>
+      printingWebContentsObservers_;
 
   // Management of the bookmark menu which spans across all windows
   // (and Browser*s). |profileBookmarkMenuBridgeMap_| is a cache that owns one
@@ -77,6 +90,7 @@ class WorkAreaWatcherObserver;
   // Launch Services) before we've launched the browser, we queue them up in
   // |startupUrls_| so that they can go in the first browser window/tab.
   std::vector<GURL> startupUrls_;
+  std::vector<GURL> startupPrintUrls_;
   BOOL startupComplete_;
 
   // Outlets for the close tab/window menu items so that we can adjust the

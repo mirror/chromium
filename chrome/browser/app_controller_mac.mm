@@ -41,6 +41,7 @@
 #include "chrome/browser/lifetime/scoped_keep_alive.h"
 #include "chrome/browser/mac/mac_startup_profiler.h"
 #include "chrome/browser/prefs/incognito_mode_prefs.h"
+#include "chrome/browser/printing/print_view_manager_common.h"
 #include "chrome/browser/profiles/profile_attributes_entry.h"
 #include "chrome/browser/profiles/profile_attributes_storage.h"
 #include "chrome/browser/profiles/profile_manager.h"
@@ -95,6 +96,7 @@
 #include "content/public/browser/download_manager.h"
 #include "content/public/browser/notification_service.h"
 #include "content/public/browser/notification_types.h"
+#include "content/public/browser/page_navigator.h"
 #include "content/public/browser/plugin_service.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/browser/extension_system.h"
@@ -108,6 +110,7 @@ using apps::ExtensionAppShimHandler;
 using base::UserMetricsAction;
 using content::BrowserContext;
 using content::DownloadManager;
+using content::WebContentsObserver;
 
 namespace {
 
@@ -205,6 +208,8 @@ bool IsProfileSignedOut(Profile* profile) {
 - (BOOL)shouldQuitWithInProgressDownloads;
 - (void)executeApplication:(id)sender;
 - (void)profileWasRemoved:(const base::FilePath&)profilePath;
+- (void)printWebContents:(content::WebContents*)webContents
+        showPrintPreview:(BOOL)showPrintPreview;
 
 // Opens a tab for each GURL in |urls|.
 - (void)openUrls:(const std::vector<GURL>&)urls;
@@ -219,6 +224,16 @@ bool IsProfileSignedOut(Profile* profile) {
 // this method is called, and that tab is the NTP, then this method closes the
 // NTP after all the |urls| have been opened.
 - (void)openUrlsReplacingNTP:(const std::vector<GURL>&)urls;
+
+// Opens a new window for each GURL in |urls| with a print dialog for each
+// window.
+- (void)openAndPrintUrls:(const std::vector<GURL>&)urls;
+
+// Like -openStartupUrls, this method opens a new window (with a print dialog)
+// for each GURL in |startupPrintUrls_|. It must be called exactly once after
+// startup has completed, at the same time as -openStartupUrls. This method will
+// clear |startupPrintUrls_|.
+- (void)openAndPrintStartupPrintUrls;
 
 // Whether instances of this class should use the Handoff feature.
 - (BOOL)shouldUseHandoff;
@@ -280,6 +295,36 @@ class AppControllerProfileObserver : public ProfileAttributesStorage::Observer {
   AppController* app_controller_;  // Weak; owns us.
 
   DISALLOW_COPY_AND_ASSIGN(AppControllerProfileObserver);
+};
+
+class AppControllerWebContentsObserver : public WebContentsObserver {
+ public:
+  AppControllerWebContentsObserver(AppController* app_controller,
+                                   content::WebContents* web_contents,
+                                   bool show_print_preview)
+      : WebContentsObserver(web_contents),
+        app_controller_(app_controller),
+        web_contents_(web_contents),
+        show_print_preview_(show_print_preview) {
+    DCHECK(app_controller_);
+    DCHECK(web_contents_);
+  }
+
+ private:
+  AppController* app_controller_;
+  content::WebContents* web_contents_;
+  bool show_print_preview_;
+
+  void DidFinishLoad(content::RenderFrameHost* render_frame_host,
+                     const GURL& validated_url) override {
+    // TODO: If we need to launch a plugin to render the URL (like if we are
+    // opening a PDF), we need to 1) detect that we need to launch a plugin, and
+    // then 2) wait for the plugin to load before printing.
+    [app_controller_ printWebContents:web_contents_
+                     showPrintPreview:show_print_preview_];
+  }
+
+  DISALLOW_COPY_AND_ASSIGN(AppControllerWebContentsObserver);
 };
 
 @implementation AppController
@@ -689,6 +734,47 @@ class AppControllerProfileObserver : public ProfileAttributesStorage::Observer {
   }
 }
 
+- (void)openAndPrintUrls:(const std::vector<GURL>&)urls {
+  if (urls.empty())
+    return;
+
+  if (!startupComplete_) {
+    startupPrintUrls_.insert(startupPrintUrls_.end(), urls.begin(), urls.end());
+    return;
+  }
+
+  // We create a new browser for each URL that we're printing, and then trigger
+  // a print on each browser.
+  for (GURL url : urls) {
+    Browser* browser = new Browser(
+        Browser::CreateParams([self safeLastProfileForNewWindows], true));
+    browser->window()->Show();
+
+    content::OpenURLParams params(
+        url, content::Referrer(), WindowOpenDisposition::NEW_FOREGROUND_TAB,
+        ui::PageTransition::PAGE_TRANSITION_AUTO_TOPLEVEL, false);
+    content::WebContents* contents = browser->OpenURL(params);
+
+    printingWebContentsObservers_[contents] =
+        base::MakeUnique<AppControllerWebContentsObserver>(
+            self, contents,
+            browser->profile()->GetPrefs()->GetBoolean(
+                prefs::kPrintPreviewDisabled));
+  }
+}
+
+- (void)openAndPrintStartupPrintUrls {
+  DCHECK(startupComplete_);
+  [self openAndPrintUrls:startupPrintUrls_];
+  startupPrintUrls_.clear();
+}
+
+- (void)printWebContents:(content::WebContents*)webContents
+        showPrintPreview:(BOOL)printPreview {
+  printing::StartPrint(webContents, printPreview, false);
+  printingWebContentsObservers_.erase(webContents);
+}
+
 // This is called after profiles have been loaded and preferences registered.
 // It is safe to access the default profile here.
 - (void)applicationDidFinishLaunching:(NSNotification*)notify {
@@ -741,6 +827,7 @@ class AppControllerProfileObserver : public ProfileAttributesStorage::Observer {
     activeWebContents = browser->tab_strip_model()->GetActiveWebContents();
   [self updateHandoffManager:activeWebContents];
   [self openStartupUrls];
+  [self openAndPrintStartupPrintUrls];
 
   PrefService* localState = g_browser_process->local_state();
   if (localState) {
@@ -1327,6 +1414,16 @@ class AppControllerProfileObserver : public ProfileAttributesStorage::Observer {
     NOTREACHED() << "Nothing to open!";
 
   [sender replyToOpenOrPrint:NSApplicationDelegateReplySuccess];
+}
+
+- (BOOL)application:(NSApplication*)sender printFile:(NSString*)filename {
+  GURL gurl = net::FilePathToFileURL(
+      base::FilePath([filename fileSystemRepresentation]));
+  std::vector<GURL> gurlVector;
+  gurlVector.push_back(gurl);
+
+  [self openAndPrintUrls:gurlVector];
+  return YES;
 }
 
 // Show the preferences window, or bring it to the front if it's already
