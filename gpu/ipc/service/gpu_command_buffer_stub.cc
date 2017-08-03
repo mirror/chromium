@@ -9,6 +9,7 @@
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/debug/crash_logging.h"
+#include "base/debug/stack_trace.h"
 #include "base/hash.h"
 #include "base/json/json_writer.h"
 #include "base/macros.h"
@@ -170,14 +171,29 @@ void FastSetActiveURL(const GURL& url, size_t url_hash, GpuChannel* channel) {
   // BlinkPlatformImpl::createOffscreenGraphicsContext3DProvider. Hopefully the
   // onscreen context URL was set previously and will show up even when a crash
   // occurs during offscreen command processing.
-  if (url.is_empty())
+  if (url.is_empty()) {
+    LOG(INFO) << "url.is_empty(): " << url.is_empty();
     return;
+  }
   static size_t g_last_url_hash = 0;
+
+  static uint64_t g_call_count = 1;
   if (url_hash != g_last_url_hash) {
+    LOG(INFO) << "CACHE MISS -------------------------------------------- " << g_call_count++;
+    LOG(INFO) << "url_hash: " << url_hash;
+    LOG(INFO) << "g_last_url_hash: " << g_last_url_hash;
+
+    LOG(INFO) << "GURL: " << url;
+    base::debug::StackTrace().Print();
     g_last_url_hash = url_hash;
     DCHECK(channel && channel->gpu_channel_manager() &&
            channel->gpu_channel_manager()->delegate());
+    base::TimeTicks start = base::TimeTicks::Now();
     channel->gpu_channel_manager()->delegate()->SetActiveURL(url);
+    base::TimeDelta delta = base::TimeTicks::Now() - start;
+    LOG(INFO) << "SetActiveURL took " << delta.InMicroseconds() << " microseconds.";
+  } else {
+    LOG(INFO) << "cache hit.";
   }
 }
 
