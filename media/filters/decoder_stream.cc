@@ -743,6 +743,11 @@ void DecoderStream<StreamType>::CompleteDecoderReinitialization(bool success) {
     return;
   }
 
+  // Re-enable fallback to software after reinitialization. This is the last
+  // place we can clear that state, and as such is the least likely to interfere
+  // with the rest of the fallback algorithm.
+  decoder_produced_a_frame_ = false;
+
   ReadFromDemuxerStream();
 }
 
