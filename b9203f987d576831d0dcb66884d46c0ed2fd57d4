@@ -16,6 +16,40 @@
       "revId": "b9203f987d576831d0dcb66884d46c0ed2fd57d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b0eaafc_741e05f8",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-03T21:57:25Z",
+      "side": 1,
+      "message": "DCHECK_GT",
+      "revId": "b9203f987d576831d0dcb66884d46c0ed2fd57d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2741d65_e36b0fc6",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-08-03T21:57:25Z",
+      "side": 1,
+      "message": "DCHECK_EQ",
+      "revId": "b9203f987d576831d0dcb66884d46c0ed2fd57d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
