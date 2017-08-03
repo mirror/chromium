@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9f5cfa09_a14678c6",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2017-08-03T19:29:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65ac625b_be1c5dc3",
+      "range": {
+        "startLine": 217,
+        "startChar": 2,
+        "endLine": 217,
+        "endChar": 22
+      },
+      "revId": "7618100939238176127a609bc314f4f884a26e28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d109732b_38335b76",
         "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.h",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "35798b6e_8109b12d",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2017-08-03T19:29:08Z",
+      "side": 1,
+      "message": "I\u0027ve used a HeapVector according to the code base, but not sure whether it\u0027s a appropriate data structure. Please advice.",
+      "parentUuid": "d109732b_38335b76",
+      "range": {
+        "startLine": 139,
+        "startChar": 2,
+        "endLine": 139,
+        "endChar": 8
+      },
+      "revId": "7618100939238176127a609bc314f4f884a26e28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b65ea251_947cf2dc",
         "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.h",
         "patchSetId": 3
@@ -59,6 +107,24 @@
       "writtenOn": "2017-08-02T23:34:19Z",
       "side": 1,
       "message": "A nested class or struct for these would be nice.",
+      "revId": "7618100939238176127a609bc314f4f884a26e28",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db812861_181d7349",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1215729
+      },
+      "writtenOn": "2017-08-03T19:29:08Z",
+      "side": 1,
+      "message": "I create this stand alone class SubTaskAttributionVector other than using a nested class, because this needs to be used in multiple classes. Otherwise we would have a bunch of PerformanceMonitor::SubTaskAttributionVector. Is it OK?",
+      "parentUuid": "b65ea251_947cf2dc",
       "revId": "7618100939238176127a609bc314f4f884a26e28",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
