@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16f6ba99_88f22132",
+        "filename": "chrome/browser/extensions/api/platform_keys/platform_keys_api.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-08-03T17:43:52Z",
+      "side": 1,
+      "message": "This cast here is necessary, since key_size_bits is unsigned. Otherwise the compiler wouldn\u0027t know whether to convert to bool, int or double here.",
+      "range": {
+        "startLine": 62,
+        "startChar": 32,
+        "endLine": 62,
+        "endChar": 48
+      },
+      "revId": "d977807e56b66f36184972e2512f080216c5a251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fea1c15_0ac17f52",
+        "filename": "chrome/renderer/extensions/platform_keys_natives.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1179305
+      },
+      "writtenOn": "2017-08-03T17:43:52Z",
+      "side": 1,
+      "message": "Same here.",
+      "range": {
+        "startLine": 61,
+        "startChar": 20,
+        "endLine": 61,
+        "endChar": 36
+      },
+      "revId": "d977807e56b66f36184972e2512f080216c5a251",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
