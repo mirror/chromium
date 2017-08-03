@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8167b3f8_699562fd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-08-03T20:35:02Z",
+      "side": 1,
+      "message": "The comment also references 477480 - is that worth also listing here?",
+      "revId": "719d7e0bd327a010af081654876685cf0e466359",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
