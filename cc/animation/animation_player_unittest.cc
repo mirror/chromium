@@ -4,6 +4,7 @@
 
 #include "cc/animation/animation_player.h"
 
+#include "base/strings/stringprintf.h"
 #include "cc/animation/animation_delegate.h"
 #include "cc/animation/animation_host.h"
 #include "cc/animation/animation_id_provider.h"
@@ -412,26 +413,34 @@ TEST_F(AnimationPlayerTest, SwitchToLayer) {
 
 TEST_F(AnimationPlayerTest, ToString) {
   player_->AttachElement(element_id_);
-  EXPECT_EQ("AnimationPlayer{id=2, element_id=(1), animations=[]}",
+  EXPECT_EQ(base::StringPrintf(
+                "AnimationPlayer{id=%d, element_id=(%lu), animations=[]}",
+                player_->id(), static_cast<unsigned long>(element_id_.id_)),
             player_->ToString());
 
   player_->AddAnimation(
       Animation::Create(base::MakeUnique<FakeFloatAnimationCurve>(15), 42, 73,
                         TargetProperty::OPACITY));
-  EXPECT_EQ(
-      "AnimationPlayer{id=2, element_id=(1), animations=[Animation{id=42, "
-      "group=73, target_property_id=1, "
-      "run_state=WAITING_FOR_TARGET_AVAILABILITY}]}",
-      player_->ToString());
+  EXPECT_EQ(base::StringPrintf("AnimationPlayer{id=%d, element_id=(%lu), "
+                               "animations=[Animation{id=42, "
+                               "group=73, target_property_id=1, "
+                               "run_state=WAITING_FOR_TARGET_AVAILABILITY}]}",
+                               player_->id(),
+                               static_cast<unsigned long>(element_id_.id_)),
+            player_->ToString());
 
   player_->AddAnimation(
       Animation::Create(base::MakeUnique<FakeFloatAnimationCurve>(18), 45, 76,
                         TargetProperty::BOUNDS));
   EXPECT_EQ(
-      "AnimationPlayer{id=2, element_id=(1), animations=[Animation{id=42, "
-      "group=73, target_property_id=1, "
-      "run_state=WAITING_FOR_TARGET_AVAILABILITY}, Animation{id=45, group=76, "
-      "target_property_id=5, run_state=WAITING_FOR_TARGET_AVAILABILITY}]}",
+      base::StringPrintf(
+          "AnimationPlayer{id=%d, element_id=(%lu), "
+          "animations=[Animation{id=42, "
+          "group=73, target_property_id=1, "
+          "run_state=WAITING_FOR_TARGET_AVAILABILITY}, Animation{id=45, "
+          "group=76, "
+          "target_property_id=5, run_state=WAITING_FOR_TARGET_AVAILABILITY}]}",
+          player_->id(), static_cast<unsigned long>(element_id_.id_)),
       player_->ToString());
 }
 
