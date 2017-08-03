@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8bc41dc2_32498bb3",
+        "filename": "chrome/browser/media_galleries/fileapi/itunes_file_util_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-03T15:12:10Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be required. If |itunes_data_provider_| is only used from MediaTaskRunner(), other tasks will always be sequenced after its init. If |itunes_data_provider_| is used outside of MediaTaskRunner() then that\u0027s likely the source of failures (which was incorrect before but the true multi-threadedness of ScopedTaskEnvironment highlights this -- that\u0027s precisely why we intentionally didn\u0027t fake TaskScheduler on the main thread in unit tests with the ScopedTaskEnvironment design).",
+      "revId": "965854c6158722e6d9dd0be78b68f65a243fd486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0538cb0b_44cba68d",
+        "filename": "chrome/browser/media_galleries/fileapi/itunes_file_util_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-03T15:12:10Z",
+      "side": 1,
+      "message": "You can use OnTaskRunnerDeleter paradigm here instead of the TearDown dance, i.e.:\n\n// Sample usage with std::unique_ptr :\n// std::unique_ptr\u003cFoo, base::OnTaskRunnerDeleter\u003e ptr(\n//     new Foo, base::OnTaskRunnerDeleter(my_task_runner));\n\nthen you can just let members unwind in order (this one will post a task for deletion) and ~ScopedTaskEnvironment() will automatically flush all threads until this is done.",
+      "revId": "965854c6158722e6d9dd0be78b68f65a243fd486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6753569f_a06f37ab",
+        "filename": "chrome/browser/media_galleries/fileapi/media_file_system_backend.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-03T15:12:10Z",
+      "side": 1,
+      "message": "rm include",
+      "revId": "965854c6158722e6d9dd0be78b68f65a243fd486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78f22c05_ed9e63d1",
+        "filename": "chrome/browser/media_galleries/fileapi/native_media_file_util_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-03T15:12:10Z",
+      "side": 1,
+      "message": "You don\u0027t need both to run until idle. TestBrowserThreadBundle is a superset of ScopedTaskEnvironment (it includes one if none is provided -- it\u0027s a ScopedTaskEnvironment + named BrowserThreads).\n\nTo flush it all you need to use content::RunAllBlockingPoolTasksUntilIdle() (yes, poorly named, will rename after migration churn is through)",
+      "revId": "965854c6158722e6d9dd0be78b68f65a243fd486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6d03d85_db3088e9",
+        "filename": "chrome/browser/media_galleries/fileapi/native_media_file_util_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-03T15:12:10Z",
+      "side": 1,
+      "message": "I think it\u0027s more readable to just content::RunAllBlockingPoolTasksUntilIdle() inline instead of having this helper making a single call..",
+      "revId": "965854c6158722e6d9dd0be78b68f65a243fd486",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
