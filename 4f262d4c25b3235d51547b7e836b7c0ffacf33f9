@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "25e1f648_7c199a80",
+        "filename": "components/viz/client/client_layer_tree_frame_sink.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-03T21:56:16Z",
+      "side": 1,
+      "message": "Any reason not to address the TODO here?",
+      "revId": "4f262d4c25b3235d51547b7e836b7c0ffacf33f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "24e750d4_944fbb13",
         "filename": "components/viz/service/frame_sinks/gpu_root_compositor_frame_sink.cc",
         "patchSetId": 8
@@ -13,6 +30,41 @@
       "writtenOn": "2017-08-03T21:35:19Z",
       "side": 1,
       "message": "it occurs to me that my statement about this was only correct in internal window mode. You should remove this.",
+      "revId": "4f262d4c25b3235d51547b7e836b7c0ffacf33f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d66cd758_adb6bfe1",
+        "filename": "components/viz/service/frame_sinks/gpu_root_compositor_frame_sink.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-03T21:56:16Z",
+      "side": 1,
+      "message": "This probably applies to external window mode too? It\u0027s the same as a second monitor on internal mode, everything else would be the same?",
+      "parentUuid": "24e750d4_944fbb13",
+      "revId": "4f262d4c25b3235d51547b7e836b7c0ffacf33f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b50a1c8_554d6dbc",
+        "filename": "services/ui/ws/compositor_frame_sink_client_binding.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-03T21:56:16Z",
+      "side": 1,
+      "message": "std::move(hit_test_region_list) here, right?",
       "revId": "4f262d4c25b3235d51547b7e836b7c0ffacf33f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
