@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "55702838_007ceef8",
+        "filename": "AUTHORS",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001766
+      },
+      "writtenOn": "2017-08-03T00:15:52Z",
+      "side": 1,
+      "message": "Can you not re-sort the file?\nI would like this diff to just be a single line addition and nothing else.",
+      "revId": "f716a4ed4d6da563686c7b3d84c00cd6202b7071",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
