@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "681472d8_f5c8a928",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter_browsertest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-03T21:05:41Z",
+      "side": 1,
+      "message": "It\u0027s not clear to me why this would be necessary now, and not before?",
+      "revId": "2973089f32a1ba0643c208d21f28d44334bb18a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
