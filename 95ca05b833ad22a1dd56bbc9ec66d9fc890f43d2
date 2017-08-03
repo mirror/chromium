@@ -22,6 +22,30 @@
       "revId": "95ca05b833ad22a1dd56bbc9ec66d9fc890f43d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ec4ac51_08c81827",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 2046,
+      "author": {
+        "id": 1148823
+      },
+      "writtenOn": "2017-08-03T20:14:25Z",
+      "side": 1,
+      "message": "The NTP takes index 0; its considered the last committed item and that\u0027s why i have the condition this way;  i believe this code should never get to a status that lastCommittedItemIndex is -1 as this is a reload so there were always be a navigation item.",
+      "parentUuid": "2d374db1_4c22247a",
+      "range": {
+        "startLine": 2046,
+        "startChar": 29,
+        "endLine": 2046,
+        "endChar": 51
+      },
+      "revId": "95ca05b833ad22a1dd56bbc9ec66d9fc890f43d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
