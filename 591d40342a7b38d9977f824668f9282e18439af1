@@ -34,6 +34,24 @@
       "revId": "591d40342a7b38d9977f824668f9282e18439af1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd1d7f66_b2d4ccdd",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1001118
+      },
+      "writtenOn": "2017-08-03T18:04:41Z",
+      "side": 1,
+      "message": "Ah, the back arrow is *always* above the app list circle in left/right shelf alignments, even in RTL, understood.",
+      "parentUuid": "c03274f8_8fc6303f",
+      "revId": "591d40342a7b38d9977f824668f9282e18439af1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
