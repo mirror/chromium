@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d374db1_4c22247a",
+        "filename": "ios/web/web_state/ui/crw_web_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 2046,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-08-03T18:48:34Z",
+      "side": 1,
+      "message": "Should this be navigationManager-\u003eGetLastCommittedItem()? Otherwise this check will not pass if index is 0.",
+      "range": {
+        "startLine": 2046,
+        "startChar": 29,
+        "endLine": 2046,
+        "endChar": 51
+      },
+      "revId": "95ca05b833ad22a1dd56bbc9ec66d9fc890f43d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
