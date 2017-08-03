@@ -284,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "e38e388a_5ad08b10",
+        "filename": "base/task_scheduler/scheduler_worker.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-08-03T20:47:30Z",
+      "side": 1,
+      "message": "Ok, will do.\n\nI was thinking of doing that, but was hesitant because there\u0027s some ambiguity here (the version I have here is also ambiguous). It could be interpreted as implying not just that there\u0027s a single thread per SchedulerWorker, but also that there\u0027s also just a single SchedulerWorker (or at least a single SchedulerWorker associated w/ this delegate). But, thinking about it further, using \"the\" is probably still better.",
+      "parentUuid": "70fa749b_164ca9ed",
+      "range": {
+        "startLine": 68,
+        "startChar": 7,
+        "endLine": 68,
+        "endChar": 43
+      },
+      "revId": "eb9687209c9efba9fde69645e7447660b7c3efe8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a288878d_d30ac8ab",
         "filename": "base/task_scheduler/scheduler_worker.h",
         "patchSetId": 22
