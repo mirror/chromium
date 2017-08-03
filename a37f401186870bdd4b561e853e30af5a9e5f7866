@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "814ebf29_aeb146cf",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-03T20:38:29Z",
+      "side": 1,
+      "message": "Sure thing. Will add a TODO here.",
+      "parentUuid": "e56d6bcf_7929129a",
+      "revId": "a37f401186870bdd4b561e853e30af5a9e5f7866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7767dccd_e6813b4f",
         "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
         "patchSetId": 5
@@ -48,6 +66,24 @@
       "side": 1,
       "message": "We wouldn\u0027t be losing data as the OnDataAvailable function only consumes what it can.",
       "parentUuid": "7767dccd_e6813b4f",
+      "revId": "a37f401186870bdd4b561e853e30af5a9e5f7866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a80ae15_a763f86f",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-03T20:38:29Z",
+      "side": 1,
+      "message": "Brought back the MojoToNetPendingBuffer and MojoToNetIOBuffer classes to avoid the copy",
+      "parentUuid": "e139cddc_9f9dbd04",
       "revId": "a37f401186870bdd4b561e853e30af5a9e5f7866",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -86,6 +122,24 @@
       "revId": "a37f401186870bdd4b561e853e30af5a9e5f7866",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ec55ee5_b3a69cf9",
+        "filename": "content/browser/url_loader_factory_getter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-03T20:38:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06f8f054_2d49712f",
+      "revId": "a37f401186870bdd4b561e853e30af5a9e5f7866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
