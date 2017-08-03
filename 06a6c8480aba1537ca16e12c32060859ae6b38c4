@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0d48de3_6c654a19",
+        "filename": "ui/webui/resources/js/cr/ui/list.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-03T17:47:41Z",
+      "side": 1,
+      "message": "Can we rename handleMouseDown to handlePointerDown?",
+      "revId": "06a6c8480aba1537ca16e12c32060859ae6b38c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8293632_f589f353",
+        "filename": "ui/webui/resources/js/cr/ui/list.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-03T17:47:41Z",
+      "side": 1,
+      "message": "As of latest patch only touchmove and touchcancel trigger this function.",
+      "revId": "06a6c8480aba1537ca16e12c32060859ae6b38c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "481bcea6_de4949a5",
+        "filename": "ui/webui/resources/js/cr/ui/list_selection_controller.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-03T17:47:41Z",
+      "side": 1,
+      "message": "As of latest patch, only touchmove, touchcancel will trigger this callback.",
+      "revId": "06a6c8480aba1537ca16e12c32060859ae6b38c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
