@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ca16d83_13a44c23",
+        "filename": "chrome/browser/extensions/crx_installer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-03T01:42:06Z",
+      "side": 1,
+      "message": "Not your current change...\n\nWe should run these in higher priority than USER_VISIBLE?\n\nthis task runner is used by sandboxed_unpacker, which would unpack files to a temp dir and be done(?), and that shouldn\u0027t collide with files accessed by the devoted task runner from other places, right?\n\nLet me know what you think. Also, this is more of a question than comment, and even if we end up doing the change, we should do outside this CL after adding a TODO.",
+      "range": {
+        "startLine": 136,
+        "startChar": 6,
+        "endLine": 136,
+        "endChar": 28
+      },
+      "revId": "e938e530c2464118a17d38fc489cf4380dfd2b63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
