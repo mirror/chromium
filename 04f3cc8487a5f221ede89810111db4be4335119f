@@ -70,6 +70,30 @@
       "revId": "04f3cc8487a5f221ede89810111db4be4335119f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "966fd880_09cfe4b5",
+        "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_web_contents.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-08-03T18:35:19Z",
+      "side": 1,
+      "message": "1. On using delegate. Perhaps, you mean AppListViewDelegate::OpenSearchResult. The issue is that AppListViewDelegate instance lives in places inaccessible to search providers (AnswerCardWebContents is a part of the search provider). It basically reflects the design where opening a result is a business of UI, not provider. We probably can plumb AppListViewDelegate into AnswerCardWebContents, but this is hacky in a worser sense, as details of by-design isolated components start leaking across component borders.\n\n2. On “SearchResultAnswerCardView* const parent \u003d GetParent();”\nAgain, components. The provider, and its WebView lives in chrome/browser/ui component, and its parent lives in ui/app_list component. Making cross-component assumptions on what is the type of parent seems wrong. As of now, the search provider just provides the view to the UI layer, it the UI layer adds it to the view hierarchy, and that’s the whole contract between the components.\n\nAlso, it\u0027s worth noting that after this, I\u0027m going to take care of scroll events, that are eaten by WebView. My plan was to propagate them using a similar mechanism. It would be nice to not have two completely different approaches for tapping/clicking and for scrolling.",
+      "parentUuid": "ad991378_750d152f",
+      "range": {
+        "startLine": 189,
+        "startChar": 0,
+        "endLine": 189,
+        "endChar": 32
+      },
+      "revId": "04f3cc8487a5f221ede89810111db4be4335119f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
