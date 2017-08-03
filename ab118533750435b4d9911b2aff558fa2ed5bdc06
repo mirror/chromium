@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "c5f2e124_20bb7478",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position-3/position-sticky-margins-ref.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1212214
+      },
+      "writtenOn": "2017-08-03T13:59:42Z",
+      "side": 1,
+      "message": "Ack, done.",
+      "parentUuid": "4018c1a4_48b8d108",
+      "revId": "ab118533750435b4d9911b2aff558fa2ed5bdc06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb44ffab_c074683c",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/css/css-position-3/position-sticky-margins.html",
         "patchSetId": 1
