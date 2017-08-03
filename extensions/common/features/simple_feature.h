@@ -44,7 +44,7 @@ class SimpleFeature : public Feature {
     ~ScopedWhitelistForTest();
 
    private:
-    std::string* previous_id_;
+    std::string previous_id_;
 
     DISALLOW_COPY_AND_ASSIGN(ScopedWhitelistForTest);
   };
