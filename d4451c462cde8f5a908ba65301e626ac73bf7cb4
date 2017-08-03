@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9e866d1b_35697b6f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-08-03T01:23:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "003b19af_5fa16bf6",
+      "range": {
+        "startLine": 9,
+        "startChar": 111,
+        "endLine": 9,
+        "endChar": 120
+      },
+      "revId": "d4451c462cde8f5a908ba65301e626ac73bf7cb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd04cee6_b4fc768e",
         "filename": "/COMMIT_MSG",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "805f3911_7b61c4ad",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-08-03T01:23:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd04cee6_b4fc768e",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 1
+      },
+      "revId": "d4451c462cde8f5a908ba65301e626ac73bf7cb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd5788fc_57d2daf6",
         "filename": "chromeos/components/tether/host_scan_scheduler.cc",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-02T22:25:47Z",
       "side": 1,
       "message": "While you\u0027re here, please remove this check. We should always start up a scan when the user logs in to ensure that something the first time we open quick settings or the settings page.\n\n(You\u0027ll also need to update the CL description and the relevant test.)",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 80
+      },
+      "revId": "d4451c462cde8f5a908ba65301e626ac73bf7cb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e598ed20_f99a7236",
+        "filename": "chromeos/components/tether/host_scan_scheduler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-08-03T01:23:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd5788fc_57d2daf6",
       "range": {
         "startLine": 37,
         "startChar": 0,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "0a8e672c_c9a8b6e6",
+        "filename": "chromeos/components/tether/host_scan_scheduler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-08-03T01:23:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3bb12f0_ad809278",
+      "range": {
+        "startLine": 174,
+        "startChar": 0,
+        "endLine": 174,
+        "endChar": 54
+      },
+      "revId": "d4451c462cde8f5a908ba65301e626ac73bf7cb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e5a8aab_d1757de1",
         "filename": "chromeos/components/tether/host_scan_scheduler_unittest.cc",
         "patchSetId": 3
@@ -114,6 +210,30 @@
       "revId": "d4451c462cde8f5a908ba65301e626ac73bf7cb4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06a3be74_37abf00b",
+        "filename": "chromeos/components/tether/host_scan_scheduler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-08-03T01:23:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e5a8aab_d1757de1",
+      "range": {
+        "startLine": 175,
+        "startChar": 0,
+        "endLine": 201,
+        "endChar": 80
+      },
+      "revId": "d4451c462cde8f5a908ba65301e626ac73bf7cb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "e258e151_a14667d6",
+        "filename": "chromeos/components/tether/host_scan_scheduler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-08-03T01:23:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c59830df_907235ef",
+      "range": {
+        "startLine": 206,
+        "startChar": 0,
+        "endLine": 206,
+        "endChar": 33
+      },
+      "revId": "d4451c462cde8f5a908ba65301e626ac73bf7cb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3cc80b6a_a4bbc92b",
         "filename": "chromeos/components/tether/host_scan_scheduler_unittest.cc",
         "patchSetId": 3
@@ -151,6 +295,30 @@
       "writtenOn": "2017-08-02T22:25:47Z",
       "side": 1,
       "message": "num_scans_started() was already at 1 before, so how does num_scans_started() go back to 0 again? I don\u0027t understand how this test passes.",
+      "range": {
+        "startLine": 209,
+        "startChar": 0,
+        "endLine": 209,
+        "endChar": 56
+      },
+      "revId": "d4451c462cde8f5a908ba65301e626ac73bf7cb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d97bbbe_7cfd4033",
+        "filename": "chromeos/components/tether/host_scan_scheduler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-08-03T01:23:49Z",
+      "side": 1,
+      "message": "This was a mistake, it\u0027s fixed now.",
+      "parentUuid": "3cc80b6a_a4bbc92b",
       "range": {
         "startLine": 209,
         "startChar": 0,
@@ -183,6 +351,30 @@
       "revId": "d4451c462cde8f5a908ba65301e626ac73bf7cb4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85944c64_b37e19a6",
+        "filename": "chromeos/components/tether/host_scan_scheduler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-08-03T01:23:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e1163dd_611f665b",
+      "range": {
+        "startLine": 213,
+        "startChar": 0,
+        "endLine": 213,
+        "endChar": 32
+      },
+      "revId": "d4451c462cde8f5a908ba65301e626ac73bf7cb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
