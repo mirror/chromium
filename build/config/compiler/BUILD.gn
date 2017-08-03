@@ -515,7 +515,7 @@ config("compiler") {
           "-Wl,--thinlto-cache-policy,cache_size=10%",
         ]
       } else {
-        ldflags += [ "-Wl,-plugin-opt,jobs=8" ]
+        ldflags += [ "-Wl,-plugin-opt,jobs=16" ]
       }
 
       # Disable optimization for now because they increase binary size by too
