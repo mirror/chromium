@@ -33,6 +33,24 @@
       "revId": "8279e51d514ed49dbe970b4f493b7132e8b83d62",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b37f072d_25c3bd0d",
+        "filename": "cc/trees/element_id.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1128438
+      },
+      "writtenOn": "2017-08-03T21:04:32Z",
+      "side": 1,
+      "message": "Concern that the opaqueness/stability definition of ElementId.id_ could in the future change to be incompatible with whatever the definition is for cc::EffectNode.stable_id.\n\nWe define stable_id well in a comment here:\n\nhttps://cs.chromium.org/chromium/src/cc/trees/effect_node.h?type\u003dcs\u0026q\u003dfile:cc+effectnode+stable_id\u0026sq\u003dpackage:chromium\u0026l\u003d32\n\nbut we\u0027re essentially doing the equivalent of a static_cast from ElementIdType, which we happen to know is a uint64_t, but is supposed to be itself sort of an internal implementation detail, and turning it into stable_id, which is just a uint64_t, and is not AFAIK intended to have the same semantic item-being-animated definition as ElementId is. We know it\u0027s safe now, but there are no tests or safeguards preventing things from breaking in the future.\n\nIf you don\u0027t think something like this is a concern I\u0027m fine removing the TODO.",
+      "parentUuid": "845270ba_7ec39e30",
+      "revId": "8279e51d514ed49dbe970b4f493b7132e8b83d62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
