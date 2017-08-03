@@ -37,7 +37,7 @@ std::vector<cryptauth::RemoteDevice> RemoveDuplicatesFromVector(
 uint32_t MessageTransferOperation::kMaxConnectionAttemptsPerDevice = 3;
 
 // static
-uint32_t MessageTransferOperation::kDefaultResponseTimeoutSeconds = 10;
+uint32_t MessageTransferOperation::kDefaultTimeoutSeconds = 10;
 
 MessageTransferOperation::MessageTransferOperation(
     const std::vector<cryptauth::RemoteDevice>& devices_to_connect,
@@ -69,7 +69,7 @@ void MessageTransferOperation::Initialize() {
     cryptauth::SecureChannel::Status status;
     if (connection_manager_->GetStatusForDevice(remote_device, &status) &&
         status == cryptauth::SecureChannel::Status::AUTHENTICATED) {
-      if (ShouldWaitForResponse())
+      if (ShouldOperationUseTimeout())
         StartResponseTimerForDevice(remote_device);
 
       OnDeviceAuthenticated(remote_device);
@@ -90,7 +90,7 @@ void MessageTransferOperation::OnSecureChannelStatusChanged(
   }
 
   if (new_status == cryptauth::SecureChannel::Status::AUTHENTICATED) {
-    if (ShouldWaitForResponse())
+    if (ShouldOperationUseTimeout())
       StartResponseTimerForDevice(remote_device);
 
     OnDeviceAuthenticated(remote_device);
@@ -151,7 +151,7 @@ void MessageTransferOperation::UnregisterDevice(
   remote_devices_.erase(std::remove(remote_devices_.begin(),
                                     remote_devices_.end(), remote_device),
                         remote_devices_.end());
-  if (ShouldWaitForResponse())
+  if (ShouldOperationUseTimeout())
     StopResponseTimerForDeviceIfRunning(remote_device);
 
   connection_manager_->UnregisterRemoteDevice(remote_device,
@@ -169,12 +169,12 @@ int MessageTransferOperation::SendMessageToDevice(
                                           message_wrapper->ToRawMessage());
 }
 
-bool MessageTransferOperation::ShouldWaitForResponse() {
+bool MessageTransferOperation::ShouldOperationUseTimeout() {
   return true;
 }
 
-uint32_t MessageTransferOperation::GetResponseTimeoutSeconds() {
-  return MessageTransferOperation::kDefaultResponseTimeoutSeconds;
+uint32_t MessageTransferOperation::GetTimeoutSeconds() {
+  return MessageTransferOperation::kDefaultTimeoutSeconds;
 }
 
 void MessageTransferOperation::SetTimerFactoryForTest(
@@ -184,7 +184,7 @@ void MessageTransferOperation::SetTimerFactoryForTest(
 
 void MessageTransferOperation::StartResponseTimerForDevice(
     const cryptauth::RemoteDevice& remote_device) {
-  DCHECK(ShouldWaitForResponse());
+  DCHECK(ShouldOperationUseTimeout());
 
   PA_LOG(INFO) << "Starting timer to wait for response to message type "
                << GetMessageTypeForConnection() << " from device with ID "
@@ -193,14 +193,14 @@ void MessageTransferOperation::StartResponseTimerForDevice(
   remote_device_to_timer_map_.emplace(remote_device,
                                       timer_factory_->CreateOneShotTimer());
   remote_device_to_timer_map_[remote_device]->Start(
-      FROM_HERE, base::TimeDelta::FromSeconds(GetResponseTimeoutSeconds()),
+      FROM_HERE, base::TimeDelta::FromSeconds(GetTimeoutSeconds()),
       base::Bind(&MessageTransferOperation::OnResponseTimeout,
                  weak_ptr_factory_.GetWeakPtr(), remote_device));
 }
 
 void MessageTransferOperation::StopResponseTimerForDeviceIfRunning(
     const cryptauth::RemoteDevice& remote_device) {
-  DCHECK(ShouldWaitForResponse());
+  DCHECK(ShouldOperationUseTimeout());
 
   if (!remote_device_to_timer_map_[remote_device])
     return;

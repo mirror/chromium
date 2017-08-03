@@ -78,18 +78,18 @@ class TestOperation : public MessageTransferOperation {
     return kTestMessageType;
   }
 
-  bool ShouldWaitForResponse() override { return should_wait_for_response_; }
-
-  uint32_t GetResponseTimeoutSeconds() override {
-    return response_timeout_seconds_;
+  bool ShouldOperationUseTimeout() override {
+    return should_operation_use_timeout_;
   }
+
+  uint32_t GetTimeoutSeconds() override { return timeout_seconds_; }
 
   void set_should_wait_for_response(bool should_wait_for_response) {
-    should_wait_for_response_ = should_wait_for_response;
+    should_operation_use_timeout_ = should_wait_for_response;
   }
 
-  void set_response_timeout_seconds(uint32_t response_timeout_seconds) {
-    response_timeout_seconds_ = response_timeout_seconds;
+  void set_timeout_seconds(uint32_t response_timeout_seconds) {
+    timeout_seconds_ = response_timeout_seconds;
   }
 
   void set_should_unregister_device_on_message_received(
@@ -113,8 +113,8 @@ class TestOperation : public MessageTransferOperation {
 
   std::map<cryptauth::RemoteDevice, DeviceMapValue> device_map_;
 
-  bool should_wait_for_response_ = true;
-  uint32_t response_timeout_seconds_ = kTestResponseTimeoutSeconds;
+  bool should_operation_use_timeout_ = true;
+  uint32_t timeout_seconds_ = kTestResponseTimeoutSeconds;
   bool should_unregister_device_on_message_received_ = false;
   bool has_operation_started_ = false;
   bool has_operation_finished_ = false;
@@ -358,7 +358,7 @@ TEST_F(MessageTransferOperationTest,
   InitializeOperation();
   EXPECT_TRUE(IsDeviceRegistered(test_devices_[0]));
 
-  operation_->set_response_timeout_seconds(response_timeout_seconds);
+  operation_->set_timeout_seconds(response_timeout_seconds);
 
   TransitionDeviceStatusFromDisconnectedToAuthenticated(test_devices_[0]);
   EXPECT_TRUE(IsDeviceRegistered(test_devices_[0]));
