@@ -110,6 +110,9 @@ base::string16 GetInnerText(const AXNode* node) {
 
 base::string16 GetValue(const AXNode* node, bool show_password) {
   base::string16 value = node->data().GetString16Attribute(ui::AX_ATTR_VALUE);
+  LOG(INFO) << "===qqq " << value << " " << ui::AX_STATE_PROTECTED << " "
+            << show_password;
+  LOG(INFO) << ">>>qqq " << node->data().state;
 
   if (value.empty() &&
       (IsSimpleTextControl(node->data().role, node->data().state) ||
@@ -119,7 +122,9 @@ base::string16 GetValue(const AXNode* node, bool show_password) {
   }
 
   if ((node->data().state & ui::AX_STATE_PROTECTED) != 0) {
+    LOG(INFO) << "qqq1";
     if (!show_password) {
+      LOG(INFO) << "qqq2";
       value = base::string16(value.size(), kSecurePasswordBullet);
     }
   }
@@ -161,6 +166,7 @@ base::string16 GetText(const AXNode* node, bool show_password) {
   }
 
   base::string16 value = GetValue(node, show_password);
+  LOG(INFO) << "*** " << value << " " << show_password;
 
   if (!value.empty()) {
     if ((node->data().state & ui::AX_STATE_EDITABLE) != 0)
