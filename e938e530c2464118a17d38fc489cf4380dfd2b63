@@ -22,6 +22,30 @@
       "revId": "e938e530c2464118a17d38fc489cf4380dfd2b63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c010bbea_f04e68b0",
+        "filename": "chrome/browser/extensions/crx_installer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-03T02:06:45Z",
+      "side": 1,
+      "message": "Having the ability to tweak priority within a task runner is somewhere on the task scheduling roadmap (though not within the immediate future), so we would be able to leverage that at some point.  You\u0027re right that, in theory, some of this file access should be safe - but I think it\u0027s a tenuous guarantee at best.  In particular, even though it\u0027s safe right now, I\u0027m worried that at some point it wouldn\u0027t be (especially with some of the more complicated flows we have).  Unless there\u0027s a compelling reason to use a different task runner, I\u0027d prefer to default to the safer course.\n\nIf we ever find that this is a performance problem, we can certainly investigate then. :)",
+      "parentUuid": "0ca16d83_13a44c23",
+      "range": {
+        "startLine": 136,
+        "startChar": 6,
+        "endLine": 136,
+        "endChar": 28
+      },
+      "revId": "e938e530c2464118a17d38fc489cf4380dfd2b63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
