@@ -68,14 +68,13 @@ class ArcTracingReader {
     std::vector<base::ScopedFD> unused_fds;
     ssize_t n = base::UnixDomainSocket::RecvMsg(
         read_fd_.get(), buf, kArcTraceMessageLength, &unused_fds);
-    // When EOF, return and do nothing. The clean up is done in StopTracing.
-    if (n == 0)
-      return;
-
-    if (n < 0) {
-      DPLOG(WARNING) << "Unexpected error while reading trace from client.";
-      // Do nothing here as StopTracing will do the clean up and the existing
+    if (n <= 0) {
+      // When EOF, return. The clean up is done in StopTracing, and the existing
       // trace logs will be returned.
+      if (n < 0) {
+        DPLOG(WARNING) << "Unexpected error while reading trace from client.";
+      }
+      fd_watcher_.reset();
       return;
     }
 
@@ -148,13 +147,20 @@ class ArcTracingAgentImpl : public ArcTracingAgent {
       return;
     }
 
+    success =
+        delegate_->StartTracing(trace_config, std::move(write_fd),
+                                base::Bind(callback, GetTracingAgentName()));
+
+    if (!success) {
+      // In the event of a failure, we don't use PostTask, because the
+      // delegate_->StartTracing call will have already done it.
+      return;
+    }
+
     BrowserThread::PostTask(
         BrowserThread::IO, FROM_HERE,
         base::Bind(&ArcTracingReader::StartTracing, reader_.GetWeakPtr(),
                    base::Passed(&read_fd)));
-
-    delegate_->StartTracing(trace_config, std::move(write_fd),
-                            base::Bind(callback, GetTracingAgentName()));
   }
 
   void StopAgentTracing(const StopAgentTracingCallback& callback) override {
