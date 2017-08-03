@@ -14,3 +14,83 @@ interface UrlTest {
   [Sync]
   BounceOrigin(Origin in) => (Origin out);
 };
+
+interface CronetEngine {
+
+  StartNetLog(string file);
+
+  [Sync]
+  GetDefaultUserAgent() => (string default_user_agent);
+
+  [Sync]
+  SyncCount(int16 i) => ();
+
+  [Sync]
+  DoStuffSync() => ();
+
+};
+
+enum REQUEST_PRIORITY { HIGHEST, IDLE, LOW, LOWEST, MEDIUM };
+
+interface Annotation {
+};
+
+interface Buffer {
+};
+
+interface Error {
+};
+
+interface Executor {
+};
+
+interface UrlResponseInfo {
+};
+
+interface UrlRequestCallback {
+  OnRedirectReceived(UrlRequest request, UrlResponseInfo responseInfo, string newLocationUrl);
+
+  OnResponseStarted(UrlRequest request, UrlResponseInfo responseInfo);
+
+  OnReadCompleted(UrlRequest request, Buffer buffer, int32 size);
+
+  OnSucceeded(UrlRequest request);
+
+  OnFailed(UrlRequest request, Error error);
+
+  OnCanceled(UrlRequest request);
+};
+
+interface UploadDataProvider {
+};
+
+interface UrlRequest {
+  Start();
+
+  FollowRedirect();
+
+  Read(Buffer buffer, int32 limit);
+
+  Cancel();
+
+  Destroy();
+};
+
+interface UrlRequestParams {
+  CreateWithUrl(CronetEngine engine, string url, UrlRequestCallback callback, Executor executor);
+
+  CreateRequest() => (UrlRequest request);
+
+  AddHeader(string key, string value);
+
+  SetHttpMethod(string method);
+
+  SetPriority(REQUEST_PRIORITY priority);
+
+  SetAnnotation(Annotation annotation);
+
+  SetUploadDataProvider(UploadDataProvider uploadDataProvider, Executor executor);
+
+  Destroy();
+
+};
