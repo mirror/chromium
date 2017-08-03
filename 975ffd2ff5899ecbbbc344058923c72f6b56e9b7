@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b5d9e39d_e624223a",
+        "filename": "components/exo/shell_surface.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-03T01:46:24Z",
+      "side": 1,
+      "message": "nit: I assume that adding this blank line was a mistake? please remove before landing",
+      "revId": "975ffd2ff5899ecbbbc344058923c72f6b56e9b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "478cb6f6_4fe40b29",
+        "filename": "components/exo/shell_surface.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-03T01:46:24Z",
+      "side": 1,
+      "message": "nit: add a comment that explains that this will lock it if not already locked. maybe change the name to EnsureCompositorIsLocked but not necessary if you prefer the current name",
+      "revId": "975ffd2ff5899ecbbbc344058923c72f6b56e9b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
