@@ -140,7 +140,7 @@ void InputMethodEngine::UpdateComposition(
   // Use a black thin underline by default.
   if (composition_.underlines.empty()) {
     composition_.underlines.push_back(
-        ui::CompositionUnderline(0, composition_.text.length(), SK_ColorBLACK,
+        ui::CompositionUnderline(0, composition_.text.length(), true, 0,
                                  false /* thick */, SK_ColorTRANSPARENT));
   }
 

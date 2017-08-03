@@ -76,9 +76,7 @@ void ExtractCompositionTextFromGtkPreedit(const gchar* utf8_text,
       if (background_attr || underline_attr) {
         // Use a black thin underline by default.
         CompositionUnderline underline(char16_offsets[start],
-                                       char16_offsets[end],
-                                       SK_ColorBLACK,
-                                       false,
+                                       char16_offsets[end], true, 0, false,
                                        SK_ColorTRANSPARENT);
 
         // Always use thick underline for a range with background color, which

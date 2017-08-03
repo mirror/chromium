@@ -8,11 +8,13 @@ namespace blink {
 
 CompositionMarker::CompositionMarker(unsigned start_offset,
                                      unsigned end_offset,
+                                     bool use_text_color,
                                      Color underline_color,
                                      Thickness thickness,
                                      Color background_color)
     : StyleableMarker(start_offset,
                       end_offset,
+                      use_text_color,
                       underline_color,
                       thickness,
                       background_color) {}

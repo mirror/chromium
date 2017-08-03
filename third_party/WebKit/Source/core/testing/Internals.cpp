@@ -1137,7 +1137,7 @@ void Internals::addCompositionMarker(const Range* range,
           const EphemeralRange& range, Color underline_color,
           StyleableMarker::Thickness thickness, Color background_color) {
         document_marker_controller.AddCompositionMarker(
-            range, underline_color, thickness, background_color);
+            range, false, underline_color, thickness, background_color);
       });
 }
 
@@ -1155,7 +1155,7 @@ void Internals::addActiveSuggestionMarker(const Range* range,
           const EphemeralRange& range, Color underline_color,
           StyleableMarker::Thickness thickness, Color background_color) {
         document_marker_controller.AddActiveSuggestionMarker(
-            range, underline_color, thickness, background_color);
+            range, false, underline_color, thickness, background_color);
       });
 }
 
