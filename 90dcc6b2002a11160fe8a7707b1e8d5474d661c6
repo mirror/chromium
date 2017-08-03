@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1314284f_0d7ea151",
+        "filename": "chrome/installer/zucchini/image_index.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-03T01:42:04Z",
+      "side": 1,
+      "message": "label bound? 2 more instances below.\n\nAlso, please be consistent with \"Label\" or \"label\" in comments (I don\u0027t care which one, as long as it\u0027s consistent).",
+      "range": {
+        "startLine": 94,
+        "startChar": 65,
+        "endLine": 94,
+        "endChar": 76
+      },
+      "revId": "90dcc6b2002a11160fe8a7707b1e8d5474d661c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11821b6b_b049b652",
+        "filename": "chrome/installer/zucchini/image_index.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-03T01:42:04Z",
+      "side": 1,
+      "message": "can only be called once for each |pool|, until UnlabelTargets() (below) is called.",
+      "range": {
+        "startLine": 103,
+        "startChar": 27,
+        "endLine": 103,
+        "endChar": 60
+      },
+      "revId": "90dcc6b2002a11160fe8a7707b1e8d5474d661c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
