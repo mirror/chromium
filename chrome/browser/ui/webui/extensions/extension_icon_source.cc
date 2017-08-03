@@ -134,7 +134,7 @@ void ExtensionIconSource::StartDataRequest(
   if (icon.relative_path().empty()) {
     LoadIconFailed(next_id);
   } else {
-    LoadExtensionImage(icon, next_id);
+    LoadExtensionImage(std::move(icon), next_id);
   }
 }
 
@@ -198,12 +198,11 @@ void ExtensionIconSource::LoadDefaultImage(int request_id) {
   FinalizeImage(&resized_image, request_id);
 }
 
-void ExtensionIconSource::LoadExtensionImage(const ExtensionResource& icon,
+void ExtensionIconSource::LoadExtensionImage(ExtensionResource icon,
                                              int request_id) {
   ExtensionIconRequest* request = GetData(request_id);
   ImageLoader::Get(profile_)->LoadImageAsync(
-      request->extension.get(),
-      icon,
+      request->extension.get(), std::move(icon),
       gfx::Size(request->size, request->size),
       base::Bind(&ExtensionIconSource::OnImageLoaded, AsWeakPtr(), request_id));
 }

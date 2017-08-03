@@ -301,7 +301,7 @@ void KioskAppData::LoadFromInstalledApp(Profile* profile,
   extensions::ExtensionResource image = extensions::IconsInfo::GetIconResource(
       app, kIconSize, ExtensionIconSet::MATCH_BIGGER);
   extensions::ImageLoader::Get(profile)->LoadImageAsync(
-      app, image, gfx::Size(kIconSize, kIconSize),
+      app, std::move(image), gfx::Size(kIconSize, kIconSize),
       base::Bind(&KioskAppData::OnExtensionIconLoaded,
                  weak_factory_.GetWeakPtr()));
 }

@@ -206,18 +206,18 @@ TEST_F(ExtensionInstallPromptTestWithService, ExtensionInstallPromptIconsTest) {
       data_dir().AppendASCII("simple_with_icon"), INSTALL_NEW);
   ASSERT_TRUE(extension);
 
-  std::vector<ImageLoader::ImageRepresentation> image_rep(
-      1, ImageLoader::ImageRepresentation(
-             IconsInfo::GetIconResource(extension,
-                                        extension_misc::EXTENSION_ICON_LARGE,
-                                        ExtensionIconSet::MATCH_BIGGER),
-             ImageLoader::ImageRepresentation::NEVER_RESIZE, gfx::Size(),
-             ui::SCALE_FACTOR_100P));
+  std::vector<ImageLoader::ImageRepresentation> image_rep;
+  image_rep.push_back(ImageLoader::ImageRepresentation(
+      IconsInfo::GetIconResource(extension,
+                                 extension_misc::EXTENSION_ICON_LARGE,
+                                 ExtensionIconSet::MATCH_BIGGER),
+      ImageLoader::ImageRepresentation::NEVER_RESIZE, gfx::Size(),
+      ui::SCALE_FACTOR_100P));
   base::RunLoop image_loop;
   gfx::Image image;
   ImageLoader::Get(browser_context())
       ->LoadImagesAsync(
-          extension, image_rep,
+          extension, std::move(image_rep),
           base::Bind(&SetImage, &image, image_loop.QuitClosure()));
   image_loop.Run();
   ASSERT_FALSE(image.IsEmpty());

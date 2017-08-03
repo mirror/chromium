@@ -288,10 +288,9 @@ void GetShortcutInfoForApp(const extensions::Extension* extension,
             extension, size, ExtensionIconSet::MATCH_EXACTLY);
     if (!resource.empty()) {
       info_list.push_back(extensions::ImageLoader::ImageRepresentation(
-          resource,
+          std::move(resource),
           extensions::ImageLoader::ImageRepresentation::ALWAYS_RESIZE,
-          gfx::Size(size, size),
-          ui::SCALE_FACTOR_100P));
+          gfx::Size(size, size), ui::SCALE_FACTOR_100P));
     }
   }
 
@@ -310,17 +309,16 @@ void GetShortcutInfoForApp(const extensions::Extension* extension,
           extension, size, ExtensionIconSet::MATCH_SMALLER);
     }
     info_list.push_back(extensions::ImageLoader::ImageRepresentation(
-        resource,
+        std::move(resource),
         extensions::ImageLoader::ImageRepresentation::ALWAYS_RESIZE,
-        gfx::Size(size, size),
-        ui::SCALE_FACTOR_100P));
+        gfx::Size(size, size), ui::SCALE_FACTOR_100P));
   }
 
   // |info_list| may still be empty at this point, in which case
   // LoadImageFamilyAsync will call the OnImageLoaded callback with an empty
   // image and exit immediately.
   extensions::ImageLoader::Get(profile)->LoadImageFamilyAsync(
-      extension, info_list,
+      extension, std::move(info_list),
       base::Bind(&OnImageLoaded, base::Passed(&shortcut_info), callback));
 }
 

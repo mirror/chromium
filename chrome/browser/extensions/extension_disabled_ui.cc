@@ -386,13 +386,10 @@ void AddExtensionDisabledError(ExtensionService* service,
       extension, kIconSize, ExtensionIconSet::MATCH_BIGGER);
   gfx::Size size(kIconSize, kIconSize);
   ImageLoader::Get(service->profile())
-      ->LoadImageAsync(extension,
-                       image,
-                       size,
-                       base::Bind(&AddExtensionDisabledErrorWithIcon,
-                                  service->AsWeakPtr(),
-                                  extension->id(),
-                                  is_remote_install));
+      ->LoadImageAsync(
+          extension, std::move(image), size,
+          base::Bind(&AddExtensionDisabledErrorWithIcon, service->AsWeakPtr(),
+                     extension->id(), is_remote_install));
 }
 
 }  // namespace extensions

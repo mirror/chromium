@@ -13,10 +13,10 @@
 using content::BrowserThread;
 
 FileReader::FileReader(
-    const extensions::ExtensionResource& resource,
+    extensions::ExtensionResource resource,
     const OptionalFileThreadTaskCallback& optional_file_thread_task_callback,
     const DoneCallback& done_callback)
-    : resource_(resource),
+    : resource_(std::move(resource)),
       optional_file_thread_task_callback_(optional_file_thread_task_callback),
       done_callback_(done_callback),
       origin_task_runner_(base::ThreadTaskRunnerHandle::Get()) {}

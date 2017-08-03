@@ -9,8 +9,8 @@
 namespace extensions {
 namespace declarative_net_request {
 
-DNRManifestData::DNRManifestData(const ExtensionResource& resource)
-    : resource(resource) {}
+DNRManifestData::DNRManifestData(ExtensionResource resource)
+    : resource(std::move(resource)) {}
 DNRManifestData::~DNRManifestData() = default;
 
 // static

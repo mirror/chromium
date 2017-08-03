@@ -394,11 +394,9 @@ void ExtensionStorageMonitor::OnStorageThresholdExceeded(
   ExtensionResource resource =  IconsInfo::GetIconResource(
       extension, kIconSize, ExtensionIconSet::MATCH_BIGGER);
   ImageLoader::Get(context_)->LoadImageAsync(
-      extension, resource, gfx::Size(kIconSize, kIconSize),
+      extension, std::move(resource), gfx::Size(kIconSize, kIconSize),
       base::Bind(&ExtensionStorageMonitor::OnImageLoaded,
-                 weak_ptr_factory_.GetWeakPtr(),
-                 extension_id,
-                 current_usage));
+                 weak_ptr_factory_.GetWeakPtr(), extension_id, current_usage));
 }
 
 void ExtensionStorageMonitor::OnImageLoaded(const std::string& extension_id,

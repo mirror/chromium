@@ -66,9 +66,9 @@ void RunBasicTest(const char* filename) {
 
   Receiver receiver;
 
-  scoped_refptr<FileReader> file_reader(
-      new FileReader(resource, FileReader::OptionalFileThreadTaskCallback(),
-                     receiver.NewCallback()));
+  scoped_refptr<FileReader> file_reader(new FileReader(
+      std::move(resource), FileReader::OptionalFileThreadTaskCallback(),
+      receiver.NewCallback()));
   file_reader->Start();
 
   base::RunLoop().Run();
@@ -95,9 +95,9 @@ TEST_F(FileReaderTest, NonExistantFile) {
 
   Receiver receiver;
 
-  scoped_refptr<FileReader> file_reader(
-      new FileReader(resource, FileReader::OptionalFileThreadTaskCallback(),
-                     receiver.NewCallback()));
+  scoped_refptr<FileReader> file_reader(new FileReader(
+      std::move(resource), FileReader::OptionalFileThreadTaskCallback(),
+      receiver.NewCallback()));
   file_reader->Start();
 
   base::RunLoop().Run();
