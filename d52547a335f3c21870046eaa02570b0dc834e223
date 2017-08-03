@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1fde83a_5864934a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-03T01:37:38Z",
+      "side": 1,
+      "message": "nit: Newline before this.",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 1
+      },
+      "revId": "d52547a335f3c21870046eaa02570b0dc834e223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08e2357c_f0886299",
+        "filename": "chromeos/components/tether/host_scan_scheduler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-03T01:37:38Z",
+      "side": 1,
+      "message": "nit: Let\u0027s just rename this to ScheduleScan(). It\u0027s called when the user logs in as well as when Tether starts up after being disabled (e.g., when Bluetooth goes from off to on). The current function name breaks encapsulation since it\u0027s the client\u0027s responsibility of determining when the function is called.",
+      "range": {
+        "startLine": 32,
+        "startChar": 7,
+        "endLine": 32,
+        "endChar": 19
+      },
+      "revId": "d52547a335f3c21870046eaa02570b0dc834e223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a952f48_cc3b8f4f",
+        "filename": "chromeos/components/tether/host_scan_scheduler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-03T01:37:38Z",
+      "side": 1,
+      "message": "nit: Please edit host_scanner.h and move NotifyScanFinished() to the protected section. Then, in StopScan(), call NotifyScanFinished() after setting is_scan_active_ to false. This way, you don\u0027t need to call ScanFinished() explicitly in the test.",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 46
+      },
+      "revId": "d52547a335f3c21870046eaa02570b0dc834e223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f52cb9e7_593a5707",
+        "filename": "chromeos/components/tether/host_scan_scheduler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-03T01:37:38Z",
+      "side": 1,
+      "message": "nit: Please remove the newline between performing something and verifying the results to make it easy to parse visually what your class is verifying.\n\nLook to the test above this one for an example.",
+      "range": {
+        "startLine": 188,
+        "startChar": 0,
+        "endLine": 188,
+        "endChar": 32
+      },
+      "revId": "d52547a335f3c21870046eaa02570b0dc834e223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eae2aa66_07f3fa93",
+        "filename": "chromeos/components/tether/host_scan_scheduler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-03T01:37:38Z",
+      "side": 1,
+      "message": "Note: You should be able to remove this after implementing my earlier comment. You can also remove the extra call to ScanFinished() above in the previous test while you\u0027re at it.",
+      "range": {
+        "startLine": 207,
+        "startChar": 0,
+        "endLine": 207,
+        "endChar": 39
+      },
+      "revId": "d52547a335f3c21870046eaa02570b0dc834e223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d6b409c_74469658",
+        "filename": "chromeos/components/tether/host_scan_scheduler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-03T01:37:38Z",
+      "side": 1,
+      "message": "Hmm, this should automatically happen when setting the Ethernet network to connecting/connected. Is that not working?",
+      "range": {
+        "startLine": 208,
+        "startChar": 0,
+        "endLine": 208,
+        "endChar": 44
+      },
+      "revId": "d52547a335f3c21870046eaa02570b0dc834e223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
