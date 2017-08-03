@@ -65,6 +65,13 @@ class InputHandler : public DevToolsDomainHandler,
       Maybe<int> click_count,
       std::unique_ptr<DispatchMouseEventCallback> callback) override;
 
+  void DispatchTouchEvent(
+      const std::string& type,
+      std::unique_ptr<Array<Input::TouchPoint>> touch_points,
+      protocol::Maybe<int> modifiers,
+      protocol::Maybe<double> timestamp,
+      std::unique_ptr<DispatchTouchEventCallback> callback) override;
+
   Response EmulateTouchFromMouseEvent(const std::string& type,
                                       int x,
                                       int y,
@@ -140,6 +147,8 @@ class InputHandler : public DevToolsDomainHandler,
   std::deque<std::unique_ptr<DispatchKeyEventCallback>> pending_key_callbacks_;
   std::deque<std::unique_ptr<DispatchMouseEventCallback>>
       pending_mouse_callbacks_;
+  std::deque<std::unique_ptr<DispatchTouchEventCallback>>
+      pending_touch_callbacks_;
   float page_scale_factor_;
   gfx::SizeF scrollable_viewport_size_;
   int last_id_;

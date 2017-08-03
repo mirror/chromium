@@ -19,6 +19,7 @@
 #include "content/common/input/synthetic_smooth_scroll_gesture_params.h"
 #include "content/common/input/synthetic_tap_gesture_params.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
+#include "ui/events/base_event_utils.h"
 #include "ui/events/blink/web_input_event_traits.h"
 #include "ui/events/keycodes/dom/keycode_converter.h"
 #include "ui/gfx/geometry/point.h"
@@ -137,6 +138,30 @@ blink::WebInputEvent::Type GetMouseEventType(const std::string& type) {
   return blink::WebInputEvent::kUndefined;
 }
 
+blink::WebInputEvent::Type GetTouchEventType(const std::string& type) {
+  if (type == Input::DispatchTouchEvent::TypeEnum::TouchStart)
+    return blink::WebInputEvent::kTouchStart;
+  if (type == Input::DispatchTouchEvent::TypeEnum::TouchEnd)
+    return blink::WebInputEvent::kTouchEnd;
+  if (type == Input::DispatchTouchEvent::TypeEnum::TouchMove)
+    return blink::WebInputEvent::kTouchMove;
+  return blink::WebInputEvent::kUndefined;
+}
+
+blink::WebTouchPoint::State GetTouchPointState(const std::string& state) {
+  if (state == Input::TouchPoint::StateEnum::TouchPressed)
+    return blink::WebTouchPoint::kStatePressed;
+  if (state == Input::TouchPoint::StateEnum::TouchReleased)
+    return blink::WebTouchPoint::kStateReleased;
+  if (state == Input::TouchPoint::StateEnum::TouchMoved)
+    return blink::WebTouchPoint::kStateMoved;
+  if (state == Input::TouchPoint::StateEnum::TouchStationary)
+    return blink::WebTouchPoint::kStateStationary;
+  if (state == Input::TouchPoint::StateEnum::TouchCancelled)
+    return blink::WebTouchPoint::kStateCancelled;
+  return blink::WebTouchPoint::kStateUndefined;
+}
+
 void SendSynthesizePinchGestureResponse(
     std::unique_ptr<Input::Backend::SynthesizePinchGestureCallback> callback,
     SyntheticGesture::Result result) {
@@ -240,6 +265,10 @@ void InputHandler::OnInputEventAck(const blink::WebInputEvent& event) {
              !pending_mouse_callbacks_.empty()) {
     pending_mouse_callbacks_.front()->sendSuccess();
     pending_mouse_callbacks_.pop_front();
+  } else if (blink::WebInputEvent::IsTouchEventType(event.GetType()) &&
+             !pending_touch_callbacks_.empty()) {
+    pending_touch_callbacks_.front()->sendSuccess();
+    pending_touch_callbacks_.pop_front();
   }
 }
 
@@ -403,6 +432,89 @@ void InputHandler::DispatchMouseEvent(
   if (event_type != blink::WebInputEvent::kMouseMove || !input_queued_) {
     pending_mouse_callbacks_.back()->sendSuccess();
     pending_mouse_callbacks_.pop_back();
+  }
+}
+
+void InputHandler::DispatchTouchEvent(
+    const std::string& type,
+    std::unique_ptr<Array<Input::TouchPoint>> touch_points,
+    protocol::Maybe<int> modifiers,
+    protocol::Maybe<double> timestamp,
+    std::unique_ptr<DispatchTouchEventCallback> callback) {
+  blink::WebInputEvent::Type event_type = GetTouchEventType(type);
+  if (event_type == blink::WebInputEvent::kUndefined) {
+    callback->sendFailure(Response::InvalidParams(
+        base::StringPrintf("Unexpected event type '%s'", type.c_str())));
+    return;
+  }
+  blink::WebTouchEvent event(
+      event_type,
+      GetEventModifiers(modifiers.fromMaybe(blink::WebInputEvent::kNoModifiers),
+                        false, false),
+      GetEventTimestamp(std::move(timestamp)));
+  event.dispatch_type = blink::WebInputEvent::kBlocking;
+  event.moved_beyond_slop_region = true;
+  event.unique_touch_event_id = ui::GetNextTouchEventId();
+
+  if (touch_points->length() > blink::WebTouchEvent::kTouchesLengthCap) {
+    callback->sendFailure(Response::InvalidParams(
+        base::StringPrintf("Exceeded maximum touch points limit of %d",
+                           blink::WebTouchEvent::kTouchesLengthCap)));
+    return;
+  }
+
+  event.touches_length = touch_points->length();
+  int auto_id = 0;
+  for (size_t i = 0; i < touch_points->length(); ++i) {
+    Input::TouchPoint* point = touch_points->get(i);
+    int id;
+    if (point->HasId()) {
+      if (auto_id > 0)
+        id = -1;
+      else
+        id = point->GetId(0);
+      auto_id = -1;
+    } else {
+      id = auto_id++;
+    }
+    if (id < 0) {
+      callback->sendFailure(Response::InvalidParams(
+          "All or none of the provided TouchPoints must supply positive "
+          "integer ids."));
+      return;
+    }
+
+    blink::WebTouchPoint& event_point = event.touches[i];
+    event_point.id = id;
+    event_point.radius_x = point->GetRadiusX(1);
+    event_point.radius_y = point->GetRadiusY(1);
+    event_point.rotation_angle = point->GetRotationAngle(0.0);
+    event_point.force = point->GetForce(1.0);
+    event_point.pointer_type = blink::WebPointerProperties::PointerType::kTouch;
+    event_point.SetPositionInWidget(point->GetX() * page_scale_factor_,
+                                    point->GetY() * page_scale_factor_);
+    event_point.SetPositionInScreen(point->GetX() * page_scale_factor_,
+                                    point->GetY() * page_scale_factor_);
+    event_point.state = GetTouchPointState(point->GetState());
+    if (event_point.state == blink::WebTouchPoint::kStateUndefined) {
+      callback->sendFailure(Response::InvalidParams(base::StringPrintf(
+          "Unexpected touch point type '%s'", point->GetState().c_str())));
+      return;
+    }
+  }
+
+  if (!host_ || !host_->GetRenderWidgetHost())
+    callback->sendFailure(Response::InternalError());
+
+  host_->GetRenderWidgetHost()->Focus();
+  input_queued_ = false;
+  pending_touch_callbacks_.push_back(std::move(callback));
+  ui::LatencyInfo latency_info;
+  host_->GetRenderWidgetHost()->ForwardTouchEventWithLatencyInfo(event,
+                                                                 latency_info);
+  if (!input_queued_) {
+    pending_touch_callbacks_.back()->sendSuccess();
+    pending_touch_callbacks_.pop_back();
   }
 }
 

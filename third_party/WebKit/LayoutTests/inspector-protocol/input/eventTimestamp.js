@@ -48,7 +48,7 @@
 
   // We send epoch timestamp but expect to receive high-res timestamps
   var baseEpochTimestamp = Date.now() / 1000; // in seconds
-  var offsets = [0, 5, 10, 15];
+  var offsets = [0, 5, 10, 15, 20, 25];
   var sentTimestamps = offsets.map(offset => baseEpochTimestamp + offset);
 
   var offsetsMs = offsets.map(offset => 1000 * offset);
@@ -85,7 +85,24 @@
     x: 100,
     y: 200
   }));
-
+  dumpError(await dp.Input.dispatchTouchEvent({
+    type: 'touchStart',
+    timestamp: sentTimestamps[4],
+    touchPoints: [{
+      state: 'touchPressed',
+      x: 100,
+      y: 200
+    }]
+  }));
+  dumpError(await dp.Input.dispatchTouchEvent({
+    type: 'touchStart',
+    timestamp: sentTimestamps[5],
+    touchPoints: [{
+      state: 'touchPressed',
+      x: 100,
+      y: 100
+    }]
+  }));
   testRunner.log(await session.evaluateAsync('verifyTimestampsPromise'));
   testRunner.completeTest();
 })

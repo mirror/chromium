@@ -2331,14 +2331,14 @@ void RenderWidgetHostImpl::OnTouchEventAck(
     const TouchEventWithLatencyInfo& event,
     InputEventAckState ack_result) {
   latency_tracker_.OnInputEventAck(event.event, &event.latency, ack_result);
-  for (auto& input_event_observer : input_event_observers_)
-    input_event_observer.OnInputEventAck(event.event);
 
   if (touch_emulator_ &&
       touch_emulator_->HandleTouchEventAck(event.event, ack_result)) {
     return;
   }
 
+  for (auto& input_event_observer : input_event_observers_)
+    input_event_observer.OnInputEventAck(event.event);
   if (view_)
     view_->ProcessAckedTouchEvent(event, ack_result);
 }

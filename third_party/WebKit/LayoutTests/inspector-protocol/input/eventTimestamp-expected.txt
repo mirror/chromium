@@ -7,8 +7,14 @@ type: keydown
 type: mousedown
 -----Event-----
 type: mousedown
+-----Event-----
+type: touchstart
+-----Event-----
+type: touchstart
 -----Verify-----
-Received 4 timestamps
+Received 6 timestamps
+timeStamps offsets is as expected.
+timeStamps offsets is as expected.
 timeStamps offsets is as expected.
 timeStamps offsets is as expected.
 timeStamps offsets is as expected.
