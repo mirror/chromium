@@ -111,6 +111,31 @@ IN_PROC_BROWSER_TEST_F(ArcVoiceInteractionArcHomeServiceTest,
 }
 
 IN_PROC_BROWSER_TEST_F(ArcVoiceInteractionArcHomeServiceTest,
+                       VoiceInteractionStructureSectionTest) {
+  // Help ensure accessibility states are tested correctly.
+  auto result = GetVoiceInteractionStructure(
+      "<div role='section' aria-expanded='false'>"
+      "Hello<img>"
+      "</div>");
+  ASSERT_FALSE(result.is_null());
+
+  auto& child = result->children[0];
+  ASSERT_EQ(base::UTF16ToUTF8(child->text), "");
+}
+
+IN_PROC_BROWSER_TEST_F(ArcVoiceInteractionArcHomeServiceTest,
+                       VoiceInteractionStructureSelectTest) {
+  // Help ensure accessibility states are tested correctly.
+  auto result = GetVoiceInteractionStructure(
+      "<div><select><option>1</option></select></div>");
+  ASSERT_FALSE(result.is_null());
+
+  auto& child = result->children[0];
+  ASSERT_EQ(base::UTF16ToUTF8(child->text), "");
+  ASSERT_EQ(base::UTF16ToUTF8(child->children[0]->text), "1");
+}
+
+IN_PROC_BROWSER_TEST_F(ArcVoiceInteractionArcHomeServiceTest,
                        VoiceInteractionStructureMultipleSelectionTest) {
   auto result = GetVoiceInteractionStructure(
       "<html>"
