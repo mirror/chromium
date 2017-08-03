@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76a498f1_d9d8d502",
+        "filename": "chrome/browser/ui/webui/ntp/app_icon_webui_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-03T01:55:15Z",
+      "side": 1,
+      "message": "Prune includes",
+      "revId": "cba8ff18d290d34247a67fe827ed722910dad2d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e976c8ad_8738286f",
+        "filename": "chrome/browser/ui/webui/ntp/app_icon_webui_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-03T01:55:15Z",
+      "side": 1,
+      "message": "Return std::unique_ptr\u003c\u003e (here and above)",
+      "revId": "cba8ff18d290d34247a67fe827ed722910dad2d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2371de8b_0135a883",
+        "filename": "chrome/browser/ui/webui/ntp/app_icon_webui_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-03T01:55:15Z",
+      "side": 1,
+      "message": "I don\u0027t think invoking the super constructor explicitly should be necessary?",
+      "revId": "cba8ff18d290d34247a67fe827ed722910dad2d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b4b2a9a_68821f85",
+        "filename": "chrome/browser/ui/webui/ntp/app_icon_webui_handler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-03T01:55:15Z",
+      "side": 1,
+      "message": "Unneeded, I think (though \u003cmemory\u003e will be needed)",
+      "revId": "cba8ff18d290d34247a67fe827ed722910dad2d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ee3a99e_328bb47c",
+        "filename": "chrome/browser/ui/webui/ntp/app_icon_webui_handler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-03T01:55:15Z",
+      "side": 1,
+      "message": "unneeded, I think",
+      "revId": "cba8ff18d290d34247a67fe827ed722910dad2d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d994f78d_544bf8d4",
+        "filename": "chrome/browser/ui/webui/ntp/app_icon_webui_handler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-03T01:55:15Z",
+      "side": 1,
+      "message": "Add class comments?",
+      "revId": "cba8ff18d290d34247a67fe827ed722910dad2d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1feca991_51ad2511",
+        "filename": "chrome/browser/ui/webui/ntp/app_icon_webui_handler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-03T01:55:15Z",
+      "side": 1,
+      "message": "\"As above\"?",
+      "revId": "cba8ff18d290d34247a67fe827ed722910dad2d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5572f136_f1961448",
+        "filename": "chrome/browser/ui/webui/ntp/app_launcher_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-03T01:55:15Z",
+      "side": 1,
+      "message": "prefer !is_empty()",
+      "revId": "cba8ff18d290d34247a67fe827ed722910dad2d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
