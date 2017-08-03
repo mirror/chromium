@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "aa1a6835_22f39840",
+        "filename": "chrome/browser/resources/chromeos/arc_support/background.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-08-03T23:58:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f186f008_08ec4ab5",
+      "revId": "3a56b31ba0094d75c76e779f35b65f6abdd8a1fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d89ce67_8e98628e",
         "filename": "chrome/browser/resources/chromeos/arc_support/background.js",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "f11a6471_a3846a86",
+        "filename": "chrome/browser/resources/chromeos/arc_support/background.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-08-03T23:58:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d89ce67_8e98628e",
+      "revId": "3a56b31ba0094d75c76e779f35b65f6abdd8a1fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c298d07_e0956d5c",
         "filename": "chrome/browser/resources/chromeos/arc_support/background.js",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-03T15:09:57Z",
       "side": 1,
       "message": "nit/optional: I\u0027d recommend\nsetInterval(() \u003d\u003e this.update_(), ...);",
+      "revId": "3a56b31ba0094d75c76e779f35b65f6abdd8a1fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e8f02c0_74e5f7e1",
+        "filename": "chrome/browser/resources/chromeos/arc_support/background.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-08-03T23:58:20Z",
+      "side": 1,
+      "message": "nice",
+      "parentUuid": "3c298d07_e0956d5c",
       "revId": "3a56b31ba0094d75c76e779f35b65f6abdd8a1fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "5ba3ca19_db31eb9f",
+        "filename": "chrome/browser/resources/chromeos/arc_support/background.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-08-03T23:58:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2e8e4fdb_8cdd9dcf",
+      "revId": "3a56b31ba0094d75c76e779f35b65f6abdd8a1fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cf1f135e_6d9a1aad",
         "filename": "chrome/browser/resources/chromeos/arc_support/background.js",
         "patchSetId": 2
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "0511e904_5bc1eead",
+        "filename": "chrome/browser/resources/chromeos/arc_support/background.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-08-03T23:58:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cf1f135e_6d9a1aad",
+      "revId": "3a56b31ba0094d75c76e779f35b65f6abdd8a1fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b770754_df7f4d9d",
         "filename": "chrome/browser/resources/chromeos/arc_support/main.html",
         "patchSetId": 2
@@ -98,6 +188,24 @@
       "writtenOn": "2017-08-03T15:09:57Z",
       "side": 1,
       "message": "Should this be set 100% always?",
+      "revId": "3a56b31ba0094d75c76e779f35b65f6abdd8a1fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa0a10e3_bfa281f0",
+        "filename": "chrome/browser/resources/chromeos/arc_support/main.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-08-03T23:58:20Z",
+      "side": 1,
+      "message": "Yes, it is set. By default transform and scale set the way active element occupies whole space.",
+      "parentUuid": "9b770754_df7f4d9d",
       "revId": "3a56b31ba0094d75c76e779f35b65f6abdd8a1fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
