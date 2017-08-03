@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9fc503a_818898e2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-08-03T17:04:44Z",
+      "side": 1,
+      "message": ".. also caused issues with other renderer-initiated but browser-controlled navigations.",
+      "range": {
+        "startLine": 13,
+        "startChar": 42,
+        "endLine": 14,
+        "endChar": 21
+      },
+      "revId": "027e865d71122264e5ede3712520982a43be304d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efaed99c_b31c436b",
+        "filename": "headless/lib/browser/headless_web_contents_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-08-03T17:04:44Z",
+      "side": 1,
+      "message": "we should actually also test that this is called (in the BrowserOpenInTab test). Can probably just reuse the MockHeadlessBrowserContextObserver (see WindowOpen test in same test file).",
+      "range": {
+        "startLine": 149,
+        "startChar": 51,
+        "endLine": 149,
+        "endChar": 77
+      },
+      "revId": "027e865d71122264e5ede3712520982a43be304d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7144a659_ecd282d9",
+        "filename": "headless/lib/browser/headless_web_contents_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-08-03T17:04:44Z",
+      "side": 1,
+      "message": "add support for other disposition types.",
+      "range": {
+        "startLine": 155,
+        "startChar": 23,
+        "endLine": 155,
+        "endChar": 52
+      },
+      "revId": "027e865d71122264e5ede3712520982a43be304d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f017106e_8c2df9f6",
+        "filename": "headless/lib/headless_web_contents_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 874,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-08-03T17:04:44Z",
+      "side": 1,
+      "message": "feel free to just use +. git cl format will make it look nice :)\n\nstd::string script \u003d \"window.location \u003d \u0027\" + embedded_test_server()-\u003eGetURL(\"/hello.html\").spec() + \"\u0027;\";",
+      "range": {
+        "startLine": 874,
+        "startChar": 2,
+        "endLine": 874,
+        "endChar": 11
+      },
+      "revId": "027e865d71122264e5ede3712520982a43be304d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1308b538_b9c0ee49",
+        "filename": "headless/lib/headless_web_contents_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-08-03T17:04:44Z",
+      "side": 1,
+      "message": "nit: By historic convention, we put the expected value first in EXPECT_* macros, i.e.\nEXPECT_EQ(1u, browser_context-\u003eGetAllWebContents().size());\n\nsame below :)",
+      "range": {
+        "startLine": 894,
+        "startChar": 0,
+        "endLine": 894,
+        "endChar": 61
+      },
+      "revId": "027e865d71122264e5ede3712520982a43be304d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c421a227_feb26e90",
+        "filename": "headless/lib/headless_web_contents_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 902,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-08-03T17:04:44Z",
+      "side": 1,
+      "message": "nit: comments are sentences, please add a \".\" :)",
+      "range": {
+        "startLine": 902,
+        "startChar": 30,
+        "endLine": 902,
+        "endChar": 33
+      },
+      "revId": "027e865d71122264e5ede3712520982a43be304d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
