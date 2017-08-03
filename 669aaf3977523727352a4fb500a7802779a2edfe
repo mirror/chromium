@@ -16,6 +16,24 @@
       "revId": "669aaf3977523727352a4fb500a7802779a2edfe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03295f91_03a293fe",
+        "filename": "chrome/browser/resources/chromeos/internet_detail_dialog.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-03T16:08:57Z",
+      "side": 1,
+      "message": "The dialog is modal so it is not possible to change the language while it is visible. If the language changes, re-opening it will load the correct localized strings since the context is re-created.",
+      "parentUuid": "ff76e04b_b6a118f4",
+      "revId": "669aaf3977523727352a4fb500a7802779a2edfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
