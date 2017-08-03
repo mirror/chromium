@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "12bba93e_4d64e5e0",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserObserverWrapper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-03T07:02:53Z",
+      "side": 1,
+      "message": "am i right that this is the part that\u0027s the \u0027hack\u0027, that in future these methods shouldn\u0027t convert to a range? if so please add a todo here as such",
+      "revId": "b7da56143213a762a010e478443d6ecc387a4253",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e055725_4c053495",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSParserObserverWrapper.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-03T07:02:53Z",
+      "side": 1,
+      "message": "since you\u0027re introducing a new bool literal argument, this would be a good place to change it to an enum to comply with the style guide",
+      "revId": "b7da56143213a762a010e478443d6ecc387a4253",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
