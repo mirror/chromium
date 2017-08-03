@@ -129,6 +129,39 @@ webview,
   text-align: left;
 }
 
+.progress-container {
+  display: block;
+  height: 4px;
+  margin: auto;
+  overflow: hidden;
+  padding: 112px 0 0 0;
+  position: relative;
+  width: 360px;
+}
+
+.progress-primary,
+.progress-secondary {
+  height: 4px;
+  position: absolute;
+  width: 360px;
+}
+
+.progress-primary {
+  -webkit-transform-origin: right center;
+  background: rgb(66, 133, 244);
+  transform-origin: right center;
+}
+
+.progress-primary.red {
+  background: rgb(255, 55, 79);
+}
+
+.progress-secondary {
+  -webkit-transform-origin: center center;
+  background: rgb(224, 224, 244);
+  transform-origin: center center;
+}
+
 .scrollable {
   flex: auto;
   margin: 0;
