@@ -22,6 +22,30 @@
       "revId": "0b8c5c768f6d57bf0d05a51921de4eaf1b12b6bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a2aedbd5_819d7244",
+        "filename": "ios/web_view/tools/build.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-08-03T23:50:39Z",
+      "side": 1,
+      "message": "I agree, I added a loop.",
+      "parentUuid": "efc913e9_89f9a4dc",
+      "range": {
+        "startLine": 153,
+        "startChar": 31,
+        "endLine": 153,
+        "endChar": 0
+      },
+      "revId": "0b8c5c768f6d57bf0d05a51921de4eaf1b12b6bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
