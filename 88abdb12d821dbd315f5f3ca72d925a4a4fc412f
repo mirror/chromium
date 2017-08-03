@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "206026c2_4c612fcc",
+        "filename": "content/renderer/render_widget_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-03T21:46:08Z",
+      "side": 1,
+      "message": "Won\u0027t this throw if view_position is missing?",
+      "range": {
+        "startLine": 517,
+        "startChar": 36,
+        "endLine": 517,
+        "endChar": 38
+      },
+      "revId": "88abdb12d821dbd315f5f3ca72d925a4a4fc412f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe0add1b_b48f3781",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/resources/device-emulator.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-03T21:46:08Z",
+      "side": 1,
+      "message": "In the new test you are adding let\u0027s pass:\n- non-zero position\n- screenSize not equal to view size.\nIt might be easier to not use DeviceEmulator helper and just call protocol directly then.",
+      "revId": "88abdb12d821dbd315f5f3ca72d925a4a4fc412f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9263fac6_d203267a",
+        "filename": "third_party/WebKit/public/web/DEPS",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-03T21:46:08Z",
+      "side": 1,
+      "message": "Is that allowed now? We should double-check with platform arch team.",
+      "revId": "88abdb12d821dbd315f5f3ca72d925a4a4fc412f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e81feba_d5e3af72",
+        "filename": "third_party/WebKit/public/web/WebDeviceEmulationParams.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-03T21:46:08Z",
+      "side": 1,
+      "message": "Empty size means using default value: original one for kDesktop screen position, equal to |view_size| for kMobile.",
+      "range": {
+        "startLine": 24,
+        "startChar": 13,
+        "endLine": 24,
+        "endChar": 41
+      },
+      "revId": "88abdb12d821dbd315f5f3ca72d925a4a4fc412f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dca93229_da94c73f",
+        "filename": "third_party/WebKit/public/web/WebDeviceEmulationParams.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-03T21:46:08Z",
+      "side": 1,
+      "message": "Missing position means using default value: original one for kDesktop screen position, (0, 0) for kMobile.",
+      "range": {
+        "startLine": 27,
+        "startChar": 37,
+        "endLine": 27,
+        "endChar": 76
+      },
+      "revId": "88abdb12d821dbd315f5f3ca72d925a4a4fc412f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
