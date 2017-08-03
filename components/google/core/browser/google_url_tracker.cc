@@ -190,8 +190,10 @@ void GoogleURLTracker::StartFetchIfDesirable() {
             "requests.\nFinally, running Chromium with "
             "--disable-background-networking will disable this, as well as "
             "various other features that make network requests automatically."
-          policy_exception_justification:
-            "Not implemented."
+           policy_exception_justification:
+            "Setting DefaultSearchProviderEnabled Chrome settings policy to "
+            "false suffices as an alternative to the first requirement in "
+            "settings. But there is no policy for the second one."
         })");
   fetcher_ =
       net::URLFetcher::Create(fetcher_id_, GURL(kSearchDomainCheckURL),
