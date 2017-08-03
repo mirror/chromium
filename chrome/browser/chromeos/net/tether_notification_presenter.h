@@ -17,6 +17,7 @@
 #include "chromeos/network/network_connect.h"
 #include "chromeos/network/network_state.h"
 #include "components/cryptauth/remote_device.h"
+#include "ui/gfx/vector_icon_types.h"
 #include "ui/message_center/message_center_observer.h"
 #include "ui/message_center/notification.h"
 
@@ -93,6 +94,14 @@ class TetherNotificationPresenter
       const base::string16& message,
       const message_center::RichNotificationData rich_notification_data,
       int signal_strength);
+  static std::unique_ptr<message_center::Notification>
+  CreateNotificationWithBadge(
+      const std::string& id,
+      const base::string16& title,
+      const base::string16& message,
+      const message_center::RichNotificationData rich_notification_data,
+      int signal_strength,
+      const gfx::VectorIcon* badge);
 
   friend class TetherNotificationPresenterTest;
 
