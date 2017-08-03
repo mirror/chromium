@@ -24,6 +24,8 @@
 #include "base/strings/sys_string_conversions.h"
 #include "base/strings/utf_string_conversions.h"
 #include "build/build_config.h"
+// DO NOT SUBMIT - TODO(siggi): figure declaration crap.
+#include "chrome_elf/chrome_elf_main.h"
 #include "components/crash/content/app/crash_reporter_client.h"
 #include "third_party/crashpad/crashpad/client/crash_report_database.h"
 #include "third_party/crashpad/crashpad/client/crashpad_client.h"
@@ -319,7 +321,7 @@ extern "C" {
 // be consistent with
 // crash_reporter::GetCrashReporterClient()->GetCollectStatsConsent(), but it's
 // not enforced to avoid blocking startup code on synchronizing them.
-void __declspec(dllexport) __cdecl SetUploadConsentImpl(bool consent) {
+void SetUploadConsentImpl(bool consent) {
   crash_reporter::SetUploadConsent(consent);
 }
 
@@ -327,20 +329,18 @@ void __declspec(dllexport) __cdecl SetUploadConsentImpl(bool consent) {
 // change the name or signature of this function you will break SyzyASAN
 // instrumented releases of Chrome. Please contact syzygy-team@chromium.org
 // before doing so! See also http://crbug.com/567781.
-void __declspec(dllexport) __cdecl SetCrashKeyValueImpl(const wchar_t* key,
-                                                        const wchar_t* value) {
+void SetCrashKeyValueImpl(const wchar_t* key, const wchar_t* value) {
   crash_reporter::SetCrashKeyValue(base::UTF16ToUTF8(key),
                                    base::UTF16ToUTF8(value));
 }
 
-void __declspec(dllexport) __cdecl ClearCrashKeyValueImpl(const wchar_t* key) {
+void ClearCrashKeyValueImpl(const wchar_t* key) {
   crash_reporter::ClearCrashKey(base::UTF16ToUTF8(key));
 }
 
 // This helper is invoked by code in chrome.dll to request a single crash report
 // upload. See CrashUploadListCrashpad.
-void __declspec(dllexport)
-    RequestSingleCrashUploadImpl(const std::string& local_id) {
+void RequestSingleCrashUploadImpl(const std::string& local_id) {
   crash_reporter::RequestSingleCrashUpload(local_id);
 }
 }  // extern "C"
