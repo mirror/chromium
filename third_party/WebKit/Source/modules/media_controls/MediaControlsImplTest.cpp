@@ -186,6 +186,9 @@ class MediaControlsImplTest : public ::testing::Test {
 
   void SimulateLoadedMetadata() { media_controls_->OnLoadedMetadata(); }
 
+  void SimulateOnSeeking() { media_controls_->OnSeeking(); }
+  void SimulateOnSeeked() { media_controls_->OnSeeked(); }
+
   MediaControlsImpl& MediaControls() { return *media_controls_; }
   MediaControlVolumeSliderElement* VolumeSliderElement() const {
     return media_controls_->volume_slider_;
@@ -549,6 +552,32 @@ TEST_F(MediaControlsImplTest, TimelineImmediatelyUpdatesCurrentTime) {
   EXPECT_EQ(duration / 2, current_time_display->CurrentValue());
 }
 
+TEST_F(MediaControlsImplTest, TimeIndicatorsUpdatedOnSeeking) {
+  EnsureSizing();
+
+  MediaControlCurrentTimeDisplayElement* current_time_display =
+      GetCurrentTimeDisplayElement();
+  MediaControlTimelineElement* timeline = TimelineElement();
+  double duration = 1000;
+  LoadMediaWithDuration(duration);
+
+  EXPECT_EQ(0, current_time_display->CurrentValue());
+  ASSERT_EQ(0, timeline->valueAsNumber());
+
+  MediaControls().MediaElement().setCurrentTime(duration / 4);
+
+  // Time indicators are not yet updated.
+  EXPECT_EQ(0, current_time_display->CurrentValue());
+  ASSERT_EQ(0, timeline->valueAsNumber());
+
+  SimulateOnSeeking();
+
+  // The time indicators should be updated immediately when the 'seeking' event
+  // is fired.
+  EXPECT_EQ(duration / 4, current_time_display->CurrentValue());
+  ASSERT_EQ(duration / 4, timeline->valueAsNumber());
+}
+
 TEST_F(MediaControlsImplTest, VolumeSliderPaintInvalidationOnInput) {
   EnsureSizing();
 
@@ -765,6 +794,30 @@ class MediaControlsImplTestWithMockScheduler : public MediaControlsImplTest {
 };
 
 }  // namespace
+
+TEST_F(MediaControlsImplTestWithMockScheduler, SeekingShowsControls) {
+  Element* panel = GetElementByShadowPseudoId(MediaControls(),
+                                              "-webkit-media-controls-panel");
+  ASSERT_NE(nullptr, panel);
+
+  MediaControls().MediaElement().SetSrc("http://example.com");
+  MediaControls().MediaElement().Play();
+
+  // Hide the controls to start.
+  MediaControls().Hide();
+  ASSERT_FALSE(IsElementVisible(*panel));
+
+  // Seeking should cause the controls to become visible.
+  SimulateOnSeeking();
+  ASSERT_TRUE(IsElementVisible(*panel));
+
+  // Once seeking is complete, the hide controls timer should be started again.
+  // Wait long enough for it to fire to verify controls return to hidden after
+  // OnSeeked() is called.
+  SimulateOnSeeked();
+  platform_->RunForPeriodSeconds(4);
+  ASSERT_FALSE(IsElementVisible(*panel));
+}
 
 TEST_F(MediaControlsImplTestWithMockScheduler,
        ControlsRemainVisibleDuringKeyboardInteraction) {
