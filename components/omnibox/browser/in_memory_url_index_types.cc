@@ -15,10 +15,80 @@
 #include "base/strings/string_util.h"
 #include "net/base/escape.h"
 
+#include "base/strings/string_split.h"
+#include "base/strings/utf_string_conversions.h"
+
 namespace {
 // The maximum number of characters to consider from an URL and page title
 // while matching user-typed terms.
 const size_t kMaxSignificantChars = 200;
+
+// Adapter class for base::i18n::BreakIterator to handle underscore as a
+// punctuation.
+// |sub_words_| holds words which are split by underscore if current word has
+// underscore.
+// |pos_| indicates position of |sub_words_| considering underscore.
+class BreakIteratorAdapter {
+ public:
+  explicit BreakIteratorAdapter(base::i18n::BreakIterator& iter)
+      : iter_(iter) {}
+  bool Init() { return iter_.Init(); }
+  bool IsWord() const { return iter_.IsWord(); }
+
+  bool Advance() {
+    if (AdvanceSubWords())
+      return true;
+
+    if (!iter_.Advance())
+      return false;
+
+    BreakSubWords();
+    return true;
+  }
+
+  base::string16 GetString() const {
+    if (!sub_words_.empty())
+      return sub_words_.back();
+    return iter_.GetString();
+  }
+
+  size_t prev() const {
+    if (!sub_words_.empty())
+      return pos_;
+    return iter_.prev();
+  }
+
+ private:
+  bool AdvanceSubWords() {
+    if (sub_words_.size() > 1) {
+      const auto& word = sub_words_.back();
+      // Adjust position by word length + underscore.
+      pos_ += word.length() + 1;
+      sub_words_.pop_back();
+      return true;
+    }
+    if (!sub_words_.empty())
+      sub_words_.clear();
+    return false;
+  }
+  void BreakSubWords() {
+    if (!iter_.IsWord())
+      return;
+    base::string16 word = iter_.GetString();
+    std::size_t found = word.find(underscore_);
+    if (found == std::string::npos)
+      return;
+    sub_words_ = base::SplitString(word, underscore_, base::TRIM_WHITESPACE,
+                                   base::SPLIT_WANT_NONEMPTY);
+    std::reverse(sub_words_.begin(),sub_words_.end());
+    pos_ = iter_.prev();
+  }
+  const base::string16 underscore_ = base::ASCIIToUTF16("_");
+  std::vector<base::string16> sub_words_;
+  size_t pos_ = 0;
+  base::i18n::BreakIterator& iter_;
+  DISALLOW_COPY_AND_ASSIGN(BreakIteratorAdapter);
+};
 }
 
 // Matches within URL and Title Strings ----------------------------------------
@@ -110,9 +180,10 @@ String16Vector String16VectorFromString16(
     WordStarts* word_starts) {
   if (word_starts)
     word_starts->clear();
-  base::i18n::BreakIterator iter(cleaned_uni_string,
+  base::i18n::BreakIterator break_iter(cleaned_uni_string,
       break_on_space ? base::i18n::BreakIterator::BREAK_SPACE :
           base::i18n::BreakIterator::BREAK_WORD);
+  BreakIteratorAdapter iter(break_iter);
   String16Vector words;
   if (!iter.Init())
     return words;
