@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "4f04f3db_6541134e",
+        "filename": "components/ntp_tiles/popular_sites_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-08-03T11:11:16Z",
+      "side": 1,
+      "message": "Sure, this is done in the latest PS. (It\u0027s special cased as the section ID is valid, just the section is not.)",
+      "parentUuid": "f100977c_0be8c24c",
+      "range": {
+        "startLine": 176,
+        "startChar": 64,
+        "endLine": 176,
+        "endChar": 0
+      },
+      "revId": "02a37dccb5cf9305b23354bfb7fb2c1cd7efb695",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d0b3fae_74cb8ab0",
         "filename": "components/ntp_tiles/popular_sites_impl.cc",
         "patchSetId": 4
@@ -250,6 +274,30 @@
       "side": 1,
       "message": "I have the impression this is too smart and unnecessary.\n- Stale cache: Do you mean from prefs? You\u0027re right about the need to handle that, but I think what we should do is to store the version in prefs (and discard prefs in case of version mismatch). WDYT?\n\n- Rollbacks to V5: I don\u0027t follow what you mean here unless it refers to stale caches / prefs.",
       "parentUuid": "8c5e6a0b_cc4fa5c8",
+      "range": {
+        "startLine": 211,
+        "startChar": 48,
+        "endLine": 211,
+        "endChar": 0
+      },
+      "revId": "02a37dccb5cf9305b23354bfb7fb2c1cd7efb695",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "59fdf2f9_e09881b3",
+        "filename": "components/ntp_tiles/popular_sites_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-08-03T11:11:16Z",
+      "side": 1,
+      "message": "\u003e I have the impression this is too smart and unnecessary.\n\u003e - Stale cache: Do you mean from prefs? You\u0027re right about the need to handle that, but I think what we should do is to store the version in prefs (and discard prefs in case of version mismatch). WDYT?\n\nThat seems appropriate, given the answer to the next question. \n\n\u003e - Rollbacks to V5: I don\u0027t follow what you mean here unless it refers to stale caches / prefs.\n\nI though about the server returning an older version. But as we can override the version using Finch, we gain very little and should probably prefer the cleaner version checks.",
+      "parentUuid": "8da6332b_74578212",
       "range": {
         "startLine": 211,
         "startChar": 48,
