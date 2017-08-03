@@ -34,6 +34,24 @@
       "revId": "103e8300f3f2cc14e22cb97e7711237a163576fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e258b7ba_c584e597",
+        "filename": "cc/resources/resource_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-08-03T02:09:37Z",
+      "side": 1,
+      "message": "I think it\u0027d be better to set it when the resource is allocated and it\u0027d be even better to know when it hasn\u0027t been set yet.\n\nWe don\u0027t always create GMBs in the resource provider though.\nThe different mapping from resource type to buffer type can happen when we create resources from mailboxes, for example we do that in exo::Buffer::ProduceTransferableResource.\nAs you can see there, we always create an RGBA resource, but we can have different BufferFormats. For example, an NV12 buffer can be seen as RGBA from cc and GL POV, since the GLImage we create has GL_RGB as internal format and can be sampled as such.\nWe need to know the format of the actual buffer when we want to scan it out though.",
+      "parentUuid": "8f73f993_9bb56fe0",
+      "revId": "103e8300f3f2cc14e22cb97e7711237a163576fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
