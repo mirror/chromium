@@ -833,6 +833,21 @@ class BLINK_EXPORT WebFrameClient {
     return WebURL();
   }
 
+  // Overwrites the given URL to use an HTML5 embed if possible.
+  // An empty URL is returned if the URL is not overriden.
+  virtual WebURL OverridePDFEmbedWithHTML(const WebURL& url,
+                                          const WebString& orig_mime_type) {
+    return WebURL();
+  }
+
+  // Returns the v8::Object wrapping the implementation of custom scripting API
+  // for an HTMLPluginElement which has a content frame |frame|.
+  virtual v8::Local<v8::Object> GetV8ScriptableObjectForPluginFrame(
+      v8::Isolate* isolate,
+      WebFrame* frame) {
+    return v8::Local<v8::Object>();
+  }
+
   // Loading --------------------------------------------------------------
 
   virtual std::unique_ptr<blink::WebURLLoader> CreateURLLoader(
