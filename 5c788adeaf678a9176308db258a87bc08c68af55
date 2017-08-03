@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "4090379f_63c5e63a",
+        "filename": "media/filters/decoder_stream.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-08-03T20:25:33Z",
+      "side": 1,
+      "message": "In 2), I meant \"..., of potentially many, error logs get emitted **first**. ...\"",
+      "parentUuid": "40dbbcd2_4cecd449",
+      "revId": "5c788adeaf678a9176308db258a87bc08c68af55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68ac7739_0abab56f",
         "filename": "media/filters/decrypting_demuxer_stream.cc",
         "patchSetId": 3
