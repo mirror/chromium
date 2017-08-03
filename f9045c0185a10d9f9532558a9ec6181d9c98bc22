@@ -16,6 +16,24 @@
       "revId": "f9045c0185a10d9f9532558a9ec6181d9c98bc22",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b06d330d_f624cbea",
+        "filename": "content/common/download/download_stream.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-08-03T16:56:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "029b7e5d_12a05e45",
+      "revId": "f9045c0185a10d9f9532558a9ec6181d9c98bc22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
