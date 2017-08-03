@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "24d797a5_05415408",
+        "filename": "components/crash/content/app/crashpad_win.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-08-03T13:48:11Z",
+      "side": 1,
+      "message": "1. https always, everywhere.\n2. Is that a killer vanity domain name or what? Dump the extra 7.",
+      "range": {
+        "startLine": 112,
+        "startChar": 13,
+        "endLine": 112,
+        "endChar": 30
+      },
+      "revId": "f217963612e3d2444f11a611477527017b58c238",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
