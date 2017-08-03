@@ -1,0 +1,274 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0024c4bf_357a62ce",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-03T23:43:16Z",
+      "side": 1,
+      "message": "based64 here also",
+      "range": {
+        "startLine": 111,
+        "startChar": 63,
+        "endLine": 111,
+        "endChar": 72
+      },
+      "revId": "ac6ea4aaf2772ab291ea54c40c63d33c227a7f6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64c4ad72_ba4747df",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-03T23:43:16Z",
+      "side": 1,
+      "message": "I\u0027d prefer \"platform_type\", \"threat_entry_type\", \"threat_type\" because those are not general English terms but tied to those enums\n\nOr PlatformType, ThreatEntryType, ThreatType.",
+      "range": {
+        "startLine": 115,
+        "startChar": 9,
+        "endLine": 115,
+        "endChar": 17
+      },
+      "revId": "ac6ea4aaf2772ab291ea54c40c63d33c227a7f6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35900814_4ba8749c",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-03T23:43:16Z",
+      "side": 1,
+      "message": "I may be misremembering but didn\u0027t we decide to display base64 value?",
+      "range": {
+        "startLine": 134,
+        "startChar": 53,
+        "endLine": 134,
+        "endChar": 64
+      },
+      "revId": "ac6ea4aaf2772ab291ea54c40c63d33c227a7f6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26d1d04a_e397876d",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-03T23:43:16Z",
+      "side": 1,
+      "message": "Can we reuse full_hash_cache_parsed ?",
+      "range": {
+        "startLine": 147,
+        "startChar": 26,
+        "endLine": 147,
+        "endChar": 45
+      },
+      "revId": "ac6ea4aaf2772ab291ea54c40c63d33c227a7f6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c8837a6_8e59357a",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-03T23:43:16Z",
+      "side": 1,
+      "message": "remove comment",
+      "range": {
+        "startLine": 156,
+        "startChar": 0,
+        "endLine": 156,
+        "endChar": 38
+      },
+      "revId": "ac6ea4aaf2772ab291ea54c40c63d33c227a7f6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73b6ba04_502d913a",
+        "filename": "components/safe_browsing/web_ui/safe_browsing_ui.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-03T23:43:16Z",
+      "side": 1,
+      "message": "Ultimately, the V4GetHashProtocolManager is a sibling of V4Database and V4UpdateProtocolManager\nso either this should be a part of GetDatabaseManagerInfo or those parts should also be split out into their own methods.",
+      "range": {
+        "startLine": 258,
+        "startChar": 28,
+        "endLine": 258,
+        "endChar": 48
+      },
+      "revId": "ac6ea4aaf2772ab291ea54c40c63d33c227a7f6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfe2d267_f9635129",
+        "filename": "components/safe_browsing_db/v4_get_hash_protocol_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 437,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-03T23:43:16Z",
+      "side": 1,
+      "message": "++",
+      "range": {
+        "startLine": 437,
+        "startChar": 34,
+        "endLine": 437,
+        "endChar": 38
+      },
+      "revId": "ac6ea4aaf2772ab291ea54c40c63d33c227a7f6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fa4b37e_733205ac",
+        "filename": "components/safe_browsing_db/v4_get_hash_protocol_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 797,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-03T23:43:16Z",
+      "side": 1,
+      "message": "const auto\u0026 should work and is more appropriate",
+      "range": {
+        "startLine": 797,
+        "startChar": 7,
+        "endLine": 797,
+        "endChar": 11
+      },
+      "revId": "ac6ea4aaf2772ab291ea54c40c63d33c227a7f6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4c49c68_21629852",
+        "filename": "components/safe_browsing_db/v4_get_hash_protocol_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 800,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-03T23:43:16Z",
+      "side": 1,
+      "message": "nit: can delete this empty line",
+      "revId": "ac6ea4aaf2772ab291ea54c40c63d33c227a7f6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c015fb69_626c99d2",
+        "filename": "components/safe_browsing_db/v4_get_hash_protocol_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 805,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-03T23:43:16Z",
+      "side": 1,
+      "message": "const auto\u0026 again",
+      "range": {
+        "startLine": 805,
+        "startChar": 9,
+        "endLine": 805,
+        "endChar": 13
+      },
+      "revId": "ac6ea4aaf2772ab291ea54c40c63d33c227a7f6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de9f58a4_fa3a6808",
+        "filename": "components/safe_browsing_db/v4_local_database_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-03T23:43:16Z",
+      "side": 1,
+      "message": "nullptr check here too.\nTry turning off SafeBrowsing and open chrome://safe-browsing to test.",
+      "range": {
+        "startLine": 190,
+        "startChar": 2,
+        "endLine": 190,
+        "endChar": 29
+      },
+      "revId": "ac6ea4aaf2772ab291ea54c40c63d33c227a7f6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fd36140_d04a47ed",
+        "filename": "components/safe_browsing_db/v4_local_database_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-03T23:43:16Z",
+      "side": 1,
+      "message": "needs nullptr check",
+      "range": {
+        "startLine": 199,
+        "startChar": 2,
+        "endLine": 199,
+        "endChar": 31
+      },
+      "revId": "ac6ea4aaf2772ab291ea54c40c63d33c227a7f6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
