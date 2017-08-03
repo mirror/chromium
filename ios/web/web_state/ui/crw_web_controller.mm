@@ -3593,6 +3593,10 @@ registerLoadRequestForURL:(const GURL&)requestURL
         scrollView.maximumZoomScale);
     displayState.zoom_state().set_zoom_scale(scrollView.zoomScale);
   } else {
+    if ([self.nativeController respondsToSelector:@selector(scrollOffset)]) {
+      displayState.scroll_state().set_offset_y(
+          [self.nativeController scrollOffset]);
+    }
     // TODO(crbug.com/546146): Handle native views.
   }
   return displayState;

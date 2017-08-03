@@ -51,9 +51,14 @@
 #import "ios/chrome/browser/ui/overscroll_actions/overscroll_actions_controller.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
 #import "ios/chrome/browser/ui/url_loader.h"
+#import "ios/chrome/browser/web_state_list/web_state_list.h"
 #include "ios/chrome/grit/ios_strings.h"
 #import "ios/third_party/material_components_ios/src/components/Snackbar/src/MaterialSnackbar.h"
+#import "ios/web/public/navigation_item.h"
+#import "ios/web/public/navigation_manager.h"
 #include "ios/web/public/referrer.h"
+#import "ios/web/public/web_state/web_state.h"
+#include "ios/web/public/web_state/web_state_observer.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/strings/grit/ui_strings.h"
 
@@ -87,9 +92,30 @@ const char kNTPHelpURL[] = "https://support.google.com/chrome/?p=new_tab";
 @property(nonatomic, strong, readwrite)
     ContentSuggestionsHeaderViewController* headerController;
 
+- (void)pageLoaded;
+
 @end
 
-@implementation ContentSuggestionsCoordinator
+class ContentSuggestionsWebStateObserver : public web::WebStateObserver {
+ public:
+  ContentSuggestionsWebStateObserver(ContentSuggestionsCoordinator* coordinator,
+                                     web::WebState* webState)
+      : coordinator_(coordinator) {
+    Observe(webState);
+  }
+
+  void PageLoaded(
+      web::PageLoadCompletionStatus load_completion_status) override {
+    [coordinator_ pageLoaded];
+  }
+
+ private:
+  ContentSuggestionsCoordinator* coordinator_;
+};
+
+@implementation ContentSuggestionsCoordinator {
+  ContentSuggestionsWebStateObserver* _observer;
+}
 
 @synthesize alertCoordinator = _alertCoordinator;
 @synthesize browserState = _browserState;
@@ -113,6 +139,10 @@ const char kNTPHelpURL[] = "https://support.google.com/chrome/?p=new_tab";
   }
 
   _visible = YES;
+
+  web::WebState* webState = self.webStateList->GetActiveWebState();
+  // Memory leak here.
+  _observer = new ContentSuggestionsWebStateObserver(self, webState);
 
   ntp_snippets::ContentSuggestionsService* contentSuggestionsService =
       IOSChromeContentSuggestionsServiceFactory::GetForBrowserState(
@@ -179,6 +209,18 @@ const char kNTPHelpURL[] = "https://support.google.com/chrome/?p=new_tab";
 
 - (UIViewController*)viewController {
   return self.suggestionsViewController;
+}
+
+- (void)pageLoaded {
+  web::WebState* webState = self.webStateList->GetActiveWebState();
+  if (webState) {
+    web::NavigationManager* nav = webState->GetNavigationManager();
+    web::NavigationItem* item = nav->GetVisibleItem();
+    if (item && item->GetPageDisplayState().scroll_state().offset_y() > 0) {
+      self.suggestionsViewController.collectionView.contentOffset =
+          CGPointMake(0, item->GetPageDisplayState().scroll_state().offset_y());
+    }
+  }
 }
 
 #pragma mark - ContentSuggestionsCommands

@@ -96,6 +96,8 @@ struct ContextMenuParams;
 // content.
 - (GURL)virtualURL;
 
+- (CGFloat)scrollOffset;
+
 @end
 
 // CRWNativeContent delegate protocol.

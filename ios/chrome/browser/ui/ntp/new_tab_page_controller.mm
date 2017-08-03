@@ -414,6 +414,11 @@ enum {
   }
 }
 
+- (CGFloat)scrollOffset {
+  return self.contentSuggestionsCoordinator.viewController.collectionView
+      .contentOffset.y;
+}
+
 #pragma mark -
 
 - (void)setSwipeRecognizerProvider:(id<CRWSwipeRecognizerProvider>)provider {
