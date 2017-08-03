@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b840d87_ac8ef581",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-08-03T21:38:52Z",
+      "side": 1,
+      "message": "order is typically:\nctor, dtor, then methods\n\nhttps://google.github.io/styleguide/cppguide.html#Declaration_Order",
+      "revId": "936293b85c5f33f2643b9e87c3a91867a0430b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
