@@ -120,50 +120,51 @@ class GeneratedBackgroundPageJob : public net::URLRequestSimpleJob {
   net::HttpResponseInfo response_info_;
 };
 
-base::Time GetFileLastModifiedTime(const base::FilePath& filename) {
-  if (base::PathExists(filename)) {
-    base::File::Info info;
-    if (base::GetFileInfo(filename, &info))
-      return info.last_modified;
-  }
-  return base::Time();
-}
+// base::Time GetFileLastModifiedTime(const base::FilePath& filename) {
+//   if (base::PathExists(filename)) {
+//     base::File::Info info;
+//     if (base::GetFileInfo(filename, &info))
+//       return info.last_modified;
+//   }
+//   return base::Time();
+// }
 
-base::Time GetFileCreationTime(const base::FilePath& filename) {
-  if (base::PathExists(filename)) {
-    base::File::Info info;
-    if (base::GetFileInfo(filename, &info))
-      return info.creation_time;
-  }
-  return base::Time();
-}
+// base::Time GetFileCreationTime(const base::FilePath& filename) {
+//   if (base::PathExists(filename)) {
+//     base::File::Info info;
+//     if (base::GetFileInfo(filename, &info))
+//       return info.creation_time;
+//   }
+//   return base::Time();
+// }
 
-void ReadResourceFilePathAndLastModifiedTime(
-    const extensions::ExtensionResource& resource,
-    const base::FilePath& directory,
-    base::FilePath* file_path,
-    base::Time* last_modified_time) {
-  *file_path = resource.GetFilePath();
-  *last_modified_time = GetFileLastModifiedTime(*file_path);
-  // While we're here, log the delta between extension directory
-  // creation time and the resource's last modification time.
-  base::ElapsedTimer query_timer;
-  base::Time dir_creation_time = GetFileCreationTime(directory);
-  UMA_HISTOGRAM_TIMES("Extensions.ResourceDirectoryTimestampQueryLatency",
-                      query_timer.Elapsed());
-  int64_t delta_seconds = (*last_modified_time - dir_creation_time).InSeconds();
-  if (delta_seconds >= 0) {
-    UMA_HISTOGRAM_CUSTOM_COUNTS("Extensions.ResourceLastModifiedDelta",
-                                delta_seconds, 1,
-                                base::TimeDelta::FromDays(30).InSeconds(), 50);
-  } else {
-    UMA_HISTOGRAM_CUSTOM_COUNTS("Extensions.ResourceLastModifiedNegativeDelta",
-                                -delta_seconds,
-                                1,
-                                base::TimeDelta::FromDays(30).InSeconds(),
-                                50);
-  }
-}
+// void ReadResourceFilePathAndLastModifiedTime(
+//     const extensions::ExtensionResource& resource,
+//     const base::FilePath& directory,
+//     base::FilePath* file_path,
+//     base::Time* last_modified_time) {
+//   *file_path = resource.GetFilePath();
+//   *last_modified_time = GetFileLastModifiedTime(*file_path);
+//   // While we're here, log the delta between extension directory
+//   // creation time and the resource's last modification time.
+//   base::ElapsedTimer query_timer;
+//   base::Time dir_creation_time = GetFileCreationTime(directory);
+//   UMA_HISTOGRAM_TIMES("Extensions.ResourceDirectoryTimestampQueryLatency",
+//                       query_timer.Elapsed());
+//   int64_t delta_seconds = (*last_modified_time -
+//   dir_creation_time).InSeconds(); if (delta_seconds >= 0) {
+//     UMA_HISTOGRAM_CUSTOM_COUNTS("Extensions.ResourceLastModifiedDelta",
+//                                 delta_seconds, 1,
+//                                 base::TimeDelta::FromDays(30).InSeconds(),
+//                                 50);
+//   } else {
+//     UMA_HISTOGRAM_CUSTOM_COUNTS("Extensions.ResourceLastModifiedNegativeDelta",
+//                                 -delta_seconds,
+//                                 1,
+//                                 base::TimeDelta::FromDays(30).InSeconds(),
+//                                 50);
+//   }
+// }
 
 class URLRequestExtensionJob : public net::URLRequestFileJob {
  public:
@@ -204,18 +205,19 @@ class URLRequestExtensionJob : public net::URLRequestFileJob {
 
   void Start() override {
     request_timer_.reset(new base::ElapsedTimer());
-    base::FilePath* read_file_path = new base::FilePath;
-    base::Time* last_modified_time = new base::Time();
+    // base::FilePath* read_file_path = new base::FilePath;
+    // base::Time* last_modified_time = new base::Time();
 
     // Inherit task priority from the calling context.
-    base::PostTaskWithTraitsAndReply(
-        FROM_HERE, {base::MayBlock()},
-        base::Bind(&ReadResourceFilePathAndLastModifiedTime, resource_,
-                   directory_path_, base::Unretained(read_file_path),
-                   base::Unretained(last_modified_time)),
-        base::Bind(&URLRequestExtensionJob::OnFilePathAndLastModifiedTimeRead,
-                   weak_factory_.GetWeakPtr(), base::Owned(read_file_path),
-                   base::Owned(last_modified_time)));
+    // COMMENT: copy.
+    // base::PostTaskWithTraitsAndReply(
+    //     FROM_HERE, {base::MayBlock()},
+    //     base::Bind(&ReadResourceFilePathAndLastModifiedTime, resource_,
+    //                directory_path_, base::Unretained(read_file_path),
+    //                base::Unretained(last_modified_time)),
+    //     base::Bind(&URLRequestExtensionJob::OnFilePathAndLastModifiedTimeRead,
+    //                weak_factory_.GetWeakPtr(), base::Owned(read_file_path),
+    //                base::Owned(last_modified_time)));
   }
 
   bool IsRedirectResponse(GURL* location, int* http_status_code) override {

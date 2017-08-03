@@ -45,12 +45,13 @@ class ImageLoader : public KeyedService {
     // than |desired_size| or always resize it.
     enum ResizeCondition { RESIZE_WHEN_LARGER, ALWAYS_RESIZE, NEVER_RESIZE };
 
-    ImageRepresentation(const ExtensionResource& resource,
+    ImageRepresentation(ExtensionResource resource,
                         ResizeCondition resize_condition,
                         const gfx::Size& desired_size,
                         float scale_factor);
     ~ImageRepresentation();
-
+    ImageRepresentation(ImageRepresentation&&);
+    ImageRepresentation& operator=(ImageRepresentation&&);
     // Extension resource to load.
     ExtensionResource resource;
 
@@ -62,6 +63,8 @@ class ImageLoader : public KeyedService {
 
     // |scale_factor| is used to construct the loaded gfx::ImageSkia.
     float scale_factor;
+
+    DISALLOW_COPY_AND_ASSIGN(ImageRepresentation);
   };
 
   struct LoadResult;
@@ -82,7 +85,7 @@ class ImageLoader : public KeyedService {
   // TODO(estade): remove this in favor of LoadImageAtEveryScaleFactorAsync,
   // and rename the latter to LoadImageAsync.
   void LoadImageAsync(const Extension* extension,
-                      const ExtensionResource& resource,
+                      ExtensionResource resource,
                       const gfx::Size& max_size,
                       const ImageLoaderImageCallback& callback);
 
@@ -99,7 +102,7 @@ class ImageLoader : public KeyedService {
   // same extension. This is used to load multiple resolutions of the same image
   // type.
   void LoadImagesAsync(const Extension* extension,
-                       const std::vector<ImageRepresentation>& info_list,
+                       std::vector<ImageRepresentation> info_list,
                        const ImageLoaderImageCallback& callback);
 
   // Same as LoadImagesAsync() above except it loads into an image family. This
@@ -110,7 +113,7 @@ class ImageLoader : public KeyedService {
   // If multiple images of the same logical size are loaded, they will be
   // combined into a single ImageSkia in the ImageFamily.
   void LoadImageFamilyAsync(const Extension* extension,
-                            const std::vector<ImageRepresentation>& info_list,
+                            std::vector<ImageRepresentation> info_list,
                             const ImageLoaderImageFamilyCallback& callback);
 
  private:

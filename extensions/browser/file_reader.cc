@@ -11,10 +11,10 @@
 #include "extensions/browser/extension_file_task_runner.h"
 
 FileReader::FileReader(
-    const extensions::ExtensionResource& resource,
+    extensions::ExtensionResource resource,
     const OptionalFileSequenceTask& optional_file_sequence_task,
     const DoneCallback& done_callback)
-    : resource_(resource),
+    : resource_(std::move(resource)),
       optional_file_sequence_task_(optional_file_sequence_task),
       done_callback_(done_callback),
       origin_task_runner_(base::ThreadTaskRunnerHandle::Get()) {}
