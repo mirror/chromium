@@ -367,7 +367,7 @@ class CORE_EXPORT PaintLayer : public DisplayItemClient {
   // Layer::paint*() methods.
   PaintLayer* EnclosingLayerForPaintInvalidation() const;
 
-  PaintLayer* EnclosingLayerForPaintInvalidationCrossingFrameBoundaries() const;
+  PaintLayer* EnclosingLayerForPaintInvalidationCrossingFrameBoundaries(bool flag = false) const;
 
   bool HasAncestorWithFilterThatMovesPixels() const;
 
