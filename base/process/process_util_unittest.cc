@@ -680,6 +680,35 @@ TEST_F(ProcessUtilTest, MAYBE_FDRemapping) {
   DPCHECK(ret == 0);
 }
 
+MULTIPROCESS_TEST_MAIN(ProcessUtilsVerifyStdio) {
+  // Verify that all of the stdio handles are valid.
+  int ret = IGNORE_EINTR(close(STDIN_FILENO));
+  DPCHECK(ret == 0);
+  ret = IGNORE_EINTR(close(STDOUT_FILENO));
+  DPCHECK(ret == 0);
+  ret = IGNORE_EINTR(close(STDERR_FILENO));
+  DPCHECK(ret == 0);
+  return 0;
+}
+
+TEST_F(ProcessUtilTest, FDRemappingLeavesStdio) {
+  int dev_null = open("/dev/null", O_RDONLY);
+  DCHECK_LT(2, dev_null);
+
+  base::LaunchOptions options;
+  options.fds_to_remap.push_back(std::pair<int, int>(dev_null, dev_null));
+  base::SpawnChildResult spawn_child =
+      SpawnChildWithOptions("ProcessUtilsVerifyStdio", options);
+  CHECK(spawn_child.process.IsValid());
+  int ret = IGNORE_EINTR(close(dev_null));
+  DPCHECK(ret == 0);
+
+  int exit_code;
+  CHECK(spawn_child.process.WaitForExitWithTimeout(
+      base::TimeDelta::FromSeconds(5), &exit_code));
+  EXPECT_EQ(0, exit_code);
+}
+
 namespace {
 
 std::string TestLaunchProcess(const std::vector<std::string>& args,
