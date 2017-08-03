@@ -15,17 +15,21 @@
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/resource_context.h"
 #include "headless/lib/browser/headless_browser_context_options.h"
+#include "headless/lib/browser/headless_download_manager_delegate.h"
 #include "headless/lib/browser/headless_url_request_context_getter.h"
 #include "headless/public/headless_browser.h"
 #include "headless/public/headless_browser_context.h"
+#include "headless/public/headless_export.h"
 
 namespace headless {
 class HeadlessBrowserImpl;
+class HeadlessDownloadManagerDelegate;
 class HeadlessResourceContext;
 class HeadlessWebContentsImpl;
 
-class HeadlessBrowserContextImpl : public HeadlessBrowserContext,
-                                   public content::BrowserContext {
+class HEADLESS_EXPORT HeadlessBrowserContextImpl
+    : public HeadlessBrowserContext,
+      public content::BrowserContext {
  public:
   ~HeadlessBrowserContextImpl() override;
 
@@ -59,7 +63,7 @@ class HeadlessBrowserContextImpl : public HeadlessBrowserContext,
   base::FilePath GetPath() const override;
   bool IsOffTheRecord() const override;
   content::ResourceContext* GetResourceContext() override;
-  content::DownloadManagerDelegate* GetDownloadManagerDelegate() override;
+  HeadlessDownloadManagerDelegate* GetDownloadManagerDelegate() override;
   content::BrowserPluginGuestManager* GetGuestManager() override;
   storage::SpecialStoragePolicy* GetSpecialStoragePolicy() override;
   content::PushMessagingService* GetPushMessagingService() override;
@@ -118,6 +122,7 @@ class HeadlessBrowserContextImpl : public HeadlessBrowserContext,
   HeadlessBrowserImpl* browser_;  // Not owned.
   std::unique_ptr<HeadlessBrowserContextOptions> context_options_;
   std::unique_ptr<HeadlessResourceContext> resource_context_;
+  std::unique_ptr<HeadlessDownloadManagerDelegate> download_manager_delegate_;
   base::FilePath path_;
   base::Lock observers_lock_;
   base::ObserverList<Observer> observers_;
