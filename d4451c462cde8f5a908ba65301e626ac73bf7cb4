@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "d3b8c2c1_cdff8255",
+        "filename": "chromeos/components/tether/host_scan_scheduler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-03T18:21:46Z",
+      "side": 1,
+      "message": "Hey Leslie, looks like this still isn\u0027t done yet.",
+      "parentUuid": "e7d8a9f6_64785ec6",
+      "range": {
+        "startLine": 174,
+        "startChar": 0,
+        "endLine": 174,
+        "endChar": 54
+      },
+      "revId": "d4451c462cde8f5a908ba65301e626ac73bf7cb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e5a8aab_d1757de1",
         "filename": "chromeos/components/tether/host_scan_scheduler_unittest.cc",
         "patchSetId": 3
@@ -414,6 +438,30 @@
       "side": 1,
       "message": "Please rename the relevant functions.",
       "parentUuid": "85944c64_b37e19a6",
+      "range": {
+        "startLine": 213,
+        "startChar": 0,
+        "endLine": 213,
+        "endChar": 32
+      },
+      "revId": "d4451c462cde8f5a908ba65301e626ac73bf7cb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c38b561c_4dea8654",
+        "filename": "chromeos/components/tether/host_scan_scheduler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-03T18:21:46Z",
+      "side": 1,
+      "message": "Neither is this.",
+      "parentUuid": "075b488f_91851e70",
       "range": {
         "startLine": 213,
         "startChar": 0,

@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7319bbad_1f0dd97d",
+        "filename": "chromeos/components/tether/host_scan_scheduler_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-03T18:21:46Z",
+      "side": 1,
+      "message": "This should be set when the network is connecting/connected, but not when it is disconnected. Move this down to those functions, and remove it in the disconnected function.",
+      "range": {
+        "startLine": 88,
+        "startChar": 0,
+        "endLine": 88,
+        "endChar": 46
+      },
+      "revId": "e734715673d676ce72b76473db3ebb19cbdeff48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18ba7b44_db27dc46",
+        "filename": "chromeos/components/tether/host_scan_scheduler_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-03T18:21:46Z",
+      "side": 1,
+      "message": "nit: \"..., no scan should start when an Ethernet network becomes the default network then disconnects.\"\n\nSame below.",
+      "range": {
+        "startLine": 236,
+        "startChar": 59,
+        "endLine": 236,
+        "endChar": 64
+      },
+      "revId": "e734715673d676ce72b76473db3ebb19cbdeff48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fefa9a48_cbd994f8",
+        "filename": "chromeos/components/tether/host_scan_scheduler_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-03T18:21:46Z",
+      "side": 1,
+      "message": "When this call occurs, the Tether network should become the default network. Please add a parameter to this function which is the path of the new default network and pass in the Tether network\u0027s path here. Remember - the real NSH transitions from Ethernet default --\u003e no default --\u003e Tether default (not directly Ethernet default --\u003e Tether default), so make sure you initially transition to no default before making the change.\n\nNote that in the above cases (where a Tether network is not active), you can just pass an empty string. You can handle empty strings specially in your function.",
+      "range": {
+        "startLine": 253,
+        "startChar": 0,
+        "endLine": 253,
+        "endChar": 34
+      },
+      "revId": "e734715673d676ce72b76473db3ebb19cbdeff48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
