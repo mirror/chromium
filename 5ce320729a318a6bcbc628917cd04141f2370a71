@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aaa1d2f9_d000e6cd",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-03T15:27:51Z",
+      "side": 1,
+      "message": "This should be \u0027gusss\u0027 since you wrote the TODO.  We don\u0027t want to use TODOs in code to assign work so they are used to record who wrote the comment originally.",
+      "range": {
+        "startLine": 28,
+        "startChar": 8,
+        "endLine": 28,
+        "endChar": 14
+      },
+      "revId": "5ce320729a318a6bcbc628917cd04141f2370a71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b76a293_4c09af12",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-03T15:27:51Z",
+      "side": 1,
+      "message": "You could add some checking up here if these are required:\nDCHECK(frame);\nDCHECK(done);\n\nThis is also helpful because you might store the params in a pending_encode_ callback and you won\u0027t know the original stacktrace if there is a problem with the params when the pending_encode_ callback is run.",
+      "range": {
+        "startLine": 34,
+        "startChar": 1,
+        "endLine": 34,
+        "endChar": 2
+      },
+      "revId": "5ce320729a318a6bcbc628917cd04141f2370a71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6611f7bb_4d995217",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-03T15:27:51Z",
+      "side": 1,
+      "message": "These cases are handled on lines 45 and 46.  We typically don\u0027t add DCHECKs if we are going to handle the condition.",
+      "range": {
+        "startLine": 66,
+        "startChar": 1,
+        "endLine": 68,
+        "endChar": 0
+      },
+      "revId": "5ce320729a318a6bcbc628917cd04141f2370a71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0caa1373_57820219",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-03T15:27:51Z",
+      "side": 1,
+      "message": "Would this DCHECK be useful at the top of the function?  We often group DCHECKs for input params at the top so we know the params are valid before doing work on them.",
+      "range": {
+        "startLine": 73,
+        "startChar": 5,
+        "endLine": 73,
+        "endChar": 62
+      },
+      "revId": "5ce320729a318a6bcbc628917cd04141f2370a71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1224aebf_6c9dd06a",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-03T15:27:51Z",
+      "side": 1,
+      "message": "Can we use a helper function for this (or does one already exist)?  If this isn\u0027t shared, we can just have a function in the anonymous namespace above.",
+      "range": {
+        "startLine": 79,
+        "startChar": 0,
+        "endLine": 89,
+        "endChar": 59
+      },
+      "revId": "5ce320729a318a6bcbc628917cd04141f2370a71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b827b874_6b867754",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-03T15:27:51Z",
+      "side": 1,
+      "message": "nit: for unnamed params like true/false/42, it can be useful to add a comment on the param name to make it obvious what is being set to false:\n/*force_keyframe\u003d*/false",
+      "range": {
+        "startLine": 93,
+        "startChar": 49,
+        "endLine": 93,
+        "endChar": 54
+      },
+      "revId": "5ce320729a318a6bcbc628917cd04141f2370a71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcb68523_a77f56d2",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-03T15:27:51Z",
+      "side": 1,
+      "message": "I haven\u0027t used this macro before but it looks like this will terminate the process on release builds.  We typically reserve that behavior for cases where the integrity of the process has been compromised or we know that we can no longer function correctly.  \n\nIs that the case here?  Or should this be a DLOG_ASSERT()?",
+      "range": {
+        "startLine": 151,
+        "startChar": 2,
+        "endLine": 151,
+        "endChar": 12
+      },
+      "revId": "5ce320729a318a6bcbc628917cd04141f2370a71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a725049e_36f93056",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-03T15:27:51Z",
+      "side": 1,
+      "message": "Would LOG be appropriate here (to help debug a customer machine for example)?",
+      "range": {
+        "startLine": 159,
+        "startChar": 2,
+        "endLine": 159,
+        "endChar": 6
+      },
+      "revId": "5ce320729a318a6bcbc628917cd04141f2370a71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95c458d9_7c5dc3bc",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-03T15:27:51Z",
+      "side": 1,
+      "message": "Can you move the c\u0027tor up above the d\u0027tor in this file?  We usually put the c\u0027tor d\u0027tor (and factory methods) first and then define the rest of the methods.",
+      "range": {
+        "startLine": 162,
+        "startChar": 0,
+        "endLine": 162,
+        "endChar": 44
+      },
+      "revId": "5ce320729a318a6bcbc628917cd04141f2370a71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86bfaa89_e1d2bf96",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-03T15:27:51Z",
+      "side": 1,
+      "message": "Is it worth logging an error here that will show up on release builds?",
+      "range": {
+        "startLine": 183,
+        "startChar": 4,
+        "endLine": 183,
+        "endChar": 17
+      },
+      "revId": "5ce320729a318a6bcbc628917cd04141f2370a71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13156fc8_0dacd3a2",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-03T15:27:51Z",
+      "side": 1,
+      "message": "):  -\u003e missing colon",
+      "range": {
+        "startLine": 200,
+        "startChar": 15,
+        "endLine": 200,
+        "endChar": 16
+      },
+      "revId": "5ce320729a318a6bcbc628917cd04141f2370a71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
