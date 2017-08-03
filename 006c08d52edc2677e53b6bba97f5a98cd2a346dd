@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e3acce2_25ee2cd5",
+        "filename": "third_party/WebKit/Source/platform/bindings/TraceWrapperMember.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-08-03T07:27:21Z",
+      "side": 1,
+      "message": "I\u0027d like to remove this in an immediate follow up, as it will simplify *all* ctor callsites, which are all TraceWrapperMember\u003cT\u003e initialization and vector pushes.",
+      "range": {
+        "startLine": 25,
+        "startChar": 10,
+        "endLine": 25,
+        "endChar": 19
+      },
+      "revId": "006c08d52edc2677e53b6bba97f5a98cd2a346dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb8e84ad_23aa4263",
+        "filename": "third_party/WebKit/Source/platform/bindings/TraceWrapperMember.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-08-03T07:27:21Z",
+      "side": 1,
+      "message": "This should fix the swap regressions we have seen on some benchmarks.",
+      "revId": "006c08d52edc2677e53b6bba97f5a98cd2a346dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
