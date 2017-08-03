@@ -110,16 +110,6 @@ class PLATFORM_EXPORT ScriptWrappableVisitor : public v8::EmbedderHeapTracer,
     WriteBarrier(value.Get());
   }
 
-  // Conservative Dijkstra barrier.
-  //
-  // On assignment 'x.a = y' during incremental marking the Dijkstra barrier
-  // suggests checking the color of 'x' and only mark 'y' if 'x' is marked.
-
-  // Since checking 'x' is expensive in the current setting, as it requires
-  // either a back pointer or expensive lookup logic due to large objects and
-  // multiple inheritance, just assume that 'x' is black. We assume here that
-  // since an object 'x' is referenced for a write, it will generally also be
-  // alive in the current GC cycle.
   template <typename T>
   static void WriteBarrier(const T* dst_object) {
     static_assert(!NeedsAdjustAndMark<T>::value,
@@ -187,8 +177,8 @@ class PLATFORM_EXPORT ScriptWrappableVisitor : public v8::EmbedderHeapTracer,
       HeapObjectHeader* (*heap_object_header_callback)(const void*),
       void (*missed_write_barrier_callback)(void),
       const void* object) const override {
-    DCHECK(!tracing_in_progress_);
-    DCHECK(heap_object_header_callback(object)->IsWrapperHeaderMarked());
+    if (!tracing_in_progress_)
+      return false;
 
     marking_deque_.push_back(WrapperMarkingData(
         trace_wrappers_callback, heap_object_header_callback, object));

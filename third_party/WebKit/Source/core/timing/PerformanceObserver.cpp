@@ -40,7 +40,7 @@ PerformanceObserver::PerformanceObserver(ScriptState* script_state,
                                          PerformanceBase* performance,
                                          PerformanceObserverCallback* callback)
     : execution_context_(ExecutionContext::From(script_state)),
-      callback_(this, callback),
+      callback_(callback),
       performance_(performance),
       filter_options_(PerformanceEntry::kInvalid),
       is_registered_(false) {
