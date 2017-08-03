@@ -610,6 +610,305 @@
       "revId": "cf96cf9a77b089cd76cdeb87d94c4ea9ab8b485d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fa264c78_6251fcd8",
+        "filename": "components/cryptauth/device_capability_manager_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-03T18:44:36Z",
+      "side": 1,
+      "message": "super nit: As a convention we\u0027ve been using camelCaseStrings for test constants.",
+      "range": {
+        "startLine": 33,
+        "startChar": 46,
+        "endLine": 33,
+        "endChar": 72
+      },
+      "revId": "cf96cf9a77b089cd76cdeb87d94c4ea9ab8b485d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1ad3a25_096135b7",
+        "filename": "components/cryptauth/device_capability_manager_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-03T18:44:36Z",
+      "side": 1,
+      "message": "Doesn\u0027t look like |available_devices_| is ever used except for here. Instead, just pass cryptauth::GenerateTestRemoteDevices(5) here and get rid of that field.",
+      "range": {
+        "startLine": 72,
+        "startChar": 54,
+        "endLine": 72,
+        "endChar": 72
+      },
+      "revId": "cf96cf9a77b089cd76cdeb87d94c4ea9ab8b485d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "096c5aae_1a5255ea",
+        "filename": "components/cryptauth/device_capability_manager_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-03T18:44:36Z",
+      "side": 1,
+      "message": "Please have this function return a response instead of setting an instance field with the response. |find_eligible_unlock_devices_response_| is only used just after this function is called, so it is better to avoid having it be an instance field.",
+      "range": {
+        "startLine": 132,
+        "startChar": 7,
+        "endLine": 132,
+        "endChar": 46
+      },
+      "revId": "cf96cf9a77b089cd76cdeb87d94c4ea9ab8b485d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f16ac9d9_36ad811f",
+        "filename": "components/cryptauth/device_capability_manager_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-03T18:44:36Z",
+      "side": 1,
+      "message": "You shouldn\u0027t need this extra mutable_device() call.",
+      "range": {
+        "startLine": 140,
+        "startChar": 0,
+        "endLine": 140,
+        "endChar": 28
+      },
+      "revId": "cf96cf9a77b089cd76cdeb87d94c4ea9ab8b485d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db581d9c_a7eaadca",
+        "filename": "components/cryptauth/device_capability_manager_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-03T18:44:36Z",
+      "side": 1,
+      "message": "This is only ever called when passing |result_eligible_devices_| and |result_ineligible_devices_|, so just use those fields internally and get rid of the parameters.\n\nAlso, rename to VerifyDeviceEligibility().",
+      "range": {
+        "startLine": 145,
+        "startChar": 7,
+        "endLine": 145,
+        "endChar": 28
+      },
+      "revId": "cf96cf9a77b089cd76cdeb87d94c4ea9ab8b485d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7113bc2a_9a2ca28b",
+        "filename": "components/cryptauth/device_capability_manager_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-03T18:44:36Z",
+      "side": 1,
+      "message": "Instead of comparing the public keys, you can just compare the actual objects.\n\nfor (const auto\u0026 device_info : eligible_device_infos) {\n  EXPECT_NE(test_eligible_external_devices_infos_.find(device_info),\n            test_eligible_external_devices_infos_.end());\n}\n\nAlso, note that I used the variable \"device_info\" instead of \"remote_device\". These aren\u0027t RemoteDevice objects.",
+      "range": {
+        "startLine": 148,
+        "startChar": 0,
+        "endLine": 153,
+        "endChar": 5
+      },
+      "revId": "cf96cf9a77b089cd76cdeb87d94c4ea9ab8b485d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23c6e676_03e6ab46",
+        "filename": "components/cryptauth/device_capability_manager_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-03T18:44:36Z",
+      "side": 1,
+      "message": "Technically, your tests could still pass if TestSuccessFindEligibleUnlockDevicesCallback() were never called, since the for() loops above would simply loop through empty vectors of devices.\n\nTo ensure that this is not the case, at the start of this function, verify that these vectors are not empty, and add a comment explaining why.",
+      "range": {
+        "startLine": 159,
+        "startChar": 0,
+        "endLine": 159,
+        "endChar": 41
+      },
+      "revId": "cf96cf9a77b089cd76cdeb87d94c4ea9ab8b485d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "633cea56_8e6e983c",
+        "filename": "components/cryptauth/device_capability_manager_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-03T18:44:36Z",
+      "side": 1,
+      "message": "nit: Take a parameter here of what you should be invoking the callback with, like you do for InvokeFindEligibleForPromotionCallback() below.",
+      "range": {
+        "startLine": 223,
+        "startChar": 7,
+        "endLine": 223,
+        "endChar": 46
+      },
+      "revId": "cf96cf9a77b089cd76cdeb87d94c4ea9ab8b485d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d255f16_9e6a39fd",
+        "filename": "components/cryptauth/device_capability_manager_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-03T18:44:36Z",
+      "side": 1,
+      "message": "nit: You can just set to false. Unfortunately, there\u0027s no \"clean\" way to do this like there is for strings, since there is no special boolean value to choose from.",
+      "range": {
+        "startLine": 257,
+        "startChar": 0,
+        "endLine": 257,
+        "endChar": 68
+      },
+      "revId": "cf96cf9a77b089cd76cdeb87d94c4ea9ab8b485d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fd86299_431c3403",
+        "filename": "components/cryptauth/device_capability_manager_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-03T18:44:36Z",
+      "side": 1,
+      "message": "nit: all_test_external_device_infos_;",
+      "range": {
+        "startLine": 263,
+        "startChar": 6,
+        "endLine": 263,
+        "endChar": 38
+      },
+      "revId": "cf96cf9a77b089cd76cdeb87d94c4ea9ab8b485d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1349689b_72a16383",
+        "filename": "components/cryptauth/device_capability_manager_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-03T18:44:36Z",
+      "side": 1,
+      "message": "nit: Instead of just saying that these are for all tests, describe what they are used for and how they are set/cleared.",
+      "range": {
+        "startLine": 278,
+        "startChar": 0,
+        "endLine": 278,
+        "endChar": 19
+      },
+      "revId": "cf96cf9a77b089cd76cdeb87d94c4ea9ab8b485d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "893a1ba6_112e294d",
+        "filename": "components/cryptauth/device_capability_manager_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-03T18:44:36Z",
+      "side": 1,
+      "message": "nit: Spaces around \"eligible\". Same elsewhere.",
+      "range": {
+        "startLine": 314,
+        "startChar": 48,
+        "endLine": 314,
+        "endChar": 56
+      },
+      "revId": "cf96cf9a77b089cd76cdeb87d94c4ea9ab8b485d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9923a555_c506e168",
+        "filename": "components/cryptauth/device_capability_manager_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-03T18:44:36Z",
+      "side": 1,
+      "message": "You also need to verify the success result for eligible devices as well. Same thing below for the \"eligible for promotion\" case.",
+      "range": {
+        "startLine": 315,
+        "startChar": 0,
+        "endLine": 315,
+        "endChar": 1
+      },
+      "revId": "cf96cf9a77b089cd76cdeb87d94c4ea9ab8b485d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
