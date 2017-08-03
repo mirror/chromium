@@ -238,6 +238,30 @@
     },
     {
       "key": {
+        "uuid": "ed957010_6c77761d",
+        "filename": "chromeos/components/tether/host_scan_scheduler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-08-03T19:40:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3b8c2c1_cdff8255",
+      "range": {
+        "startLine": 174,
+        "startChar": 0,
+        "endLine": 174,
+        "endChar": 54
+      },
+      "revId": "d4451c462cde8f5a908ba65301e626ac73bf7cb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e5a8aab_d1757de1",
         "filename": "chromeos/components/tether/host_scan_scheduler_unittest.cc",
         "patchSetId": 3
@@ -462,6 +486,30 @@
       "side": 1,
       "message": "Neither is this.",
       "parentUuid": "075b488f_91851e70",
+      "range": {
+        "startLine": 213,
+        "startChar": 0,
+        "endLine": 213,
+        "endChar": 32
+      },
+      "revId": "d4451c462cde8f5a908ba65301e626ac73bf7cb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7bba0413_4715447e",
+        "filename": "chromeos/components/tether/host_scan_scheduler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-08-03T19:40:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c38b561c_4dea8654",
       "range": {
         "startLine": 213,
         "startChar": 0,
