@@ -28,6 +28,7 @@
 #include "cc/base/switches.h"
 #include "chrome/browser/experiments/memory_ablation_experiment.h"
 #include "chrome/browser/flag_descriptions.h"
+#include "chrome/browser/page_load_metrics/observers/ads_page_load_metrics_observer.h"
 #include "chrome/browser/predictors/resource_prefetch_common.h"
 #include "chrome/browser/prerender/prerender_field_trial.h"
 #include "chrome/common/channel_info.h"
@@ -3278,6 +3279,10 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kEnableManualFallbacksFillingDescription, kOsDesktop,
      FEATURE_VALUE_TYPE(
          password_manager::features::kEnableManualFallbacksFilling)},
+
+    {"frame-size-limit", flag_descriptions::kEnableFrameSizeLimitName,
+     flag_descriptions::kEnableFrameSizeLimitDescription, kOsAll,
+     FEATURE_VALUE_TYPE(features::kFrameSizeFeature)},
 
     // NOTE: Adding new command-line switches requires adding corresponding
     // entries to enum "LoginCustomFlags" in histograms/enums.xml. See note in

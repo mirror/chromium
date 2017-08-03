@@ -23083,6 +23083,7 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="-650504533" label="enable-speculative-launch-service-worker"/>
   <int value="-650176557" label="OfflinePagesSvelteConcurrentLoading:enabled"/>
   <int value="-649956990" label="enable-harfbuzz-rendertext"/>
+  <int value="-649805959" label="FrameSizeFeature:disabled"/>
   <int value="-645455405" label="MacViewsNativeDialogs:enabled"/>
   <int value="-641719457" label="disable-compositor-touch-hit-testing"/>
   <int value="-631740127" label="inert-visual-viewport"/>
@@ -23276,17 +23277,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="0" label="BAD_FLAG_FORMAT">
     Command-line flag doesn't start with two dashes.
   </int>
-<!--
-Values in LoginCustomFlags are:  value=(uint32_t)MD5(label).
-This enum is verified by AboutFlagsHistogramTest unit test.
-To add a new entry, add it with any unique value and run test to compute valid
-value. After that run tools/metrics/histograms/validate_format.py to find out
-where the value should be inserted to maintain ordering.
-Don't remove entries when removing a flag, they are still used to decode data
-from previous Chrome versions.
--->
-
-  <summary>Chrome flags that lead to Chrome restart on Chrome OS.</summary>
   <int value="7444737" label="NTPSuggestionsStandaloneUI:disabled"/>
   <int value="7533886" label="disable-offer-store-unmasked-wallet-cards"/>
   <int value="10458238" label="disable-print-preview-simplify"/>
@@ -23522,6 +23512,18 @@ from previous Chrome versions.
   <int value="851085848" label="enable-settings-window"/>
   <int value="854730848" label="disable-app-info-dialog-mac"/>
   <int value="855746780" label="disable-physical-keyboard-autocorrect"/>
+<!--
+Values in LoginCustomFlags are:  value=(uint32_t)MD5(label).
+This enum is verified by AboutFlagsHistogramTest unit test.
+To add a new entry, add it with any unique value and run test to compute valid
+value. After that run tools/metrics/histograms/validate_format.py to find out
+where the value should be inserted to maintain ordering.
+Don't remove entries when removing a flag, they are still used to decode data
+from previous Chrome versions.
+-->
+
+  <summary>Chrome flags that lead to Chrome restart on Chrome OS.</summary>
+  <int value="856415051" label="FrameSizeFeature:enabled"/>
   <int value="857445869" label="enable-captive-portal-bypass-proxy"/>
   <int value="862453793" label="TranslateUI2016Q2:enabled"/>
   <int value="867512869" label="mark-non-secure-as"/>

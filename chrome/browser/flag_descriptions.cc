@@ -335,6 +335,10 @@ const char kEnableManualFallbacksFillingDescription[] =
     "might contain generation fallbacks or 'Show all saved passwords' "
     "fallback.";
 
+const char kEnableFrameSizeLimitName[] = "Default Size Policy";
+const char kEnableFrameSizeLimitDescription[] =
+    "Experiment with putting size limits on frames by default";
+
 const char kEnableMaterialDesignBookmarksName[] =
     "Enable Material Design bookmarks";
 const char kEnableMaterialDesignBookmarksDescription[] =
