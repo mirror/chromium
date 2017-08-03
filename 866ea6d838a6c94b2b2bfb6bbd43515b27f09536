@@ -52,6 +52,24 @@
       "revId": "866ea6d838a6c94b2b2bfb6bbd43515b27f09536",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18440db9_988131f3",
+        "filename": "chrome/browser/ui/ash/palette_delegate_chromeos.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-08-03T22:07:01Z",
+      "side": 1,
+      "message": "You are absolutely right, there is Timer::Start which is what I should have used. I have missed that as I have only looked at a few usages, and they were all 0-parameter. Thanks!",
+      "parentUuid": "1943dc88_ec8e80be",
+      "revId": "866ea6d838a6c94b2b2bfb6bbd43515b27f09536",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
