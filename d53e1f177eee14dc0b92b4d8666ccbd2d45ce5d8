@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d642a2a5_22de9b6d",
+        "filename": "base/synchronization/waitable_event_mac.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-03T18:57:13Z",
+      "side": 1,
+      "message": "\u003e A unique_ptr\u003cAutoLock\u003e in the enclosing scope that you .reset() here would make me a little more comfortable, but then I guess I’d want the same thing with a unique_ptr\u003cscoped_refptr\u003cReceiveRight\u003e\u003e.\n\nI thought about it, but then I thought that putting scopers in unique_ptr is just a bit too much for this already \"too much\" code.",
+      "parentUuid": "00ec1214_b4895e7d",
+      "revId": "d53e1f177eee14dc0b92b4d8666ccbd2d45ce5d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "327ff448_1011aef5",
         "filename": "base/synchronization/waitable_event_mac.cc",
         "patchSetId": 9
@@ -50,6 +68,24 @@
       "revId": "d53e1f177eee14dc0b92b4d8666ccbd2d45ce5d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4b3c000_d7655228",
+        "filename": "base/synchronization/waitable_event_watcher_mac.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-08-03T18:57:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d3f00610_4c73c20c",
+      "revId": "d53e1f177eee14dc0b92b4d8666ccbd2d45ce5d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
