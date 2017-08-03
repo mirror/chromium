@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4181ab0b_a34bbf3f",
+        "filename": "net/cert/x509_util.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-08-03T19:54:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b642f94_cccce1af",
+      "revId": "6819481e08c1fbd44cc804a1926e7e087925e5a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ca68550_0dd4b0ba",
         "filename": "net/cert/x509_util_openssl.cc",
         "patchSetId": 1
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "9b4fe451_1f3c581a",
+        "filename": "net/cert/x509_util_openssl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-08-03T19:54:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ca68550_0dd4b0ba",
+      "range": {
+        "startLine": 417,
+        "startChar": 22,
+        "endLine": 417,
+        "endChar": 25
+      },
+      "revId": "6819481e08c1fbd44cc804a1926e7e087925e5a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be13c888_3a28f489",
         "filename": "net/socket/ssl_client_socket_impl.cc",
         "patchSetId": 1
@@ -53,6 +95,30 @@
       "writtenOn": "2017-07-28T22:01:30Z",
       "side": 1,
       "message": "Looks like this could add a ERR_SSL_CLIENT_AUTH_CERT_BAD_FORMAT in cases where SSL_set_chain_and_key fails, which aren\u0027t due to the client cert format.",
+      "range": {
+        "startLine": 1621,
+        "startChar": 6,
+        "endLine": 1621,
+        "endChar": 24
+      },
+      "revId": "6819481e08c1fbd44cc804a1926e7e087925e5a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e35bffa9_f0525968",
+        "filename": "net/socket/ssl_client_socket_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1621,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-08-03T19:54:20Z",
+      "side": 1,
+      "message": "The only extra failure path is SSL_set_chain_and_key which can only fail if:\n- malloc failed (would crash Chrome)\n- we can\u0027t parse the public key or check key usage in the cert (bad cert format)\n- cert/key mismatch (not possible here because we didn\u0027t give BoringSSL an EVP_PKEY)\n\nIt is making assumptions based on implementation details, but given that we pass in certs and kPrivateKeyMethod, I think it\u0027s not possible for SetSSLChainAndKey to fail for anything other than bad certs or malloc. I dunno. I tried making it return Error, but ERR_SSL_CLIENT_AUTH_CERT_BAD_FORMAT is wrong when the server calls it.\n\nThoughts?",
+      "parentUuid": "be13c888_3a28f489",
       "range": {
         "startLine": 1621,
         "startChar": 6,
