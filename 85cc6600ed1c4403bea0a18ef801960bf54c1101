@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bec7278c_14c11d1c",
+        "filename": "chrome/common/logging_chrome.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-03T00:29:43Z",
+      "side": 0,
+      "message": "keep this blank line",
+      "revId": "85cc6600ed1c4403bea0a18ef801960bf54c1101",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

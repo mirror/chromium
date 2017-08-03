@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "efbf62d5_49edcd65",
+        "filename": "chrome/common/logging_chrome.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-03T00:29:43Z",
+      "side": 1,
+      "message": "note to self: ReplaceExtension looks like it handles paths without extensions, and takes new extensions either with or without \u0027.\u0027 and adds it if needed",
+      "revId": "505221d1cb16abf889ab2d472d15c8218c33dcbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d6ce2e9_96ea93ac",
+        "filename": "chrome/common/logging_chrome.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-03T00:29:43Z",
+      "side": 1,
+      "message": "i don\u0027t think you need this anymore. base::ReplaceFile uses rename(), which already replaces existing files.",
+      "revId": "505221d1cb16abf889ab2d472d15c8218c33dcbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0edca8a7_8db3dd41",
+        "filename": "chrome/common/logging_chrome.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-08-03T00:29:43Z",
+      "side": 1,
+      "message": "delete extra blank line",
+      "revId": "505221d1cb16abf889ab2d472d15c8218c33dcbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
