@@ -8,6 +8,22 @@
  */
 
 /**
+ * Enumeration of setup methods.
+ * @enum {string}
+ */
+var SetupMethod = {MANUAL: 'manual', AUTOMATIC: 'automatic'};
+
+/**
+ * @typedef {{
+ *   usb_vendor_id: int,
+ *   usb_product_id: int,
+ *   usb_vendor_name: string,
+ *   usb_product_name: string
+ * }}
+ */
+var CupsUsbInfo;
+
+/**
  * @typedef {{
  *   ppdManufacturer: string,
  *   ppdModel: string,
@@ -22,7 +38,8 @@
  *   printerPPDPath: string,
  *   printerProtocol: string,
  *   printerQueue: string,
- *   printerStatus: string
+ *   printerStatus: string,
+ *   printerUsbInfo: !CupsUsbInfo,
  * }}
  */
 var CupsPrinterInfo;
@@ -93,9 +110,10 @@ cr.define('settings', function() {
     getCupsPrinterPPDPath() {}
 
     /**
+     * @param {!SetupMethod} setupMethod
      * @param {!CupsPrinterInfo} newPrinter
      */
-    addCupsPrinter(newPrinter) {}
+    addCupsPrinter(setupMethod, newPrinter) {}
 
     startDiscoveringPrinters() {}
     stopDiscoveringPrinters() {}
@@ -138,8 +156,8 @@ cr.define('settings', function() {
     }
 
     /** @override */
-    addCupsPrinter(newPrinter) {
-      chrome.send('addCupsPrinter', [newPrinter]);
+    addCupsPrinter(setupMethod, newPrinter) {
+      chrome.send('addCupsPrinter', [setupMethod, newPrinter]);
     }
 
     /** @override */
