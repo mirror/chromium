@@ -158,6 +158,9 @@ class BASE_EXPORT SysInfo {
   // See also SysUtils.java, method isLowEndDevice.
   static bool IsLowEndDevice();
 
+  // Test functions:
+  static void SetLowEndDeviceForTesting(bool is_low_end);
+
  private:
   FRIEND_TEST_ALL_PREFIXES(SysInfoTest, AmountOfAvailablePhysicalMemory);
   FRIEND_TEST_ALL_PREFIXES(debug::SystemMetricsTest, ParseMeminfo);

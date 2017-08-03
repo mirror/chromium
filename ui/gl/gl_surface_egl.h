@@ -74,6 +74,10 @@ class GL_EXPORT GLSurfaceEGL : public GLSurface {
   static bool IsEGLSurfacelessContextSupported();
   static bool IsEGLContextPrioritySupported();
   static bool IsDirectCompositionSupported();
+  static bool IsDriverProgramBinaryCacheInUse();
+
+  // Test only functions.
+  static void SetDriverProgramBinaryCacheInUseForTesting(bool in_use);
 
  protected:
   ~GLSurfaceEGL() override;

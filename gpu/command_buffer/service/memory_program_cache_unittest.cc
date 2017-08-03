@@ -10,6 +10,8 @@
 #include <memory>
 
 #include "base/bind.h"
+#include "base/memory/ptr_util.h"
+#include "base/sys_info.h"
 #include "gpu/command_buffer/common/activity_flags.h"
 #include "gpu/command_buffer/common/gles2_cmd_format.h"
 #include "gpu/command_buffer/service/gl_utils.h"
@@ -20,6 +22,10 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/gl/gl_bindings.h"
 #include "ui/gl/gl_mock.h"
+
+#if defined(USE_EGL)
+#include "ui/gl/gl_surface_egl.h"
+#endif
 
 using ::testing::_;
 using ::testing::Invoke;
@@ -629,6 +635,96 @@ TEST_F(MemoryProgramCacheTest, OverwriteOnNewSave) {
       cache_->LoadLinkedProgram(kProgramId, vertex_shader_, fragment_shader_,
                                 NULL, varyings_, GL_NONE, this));
 }
+
+// Check that the cache behaves correctly when EGL_ANDROID_binary_cache is
+// available.
+#if defined(USE_EGL)
+
+class ScopedSetLowEndDeviceForTesting {
+ public:
+  ScopedSetLowEndDeviceForTesting(bool is_low_end)
+      : initial_value_(base::SysInfo::IsLowEndDevice()) {
+    base::SysInfo::SetLowEndDeviceForTesting(is_low_end);
+  }
+  ~ScopedSetLowEndDeviceForTesting() {
+    base::SysInfo::SetLowEndDeviceForTesting(initial_value_);
+  }
+
+ private:
+  bool initial_value_;
+};
+
+// On a low-end device, the cache should disable itself if
+// EGL_ANDROID_binary_cache is available.
+TEST_F(MemoryProgramCacheTest, CacheDisabledOnLowEndWithDriverCache) {
+  ScopedSetLowEndDeviceForTesting force_low_end(true);
+  EXPECT_TRUE(base::SysInfo::IsLowEndDevice());
+
+  const GLenum kFormat = 1;
+  const int kProgramId = 10;
+  const int kBinaryLength = 20;
+  char test_binary[kBinaryLength];
+  for (int i = 0; i < kBinaryLength; ++i) {
+    test_binary[i] = i;
+  }
+  ProgramBinaryEmulator emulator(kBinaryLength, kFormat, test_binary);
+
+  // Override the EGL setting and ensure that we can't cache shaders.
+  gl::GLSurfaceEGL::SetDriverProgramBinaryCacheInUseForTesting(true);
+  cache_->SaveLinkedProgram(kProgramId, vertex_shader_, fragment_shader_, NULL,
+                            varyings_, GL_NONE, this);
+
+  EXPECT_NE(ProgramCache::LINK_SUCCEEDED,
+            cache_->GetLinkedProgramStatus(
+                vertex_shader_->last_compiled_signature(),
+                fragment_shader_->last_compiled_signature(), NULL, varyings_,
+                GL_NONE));
+  EXPECT_EQ(0, shader_cache_count());
+
+  // Restore the EGL setting and ensure that we can now cache shaders.
+  gl::GLSurfaceEGL::SetDriverProgramBinaryCacheInUseForTesting(false);
+  SetExpectationsForSaveLinkedProgram(kProgramId, &emulator);
+  cache_->SaveLinkedProgram(kProgramId, vertex_shader_, fragment_shader_, NULL,
+                            varyings_, GL_NONE, this);
+
+  EXPECT_EQ(ProgramCache::LINK_SUCCEEDED,
+            cache_->GetLinkedProgramStatus(
+                vertex_shader_->last_compiled_signature(),
+                fragment_shader_->last_compiled_signature(), NULL, varyings_,
+                GL_NONE));
+  EXPECT_EQ(1, shader_cache_count());
+}
+
+// On a normal device, the cache is always enabled.
+TEST_F(MemoryProgramCacheTest, CacheEnabledOnNonLowEndWithDriverCache) {
+  ScopedSetLowEndDeviceForTesting force_high_end(false);
+  EXPECT_FALSE(base::SysInfo::IsLowEndDevice());
+
+  const GLenum kFormat = 1;
+  const int kProgramId = 10;
+  const int kBinaryLength = 20;
+  char test_binary[kBinaryLength];
+  for (int i = 0; i < kBinaryLength; ++i) {
+    test_binary[i] = i;
+  }
+  ProgramBinaryEmulator emulator(kBinaryLength, kFormat, test_binary);
+
+  // Even with EGL_ANDROID_binary_cache, we should be enabled on a normal
+  // device.
+  gl::GLSurfaceEGL::SetDriverProgramBinaryCacheInUseForTesting(true);
+  SetExpectationsForSaveLinkedProgram(kProgramId, &emulator);
+  cache_->SaveLinkedProgram(kProgramId, vertex_shader_, fragment_shader_, NULL,
+                            varyings_, GL_NONE, this);
+
+  EXPECT_EQ(ProgramCache::LINK_SUCCEEDED,
+            cache_->GetLinkedProgramStatus(
+                vertex_shader_->last_compiled_signature(),
+                fragment_shader_->last_compiled_signature(), NULL, varyings_,
+                GL_NONE));
+  EXPECT_EQ(1, shader_cache_count());
+}
+
+#endif  // defined(USE_EGL)
 
 }  // namespace gles2
 }  // namespace gpu

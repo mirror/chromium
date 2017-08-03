@@ -19,10 +19,13 @@ class LazySysInfoValue {
 
   ~LazySysInfoValue() { }
 
-  T value() { return value_; }
+  T value() const { return value_; }
+
+  // Test functions:
+  void SetValueForTesting(T value) { value_ = value; }
 
  private:
-  const T value_;
+  T value_;
 
   DISALLOW_COPY_AND_ASSIGN(LazySysInfoValue);
 };
