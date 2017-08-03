@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe8f3a6d_3eb4c2f3",
+        "filename": "third_party/WebKit/LayoutTests/compositing/layer-creation/overflow-scroll-overlap.html",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-08-03T20:43:06Z",
+      "side": 1,
+      "message": "Changing this reveals a visual failure when we try to optimize away the ancestor clip, so I would like to keep the change for future reference. I only noticed it because I loaded all the text failures to verify the visual result, and scroll the element. Otherwise we had no layout test visual failures from the change.",
+      "range": {
+        "startLine": 46,
+        "startChar": 18,
+        "endLine": 46,
+        "endChar": 27
+      },
+      "revId": "92f45f36a25ec5130d2e13da7ce79df604c23468",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
