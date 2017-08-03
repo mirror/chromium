@@ -102,6 +102,7 @@ public class ServiceWorkerPaymentAppBridge implements PaymentAppFactory.PaymentA
     @CalledByNative
     private static void onPaymentAppCreated(long registrationId, String label,
             @Nullable String sublabel, @Nullable Bitmap icon, String[] methodNameArray,
+            boolean preferRelatedApplications, String[] relatedApplications,
             WebContents webContents, Object callback) {
         assert callback instanceof PaymentAppFactory.PaymentAppCreatedCallback;
         Context context = ChromeActivity.fromWebContents(webContents);
@@ -110,7 +111,7 @@ public class ServiceWorkerPaymentAppBridge implements PaymentAppFactory.PaymentA
                 .onPaymentAppCreated(new ServiceWorkerPaymentApp(webContents, registrationId, label,
                         sublabel,
                         icon == null ? null : new BitmapDrawable(context.getResources(), icon),
-                        methodNameArray));
+                        methodNameArray, preferRelatedApplications, relatedApplications));
     }
 
     @CalledByNative

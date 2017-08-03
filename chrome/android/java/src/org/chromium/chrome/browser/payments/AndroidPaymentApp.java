@@ -252,6 +252,16 @@ public class AndroidPaymentApp
     }
 
     @Override
+    public boolean preferRelatedApplications() {
+        return false;
+    }
+
+    @Override
+    public Set<String> getRelatedApplicationIds() {
+        return null;
+    }
+
+    @Override
     public String getAppIdentifier() {
         return getIdentifier();
     }

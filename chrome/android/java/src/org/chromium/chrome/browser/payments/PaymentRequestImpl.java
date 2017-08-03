@@ -712,6 +712,8 @@ public class PaymentRequestImpl implements PaymentRequest, PaymentRequestUI.Clie
 
         assert mPendingApps == null;
 
+        dedupePaymentApp();
+
         mPendingApps = new ArrayList<>(mApps);
         mPendingInstruments = new ArrayList<>();
 
@@ -741,6 +743,28 @@ public class PaymentRequestImpl implements PaymentRequest, PaymentRequestUI.Clie
             q.getKey().getInstruments(
                     q.getValue(), mTopLevelOrigin, mPaymentRequestOrigin, mCertificateChain, this);
         }
+    }
+
+    private void dedupePaymentApp() {
+        Set<String> appIdentifiers = new HashSet<>();
+        for (int i = 0; i < mApps.size(); i++) {
+            appIdentifiers.add(mApps.get(i).getAppIdentifier());
+        }
+
+        List<PaymentApp> appsToDedupe = new ArrayList<>();
+        for (int i = 0; i < mApps.size(); i++) {
+            if (mApps.get(i).preferRelatedApplications()) {
+                Set<String> relatedApplicationIds = mApps.get(i).getRelatedApplicationIds();
+                if (relatedApplicationIds == null || relatedApplicationIds.isEmpty()) continue;
+                for (String id : relatedApplicationIds) {
+                    if (appIdentifiers.contains(id)) {
+                        appsToDedupe.add(mApps.get(i));
+                    }
+                }
+            }
+        }
+
+        if (!appsToDedupe.isEmpty()) mApps.removeAll(appsToDedupe);
     }
 
     /** Filter out merchant method data that's not relevant to a payment app. Can return null. */

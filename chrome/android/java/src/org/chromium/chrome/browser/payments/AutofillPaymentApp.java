@@ -185,6 +185,16 @@ public class AutofillPaymentApp implements PaymentApp {
         return merchantSupportsAutofillPaymentInstruments(methodDataMap);
     }
 
+    @Override
+    public boolean preferRelatedApplications() {
+        return false;
+    }
+
+    @Override
+    public Set<String> getRelatedApplicationIds() {
+        return null;
+    }
+
     /** @return True if the merchant methodDataMap supports autofill payment instruments. */
     public static boolean merchantSupportsAutofillPaymentInstruments(
             Map<String, PaymentMethodData> methodDataMap) {

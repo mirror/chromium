@@ -36,25 +36,33 @@ public class ServiceWorkerPaymentApp extends PaymentInstrument implements Paymen
     private final Drawable mIcon;
     private final Set<String> mMethodNames;
     private final boolean mCanPreselect;
+    private final boolean mPreferRelatedApplications;
+    private final Set<String> mRelatedApplicationIds;
 
     /**
      * Build a service worker payment app instance per origin.
      *
      * @see https://w3c.github.io/webpayments-payment-handler/#structure-of-a-web-payment-app
      *
-     * @param webContents       The web contents where PaymentRequest was invoked.
-     * @param registrationId    The registration id of the corresponding service worker payment app.
-     * @param label             The label of the payment app.
-     * @param sublabel          The sublabel of the payment app.
-     * @param icon              The drawable icon of the payment app.
-     * @param methodNames       A set of payment method names supported by the payment app.
+     * @param webContents               The web contents where PaymentRequest was invoked.
+     * @param registrationId            The registration id of the corresponding service worker
+     *                                  payment app.
+     * @param label                     The label of the payment app.
+     * @param sublabel                  The sublabel of the payment app.
+     * @param icon                      The drawable icon of the payment app.
+     * @param methodNames               A set of payment method names supported by the payment app.
+     * @param preferRelatedApplications A flag to indicate whether this app prefers related
+     *                                  applications.
+     * @param relatedApplications       A set of related application Ids.
      */
     public ServiceWorkerPaymentApp(WebContents webContents, long registrationId, String label,
-            @Nullable String sublabel, @Nullable Drawable icon, String[] methodNames) {
+            @Nullable String sublabel, @Nullable Drawable icon, String[] methodNames,
+            boolean preferRelatedApplications, String[] relatedApplications) {
         super(label + sublabel, label, sublabel, icon);
         mWebContents = webContents;
         mRegistrationId = registrationId;
         mIcon = icon;
+        mPreferRelatedApplications = preferRelatedApplications;
 
         // Sublabel and/or icon are set to null if fetching or processing the corresponding web app
         // manifest failed. Then do not preselect this payment app.
@@ -63,6 +71,11 @@ public class ServiceWorkerPaymentApp extends PaymentInstrument implements Paymen
         mMethodNames = new HashSet<>();
         for (int i = 0; i < methodNames.length; i++) {
             mMethodNames.add(methodNames[i]);
+        }
+
+        mRelatedApplicationIds = new HashSet();
+        for (int i = 0; i < relatedApplications.length; i++) {
+            mRelatedApplicationIds.add(relatedApplications[i]);
         }
     }
 
@@ -90,6 +103,16 @@ public class ServiceWorkerPaymentApp extends PaymentInstrument implements Paymen
         Set<String> methodNames = new HashSet<>(methodsAndData.keySet());
         methodNames.retainAll(mMethodNames);
         return !methodNames.isEmpty();
+    }
+
+    @Override
+    public boolean preferRelatedApplications() {
+        return mPreferRelatedApplications;
+    }
+
+    @Override
+    public Set<String> getRelatedApplicationIds() {
+        return Collections.unmodifiableSet(mRelatedApplicationIds);
     }
 
     @Override

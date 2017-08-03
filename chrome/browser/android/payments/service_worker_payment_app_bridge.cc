@@ -40,6 +40,13 @@ void OnGotAllPaymentApps(const JavaRef<jobject>& jweb_contents,
   JNIEnv* env = AttachCurrentThread();
 
   for (const auto& app_info : apps) {
+    std::vector<std::string> related_application_ids;
+    for (const auto& related_application :
+         app_info.second->related_applications) {
+      if (related_application.platform == "play")
+        related_application_ids.emplace_back(related_application.id);
+    }
+
     Java_ServiceWorkerPaymentAppBridge_onPaymentAppCreated(
         env, app_info.second->registration_id,
         ConvertUTF8ToJavaString(env, app_info.second->name),
@@ -51,7 +58,9 @@ void OnGotAllPaymentApps(const JavaRef<jobject>& jweb_contents,
             ? nullptr
             : gfx::ConvertToJavaBitmap(app_info.second->icon.get()),
         ToJavaArrayOfStrings(env, app_info.second->enabled_methods),
-        jweb_contents, jcallback);
+        app_info.second->prefer_related_applications,
+        ToJavaArrayOfStrings(env, related_application_ids), jweb_contents,
+        jcallback);
   }
   Java_ServiceWorkerPaymentAppBridge_onAllPaymentAppsCreated(env, jcallback);
 }
