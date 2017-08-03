@@ -100,6 +100,23 @@
     },
     {
       "key": {
+        "uuid": "54f22923_0751a197",
+        "filename": "net/socket/ssl_client_socket_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-08-03T21:59:04Z",
+      "side": 1,
+      "message": "Oh, this also should be eagerly driving the full handshake to avoid a deadlock. Probably can get away with doing that separately, but add a TODO and bug for it that blocks the main bug so we do not forget.",
+      "revId": "f9944c6a32843471ebdd7505f565df20176539b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f3e26950_c820c429",
         "filename": "net/socket/ssl_client_socket_impl.cc",
         "patchSetId": 1
