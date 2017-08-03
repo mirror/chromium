@@ -130,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "06583971_8ec5cde1",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-08-03T09:31:42Z",
+      "side": 1,
+      "message": "I revert this one and return to it after a general discussion about all annotations in content that have Chrome dependent annotations.",
+      "parentUuid": "9c095bb4_ebe4847a",
+      "range": {
+        "startLine": 89,
+        "startChar": 8,
+        "endLine": 93,
+        "endChar": 9
+      },
+      "revId": "ea6fc4b0dbfdcdd1d416f4856949ce014eb59cd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "22937fc1_8d8fc887",
         "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
         "patchSetId": 2
@@ -213,6 +237,30 @@
       "side": 1,
       "message": "Ramin:  Correct.  Except for AW, where it does block all URLs.\n\nAlso, the behavior is implemented in chrome/, and this is a content/ file, so it should not be documented here.",
       "parentUuid": "aac196ac_839c01a8",
+      "range": {
+        "startLine": 160,
+        "startChar": 30,
+        "endLine": 160,
+        "endChar": 37
+      },
+      "revId": "ea6fc4b0dbfdcdd1d416f4856949ce014eb59cd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b259e2c_be7f366b",
+        "filename": "content/browser/loader/resource_dispatcher_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-08-03T09:31:42Z",
+      "side": 1,
+      "message": "I revert this one and return to it after a general discussion about all annotations in content that have Chrome dependent annotations.",
+      "parentUuid": "78096b14_9db262ee",
       "range": {
         "startLine": 160,
         "startChar": 30,
@@ -428,6 +476,30 @@
       "side": 1,
       "message": "You are right. From the 6 annotations in net/ this is the only one that requires Chrome specific description and it\u0027s best to keep annotation closer to implementation.",
       "parentUuid": "99697ed5_e4ce5099",
+      "range": {
+        "startLine": 179,
+        "startChar": 19,
+        "endLine": 179,
+        "endChar": 28
+      },
+      "revId": "ea6fc4b0dbfdcdd1d416f4856949ce014eb59cd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00fb81b4_420a3dbd",
+        "filename": "net/proxy/proxy_script_fetcher_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-08-03T09:31:42Z",
+      "side": 1,
+      "message": "I revert this one and create a separate CL for this case.",
+      "parentUuid": "432df84f_1f2d5981",
       "range": {
         "startLine": 179,
         "startChar": 19,
