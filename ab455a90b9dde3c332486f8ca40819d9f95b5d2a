@@ -71,6 +71,29 @@
     },
     {
       "key": {
+        "uuid": "95de5624_a2dd2271",
+        "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_browsertest_win.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1130491
+      },
+      "writtenOn": "2017-08-03T02:31:46Z",
+      "side": 1,
+      "message": "It\u0027d be good to check that ShowChromeCleanerPrompt() has not been called yet. I don\u0027t know if we can do such test in gmock, but we can try to check see what happens if we move the EXPECT_CALL  after the point it\u0027s actually needed. If we can\u0027t solve that using gmock only, then we could create our own fake subclass with a boolean flag that we set only when ShowChromeCleanerPrompt() is called (this way, we can simply check if the boolean is true or false).",
+      "range": {
+        "startLine": 82,
+        "startChar": 61,
+        "endLine": 82,
+        "endChar": 0
+      },
+      "revId": "ab455a90b9dde3c332486f8ca40819d9f95b5d2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "37620c87_a258679d",
         "filename": "chrome/browser/safe_browsing/chrome_cleaner/chrome_cleaner_dialog_controller_impl_win.h",
         "patchSetId": 7
