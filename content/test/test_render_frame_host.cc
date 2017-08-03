@@ -83,6 +83,13 @@ MockRenderProcessHost* TestRenderFrameHost::GetProcess() {
   return static_cast<MockRenderProcessHost*>(RenderFrameHostImpl::GetProcess());
 }
 
+service_manager::mojom::InterfaceProviderRequest
+TestRenderFrameHost::RouteThroughCapabilityFilter(
+    service_manager::mojom::InterfaceProviderRequest request) {
+  // Bypass filtering in unit tests where we usually have ServiceManager.
+  return request;
+}
+
 void TestRenderFrameHost::InitializeRenderFrameIfNeeded() {
   if (!render_view_host()->IsRenderViewLive()) {
     render_view_host()->GetProcess()->Init();
@@ -409,7 +416,8 @@ void TestRenderFrameHost::SendNavigateWithParameters(
 }
 
 void TestRenderFrameHost::SendNavigateWithParams(
-    FrameHostMsg_DidCommitProvisionalLoad_Params* params) {
+    FrameHostMsg_DidCommitProvisionalLoad_Params* params,
+    service_manager::mojom::InterfaceProviderRequest request) {
   if (navigation_handle()) {
     scoped_refptr<net::HttpResponseHeaders> response_headers =
         new net::HttpResponseHeaders(std::string());
@@ -417,8 +425,9 @@ void TestRenderFrameHost::SendNavigateWithParams(
         std::string("Content-Type: ") + contents_mime_type_);
     navigation_handle()->set_response_headers_for_testing(response_headers);
   }
-  FrameHostMsg_DidCommitProvisionalLoad msg(GetRoutingID(), *params);
-  OnDidCommitProvisionalLoad(msg);
+  DidCommitProvisionalLoad(
+      base::MakeUnique<FrameHostMsg_DidCommitProvisionalLoad_Params>(*params),
+      std::move(request));
   last_commit_was_error_page_ = params->url_is_unreachable;
 }
 
