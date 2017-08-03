@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c527bb58_a3ba0d2a",
+        "filename": "remoting/codec/DEPS",
+        "patchSetId": 19
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000608
+      },
+      "writtenOn": "2017-08-03T21:51:02Z",
+      "side": 1,
+      "message": "Could you limit this to \"+gpu/command_buffer/service/gpu_preferences.h\" for now? It doesn\u0027t looks like you really need the rest of the gpu/ code, and GpuPreferences can pretty much stand by itself.",
+      "revId": "b9203f987d576831d0dcb66884d46c0ed2fd57d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
