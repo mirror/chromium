@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c36487b5_a247c613",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 83698,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-03T18:35:41Z",
+      "side": 1,
+      "message": "Is this intentional?  In the original patch you sent me, you deleted the three histograms below this one but not this one.  Moreover, in the comment thread on this change, you wrote\n\u003e The counterpart in V8: https://chromium-review.googlesource.com/c/595588\nand that change only deletes the three histograms below, not this one.\n\nI\u0027m going to approve this, but please double-check whether you actually be marking this histogram as obsolete or whether this was a mistake.\n\nIn either case, please update the changelist description to point to the relevant v8 changelist(s) that deleted the histograms.",
+      "revId": "5ad940a337f227c42e3387eef462632f75cbc547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
