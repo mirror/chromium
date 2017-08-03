@@ -16,6 +16,24 @@
       "revId": "295025fe793967873757bd08611af1df445cf0f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "478de4bf_549e2ecc",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-08-03T09:44:53Z",
+      "side": 1,
+      "message": "We want to bail out if wrapper tracing is not in progress. This was previously implicitly checked by reading the mark bits of |src_object| as for disabled wrapper tracing all objects were unmarked.\n\nWith this line we now make the check of (a) (see the other comment) explicit.",
+      "parentUuid": "e69afe21_faab95ac",
+      "revId": "295025fe793967873757bd08611af1df445cf0f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

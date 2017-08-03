@@ -16,6 +16,24 @@
       "revId": "7f5284e388f4ef8349e9b5c0fe3b70a1d21b347d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4361fcd8_2aa25faa",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-08-03T09:44:53Z",
+      "side": 0,
+      "message": "This is the check we want to get rid of. We cannot access |src_object| because we wont find its header.\n\nThis check bails out in 2 cases:\n(a) Wrapper tracing is disabled as |src_object| will definitely be unmarked in this case.\n(b) The source is not yet marked, meaning that we will find it.\n\nThe conservative barrier will not be able to check (b). The check for (a) is done in the new version.\n\nAbout your concern: We wont add one object multiple times, as MarkAndPushToMarkingDeque below will only add |dst_object| if it is still unmarked.",
+      "parentUuid": "e37ee8f0_bb36058f",
+      "revId": "7f5284e388f4ef8349e9b5c0fe3b70a1d21b347d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
