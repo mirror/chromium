@@ -49,6 +49,9 @@ class CORE_EXPORT StyleImage : public GarbageCollectedFinalized<StyleImage> {
     return Data() == other.Data();
   }
 
+  static bool IsDisabled();
+  static void SetDisabled(bool disabled);
+
   virtual CSSValue* CssValue() const = 0;
   virtual CSSValue* ComputedCSSValue() const = 0;
 

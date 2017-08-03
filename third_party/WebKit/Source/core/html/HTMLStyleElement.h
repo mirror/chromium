@@ -43,6 +43,7 @@ class CORE_EXPORT HTMLStyleElement final : public HTMLElement,
 
   bool disabled() const;
   void setDisabled(bool);
+  void Poof();
 
   DECLARE_VIRTUAL_TRACE();
 

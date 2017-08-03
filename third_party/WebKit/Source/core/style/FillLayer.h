@@ -116,6 +116,9 @@ class CORE_EXPORT FillLayer {
   bool IsMaskSourceTypeSet() const { return mask_source_type_set_; }
 
   void SetImage(StyleImage* i) {
+    if (StyleImage::IsDisabled()) {
+      return;
+    }
     image_ = i;
     image_set_ = true;
   }

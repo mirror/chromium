@@ -2027,6 +2027,14 @@ void StyleResolver::UpdateMediaType() {
   }
 }
 
+static bool s_is_disabled = false;
+bool StyleResolver::IsDisabled() {
+  return s_is_disabled;
+}
+void StyleResolver::SetDisabled(bool disabled) {
+  s_is_disabled = disabled;
+}
+
 DEFINE_TRACE(StyleResolver) {
   visitor->Trace(matched_properties_cache_);
   visitor->Trace(selector_filter_);

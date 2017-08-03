@@ -55,11 +55,11 @@ class CORE_EXPORT StyleElement : public GarbageCollectedMixin {
   ProcessingResult FinishParsingChildren(Element&);
 
   Member<CSSStyleSheet> sheet_;
+  void ClearSheet(Element& owner_element);
 
  private:
   ProcessingResult CreateSheet(Element&, const String& text = String());
   ProcessingResult Process(Element&);
-  void ClearSheet(Element& owner_element);
 
   bool created_by_parser_ : 1;
   bool loading_ : 1;
