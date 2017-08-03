@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "8eeaeb08_676e5755",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1133074
+      },
+      "writtenOn": "2017-08-03T16:17:43Z",
+      "side": 1,
+      "message": "This feels like an assignment though (i.e. Implement a thing), especially since the bug is referenced which will have enough context to take action. \n\nThis is a nit for me, I wouldn\u0027t do it personally but won\u0027t object too strongly if it is left as-is.",
+      "parentUuid": "d7e4d19d_2ef6bb5c",
+      "range": {
+        "startLine": 28,
+        "startChar": 8,
+        "endLine": 28,
+        "endChar": 14
+      },
+      "revId": "5ce320729a318a6bcbc628917cd04141f2370a71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b76a293_4c09af12",
         "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
         "patchSetId": 14
