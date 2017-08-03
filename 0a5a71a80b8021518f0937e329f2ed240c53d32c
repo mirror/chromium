@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "66ee0de1_a46e8548",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-03T00:18:56Z",
+      "side": 1,
+      "message": "We want to also normalize by when the event was emitted. If we always emit to this metric, then in the dashboard we won\u0027t know if the metric represents an intermediate state or the final state of Tether that the user actually desired. \n\nI think it\u0027d be fine to only log at the beginning of a session, but I don\u0027t see that having any benefit over logging at the end.",
+      "parentUuid": "4e59745e_d18c2334",
+      "range": {
+        "startLine": 145,
+        "startChar": 0,
+        "endLine": 145,
+        "endChar": 37
+      },
+      "revId": "0a5a71a80b8021518f0937e329f2ed240c53d32c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "abbcbf75_cd95ffe1",
         "filename": "chrome/browser/chromeos/tether/tether_service.cc",
         "patchSetId": 3
@@ -228,6 +252,30 @@
       "side": 1,
       "message": "That doesn\u0027t fix the race condition.\n\nExample:\n(0) is_ble_advertising_supported_ starts as true.\n(1) TetherService starts up, and before the adapter is fetched, OnSyncFinished() is called.\n(2) UpdateTetherTechnologyState() is called, and Tether is ENABLED.\n(3) The adapter is fetched, and it actually doesn\u0027t support advertising.\n(4) UpdateTetherTechnologyState() is called, and Tether is UNAVAILABLE.",
       "parentUuid": "3619d4b4_fab17597",
+      "range": {
+        "startLine": 301,
+        "startChar": 0,
+        "endLine": 316,
+        "endChar": 1
+      },
+      "revId": "0a5a71a80b8021518f0937e329f2ed240c53d32c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ff1f2725_bb9b2778",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-03T00:18:56Z",
+      "side": 1,
+      "message": "Alright, actually fixed.",
+      "parentUuid": "f68f8e69_8c016b4c",
       "range": {
         "startLine": 301,
         "startChar": 0,
