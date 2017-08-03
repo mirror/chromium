@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "c0f660ed_06ed8756",
+        "filename": "extensions/common/file_util_unittest.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-08-03T16:26:30Z",
+      "side": 1,
+      "message": "No, file_util::ValidateExtension does not propogate the warnings to file_util::LoadExtension. Note here, https://chromium.googlesource.com/chromium/src/+/00d59f5db8d573a372605669ce6958ebced42db1/extensions/common/file_util.cc#224, even if ValidateExtension has warnings, LoadExtension doesn\u0027t do anything with them, and doesn\u0027t escalate them to the |error| variable since they aren\u0027t errors.\n\nTo check the warning values and isolate ValidateExtension, I separated these tests.",
+      "parentUuid": "493db1ad_51761ea3",
+      "revId": "8f453a03ba5ed746201fb1fe12c20e2ebc9b7c68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fe6b1951_0e9454e5",
         "filename": "extensions/common/file_util_unittest.cc",
         "patchSetId": 13
