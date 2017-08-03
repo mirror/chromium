@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e37ee8f0_bb36058f",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-03T09:39:10Z",
+      "side": 0,
+      "message": "If we remove this check, won\u0027t we end up with adding the same object to the marking deque a lot of times?\n\nI vaguely remember that you introduced this check to fix a performance issue caused by duplicated objects in the marking deque.",
+      "revId": "7f5284e388f4ef8349e9b5c0fe3b70a1d21b347d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
