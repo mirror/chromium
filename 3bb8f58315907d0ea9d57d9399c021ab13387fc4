@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d46e2c45_77a0ed0e",
+        "filename": "media/renderers/skcanvas_video_renderer.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-08-03T22:33:02Z",
+      "side": 1,
+      "message": "Should probably leave these as gfx::Size, since the origin is never used below.",
+      "range": {
+        "startLine": 98,
+        "startChar": 7,
+        "endLine": 98,
+        "endChar": 11
+      },
+      "revId": "3bb8f58315907d0ea9d57d9399c021ab13387fc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69abb3ab_39ec4391",
+        "filename": "media/renderers/skcanvas_video_renderer.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-08-03T22:33:02Z",
+      "side": 1,
+      "message": "Unnecessary parenthesis.",
+      "range": {
+        "startLine": 99,
+        "startChar": 24,
+        "endLine": 99,
+        "endChar": 45
+      },
+      "revId": "3bb8f58315907d0ea9d57d9399c021ab13387fc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69d98caf_8d3d2756",
+        "filename": "media/renderers/skcanvas_video_renderer.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-08-03T22:33:02Z",
+      "side": 1,
+      "message": "I still don\u0027t see why this should be the visible rect size; make_from_yuv_textures_copy has no knowledge of that aspect of the textures, and will almost certainly do the wrong thing if the origin is not (0, 0).",
+      "range": {
+        "startLine": 158,
+        "startChar": 53,
+        "endLine": 158,
+        "endChar": 61
+      },
+      "revId": "3bb8f58315907d0ea9d57d9399c021ab13387fc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
