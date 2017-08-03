@@ -83,6 +83,8 @@ class CORE_EXPORT OriginTrialContext final
   // enabled.
   void InitializePendingFeatures();
 
+  void AddFeature(const String& feature);
+
   DECLARE_VIRTUAL_TRACE();
 
  private:
