@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f982f86_28bfcf95",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 995,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-08-03T23:24:04Z",
+      "side": 1,
+      "message": "I\u0027m a little worried about all the places that call this using different conditions. In particular, should we be checking with ShouldHideMediaControls() here?\n\nThis probably means that it\u0027s time for a refactor, which I won\u0027t make you do. Just make sure the conditions to enable the timer are consistent for now.",
+      "range": {
+        "startLine": 995,
+        "startChar": 2,
+        "endLine": 995,
+        "endChar": 29
+      },
+      "revId": "9331f3231a69a0c33b13be880a2bf140b11a08b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
