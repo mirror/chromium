@@ -289,7 +289,7 @@ suite('SiteDetails', function() {
             source: settings.SiteSettingSource.DEFAULT,
           };
           browserProxy.resetResolver('getOriginPermissions');
-          browserProxy.setSinglePref(
+          browserProxy.setSingleException(
               settings.ContentSettingsTypes.NOTIFICATIONS, newException);
           return browserProxy.whenCalled('getOriginPermissions');
         })
