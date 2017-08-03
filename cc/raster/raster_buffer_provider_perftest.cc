@@ -484,14 +484,14 @@ class RasterBufferProviderPerfTest
 
  private:
   void Create3dResourceProvider() {
-    resource_provider_ =
-        FakeResourceProvider::Create(compositor_context_provider_.get(),
-                                     nullptr, &gpu_memory_buffer_manager_);
+    resource_provider_ = FakeLayerTreeResourceProvider::Create(
+        compositor_context_provider_.get(), nullptr,
+        &gpu_memory_buffer_manager_);
   }
 
   void CreateSoftwareResourceProvider() {
-    resource_provider_ =
-        FakeResourceProvider::Create(nullptr, &shared_bitmap_manager_, nullptr);
+    resource_provider_ = FakeLayerTreeResourceProvider::Create(
+        nullptr, &shared_bitmap_manager_, nullptr);
   }
 
   std::string TestModifierString() const {
@@ -555,7 +555,7 @@ class RasterBufferProviderCommonPerfTest
  public:
   // Overridden from testing::Test:
   void SetUp() override {
-    resource_provider_ = FakeResourceProvider::Create(
+    resource_provider_ = FakeLayerTreeResourceProvider::Create(
         compositor_context_provider_.get(), nullptr);
   }
 
