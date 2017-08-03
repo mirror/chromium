@@ -22,6 +22,30 @@
       "revId": "078c590a4e403f8d0fa6fb2632b129e65e189ad0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4283bdc4_6776d746",
+        "filename": "components/ntp_snippets/content_suggestions_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1210565
+      },
+      "writtenOn": "2017-08-03T14:22:09Z",
+      "side": 1,
+      "message": "This is also my understanding. You can no longer control that a OnceCallback is called only once after it is passed to an \"old\" callback.",
+      "parentUuid": "e70b9e00_e34d34d9",
+      "range": {
+        "startLine": 218,
+        "startChar": 74,
+        "endLine": 218,
+        "endChar": 0
+      },
+      "revId": "078c590a4e403f8d0fa6fb2632b129e65e189ad0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
