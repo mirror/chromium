@@ -9,6 +9,7 @@
 #include <memory>
 #include <string>
 
+#include "ash/wm/lock_state_observer.h"
 #include "base/compiler_specific.h"
 #include "base/gtest_prod_util.h"
 #include "base/macros.h"
@@ -55,7 +56,8 @@ class WizardController : public BaseScreenDelegate,
                          public ControllerPairingScreen::Delegate,
                          public HostPairingScreen::Delegate,
                          public NetworkScreen::Delegate,
-                         public HIDDetectionScreen::Delegate {
+                         public HIDDetectionScreen::Delegate,
+                         public ash::LockStateObserver {
  public:
   WizardController(LoginDisplayHost* host, OobeUI* oobe_ui);
   ~WizardController() override;
@@ -128,6 +130,9 @@ class WizardController : public BaseScreenDelegate,
   // Allocate a given BaseScreen for the given |Screen|. Used by
   // |screen_manager_|.
   BaseScreen* CreateScreen(OobeScreen screen);
+
+  // Override from LockStateObserver:
+  void OnLockStateEvent(LockStateObserver::EventType event) override;
 
  private:
   // Show specific screen.

@@ -51,6 +51,9 @@ class WaitForContainerReadyScreenHandler
   // Whether the screen should be shown right after initialization.
   bool show_on_init_ = false;
 
+  // Whether the screen have already been shown.
+  bool shown_ = false;
+
   // Whether app list is ready.
   bool is_app_list_ready_ = false;
 

@@ -10,6 +10,12 @@ login.createScreen(
     'VoiceInteractionValuePropScreen', 'voice-interaction-value-prop',
     function() {
       return {
+        EXTERNAL_API: ['setScreenHidden'],
+
+        /** Hide/Show voice interaction value prop screen **/
+        setScreenHidden: function(hidden) {
+          $('voice-interaction-value-prop-md').hidden = hidden;
+        },
 
         /** @Override */
         onBeforeShow: function(data) {
