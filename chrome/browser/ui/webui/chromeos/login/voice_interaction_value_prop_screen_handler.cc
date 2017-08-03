@@ -65,11 +65,18 @@ void VoiceInteractionValuePropScreenHandler::Show() {
     show_on_init_ = true;
     return;
   }
+  if (shown_) {
+    CallJS("setScreenHidden", false);
+    return;
+  }
 
+  shown_ = true;
   ShowScreen(kScreenId);
 }
 
-void VoiceInteractionValuePropScreenHandler::Hide() {}
+void VoiceInteractionValuePropScreenHandler::Hide() {
+  CallJS("setScreenHidden", true);
+}
 
 void VoiceInteractionValuePropScreenHandler::Initialize() {
   if (!screen_ || !show_on_init_)

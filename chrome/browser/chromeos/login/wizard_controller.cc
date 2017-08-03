@@ -12,6 +12,9 @@
 #include <utility>
 #include <vector>
 
+#include "ash/public/cpp/shell_window_ids.h"
+#include "ash/shell.h"
+#include "ash/shell_port.h"
 #include "base/bind.h"
 #include "base/callback_helpers.h"
 #include "base/command_line.h"
@@ -101,6 +104,7 @@
 #include "components/user_manager/user_manager.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/notification_types.h"
+#include "ui/aura/window.h"
 #include "ui/base/accelerators/accelerator.h"
 
 using content::BrowserThread;
@@ -258,6 +262,7 @@ WizardController::WizardController(LoginDisplayHost* host, OobeUI* oobe_ui)
   DCHECK(default_controller_ == nullptr);
   default_controller_ = this;
   screen_manager_ = base::MakeUnique<ScreenManager>(this);
+  ash::ShellPort::Get()->AddLockStateObserver(this);
   // In session OOBE was initiated from voice interaction keyboard shortcuts.
   is_in_session_oobe_ =
       session_manager::SessionManager::Get()->IsSessionStarted();
@@ -276,6 +281,7 @@ WizardController::~WizardController() {
   screen_manager_.reset();
   // |remora_controller| has to be reset after |screen_manager_| is reset.
   remora_controller_.reset();
+  ash::ShellPort::Get()->RemoveLockStateObserver(this);
   if (shark_connection_listener_.get()) {
     base::ThreadTaskRunnerHandle::Get()->DeleteSoon(
         FROM_HERE, shark_connection_listener_.release());
@@ -443,6 +449,24 @@ BaseScreen* WizardController::CreateScreen(OobeScreen screen) {
   }
 
   return nullptr;
+}
+
+void WizardController::OnLockStateEvent(
+    ash::LockStateObserver::EventType event) {
+  if (event == EVENT_PRELOCK_ANIMATION_STARTED ||
+      event == EVENT_LOCK_ANIMATION_STARTED) {
+    if (current_screen_)
+      current_screen_->Hide();
+  }
+  if (event == EVENT_PRELOCK_ANIMATION_CANCELLED ||
+      event == EVENT_UNLOCK_ANIMATION_FINISHED) {
+    if (current_screen_)
+      current_screen_->Show();
+    aura::Window* lock_container = ash::Shell::GetContainer(
+        ash::Shell::GetPrimaryRootWindow(),
+        ash::kShellWindowId_LockScreenContainersContainer);
+    lock_container->layer()->SetOpacity(1.0);
+  }
 }
 
 void WizardController::ShowNetworkScreen() {
