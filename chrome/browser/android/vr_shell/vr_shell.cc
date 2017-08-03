@@ -415,10 +415,6 @@ void VrShell::OnTabRemoved(JNIEnv* env,
   ui_->RemoveTab(incognito, id);
 }
 
-void VrShell::SetWebVRSecureOrigin(bool secure_origin) {
-  ui_->SetWebVrSecureOrigin(secure_origin);
-}
-
 void VrShell::CreateVRDisplayInfo(
     const base::Callback<void(device::mojom::VRDisplayInfoPtr)>& callback,
     uint32_t device_id) {

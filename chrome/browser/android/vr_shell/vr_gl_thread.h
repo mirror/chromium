@@ -78,7 +78,6 @@ class VrGLThread : public base::Thread,
   void SetLoading(bool loading) override;
   void SetToolbarState(const vr::ToolbarState& state) override;
   void SetWebVrMode(bool enabled, bool show_toast) override;
-  void SetWebVrSecureOrigin(bool secure) override;
   void SetVideoCapturingIndicator(bool enabled) override;
   void SetScreenCapturingIndicator(bool enabled) override;
   void SetAudioCapturingIndicator(bool enabled) override;

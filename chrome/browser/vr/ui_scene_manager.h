@@ -44,7 +44,6 @@ class UiSceneManager {
   void SetFullscreen(bool fullscreen);
   void SetIncognito(bool incognito);
   void SetToolbarState(const ToolbarState& state);
-  void SetWebVrSecureOrigin(bool secure);
   void SetWebVrMode(bool web_vr, bool show_toast);
   void SetLoading(bool loading);
   void SetLoadProgress(float progress);
@@ -93,6 +92,7 @@ class UiSceneManager {
   void OnExitPromptBackplaneClicked();
   void OnCloseButtonClicked();
   void OnUnsupportedMode(UiUnsupportedMode mode);
+  void SetWebVrSecureOrigin(bool secure);
   int AllocateId();
   ColorScheme::Mode mode() const;
   const ColorScheme& color_scheme() const;

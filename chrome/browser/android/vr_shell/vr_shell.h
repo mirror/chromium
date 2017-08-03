@@ -207,7 +207,6 @@ class VrShell : public device::GvrDelegate,
   void SetUiState();
 
   // device::GvrDelegate implementation.
-  void SetWebVRSecureOrigin(bool secure_origin) override;
   void UpdateVSyncInterval(base::TimeTicks vsync_timebase,
                            base::TimeDelta vsync_interval) override;
   void CreateVRDisplayInfo(

@@ -46,7 +46,6 @@ class DEVICE_VR_EXPORT GvrDelegate {
                                                      gfx::Size recommended_size,
                                                      uint32_t device_id);
 
-  virtual void SetWebVRSecureOrigin(bool secure_origin) = 0;
   virtual void UpdateVSyncInterval(base::TimeTicks vsync_timebase,
                                    base::TimeDelta vsync_interval) = 0;
   virtual void CreateVRDisplayInfo(
