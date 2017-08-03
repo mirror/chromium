@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "01bcf634_184a3c3a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/ContentSuggestionsNotificationHelper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-08-03T20:12:21Z",
+      "side": 1,
+      "message": "Ah yes, if you just want to be able to change the name then versioning it with ints like in PS4 should work fine. Sorry for any confusion. \n\n..But if you decide you don\u0027t need to be able to rename the channel then I agree storing a bool like you have in PS6 is sensible, (rather than recreating them every time, at least while we are using reflection, since it is slow).",
+      "parentUuid": "47e498e1_e0098c82",
+      "revId": "e1018362c2cca1369b693c2752011427ed07dd4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34ae907e_a2b323f6",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/ContentSuggestionsNotificationHelper.java",
         "patchSetId": 4
