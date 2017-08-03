@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "5f67ca62_f6153ef1",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-08-03T00:55:57Z",
+      "side": 1,
+      "message": "Holding for now until Tommy\u0027s input",
+      "parentUuid": "039d3954_4d8f7cd9",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 34
+      },
+      "revId": "b138e0beb6be54ce328b05019192a43bef0e1b53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "87d9412a_74a6fd4c",
         "filename": "chrome/browser/feature_engagement/feature_tracker.h",
         "patchSetId": 6
@@ -329,6 +353,30 @@
       "revId": "b138e0beb6be54ce328b05019192a43bef0e1b53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c591b7ac_ab819faa",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-08-03T00:55:57Z",
+      "side": 1,
+      "message": "I agree. Done.",
+      "parentUuid": "4fb3d152_5156f1c2",
+      "range": {
+        "startLine": 18,
+        "startChar": 0,
+        "endLine": 19,
+        "endChar": 8
+      },
+      "revId": "b138e0beb6be54ce328b05019192a43bef0e1b53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
