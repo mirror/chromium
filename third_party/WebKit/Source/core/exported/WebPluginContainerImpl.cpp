@@ -835,15 +835,33 @@ void WebPluginContainerImpl::HandleKeyboardEvent(KeyboardEvent* event) {
       web_event.GetType() == WebInputEvent::kKeyDown) {
     if ((web_event.GetModifiers() & WebInputEvent::kInputModifiers) ==
             kEditingModifier &&
-        (web_event.windows_key_code == VKEY_C ||
-         web_event.windows_key_code == VKEY_INSERT)
-        // Only copy if there's a selection, so that we only ever do this
-        // for Pepper plugins that support copying.  Windowless NPAPI
-        // plugins will get the event as before.
-        && web_plugin_->HasSelection()) {
-      Copy();
-      event->SetDefaultHandled();
-      return;
+        // Only copy/cut if there's a selection, so that we only ever do
+        // this for Pepper plugins that support copying/cutting.
+        // Windowless NPAPI plugins will get the event as before.
+        web_plugin_->HasSelection()) {
+      if (web_event.windows_key_code == VKEY_C ||
+          web_event.windows_key_code == VKEY_INSERT) {
+        Copy();
+        event->SetDefaultHandled();
+        return;
+      }
+
+      // Ask the plugin if it can cut text before calling Cut().
+      if (web_event.windows_key_code == VKEY_X) {
+        if (ExecuteEditCommand("Cut", "")) {
+          event->SetDefaultHandled();
+          return;
+        }
+      }
+    }
+    // Alternate shortcut for Cut() is Shift + Delete.
+    if ((web_event.GetModifiers() & WebInputEvent::kInputModifiers) ==
+            WebInputEvent::kShiftKey &&
+        web_event.windows_key_code == VKEY_DELETE) {
+      if (ExecuteEditCommand("Cut", "")) {
+        event->SetDefaultHandled();
+        return;
+      }
     }
   }
 
