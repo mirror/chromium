@@ -31,6 +31,7 @@ source_set("payments") {
   deps = [
     "//base",
     "//components/autofill/core/browser",
+    "//components/image_fetcher/core",
     "//components/image_fetcher/ios",
     "//components/keyed_service/ios",
     "//components/payments/core",
@@ -75,6 +76,7 @@ source_set("unit_tests") {
     "//net:test_support",
     "//testing/gmock",
     "//testing/gtest",
+    "//url",
   ]
 }
 
