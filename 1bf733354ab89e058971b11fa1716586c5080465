@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "2512dfc6_44189b95",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-03T08:55:26Z",
+      "side": 1,
+      "message": "It seems cleaner to me: As it is, there are two parameters which are effectively for tests only; they\u0027ll always be null in real usage. That\u0027s effectively a \"SetThingForTesting\", which I consider an antipattern.",
+      "parentUuid": "222959cb_fd022aa7",
+      "revId": "1bf733354ab89e058971b11fa1716586c5080465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "39ad5155_6390023f",
         "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
         "patchSetId": 15
@@ -104,6 +122,24 @@
       "revId": "1bf733354ab89e058971b11fa1716586c5080465",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "547b41e3_ce7e82ba",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-03T08:55:26Z",
+      "side": 1,
+      "message": "1) Ack.\n2) We *could* choose a different delay if the last check failed, say, 1 hour. I\u0027m not sure it\u0027s worth the effort though.\n3) This I don\u0027t buy. If it\u0027s worth doing, it\u0027s worth doing properly :)\n4) That seems like a good idea. Doesn\u0027t have to be in this CL of course.\n\nMaybe add a comment explicitly stating that this is on purpose? Otherwise the next reader of the code might wonder, like I did.",
+      "parentUuid": "b7dd2d8c_1fc71e35",
+      "revId": "1bf733354ab89e058971b11fa1716586c5080465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -192,6 +228,24 @@
       "revId": "1bf733354ab89e058971b11fa1716586c5080465",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "31749661_02adbe3f",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-03T08:55:26Z",
+      "side": 1,
+      "message": "...wait, it does this for literally all methods, right? In that case, should it just be a StrictMock?",
+      "parentUuid": "638b8d5f_71acc0e4",
+      "revId": "1bf733354ab89e058971b11fa1716586c5080465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -312,6 +366,24 @@
     },
     {
       "key": {
+        "uuid": "109423f2_d7e27628",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-03T08:55:26Z",
+      "side": 1,
+      "message": "Ah, I didn\u0027t get that from the comment. Let me try to reformulate to make it clearer:\n\nCheck that the handler validates the token through GetToken. ValidateToken always returns true on Android, so it\u0027s not useful. Instead, the handler must check that the result from GetToken is unchanged.\n\nDoes that make sense?\nAlso, I might argue that it\u0027s not really relevant whether ValidateToken gets called or not, and the test would fail anyway even without the explicit EXPECT_CALL().Times(0) since it\u0027s a StrictMock. But I don\u0027t really mind either way.",
+      "parentUuid": "94038675_128d7b0a",
+      "revId": "1bf733354ab89e058971b11fa1716586c5080465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "498f0fe5_481fa89e",
         "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler_unittest.cc",
         "patchSetId": 15
@@ -341,6 +413,24 @@
       "side": 1,
       "message": "In line 339 we forwarded by (1 hour - 1 second).",
       "parentUuid": "498f0fe5_481fa89e",
+      "revId": "1bf733354ab89e058971b11fa1716586c5080465",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c0e05970_133ce1eb",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler_unittest.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-03T08:55:26Z",
+      "side": 1,
+      "message": "Ah, I missed the \"time_to_validation -\" part, sorry.",
+      "parentUuid": "69cec3cf_1994b14f",
       "revId": "1bf733354ab89e058971b11fa1716586c5080465",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
