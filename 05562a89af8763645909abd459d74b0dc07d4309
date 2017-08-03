@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "adf483b3_260b5c54",
+        "filename": "components/printing/renderer/print_render_frame_helper.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 842,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-03T11:13:09Z",
+      "side": 1,
+      "message": "I reverted to doing it here rather than in BindToFrame: FrameReference depends on the WebView being set already... but this is a fundamental initialization order problem in Blink right now.\n\nI think we\u0027ll likely be able to fix it eventually, but will take some time.\n\n(I\u0027ve added a TODO to note this as well)",
+      "range": {
+        "startLine": 842,
+        "startChar": 2,
+        "endLine": 842,
+        "endChar": 27
+      },
+      "revId": "05562a89af8763645909abd459d74b0dc07d4309",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
