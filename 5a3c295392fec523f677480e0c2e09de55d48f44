@@ -66,6 +66,23 @@
     },
     {
       "key": {
+        "uuid": "82efa5d4_9fa91f73",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-08-03T20:52:05Z",
+      "side": 1,
+      "message": "annotate containers plz",
+      "revId": "5a3c295392fec523f677480e0c2e09de55d48f44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c347b475_a244acb1",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
         "patchSetId": 4
@@ -113,6 +130,40 @@
     },
     {
       "key": {
+        "uuid": "fe220ebb_c1eb1a8f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-08-03T20:52:05Z",
+      "side": 1,
+      "message": ".clear()",
+      "revId": "5a3c295392fec523f677480e0c2e09de55d48f44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fee83e1_23fa0945",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleSidebar.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-08-03T20:52:05Z",
+      "side": 1,
+      "message": "/** @enum {symbol} */",
+      "revId": "5a3c295392fec523f677480e0c2e09de55d48f44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7ed31b1b_8d347022",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
         "patchSetId": 4
@@ -154,6 +205,57 @@
         "endLine": 58,
         "endChar": 16
       },
+      "revId": "5a3c295392fec523f677480e0c2e09de55d48f44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b88b4ff1_ec5456ae",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 1076,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-08-03T20:52:05Z",
+      "side": 1,
+      "message": "early return plz",
+      "revId": "5a3c295392fec523f677480e0c2e09de55d48f44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8421152a_b44bbf53",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/consoleSidebar.css",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-08-03T20:52:05Z",
+      "side": 1,
+      "message": "We use 4 space padding in CSS.",
+      "revId": "5a3c295392fec523f677480e0c2e09de55d48f44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4e41bb5_6f87bfe3",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console_model/ConsoleModel.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-08-03T20:52:05Z",
+      "side": 1,
+      "message": "this.context \u003d context.match(/[^#]*/)[0];",
       "revId": "5a3c295392fec523f677480e0c2e09de55d48f44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
