@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "108d7a33_1b5b34b1",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorPageAgent.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-03T23:33:10Z",
+      "side": 1,
+      "message": "Please turn this into function in anonymous namespace in this file, and do not expose it through InspectorPageAgent at all. Nobody else should rely on it anymore, otherwise they might fail due to assumption that InspectorResourceContentLoader handles all resource. By making it private to this file, we can avoid any new dependencies on it.",
+      "range": {
+        "startLine": 325,
+        "startChar": 30,
+        "endLine": 325,
+        "endChar": 44
+      },
+      "revId": "1d904a8aaf58bcd1b32dfc32e7ba60934dd71cfb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
