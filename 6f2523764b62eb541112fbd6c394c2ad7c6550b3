@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c09ba8fd_6b2b7919",
+        "filename": "third_party/WebKit/Source/core/html/HTMLEmbedElement.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-08-03T15:15:56Z",
+      "side": 0,
+      "message": "Removing this since it can get called in stylerecalc when you may not have a layoutobject.",
+      "revId": "6f2523764b62eb541112fbd6c394c2ad7c6550b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
