@@ -52,6 +52,7 @@
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
+#include "core/html/HTMLFrameOwnerElement.h"
 #include "core/layout/FragmentainerIterator.h"
 #include "core/layout/HitTestRequest.h"
 #include "core/layout/HitTestResult.h"
@@ -1013,7 +1014,7 @@ PaintLayer* PaintLayer::EnclosingLayerWithCompositedLayerMapping(
 // Return the enclosingCompositedLayerForPaintInvalidation for the given Layer
 // including crossing frame boundaries.
 PaintLayer*
-PaintLayer::EnclosingLayerForPaintInvalidationCrossingFrameBoundaries() const {
+PaintLayer::EnclosingLayerForPaintInvalidationCrossingFrameBoundaries(bool flag) const {
   const PaintLayer* layer = this;
   PaintLayer* composited_layer = 0;
   while (!composited_layer) {
@@ -1021,11 +1022,19 @@ PaintLayer::EnclosingLayerForPaintInvalidationCrossingFrameBoundaries() const {
     if (!composited_layer) {
       CHECK(layer->GetLayoutObject().GetFrame());
       LayoutItem owner = layer->GetLayoutObject().GetFrame()->OwnerLayoutItem();
-      if (owner.IsNull())
+      if (owner.IsNull()) {
+        Frame* frame = layer->GetLayoutObject().GetFrame();
+        if (flag && !(frame->DeprecatedLocalOwner()))
+            LOG(ERROR) << "check point 0000000000000000000000000000000";
+        if (flag && !(frame->DeprecatedLocalOwner()->GetLayoutObject()))
+            LOG(ERROR) << "check point 1111111111111111111111111111111";
         break;
+      }
       layer = owner.EnclosingLayer();
     }
   }
+  if (flag && !composited_layer)
+      LOG(ERROR) << "check point 2222222222222222222222222222222222222";
   return composited_layer;
 }
 
