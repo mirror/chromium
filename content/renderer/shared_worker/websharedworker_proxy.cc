@@ -7,7 +7,6 @@
 #include <stddef.h>
 
 #include "content/child/child_thread_impl.h"
-#include "content/child/webmessageportchannel_impl.h"
 #include "content/common/view_messages.h"
 #include "ipc/message_router.h"
 
@@ -16,7 +15,7 @@ namespace content {
 WebSharedWorkerProxy::WebSharedWorkerProxy(
     std::unique_ptr<blink::WebSharedWorkerConnectListener> listener,
     ViewHostMsg_CreateWorker_Params params,
-    std::unique_ptr<blink::WebMessagePortChannel> channel)
+    blink_common::MessagePort channel)
     : route_id_(MSG_ROUTING_NONE),
       router_(ChildThreadImpl::current()->GetRouter()),
       listener_(std::move(listener)) {
@@ -28,9 +27,8 @@ WebSharedWorkerProxy::~WebSharedWorkerProxy() {
   router_->RemoveRoute(route_id_);
 }
 
-void WebSharedWorkerProxy::connect(
-    ViewHostMsg_CreateWorker_Params params,
-    std::unique_ptr<blink::WebMessagePortChannel> channel) {
+void WebSharedWorkerProxy::connect(ViewHostMsg_CreateWorker_Params params,
+                                   blink_common::MessagePort channel) {
   // Send synchronous IPC to get |route_id|.
   // TODO(nhiroki): Stop using synchronous IPC (https://crbug.com/679654).
   ViewHostMsg_CreateWorker_Reply reply;
@@ -39,8 +37,7 @@ void WebSharedWorkerProxy::connect(
   router_->AddRoute(route_id_, this);
   listener_->WorkerCreated(reply.error);
 
-  message_port_ = static_cast<WebMessagePortChannelImpl*>(channel.get())
-                      ->ReleaseMessagePort();
+  message_port_ = std::move(channel);
 
   // An actual connection request will be issued on OnWorkerCreated().
 }
