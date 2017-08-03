@@ -538,6 +538,8 @@ class CORE_EXPORT HTMLMediaElement
 
   EnumerationHistogram& ShowControlsHistogram() const;
 
+  virtual void MediaRemotingStopped() {}
+
   TaskRunnerTimer<HTMLMediaElement> load_timer_;
   TaskRunnerTimer<HTMLMediaElement> progress_event_timer_;
   TaskRunnerTimer<HTMLMediaElement> playback_progress_timer_;
