@@ -52,6 +52,10 @@ CSSRule* StyleRuleBase::CreateCSSOMWrapper(CSSRule* parent_rule) const {
   return CreateCSSOMWrapper(0, parent_rule);
 }
 
+StyleRuleBase::~StyleRuleBase() {
+  FinalizeGarbageCollectedObject();
+}
+
 DEFINE_TRACE(StyleRuleBase) {
   switch (GetType()) {
     case kCharset:

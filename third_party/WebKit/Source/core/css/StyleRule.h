@@ -75,11 +75,12 @@ class CORE_EXPORT StyleRuleBase
   DEFINE_INLINE_TRACE_AFTER_DISPATCH() {}
   void FinalizeGarbageCollectedObject();
 
-  // ~StyleRuleBase should be public, because non-public ~StyleRuleBase
-  // causes C2248 error : 'blink::StyleRuleBase::~StyleRuleBase' : cannot
-  // access protected member declared in class 'blink::StyleRuleBase' when
-  // compiling 'source\wtf\refcounted.h' by using msvc.
-  ~StyleRuleBase() {}
+  // ~StyleRuleBase should be public because some container like HeapVector
+  // are calling directly the destructor. This destructor is not virtual to
+  // avoid generating a VTable, but it's implementation is calling the
+  // appropriate destructor by calling the dispatch function
+  // |FinalizeGarbageCollectedObject|.
+  ~StyleRuleBase();
 
  protected:
   StyleRuleBase(RuleType type) : type_(type) {}
