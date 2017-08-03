@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "71aa79ac_4db26207",
+        "filename": "chromeos/components/tether/host_scan_scheduler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-08-03T17:59:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08e2357c_f0886299",
+      "range": {
+        "startLine": 32,
+        "startChar": 7,
+        "endLine": 32,
+        "endChar": 19
+      },
+      "revId": "d52547a335f3c21870046eaa02570b0dc834e223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a952f48_cc3b8f4f",
         "filename": "chromeos/components/tether/host_scan_scheduler_unittest.cc",
         "patchSetId": 6
@@ -68,6 +92,30 @@
       "revId": "d52547a335f3c21870046eaa02570b0dc834e223",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38bbbed0_028837bd",
+        "filename": "chromeos/components/tether/host_scan_scheduler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-08-03T17:59:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a952f48_cc3b8f4f",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 46
+      },
+      "revId": "d52547a335f3c21870046eaa02570b0dc834e223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "83588c4d_8c7f329c",
+        "filename": "chromeos/components/tether/host_scan_scheduler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-08-03T17:59:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f52cb9e7_593a5707",
+      "range": {
+        "startLine": 188,
+        "startChar": 0,
+        "endLine": 188,
+        "endChar": 32
+      },
+      "revId": "d52547a335f3c21870046eaa02570b0dc834e223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eae2aa66_07f3fa93",
         "filename": "chromeos/components/tether/host_scan_scheduler_unittest.cc",
         "patchSetId": 6
@@ -117,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "0da78fbc_cf34805e",
+        "filename": "chromeos/components/tether/host_scan_scheduler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-08-03T17:59:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eae2aa66_07f3fa93",
+      "range": {
+        "startLine": 207,
+        "startChar": 0,
+        "endLine": 207,
+        "endChar": 39
+      },
+      "revId": "d52547a335f3c21870046eaa02570b0dc834e223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d6b409c_74469658",
         "filename": "chromeos/components/tether/host_scan_scheduler_unittest.cc",
         "patchSetId": 6
@@ -128,6 +224,30 @@
       "writtenOn": "2017-08-03T01:37:38Z",
       "side": 1,
       "message": "Hmm, this should automatically happen when setting the Ethernet network to connecting/connected. Is that not working?",
+      "range": {
+        "startLine": 208,
+        "startChar": 0,
+        "endLine": 208,
+        "endChar": 44
+      },
+      "revId": "d52547a335f3c21870046eaa02570b0dc834e223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7780d92b_b179b06e",
+        "filename": "chromeos/components/tether/host_scan_scheduler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1213234
+      },
+      "writtenOn": "2017-08-03T17:59:53Z",
+      "side": 1,
+      "message": "No, it isn\u0027t working without this line.",
+      "parentUuid": "6d6b409c_74469658",
       "range": {
         "startLine": 208,
         "startChar": 0,
