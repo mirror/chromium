@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7224744e_4bf60f6d",
+        "filename": "base/synchronization/waitable_event_mac.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-08-03T15:51:26Z",
+      "side": 1,
+      "message": "You don’t need use_slow_path. watch_list.get() implies it. If you want to check use_slow_path to be certain, it’d be better as a DCHECK on the next line.",
+      "range": {
+        "startLine": 70,
+        "startChar": 6,
+        "endLine": 70,
+        "endChar": 39
+      },
+      "revId": "ded07c9729c396c2c013d6f138144e63b9a689ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6c1bafa_f09f102f",
+        "filename": "base/synchronization/waitable_event_watcher_mac.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-08-03T15:51:26Z",
+      "side": 1,
+      "message": "What if the event becomes signaled right here, after your IsSignaled() check but before you push_back()?\n\nYou might need to take watch_list_lock_ here before the IsSignaled() check, and hold it in WaitableEvent::Signal() through the mach_msg() send.",
+      "revId": "ded07c9729c396c2c013d6f138144e63b9a689ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

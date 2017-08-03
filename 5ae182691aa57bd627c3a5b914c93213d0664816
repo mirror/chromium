@@ -46,6 +46,30 @@
       "revId": "5ae182691aa57bd627c3a5b914c93213d0664816",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4748fcaa_4019b979",
+        "filename": "base/synchronization/waitable_event_mac.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1174099
+      },
+      "writtenOn": "2017-08-03T15:51:26Z",
+      "side": 1,
+      "message": "\u003e MACH_RCV_TRAILER_NULL is default and would fill out the mach_msg_trailer_t with length of zero. I think this is pretty standard, since typical mach_msg calls don\u0027t utilize the trailer but space for it is still required in the rcv_limit.\n\nTrue, OK.",
+      "parentUuid": "24b27326_8196e5c6",
+      "range": {
+        "startLine": 137,
+        "startChar": 16,
+        "endLine": 137,
+        "endChar": 34
+      },
+      "revId": "5ae182691aa57bd627c3a5b914c93213d0664816",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
