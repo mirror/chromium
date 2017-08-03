@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9e4c44d1_8262a96c",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/output.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-08-03T19:19:04Z",
+      "side": 1,
+      "message": "Definitely. I think this could also help clean things up and with the use of tag template functions. The only trick is to see if our current linter understands the new syntax (I tried a while ago to use arrow functions and couldn\u0027t due to linter or closure compiler issues).",
+      "parentUuid": "a6da983e_efb14be2",
+      "revId": "fbd3d12f733366d87725c2b0ce8a0523161c9ad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "64a481a7_2f36160b",
         "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/output.js",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "fbd3d12f733366d87725c2b0ce8a0523161c9ad2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0204810_e6fbc700",
+        "filename": "chrome/browser/resources/chromeos/chromevox/cvox2/background/output.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 921,
+      "author": {
+        "id": 1001986
+      },
+      "writtenOn": "2017-08-03T19:19:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64a481a7_2f36160b",
+      "revId": "fbd3d12f733366d87725c2b0ce8a0523161c9ad2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
