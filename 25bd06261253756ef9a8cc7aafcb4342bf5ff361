@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fa911ea2_ee3ed564",
+        "filename": "ui/webui/resources/js/cr/ui/menu.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 189,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-03T06:40:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1691efb_ee3ecb05",
+      "range": {
+        "startLine": 189,
+        "startChar": 14,
+        "endLine": 189,
+        "endChar": 30
+      },
+      "revId": "25bd06261253756ef9a8cc7aafcb4342bf5ff361",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5e77566_3e6bbb21",
         "filename": "ui/webui/resources/js/cr/ui/menu.js",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "25bd06261253756ef9a8cc7aafcb4342bf5ff361",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c6f1c88_40ea291f",
+        "filename": "ui/webui/resources/js/cr/ui/menu.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-03T06:40:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5e77566_3e6bbb21",
+      "range": {
+        "startLine": 191,
+        "startChar": 7,
+        "endLine": 191,
+        "endChar": 0
+      },
+      "revId": "25bd06261253756ef9a8cc7aafcb4342bf5ff361",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -88,6 +136,48 @@
     },
     {
       "key": {
+        "uuid": "e6e7c7a0_f699cf52",
+        "filename": "ui/webui/resources/js/cr/ui/menu.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-03T06:40:49Z",
+      "side": 1,
+      "message": "Done.\nThanks for the advice.",
+      "parentUuid": "4108b0f8_ed9d5d8b",
+      "revId": "25bd06261253756ef9a8cc7aafcb4342bf5ff361",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d599ba4a_155c1f9c",
+        "filename": "ui/webui/resources/js/cr/ui/menu.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-03T06:40:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af852ad6_0bfdd53b",
+      "range": {
+        "startLine": 194,
+        "startChar": 43,
+        "endLine": 194,
+        "endChar": 71
+      },
+      "revId": "25bd06261253756ef9a8cc7aafcb4342bf5ff361",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "685c9596_2b7d22d4",
         "filename": "ui/webui/resources/js/cr/ui/menu.js",
         "patchSetId": 5
@@ -108,6 +198,53 @@
       "revId": "25bd06261253756ef9a8cc7aafcb4342bf5ff361",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1edfe8da_d3acee93",
+        "filename": "ui/webui/resources/js/cr/ui/menu.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-03T06:40:49Z",
+      "side": 1,
+      "message": "\"this\" is not visible in this scope and it was not bound nether, which caused runtime errors. Fixed now.",
+      "range": {
+        "startLine": 248,
+        "startChar": 44,
+        "endLine": 248,
+        "endChar": 64
+      },
+      "revId": "25bd06261253756ef9a8cc7aafcb4342bf5ff361",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "12b3490d_d00e940f",
+        "filename": "ui/webui/resources/js/cr/ui/menu.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-08-03T06:40:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "685c9596_2b7d22d4",
+      "range": {
+        "startLine": 248,
+        "startChar": 42,
+        "endLine": 248,
+        "endChar": 70
+      },
+      "revId": "25bd06261253756ef9a8cc7aafcb4342bf5ff361",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
