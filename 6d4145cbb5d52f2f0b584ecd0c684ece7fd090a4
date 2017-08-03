@@ -348,6 +348,24 @@
     },
     {
       "key": {
+        "uuid": "9243fa62_51e60604",
+        "filename": "chrome/browser/ui/views/harmony/layout_provider_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1151884
+      },
+      "writtenOn": "2017-08-03T00:44:08Z",
+      "side": 1,
+      "message": "Okay, I changed this to check Windows version too. It just seems really odd to me that the font height would change between versions. I couldn\u0027t find a Windows 8 machine so I\u0027m guessing that it\u0027s the same as 7.",
+      "parentUuid": "492a1c29_49c9602a",
+      "revId": "6d4145cbb5d52f2f0b584ecd0c684ece7fd090a4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79b8db02_b222dbf3",
         "filename": "ui/views/layout/layout_provider.cc",
         "patchSetId": 11
