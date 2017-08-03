@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20a362f1_c9ff28e0",
+        "filename": "chromeos/components/tether/host_scan_scheduler_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-03T19:46:56Z",
+      "side": 1,
+      "message": "nit: Rename to new_default_service_path and add a comment for this function which tells the user what this parameter will be used for and what will happen if the string provided is empty.",
+      "range": {
+        "startLine": 108,
+        "startChar": 57,
+        "endLine": 108,
+        "endChar": 77
+      },
+      "revId": "a04b780c94d8e007cba6c41ffa368fa5ebc2b320",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b693b047_2b6a104e",
+        "filename": "chromeos/components/tether/host_scan_scheduler_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-03T19:46:56Z",
+      "side": 1,
+      "message": "nit:\n\nif (empty())\n  return;\n\nSetManagerProperty();",
+      "range": {
+        "startLine": 112,
+        "startChar": 0,
+        "endLine": 115,
+        "endChar": 5
+      },
+      "revId": "a04b780c94d8e007cba6c41ffa368fa5ebc2b320",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6dc7e46_a2ef9590",
+        "filename": "chromeos/components/tether/host_scan_scheduler_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-03T19:46:56Z",
+      "side": 1,
+      "message": "nit: Document what is returned by this function.",
+      "range": {
+        "startLine": 134,
+        "startChar": 2,
+        "endLine": 134,
+        "endChar": 13
+      },
+      "revId": "a04b780c94d8e007cba6c41ffa368fa5ebc2b320",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56bb11f0_dd58ff0d",
+        "filename": "chromeos/components/tether/host_scan_scheduler_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1001529
+      },
+      "writtenOn": "2017-08-03T19:46:56Z",
+      "side": 1,
+      "message": "nit: std::string()\n\nSame below.",
+      "range": {
+        "startLine": 211,
+        "startChar": 33,
+        "endLine": 211,
+        "endChar": 35
+      },
+      "revId": "a04b780c94d8e007cba6c41ffa368fa5ebc2b320",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
