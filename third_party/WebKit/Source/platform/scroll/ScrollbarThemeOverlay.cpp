@@ -292,4 +292,8 @@ int ScrollbarThemeOverlay::MinimumThumbLength(
       .width;
 }
 
+void ScrollbarThemeOverlay::SetHitTestEnabledForTesting(bool yes) {
+  allow_hit_test_ = yes ? kAllowHitTest : kDisallowHitTest;
+}
+
 }  // namespace blink
