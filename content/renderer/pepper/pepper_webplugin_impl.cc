@@ -19,8 +19,11 @@
 #include "content/renderer/pepper/plugin_module.h"
 #include "content/renderer/pepper/v8object_var.h"
 #include "content/renderer/render_frame_impl.h"
+#include "content/renderer/render_thread_impl.h"
+#include "content/renderer/renderer_blink_platform_impl.h"
 #include "ppapi/shared_impl/ppapi_globals.h"
 #include "ppapi/shared_impl/var_tracker.h"
+#include "third_party/WebKit/public/platform/WebClipboard.h"
 #include "third_party/WebKit/public/platform/WebCoalescedInputEvent.h"
 #include "third_party/WebKit/public/platform/WebPoint.h"
 #include "third_party/WebKit/public/platform/WebRect.h"
@@ -289,6 +292,15 @@ bool PepperWebPluginImpl::CanEditText() const {
   return instance_ && instance_->CanEditText();
 }
 
+bool PepperWebPluginImpl::ExecuteEditCommand(const blink::WebString& name) {
+  return ExecuteCommand(name, WebString());
+}
+
+bool PepperWebPluginImpl::ExecuteEditCommand(const blink::WebString& name,
+                                             const blink::WebString& value) {
+  return ExecuteCommand(name, value);
+}
+
 WebURL PepperWebPluginImpl::LinkAtPosition(const WebPoint& position) const {
   // Re-entrancy may cause JS to try to execute script on the plugin before it
   // is fully initialized. See: crbug.com/715747.
@@ -385,6 +397,28 @@ void PepperWebPluginImpl::RotateView(RotationType type) {
 
 bool PepperWebPluginImpl::IsPlaceholder() {
   return false;
+}
+
+bool PepperWebPluginImpl::ExecuteCommand(const blink::WebString& name,
+                                         const blink::WebString& value) {
+  if (!instance_)
+    return false;
+
+  if (name == "Cut") {
+    return ExecuteCut();
+  }
+  return false;
+}
+
+bool PepperWebPluginImpl::ExecuteCut() {
+  if (!CanEditText() || !HasSelection())
+    return false;
+
+  RenderThreadImpl::current_blink_platform_impl()->Clipboard()->WriteHTML(
+      SelectionAsMarkup(), WebURL(), SelectionAsText(), false);
+
+  instance_->ReplaceSelection("");
+  return true;
 }
 
 }  // namespace content
