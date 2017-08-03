@@ -50,6 +50,7 @@
 #include "core/inspector/MainThreadDebugger.h"
 #include "core/loader/FrameFetchContext.h"
 #include "core/loader/FrameLoader.h"
+#include "core/loader/InteractiveDetector.h"
 #include "core/loader/LinkLoader.h"
 #include "core/loader/NetworkHintsInterface.h"
 #include "core/loader/ProgressTracker.h"
@@ -989,6 +990,11 @@ void DocumentLoader::DidCommitNavigation() {
   // Links with media values need more information (like viewport information).
   // This happens after the first chunk is parsed in HTMLDocumentParser.
   DispatchLinkHeaderPreloads(nullptr, LinkLoader::kOnlyLoadNonMedia);
+
+  Document* document = frame_->GetDocument();
+  if (document) {
+    InteractiveDetector::From(*document);
+  }
 
   TRACE_EVENT1("devtools.timeline", "CommitLoad", "data",
                InspectorCommitLoadEvent::Data(frame_));
