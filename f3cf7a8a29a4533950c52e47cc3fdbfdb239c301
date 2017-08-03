@@ -1,0 +1,193 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eae3f4f7_644b3808",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-03T22:39:19Z",
+      "side": 1,
+      "message": "nit: might be nice to put mojo::MakeRequest(\u0026url_loader_) inline here to remove the local variable",
+      "range": {
+        "startLine": 22,
+        "startChar": 16,
+        "endLine": 22,
+        "endChar": 34
+      },
+      "revId": "f3cf7a8a29a4533950c52e47cc3fdbfdb239c301",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e173eccb_46170bff",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-03T22:39:19Z",
+      "side": 1,
+      "message": "maybe something like\nvirtual bool ShouldIgnoreCertErrors()",
+      "revId": "f3cf7a8a29a4533950c52e47cc3fdbfdb239c301",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db42798c_78d13ab0",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-03T22:39:19Z",
+      "side": 1,
+      "message": "The combination of  Read() + OnStartLoadingResponseBody() + StartReading() maybe could be clearer. I see StartReading() doesn\u0027t happen until a Read() is pending and OnStartLoadingResponseBody() has happened.\n\nvoid Read() { read_pending_ \u003d true; MaybeStartReading(); }\nvoid OnStartLoadingResponseBody() { body_pipe_handle_ \u003d xxx; MaybeStartReading(); }\n\nvoid MaybeStartReading() {\n  if (both conditions are met) {\n    setup the handle watcher if we need to;\n    StartReading();\n  }\n}",
+      "range": {
+        "startLine": 87,
+        "startChar": 47,
+        "endLine": 87,
+        "endChar": 51
+      },
+      "revId": "f3cf7a8a29a4533950c52e47cc3fdbfdb239c301",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71608948_29195068",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-03T22:39:19Z",
+      "side": 1,
+      "message": "is there a way to test for this without the boolean flags, maybe test for an empty handle() or ready_callback()? it\u0027d be nice to not have the data member.",
+      "range": {
+        "startLine": 92,
+        "startChar": 8,
+        "endLine": 92,
+        "endChar": 19
+      },
+      "revId": "f3cf7a8a29a4533950c52e47cc3fdbfdb239c301",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1909c003_b129caf3",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-03T22:39:19Z",
+      "side": 1,
+      "message": "Do we ever expect this method to be called? What if the response is being read from the the net services httpcache and it contains \u0027metadata\u0027, will this method get called? Looks like it will get called. I wish we could turn that off, it copies the |data|.\n\nIf its expected, probably should remove the NOTIMPLEMENTED",
+      "range": {
+        "startLine": 165,
+        "startChar": 2,
+        "endLine": 165,
+        "endChar": 16
+      },
+      "revId": "f3cf7a8a29a4533950c52e47cc3fdbfdb239c301",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "982b45cb_fbfa2a75",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-03T22:39:19Z",
+      "side": 1,
+      "message": "Is the response_body_available_ data member needed, would testing !handle_ work? The fewer data members the better.",
+      "range": {
+        "startLine": 176,
+        "startChar": 29,
+        "endLine": 176,
+        "endChar": 33
+      },
+      "revId": "f3cf7a8a29a4533950c52e47cc3fdbfdb239c301",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff34faf3_e06839eb",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-03T22:39:19Z",
+      "side": 1,
+      "message": "for clarity, i think it\u0027d be good for Watch() to be called from only one spot",
+      "revId": "f3cf7a8a29a4533950c52e47cc3fdbfdb239c301",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9941f7bf_37aa3f80",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-03T22:39:19Z",
+      "side": 1,
+      "message": "i don\u0027t understand how the read loop works yet",
+      "range": {
+        "startLine": 257,
+        "startChar": 16,
+        "endLine": 257,
+        "endChar": 47
+      },
+      "revId": "f3cf7a8a29a4533950c52e47cc3fdbfdb239c301",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "439dfb3c_2c2fa288",
+        "filename": "content/browser/appcache/appcache_update_url_request.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-03T22:39:19Z",
+      "side": 1,
+      "message": "seems odd to be returning IO_PENDING here if OnReadCompleted, looks like we don\u0027t need the return value anymore",
+      "revId": "f3cf7a8a29a4533950c52e47cc3fdbfdb239c301",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
