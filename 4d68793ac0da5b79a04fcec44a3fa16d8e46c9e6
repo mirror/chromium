@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3056dbb9_5f955ef1",
+        "filename": "chromecast/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1123449
+      },
+      "writtenOn": "2017-08-03T20:49:25Z",
+      "side": 1,
+      "message": "Nit: add a comment with bug number tracking this",
+      "range": {
+        "startLine": 194,
+        "startChar": 0,
+        "endLine": 196,
+        "endChar": 33
+      },
+      "revId": "4d68793ac0da5b79a04fcec44a3fa16d8e46c9e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
