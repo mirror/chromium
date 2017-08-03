@@ -2051,4 +2051,36 @@ void PaintOpBuffer::ShrinkToFit() {
   }
 }
 
+PaintOpBuffer::FlatteningIterator::FlatteningIterator(
+    const PaintOpBuffer* buffer,
+    const std::vector<size_t>* offsets)
+    : top_level_iter_(buffer, offsets) {
+  FlattenCurrentOpIfNeeded();
+}
+
+// Advance the iterators to the next non-draw record op (which could
+// include the current op and not advance at all).
+void PaintOpBuffer::FlatteningIterator::FlattenCurrentOpIfNeeded() {
+  while (true) {
+    PaintOp* op = **this;
+    if (op) {
+      if (op->GetType() != PaintOpType::DrawRecord)
+        return;
+      auto* record_op = static_cast<DrawRecordOp*>(op);
+      nested_iter_.push_back(Iterator(record_op->record.get()));
+      continue;
+    }
+    if (nested_iter_.empty())
+      return;
+
+    nested_iter_.pop_back();
+    if (nested_iter_.empty())
+      ++top_level_iter_;
+    else
+      ++nested_iter_.back();
+  }
+}
+
+PaintOpBuffer::FlatteningIterator::~FlatteningIterator() = default;
+
 }  // namespace cc
