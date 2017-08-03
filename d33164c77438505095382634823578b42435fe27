@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b469e132_ec8603ae",
+        "filename": "content/renderer/pepper/pepper_webplugin_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-08-03T18:44:16Z",
+      "side": 1,
+      "message": "Will there be other kinds of commands besides \u0027Edit\u0027 commands? If not, then this method could be eliminated by moving this code into the second overload of ExecuteEditCommand. The first overload would then call the second with an empty string. WDYT?",
+      "range": {
+        "startLine": 411,
+        "startChar": 1,
+        "endLine": 411,
+        "endChar": 0
+      },
+      "revId": "d33164c77438505095382634823578b42435fe27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f61e326c_ebb17057",
+        "filename": "content/renderer/pepper/pepper_webplugin_impl.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-08-03T18:44:16Z",
+      "side": 1,
+      "message": "Cut/Copy/Paste have similar code. What do you think about implementing them in the same helper method, or even in ExecuteEditCommand so we can reduce the amount of code, rather than having a separate method for each one?",
+      "range": {
+        "startLine": 422,
+        "startChar": 1,
+        "endLine": 422,
+        "endChar": 0
+      },
+      "revId": "d33164c77438505095382634823578b42435fe27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
