@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d19905d_69809482",
+        "filename": "base/process/launch_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-03T16:07:47Z",
+      "side": 1,
+      "message": "nit: I would\u0027ve found `stdio_already_mapped` or `stdio_explicitly_mapped` less confusing. As-is, the\n\n  if (!maps_stdio)\n    map_stdio();\n\nif at the end looks weird to me.",
+      "range": {
+        "startLine": 122,
+        "startChar": 8,
+        "endLine": 122,
+        "endChar": 17
+      },
+      "revId": "a2dc91e2bd994b0bb68678df81b61b49a39c677f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "633b3d28_1c549af5",
+        "filename": "base/process/process_util_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 735,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-03T16:07:47Z",
+      "side": 1,
+      "message": "Do you need to close pipe_fds[0]?",
+      "revId": "a2dc91e2bd994b0bb68678df81b61b49a39c677f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
