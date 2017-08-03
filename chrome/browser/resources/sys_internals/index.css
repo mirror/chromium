@@ -1,0 +1,139 @@
+/** Copyright (c) 2017 The Chromium Authors. All rights reserved.
+  * Use of this source code is governed by a BSD-style license that can be
+  * found in the LICENSE file.
+**/
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+/* Line Chart */
+.line-chart-root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  background-color: #e3e3e3;
+}
+
+.line-chart-canvas-outer {
+  /*height: 100%;*/
+  /*width: 100%;*/
+  flex-grow: 1;
+  /*display: inline-block;*/
+}
+
+.horizontal-scrollbar-outer {
+  width: 100%;
+  height: 16px;
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+
+.horizontal-scrollbar-inner {
+  height: 1px;
+}
+
+.line-chart-menu {
+  height: 100%;
+  display: flex;
+}
+
+.line-chart-menu-button-outer {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.line-chart-menu-handle {
+  height: 100%;
+  width: 30px;
+  background-color: #9a9a9a;
+  cursor: pointer;
+}
+
+.line-chart-menu-button {
+  padding: 15px 15px 15px 15px;
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  line-height: 1.5em;
+  cursor: pointer;
+  user-select: none;
+}
+
+.line-chart-menu-button-inner-span {
+  width: 100%;
+  text-align: center;
+  white-space: nowrap;
+}
+
+
+/* Line Chart End*/
+
+#sys-internals-nav {
+  width: calc(100% - 20px);
+  height: 50px;
+  background-color: rgb(46, 90, 181);
+  padding: 0 10px;
+}
+
+#sys-internals-nav-menu-btn {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  fill: #fff;
+  padding: 10px;
+}
+
+#sys-internals-body {
+  width: 100%;
+  height: calc(100% - 50px);
+}
+
+#sys-internals-menu {
+  height: 100%;
+}
+
+#sys-internals-chart-menu {
+  height: 100%;
+}
+
+#sys-internals-drawer {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-color: rgba(0,0,0,0.5);
+  transition: background-color 200ms ease-in-out;
+}
+
+#sys-internals-drawer.hidden {
+  background-color: rgba(0,0,0,0);
+}
+
+#sys-internals-drawer-menu {
+  position: relative;
+  width: 300px;
+  height: 100%;
+  background-color: #f8f8f8;
+  transition: left 200ms ease-in-out;
+  left: 0;
+}
+
+#sys-internals-drawer-menu.hidden {
+  left: -300px;
+}
+
+.sys-internals-drawer-item {
+  width: 100%;
+  height: 48px;
+  font-size: 24px;
+  display: block;
+}
