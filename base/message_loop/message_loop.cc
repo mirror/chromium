@@ -347,6 +347,11 @@ void MessageLoop::ClearTaskRunnerForTesting() {
 
 void MessageLoop::Run() {
   DCHECK_EQ(this, current());
+
+  ReloadWorkQueue();
+  if (!work_queue_.empty())
+    ScheduleWork();
+
   pump_->Run(this);
 }
 
