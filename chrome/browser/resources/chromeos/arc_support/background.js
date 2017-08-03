@@ -40,6 +40,12 @@ var currentDeviceId = null;
 var lastFocusedElement = null;
 
 /**
+ * Contains currently active progress bar animation.
+ * @type {ProgressBarAnimation}
+ */
+var activeProgressAnimation = null;
+
+/**
  * Host window inner default width.
  * @const {number}
  */
@@ -205,6 +211,80 @@ var LoadState = {
   ABORTED: 2,
   LOADED: 3,
 };
+
+/**
+ * Provides animation for set of div elements that looks similar to paper
+ * progress animation. This class performs animation with the fixed rate that
+ * can save CPU resources on low-end machines.
+ */
+class ProgressBarAnimation {
+  /**
+   * @param {Element} page The root div element of the page that contains
+   *                       the progress bar to animate.
+   */
+  constructor(page) {
+    this.primaryProgress_ = page.querySelector('.progress-primary');
+    this.secondaryProgress_ = page.querySelector('.progress-secondary');
+    this.updateInterval_ = null;
+    this.animationDurationMs_ = 2000;  // 2 second animation loop.
+    this.fps_ = 10;                    // 10 frames per second.
+  }
+
+  /**
+   * Called periodically to perform animation update.
+   */
+  update_() {
+    // Calculate animation time in range 0..1.
+    var currentAnimationRatio =
+        ((new Date().getTime() - this.startTime_) / this.animationDurationMs_) %
+        1;
+    // Ranges and constants are taken from paper progress implementation.
+    // Animate the primary progress.
+    if (currentAnimationRatio <= 0.5) {
+      var translate = -100 + 200 * currentAnimationRatio;
+      this.primaryProgress_.style.transform =
+          'scaleX(1) translateX(' + translate + '%)';
+    } else if (currentAnimationRatio <= 0.75) {
+      this.primaryProgress_.style.transform = 'scaleX(1) translateX(0%)';
+    } else {
+      var scale = 4.0 * (1.0 - currentAnimationRatio);
+      this.primaryProgress_.style.transform =
+          'scaleX(' + scale + ') translateX(0%)';
+    }
+
+    // Animate the secondary progress.
+    if (currentAnimationRatio < 0.3) {
+      this.secondaryProgress_.style.transform =
+          'scaleX(0.75) translateX(-125%)';
+    } else if (currentAnimationRatio < 0.9) {
+      var translate = -125.0 + 250.0 * (currentAnimationRatio - 0.3) / 0.6;
+      this.secondaryProgress_.style.transform =
+          'scaleX(0.75) translateX(' + translate + '%)';
+    } else {
+      this.secondaryProgress_.style.transform = 'scaleX(0.75) translateX(125%)';
+    }
+  }
+
+  /**
+   * Starts animation.
+   */
+  start() {
+    this.startTime_ = new Date().getTime();
+    this.stop();
+    this.updateInterval_ = setInterval(() => this.update_(), 1000 / this.fps_);
+  }
+
+  /**
+   * Stops animation.
+   */
+  stop() {
+    if (!this.updateInterval_) {
+      return;
+    }
+    clearInterval(this.updateInterval_);
+    this.updateInterval_ = null;
+  }
+}
 
 /**
  * Handles events for Terms-Of-Service page. Also this implements the async
@@ -560,6 +640,31 @@ function connectPort() {
 }
 
 /**
+ * Stops current progress bar animation if it exists.
+ */
+function stopProgressAnimation() {
+  if (!activeProgressAnimation) {
+    return;
+  }
+
+  activeProgressAnimation.stop();
+  activeProgressAnimation = null;
+}
+
+/**
+ * Starts new progress bar animation and optionally stops previous one.
+ * @param {string} pageDivId Page id that contains progress bar to animate.
+ */
+function startProgressAnimation(pageDivId) {
+  stopProgressAnimation();
+
+  var doc = appWindow.contentWindow.document;
+  activeProgressAnimation =
+      new ProgressBarAnimation(doc.getElementById(pageDivId));
+  activeProgressAnimation.start();
+}
+
+/**
  * Shows requested page and hide others. Show appWindow if it was hidden before.
  * 'none' hides all views.
  * @param {string} pageDivId id of divider of the page to show.
@@ -570,6 +675,7 @@ function showPage(pageDivId) {
   }
 
   hideOverlay();
+  stopProgressAnimation();
   var doc = appWindow.contentWindow.document;
   // If the request is lso-loading and arc-loading page is currently shown,
   // then we do not switch the view. This is because both pages are saying
@@ -593,6 +699,13 @@ function showPage(pageDivId) {
   appWindow.show();
   if (pageDivId == 'terms') {
     termsPage.onShow();
+  }
+
+  // Start progress bar animation for the page that has the dynamic progress
+  // bar. 'error' page has the static progress bar that no need to be animated.
+  if (pageDivId == 'terms' || pageDivId == 'arc-loading' ||
+      pageDivId == 'lso-loading') {
+    startProgressAnimation(pageDivId);
   }
 }
 
