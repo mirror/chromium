@@ -16,6 +16,24 @@
       "revId": "0cbe99de3aa8b23d23ae8afa68d4e41e9625a36a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d0b3fce_ded666f6",
+        "filename": "chrome/browser/page_load_metrics/page_load_tracker.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-08-03T18:43:04Z",
+      "side": 1,
+      "message": "That would require the GetSourceId function to depend on content/public, so I don\u0027t think it can replace this method.  We could define a wrapper function which does that, but I think that\u0027s a seperate question, so I\u0027ll leave that until we have resolution on having NavigationId.",
+      "parentUuid": "9dd098b9_c637d696",
+      "revId": "0cbe99de3aa8b23d23ae8afa68d4e41e9625a36a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
