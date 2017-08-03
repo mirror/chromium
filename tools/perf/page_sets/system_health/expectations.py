@@ -27,6 +27,9 @@ class SystemHealthDesktopCommonExpectations(expectations.StoryExpectations):
 
 class SystemHealthDesktopMemoryExpectations(expectations.StoryExpectations):
   def SetExpectations(self):
+    self.DisableStory('browse:search:google',
+                      [expectations.ALL_MAC],
+                      'crbug.com/752260')
     self.DisableStory('browse:news:hackernews',
                       [expectations.ALL_WIN, expectations.ALL_MAC],
                       'crbug.com/676336')
