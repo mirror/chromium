@@ -165,9 +165,19 @@ DEFINE_TRACE_WRAPPERS(EventTarget) {
   }
 }
 
-EventTarget::EventTarget() {}
+HeapHashSet<WeakMember<EventTarget>>& EventTarget::All() {
+  DEFINE_STATIC_LOCAL(HeapHashSet<WeakMember<EventTarget>>, all,
+                      (new HeapHashSet<WeakMember<EventTarget>>));
+  return all;
+}
 
-EventTarget::~EventTarget() {}
+EventTarget::EventTarget() {
+  EventTarget::All().insert(this);
+}
+
+EventTarget::~EventTarget() {
+  EventTarget::All().erase(this);
+}
 
 Node* EventTarget::ToNode() {
   return nullptr;

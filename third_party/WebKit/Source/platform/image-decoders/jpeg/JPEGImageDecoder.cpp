@@ -1005,10 +1005,14 @@ void JPEGImageDecoder::Decode(bool only_size) {
     reader_->SetData(data_.Get());
   }
 
-  // If we couldn't decode the image but have received all the data, decoding
-  // has failed.
-  if (!reader_->Decode(only_size) && IsAllDataReceived())
+  if (!ImageDecoder::IsDisabled() || only_size) {
+    // If we couldn't decode the image but have received all the data, decoding
+    // has failed.
+    if (!reader_->Decode(only_size) && IsAllDataReceived())
+      SetFailed();
+  } else {
     SetFailed();
+  }
 
   // If decoding is done or failed, we don't need the JPEGImageReader anymore.
   if (IsComplete(this, only_size) || Failed())
