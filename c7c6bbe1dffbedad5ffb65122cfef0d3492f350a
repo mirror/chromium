@@ -186,6 +186,24 @@
       "revId": "c7c6bbe1dffbedad5ffb65122cfef0d3492f350a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ac6c1493_e5c14ad4",
+        "filename": "chrome/renderer/searchbox/search_bouncer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-03T08:32:02Z",
+      "side": 1,
+      "message": "So, from what I can tell, in the typical case Unretained is safe because there\u0027s an accompanying UnregisterMojoInterfaces which calls RemoveInterface? Or is there some more fundamental reason?\nSorry, all the Mojo stuff always feels a bit like black magic to me...\n\nSo if the reason it\u0027s safe *here* is \"this class is a leaky singleton\", then I\u0027d prefer to have a comment saying that, since it\u0027s easy to miss otherwise. OTOH, if the reason is \"Mojo is magic\", then I guess that\u0027s just how it is :-/",
+      "parentUuid": "225995b9_f3c6541d",
+      "revId": "c7c6bbe1dffbedad5ffb65122cfef0d3492f350a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

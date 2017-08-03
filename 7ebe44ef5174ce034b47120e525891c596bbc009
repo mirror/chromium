@@ -46,6 +46,30 @@
       "revId": "7ebe44ef5174ce034b47120e525891c596bbc009",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b45729ec_1295fbeb",
+        "filename": "chrome/browser/search/instant_service_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-03T08:32:02Z",
+      "side": 0,
+      "message": "Okay, fair enough. I agree that this test isn\u0027t testing very much, so it\u0027s probably acceptable to lose it. Still it kinda seems like a shortcoming in Mojo that things aren\u0027t fakeable...",
+      "parentUuid": "72aa1f0e_313b3b87",
+      "range": {
+        "startLine": 120,
+        "startChar": 1,
+        "endLine": 120,
+        "endChar": 0
+      },
+      "revId": "7ebe44ef5174ce034b47120e525891c596bbc009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
