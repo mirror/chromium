@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bfa69da3_7f409785",
+        "filename": "content/browser/accessibility/browser_accessibility_android.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 1092,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-08-03T19:53:06Z",
+      "side": 1,
+      "message": "nit: the \"static\" comment should go on a separate line",
+      "revId": "9e931a3fc73af174a0ffbc26be24bf6c89e32afb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
