@@ -12,7 +12,7 @@ bool StructTraits<blink_common::mojom::MessagePortMessage::DataView,
          blink_common::MessagePortMessage* out) {
   std::vector<mojo::ScopedMessagePipeHandle> ports;
   if (!data.ReadEncodedMessage(&out->owned_encoded_message) ||
-      !data.ReadPorts(&ports))
+      !data.ReadPorts(&ports) || !data.ReadBlobs(&out->blobs))
     return false;
 
   out->encoded_message = mojo::ConstCArray<uint8_t>(

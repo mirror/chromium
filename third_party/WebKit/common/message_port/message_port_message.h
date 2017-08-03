@@ -7,6 +7,7 @@
 
 #include <vector>
 #include "mojo/public/cpp/bindings/array_traits_carray.h"
+#include "storage/public/interfaces/blobs.mojom.h"
 #include "third_party/WebKit/common/common_export.h"
 #include "third_party/WebKit/common/message_port/message_port.h"
 
@@ -17,6 +18,8 @@ namespace blink_common {
 struct BLINK_COMMON_EXPORT MessagePortMessage {
   MessagePortMessage();
   ~MessagePortMessage();
+  MessagePortMessage(MessagePortMessage&&) = default;
+  MessagePortMessage& operator=(MessagePortMessage&&) = default;
 
   // To reduce copies when serializing |encoded_message| does not have to point
   // to |owned_encoded_message|. The serialization code completely ignores the
@@ -28,6 +31,9 @@ struct BLINK_COMMON_EXPORT MessagePortMessage {
 
   // Any ports being transfered as part of this message.
   std::vector<MessagePort> ports;
+
+  // Blob handles for any blobs being send in this message.
+  std::vector<storage::mojom::SerializedBlobPtr> blobs;
 };
 
 }  // namespace blink_common

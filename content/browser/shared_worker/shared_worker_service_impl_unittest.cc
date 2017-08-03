@@ -29,6 +29,7 @@
 #include "content/public/test/test_utils.h"
 #include "ipc/ipc_sync_message.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "third_party/WebKit/common/message_port/message_port.mojom.h"
 
 using blink_common::MessagePort;
 
@@ -123,9 +124,11 @@ void BlockingReadFromMessagePort(MessagePort port,
   port.SetCallback(run_loop.QuitClosure());
   run_loop.Run();
 
-  std::vector<MessagePort> should_be_empty;
-  EXPECT_TRUE(port.GetMessage(message, &should_be_empty));
-  EXPECT_TRUE(should_be_empty.empty());
+  blink_common::mojom::MessagePortMessagePtr msg;
+  EXPECT_TRUE(port.GetMessage(&msg));
+  EXPECT_TRUE(msg->ports.empty());
+  EXPECT_TRUE(msg->blobs.empty());
+  *message = msg->encoded_message;
 }
 
 class MockSharedWorkerMessageFilter : public SharedWorkerMessageFilter {
@@ -389,9 +392,10 @@ TEST_F(SharedWorkerServiceImplTest, BasicTest) {
 
   // Verify that |worker_msg_port| corresponds to |connector->local_port()|.
   std::vector<uint8_t> expected_message(StringPieceToVector("test1"));
-  connector->local_port().PostMessage(expected_message.data(),
-                                      expected_message.size(),
-                                      std::vector<MessagePort>());
+  connector->local_port().PostMessage(
+      blink_common::mojom::MessagePortMessage::New(
+          expected_message, std::vector<mojo::ScopedMessagePipeHandle>(),
+          std::vector<storage::mojom::SerializedBlobPtr>()));
   std::vector<uint8_t> received_message;
   BlockingReadFromMessagePort(worker_msg_port, &received_message);
   EXPECT_EQ(expected_message, received_message);
@@ -481,9 +485,10 @@ TEST_F(SharedWorkerServiceImplTest, TwoRendererTest) {
 
   // Verify that |worker_msg_port1| corresponds to |connector0->local_port()|.
   std::vector<uint8_t> expected_message1(StringPieceToVector("test1"));
-  connector0->local_port().PostMessage(expected_message1.data(),
-                                       expected_message1.size(),
-                                       std::vector<MessagePort>());
+  connector0->local_port().PostMessage(
+      blink_common::mojom::MessagePortMessage::New(
+          expected_message1, std::vector<mojo::ScopedMessagePipeHandle>(),
+          std::vector<storage::mojom::SerializedBlobPtr>()));
   std::vector<uint8_t> received_message1;
   BlockingReadFromMessagePort(worker_msg_port1, &received_message1);
   EXPECT_EQ(expected_message1, received_message1);
@@ -554,9 +559,10 @@ TEST_F(SharedWorkerServiceImplTest, TwoRendererTest) {
 
   // Verify that |worker_msg_port2| corresponds to |connector1->local_port()|.
   std::vector<uint8_t> expected_message2(StringPieceToVector("test2"));
-  connector1->local_port().PostMessage(expected_message2.data(),
-                                       expected_message2.size(),
-                                       std::vector<MessagePort>());
+  connector1->local_port().PostMessage(
+      blink_common::mojom::MessagePortMessage::New(
+          expected_message2, std::vector<mojo::ScopedMessagePipeHandle>(),
+          std::vector<storage::mojom::SerializedBlobPtr>()));
   std::vector<uint8_t> received_message2;
   BlockingReadFromMessagePort(worker_msg_port2, &received_message2);
   EXPECT_EQ(expected_message2, received_message2);

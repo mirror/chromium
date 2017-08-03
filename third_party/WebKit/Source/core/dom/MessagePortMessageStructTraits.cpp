@@ -11,7 +11,8 @@ bool StructTraits<blink_common::mojom::blink::MessagePortMessage::DataView,
     Read(blink_common::mojom::blink::MessagePortMessage::DataView data,
          blink::BlinkMessagePortMessage* out) {
   std::vector<mojo::ScopedMessagePipeHandle> ports;
-  if (!data.ReadPorts(&ports))
+  Vector<storage::mojom::blink::SerializedBlobPtr> blobs;
+  if (!data.ReadPorts(&ports) || !data.ReadBlobs(&blobs))
     return false;
 
   mojo::ArrayDataView<uint8_t> message_data;
@@ -19,6 +20,12 @@ bool StructTraits<blink_common::mojom::blink::MessagePortMessage::DataView,
   out->message = blink::SerializedScriptValue::Create(
       reinterpret_cast<const char*>(message_data.data()), message_data.size());
   out->ports = blink_common::MessagePort::BindHandles(std::move(ports));
+  for (auto& blob : blobs) {
+    out->message->BlobDataHandles().Set(
+        blob->uuid,
+        blink::BlobDataHandle::Create(blob->uuid, blob->content_type,
+                                      blob->size, blob->blob.PassInterface()));
+  }
   return true;
 }
 

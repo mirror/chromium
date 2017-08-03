@@ -7,6 +7,9 @@
 
 #include "bindings/core/v8/serialization/SerializedScriptValue.h"
 #include "core/dom/MessagePortMessage.h"
+#include "mojo/public/cpp/bindings/array_traits_wtf_vector.h"
+#include "mojo/public/cpp/bindings/string_traits_wtf.h"
+#include "platform/blob/BlobData.h"
 #include "third_party/WebKit/common/message_port/message_port.h"
 #include "third_party/WebKit/common/message_port/message_port.mojom-blink.h"
 
@@ -26,6 +29,19 @@ struct StructTraits<blink_common::mojom::blink::MessagePortMessage::DataView,
   static std::vector<mojo::ScopedMessagePipeHandle> ports(
       blink::BlinkMessagePortMessage& input) {
     return blink_common::MessagePort::ReleaseHandles(input.ports);
+  }
+
+  static Vector<storage::mojom::blink::SerializedBlobPtr> blobs(
+      blink::BlinkMessagePortMessage& input) {
+    Vector<storage::mojom::blink::SerializedBlobPtr> result;
+    if (blink::RuntimeEnabledFeatures::MojoBlobsEnabled()) {
+      for (const auto& blob : input.message->BlobDataHandles()) {
+        result.push_back(storage::mojom::blink::SerializedBlob::New(
+            blob.value->Uuid(), blob.value->GetType(), blob.value->size(),
+            blob.value->CloneBlobPtr()));
+      }
+    }
+    return result;
   }
 
   static bool Read(blink_common::mojom::blink::MessagePortMessage::DataView,

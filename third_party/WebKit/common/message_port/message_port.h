@@ -63,10 +63,6 @@ class BLINK_COMMON_EXPORT MessagePort {
 
   // Sends an encoded message (along with ports to transfer) to this port's
   // peer.
-  void PostMessage(const uint8_t* encoded_message,
-                   size_t encoded_message_size,
-                   std::vector<MessagePort> ports);
-
   template <typename StructType, typename MessageType>
   void PostMessage(MessageType* message) {
     static_assert(std::is_same<typename StructType::DataView,
@@ -82,11 +78,13 @@ class BLINK_COMMON_EXPORT MessagePort {
                           MOJO_WRITE_MESSAGE_FLAG_NONE);
   }
 
+  template <typename StructType>
+  void PostMessage(mojo::StructPtr<StructType> message) {
+    PostMessage<StructType, mojo::StructPtr<StructType>>(&message);
+  }
+
   // Get the next available encoded message if any. Returns true if a message
   // was read.
-  bool GetMessage(std::vector<uint8_t>* encoded_message,
-                  std::vector<MessagePort>* ports);
-
   template <typename StructType, typename MessageType>
   bool GetMessage(MessageType* message) {
     static_assert(std::is_same<typename StructType::DataView,
@@ -101,6 +99,11 @@ class BLINK_COMMON_EXPORT MessagePort {
 
     mojo::Message mojo_message(std::move(message_handle));
     return StructType::DeserializeFromMessage(std::move(mojo_message), message);
+  }
+
+  template <typename StructType>
+  bool GetMessage(mojo::StructPtr<StructType>* message) {
+    return GetMessage<StructType, mojo::StructPtr<StructType>>(message);
   }
 
   // This callback will be invoked on a background thread when messages are
