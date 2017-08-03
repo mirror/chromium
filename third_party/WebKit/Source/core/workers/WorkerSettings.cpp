@@ -18,6 +18,9 @@ void WorkerSettings::CopyFlagValuesFromSettings(Settings* settings) {
       settings->GetAllowRunningOfInsecureContent();
   strictly_block_blockable_mixed_content_ =
       settings->GetStrictlyBlockBlockableMixedContent();
+  // The copied object isn't thread safe, but WorkerGlobalScope will make a deep
+  // copy of it later on, if needed.
+  generic_font_family_settings_ = settings->GetGenericFontFamilySettings();
 }
 
 }  // namespace blink

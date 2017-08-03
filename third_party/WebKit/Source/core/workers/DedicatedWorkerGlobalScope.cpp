@@ -54,7 +54,9 @@ DedicatedWorkerGlobalScope* DedicatedWorkerGlobalScope::Create(
       creation_params->worker_clients);
   context->ApplyContentSecurityPolicyFromVector(
       *creation_params->content_security_policy_parsed_headers);
+  creation_params->worker_settings->DeepCopyGenericFontFamilySettings();
   context->SetWorkerSettings(std::move(creation_params->worker_settings));
+
   if (!creation_params->referrer_policy.IsNull())
     context->ParseAndSetReferrerPolicy(creation_params->referrer_policy);
   context->SetAddressSpace(creation_params->address_space);
