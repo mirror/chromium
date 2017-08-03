@@ -21,9 +21,8 @@
 @property(nonatomic) UITextAutocorrectionType autocorrectionType;
 @property(nonatomic) UITextSpellCheckingType spellCheckingType;
 
-// This determines whether or how the soft keyboard should be shown. The default
-// value is NO.
-@property(nonatomic) BOOL hasPhysicalKeyboard;
+// Default value is NO.
+@property(nonatomic) BOOL showsSoftKeyboard;
 
 // This delegate is used to call back to handler key entry.
 @property(weak, nonatomic) id<ClientKeyboardDelegate> delegate;
