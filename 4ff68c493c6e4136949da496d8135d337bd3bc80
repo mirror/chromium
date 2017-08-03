@@ -1,0 +1,333 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "437d9377_a5c486a3",
+        "filename": "chrome/browser/extensions/api/image_writer_private/destroy_partitions_operation_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-03T17:45:05Z",
+      "side": 1,
+      "message": "Could we use a lambda here?",
+      "revId": "4ff68c493c6e4136949da496d8135d337bd3bc80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d251231e_d9d46435",
+        "filename": "chrome/browser/extensions/api/image_writer_private/destroy_partitions_operation_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-03T17:45:05Z",
+      "side": 1,
+      "message": "Hmm... it seems like we have no guarantee that anything actually ran here.  i.e., if the test just ended without running the task, wouldn\u0027t it pass?  Do we need to add a VerifyAndClearExpectations call?",
+      "revId": "4ff68c493c6e4136949da496d8135d337bd3bc80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6732b7f4_57856d7d",
+        "filename": "chrome/browser/extensions/api/image_writer_private/image_writer_private_apitest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-03T17:45:05Z",
+      "side": 1,
+      "message": "ditto re lambda",
+      "revId": "4ff68c493c6e4136949da496d8135d337bd3bc80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd58eba1_32315ae7",
+        "filename": "chrome/browser/extensions/api/image_writer_private/image_writer_utility_client.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-03T17:45:05Z",
+      "side": 1,
+      "message": "Could this just be\nusing ImageWriterUtilityClientFactory \u003d \n    base::Callback\u003cscoped_refptr\u003cImageWriterUtilityClient\u003e()\u003e;\n?",
+      "revId": "4ff68c493c6e4136949da496d8135d337bd3bc80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94821caf_dfa85721",
+        "filename": "chrome/browser/extensions/api/image_writer_private/operation.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-03T17:45:05Z",
+      "side": 1,
+      "message": "Is this needed, when defined in the header?",
+      "revId": "4ff68c493c6e4136949da496d8135d337bd3bc80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6600486_ce610d9d",
+        "filename": "chrome/browser/extensions/api/image_writer_private/operation.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-03T17:45:05Z",
+      "side": 1,
+      "message": "DCHECK sequence?",
+      "revId": "4ff68c493c6e4136949da496d8135d337bd3bc80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "631c7c28_b254caf2",
+        "filename": "chrome/browser/extensions/api/image_writer_private/operation.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-03T17:45:05Z",
+      "side": 1,
+      "message": "std::move() a const \u0026 doesn\u0027t do anything.",
+      "revId": "4ff68c493c6e4136949da496d8135d337bd3bc80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fa97de9_fa43b5a6",
+        "filename": "chrome/browser/extensions/api/image_writer_private/operation.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-03T17:45:05Z",
+      "side": 1,
+      "message": "*Start() and Run() run on a blocking thread\n\nAlthough actually, what is Run()?",
+      "revId": "4ff68c493c6e4136949da496d8135d337bd3bc80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "334d5380_5cab0388",
+        "filename": "chrome/browser/extensions/api/image_writer_private/operation.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-03T17:45:05Z",
+      "side": 1,
+      "message": "nit: Cleanup",
+      "revId": "4ff68c493c6e4136949da496d8135d337bd3bc80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2aee45ec_037ca859",
+        "filename": "chrome/browser/extensions/api/image_writer_private/operation.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-03T17:45:05Z",
+      "side": 1,
+      "message": "nit: run",
+      "range": {
+        "startLine": 239,
+        "startChar": 39,
+        "endLine": 239,
+        "endChar": 43
+      },
+      "revId": "4ff68c493c6e4136949da496d8135d337bd3bc80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a5e3df8_2760d11b",
+        "filename": "chrome/browser/extensions/api/image_writer_private/operation_chromeos.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-03T17:45:05Z",
+      "side": 1,
+      "message": "remove",
+      "revId": "4ff68c493c6e4136949da496d8135d337bd3bc80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eeda97a6_9c4139d4",
+        "filename": "chrome/browser/extensions/api/image_writer_private/operation_chromeos.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-03T17:45:05Z",
+      "side": 1,
+      "message": "remove",
+      "revId": "4ff68c493c6e4136949da496d8135d337bd3bc80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c985c139_f18b1d9d",
+        "filename": "chrome/browser/extensions/api/image_writer_private/operation_chromeos.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-03T17:45:05Z",
+      "side": 1,
+      "message": "Kind of a shame we post a task to the sequence only to post one back to the UI thread in Operation::Error, but it\u0027s probably not worth the hassle of disentangling the call to OperationManager::OnError and CleanUp(), given this code isn\u0027t in many critical paths.",
+      "revId": "4ff68c493c6e4136949da496d8135d337bd3bc80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3db375a_352783f5",
+        "filename": "chrome/browser/extensions/api/image_writer_private/operation_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-03T17:45:05Z",
+      "side": 1,
+      "message": "In these tests, too, can we verify expectations?",
+      "revId": "4ff68c493c6e4136949da496d8135d337bd3bc80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58352ec1_e58e26e1",
+        "filename": "chrome/browser/extensions/api/image_writer_private/unzip_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-03T17:45:05Z",
+      "side": 1,
+      "message": "Will Unzip() be called more than once?  If so, then do we have to worry about concurrent calls?  If not, could we pass these into the ctor and have Unzip() only take image and dir paths, so that member variables are all set at construction time?",
+      "revId": "4ff68c493c6e4136949da496d8135d337bd3bc80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "127d69a1_93bd2809",
+        "filename": "chrome/browser/extensions/api/image_writer_private/unzip_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-03T17:45:05Z",
+      "side": 1,
+      "message": "optional nit: I usually find these easier to read as\nif (!Open() || !Advance() || !OpenInZip())\nas opposed to\nif (!(Open() \u0026\u0026 Advance() \u0026\u0026 OpenInZip())\nbut I imagine that\u0027s all just personal preference, so up to you.",
+      "revId": "4ff68c493c6e4136949da496d8135d337bd3bc80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1109dafc_b4282bc0",
+        "filename": "chrome/browser/extensions/api/image_writer_private/unzip_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-03T17:45:05Z",
+      "side": 1,
+      "message": "I\u0027ve seen the pattern of `return VoidCall();` before, but it\u0027s a bit odd.  I\u0027d prefer\nOnError();\nreturn;",
+      "revId": "4ff68c493c6e4136949da496d8135d337bd3bc80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb3d6b8e_e93f67b9",
+        "filename": "chrome/browser/extensions/api/image_writer_private/unzip_helper.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-03T17:45:05Z",
+      "side": 1,
+      "message": "Can these be OnceCallback variants?  (Except progress?)",
+      "revId": "4ff68c493c6e4136949da496d8135d337bd3bc80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a40ce5d_40c2eead",
+        "filename": "chrome/browser/extensions/api/image_writer_private/write_from_file_operation_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-08-03T17:45:05Z",
+      "side": 1,
+      "message": "here too, verify",
+      "revId": "4ff68c493c6e4136949da496d8135d337bd3bc80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
