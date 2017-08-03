@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f186f008_08ec4ab5",
+        "filename": "chrome/browser/resources/chromeos/arc_support/background.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-03T15:09:57Z",
+      "side": 1,
+      "message": "Pls add suffix \u0027_\u0027 for private fields for consistency.",
+      "revId": "3a56b31ba0094d75c76e779f35b65f6abdd8a1fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d89ce67_8e98628e",
+        "filename": "chrome/browser/resources/chromeos/arc_support/background.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-03T15:09:57Z",
+      "side": 1,
+      "message": "Please use full word for consistency. animationTime.\n(optional): suggestion, currentAnimationRatio or currentAnimationTimeRatio.",
+      "revId": "3a56b31ba0094d75c76e779f35b65f6abdd8a1fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c298d07_e0956d5c",
+        "filename": "chrome/browser/resources/chromeos/arc_support/background.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-03T15:09:57Z",
+      "side": 1,
+      "message": "nit/optional: I\u0027d recommend\nsetInterval(() \u003d\u003e this.update_(), ...);",
+      "revId": "3a56b31ba0094d75c76e779f35b65f6abdd8a1fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e8e4fdb_8cdd9dcf",
+        "filename": "chrome/browser/resources/chromeos/arc_support/background.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-03T15:09:57Z",
+      "side": 1,
+      "message": "Let\u0027s move these into ProgressBarAnimation ctor, and instead let\u0027s pass the progress-container element to the animation\u0027s ctor.\nInside the ctor, you should be able to find the element by querySelector w/ class name.",
+      "revId": "3a56b31ba0094d75c76e779f35b65f6abdd8a1fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf1f135e_6d9a1aad",
+        "filename": "chrome/browser/resources/chromeos/arc_support/background.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 708,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-03T15:09:57Z",
+      "side": 1,
+      "message": "Could you comment \"error\" is intentionally dropped from here?",
+      "revId": "3a56b31ba0094d75c76e779f35b65f6abdd8a1fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b770754_df7f4d9d",
+        "filename": "chrome/browser/resources/chromeos/arc_support/main.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-08-03T15:09:57Z",
+      "side": 1,
+      "message": "Should this be set 100% always?",
+      "revId": "3a56b31ba0094d75c76e779f35b65f6abdd8a1fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
