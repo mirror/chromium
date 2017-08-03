@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "339b185f_e94a4f75",
+        "filename": "third_party/WebKit/LayoutTests/compositing/overflow/scaled-composited-scroller-position.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-08-03T00:34:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0c725b6c_e50e8dfd",
+      "range": {
+        "startLine": 10,
+        "startChar": 3,
+        "endLine": 10,
+        "endChar": 11
+      },
+      "revId": "6e0dcbc13c6997c280b8829c9f3b1c61727891d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7d17b544_4faf3147",
         "filename": "third_party/WebKit/LayoutTests/compositing/overflow/scaled-composited-scroller-position.html",
         "patchSetId": 2
@@ -36,6 +60,24 @@
       "writtenOn": "2017-08-01T21:26:03Z",
       "side": 1,
       "message": "This looks like another complication because it involves kicking the background to the scrolling contents layer. How about just putting a background on the spacer?",
+      "revId": "6e0dcbc13c6997c280b8829c9f3b1c61727891d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ff07440_befa2680",
+        "filename": "third_party/WebKit/LayoutTests/compositing/overflow/scaled-composited-scroller-position.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-08-03T00:34:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d17b544_4faf3147",
       "revId": "6e0dcbc13c6997c280b8829c9f3b1c61727891d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "483f7d26_cdcd20f4",
+        "filename": "third_party/WebKit/LayoutTests/compositing/overflow/scaled-composited-scroller-position.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-08-03T00:34:05Z",
+      "side": 1,
+      "message": "If the scroller isn\u0027t affected by the contents underneath it it doesn\u0027t change the promotion decision.  It\u0027s not just being a stacking context; it\u0027s the being composited at issue.\nWithout opacity the occluded nature admits a non-fixing dodge: ignoring occluded content in determining compositing reasons.  flackr mentioned work in this area had been done before and may be done again.",
+      "parentUuid": "1ab79b84_6a18d4fd",
+      "revId": "6e0dcbc13c6997c280b8829c9f3b1c61727891d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0c81676a_24d8a608",
         "filename": "third_party/WebKit/LayoutTests/compositing/overflow/scaled-composited-scroller-position.html",
         "patchSetId": 2
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "0de252a4_0ca8c460",
+        "filename": "third_party/WebKit/LayoutTests/compositing/overflow/scaled-composited-scroller-position.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-08-03T00:34:05Z",
+      "side": 1,
+      "message": "Done (It\u0027s unrelated once the space between the areas is driven by the height/width of the filter divs)",
+      "parentUuid": "0c81676a_24d8a608",
+      "revId": "6e0dcbc13c6997c280b8829c9f3b1c61727891d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d8692bc6_cbdbc986",
         "filename": "third_party/WebKit/LayoutTests/compositing/overflow/scaled-composited-scroller-position.html",
         "patchSetId": 2
@@ -87,6 +165,24 @@
       "writtenOn": "2017-08-01T21:26:03Z",
       "side": 1,
       "message": "FYI: There is a simpler trick if the rendering of scrollbar is not in interest.\n::-webkit-scrollbar {\n  width: 0px;\n  height: 0px;\n}\nThough in this particular test IMO we should expect scrollbar to draw identically.",
+      "revId": "6e0dcbc13c6997c280b8829c9f3b1c61727891d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bf7a0ab_2eb45fbf",
+        "filename": "third_party/WebKit/LayoutTests/compositing/overflow/scaled-composited-scroller-position.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000279
+      },
+      "writtenOn": "2017-08-03T00:34:05Z",
+      "side": 1,
+      "message": "That seems like a broader assertion, giving the test more reasons to fail rather than a focused test of a single point.",
+      "parentUuid": "d8692bc6_cbdbc986",
       "revId": "6e0dcbc13c6997c280b8829c9f3b1c61727891d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
