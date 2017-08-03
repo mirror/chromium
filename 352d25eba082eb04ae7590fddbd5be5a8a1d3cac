@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ad904f4_7b8459e1",
+        "filename": "third_party/WebKit/PRESUBMIT.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-03T01:58:54Z",
+      "side": 1,
+      "message": "I\u0027m just curious but what is this white/black list used for?",
+      "revId": "352d25eba082eb04ae7590fddbd5be5a8a1d3cac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd7e7318_e459532a",
+        "filename": "third_party/WebKit/Source/controller/tests/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-08-03T01:58:54Z",
+      "side": 1,
+      "message": "Do we need these include_rules?",
+      "revId": "352d25eba082eb04ae7590fddbd5be5a8a1d3cac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
