@@ -22,6 +22,30 @@
       "revId": "a1c9e3262af4ab7980008e476d6712b1223fab3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4b3a4f2_c02855f0",
+        "filename": "components/simple_url_loader/simple_url_loader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-03T20:54:45Z",
+      "side": 1,
+      "message": "Is there a hard guarantee, that any OK from the original Mojo interface result will arrive strictly after all MOJO_RESULT_OKs?  If so, why?  I don\u0027t think there\u0027s any guarantee that the \"mojo::ScopedDataPipeConsumerHandle\" we receive is using the same Mojo pipe as the URLLoader itself, is there?",
+      "parentUuid": "2f658bc7_d3afbb45",
+      "range": {
+        "startLine": 88,
+        "startChar": 0,
+        "endLine": 100,
+        "endChar": 7
+      },
+      "revId": "a1c9e3262af4ab7980008e476d6712b1223fab3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
