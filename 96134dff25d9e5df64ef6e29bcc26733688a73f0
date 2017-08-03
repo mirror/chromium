@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "811d2a0f_c2736587",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-03T15:15:13Z",
+      "side": 1,
+      "message": "Could this be named something that indicates its meaning, as opposed to what it\u0027s used for?\n\ne.g., is_disjoint_window, or something like that?",
+      "range": {
+        "startLine": 24,
+        "startChar": 55,
+        "endLine": 24,
+        "endChar": 68
+      },
+      "revId": "96134dff25d9e5df64ef6e29bcc26733688a73f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17211266_97019184",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-03T15:15:13Z",
+      "side": 1,
+      "message": "At -\u003e Is, as this could current be interpreted as \"What\u0027s the index when thing X is 0?\"",
+      "range": {
+        "startLine": 38,
+        "startChar": 16,
+        "endLine": 38,
+        "endChar": 20
+      },
+      "revId": "96134dff25d9e5df64ef6e29bcc26733688a73f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0320e121_1f3b7852",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 2244,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-03T15:15:13Z",
+      "side": 1,
+      "message": "Can we move this comment to where we compute report_to_uma?",
+      "range": {
+        "startLine": 2239,
+        "startChar": 2,
+        "endLine": 2244,
+        "endChar": 63
+      },
+      "revId": "96134dff25d9e5df64ef6e29bcc26733688a73f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

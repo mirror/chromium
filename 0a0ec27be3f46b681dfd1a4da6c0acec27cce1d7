@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "56b2f3ff_bdd2b4b9",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-03T15:15:13Z",
+      "side": 1,
+      "message": "Thanks.",
+      "range": {
+        "startLine": 36,
+        "startChar": 9,
+        "endLine": 36,
+        "endChar": 11
+      },
+      "revId": "0a0ec27be3f46b681dfd1a4da6c0acec27cce1d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3470aa2f_7c80030b",
         "filename": "third_party/WebKit/Source/platform/scheduler/base/queueing_time_estimator.cc",
         "patchSetId": 11
@@ -236,6 +259,52 @@
       "writtenOn": "2017-08-02T15:53:08Z",
       "side": 1,
       "message": "We processed 110000ms, so we should report 11 numbers, not 10 (just added an extra 0 at the end). Similarly in the testcase below.",
+      "revId": "0a0ec27be3f46b681dfd1a4da6c0acec27cce1d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7063ff0e_69a8a102",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 2225,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-03T15:15:13Z",
+      "side": 1,
+      "message": "Can we name this something more focused on what the bit means, as opposed to what it\u0027s used for?\n\nPerhaps something like: completed_disjoint_window?",
+      "range": {
+        "startLine": 2225,
+        "startChar": 9,
+        "endLine": 2225,
+        "endChar": 22
+      },
+      "revId": "0a0ec27be3f46b681dfd1a4da6c0acec27cce1d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b7bbd79_4bd86bc1",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 2245,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-03T15:15:13Z",
+      "side": 1,
+      "message": "This comment should probably be moved to where we compute |report_to_uma|.",
+      "range": {
+        "startLine": 2240,
+        "startChar": 2,
+        "endLine": 2245,
+        "endChar": 63
+      },
       "revId": "0a0ec27be3f46b681dfd1a4da6c0acec27cce1d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
