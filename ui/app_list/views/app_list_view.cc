@@ -968,9 +968,13 @@ void AppListView::SetStateFromSearchBoxView(bool search_box_is_empty) {
 void AppListView::UpdateYPositionAndOpacity(int y_position_in_screen,
                                             float background_opacity,
                                             bool is_end_gesture) {
-  gfx::Rect new_widget_bounds = fullscreen_widget_->GetWindowBoundsInScreen();
-  new_widget_bounds.set_y(std::max(y_position_in_screen, 0));
-  fullscreen_widget_->SetBounds(new_widget_bounds);
+  if (is_end_gesture) {
+    SetState(FULLSCREEN_ALL_APPS);
+  } else {
+    gfx::Rect new_widget_bounds = fullscreen_widget_->GetWindowBoundsInScreen();
+    new_widget_bounds.set_y(std::max(y_position_in_screen, 0));
+    fullscreen_widget_->SetBounds(new_widget_bounds);
+  }
 
   app_list_background_shield_->layer()->SetOpacity(background_opacity);
   gfx::Rect work_area_bounds = fullscreen_widget_->GetWorkAreaBoundsInScreen();
