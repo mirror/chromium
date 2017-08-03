@@ -292,9 +292,7 @@ double ProcessMetrics::GetCPUUsage() {
     // not yet received the notification.
     return 0;
   }
-  int64_t system_time =
-      (FileTimeToUTC(kernel_time) + FileTimeToUTC(user_time)) /
-      processor_count_;
+  int64_t system_time = FileTimeToUTC(kernel_time) + FileTimeToUTC(user_time);
   TimeTicks time = TimeTicks::Now();
 
   if (last_system_time_ == 0) {

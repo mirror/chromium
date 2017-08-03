@@ -191,22 +191,17 @@ class BASE_EXPORT ProcessMetrics {
                       size_t* locked_bytes) const;
 #endif
 
-  // Returns the CPU usage in percent since the last time this method or
-  // GetPlatformIndependentCPUUsage() was called. The first time this method
-  // is called it returns 0 and will return the actual CPU info on subsequent
-  // calls. On Windows, the CPU usage value is for all CPUs. So if you have
-  // 2 CPUs and your process is using all the cycles of 1 CPU and not the other
-  // CPU, this method returns 50.
+  // Returns the CPU usage per-core, in percent, since the last time this
+  // method was called. This gives a value in the range of 0 to
+  // (100 * numCPUCores), with a process running continuously on two cores
+  // reported as having 200% CPU usage, for example.
+  // The first time this method is called it returns 0 and will return the
+  // actual CPU info on subsequent calls.
   double GetCPUUsage();
 
   // Returns the number of average idle cpu wakeups per second since the last
   // call.
   int GetIdleWakeupsPerSecond();
-
-  // Same as GetCPUUsage(), but will return consistent values on all platforms
-  // (cancelling the Windows exception mentioned above) by returning a value in
-  // the range of 0 to (100 * numCPUCores) everywhere.
-  double GetPlatformIndependentCPUUsage();
 
   // Retrieves accounting information for all I/O operations performed by the
   // process.
