@@ -34,6 +34,24 @@
       "revId": "fc5557db3edd9b27b727a0d54eabb5ada45a8f8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10524a8b_5aecc7b9",
+        "filename": "third_party/WebKit/Source/core/frame/PerformanceMonitor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-08-03T17:42:27Z",
+      "side": 1,
+      "message": "Thanks for clarification. That makes sense.\nPlease add a comment saying that these are going to be used in a follow-up patch.\nOtherwise someone can come and remove unused fields. ;-)",
+      "parentUuid": "2c3edb66_e40c6bbd",
+      "revId": "fc5557db3edd9b27b727a0d54eabb5ada45a8f8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
