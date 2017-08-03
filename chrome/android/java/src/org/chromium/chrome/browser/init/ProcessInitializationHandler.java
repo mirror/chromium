@@ -18,6 +18,7 @@ import android.view.inputmethod.InputMethodSubtype;
 import com.google.ipc.invalidation.external.client.android.service.AndroidLogger;
 
 import org.chromium.base.ApiCompatibilityUtils;
+import org.chromium.base.BuildInfo;
 import org.chromium.base.CommandLine;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.Log;
@@ -402,6 +403,13 @@ public class ProcessInitializationHandler {
                 BackgroundTaskSchedulerFactory.getScheduler().checkForOSUpgrade(application);
             }
         });
+
+        deferredStartupHandler.addDeferredTask(new Runnable() {
+            @Override
+            public void run() {
+                logEGLShaderCacheSizeHistogram();
+            }
+        });
     }
 
     private void initChannelsAsync() {
@@ -642,5 +650,40 @@ public class ProcessInitializationHandler {
             boolean match = systemLocale.getLanguage().equalsIgnoreCase(keyboardLanguage);
             RecordHistogram.recordBooleanHistogram("InputMethod.MatchesSystemLanguage", match);
         }
+    }
+
+    /**
+     * Logs a histogram with the size of the Android EGL shader cache.
+     */
+    private static void logEGLShaderCacheSizeHistogram() {
+        Context cacheContext;
+        // On Android N+ this cache is stored in the protected storage context.
+        if (BuildInfo.isAtLeastN()) {
+            cacheContext =
+                    ContextUtils.getApplicationContext().createDeviceProtectedStorageContext();
+        } else {
+            cacheContext = ContextUtils.getApplicationContext();
+        }
+        // Make cacheContext final to pass to the AsyncTask.
+        final Context finalCacheContext = cacheContext;
+
+        // Must log async, as we're doing a file access.
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... unused) {
+                File codeCacheDir = finalCacheContext.getCodeCacheDir();
+                if (codeCacheDir == null) {
+                    return null;
+                }
+                final File cacheFile = new File(codeCacheDir, "com.android.opengl.shaders_cache");
+                if (!cacheFile.exists()) {
+                    return null;
+                }
+                String histogramName = "Memory.Experimental.Browser.EGLShaderCacheSize.Android";
+                RecordHistogram.recordMemoryKBHistogram(histogramName, (int) cacheFile.length());
+                return null;
+            }
+        }
+                .executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 }
