@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33680a62_7fdefb0c",
+        "filename": "third_party/WebKit/LayoutTests/virtual/color_space/fast/canvas/color-space/canvas-getImageData-linear-rgb.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-08-03T19:14:53Z",
+      "side": 1,
+      "message": "remove whitespace",
+      "range": {
+        "startLine": 27,
+        "startChar": 32,
+        "endLine": 27,
+        "endChar": 33
+      },
+      "revId": "663b39df09cc2154f5919abcd6755ddad95f6ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1225a37d_f807010a",
+        "filename": "third_party/WebKit/LayoutTests/virtual/color_space/fast/canvas/color-space/canvas-getImageData-linear-rgb.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-08-03T19:14:53Z",
+      "side": 1,
+      "message": "whitespace",
+      "range": {
+        "startLine": 65,
+        "startChar": 23,
+        "endLine": 65,
+        "endChar": 24
+      },
+      "revId": "663b39df09cc2154f5919abcd6755ddad95f6ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aed0fe1f_e3297314",
+        "filename": "third_party/WebKit/LayoutTests/virtual/color_space/fast/canvas/color-space/canvas-getImageData-p3.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-08-03T19:14:53Z",
+      "side": 1,
+      "message": "whitespace here and below.",
+      "range": {
+        "startLine": 6,
+        "startChar": 32,
+        "endLine": 6,
+        "endChar": 33
+      },
+      "revId": "663b39df09cc2154f5919abcd6755ddad95f6ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27fd20cf_bb41a5aa",
+        "filename": "third_party/WebKit/LayoutTests/virtual/color_space/fast/canvas/color-space/canvas-getImageData-rec2020.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-08-03T19:14:53Z",
+      "side": 1,
+      "message": "whitespaces here and below",
+      "range": {
+        "startLine": 8,
+        "startChar": 48,
+        "endLine": 8,
+        "endChar": 49
+      },
+      "revId": "663b39df09cc2154f5919abcd6755ddad95f6ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46e57ec2_5e132ea2",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 671,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-08-03T19:14:53Z",
+      "side": 1,
+      "message": "Don\u0027t we also have the same double gamma problem with ColorCanvasExtensionEnabled?",
+      "range": {
+        "startLine": 671,
+        "startChar": 25,
+        "endLine": 671,
+        "endChar": 41
+      },
+      "revId": "663b39df09cc2154f5919abcd6755ddad95f6ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5b0ac58_79920e0d",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridge.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-08-03T19:14:53Z",
+      "side": 1,
+      "message": "I think this should be ColorCorrectRenderingEnabled()",
+      "range": {
+        "startLine": 166,
+        "startChar": 25,
+        "endLine": 166,
+        "endChar": 51
+      },
+      "revId": "663b39df09cc2154f5919abcd6755ddad95f6ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b37034b3_e5aafab2",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasColorParams.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-08-03T19:14:53Z",
+      "side": 1,
+      "message": "I don\u0027t think the value of color_space_ should matter here.",
+      "range": {
+        "startLine": 71,
+        "startChar": 9,
+        "endLine": 71,
+        "endChar": 21
+      },
+      "revId": "663b39df09cc2154f5919abcd6755ddad95f6ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7ceb321_036cdc39",
+        "filename": "third_party/WebKit/Source/platform/graphics/CanvasColorParams.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-08-03T19:14:53Z",
+      "side": 1,
+      "message": "I had a bit of trouble decyphering the call sites. I think this could be made more readable. I think it should be ColorCorrectRenderingInSRGBOnly() vs ColorCorrectRenderingInAnyColorSpace()",
+      "range": {
+        "startLine": 52,
+        "startChar": 14,
+        "endLine": 52,
+        "endChar": 30
+      },
+      "revId": "663b39df09cc2154f5919abcd6755ddad95f6ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6402b4aa_fd671fe7",
+        "filename": "third_party/WebKit/Source/platform/graphics/UnacceleratedImageBufferSurface.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-08-03T19:14:53Z",
+      "side": 1,
+      "message": "we need to do the xform canvas thing even when all color space are supported.  \"srgb\" should behave the same regardless of whether or not canvas color space extension is enabled.",
+      "range": {
+        "startLine": 54,
+        "startChar": 5,
+        "endLine": 54,
+        "endChar": 28
+      },
+      "revId": "663b39df09cc2154f5919abcd6755ddad95f6ed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
