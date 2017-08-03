@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d0c3ba4b_e116fc22",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_tile_saver.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-08-03T15:40:16Z",
+      "side": 1,
+      "message": "\"The UserDefaults class provides convenience methods for accessing common types [...] If you want to store any other type of object, you should typically archive it to create an instance of NSData.\"\nfrom https://developer.apple.com/documentation/foundation/userdefaults?language\u003dobjc\n\nIs there a simpler way to do this?",
+      "parentUuid": "1a49d01d_99d240f6",
+      "range": {
+        "startLine": 164,
+        "startChar": 18,
+        "endLine": 164,
+        "endChar": 33
+      },
+      "revId": "b92f6a543efa9cbbe276bf922a8eb724e33dfc88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "919a7723_cc62064e",
         "filename": "ios/chrome/content_widget_extension/content_widget_view.mm",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "1b192113_d03621d3",
+        "filename": "ios/chrome/content_widget_extension/content_widget_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-08-03T15:40:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "919a7723_cc62064e",
+      "range": {
+        "startLine": 78,
+        "startChar": 11,
+        "endLine": 78,
+        "endChar": 12
+      },
+      "revId": "b92f6a543efa9cbbe276bf922a8eb724e33dfc88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82928aa7_3996d961",
         "filename": "ios/chrome/content_widget_extension/content_widget_view.mm",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "b92f6a543efa9cbbe276bf922a8eb724e33dfc88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "383771de_a6f60e2d",
+        "filename": "ios/chrome/content_widget_extension/content_widget_view.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-08-03T15:40:16Z",
+      "side": 1,
+      "message": "They are not always the same size; sites can be less than mostvisitedtiles. I handle this case. I don\u0027t *think* it can be more, but just in case I\u0027ve added a check.",
+      "parentUuid": "82928aa7_3996d961",
+      "range": {
+        "startLine": 155,
+        "startChar": 41,
+        "endLine": 155,
+        "endChar": 57
+      },
+      "revId": "b92f6a543efa9cbbe276bf922a8eb724e33dfc88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
