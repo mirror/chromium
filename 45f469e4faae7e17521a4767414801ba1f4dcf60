@@ -16,6 +16,24 @@
       "revId": "45f469e4faae7e17521a4767414801ba1f4dcf60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b9b1490_bc36bb8c",
+        "filename": "cc/paint/paint_op_writer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-03T21:36:59Z",
+      "side": 1,
+      "message": "Hmm, ok I changed it. I also subtracted memory again because I do want to check it against bytes remaining first. Let me know if this is better.",
+      "parentUuid": "628d6b55_7c527200",
+      "revId": "45f469e4faae7e17521a4767414801ba1f4dcf60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
