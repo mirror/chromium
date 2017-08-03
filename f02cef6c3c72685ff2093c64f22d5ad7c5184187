@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "48f98006_c93bf6e8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-03T19:56:38Z",
+      "side": 1,
+      "message": "Indeed, fixed.",
+      "parentUuid": "2e08aa79_45aa6118",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 18
+      },
+      "revId": "f02cef6c3c72685ff2093c64f22d5ad7c5184187",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4ead35f_09a43784",
         "filename": "/COMMIT_MSG",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "a0e726ec_99175ef1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-03T19:56:38Z",
+      "side": 1,
+      "message": "Ah! That\u0027s the one. Updated to reference the bug, and updated the bug to reference the spec question.",
+      "parentUuid": "e4ead35f_09a43784",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 24,
+        "endChar": 71
+      },
+      "revId": "f02cef6c3c72685ff2093c64f22d5ad7c5184187",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee130285_733a871a",
         "filename": "third_party/WebKit/Source/core/dom/ElementTest.cpp",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2017-08-03T09:30:41Z",
       "side": 1,
       "message": "Having \u0027width\u0027 !\u003d \u0027height\u0027 adds an additional point to the checklist in cases like. Optional.",
+      "range": {
+        "startLine": 276,
+        "startChar": 2,
+        "endLine": 277,
+        "endChar": 53
+      },
+      "revId": "f02cef6c3c72685ff2093c64f22d5ad7c5184187",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0bb7c6b1_37f5f016",
+        "filename": "third_party/WebKit/Source/core/dom/ElementTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-08-03T19:56:38Z",
+      "side": 1,
+      "message": "I agree, changed from 100 to a nice round prime: 71.",
+      "parentUuid": "ee130285_733a871a",
       "range": {
         "startLine": 276,
         "startChar": 2,
