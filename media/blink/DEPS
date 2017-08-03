@@ -5,6 +5,7 @@ include_rules = [
   "+components/scheduler",  # Only allowed in tests.
   "+gin",
   "+media",
+  "+mojo/public/cpp/bindings",
   "+mojo/edk/embedder",
   "+mojo/public/cpp/bindings",
   "+net/base",

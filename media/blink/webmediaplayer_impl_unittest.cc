@@ -250,7 +250,8 @@ class WebMediaPlayerImplTest : public testing::Test {
             RequestRoutingTokenCallback(), nullptr,
             kMaxKeyframeDistanceToDisableBackgroundVideo,
             kMaxKeyframeDistanceToDisableBackgroundVideoMSE, false, false,
-            provider_.get()));
+            provider_.get(),
+            WebMediaPlayerParams::CreateCapabilitiesRecorderCB()));
   }
 
   ~WebMediaPlayerImplTest() override {
