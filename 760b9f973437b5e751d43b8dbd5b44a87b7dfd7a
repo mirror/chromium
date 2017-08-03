@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f88fec4_bde5114d",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 862,
+      "author": {
+        "id": 1106664
+      },
+      "writtenOn": "2017-08-03T02:16:57Z",
+      "side": 1,
+      "message": "Maybe using a reverse_iterator here, event_path.rbegin(), may be more succinct?",
+      "revId": "760b9f973437b5e751d43b8dbd5b44a87b7dfd7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8614d5fa_bebff7fc",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 891,
+      "author": {
+        "id": 1106664
+      },
+      "writtenOn": "2017-08-03T02:16:57Z",
+      "side": 1,
+      "message": "Maybe just\n\nreturn event.defaultPrevented();\n\nis more succinct?",
+      "revId": "760b9f973437b5e751d43b8dbd5b44a87b7dfd7a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
