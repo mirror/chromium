@@ -72,15 +72,23 @@ void WaitForContainerReadyScreenHandler::Show() {
     return;
   }
 
+  if (shown_) {
+    CallJS("setScreenHidden", false);
+    return;
+  }
+
   timer_.Start(
       FROM_HERE, kWaitingTimeout,
       base::Bind(&WaitForContainerReadyScreenHandler::OnMaxContainerWaitTimeout,
                  weak_ptr_factory_.GetWeakPtr()));
 
+  shown_ = true;
   ShowScreen(kScreenId);
 }
 
-void WaitForContainerReadyScreenHandler::Hide() {}
+void WaitForContainerReadyScreenHandler::Hide() {
+  CallJS("setScreenHidden", true);
+}
 
 void WaitForContainerReadyScreenHandler::OnPackageListInitialRefreshed() {
   is_app_list_ready_ = true;
