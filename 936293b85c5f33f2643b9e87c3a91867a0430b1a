@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1765ec21_19064804",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-08-03T23:22:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b840d87_ac8ef581",
+      "revId": "936293b85c5f33f2643b9e87c3a91867a0430b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "172f367d_9adba290",
         "filename": "content/browser/loader/resource_scheduler.h",
         "patchSetId": 6
@@ -30,6 +48,30 @@
       "writtenOn": "2017-08-03T21:46:06Z",
       "side": 1,
       "message": "why is this friend needed? Is it because RS can access GetConfig()?",
+      "range": {
+        "startLine": 166,
+        "startChar": 17,
+        "endLine": 166,
+        "endChar": 34
+      },
+      "revId": "936293b85c5f33f2643b9e87c3a91867a0430b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "828bb91b_75359246",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-08-03T23:22:03Z",
+      "side": 1,
+      "message": "Yes, and then it exposes it for tests.",
+      "parentUuid": "172f367d_9adba290",
       "range": {
         "startLine": 166,
         "startChar": 17,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "4a5a2583_c4e25225",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-08-03T23:22:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d9ce21e_416e6529",
+      "range": {
+        "startLine": 169,
+        "startChar": 45,
+        "endLine": 169,
+        "endChar": 72
+      },
+      "revId": "936293b85c5f33f2643b9e87c3a91867a0430b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66e662ac_d3a7446c",
         "filename": "content/browser/loader/resource_scheduler.h",
         "patchSetId": 6
@@ -85,6 +151,30 @@
       "revId": "936293b85c5f33f2643b9e87c3a91867a0430b1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a15e9375_74991422",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-08-03T23:22:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66e662ac_d3a7446c",
+      "range": {
+        "startLine": 175,
+        "startChar": 36,
+        "endLine": 175,
+        "endChar": 0
+      },
+      "revId": "936293b85c5f33f2643b9e87c3a91867a0430b1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
