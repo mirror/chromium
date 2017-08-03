@@ -4,8 +4,11 @@
 
 #import "ios/chrome/content_widget_extension/content_widget_view.h"
 
+#include "base/logging.h"
 #import "ios/chrome/browser/ui/favicon/favicon_view.h"
+#import "ios/chrome/browser/ui/ntp/ntp_tile.h"
 #import "ios/chrome/browser/ui/util/constraints_ui_util.h"
+#include "ios/chrome/common/app_group/app_group_constants.h"
 #import "ios/chrome/content_widget_extension/most_visited_tile_view.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -37,13 +40,17 @@ const int kIconsPerRow = 4;
 @property(nonatomic, readonly) BOOL shouldShowSecondRow;
 // The number of sites to display.
 @property(nonatomic, assign) int siteCount;
+// The most visited tile views; tiles remain in this array even when hidden.
+@property(nonatomic, strong) NSArray<MostVisitedTileView*>* mostVisitedTiles;
+// The target for actions in the view.
+@property(nonatomic, weak) id<ContentWidgetViewActionTarget> target;
 
 // Sets up the widget UI for an expanded or compact appearance based on
 // |compact|.
 - (void)createUI:(BOOL)compact;
 
-// Creates the view for a row of 4 sites.
-- (UIView*)createRowOfSites;
+// Arranges |tiles| horizontally in a view and returns the view.
+- (UIView*)createRowFromTiles:(NSArray<MostVisitedTileView*>*)tiles;
 
 // Returns the height to use for the first row, depending on the display mode.
 - (CGFloat)firstRowHeight:(BOOL)compact;
@@ -61,9 +68,14 @@ const int kIconsPerRow = 4;
 @synthesize compactHeight = _compactHeight;
 @synthesize firstRowHeightConstraint = _firstRowHeightConstraint;
 @synthesize siteCount = _siteCount;
+@synthesize mostVisitedTiles = _mostVisitedTiles;
+@synthesize target = _target;
 
-- (instancetype)initWithCompactHeight:(CGFloat)compactHeight
-                     initiallyCompact:(BOOL)compact {
+- (instancetype)initWithActionTarget:(id<ContentWidgetViewActionTarget>)target
+                       compactHeight:(CGFloat)compactHeight
+                    initiallyCompact:(BOOL)compact {
+  DCHECK(target);
+  _target = target;
   self = [super initWithFrame:CGRectZero];
   if (self) {
     _compactHeight = compactHeight;
@@ -85,8 +97,18 @@ const int kIconsPerRow = 4;
 #pragma mark - UI creation
 
 - (void)createUI:(BOOL)compact {
-  _firstRow = [self createRowOfSites];
-  _secondRow = [self createRowOfSites];
+  NSMutableArray* tiles = [[NSMutableArray alloc] init];
+  for (int i = 0; i < kIconsPerRow * 2; i++) {
+    [tiles addObject:[[MostVisitedTileView alloc] init]];
+  }
+  _mostVisitedTiles = tiles;
+
+  _firstRow = [self
+      createRowFromTiles:[tiles
+                             subarrayWithRange:NSMakeRange(0, kIconsPerRow)]];
+  _secondRow = [self
+      createRowFromTiles:[tiles subarrayWithRange:NSMakeRange(kIconsPerRow,
+                                                              kIconsPerRow)]];
 
   [self addSubview:_firstRow];
   [self addSubview:_secondRow];
@@ -105,14 +127,8 @@ const int kIconsPerRow = 4;
   ]];
 }
 
-- (UIView*)createRowOfSites {
-  NSMutableArray<MostVisitedTileView*>* cells = [[NSMutableArray alloc] init];
-  for (int i = 0; i < kIconsPerRow; i++) {
-    cells[i] = [[MostVisitedTileView alloc] init];
-    cells[i].translatesAutoresizingMaskIntoConstraints = NO;
-  }
-
-  UIStackView* stack = [[UIStackView alloc] initWithArrangedSubviews:cells];
+- (UIView*)createRowFromTiles:(NSArray<MostVisitedTileView*>*)tiles {
+  UIStackView* stack = [[UIStackView alloc] initWithArrangedSubviews:tiles];
   stack.translatesAutoresizingMaskIntoConstraints = NO;
   stack.axis = UILayoutConstraintAxisHorizontal;
   stack.alignment = UIStackViewAlignmentTop;
@@ -132,6 +148,48 @@ const int kIconsPerRow = 4;
   ]];
 
   return container;
+}
+
+- (void)updateSites:(NSDictionary<NSURL*, NTPTile*>*)sites {
+  for (NTPTile* site in sites.objectEnumerator) {
+    MostVisitedTileView* tileView = self.mostVisitedTiles[site.position];
+    tileView.titleLabel.text = site.title;
+    tileView.URL = site.URL;
+
+    FaviconAttributes* attributes = nil;
+
+    if (site.faviconPath) {
+      NSURL* filePath = [app_group::ContentWidgetFaviconsFolder()
+          URLByAppendingPathComponent:site.faviconPath];
+      UIImage* faviconImage = [UIImage imageWithContentsOfFile:filePath.path];
+      if (faviconImage) {
+        attributes = [FaviconAttributes attributesWithImage:faviconImage];
+      }
+    } else {
+      attributes = [FaviconAttributes
+          attributesWithMonogram:site.fallbackMonogram
+                       textColor:site.fallbackTextColor
+                 backgroundColor:site.fallbackBackgroundColor
+          defaultBackgroundColor:site.fallbackIsDefaultColor];
+    }
+    [tileView.faviconView configureWithAttributes:attributes];
+    tileView.alpha = 1;
+    tileView.userInteractionEnabled = YES;
+    [tileView addTarget:self.target
+                  action:@selector(openURL:)
+        forControlEvents:UIControlEventTouchUpInside];
+    tileView.accessibilityLabel = site.title;
+  }
+
+  self.siteCount = sites.count;
+  [self hideEmptyTiles];
+}
+
+- (void)hideEmptyTiles {
+  for (int i = self.siteCount; i < 2 * kIconsPerRow; i++) {
+    self.mostVisitedTiles[i].alpha = 0;
+    self.mostVisitedTiles[i].userInteractionEnabled = NO;
+  }
 }
 
 - (CGFloat)firstRowHeight:(BOOL)compact {
