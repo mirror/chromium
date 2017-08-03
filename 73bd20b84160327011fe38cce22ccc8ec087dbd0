@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3a8ced9_4673c3fd",
+        "filename": "content/browser/renderer_host/input/synthetic_mouse_driver.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-08-03T14:47:36Z",
+      "side": 1,
+      "message": "Should this be a Buttons, instead of a vector? We just want to represent a set of buttons, right?",
+      "range": {
+        "startLine": 42,
+        "startChar": 36,
+        "endLine": 42,
+        "endChar": 42
+      },
+      "revId": "73bd20b84160327011fe38cce22ccc8ec087dbd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
