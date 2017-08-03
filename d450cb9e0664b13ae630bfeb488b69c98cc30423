@@ -22,6 +22,30 @@
       "revId": "d450cb9e0664b13ae630bfeb488b69c98cc30423",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3298d16b_4c762516",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 80033,
+      "author": {
+        "id": 1230085
+      },
+      "writtenOn": "2017-08-03T16:30:08Z",
+      "side": 1,
+      "message": "Good catch, will do.",
+      "parentUuid": "eb45fc5a_3803c38d",
+      "range": {
+        "startLine": 80033,
+        "startChar": 18,
+        "endLine": 80033,
+        "endChar": 26
+      },
+      "revId": "d450cb9e0664b13ae630bfeb488b69c98cc30423",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
