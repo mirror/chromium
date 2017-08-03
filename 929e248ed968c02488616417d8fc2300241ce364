@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3a5b2715_807cc379",
+        "filename": "ios/components/captive_portal/features.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-08-03T13:29:27Z",
+      "side": 1,
+      "message": "same question here?",
+      "range": {
+        "startLine": 9,
+        "startChar": 4,
+        "endLine": 9,
+        "endChar": 11
+      },
+      "revId": "929e248ed968c02488616417d8fc2300241ce364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1048fafd_075f620a",
+        "filename": "ios/components/captive_portal/features.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-08-03T13:29:27Z",
+      "side": 1,
+      "message": "Why the test? this file is in ios/ ,so should be included only by ios code?",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 19
+      },
+      "revId": "929e248ed968c02488616417d8fc2300241ce364",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
