@@ -16,6 +16,24 @@
       "revId": "fe2e06a06c1836c27a84dbfdc61c6952118aeb06",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c7d2e62_b1c94c18",
+        "filename": "tools/gritsettings/resource_ids",
+        "patchSetId": 7
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-08-03T23:30:17Z",
+      "side": 1,
+      "message": "That makes sense, I\u0027ve bumped this up.",
+      "parentUuid": "4b6d07c0_ce8867da",
+      "revId": "fe2e06a06c1836c27a84dbfdc61c6952118aeb06",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
