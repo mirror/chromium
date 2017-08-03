@@ -25,8 +25,7 @@
 #include "storage/browser/quota/quota_manager.h"
 #include "storage/browser/test/mock_blob_url_request_context.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "third_party/leveldatabase/src/helpers/memenv/memenv.h"
-#include "third_party/leveldatabase/src/include/leveldb/env.h"
+#include "third_party/leveldatabase/env_chromium.h"
 
 using content::MockBlobURLRequestContext;
 using content::ScopedTextBlob;
@@ -40,7 +39,8 @@ class LocalFileChangeTrackerTest : public testing::Test {
  public:
   LocalFileChangeTrackerTest()
       : thread_bundle_(content::TestBrowserThreadBundle::IO_MAINLOOP),
-        in_memory_env_(leveldb::NewMemEnv(leveldb::Env::Default())),
+        in_memory_env_(leveldb_env::NewMemEnv(leveldb::Env::Default(),
+                                              "LocalFileChangeTrackerTest")),
         file_system_(GURL("http://example.com"),
                      in_memory_env_.get(),
                      base::ThreadTaskRunnerHandle::Get().get(),

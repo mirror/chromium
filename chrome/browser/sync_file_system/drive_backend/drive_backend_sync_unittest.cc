@@ -43,8 +43,7 @@
 #include "net/url_request/url_request_context_getter.h"
 #include "storage/browser/fileapi/file_system_context.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "third_party/leveldatabase/src/helpers/memenv/memenv.h"
-#include "third_party/leveldatabase/src/include/leveldb/env.h"
+#include "third_party/leveldatabase/env_chromium.h"
 
 #define FPL(a) FILE_PATH_LITERAL(a)
 
@@ -87,7 +86,8 @@ class DriveBackendSyncTest : public testing::Test,
 
   void SetUp() override {
     ASSERT_TRUE(base_dir_.CreateUniqueTempDir());
-    in_memory_env_.reset(leveldb::NewMemEnv(leveldb::Env::Default()));
+    in_memory_env_.reset(leveldb_env::NewMemEnv(leveldb::Env::Default(),
+                                                "DriveBackendSyncTest"));
 
     io_task_runner_ = content::BrowserThread::GetTaskRunnerForThread(
         content::BrowserThread::IO);

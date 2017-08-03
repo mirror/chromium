@@ -31,6 +31,7 @@
 #include "base/trace_event/process_memory_dump.h"
 #include "base/trace_event/trace_event.h"
 #include "third_party/leveldatabase/chromium_logger.h"
+#include "third_party/leveldatabase/src/helpers/memenv/memenv.h"
 #include "third_party/leveldatabase/src/include/leveldb/options.h"
 #include "third_party/re2/src/re2/re2.h"
 
@@ -1174,6 +1175,182 @@ class DBTracker::TrackedDBImpl : public base::LinkNode<TrackedDBImpl>,
   std::unique_ptr<leveldb::DB> db_;
 };
 
+// Reports live memory Env's to memory-infra. For each live Env the following
+// information is reported:
+// 1. Instance pointer (to disambiguate Env's).
+// 2. Memory taken by the Env.
+// 3. The name of the Env (when not in BACKGROUND mode to avoid exposing
+//    PIIs in slow reports).
+//
+// Example report (as seen after clicking "mememv" in "Overview" pane
+// in Chrome tracing UI):
+//
+// Component             size          name
+// ---------------------------------------------------------------------------
+// memenv                204.4 KiB
+//   0x7FE70F2040A0      4.0 KiB       leveldb-service
+//   0x7FE70F530D80      188.4 KiB     indexed-db
+//   0x7FE71442F270      4.0 KiB       leveldb-proto
+//   0x7FE71471EC50      8.0 KiB       service-worker
+//
+class MemEnvTracker::MemoryDumpProvider
+    : public base::trace_event::MemoryDumpProvider {
+ public:
+  bool OnMemoryDump(const base::trace_event::MemoryDumpArgs& args,
+                    base::trace_event::ProcessMemoryDump* pmd) override {
+    // Don't dump in background mode ("from the field") until whitelisted.
+    if (args.level_of_detail ==
+        base::trace_event::MemoryDumpLevelOfDetail::BACKGROUND) {
+      return true;
+    }
+
+    auto env_visitor = [](const base::trace_event::MemoryDumpArgs& args,
+                          base::trace_event::ProcessMemoryDump* pmd,
+                          TrackedInMemoryEnv* env) {
+      std::string env_dump_name = MemEnvTracker::GetMemoryDumpName(env);
+      auto* env_dump = pmd->CreateAllocatorDump(env_dump_name.c_str());
+
+      env_dump->AddScalar(base::trace_event::MemoryAllocatorDump::kNameSize,
+                          base::trace_event::MemoryAllocatorDump::kUnitsBytes,
+                          env->size());
+
+      if (args.level_of_detail !=
+          base::trace_event::MemoryDumpLevelOfDetail::BACKGROUND) {
+        env_dump->AddString("name", "", env->name());
+      }
+
+      const char* system_allocator_name =
+          base::trace_event::MemoryDumpManager::GetInstance()
+              ->system_allocator_pool_name();
+      if (system_allocator_name) {
+        pmd->AddSuballocation(env_dump->guid(), system_allocator_name);
+      }
+    };
+
+    MemEnvTracker::GetInstance()->VisitEnvs(
+        base::BindRepeating(env_visitor, args, base::Unretained(pmd)));
+    return true;
+  }
+};
+
+MemEnvTracker::TrackedInMemoryEnv::TrackedInMemoryEnv(MemEnvTracker* tracker,
+                                                      leveldb::Env* base_env,
+                                                      const std::string& name)
+    : EnvWrapper(base_env),
+      base_env_(base_env),
+      tracker_(tracker),
+      name_(name) {
+  tracker_->EnvCreated(this);
+}
+
+MemEnvTracker::TrackedInMemoryEnv::~TrackedInMemoryEnv() {
+  tracker_->EnvDestroyed(this);
+}
+
+leveldb::Status MemEnvTracker::TrackedInMemoryEnv::NewWritableFile(
+    const std::string& f,
+    leveldb::WritableFile** r) {
+  leveldb::Status s = leveldb::EnvWrapper::NewWritableFile(f, r);
+  if (s.ok()) {
+    base::AutoLock lock(files_lock_);
+    file_names_.insert(f);
+  }
+  return s;
+}
+
+leveldb::Status MemEnvTracker::TrackedInMemoryEnv::NewAppendableFile(
+    const std::string& f,
+    leveldb::WritableFile** r) {
+  leveldb::Status s = leveldb::EnvWrapper::NewAppendableFile(f, r);
+  if (s.ok()) {
+    base::AutoLock lock(files_lock_);
+    file_names_.insert(f);
+  }
+  return s;
+}
+
+leveldb::Status MemEnvTracker::TrackedInMemoryEnv::DeleteFile(
+    const std::string& fname) {
+  leveldb::Status s = leveldb::EnvWrapper::DeleteFile(fname);
+  if (s.ok()) {
+    base::AutoLock lock(files_lock_);
+    DCHECK(base::ContainsKey(file_names_, fname));
+    file_names_.erase(fname);
+  }
+  return s;
+}
+
+leveldb::Status MemEnvTracker::TrackedInMemoryEnv::RenameFile(
+    const std::string& src,
+    const std::string& target) {
+  leveldb::Status s = leveldb::EnvWrapper::RenameFile(src, target);
+  if (s.ok()) {
+    base::AutoLock lock(files_lock_);
+    file_names_.erase(src);
+    file_names_.insert(target);
+  }
+  return s;
+}
+
+uint64_t MemEnvTracker::TrackedInMemoryEnv::size() {
+  base::AutoLock lock(files_lock_);
+  uint64_t total_size = 0;
+  for (const std::string& fname : file_names_) {
+    uint64_t file_size;
+    leveldb::Status s = GetFileSize(fname, &file_size);
+    DCHECK(s.ok());
+    if (s.ok()) {
+      // Roughly approximating the size of leveldb::FileState in memenv.cc
+      total_size += file_size + fname.size() * sizeof(char) + sizeof(int) +
+                    sizeof(uint64_t) + sizeof(leveldb::port::Mutex);
+    }
+  }
+  return total_size;
+}
+
+MemEnvTracker::MemEnvTracker() : mdp_(new MemoryDumpProvider()) {
+  base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
+      mdp_.get(), "LevelDB", nullptr);
+}
+
+MemEnvTracker::~MemEnvTracker() {
+  NOTREACHED();  // MemEnvTracker is a singleton
+}
+
+void MemEnvTracker::EnvCreated(TrackedInMemoryEnv* env) {
+  base::AutoLock lock(env_lock_);
+  envs_.Append(env);
+}
+
+void MemEnvTracker::EnvDestroyed(TrackedInMemoryEnv* env) {
+  base::AutoLock lock(env_lock_);
+  env->RemoveFromList();
+}
+
+std::string MemEnvTracker::GetMemoryDumpName(leveldb::Env* tracked_env) {
+  return base::StringPrintf("memenv/0x%" PRIXPTR,
+                            reinterpret_cast<uintptr_t>(tracked_env));
+}
+
+leveldb::Env* MemEnvTracker::NewMemEnv(leveldb::Env* base_env,
+                                       const std::string& name) {
+  // TrackedInMemoryEnv ctor adds the instance to the tracker.
+  return new TrackedInMemoryEnv(GetInstance(), leveldb::NewMemEnv(base_env),
+                                name);
+}
+
+void MemEnvTracker::VisitEnvs(const EnvVisitor& visitor) {
+  base::AutoLock lock(env_lock_);
+  for (auto* i = envs_.head(); i != envs_.end(); i = i->next())
+    visitor.Run(i->value());
+}
+
+// static
+MemEnvTracker* MemEnvTracker::GetInstance() {
+  static MemEnvTracker* instance = new MemEnvTracker();
+  return instance;
+}
+
 // Reports live databases to memory-infra. For each live database the following
 // information is reported:
 // 1. Instance pointer (to disambiguate databases).
@@ -1301,6 +1478,10 @@ leveldb::Status OpenDB(const leveldb::Options& options,
     dbptr->reset(tracked_db);
   }
   return status;
+}
+
+leveldb::Env* NewMemEnv(leveldb::Env* base_env, const std::string& name) {
+  return MemEnvTracker::GetInstance()->NewMemEnv(base_env, name);
 }
 
 }  // namespace leveldb_env

@@ -20,9 +20,7 @@
 #include "content/browser/service_worker/service_worker_metrics.h"
 #include "content/common/service_worker/service_worker_utils.h"
 #include "third_party/leveldatabase/env_chromium.h"
-#include "third_party/leveldatabase/src/helpers/memenv/memenv.h"
 #include "third_party/leveldatabase/src/include/leveldb/db.h"
-#include "third_party/leveldatabase/src/include/leveldb/env.h"
 #include "third_party/leveldatabase/src/include/leveldb/write_batch.h"
 #include "url/origin.h"
 
@@ -1224,7 +1222,8 @@ ServiceWorkerDatabase::Status ServiceWorkerDatabase::LazyOpen(
   options.create_if_missing = create_if_missing;
   options.reuse_logs = leveldb_env::kDefaultLogReuseOptionValue;
   if (IsDatabaseInMemory()) {
-    env_.reset(leveldb::NewMemEnv(leveldb::Env::Default()));
+    env_.reset(
+        leveldb_env::NewMemEnv(leveldb::Env::Default(), "service-worker"));
     options.env = env_.get();
   } else {
     options.env = g_service_worker_env.Pointer();

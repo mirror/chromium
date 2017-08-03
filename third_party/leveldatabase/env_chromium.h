@@ -293,6 +293,82 @@ class DBTracker {
   DISALLOW_COPY_AND_ASSIGN(DBTracker);
 };
 
+class MemEnvTracker {
+ private:
+  class TrackedInMemoryEnv : public leveldb::EnvWrapper,
+                             public base::LinkNode<TrackedInMemoryEnv> {
+   public:
+    TrackedInMemoryEnv(MemEnvTracker* tracker,
+                       leveldb::Env* base_env,
+                       const std::string& name);
+    virtual ~TrackedInMemoryEnv();
+
+    leveldb::Status NewWritableFile(const std::string& f,
+                                    leveldb::WritableFile** r) override;
+    leveldb::Status NewAppendableFile(const std::string& f,
+                                      leveldb::WritableFile** r) override;
+    leveldb::Status DeleteFile(const std::string& fname) override;
+    leveldb::Status RenameFile(const std::string& src,
+                               const std::string& target) override;
+
+    const std::string& name() const { return name_; }
+    uint64_t size();
+
+   private:
+    std::unique_ptr<leveldb::Env> base_env_;  // The memory Env to track.
+    MemEnvTracker* tracker_;
+    const std::string name_;
+    base::Lock files_lock_;
+    std::set<std::string> file_names_;
+  };
+
+ public:
+  class MemoryDumpProvider;
+
+  using EnvVisitor = base::RepeatingCallback<void(TrackedInMemoryEnv*)>;
+
+  // MemEnvTracker singleton instance.
+  static MemEnvTracker* GetInstance();
+
+  // Returns name of memory-infra dump for |tracked_env|. Can be used to attach
+  // additional info to the Env dump, or to properly attribute memory
+  // usage in memory dump providers that also dump |tracked_env|.
+  // Note that |tracked_env| should be a live Env instance produced by
+  // NewMemEnv() method or leveldb_env::NewMemEnv() function.
+  static std::string GetMemoryDumpName(leveldb::Env* tracked_env);
+
+  // Creates a new in-memory Env and starts tracking it. As long as the created
+  // Env is alive (i.e. its instance is not destroyed) the Env is exposed to
+  // memory-infra and is enumerated by VisitEnvs() method. This function is an
+  // implementation detail of leveldb_env::NewMemEnv(), and has similar
+  // guarantees regarding the return value.
+  leveldb::Env* NewMemEnv(leveldb::Env* base_env, const std::string& name);
+
+  // Calls |visitor| for each live memory Env. The Env is live from the
+  // point it was returned from NewMemEnv() and up until its instance is
+  // destroyed.
+  // The Env's may be visited in an arbitrary order.
+  // This function takes a lock, preventing an Env from being created or
+  // destroyed (but doesn't lock the Env's themselves).
+  void VisitEnvs(const EnvVisitor& visitor);
+
+ private:
+  friend class TrackedWritableFile;
+
+  MemEnvTracker();
+  ~MemEnvTracker();
+
+  void EnvCreated(TrackedInMemoryEnv* env);
+  void EnvDestroyed(TrackedInMemoryEnv* env);
+
+  std::unique_ptr<MemoryDumpProvider> mdp_;
+
+  base::Lock env_lock_;
+  base::LinkedList<TrackedInMemoryEnv> envs_;
+
+  DISALLOW_COPY_AND_ASSIGN(MemEnvTracker);
+};
+
 // Opens a database and exposes it to Chrome's tracing (see DBTracker for
 // details). The function guarantees that:
 //   1. |dbptr| is not touched on failure
@@ -300,6 +376,10 @@ class DBTracker {
 leveldb::Status OpenDB(const leveldb::Options& options,
                        const std::string& name,
                        std::unique_ptr<leveldb::DB>* dbptr);
+
+// Creates an in-memory Env for which all files are stored in the heap.
+// This wraps leveldb::NewMemEnv to add memory-infra logging.
+leveldb::Env* NewMemEnv(leveldb::Env* base_env, const std::string& name);
 
 }  // namespace leveldb_env
 
