@@ -14,6 +14,8 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/test/scoped_feature_list.h"
+#include "components/autofill/core/browser/autofill_experiments.h"
 #include "components/autofill/core/browser/autofill_test_utils.h"
 #include "components/autofill/core/common/autofill_switches.h"
 #include "components/autofill/core/common/form_data.h"
@@ -65,6 +67,11 @@ class FormStructureTest : public testing::Test {
     field_trial_list_.reset();
   }
 
+  void EnableAutofillCreditCardSuggestionStrictTriggeringExperiment() {
+    scoped_feature_list_.InitAndEnableFeature(
+        kAutofillCreditCardSuggestionStrictTriggering);
+  }
+
  private:
   void EnableAutofillMetadataFieldTrial() {
     field_trial_list_.reset();
@@ -78,6 +85,7 @@ class FormStructureTest : public testing::Test {
 
   std::unique_ptr<base::FieldTrialList> field_trial_list_;
   scoped_refptr<base::FieldTrial> field_trial_;
+  base::test::ScopedFeatureList scoped_feature_list_;
 };
 
 TEST_F(FormStructureTest, FieldCount) {
@@ -3854,6 +3862,504 @@ TEST_F(FormStructureTest, FindLongestCommonPrefix) {
   strings.clear();
   prefix = FormStructure::FindLongestCommonPrefix(strings);
   EXPECT_EQ(ASCIIToUTF16(""), prefix);
+}
+
+TEST_F(FormStructureTest, ShouldFillCreditCardForm_OnlyNumber) {
+  // Set up our form data.
+  FormData form;
+  form.name = ASCIIToUTF16("MyForm");
+  form.origin = GURL("https://myform.com/form.html");
+  form.action = GURL("https://myform.com/submit.html");
+
+  // Set the field autocomplete attribute, because heuristics don't parse single
+  // credit card fields.
+  FormFieldData field;
+  test::CreateTestFormField("Card Number", "cardnumber", "", "text", &field);
+  field.autocomplete_attribute = "cc-number";
+  form.fields.push_back(field);
+
+  FormStructure form_structure(form);
+  std::vector<FormStructure*> forms;
+  forms.push_back(&form_structure);
+  forms.front()->DetermineHeuristicTypes(nullptr /* ukm_service */);
+
+  // Make sure the credit card form should be filled.
+  EXPECT_TRUE(form_structure.ShouldFillCreditCardForm());
+
+  // Make sure that the credit card form should be filled if the experiment is
+  // enabled.
+  EnableAutofillCreditCardSuggestionStrictTriggeringExperiment();
+  EXPECT_TRUE(form_structure.ShouldFillCreditCardForm());
+}
+
+TEST_F(FormStructureTest, ShouldFillCreditCardForm_OnlyName) {
+  // Set up our form data.
+  FormData form;
+  form.name = ASCIIToUTF16("MyForm");
+  form.origin = GURL("https://myform.com/form.html");
+  form.action = GURL("https://myform.com/submit.html");
+
+  // Set the field autocomplete attribute, because heuristics don't parse single
+  // credit card fields.
+  FormFieldData field;
+  test::CreateTestFormField("Card Name", "cardname", "", "text", &field);
+  field.autocomplete_attribute = "cc-given-name";
+  form.fields.push_back(field);
+
+  FormStructure form_structure(form);
+  std::vector<FormStructure*> forms;
+  forms.push_back(&form_structure);
+  forms.front()->DetermineHeuristicTypes(nullptr /* ukm_service */);
+
+  // Make sure the credit card form should be filled.
+  EXPECT_TRUE(form_structure.ShouldFillCreditCardForm());
+
+  // Make sure that the credit card form should be filled if the experiment is
+  // enabled.
+  EnableAutofillCreditCardSuggestionStrictTriggeringExperiment();
+  EXPECT_TRUE(form_structure.ShouldFillCreditCardForm());
+}
+
+TEST_F(FormStructureTest, ShouldFillCreditCardForm_OnlyExpMonth) {
+  // Set up our form data.
+  FormData form;
+  form.name = ASCIIToUTF16("MyForm");
+  form.origin = GURL("https://myform.com/form.html");
+  form.action = GURL("https://myform.com/submit.html");
+
+  // Set the field autocomplete attribute, because heuristics don't parse single
+  // credit card fields.
+  FormFieldData field;
+  test::CreateTestFormField("", "cccsc", "", "text", &field);
+  field.autocomplete_attribute = "cc-exp-month";
+  form.fields.push_back(field);
+
+  FormStructure form_structure(form);
+  std::vector<FormStructure*> forms;
+  forms.push_back(&form_structure);
+  forms.front()->DetermineHeuristicTypes(nullptr /* ukm_service */);
+
+  // Make sure the credit card form should be filled.
+  EXPECT_TRUE(form_structure.ShouldFillCreditCardForm());
+
+  // Make sure that the credit card form should not be filled if the experiment
+  // is enabled.
+  EnableAutofillCreditCardSuggestionStrictTriggeringExperiment();
+  EXPECT_FALSE(form_structure.ShouldFillCreditCardForm());
+}
+
+TEST_F(FormStructureTest, ShouldFillCreditCardForm_OnlyExpYear) {
+  // Set up our form data.
+  FormData form;
+  form.name = ASCIIToUTF16("MyForm");
+  form.origin = GURL("https://myform.com/form.html");
+  form.action = GURL("https://myform.com/submit.html");
+
+  // Set the field autocomplete attribute, because heuristics don't parse single
+  // credit card fields.
+  FormFieldData field;
+  test::CreateTestFormField("", "ccexpyear", "", "text", &field);
+  field.autocomplete_attribute = "cc-exp-year";
+  form.fields.push_back(field);
+
+  FormStructure form_structure(form);
+  std::vector<FormStructure*> forms;
+  forms.push_back(&form_structure);
+  forms.front()->DetermineHeuristicTypes(nullptr /* ukm_service */);
+
+  // Make sure the credit card form should be filled.
+  EXPECT_TRUE(form_structure.ShouldFillCreditCardForm());
+
+  // Make sure that the credit card form should not be filled if the experiment
+  // is enabled.
+  EnableAutofillCreditCardSuggestionStrictTriggeringExperiment();
+  EXPECT_FALSE(form_structure.ShouldFillCreditCardForm());
+}
+
+TEST_F(FormStructureTest, ShouldFillCreditCardForm_OnlyExpirationDate) {
+  // Set up our form data.
+  FormData form;
+  form.name = ASCIIToUTF16("MyForm");
+  form.origin = GURL("https://myform.com/form.html");
+  form.action = GURL("https://myform.com/submit.html");
+
+  // Set the field autocomplete attribute, because heuristics don't parse single
+  // credit card fields.
+  FormFieldData field;
+  test::CreateTestFormField("", "ccexpdate", "", "text", &field);
+  field.autocomplete_attribute = "cc-exp";
+  form.fields.push_back(field);
+
+  FormStructure form_structure(form);
+  std::vector<FormStructure*> forms;
+  forms.push_back(&form_structure);
+  forms.front()->DetermineHeuristicTypes(nullptr /* ukm_service */);
+
+  // Make sure the credit card form should be filled.
+  EXPECT_TRUE(form_structure.ShouldFillCreditCardForm());
+
+  // Make sure that the credit card form should be filled if the experiment is
+  // enabled.
+  EnableAutofillCreditCardSuggestionStrictTriggeringExperiment();
+  EXPECT_TRUE(form_structure.ShouldFillCreditCardForm());
+}
+
+TEST_F(FormStructureTest, ShouldFillCreditCardForm_OnlyCVC) {
+  // Set up our form data.
+  FormData form;
+  form.name = ASCIIToUTF16("MyForm");
+  form.origin = GURL("https://myform.com/form.html");
+  form.action = GURL("https://myform.com/submit.html");
+
+  // Set the field autocomplete attribute, because heuristics don't parse single
+  // credit card fields.
+  FormFieldData field;
+  test::CreateTestFormField("", "cccsc", "", "text", &field);
+  field.autocomplete_attribute = "cc-csc";
+  form.fields.push_back(field);
+
+  FormStructure form_structure(form);
+  std::vector<FormStructure*> forms;
+  forms.push_back(&form_structure);
+  forms.front()->DetermineHeuristicTypes(nullptr /* ukm_service */);
+
+  // Make sure the credit card form should be filled.
+  EXPECT_TRUE(form_structure.ShouldFillCreditCardForm());
+
+  // Make sure that the credit card form should be filled if the experiment is
+  // enabled.
+  EnableAutofillCreditCardSuggestionStrictTriggeringExperiment();
+  EXPECT_TRUE(form_structure.ShouldFillCreditCardForm());
+}
+
+TEST_F(FormStructureTest, ShouldFillCreditCardForm_NumberAndCvc) {
+  // Set up our form data.
+  FormData form;
+  form.name = ASCIIToUTF16("MyForm");
+  form.origin = GURL("https://myform.com/form.html");
+  form.action = GURL("https://myform.com/submit.html");
+
+  // Set the field autocomplete attribute, because heuristics don't parse single
+  // credit card fields.
+  FormFieldData field;
+  test::CreateTestFormField("", "ccnumber", "", "text", &field);
+  field.autocomplete_attribute = "cc-number";
+  form.fields.push_back(field);
+  test::CreateTestFormField("", "csc", "", "text", &field);
+  field.autocomplete_attribute = "cc-csc";
+  form.fields.push_back(field);
+
+  FormStructure form_structure(form);
+  std::vector<FormStructure*> forms;
+  forms.push_back(&form_structure);
+  forms.front()->DetermineHeuristicTypes(nullptr /* ukm_service */);
+
+  // Make sure the credit card form should be filled.
+  EXPECT_TRUE(form_structure.ShouldFillCreditCardForm());
+
+  // Make sure that the credit card form should be filled if the experiment is
+  // enabled.
+  EnableAutofillCreditCardSuggestionStrictTriggeringExperiment();
+  EXPECT_TRUE(form_structure.ShouldFillCreditCardForm());
+}
+
+TEST_F(FormStructureTest, ShouldFillCreditCardForm_NumberCvcAndNonCCInfo) {
+  // Set up our form data.
+  FormData form;
+  form.name = ASCIIToUTF16("MyForm");
+  form.origin = GURL("https://myform.com/form.html");
+  form.action = GURL("https://myform.com/submit.html");
+
+  // Set the field autocomplete attribute, because heuristics don't parse single
+  // credit card fields.
+  FormFieldData field;
+  test::CreateTestFormField("", "ccnumber", "", "text", &field);
+  field.autocomplete_attribute = "cc-number";
+  form.fields.push_back(field);
+  test::CreateTestFormField("", "csc", "", "text", &field);
+  field.autocomplete_attribute = "cc-csc";
+  form.fields.push_back(field);
+  test::CreateTestFormField("", "streetaddress", "", "text", &field);
+  field.autocomplete_attribute = "street-address";
+  form.fields.push_back(field);
+
+  FormStructure form_structure(form);
+  std::vector<FormStructure*> forms;
+  forms.push_back(&form_structure);
+  forms.front()->DetermineHeuristicTypes(nullptr /* ukm_service */);
+
+  // Make sure the credit card form should be filled.
+  EXPECT_TRUE(form_structure.ShouldFillCreditCardForm());
+
+  // Make sure that the credit card form should be filled if the experiment is
+  // enabled.
+  EnableAutofillCreditCardSuggestionStrictTriggeringExperiment();
+  EXPECT_TRUE(form_structure.ShouldFillCreditCardForm());
+}
+
+TEST_F(FormStructureTest,
+       ShouldFillCreditCardForm_ExpirationMonthAndNonCCField) {
+  // Set up our form data.
+  FormData form;
+  form.name = ASCIIToUTF16("MyForm");
+  form.origin = GURL("https://myform.com/form.html");
+  form.action = GURL("https://myform.com/submit.html");
+
+  // Set the field autocomplete attribute, because heuristics don't parse single
+  // credit card fields.
+  FormFieldData field;
+  test::CreateTestFormField("", "ccmonth", "", "text", &field);
+  field.autocomplete_attribute = "cc-exp-month";
+  form.fields.push_back(field);
+  test::CreateTestFormField("", "streetaddress", "", "text", &field);
+  field.autocomplete_attribute = "street-address";
+  form.fields.push_back(field);
+
+  FormStructure form_structure(form);
+  std::vector<FormStructure*> forms;
+  forms.push_back(&form_structure);
+  forms.front()->DetermineHeuristicTypes(nullptr /* ukm_service */);
+
+  // Make sure the credit card form should be filled.
+  EXPECT_TRUE(form_structure.ShouldFillCreditCardForm());
+
+  // Make sure that the credit card form should not be filled if the experiment
+  // is enabled.
+  EnableAutofillCreditCardSuggestionStrictTriggeringExperiment();
+  EXPECT_FALSE(form_structure.ShouldFillCreditCardForm());
+}
+
+TEST_F(FormStructureTest,
+       ShouldFillCreditCardForm_ExpirationYearAndNonCCField) {
+  // Set up our form data.
+  FormData form;
+  form.name = ASCIIToUTF16("MyForm");
+  form.origin = GURL("https://myform.com/form.html");
+  form.action = GURL("https://myform.com/submit.html");
+
+  // Set the field autocomplete attribute, because heuristics don't parse single
+  // credit card fields.
+  FormFieldData field;
+  test::CreateTestFormField("", "ccyear", "", "text", &field);
+  field.autocomplete_attribute = "cc-exp-year";
+  form.fields.push_back(field);
+  test::CreateTestFormField("", "streetaddress", "", "text", &field);
+  field.autocomplete_attribute = "street-address";
+  form.fields.push_back(field);
+
+  FormStructure form_structure(form);
+  std::vector<FormStructure*> forms;
+  forms.push_back(&form_structure);
+  forms.front()->DetermineHeuristicTypes(nullptr /* ukm_service */);
+
+  // Make sure the credit card form should be filled.
+  EXPECT_TRUE(form_structure.ShouldFillCreditCardForm());
+
+  // Make sure that the credit card form should not be filled if the experiment
+  // is enabled.
+  EnableAutofillCreditCardSuggestionStrictTriggeringExperiment();
+  EXPECT_FALSE(form_structure.ShouldFillCreditCardForm());
+}
+
+TEST_F(FormStructureTest,
+       ShouldFillCreditCardForm_ExpirationDateAndNonCCField) {
+  // Set up our form data.
+  FormData form;
+  form.name = ASCIIToUTF16("MyForm");
+  form.origin = GURL("https://myform.com/form.html");
+  form.action = GURL("https://myform.com/submit.html");
+
+  // Set the field autocomplete attribute, because heuristics don't parse single
+  // credit card fields.
+  FormFieldData field;
+  test::CreateTestFormField("", "ccexpdate", "", "text", &field);
+  field.autocomplete_attribute = "cc-exp-date";
+  form.fields.push_back(field);
+  test::CreateTestFormField("", "streetaddress", "", "text", &field);
+  field.autocomplete_attribute = "street-address";
+  form.fields.push_back(field);
+
+  FormStructure form_structure(form);
+  std::vector<FormStructure*> forms;
+  forms.push_back(&form_structure);
+  forms.front()->DetermineHeuristicTypes(nullptr /* ukm_service */);
+
+  // Make sure the credit card form should be filled.
+  EXPECT_TRUE(form_structure.ShouldFillCreditCardForm());
+
+  // Make sure that the credit card form should not be filled if the experiment
+  // is enabled.
+  EnableAutofillCreditCardSuggestionStrictTriggeringExperiment();
+  EXPECT_FALSE(form_structure.ShouldFillCreditCardForm());
+}
+
+TEST_F(FormStructureTest, ShouldFillCreditCardForm_NumberAndNonCCField) {
+  // Set up our form data.
+  FormData form;
+  form.name = ASCIIToUTF16("MyForm");
+  form.origin = GURL("https://myform.com/form.html");
+  form.action = GURL("https://myform.com/submit.html");
+
+  // Set the field autocomplete attribute, because heuristics don't parse single
+  // credit card fields.
+  FormFieldData field;
+  test::CreateTestFormField("", "ccnumber", "", "text", &field);
+  field.autocomplete_attribute = "cc-number";
+  form.fields.push_back(field);
+  test::CreateTestFormField("", "streetaddress", "", "text", &field);
+  field.autocomplete_attribute = "street-address";
+  form.fields.push_back(field);
+
+  FormStructure form_structure(form);
+  std::vector<FormStructure*> forms;
+  forms.push_back(&form_structure);
+  forms.front()->DetermineHeuristicTypes(nullptr /* ukm_service */);
+
+  // Make sure the credit card form should be filled.
+  EXPECT_TRUE(form_structure.ShouldFillCreditCardForm());
+
+  // Make sure that the credit card form should not be filled if the experiment
+  // is enabled.
+  EnableAutofillCreditCardSuggestionStrictTriggeringExperiment();
+  EXPECT_FALSE(form_structure.ShouldFillCreditCardForm());
+}
+
+TEST_F(FormStructureTest, ShouldFillCreditCardForm_TwoCCFieldsAndNonCCField) {
+  // Set up our form data.
+  FormData form;
+  form.name = ASCIIToUTF16("MyForm");
+  form.origin = GURL("https://myform.com/form.html");
+  form.action = GURL("https://myform.com/submit.html");
+
+  // Set the field autocomplete attribute, because heuristics don't parse single
+  // credit card fields.
+  FormFieldData field;
+  test::CreateTestFormField("", "ccnumber", "", "text", &field);
+  field.autocomplete_attribute = "cc-number";
+  form.fields.push_back(field);
+  test::CreateTestFormField("", "cccvc", "", "text", &field);
+  field.autocomplete_attribute = "cc-csc";
+  form.fields.push_back(field);
+  test::CreateTestFormField("", "streetaddress", "", "text", &field);
+  field.autocomplete_attribute = "street-address";
+  form.fields.push_back(field);
+
+  FormStructure form_structure(form);
+  std::vector<FormStructure*> forms;
+  forms.push_back(&form_structure);
+  forms.front()->DetermineHeuristicTypes(nullptr /* ukm_service */);
+
+  // Make sure the credit card form should be filled.
+  EXPECT_TRUE(form_structure.ShouldFillCreditCardForm());
+
+  // Make sure that the credit card form should not be filled if the experiment
+  // is enabled.
+  EnableAutofillCreditCardSuggestionStrictTriggeringExperiment();
+  EXPECT_TRUE(form_structure.ShouldFillCreditCardForm());
+}
+
+TEST_F(FormStructureTest, ShouldFillCreditCardForm_TwoSameCCFields) {
+  // Set up our form data.
+  FormData form;
+  form.name = ASCIIToUTF16("MyForm");
+  form.origin = GURL("https://myform.com/form.html");
+  form.action = GURL("https://myform.com/submit.html");
+
+  // Set the field autocomplete attribute, because heuristics don't parse single
+  // credit card fields.
+  FormFieldData field;
+  test::CreateTestFormField("", "ccnumber", "", "text", &field);
+  field.autocomplete_attribute = "cc-number";
+  form.fields.push_back(field);
+  test::CreateTestFormField("", "ccnumber", "", "text", &field);
+  field.autocomplete_attribute = "cc-number";
+  form.fields.push_back(field);
+
+  FormStructure form_structure(form);
+  std::vector<FormStructure*> forms;
+  forms.push_back(&form_structure);
+  forms.front()->DetermineHeuristicTypes(nullptr /* ukm_service */);
+
+  // Make sure the credit card form should be filled.
+  EXPECT_TRUE(form_structure.ShouldFillCreditCardForm());
+
+  // Make sure that the credit card form should not be filled if the experiment
+  // is enabled.
+  EnableAutofillCreditCardSuggestionStrictTriggeringExperiment();
+  EXPECT_FALSE(form_structure.ShouldFillCreditCardForm());
+}
+
+TEST_F(FormStructureTest,
+       ShouldFillCreditCardForm_TwoSameCCFieldsAndNonCCField) {
+  // Set up our form data.
+  FormData form;
+  form.name = ASCIIToUTF16("MyForm");
+  form.origin = GURL("https://myform.com/form.html");
+  form.action = GURL("https://myform.com/submit.html");
+
+  // Set the field autocomplete attribute, because heuristics don't parse single
+  // credit card fields.
+  FormFieldData field;
+  test::CreateTestFormField("", "ccnumber", "", "text", &field);
+  field.autocomplete_attribute = "cc-number";
+  form.fields.push_back(field);
+  test::CreateTestFormField("", "ccnumber", "", "text", &field);
+  field.autocomplete_attribute = "cc-number";
+  form.fields.push_back(field);
+  test::CreateTestFormField("", "streetaddress", "", "text", &field);
+  field.autocomplete_attribute = "street-address";
+  form.fields.push_back(field);
+
+  FormStructure form_structure(form);
+  std::vector<FormStructure*> forms;
+  forms.push_back(&form_structure);
+  forms.front()->DetermineHeuristicTypes(nullptr /* ukm_service */);
+
+  // Make sure the credit card form should be filled.
+  EXPECT_TRUE(form_structure.ShouldFillCreditCardForm());
+
+  // Make sure that the credit card form should not be filled if the experiment
+  // is enabled.
+  EnableAutofillCreditCardSuggestionStrictTriggeringExperiment();
+  EXPECT_FALSE(form_structure.ShouldFillCreditCardForm());
+}
+
+TEST_F(FormStructureTest,
+       ShouldFillCreditCardForm_TwoSameCCFieldsADifferentCCFieldAndNonCCField) {
+  // Set up our form data.
+  FormData form;
+  form.name = ASCIIToUTF16("MyForm");
+  form.origin = GURL("https://myform.com/form.html");
+  form.action = GURL("https://myform.com/submit.html");
+
+  // Set the field autocomplete attribute, because heuristics don't parse single
+  // credit card fields.
+  FormFieldData field;
+  test::CreateTestFormField("", "ccnumber", "", "text", &field);
+  field.autocomplete_attribute = "cc-number";
+  form.fields.push_back(field);
+  test::CreateTestFormField("", "ccnumber", "", "text", &field);
+  field.autocomplete_attribute = "cc-number";
+  form.fields.push_back(field);
+  test::CreateTestFormField("", "cccvc", "", "text", &field);
+  field.autocomplete_attribute = "cc-csc";
+  form.fields.push_back(field);
+  test::CreateTestFormField("", "streetaddress", "", "text", &field);
+  field.autocomplete_attribute = "street-address";
+  form.fields.push_back(field);
+
+  FormStructure form_structure(form);
+  std::vector<FormStructure*> forms;
+  forms.push_back(&form_structure);
+  forms.front()->DetermineHeuristicTypes(nullptr /* ukm_service */);
+
+  // Make sure the credit card form should be filled.
+  EXPECT_TRUE(form_structure.ShouldFillCreditCardForm());
+
+  // Make sure that the credit card form should be filled if the experiment is
+  // enabled.
+  EnableAutofillCreditCardSuggestionStrictTriggeringExperiment();
+  EXPECT_TRUE(form_structure.ShouldFillCreditCardForm());
 }
 
 }  // namespace autofill

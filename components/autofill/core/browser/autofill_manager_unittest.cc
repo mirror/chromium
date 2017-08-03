@@ -1081,6 +1081,11 @@ class AutofillManagerTest : public testing::Test {
         kAutofillUpstreamRequestCvcIfMissing);
   }
 
+  void EnableAutofillCreditCardSuggestionStrictTriggeringExperiment() {
+    scoped_feature_list_.InitAndEnableFeature(
+        kAutofillCreditCardSuggestionStrictTriggering);
+  }
+
   void DisableAutofillUpstreamUseAutofillProfileComparator() {
     scoped_feature_list_.InitAndDisableFeature(
         kAutofillUpstreamUseAutofillProfileComparator);
@@ -1979,6 +1984,259 @@ TEST_F(AutofillManagerTest, GetCreditCardSuggestions_RepeatedObfuscatedNumber) {
       Suggestion(std::string("Mastercard") + kUTF8MidlineEllipsis + "3456",
                  "05/99", kMasterCard,
                  autofill_manager_->GetPackedCreditCardID(7)));
+}
+
+// Test that we return a credit card suggestion for a complete credit card form.
+TEST_F(AutofillManagerTest, GetCreditCardSuggestions_CompleteCreditCardForm) {
+  // Set up our form data.
+  FormData form;
+  CreateTestCreditCardFormData(&form, /* is_https */ true, false);
+  std::vector<FormData> forms(1, form);
+  FormsSeen(forms);
+
+  GetAutofillSuggestions(form, form.fields[0]);
+
+  // Make sure that suggestions were shown.
+  external_delegate_->CheckSuggestionCount(kDefaultPageID, 2);
+
+  // Enable the experiment, suggestions should be shown.
+  EnableAutofillCreditCardSuggestionStrictTriggeringExperiment();
+  GetAutofillSuggestions(form, form.fields[0]);
+  external_delegate_->CheckSuggestionCount(kDefaultPageID, 2);
+}
+
+// Test that credit card suggestions are offered for a credit card form with
+// only a credit card field.
+TEST_F(AutofillManagerTest, GetCreditCardSuggestions_OneCCField_ShouldSuggest) {
+  // Set up our form data.
+  FormData form;
+  form.name = ASCIIToUTF16("MyForm");
+  form.origin = GURL("https://myform.com/form.html");
+  form.action = GURL("https://myform.com/submit.html");
+
+  // Set the field autocomplete attribute, because heuristics don't parse single
+  // credit card fields.
+  FormFieldData field;
+  test::CreateTestFormField("Card Number", "cardnumber", "", "text", &field);
+  field.autocomplete_attribute = "cc-number";
+  form.fields.push_back(field);
+
+  std::vector<FormData> forms(1, form);
+  FormsSeen(forms);
+
+  GetAutofillSuggestions(form, field);
+
+  // Make sure that suggestions were shown.
+  external_delegate_->CheckSuggestionCount(kDefaultPageID, 2);
+
+  // Enable the experiment, suggestions should be shown.
+  EnableAutofillCreditCardSuggestionStrictTriggeringExperiment();
+  GetAutofillSuggestions(form, form.fields[0]);
+  external_delegate_->CheckSuggestionCount(kDefaultPageID, 2);
+}
+
+// Test no suggestions are offered for a credit card form with only a credit
+// card expiration month field, if the credit card suggestion restriction
+// experiment is enabled.
+TEST_F(AutofillManagerTest,
+       GetCreditCardSuggestions_OneCCField_ShouldNotSuggest) {
+  // Set up our form data.
+  FormData form;
+  form.name = ASCIIToUTF16("MyForm");
+  form.origin = GURL("https://myform.com/form.html");
+  form.action = GURL("https://myform.com/submit.html");
+
+  // Set the field autocomplete attribute, because heuristics don't parse single
+  // credit card fields.
+  FormFieldData field;
+  test::CreateTestFormField("Expiration Date", "ccmonth", "", "text", &field);
+  field.autocomplete_attribute = "cc-exp-month";
+  form.fields.push_back(field);
+
+  std::vector<FormData> forms(1, form);
+  FormsSeen(forms);
+
+  // Make sure that suggestions were shown.
+  GetAutofillSuggestions(form, form.fields[0]);
+  external_delegate_->CheckSuggestionCount(kDefaultPageID, 2);
+
+  // Enable the experiment, no suggestions should be shown.
+  EnableAutofillCreditCardSuggestionStrictTriggeringExperiment();
+  GetAutofillSuggestions(form, form.fields[0]);
+  EXPECT_FALSE(external_delegate_->on_suggestions_returned_seen());
+}
+
+// Test that suggestions are offered for a credit card form with only a credit
+// card expiration month and year fields, if the credit card suggestion
+// restriction experiment is enabled.
+TEST_F(AutofillManagerTest,
+       GetCreditCardSuggestions_TwoCCFields_ShouldSuggest) {
+  // Set up our form data.
+  FormData form;
+  form.name = ASCIIToUTF16("MyForm");
+  form.origin = GURL("https://myform.com/form.html");
+  form.action = GURL("https://myform.com/submit.html");
+
+  // Set the field autocomplete attribute, because heuristics don't parse single
+  // credit card fields.
+  FormFieldData field;
+  test::CreateTestFormField("Expiration Date", "ccmonth", "", "text", &field);
+  field.autocomplete_attribute = "cc-exp-month";
+  form.fields.push_back(field);
+  test::CreateTestFormField("", "ccyear", "", "text", &field);
+  field.autocomplete_attribute = "cc-exp-year";
+  form.fields.push_back(field);
+
+  std::vector<FormData> forms(1, form);
+  FormsSeen(forms);
+
+  GetAutofillSuggestions(form, form.fields[0]);
+
+  // Make sure that suggestions were shown.
+  external_delegate_->CheckSuggestionCount(kDefaultPageID, 2);
+
+  // Enable the experiment, suggestions should be shown.
+  EnableAutofillCreditCardSuggestionStrictTriggeringExperiment();
+  GetAutofillSuggestions(form, form.fields[0]);
+  external_delegate_->CheckSuggestionCount(kDefaultPageID, 2);
+}
+
+// Test no suggestions are offered for a credit card form with two times the
+// same credit card field, if the credit card suggestion restriction experiment
+// is enabled.
+TEST_F(AutofillManagerTest,
+       GetCreditCardSuggestions_TwoSameCCFields_ShouldNotSuggest) {
+  // Set up our form data.
+  FormData form;
+  form.name = ASCIIToUTF16("MyForm");
+  form.origin = GURL("https://myform.com/form.html");
+  form.action = GURL("https://myform.com/submit.html");
+
+  // Set the field autocomplete attribute, because heuristics don't parse single
+  // credit card fields.
+  FormFieldData field;
+  test::CreateTestFormField("", "ccnumber", "", "text", &field);
+  field.autocomplete_attribute = "cc-number";
+  form.fields.push_back(field);
+  test::CreateTestFormField("", "ccnumber", "", "text", &field);
+  field.autocomplete_attribute = "cc-number";
+  form.fields.push_back(field);
+
+  std::vector<FormData> forms(1, form);
+  FormsSeen(forms);
+
+  // Make sure that suggestions were shown.
+  GetAutofillSuggestions(form, form.fields[0]);
+  external_delegate_->CheckSuggestionCount(kDefaultPageID, 2);
+
+  // Enable the experiment, no suggestions should be shown.
+  EnableAutofillCreditCardSuggestionStrictTriggeringExperiment();
+  GetAutofillSuggestions(form, form.fields[0]);
+  EXPECT_FALSE(external_delegate_->on_suggestions_returned_seen());
+}
+
+// Test no suggestions are offered for a mixed form with only one credit card
+// field, if the credit card suggestion restriction experiment is enabled.
+TEST_F(AutofillManagerTest, GetCreditCardSuggestions_OneCCFieldAndNonCCInfo) {
+  // Set up our form data.
+  FormData form;
+  form.name = ASCIIToUTF16("MyForm");
+  form.origin = GURL("https://myform.com/form.html");
+  form.action = GURL("https://myform.com/submit.html");
+
+  // Set the field autocomplete attribute, because heuristics don't parse single
+  // credit card fields.
+  FormFieldData field;
+  test::CreateTestFormField("", "ccnumber", "", "text", &field);
+  field.autocomplete_attribute = "cc-number";
+  form.fields.push_back(field);
+  test::CreateTestFormField("", "streetaddress", "", "text", &field);
+  field.autocomplete_attribute = "street-address";
+  form.fields.push_back(field);
+
+  std::vector<FormData> forms(1, form);
+  FormsSeen(forms);
+
+  // Make sure that suggestions were shown.
+  GetAutofillSuggestions(form, form.fields[0]);
+  external_delegate_->CheckSuggestionCount(kDefaultPageID, 2);
+
+  // Enable the experiment, no suggestions should be shown.
+  EnableAutofillCreditCardSuggestionStrictTriggeringExperiment();
+  GetAutofillSuggestions(form, form.fields[0]);
+  EXPECT_FALSE(external_delegate_->on_suggestions_returned_seen());
+}
+
+// Test no suggestions are offered for a mixed form with only one credit card
+// field, if the credit card suggestion restriction experiment is enabled.
+TEST_F(AutofillManagerTest, GetCreditCardSuggestions_TwoCCFieldsAndNonCCInfo) {
+  // Set up our form data.
+  FormData form;
+  form.name = ASCIIToUTF16("MyForm");
+  form.origin = GURL("https://myform.com/form.html");
+  form.action = GURL("https://myform.com/submit.html");
+
+  // Set the field autocomplete attribute, because heuristics don't parse single
+  // credit card fields.
+  FormFieldData field;
+  test::CreateTestFormField("", "ccnumber", "", "text", &field);
+  field.autocomplete_attribute = "cc-number";
+  form.fields.push_back(field);
+  test::CreateTestFormField("", "cccvc", "", "text", &field);
+  field.autocomplete_attribute = "cc-csc";
+  form.fields.push_back(field);
+  test::CreateTestFormField("", "streetaddress", "", "text", &field);
+  field.autocomplete_attribute = "street-address";
+  form.fields.push_back(field);
+
+  std::vector<FormData> forms(1, form);
+  FormsSeen(forms);
+
+  // Make sure that suggestions were shown.
+  GetAutofillSuggestions(form, form.fields[0]);
+  external_delegate_->CheckSuggestionCount(kDefaultPageID, 2);
+
+  // Enable the experiment, no suggestions should be shown.
+  EnableAutofillCreditCardSuggestionStrictTriggeringExperiment();
+  GetAutofillSuggestions(form, form.fields[0]);
+  external_delegate_->CheckSuggestionCount(kDefaultPageID, 2);
+}
+
+// Test no suggestions are offered for a mixed form with two times the same
+// credit card field, if the credit card suggestion restriction experiment is
+// enabled.
+TEST_F(AutofillManagerTest,
+       GetCreditCardSuggestions_TwoSameCCFieldsAndNonCCField) {
+  // Set up our form data.
+  FormData form;
+  form.name = ASCIIToUTF16("MyForm");
+  form.origin = GURL("https://myform.com/form.html");
+  form.action = GURL("https://myform.com/submit.html");
+
+  // Set the field autocomplete attribute, because heuristics don't parse single
+  // credit card fields.
+  FormFieldData field;
+  test::CreateTestFormField("", "ccnumber", "", "text", &field);
+  field.autocomplete_attribute = "cc-number";
+  form.fields.push_back(field);
+  test::CreateTestFormField("", "ccnumber", "", "text", &field);
+  field.autocomplete_attribute = "cc-number";
+  form.fields.push_back(field);
+  test::CreateTestFormField("", "streetaddress", "", "text", &field);
+  field.autocomplete_attribute = "street-address";
+  form.fields.push_back(field);
+
+  std::vector<FormData> forms(1, form);
+  FormsSeen(forms);
+
+  // Make sure that suggestions were shown.
+  GetAutofillSuggestions(form, form.fields[0]);
+  external_delegate_->CheckSuggestionCount(kDefaultPageID, 2);
+
+  // Enable the experiment, no suggestions should be shown.
+  EnableAutofillCreditCardSuggestionStrictTriggeringExperiment();
+  GetAutofillSuggestions(form, form.fields[0]);
+  EXPECT_FALSE(external_delegate_->on_suggestions_returned_seen());
 }
 
 // Test that we return profile and credit card suggestions for combined forms.

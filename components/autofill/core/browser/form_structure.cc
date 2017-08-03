@@ -23,6 +23,7 @@
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/time/time.h"
+#include "components/autofill/core/browser/autofill_experiments.h"
 #include "components/autofill/core/browser/autofill_metrics.h"
 #include "components/autofill/core/browser/autofill_type.h"
 #include "components/autofill/core/browser/field_candidates.h"
@@ -599,6 +600,43 @@ bool FormStructure::IsCompleteCreditCardForm() const {
       return true;
   }
   return false;
+}
+
+bool FormStructure::ShouldFillCreditCardForm() const {
+  if (!IsAutofillCreditCardSuggestionStrictTriggeringEnabled())
+    return true;
+
+  bool has_two_different_cc_fields = false;
+  ServerFieldType first_cc_type = UNKNOWN_TYPE;
+  bool has_exp_month_or_year = false;
+  for (const auto& field : fields_) {
+    if (field->Type().group() != CREDIT_CARD)
+      continue;
+
+    // Check if the form has at least two different credit card fields.
+    if (!has_two_different_cc_fields) {
+      if (first_cc_type == UNKNOWN_TYPE) {
+        first_cc_type = field->Type().GetStorableType();
+      } else if (field->Type().GetStorableType() != first_cc_type) {
+        has_two_different_cc_fields = true;
+      }
+    }
+
+    // Check if the form contains an expiration month or year field.
+    if (field->Type().GetStorableType() == CREDIT_CARD_EXP_MONTH ||
+        field->Type().GetStorableType() == CREDIT_CARD_EXP_2_DIGIT_YEAR ||
+        field->Type().GetStorableType() == CREDIT_CARD_EXP_4_DIGIT_YEAR) {
+      has_exp_month_or_year = true;
+    }
+  }
+
+  // If there is only one field and it's an expiration month or year, it should
+  // not be filled.
+  if (fields_.size() == 1)
+    return !has_exp_month_or_year;
+
+  // Otherwise, fill if there are at least two different credit card fields.
+  return has_two_different_cc_fields;
 }
 
 void FormStructure::UpdateAutofillCount() {

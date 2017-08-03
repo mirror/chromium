@@ -585,6 +585,10 @@ void AutofillManager::OnQueryFormFieldAutofillImpl(
     }
   }
 
+  // Only offer suggestions for fillable credit card forms.
+  if (is_filling_credit_card && !form_structure->ShouldFillCreditCardForm())
+    return;
+
   std::vector<Suggestion> suggestions;
   const bool is_context_secure = !IsFormNonSecure(form);
   const bool is_http_warning_enabled =
