@@ -79,6 +79,30 @@
       "revId": "58e77fc80e6b797c126da1a4ae0c15cfed4c90c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74b88b84_2c365d8c",
+        "filename": "content/browser/renderer_host/input/synthetic_mouse_driver.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1118546
+      },
+      "writtenOn": "2017-08-03T03:29:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e77cbf0_0a06cff6",
+      "range": {
+        "startLine": 33,
+        "startChar": 35,
+        "endLine": 33,
+        "endChar": 40
+      },
+      "revId": "58e77fc80e6b797c126da1a4ae0c15cfed4c90c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
