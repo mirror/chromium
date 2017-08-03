@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a33c44a2_b3d090c1",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 1540,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-08-03T16:22:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91c54feb_4947595d",
+      "range": {
+        "startLine": 1540,
+        "startChar": 2,
+        "endLine": 1540,
+        "endChar": 62
+      },
+      "revId": "22dd07c1c747119596c161116ef208afee75213d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10e81f9a_ecf88707",
         "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
         "patchSetId": 19
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-02T23:39:52Z",
       "side": 1,
       "message": "In what case can we get here? i.e. If this LayoutBox has a scrollbar, it must have a PaintLayer so shouldn\u0027t we have already tried hit testing the scrollbar from PaintLayer::HitTestLayer (in the \"Check current layer overflow first\" section)",
+      "range": {
+        "startLine": 1545,
+        "startChar": 4,
+        "endLine": 1545,
+        "endChar": 16
+      },
+      "revId": "22dd07c1c747119596c161116ef208afee75213d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79a96ebb_63783b80",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 1545,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-08-03T16:22:48Z",
+      "side": 1,
+      "message": "It seems this is ready to remove. Let me check in trybots",
+      "parentUuid": "10e81f9a_ecf88707",
       "range": {
         "startLine": 1545,
         "startChar": 4,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e0c1ef59_5664095b",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutView.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-08-03T16:22:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e546de5a_2f930429",
+      "range": {
+        "startLine": 131,
+        "startChar": 2,
+        "endLine": 132,
+        "endChar": 72
+      },
+      "revId": "22dd07c1c747119596c161116ef208afee75213d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87a4e4a0_ed94d029",
         "filename": "third_party/WebKit/Source/core/layout/LayoutView.cpp",
         "patchSetId": 19
@@ -91,6 +163,30 @@
       "revId": "22dd07c1c747119596c161116ef208afee75213d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "334999b0_e7e9e138",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutView.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-08-03T16:22:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87a4e4a0_ed94d029",
+      "range": {
+        "startLine": 133,
+        "startChar": 2,
+        "endLine": 133,
+        "endChar": 74
+      },
+      "revId": "22dd07c1c747119596c161116ef208afee75213d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "c2fd634d_9b733bbb",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutView.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-08-03T16:22:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49054c69_4c94a066",
+      "range": {
+        "startLine": 140,
+        "startChar": 50,
+        "endLine": 140,
+        "endChar": 66
+      },
+      "revId": "22dd07c1c747119596c161116ef208afee75213d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4635d9d3_6789d757",
         "filename": "third_party/WebKit/Source/core/paint/PaintLayer.cpp",
         "patchSetId": 19
@@ -137,6 +257,30 @@
       "revId": "22dd07c1c747119596c161116ef208afee75213d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d09fc5e_fe230f07",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayer.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 2077,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-08-03T16:22:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4635d9d3_6789d757",
+      "range": {
+        "startLine": 2077,
+        "startChar": 2,
+        "endLine": 2077,
+        "endChar": 39
+      },
+      "revId": "22dd07c1c747119596c161116ef208afee75213d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "b87e9045_3cd5bedb",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayer.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 2125,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-08-03T16:22:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6653a24_b54a71c3",
+      "range": {
+        "startLine": 2125,
+        "startChar": 19,
+        "endLine": 2125,
+        "endChar": 32
+      },
+      "revId": "22dd07c1c747119596c161116ef208afee75213d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "836c832c_1c7e8ae5",
         "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
         "patchSetId": 19
@@ -183,6 +351,30 @@
       "revId": "22dd07c1c747119596c161116ef208afee75213d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35120f1f_cfa15660",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 1517,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-08-03T16:22:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "836c832c_1c7e8ae5",
+      "range": {
+        "startLine": 1517,
+        "startChar": 44,
+        "endLine": 1517,
+        "endChar": 62
+      },
+      "revId": "22dd07c1c747119596c161116ef208afee75213d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "0854e60b_a52c0e23",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollbarThemeOverlay.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-08-03T16:22:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bfa5a94d_a10786b0",
+      "range": {
+        "startLine": 92,
+        "startChar": 7,
+        "endLine": 92,
+        "endChar": 20
+      },
+      "revId": "22dd07c1c747119596c161116ef208afee75213d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e91a799_6f4ae24d",
         "filename": "third_party/WebKit/Source/platform/scroll/ScrollbarThemeOverlayMock.h",
         "patchSetId": 19
@@ -229,6 +445,30 @@
       "revId": "22dd07c1c747119596c161116ef208afee75213d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5de42202_ab6e072e",
+        "filename": "third_party/WebKit/Source/platform/scroll/ScrollbarThemeOverlayMock.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1197698
+      },
+      "writtenOn": "2017-08-03T16:22:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e91a799_6f4ae24d",
+      "range": {
+        "startLine": 68,
+        "startChar": 7,
+        "endLine": 68,
+        "endChar": 20
+      },
+      "revId": "22dd07c1c747119596c161116ef208afee75213d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
