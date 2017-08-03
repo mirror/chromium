@@ -91,6 +91,16 @@ bool IOSChromePasswordManagerClient::PromptUserToSaveOrUpdatePassword(
   return true;
 }
 
+void IOSChromePasswordManagerClient::ShowManualFallbackForSaving(
+    std::unique_ptr<password_manager::PasswordFormManager> form_to_save,
+    bool is_update) {
+  NOTIMPLEMENTED();
+}
+
+void IOSChromePasswordManagerClient::HideManualFallbackForSaving() {
+  NOTIMPLEMENTED();
+}
+
 void IOSChromePasswordManagerClient::AutomaticPasswordSave(
     std::unique_ptr<PasswordFormManager> saved_form_manager) {
   NOTIMPLEMENTED();

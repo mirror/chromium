@@ -18,6 +18,9 @@
 namespace autofill {
 struct PasswordForm;
 }
+namespace password_manager {
+class TestPasswordStore;
+}
 
 class ManagePasswordsUIController;
 
@@ -65,19 +68,29 @@ class BubbleObserver {
  public:
   explicit BubbleObserver(content::WebContents* web_contents);
 
-  // Checks if the save prompt is being currently shown.
-  bool IsShowingSavePrompt() const;
+  // Checks if the save prompt is being currently available.
+  bool IsSavePromptAvailable() const;
 
-  // Checks if the update prompt is being currently shown.
-  bool IsShowingUpdatePrompt() const;
+  // Checks if the update prompt is being currently available.
+  bool IsUpdatePromptAvailable() const;
+
+  // Checks if the save prompt was shown.
+  bool WasSavePromptShown() const;
+
+  // Checks if the update prompt was shown.
+  bool WasUpdatePromptShown() const;
 
   // Dismisses the prompt currently open and moves the controller to the
   // inactive state.
   void Dismiss() const;
 
   // Expecting that the prompt is shown, saves the password. Checks that the
-  // prompt is no longer visible afterwards.
+  // prompt is no longer available.
   void AcceptSavePrompt() const;
+
+  // Expecting that the prompt is available, opens the prompt and saves the
+  // password. Checks that the prompt is no longer available.
+  void OpenAndAcceptSavePrompt() const;
 
   // Expecting that the prompt is shown, update |form| with the password from
   // observed form. Checks that the prompt is no longer visible afterwards.
@@ -161,6 +174,13 @@ class PasswordManagerBrowserTestBase : public InProcessBrowserTest {
 
   // Synchronoulsy adds the given host to the list of valid HSTS hosts.
   void AddHSTSHost(const std::string& host);
+
+  // Checks that new credential is stored. For simplicity we assume that
+  // password store contains only 1 credential.
+  void CheckThatCredentialsStored(
+      password_manager::TestPasswordStore* password_store,
+      const base::string16& username,
+      const base::string16& password);
 
   // Accessors
   // Return the first created tab with a custom ManagePasswordsUIController.

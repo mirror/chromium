@@ -137,6 +137,16 @@ bool AreAllFieldsEmpty(const PasswordForm& form) {
          form.new_password_value.empty();
 }
 
+// Helper function that determines whether update or save prompt should be
+// shown for credentials in |provisional_save_manager|.
+bool IsPasswordUpdate(const PasswordFormManager& provisional_save_manager) {
+  return (!provisional_save_manager.best_matches().empty() &&
+          provisional_save_manager
+              .is_possible_change_password_form_without_username()) ||
+         provisional_save_manager.password_overridden() ||
+         provisional_save_manager.retry_password_form_password_update();
+}
+
 // Finds the matched form manager for |form| in |pending_login_managers|.
 PasswordFormManager* FindMatchedManager(
     const autofill::PasswordForm& form,
@@ -319,6 +329,7 @@ void PasswordManager::SaveGenerationFieldDetectedByClassifier(
 void PasswordManager::ProvisionallySavePassword(
     const PasswordForm& form,
     const password_manager::PasswordManagerDriver* driver) {
+  LOG(ERROR) << "ProvisionallySavePassword";
   bool is_saving_and_filling_enabled =
       client_->IsSavingAndFillingEnabledForCurrentPage();
 
@@ -347,6 +358,7 @@ void PasswordManager::ProvisionallySavePassword(
   }
 
   bool should_block = ShouldBlockPasswordForSameOriginButDifferentScheme(form);
+  LOG(ERROR) << "should_block " << should_block;
   metrics_util::LogShouldBlockPasswordForSameOriginButDifferentScheme(
       should_block);
   if (should_block) {
@@ -376,6 +388,7 @@ void PasswordManager::ProvisionallySavePassword(
   // post-submit navigation concludes, we compare the landing URL against the
   // cached and report the difference through UMA.
   main_frame_url_ = client_->GetMainFrameURL();
+  LOG(ERROR) << "set main_frame_url_ to " << main_frame_url_;
 
   // Report SubmittedFormFrame metric.
   if (driver) {
@@ -465,6 +478,34 @@ void PasswordManager::OnPasswordFormForceSaveRequested(
   ProvisionallySavePassword(password_form, driver);
   if (provisional_save_manager_)
     OnLoginSuccessful();
+}
+
+void PasswordManager::ShowManualFallbackForSaving(
+    password_manager::PasswordManagerDriver* driver,
+    const PasswordForm& password_form) {
+  if (!client_->IsSavingAndFillingEnabledForCurrentPage())
+    return;
+
+  PasswordFormManager* matched_manager = FindMatchedManager(
+      password_form, pending_login_managers_, driver, nullptr);
+  if (!matched_manager)
+    return;
+  // TODO(crbug.com/741537): Process manual saving request even if there is
+  // still no response from the store.
+  if (matched_manager->form_fetcher()->GetState() ==
+      FormFetcher::State::WAITING) {
+    return;
+  }
+  ProvisionallySaveManager(password_form, matched_manager, nullptr);
+  LOG(ERROR) << "show fallback " << password_form.username_value;
+  DCHECK(provisional_save_manager_);
+  bool is_update = IsPasswordUpdate(*provisional_save_manager_);
+  client_->ShowManualFallbackForSaving(std::move(provisional_save_manager_),
+                                       is_update);
+}
+
+void PasswordManager::HideManualFallbackForSaving() {
+  client_->HideManualFallbackForSaving();
 }
 
 void PasswordManager::OnPasswordFormsParsed(
@@ -780,12 +821,7 @@ void PasswordManager::OnLoginSuccessful() {
                           empty_password);
     if (logger)
       logger->LogMessage(Logger::STRING_DECISION_ASK);
-    bool update_password =
-        (!provisional_save_manager_->best_matches().empty() &&
-         provisional_save_manager_
-             ->is_possible_change_password_form_without_username()) ||
-        provisional_save_manager_->password_overridden() ||
-        provisional_save_manager_->retry_password_form_password_update();
+    bool update_password = IsPasswordUpdate(*provisional_save_manager_);
     if (client_->PromptUserToSaveOrUpdatePassword(
             std::move(provisional_save_manager_), update_password)) {
       if (logger)
