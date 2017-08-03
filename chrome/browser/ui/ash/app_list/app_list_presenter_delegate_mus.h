@@ -37,6 +37,8 @@ class AppListPresenterDelegateMus : public app_list::AppListPresenterDelegate,
   void UpdateBounds() override;
   gfx::Vector2d GetVisibilityAnimationOffset(
       aura::Window* root_window) override;
+  int GetVisibilityAnimationDuration(aura::Window* root_window,
+                                     bool is_visible) override;
 
  private:
   // views::PointerWatcher:
