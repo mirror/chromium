@@ -278,11 +278,9 @@ bool InspectorPageAgent::CachedResourceContent(Resource* cached_resource,
           cached_resource->ResourceBuffer(), result, base64_encoded);
       return true;
     case Resource::kScript:
-      MaybeEncodeTextContent(
-          cached_resource->ResourceBuffer()
-              ? ToScriptResource(cached_resource)->DecodedText()
-              : ToScriptResource(cached_resource)->SourceText(),
-          cached_resource->ResourceBuffer(), result, base64_encoded);
+      MaybeEncodeTextContent(ToScriptResource(cached_resource)->SourceText(),
+                             cached_resource->ResourceBuffer(), result,
+                             base64_encoded);
       return true;
     default:
       String text_encoding_name =
