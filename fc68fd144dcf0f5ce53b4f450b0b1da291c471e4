@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5edbdf94_88d05995",
+        "filename": "net/quic/core/quic_proxy_client_socket.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-08-03T22:33:28Z",
+      "side": 1,
+      "message": "Is this right? In SpdyProxyClientSocket, the function looks like:\n\nbool SpdyProxyClientSocket::IsConnectedAndIdle() const {\n  return IsConnected() \u0026\u0026 read_buffer_queue_.IsEmpty() \u0026\u0026\n      spdy_stream_-\u003eIsOpen();\n}",
+      "range": {
+        "startLine": 126,
+        "startChar": 9,
+        "endLine": 126,
+        "endChar": 20
+      },
+      "revId": "fc68fd144dcf0f5ce53b4f450b0b1da291c471e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc2526da_de0c97ff",
+        "filename": "net/quic/core/quic_proxy_client_socket.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-08-03T22:33:28Z",
+      "side": 1,
+      "message": "In SpdyProxyClientSocket::OnDataSend(), the write_callback_ is posted instead of called directly to avoid deep callback chains. Is that necessary here?",
+      "range": {
+        "startLine": 242,
+        "startChar": 6,
+        "endLine": 242,
+        "endChar": 9
+      },
+      "revId": "fc68fd144dcf0f5ce53b4f450b0b1da291c471e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "966d0249_eac4f639",
+        "filename": "net/quic/core/quic_proxy_client_socket.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1228995
+      },
+      "writtenOn": "2017-08-03T22:33:28Z",
+      "side": 1,
+      "message": "This comment and BeginEvent() call were copied from SpdyProxyClientSocket, but I don\u0027t know what it means. Is it still necessary?",
+      "range": {
+        "startLine": 315,
+        "startChar": 31,
+        "endLine": 315,
+        "endChar": 67
+      },
+      "revId": "fc68fd144dcf0f5ce53b4f450b0b1da291c471e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
