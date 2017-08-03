@@ -1065,7 +1065,8 @@ void PaintLayerPainter::PaintFragmentWithPhase(
                        painting_info.GetGlobalPaintFlags(), paint_flags,
                        &painting_info.root_layer->GetLayoutObject());
 
-  paint_layer_.GetLayoutObject().Paint(paint_info, paint_offset);
+  paint_layer_.GetLayoutObject().Paint(paint_info, paint_offset,
+                                       painting_info.sub_pixel_accumulation);
 }
 
 void PaintLayerPainter::PaintBackgroundForFragments(

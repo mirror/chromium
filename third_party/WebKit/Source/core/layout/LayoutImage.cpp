@@ -201,7 +201,8 @@ void LayoutImage::PaintReplaced(const PaintInfo& paint_info,
 }
 
 void LayoutImage::Paint(const PaintInfo& paint_info,
-                        const LayoutPoint& paint_offset) const {
+                        const LayoutPoint& paint_offset,
+                        const LayoutSize& sub_pixel_accumulation) const {
   ImagePainter(*this).Paint(paint_info, paint_offset);
 }
 

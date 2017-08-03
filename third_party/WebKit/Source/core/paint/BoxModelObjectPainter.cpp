@@ -94,7 +94,8 @@ void BoxModelObjectPainter::PaintFillLayerTextFillBox(
     LayoutSize local_offset = box_model_.IsBox()
                                   ? ToLayoutBox(&box_model_)->LocationOffset()
                                   : LayoutSize();
-    box_model_.Paint(paint_info, scrolled_paint_rect.Location() - local_offset);
+    box_model_.Paint(paint_info, scrolled_paint_rect.Location() - local_offset,
+                     LayoutSize());
   }
 
   context.EndLayer();  // Text mask layer.

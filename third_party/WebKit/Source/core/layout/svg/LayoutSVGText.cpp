@@ -350,7 +350,8 @@ void LayoutSVGText::AbsoluteQuads(Vector<FloatQuad>& quads,
 }
 
 void LayoutSVGText::Paint(const PaintInfo& paint_info,
-                          const LayoutPoint&) const {
+                          const LayoutPoint&,
+                          const LayoutSize&) const {
   SVGTextPainter(*this).Paint(paint_info);
 }
 

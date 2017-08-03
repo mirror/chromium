@@ -224,7 +224,9 @@ class CORE_EXPORT LayoutTableSection final : public LayoutTableBoxComponent {
     return CreateAnonymousWithParent(parent);
   }
 
-  void Paint(const PaintInfo&, const LayoutPoint&) const override;
+  void Paint(const PaintInfo&,
+             const LayoutPoint&,
+             const LayoutSize&) const override;
 
   // Flip the rect so it aligns with the coordinates used by the rowPos and
   // columnPos vectors.

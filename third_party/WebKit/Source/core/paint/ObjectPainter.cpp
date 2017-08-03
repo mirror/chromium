@@ -298,7 +298,7 @@ void ObjectPainter::PaintInlineChildrenOutlines(
        child = child->NextSibling()) {
     if (child->IsLayoutInline() &&
         !ToLayoutInline(child)->HasSelfPaintingLayer())
-      child->Paint(paint_info_for_descendants, paint_offset);
+      child->Paint(paint_info_for_descendants, paint_offset, LayoutSize());
   }
 }
 
@@ -683,7 +683,7 @@ void ObjectPainter::PaintAllPhasesAtomically(const PaintInfo& paint_info,
   // complete painting for these phases.
   if (paint_info.phase == kPaintPhaseSelection ||
       paint_info.phase == kPaintPhaseTextClip) {
-    layout_object_.Paint(paint_info, paint_offset);
+    layout_object_.Paint(paint_info, paint_offset, LayoutSize());
     return;
   }
 
@@ -692,13 +692,13 @@ void ObjectPainter::PaintAllPhasesAtomically(const PaintInfo& paint_info,
 
   PaintInfo info(paint_info);
   info.phase = kPaintPhaseBlockBackground;
-  layout_object_.Paint(info, paint_offset);
+  layout_object_.Paint(info, paint_offset, LayoutSize());
   info.phase = kPaintPhaseFloat;
-  layout_object_.Paint(info, paint_offset);
+  layout_object_.Paint(info, paint_offset, LayoutSize());
   info.phase = kPaintPhaseForeground;
-  layout_object_.Paint(info, paint_offset);
+  layout_object_.Paint(info, paint_offset, LayoutSize());
   info.phase = kPaintPhaseOutline;
-  layout_object_.Paint(info, paint_offset);
+  layout_object_.Paint(info, paint_offset, LayoutSize());
 }
 
 #if DCHECK_IS_ON()

@@ -73,7 +73,9 @@ class LayoutListItem final : public LayoutBlockFlow {
   void InsertedIntoTree() override;
   void WillBeRemovedFromTree() override;
 
-  void Paint(const PaintInfo&, const LayoutPoint&) const override;
+  void Paint(const PaintInfo&,
+             const LayoutPoint&,
+             const LayoutSize&) const override;
 
   void SubtreeDidChange() final;
 

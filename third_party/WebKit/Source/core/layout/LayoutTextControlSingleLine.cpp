@@ -67,8 +67,9 @@ inline HTMLElement* LayoutTextControlSingleLine::InnerSpinButtonElement()
 }
 
 void LayoutTextControlSingleLine::Paint(const PaintInfo& paint_info,
-                                        const LayoutPoint& paint_offset) const {
-  LayoutTextControl::Paint(paint_info, paint_offset);
+                                        const LayoutPoint& paint_offset,
+                                        const LayoutSize&) const {
+  LayoutTextControl::Paint(paint_info, paint_offset, LayoutSize());
 
   if (ShouldPaintSelfBlockBackground(paint_info.phase) &&
       should_draw_caps_lock_indicator_) {

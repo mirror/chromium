@@ -150,7 +150,8 @@ void LayoutSVGImage::UpdateLayout() {
 }
 
 void LayoutSVGImage::Paint(const PaintInfo& paint_info,
-                           const LayoutPoint&) const {
+                           const LayoutPoint&,
+                           const LayoutSize&) const {
   SVGImagePainter(*this).Paint(paint_info);
 }
 

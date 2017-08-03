@@ -126,7 +126,9 @@ class LayoutFrameSet final : public LayoutBox {
   }
 
   void UpdateLayout() override;
-  void Paint(const PaintInfo&, const LayoutPoint&) const override;
+  void Paint(const PaintInfo&,
+             const LayoutPoint&,
+             const LayoutSize&) const override;
   void ComputePreferredLogicalWidths() override;
   bool IsChildAllowed(LayoutObject*, const ComputedStyle&) const override;
   CursorDirective GetCursor(const LayoutPoint&, Cursor&) const override;
