@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "628d6b55_7c527200",
+        "filename": "cc/paint/paint_op_writer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-03T21:06:44Z",
+      "side": 1,
+      "message": "*cowhand premature optimization hat* Hmmmmm % can be slow on some devices.  Do we ever have alignments that are not powers of two here?  What about something more like memory_ \u003d (memory_ + alignment - 1) \u0026 ~(alignment-1) plus dcheck(is power of two).",
+      "revId": "45f469e4faae7e17521a4767414801ba1f4dcf60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
