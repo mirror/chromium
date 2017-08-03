@@ -22,6 +22,52 @@
       "revId": "e5ccb33c611bb4744347b2cae075812e219287e9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a5404d0_77b0899a",
+        "filename": "content/browser/loader/redirect_to_file_resource_handler_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-03T21:48:53Z",
+      "side": 1,
+      "message": "Check the MockResourceHandler\u0027s status is cancelled, and that it was cancelled out of band?  (I think this always cancels out of band, at least, doesn\u0027t it?",
+      "range": {
+        "startLine": 329,
+        "startChar": 23,
+        "endLine": 329,
+        "endChar": 38
+      },
+      "revId": "e5ccb33c611bb4744347b2cae075812e219287e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0f5cf38_2c813c80",
+        "filename": "content/browser/loader/redirect_to_file_resource_handler_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-03T21:48:53Z",
+      "side": 1,
+      "message": "Have a test just like this, except with creation failing?  Those will always be in-band cancels, I think?",
+      "range": {
+        "startLine": 415,
+        "startChar": 42,
+        "endLine": 415,
+        "endChar": 77
+      },
+      "revId": "e5ccb33c611bb4744347b2cae075812e219287e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
