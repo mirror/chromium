@@ -22,6 +22,30 @@
       "revId": "0fb71fc8141ee053fee50df3afcd30786fd2a536",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4b9ac14_01ead23d",
+        "filename": "headless/lib/browser/headless_browser_context_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-08-03T10:47:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "495e160b_ee434cdd",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 35
+      },
+      "revId": "0fb71fc8141ee053fee50df3afcd30786fd2a536",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
