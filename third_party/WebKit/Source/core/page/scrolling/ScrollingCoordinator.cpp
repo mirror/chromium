@@ -582,39 +582,45 @@ static void ProjectRectsToGraphicsLayerSpaceRecursive(
     const PaintLayer* composited_layer =
         layer_iter->key
             ->EnclosingLayerForPaintInvalidationCrossingFrameBoundaries();
-    DCHECK(composited_layer);
 
-    // Find the appropriate GraphicsLayer for the composited Layer.
-    GraphicsLayer* graphics_layer =
-        composited_layer->GraphicsLayerBacking(&cur_layer->GetLayoutObject());
+    // Discovered in crbug.com/751389, the function in the above line could
+    // return a nullptr.
+    if (composited_layer) {
+      // Find the appropriate GraphicsLayer for the composited Layer.
+      GraphicsLayer* graphics_layer =
+          composited_layer->GraphicsLayerBacking(&cur_layer->GetLayoutObject());
 
-    GraphicsLayerHitTestRects::iterator gl_iter =
-        graphics_rects.find(graphics_layer);
-    Vector<LayoutRect>* gl_rects;
-    if (gl_iter == graphics_rects.end())
-      gl_rects = &graphics_rects.insert(graphics_layer, Vector<LayoutRect>())
-                      .stored_value->value;
-    else
-      gl_rects = &gl_iter->value;
-
-    // Transform each rect to the co-ordinate space of the graphicsLayer.
-    for (size_t i = 0; i < layer_iter->value.size(); ++i) {
-      LayoutRect rect = layer_iter->value[i];
-      if (composited_layer != cur_layer) {
-        FloatQuad compositor_quad = geometry_map.MapToAncestor(
-            FloatRect(rect), &composited_layer->GetLayoutObject());
-        rect = LayoutRect(compositor_quad.BoundingBox());
-        // If the enclosing composited layer itself is scrolled, we have to undo
-        // the subtraction of its scroll offset since we want the offset
-        // relative to the scrolling content, not the element itself.
-        if (composited_layer->GetLayoutObject().HasOverflowClip())
-          rect.Move(composited_layer->GetLayoutBox()->ScrolledContentOffset());
+      GraphicsLayerHitTestRects::iterator gl_iter =
+          graphics_rects.find(graphics_layer);
+      Vector<LayoutRect>* gl_rects;
+      if (gl_iter == graphics_rects.end()) {
+        gl_rects = &graphics_rects.insert(graphics_layer, Vector<LayoutRect>())
+                        .stored_value->value;
+      } else {
+        gl_rects = &gl_iter->value;
       }
-      PaintLayer::MapRectInPaintInvalidationContainerToBacking(
-          composited_layer->GetLayoutObject(), rect);
-      rect.Move(-graphics_layer->OffsetFromLayoutObject());
 
-      gl_rects->push_back(rect);
+      // Transform each rect to the co-ordinate space of the graphicsLayer.
+      for (size_t i = 0; i < layer_iter->value.size(); ++i) {
+        LayoutRect rect = layer_iter->value[i];
+        if (composited_layer != cur_layer) {
+          FloatQuad compositor_quad = geometry_map.MapToAncestor(
+              FloatRect(rect), &composited_layer->GetLayoutObject());
+          rect = LayoutRect(compositor_quad.BoundingBox());
+          // If the enclosing composited layer itself is scrolled, we have to
+          // undo the subtraction of its scroll offset since we want the offset
+          // relative to the scrolling content, not the element itself.
+          if (composited_layer->GetLayoutObject().HasOverflowClip()) {
+            rect.Move(
+                composited_layer->GetLayoutBox()->ScrolledContentOffset());
+          }
+        }
+        PaintLayer::MapRectInPaintInvalidationContainerToBacking(
+            composited_layer->GetLayoutObject(), rect);
+        rect.Move(-graphics_layer->OffsetFromLayoutObject());
+
+        gl_rects->push_back(rect);
+      }
     }
   }
 
@@ -783,6 +789,8 @@ void ScrollingCoordinator::SetTouchEventTargetRects(
       const PaintLayer* composited_layer =
           layer_rect.key
               ->EnclosingLayerForPaintInvalidationCrossingFrameBoundaries();
+      // Discovered in crbug.com/751389, the function in the above line could
+      // return a nullptr.
       if (!composited_layer)
         continue;
       layers_with_touch_rects_.insert(composited_layer);

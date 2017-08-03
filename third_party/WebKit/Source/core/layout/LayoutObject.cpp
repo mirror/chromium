@@ -1055,8 +1055,12 @@ const LayoutBoxModelObject* LayoutObject::EnclosingCompositedContainer() const {
   if (PaintLayer* painting_layer = this->PaintingLayer()) {
     if (PaintLayer* compositing_layer =
             painting_layer
-                ->EnclosingLayerForPaintInvalidationCrossingFrameBoundaries())
-      container = &compositing_layer->GetLayoutObject();
+                ->EnclosingLayerForPaintInvalidationCrossingFrameBoundaries()) {
+      // Discovered in crbug.com/751389, the function in the above line could
+      // return a nullptr.
+      if (compositing_layer)
+        container = &compositing_layer->GetLayoutObject();
+    }
   }
   return container;
 }
