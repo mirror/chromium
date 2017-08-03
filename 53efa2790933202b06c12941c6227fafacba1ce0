@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01964c7e_4c37a6cf",
+        "filename": "tools/perf/benchmarks/blink_perf.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-08-03T19:50:08Z",
+      "side": 1,
+      "message": "I think it seems unnecessary to create a fake timeline event. If we already do the merging, I suggest the outcome of the merge would just be dictionary whose key is event_name \u0026 value is a list of tuple (start_thread_time, end_thread_time) time.",
+      "revId": "53efa2790933202b06c12941c6227fafacba1ce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bb9a1c0_45412d23",
+        "filename": "tools/perf/benchmarks/blink_perf_unittest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-08-03T19:50:08Z",
+      "side": 1,
+      "message": "Can you make _AddAsyncSlice a method of ComputeTraceEventsMetricsForBlinkPerfTest class?",
+      "revId": "53efa2790933202b06c12941c6227fafacba1ce0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
