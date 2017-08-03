@@ -167,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "f17918a1_a4567fec",
+        "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1223699
+      },
+      "writtenOn": "2017-08-03T20:25:21Z",
+      "side": 1,
+      "message": "Ah, good point. Done",
+      "parentUuid": "5b0ebe8e_c6e9e9c0",
+      "range": {
+        "startLine": 128,
+        "startChar": 5,
+        "endLine": 128,
+        "endChar": 14
+      },
+      "revId": "d2f255269c09098c1d37e2c1b92d40d063b32d5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9fd5688_393d1740",
         "filename": "remoting/codec/webrtc_video_encoder_gpu.cc",
         "patchSetId": 17
