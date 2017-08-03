@@ -46,6 +46,30 @@
       "revId": "a1c9e3262af4ab7980008e476d6712b1223fab3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af1ed13e_6d100f72",
+        "filename": "components/simple_url_loader/simple_url_loader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-08-03T20:59:23Z",
+      "side": 1,
+      "message": "Never mind. I see that we need to use closure of the producer handle to indicate the end of the response stream because the OnComplete message can be delivered first.\n\nWe should however at least be able to rule out the failure case.",
+      "parentUuid": "2f658bc7_d3afbb45",
+      "range": {
+        "startLine": 88,
+        "startChar": 0,
+        "endLine": 100,
+        "endChar": 7
+      },
+      "revId": "a1c9e3262af4ab7980008e476d6712b1223fab3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
