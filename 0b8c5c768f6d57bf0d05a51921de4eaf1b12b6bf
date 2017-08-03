@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "efc913e9_89f9a4dc",
+        "filename": "ios/web_view/tools/build.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1230570
+      },
+      "writtenOn": "2017-08-03T04:02:46Z",
+      "side": 1,
+      "message": "Optional: It may be cleaner to write this part with for-loop instead of repeating similar function call 4 times here, now that we have more and more extra arguments.",
+      "range": {
+        "startLine": 153,
+        "startChar": 31,
+        "endLine": 153,
+        "endChar": 0
+      },
+      "revId": "0b8c5c768f6d57bf0d05a51921de4eaf1b12b6bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
