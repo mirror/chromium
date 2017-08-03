@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a68ec170_07de76ce",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/feature-policy/resources/featurepolicy.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1221384
+      },
+      "writtenOn": "2017-08-03T15:39:16Z",
+      "side": 1,
+      "message": "This is even better! I wonder if we should replace all current usage of test_feature_availability by this even.\n\nThanks for writing this up :)",
+      "range": {
+        "startLine": 68,
+        "startChar": 0,
+        "endLine": 68,
+        "endChar": 60
+      },
+      "revId": "1b69e496f08d2cdf2436d6e984ccde3d3ee53d6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
