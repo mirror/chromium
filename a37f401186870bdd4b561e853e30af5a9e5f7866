@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "b7b51e1c_9c00d850",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-03T22:07:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ddb4da4_8ae40cbf",
+      "revId": "a37f401186870bdd4b561e853e30af5a9e5f7866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e56d6bcf_7929129a",
         "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
         "patchSetId": 5
@@ -89,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "f771e391_2c6a7c40",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-03T22:07:07Z",
+      "side": 1,
+      "message": "Thanks. Added a method ::ShouldIgnoreCertificateErrors() to the base class. The URLRequest\noverride queries the info from the context. The loader implementation returns false. Added a TODO there.",
+      "parentUuid": "cf8ed2a1_0b3ae2db",
+      "revId": "a37f401186870bdd4b561e853e30af5a9e5f7866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8a3dbf1f_a4fe7e82",
         "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
         "patchSetId": 5
@@ -106,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "c4c70550_f94b354b",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-03T22:07:07Z",
+      "side": 1,
+      "message": "This says otherwise? https://en.wikipedia.org/wiki/List_of_HTTP_status_codes#5xx_Server_errors\n\nAdditionally I have seen cases where OnResponseStarted gets called for errors.",
+      "parentUuid": "8a3dbf1f_a4fe7e82",
+      "revId": "a37f401186870bdd4b561e853e30af5a9e5f7866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3618b045_d5c0e156",
         "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
         "patchSetId": 5
@@ -117,6 +171,24 @@
       "writtenOn": "2017-08-03T20:53:54Z",
       "side": 1,
       "message": "This is a awkward?\n\nMaybe OnResponseCompleted can set result_ to NETWORK_ERROR if status.error_code !\u003d OK. Or maybe result_ can be pessimistically initialized to NETWORK_ERROR, and then optimistically set to OK in OnResponseStarted.",
+      "revId": "a37f401186870bdd4b561e853e30af5a9e5f7866",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4034a79c_45aea422",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-03T22:07:07Z",
+      "side": 1,
+      "message": "OnResponseCompleted sets result to NETWORK_ERROR if the error code is a failure.",
+      "parentUuid": "3618b045_d5c0e156",
       "revId": "a37f401186870bdd4b561e853e30af5a9e5f7866",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
