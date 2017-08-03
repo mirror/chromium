@@ -130,11 +130,11 @@ class PLATFORM_EXPORT ScriptWrappableVisitor : public v8::EmbedderHeapTracer,
 
     const ThreadState* thread_state = ThreadState::Current();
     DCHECK(thread_state);
-    WrapperVisitor* const current = CurrentVisitor(thread_state->GetIsolate());
-
     // Bail out if tracing is not in progress.
-    if (!current->TracingInProgress())
+    if (!thread_state->WrapperTracingInProgress())
       return;
+
+    WrapperVisitor* const current = CurrentVisitor(thread_state->GetIsolate());
 
     // If the wrapper is already marked we can bail out here.
     if (TraceTrait<T>::GetHeapObjectHeader(dst_object)->IsWrapperHeaderMarked())
@@ -178,8 +178,6 @@ class PLATFORM_EXPORT ScriptWrappableVisitor : public v8::EmbedderHeapTracer,
 
   // Immediately cleans up all wrappers if necessary.
   void PerformCleanup();
-
-  bool TracingInProgress() const override { return tracing_in_progress_; }
 
  protected:
   bool PushToMarkingDeque(

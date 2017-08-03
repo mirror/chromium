@@ -51,9 +51,6 @@ class ScriptWrappableVisitorVerifier : public WrapperVisitor {
   }
   void MarkWrappersInAllWorlds(const ScriptWrappable*) const override {}
 
-  // The verifier is only used during tracing.
-  bool TracingInProgress() const override { return true; }
-
  private:
   mutable WTF::HashSet<HeapObjectHeader*> visited_headers_;
 };
