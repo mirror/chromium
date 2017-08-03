@@ -31311,6 +31311,10 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Media.UnderflowDuration" units="ms">
+  <obsolete>
+    Removed Aug 2017. Media.UnderflowDuration2 removes zero-weighting so that we
+    only report actual underflows.
+  </obsolete>
   <owner>dalecurtis@chromium.org</owner>
   <summary>
     The amount of time taken to leave the underflow state (i.e. resume playback)
@@ -31319,6 +31323,10 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Media.UnderflowDuration.EME" units="ms">
+  <obsolete>
+    Removed Aug 2017. Media.UnderflowDuration2.EME removes zero-weighting so
+    that we only report actual underflows.
+  </obsolete>
   <owner>media-dev@chromium.org</owner>
   <summary>
     The amount of time taken to leave the underflow state (i.e. resume playback)
@@ -31327,10 +31335,43 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="Media.UnderflowDuration.MSE" units="ms">
+  <obsolete>
+    Removed Aug 2017. Media.UnderflowDuration2.EME removes zero-weighting so
+    that we only report actual underflows.
+  </obsolete>
   <owner>dalecurtis@chromium.org</owner>
   <summary>
     The amount of time taken to leave the underflow state (i.e. resume playback)
     for Media Source Extensions (MSE) based playbacks.
+  </summary>
+</histogram>
+
+<histogram name="Media.UnderflowDuration2" units="ms">
+  <owner>dalecurtis@chromium.org</owner>
+  <summary>
+    The amount of time taken to leave the underflow state (i.e. resume playback)
+    for src= playbacks. This doesn't report initial zero samples, which was
+    previously used to compensate for playbacks that don't rebuffer.
+  </summary>
+</histogram>
+
+<histogram name="Media.UnderflowDuration2.EME" units="ms">
+  <owner>media-dev@chromium.org</owner>
+  <summary>
+    The amount of time taken to leave the underflow state (i.e. resume playback)
+    for Encrypted Media Extensions (EME) based playbacks. This doesn't report
+    initial zero samples, which was previously used to compensate for playbacks
+    that don't rebuffer.
+  </summary>
+</histogram>
+
+<histogram name="Media.UnderflowDuration2.MSE" units="ms">
+  <owner>dalecurtis@chromium.org</owner>
+  <summary>
+    The amount of time taken to leave the underflow state (i.e. resume playback)
+    for Media Source Extensions (MSE) based playbacks. This doesn't report
+    initial zero samples, which was previously used to compensate for playbacks
+    that don't rebuffer.
   </summary>
 </histogram>
 

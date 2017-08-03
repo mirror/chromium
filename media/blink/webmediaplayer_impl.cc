@@ -1435,12 +1435,6 @@ void WebMediaPlayerImpl::OnBufferingStateChange(BufferingState state) {
       "pipeline_buffering_state", state));
 
   if (state == BUFFERING_HAVE_ENOUGH) {
-    if (highest_ready_state_ < WebMediaPlayer::kReadyStateHaveEnoughData) {
-      // Record a zero value for underflow histogram so that the histogram
-      // includes playbacks which never encounter an underflow event.
-      RecordUnderflowDuration(base::TimeDelta());
-    }
-
     SetReadyState(CanPlayThrough() ? WebMediaPlayer::kReadyStateHaveEnoughData
                                    : WebMediaPlayer::kReadyStateHaveFutureData);
 
@@ -2651,12 +2645,12 @@ void WebMediaPlayerImpl::RecordUnderflowDuration(base::TimeDelta duration) {
   DCHECK(data_source_ || chunk_demuxer_);
 
   if (data_source_)
-    UMA_HISTOGRAM_TIMES("Media.UnderflowDuration", duration);
+    UMA_HISTOGRAM_TIMES("Media.UnderflowDuration2", duration);
   else
-    UMA_HISTOGRAM_TIMES("Media.UnderflowDuration.MSE", duration);
+    UMA_HISTOGRAM_TIMES("Media.UnderflowDuration2.MSE", duration);
 
   if (is_encrypted_)
-    UMA_HISTOGRAM_TIMES("Media.UnderflowDuration.EME", duration);
+    UMA_HISTOGRAM_TIMES("Media.UnderflowDuration2.EME", duration);
 }
 
 #define UMA_HISTOGRAM_VIDEO_HEIGHT(name, sample) \
