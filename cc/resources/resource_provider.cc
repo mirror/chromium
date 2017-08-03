@@ -221,7 +221,7 @@ ResourceProvider::Resource::Resource(GLuint texture_id,
       hint(hint),
       type(type),
       usage(gfx::BufferUsage::GPU_READ_CPU_READ_WRITE),
-      buffer_format(gfx::BufferFormat::RGBA_8888),
+      buffer_format(BufferFormat(format)),
       format(format),
       shared_bitmap(nullptr) {
 }
