@@ -3284,7 +3284,8 @@ const FeatureEntry kFeatureEntries[] = {
 
     {"enable-manual-fallbacks-filling",
      flag_descriptions::kEnableManualFallbacksFillingName,
-     flag_descriptions::kEnableManualFallbacksFillingDescription, kOsDesktop,
+     flag_descriptions::kEnableManualFallbacksFillingDescription,
+     kOsDesktop | kOsAndroid,
      FEATURE_VALUE_TYPE(
          password_manager::features::kEnableManualFallbacksFilling)},
 
