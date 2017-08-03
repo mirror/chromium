@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "b93bab79_9a2ad3bb",
+        "filename": "media/filters/decoder_stream.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 609,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-08-03T20:38:48Z",
+      "side": 1,
+      "message": "Hmm.  I noticed after my earlier comment that we don\u0027t currently use a StrictMock\u003cMockMediaLog\u003e in pipeline integration tests (I do in many places in sub-integration -- MSE pieces of the pipeline). Maybe add an EME browsertest that also verifies the contents of MediaError.message contain your err? (See https://cs.chromium.org/chromium/src/content/browser/media/media_browsertest.cc?dr\u003dCSs\u0026l\u003d306 for example...)",
+      "parentUuid": "4090379f_63c5e63a",
+      "revId": "5c788adeaf678a9176308db258a87bc08c68af55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68ac7739_0abab56f",
         "filename": "media/filters/decrypting_demuxer_stream.cc",
         "patchSetId": 3
