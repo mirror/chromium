@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "602fa7b6_432b0342",
+        "filename": "chrome/browser/chromeos/tether/tether_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-03T00:32:42Z",
+      "side": 1,
+      "message": "Unfortunately this does not compile \"error: using declaration cannot refer to class member\"",
+      "parentUuid": "c715562d_3210d320",
+      "range": {
+        "startLine": 282,
+        "startChar": 0,
+        "endLine": 282,
+        "endChar": 1
+      },
+      "revId": "6fd62b2d647b22d7f9d9c6badda892c7eba4e957",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b43f87f4_1eb7911a",
         "filename": "chrome/browser/chromeos/tether/tether_service_unittest.cc",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-02T23:55:49Z",
       "side": 1,
       "message": "nit: Why is this test moved down? Unless there is a strong reason, let\u0027s leave it where it was to prevent unnecessary history modification.",
+      "range": {
+        "startLine": 503,
+        "startChar": 0,
+        "endLine": 503,
+        "endChar": 54
+      },
+      "revId": "6fd62b2d647b22d7f9d9c6badda892c7eba4e957",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37742199_18475e6d",
+        "filename": "chrome/browser/chromeos/tether/tether_service_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-03T00:32:42Z",
+      "side": 1,
+      "message": "It matches the order in which \"triggers\" are checked. I feel this makes the test better follow the flow of the class but I don\u0027t feel strongly about this.",
+      "parentUuid": "b43f87f4_1eb7911a",
       "range": {
         "startLine": 503,
         "startChar": 0,
