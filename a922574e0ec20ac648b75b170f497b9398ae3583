@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09dc7933_07c3845a",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-03T11:37:58Z",
+      "side": 1,
+      "message": "optional nit: \"!\u003d nullptr\" isn\u0027t required, and I think most null checks omit it.",
+      "revId": "a922574e0ec20ac648b75b170f497b9398ae3583",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
