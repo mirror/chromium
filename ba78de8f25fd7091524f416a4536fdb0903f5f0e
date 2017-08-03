@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "311ae09f_a2f4ae34",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-03T00:00:01Z",
+      "side": 1,
+      "message": "This made my head hurt to review.  I _think_ it\u0027s right, but I\u0027m not positive.\n\nI started at this for like twenty minutes, thinking of alternatives, sometimes with using match.input_length compared with host_post in addition to those tests, sometimes using \u003e versus \u003e\u003d.\n\nI think core concern I have revolves around something that is only a subdomain match.  Can you add a test for, say, the input \"ww\"?  And maybe \"http://ww\" while you\u0027re at it?  That kind of stuff.  Then I\u0027d feel better.",
+      "range": {
+        "startLine": 740,
+        "startChar": 0,
+        "endLine": 744,
+        "endChar": 70
+      },
+      "revId": "ba78de8f25fd7091524f416a4536fdb0903f5f0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e16ff389_a58c0c3a",
+        "filename": "components/omnibox/browser/history_url_provider_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-03T00:00:01Z",
+      "side": 1,
+      "message": "nit: please briefly comment",
+      "range": {
+        "startLine": 250,
+        "startChar": 7,
+        "endLine": 250,
+        "endChar": 31
+      },
+      "revId": "ba78de8f25fd7091524f416a4536fdb0903f5f0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5aed357_bbd27566",
+        "filename": "components/omnibox/browser/history_url_provider_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-03T00:00:01Z",
+      "side": 1,
+      "message": "What?\nDon\u0027t HistoryURLProvider matches come sorted?\n?\n\nPerhaps replace the whole comment (bother sentences) with simply:\n// Test the variations of URL formatting on the last match.",
+      "range": {
+        "startLine": 374,
+        "startChar": 5,
+        "endLine": 374,
+        "endChar": 59
+      },
+      "revId": "ba78de8f25fd7091524f416a4536fdb0903f5f0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78a2ab79_d517fdeb",
+        "filename": "components/omnibox/browser/history_url_provider_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1162,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-08-03T00:00:01Z",
+      "side": 1,
+      "message": "Do you want to test each of these flags separately?  (Like, flip one and make sure that it doesn\u0027t inadvertently turn on a different flag\u0027s behavior at the same time?)",
+      "revId": "ba78de8f25fd7091524f416a4536fdb0903f5f0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
