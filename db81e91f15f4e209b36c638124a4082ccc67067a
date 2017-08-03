@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6e2aad0d_e680b6f1",
+        "filename": "base/process/process_util_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 684,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-03T08:34:26Z",
+      "side": 1,
+      "message": "Yeah, it\u0027s just a PITA because we can\u0027t use fds_to_remap, since that\u0027s the thing we\u0027re testing. \n\nThe test parent process will need to dup() stdout into a backup FD, create a pipe and dup2() that into stdout, launch the process, dup2() the backup stdout into stdout, then check the pipe for content from the child.\n\n*sigh* Fine, tests that don\u0027t test aren\u0027t much use, I suppose. ;)",
+      "parentUuid": "3f3f7436_8c1b841e",
+      "revId": "db81e91f15f4e209b36c638124a4082ccc67067a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e389855_22146baa",
         "filename": "base/process/process_util_unittest.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "db81e91f15f4e209b36c638124a4082ccc67067a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d51daa5_49be60dc",
+        "filename": "base/process/process_util_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 685,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-03T08:34:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e389855_22146baa",
+      "revId": "db81e91f15f4e209b36c638124a4082ccc67067a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "fbaecf45_71127200",
+        "filename": "base/process/process_util_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-03T08:34:26Z",
+      "side": 1,
+      "message": "Yeah, I suspect very little POSIX software would run without /dev/null :)",
+      "parentUuid": "3aa907b1_3ee6d685",
+      "range": {
+        "startLine": 695,
+        "startChar": 23,
+        "endLine": 695,
+        "endChar": 32
+      },
+      "revId": "db81e91f15f4e209b36c638124a4082ccc67067a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dfa89461_22d90f9d",
         "filename": "base/process/process_util_unittest.cc",
         "patchSetId": 1
@@ -79,6 +139,30 @@
       "revId": "db81e91f15f4e209b36c638124a4082ccc67067a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9333e068_8918fdf8",
+        "filename": "base/process/process_util_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-03T08:34:26Z",
+      "side": 1,
+      "message": "CHECKing rather than ASSERTing here for consistency with the other tests; happy to change it.",
+      "parentUuid": "dfa89461_22d90f9d",
+      "range": {
+        "startLine": 696,
+        "startChar": 2,
+        "endLine": 696,
+        "endChar": 11
+      },
+      "revId": "db81e91f15f4e209b36c638124a4082ccc67067a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
