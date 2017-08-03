@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26fd371c_9fc432ae",
+        "filename": "services/resource_coordinator/coordination_unit/coordination_unit_introspector_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1211219
+      },
+      "writtenOn": "2017-08-03T21:26:12Z",
+      "side": 1,
+      "message": "Why not use ToFrameCU(frame_cu)-\u003eIsMainFrame()?",
+      "range": {
+        "startLine": 37,
+        "startChar": 10,
+        "endLine": 39,
+        "endChar": 23
+      },
+      "revId": "fbb8073fc66d3a820919144b6f11c148be8aa417",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
