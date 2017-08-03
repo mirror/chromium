@@ -1631,6 +1631,7 @@ test("browser_tests") {
       "//components/policy:chrome_settings_proto_generated_compile",
       "//components/resources",
       "//components/safe_browsing_db:test_database_manager",
+      "//components/simple_url_loader",
       "//components/strings",
       "//components/sync",
       "//components/translate/core/common",
