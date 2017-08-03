@@ -34,6 +34,23 @@
       "revId": "540595c987b9e2739e3dd7ceb46b586944d74d3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b5a0925_86161571",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParser.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-08-03T03:35:11Z",
+      "side": 0,
+      "message": "Eddy was the code that you shifted from this class to CSSPropertyAPICustomHelper changed in any substantial way, or just moved?",
+      "revId": "540595c987b9e2739e3dd7ceb46b586944d74d3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
