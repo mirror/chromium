@@ -30,7 +30,7 @@ typedef NS_ENUM(NSInteger, BubbleAlignment) {
 // Speech bubble shaped view that displays a message.
 @interface BubbleView : UIView
 
-// Initializes with the given text, direction that the bubble should point, and
+// Initialize with the given text, direction that the bubble should point, and
 // alignment of the bubble.
 - (instancetype)initWithText:(NSString*)text
               arrowDirection:(BubbleArrowDirection)direction
