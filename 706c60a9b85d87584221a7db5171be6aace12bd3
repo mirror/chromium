@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e2f96443_ffafd8dc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 7
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-08-04T09:56:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebb79730_11fb980f",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 60
+      },
+      "revId": "706c60a9b85d87584221a7db5171be6aace12bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e614112f_c9a86ef1",
         "filename": "chrome/browser/policy/test/policy_testserver.py",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "706c60a9b85d87584221a7db5171be6aace12bd3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9313975_86335cb0",
+        "filename": "chrome/browser/policy/test/policy_testserver.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 728,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-08-04T09:56:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e614112f_c9a86ef1",
+      "range": {
+        "startLine": 727,
+        "startChar": 9,
+        "endLine": 728,
+        "endChar": 38
+      },
+      "revId": "706c60a9b85d87584221a7db5171be6aace12bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "22776d4c_5d1d26a1",
+        "filename": "chrome/browser/policy/test/policy_testserver.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-08-04T09:56:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f777d42_c38cc66b",
+      "range": {
+        "startLine": 736,
+        "startChar": 11,
+        "endLine": 736,
+        "endChar": 36
+      },
+      "revId": "706c60a9b85d87584221a7db5171be6aace12bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b8ddfd8_2e84091a",
         "filename": "chrome/browser/policy/test/policy_testserver.py",
         "patchSetId": 7
@@ -82,6 +154,30 @@
       "writtenOn": "2017-08-03T17:34:44Z",
       "side": 1,
       "message": "Sorry, I\u0027m not quite following the idea here...\n\nFor instance, the \"sub_field.name in sub_value\" expression, as it appears to me, checks whether one string is a substring of another one. Then it\u0027s probably not what was desired here.\n\nAnd, actually, are two loops really necessary here - isn\u0027t it enough to just iterate over all fields in a single loop?",
+      "range": {
+        "startLine": 738,
+        "startChar": 8,
+        "endLine": 740,
+        "endChar": 42
+      },
+      "revId": "706c60a9b85d87584221a7db5171be6aace12bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6c3b84c_1b69c99c",
+        "filename": "chrome/browser/policy/test/policy_testserver.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-08-04T09:56:19Z",
+      "side": 1,
+      "message": "Yes, strings should be equal, fix it.\nWe need two loops because field have to be in proto and in json at the same time.\nI can do it another way, but it also will be O(n^2).",
+      "parentUuid": "9b8ddfd8_2e84091a",
       "range": {
         "startLine": 738,
         "startChar": 8,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "d826db9e_ec64d13b",
+        "filename": "chrome/browser/policy/test/policy_testserver.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-08-04T09:56:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c2d7160_bcc0e482",
+      "range": {
+        "startLine": 741,
+        "startChar": 14,
+        "endLine": 741,
+        "endChar": 19
+      },
+      "revId": "706c60a9b85d87584221a7db5171be6aace12bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a549f15_ffebeb3f",
         "filename": "chrome/browser/policy/test/policy_testserver.py",
         "patchSetId": 7
@@ -128,6 +248,30 @@
       "writtenOn": "2017-08-03T17:34:44Z",
       "side": 1,
       "message": "Not insisting, but maybe the readability of the whole method could be improved by introducing a bunch of small local functions (e.g. set_repeated_raw_field()/set_repeated_message_field()/set_raw_field()/...), so that this giant if-elif-else block becomes small and simple.",
+      "range": {
+        "startLine": 744,
+        "startChar": 4,
+        "endLine": 744,
+        "endChar": 8
+      },
+      "revId": "706c60a9b85d87584221a7db5171be6aace12bd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f47e54b_fe346302",
+        "filename": "chrome/browser/policy/test/policy_testserver.py",
+        "patchSetId": 7
+      },
+      "lineNbr": 744,
+      "author": {
+        "id": 1228045
+      },
+      "writtenOn": "2017-08-04T09:56:19Z",
+      "side": 1,
+      "message": "God idea. I\u0027ll try.",
+      "parentUuid": "6a549f15_ffebeb3f",
       "range": {
         "startLine": 744,
         "startChar": 4,
