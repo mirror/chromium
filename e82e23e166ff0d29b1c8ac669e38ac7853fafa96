@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "71807dfb_ddbddf0f",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1225649
+      },
+      "writtenOn": "2017-08-04T19:17:26Z",
+      "side": 1,
+      "message": "I moved it to LoadAndSave; now it lazily creates it upon the first time LoadAndSave is called, and avoids checking the flag in the constructor.",
+      "parentUuid": "3fd3e1fb_0b3bd2ef",
+      "range": {
+        "startLine": 122,
+        "startChar": 6,
+        "endLine": 122,
+        "endChar": 38
+      },
+      "revId": "e82e23e166ff0d29b1c8ac669e38ac7853fafa96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46f9b359_cb0df4cd",
         "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "e82e23e166ff0d29b1c8ac669e38ac7853fafa96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02aeb6a6_edd3d0fe",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1225649
+      },
+      "writtenOn": "2017-08-04T19:17:26Z",
+      "side": 1,
+      "message": "I used an explicit cast to bool to make it obvious. If this is not desirable, I can change it to an implicit cast.",
+      "parentUuid": "46f9b359_cb0df4cd",
+      "range": {
+        "startLine": 231,
+        "startChar": 6,
+        "endLine": 231,
+        "endChar": 38
+      },
+      "revId": "e82e23e166ff0d29b1c8ac669e38ac7853fafa96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "6a33b292_22a6ac2d",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1225649
+      },
+      "writtenOn": "2017-08-04T19:17:26Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "505fe892_dcb21916",
+      "range": {
+        "startLine": 492,
+        "startChar": 6,
+        "endLine": 492,
+        "endChar": 21
+      },
+      "revId": "e82e23e166ff0d29b1c8ac669e38ac7853fafa96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96caab7c_168dce3d",
         "filename": "chrome/browser/offline_pages/background_loader_offliner.h",
         "patchSetId": 7
@@ -91,6 +163,30 @@
       "revId": "e82e23e166ff0d29b1c8ac669e38ac7853fafa96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38ac57c2_9e5107f7",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1225649
+      },
+      "writtenOn": "2017-08-04T19:17:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96caab7c_168dce3d",
+      "range": {
+        "startLine": 17,
+        "startChar": 52,
+        "endLine": 17,
+        "endChar": 74
+      },
+      "revId": "e82e23e166ff0d29b1c8ac669e38ac7853fafa96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
