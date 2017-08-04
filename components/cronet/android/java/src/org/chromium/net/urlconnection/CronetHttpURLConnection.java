@@ -11,6 +11,7 @@ import org.chromium.net.CronetEngine;
 import org.chromium.net.CronetException;
 import org.chromium.net.UrlRequest;
 import org.chromium.net.UrlResponseInfo;
+import org.chromium.net.impl.CronetExceptionImpl;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -494,6 +495,7 @@ public class CronetHttpURLConnection extends HttpURLConnection {
         @Override
         public void onCanceled(UrlRequest request, UrlResponseInfo info) {
             mResponseInfo = info;
+            mException = new CronetExceptionImpl("request canceled", null);
             setResponseDataCompleted(new IOException("stream closed"));
         }
 

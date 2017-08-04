@@ -23,6 +23,8 @@ import java.io.OutputStream;
 import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -1191,6 +1193,56 @@ public class CronetHttpURLConnectionTest extends CronetTestBase {
         // Disables caching. No cached response is received.
         checkRequestCaching(url,
                 CacheSetting.DONT_USE_CACHE, ExpectedOutcome.FAILURE);
+    }
+
+    private static class HangingServer {
+        private ServerSocket mServerSocket;
+        void start() throws IOException {
+            mServerSocket = new ServerSocket(0);
+        }
+        Socket accept() throws IOException {
+            return mServerSocket.accept();
+        }
+        void shutDown() throws IOException {
+            mServerSocket.close();
+        }
+        String getUrl() {
+            return "http://localhost:" + mServerSocket.getLocalPort();
+        }
+    }
+
+    @SmallTest
+    @Feature({"Cronet"})
+    @OnlyRunCronetHttpURLConnection
+    // Tests that if disconnect() is called on a different thread when
+    // getResponseCode() is still waiting for response, there is no
+    // NPE but only IOException.
+    // Regression test for crbug.com/751786
+    public void testDisconnectWhenGetResponseCodeIsWaiting() throws Exception {
+        HangingServer hangingServer = new HangingServer();
+        hangingServer.start();
+        URL url = new URL(hangingServer.getUrl());
+        final HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        // connect() is non-blocking. This is to make sure disconnect() triggers cancellation.
+        connection.connect();
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    connection.getResponseCode();
+                    fail();
+                } catch (IOException e) {
+                    // Expected
+                    assertEquals("request canceled", e.getMessage());
+                }
+            }
+        });
+        t.start();
+        Socket s = hangingServer.accept();
+        connection.disconnect();
+        t.join();
+        s.close();
+        hangingServer.shutDown();
     }
 
     private void checkExceptionsAreThrown(HttpURLConnection connection)
