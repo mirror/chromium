@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "25f71bfc_be1c24cf",
+        "filename": "chrome/browser/ntp_snippets/content_suggestions_service_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-04T13:41:14Z",
+      "side": 1,
+      "message": "It is gone now.",
+      "parentUuid": "2a440b98_b7e90218",
+      "range": {
+        "startLine": 454,
+        "startChar": 7,
+        "endLine": 454,
+        "endChar": 36
+      },
+      "revId": "7b653b27b3d817215c5fa26a64de8cc3fc286053",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2cf0afd0_23b447b3",
         "filename": "components/ntp_snippets/content_suggestions_service.h",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "7b653b27b3d817215c5fa26a64de8cc3fc286053",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "585c63a6_46a2e248",
+        "filename": "components/ntp_snippets/content_suggestions_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-08-04T13:41:14Z",
+      "side": 1,
+      "message": "Done.\n\nI\u0027ve added an accessor. \nI am reluctant to add it to the interface, so I use static_casts instead.",
+      "parentUuid": "2cf0afd0_23b447b3",
+      "revId": "7b653b27b3d817215c5fa26a64de8cc3fc286053",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
