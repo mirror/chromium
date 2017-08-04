@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1b9e314_4d33f198",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObject.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2356,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-08-04T18:40:20Z",
+      "side": 1,
+      "message": "This current_layer null check is not necessary.",
+      "range": {
+        "startLine": 2356,
+        "startChar": 10,
+        "endLine": 2356,
+        "endChar": 23
+      },
+      "revId": "bf531fdbd17c1120eb1bb9c69fe6c4a0070df3fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
