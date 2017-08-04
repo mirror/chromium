@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5320d11c_05f9654c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/DebuggerModel.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-08-04T01:32:45Z",
+      "side": 1,
+      "message": "I have a few concerns about this approach:\n- JSON.parse might throw\n- synchronous XHR is deprecated\n- synchronous XHR will slow us down\n- we do double work here (we later will decode sourcemap another time in SourceMapManager)\n\nAs an alternatively, how about one of the following:\n1. disregard sourceMapURL entirely in generating sourceMapId. This will work just fine if there\u0027s a sourceURL specified for the script\n2. modify sourceMapManager.attachSourceMap to return a promise which will resolve with sourceMap, and then compute the sourceMapId from the sourceMap. This is more involved, but seems to be more reliable",
+      "revId": "59415c0d9cfd5792b6872ed8b2e7bb9390fc40a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
