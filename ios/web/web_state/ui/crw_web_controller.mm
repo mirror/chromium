@@ -1139,21 +1139,6 @@ const NSTimeInterval kSnapshotOverlayTransition = 0.5;
   _usePlaceholderOverlay = YES;
 }
 
-- (void)reinitializeWebViewAndReload:(BOOL)reload {
-  if (_webView) {
-    [self removeWebViewAllowingCachedReconstruction:NO];
-    if (reload) {
-      [self loadCurrentURLInWebView];
-    } else {
-      // Clear the space for the web view to lazy load when needed.
-      _usePlaceholderOverlay = YES;
-      _touchTrackingRecognizer.get().touchTrackingDelegate = nil;
-      _touchTrackingRecognizer.reset();
-      [self resetContainerView];
-    }
-  }
-}
-
 - (BOOL)isViewAlive {
   return !_webProcessIsDead && [_containerView isViewAlive];
 }
