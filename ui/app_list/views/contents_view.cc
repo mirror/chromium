@@ -468,7 +468,10 @@ gfx::Size ContentsView::CalculatePreferredSize() const {
   return gfx::Size(bottom_right.x(), bottom_right.y());
 }
 
-void ContentsView::Layout() {
+void ContentsView::Layout(int app_list_y_position_in_screen,
+                          int work_area_bottom,
+                          bool is_end_gesture,
+                          bool is_for_dragging) {
   // Immediately finish all current animations.
   pagination_model_.FinishAnimation();
 
@@ -483,7 +486,11 @@ void ContentsView::Layout() {
     return;
 
   for (AppListPage* page : app_list_pages_) {
-    page->SetBoundsRect(page->GetPageBoundsForState(GetActiveState()));
+    is_for_dragging
+        ? page->SetBoundsRect(page->LayoutAndUpdateOpacityDuringDragging(
+              GetActiveState(), app_list_y_position_in_screen, work_area_bottom,
+              is_end_gesture))
+        : page->SetBoundsRect(page->GetPageBoundsForState(GetActiveState()));
   }
 
   // The search box is contained in a widget so set the bounds of the widget
@@ -495,6 +502,10 @@ void ContentsView::Layout() {
         GetSearchBoxView()->GetViewBoundsForSearchBoxContentsBounds(
             search_box_bounds)));
   }
+}
+
+void ContentsView::Layout() {
+  Layout(0, 0, false /* is_end_gesture */, false /*is_for_dragging*/);
 }
 
 bool ContentsView::OnKeyPressed(const ui::KeyEvent& event) {
