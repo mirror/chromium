@@ -411,8 +411,8 @@ _BANNED_CPP_FUNCTIONS = (
     (
       'MessageLoop::QuitWhenIdleClosure',
       (
-        'MessageLoop::QuitWhenIdleClosure is deprecated. Please migrate to'
-        'Runloop.'
+        'MessageLoop::QuitWhenIdleClosure is deprecated. Please migrate to',
+        'Runloop.',
       ),
       True,
       (),
@@ -420,8 +420,8 @@ _BANNED_CPP_FUNCTIONS = (
     (
       'RunLoop::QuitCurrent',
       (
-        'Please migrate away from RunLoop::QuitCurrent*() methods. Use member'
-        'methods of a specific RunLoop instance instead.'
+        'Please migrate away from RunLoop::QuitCurrent*() methods. Use member',
+        'methods of a specific RunLoop instance instead.',
       ),
       True,
       (),
