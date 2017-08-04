@@ -272,6 +272,34 @@ namespace blink {
 
 using namespace HTMLNames;
 
+class DocumentOutliveTimeReporter : public ThreadStateObserver {
+ public:
+  DocumentOutliveTimeReporter() : ThreadStateObserver(ThreadState::Current()) {}
+
+  ~DocumentOutliveTimeReporter() override {
+    // As not all documents are destroyed before the process dies, this might
+    // miss some long-lived documents or leaked documents.
+    UMA_HISTOGRAM_CUSTOM_COUNTS(
+        "Document.OutliveTimeAfterShutdown.DestoryedBeforeProcessDies",
+        gc_count_ + 1, 1, 100, 100);
+  }
+
+  void OnCompleteSweepDone() override {
+    DEFINE_STATIC_LOCAL(BooleanHistogram, document_outlive_time_5_histogram,
+                        ("Document.OutLiveTimeAfterShutdown.GCCount5"));
+    DEFINE_STATIC_LOCAL(BooleanHistogram, document_outlive_time_10_histogram,
+                        ("Document.OutLiveTimeAfterShutdown.GCCount10"));
+    gc_count_++;
+    if (gc_count_ == 5)
+      document_outlive_time_5_histogram.Count(true);
+    if (gc_count_ == 10)
+      document_outlive_time_10_histogram.Count(true);
+  }
+
+ private:
+  int gc_count_ = 0;
+};
+
 static const unsigned kCMaxWriteRecursionDepth = 21;
 
 // This amount of time must have elapsed before we will even consider scheduling
@@ -2738,6 +2766,9 @@ void Document::Shutdown() {
   // should be renamed, or this setting of the frame to 0 could be made
   // explicit in each of the callers of Document::detachLayoutTree().
   frame_ = nullptr;
+
+  document_outlive_time_reporter_ =
+      WTF::WrapUnique(new DocumentOutliveTimeReporter());
 }
 
 void Document::RemoveAllEventListeners() {
