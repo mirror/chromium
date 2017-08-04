@@ -48,7 +48,9 @@ EphemeralRange CurrentWordIfTypingInPartialWord(const Element& editable) {
       frame.GetEditor().LastTypingCommandIfStillOpenForTyping();
   if (!typing_command)
     return EphemeralRange();
-  if (typing_command->EndingVisibleSelection().AsSelection() != selection)
+  if (typing_command->EndingVisibleSelection().AsSelection() != selection &&
+      typing_command->EndingSelection().IsDirectional() !=
+          frame.Selection().IsDirectional())
     return EphemeralRange();
   return AdjacentWordIfExists(selection.Base());
 }
