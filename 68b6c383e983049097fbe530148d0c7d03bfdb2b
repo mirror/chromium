@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ba75d955_8cf68c93",
+        "filename": "chrome/gpu/gpu_arc_video_encode_accelerator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-04T10:23:33Z",
+      "side": 1,
+      "message": "Please update this comment.",
+      "range": {
+        "startLine": 124,
+        "startChar": 0,
+        "endLine": 126,
+        "endChar": 38
+      },
+      "revId": "68b6c383e983049097fbe530148d0c7d03bfdb2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cdbdf1b_0b6078d6",
+        "filename": "chrome/gpu/gpu_arc_video_encode_accelerator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-04T10:23:33Z",
+      "side": 1,
+      "message": "bitstream_buffer_serial_ is unsigned though, so maybe we can just do the simple thing? Otherwise, update this comment to mention why masking is still needed.",
+      "range": {
+        "startLine": 213,
+        "startChar": 5,
+        "endLine": 213,
+        "endChar": 75
+      },
+      "revId": "68b6c383e983049097fbe530148d0c7d03bfdb2b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
