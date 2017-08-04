@@ -210,6 +210,12 @@ TEST_F(HostFrameSinkManagerTest, CreateCompositorFrameSinkSupport) {
 }
 
 TEST_F(HostFrameSinkManagerTest, AssignTemporaryReference) {
+  FakeHostFrameSinkClient parent_client;
+  host_manager().RegisterFrameSinkId(kParentFrameSinkId, &parent_client);
+
+  FakeHostFrameSinkClient child_client;
+  host_manager().RegisterFrameSinkId(kClientFrameSinkId, &child_client);
+
   const SurfaceId surface_id = MakeSurfaceId(kClientFrameSinkId, 1);
   auto support = CreateCompositorFrameSinkSupport(surface_id.frame_sink_id(),
                                                   false /* is_root */);
