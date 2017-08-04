@@ -2,7 +2,8 @@
   "dependencies": [
     "test_runner",
     "sdk",
-    "network_log"
+    "network_log",
+    "workspace"
   ],
   "scripts": [
     "IntegrationTestRunner.js"

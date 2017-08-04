@@ -1,0 +1,14 @@
+{
+  "dependencies": [
+    "test_runner",
+    "integration_test_runner",
+    "timeline_model",
+    "timeline"
+  ],
+  "scripts": [
+    "TimelineTestRunner.js"
+  ],
+  "skip_compilation": [
+    "TimelineTestRunner.js"
+  ]
+}

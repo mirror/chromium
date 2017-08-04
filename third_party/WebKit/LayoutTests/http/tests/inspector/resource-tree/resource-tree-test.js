@@ -1,3 +1,6 @@
+// This file is being deprecated and is moving to front_end/application_test_runner/ResourceTreeTestRunner.js
+// Please see crbug.com/667560 for more details
+
 var initialize_ResourceTreeTest = function() {
 
 InspectorTest.dumpResources = function(formatter)

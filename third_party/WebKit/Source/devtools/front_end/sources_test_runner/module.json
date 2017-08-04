@@ -6,6 +6,15 @@
     "workspace"
   ],
   "scripts": [
+    "SourcesTestRunner.js",
+    "DebuggerTestRunner.js",
+    "LiveEditTestRunner.js",
+    "SearchTestRunner.js"
+  ],
+  "skip_compilation": [
+    "DebuggerTestRunner.js",
+    "LiveEditTestRunner.js",
+    "SearchTestRunner.js",
     "SourcesTestRunner.js"
   ]
 }

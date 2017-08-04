@@ -1,3 +1,6 @@
+// This file is being deprecated and is moving to front_end/bindings_test_runner/PersistenceTestRunner.js
+// Please see crbug.com/667560 for more details
+
 var initialize_PersistenceTest = function() {
 
 InspectorTest.preloadModule("persistence");

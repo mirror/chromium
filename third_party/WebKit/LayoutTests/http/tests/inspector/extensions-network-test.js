@@ -1,3 +1,6 @@
+// This file is being deprecated and is moving to front_end/extensions_test_runner/ExtensionsNetworkTestRunner.js
+// Please see crbug.com/667560 for more details
+
 function extension_getRequestByUrl(urls, callback)
 {
     function onHAR(response)

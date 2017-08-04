@@ -1,3 +1,6 @@
+// This file is being deprecated and is moving to front_end/sources_test_runner/SourcesTestRunner.js
+// Please see crbug.com/667560 for more details
+
 var initialize_SourcesTest = function() {
 
 InspectorTest.preloadPanel("sources");
