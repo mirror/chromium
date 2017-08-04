@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3677b9ee_b7a6bfa4",
+        "filename": "third_party/WebKit/Source/devtools/front_end/integration_test_runner/IntegrationTestRunner.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-04T22:45:21Z",
+      "side": 1,
+      "message": "I wonder if this can be much simpler now, i.e.\n\nfor (var func of testSuite) {\n    TestRunner.addRestult(...)\n    await new Promise(fulfill \u003d\u003e TestRunner.safeWrap(func)(fulfill));\n}\nInspectorTest.completeTest();",
+      "revId": "7f32779631566610f7fdf77975db6d06d3673ef8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b6d627d_179e22e9",
+        "filename": "third_party/WebKit/Source/devtools/front_end/integration_test_runner/IntegrationTestRunner.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-04T22:45:21Z",
+      "side": 1,
+      "message": "Can this be a template?",
+      "revId": "7f32779631566610f7fdf77975db6d06d3673ef8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0215b46_52cbed90",
+        "filename": "third_party/WebKit/Source/devtools/front_end/integration_test_runner/IntegrationTestRunner.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 571,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-04T22:45:21Z",
+      "side": 1,
+      "message": "This seems to be only used by console tests and overall looks somewhat weird, so perhaps keep it in the console runner?",
+      "revId": "7f32779631566610f7fdf77975db6d06d3673ef8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "897e0587_c3243b61",
+        "filename": "third_party/WebKit/Source/devtools/front_end/integration_test_runner/IntegrationTestRunner.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-04T22:45:21Z",
+      "side": 1,
+      "message": "would await Promise.resolve() do the magic?",
+      "revId": "7f32779631566610f7fdf77975db6d06d3673ef8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bd0680a_c50b053c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/integration_test_runner/IntegrationTestRunner.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-04T22:45:21Z",
+      "side": 1,
+      "message": "nit: we typically do not take advantage of var\u0027s dynamic scoping and put var into the enclosing block as if it were lexically scoped. Better yet, just \"return override.apply(this, arguments);\"",
+      "revId": "7f32779631566610f7fdf77975db6d06d3673ef8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7070d28_f07bc37a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/integration_test_runner/IntegrationTestRunner.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-04T22:45:21Z",
+      "side": 1,
+      "message": "@template while you\u0027re here?",
+      "revId": "7f32779631566610f7fdf77975db6d06d3673ef8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3942dca7_90979e79",
+        "filename": "third_party/WebKit/Source/devtools/front_end/integration_test_runner/IntegrationTestRunner.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 722,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-08-04T22:45:21Z",
+      "side": 1,
+      "message": "Let\u0027s make it local to the only test that uses it.",
+      "revId": "7f32779631566610f7fdf77975db6d06d3673ef8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
