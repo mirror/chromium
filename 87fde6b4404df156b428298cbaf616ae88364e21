@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6e7878f_9856349c",
+        "filename": "third_party/WebKit/Source/core/exported/WebPluginContainerTest.cpp",
+        "patchSetId": 23
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-04T18:00:56Z",
+      "side": 1,
+      "message": "Add \"explicit \" in front.",
+      "revId": "87fde6b4404df156b428298cbaf616ae88364e21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
