@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d210e01_7108a32b",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 1003,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-04T16:38:46Z",
+      "side": 1,
+      "message": "No need to explicitly invoke 0-argument constructors when not using smart pointer types.",
+      "range": {
+        "startLine": 1003,
+        "startChar": 6,
+        "endLine": 1003,
+        "endChar": 51
+      },
+      "revId": "c2620eebebf740261654332649978c2cf06a3a94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d8cad31_a13e0acf",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 1315,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-04T16:38:46Z",
+      "side": 1,
+      "message": "Suggest just caching the type on the stack, and then comparing that against the connection types - it\u0027s a virtual function call, though admittedly, it\u0027s presumably fairly fast, otherwise.",
+      "range": {
+        "startLine": 1315,
+        "startChar": 51,
+        "endLine": 1315,
+        "endChar": 0
+      },
+      "revId": "c2620eebebf740261654332649978c2cf06a3a94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aeea50c_347f9afc",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-04T16:38:46Z",
+      "side": 1,
+      "message": "max_effective_connection_type_ / non_delayable_weight_.\n\nWhat do we get by making this a class, instead of a method on the scheduler?",
+      "range": {
+        "startLine": 164,
+        "startChar": 39,
+        "endLine": 164,
+        "endChar": 68
+      },
+      "revId": "c2620eebebf740261654332649978c2cf06a3a94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
