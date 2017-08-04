@@ -189,42 +189,11 @@
         // results for all the subtests in this test.
         let testResults = '';
         let resultCounter = [0, 0, 0, 0];
-        // The reflection tests contain huge number of tests, and Chromium code
-        // review tool has the 1MB diff size limit. We merge PASS lines.
-        if (output_document.URL.indexOf('/html/dom/reflection') >= 0) {
-            for (let i = 0; i < tests.length; ++i) {
-                if (tests[i].status == 0) {
-                    const colon = tests[i].name.indexOf(':');
-                    if (colon > 0) {
-                        const prefix = tests[i].name.substring(0, colon + 1);
-                        let j = i + 1;
-                        for (; j < tests.length; ++j) {
-                            if (!tests[j].name.startsWith(prefix) ||
-                                tests[j].status != 0)
-                                break;
-                        }
-                        const numPasses = j - i;
-                        if (numPasses > 1) {
-                            resultCounter[0] += numPasses;
-                            testResults += convertResult(tests[i].status) +
-                                ` ${sanitize(prefix)} ${numPasses} tests\n`;
-                            i = j - 1;
-                            continue;
-                        }
-                    }
-                }
-                resultCounter[tests[i].status]++;
-                testResults += convertResult(tests[i].status) + ' ' +
-                    sanitize(tests[i].name) + ' ' + sanitize(tests[i].message) +
-                    '\n';
-            }
-        } else {
-            for (let i = 0; i < tests.length; ++i) {
-                resultCounter[tests[i].status]++;
-                testResults += convertResult(tests[i].status) + ' ' +
-                    sanitize(tests[i].name) + ' ' + sanitize(tests[i].message) +
-                    '\n';
-            }
+        for (let i = 0; i < tests.length; ++i) {
+            resultCounter[tests[i].status]++;
+            testResults += convertResult(tests[i].status) + ' ' +
+                sanitize(tests[i].name) + ' ' + sanitize(tests[i].message) +
+                '\n';
         }
         if (output_document.URL.indexOf('http://web-platform.test') >= 0 &&
             tests.length >= 50 &&
