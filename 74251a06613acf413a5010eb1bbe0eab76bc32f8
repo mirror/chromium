@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e90fbe4c_324a6edf",
+        "filename": "net/http/http_server_properties_manager_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1030,
+      "author": {
+        "id": 1157934
+      },
+      "writtenOn": "2017-08-04T17:06:54Z",
+      "side": 0,
+      "message": "Is this expectation broken in the test now? If not, better to keep this.",
+      "revId": "74251a06613acf413a5010eb1bbe0eab76bc32f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
