@@ -44,7 +44,7 @@ public class CronetHttpURLConnection extends HttpURLConnection {
     private CronetInputStream mInputStream;
     private CronetOutputStream mOutputStream;
     private UrlResponseInfo mResponseInfo;
-    private CronetException mException;
+    private IOException mException;
     private boolean mOnRedirectCalled;
     // Whether response headers are received, the request is failed, or the request is canceled.
     private boolean mHasResponseHeadersOrCompleted;
@@ -487,8 +487,7 @@ public class CronetHttpURLConnection extends HttpURLConnection {
                         "Exception cannot be null in onFailed.");
             }
             mResponseInfo = info;
-            mException = exception;
-            setResponseDataCompleted(mException);
+            setResponseDataCompleted(exception);
         }
 
         @Override
@@ -504,6 +503,7 @@ public class CronetHttpURLConnection extends HttpURLConnection {
          *            caller tries to read more data.
          */
         private void setResponseDataCompleted(IOException exception) {
+            mException = exception;
             if (mInputStream != null) {
                 mInputStream.setResponseDataCompleted(exception);
             }
