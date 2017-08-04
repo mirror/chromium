@@ -16,9 +16,11 @@
 #include "base/strings/string16.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/test/scoped_feature_list.h"
 #include "chrome/browser/metrics/chrome_metrics_service_accessor.h"
 #include "chrome/browser/sync/profile_sync_service_factory.h"
 #include "chrome/browser/sync/profile_sync_test_util.h"
+#include "chrome/browser/sync/user_event_service_factory.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/test/base/chrome_render_view_host_test_harness.h"
 #include "chrome/test/base/testing_profile.h"
@@ -35,12 +37,15 @@
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
 #include "components/prefs/testing_pref_service.h"
+#include "components/safe_browsing/features.h"
 #include "components/sessions/content/content_record_password_state.h"
+#include "components/sync/user_events/fake_user_event_service.h"
 #include "components/sync_preferences/testing_pref_service_syncable.h"
 #include "components/version_info/version_info.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/url_constants.h"
+#include "content/public/test/test_renderer_host.h"
 #include "content/public/test/web_contents_tester.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "services/service_manager/public/cpp/interface_provider.h"
@@ -193,6 +198,11 @@ class FakePasswordAutofillAgent
   mojo::Binding<autofill::mojom::PasswordAutofillAgent> binding_;
 };
 
+std::unique_ptr<KeyedService> BuildFakeUserEventService(
+    content::BrowserContext* context) {
+  return base::MakeUnique<syncer::FakeUserEventService>();
+}
+
 }  // namespace
 
 class ChromePasswordManagerClientTest : public ChromeRenderViewHostTestHarness {
@@ -237,11 +247,23 @@ class ChromePasswordManagerClientTest : public ChromeRenderViewHostTestHarness {
   // returns false.
   bool WasLoggingActivationMessageSent(bool* activation_flag);
 
+  syncer::FakeUserEventService* GetUserEventService() {
+    return fake_user_event_service_;
+  }
+
+  void EnableSyncPasswordReuseEvent() {
+    scoped_feature_list_ = base::MakeUnique<base::test::ScopedFeatureList>();
+    scoped_feature_list_->InitWithFeatures(
+        {safe_browsing::kSyncPasswordReuseEvent}, {});
+  }
+
   FakePasswordAutofillAgent fake_agent_;
 
   TestingPrefServiceSimple prefs_;
   base::FieldTrialList field_trial_list_;
   bool metrics_enabled_;
+  syncer::FakeUserEventService* fake_user_event_service_;
+  std::unique_ptr<base::test::ScopedFeatureList> scoped_feature_list_;
 };
 
 void ChromePasswordManagerClientTest::SetUp() {
@@ -262,6 +284,11 @@ void ChromePasswordManagerClientTest::SetUp() {
   // Connect our bool for testing.
   ChromeMetricsServiceAccessor::SetMetricsAndCrashReportingForTesting(
       &metrics_enabled_);
+
+  fake_user_event_service_ = static_cast<syncer::FakeUserEventService*>(
+      browser_sync::UserEventServiceFactory::GetInstance()
+          ->SetTestingFactoryAndUse(browser_context(),
+                                    &BuildFakeUserEventService));
 }
 
 void ChromePasswordManagerClientTest::TearDown() {
@@ -643,3 +670,22 @@ TEST_F(ChromePasswordManagerClientTest,
 }
 
 #endif
+
+TEST_F(ChromePasswordManagerClientTest,
+       VerifyPasswordReuseUserEventNotRecorded) {
+  // Feature not enabled.
+  GetClient()->LogPasswordReuseDetectedEvent();
+  EXPECT_TRUE(GetUserEventService()->GetRecordedUserEvents().empty());
+
+  EnableSyncPasswordReuseEvent();
+  // Feature enabled but no committed navigation entry.
+  GetClient()->LogPasswordReuseDetectedEvent();
+  EXPECT_TRUE(GetUserEventService()->GetRecordedUserEvents().empty());
+}
+
+TEST_F(ChromePasswordManagerClientTest, VerifyPasswordReuseUserEventRecorded) {
+  EnableSyncPasswordReuseEvent();
+  NavigateAndCommit(GURL("https://www.example.com/"));
+  GetClient()->LogPasswordReuseDetectedEvent();
+  EXPECT_EQ(1ul, GetUserEventService()->GetRecordedUserEvents().size());
+}
