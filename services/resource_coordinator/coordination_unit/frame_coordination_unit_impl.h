@@ -32,6 +32,7 @@ class FrameCoordinationUnitImpl : public CoordinationUnitImpl {
 
  private:
   // CoordinationUnitImpl implementation.
+  void OnEventReceived(const mojom::Event event) override;
   void OnPropertyChanged(const mojom::PropertyType property_type,
                          const base::Value& value) override;
   DISALLOW_COPY_AND_ASSIGN(FrameCoordinationUnitImpl);
