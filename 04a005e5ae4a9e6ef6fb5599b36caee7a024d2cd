@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0bae50d0_94f2b55d",
+        "filename": "chrome/installer/zucchini/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-04T17:09:10Z",
+      "side": 1,
+      "message": "This is fixed already, just need to rebase.",
+      "parentUuid": "14135599_3475fb25",
+      "range": {
+        "startLine": 84,
+        "startChar": 77,
+        "endLine": 84,
+        "endChar": 79
+      },
+      "revId": "04a005e5ae4a9e6ef6fb5599b36caee7a024d2cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83351a9e_048d4718",
         "filename": "chrome/installer/zucchini/README.md",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "04a005e5ae4a9e6ef6fb5599b36caee7a024d2cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84dc37ec_c784218d",
+        "filename": "chrome/installer/zucchini/README.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-04T17:09:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83351a9e_048d4718",
+      "range": {
+        "startLine": 91,
+        "startChar": 24,
+        "endLine": 91,
+        "endChar": 29
+      },
+      "revId": "04a005e5ae4a9e6ef6fb5599b36caee7a024d2cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "425b8325_d2e35ef3",
+        "filename": "chrome/installer/zucchini/rel32_finder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-04T17:09:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3197d63a_ca8f4f1f",
+      "range": {
+        "startLine": 22,
+        "startChar": 26,
+        "endLine": 22,
+        "endChar": 40
+      },
+      "revId": "04a005e5ae4a9e6ef6fb5599b36caee7a024d2cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d084171_df6eeae1",
         "filename": "chrome/installer/zucchini/rel32_finder.h",
         "patchSetId": 6
@@ -91,6 +163,30 @@
       "revId": "04a005e5ae4a9e6ef6fb5599b36caee7a024d2cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3a3ef23_e7c6d6aa",
+        "filename": "chrome/installer/zucchini/rel32_finder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-04T17:09:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d084171_df6eeae1",
+      "range": {
+        "startLine": 29,
+        "startChar": 49,
+        "endLine": 30,
+        "endChar": 8
+      },
+      "revId": "04a005e5ae4a9e6ef6fb5599b36caee7a024d2cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "790ac8fc_a81fa861",
+        "filename": "chrome/installer/zucchini/rel32_finder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-04T17:09:10Z",
+      "side": 1,
+      "message": "Adding default constructor that set member to nullptr. This one is still useful in unittests.",
+      "parentUuid": "70a59fac_0530b982",
+      "range": {
+        "startLine": 76,
+        "startChar": 23,
+        "endLine": 79,
+        "endChar": 26
+      },
+      "revId": "04a005e5ae4a9e6ef6fb5599b36caee7a024d2cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e2f1d7b6_1cb1d68d",
         "filename": "chrome/installer/zucchini/rel32_finder.h",
         "patchSetId": 6
@@ -128,6 +248,30 @@
       "writtenOn": "2017-08-04T05:51:40Z",
       "side": 1,
       "message": "Is this still needed?",
+      "range": {
+        "startLine": 91,
+        "startChar": 7,
+        "endLine": 91,
+        "endChar": 13
+      },
+      "revId": "04a005e5ae4a9e6ef6fb5599b36caee7a024d2cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "491c0792_e79ce74c",
+        "filename": "chrome/installer/zucchini/rel32_finder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1218025
+      },
+      "writtenOn": "2017-08-04T17:09:10Z",
+      "side": 1,
+      "message": "Still needed because some extra filtering is done by caller based on target.",
+      "parentUuid": "e2f1d7b6_1cb1d68d",
       "range": {
         "startLine": 91,
         "startChar": 7,
