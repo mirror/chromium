@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "53348901_1fe4f209",
+        "filename": "ash/app_list/app_list_presenter_delegate_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-08-04T22:20:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04dbfc7d_c8db1015",
+      "range": {
+        "startLine": 268,
+        "startChar": 54,
+        "endLine": 268,
+        "endChar": 66
+      },
+      "revId": "99f490fa721643b0ff833d5c361bad5c0ecbec45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbc8b676_9100583c",
         "filename": "ui/app_list/presenter/app_list_presenter_delegate.h",
         "patchSetId": 6

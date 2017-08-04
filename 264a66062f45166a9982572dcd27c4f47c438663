@@ -22,6 +22,30 @@
       "revId": "264a66062f45166a9982572dcd27c4f47c438663",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c10ea57_e976b652",
+        "filename": "ui/app_list/presenter/app_list_presenter_delegate.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1189880
+      },
+      "writtenOn": "2017-08-04T22:20:48Z",
+      "side": 1,
+      "message": "Using static constexpr here causes linking issues, to resolve this I ended up declaring static const base::TimeDelta objects in the header, and defining in the cc.",
+      "parentUuid": "87521d78_1d4c300a",
+      "range": {
+        "startLine": 66,
+        "startChar": 20,
+        "endLine": 66,
+        "endChar": 34
+      },
+      "revId": "264a66062f45166a9982572dcd27c4f47c438663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
