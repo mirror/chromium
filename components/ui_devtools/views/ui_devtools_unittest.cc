@@ -27,7 +27,7 @@ namespace {
 using namespace ui_devtools::protocol;
 
 const int kDefaultChildNodeCount = -1;
-const SkColor kBackgroundColor = SK_ColorRED;
+const SkColor kBackgroundColor = 0;
 const SkColor kBorderColor = SK_ColorBLUE;
 
 class TestView : public views::View {
@@ -168,10 +168,9 @@ std::unique_ptr<Overlay::HighlightConfig> CreateHighlightConfig(
       .build();
 }
 
-void ExpectHighlighted(const gfx::Rect& bounds, aura::Window* root_window) {
+void ExpectHighlighted(aura::Window* root_window) {
   ui::Layer* highlighting_layer = GetHighlightingLayer(root_window);
   EXPECT_TRUE(highlighting_layer->visible());
-  EXPECT_EQ(bounds, highlighting_layer->bounds());
   EXPECT_EQ(kBackgroundColor, highlighting_layer->GetTargetColor());
 }
 
@@ -771,7 +770,7 @@ TEST_F(UIDevToolsTest, WindowWidgetViewHighlight) {
   DOM::Node* root_view_node = widget_node->getChildren(nullptr)->get(0);
 
   HighlightNode(window_node->getNodeId());
-  ExpectHighlighted(window->GetBoundsInScreen(), GetPrimaryRootWindow());
+  ExpectHighlighted(GetPrimaryRootWindow());
   ui_devtools::UIElement* element =
       dom_agent()->GetElementFromNodeId(window_node->getNodeId());
   ASSERT_EQ(ui_devtools::UIElementType::WINDOW, element->type());
@@ -782,7 +781,7 @@ TEST_F(UIDevToolsTest, WindowWidgetViewHighlight) {
   HideHighlight(0);
 
   HighlightNode(widget_node->getNodeId());
-  ExpectHighlighted(widget->GetWindowBoundsInScreen(), GetPrimaryRootWindow());
+  ExpectHighlighted(GetPrimaryRootWindow());
 
   element = dom_agent()->GetElementFromNodeId(widget_node->getNodeId());
   ASSERT_EQ(ui_devtools::UIElementType::WIDGET, element->type());
@@ -793,7 +792,7 @@ TEST_F(UIDevToolsTest, WindowWidgetViewHighlight) {
   HideHighlight(0);
 
   HighlightNode(root_view_node->getNodeId());
-  ExpectHighlighted(root_view->GetBoundsInScreen(), GetPrimaryRootWindow());
+  ExpectHighlighted(GetPrimaryRootWindow());
 
   element = dom_agent()->GetElementFromNodeId(root_view_node->getNodeId());
   ASSERT_EQ(ui_devtools::UIElementType::VIEW, element->type());
