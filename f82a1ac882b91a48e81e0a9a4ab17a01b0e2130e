@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76481810_961d7f31",
+        "filename": "services/viz/public/cpp/compositing/struct_traits_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-04T18:26:36Z",
+      "side": 1,
+      "message": "Can you make the anonymous namespace end here? The test cases don\u0027t need to be in it.",
+      "range": {
+        "startLine": 34,
+        "startChar": 1,
+        "endLine": 34,
+        "endChar": 0
+      },
+      "revId": "f82a1ac882b91a48e81e0a9a4ab17a01b0e2130e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "058b56a3_f739518b",
+        "filename": "services/viz/public/cpp/compositing/struct_traits_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-04T18:26:36Z",
+      "side": 1,
+      "message": "Since you\u0027re added the helper function, you might as well use it here too.",
+      "revId": "f82a1ac882b91a48e81e0a9a4ab17a01b0e2130e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
