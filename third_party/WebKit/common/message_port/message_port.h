@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CONTENT_COMMON_MESSAGE_PORT_H_
-#define CONTENT_COMMON_MESSAGE_PORT_H_
+#ifndef THIRD_PARTY_WEBKIT_COMMON_MESSAGE_PORT_MESSAGE_PORT_H_
+#define THIRD_PARTY_WEBKIT_COMMON_MESSAGE_PORT_MESSAGE_PORT_H_
 
 #include <vector>
 
@@ -11,11 +11,11 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/synchronization/lock.h"
-#include "content/common/content_export.h"
 #include "mojo/public/cpp/system/message_pipe.h"
 #include "mojo/public/cpp/system/watcher.h"
+#include "third_party/WebKit/common/common_export.h"
 
-namespace content {
+namespace blink_common {
 
 // MessagePort corresponds to a HTML MessagePort. It is a thin wrapper around a
 // Mojo MessagePipeHandle and provides methods for reading and writing messages.
@@ -41,7 +41,7 @@ namespace content {
 //
 // TODO(darin): Make this class move-only once no longer used with Chrome IPC.
 //
-class CONTENT_EXPORT MessagePort {
+class BLINK_COMMON_EXPORT MessagePort {
  public:
   ~MessagePort();
   MessagePort();
@@ -57,6 +57,8 @@ class CONTENT_EXPORT MessagePort {
 
   static std::vector<mojo::ScopedMessagePipeHandle> ReleaseHandles(
       const std::vector<MessagePort>& ports);
+  static std::vector<MessagePort> BindHandles(
+      std::vector<mojo::ScopedMessagePipeHandle> handles);
 
   // Sends an encoded message (along with ports to transfer) to this port's
   // peer.
@@ -116,6 +118,6 @@ class CONTENT_EXPORT MessagePort {
   mutable scoped_refptr<State> state_;
 };
 
-}  // namespace content
+}  // namespace blink_common
 
-#endif  // CONTENT_COMMON_MESSAGE_PORT_H_
+#endif  // THIRD_PARTY_WEBKIT_COMMON_MESSAGE_PORT_MESSAGE_PORT_H_

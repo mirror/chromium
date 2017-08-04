@@ -22,9 +22,12 @@
 
 struct ViewHostMsg_CreateWorker_Params;
 
+namespace blink_common {
+class MessagePort;
+}
+
 namespace content {
 
-class MessagePort;
 class SharedWorkerInstance;
 class SharedWorkerHost;
 class SharedWorkerMessageFilter;
@@ -55,7 +58,7 @@ class CONTENT_EXPORT SharedWorkerServiceImpl
       const WorkerStoragePartitionId& partition_id);
   void ConnectToWorker(SharedWorkerMessageFilter* filter,
                        int worker_route_id,
-                       const MessagePort& port);
+                       const blink_common::MessagePort& port);
   void DocumentDetached(SharedWorkerMessageFilter* filter,
                         unsigned long long document_id);
   void CountFeature(SharedWorkerMessageFilter* filter,

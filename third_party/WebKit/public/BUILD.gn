@@ -258,8 +258,6 @@ source_set("blink_headers") {
     "platform/WebMemoryPressureLevel.h",
     "platform/WebMemoryState.h",
     "platform/WebMenuSourceType.h",
-    "platform/WebMessagePortChannel.h",
-    "platform/WebMessagePortChannelClient.h",
     "platform/WebMixedContent.h",
     "platform/WebMixedContentContextType.h",
     "platform/WebMockClipboard.h",
@@ -658,6 +656,7 @@ source_set("blink_headers") {
     "//media/midi:mojo_shared_cpp_sources",
     "//mojo/public/cpp/bindings:bindings",
     "//mojo/public/cpp/system:system",
+    "//third_party/WebKit/common:blink_common",
     "//v8:v8_headers",
   ]
 }

@@ -25,7 +25,7 @@ void SharedWorkerRepository::Connect(
     blink::WebAddressSpace creation_address_space,
     blink::WebSharedWorkerCreationContextType creation_context_type,
     bool data_saver_enabled,
-    std::unique_ptr<blink::WebMessagePortChannel> channel,
+    blink_common::MessagePort channel,
     std::unique_ptr<blink::WebSharedWorkerConnectListener> listener) {
   documents_with_workers_.insert(document_id);
 
