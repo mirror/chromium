@@ -27,7 +27,7 @@ function main() {
       continue;
     const fullTestPath = path.resolve(__dirname, '..', '..', '..', '..', 'LayoutTests', testPath);
     try {
-      childProcess.execSync(`node ${MIGRATE_SCRIPT_PATH} ${fullTestPath}`)
+      childProcess.execSync(`node ${MIGRATE_SCRIPT_PATH} ${fullTestPath}`);
     } catch (err) {
       console.log(err.stdout.toString());
       continue;

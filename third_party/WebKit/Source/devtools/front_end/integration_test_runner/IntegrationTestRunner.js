@@ -21,6 +21,7 @@ IntegrationTestRunner._setupTestHelpers = function(target) {
   TestRunner.HeapProfilerAgent = target.heapProfilerAgent();
   TestRunner.InspectorAgent = target.inspectorAgent();
   TestRunner.NetworkAgent = target.networkAgent();
+  TestRunner.OverlayAgent = target.overlayAgent();
   TestRunner.PageAgent = target.pageAgent();
   TestRunner.ProfilerAgent = target.profilerAgent();
   TestRunner.RuntimeAgent = target.runtimeAgent();
