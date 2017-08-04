@@ -135,6 +135,9 @@ const int kSearchBoxPadding = 16;
 const int kSearchBoxTopPadding = 24;
 const int kSearchBoxBottomPadding = 21;
 
+// Preferred height of search box.
+const int kSearchBoxPreferredHeight = 48;
+
 // The background border corner radius of the search box in fullscreen mode.
 const int kSearchBoxBorderCornerRadiusFullscreen = 24;
 
