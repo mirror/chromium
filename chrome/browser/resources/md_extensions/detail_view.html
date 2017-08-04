@@ -3,6 +3,7 @@
 <link rel="import" href="chrome://resources/cr_elements/cr_icons_css.html">
 <link rel="import" href="chrome://resources/cr_elements/hidden_style_css.html">
 <link rel="import" href="chrome://resources/cr_elements/paper_toggle_style_css.html">
+<link rel="import" href="chrome://resources/cr_elements/policy/cr_policy_vars_css.html">
 <link rel="import" href="chrome://resources/html/action_link.html">
 <link rel="import" href="chrome://resources/html/action_link_css.html">
 <link rel="import" href="chrome://resources/html/cr.html">
@@ -10,6 +11,7 @@
 <link rel="import" href="chrome://resources/polymer/v1_0/iron-flex-layout/iron-flex-layout-classes.html">
 <link rel="import" href="chrome://resources/polymer/v1_0/iron-icons/iron-icons.html">
 <link rel="import" href="chrome://resources/polymer/v1_0/paper-icon-button/paper-icon-button-light.html">
+<link rel="import" href="chrome://resources/polymer/v1_0/paper-tooltip/paper-tooltip.html">
 <link rel="import" href="chrome://resources/polymer/v1_0/paper-styles/color.html">
 <link rel="import" href="chrome://resources/polymer/v1_0/neon-animation/neon-animatable-behavior.html">
 <link rel="import" href="chrome://extensions/animation_helper.html">
@@ -20,6 +22,7 @@
     <style include=
         "iron-flex cr-hidden-style cr-icons action-link paper-toggle-style">
       :host {
+        --iron-icon-fill-color: var(--paper-grey-600);
         display: block;
         height: 100%;
         overflow: auto;
@@ -109,6 +112,16 @@
         -webkit-padding-start: 20px;
         margin: 0;
       }
+
+      /* Policy Indicator styling */
+      .indicator-container {
+        @apply(--cr-policy-indicator);
+        -webkit-margin-end: 20px;
+      }
+
+      paper-tooltip {
+        --paper-tooltip: var(--cr-policy-tooltip);
+      }
     </style>
     <div id="main">
       <div id="top-bar">
@@ -120,11 +133,26 @@
       </div>
       <div class="control-line" id="enable-section">
         <span>[[computeEnabledText_(data.*)]]</span>
-        <paper-toggle-button id="enable-toggle"
-            checked="[[isEnabled_(data.state)]]"
-            on-change="onEnableChange_"
-            disabled="[[!isEnableToggleEnabled_(data.*)]]">
-        </paper-toggle-button>
+        <div class="layout horizontal">
+          <template is="dom-if" if="[[data.controlledInfo]]" restamp>
+            <div class="indicator-container">
+              <iron-icon id="indicator" tabindex="0"
+                  aria-label$="[[data.controlledInfo.type]]"
+                  aria-describedby="tooltip"
+                  icon="[[getIndicatorIcon_(data.controlledInfo.type)]]">
+              </iron-icon>
+              <paper-tooltip id="tooltip" for="indicator" position="top"
+                  fit-to-visible-bounds>
+                [[data.controlledInfo.text]]
+              </paper-tooltip>
+            </div>
+          </template>
+          <paper-toggle-button id="enable-toggle"
+              checked="[[isEnabled_(data.state)]]"
+              on-change="onEnableChange_"
+              disabled="[[!isEnableToggleEnabled_(data.*)]]">
+          </paper-toggle-button>
+        </div>
       </div>
       <div class="section">
         <div class="section-title">$i18n{itemDescriptionLabel}</div>

@@ -183,7 +183,22 @@ cr.define('extensions', function() {
     computeSourceString_: function() {
       return extensions.getItemSourceString(
           extensions.getItemSource(this.data));
-    }
+    },
+
+    /** @private */
+    getIndicatorIcon_: function(type) {
+      switch (type) {
+        case 'POLICY':
+          return 'cr20:domain';
+        case 'CHILD_CUSTODIAN':
+          return 'cr:account-child-invert';
+        case 'SUPERVISED_USER_CUSTODIAN':
+          return 'cr:supervisor-account';
+        default:
+          assertNotReached();
+      }
+    },
+
   });
 
   return {DetailView: DetailView};

@@ -8,6 +8,7 @@ cr.define('extension_detail_view_tests', function() {
   var TestNames = {
     Layout: 'layout',
     ClickableElements: 'clickable elements',
+    Indicator: 'indicator',
   };
 
   suite('ExtensionItemTest', function() {
@@ -143,6 +144,13 @@ cr.define('extension_detail_view_tests', function() {
           [extensionData.id]);
       mockDelegate.testClickingCalls(
           item.$$('#remove-extension'), 'deleteItem', [extensionData.id]);
+    });
+
+    test(assert(TestNames.Indicator), function() {
+      expectFalse(!!item.$$('.indicator-container'));
+      item.set('data.controlledInfo', {type: 'POLICY', text: 'policy'});
+      Polymer.dom.flush();
+      expectTrue(!!item.$$('.indicator-container'));
     });
   });
 
