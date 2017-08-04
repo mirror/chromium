@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f53f3c5_0c73ca7b",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 2696,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-04T06:52:00Z",
+      "side": 1,
+      "message": "nit: I felt it\u0027d be helpful to have a comment about this branch, e.g. empty relative partition path means that we\u0027re creating a network context for a default, browser-wide one. (Here or maybe in content_browser_client.h)",
+      "revId": "2e81f4781ad54baebf4eaf9a011f30926e9ced48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
