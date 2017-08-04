@@ -60,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "d2a4541d_c11b3a20",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-08-04T02:05:42Z",
+      "side": 1,
+      "message": "This is some thing all classes will need, fixed accordingly.",
+      "parentUuid": "791291ea_70e1b744",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 39
+      },
+      "revId": "4227f4ee9fc1d3926bfa27ab006522cc6f47b4e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16a06286_f0dd18ca",
         "filename": "chrome/browser/feature_engagement/feature_tracker.h",
         "patchSetId": 11
@@ -106,6 +130,54 @@
     },
     {
       "key": {
+        "uuid": "e322de3e_aa74e796",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-08-04T02:05:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16a06286_f0dd18ca",
+      "range": {
+        "startLine": 51,
+        "startChar": 26,
+        "endLine": 51,
+        "endChar": 52
+      },
+      "revId": "4227f4ee9fc1d3926bfa27ab006522cc6f47b4e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e10f27c_574b8ad6",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-08-04T02:05:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc0e5dce_a7ec22fa",
+      "range": {
+        "startLine": 51,
+        "startChar": 24,
+        "endLine": 51,
+        "endChar": 26
+      },
+      "revId": "4227f4ee9fc1d3926bfa27ab006522cc6f47b4e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a8f12b8b_be456a03",
         "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker_unittest.cc",
         "patchSetId": 11
@@ -126,6 +198,30 @@
       "revId": "4227f4ee9fc1d3926bfa27ab006522cc6f47b4e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ddc4d54_12948e51",
+        "filename": "chrome/browser/feature_engagement/new_tab/new_tab_tracker_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-08-04T02:05:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8f12b8b_be456a03",
+      "range": {
+        "startLine": 57,
+        "startChar": 2,
+        "endLine": 59,
+        "endChar": 66
+      },
+      "revId": "4227f4ee9fc1d3926bfa27ab006522cc6f47b4e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -187,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "592749ae_d0706c0a",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-08-04T02:05:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f774183_73328fd1",
+      "range": {
+        "startLine": 18,
+        "startChar": 7,
+        "endLine": 18,
+        "endChar": 8
+      },
+      "revId": "4227f4ee9fc1d3926bfa27ab006522cc6f47b4e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7414a6f0_9e4311b7",
         "filename": "chrome/browser/feature_engagement/session_duration_updater.h",
         "patchSetId": 11
@@ -207,6 +327,30 @@
       "revId": "4227f4ee9fc1d3926bfa27ab006522cc6f47b4e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06b2b9d6_c8e13a52",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-08-04T02:05:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7414a6f0_9e4311b7",
+      "range": {
+        "startLine": 20,
+        "startChar": 16,
+        "endLine": 22,
+        "endChar": 43
+      },
+      "revId": "4227f4ee9fc1d3926bfa27ab006522cc6f47b4e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -233,6 +377,30 @@
     },
     {
       "key": {
+        "uuid": "d2cec791_8608d654",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-08-04T02:05:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bef12fe2_f918313e",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 27
+      },
+      "revId": "4227f4ee9fc1d3926bfa27ab006522cc6f47b4e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6a6615f_d870cb78",
         "filename": "components/feature_engagement/public/event_constants.h",
         "patchSetId": 11
@@ -253,6 +421,30 @@
       "revId": "4227f4ee9fc1d3926bfa27ab006522cc6f47b4e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e161526_8b938853",
+        "filename": "components/feature_engagement/public/event_constants.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-08-04T02:05:42Z",
+      "side": 1,
+      "message": "This should stay, kSessionTime should be (and now is) deleted, this is the event constant that is marked as true when the session time goes over the limit for the newtab feature. There will be an equivalent event constant for each feature. Before hand all the features were going to share kSessionTime, which would only make sense if thy all had the same active time requirement.",
+      "parentUuid": "f6a6615f_d870cb78",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 0
+      },
+      "revId": "4227f4ee9fc1d3926bfa27ab006522cc6f47b4e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
