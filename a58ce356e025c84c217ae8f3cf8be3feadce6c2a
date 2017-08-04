@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42075fa6_ac310c57",
+        "filename": "third_party/WebKit/Source/core/layout/ng/inline/ng_inline_node_offset_mapping_test.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1128431
+      },
+      "writtenOn": "2017-08-04T22:08:28Z",
+      "side": 1,
+      "message": "Can you add another case where the div has more than one character? Then we\u0027d create a LayoutTextFragment for the remaining characters IIUC.\n\nCould be in this, or in separate patch is fine with me.",
+      "revId": "a58ce356e025c84c217ae8f3cf8be3feadce6c2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
