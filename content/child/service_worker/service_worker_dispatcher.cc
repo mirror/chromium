@@ -67,10 +67,6 @@ void ServiceWorkerDispatcher::OnMessageReceived(const IPC::Message& msg) {
   // handler in ServiceWorkerMessageFilter to release references passed from
   // the browser process in case we fail to post task to the thread.
   IPC_BEGIN_MESSAGE_MAP(ServiceWorkerDispatcher, msg)
-    IPC_MESSAGE_HANDLER(ServiceWorkerMsg_AssociateRegistration,
-                        OnAssociateRegistration)
-    IPC_MESSAGE_HANDLER(ServiceWorkerMsg_DisassociateRegistration,
-                        OnDisassociateRegistration)
     IPC_MESSAGE_HANDLER(ServiceWorkerMsg_ServiceWorkerRegistered, OnRegistered)
     IPC_MESSAGE_HANDLER(ServiceWorkerMsg_ServiceWorkerUpdated, OnUpdated)
     IPC_MESSAGE_HANDLER(ServiceWorkerMsg_ServiceWorkerUnregistered,
@@ -109,8 +105,6 @@ void ServiceWorkerDispatcher::OnMessageReceived(const IPC::Message& msg) {
                         OnSetVersionAttributes)
     IPC_MESSAGE_HANDLER(ServiceWorkerMsg_UpdateFound,
                         OnUpdateFound)
-    IPC_MESSAGE_HANDLER(ServiceWorkerMsg_SetControllerServiceWorker,
-                        OnSetControllerServiceWorker)
     IPC_MESSAGE_HANDLER(ServiceWorkerMsg_MessageToDocument,
                         OnPostMessage)
     IPC_MESSAGE_HANDLER(ServiceWorkerMsg_CountFeature, OnCountFeature)
@@ -404,9 +398,7 @@ void ServiceWorkerDispatcher::OnAssociateRegistration(
   std::unique_ptr<ServiceWorkerHandleReference> active = Adopt(attrs.active);
   ProviderContextMap::iterator context = provider_contexts_.find(provider_id);
   if (context != provider_contexts_.end()) {
-    context->second->OnAssociateRegistration(
-        std::move(registration), std::move(installing), std::move(waiting),
-        std::move(active));
+    context->second->AssociateRegistration(info, attrs);
   }
 }
 
@@ -416,7 +408,7 @@ void ServiceWorkerDispatcher::OnDisassociateRegistration(
   ProviderContextMap::iterator provider = provider_contexts_.find(provider_id);
   if (provider == provider_contexts_.end())
     return;
-  provider->second->OnDisassociateRegistration();
+  provider->second->DisassociateRegistration();
 }
 
 void ServiceWorkerDispatcher::OnRegistered(
@@ -817,44 +809,6 @@ void ServiceWorkerDispatcher::OnUpdateFound(
       registrations_.find(registration_handle_id);
   if (found != registrations_.end())
     found->second->OnUpdateFound();
-}
-
-void ServiceWorkerDispatcher::OnSetControllerServiceWorker(
-    int thread_id,
-    int provider_id,
-    const ServiceWorkerObjectInfo& info,
-    bool should_notify_controllerchange,
-    const std::set<uint32_t>& used_features) {
-  TRACE_EVENT2("ServiceWorker",
-               "ServiceWorkerDispatcher::OnSetControllerServiceWorker",
-               "Thread ID", thread_id,
-               "Provider ID", provider_id);
-
-  // Adopt the reference sent from the browser process and pass it to the
-  // provider context if it exists.
-  std::unique_ptr<ServiceWorkerHandleReference> handle_ref = Adopt(info);
-  ProviderContextMap::iterator provider = provider_contexts_.find(provider_id);
-  if (provider != provider_contexts_.end()) {
-    provider->second->OnSetControllerServiceWorker(std::move(handle_ref),
-                                                   used_features);
-  }
-
-  ProviderClientMap::iterator found = provider_clients_.find(provider_id);
-  if (found != provider_clients_.end()) {
-    // Sync the controllee's use counter with the service worker's one.
-    for (uint32_t feature : used_features)
-      found->second->CountFeature(feature);
-
-    // Get the existing worker object or create a new one with a new reference
-    // to populate the .controller field.
-    scoped_refptr<WebServiceWorkerImpl> worker = GetOrCreateServiceWorker(
-        ServiceWorkerHandleReference::Create(info, thread_safe_sender_.get()));
-    found->second->SetController(WebServiceWorkerImpl::CreateHandle(worker),
-                                 should_notify_controllerchange);
-    // You must not access |found| after setController() because it may fire the
-    // controllerchange event that may remove the provider client, for example,
-    // by detaching an iframe.
-  }
 }
 
 void ServiceWorkerDispatcher::OnPostMessage(

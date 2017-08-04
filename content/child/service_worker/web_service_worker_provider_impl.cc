@@ -46,6 +46,7 @@ void WebServiceWorkerProviderImpl::SetClient(
   // the single provider context across threads. (http://crbug.com/366538
   // for more context)
   GetDispatcher()->AddProviderClient(context_->provider_id(), client);
+  context_->set_provider_client(client);
 
   if (!context_->controller())
     return;
