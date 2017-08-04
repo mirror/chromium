@@ -132,7 +132,12 @@ class CoordinatorImpl : public Coordinator, public mojom::Coordinator {
   // Callback of RequestOSMemoryDump.
   void OnOSMemoryDumpResponse(mojom::ClientProcess*,
                               bool success,
-                              OSMemDumpMap);
+                              mojom::RawOSMemDumpPtr);
+
+  // Callback of RequestManyOSMemoryDumps.
+  void OnManyOSMemoryDumpsResponse(mojom::ClientProcess*,
+                                   bool success,
+                                   OSMemDumpMap);
 
   void RemovePendingResponse(mojom::ClientProcess*,
                              QueuedMemoryDumpRequest::PendingResponse::Type);

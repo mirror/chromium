@@ -166,7 +166,9 @@ interface ClientProcess {
   // On Linux we call this once on the browser process ClientProcess passing
   // the pids for all processes.
   // See crbug.com/461788
-  RequestOSMemoryDump(bool want_mmaps, array<mojo.common.mojom.ProcessId> pids) =>
+  RequestOSMemoryDump(bool want_mmaps) => (bool success, RawOSMemDump? dumps);
+
+  RequestManyOSMemoryDumps(bool want_mmaps, array<mojo.common.mojom.ProcessId> pids) =>
       (bool success, map<mojo.common.mojom.ProcessId, RawOSMemDump> dumps);
 };
 
