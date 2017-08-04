@@ -6,8 +6,8 @@ import("//third_party/protobuf/proto_library.gni")
 
 static_library("web_ui") {
   sources = [
-    "safe_browsing_ui.cc",
-    "safe_browsing_ui.h",
+    "webui.cc",
+    "webui.h",
   ]
 
   deps = [
