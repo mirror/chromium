@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2c231f9_101a673c",
+        "filename": "content/renderer/media/media_stream_constraints_util_video_content_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1267,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-08-04T21:51:58Z",
+      "side": 1,
+      "message": "nit: Prefer to use constexpr rather than const now that all platform\u0027s toolchains support C++11.",
+      "range": {
+        "startLine": 1267,
+        "startChar": 4,
+        "endLine": 1267,
+        "endChar": 9
+      },
+      "revId": "811a8552db4d273521a237c133c0666d8e3050a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
