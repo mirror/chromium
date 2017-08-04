@@ -71,6 +71,7 @@
 #include "core/layout/api/LayoutViewItem.h"
 #include "core/layout/compositing/PaintLayerCompositor.h"
 #include "core/page/ChromeClient.h"
+#include "core/page/Page.h"
 #include "platform/Histogram.h"
 #include "platform/LayoutTestSupport.h"
 #include "platform/RuntimeEnabledFeatures.h"
@@ -95,6 +96,7 @@
 #include "public/platform/WebInbandTextTrack.h"
 #include "public/platform/WebMediaPlayerSource.h"
 #include "public/platform/WebMediaStream.h"
+#include "public/platform/WebScreenInfo.h"
 #include "public/platform/modules/remoteplayback/WebRemotePlaybackAvailability.h"
 #include "public/platform/modules/remoteplayback/WebRemotePlaybackClient.h"
 #include "public/platform/modules/remoteplayback/WebRemotePlaybackState.h"
@@ -4096,6 +4098,13 @@ bool HTMLMediaElement::IsAudioElement() {
 WebMediaPlayer::DisplayType HTMLMediaElement::DisplayType() const {
   return IsFullscreen() ? WebMediaPlayer::DisplayType::kFullscreen
                         : WebMediaPlayer::DisplayType::kInline;
+}
+
+gfx::ColorSpace HTMLMediaElement::TargetColorSpace() {
+  const LocalFrame* frame = GetDocument().GetFrame();
+  if (!frame)
+    return gfx::ColorSpace();
+  return frame->GetPage()->GetChromeClient().GetScreenInfo().color_space;
 }
 
 void HTMLMediaElement::CheckViewportIntersectionTimerFired(TimerBase*) {
