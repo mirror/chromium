@@ -19,9 +19,30 @@ public class PageLoadMetrics {
     public static final String FIRST_CONTENTFUL_PAINT = "firstContentfulPaint";
     public static final String NAVIGATION_START = "navigationStart";
     public static final String LOAD_EVENT_START = "loadEventStart";
+    public static final String DOMAIN_LOOKUP_START = "domainLookupStart";
+    public static final String DOMAIN_LOOKUP_END = "domainLookupEnd";
+    public static final String CONNECT_START = "connectStart";
+    public static final String CONNECT_END = "connectEnd";
+    public static final String REQUEST_START = "requestStart";
+    public static final String RESPONSE_START = "responseStart";
+    public static final String RESPONSE_END = "responseEnd";
 
     /** Observer for page load metrics. */
     public interface Observer {
+        /**
+         * Called when Network Quality Estimate is available. This is guaranteed to be
+         * called before any other metric event below.
+         *
+         * @param webContents the WebContents this metrics is related to.
+         * @param effectiveConnectionType the effective connection type, see
+         *     net::EffectiveConnectionType.
+         * @param httpRttMs an estimate of HTTP RTT, in milliseconds. Will be zero if unknown.
+         * @param transportRttMs an estimate of transport RTT, in milliseconds. Will be zero
+         *     if unknown.
+         */
+        public void onNetworkQualityEstimate(WebContents webContents, int effectiveConnectionType,
+                long httpRttMs, long transportRttMs);
+
         /**
          * Called when the first contentful paint page load metric is available.
          *
@@ -41,6 +62,18 @@ public class PageLoadMetrics {
          */
         public void onLoadEventStart(
                 WebContents webContents, long navigationStartTick, long loadEventStartMs);
+
+        /**
+         * Called when a resource is loaded.
+         *
+         * @param webContents the WebContents this metrics is related to.
+         *
+         * Remaining parameters are timing information in milliseconds from a common
+         * arbitrary point (such as but not guaranteed to be system start).
+         */
+        public void onLoadedResource(WebContents webContents, long dnsStartMs, long dnsEndMs,
+                long connectStartMs, long connectEndMs, long requestStartMs, long sendStartMs,
+                long sendEndMs);
     }
 
     private static ObserverList<Observer> sObservers;
@@ -57,6 +90,17 @@ public class PageLoadMetrics {
         ThreadUtils.assertOnUiThread();
         if (sObservers == null) return false;
         return sObservers.removeObserver(observer);
+    }
+
+    @CalledByNative
+    static void onNetworkQualityEstimate(WebContents webContents, int effectiveConnectionType,
+            long httpRttMs, long transportRttMs) {
+        ThreadUtils.assertOnUiThread();
+        if (sObservers == null) return;
+        for (Observer observer : sObservers) {
+            observer.onNetworkQualityEstimate(
+                    webContents, effectiveConnectionType, httpRttMs, transportRttMs);
+        }
     }
 
     @CalledByNative
@@ -77,6 +121,18 @@ public class PageLoadMetrics {
         if (sObservers == null) return;
         for (Observer observer : sObservers) {
             observer.onLoadEventStart(webContents, navigationStartTick, loadEventStartMs);
+        }
+    }
+
+    @CalledByNative
+    static void onLoadedResource(WebContents webContents, long dnsStartMs, long dnsEndMs,
+            long connectStartMs, long connectEndMs, long requestStartMs, long sendStartMs,
+            long sendEndMs) {
+        ThreadUtils.assertOnUiThread();
+        if (sObservers == null) return;
+        for (Observer observer : sObservers) {
+            observer.onLoadedResource(webContents, dnsStartMs, dnsEndMs, connectStartMs,
+                    connectEndMs, requestStartMs, sendStartMs, sendEndMs);
         }
     }
 
