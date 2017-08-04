@@ -79,6 +79,8 @@ class ChromePluginServiceFilter : public content::PluginServiceFilter,
   bool CanLoadPlugin(int render_process_id,
                      const base::FilePath& path) override;
 
+  static bool GetPdfPluginInfo(content::WebPluginInfo* info);
+
  private:
   friend struct base::DefaultSingletonTraits<ChromePluginServiceFilter>;
   struct ContextInfo;
