@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "597046b2_f8c50eaa",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 21
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1229489
+      },
+      "writtenOn": "2017-08-04T04:16:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3ce86b0_699c1490",
+      "revId": "2aaac6248fa6064d9431317f56109f05435275fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff3a8525_2b32b7b3",
         "filename": "content/renderer/pepper/pepper_webplugin_impl.cc",
         "patchSetId": 21
@@ -33,6 +51,24 @@
       "revId": "2aaac6248fa6064d9431317f56109f05435275fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09f280d2_a81f0f35",
+        "filename": "content/renderer/pepper/pepper_webplugin_impl.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1229489
+      },
+      "writtenOn": "2017-08-04T04:16:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff3a8525_2b32b7b3",
+      "revId": "2aaac6248fa6064d9431317f56109f05435275fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "c69880f9_8433316b",
+        "filename": "content/renderer/pepper/pepper_webplugin_impl.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1229489
+      },
+      "writtenOn": "2017-08-04T04:16:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7dcb311e_85a36abb",
+      "range": {
+        "startLine": 308,
+        "startChar": 4,
+        "endLine": 308,
+        "endChar": 51
+      },
+      "revId": "2aaac6248fa6064d9431317f56109f05435275fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3cdac5e1_d12a9b42",
         "filename": "third_party/WebKit/Source/core/exported/WebPluginContainerImpl.cpp",
         "patchSetId": 21
@@ -70,6 +130,30 @@
       "writtenOn": "2017-08-04T01:22:14Z",
       "side": 1,
       "message": "Do we need this check? Same on line 859.",
+      "range": {
+        "startLine": 849,
+        "startChar": 50,
+        "endLine": 849,
+        "endChar": 76
+      },
+      "revId": "2aaac6248fa6064d9431317f56109f05435275fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f585c2ff_35bbd3fb",
+        "filename": "third_party/WebKit/Source/core/exported/WebPluginContainerImpl.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 849,
+      "author": {
+        "id": 1229489
+      },
+      "writtenOn": "2017-08-04T04:16:25Z",
+      "side": 1,
+      "message": "I guess we don\u0027t - I added back the checks that I removed before, but because we really only need one of them checked I can just use HasSelection().",
+      "parentUuid": "3cdac5e1_d12a9b42",
       "range": {
         "startLine": 849,
         "startChar": 50,
@@ -96,6 +180,24 @@
       "revId": "2aaac6248fa6064d9431317f56109f05435275fc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03c15deb_40e0d284",
+        "filename": "third_party/WebKit/Source/core/exported/WebPluginContainerTest.cpp",
+        "patchSetId": 21
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1229489
+      },
+      "writtenOn": "2017-08-04T04:16:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f40ccd16_d0df1dfb",
+      "revId": "2aaac6248fa6064d9431317f56109f05435275fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
