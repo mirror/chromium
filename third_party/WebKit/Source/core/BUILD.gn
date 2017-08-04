@@ -1508,6 +1508,7 @@ jumbo_source_set("unit_tests") {
     "loader/DocumentLoadTimingTest.cpp",
     "loader/DocumentLoaderTest.cpp",
     "loader/FrameFetchContextTest.cpp",
+    "loader/InteractiveDetectorTest.cpp",
     "loader/LinkLoaderTest.cpp",
     "loader/MixedContentCheckerTest.cpp",
     "loader/NetworkQuietDetectorTest.cpp",
