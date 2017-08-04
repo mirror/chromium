@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "641d6aea_52203017",
+        "filename": "tools/gn/command_clean.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1128439
+      },
+      "writtenOn": "2017-08-04T20:50:56Z",
+      "side": 1,
+      "message": "This means that we are still allocating ~16K strings, although at least not all at the same time. The conversion to a string temporary can be avoided by using AppendToString(line, result);",
+      "revId": "ffe0f076751516203376d94942be516f0ba3fcc7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
