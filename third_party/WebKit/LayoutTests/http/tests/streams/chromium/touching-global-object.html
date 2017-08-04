@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<div id=result>NOTHING</div>
+<script>
+// This test cannot use testharness.js because it doesn't work when you remove
+// all the global objects.
+if (self.testRunner) {
+  testRunner.dumpAsText();
+}
+function runTest() {
+  const ReadableStream = self.ReadableStream;
+  const WritableStream = self.WritableStream;
+  const doNotSet = new Set(['location', 'window', 'self']);
+  const undefined = self.undefined;
+  const document = self.document;
+  for (const key of Object.getOwnPropertyNames(self)) {
+    if (doNotSet.has(key)) {
+      continue;
+    }
+    self[key] = undefined;
+  }
+  let done;
+  let writer;
+  // Perform a reasonable comprehensive overview of ReadableStream functions.
+  const rs = new ReadableStream({
+    pull(controller) {
+      if (done) {
+        controller.close();
+      }
+      controller.enqueue('tree');
+    }
+  });
+  const reader = rs.getReader();
+  reader.read().then(() => {
+    reader.releaseLock();
+    return rs.pipeTo(new WritableStream({
+      write() {
+        done = true;
+      }
+    }));
+  }).then(() => {
+    // Cover WritableStreamDefaultWriter
+    const ws = new WritableStream();
+    writer = ws.getWriter();
+    return writer.write('something');
+  }).then(() => {
+    writer.releaseLock();
+    document.querySelector('#result').textContent = 'PASS';
+  });
+}
+runTest();
+</script>
