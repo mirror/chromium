@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15d2ae53_febc36ee",
+        "filename": "sandbox/win/src/win_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1149139
+      },
+      "writtenOn": "2017-08-04T10:58:22Z",
+      "side": 1,
+      "message": "Could these direct compares use EqualPath? Just it might look slightly cleaner, not that it matters from a functional perspective.",
+      "revId": "6ccd0b5183cf332431320e727c2e6f3635bc3462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e67b76a_5f92ad88",
+        "filename": "sandbox/win/src/win_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1149139
+      },
+      "writtenOn": "2017-08-04T10:58:22Z",
+      "side": 1,
+      "message": "Nit: should this be \"is_device_harddisk_path\" or something else considering that\u0027s what we checked, and to avoid confusion with the call to IsDevicePath?",
+      "revId": "6ccd0b5183cf332431320e727c2e6f3635bc3462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3723149_60ef5e41",
+        "filename": "sandbox/win/src/win_utils.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 585,
+      "author": {
+        "id": 1149139
+      },
+      "writtenOn": "2017-08-04T10:58:22Z",
+      "side": 1,
+      "message": "I think this could result is incorrect behavior (though a pretty small edge case). Maybe I\u0027m missing it but no where do you verify that the \\Device\\HarddiskVolumeX path in the image path you\u0027re replacing matches the one which corresponds to the drive letter. We should probably only check paths which start with the same \\Device\\HarddiskVolumeX path, and then get long path (as if it\u0027s not on the same volume it couldn\u0027t match anyway).",
+      "revId": "6ccd0b5183cf332431320e727c2e6f3635bc3462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b4abd55_0038defd",
+        "filename": "sandbox/win/src/win_utils_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1149139
+      },
+      "writtenOn": "2017-08-04T10:58:22Z",
+      "side": 1,
+      "message": "Is this code always guaranteed to be running as an administrator? Otherwise presumably we can\u0027t write to Program Files?",
+      "revId": "6ccd0b5183cf332431320e727c2e6f3635bc3462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6210ce3f_608438e6",
+        "filename": "sandbox/win/src/win_utils_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1149139
+      },
+      "writtenOn": "2017-08-04T10:58:22Z",
+      "side": 1,
+      "message": "Nit: It shouldn\u0027t be CopyFileW (although it really is compiled with that name) as that\u0027s down to stupid Windows macro expansions. CopyFile _should_ work and avoid the possibility that at a future date the expansion breaks. Of course if it doesn\u0027t build, then leave as is :-)",
+      "revId": "6ccd0b5183cf332431320e727c2e6f3635bc3462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6591e975_feba0456",
+        "filename": "sandbox/win/src/win_utils_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1149139
+      },
+      "writtenOn": "2017-08-04T10:58:22Z",
+      "side": 1,
+      "message": "Should we set a warning or something if the short path equals the long path? While it\u0027s unlikely, 8.3 filename generation could be disabled which would result in this code not doing anything meaningful and we wouldn\u0027t realize.",
+      "revId": "6ccd0b5183cf332431320e727c2e6f3635bc3462",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
