@@ -91,7 +91,8 @@ class ResourceLoadingCancellingThrottle
         navigation_handle()->GetRenderFrameHost(),
         content::RESOURCE_TYPE_MAIN_FRAME, false /* was_cached */,
         nullptr /* data_reduction_proxy */, 10 * 1024 /* raw_body_bytes */,
-        0 /* original_network_content_length */, base::TimeTicks::Now(), 0);
+        0 /* original_network_content_length */, base::TimeTicks::Now(), 0,
+        nullptr /* load_timing_info */);
   }
 
   DISALLOW_COPY_AND_ASSIGN(ResourceLoadingCancellingThrottle);
@@ -296,7 +297,7 @@ class AdsPageLoadMetricsObserverTest : public SubresourceFilterTestHarness {
         resource_cached == ResourceCached::CACHED, resource_size_in_kb * 1024,
         0,       /* original_network_content_length */
         nullptr, /* data_reduction_proxy_data */
-        content::RESOURCE_TYPE_SUB_FRAME, 0);
+        content::RESOURCE_TYPE_SUB_FRAME, 0, net::LoadTimingInfo());
     tester_->SimulateLoadedResource(request);
   }
 
@@ -352,7 +353,7 @@ TEST_F(AdsPageLoadMetricsObserverTest, ResourceBeforeAdFrameCommits) {
       10 * 1024 /* size */, 0 /* original_network_content_length */,
       nullptr
       /* data_reduction_proxy_data */,
-      content::RESOURCE_TYPE_SUB_FRAME, 0);
+      content::RESOURCE_TYPE_SUB_FRAME, 0, net::LoadTimingInfo());
   tester()->SimulateLoadedResource(request);
 
   CreateAndNavigateSubFrame(kNonAdUrl, kAdName, main_frame);
@@ -592,7 +593,7 @@ TEST_F(AdsPageLoadMetricsObserverTest, TwoResourceLoadsBeforeCommit) {
       main_frame->GetFrameTreeNodeId() + 1, false /* cached */,
       10 * 1024 /* size */, false /* data_reduction_proxy_used */,
       0 /* original_network_content_length */, content::RESOURCE_TYPE_SUB_FRAME,
-      0);
+      0, net::LoadTimingInfo());
   tester()->SimulateLoadedResource(request);
   RenderFrameHost* subframe_ad =
       RenderFrameHostTester::For(main_frame)->AppendChild(kAdName);
@@ -672,7 +673,7 @@ TEST_F(AdsPageLoadMetricsObserverTest, MainFrameResource) {
       false /* was_cached */, 10 * 1024 /* raw_body_bytes */,
       0 /* original_network_content_length */,
       nullptr /* data_reduction_proxy_data */,
-      content::RESOURCE_TYPE_MAIN_FRAME, 0);
+      content::RESOURCE_TYPE_MAIN_FRAME, 0, net::LoadTimingInfo());
 
   tester()->SimulateLoadedResource(request,
                                    navigation_simulator->GetGlobalRequestID());
