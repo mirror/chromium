@@ -16,6 +16,24 @@
       "revId": "f8fa3764bf595e9b3a2b44b8fd9d1d4a64f6e208",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e013b886_6d90027e",
+        "filename": "gpu/command_buffer/client/ring_buffer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-08-04T23:05:25Z",
+      "side": 1,
+      "message": "Yeah, I had a similar thought about the semantics of silence vs returning information, but I don\u0027t think there\u0027s any action for the caller to take if the block can\u0027t be shrunk.\n\nI had the assumption that most callers would always be operating on the last block in general and so probably wouldn\u0027t hit any of these cases.  I could make them DCHECKs instead if you\u0027d like.",
+      "parentUuid": "990e393d_6e27aa5f",
+      "revId": "f8fa3764bf595e9b3a2b44b8fd9d1d4a64f6e208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
