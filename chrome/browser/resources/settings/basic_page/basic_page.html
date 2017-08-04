@@ -30,6 +30,10 @@
 <link rel="import" href="../chrome_cleanup_page/chrome_cleanup_page.html">
 </if>
 
+<if expr="is_linux">
+<link rel="import" href="../change_password_page/change_password_page.html">
+</if>
+
 <!-- TODO(michaelpg): Rename to something better than "basic" now that this page
      includes both the basic and advanced settings. -->
 <dom-module id="settings-basic-page">
@@ -129,6 +133,13 @@
             <settings-chrome-cleanup-page></settings-chrome-cleanup-page>
           </settings-section>
         </template>
+</if>
+<if expr="is_linux">
+        <template is="dom-if" if="[[showChangePassword]]" restamp>
+          <settings-section section="changePassword">
+            <settings-change-password-page></settings-change-password-page>
+          </settings-section>
+          </template>
 </if>
         <template is="dom-if" if="[[showPage_(pageVisibility.people)]]" restamp>
           <settings-section page-title="$i18n{peoplePageTitle}"

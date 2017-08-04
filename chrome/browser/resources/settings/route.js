@@ -572,6 +572,7 @@ cr.define('settings', function() {
     /**
      * @param {!settings.Route|undefined} opt_newRoute
      * @param {!settings.Route|undefined} opt_oldRoute
+     * @abstract
      */
     currentRouteChanged: function(opt_newRoute, opt_oldRoute) {
       assertNotReached();
