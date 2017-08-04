@@ -4,6 +4,7 @@
 
 import("//media/media_options.gni")
 import("//remoting/build/config/remoting_build.gni")
+#test
 
 group("remoting_all") {
   testonly = true
