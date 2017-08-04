@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "f430eed2_8e0b894e",
+        "filename": "chrome/browser/net/profile_network_context_service.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-04T18:40:33Z",
+      "side": 1,
+      "message": "Thoughts other than \"sigh\"?  :-}\n\nI am good with it as is, and the issues you raise are why I raised it as a suggestion.  But I think one can squint and thing of the whole ball of wax calling in here as being the \"consumer\", and I wouldn\u0027t think that phrasing the comment prescriptively would harm either readability or maintainability.  But I\u0027m happy to defer to your judgement.",
+      "parentUuid": "26ed56da_d9707b92",
+      "range": {
+        "startLine": 45,
+        "startChar": 36,
+        "endLine": 45,
+        "endChar": 42
+      },
+      "revId": "0d9082f9c09519757d387353618fece739e648c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "faba27d5_1cfe6eb6",
         "filename": "chrome/browser/net/profile_network_context_service.h",
         "patchSetId": 8
@@ -368,6 +392,30 @@
       "side": 1,
       "message": "I\u0027ve switched to an alternate solution that I think is a bit cleaner.  I still think we want to get the Profile out of the NetworkContext creation path, but for now, putting it there lets the TestingProfile work around precisely those cases it breaks...hopefully.",
       "parentUuid": "56ea3aef_f2fa9ffd",
+      "range": {
+        "startLine": 24,
+        "startChar": 3,
+        "endLine": 24,
+        "endChar": 29
+      },
+      "revId": "0d9082f9c09519757d387353618fece739e648c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8130052c_bda271c2",
+        "filename": "chrome/test/base/test_chrome_content_browser_client.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001809
+      },
+      "writtenOn": "2017-08-04T18:40:33Z",
+      "side": 1,
+      "message": "I\u0027ll re-review your alternate solution, so you can ignore this comment, but my original request wasn\u0027t actually for more investigation, it was just to be clearer in your phrasing--I wasn\u0027t managing to be certain about what you were actually saying in the comment.",
+      "parentUuid": "7f1d7863_21b9b8f1",
       "range": {
         "startLine": 24,
         "startChar": 3,
