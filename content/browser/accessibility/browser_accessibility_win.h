@@ -11,10 +11,12 @@
 #include "content/browser/accessibility/browser_accessibility.h"
 #include "content/browser/accessibility/browser_accessibility_com_win.h"
 #include "content/common/content_export.h"
+#include "ui/accessibility/ax_mode_observer.h"
 
 namespace content {
 
-class CONTENT_EXPORT BrowserAccessibilityWin : public BrowserAccessibility {
+class CONTENT_EXPORT BrowserAccessibilityWin : public BrowserAccessibility,
+                                               public ui::AXModeObserver {
  public:
   BrowserAccessibilityWin();
   ~BrowserAccessibilityWin() override;
@@ -34,6 +36,9 @@ class CONTENT_EXPORT BrowserAccessibilityWin : public BrowserAccessibility {
 
   gfx::NativeViewAccessible GetNativeViewAccessible() override;
   ui::AXPlatformNode* GetFromNodeID(int32_t id) override;
+
+  // AXModeObserver
+  void OnAXModeChanged(ui::AXMode mode) override;
 
   class BrowserAccessibilityComWin* GetCOM() const;
 

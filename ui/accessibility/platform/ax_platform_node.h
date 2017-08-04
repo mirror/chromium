@@ -8,6 +8,7 @@
 #include "build/build_config.h"
 #include "ui/accessibility/ax_enums.h"
 #include "ui/accessibility/ax_export.h"
+#include "ui/accessibility/ax_mode_observer.h"
 #include "ui/gfx/native_widget_types.h"
 
 namespace ui {
@@ -45,6 +46,11 @@ class AX_EXPORT AXPlatformNode {
 
   // Return this object's delegate.
   virtual AXPlatformNodeDelegate* GetDelegate() const = 0;
+
+  // Register and unregister to receive notifications about AXMode changes
+  // for this node.
+  virtual void AddAXModeObserver(ui::AXModeObserver* observer) = 0;
+  virtual void RemoveAXModeObserver(ui::AXModeObserver* observer) = 0;
 
  protected:
   AXPlatformNode();

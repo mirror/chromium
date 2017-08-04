@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "ui/accessibility/platform/ax_platform_node_win.h"
 #include "base/containers/hash_tables.h"
 #include "base/lazy_instance.h"
 #include "base/strings/string_number_conversions.h"
@@ -13,12 +14,12 @@
 #include "third_party/iaccessible2/ia2_api_all.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/accessibility/ax_action_data.h"
+#include "ui/accessibility/ax_mode_observer.h"
 #include "ui/accessibility/ax_node_data.h"
 #include "ui/accessibility/ax_role_properties.h"
 #include "ui/accessibility/ax_text_utils.h"
 #include "ui/accessibility/ax_tree_data.h"
 #include "ui/accessibility/platform/ax_platform_node_delegate.h"
-#include "ui/accessibility/platform/ax_platform_node_win.h"
 #include "ui/accessibility/platform/ax_platform_unique_id.h"
 #include "ui/base/win/atl_module.h"
 #include "ui/gfx/geometry/rect_conversions.h"
@@ -329,6 +330,11 @@ AXPlatformNodeWin::~AXPlatformNodeWin() {
     relation->Release();
   if (unique_id_)
     g_unique_id_map.Get().erase(unique_id_);
+}
+
+void AXPlatformNodeWin::NotifyAXModeChanged(ui::AXMode mode_flags) {
+  for (auto& observer : ax_mode_observers_)
+    observer.OnAXModeChanged(mode_flags);
 }
 
 void AXPlatformNodeWin::CalculateRelationships() {
