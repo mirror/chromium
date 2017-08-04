@@ -36,3 +36,5 @@ var CertificateAction = {
   EXPORT_PERSONAL: 2,
   IMPORT: 3,
 };
+
+var CertificateActionEvent = 'certificate-action';
