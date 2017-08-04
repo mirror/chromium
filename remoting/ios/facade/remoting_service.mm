@@ -77,9 +77,6 @@ NSString* const kUserInfo = @"kUserInfo";
 #pragma mark - RemotingService Implementation
 
 - (void)startHostListFetchWith:(NSString*)accessToken {
-  if (_hostListState == HostListStateFetching) {
-    return;
-  }
   [self setHostListState:HostListStateFetching];
   if (!_hostListFetcher) {
     _hostListFetcher = new remoting::HostListFetcher(
@@ -89,12 +86,19 @@ NSString* const kUserInfo = @"kUserInfo";
       base::SysNSStringToUTF8(accessToken),
       base::BindBlockArc(^(int responseCode,
                            const std::vector<remoting::HostInfo>& hostlist) {
+        if (responseCode != net::HTTP_OK) {
+          LOG(WARNING) << "Failed to fetch host list. Response code: "
+                       << responseCode;
+          if (responseCode == net::HTTP_UNAUTHORIZED) {
+            [[RemotingService instance].authentication logout];
+          }
+          // TODO(nicholss): There are more |responseCode|s that we might want
+          // to trigger on, look into that later.
 
-        if (responseCode == net::HTTP_UNAUTHORIZED) {
-          [[RemotingService instance].authentication logout];
+          [self setHostListState:HostListStateNotFetched];
+          _hosts = nil;
+          return;
         }
-        // TODO(nicholss): There are more |responseCode|s that we might want to
-        // trigger on, look into that later.
 
         NSMutableArray<HostInfo*>* hosts =
             [NSMutableArray arrayWithCapacity:hostlist.size()];

@@ -44,6 +44,8 @@ class HostListFetcher : public net::URLFetcherDelegate {
 
   // Makes a service call to retrieve a hostlist. The
   // callback will be called once the HTTP request has completed.
+  // Note that if another call to RetrieveHostlist() is made, previous
+  // HostlistCallbacks will be silently dropped.
   virtual void RetrieveHostlist(const std::string& access_token,
                                 const HostlistCallback& callback);
 
