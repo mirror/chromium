@@ -180,6 +180,7 @@ static_library("test_support") {
     "mock_keyboard_driver_win.h",
     "mock_leveldb_database.cc",
     "mock_leveldb_database.h",
+    "mock_overscroll_observer.h",
     "mock_permission_manager.cc",
     "mock_permission_manager.h",
     "mock_platform_notification_service.cc",
@@ -368,6 +369,11 @@ static_library("test_support") {
   }
 
   if (use_aura) {
+    sources += [
+      "mock_overscroll_controller_delegate.cc",
+      "mock_overscroll_controller_delegate.h",
+    ]
+
     deps += [
       "//ui/aura:test_support",
       "//ui/resources:ui_test_pak",
@@ -402,6 +408,11 @@ static_library("test_support") {
   }
 
   if (is_android) {
+    sources += [
+      "mock_overscroll_refresh_handler.cc",
+      "mock_overscroll_refresh_handler.h",
+    ]
+
     deps += [
       "//device/geolocation:geolocation_java",
       "//media/capture/video/android:android",
@@ -931,6 +942,7 @@ test("content_browsertests") {
       "//content/shell/android:content_shell_assets",
       "//content/shell/android:content_shell_jni_headers",
       "//testing/android/native_test:native_test_support",
+      "//ui/android:android",
     ]
     android_manifest =
         "${target_gen_dir}/content_browsertests_manifest/AndroidManifest.xml"
