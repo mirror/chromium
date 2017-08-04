@@ -19,6 +19,47 @@
     },
     {
       "key": {
+        "uuid": "b7cd5997_9b1f7253",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_add_printer_dialog.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 469,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-08-04T22:48:55Z",
+      "side": 1,
+      "message": "No.  printerUsbInfo is populated in the other \u0027found\u0027 workflow.  I\u0027ll rename this method in M62.",
+      "parentUuid": "3776983a_393e7304",
+      "revId": "ba21ccbd4cdd7b6f0672a898e188652124b4be14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2bdffe1_758d3486",
+        "filename": "chrome/browser/resources/settings/printing_page/cups_printers_browser_proxy.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-08-04T22:48:55Z",
+      "side": 1,
+      "message": "I wasn\u0027t sure the best way to make this field optional.  Not all printer objects are expected to have it so I made it nullable.",
+      "range": {
+        "startLine": 43,
+        "startChar": 5,
+        "endLine": 43,
+        "endChar": 34
+      },
+      "revId": "ba21ccbd4cdd7b6f0672a898e188652124b4be14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ed6d5cb1_645f9539",
         "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
         "patchSetId": 5
@@ -30,6 +71,24 @@
       "writtenOn": "2017-08-04T22:40:34Z",
       "side": 1,
       "message": "If your CL lands after my edit-printer CL, please modify it to CreateEmptyPrinterInfo() to make sure UI works properly.",
+      "revId": "ba21ccbd4cdd7b6f0672a898e188652124b4be14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e830e771_1975a860",
+        "filename": "chrome/browser/ui/webui/settings/chromeos/cups_printers_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1151689
+      },
+      "writtenOn": "2017-08-04T22:48:55Z",
+      "side": 1,
+      "message": "yeah, I\u0027m waiting until your CL lands.",
+      "parentUuid": "ed6d5cb1_645f9539",
       "revId": "ba21ccbd4cdd7b6f0672a898e188652124b4be14",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
