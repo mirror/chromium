@@ -12,6 +12,7 @@
 #include "components/leveldb/leveldb_service_impl.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "services/file/file_system.h"
+#include "services/file/restricted_file_system.h"
 #include "services/file/user_id_map.h"
 #include "services/service_manager/public/cpp/service_context.h"
 
@@ -33,6 +34,17 @@ class FileService::FileSystemObjects
       lock_table_ = new filesystem::LockTable;
     mojo::MakeStrongBinding(
         base::MakeUnique<FileSystem>(user_dir_, lock_table_),
+        std::move(request));
+  }
+
+  // Called on the |file_service_runner_|.
+  void OnRestrictedFileSystemRequest(
+      const service_manager::Identity& remote_identity,
+      mojom::RestrictedFileSystemRequest request) {
+    if (!lock_table_)
+      lock_table_ = new filesystem::LockTable;
+    mojo::MakeStrongBinding(
+        base::MakeUnique<RestrictedFileSystemImpl>(user_dir_, lock_table_),
         std::move(request));
   }
 
@@ -87,6 +99,8 @@ FileService::FileService()
       &FileService::BindLevelDBServiceRequest, base::Unretained(this)));
   registry_.AddInterface<mojom::FileSystem>(
       base::Bind(&FileService::BindFileSystemRequest, base::Unretained(this)));
+  registry_.AddInterface<mojom::RestrictedFileSystem>(base::Bind(
+      &FileService::BindRestrictedFileSystemRequest, base::Unretained(this)));
 }
 
 FileService::~FileService() {
@@ -119,6 +133,16 @@ void FileService::BindFileSystemRequest(
                  base::Passed(&request)));
 }
 
+void FileService::BindRestrictedFileSystemRequest(
+    mojom::RestrictedFileSystemRequest request,
+    const service_manager::BindSourceInfo& source_info) {
+  file_service_runner_->PostTask(
+      FROM_HERE,
+      base::Bind(&FileService::FileSystemObjects::OnRestrictedFileSystemRequest,
+                 file_system_objects_->AsWeakPtr(), source_info.identity,
+                 base::Passed(&request)));
+}
+
 void FileService::BindLevelDBServiceRequest(
     leveldb::mojom::LevelDBServiceRequest request,
     const service_manager::BindSourceInfo& source_info) {
@@ -129,4 +153,4 @@ void FileService::BindLevelDBServiceRequest(
                  base::Passed(&request)));
 }
 
-}  // namespace user_service
+}  // namespace file

@@ -8,13 +8,23 @@ source_set("muxers") {
   visibility = [ "//media/*" ]
 
   sources = [
+    "//media/muxers/mkv_reader_writer.h",
+    "//media/muxers/mkv_reader_writer_adapter.cc",
+    "//media/muxers/mkv_reader_writer_adapter.h",
+    "//media/muxers/seekable_webm_remuxer.cc",
+    "//media/muxers/seekable_webm_remuxer.h",
     "//media/muxers/webm_muxer.cc",
     "//media/muxers/webm_muxer.h",
+    "//media/muxers/webm_muxer_utils.cc",
+    "//media/muxers/webm_muxer_utils.h",
+    "//media/muxers/webm_reader_adapter.cc",
+    "//media/muxers/webm_reader_adapter.h",
   ]
 
   deps = [
     "//skia",
     "//third_party/libwebm",
+    "//third_party/libwebm:webm_parser",
   ]
 
   configs += [ "//media:media_implementation" ]

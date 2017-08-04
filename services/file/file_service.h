@@ -12,6 +12,7 @@
 #include "components/leveldb/public/interfaces/leveldb.mojom.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "services/file/public/interfaces/file_system.mojom.h"
+#include "services/file/public/interfaces/restricted_file_system.mojom.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "services/service_manager/public/cpp/service.h"
 
@@ -33,6 +34,10 @@ class FileService : public service_manager::Service {
 
   void BindFileSystemRequest(
       mojom::FileSystemRequest request,
+      const service_manager::BindSourceInfo& source_info);
+
+  void BindRestrictedFileSystemRequest(
+      mojom::RestrictedFileSystemRequest request,
       const service_manager::BindSourceInfo& source_info);
 
   void BindLevelDBServiceRequest(

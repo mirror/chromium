@@ -91,6 +91,7 @@ class MediaRecorderHandlerTest : public TestWithParam<MediaRecorderTestParams>,
 
   MOCK_METHOD4(WriteData, void(const char*, size_t, bool, double));
   MOCK_METHOD1(OnError, void(const WebString& message));
+  MOCK_METHOD0(OnStopped, void());
 
   bool recording() const { return media_recorder_handler_->recording_; }
   bool hasVideoRecorders() const {
@@ -212,6 +213,7 @@ TEST_P(MediaRecorderHandlerTest, InitializeStartStop) {
   EXPECT_TRUE(hasAudioRecorders() || !GetParam().has_audio);
 
   media_recorder_handler_->Stop();
+  // TODO: Wait for call to OnStopped().
   EXPECT_FALSE(recording());
   EXPECT_FALSE(hasVideoRecorders());
   EXPECT_FALSE(hasAudioRecorders());

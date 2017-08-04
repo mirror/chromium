@@ -11,9 +11,11 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/strings/string_piece.h"
+#include "base/threading/thread.h"
 #include "base/threading/thread_checker.h"
 #include "content/common/content_export.h"
 #include "content/renderer/media_recorder/video_track_recorder.h"
+#include "services/file/public/interfaces/restricted_file_system.mojom.h"
 #include "third_party/WebKit/public/platform/WebMediaRecorderHandler.h"
 #include "third_party/WebKit/public/platform/WebMediaStream.h"
 
@@ -25,6 +27,8 @@ class WebString;
 namespace media {
 class AudioBus;
 class AudioParameters;
+class MkvReader;
+class MkvReaderWriter;
 class VideoFrame;
 class WebmMuxer;
 }  // namespace media
@@ -79,7 +83,32 @@ class CONTENT_EXPORT MediaRecorderHandler final
   void OnEncodedAudio(const media::AudioParameters& params,
                       std::unique_ptr<std::string> encoded_data,
                       base::TimeTicks timestamp);
-  void WriteData(base::StringPiece data);
+  void InitMuxer(bool use_video_tracks,
+                 bool use_audio_tracks);
+  void InitRecordingBuffers();
+  void InitRecordingBuffersOnMuxerThread(file::mojom::RestrictedFileSystemPtrInfo file_system_ptr_info);
+  void ReleaseMuxerAndBuffersOnMuxerThread();
+  void PauseMuxer();
+  void ResumeMuxer();
+  void SendVideoDataToMuxer(
+    const media::WebmMuxer::VideoParameters& params,
+    std::unique_ptr<std::string> encoded_data,
+    std::unique_ptr<std::string> encoded_alpha,
+    base::TimeTicks timestamp,
+    bool is_key_frame);
+  void SendAudioDataToMuxer(
+    const media::AudioParameters& params,
+    std::unique_ptr<std::string> encoded_data,
+    base::TimeTicks timestamp);
+  void ReportErrorToClient(const std::string message);
+  void OnCreateTempFileResponse(filesystem::mojom::FileError result_code);
+  void OnReceiveDataFromMuxer(base::StringPiece data);
+  void OnMuxerFinalized();
+
+  void FinalizeMuxer();
+  void BlockingPushAllDataFromRecordingBufferToClient(
+      media::MkvReader* buffer);
+  void PushDataToClient(base::StringPiece data, bool is_last_in_slice);
 
   // Updates |video_tracks_|,|audio_tracks_| and returns true if any changed.
   bool UpdateTracksAndCheckIfChanged();
@@ -90,8 +119,10 @@ class CONTENT_EXPORT MediaRecorderHandler final
                             const base::TimeTicks& timestamp);
   void SetAudioFormatForTesting(const media::AudioParameters& params);
 
-  // Bound to the main render thread.
-  base::ThreadChecker main_render_thread_checker_;
+  base::Thread muxer_thread_;
+  scoped_refptr<base::SequencedTaskRunner> main_sequence_task_runner_;
+  SEQUENCE_CHECKER(main_sequence_checker_);
+  base::WeakPtr<MediaRecorderHandler> weak_this_for_main_sequence_;
 
   // Sanitized video and audio bitrate settings passed on initialize().
   int32_t video_bits_per_second_;
@@ -113,12 +144,16 @@ class CONTENT_EXPORT MediaRecorderHandler final
 
   // |client_| is a weak pointer, and is valid for the lifetime of this object.
   blink::WebMediaRecorderHandlerClient* client_;
+  bool has_pushed_any_data_to_client_;
 
   std::vector<std::unique_ptr<VideoTrackRecorder>> video_recorders_;
   std::vector<std::unique_ptr<AudioTrackRecorder>> audio_recorders_;
 
   // Worker class doing the actual Webm Muxing work.
   std::unique_ptr<media::WebmMuxer> webm_muxer_;
+  std::unique_ptr<media::MkvReaderWriter> live_mode_recording_buffer_;
+  std::unique_ptr<media::MkvReaderWriter> file_mode_buffer_;
+  std::unique_ptr<media::MkvReaderWriter> cues_before_clusters_buffer_;
 
   base::WeakPtrFactory<MediaRecorderHandler> weak_factory_;
 
@@ -126,4 +161,5 @@ class CONTENT_EXPORT MediaRecorderHandler final
 };
 
 }  // namespace content
+
 #endif  // CONTENT_RENDERER_MEDIA_RECORDER_MEDIA_RECORDER_HANDLER_H_

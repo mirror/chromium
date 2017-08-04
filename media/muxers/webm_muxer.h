@@ -20,6 +20,7 @@
 #include "media/base/media_export.h"
 #include "media/base/video_codecs.h"
 #include "third_party/libwebm/source/mkvmuxer.hpp"
+#include "third_party/libwebm/source/mkvparser/mkvparser.h"
 #include "ui/gfx/geometry/size.h"
 
 namespace gfx {
@@ -58,10 +59,12 @@ class MEDIA_EXPORT WebmMuxer : public NON_EXPORTED_BASE(mkvmuxer::IMkvWriter) {
   };
 
   // |codec| can be VP8 or VP9 and should coincide with whatever is sent in
-  // OnEncodedVideo().
+  // OnEncodedVideo(). Using this constructor, WebmMuxer will produce WebM data
+  // in "live" mode, which means that it does not specify a duration in the
+  // header or contain cue points for efficient seeking.
   WebmMuxer(VideoCodec codec,
-            bool has_video_,
-            bool has_audio_,
+            bool has_video,
+            bool has_audio,
             const WriteDataCB& write_data_callback);
   ~WebmMuxer() override;
 
@@ -81,9 +84,12 @@ class MEDIA_EXPORT WebmMuxer : public NON_EXPORTED_BASE(mkvmuxer::IMkvWriter) {
   void Pause();
   void Resume();
 
+  void FinalizeAndPushAllData();
+
   void ForceOneLibWebmErrorForTesting() { force_one_libwebm_error_ = true; }
 
  private:
+  class MkvReaderWriterAdapter;
   friend class WebmMuxerTest;
 
   // Methods for creating and adding video and audio tracks, called upon

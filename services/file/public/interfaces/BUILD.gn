@@ -7,6 +7,7 @@ import("//mojo/public/tools/bindings/mojom.gni")
 mojom("interfaces") {
   sources = [
     "file_system.mojom",
+    "restricted_file_system.mojom",
   ]
 
   deps = [

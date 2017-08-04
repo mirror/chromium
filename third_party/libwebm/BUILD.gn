@@ -20,3 +20,41 @@ static_library("libwebm") {
     "source/mkvmuxer/mkvwriter.cc",
   ]
 }
+
+config("webm_parser_config") {
+  include_dirs = [ "./source/webm_parser", "./source/webm_parser/include" ]
+}
+
+static_library("webm_parser") {
+  configs += [ ":webm_parser_config" ]
+  public_configs = [ ":webm_parser_config" ]
+
+  if (!is_win) {
+    cflags = [ "-Wno-deprecated-declarations" ]  # libwebm uses std::auto_ptr
+  }
+
+  sources = [
+    "source/webm_parser/src/ancestory.cc",
+    "source/webm_parser/src/bit_utils.cc",
+    "source/webm_parser/src/block_header_parser.cc",
+    "source/webm_parser/src/block_parser.cc",
+    "source/webm_parser/src/buffer_reader.cc",
+    "source/webm_parser/src/callback.cc",
+    "source/webm_parser/src/date_parser.cc",
+    "source/webm_parser/src/file_reader.cc",
+    "source/webm_parser/src/float_parser.cc",
+    "source/webm_parser/src/id_element_parser.cc",
+    "source/webm_parser/src/id_parser.cc",
+    "source/webm_parser/src/istream_reader.cc",
+    "source/webm_parser/src/master_parser.cc",
+    "source/webm_parser/src/parser_utils.cc",
+    "source/webm_parser/src/segment_parser.cc",
+    "source/webm_parser/src/size_parser.cc",
+    "source/webm_parser/src/skip_parser.cc",
+    "source/webm_parser/src/unknown_parser.cc",
+    "source/webm_parser/src/var_int_parser.cc",
+    "source/webm_parser/src/virtual_block_parser.cc",
+    "source/webm_parser/src/void_parser.cc",
+    "source/webm_parser/src/webm_parser.cc",
+  ]
+}

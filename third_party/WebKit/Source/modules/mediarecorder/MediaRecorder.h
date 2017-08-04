@@ -84,6 +84,7 @@ class MODULES_EXPORT MediaRecorder final
                  bool last_in_slice,
                  double timecode) override;
   void OnError(const WebString& message) override;
+  void OnStopped() override;
 
   DECLARE_VIRTUAL_TRACE();
 

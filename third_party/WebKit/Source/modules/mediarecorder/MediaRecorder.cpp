@@ -362,10 +362,13 @@ void MediaRecorder::CreateBlobEvent(Blob* blob, double timecode) {
 
 void MediaRecorder::StopRecording() {
   DCHECK(state_ != State::kInactive);
-  state_ = State::kInactive;
-
+  // TODO: Ignore or otherwise handle calls coming in until OnStopped() has
+  // been called.
   recorder_handler_->Stop();
+}
 
+void MediaRecorder::OnStopped() {
+  state_ = State::kInactive;
   WriteData(nullptr /* data */, 0 /* length */, true /* lastInSlice */,
             WTF::CurrentTimeMS());
   ScheduleDispatchEvent(Event::Create(EventTypeNames::stop));

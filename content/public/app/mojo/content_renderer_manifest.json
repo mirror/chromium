@@ -27,6 +27,7 @@
           "device:sensors",
           "device:time_zone_monitor"
         ],
+        "file": [ "file:restricted_filesystem" ],
         "ui": [
           "discardable_memory",
           "gpu_client"

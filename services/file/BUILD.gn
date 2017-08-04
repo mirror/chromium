@@ -4,6 +4,7 @@
 
 import("//services/service_manager/public/cpp/service.gni")
 import("//services/service_manager/public/service_manifest.gni")
+import("//services/service_manager/public/tools/test/service_test.gni")
 
 source_set("lib") {
   sources = [
@@ -11,6 +12,8 @@ source_set("lib") {
     "file_service.h",
     "file_system.cc",
     "file_system.h",
+    "restricted_file_system.cc",
+    "restricted_file_system.h",
     "user_id_map.cc",
     "user_id_map.h",
   ]
@@ -33,4 +36,33 @@ source_set("lib") {
 service_manifest("manifest") {
   name = "file"
   source = "manifest.json"
+}
+
+source_set("tests") {
+  testonly = true
+
+  sources = [
+    "test/restricted_file_system_test.cc",
+  ]
+
+  deps = [
+    ":lib",
+    "//base/test:test_support",
+    "//services/file/public/interfaces",
+    "//services/service_manager/public/cpp",
+    "//services/service_manager/public/cpp:service_test_support",
+    "//testing/gmock",
+    "//testing/gtest",
+  ]
+}
+
+service_manifest("unittest_manifest") {
+  name = "file_unittests"
+  source = "test/unittest_manifest.json"
+  packaged_services = [ ":manifest" ]
+}
+
+catalog("tests_catalog") {
+  testonly = true
+  embedded_services = [ ":unittest_manifest" ]
 }

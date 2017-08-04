@@ -20,6 +20,7 @@ class WebMediaRecorderHandlerClient {
                          double timecode) = 0;
 
   virtual void OnError(const WebString& message) = 0;
+  virtual void OnStopped() = 0;
 };
 
 }  // namespace blink

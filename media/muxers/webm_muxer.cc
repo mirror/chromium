@@ -12,49 +12,18 @@
 #include "media/base/limits.h"
 #include "media/base/video_frame.h"
 #include "media/filters/opus_constants.h"
+#include "media/muxers/webm_muxer_utils.h"
+
+// libwebm defines the (empty) destructor for the IMkvReader inside
+// mkvparser.cc, which we do not link against. Therefore, we provide our own
+// definition.
+namespace mkvparser {
+IMkvReader::~IMkvReader() {}
+}  // namespace mkvparser
 
 namespace media {
 
 namespace {
-
-void WriteOpusHeader(const media::AudioParameters& params, uint8_t* header) {
-  // See https://wiki.xiph.org/OggOpus#ID_Header.
-  // Set magic signature.
-  std::string label = "OpusHead";
-  memcpy(header + OPUS_EXTRADATA_LABEL_OFFSET, label.c_str(), label.size());
-  // Set Opus version.
-  header[OPUS_EXTRADATA_VERSION_OFFSET] = 1;
-  // Set channel count.
-  header[OPUS_EXTRADATA_CHANNELS_OFFSET] = params.channels();
-  // Set pre-skip
-  uint16_t skip = 0;
-  memcpy(header + OPUS_EXTRADATA_SKIP_SAMPLES_OFFSET, &skip, sizeof(uint16_t));
-  // Set original input sample rate in Hz.
-  uint32_t sample_rate = params.sample_rate();
-  memcpy(header + OPUS_EXTRADATA_SAMPLE_RATE_OFFSET, &sample_rate,
-         sizeof(uint32_t));
-  // Set output gain in dB.
-  uint16_t gain = 0;
-  memcpy(header + OPUS_EXTRADATA_GAIN_OFFSET, &gain, 2);
-
-  // Set channel mapping.
-  if (params.channels() > 2) {
-    // Also possible to have a multistream, not supported for now.
-    DCHECK_LE(params.channels(), OPUS_MAX_VORBIS_CHANNELS);
-    header[OPUS_EXTRADATA_CHANNEL_MAPPING_OFFSET] = 1;
-    // Assuming no coupled streams. This should actually be
-    // channels() - |coupled_streams|.
-    header[OPUS_EXTRADATA_NUM_STREAMS_OFFSET] = params.channels();
-    header[OPUS_EXTRADATA_NUM_COUPLED_OFFSET] = 0;
-    // Set the actual stream map.
-    for (int i = 0; i < params.channels(); ++i) {
-      header[OPUS_EXTRADATA_STREAM_MAP_OFFSET + i] =
-          kOpusVorbisChannelMap[params.channels() - 1][i];
-    }
-  } else {
-    header[OPUS_EXTRADATA_CHANNEL_MAPPING_OFFSET] = 0;
-  }
-}
 
 static double GetFrameRate(const WebmMuxer::VideoParameters& params) {
   const double kZeroFrameRate = 0.0;
@@ -112,7 +81,6 @@ WebmMuxer::WebmMuxer(VideoCodec codec,
   DCHECK(!write_data_callback_.is_null());
   DCHECK(codec == kCodecVP8 || codec == kCodecVP9 || codec == kCodecH264)
       << " Unsupported codec: " << GetCodecName(codec);
-
   segment_.Init(this);
   segment_.set_mode(mkvmuxer::Segment::kLive);
   segment_.OutputCues(false);
@@ -126,10 +94,7 @@ WebmMuxer::WebmMuxer(VideoCodec codec,
 }
 
 WebmMuxer::~WebmMuxer() {
-  // No need to segment_.Finalize() since is not Seekable(), i.e. a live
-  // stream, but is a good practice.
   DCHECK(thread_checker_.CalledOnValidThread());
-  segment_.Finalize();
 }
 
 bool WebmMuxer::OnEncodedVideo(const VideoParameters& params,
@@ -229,6 +194,11 @@ void WebmMuxer::Resume() {
   }
 }
 
+void WebmMuxer::FinalizeAndPushAllData() {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  segment_.Finalize();
+}
+
 void WebmMuxer::AddVideoTrack(const gfx::Size& frame_size, double frame_rate) {
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK_EQ(0u, video_track_index_)
@@ -291,8 +261,8 @@ void WebmMuxer::AddAudioTrack(const media::AudioParameters& params) {
   DCHECK_EQ(params.channels(), static_cast<int>(audio_track->channels()));
 
   uint8_t opus_header[OPUS_EXTRADATA_SIZE];
-  WriteOpusHeader(params, opus_header);
-
+  WebmMuxerUtils::WriteOpusHeader(params.channels(), params.sample_rate(),
+                                  opus_header);
   if (!audio_track->SetCodecPrivate(opus_header, OPUS_EXTRADATA_SIZE))
     LOG(ERROR) << __func__ << ": failed to set opus header.";
 
@@ -348,25 +318,29 @@ bool WebmMuxer::AddFrame(std::unique_ptr<std::string> encoded_data,
     return false;
   }
 
+  auto timestamp_in_ns = most_recent_timestamp_.InMicroseconds() *
+                         base::Time::kNanosecondsPerMicrosecond;
+
   DCHECK(encoded_data->data());
   if (!encoded_alpha || encoded_alpha->empty()) {
-    return segment_.AddFrame(
-        reinterpret_cast<const uint8_t*>(encoded_data->data()),
-        encoded_data->size(), track_index,
-        most_recent_timestamp_.InMicroseconds() *
-            base::Time::kNanosecondsPerMicrosecond,
-        is_key_frame);
+    if (!segment_.AddFrame(
+            reinterpret_cast<const uint8_t*>(encoded_data->data()),
+            encoded_data->size(), track_index, timestamp_in_ns, is_key_frame)) {
+      return false;
+    }
+    return true;
   }
 
   DCHECK(encoded_alpha->data());
-  return segment_.AddFrameWithAdditional(
-      reinterpret_cast<const uint8_t*>(encoded_data->data()),
-      encoded_data->size(),
-      reinterpret_cast<const uint8_t*>(encoded_alpha->data()),
-      encoded_alpha->size(), 1 /* add_id */, track_index,
-      most_recent_timestamp_.InMicroseconds() *
-          base::Time::kNanosecondsPerMicrosecond,
-      is_key_frame);
+  if (!segment_.AddFrameWithAdditional(
+          reinterpret_cast<const uint8_t*>(encoded_data->data()),
+          encoded_data->size(),
+          reinterpret_cast<const uint8_t*>(encoded_alpha->data()),
+          encoded_alpha->size(), 1 /* add_id */, track_index, timestamp_in_ns,
+          is_key_frame)) {
+    return false;
+  }
+  return true;
 }
 
 WebmMuxer::EncodedVideoFrame::EncodedVideoFrame(
