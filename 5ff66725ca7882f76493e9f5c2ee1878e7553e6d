@@ -36,6 +36,29 @@
     },
     {
       "key": {
+        "uuid": "db359c16_14cc12d9",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsolePrompt.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-04T23:59:24Z",
+      "side": 1,
+      "message": "Can we annotate this?",
+      "range": {
+        "startLine": 204,
+        "startChar": 83,
+        "endLine": 204,
+        "endChar": 87
+      },
+      "revId": "5ff66725ca7882f76493e9f5c2ee1878e7553e6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db80b15d_0b5c4b1a",
         "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsolePrompt.js",
         "patchSetId": 10
@@ -76,6 +99,29 @@
     },
     {
       "key": {
+        "uuid": "8673b1bc_06ac43dc",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console_model/ConsoleModel.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-04T23:59:24Z",
+      "side": 1,
+      "message": "I think we can have one less parameter, since originatingMessage.messageText \u003d\u003d\u003d (requestedText || text).\nCould we either:\n- Not pass in originatingMessage, and create the CommandMessage using (requestedText || text), similar to before\n- Not pass in requestedText, and extract it from originatingMessage.messageText\n?\n\nI\u0027d prefer the first so that we could avoid adding a new public function addCommandMessage()",
+      "range": {
+        "startLine": 131,
+        "startChar": 0,
+        "endLine": 131,
+        "endChar": 42
+      },
+      "revId": "5ff66725ca7882f76493e9f5c2ee1878e7553e6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5915cb7d_ccc5060a",
         "filename": "third_party/WebKit/Source/devtools/front_end/console_model/ConsoleModel.js",
         "patchSetId": 10
@@ -87,6 +133,29 @@
       "writtenOn": "2017-08-04T23:51:27Z",
       "side": 1,
       "message": "text is not needed probably",
+      "revId": "5ff66725ca7882f76493e9f5c2ee1878e7553e6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a79b4007_3928a115",
+        "filename": "third_party/WebKit/Source/devtools/front_end/formatter/FormatterWorkerPool.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-04T23:59:24Z",
+      "side": 1,
+      "message": "Since other similar places haven\u0027t switched to shorthand syntax, can we do the full {context: context}?",
+      "range": {
+        "startLine": 157,
+        "startChar": 64,
+        "endLine": 157,
+        "endChar": 71
+      },
       "revId": "5ff66725ca7882f76493e9f5c2ee1878e7553e6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -201,6 +270,52 @@
       "writtenOn": "2017-08-04T23:51:27Z",
       "side": 1,
       "message": "let\u0027s wait for the upstream bugfix to land. If the upstream is slow/unresponsive, we\u0027ll use this workaround.",
+      "revId": "5ff66725ca7882f76493e9f5c2ee1878e7553e6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37468eee_2365410f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/object_ui/ObjectPropertiesSection.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-04T23:59:24Z",
+      "side": 1,
+      "message": "Passing allowTopLevelAwait `true` doesn\u0027t really change the behavior.  I\u0027d prefer to get rid of this 2nd function parameter and just always use the async fn constructor for testing.",
+      "range": {
+        "startLine": 894,
+        "startChar": 89,
+        "endLine": 894,
+        "endChar": 94
+      },
+      "revId": "5ff66725ca7882f76493e9f5c2ee1878e7553e6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e700279_17ec1f2c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/RuntimeModel.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-04T23:59:24Z",
+      "side": 1,
+      "message": "Can we add a comment saying that this requires further work to be possible?",
+      "range": {
+        "startLine": 610,
+        "startChar": 25,
+        "endLine": 610,
+        "endChar": 52
+      },
       "revId": "5ff66725ca7882f76493e9f5c2ee1878e7553e6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
