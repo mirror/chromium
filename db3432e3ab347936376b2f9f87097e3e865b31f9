@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7b2bc117_c3f8d57b",
+        "filename": "components/ui_devtools/views/ui_devtools_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-04T02:01:36Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "448dd913_c3006151",
+      "range": {
+        "startLine": 381,
+        "startChar": 23,
+        "endLine": 381,
+        "endChar": 63
+      },
+      "revId": "db3432e3ab347936376b2f9f87097e3e865b31f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0c9f8520_20b4a5cc",
         "filename": "components/ui_devtools/views/ui_element.cc",
         "patchSetId": 16
@@ -36,6 +60,24 @@
       "writtenOn": "2017-08-03T15:30:01Z",
       "side": 1,
       "message": "Instead of this, can GetBackingElement() be a const method too? That way, you won\u0027t need the const_cast\u003c\u003e here.",
+      "revId": "db3432e3ab347936376b2f9f87097e3e865b31f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46f29d46_61ccae8b",
+        "filename": "components/ui_devtools/views/ui_element.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-04T02:01:36Z",
+      "side": 1,
+      "message": "static BackingT* GetBackingElement(UIElement* element) is a static member function so I can\u0027t put const qualifier here",
+      "parentUuid": "0c9f8520_20b4a5cc",
       "revId": "db3432e3ab347936376b2f9f87097e3e865b31f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
