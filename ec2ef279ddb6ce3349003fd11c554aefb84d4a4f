@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a73ed61c_bedebfc5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-04T19:18:57Z",
+      "side": 1,
+      "message": "Expand this message please. What\u0027s a \"range\"? Not in the readme.",
+      "revId": "ec2ef279ddb6ce3349003fd11c554aefb84d4a4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9ea4e28_4fe5d050",
+        "filename": "chrome/installer/zucchini/encoded_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-04T19:18:57Z",
+      "side": 1,
+      "message": "What is a typetag? I looked at the definition \nhttps://cs.chromium.org/chromium/src/chrome/installer/zucchini/image_utils.h?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d32\n\nand still don\u0027t know what\u0027s going on.",
+      "revId": "ec2ef279ddb6ce3349003fd11c554aefb84d4a4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3608812_d9ffacc6",
+        "filename": "chrome/installer/zucchini/encoded_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-04T19:18:57Z",
+      "side": 1,
+      "message": "huh? the boss?",
+      "revId": "ec2ef279ddb6ce3349003fd11c554aefb84d4a4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9da08a23_8b595ddf",
+        "filename": "chrome/installer/zucchini/encoded_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-04T19:18:57Z",
+      "side": 1,
+      "message": "Should this be called kDummyRank?",
+      "revId": "ec2ef279ddb6ce3349003fd11c554aefb84d4a4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5227b9ce_98752e01",
+        "filename": "chrome/installer/zucchini/encoded_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-04T19:18:57Z",
+      "side": 1,
+      "message": "sorry, I don\u0027t understand this. Can you add to the README?",
+      "revId": "ec2ef279ddb6ce3349003fd11c554aefb84d4a4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84aa8cbd_21d0a162",
+        "filename": "chrome/installer/zucchini/encoded_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-08-04T19:18:57Z",
+      "side": 1,
+      "message": "Add a comment about lifetime semantics: ImageIndex must outlive this class.",
+      "revId": "ec2ef279ddb6ce3349003fd11c554aefb84d4a4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
