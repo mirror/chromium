@@ -22,6 +22,30 @@
       "revId": "6a7c7586a12b8a92588783fe82d26a6c0988967f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ace9cf4_38823784",
+        "filename": "chrome/browser/ui/search/local_ntp_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1229240
+      },
+      "writtenOn": "2017-08-04T15:41:14Z",
+      "side": 1,
+      "message": "Done, did you mean it like this?",
+      "parentUuid": "7a1e4b73_aa0c6eca",
+      "range": {
+        "startLine": 503,
+        "startChar": 80,
+        "endLine": 503,
+        "endChar": 0
+      },
+      "revId": "6a7c7586a12b8a92588783fe82d26a6c0988967f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
