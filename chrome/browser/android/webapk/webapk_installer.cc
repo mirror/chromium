@@ -308,14 +308,12 @@ void WebApkInstaller::OnResult(WebApkInstallResult result) {
   finish_callback_.Run(result, relax_updates_, webapk_package_);
 
   if (task_type_ == WebApkInstaller::INSTALL) {
-    if (result == WebApkInstallResult::SUCCESS) {
       webapk::TrackInstallDuration(install_duration_timer_->Elapsed());
       webapk::TrackInstallEvent(webapk::INSTALL_COMPLETED);
     } else {
       DVLOG(1) << "The WebAPK installation failed.";
       webapk::TrackInstallEvent(webapk::INSTALL_FAILED);
     }
-  }
 
   delete this;
 }
