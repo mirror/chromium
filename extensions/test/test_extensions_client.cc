@@ -46,7 +46,10 @@ void TestExtensionsClient::RemoveBrowserImagePathsFilter(
   browser_image_filters_.erase(filter);
 }
 
-void TestExtensionsClient::Initialize() {
+void TestExtensionsClient::InitializeWebStoreUrls(
+    base::CommandLine* command_line) {}
+
+void TestExtensionsClient::InitializeGlobalState() {
   // Registration could already be finalized in unit tests, where the utility
   // thread runs in-process.
   if (!ManifestHandler::IsRegistrationFinalized()) {
@@ -66,7 +69,7 @@ TestExtensionsClient::GetPermissionMessageProvider() const {
   return provider;
 }
 
-const std::string TestExtensionsClient::GetProductName() {
+const std::string TestExtensionsClient::GetProductName() const {
   return "extensions_test";
 }
 
