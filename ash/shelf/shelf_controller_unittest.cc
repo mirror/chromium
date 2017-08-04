@@ -15,7 +15,6 @@
 #include "ash/shell.h"
 #include "ash/test/ash_test_base.h"
 #include "mojo/public/cpp/bindings/associated_binding.h"
-#include "ui/display/types/display_constants.h"
 
 namespace ash {
 namespace {
@@ -27,19 +26,6 @@ class TestShelfObserver : public mojom::ShelfObserver {
   ~TestShelfObserver() override = default;
 
   // mojom::ShelfObserver:
-  void OnShelfInitialized(int64_t display_id) override {
-    display_id_ = display_id;
-  }
-  void OnAlignmentChanged(ShelfAlignment alignment,
-                          int64_t display_id) override {
-    alignment_ = alignment;
-    display_id_ = display_id;
-  }
-  void OnAutoHideBehaviorChanged(ShelfAutoHideBehavior auto_hide,
-                                 int64_t display_id) override {
-    auto_hide_ = auto_hide;
-    display_id_ = display_id;
-  }
   void OnShelfItemAdded(int32_t, const ShelfItem&) override { added_count_++; }
   void OnShelfItemRemoved(const ShelfID&) override { removed_count_++; }
   void OnShelfItemMoved(const ShelfID&, int32_t) override {}
@@ -47,16 +33,10 @@ class TestShelfObserver : public mojom::ShelfObserver {
   void OnShelfItemDelegateChanged(const ShelfID&,
                                   mojom::ShelfItemDelegatePtr) override {}
 
-  int64_t display_id() const { return display_id_; }
-  ShelfAlignment alignment() const { return alignment_; }
-  ShelfAutoHideBehavior auto_hide() const { return auto_hide_; }
   size_t added_count() const { return added_count_; }
   size_t removed_count() const { return removed_count_; }
 
  private:
-  int64_t display_id_ = display::kInvalidDisplayId;
-  ShelfAlignment alignment_ = SHELF_ALIGNMENT_BOTTOM_LOCKED;
-  ShelfAutoHideBehavior auto_hide_ = SHELF_AUTO_HIDE_ALWAYS_HIDDEN;
   size_t added_count_ = 0;
   size_t removed_count_ = 0;
 
@@ -64,7 +44,6 @@ class TestShelfObserver : public mojom::ShelfObserver {
 };
 
 using ShelfControllerTest = AshTestBase;
-using NoSessionShelfControllerTest = NoSessionAshTestBase;
 
 TEST_F(ShelfControllerTest, IntializesAppListItemDelegate) {
   ShelfModel* model = Shell::Get()->shelf_controller()->model();
@@ -75,34 +54,6 @@ TEST_F(ShelfControllerTest, IntializesAppListItemDelegate) {
   const char kChromeAppId[] = "mgndgikekgjfcpckkfioiadnlibdjbkf";
   EXPECT_EQ(kChromeAppId, model->items()[1].id.app_id);
   EXPECT_FALSE(model->GetShelfItemDelegate(ShelfID(kChromeAppId)));
-}
-
-TEST_F(NoSessionShelfControllerTest, AlignmentAndAutoHide) {
-  ShelfController* controller = Shell::Get()->shelf_controller();
-  TestShelfObserver observer;
-  mojom::ShelfObserverAssociatedPtr observer_ptr;
-  mojo::AssociatedBinding<mojom::ShelfObserver> binding(
-      &observer, mojo::MakeIsolatedRequest(&observer_ptr));
-  controller->AddObserver(observer_ptr.PassInterface());
-
-  // Simulated login should initialize the primary shelf and notify |observer|.
-  EXPECT_EQ(display::kInvalidDisplayId, observer.display_id());
-  EXPECT_EQ(SHELF_ALIGNMENT_BOTTOM_LOCKED, observer.alignment());
-  EXPECT_EQ(SHELF_AUTO_HIDE_ALWAYS_HIDDEN, observer.auto_hide());
-  SetUserLoggedIn(true);
-  SetSessionStarted(true);
-  base::RunLoop().RunUntilIdle();
-  EXPECT_EQ(GetPrimaryDisplay().id(), observer.display_id());
-  EXPECT_EQ(SHELF_ALIGNMENT_BOTTOM, observer.alignment());
-  EXPECT_EQ(SHELF_AUTO_HIDE_BEHAVIOR_NEVER, observer.auto_hide());
-
-  // Changing shelf properties should notify |observer|.
-  GetPrimaryShelf()->SetAlignment(SHELF_ALIGNMENT_LEFT);
-  base::RunLoop().RunUntilIdle();
-  EXPECT_EQ(SHELF_ALIGNMENT_LEFT, observer.alignment());
-  GetPrimaryShelf()->SetAutoHideBehavior(SHELF_AUTO_HIDE_BEHAVIOR_ALWAYS);
-  base::RunLoop().RunUntilIdle();
-  EXPECT_EQ(SHELF_AUTO_HIDE_BEHAVIOR_ALWAYS, observer.auto_hide());
 }
 
 TEST_F(ShelfControllerTest, ShelfModelChangesInClassicAsh) {
