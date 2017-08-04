@@ -228,7 +228,8 @@ void AppListPresenterDelegate::OnMouseEvent(ui::MouseEvent* event) {
 }
 
 void AppListPresenterDelegate::OnGestureEvent(ui::GestureEvent* event) {
-  if (event->type() == ui::ET_GESTURE_SHOW_PRESS)
+  if (event->type() == ui::ET_GESTURE_SHOW_PRESS ||
+      event->type() == ui::ET_GESTURE_TWO_FINGER_TAP)
     ProcessLocatedEvent(event);
 }
 
@@ -248,6 +249,14 @@ void AppListPresenterDelegate::OnKeyboardClosed() {}
 void AppListPresenterDelegate::OnOverviewModeStarting() {
   if (is_visible_)
     presenter_->Dismiss();
+}
+
+void AppListPresenterDelegate::OnShelfAlignmentChanged(
+    aura::Window* root_window) {
+  if (app_list::features::IsFullscreenAppListEnabled()) {
+    if (is_visible_)
+      presenter_->Dismiss();
+  }
 }
 
 void AppListPresenterDelegate::OnTabletModeStarted() {

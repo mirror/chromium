@@ -483,6 +483,31 @@ TEST_F(FullscreenAppListPresenterDelegateTest,
   EXPECT_EQ(app_list->app_list_state(), app_list::AppListView::CLOSED);
 }
 
+// Tests that two finger tapping and right clicking the shelf closes the app
+// list.
+TEST_P(FullscreenAppListPresenterDelegateTest,
+       TwoFingerTapAndRightClickingShelfClosesApplist) {
+  // better name for variable
+  const bool tap_or_click = TestMouseEventParam();
+  app_list_presenter_impl()->Show(GetPrimaryDisplayId());
+  ShelfView* shelf_view =
+      Shelf::ForWindow(Shell::GetRootWindowForDisplayId(GetPrimaryDisplayId()));
+  ui::test::EventGenerator& generator = GetEventGenerator();
+  if (tap_or_click) {
+    generator.GestureMultiFingerScroll();
+    /*
+     * void GestureMultiFingerScrollWithDelays(int count,
+                                          const gfx::Point start[],
+                                          const gfx::Vector2d delta[],
+                                          const int delay_adding_finger_ms[],
+                                          const int delay_releasing_finger_ms[],
+                                          int event_separation_time_ms,
+                                          int steps);
+
+     * */
+  }
+}
+
 // Tests that the bottom shelf background is hidden when the app list is shown
 // in laptop mode.
 TEST_F(FullscreenAppListPresenterDelegateTest,
