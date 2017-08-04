@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "02c227da_d55fb5e7",
+        "filename": "components/autofill/content/common/autofill_driver.mojom",
+        "patchSetId": 13
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-08-04T10:45:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6fbfeffe_a9d4a8f7",
+      "range": {
+        "startLine": 116,
+        "startChar": 2,
+        "endLine": 116,
+        "endChar": 26
+      },
+      "revId": "d39a186a958cb0cc99714d92b8fc5c230ba26378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "324db797_1a36c466",
         "filename": "components/autofill/content/common/autofill_driver.mojom",
         "patchSetId": 13
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-03T17:44:30Z",
       "side": 1,
       "message": "Can you tell me more about using the \"Form not secure\" warning? I ask because we\u0027ve decided not to launch the Form-Not-Secure warnings, at least not right now. Was there an independent decision that manual fallbacks should include not-secure warnings? If so, that\u0027s fine with me, but note that it looks like their presence will be gated on the Form-Not-Secure Finch trial which is currently disabled. If you want a not-secure warning in the manual fallbacks dropdown, you\u0027ll probably need to set up a separate Finch trial for it.",
+      "range": {
+        "startLine": 118,
+        "startChar": 32,
+        "endLine": 118,
+        "endChar": 62
+      },
+      "revId": "d39a186a958cb0cc99714d92b8fc5c230ba26378",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e85214e_7ee579aa",
+        "filename": "components/autofill/content/common/autofill_driver.mojom",
+        "patchSetId": 13
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1128432
+      },
+      "writtenOn": "2017-08-04T10:45:24Z",
+      "side": 1,
+      "message": "Nope, it wasn\u0027t independent decision. I was unaware of decision not to launch \"Form not secure\", so I was implementing manual fallbacks in a way that \"Form not secure\" warning is preserved (but since it\u0027s guarded with the same experiment as other \"Form not secure\" warnings, it just won\u0027t show)",
+      "parentUuid": "324db797_1a36c466",
       "range": {
         "startLine": 118,
         "startChar": 32,
