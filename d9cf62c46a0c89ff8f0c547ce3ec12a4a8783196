@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6fd57651_f66d92bc",
+        "filename": "cc/animation/animation_player_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 418,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-04T00:24:22Z",
+      "side": 1,
+      "message": "\u003c_\u003c",
+      "range": {
+        "startLine": 418,
+        "startChar": 58,
+        "endLine": 418,
+        "endChar": 73
+      },
+      "revId": "d9cf62c46a0c89ff8f0c547ce3ec12a4a8783196",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
