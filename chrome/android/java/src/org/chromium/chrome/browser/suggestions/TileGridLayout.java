@@ -86,7 +86,7 @@ public class TileGridLayout extends FrameLayout {
      * @param tile The tile that holds the data to populate the tile view.
      */
     public void updateIconView(Tile tile) {
-        TileView tileView = getTileView(tile.getUrl());
+        TileView tileView = getTileView(tile.getData());
         if (tileView != null) tileView.renderIcon(tile);
     }
 
@@ -206,6 +206,15 @@ public class TileGridLayout extends FrameLayout {
         for (int i = 0; i < childCount; i++) {
             TileView tileView = (TileView) getChildAt(i);
             if (TextUtils.equals(url, tileView.getUrl())) return tileView;
+        }
+        return null;
+    }
+
+    TileView getTileView(SiteSuggestion suggestion) {
+        int childCount = getChildCount();
+        for (int i = 0; i < childCount; i++) {
+            TileView tileView = (TileView) getChildAt(i);
+            if (suggestion.equals(tileView.getData())) return tileView;
         }
         return null;
     }

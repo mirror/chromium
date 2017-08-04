@@ -36,6 +36,7 @@ import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
 import org.chromium.chrome.test.ChromeTabbedActivityTestRule;
 import org.chromium.chrome.test.util.NewTabPageTestUtils;
 import org.chromium.chrome.test.util.browser.RecyclerViewTestUtils;
+import org.chromium.chrome.test.util.browser.suggestions.FakeMostVisitedSites;
 import org.chromium.chrome.test.util.browser.suggestions.FakeSuggestionsSource;
 import org.chromium.chrome.test.util.browser.suggestions.SuggestionsDependenciesRule;
 import org.chromium.content.browser.test.util.Criteria;
@@ -78,7 +79,7 @@ public class TileGroupTest {
 
         mSiteSuggestionUrls = mTestServer.getURLs(FAKE_MOST_VISITED_URLS);
 
-        mMostVisitedSites = new FakeMostVisitedSites();
+        mMostVisitedSites = new FakeMostVisitedSites(/* observeOnUiThread = */ true);
         mSuggestionsDeps.getFactory().mostVisitedSites = mMostVisitedSites;
         mMostVisitedSites.setTileSuggestions(mSiteSuggestionUrls);
 
