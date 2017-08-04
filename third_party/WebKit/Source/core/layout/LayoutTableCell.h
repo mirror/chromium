@@ -30,9 +30,11 @@
 #include "core/CoreExport.h"
 #include "core/layout/CollapsedBorderValue.h"
 #include "core/layout/LayoutBlockFlow.h"
+#include "core/layout/LayoutTableCol.h"
 #include "core/layout/LayoutTableRow.h"
 #include "core/layout/LayoutTableSection.h"
 #include "platform/LengthFunctions.h"
+#include "platform/RuntimeEnabledFeatures.h"
 #include "platform/text/WritingModeUtils.h"
 
 namespace blink {
@@ -177,6 +179,21 @@ class CORE_EXPORT LayoutTableCell final : public LayoutBlockFlow {
   }
 
   void SetCellLogicalWidth(int constrained_logical_width, SubtreeLayoutScope&);
+
+  bool IsCellColumnCollapsed() const {
+    if (!RuntimeEnabledFeatures::VisibilityCollapseEnabled())
+      return false;
+    LayoutTableCol* col;
+    if (HasSetAbsoluteColumnIndex()) {
+      col = Table()
+                ->ColElementAtAbsoluteColumn(AbsoluteColumnIndex())
+                .InnermostColOrColGroup();
+      if (col && col->Style()->Visibility() == EVisibility::kCollapse) {
+        return true;
+      }
+    }
+    return false;
+  }
 
   LayoutUnit BorderLeft() const override;
   LayoutUnit BorderRight() const override;

@@ -1,0 +1,86 @@
+<!doctype html>
+<meta charset="utf-8">
+<script src='/resources/testharness.js'></script>
+<script src='/resources/testharnessreport.js'></script>
+<link rel='stylesheet' href='support/base.css' />
+<link rel="author" title="Joy Yu" href="mailto:joysyu@mit.edu">
+<link rel="help" href="https://drafts.csswg.org/css-tables-3/#computing-the-table-width">
+<main>
+    <h1>Visibility collapse</h1>
+    <a href="https://drafts.csswg.org/css-tables-3/#computing-the-table-width">Spec</a>
+    <p>
+    Setting a spanning column to visibility:collapse changes table width but
+    not height.
+    </p>
+
+    <table id="one">
+      <col style="background-color:red;">
+      <col style="background-color: blue;">
+      <col style="background-color: green;">
+      <tr>
+        <td>Row 1 Col 1</td>
+        <td id="secondColumn">Row 1 Col 2</td>
+        <td>Row 1 Col 3</td>
+      </tr>
+      <tr>
+        <td>Row 2 Col 1</td>
+        <td>Row 2 Col 2</td>
+        <td>Row 2 Col 3</td>
+      </tr>
+      <tr>
+        <td>Row 3 Col 1</td>
+        <td>Row 3 Col 2</td>
+        <td>Row 3 Col 3</td>
+      </tr>
+      <tr>
+        <td colspan="3">Spans 3 Columns</td>
+      </tr>
+    </table>
+    Bottom table is identical to top except the middle column has been collapsed.
+    <table id="two">
+      <col style="background-color:red;">
+      <col style="background-color: blue; visibility: collapse;">
+      <col style="background-color: green;">
+      <tr>
+        <td>Row 1 Col 1</td>
+        <td>Row 1 Col 2</td>
+        <td>Row 1 Col 3</td>
+      </tr>
+      <tr>
+        <td>Row 2 Col 1</td>
+        <td>Row 2 Col 2</td>
+        <td>Row 2 Col 3</td>
+      </tr>
+      <tr>
+        <td>Row 3 Col 1</td>
+        <td>Row 3 Col 2</td>
+        <td>Row 3 Col 3</td>
+      </tr>
+      <tr>
+        <td colspan="3">Spans 3 Columns</td>
+      </tr>
+    </table>
+</main>
+
+<script>
+    borderWidth = 2;
+    tests = [
+        [
+            document.getElementById('two').offsetHeight,
+            document.getElementById('one').offsetHeight,
+            "col visibility:collapse doesn't change table height",
+        ],
+        [
+            document.getElementById('two').offsetWidth,
+            document.getElementById('one').offsetWidth - document.getElementById('secondColumn').offsetWidth - borderWidth,
+            "col visibility:collapse changes table width"
+        ]];
+    for (i = 0; i< tests.length; i++) {
+        test(function()
+            {
+                assert_equals.apply(this, tests[i]);
+            },
+            tests[i][2]);
+    };
+</script>
+</html>
