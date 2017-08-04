@@ -22,6 +22,30 @@
       "revId": "310d0c8456c4703c0c41aaa45d21d1c1e951b498",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46ce2c1a_f71d1d6b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AndroidPaymentAppFinder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-08-04T16:51:55Z",
+      "side": 1,
+      "message": "my bad, you used supportedMethod",
+      "parentUuid": "007e14c5_2de2793b",
+      "range": {
+        "startLine": 278,
+        "startChar": 16,
+        "endLine": 281,
+        "endChar": 66
+      },
+      "revId": "310d0c8456c4703c0c41aaa45d21d1c1e951b498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
