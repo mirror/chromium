@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "94ea9e89_921e38f9",
+        "filename": "ash/wallpaper/wallpaper_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-08-04T20:37:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb99056c_1a9cd42d",
+      "revId": "669484557a5830460c7b8a48bf823d38139d5263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6dc18891_69554a0f",
         "filename": "ash/wallpaper/wallpaper_view.cc",
         "patchSetId": 3
@@ -51,6 +69,24 @@
       "revId": "669484557a5830460c7b8a48bf823d38139d5263",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b23c476e_9e40df8e",
+        "filename": "ash/wallpaper/wallpaper_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 206,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-08-04T20:37:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ffe9bed_776ff484",
+      "revId": "669484557a5830460c7b8a48bf823d38139d5263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -137,6 +173,24 @@
       "side": 1,
       "message": "This way of dimming the wallpaper is likely causing 2x overdraw in skia\u0027s rasterizer (sw rasterizer in this case as this is ChromeOS UI). Let\u0027s avoid that.\n\nYou should be able to apply the color adjustment as part of the DrawImageInt call to avoid this. Pass a SkPaint that is set up correctly to the call. I think SkPaint.setColorFilter would be one way of doing this but there might be something simpler and more efficient. +reed, junov for advice.",
       "parentUuid": "55c19d80_04073ce0",
+      "revId": "669484557a5830460c7b8a48bf823d38139d5263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfddc2c0_c7ab2bcb",
+        "filename": "ash/wallpaper/wallpaper_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-08-04T20:37:47Z",
+      "side": 1,
+      "message": "Done. I experimented with some of the different blend modes and found |SkBlendMode::kOverlay| is the one matching the mock, but I don\u0027t know much about the reason behind it.\n\nIn the case of wallpaper::WALLPAPER_LAYOUT_TILE, what we really need is:\n       TileImageInt(const ImageSkia\u0026 image,\n                    int dest_x,\n                    int dest_y,\n                    int w,\n                    int h,\n                    cc::PaintFlags* flags)\n\nwhich doesn\u0027t exist in https://cs.chromium.org/chromium/src/ui/gfx/canvas.h?type\u003dcs\u0026q\u003dtileimageint\u0026l\u003d397\n\nIf necessary we\u0027ll add a new function. Otherwise the current usage should be fine?",
+      "parentUuid": "4f52a3b3_4453b4b1",
       "revId": "669484557a5830460c7b8a48bf823d38139d5263",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
