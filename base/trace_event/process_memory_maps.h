@@ -30,26 +30,27 @@ class BASE_EXPORT ProcessMemoryMaps {
     VMRegion();
     VMRegion(const VMRegion& other);
 
-    uint64_t start_address;
-    uint64_t size_in_bytes;
-    uint64_t module_timestamp;
-    uint32_t protection_flags;
+    uint64_t start_address = 0;
+    uint64_t size_in_bytes = 0;
+    uint64_t module_timestamp = 0;
+    uint32_t protection_flags = 0;
     std::string mapped_file;
 
     // private_dirty_resident + private_clean_resident + shared_dirty_resident +
     // shared_clean_resident = resident set size.
-    uint64_t byte_stats_private_dirty_resident;
-    uint64_t byte_stats_private_clean_resident;
-    uint64_t byte_stats_shared_dirty_resident;
-    uint64_t byte_stats_shared_clean_resident;
+    uint64_t byte_stats_private_dirty_resident = 0;
+    uint64_t byte_stats_private_clean_resident = 0;
+    uint64_t byte_stats_shared_dirty_resident = 0;
+    uint64_t byte_stats_shared_clean_resident = 0;
 
-    uint64_t byte_stats_swapped;
+    uint64_t byte_stats_swapped = 0;
 
     // For multiprocess accounting.
-    uint64_t byte_stats_proportional_resident;
+    uint64_t byte_stats_proportional_resident = 0;
   };
 
   ProcessMemoryMaps();
+  ProcessMemoryMaps(ProcessMemoryMaps&&) noexcept;
   ~ProcessMemoryMaps();
 
   void AddVMRegion(const VMRegion& region) { vm_regions_.push_back(region); }

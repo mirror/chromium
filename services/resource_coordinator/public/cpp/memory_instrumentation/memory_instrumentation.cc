@@ -45,15 +45,16 @@ MemoryInstrumentation::~MemoryInstrumentation() {
 }
 
 void MemoryInstrumentation::RequestGlobalDump(
+    MemoryDumpLevelOfDetail detail,
     RequestGlobalDumpCallback callback) {
   const auto& coordinator = GetCoordinatorBindingForCurrentThread();
   auto callback_adapter = [](RequestGlobalDumpCallback callback, bool success,
                              uint64_t dump_id, mojom::GlobalMemoryDumpPtr ptr) {
     if (callback)
-      callback.Run(success, std::move(ptr));
+      std::move(callback).Run(success, std::move(ptr));
   };
   base::trace_event::MemoryDumpRequestArgs args = {
-      0, MemoryDumpType::SUMMARY_ONLY, MemoryDumpLevelOfDetail::BACKGROUND};
+      0, MemoryDumpType::SUMMARY_ONLY, detail};
   coordinator->RequestGlobalMemoryDump(args,
                                        base::Bind(callback_adapter, callback));
 }
@@ -67,7 +68,7 @@ void MemoryInstrumentation::RequestGlobalDumpAndAppendToTrace(
                              bool success, uint64_t dump_id,
                              mojom::GlobalMemoryDumpPtr) {
     if (callback)
-      callback.Run(success, dump_id);
+      std::move(callback).Run(success, dump_id);
   };
   base::trace_event::MemoryDumpRequestArgs args = {0, dump_type,
                                                    level_of_detail};

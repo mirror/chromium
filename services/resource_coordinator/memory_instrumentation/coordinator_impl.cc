@@ -72,6 +72,10 @@ memory_instrumentation::mojom::OSMemDumpPtr CreatePublicOSDump(
 
   os_dump->resident_set_kb = internal_os_dump.resident_set_kb;
   os_dump->private_footprint_kb = CalculatePrivateFootprintKb(internal_os_dump);
+
+  for (const auto& map : internal_os_dump.memory_maps)
+    os_dump->memory_maps.emplace_back(map.Clone());
+
   return os_dump;
 }
 
@@ -481,7 +485,8 @@ void CoordinatorImpl::FinalizeGlobalMemoryDumpIfAllManagersReplied() {
     // TODO(hjd): We should have a better way to tell if a chrome_dump is
     // filled.
     mojom::ProcessMemoryDumpPtr& pmd = pair.second;
-    if (!pmd || !pmd->chrome_dump->malloc_total_kb)
+    if (!pmd ||
+        (!pmd->chrome_dump->malloc_total_kb && !pmd->os_dump->resident_set_kb))
       continue;
     global_dump->process_dumps.push_back(std::move(pmd));
   }

@@ -39,12 +39,14 @@ class SERVICES_RESOURCE_COORDINATOR_PUBLIC_CPP_EXPORT MemoryInstrumentation {
   static MemoryInstrumentation* GetInstance();
 
   // Requests a global memory dump.
+  //
   // Returns asynchronously, via the callback argument:
   //  (true, global_dump) if succeeded;
   //  (false, nullptr) if failed.
   // The callback (if not null), will be posted on the same thread of the
   // RequestGlobalDump() call.
-  void RequestGlobalDump(RequestGlobalDumpCallback);
+  void RequestGlobalDump(MemoryDumpLevelOfDetail detail,
+                         RequestGlobalDumpCallback);
 
   // Requests a global memory dump and serializes the result into the trace.
   // This requires that both tracing and the memory-infra category have been
