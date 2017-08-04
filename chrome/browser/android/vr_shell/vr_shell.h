@@ -85,8 +85,6 @@ class VrShell : public device::GvrDelegate,
       const base::android::JavaParamRef<jobject>& obj,
       const base::android::JavaParamRef<jobject>& web_contents,
       const base::android::JavaParamRef<jobject>& touch_event_synthesizer);
-  void LoadUIContent(JNIEnv* env,
-                     const base::android::JavaParamRef<jobject>& obj);
   void Destroy(JNIEnv* env, const base::android::JavaParamRef<jobject>& obj);
   void OnTriggerEvent(JNIEnv* env,
                       const base::android::JavaParamRef<jobject>& obj,
