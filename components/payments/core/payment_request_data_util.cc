@@ -19,7 +19,6 @@
 #include "components/payments/core/payment_address.h"
 #include "components/payments/core/payment_method_data.h"
 #include "third_party/libphonenumber/phonenumber_api.h"
-#include "url/gurl.h"
 #include "url/url_constants.h"
 
 namespace payments {

@@ -360,7 +360,7 @@ IN_PROC_BROWSER_TEST_F(PaymentRequestPaymentMethodIdentifierTest, Url_Valid) {
   std::vector<PaymentRequest*> requests =
       GetPaymentRequests(GetActiveWebContents());
   EXPECT_EQ(1u, requests.size());
-  std::vector<std::string> url_payment_method_identifiers =
+  std::vector<GURL> url_payment_method_identifiers =
       requests[0]->spec()->url_payment_method_identifiers();
   EXPECT_EQ(1u, url_payment_method_identifiers.size());
   EXPECT_EQ("https://bobpay.xyz", url_payment_method_identifiers[0]);
