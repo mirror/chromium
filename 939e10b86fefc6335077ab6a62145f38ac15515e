@@ -1,0 +1,231 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08c0b5e5_012b12a8",
+        "filename": "content/browser/appcache/appcache_update_request_base.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-04T21:48:20Z",
+      "side": 1,
+      "message": "The comment suggests it won\u0027t complete syncly, let\u0027s make the impls keep that contract. Maybe comment that multiple concurrent Read() operations are not supported.",
+      "revId": "939e10b86fefc6335077ab6a62145f38ac15515e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd2f8422_34ac77bb",
+        "filename": "content/browser/appcache/appcache_update_url_fetcher.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-04T21:48:20Z",
+      "side": 1,
+      "message": "the local isn\u0027t needed anymore so we can put the function call in the if condition",
+      "revId": "939e10b86fefc6335077ab6a62145f38ac15515e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57116608_047435ea",
+        "filename": "content/browser/appcache/appcache_update_url_fetcher.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-04T21:48:20Z",
+      "side": 1,
+      "message": "is the test for net_error \u003c 0 needed or wanted? what does a positive error code mean and wouldn\u0027t it still mean the result_ should be some sort of error instead of OK?",
+      "revId": "939e10b86fefc6335077ab6a62145f38ac15515e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1565430b_c555fcbe",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-04T21:48:20Z",
+      "side": 1,
+      "message": "neither impl (netservice or netlib) supports concurrent reads, DCHECKS to that effect that might be good",
+      "revId": "939e10b86fefc6335077ab6a62145f38ac15515e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bf6b2bb_d44675e1",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-04T21:48:20Z",
+      "side": 1,
+      "message": "What about handle_watcher_ and handle_, we don\u0027t want any reads to complete after we\u0027ve canceled. Could also clear out potentially bulky data members like the headers and the io buffer",
+      "revId": "939e10b86fefc6335077ab6a62145f38ac15515e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3042284_3fdbeca7",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-04T21:48:20Z",
+      "side": 1,
+      "message": "Would it make sense to also setup an unarmed handle_wather_ here? The MaybeStartReading() method would just need to ArmOrNotify() to kick things off for a Read() operation.",
+      "revId": "939e10b86fefc6335077ab6a62145f38ac15515e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75932e6b_56f12271",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-04T21:48:20Z",
+      "side": 1,
+      "message": "I think there are some code paths where this flag is not reset. WOuld it make sense to reset this flag inside of StartReading() when BeginRead() does not return SHOULD_WAIT?",
+      "range": {
+        "startLine": 183,
+        "startChar": 20,
+        "endLine": 183,
+        "endChar": 25
+      },
+      "revId": "939e10b86fefc6335077ab6a62145f38ac15515e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c0b69c6_311379ab",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-04T21:48:20Z",
+      "side": 1,
+      "message": "Is the ever expected to be false? I think we only ArmOrNotify() when a Read() is pending.",
+      "revId": "939e10b86fefc6335077ab6a62145f38ac15515e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "655b60d6_610560fd",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-04T21:48:20Z",
+      "side": 1,
+      "message": "What does this return value mean? If we get this return value, how does progress continue so we get to read completion?",
+      "revId": "939e10b86fefc6335077ab6a62145f38ac15515e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90250bd1_3392fcca",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-04T21:48:20Z",
+      "side": 1,
+      "message": "This is a bizarre return value to indicate the pipe has been drained and no more is expected? What is the case about?",
+      "revId": "939e10b86fefc6335077ab6a62145f38ac15515e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3136790_0368228a",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-04T21:48:20Z",
+      "side": 1,
+      "message": "Would a call to ArmOrNotify() work here? I\u0027m not familiar with these primitives. The .h file says this Watch() method variant is deprecated, there\u0027s another with 4 parameters now.",
+      "revId": "939e10b86fefc6335077ab6a62145f38ac15515e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fd35ca0_e24d8578",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-04T21:48:20Z",
+      "side": 1,
+      "message": "can you describe when it gets reset to false?",
+      "revId": "939e10b86fefc6335077ab6a62145f38ac15515e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca923e5f_939421b9",
+        "filename": "content/browser/appcache/appcache_update_url_request.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-04T21:48:20Z",
+      "side": 1,
+      "message": "yup, i\u0027d vote to PostTask(OnReadComleted) here, but we\u0027ll need to bind a weak this ptr",
+      "revId": "939e10b86fefc6335077ab6a62145f38ac15515e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

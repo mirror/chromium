@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "f11688a0_5f01d79c",
+        "filename": "content/browser/appcache/appcache_update_url_fetcher.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-08-04T21:48:20Z",
+      "side": 1,
+      "message": "I\u0027m not so sure? Looks like fetchers can be deleted at any time by the job, and when the fetcher is deleted, it\u0027s request_ is deleted too. And that can happen when there\u0027s a task pending to call Read.\n\nIt might help to have request-\u003eRead() never complete syncrhoniously, so put the task posting eferral logic into the request class instead of here. I think the reqeust object might need to use a weakptrfactory to make that work.",
+      "parentUuid": "2d25d044_3995d9f0",
+      "revId": "dcd4cc55fc476036a27ec59936199d6f186ca99b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "673247b9_22e07d0f",
         "filename": "content/browser/appcache/appcache_update_url_fetcher.cc",
         "patchSetId": 11
