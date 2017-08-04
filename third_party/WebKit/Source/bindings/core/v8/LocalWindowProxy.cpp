@@ -194,6 +194,12 @@ void LocalWindowProxy::CreateContext() {
 
   v8::Local<v8::Context> context;
   {
+    SCOPED_BLINK_UMA_HISTOGRAM_TIMER(
+        GetFrame()->IsMainFrame()
+            ? "Blink.Binding.CreateV8ContextForMainFrame"
+            : "Blink.Binding.CreateV8ContextForNonMainFrame");
+    v8::Isolate* isolate = GetIsolate();
+    Document* document = GetFrame()->GetDocument();
     V8PerIsolateData::UseCounterDisabledScope use_counter_disabled(
         V8PerIsolateData::From(GetIsolate()));
     context =
