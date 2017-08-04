@@ -16,6 +16,24 @@
       "revId": "16548d29014862548661527cb953fe1e61e4d9eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "913a48b5_5e30e7fc",
+        "filename": "ui/app_list/views/app_list_page.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1202846
+      },
+      "writtenOn": "2017-08-04T22:47:02Z",
+      "side": 1,
+      "message": "There are three pages in total, includes start_page, search_result_page, apps_container_view (for showing full screen apps). All of them have different bounds according to currently app list state, like if app list state is STATE_APPS, start page will be hidden maybe below the screen (bounds is below the screen).\nCurrently, only apps_container_view page need to be relayout during dragging, and start_page will also need it in the future. But not search result page. So the new func DraggingLayout in \napp_list_page should be none pure virtual and it should return the same value as GetPageBoundsForState. Since for search result page, which doesn\u0027t need relayout, it can use the page bounds directly in Layout func in ContentsView.\nSo, I think maybe make the name as GetPageBoundsDuringDragging here looks better?",
+      "parentUuid": "bf00e1cb_f885104f",
+      "revId": "16548d29014862548661527cb953fe1e61e4d9eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
