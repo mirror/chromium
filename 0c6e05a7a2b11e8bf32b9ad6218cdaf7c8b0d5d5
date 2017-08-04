@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "514073f1_0250d929",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1319,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-04T10:06:24Z",
+      "side": 1,
+      "message": "IIUC, We no longer have another call site of DidSkipWaiting, so I think we can remove DidSkipWaiting and expand its content here.",
+      "revId": "0c6e05a7a2b11e8bf32b9ad6218cdaf7c8b0d5d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35d1c12a_4c7fef30",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1320,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-08-04T10:06:24Z",
+      "side": 1,
+      "message": "I think we need to return here unless it\u0027s INSTALLED.\nAnyway, do you know when it\u0027s INSTALLED here? I guess if skipWaiting is called in e.waitUntil() for the install event handler, |status_| should be INSTALLING. If it\u0027s INSTALLED, that probably means skipWaiting was called in the install event handler directly without using waitUntil().\nIs that case still valid?",
+      "revId": "0c6e05a7a2b11e8bf32b9ad6218cdaf7c8b0d5d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
