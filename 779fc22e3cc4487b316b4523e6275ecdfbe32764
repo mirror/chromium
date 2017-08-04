@@ -22,6 +22,29 @@
       "revId": "779fc22e3cc4487b316b4523e6275ecdfbe32764",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "069ac73b_725ba098",
+        "filename": "ios/chrome/browser/ui/authentication/signin_interaction_controller_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-08-04T09:25:28Z",
+      "side": 0,
+      "message": "I\u0027m guessing those 2 lines can be replaced by:\n [ChromeEarlGreyUI signInToIdentityByEmail:identity1.userEmail];",
+      "range": {
+        "startLine": 538,
+        "startChar": 1,
+        "endLine": 540,
+        "endChar": 0
+      },
+      "revId": "779fc22e3cc4487b316b4523e6275ecdfbe32764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6ecd5ea_15d5aae8",
+        "filename": "ios/chrome/browser/ui/authentication/signin_confirmation_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-08-04T09:25:28Z",
+      "side": 1,
+      "message": "So far we decide to write \"Signin\" as it is one word (with a lowercase for \"in\"). See \nsdefresne\u0027s comment in crrev.com/2786133002.",
+      "range": {
+        "startLine": 37,
+        "startChar": 17,
+        "endLine": 37,
+        "endChar": 23
+      },
+      "revId": "8be02eccc0b6e5ce3d7d0439c4ac01e03fd46deb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59fba670_8ef327de",
+        "filename": "ios/chrome/browser/ui/authentication/signin_confirmation_view_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-08-04T09:25:28Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 38,
+        "startChar": 6,
+        "endLine": 38,
+        "endChar": 12
+      },
+      "revId": "8be02eccc0b6e5ce3d7d0439c4ac01e03fd46deb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15af8ac1_62811328",
+        "filename": "ios/chrome/test/earl_grey/chrome_earl_grey_ui.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-08-04T09:25:28Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 66,
+        "startChar": 12,
+        "endLine": 66,
+        "endChar": 18
+      },
+      "revId": "8be02eccc0b6e5ce3d7d0439c4ac01e03fd46deb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0642711_ffbef514",
+        "filename": "ios/chrome/test/earl_grey/chrome_earl_grey_ui.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-08-04T09:25:28Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 70,
+        "startChar": 8,
+        "endLine": 70,
+        "endChar": 14
+      },
+      "revId": "8be02eccc0b6e5ce3d7d0439c4ac01e03fd46deb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3660c1b_628d6331",
+        "filename": "ios/chrome/test/earl_grey/chrome_earl_grey_ui.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-08-04T09:25:28Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 74,
+        "startChar": 15,
+        "endLine": 74,
+        "endChar": 21
+      },
+      "revId": "8be02eccc0b6e5ce3d7d0439c4ac01e03fd46deb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03c1e032_48fb4927",
+        "filename": "ios/chrome/test/earl_grey/chrome_earl_grey_ui.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1161750
+      },
+      "writtenOn": "2017-08-04T09:25:28Z",
+      "side": 1,
+      "message": "Just a quick question (I\u0027m not an english native speaker), I thought \"dismiss\" was more closing without validating (like clicking cancel). Maybe it would be clearer to rename it to \"confirmSigninConfirmationDialog\".\n\nI let you decide :)",
+      "range": {
+        "startLine": 183,
+        "startChar": 8,
+        "endLine": 183,
+        "endChar": 39
+      },
+      "revId": "8be02eccc0b6e5ce3d7d0439c4ac01e03fd46deb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
