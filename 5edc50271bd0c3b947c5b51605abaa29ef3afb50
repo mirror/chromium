@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9c55a05e_5ad0aaf1",
+        "filename": "third_party/WebKit/Source/core/timing/Performance.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-08-04T22:25:11Z",
+      "side": 1,
+      "message": "Maybe okay to keep in this patch -- up to you. Main thing is that we don\u0027t report sub-task attribution to cross origin frames. For now maybe check the first string returned in the pair, next we need to better handle multiple-contexts case.",
+      "parentUuid": "eaf68284_a6a7876e",
+      "range": {
+        "startLine": 254,
+        "startChar": 79,
+        "endLine": 254,
+        "endChar": 80
+      },
+      "revId": "5edc50271bd0c3b947c5b51605abaa29ef3afb50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f40cab4e_1fad5603",
         "filename": "third_party/WebKit/Source/core/timing/PerformanceLongTaskTiming.cpp",
         "patchSetId": 10
