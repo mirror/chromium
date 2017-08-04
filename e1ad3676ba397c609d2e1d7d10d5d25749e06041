@@ -168,6 +168,30 @@
     },
     {
       "key": {
+        "uuid": "ce431920_3258282a",
+        "filename": "media/base/android/java/src/org/chromium/media/AudioTrackOutputStream.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1148014
+      },
+      "writtenOn": "2017-08-04T22:04:56Z",
+      "side": 1,
+      "message": "Both AC3 and EAC3 are CBR. However, Android also supports ENCODING_DOLBY_TRUEHD and ENCODING_DTS_HD. According to [1][2], DTS-HD MA and Dolby TrueHD are VBR. Thus, I would prefer to prepare for VBR cases.\n\n[1] https://www.tomsguide.com/us/high-def-audio-hdmi,review-1088-4.html\n[2] http://www.avsforum.com/forum/91-audio-theory-setup-chat/1452759-lpcm-vs-dolby-truehd-vs-dts-hd-master-audio-3.html#post22942524",
+      "parentUuid": "c7abde69_98b8b13b",
+      "range": {
+        "startLine": 43,
+        "startChar": 10,
+        "endLine": 43,
+        "endChar": 22
+      },
+      "revId": "e1ad3676ba397c609d2e1d7d10d5d25749e06041",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6918eddc_3c0515f7",
         "filename": "media/base/android/java/src/org/chromium/media/AudioTrackOutputStream.java",
         "patchSetId": 2
