@@ -7,6 +7,9 @@
 namespace blink_common {
 
 MessagePortMessage::MessagePortMessage() = default;
+MessagePortMessage::MessagePortMessage(MessagePortMessage&&) = default;
+MessagePortMessage& MessagePortMessage::operator=(MessagePortMessage&&) =
+    default;
 MessagePortMessage::~MessagePortMessage() = default;
 
 }  // namespace blink_common
