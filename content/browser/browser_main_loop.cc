@@ -143,6 +143,7 @@
 #include "content/browser/android/scoped_surface_request_manager.h"
 #include "content/browser/android/tracing_controller_android.h"
 #include "content/browser/media/android/browser_media_player_manager.h"
+#include "content/browser/memory/near_oom_detector_android.h"
 #include "content/browser/screen_orientation/screen_orientation_delegate_android.h"
 #include "media/base/android/media_drm_bridge_client.h"
 #include "ui/android/screen_android.h"
@@ -1646,6 +1647,10 @@ void BrowserMainLoop::InitializeMemoryManagementComponent() {
       SwapMetricsDriver::Create(std::move(delegate), kSwapMetricsInterval);
   if (swap_metrics_driver_)
     swap_metrics_driver_->Start();
+
+#if defined(OS_ANDROID)
+  NearOOMDetector::GetInstance()->Start();
+#endif
 }
 
 bool BrowserMainLoop::InitializeToolkit() {

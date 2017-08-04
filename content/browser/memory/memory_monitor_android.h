@@ -23,6 +23,8 @@ class CONTENT_EXPORT MemoryMonitorAndroid : public MemoryMonitor {
     jboolean low_memory;
     jlong threshold;
     jlong total_mem;
+    jlong visible_app_threshold;
+    jlong foreground_app_threshold;
   };
 
   // Delegate interface used by MemoryMonitorAndroid.

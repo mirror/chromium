@@ -14,6 +14,8 @@ import org.chromium.base.Log;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 
+import java.lang.reflect.Field;
+
 /**
  * Android implementation of MemoryMonitor.
  */
@@ -39,8 +41,12 @@ class MemoryMonitorAndroid {
         ActivityManager am =
                 (ActivityManager) ContextUtils.getApplicationContext().getSystemService(
                         Context.ACTIVITY_SERVICE);
+        long foregroundAppThreshold = 0;
+        long visibleAppThreshold = 0;
         try {
             am.getMemoryInfo(sMemoryInfo);
+            foregroundAppThreshold = getThreshold("foregroundAppThreshold");
+            visibleAppThreshold = getThreshold("visibleAppThreshold");
         } catch (RuntimeException e) {
             // RuntimeException can be thrown when the system is going to
             // restart. Pass arbitrary values to the callback.
@@ -52,9 +58,20 @@ class MemoryMonitorAndroid {
             sMemoryInfo.threshold = 1;
             sMemoryInfo.totalMem = 1;
         }
-        nativeGetMemoryInfoCallback(
-                sMemoryInfo.availMem, sMemoryInfo.lowMemory,
-                sMemoryInfo.threshold, sMemoryInfo.totalMem, outPtr);
+        nativeGetMemoryInfoCallback(sMemoryInfo.availMem, sMemoryInfo.lowMemory,
+                sMemoryInfo.threshold, sMemoryInfo.totalMem, visibleAppThreshold,
+                foregroundAppThreshold, outPtr);
+    }
+
+    private static long getThreshold(String fieldName) {
+        try {
+            Field field = ActivityManager.MemoryInfo.class.getDeclaredField(fieldName);
+            field.setAccessible(true);
+            return field.getLong(sMemoryInfo);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            Log.e(TAG, "Cannot find: " + fieldName);
+        }
+        return 0;
     }
 
     /**
@@ -81,9 +98,9 @@ class MemoryMonitorAndroid {
         ContextUtils.getApplicationContext().registerComponentCallbacks(sCallbacks);
     }
 
-    private static native void nativeGetMemoryInfoCallback(
-            long availMem, boolean lowMemory,
-            long threshold, long totalMem, long outPtr);
+    private static native void nativeGetMemoryInfoCallback(long availMem, boolean lowMemory,
+            long threshold, long totalMem, long visibleAppThreshold, long foregroundAppThreshold,
+            long outPtr);
 
     private static native void nativeOnTrimMemory(int level);
 }

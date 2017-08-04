@@ -133,6 +133,11 @@ struct UpdateScrollbarThemeParams {
   bool scroll_view_rubber_banding;
 };
 
+enum OutOfMemoryCondition {
+  NORMAL = 0,
+  NEAR_OOM = 1,
+};
+
 // The primordial Channel-associated interface implemented by a render process.
 // This should be used for implementing browser-to-renderer control messages
 // which need to retain FIFO with respect to legacy IPC messages.
@@ -186,4 +191,6 @@ interface Renderer {
   // Tells the renderer to empty its plugin list cache, optional reloading
   // pages containing plugins.
   PurgePluginListCache(bool reload_pages);
+
+  OnOutOfMemoryConditionChanged(OutOfMemoryCondition condition);
 };

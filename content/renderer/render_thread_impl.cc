@@ -2271,6 +2271,15 @@ void RenderThreadImpl::PurgePluginListCache(bool reload_pages) {
 #endif
 }
 
+void RenderThreadImpl::OnOutOfMemoryConditionChanged(
+    mojom::OutOfMemoryCondition condition) {
+  TRACE_EVENT1("memory", "RenderThreadImpl::OnOutOfMemoryConditionChanged",
+               "condition",
+               (condition == mojom::OutOfMemoryCondition::NORMAL ? "normal"
+                                                                 : "near-oom"));
+  // TODO(bashi): Do something to prevent OOM.
+}
+
 void RenderThreadImpl::OnCreateNewSharedWorker(
     const WorkerProcessMsg_CreateWorker_Params& params) {
   // EmbeddedSharedWorkerStub will self-destruct.

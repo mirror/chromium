@@ -577,6 +577,8 @@ class CONTENT_EXPORT RenderThreadImpl
                              const std::string& highlight_text_color,
                              const std::string& highlight_color) override;
   void PurgePluginListCache(bool reload_pages) override;
+  void OnOutOfMemoryConditionChanged(
+      mojom::OutOfMemoryCondition condition) override;
 
   void OnMemoryPressure(
       base::MemoryPressureListener::MemoryPressureLevel memory_pressure_level);

@@ -49,6 +49,8 @@ static void GetMemoryInfoCallback(
     jboolean low_memory,
     jlong threshold,
     jlong total_mem,
+    jlong visible_app_threshold,
+    jlong foreground_app_threshold,
     jlong out_ptr) {
   DCHECK(out_ptr);
   MemoryMonitorAndroid::MemoryInfo* info =
@@ -57,6 +59,8 @@ static void GetMemoryInfoCallback(
   info->low_memory = low_memory;
   info->threshold = threshold;
   info->total_mem = total_mem;
+  info->visible_app_threshold = visible_app_threshold;
+  info->foreground_app_threshold = foreground_app_threshold;
 }
 
 // The maximum level of onTrimMemory (TRIM_MEMORY_COMPLETE).
@@ -69,7 +73,8 @@ static void OnTrimMemory(JNIEnv* env,
                          jint level) {
   DCHECK(level >= 0 && level <= kTrimMemoryLevelMax);
   auto* coordinator = MemoryCoordinatorImpl::GetInstance();
-  DCHECK(coordinator);
+  if (!coordinator)
+    return;
 
   if (level >= kTrimMemoryRunningCritical) {
     coordinator->ForceSetMemoryCondition(MemoryCondition::CRITICAL,
