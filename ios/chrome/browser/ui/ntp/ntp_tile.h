@@ -24,18 +24,26 @@
 // Whether the fallback background color for the most visited site is the
 // default color.
 @property(assign, atomic) BOOL fallbackIsDefaultColor;
+// The monogram to use on the fallback icon.
+@property(strong, atomic) NSString* fallbackMonogram;
 // Whether the favicon has been fetched for the most visited site. This can be
 // YES with no fallback values or favicon path.
 @property(assign, atomic) BOOL faviconFetched;
+// Index of the site's position in the most visited list.
+@property(assign, atomic) NSUInteger position;
 
-- (instancetype)initWithTitle:(NSString*)title URL:(NSURL*)URL;
+- (instancetype)initWithTitle:(NSString*)title
+                          URL:(NSURL*)URL
+                     position:(NSUInteger)position;
 - (instancetype)initWithTitle:(NSString*)title
                           URL:(NSURL*)URL
                   faviconPath:(NSString*)faviconPath
             fallbackTextColor:(UIColor*)fallbackTextColor
       fallbackBackgroundColor:(UIColor*)fallbackTextColor
        fallbackIsDefaultColor:(BOOL)fallbackIsDefaultColor
-               faviconFetched:(BOOL)faviconFetched;
+             fallbackMonogram:(NSString*)fallbackMonogram
+               faviconFetched:(BOOL)faviconFetched
+                     position:(NSUInteger)position;
 @end
 
 #endif  // IOS_CHROME_BROWSER_UI_NTP_NTP_TILE_H_
