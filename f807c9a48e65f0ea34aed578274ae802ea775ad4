@@ -22,6 +22,30 @@
       "revId": "f807c9a48e65f0ea34aed578274ae802ea775ad4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa4abe1e_81c6dd5d",
+        "filename": "remoting/ios/facade/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1152109
+      },
+      "writtenOn": "2017-08-04T22:42:10Z",
+      "side": 1,
+      "message": "I just rewrote the logic using notification. Now RemoteVC will show the error.",
+      "parentUuid": "3b91cd04_1e57f646",
+      "range": {
+        "startLine": 30,
+        "startChar": 10,
+        "endLine": 30,
+        "endChar": 14
+      },
+      "revId": "f807c9a48e65f0ea34aed578274ae802ea775ad4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
