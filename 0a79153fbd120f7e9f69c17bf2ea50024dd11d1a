@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e4683a1_7bae2a22",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-04T22:02:56Z",
+      "side": 1,
+      "message": "Should we find a way to check or prevent this?  Applying an origin lock to a process that has been used for other things (or that can\u0027t possibly be locked, like a guest process) seems like something we should catch.",
+      "revId": "0a79153fbd120f7e9f69c17bf2ea50024dd11d1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c5d2601_598fa2d8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-04T22:02:56Z",
+      "side": 1,
+      "message": "Let\u0027s file a bug for this, CC\u0027ing clamy and falken.",
+      "revId": "0a79153fbd120f7e9f69c17bf2ea50024dd11d1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8b916ab_d36825a4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-04T22:02:56Z",
+      "side": 1,
+      "message": "Not just subframes, right?  Basically, origin isolation does not apply to any documents within guests.",
+      "revId": "0a79153fbd120f7e9f69c17bf2ea50024dd11d1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cc9b99e_be9e55e6",
+        "filename": "chrome/browser/apps/guest_view/web_view_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 4253,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-04T22:02:56Z",
+      "side": 1,
+      "message": "Maybe we can add another test for visiting an isolated origin in the main frame as well?  Doesn\u0027t have to be this CL, but feel free to if that\u0027s easy.",
+      "revId": "0a79153fbd120f7e9f69c17bf2ea50024dd11d1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7b178aa_da9d155d",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3528,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-04T22:02:56Z",
+      "side": 1,
+      "message": "I\u0027m trying to figure out if there\u0027s a way we could have caught this bug earlier, but I\u0027m having trouble spotting what the expected StoragePartition is.  Maybe we could have something like a check that this final render_process_host has the same StoragePartition as BrowserContext::GetStoragePartition(browser_context, site_instance), since that\u0027s what RPHI::CreateRenderProcessHost seems to be doing in the \"create from scratch\" case?  Not sure if it\u0027s that simple, though.",
+      "revId": "0a79153fbd120f7e9f69c17bf2ea50024dd11d1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
