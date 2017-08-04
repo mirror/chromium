@@ -11623,6 +11623,73 @@ TEST_P(ParameterizedWebFrameTest,
   web_view->UpdateAllLifecyclePhases();
 }
 
+// Ensure overlay scrollbar change to display:none correctly by JavaScript.
+TEST_P(ParameterizedWebFrameTest,
+       OverlayScrollbarChangeToDisplayNoneDynamically) {
+  RegisterMockedHttpURLLoad("scrollbar-change-to-display-none.html");
+  FrameTestHelpers::WebViewHelper web_view_helper;
+  WebViewBase* web_view = web_view_helper.InitializeAndLoad(
+      base_url_ + "scrollbar-change-to-display-none.html");
+
+  web_view_helper.Resize(WebSize(200, 200));
+
+  web_view->UpdateAllLifecyclePhases();
+
+  // Enusre we have overlay scrollbar for div and root.
+  Document* document =
+      ToLocalFrame(web_view->GetPage()->MainFrame())->GetDocument();
+
+  Element* div = document->getElementById("div");
+  ScrollableArea* scrollable_div =
+      ToLayoutBox(div->GetLayoutObject())->GetScrollableArea();
+
+  ScrollableArea* scrollable_root = web_view_helper.LocalMainFrame()
+                                        ->GetFrameView()
+                                        ->LayoutViewportScrollableArea();
+
+  EXPECT_TRUE(scrollable_div->VerticalScrollbar());
+  EXPECT_TRUE(scrollable_div->VerticalScrollbar()->IsOverlayScrollbar());
+  EXPECT_FALSE(scrollable_div->HorizontalScrollbar());
+
+  EXPECT_TRUE(scrollable_root->VerticalScrollbar());
+  EXPECT_TRUE(scrollable_root->VerticalScrollbar()->IsOverlayScrollbar());
+
+  // For PaintLayer Overlay Scrollbar we will remove the scrollbar when it is
+  // not necessary even with overflow:scroll.
+  if (GetParam() == 0)
+    EXPECT_TRUE(scrollable_root->HorizontalScrollbar());
+  else
+    EXPECT_FALSE(scrollable_root->HorizontalScrollbar());
+
+  HitTestResult hit_test_result =
+      web_view->CoreHitTestResultAt(WebPoint(195, 10));
+  EXPECT_TRUE(hit_test_result.GetScrollbar());
+
+  // Change CSS by JavaScript.
+  WebLocalFrame* frame = web_view_helper.LocalMainFrame();
+
+  frame->ExecuteScript(WebScriptSource(
+      "let style = document.createElement('style');"
+      "style.innerHTML = 'body::-webkit-scrollbar{ display:none; }' + "
+      "'div::-webkit-scrollbar{ display:none; }';"
+      "document.getElementsByTagName('head')[0].appendChild(style);"));
+  frame->View()->UpdateAllLifecyclePhases();
+
+  EXPECT_TRUE(scrollable_div->VerticalScrollbar());
+  EXPECT_TRUE(scrollable_div->VerticalScrollbar()->IsCustomScrollbar());
+  EXPECT_TRUE(scrollable_div->HorizontalScrollbar());
+  EXPECT_TRUE(scrollable_div->HorizontalScrollbar()->IsCustomScrollbar());
+
+  EXPECT_TRUE(scrollable_root->VerticalScrollbar());
+  EXPECT_TRUE(scrollable_root->VerticalScrollbar()->IsCustomScrollbar());
+  EXPECT_TRUE(scrollable_root->HorizontalScrollbar());
+  EXPECT_TRUE(scrollable_root->HorizontalScrollbar()->IsCustomScrollbar());
+
+  // Hit test should not reach the display:none scrollbar.
+  hit_test_result = web_view->CoreHitTestResultAt(WebPoint(195, 10));
+  EXPECT_FALSE(hit_test_result.GetScrollbar());
+}
+
 static void DisableCompositing(WebSettings* settings) {
   settings->SetAcceleratedCompositingEnabled(false);
   settings->SetPreferCompositingToLCDTextEnabled(false);
