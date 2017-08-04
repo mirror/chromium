@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2f6f9073_0a3c266a",
+        "filename": "chrome/browser/permissions/permission_context_base_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 626,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-04T16:04:23Z",
+      "side": 1,
+      "message": "Yes. They are trying to do a browser-initiated navigation to an invalid URL and have it commit, which can\u0027t happen because the navigation won\u0027t even start. NavigateAndCommit switches to using a NavigationSimulator in that patch, and can no longer support doing a browser initiated navigation + commit to an invalid URL, as NavigationSimulator recognizes that this situation cannot happen and hits a CHECK. So I\u0027m just asking for a navigation to an invalid URL - which seems enough for this test to work - and I stop simulating the commit.",
+      "parentUuid": "fa2dea21_bad8cb5c",
+      "revId": "3172e4de4924accc61bbc88ec4437166363d0e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "12a686f2_ec6c8448",
         "filename": "content/public/test/navigation_simulator.cc",
         "patchSetId": 4
@@ -30,6 +48,30 @@
       "writtenOn": "2017-08-02T21:36:00Z",
       "side": 1,
       "message": "nit: You could mimic what you do below with the FTN initialization and set the render_frame_host_ to the WebContents main frame if the passed in pointer is nullptr.",
+      "range": {
+        "startLine": 151,
+        "startChar": 25,
+        "endLine": 151,
+        "endChar": 42
+      },
+      "revId": "3172e4de4924accc61bbc88ec4437166363d0e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87ae8355_8179c5f2",
+        "filename": "content/public/test/navigation_simulator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-04T16:04:23Z",
+      "side": 1,
+      "message": "No because it will be set at navigation start without PlzNavigate (it could be the pending RFH), and at commit time for PlzNavigate. I think this is closer to what is really happening in navigation, so I prefer to keep it that way.",
+      "parentUuid": "12a686f2_ec6c8448",
       "range": {
         "startLine": 151,
         "startChar": 25,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "eb883e65_25fd13e3",
+        "filename": "content/public/test/navigation_simulator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-04T16:04:23Z",
+      "side": 1,
+      "message": "Well not necessarily. We could end up navigating the speculative RFH.",
+      "parentUuid": "2b65994c_bdcdd7b3",
+      "range": {
+        "startLine": 292,
+        "startChar": 8,
+        "endLine": 292,
+        "endChar": 26
+      },
+      "revId": "3172e4de4924accc61bbc88ec4437166363d0e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ef80df3e_495b2abf",
         "filename": "content/public/test/navigation_simulator.cc",
         "patchSetId": 4
@@ -76,6 +142,24 @@
       "writtenOn": "2017-08-02T21:36:00Z",
       "side": 1,
       "message": "I think this code will be simpler if we just initialize the RFH to the main frame one in the constructor, if we were only supplied WebContents.",
+      "revId": "3172e4de4924accc61bbc88ec4437166363d0e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b111c7ff_bde7ad6e",
+        "filename": "content/public/test/navigation_simulator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-04T16:04:23Z",
+      "side": 1,
+      "message": "Actually it was written before I had added the FTN to the NavigationSimulator. I can just use it here to simplify the code.",
+      "parentUuid": "ef80df3e_495b2abf",
       "revId": "3172e4de4924accc61bbc88ec4437166363d0e15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "2fa33f02_7fdf960c",
+        "filename": "content/public/test/navigation_simulator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 686,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-04T16:04:23Z",
+      "side": 1,
+      "message": "Done. I only added the FTN to the NavigationSimulator after I wrote most of the patch, and there are a few places that could have used it that I didn\u0027t update it seems.",
+      "parentUuid": "6dad3760_539dcab1",
+      "range": {
+        "startLine": 686,
+        "startChar": 37,
+        "endLine": 686,
+        "endChar": 52
+      },
+      "revId": "3172e4de4924accc61bbc88ec4437166363d0e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1374753_6e9fed81",
         "filename": "content/public/test/navigation_simulator.cc",
         "patchSetId": 4
@@ -125,6 +233,30 @@
       "revId": "3172e4de4924accc61bbc88ec4437166363d0e15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "492ddf9b_ae5306e9",
+        "filename": "content/public/test/navigation_simulator.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 754,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-04T16:04:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1374753_6e9fed81",
+      "range": {
+        "startLine": 754,
+        "startChar": 11,
+        "endLine": 754,
+        "endChar": 27
+      },
+      "revId": "3172e4de4924accc61bbc88ec4437166363d0e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -151,6 +283,54 @@
     },
     {
       "key": {
+        "uuid": "fd8b2061_b5102afb",
+        "filename": "content/public/test/navigation_simulator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-04T16:04:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2abbc71_89dad599",
+      "range": {
+        "startLine": 42,
+        "startChar": 18,
+        "endLine": 42,
+        "endChar": 30
+      },
+      "revId": "3172e4de4924accc61bbc88ec4437166363d0e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "27a1aef9_72b6b66f",
+        "filename": "content/public/test/navigation_simulator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-04T16:04:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2abbc71_89dad599",
+      "range": {
+        "startLine": 42,
+        "startChar": 18,
+        "endLine": 42,
+        "endChar": 30
+      },
+      "revId": "3172e4de4924accc61bbc88ec4437166363d0e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "65b8bbc1_ab9a2d33",
         "filename": "content/public/test/navigation_simulator.h",
         "patchSetId": 4
@@ -168,6 +348,42 @@
     },
     {
       "key": {
+        "uuid": "f438d110_43daf899",
+        "filename": "content/public/test/navigation_simulator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-04T16:04:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65b8bbc1_ab9a2d33",
+      "revId": "3172e4de4924accc61bbc88ec4437166363d0e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6c4ae433_af1aaf39",
+        "filename": "content/public/test/navigation_simulator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-04T16:04:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65b8bbc1_ab9a2d33",
+      "revId": "3172e4de4924accc61bbc88ec4437166363d0e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e166adaa_eac3fc4b",
         "filename": "content/public/test/navigation_simulator.h",
         "patchSetId": 4
@@ -182,6 +398,42 @@
       "revId": "3172e4de4924accc61bbc88ec4437166363d0e15",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f73f731f_4fb59f14",
+        "filename": "content/public/test/navigation_simulator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-04T16:04:23Z",
+      "side": 1,
+      "message": "I made the constructor private since it makes more sense IMO. This required removing usage of base::MakeUnique in the .cc file though.",
+      "parentUuid": "e166adaa_eac3fc4b",
+      "revId": "3172e4de4924accc61bbc88ec4437166363d0e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ab23f84_c5e0b4e0",
+        "filename": "content/public/test/navigation_simulator.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-08-04T16:04:23Z",
+      "side": 1,
+      "message": "Done. I\u0027ve made the constructor private, which makes more sense IMO. This required removing usage of base::MakeUnique in the .cc file though (it requires the constructor to be public).",
+      "parentUuid": "e166adaa_eac3fc4b",
+      "revId": "3172e4de4924accc61bbc88ec4437166363d0e15",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
