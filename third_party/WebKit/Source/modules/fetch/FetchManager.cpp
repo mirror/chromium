@@ -218,7 +218,7 @@ class FetchManager::Loader final
         SubresourceIntegrity::ReportInfo report_info;
         bool check_result = SubresourceIntegrity::CheckSubresourceIntegrity(
             integrity_metadata_, buffer_.data(), buffer_.size(), url_,
-            report_info);
+            nullptr /* Resource */, report_info);
         SubresourceIntegrityHelper::DoReport(*loader_->GetExecutionContext(),
                                              report_info);
         if (check_result) {

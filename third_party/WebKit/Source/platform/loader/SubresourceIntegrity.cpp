@@ -108,7 +108,7 @@ bool SubresourceIntegrity::CheckSubresourceIntegrity(
     const char* content,
     size_t size,
     const KURL& resource_url,
-    const Resource& resource,
+    const Resource* resource,
     ReportInfo& report_info) {
   if (integrity_attribute.IsEmpty())
     return true;
@@ -128,9 +128,9 @@ bool SubresourceIntegrity::CheckSubresourceIntegrity(
     const char* content,
     size_t size,
     const KURL& resource_url,
-    const Resource& resource,
+    const Resource* resource,
     ReportInfo& report_info) {
-  if (!resource.IsSameOriginOrCORSSuccessful()) {
+  if (resource && !resource->IsSameOriginOrCORSSuccessful()) {
     report_info.AddConsoleErrorMessage(
         "Subresource Integrity: The resource '" + resource_url.ElidedString() +
         "' has an integrity attribute, but the resource "
@@ -142,32 +142,6 @@ bool SubresourceIntegrity::CheckSubresourceIntegrity(
     return false;
   }
 
-  return CheckSubresourceIntegrity(metadata_set, content, size, resource_url,
-                                   report_info);
-}
-
-bool SubresourceIntegrity::CheckSubresourceIntegrity(
-    const String& integrity_metadata,
-    const char* content,
-    size_t size,
-    const KURL& resource_url,
-    ReportInfo& report_info) {
-  IntegrityMetadataSet metadata_set;
-  IntegrityParseResult integrity_parse_result =
-      ParseIntegrityAttribute(integrity_metadata, metadata_set, &report_info);
-  if (integrity_parse_result != kIntegrityParseValidResult)
-    return true;
-
-  return CheckSubresourceIntegrity(metadata_set, content, size, resource_url,
-                                   report_info);
-}
-
-bool SubresourceIntegrity::CheckSubresourceIntegrity(
-    const IntegrityMetadataSet& metadata_set,
-    const char* content,
-    size_t size,
-    const KURL& resource_url,
-    ReportInfo& report_info) {
   if (!metadata_set.size())
     return true;
 
@@ -298,13 +272,6 @@ bool SubresourceIntegrity::ParseDigest(const UChar*& position,
   // We accept base64url encoding, but normalize to "normal" base64 internally:
   digest = NormalizeToBase64(String(begin, position - begin));
   return true;
-}
-
-SubresourceIntegrity::IntegrityParseResult
-SubresourceIntegrity::ParseIntegrityAttribute(
-    const WTF::String& attribute,
-    IntegrityMetadataSet& metadata_set) {
-  return ParseIntegrityAttribute(attribute, metadata_set, nullptr);
 }
 
 SubresourceIntegrity::IntegrityParseResult
