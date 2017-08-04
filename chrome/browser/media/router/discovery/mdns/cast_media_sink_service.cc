@@ -77,6 +77,19 @@ ErrorType CreateCastMediaSink(const media_router::DnsSdService& service,
   return ErrorType::NONE;
 }
 
+// Predicate to test if two discovered services have the same service_name.
+class IsSameServiceName {
+ public:
+  explicit IsSameServiceName(const media_router::DnsSdService& service)
+      : service_(service) {}
+  bool operator()(const media_router::DnsSdService& other) const {
+    return service_.service_name == other.service_name;
+  }
+
+ private:
+  const media_router::DnsSdService& service_;
+};
+
 }  // namespace
 
 namespace media_router {
@@ -95,11 +108,15 @@ CastMediaSinkService::CastMediaSinkService(
 
 CastMediaSinkService::CastMediaSinkService(
     const OnSinksDiscoveredCallback& callback,
-    cast_channel::CastSocketService* cast_socket_service)
+    cast_channel::CastSocketService* cast_socket_service,
+    DiscoveryNetworkMonitor* network_monitor)
     : MediaSinkServiceBase(callback),
-      cast_socket_service_(cast_socket_service) {
+      cast_socket_service_(cast_socket_service),
+      network_monitor_(network_monitor) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   DCHECK(cast_socket_service_);
+  DCHECK(network_monitor_);
+  network_monitor_->AddObserver(this);
 }
 
 CastMediaSinkService::~CastMediaSinkService() {}
@@ -112,6 +129,8 @@ void CastMediaSinkService::Start() {
   dns_sd_registry_ = DnsSdRegistry::GetInstance();
   dns_sd_registry_->AddObserver(this);
   dns_sd_registry_->RegisterDnsSdListener(kCastServiceType);
+  network_monitor_ = DiscoveryNetworkMonitor::GetInstance();
+  network_monitor_->AddObserver(this);
   MediaSinkServiceBase::StartTimer();
 }
 
@@ -123,6 +142,8 @@ void CastMediaSinkService::Stop() {
   dns_sd_registry_->UnregisterDnsSdListener(kCastServiceType);
   dns_sd_registry_->RemoveObserver(this);
   dns_sd_registry_ = nullptr;
+  network_monitor_->RemoveObserver(this);
+  network_monitor_ = nullptr;
   MediaSinkServiceBase::StopTimer();
 }
 
@@ -134,20 +155,15 @@ void CastMediaSinkService::SetDnsSdRegistryForTest(DnsSdRegistry* registry) {
   MediaSinkServiceBase::StartTimer();
 }
 
-void CastMediaSinkService::OnDnsSdEvent(
-    const std::string& service_type,
-    const DnsSdRegistry::DnsSdServiceList& services) {
-  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-  DVLOG(2) << "CastMediaSinkService::OnDnsSdEvent found " << services.size()
-           << " services";
-
-  current_sinks_.clear();
-  current_services_ = services;
-
-  for (const auto& service : services) {
+void CastMediaSinkService::StartDeviceResolution(
+    const DnsSdRegistry::DnsSdServiceList& services_to_resolve) {
+  for (const auto& service : services_to_resolve) {
     net::IPAddress ip_address;
     if (!ip_address.AssignFromIPLiteral(service.ip_address)) {
       DVLOG(2) << "Invalid ip_addresss: " << service.ip_address;
+      services_pending_resolution_.erase(
+          std::remove(services_pending_resolution_.begin(),
+                      services_pending_resolution_.end(), service));
       continue;
     }
 
@@ -161,11 +177,31 @@ void CastMediaSinkService::OnDnsSdEvent(
   MediaSinkServiceBase::RestartTimer();
 }
 
+void CastMediaSinkService::OnDnsSdEvent(
+    const std::string& service_type,
+    const DnsSdRegistry::DnsSdServiceList& services) {
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  DVLOG(2) << "CastMediaSinkService::OnDnsSdEvent found " << services.size()
+           << " services";
+
+  for (const auto& service : services) {
+    auto service_it = std::find_if(services_pending_resolution_.begin(),
+                                   services_pending_resolution_.end(),
+                                   IsSameServiceName(service));
+    if (service_it == services_pending_resolution_.end()) {
+      services_pending_resolution_.push_back(service);
+    } else {
+      *service_it = service;
+    }
+  }
+  StartDeviceResolution(services);
+}
+
 void CastMediaSinkService::OpenChannelOnIOThread(
     const DnsSdService& service,
     const net::IPEndPoint& ip_endpoint) {
   if (!observer_)
-    observer_.reset(new CastSocketObserver());
+    observer_.reset(new CastSocketObserver(this));
 
   cast_socket_service_->OpenSocket(
       ip_endpoint, g_browser_process->net_log(),
@@ -178,6 +214,14 @@ void CastMediaSinkService::OnChannelOpenedOnIOThread(
     const DnsSdService& service,
     cast_channel::CastSocket* socket) {
   DCHECK(socket);
+  if (!base::ContainsValue(services_pending_resolution_, service)) {
+    DVLOG(2) << "Service data not found in pending service data list...";
+    return;
+  }
+
+  services_pending_resolution_.erase(
+      std::remove(services_pending_resolution_.begin(),
+                  services_pending_resolution_.end(), service));
   if (socket->error_state() != cast_channel::ChannelError::NONE) {
     DVLOG(2) << "Fail to open channel " << service.ip_address << ": "
              << service.service_host_port.ToString() << " [ChannelError]: "
@@ -203,17 +247,80 @@ void CastMediaSinkService::OnChannelOpenedOnUIThread(
     return;
   }
 
-  if (!base::ContainsValue(current_services_, service)) {
-    DVLOG(2) << "Service data not found in current service data list...";
-    return;
-  }
-
-  DVLOG(2) << "Ading sink to current_sinks_ [id]: " << sink.sink().id();
+  DVLOG(2) << "Adding sink to current_sinks_ [id]: " << sink.sink().id();
   current_sinks_.insert(sink);
+  current_services_.push_back(service);
   MediaSinkServiceBase::RestartTimer();
 }
 
-CastMediaSinkService::CastSocketObserver::CastSocketObserver() {}
+void CastMediaSinkService::OnNetworksChanged(const std::string& network_id) {
+  std::string last_network_id = current_network_id_;
+  current_network_id_ = network_id;
+  if (network_id == DiscoveryNetworkMonitor::kNetworkIdUnknown ||
+      network_id == DiscoveryNetworkMonitor::kNetworkIdDisconnected) {
+    if (last_network_id == DiscoveryNetworkMonitor::kNetworkIdUnknown ||
+        last_network_id == DiscoveryNetworkMonitor::kNetworkIdDisconnected) {
+      return;
+    }
+    service_cache_.emplace(last_network_id, current_services_);
+    return;
+  }
+  auto cache_entry = service_cache_.find(network_id);
+  // Check if we have any cached services for this network ID.
+  if (cache_entry == service_cache_.end()) {
+    return;
+  }
+  DVLOG(2) << "Cache restored " << cache_entry->second.size()
+           << " service(s) for network " << network_id;
+  DnsSdRegistry::DnsSdServiceList services_to_resolve;
+  for (const auto& service : cache_entry->second) {
+    if (std::find_if(services_pending_resolution_.begin(),
+                     services_pending_resolution_.end(),
+                     IsSameServiceName(service)) ==
+        services_pending_resolution_.end()) {
+      services_pending_resolution_.push_back(service);
+      services_to_resolve.push_back(service);
+    }
+  }
+  current_services_ = cache_entry->second;
+  StartDeviceResolution(services_to_resolve);
+}
+
+void CastMediaSinkService::OnCastChannelError(
+    const net::IPEndPoint& ip_endpoint) {
+  const net::IPAddress& ip_address = ip_endpoint.address();
+  const std::string ip_address_str = ip_address.ToString();
+  const auto port = ip_endpoint.port();
+  decltype(current_sinks_)::iterator sink_it;
+  while ((sink_it = std::find_if(current_sinks_.begin(), current_sinks_.end(),
+                                 [&ip_address](const MediaSinkInternal& sink) {
+                                   return sink.cast_data().ip_address ==
+                                          ip_address;
+                                 })) != current_sinks_.end()) {
+    current_sinks_.erase(sink_it);
+  }
+  current_services_.erase(
+      std::remove_if(current_services_.begin(), current_services_.end(),
+                     [&ip_address_str, port](const DnsSdService& service) {
+                       return service.ip_address == ip_address_str &&
+                              service.service_host_port.port() == port;
+                     }));
+  auto cache_entry = service_cache_.find(current_network_id_);
+  if (cache_entry == service_cache_.end()) {
+    return;
+  }
+  cache_entry->second.erase(
+      std::remove_if(cache_entry->second.begin(), cache_entry->second.end(),
+                     [&ip_address_str, port](const DnsSdService& service) {
+                       return service.ip_address == ip_address_str &&
+                              service.service_host_port.port() == port;
+                     }));
+}
+
+CastMediaSinkService::CastSocketObserver::CastSocketObserver(
+    CastMediaSinkService* media_sink_service)
+    : media_sink_service_(media_sink_service) {}
+
 CastMediaSinkService::CastSocketObserver::~CastSocketObserver() {
   cast_channel::CastSocketService::GetInstance()->RemoveObserver(this);
 }
@@ -224,6 +331,7 @@ void CastMediaSinkService::CastSocketObserver::OnError(
   DVLOG(1) << "OnError [ip_endpoint]: " << socket.ip_endpoint().ToString()
            << " [error_state]: "
            << cast_channel::ChannelErrorToString(error_state);
+  media_sink_service_->OnCastChannelError(socket.ip_endpoint());
 }
 
 void CastMediaSinkService::CastSocketObserver::OnMessage(
