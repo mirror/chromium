@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "466f07a8_56e705d3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-04T17:06:52Z",
+      "side": 1,
+      "message": "Use the full path here starting at chrome/next/path",
+      "range": {
+        "startLine": 9,
+        "startChar": 16,
+        "endLine": 9,
+        "endChar": 39
+      },
+      "revId": "f34a650bd4930d9a23c3b349a05ad0abec7baddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85ae69d0_3fe36f58",
+        "filename": "chrome/browser/ui/views/feature_promos/feature_promo.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-04T17:06:52Z",
+      "side": 1,
+      "message": "Isn\u0027t this handled by BubbleDialogDelegateView\u0027s constructor (it sets arrow to arrow_)?",
+      "range": {
+        "startLine": 37,
+        "startChar": 2,
+        "endLine": 37,
+        "endChar": 19
+      },
+      "revId": "f34a650bd4930d9a23c3b349a05ad0abec7baddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbcaf5da_228d9846",
+        "filename": "chrome/browser/ui/views/feature_promos/feature_promo.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-04T17:06:52Z",
+      "side": 1,
+      "message": "This file should be called feature_promo_bubble_view.h (and with the corresponding cc file).\n\nPerform this rename as the last patchset of the review.",
+      "range": {
+        "startLine": 23,
+        "startChar": 6,
+        "endLine": 23,
+        "endChar": 28
+      },
+      "revId": "f34a650bd4930d9a23c3b349a05ad0abec7baddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57ea29f7_17ee374b",
+        "filename": "chrome/browser/ui/views/feature_promos/feature_promo.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-04T17:06:52Z",
+      "side": 1,
+      "message": "Document what these parameters do with particular emphasis on |anchor_view| and |anchor_rect| (and how they\u0027re used or how one overrides the other).",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 47
+      },
+      "revId": "f34a650bd4930d9a23c3b349a05ad0abec7baddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5316b9fc_5f890590",
+        "filename": "chrome/browser/ui/views/feature_promos/new_tab_promo.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-04T17:06:52Z",
+      "side": 1,
+      "message": "Update this comment for the new name.",
+      "range": {
+        "startLine": 11,
+        "startChar": 7,
+        "endLine": 11,
+        "endChar": 18
+      },
+      "revId": "f34a650bd4930d9a23c3b349a05ad0abec7baddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1148e731_d4d9a964",
+        "filename": "chrome/browser/ui/views/feature_promos/new_tab_promo.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-04T17:06:52Z",
+      "side": 1,
+      "message": "Similarly, this should be called new_tab_promo_bubble_view.h",
+      "range": {
+        "startLine": 14,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 28
+      },
+      "revId": "f34a650bd4930d9a23c3b349a05ad0abec7baddf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
