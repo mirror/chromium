@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a72a953_0497dc8a",
+        "filename": "services/ui/ws/event_dispatcher.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-04T23:27:10Z",
+      "side": 0,
+      "message": "I don\u0027t believe this, or the call on 566 is needed. Both of these aren\u0027t called from when the mouse location has changed.",
+      "range": {
+        "startLine": 547,
+        "startChar": 7,
+        "endLine": 547,
+        "endChar": 25
+      },
+      "revId": "879ed39c816c2f06b234c90a53f9b9f08d822852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7dca3f8_f8feee8c",
+        "filename": "services/ui/ws/modal_window_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-04T23:27:10Z",
+      "side": 0,
+      "message": "This code is called when the modal type has already been set, so I removed it from here. This necessitated updating some tests which relied on existing behavior.",
+      "range": {
+        "startLine": 196,
+        "startChar": 7,
+        "endLine": 196,
+        "endChar": 24
+      },
+      "revId": "879ed39c816c2f06b234c90a53f9b9f08d822852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
