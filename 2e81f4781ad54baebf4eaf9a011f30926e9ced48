@@ -16,6 +16,24 @@
       "revId": "2e81f4781ad54baebf4eaf9a011f30926e9ced48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19e01de9_78271a37",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 2696,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-04T12:08:31Z",
+      "side": 1,
+      "message": "Added comment in both places (Here more about the reason for if).",
+      "parentUuid": "2f53f3c5_0c73ca7b",
+      "revId": "2e81f4781ad54baebf4eaf9a011f30926e9ced48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
