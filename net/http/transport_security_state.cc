@@ -1505,8 +1505,9 @@ void TransportSecurityState::ProcessExpectCTHeader(
   base::TimeDelta max_age;
   bool enforce;
   GURL report_uri;
-  if (!ParseExpectCTHeader(value, &max_age, &enforce, &report_uri))
+  if (!ParseExpectCTHeader(value, &max_age, &enforce, &report_uri)) {
     return;
+  }
   // Do not persist Expect-CT headers if the connection was not chained to a
   // public root or did not comply with CT policy.
   if (!ssl_info.is_issued_by_known_root)
