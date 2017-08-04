@@ -22,6 +22,30 @@
       "revId": "c8f25f6d6ae171a4ef963f44761b563c42c557d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d49ab2b0_97f95421",
+        "filename": "ios/chrome/browser/ssl/captive_portal_features.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-08-04T15:30:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "00bc5fd1_a7dd926b",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 20
+      },
+      "revId": "c8f25f6d6ae171a4ef963f44761b563c42c557d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
