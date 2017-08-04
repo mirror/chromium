@@ -142,6 +142,7 @@
 #include "platform/bindings/V8PerContextData.h"
 #include "platform/graphics/CompositorMutableProperties.h"
 #include "platform/graphics/CompositorMutation.h"
+#include "platform/scroll/ScrollCustomization.h"
 #include "platform/scroll/ScrollableArea.h"
 #include "platform/scroll/SmoothScrollSequencer.h"
 #include "platform/wtf/BitVector.h"
@@ -623,6 +624,20 @@ void Element::CallDistributeScroll(ScrollState& scroll_state) {
     NativeDistributeScroll(scroll_state);
     return;
   }
+
+  ScrollCustomization scroll_customization =
+      GetLayoutBox()->Style()->GetScrollCustomization();
+
+  ScrollCustomization direction =
+      GetScrollCustomizationFromScrollStateData(*scroll_state.Data());
+
+  if (!(direction & scroll_customization)) {
+    // No need to call the handler given that the element is not expecting
+    // scrolls in the given direction.
+    NativeDistributeScroll(scroll_state);
+    return;
+  }
+
   if (callback->NativeScrollBehavior() !=
       WebNativeScrollBehavior::kPerformAfterNativeScroll)
     callback->handleEvent(&scroll_state);
@@ -712,6 +727,23 @@ void Element::CallApplyScroll(ScrollState& scroll_state) {
     NativeApplyScroll(scroll_state);
     return;
   }
+
+  // Cache the current value of ScrollCustomization to later verify the handler
+  // consumed deltas correctly. It is assumed that the handler's modifications
+  // to CSS properties for ScrollCustomization is ignored and postponed to next
+  // event,
+  ScrollCustomization scroll_customization =
+      GetLayoutBox()->Style()->GetScrollCustomization();
+  ScrollCustomization direction =
+      GetScrollCustomizationFromScrollStateData(*scroll_state.Data());
+
+  if (!(direction & scroll_customization)) {
+    // No need to call the handler given that the element is not expecting
+    // scrolls in the given direction.
+    NativeApplyScroll(scroll_state);
+    return;
+  }
+
   if (callback->NativeScrollBehavior() !=
       WebNativeScrollBehavior::kPerformAfterNativeScroll)
     callback->handleEvent(&scroll_state);
