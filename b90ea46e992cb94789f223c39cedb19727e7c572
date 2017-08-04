@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "62fa2e1c_e51e46a8",
+        "filename": "chrome/browser/chromeos/policy/device_policy_decoder_chromeos.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-04T17:35:12Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "74f39e7a_3033706d",
+      "range": {
+        "startLine": 117,
+        "startChar": 2,
+        "endLine": 117,
+        "endChar": 23
+      },
+      "revId": "b90ea46e992cb94789f223c39cedb19727e7c572",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa0ef70b_fe33385e",
         "filename": "chrome/browser/chromeos/policy/proto/chrome_device_policy.proto",
         "patchSetId": 13
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Yes. \nFound out that if we asked only milliseconds (in UTC), we would have a problems with timezones and daylight times. \nAdmin and user can have different timezones.\nI\u0027ll send you e-mail about that.",
       "parentUuid": "aa0ef70b_fe33385e",
+      "range": {
+        "startLine": 816,
+        "startChar": 0,
+        "endLine": 820,
+        "endChar": 1
+      },
+      "revId": "b90ea46e992cb94789f223c39cedb19727e7c572",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00dd1ef9_a035f406",
+        "filename": "chrome/browser/chromeos/policy/proto/chrome_device_policy.proto",
+        "patchSetId": 13
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-04T17:35:12Z",
+      "side": 1,
+      "message": "I see, but I thought the issues with timezones and daylight saving are resolved by passing the \"timezone\" field - aren\u0027t they?\n\nSo what I tried to say - is it really beneficial to pass the values of hours and minutes separately? Do you need to make such distinction between them? I was thinking that a single number (like (hours * 60 + minutes) * 1000) provides enough information for the client.\n\nThe benefit of passing a single number (the number of milliseconds) is the simplification of the format and the easier parsing.",
+      "parentUuid": "0ea41828_b7e2e96e",
       "range": {
         "startLine": 816,
         "startChar": 0,
