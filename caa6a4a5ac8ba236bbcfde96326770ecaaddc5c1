@@ -16,6 +16,24 @@
       "revId": "caa6a4a5ac8ba236bbcfde96326770ecaaddc5c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7ad19a3_8a1b24e2",
+        "filename": "components/password_manager/core/browser/password_reuse_detection_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-08-04T21:14:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b5cabcb_57ee3be7",
+      "revId": "caa6a4a5ac8ba236bbcfde96326770ecaaddc5c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
