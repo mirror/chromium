@@ -7,6 +7,7 @@
 #include "ash/ash_switches.h"
 #include "ash/public/cpp/ash_pref_names.h"
 #include "ash/public/cpp/config.h"
+#include "ash/session/test_session_controller_client.h"
 #include "ash/shell.h"
 #include "ash/shell_test_api.h"
 #include "ash/system/palette/test_palette_delegate.h"
@@ -18,7 +19,10 @@
 #include "base/command_line.h"
 #include "base/memory/ptr_util.h"
 #include "components/prefs/testing_pref_service.h"
+#include "components/session_manager/session_manager_types.h"
+#include "ui/events/devices/touchscreen_device.h"
 #include "ui/events/event.h"
+#include "ui/events/test/device_data_manager_test_api.h"
 #include "ui/events/test/event_generator.h"
 
 namespace ash {
@@ -30,11 +34,23 @@ class PaletteTrayTest : public AshTestBase {
 
   void SetUp() override {
     base::CommandLine::ForCurrentProcess()->AppendSwitch(
-        switches::kAshForceEnableStylusTools);
-    base::CommandLine::ForCurrentProcess()->AppendSwitch(
         switches::kAshEnablePaletteOnAllDisplays);
 
     AshTestBase::SetUp();
+
+    // Set up and add a stylus to the device manager.
+    const std::string kTestStylusName = "test_stylus";
+    const std::string kTestStylusPath =
+        "/sys/class/power_supply/hid-AA:BB:CC-battery";
+
+    ui::TouchscreenDevice stylus(0 /* id */, ui::INPUT_DEVICE_INTERNAL,
+                                 kTestStylusName, gfx::Size(),
+                                 1 /* touch_points */);
+    stylus.sys_path = base::FilePath(kTestStylusPath);
+    stylus.is_stylus = true;
+
+    ui::test::DeviceDataManagerTestAPI test_api;
+    test_api.SetTouchscreenDevices({stylus});
 
     Shell::RegisterLocalStatePrefs(pref_service_.registry());
     ash_test_helper()->test_shell_delegate()->set_local_state_pref_service(
@@ -144,6 +160,38 @@ TEST_F(PaletteTrayTest, PaletteTrayIsVisibleForInternalStylus) {
   InitForInternalStylus();
   ASSERT_TRUE(palette_tray_);
   EXPECT_TRUE(palette_tray_->visible());
+}
+
+// Verify that when entering or exiting the lock screen, the behavior of the
+// palette tray button is as expected.
+TEST_F(PaletteTrayTest, PaletteTrayOnLockScreenBehavior) {
+  // TODO(crbug.com/751191): Remove the check for Mash.
+  if (Shell::GetAshConfig() == Config::MASH)
+    return;
+
+  InitForInternalStylus();
+  ASSERT_TRUE(palette_tray_->visible());
+
+  test_api_->GetPaletteToolManager()->ActivateTool(
+      PaletteToolId::LASER_POINTER);
+  EXPECT_TRUE(test_api_->GetPaletteToolManager()->IsToolActive(
+      PaletteToolId::LASER_POINTER));
+
+  // Verify that when entering the lock screen, the palette tray button is
+  // hidden, and the tool that was active is no longer active.
+  GetSessionControllerClient()->SetSessionState(
+      session_manager::SessionState::LOCKED);
+  EXPECT_FALSE(test_api_->GetPaletteToolManager()->IsToolActive(
+      PaletteToolId::LASER_POINTER));
+  EXPECT_FALSE(palette_tray_->visible());
+
+  // Verify that when logging back in the tray is visible, but the tool that was
+  // active before locking the screen is still inactive.
+  GetSessionControllerClient()->SetSessionState(
+      session_manager::SessionState::ACTIVE);
+  EXPECT_TRUE(palette_tray_->visible());
+  EXPECT_FALSE(test_api_->GetPaletteToolManager()->IsToolActive(
+      PaletteToolId::LASER_POINTER));
 }
 
 // Verify taps on the palette tray button results in expected behaviour.

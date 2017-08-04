@@ -19,13 +19,16 @@
 namespace ash {
 namespace palette_utils {
 
+bool HasForcedStylusInput() {
+  return base::CommandLine::ForCurrentProcess()->HasSwitch(
+      switches::kAshForceEnableStylusTools);
+}
+
 bool HasStylusInput() {
   // Allow the user to force enable or disable by passing a switch. If both are
   // present, enabling takes precedence over disabling.
-  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kAshForceEnableStylusTools)) {
+  if (HasForcedStylusInput())
     return true;
-  }
 
   // Check to see if the hardware reports it is stylus capable.
   for (const ui::TouchscreenDevice& device :

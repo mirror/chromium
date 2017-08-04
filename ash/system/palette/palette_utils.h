@@ -14,6 +14,9 @@ class Point;
 namespace ash {
 namespace palette_utils {
 
+// Returns true if the flag to force stylus input is set to true.
+ASH_EXPORT bool HasForcedStylusInput();
+
 // Returns true if there is a stylus input device on the internal display. This
 // will return false even if there is a stylus input device until hardware
 // probing is complete (see ui::InputDeviceEventObserver).
