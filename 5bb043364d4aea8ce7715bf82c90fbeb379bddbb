@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98fa6e44_5583d29d",
+        "filename": "chrome/browser/resources/settings/site_settings/site_details_permission.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-04T00:21:44Z",
+      "side": 1,
+      "message": "Maybe say \"Currently\" instead of \"Note\"? i.e. currently (to me) says that this may change and the reader may want to check on that, while note implies this shall be true, ongoing. Dunno if that\u0027s just me though.",
+      "revId": "5bb043364d4aea8ce7715bf82c90fbeb379bddbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5ef981a_c34e9c9c",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_localized_strings_provider.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1904,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-04T00:21:44Z",
+      "side": 1,
+      "message": "\"IDS_SETTINGS_\" is fairly standard prefix for strings used in settings. Is it reasonable to do that here? Also, it\u0027s nicer if the string label and the IDS_ label are more similar.",
+      "revId": "5bb043364d4aea8ce7715bf82c90fbeb379bddbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

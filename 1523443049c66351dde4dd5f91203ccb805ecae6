@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fcd1c6dc_741ff07a",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2245,
+      "author": {
+        "id": 1136204
+      },
+      "writtenOn": "2017-08-04T00:21:44Z",
+      "side": 0,
+      "message": "Asking about the desc\u003d, will this always be a single site? I\u0027m asking because the desc\u003d reads that way to me and it may make a difference to a translator on whether this can be plural or not. I guess I\u0027m really asking if, \"for a particular site\" is 100% correct in all cases this will be used.",
+      "revId": "1523443049c66351dde4dd5f91203ccb805ecae6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
