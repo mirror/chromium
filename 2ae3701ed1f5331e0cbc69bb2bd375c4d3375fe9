@@ -16,6 +16,24 @@
       "revId": "2ae3701ed1f5331e0cbc69bb2bd375c4d3375fe9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4df1312_8c2beee2",
+        "filename": "native_client_sdk/src/libraries/error_handling/error_handling.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1182849
+      },
+      "writtenOn": "2017-08-04T16:42:55Z",
+      "side": 0,
+      "message": "Because I got the following presubmit warning:\n\n ** Presubmit Warnings **\n The src directory requires source formatting. Please run git cl format .\n\nSo I ran \"git cl format\", and this line has been removed as a result",
+      "parentUuid": "1e22fe49_82d68f2a",
+      "revId": "2ae3701ed1f5331e0cbc69bb2bd375c4d3375fe9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
