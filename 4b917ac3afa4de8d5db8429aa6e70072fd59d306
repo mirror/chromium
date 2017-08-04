@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4735631b_52aafe4d",
+        "filename": "extensions/common/api/declarative_net_request/indexed_rule.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-08-04T00:18:55Z",
+      "side": 0,
+      "message": "I am assuming it\u0027s ok to have duplicate domains?",
+      "range": {
+        "startLine": 226,
+        "startChar": 22,
+        "endLine": 226,
+        "endChar": 28
+      },
+      "revId": "4b917ac3afa4de8d5db8429aa6e70072fd59d306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
