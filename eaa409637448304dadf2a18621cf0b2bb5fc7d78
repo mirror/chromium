@@ -155,6 +155,29 @@
     },
     {
       "key": {
+        "uuid": "d2153b83_6f74991c",
+        "filename": "ash/system/bluetooth/bluetooth_power_controller.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2017-08-04T22:19:53Z",
+      "side": 1,
+      "message": "This entire file has 0 comments.",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 162,
+        "endChar": 19
+      },
+      "revId": "eaa409637448304dadf2a18621cf0b2bb5fc7d78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "35f70c67_af8b443c",
         "filename": "ash/system/bluetooth/bluetooth_power_controller.h",
         "patchSetId": 18
@@ -234,6 +257,29 @@
       "writtenOn": "2017-08-04T22:03:39Z",
       "side": 1,
       "message": "I think it would be clearer to move this method into BluetoothController. Then all the power management stuff would be in one place, and the reader could see the interactions with prefs.\n\nIt should also make it more clear when the various registries are available.",
+      "revId": "eaa409637448304dadf2a18621cf0b2bb5fc7d78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7704b815_42d5ec31",
+        "filename": "ash/system/bluetooth/tray_bluetooth_helper.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2017-08-04T22:19:53Z",
+      "side": 1,
+      "message": "This code should only be looking at settings. The \"actual\" powered state should only be seen by or managed by the BluetoothPowerController.",
+      "range": {
+        "startLine": 126,
+        "startChar": 36,
+        "endLine": 126,
+        "endChar": 45
+      },
       "revId": "eaa409637448304dadf2a18621cf0b2bb5fc7d78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
