@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b2330913_3232d7a0",
+        "filename": "components/offline_pages/content/renovations/test/page_renovator_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-04T20:47:34Z",
+      "side": 1,
+      "message": "nit: |Navigate|",
+      "range": {
+        "startLine": 115,
+        "startChar": 45,
+        "endLine": 115,
+        "endChar": 53
+      },
+      "revId": "8a1a8d42b4f143ac37935ec7a14a0f22901066b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a242b62b_cbeb473e",
+        "filename": "components/offline_pages/content/renovations/test/page_renovator_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-04T20:47:34Z",
+      "side": 1,
+      "message": "good idea with moving this up.",
+      "range": {
+        "startLine": 153,
+        "startChar": 31,
+        "endLine": 153,
+        "endChar": 39
+      },
+      "revId": "8a1a8d42b4f143ac37935ec7a14a0f22901066b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63e0db77_be4d4af2",
+        "filename": "components/offline_pages/content/renovations/test/page_renovator_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-04T20:47:34Z",
+      "side": 1,
+      "message": "nit, my fault, but since it is test:\n\nASSERT_TRUE(render_frame_) \u003c\u003c \"Navigate should have been called.\";",
+      "range": {
+        "startLine": 162,
+        "startChar": 9,
+        "endLine": 162,
+        "endChar": 22
+      },
+      "revId": "8a1a8d42b4f143ac37935ec7a14a0f22901066b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc143259_4a1f6506",
+        "filename": "components/offline_pages/content/renovations/test/page_renovator_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-04T20:47:34Z",
+      "side": 1,
+      "message": "same nit.",
+      "range": {
+        "startLine": 183,
+        "startChar": 2,
+        "endLine": 183,
+        "endChar": 8
+      },
+      "revId": "8a1a8d42b4f143ac37935ec7a14a0f22901066b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32c2ad4f_a8400f59",
+        "filename": "components/offline_pages/resources/renovations.js",
+        "patchSetId": 9
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-04T20:47:34Z",
+      "side": 1,
+      "message": "I presume there is no harm in applying the same class multiple times. Perhaps it is worth calling out in a comment, that we don\u0027t care about that.\n\nThis is for scenario, where the user already unfolded some of the section before choosing to save the page.\n\nPS. already see someone opening a bug: Wiki page saved with more sections, than I opened... :)",
+      "range": {
+        "startLine": 13,
+        "startChar": 28,
+        "endLine": 13,
+        "endChar": 30
+      },
+      "revId": "8a1a8d42b4f143ac37935ec7a14a0f22901066b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

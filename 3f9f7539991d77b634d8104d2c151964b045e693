@@ -284,6 +284,30 @@
     },
     {
       "key": {
+        "uuid": "ffe0aca3_3ca861e9",
+        "filename": "components/offline_pages/core/renovations/page_renovation_loader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-04T20:47:34Z",
+      "side": 1,
+      "message": "Got it. I missed that.",
+      "parentUuid": "4275859e_31a5bd2b",
+      "range": {
+        "startLine": 29,
+        "startChar": 45,
+        "endLine": 29,
+        "endChar": 63
+      },
+      "revId": "3f9f7539991d77b634d8104d2c151964b045e693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5194a93_91de53d0",
         "filename": "components/offline_pages/resources/renovations.js",
         "patchSetId": 8
@@ -328,6 +352,30 @@
       "revId": "3f9f7539991d77b634d8104d2c151964b045e693",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb423b4f_af2f8a49",
+        "filename": "components/offline_pages/resources/renovations.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-04T20:47:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e951b4a6_d25b6343",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 11
+      },
+      "revId": "3f9f7539991d77b634d8104d2c151964b045e693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
