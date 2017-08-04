@@ -1,0 +1,141 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64016688_6ca4ce7b",
+        "filename": "content/browser/service_worker/service_worker_content_settings_proxy_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-04T07:47:24Z",
+      "side": 1,
+      "message": "pass -\u003e Pass",
+      "range": {
+        "startLine": 37,
+        "startChar": 7,
+        "endLine": 37,
+        "endChar": 11
+      },
+      "revId": "217268ade545b9724650745ba47bce3042634abd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61fb5421_c49f94a5",
+        "filename": "content/browser/service_worker/service_worker_content_settings_proxy_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-04T07:47:24Z",
+      "side": 1,
+      "message": "\"do not always have frames\" sounds like a service worker sometimes have a frame. Can you rephrase this like \"service worker never has frames.\"?",
+      "range": {
+        "startLine": 37,
+        "startChar": 70,
+        "endLine": 38,
+        "endChar": 26
+      },
+      "revId": "217268ade545b9724650745ba47bce3042634abd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "860cfe43_759b83f6",
+        "filename": "content/browser/service_worker/service_worker_content_settings_proxy_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-04T07:47:24Z",
+      "side": 1,
+      "message": "Can you wrap this line with {} because the if-statement\u0027s body is wrapped with {}?\n\nif (!origin.unique()) {\n  ...\n} else {\n  std::move(callback).Run(false);\n}",
+      "revId": "217268ade545b9724650745ba47bce3042634abd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "525981e8_d9751a2e",
+        "filename": "content/browser/service_worker/service_worker_content_settings_proxy_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-04T07:47:24Z",
+      "side": 1,
+      "message": "pass -\u003e Pass",
+      "revId": "217268ade545b9724650745ba47bce3042634abd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "296c8c02_e10209ec",
+        "filename": "content/browser/service_worker/service_worker_content_settings_proxy_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-04T07:47:24Z",
+      "side": 1,
+      "message": "ditto: \"service worker never has frames.\"",
+      "range": {
+        "startLine": 51,
+        "startChar": 55,
+        "endLine": 52,
+        "endChar": 26
+      },
+      "revId": "217268ade545b9724650745ba47bce3042634abd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d3d4dc4_fd4bf50c",
+        "filename": "content/browser/service_worker/service_worker_content_settings_proxy_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-04T07:47:24Z",
+      "side": 1,
+      "message": "ditto.",
+      "revId": "217268ade545b9724650745ba47bce3042634abd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fab387d6_42e12f0a",
+        "filename": "content/renderer/service_worker/service_worker_content_settings_proxy.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-04T07:47:24Z",
+      "side": 1,
+      "message": "This would be eligible for using \"auto\" because a type parameter of MakeUnique clarifies the returned type.\n\nauto ptr \u003d base::MakeUnique\u003cmojom::ServiceWorkerContentSettingsProxyPtr\u003e();",
+      "revId": "217268ade545b9724650745ba47bce3042634abd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
