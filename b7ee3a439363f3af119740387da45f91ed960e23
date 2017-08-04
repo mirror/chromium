@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9fdde52_61e6e773",
+        "filename": "chrome/browser/ui/webui/policy_ui_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1127730
+      },
+      "writtenOn": "2017-08-04T15:24:03Z",
+      "side": 1,
+      "message": "Change to pointer (references must always be const).",
+      "range": {
+        "startLine": 99,
+        "startChar": 29,
+        "endLine": 99,
+        "endChar": 44
+      },
+      "revId": "b7ee3a439363f3af119740387da45f91ed960e23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a310d2d4_ccb2c04f",
+        "filename": "chrome/browser/ui/webui/policy_ui_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1127730
+      },
+      "writtenOn": "2017-08-04T15:24:03Z",
+      "side": 1,
+      "message": "Swap order, as expected values should be first.",
+      "revId": "b7ee3a439363f3af119740387da45f91ed960e23",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
