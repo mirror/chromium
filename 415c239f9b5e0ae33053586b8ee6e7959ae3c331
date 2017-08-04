@@ -39,6 +39,48 @@
       "revId": "415c239f9b5e0ae33053586b8ee6e7959ae3c331",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25134d3d_5f44c5b0",
+        "filename": "third_party/WebKit/Source/modules/fetch/FetchManager.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-08-04T19:48:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3eedb7dd_d6bc19f1",
+      "revId": "415c239f9b5e0ae33053586b8ee6e7959ae3c331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "17c57d38_29c1e318",
+        "filename": "third_party/WebKit/Source/modules/fetch/FetchManager.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-08-04T19:48:36Z",
+      "side": 1,
+      "message": "IIUC This is for Fetch API, and there is a corresponding RawResource, but is not accessible here (because FetchManager::Loader is behind ThreadableLoader).\nI expect it is not so trivial (not super hard though) to merge the SRI check here into Resource::CheckResourceIntegrity(), because of backpressure control of Fetch API.\n\n+yhirano@ if you want to add something.",
+      "parentUuid": "20294932_3fbc4fa2",
+      "range": {
+        "startLine": 220,
+        "startChar": 71,
+        "endLine": 220,
+        "endChar": 78
+      },
+      "revId": "415c239f9b5e0ae33053586b8ee6e7959ae3c331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
