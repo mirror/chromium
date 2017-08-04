@@ -70,6 +70,30 @@
       "revId": "d95e237179403366c5e3816c880b91a2d2758a7e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "af73a285_9954185e",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/BidirectionalStreamTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-08-04T13:20:47Z",
+      "side": 1,
+      "message": "Yea :( This is carried from the TestUrlRequestCallback, where writes always happen before reads.",
+      "parentUuid": "1dd4f502_1240553e",
+      "range": {
+        "startLine": 377,
+        "startChar": 34,
+        "endLine": 377,
+        "endChar": 0
+      },
+      "revId": "d95e237179403366c5e3816c880b91a2d2758a7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
