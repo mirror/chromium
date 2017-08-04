@@ -33,6 +33,7 @@ bool Base64Decode(const StringPiece& input, std::string* output) {
 
   temp.resize(output_size);
   output->swap(temp);
+  intentionally trigger a compile failure to test ninja wrapper.
   return true;
 }
 
