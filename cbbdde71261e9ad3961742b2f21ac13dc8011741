@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c201839b_cc1f969d",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1722,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-04T17:25:01Z",
+      "side": 1,
+      "message": "Can you please file a bug if one doesn\u0027t exist, and reference it in the comment?",
+      "range": {
+        "startLine": 1722,
+        "startChar": 7,
+        "endLine": 1722,
+        "endChar": 20
+      },
+      "revId": "cbbdde71261e9ad3961742b2f21ac13dc8011741",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd81125b_ce1712ac",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1725,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-04T17:25:01Z",
+      "side": 1,
+      "message": "nit: nullptr",
+      "range": {
+        "startLine": 1725,
+        "startChar": 74,
+        "endLine": 1725,
+        "endChar": 78
+      },
+      "revId": "cbbdde71261e9ad3961742b2f21ac13dc8011741",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
