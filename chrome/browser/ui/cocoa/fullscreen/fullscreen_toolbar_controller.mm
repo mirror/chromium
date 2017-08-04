@@ -12,6 +12,7 @@
 #import "chrome/browser/ui/cocoa/fullscreen/fullscreen_toolbar_mouse_tracker.h"
 #import "chrome/browser/ui/cocoa/fullscreen/fullscreen_toolbar_visibility_lock_controller.h"
 #import "chrome/browser/ui/cocoa/fullscreen/immersive_fullscreen_controller.h"
+#include "chrome/browser/ui/exclusive_access/fullscreen_within_tab_helper.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/pref_names.h"
 
@@ -154,7 +155,8 @@ const CGFloat kShowFraction = 1.0;
 - (void)updateToolbarStyleExitingTabFullscreen:(BOOL)isExitingTabFullscreen {
   FullscreenToolbarStyle oldStyle = toolbarStyle_;
 
-  if ([browserController_ isFullscreenForTabContentOrExtension] &&
+  if (!FullscreenWithinTabHelper::IsContentFullscreenEnabled() &&
+      [browserController_ isFullscreenForTabContentOrExtension] &&
       !isExitingTabFullscreen) {
     toolbarStyle_ = FullscreenToolbarStyle::TOOLBAR_NONE;
   } else {
