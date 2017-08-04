@@ -165,6 +165,9 @@ class ThemeSyncableServiceTest : public testing::Test {
     base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
         switches::kAppsGalleryUpdateURL, kCustomThemeUrl);
 
+    extensions::ExtensionsClient::Get()->InitializeWebStoreUrls(
+      base::CommandLine::ForCurrentProcess());
+
     profile_.reset(new TestingProfile);
     fake_theme_service_ = BuildForProfile(profile_.get());
     theme_sync_service_.reset(new ThemeSyncableService(profile_.get(),

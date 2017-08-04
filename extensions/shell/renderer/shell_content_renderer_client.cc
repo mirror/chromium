@@ -4,6 +4,8 @@
 
 #include "extensions/shell/renderer/shell_content_renderer_client.h"
 
+#include <memory>
+
 #include "content/public/common/content_constants.h"
 #include "content/public/renderer/render_frame.h"
 #include "content/public/renderer/render_frame_observer.h"
@@ -40,8 +42,8 @@ ShellContentRendererClient::~ShellContentRendererClient() {
 void ShellContentRendererClient::RenderThreadStarted() {
   RenderThread* thread = RenderThread::Get();
 
-  extensions_client_.reset(CreateExtensionsClient());
-  ExtensionsClient::Set(extensions_client_.get());
+  ExtensionsClient::Set(
+      std::unique_ptr<ExtensionsClient>(CreateExtensionsClient()));
 
   extensions_renderer_client_.reset(new ShellExtensionsRendererClient);
   ExtensionsRendererClient::Set(extensions_renderer_client_.get());

@@ -4,6 +4,10 @@
 
 #include "extensions/common/extensions_client.h"
 
+#include  <memory>
+#include  <utility>
+
+#include "base/command_line.h"
 #include "base/logging.h"
 #include "extensions/common/extension_icon_set.h"
 #include "extensions/common/manifest_handlers/icons_handler.h"
@@ -12,13 +16,13 @@ namespace extensions {
 
 namespace {
 
-ExtensionsClient* g_client = NULL;
+std::unique_ptr<ExtensionsClient> g_client;
 
 }  // namespace
 
 ExtensionsClient* ExtensionsClient::Get() {
   DCHECK(g_client);
-  return g_client;
+  return g_client.get();
 }
 
 std::set<base::FilePath> ExtensionsClient::GetBrowserImagePaths(
@@ -36,12 +40,12 @@ std::string ExtensionsClient::GetUserAgent() const {
   return std::string();
 }
 
-void ExtensionsClient::Set(ExtensionsClient* client) {
+void ExtensionsClient::Set(std::unique_ptr<ExtensionsClient> client) {
   // This can happen in unit tests, where the utility thread runs in-process.
   if (g_client)
     return;
-  g_client = client;
-  g_client->Initialize();
+  g_client = std::move(client);
+  g_client->InitializeGlobalState();
 }
 
 }  // namespace extensions

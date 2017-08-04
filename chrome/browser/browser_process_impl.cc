@@ -262,7 +262,8 @@ BrowserProcessImpl::BrowserProcessImpl(
   extension_event_router_forwarder_ = new extensions::EventRouterForwarder;
 
   extensions::ExtensionsClient::Set(
-      extensions::ChromeExtensionsClient::GetInstance());
+      base::MakeUnique<extensions::ChromeExtensionsClient>(
+          base::CommandLine::ForCurrentProcess()));
 
   extensions_browser_client_.reset(
       new extensions::ChromeExtensionsBrowserClient);
