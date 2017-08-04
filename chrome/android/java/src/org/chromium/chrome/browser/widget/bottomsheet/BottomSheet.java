@@ -1067,7 +1067,6 @@ public class BottomSheet
      */
     private void onSheetOpened() {
         if (mIsSheetOpen) return;
-
         mIsSheetOpen = true;
 
         // Make sure the toolbar is visible before expanding the sheet.
