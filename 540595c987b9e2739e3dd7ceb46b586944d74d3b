@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "c81adb2f_91ca1b36",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPIFiles.h.tmpl",
+        "patchSetId": 18
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-08-04T04:50:32Z",
+      "side": 0,
+      "message": "Yes, I noticed the problem with \"implements property x\" and I\u0027m glad you fixed it.\n\nWill defer to you and Bugs on what it should say in this CL though.",
+      "parentUuid": "cfbe3299_7feb520f",
+      "revId": "540595c987b9e2739e3dd7ceb46b586944d74d3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b5a0925_86161571",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParser.h",
         "patchSetId": 18
@@ -84,6 +102,24 @@
       "side": 0,
       "message": "No, I just moved it. The diff is attached in the CL description (https://gist.github.com/wilddamon/9e81c157f98ff1dbb68d43a79f89fe9c/revisions)",
       "parentUuid": "2b5a0925_86161571",
+      "revId": "540595c987b9e2739e3dd7ceb46b586944d74d3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c9840ec_7dacaf2e",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParser.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1116008
+      },
+      "writtenOn": "2017-08-04T04:50:32Z",
+      "side": 0,
+      "message": "OK cool. I looked at the diff but it is so large that it was hard to make a quick comparison. Thanks for clarifying.",
+      "parentUuid": "acf61496_7af5c203",
       "revId": "540595c987b9e2739e3dd7ceb46b586944d74d3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
