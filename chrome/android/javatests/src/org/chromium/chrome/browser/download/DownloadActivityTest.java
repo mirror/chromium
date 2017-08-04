@@ -161,7 +161,8 @@ public class DownloadActivityTest extends BaseActivityInstrumentationTestCase<Do
         });
 
         // Add a new item.
-        int callCount = mAdapterObserver.onSpaceDisplayUpdatedCallback.getCallCount();
+        int callCount = mAdapterObserver.onChangedCallback.getCallCount();
+        int spaceDisplayCallCount = mAdapterObserver.onSpaceDisplayUpdatedCallback.getCallCount();
         final DownloadItem updateItem = StubbedProvider.createDownloadItem(7, "20151021 07:28");
         ThreadUtils.runOnUiThread(new Runnable() {
             @Override
@@ -169,11 +170,13 @@ public class DownloadActivityTest extends BaseActivityInstrumentationTestCase<Do
                 mAdapter.onDownloadItemCreated(updateItem);
             }
         });
-        mAdapterObserver.onSpaceDisplayUpdatedCallback.waitForCallback(callCount);
+        mAdapterObserver.onChangedCallback.waitForCallback(callCount, 2);
+        mAdapterObserver.onSpaceDisplayUpdatedCallback.waitForCallback(spaceDisplayCallCount);
         assertEquals("6.50 GB downloaded", mSpaceUsedDisplay.getText());
 
         // Mark one download as deleted on disk, which should prevent it from being counted.
-        callCount = mAdapterObserver.onSpaceDisplayUpdatedCallback.getCallCount();
+        callCount = mAdapterObserver.onChangedCallback.getCallCount();
+        spaceDisplayCallCount = mAdapterObserver.onSpaceDisplayUpdatedCallback.getCallCount();
         final DownloadItem deletedItem = StubbedProvider.createDownloadItem(6, "20151021 07:28");
         deletedItem.setHasBeenExternallyRemoved(true);
         ThreadUtils.runOnUiThread(new Runnable() {
@@ -182,11 +185,13 @@ public class DownloadActivityTest extends BaseActivityInstrumentationTestCase<Do
                 mAdapter.onDownloadItemUpdated(deletedItem);
             }
         });
-        mAdapterObserver.onSpaceDisplayUpdatedCallback.waitForCallback(callCount);
+        mAdapterObserver.onChangedCallback.waitForCallback(callCount, 2);
+        mAdapterObserver.onSpaceDisplayUpdatedCallback.waitForCallback(spaceDisplayCallCount);
         assertEquals("5.50 GB downloaded", mSpaceUsedDisplay.getText());
 
         // Say that the offline page has been deleted.
-        callCount = mAdapterObserver.onSpaceDisplayUpdatedCallback.getCallCount();
+        callCount = mAdapterObserver.onChangedCallback.getCallCount();
+        spaceDisplayCallCount = mAdapterObserver.onSpaceDisplayUpdatedCallback.getCallCount();
         final OfflinePageDownloadItem deletedPage =
                 StubbedProvider.createOfflineItem(3, "20151021 07:28");
         ThreadUtils.runOnUiThread(new Runnable() {
@@ -196,7 +201,8 @@ public class DownloadActivityTest extends BaseActivityInstrumentationTestCase<Do
                         deletedPage.getGuid());
             }
         });
-        mAdapterObserver.onSpaceDisplayUpdatedCallback.waitForCallback(callCount);
+        mAdapterObserver.onChangedCallback.waitForCallback(callCount, 2);
+        mAdapterObserver.onSpaceDisplayUpdatedCallback.waitForCallback(spaceDisplayCallCount);
         assertEquals("512.00 MB downloaded", mSpaceUsedDisplay.getText());
     }
 

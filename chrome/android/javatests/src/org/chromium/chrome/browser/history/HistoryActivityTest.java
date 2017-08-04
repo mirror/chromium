@@ -147,6 +147,11 @@ public class HistoryActivityTest extends BaseActivityInstrumentationTestCase<His
         mAdapter.registerAdapterDataObserver(mTestObserver);
         mRecyclerView = ((RecyclerView) activity.findViewById(R.id.recycler_view));
 
+        // Account not signed in by default
+        ChromeSigninController signinController = ChromeSigninController.get();
+        signinController.setSignedInAccountName(null);
+        setHasOtherFormsOfBrowsingData(false, false);
+
         assertEquals(4, mAdapter.getItemCount());
     }
 
