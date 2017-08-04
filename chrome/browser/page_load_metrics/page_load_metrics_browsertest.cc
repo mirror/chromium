@@ -2,16 +2,20 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include <memory>
+
 #include "base/command_line.h"
 #include "base/files/scoped_temp_dir.h"
 #include "base/logging.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/memory/weak_ptr.h"
 #include "base/run_loop.h"
 #include "base/test/histogram_tester.h"
 #include "base/threading/thread_restrictions.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
+#include "chrome/browser/browser_process.h"
 #include "chrome/browser/lifetime/keep_alive_types.h"
 #include "chrome/browser/lifetime/scoped_keep_alive.h"
 #include "chrome/browser/page_load_metrics/metrics_web_contents_observer.h"
@@ -19,6 +23,7 @@
 #include "chrome/browser/page_load_metrics/observers/core_page_load_metrics_observer.h"
 #include "chrome/browser/page_load_metrics/observers/document_write_page_load_metrics_observer.h"
 #include "chrome/browser/page_load_metrics/observers/no_state_prefetch_page_load_metrics_observer.h"
+#include "chrome/browser/page_load_metrics/observers/session_restore_page_load_metrics_observer.h"
 #include "chrome/browser/page_load_metrics/observers/use_counter_page_load_metrics_observer.h"
 #include "chrome/browser/page_load_metrics/page_load_tracker.h"
 #include "chrome/browser/prefs/session_startup_pref.h"
@@ -27,8 +32,10 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/sessions/session_service_factory.h"
 #include "chrome/browser/sessions/session_service_test_helper.h"
+#include "chrome/browser/sessions/tab_restore_service_factory.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_commands.h"
+#include "chrome/browser/ui/browser_live_tab_context.h"
 #include "chrome/browser/ui/browser_navigator_params.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/common/chrome_features.h"
@@ -37,11 +44,13 @@
 #include "chrome/test/base/in_process_browser_test.h"
 #include "chrome/test/base/ui_test_utils.h"
 #include "components/prefs/pref_service.h"
+#include "components/sessions/core/tab_restore_service.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/render_view_host.h"
 #include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
+#include "content/public/common/referrer.h"
 #include "content/public/test/browser_test_utils.h"
 #include "content/public/test/download_test_observer.h"
 #include "net/base/net_errors.h"
@@ -1142,6 +1151,18 @@ class SessionRestorePageLoadMetricsBrowserTest
     return window_observer.WaitForSingleNewBrowser();
   }
 
+  std::unique_ptr<PageLoadMetricsWaiter> CreatePageLoadMetricsWaiter(
+      content::WebContents* web_contents) const {
+    return base::MakeUnique<PageLoadMetricsWaiter>(web_contents);
+  }
+
+  void WaitForFirstMeaningfulPaintOfActiveTab(Browser* browser) const {
+    auto waiter = CreatePageLoadMetricsWaiter(
+        browser->tab_strip_model()->GetActiveWebContents());
+    waiter->AddPageExpectation(TimingField::FIRST_MEANINGFUL_PAINT);
+    waiter->Wait();
+  }
+
   void WaitForTabsToLoad(Browser* browser) {
     for (int i = 0; i < browser->tab_strip_model()->count(); ++i) {
       content::WebContents* contents =
@@ -1151,8 +1172,30 @@ class SessionRestorePageLoadMetricsBrowserTest
     }
   }
 
+  // The PageLoadMetricsWaiter can observe first meaningful paints on these test
+  // pages while not on other simple pages such as /title1.html.
   GURL GetTestURL() const {
-    return embedded_test_server()->GetURL("/title1.html");
+    return embedded_test_server()->GetURL(
+        "/page_load_metrics/page_with_css.html");
+  }
+
+  GURL GetTestURL2() const {
+    return embedded_test_server()->GetURL(
+        "/page_load_metrics/main_frame_with_iframe.html");
+  }
+
+  void ExpectFirstPaintMetricsTotalCount(int expected_total_count) const {
+    // SessionRestorePageLoadMetricsObserver is disabled when browser-side
+    // navigation is enabled.
+    histogram_tester_.ExpectTotalCount(
+        internal::kHistogramSessionRestoreForegroundTabFirstPaint,
+        expected_total_count);
+    histogram_tester_.ExpectTotalCount(
+        internal::kHistogramSessionRestoreForegroundTabFirstContentfulPaint,
+        expected_total_count);
+    histogram_tester_.ExpectTotalCount(
+        internal::kHistogramSessionRestoreForegroundTabFirstMeaningfulPaint,
+        expected_total_count);
   }
 
  private:
@@ -1200,4 +1243,162 @@ IN_PROC_BROWSER_TEST_F(SessionRestorePageLoadMetricsBrowserTest,
       page_load_metrics::internal::kPageLoadStartedInForeground, true, 2);
   histogram_tester_.ExpectBucketCount(
       page_load_metrics::internal::kPageLoadStartedInForeground, false, 2);
+}
+
+IN_PROC_BROWSER_TEST_F(SessionRestorePageLoadMetricsBrowserTest,
+                       NoSessionRestore) {
+  ui_test_utils::NavigateToURL(browser(), GetTestURL());
+  // No metrics recorded because navigation is outside of session restore.
+  ExpectFirstPaintMetricsTotalCount(0);
+}
+
+IN_PROC_BROWSER_TEST_F(SessionRestorePageLoadMetricsBrowserTest,
+                       SingleTabSessionRestore) {
+  ui_test_utils::NavigateToURL(browser(), GetTestURL());
+  Browser* new_browser = QuitBrowserAndRestore(browser());
+  WaitForFirstMeaningfulPaintOfActiveTab(new_browser);
+  ExpectFirstPaintMetricsTotalCount(1);
+}
+
+IN_PROC_BROWSER_TEST_F(SessionRestorePageLoadMetricsBrowserTest,
+                       MultipleTabsSessionRestore) {
+  ui_test_utils::NavigateToURL(browser(), GetTestURL());
+  ui_test_utils::NavigateToURLWithDisposition(
+      browser(), GetTestURL(), WindowOpenDisposition::NEW_BACKGROUND_TAB,
+      ui_test_utils::BROWSER_TEST_WAIT_FOR_NAVIGATION);
+  Browser* new_browser = QuitBrowserAndRestore(browser());
+
+  TabStripModel* tab_strip = new_browser->tab_strip_model();
+  ASSERT_TRUE(tab_strip);
+  ASSERT_EQ(2, tab_strip->count());
+
+  // Wait for first paints on the initial foreground tab and all tabs loaded.
+  WaitForFirstMeaningfulPaintOfActiveTab(new_browser);
+  WaitForTabsToLoad(new_browser);
+
+  // Only metrics of the initial foreground tab are recorded.
+  ExpectFirstPaintMetricsTotalCount(1);
+}
+
+IN_PROC_BROWSER_TEST_F(SessionRestorePageLoadMetricsBrowserTest,
+                       LoadingInForegroundTabInSessionRestore) {
+  ui_test_utils::NavigateToURL(browser(), GetTestURL());
+  Browser* new_browser = QuitBrowserAndRestore(browser());
+
+  content::WebContents* active_web_contents =
+      new_browser->tab_strip_model()->GetActiveWebContents();
+  auto waiter = base::MakeUnique<PageLoadMetricsWaiter>(active_web_contents);
+  waiter->AddPageExpectation(TimingField::FIRST_MEANINGFUL_PAINT);
+
+  // Load another url in the initial tab before its first paints.
+  ExpectFirstPaintMetricsTotalCount(0);
+  // If the current web contents is not stopped properly, the next navigation
+  // will not yield any paints.
+  active_web_contents->Stop();
+  active_web_contents->GetController().LoadURL(
+      GetTestURL2(), content::Referrer(), ui::PAGE_TRANSITION_TYPED,
+      std::string());
+
+  waiter->Wait();
+
+  // Do not count the new page load in the initial foreground tab.
+  ExpectFirstPaintMetricsTotalCount(0);
+}
+
+IN_PROC_BROWSER_TEST_F(SessionRestorePageLoadMetricsBrowserTest,
+                       LoadingAfterSessionRestore) {
+  ui_test_utils::NavigateToURL(browser(), GetTestURL());
+  Browser* new_browser = QuitBrowserAndRestore(browser());
+
+  // Wait for session restore to finish (i.e., the end of the only tab).
+  WaitForFirstMeaningfulPaintOfActiveTab(new_browser);
+  ExpectFirstPaintMetricsTotalCount(1);
+
+  // Load a new page after session restore.
+  auto waiter = CreatePageLoadMetricsWaiter(
+      new_browser->tab_strip_model()->GetActiveWebContents());
+  waiter->AddPageExpectation(TimingField::FIRST_MEANINGFUL_PAINT);
+  ui_test_utils::NavigateToURL(new_browser, GetTestURL2());
+  waiter->Wait();
+
+  // No more metrics because the navigation is after session restore.
+  ExpectFirstPaintMetricsTotalCount(1);
+}
+
+IN_PROC_BROWSER_TEST_F(SessionRestorePageLoadMetricsBrowserTest,
+                       InitialForegroundTabChanged) {
+  ui_test_utils::NavigateToURL(browser(), GetTestURL());
+  ui_test_utils::NavigateToURLWithDisposition(
+      browser(), GetTestURL2(), WindowOpenDisposition::NEW_BACKGROUND_TAB,
+      ui_test_utils::BROWSER_TEST_WAIT_FOR_NAVIGATION);
+  Browser* new_browser = QuitBrowserAndRestore(browser());
+
+  // Change the foreground tab before the first meaningful paint.
+  TabStripModel* tab_strip = new_browser->tab_strip_model();
+  ASSERT_TRUE(tab_strip);
+  ASSERT_EQ(2, tab_strip->count());
+  ASSERT_EQ(0, tab_strip->active_index());
+  tab_strip->ActivateTabAt(1, true);
+  ASSERT_EQ(1, tab_strip->active_index());
+
+  // Wait for the first meaningful paint of the current foreground tab.
+  WaitForFirstMeaningfulPaintOfActiveTab(new_browser);
+  ExpectFirstPaintMetricsTotalCount(0);
+}
+
+IN_PROC_BROWSER_TEST_F(SessionRestorePageLoadMetricsBrowserTest,
+                       MultipleSessionRestores) {
+  ui_test_utils::NavigateToURL(browser(), GetTestURL());
+
+  Browser* current_browser = browser();
+  const int num_session_restores = 3;
+  for (int i = 1; i <= num_session_restores; ++i) {
+    current_browser = QuitBrowserAndRestore(current_browser);
+    WaitForFirstMeaningfulPaintOfActiveTab(current_browser);
+    ExpectFirstPaintMetricsTotalCount(i);
+  }
+}
+
+IN_PROC_BROWSER_TEST_F(SessionRestorePageLoadMetricsBrowserTest,
+                       ReopenClosedTabInSessionRestore) {
+  // Open then restore a browser with 2 tabs.
+  ui_test_utils::NavigateToURL(browser(), GetTestURL());
+  ui_test_utils::NavigateToURLWithDisposition(
+      browser(), GetTestURL2(), WindowOpenDisposition::NEW_BACKGROUND_TAB,
+      ui_test_utils::BROWSER_TEST_WAIT_FOR_NAVIGATION);
+
+  Browser* new_browser = QuitBrowserAndRestore(browser());
+  auto new_browser_waiter = CreatePageLoadMetricsWaiter(
+      new_browser->tab_strip_model()->GetActiveWebContents());
+  new_browser_waiter->AddPageExpectation(TimingField::FIRST_MEANINGFUL_PAINT);
+
+  TabStripModel* tab_strip = new_browser->tab_strip_model();
+  ASSERT_TRUE(tab_strip);
+  ASSERT_EQ(2, tab_strip->count());
+
+  // Check the browser has a delegated restore service.
+  sessions::TabRestoreService* service =
+      TabRestoreServiceFactory::GetForProfile(new_browser->profile());
+  bool has_tab_restore_service = !!service;
+  ASSERT_TRUE(has_tab_restore_service);
+  sessions::LiveTabContext* context =
+      BrowserLiveTabContext::FindContextForWebContents(
+          new_browser->tab_strip_model()->GetActiveWebContents());
+  bool has_live_tab_context = !!context;
+  ASSERT_TRUE(has_live_tab_context);
+
+  // Restore tabs from last session using that delegated restore service.
+  service->RestoreMostRecentEntry(context);
+
+  // There should be 2 restored tabs in the new browser.
+  BrowserList* active_browser_list = BrowserList::GetInstance();
+  EXPECT_EQ(2u, active_browser_list->size());
+  EXPECT_EQ(new_browser, active_browser_list->get(0));
+  Browser* reopened_browser = active_browser_list->get(1);
+  EXPECT_EQ(2, reopened_browser->tab_strip_model()->count());
+
+  // Only metrics of the initial foreground tab are recorded.
+  WaitForFirstMeaningfulPaintOfActiveTab(reopened_browser);
+  new_browser_waiter->Wait();
+  ExpectFirstPaintMetricsTotalCount(1);
 }
