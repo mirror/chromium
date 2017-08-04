@@ -59,7 +59,8 @@ RefPtr<Image> PaintWorklet::Paint(const String& name,
   PaintWorkletGlobalScopeProxy* proxy =
       PaintWorkletGlobalScopeProxy::From(FindAvailableGlobalScope());
   CSSPaintDefinition* paint_definition = proxy->FindDefinition(name);
-  return paint_definition->Paint(observer, size, data);
+  return paint_definition->Paint(observer, size, data,
+                                 GetFrame()->DevicePixelRatio());
 }
 
 DEFINE_TRACE(PaintWorklet) {

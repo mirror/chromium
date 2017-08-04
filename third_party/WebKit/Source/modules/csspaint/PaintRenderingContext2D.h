@@ -28,9 +28,10 @@ class MODULES_EXPORT PaintRenderingContext2D
   static PaintRenderingContext2D* Create(
       std::unique_ptr<ImageBuffer> image_buffer,
       bool has_alpha,
-      float zoom) {
-    return new PaintRenderingContext2D(std::move(image_buffer), has_alpha,
-                                       zoom);
+      float zoom,
+      const double device_pixel_ratio) {
+    return new PaintRenderingContext2D(std::move(image_buffer), has_alpha, zoom,
+                                       device_pixel_ratio);
   }
 
   // BaseRenderingContext2D
@@ -70,13 +71,17 @@ class MODULES_EXPORT PaintRenderingContext2D
   // PaintRenderingContext2D cannot lose it's context.
   bool isContextLost() const final { return false; }
 
+  double devicePixelRatio() const { return device_pixel_ratio_; }
+
  private:
   PaintRenderingContext2D(std::unique_ptr<ImageBuffer>,
                           bool has_alpha,
-                          float zoom);
+                          float zoom,
+                          const double device_pixel_ratio);
 
   std::unique_ptr<ImageBuffer> image_buffer_;
   bool has_alpha_;
+  const double device_pixel_ratio_;
 };
 
 }  // namespace blink

@@ -13,8 +13,11 @@ namespace blink {
 PaintRenderingContext2D::PaintRenderingContext2D(
     std::unique_ptr<ImageBuffer> image_buffer,
     bool has_alpha,
-    float zoom)
-    : image_buffer_(std::move(image_buffer)), has_alpha_(has_alpha) {
+    float zoom,
+    const double device_pixel_ratio)
+    : image_buffer_(std::move(image_buffer)),
+      has_alpha_(has_alpha),
+      device_pixel_ratio_(device_pixel_ratio) {
   clip_antialiasing_ = kAntiAliased;
   ModifiableState().SetShouldAntialias(true);
 

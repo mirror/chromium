@@ -46,7 +46,8 @@ class CSSPaintDefinition final
   // throws an error.
   PassRefPtr<Image> Paint(const ImageResourceObserver&,
                           const IntSize&,
-                          const CSSStyleValueVector*);
+                          const CSSStyleValueVector*,
+                          const double device_pixel_ratio);
   const Vector<CSSPropertyID>& NativeInvalidationProperties() const {
     return native_invalidation_properties_;
   }

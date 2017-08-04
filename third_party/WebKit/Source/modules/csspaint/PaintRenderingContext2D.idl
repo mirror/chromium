@@ -78,5 +78,7 @@
     void setLineDash(sequence<unrestricted double> dash);
     sequence<unrestricted double> getLineDash();
     attribute unrestricted double lineDashOffset;
+
+    readonly attribute unrestricted double devicePixelRatio;
 };
 PaintRenderingContext2D implements CanvasPath;
