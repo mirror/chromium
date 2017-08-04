@@ -22,6 +22,30 @@
       "revId": "2bc9e306b0f24bc10eacab9ccb8341c738893063",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0440a8c5_dfd51149",
+        "filename": "services/viz/public/interfaces/compositing/compositor_frame_sink.mojom",
+        "patchSetId": 14
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1108704
+      },
+      "writtenOn": "2017-08-04T18:26:45Z",
+      "side": 1,
+      "message": "Using TimeTicks would be blocked on Blink start using base value in their mojo set up. The policy allows it now but the workd hasn\u0027t been done. I can add TODO to change to TimeTicks later?",
+      "parentUuid": "8d8f12d9_97308ec0",
+      "range": {
+        "startLine": 38,
+        "startChar": 28,
+        "endLine": 38,
+        "endChar": 37
+      },
+      "revId": "2bc9e306b0f24bc10eacab9ccb8341c738893063",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
