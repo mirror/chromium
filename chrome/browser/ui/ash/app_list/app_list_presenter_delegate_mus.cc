@@ -4,6 +4,7 @@
 
 #include "chrome/browser/ui/ash/app_list/app_list_presenter_delegate_mus.h"
 
+#include "ui/app_list/presenter/app_list_presenter_delegate.h"
 #include "ui/app_list/presenter/app_list_presenter_impl.h"
 #include "ui/app_list/presenter/app_list_view_delegate_factory.h"
 #include "ui/app_list/views/app_list_view.h"
@@ -100,6 +101,15 @@ gfx::Vector2d AppListPresenterDelegateMus::GetVisibilityAnimationOffset(
   // TODO(mfomitchev): Classic ash does different animation here depending on
   // shelf alignment. We should probably do that too.
   return gfx::Vector2d(0, kAnimationOffset);
+}
+
+base::TimeDelta AppListPresenterDelegateMus::GetVisibilityAnimationDuration(
+    aura::Window* root_window,
+    bool is_visible) {
+  // TODO(newcomer): Classic ash does different animation here depending on
+  // shelf alignment. We should probably do that too.
+  base::TimeDelta td = kAnimationDurationMs;
+  return is_visible ? base::TimeDelta::FromMilliseconds(0) : td;
 }
 
 void AppListPresenterDelegateMus::OnPointerEventObserved(
