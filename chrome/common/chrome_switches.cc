@@ -1064,9 +1064,6 @@ const char kUseSystemDefaultPrinter[] = "use-system-default-printer";
 // Enables the out-of-process memory logging.
 const char kMemlog[] = "memlog";
 
-// Communicates the pipe name for out-of-process memory logging.
-const char kMemlogPipe[] = "memlog-pipe";
-
 // Value passed to kProcessType switch that indicates the profiling process.
 const char kProfiling[] = "profiling";
 #endif
