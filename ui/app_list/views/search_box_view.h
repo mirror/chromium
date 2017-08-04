@@ -12,6 +12,7 @@
 #include "ui/app_list/app_list_model.h"
 #include "ui/app_list/search_box_model_observer.h"
 #include "ui/app_list/speech_ui_model_observer.h"
+#include "ui/app_list/views/contents_view.h"
 #include "ui/gfx/shadow_value.h"
 #include "ui/views/controls/button/image_button.h"
 #include "ui/views/controls/textfield/textfield_controller.h"
@@ -130,7 +131,7 @@ class APP_LIST_EXPORT SearchBoxView : public views::View,
   SkColor GetBackgroundColorForState(AppListModel::State state) const;
 
   // Updates the opacity of the searchbox.
-  void UpdateOpacity(float work_area_bottom, bool is_end_gesture);
+  float UpdateOpacity(float work_area_bottom, bool is_end_gesture);
 
   // Used only in the tests to get the current search icon.
   views::ImageView* get_search_icon_for_test() { return search_icon_; }

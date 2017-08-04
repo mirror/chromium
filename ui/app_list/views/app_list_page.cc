@@ -30,6 +30,14 @@ void AppListPage::OnAnimationUpdated(double progress,
                                      AppListModel::State from_state,
                                      AppListModel::State to_state) {}
 
+gfx::Rect AppListPage::LayoutAndUpdateOpacityDuringDragging(
+    AppListModel::State state,
+    int app_list_y_position_in_screen,
+    int work_area_bottom,
+    bool is_end_gesture) const {
+  return GetPageBoundsForState(state);
+}
+
 gfx::Rect AppListPage::GetSearchBoxBounds() const {
   DCHECK(contents_view_);
   return contents_view_->GetDefaultSearchBoxBounds();
