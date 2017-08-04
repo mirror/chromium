@@ -16,6 +16,24 @@
       "revId": "abe529a407c24ce60cee4aa21a51ef8e9384ed2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcd17717_afc1b666",
+        "filename": "chrome/browser/safe_browsing/download_protection/download_protection_service_unittest.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 601,
+      "author": {
+        "id": 1230988
+      },
+      "writtenOn": "2017-08-04T20:32:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb27bec7_ef71bf1b",
+      "revId": "abe529a407c24ce60cee4aa21a51ef8e9384ed2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
