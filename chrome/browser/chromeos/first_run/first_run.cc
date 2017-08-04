@@ -136,10 +136,7 @@ class DialogLauncher : public content::NotificationObserver {
 }  // namespace
 
 void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry) {
-  registry->RegisterBooleanPref(
-      prefs::kFirstRunTutorialShown,
-      false,
-      user_prefs::PrefRegistrySyncable::SYNCABLE_PRIORITY_PREF);
+  registry->RegisterBooleanPref(prefs::kFirstRunTutorialShown, false);
 }
 
 void MaybeLaunchDialogAfterSessionStart() {
