@@ -22,6 +22,24 @@ enum class CORSStatus {
   kServiceWorkerOpaque,      // ResponseType was opaque.
 };
 
+inline bool IsSameOriginOrCORSSuccessful(CORSStatus cors_status) {
+  switch (cors_status) {
+    case CORSStatus::kSameOrigin:
+    case CORSStatus::kSuccessful:
+    case CORSStatus::kServiceWorkerSuccessful:
+      return true;
+
+    case CORSStatus::kUnknown:
+    case CORSStatus::kNotApplicable:
+    case CORSStatus::kFailed:
+    case CORSStatus::kServiceWorkerOpaque:
+      return false;
+  }
+
+  NOTREACHED();
+  return false;
+}
+
 }  // namespace blink
 
 #endif

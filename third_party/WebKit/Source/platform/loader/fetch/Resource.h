@@ -262,9 +262,7 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   CORSStatus GetCORSStatus() const { return cors_status_; }
 
   bool IsSameOriginOrCORSSuccessful() const {
-    return cors_status_ == CORSStatus::kSameOrigin ||
-           cors_status_ == CORSStatus::kSuccessful ||
-           cors_status_ == CORSStatus::kServiceWorkerSuccessful;
+    return blink::IsSameOriginOrCORSSuccessful(GetCORSStatus());
   }
 
   void SetCacheIdentifier(const String& cache_identifier) {
