@@ -97,7 +97,6 @@ class ReplacementFragment final {
   HTMLElement* InsertFragmentForTestRendering(Element* root_editable_element);
   void RemoveUnrenderedNodes(ContainerNode*);
   void RestoreAndRemoveTestRenderingNodesToFragment(Element*);
-  void RemoveInterchangeNodes(ContainerNode*);
 
   void InsertNodeBefore(Node*, Node* ref_node);
 
@@ -106,18 +105,6 @@ class ReplacementFragment final {
   bool has_interchange_newline_at_start_;
   bool has_interchange_newline_at_end_;
 };
-
-static bool IsInterchangeHTMLBRElement(const Node* node) {
-  DEFINE_STATIC_LOCAL(String, interchange_newline_class_string,
-                      (AppleInterchangeNewline));
-  if (!isHTMLBRElement(node) ||
-      toHTMLBRElement(node)->getAttribute(classAttr) !=
-          interchange_newline_class_string)
-    return false;
-  UseCounter::Count(node->GetDocument(),
-                    WebFeature::kEditingAppleInterchangeNewline);
-  return true;
-}
 
 static Position PositionAvoidingPrecedingNodes(Position pos) {
   // If we're already on a break, it's probably a placeholder and we shouldn't
@@ -176,23 +163,9 @@ ReplacementFragment::ReplacementFragment(Document* document,
   else
     shadow_ancestor_element = editable_root;
 
-  if (!editable_root->GetAttributeEventListener(
-          EventTypeNames::webkitBeforeTextInserted)
-      // FIXME: Remove these checks once textareas and textfields actually
-      // register an event handler.
-      &&
-      !(shadow_ancestor_element && shadow_ancestor_element->GetLayoutObject() &&
-        shadow_ancestor_element->GetLayoutObject()->IsTextControl()) &&
-      HasRichlyEditableStyle(*editable_root)) {
-    RemoveInterchangeNodes(fragment_.Get());
-    return;
-  }
-
   if (!HasRichlyEditableStyle(*editable_root)) {
     bool is_plain_text = true;
     for (Node& node : NodeTraversal::ChildrenOf(*fragment_)) {
-      if (IsInterchangeHTMLBRElement(&node) && &node == fragment_->lastChild())
-        continue;
       if (!node.IsTextNode()) {
         is_plain_text = false;
         break;
@@ -201,7 +174,6 @@ ReplacementFragment::ReplacementFragment(Document* document,
     // We don't need TestRendering for plain-text editing + plain-text
     // insertion.
     if (is_plain_text) {
-      RemoveInterchangeNodes(fragment_.Get());
       String original_text = fragment_->textContent();
       BeforeTextInsertedEvent* event =
           BeforeTextInsertedEvent::Create(original_text);
@@ -209,17 +181,12 @@ ReplacementFragment::ReplacementFragment(Document* document,
       if (original_text != event->GetText()) {
         fragment_ = CreateFragmentFromText(
             selection.ToNormalizedEphemeralRange(), event->GetText());
-        RemoveInterchangeNodes(fragment_.Get());
       }
       return;
     }
   }
 
   HTMLElement* holder = InsertFragmentForTestRendering(editable_root);
-  if (!holder) {
-    RemoveInterchangeNodes(fragment_.Get());
-    return;
-  }
 
   const EphemeralRange range =
       CreateVisibleSelection(
@@ -231,7 +198,6 @@ ReplacementFragment::ReplacementFragment(Document* document,
                                              .Build();
   const String& text = PlainText(range, behavior);
 
-  RemoveInterchangeNodes(holder);
   RemoveUnrenderedNodes(holder);
   RestoreAndRemoveTestRenderingNodesToFragment(holder);
 
@@ -251,7 +217,6 @@ ReplacementFragment::ReplacementFragment(Document* document,
       return;
 
     holder = InsertFragmentForTestRendering(editable_root);
-    RemoveInterchangeNodes(holder);
     RemoveUnrenderedNodes(holder);
     RestoreAndRemoveTestRenderingNodesToFragment(holder);
   }
@@ -341,36 +306,6 @@ void ReplacementFragment::RemoveUnrenderedNodes(ContainerNode* holder) {
 
   for (auto& node : unrendered)
     RemoveNode(node);
-}
-
-void ReplacementFragment::RemoveInterchangeNodes(ContainerNode* container) {
-  has_interchange_newline_at_start_ = false;
-  has_interchange_newline_at_end_ = false;
-
-  // Interchange newlines at the "start" of the incoming fragment must be
-  // either the first node in the fragment or the first leaf in the fragment.
-  Node* node = container->firstChild();
-  while (node) {
-    if (IsInterchangeHTMLBRElement(node)) {
-      has_interchange_newline_at_start_ = true;
-      RemoveNode(node);
-      break;
-    }
-    node = node->firstChild();
-  }
-  if (!container->HasChildren())
-    return;
-  // Interchange newlines at the "end" of the incoming fragment must be
-  // either the last node in the fragment or the last leaf in the fragment.
-  node = container->lastChild();
-  while (node) {
-    if (IsInterchangeHTMLBRElement(node)) {
-      has_interchange_newline_at_end_ = true;
-      RemoveNode(node);
-      break;
-    }
-    node = node->lastChild();
-  }
 }
 
 inline void ReplaceSelectionCommand::InsertedNodes::RespondToNodeInsertion(

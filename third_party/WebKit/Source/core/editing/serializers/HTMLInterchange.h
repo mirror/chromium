@@ -32,8 +32,6 @@ namespace blink {
 
 class Text;
 
-#define AppleInterchangeNewline "Apple-interchange-newline"
-
 enum EAnnotateForInterchange {
   kDoNotAnnotateForInterchange,
   kAnnotateForInterchange
