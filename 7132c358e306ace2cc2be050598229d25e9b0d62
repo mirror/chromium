@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8dedf762_2936660f",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 4787,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-04T22:55:32Z",
+      "side": 1,
+      "message": "Call this SendDidEditField (see comments below)",
+      "range": {
+        "startLine": 4787,
+        "startChar": 15,
+        "endLine": 4787,
+        "endChar": 38
+      },
+      "revId": "7132c358e306ace2cc2be050598229d25e9b0d62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b091c65_4ece2113",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 6878,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-04T22:55:32Z",
+      "side": 1,
+      "message": "Nit: call this MaybeQueueSendDidEditField and merge this with SendFieldEdited.",
+      "range": {
+        "startLine": 6878,
+        "startChar": 15,
+        "endLine": 6878,
+        "endChar": 29
+      },
+      "revId": "7132c358e306ace2cc2be050598229d25e9b0d62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46e593a3_4499208d",
+        "filename": "third_party/WebKit/public/platform/modules/insecure_input/insecure_input_service.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-08-04T22:55:32Z",
+      "side": 1,
+      "message": "Nit: to be consistent with Blink naming conventions, this would usually be named \"DidEditFieldInInsecureContext\" (in the spirit of naming functions/methods with nouns)",
+      "range": {
+        "startLine": 12,
+        "startChar": 2,
+        "endLine": 12,
+        "endChar": 30
+      },
+      "revId": "7132c358e306ace2cc2be050598229d25e9b0d62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
