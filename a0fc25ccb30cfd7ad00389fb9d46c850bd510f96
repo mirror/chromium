@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3fb75d27_cf74a17d",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-08-04T00:10:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "afbfd9c9_37488d41",
+      "revId": "a0fc25ccb30cfd7ad00389fb9d46c850bd510f96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af63d640_4597ed25",
         "filename": "chrome/browser/feature_engagement/feature_tracker.h",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-03T20:58:17Z",
       "side": 1,
       "message": "This KeyedService does not have it\u0027s own factory since it\u0027s virtual. Should there be a static \"AddDependencies(...)\" or something along those lines that subclass factories could use that depends on feature_engagement::Tracker?",
+      "revId": "a0fc25ccb30cfd7ad00389fb9d46c850bd510f96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd25671d_e54a7d23",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-08-04T00:10:23Z",
+      "side": 1,
+      "message": "I am not completely sure what this comment means/is asking for. Could you explain the motivation behind this a little more :)",
+      "parentUuid": "af63d640_4597ed25",
       "revId": "a0fc25ccb30cfd7ad00389fb9d46c850bd510f96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4b4be902_c3822ff2",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-08-04T00:10:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59f31224_b3433f1b",
+      "revId": "a0fc25ccb30cfd7ad00389fb9d46c850bd510f96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95c91a00_47693b60",
         "filename": "chrome/browser/feature_engagement/feature_tracker.h",
         "patchSetId": 10
@@ -67,6 +121,24 @@
       "revId": "a0fc25ccb30cfd7ad00389fb9d46c850bd510f96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34fcff9d_6174d441",
+        "filename": "chrome/browser/feature_engagement/feature_tracker.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-08-04T00:10:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95c91a00_47693b60",
+      "revId": "a0fc25ccb30cfd7ad00389fb9d46c850bd510f96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "cb3b4413_88ce26c7",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-08-04T00:10:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86650fe2_5b8527b2",
+      "revId": "a0fc25ccb30cfd7ad00389fb9d46c850bd510f96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9526560_fb012ebe",
         "filename": "chrome/browser/feature_engagement/session_duration_updater.cc",
         "patchSetId": 10
@@ -139,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "7ac3345d_c81aeaf2",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-08-04T00:10:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9526560_fb012ebe",
+      "revId": "a0fc25ccb30cfd7ad00389fb9d46c850bd510f96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "233cb28b_d67f5a72",
         "filename": "chrome/browser/feature_engagement/session_duration_updater_factory.cc",
         "patchSetId": 10
@@ -153,6 +261,24 @@
       "revId": "a0fc25ccb30cfd7ad00389fb9d46c850bd510f96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7fea517_7156f6fb",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater_factory.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-08-04T00:10:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "233cb28b_d67f5a72",
+      "revId": "a0fc25ccb30cfd7ad00389fb9d46c850bd510f96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -179,6 +305,30 @@
     },
     {
       "key": {
+        "uuid": "df73c9be_805492e1",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater_unittests.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-08-04T00:10:23Z",
+      "side": 1,
+      "message": "TBD upon approval, removed",
+      "parentUuid": "d751fbee_4d659f5c",
+      "range": {
+        "startLine": 24,
+        "startChar": 23,
+        "endLine": 24,
+        "endChar": 24
+      },
+      "revId": "a0fc25ccb30cfd7ad00389fb9d46c850bd510f96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c5c3605_9bde1556",
         "filename": "components/feature_engagement/public/event_constants.cc",
         "patchSetId": 10
@@ -190,6 +340,24 @@
       "writtenOn": "2017-08-03T20:58:17Z",
       "side": 1,
       "message": "This event is now being changed in the wild, is that OK? It will no longer match old user\u0027s config, etc. I guess in general it depends on whether we ever shipped the previous event name or not.",
+      "revId": "a0fc25ccb30cfd7ad00389fb9d46c850bd510f96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd082e8e_74ec8072",
+        "filename": "components/feature_engagement/public/event_constants.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-08-04T00:10:23Z",
+      "side": 1,
+      "message": "I think the previous name was tested on Canary Users only, I\u0027m not sure if this would be an issue",
+      "parentUuid": "5c5c3605_9bde1556",
       "revId": "a0fc25ccb30cfd7ad00389fb9d46c850bd510f96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
