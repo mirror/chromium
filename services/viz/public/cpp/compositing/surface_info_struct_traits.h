@@ -5,13 +5,13 @@
 #ifndef CC_IPC_SURFACE_INFO_STRUCT_TRAITS_H_
 #define CC_IPC_SURFACE_INFO_STRUCT_TRAITS_H_
 
-#include "cc/ipc/surface_info.mojom-shared.h"
 #include "components/viz/common/surfaces/surface_info.h"
+#include "services/viz/public/interfaces/compositing/surface_info.mojom-shared.h"
 
 namespace mojo {
 
 template <>
-struct StructTraits<cc::mojom::SurfaceInfoDataView, viz::SurfaceInfo> {
+struct StructTraits<viz::mojom::SurfaceInfoDataView, viz::SurfaceInfo> {
   static const viz::SurfaceId& surface_id(
       const viz::SurfaceInfo& surface_info) {
     return surface_info.id();
@@ -25,7 +25,8 @@ struct StructTraits<cc::mojom::SurfaceInfoDataView, viz::SurfaceInfo> {
     return surface_info.size_in_pixels();
   }
 
-  static bool Read(cc::mojom::SurfaceInfoDataView data, viz::SurfaceInfo* out) {
+  static bool Read(viz::mojom::SurfaceInfoDataView data,
+                   viz::SurfaceInfo* out) {
     out->device_scale_factor_ = data.device_scale_factor();
     return data.ReadSurfaceId(&out->id_) &&
            data.ReadSizeInPixels(&out->size_in_pixels_) && out->is_valid();
