@@ -99,6 +99,24 @@
       "revId": "db3432e3ab347936376b2f9f87097e3e865b31f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf4aa27a_1a721778",
+        "filename": "components/ui_devtools/views/ui_element.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1229390
+      },
+      "writtenOn": "2017-08-04T15:34:19Z",
+      "side": 1,
+      "message": "Ok I added const here in GetBackingElement(). We also still need to const_cast in WindowElement::From(), ViewElement::From() and WidgetElement::From(). You can review the new patch. Thanks!\n\ntemplate \u003ctypename BackingT, typename T\u003e\nstatic BackingT* GetBackingElement(const UIElement* element) {\n  return T::From(element);\n};\n\n// static\naura::Window* WindowElement::From(const UIElement* element) {\n  DCHECK_EQ(UIElementType::WINDOW, element-\u003etype());\n  return static_cast\u003cWindowElement*\u003e(const_cast\u003cUIElement*\u003e(element))-\u003ewindow_;\n}",
+      "parentUuid": "6151ead1_70d7b624",
+      "revId": "db3432e3ab347936376b2f9f87097e3e865b31f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
