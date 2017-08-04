@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "fe31bdbc_9a24625f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-04T18:58:11Z",
+      "side": 1,
+      "message": "This should probably just be \u0027enable\u0027, since there\u0027s no way to disable a feature once installed, it\u0027s not really a toggle.",
+      "range": {
+        "startLine": 11,
+        "startChar": 18,
+        "endLine": 11,
+        "endChar": 24
+      },
+      "revId": "5e307572daacd37e165b236209dc1a4f859b8792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e47f24b9_8b33b164",
         "filename": "third_party/WebKit/Source/bindings/scripts/generate_conditional_features.py",
         "patchSetId": 1
@@ -25,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "b84ba2c3_201d32cc",
+        "filename": "third_party/WebKit/Source/bindings/scripts/generate_conditional_features.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-04T18:58:11Z",
+      "side": 1,
+      "message": "That would make more sense, agreed -- should the change be made in idl_reader.py, or at least commented here to explain what this block is doing.",
+      "parentUuid": "e47f24b9_8b33b164",
+      "range": {
+        "startLine": 103,
+        "startChar": 12,
+        "endLine": 103,
+        "endChar": 31
+      },
+      "revId": "5e307572daacd37e165b236209dc1a4f859b8792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f476a578_c6442970",
         "filename": "third_party/WebKit/Source/core/frame/Settings.json5",
         "patchSetId": 1
@@ -36,6 +83,23 @@
       "writtenOn": "2017-08-04T08:39:54Z",
       "side": 1,
       "message": "nit: 80 columns?",
+      "revId": "5e307572daacd37e165b236209dc1a4f859b8792",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08c1110a_0b7b03a3",
+        "filename": "third_party/WebKit/Source/core/origin_trials/OriginTrialContext.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-08-04T18:58:11Z",
+      "side": 1,
+      "message": "Can you add a comment with this that explains that it\n - forces a given origin-trial-enabled feature to be enabled in the current context\n - immediately adds the bindings to the javascript environment, if it is already initialized",
       "revId": "5e307572daacd37e165b236209dc1a4f859b8792",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
