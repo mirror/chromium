@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "058fa1ff_f9c2b69c",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/make_css_property_api.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-04T04:38:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b6ee69b_bbdd5a81",
+      "revId": "dfff786e5e16ec726c865d3aaeccee74404f31c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbc37070_a85c2ac5",
         "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPI.cpp.tmpl",
         "patchSetId": 18
@@ -33,6 +51,24 @@
       "revId": "dfff786e5e16ec726c865d3aaeccee74404f31c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2562d96f_1b10b9de",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPI.cpp.tmpl",
+        "patchSetId": 18
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-04T04:38:46Z",
+      "side": 1,
+      "message": "It doesn\u0027t really matter where it is as it is not output in the output file. I put it above since the license is actually part of the output, but it looks like it\u0027s more consistent with other files if I put it below.",
+      "parentUuid": "bbc37070_a85c2ac5",
+      "revId": "dfff786e5e16ec726c865d3aaeccee74404f31c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "df2bdf2f_08db4147",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPI.cpp.tmpl",
+        "patchSetId": 18
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-04T04:38:46Z",
+      "side": 1,
+      "message": "Oops, fixed.",
+      "parentUuid": "ae82e1d1_74b3e9ed",
+      "revId": "dfff786e5e16ec726c865d3aaeccee74404f31c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50f0a4d4_f97f6561",
         "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPIHeaders.h.tmpl",
         "patchSetId": 18
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "c5440c68_34007c60",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPIHeaders.h.tmpl",
+        "patchSetId": 18
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-04T04:38:46Z",
+      "side": 1,
+      "message": "Changed to CSSPropertyAPISubclass.h.tmpl.",
+      "parentUuid": "50f0a4d4_f97f6561",
+      "revId": "dfff786e5e16ec726c865d3aaeccee74404f31c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26e10c75_673a3ed2",
         "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPIHeaders.h.tmpl",
         "patchSetId": 18
@@ -84,6 +156,24 @@
       "revId": "dfff786e5e16ec726c865d3aaeccee74404f31c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e96e3c34_fea45471",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPIHeaders.h.tmpl",
+        "patchSetId": 18
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-04T04:38:46Z",
+      "side": 1,
+      "message": "Yup, the inheritance model doesn\u0027t work if they are static.",
+      "parentUuid": "26e10c75_673a3ed2",
+      "revId": "dfff786e5e16ec726c865d3aaeccee74404f31c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "6b371919_c7fe0ad6",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPICustom.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-04T04:38:46Z",
+      "side": 1,
+      "message": "I think you\u0027ve misunderstood the purpose of this file...\n\nCSSPropertyAPICustom defines the CSSPropertyAPI baseclass\u0027s ParseSingleValue and ParseShorthand. It\u0027s called \"Custom\" because otherwise it would have the same name as the generated CSSPropertyAPI.cpp. The \"Custom\" suffix is used where we combine generated and hand written code elsewhere (which is mildly unfortunate as the naming also makes us think of custom properties, even though it\u0027s not related to that).\n\nFor further context, this is part that allows us to replace that pesky if statement\n\nCSSPropertyDescriptor\u0026 desc \u003d CSSPropertyDescriptor::Get(property_id);\nif (desc.method)\n  desc.method();\n\nwith\n\nCSSPropertyAPI::Get(property_id).method();\n\n.",
+      "parentUuid": "2215ea75_144c6ff8",
+      "revId": "dfff786e5e16ec726c865d3aaeccee74404f31c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8daec253_26811615",
         "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPICustomHelper.h",
         "patchSetId": 18
@@ -136,6 +244,24 @@
       "revId": "dfff786e5e16ec726c865d3aaeccee74404f31c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c8ccd70_368fcb7e",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPICustomHelper.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-04T04:38:46Z",
+      "side": 1,
+      "message": "Done. I\u0027ve also renamed it to CSSPropertyAPIBaseHelper for clarity.",
+      "parentUuid": "8daec253_26811615",
+      "revId": "dfff786e5e16ec726c865d3aaeccee74404f31c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -171,6 +297,24 @@
       "revId": "dfff786e5e16ec726c865d3aaeccee74404f31c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57345fc8_c7077353",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSShorthandPropertyAPIOffset.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-04T04:38:46Z",
+      "side": 1,
+      "message": "Made it a TODO. I don\u0027t think it\u0027s worthwhile to file a bug for it though. The reason it\u0027s blocked is already mentioned, but I expanded a little for clarity.",
+      "parentUuid": "7b0191ae_fca4bf84",
+      "revId": "dfff786e5e16ec726c865d3aaeccee74404f31c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "cfbe3299_7feb520f",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPIFiles.h.tmpl",
+        "patchSetId": 18
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-04T04:38:46Z",
+      "side": 0,
+      "message": "The top of the file still contains something like this:\n\n// Generated from template:\n//   core/css/properties/templates/CSSPropertyAPIHeaders.h.tmpl\n// and input files:\n//   ../../third_party/WebKit/Source/core/css/CSSProperties.json5.\n\nIt is not always correct to say \"implements x property\" when multiple properties can share API classes, and it adds considerable complexity to the generator to list all the properties that use a given API here.\n\nAlso, I didn\u0027t update the README file in this CL (it\u0027s already big enough), so I\u0027m not sure I should be pointing anybody to it yet. I plan to do that later, but perhaps we should bikeshed the contents outside this CL.",
+      "parentUuid": "fc6f7536_1eb9bf98",
+      "revId": "540595c987b9e2739e3dd7ceb46b586944d74d3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b5a0925_86161571",
         "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParser.h",
         "patchSetId": 18
@@ -51,6 +69,24 @@
       "revId": "540595c987b9e2739e3dd7ceb46b586944d74d3b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acf61496_7af5c203",
+        "filename": "third_party/WebKit/Source/core/css/parser/CSSPropertyParser.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-08-04T04:38:46Z",
+      "side": 0,
+      "message": "No, I just moved it. The diff is attached in the CL description (https://gist.github.com/wilddamon/9e81c157f98ff1dbb68d43a79f89fe9c/revisions)",
+      "parentUuid": "2b5a0925_86161571",
+      "revId": "540595c987b9e2739e3dd7ceb46b586944d74d3b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
