@@ -1719,9 +1719,11 @@ bool LayerTreeHostImpl::DrawLayers(FrameData* frame) {
   // drawn.
   if (active_tree_->hud_layer()) {
     TRACE_EVENT0("cc", "DrawLayers.UpdateHudTexture");
+    // TODO(sohanjg): Temporarily do not pass context provider, so that SW
+    // raster path is chosen till we fix the FPS drop issue with gpu raster
+    // crbug.com/751732
     active_tree_->hud_layer()->UpdateHudTexture(
-        draw_mode, resource_provider_.get(),
-        layer_tree_frame_sink_->context_provider());
+        draw_mode, resource_provider_.get(), nullptr);
   }
 
   CompositorFrameMetadata metadata = MakeCompositorFrameMetadata();
