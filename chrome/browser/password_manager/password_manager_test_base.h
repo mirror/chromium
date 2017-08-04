@@ -116,7 +116,6 @@ class PasswordManagerBrowserTestBase : public InProcessBrowserTest {
   void SetUpInProcessBrowserTestFixture() override;
   void TearDownInProcessBrowserTestFixture() override;
 
- protected:
   // Wrapper around ui_test_utils::NavigateToURL that waits until
   // DidFinishLoad() fires. Normally this function returns after
   // DidStopLoading(), which caused flakiness as the NavigationObserver
