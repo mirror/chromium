@@ -275,7 +275,8 @@ void PropertyTreeManager::UpdateScrollAndScrollTranslationNodes(
   int transform_node_id = EnsureCompositorTransformNode(scroll_offset_node);
   auto& compositor_transform_node = *GetTransformTree().Node(transform_node_id);
 
-  auto compositor_element_id = scroll_offset_node->GetCompositorElementId();
+  auto compositor_element_id =
+      scroll_offset_node->ScrollNode()->GetCompositorElementId();
   if (compositor_element_id) {
     compositor_scroll_node.element_id = compositor_element_id;
     property_trees_.element_id_to_scroll_node_index[compositor_element_id] =
