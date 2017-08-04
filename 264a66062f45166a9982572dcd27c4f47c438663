@@ -46,6 +46,30 @@
       "revId": "264a66062f45166a9982572dcd27c4f47c438663",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bacdd2b9_1779eab3",
+        "filename": "ui/app_list/presenter/app_list_presenter_delegate.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-04T23:53:47Z",
+      "side": 1,
+      "message": "You want constexpr to ensure no static initializers. Maybe you need to use an export? What error are you seeing? As an alternative you could have static getters and move the declaration/definition into the .cc.",
+      "parentUuid": "9c10ea57_e976b652",
+      "range": {
+        "startLine": 66,
+        "startChar": 20,
+        "endLine": 66,
+        "endChar": 34
+      },
+      "revId": "264a66062f45166a9982572dcd27c4f47c438663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
