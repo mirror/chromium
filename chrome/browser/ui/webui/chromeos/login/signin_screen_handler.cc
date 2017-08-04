@@ -1307,7 +1307,7 @@ void SigninScreenHandler::HandleSignOutUser() {
 }
 
 void SigninScreenHandler::HandleOpenProxySettings() {
-  LoginDisplayHost::default_host()->OpenProxySettings();
+  LoginDisplayHost::default_host()->OpenProxySettings("");
 }
 
 void SigninScreenHandler::HandleLoginVisible(const std::string& source) {
