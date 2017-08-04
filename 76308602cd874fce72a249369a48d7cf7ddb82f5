@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fff3cc62_f5175e3c",
+        "filename": "chrome/browser/android/logo_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-04T14:28:42Z",
+      "side": 1,
+      "message": "Nit: This is now called Wrap().",
+      "range": {
+        "startLine": 30,
+        "startChar": 26,
+        "endLine": 30,
+        "endChar": 37
+      },
+      "revId": "76308602cd874fce72a249369a48d7cf7ddb82f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a6690a4_dae7ce1a",
+        "filename": "chrome/browser/android/logo_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-08-04T14:28:42Z",
+      "side": 1,
+      "message": "I don\u0027t think there is really a more _idiomatic_ way in Chromium. What you could do is make the callback own the object (via base::Owned), and replace the WeakPtrFactory with a flag that states whether the callback has run, or just reset the callback and use that as a signal.",
+      "range": {
+        "startLine": 34,
+        "startChar": 17,
+        "endLine": 35,
+        "endChar": 11
+      },
+      "revId": "76308602cd874fce72a249369a48d7cf7ddb82f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
