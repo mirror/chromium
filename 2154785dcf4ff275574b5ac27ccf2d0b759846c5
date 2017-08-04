@@ -22,6 +22,30 @@
       "revId": "2154785dcf4ff275574b5ac27ccf2d0b759846c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "370df2be_ba166610",
+        "filename": "chrome/browser/ui/app_list/search/answer_card/answer_card_search_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1116056
+      },
+      "writtenOn": "2017-08-04T17:58:52Z",
+      "side": 1,
+      "message": "With the current client-side implementation, the \"opposite\" is true: result_title can not be empty if issued_query is not empty.\nI\u0027d not introduce subtle (and unneeded) dependencies between the order of parsing in ParseResponseHeaders() and this place (like, will the developer who decides to change the parsing order, also go here and revert checks?), and leave the code as is.\n\nOr if you mean the contract with the server, it\u0027s simply dangerous to have DCHECKS for data received externally. Besides, the server happened to have problems with filling headers correctly.",
+      "parentUuid": "72e8c538_5fbcacf9",
+      "range": {
+        "startLine": 133,
+        "startChar": 52,
+        "endLine": 133,
+        "endChar": 72
+      },
+      "revId": "2154785dcf4ff275574b5ac27ccf2d0b759846c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
