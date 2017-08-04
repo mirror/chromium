@@ -16,6 +16,24 @@
       "revId": "ef663868b409b748109ca7c001ffb089ca272f5f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9f108c8_bb3760e2",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontCustomPlatformData.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1130679
+      },
+      "writtenOn": "2017-08-04T07:56:08Z",
+      "side": 1,
+      "message": "A left over, thanks for spotting that.",
+      "parentUuid": "e94a354c_f5e0715e",
+      "revId": "ef663868b409b748109ca7c001ffb089ca272f5f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
