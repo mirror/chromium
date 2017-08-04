@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87521d78_1d4c300a",
+        "filename": "ui/app_list/presenter/app_list_presenter_delegate.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-04T00:10:15Z",
+      "side": 1,
+      "message": "You should be able to use TimeDelta directly here. TimeDelta::FromMilliseconds is constexp, so it\u0027s safe to use in a static. You should declare this as constexpr too, to make sure that invariant is maintained.",
+      "range": {
+        "startLine": 66,
+        "startChar": 20,
+        "endLine": 66,
+        "endChar": 34
+      },
+      "revId": "264a66062f45166a9982572dcd27c4f47c438663",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
