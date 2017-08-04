@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "925ece45_efa8623f",
+        "filename": "ios/chrome/browser/ssl/ios_ssl_error_handler.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-04T19:06:42Z",
+      "side": 1,
+      "message": "The histogram for captive portal detection duration (CaptivePortal.Session.DetectionDuration) indicates that 50% of captive portal results arrive in over a minute. Given that and the fact that captive_portal::CaptivePortalDetector doesn\u0027t have a timeout, this code can often result in a very large delay. It might be a good idea to limit the time to wait for the result. In desktop Chrome we limit this to 3 seconds.",
+      "revId": "7926b4b2c0c355508946cb301c9ea0059b611306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae186995_a23d76d8",
+        "filename": "ios/chrome/browser/ui/ssl/captive_portal_login_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-08-04T19:06:42Z",
+      "side": 1,
+      "message": "I mentioned this in the design doc too, but I think this dialog should show a URL bar, otherwise a network attacker will be able to display a full screen modal dialog which would open a phishing vector.",
+      "range": {
+        "startLine": 1,
+        "startChar": 60,
+        "endLine": 1,
+        "endChar": 0
+      },
+      "revId": "7926b4b2c0c355508946cb301c9ea0059b611306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
