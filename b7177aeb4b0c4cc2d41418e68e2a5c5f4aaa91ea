@@ -1,0 +1,112 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2dd7cfd_bc7cd212",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 3
+      },
+      "lineNbr": 8331,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-04T08:52:47Z",
+      "side": 1,
+      "message": "I\u0027d leave the strings out of this CL; they\u0027re really unrelated to the feature flag.",
+      "revId": "b7177aeb4b0c4cc2d41418e68e2a5c5f4aaa91ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f8e9048_7564e787",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2726,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-04T08:52:47Z",
+      "side": 1,
+      "message": "nit: s/Enables/Enable/ (the common style seems to be imperative)",
+      "revId": "b7177aeb4b0c4cc2d41418e68e2a5c5f4aaa91ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d33cc44e_5ebdf87f",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-04T08:52:47Z",
+      "side": 1,
+      "message": "Does this work correctly when the speech icon is hidden?",
+      "revId": "b7177aeb4b0c4cc2d41418e68e2a5c5f4aaa91ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7174287_16a22dd1",
+        "filename": "chrome/browser/resources/local_ntp/voice.css",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-04T08:52:47Z",
+      "side": 1,
+      "message": "The new files should probably also go into a separate CL.",
+      "revId": "b7177aeb4b0c4cc2d41418e68e2a5c5f4aaa91ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dcb56b8_632b63bb",
+        "filename": "chrome/browser/search/tools/generate_integrity_header.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-04T08:52:47Z",
+      "side": 1,
+      "message": "Isn\u0027t all this already contained in the other CL?\nYou can set up dependent git branches locally, so that each uploaded CL will only contain the changes it should. Gerrit will link the CLs properly. Let me know if I should demonstrate :)",
+      "range": {
+        "startLine": 21,
+        "startChar": 56,
+        "endLine": 21,
+        "endChar": 0
+      },
+      "revId": "b7177aeb4b0c4cc2d41418e68e2a5c5f4aaa91ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "576e044b_63b27e38",
+        "filename": "chrome/common/chrome_features.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-08-04T08:52:47Z",
+      "side": 1,
+      "message": "nit: s/disabled/disables/",
+      "revId": "b7177aeb4b0c4cc2d41418e68e2a5c5f4aaa91ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
