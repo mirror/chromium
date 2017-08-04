@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "66ac51a4_53f510f5",
+        "filename": "chrome/browser/chromeos/lock_screen_apps/app_manager_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-08-04T21:55:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c66c08f6_0b8ba429",
+      "revId": "b12cdf4e84c97902767b876c2caca4da8d4d42d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f5972d9_24cbb412",
         "filename": "chrome/browser/chromeos/lock_screen_apps/app_manager_impl.cc",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "803e08f4_16c63e09",
+        "filename": "chrome/browser/chromeos/lock_screen_apps/app_manager_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-08-04T21:55:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f5972d9_24cbb412",
+      "revId": "b12cdf4e84c97902767b876c2caca4da8d4d42d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc650077_60b059c3",
         "filename": "chrome/browser/chromeos/lock_screen_apps/app_window_metrics_tracker.cc",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-04T18:24:57Z",
       "side": 1,
       "message": "It\u0027s unfortunate that there are two variables encoding if the window is in foreground/background. Does it make sense for the enum to be State::kLaunched instead of State::kBackground or State::kForeground, and then use window_backgrounded_ as the only source of truth for foreground/background?",
+      "revId": "b12cdf4e84c97902767b876c2caca4da8d4d42d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14b5fdd0_a846683e",
+        "filename": "chrome/browser/chromeos/lock_screen_apps/app_window_metrics_tracker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-08-04T21:55:34Z",
+      "side": 1,
+      "message": "it would, with an exception that State is one of the enums sent to UMA, and foreground/background distinction is something I\u0027d like to track, plus having different states makes it easier to track changes in SetState.\n\nI did some refactoring to get rid off window_backgrounded_",
+      "parentUuid": "fc650077_60b059c3",
       "revId": "b12cdf4e84c97902767b876c2caca4da8d4d42d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "baf52b16_e120c83a",
+        "filename": "chrome/browser/chromeos/lock_screen_apps/app_window_metrics_tracker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-08-04T21:55:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfda5325_b2facdd8",
+      "revId": "b12cdf4e84c97902767b876c2caca4da8d4d42d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "832c11a6_6a02537d",
         "filename": "tools/metrics/histograms/enums.xml",
         "patchSetId": 4
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "2995e7e9_f7d9de06",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 22591,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-08-04T21:55:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "832c11a6_6a02537d",
+      "revId": "b12cdf4e84c97902767b876c2caca4da8d4d42d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9be19b63_baa1de54",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4
@@ -101,6 +191,24 @@
       "revId": "b12cdf4e84c97902767b876c2caca4da8d4d42d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6b86461_cf1e95d3",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 1719,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-08-04T21:55:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9be19b63_baa1de54",
+      "revId": "b12cdf4e84c97902767b876c2caca4da8d4d42d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
