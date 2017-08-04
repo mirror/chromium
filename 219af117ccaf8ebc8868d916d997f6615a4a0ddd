@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "b5faca1d_da979f68",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-04T01:51:12Z",
+      "side": 1,
+      "message": "I think that would be ideal, if you don\u0027t mind. In case you don\u0027t know, here\u0027s a command you can use to do this automatically. From your chromium checkout:\n\n$ git grep -l \u0027ContentFilter\u0027 | xargs sed -i \u0027s/ContentFilter/TLSInterception/g\u0027\n(you might want to just run `git grep -l \u0027ContentFilter\u0027` on its own first and sanity-check the files to make sure that string doesn\u0027t appear in other random files that don\u0027t have to do with this project)\n\nand you can repeat for other substitutions like \"content filter\" -\u003e \"TLS interception software\".",
+      "parentUuid": "e5688859_88933ac2",
+      "range": {
+        "startLine": 21,
+        "startChar": 8,
+        "endLine": 21,
+        "endChar": 26
+      },
+      "revId": "219af117ccaf8ebc8868d916d997f6615a4a0ddd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c54a782_c5619dae",
         "filename": "chrome/browser/ssl/ssl_error_assistant.proto",
         "patchSetId": 4
