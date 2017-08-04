@@ -95,6 +95,17 @@ class ASH_EXPORT SessionController
   // Returns true if the current user is a child account.
   bool IsUserChild() const;
 
+  // Returns true if the current user is a user with gaia account.
+  bool IsUserHasGaiaAccount() const;
+
+  // Returns true if the current user is the primary user in a multi-profile
+  // scenario.
+  bool IsUserPrimary() const;
+
+  // Returns true if the current user has the profile newly created on the
+  // device (i.e. first time login on the device).
+  bool IsUserNewProfile() const;
+
   // Returns true if the current user session is a kiosk session (either
   // chrome app kiosk or ARC kiosk).
   bool IsKioskSession() const;

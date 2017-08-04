@@ -90,6 +90,7 @@ class NativeCursorManagerAsh;
 class AshTouchTransformController;
 class AutoclickController;
 class BluetoothNotificationController;
+class BluetoothPowerController;
 class BrightnessControlDelegate;
 class CastConfigController;
 class DisplayColorManager;
@@ -732,8 +733,8 @@ class ASH_EXPORT Shell : public SessionObserver,
   // Only initialized for mash. Can be null in ash_standalone (when chrome is
   // not running) or when reconnecting to the mojo pref service after
   // multiuser profile switch.
-  std::unique_ptr<::PrefService> profile_pref_service_;
-  std::unique_ptr<::PrefService> local_state_;
+  std::unique_ptr<PrefService> profile_pref_service_mash_;
+  std::unique_ptr<PrefService> local_state_mash_;
 
   std::unique_ptr<views::corewm::TooltipController> tooltip_controller_;
   LinkHandlerModelFactory* link_handler_model_factory_;
@@ -786,6 +787,7 @@ class ASH_EXPORT Shell : public SessionObserver,
       resolution_notification_controller_;
   std::unique_ptr<BluetoothNotificationController>
       bluetooth_notification_controller_;
+  std::unique_ptr<BluetoothPowerController> bluetooth_power_controller_;
   std::unique_ptr<TrayBluetoothHelper> tray_bluetooth_helper_;
   std::unique_ptr<VirtualKeyboardController> virtual_keyboard_controller_;
   std::unique_ptr<chromeos::AudioA11yController> audio_a11y_controller_;
