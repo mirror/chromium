@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e5688859_88933ac2",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-04T01:45:52Z",
+      "side": 1,
+      "message": "Sure! I have a lot of references to the \"content filter\" language throughout these files. Do you want me to rename the others as well?",
+      "parentUuid": "8793159f_706c0d44",
+      "range": {
+        "startLine": 21,
+        "startChar": 8,
+        "endLine": 21,
+        "endChar": 26
+      },
+      "revId": "219af117ccaf8ebc8868d916d997f6615a4a0ddd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c54a782_c5619dae",
         "filename": "chrome/browser/ssl/ssl_error_assistant.proto",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "219af117ccaf8ebc8868d916d997f6615a4a0ddd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd830810_059b7604",
+        "filename": "chrome/browser/ssl/ssl_error_assistant.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-04T01:45:52Z",
+      "side": 1,
+      "message": "That\u0027s a good point. Changing!",
+      "parentUuid": "4c54a782_c5619dae",
+      "range": {
+        "startLine": 22,
+        "startChar": 11,
+        "endLine": 22,
+        "endChar": 13
+      },
+      "revId": "219af117ccaf8ebc8868d916d997f6615a4a0ddd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "df6230c7_2082a42f",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-04T01:45:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f283d11_38df6b2c",
+      "range": {
+        "startLine": 204,
+        "startChar": 58,
+        "endLine": 204,
+        "endChar": 60
+      },
+      "revId": "219af117ccaf8ebc8868d916d997f6615a4a0ddd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4cdba1e8_f02cd6ea",
         "filename": "chrome/browser/ssl/ssl_error_handler.cc",
         "patchSetId": 4
@@ -91,6 +163,30 @@
       "revId": "219af117ccaf8ebc8868d916d997f6615a4a0ddd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "002b918c_81598eda",
+        "filename": "chrome/browser/ssl/ssl_error_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 382,
+      "author": {
+        "id": 1229947
+      },
+      "writtenOn": "2017-08-04T01:45:52Z",
+      "side": 1,
+      "message": "Sure! I actually copied this code from the captive portal equivalent above.",
+      "parentUuid": "4cdba1e8_f02cd6ea",
+      "range": {
+        "startLine": 382,
+        "startChar": 4,
+        "endLine": 382,
+        "endChar": 9
+      },
+      "revId": "219af117ccaf8ebc8868d916d997f6615a4a0ddd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
