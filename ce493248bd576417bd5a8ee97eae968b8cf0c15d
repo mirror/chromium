@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fdd26a02_ef275236",
+        "filename": "ui/webui/resources/js/cr/ui/list_selection_controller.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-04T18:16:43Z",
+      "side": 1,
+      "message": "Nit: s/Inherited classes/Sub-classes",
+      "revId": "ce493248bd576417bd5a8ee97eae968b8cf0c15d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
