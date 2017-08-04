@@ -577,5 +577,10 @@
     "prefix": "mojo-blobs",
     "base": "fast/files",
     "args": ["--enable-features=MojoBlobs"]
+  },
+  {
+    "prefix": "virtual-buggy",
+    "base": "buggy",
+    "args": ["--garbage-arg"]
   }
 ]
