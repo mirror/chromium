@@ -9,6 +9,9 @@
 namespace blink {
 
 LayoutUnit NGMarginStrut::Sum() const {
+  if (seen_only_quirky_margins)
+    return initial_margin;
+
   return margin + negative_margin;
 }
 
@@ -16,12 +19,14 @@ bool NGMarginStrut::operator==(const NGMarginStrut& other) const {
   return margin == other.margin && negative_margin == other.negative_margin;
 }
 
-void NGMarginStrut::Append(const LayoutUnit& value) {
+void NGMarginStrut::Append(const LayoutUnit& value, bool is_quirky) {
   if (value < 0) {
     negative_margin = std::min(value, negative_margin);
   } else {
     margin = std::max(value, margin);
   }
+
+  seen_only_quirky_margins &= is_quirky;
 }
 
 String NGMarginStrut::ToString() const {

@@ -80,8 +80,20 @@ bool NGLayoutInputNode::IsReplaced() const {
   return box_->IsLayoutReplaced();
 }
 
+bool NGLayoutInputNode::IsBody() const {
+  return box_->IsBody();
+}
+
+bool NGLayoutInputNode::IsTableCell() const {
+  return box_->IsBody();
+}
+
 bool NGLayoutInputNode::CreatesNewFormattingContext() const {
   return box_->AvoidsFloats();
+}
+
+bool NGLayoutInputNode::InQuirksMode() const {
+  return box_->GetDocument().InQuirksMode();
 }
 
 RefPtr<NGLayoutResult> NGLayoutInputNode::Layout(NGConstraintSpace* space,
