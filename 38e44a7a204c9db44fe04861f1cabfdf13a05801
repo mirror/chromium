@@ -500,6 +500,30 @@
     },
     {
       "key": {
+        "uuid": "4fc6e380_0f7f8562",
+        "filename": "ios/chrome/content_widget_extension/content_widget_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-08-04T16:17:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0fe14087_9ceceabc",
+      "range": {
+        "startLine": 156,
+        "startChar": 6,
+        "endLine": 156,
+        "endChar": 14
+      },
+      "revId": "38e44a7a204c9db44fe04861f1cabfdf13a05801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4cb85dbe_958fa80c",
         "filename": "ios/chrome/content_widget_extension/content_widget_view.mm",
         "patchSetId": 2
