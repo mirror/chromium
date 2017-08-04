@@ -108,6 +108,29 @@
     },
     {
       "key": {
+        "uuid": "10b8f219_1cee18fb",
+        "filename": "net/http/http_stream_parser.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-04T16:55:00Z",
+      "side": 1,
+      "message": "load_flags are too much of a catch all, I don\u0027t think we want to add another just for this.  Headers can be pretty big, though.  Let me think a bit about this (Sorry for the delay)",
+      "range": {
+        "startLine": 230,
+        "startChar": 6,
+        "endLine": 230,
+        "endChar": 27
+      },
+      "revId": "0e7e846da8164ecd2605ab5077e0a2ced5afd87b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "40eb3493_0b7a022c",
         "filename": "net/http/http_transaction_test_util.h",
         "patchSetId": 4
@@ -173,6 +196,29 @@
       "side": 1,
       "message": "That\u0027s because you have a semi-colon on the end that isn\u0027t needed.  I\u0027ve run into this myself a few times. :)",
       "parentUuid": "6fae74da_e8e4d81a",
+      "revId": "0e7e846da8164ecd2605ab5077e0a2ced5afd87b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77bd0c33_b0b67c0e",
+        "filename": "net/spdy/core/spdy_header_block_test.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-04T16:55:00Z",
+      "side": 1,
+      "message": "I think we can get rid of this, and the test that uses this.  This was solely for devtools.",
+      "range": {
+        "startLine": 128,
+        "startChar": 1,
+        "endLine": 128,
+        "endChar": 0
+      },
       "revId": "0e7e846da8164ecd2605ab5077e0a2ced5afd87b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -255,6 +301,52 @@
       "side": 1,
       "message": "It doesn\u0027t seem to be applicable for most of them.",
       "parentUuid": "812ec4a2_e7757665",
+      "revId": "0e7e846da8164ecd2605ab5077e0a2ced5afd87b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d04a17db_5081c516",
+        "filename": "net/url_request/url_request_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 11607,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-04T16:55:00Z",
+      "side": 1,
+      "message": "We should have a test with a cached response, where we get a 204 and return the response from the cache, and a test where we get a response from the cache without revalidation.\n\nWe should also have a test where nothing is sent over the wire (a data URL or file URL is fine).\n\nAnd a test where the request fails before sending headers.",
+      "range": {
+        "startLine": 11607,
+        "startChar": 27,
+        "endLine": 11607,
+        "endChar": 45
+      },
+      "revId": "0e7e846da8164ecd2605ab5077e0a2ced5afd87b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fea1f29_0dead975",
+        "filename": "net/url_request/url_request_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 11623,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-04T16:55:00Z",
+      "side": 1,
+      "message": "These methods are normally called after receiving headers, right (Not after completion, which is what these tests are doing).  We should call at the same time.",
+      "range": {
+        "startLine": 11623,
+        "startChar": 30,
+        "endLine": 11623,
+        "endChar": 37
+      },
       "revId": "0e7e846da8164ecd2605ab5077e0a2ced5afd87b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
