@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c26ceb29_df537ebf",
+        "filename": "net/url_request/url_request_http_job.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 879,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-08-04T00:26:50Z",
+      "side": 1,
+      "message": "I didn\u0027t do this in this CL because it\u0027s a little bit bigger change and I want to try to merge this back to M61 if possible.",
+      "range": {
+        "startLine": 879,
+        "startChar": 20,
+        "endLine": 879,
+        "endChar": 0
+      },
+      "revId": "3fae0ccccaec60a300f109ab651ced12825597c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
