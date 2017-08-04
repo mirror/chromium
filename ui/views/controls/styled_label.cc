@@ -211,6 +211,13 @@ gfx::Insets StyledLabel::GetInsets() const {
 }
 
 gfx::Size StyledLabel::CalculatePreferredSize() const {
+  // Try to re-use a calculation done for a prior GetHeightForWidth(). But, if
+  // the size is invalidated via PrefrredSizeChanged(), without a subsequent
+  // call to GetHeightForWidth(), recalculate it. In this case, assume that the
+  // label wants to keep its width but possibly change its height.
+  int w = GetLocalBounds().width();
+  if (w != 0 && calculated_size_ == gfx::Size())
+    return const_cast<StyledLabel*>(this)->CalculateAndDoLayout(w, true);
   return calculated_size_;
 }
 
