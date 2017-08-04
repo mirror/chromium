@@ -175,6 +175,30 @@
       "revId": "295025fe793967873757bd08611af1df445cf0f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea2580fa_bb8615c4",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1002405
+      },
+      "writtenOn": "2017-08-04T11:45:57Z",
+      "side": 1,
+      "message": "Ack. Thanks for investigating.",
+      "parentUuid": "d4b8eb18_c7a6b1b8",
+      "range": {
+        "startLine": 180,
+        "startChar": 4,
+        "endLine": 180,
+        "endChar": 6
+      },
+      "revId": "295025fe793967873757bd08611af1df445cf0f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
