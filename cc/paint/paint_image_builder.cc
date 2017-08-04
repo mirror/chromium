@@ -7,10 +7,20 @@
 namespace cc {
 
 PaintImageBuilder::PaintImageBuilder() = default;
+PaintImageBuilder::PaintImageBuilder(PaintImage image)
+    : paint_image_(std::move(image)) {}
 PaintImageBuilder::~PaintImageBuilder() = default;
 
 PaintImage PaintImageBuilder::TakePaintImage() const {
-  DCHECK(!paint_image_.sk_image_ || !paint_image_.paint_record_);
+#if DCHECK_IS_ON()
+  DCHECK(id_set_);
+  // TODO(khushalsagar): Expand this for decoder backed images.
+  if (paint_image_.sk_image_) {
+    DCHECK(!paint_image_.paint_record_);
+  } else if (paint_image_.paint_record_) {
+    DCHECK(!paint_image_.sk_image_);
+  }
+#endif
   return std::move(paint_image_);
 }
 

@@ -13,18 +13,6 @@ base::AtomicSequenceNumber s_next_id_;
 }
 
 PaintImage::PaintImage() = default;
-PaintImage::PaintImage(Id id,
-                       sk_sp<SkImage> sk_image,
-                       AnimationType animation_type,
-                       CompletionState completion_state,
-                       size_t frame_count,
-                       bool is_multipart)
-    : sk_image_(std::move(sk_image)),
-      id_(id),
-      animation_type_(animation_type),
-      completion_state_(completion_state),
-      frame_count_(frame_count),
-      is_multipart_(is_multipart) {}
 PaintImage::PaintImage(const PaintImage& other) = default;
 PaintImage::PaintImage(PaintImage&& other) = default;
 PaintImage::~PaintImage() = default;
