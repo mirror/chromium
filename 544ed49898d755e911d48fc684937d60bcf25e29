@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13d1b982_42edf57a",
+        "filename": "extensions/shell/browser/shell_native_app_window_mac.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-08-04T20:53:26Z",
+      "side": 1,
+      "message": "I\u0027m not likely to support multiple windows on Mac anytime soon, so I just kept this the same as what ShellDesktopControllerMac had.",
+      "revId": "544ed49898d755e911d48fc684937d60bcf25e29",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
