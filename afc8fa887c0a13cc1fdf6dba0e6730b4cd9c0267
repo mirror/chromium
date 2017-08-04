@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b5285b1_eca34c8f",
+        "filename": "ui/gfx/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-04T19:57:03Z",
+      "side": 0,
+      "message": "Should we still have the !is_ios check?",
+      "revId": "afc8fa887c0a13cc1fdf6dba0e6730b4cd9c0267",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
