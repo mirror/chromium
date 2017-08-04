@@ -394,6 +394,30 @@
     },
     {
       "key": {
+        "uuid": "7fda9372_406033d0",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/BlockedURLsPane.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-04T02:47:41Z",
+      "side": 1,
+      "message": "I disagree. Even if this way is better (which is questionable by itself), changing the code without good enough reason just introduces more noise. WDYT?\n\nI also find it strange to do refactoring in a patch stating to accomplish entirely different thing.",
+      "parentUuid": "c0118993_7385f08f",
+      "range": {
+        "startLine": 126,
+        "startChar": 11,
+        "endLine": 126,
+        "endChar": 17
+      },
+      "revId": "d161ea8889989fa9b9a34fb51e4ed2130dd27e19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6a89ceaa_64cc6fb4",
         "filename": "third_party/WebKit/Source/devtools/front_end/ui/ListWidget.js",
         "patchSetId": 1
