@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "faf760bf_212729bf",
+        "filename": "ui/webui/resources/cr_components/README.md",
+        "patchSetId": 9
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-04T21:27:34Z",
+      "side": 1,
+      "message": "That\u0027s kind of an implementation detail, but sure, done.",
+      "parentUuid": "6512eb4c_e9647adf",
+      "range": {
+        "startLine": 8,
+        "startChar": 62,
+        "endLine": 8,
+        "endChar": 73
+      },
+      "revId": "8c39096eeb57aed27a100f5b312700e61cc09640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b870f0d7_f0f36689",
         "filename": "ui/webui/resources/cr_components/README.md",
         "patchSetId": 9
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "0cbb95fd_be81e507",
+        "filename": "ui/webui/resources/cr_components/README.md",
+        "patchSetId": 9
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-04T21:27:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b870f0d7_f0f36689",
+      "revId": "8c39096eeb57aed27a100f5b312700e61cc09640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d955d965_6ac5684d",
         "filename": "ui/webui/resources/cr_components/compiled_resources2.gyp",
         "patchSetId": 9
@@ -53,6 +95,24 @@
       "writtenOn": "2017-08-04T20:47:06Z",
       "side": 1,
       "message": "nit: Is it a convention to attach the \"_resources\" suffix? Can we just do \"cr_components\"? The name is not used anyway since third_party/closure_compiler/compiled_resources2.gyp is using an \"*\".",
+      "revId": "8c39096eeb57aed27a100f5b312700e61cc09640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9bce11c9_61d4fc86",
+        "filename": "ui/webui/resources/cr_components/compiled_resources2.gyp",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-04T21:27:34Z",
+      "side": 1,
+      "message": "We use this convention for targets grouping subfolder includes, vs. individual components. See cr_elements/ and settings/ for other examples where we do this.",
+      "parentUuid": "d955d965_6ac5684d",
       "revId": "8c39096eeb57aed27a100f5b312700e61cc09640",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -76,6 +136,24 @@
     },
     {
       "key": {
+        "uuid": "d4310e35_895c898e",
+        "filename": "ui/webui/resources/cr_elements/READE.md",
+        "patchSetId": 9
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-04T21:27:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "78bca0e9_354a070e",
+      "revId": "8c39096eeb57aed27a100f5b312700e61cc09640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c3d939f0_48749751",
         "filename": "ui/webui/resources/cr_elements/READE.md",
         "patchSetId": 9
@@ -90,6 +168,24 @@
       "revId": "8c39096eeb57aed27a100f5b312700e61cc09640",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "040deb43_1fe82be6",
+        "filename": "ui/webui/resources/cr_elements/READE.md",
+        "patchSetId": 9
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-04T21:27:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3d939f0_48749751",
+      "revId": "8c39096eeb57aed27a100f5b312700e61cc09640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
