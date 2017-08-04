@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42499274_70759ca0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-04T03:05:50Z",
+      "side": 1,
+      "message": "test-specific",
+      "range": {
+        "startLine": 9,
+        "startChar": 22,
+        "endLine": 9,
+        "endChar": 35
+      },
+      "revId": "44e3006c783ca168645bf7628083ba2ea799125e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c38477d3_96fa6768",
+        "filename": "chrome/browser/apps/app_url_redirector.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-04T03:05:50Z",
+      "side": 1,
+      "message": "Can this just be called |app| because it\u0027s only going to ever be applied to a non-app extension, right?",
+      "range": {
+        "startLine": 38,
+        "startChar": 21,
+        "endLine": 38,
+        "endChar": 30
+      },
+      "revId": "44e3006c783ca168645bf7628083ba2ea799125e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e77a570_d3bb5f98",
+        "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-04T03:05:50Z",
+      "side": 1,
+      "message": "const std::string\u0026 href",
+      "range": {
+        "startLine": 91,
+        "startChar": 24,
+        "endLine": 91,
+        "endChar": 41
+      },
+      "revId": "44e3006c783ca168645bf7628083ba2ea799125e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b630e709_5a7d9db8",
+        "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-04T03:05:50Z",
+      "side": 1,
+      "message": "querySelector(\u0027a\u0027)\n\nThen you don\u0027t need an id on the elements in the HTML files. (And the documentation for this method is no longer a lie.)",
+      "range": {
+        "startLine": 97,
+        "startChar": 29,
+        "endLine": 97,
+        "endChar": 51
+      },
+      "revId": "44e3006c783ca168645bf7628083ba2ea799125e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a36cbf28_836dfb3b",
+        "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-04T03:05:50Z",
+      "side": 1,
+      "message": "const",
+      "range": {
+        "startLine": 97,
+        "startChar": 9,
+        "endLine": 97,
+        "endChar": 12
+      },
+      "revId": "44e3006c783ca168645bf7628083ba2ea799125e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f01f1991_b9ef5321",
+        "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-04T03:05:50Z",
+      "side": 1,
+      "message": "const",
+      "range": {
+        "startLine": 100,
+        "startChar": 9,
+        "endLine": 100,
+        "endChar": 12
+      },
+      "revId": "44e3006c783ca168645bf7628083ba2ea799125e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a09e571_9427ffae",
+        "filename": "chrome/browser/extensions/bookmark_app_url_redirector_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-04T03:05:50Z",
+      "side": 1,
+      "message": "Every single test uses LinkTarget::SELF. Are you planning to add ::BLANK tests?\n\nPerhaps you should parameterize the tests (TEST_P) so each test has a SELF and BLANK variant?",
+      "range": {
+        "startLine": 126,
+        "startChar": 45,
+        "endLine": 126,
+        "endChar": 61
+      },
+      "revId": "44e3006c783ca168645bf7628083ba2ea799125e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a56a4a7_106a20ad",
+        "filename": "chrome/test/data/extensions/bookmark_apps/url_handlers/in_scope/index.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-08-04T03:05:50Z",
+      "side": 1,
+      "message": "I don\u0027t think Copyright notices are necessary in a test .html file.\n\nPrecedent: https://cs.chromium.org/chromium/src/chrome/test/data/extensions/app_with_tab_container/empty.html",
+      "revId": "44e3006c783ca168645bf7628083ba2ea799125e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
