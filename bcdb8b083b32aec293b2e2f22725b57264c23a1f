@@ -22,6 +22,30 @@
       "revId": "bcdb8b083b32aec293b2e2f22725b57264c23a1f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d5ba24e_c6b7a118",
+        "filename": "remoting/host/linux/remoting_user_session.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1144161
+      },
+      "writtenOn": "2017-08-04T22:01:13Z",
+      "side": 1,
+      "message": "I was actually quite convinced I had named this DetermineExecutablePath. Oops.",
+      "parentUuid": "2944b40b_a5ab4e56",
+      "range": {
+        "startLine": 266,
+        "startChar": 28,
+        "endLine": 266,
+        "endChar": 0
+      },
+      "revId": "bcdb8b083b32aec293b2e2f22725b57264c23a1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
