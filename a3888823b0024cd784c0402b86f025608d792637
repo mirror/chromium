@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e4530fa_bbde99a3",
+        "filename": "chrome/browser/safe_browsing/download_protection_service_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-08-04T23:57:28Z",
+      "side": 1,
+      "message": "Looks like this will get leaked.  Do you want a unique_ptr?",
+      "range": {
+        "startLine": 126,
+        "startChar": 33,
+        "endLine": 126,
+        "endChar": 64
+      },
+      "revId": "a3888823b0024cd784c0402b86f025608d792637",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f652d39_6ad27a9d",
+        "filename": "chrome/browser/safe_browsing/download_protection_service_unittest.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 2552,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-08-04T23:57:28Z",
+      "side": 1,
+      "message": "Do you want to verify the report is filled in correctly?",
+      "revId": "a3888823b0024cd784c0402b86f025608d792637",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
