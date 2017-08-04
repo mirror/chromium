@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7feeb000_1bf23115",
+        "filename": "chrome/browser/extensions/api/automation_internal/automation_event_router.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-04T19:42:17Z",
+      "side": 1,
+      "message": "No AXTreeUpdate here?",
+      "range": {
+        "startLine": 57,
+        "startChar": 29,
+        "endLine": 57,
+        "endChar": 33
+      },
+      "revId": "cf51737768e080ae9887fde14b7de849787e539f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2afa3703_e330664c",
+        "filename": "chrome/renderer/extensions/automation_internal_custom_bindings.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 773,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-08-04T19:42:17Z",
+      "side": 1,
+      "message": "clang-format got pretty confused here. I wonder why; src/.clang-format tries to teach it about IPC_BEGIN_MESSAGE_MAP. Worst case, file bug, and add `// clang-format off` / `// clang-format on` around this :-(",
+      "range": {
+        "startLine": 773,
+        "startChar": 20,
+        "endLine": 773,
+        "endChar": 23
+      },
+      "revId": "cf51737768e080ae9887fde14b7de849787e539f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
