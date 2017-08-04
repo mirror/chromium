@@ -16,6 +16,47 @@
       "revId": "e435c2b5fc1261f7cf393a16b21d6d3543698f78",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a26581b_28c8743d",
+        "filename": "content/browser/compositor/gpu_process_transport_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 351,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-04T23:57:37Z",
+      "side": 1,
+      "message": "I suggested the same thing earlier on:) Tom said he would do a follow on patch.",
+      "parentUuid": "9e33ee99_b78b0c16",
+      "revId": "e435c2b5fc1261f7cf393a16b21d6d3543698f78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bacbc45e_fe0e232b",
+        "filename": "ui/aura/window_tree_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-08-04T23:57:37Z",
+      "side": 1,
+      "message": "Is it possible to supply force_software_compositing as an argument rather than a virtual function? That is cleaner so that subclasses don\u0027t need to cache this information (such as you are doing in desktop_window_tree_host_x11.cc).",
+      "range": {
+        "startLine": 259,
+        "startChar": 22,
+        "endLine": 259,
+        "endChar": 38
+      },
+      "revId": "e435c2b5fc1261f7cf393a16b21d6d3543698f78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
