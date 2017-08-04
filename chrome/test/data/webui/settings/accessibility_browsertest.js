@@ -13,8 +13,8 @@ var ROOT_PATH = '../../../../../';
 // Polymer BrowserTest fixture and aXe-core accessibility audit.
 GEN_INCLUDE([
   ROOT_PATH + 'chrome/test/data/webui/polymer_browser_test_base.js',
-  ROOT_PATH + 'chrome/test/data/webui/settings/accessibility_audit.js',
   ROOT_PATH + 'third_party/axe-core/axe.js',
+  ROOT_PATH + 'chrome/test/data/webui/settings/accessibility_test.js',
 ]);
 
 /**
@@ -46,11 +46,9 @@ SettingsAccessibilityTest.prototype = {
   },
 };
 
-// TODO(quacht): Enable the audit rules failed in a separate CL after
-// resolving the violation or after adding the violation exception framework.
-// http://crbug.com/748608
-// http://crbug.com/748632
-var rulesToSkip = ['color-contrast', 'region', 'skip-link'];
+// Skip these rules which are typically not run by the aXe audit by default.
+// 'region' times out and 'skip-link' is not needed since we use headings markup
+var rulesToSkip = ['region', 'skip-link'];
 
 // Define a unit test for every audit rule.
 AccessibilityTest.ruleIds.forEach(function(ruleId) {
