@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f95b204e_0d2d8fe0",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/LocalWindowProxy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-08-04T22:22:02Z",
+      "side": 1,
+      "message": "SCOPED_BLINK_UMA_HISTOGRAM_TIMER uses DEFINE_STATIC_LOCAL to store the histogram, so you can\u0027t uses it with a variable argument like this, since it will always record to whichever histogram it hits first.",
+      "range": {
+        "startLine": 197,
+        "startChar": 4,
+        "endLine": 200,
+        "endChar": 62
+      },
+      "revId": "2978824d969cd4967821f87fa36161d06d0c6228",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
