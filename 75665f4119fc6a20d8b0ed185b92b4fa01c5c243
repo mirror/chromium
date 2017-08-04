@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "ea2b0724_0c94ddaf",
+        "filename": "chrome/browser/plugins/pdf_iframe_navigation_throttle.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-04T22:59:19Z",
+      "side": 1,
+      "message": "By \"entire block\" i meant the \"IsPluginAvailable\" check (lines 60-69 here). sorry if i was unclear",
+      "parentUuid": "4842130f_550b12f2",
+      "revId": "75665f4119fc6a20d8b0ed185b92b4fa01c5c243",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3bfa810e_7bbadaa1",
         "filename": "chrome/browser/plugins/pdf_iframe_navigation_throttle.h",
         "patchSetId": 4
