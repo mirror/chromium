@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f113fa1e_317901da",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/hr-time/timeOrigin.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1162220
+      },
+      "writtenOn": "2017-08-04T20:13:47Z",
+      "side": 0,
+      "message": "Removed as it is now being tested in the second test.",
+      "revId": "4681197f97a2e4fedd7e160563b888f71c2adc17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
