@@ -119,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "592277df_7ec0d2ee",
+        "filename": "chrome/browser/net/android_status_listener.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1121934
+      },
+      "writtenOn": "2017-08-04T17:33:32Z",
+      "side": 1,
+      "message": "I wrapped it in the chrome_browser_net namespace to hopefully avoid confusion with android::ApplicationStatusListener.",
+      "parentUuid": "6a327f50_44a06e4f",
+      "revId": "d1caaa1c7427754c296ae893aa08331e15d39079",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f891124_8d6ceb33",
         "filename": "net/extras/status_listener.h",
         "patchSetId": 2
