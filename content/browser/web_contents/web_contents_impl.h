@@ -32,6 +32,7 @@
 #include "content/browser/renderer_host/render_view_host_impl.h"
 #include "content/browser/renderer_host/render_widget_host_delegate.h"
 #include "content/browser/wake_lock/wake_lock_context_host.h"
+#include "content/browser/web_contents_importance.h"
 #include "content/common/content_export.h"
 #include "content/public/browser/color_chooser.h"
 #include "content/public/browser/download_url_parameters.h"
@@ -295,6 +296,13 @@ class CONTENT_EXPORT WebContentsImpl
   std::vector<WebContentsImpl*> GetWebContentsAndAllInner();
 
   void NotifyManifestUrlChanged(const base::Optional<GURL>& manifest_url);
+
+  // Set importance of WebContents that's independent from visibility.
+  //
+  // Note this is only used by and implemented on Android which exposes this API
+  // through public java code. If this useful on other platforms, then this
+  // can be moved to the public class.
+  void SetImportance(WebContentsImportance importance);
 
   // WebContents ------------------------------------------------------
   WebContentsDelegate* GetDelegate() override;
