@@ -16,6 +16,24 @@
       "revId": "f2f6d8de2a633c4fe3c63fec01a869f452a2514b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "570a0655_f6d1d0c0",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-08-04T08:07:58Z",
+      "side": 0,
+      "message": "I\u0027ve changed it to just \"(This may be automated in the future, see https://crbug.com/711447)\".\n\nI think that even if people are currently doing a good job of checking, it\u0027s overhead compared to using LayoutTests. In particular if it\u0027s sometimes hard to understand the upstream status, it may decrease wpt usage. So, I hope that we can improve on this to minimize overhead, even though a new CQ builder probably isn\u0027t the only way.",
+      "parentUuid": "a28da98a_6a3d9df2",
+      "revId": "f2f6d8de2a633c4fe3c63fec01a869f452a2514b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
