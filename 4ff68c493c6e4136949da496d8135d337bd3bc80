@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1e648406_b479d4ad",
+        "filename": "chrome/browser/extensions/api/image_writer_private/destroy_partitions_operation_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-04T00:32:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "437d9377_a5c486a3",
+      "revId": "4ff68c493c6e4136949da496d8135d337bd3bc80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d251231e_d9d46435",
         "filename": "chrome/browser/extensions/api/image_writer_private/destroy_partitions_operation_unittest.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-03T17:45:05Z",
       "side": 1,
       "message": "Hmm... it seems like we have no guarantee that anything actually ran here.  i.e., if the test just ended without running the task, wouldn\u0027t it pass?  Do we need to add a VerifyAndClearExpectations call?",
+      "revId": "4ff68c493c6e4136949da496d8135d337bd3bc80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76533168_dbbccfe6",
+        "filename": "chrome/browser/extensions/api/image_writer_private/destroy_partitions_operation_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-04T00:32:28Z",
+      "side": 1,
+      "message": "Wouldn\u0027t the EXPECT_CALLs above make sure that OnProgress, OnComplete etc were issued?\n\nSame for the other comments related to this.",
+      "parentUuid": "d251231e_d9d46435",
       "revId": "4ff68c493c6e4136949da496d8135d337bd3bc80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1dae92d1_cf765330",
+        "filename": "chrome/browser/extensions/api/image_writer_private/image_writer_private_apitest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-04T00:32:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6732b7f4_57856d7d",
+      "revId": "4ff68c493c6e4136949da496d8135d337bd3bc80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dd58eba1_32315ae7",
         "filename": "chrome/browser/extensions/api/image_writer_private/image_writer_utility_client.h",
         "patchSetId": 6
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "26901758_47536ed6",
+        "filename": "chrome/browser/extensions/api/image_writer_private/image_writer_utility_client.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-04T00:32:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dd58eba1_32315ae7",
+      "revId": "4ff68c493c6e4136949da496d8135d337bd3bc80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94821caf_dfa85721",
         "filename": "chrome/browser/extensions/api/image_writer_private/operation.cc",
         "patchSetId": 6
@@ -81,6 +153,24 @@
       "writtenOn": "2017-08-03T17:45:05Z",
       "side": 1,
       "message": "Is this needed, when defined in the header?",
+      "revId": "4ff68c493c6e4136949da496d8135d337bd3bc80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3c3581e_80ce1129",
+        "filename": "chrome/browser/extensions/api/image_writer_private/operation.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-04T00:32:28Z",
+      "side": 1,
+      "message": "Yes, but that\u0027s cryptic to me, so changed this to static member function instead of member data.",
+      "parentUuid": "94821caf_dfa85721",
       "revId": "4ff68c493c6e4136949da496d8135d337bd3bc80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "b2df30f8_3f060f6f",
+        "filename": "chrome/browser/extensions/api/image_writer_private/operation.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-04T00:32:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6600486_ce610d9d",
+      "revId": "4ff68c493c6e4136949da496d8135d337bd3bc80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "631c7c28_b254caf2",
         "filename": "chrome/browser/extensions/api/image_writer_private/operation.cc",
         "patchSetId": 6
@@ -115,6 +223,24 @@
       "writtenOn": "2017-08-03T17:45:05Z",
       "side": 1,
       "message": "std::move() a const \u0026 doesn\u0027t do anything.",
+      "revId": "4ff68c493c6e4136949da496d8135d337bd3bc80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47117c80_12a4df1b",
+        "filename": "chrome/browser/extensions/api/image_writer_private/operation.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-04T00:32:28Z",
+      "side": 1,
+      "message": "Ah, search/replace fatigue. Thanks for catching.",
+      "parentUuid": "631c7c28_b254caf2",
       "revId": "4ff68c493c6e4136949da496d8135d337bd3bc80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "9c164fae_8e5f76b3",
+        "filename": "chrome/browser/extensions/api/image_writer_private/operation.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-04T00:32:28Z",
+      "side": 1,
+      "message": "I wondered about that too, and took that as verb run :) But it was most likely a method at some point.\nI\u0027ve reworded the comment here to indicate \"most methods runs on blocking thread\"",
+      "parentUuid": "2fa97de9_fa43b5a6",
+      "revId": "4ff68c493c6e4136949da496d8135d337bd3bc80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "334d5380_5cab0388",
         "filename": "chrome/browser/extensions/api/image_writer_private/operation.h",
         "patchSetId": 6
@@ -152,6 +296,24 @@
       "revId": "4ff68c493c6e4136949da496d8135d337bd3bc80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f27c265b_80045546",
+        "filename": "chrome/browser/extensions/api/image_writer_private/operation.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-04T00:32:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "334d5380_5cab0388",
+      "revId": "4ff68c493c6e4136949da496d8135d337bd3bc80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -178,6 +340,30 @@
     },
     {
       "key": {
+        "uuid": "50e405ff_44ae814d",
+        "filename": "chrome/browser/extensions/api/image_writer_private/operation.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-04T00:32:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2aee45ec_037ca859",
+      "range": {
+        "startLine": 239,
+        "startChar": 39,
+        "endLine": 239,
+        "endChar": 43
+      },
+      "revId": "4ff68c493c6e4136949da496d8135d337bd3bc80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a5e3df8_2760d11b",
         "filename": "chrome/browser/extensions/api/image_writer_private/operation_chromeos.cc",
         "patchSetId": 6
@@ -192,6 +378,24 @@
       "revId": "4ff68c493c6e4136949da496d8135d337bd3bc80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5143190_e2bc9034",
+        "filename": "chrome/browser/extensions/api/image_writer_private/operation_chromeos.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-04T00:32:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a5e3df8_2760d11b",
+      "revId": "4ff68c493c6e4136949da496d8135d337bd3bc80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -212,6 +416,24 @@
     },
     {
       "key": {
+        "uuid": "af405756_d207b072",
+        "filename": "chrome/browser/extensions/api/image_writer_private/operation_chromeos.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-04T00:32:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eeda97a6_9c4139d4",
+      "revId": "4ff68c493c6e4136949da496d8135d337bd3bc80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c985c139_f18b1d9d",
         "filename": "chrome/browser/extensions/api/image_writer_private/operation_chromeos.cc",
         "patchSetId": 6
@@ -226,6 +448,24 @@
       "revId": "4ff68c493c6e4136949da496d8135d337bd3bc80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3232096c_ed37fed5",
+        "filename": "chrome/browser/extensions/api/image_writer_private/operation_chromeos.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-04T00:32:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c985c139_f18b1d9d",
+      "revId": "4ff68c493c6e4136949da496d8135d337bd3bc80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -263,6 +503,24 @@
     },
     {
       "key": {
+        "uuid": "6b82cabb_2ac0f7f4",
+        "filename": "chrome/browser/extensions/api/image_writer_private/unzip_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-04T00:32:28Z",
+      "side": 1,
+      "message": "Should not be called more than once.\n\nDone.",
+      "parentUuid": "58352ec1_e58e26e1",
+      "revId": "4ff68c493c6e4136949da496d8135d337bd3bc80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "127d69a1_93bd2809",
         "filename": "chrome/browser/extensions/api/image_writer_private/unzip_helper.cc",
         "patchSetId": 6
@@ -274,6 +532,24 @@
       "writtenOn": "2017-08-03T17:45:05Z",
       "side": 1,
       "message": "optional nit: I usually find these easier to read as\nif (!Open() || !Advance() || !OpenInZip())\nas opposed to\nif (!(Open() \u0026\u0026 Advance() \u0026\u0026 OpenInZip())\nbut I imagine that\u0027s all just personal preference, so up to you.",
+      "revId": "4ff68c493c6e4136949da496d8135d337bd3bc80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "869572f9_19377ae5",
+        "filename": "chrome/browser/extensions/api/image_writer_private/unzip_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-04T00:32:28Z",
+      "side": 1,
+      "message": "Interesting. I set a note aside somewhere to change this as well before sending the CL out, but forgot while fighting with the tests :)\nDone.",
+      "parentUuid": "127d69a1_93bd2809",
       "revId": "4ff68c493c6e4136949da496d8135d337bd3bc80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -297,6 +573,24 @@
     },
     {
       "key": {
+        "uuid": "324097c8_7ae0bf95",
+        "filename": "chrome/browser/extensions/api/image_writer_private/unzip_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-04T00:32:28Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "1109dafc_b4282bc0",
+      "revId": "4ff68c493c6e4136949da496d8135d337bd3bc80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fb3d6b8e_e93f67b9",
         "filename": "chrome/browser/extensions/api/image_writer_private/unzip_helper.h",
         "patchSetId": 6
@@ -308,6 +602,24 @@
       "writtenOn": "2017-08-03T17:45:05Z",
       "side": 1,
       "message": "Can these be OnceCallback variants?  (Except progress?)",
+      "revId": "4ff68c493c6e4136949da496d8135d337bd3bc80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "911e1a19_c92065cc",
+        "filename": "chrome/browser/extensions/api/image_writer_private/unzip_helper.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-08-04T00:32:28Z",
+      "side": 1,
+      "message": "These are passed to zip_reader (third_party), which accepts RepeatingCallback. So I\u0027d rather not change these.",
+      "parentUuid": "fb3d6b8e_e93f67b9",
       "revId": "4ff68c493c6e4136949da496d8135d337bd3bc80",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
