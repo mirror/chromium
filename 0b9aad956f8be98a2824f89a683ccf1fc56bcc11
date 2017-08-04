@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1670b408_a0f5f230",
+        "filename": "content/test/mock_overscroll_controller_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-04T20:57:39Z",
+      "side": 1,
+      "message": "Can you make it clearer (either in the comment, name, or both) that this is an Aura-specific class?  It\u0027s kind of subtle right now at first glance.",
+      "revId": "0b9aad956f8be98a2824f89a683ccf1fc56bcc11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b106a283_8ae1ed9d",
+        "filename": "content/test/mock_overscroll_refresh_handler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-04T20:57:39Z",
+      "side": 1,
+      "message": "Same.",
+      "revId": "0b9aad956f8be98a2824f89a683ccf1fc56bcc11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
