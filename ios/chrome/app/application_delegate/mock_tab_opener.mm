@@ -50,4 +50,10 @@
   return nil;
 }
 
+- (BOOL)shouldStayOnTabWithStartupInformation:
+    (id<StartupInformation>)startupInformation {
+  // Stub.
+  return NO;
+}
+
 @end
