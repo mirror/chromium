@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1a282dd_8ad47c2f",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/emulation/device-emulation-desktop-expected.txt",
+        "patchSetId": 6
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-08-04T16:46:16Z",
+      "side": 1,
+      "message": "I think this number should be 110. Something\u0027s wrong in implementation?",
+      "revId": "16f4239d1c5d632f2e0b98321efdb36d58cb3db1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
