@@ -71,7 +71,8 @@ std::unique_ptr<UrlDownloader, BrowserThread::DeleteOnIOThread> BeginDownload(
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
   std::unique_ptr<net::URLRequest> url_request =
-      DownloadRequestCore::CreateRequestOnIOThread(download_id, params.get());
+      DownloadRequestCore::CreateURLRequestOnIOThread(download_id,
+                                                      params.get());
   std::unique_ptr<storage::BlobDataHandle> blob_data_handle =
       params->GetBlobDataHandle();
   if (blob_data_handle) {

@@ -30,6 +30,7 @@ namespace content {
 class ByteStreamReader;
 class ByteStreamWriter;
 struct DownloadCreateInfo;
+struct ResourceRequest;
 
 // This class encapsulates the core logic for reading data from a URLRequest and
 // writing it into a ByteStream. It's common to both DownloadResourceHandler and
@@ -103,8 +104,11 @@ class CONTENT_EXPORT DownloadRequestCore
 
   std::string DebugString() const;
 
-  static std::unique_ptr<net::URLRequest> CreateRequestOnIOThread(
+  static std::unique_ptr<net::URLRequest> CreateURLRequestOnIOThread(
       uint32_t download_id,
+      DownloadUrlParameters* params);
+
+  static std::unique_ptr<ResourceRequest> CreateResourceRequest(
       DownloadUrlParameters* params);
 
   // Size of the buffer used between the DownloadRequestCore and the
@@ -121,9 +125,6 @@ class CONTENT_EXPORT DownloadRequestCore
   static DownloadInterruptReason HandleSuccessfulServerResponse(
       const net::HttpResponseHeaders& http_headers,
       DownloadSaveInfo* save_info);
-
-  static void AddPartialRequestHeaders(net::URLRequest* request,
-                                       DownloadUrlParameters* params);
 
   std::unique_ptr<DownloadCreateInfo> CreateDownloadCreateInfo(
       DownloadInterruptReason result);

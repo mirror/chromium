@@ -38,8 +38,8 @@ CreateUrlDownloader(std::unique_ptr<DownloadUrlParameters> params,
   // Build the URLRequest, BlobDataHandle is hold in original request for image
   // download.
   std::unique_ptr<net::URLRequest> url_request =
-      DownloadRequestCore::CreateRequestOnIOThread(DownloadItem::kInvalidId,
-                                                   params.get());
+      DownloadRequestCore::CreateURLRequestOnIOThread(DownloadItem::kInvalidId,
+                                                      params.get());
 
   return std::unique_ptr<UrlDownloader, BrowserThread::DeleteOnIOThread>(
       UrlDownloader::BeginDownload(delegate, std::move(url_request),
