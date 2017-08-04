@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9778d1d_dbcec64d",
+        "filename": "chrome/browser/resources/chromeos/arc_support/background.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-04T15:43:07Z",
+      "side": 1,
+      "message": "Can we put this in a separate file? That will also make it easier to replace later.",
+      "revId": "2290c897f159f405b50b83fd9f4c0afc538cebf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95ac74f7_12179c10",
+        "filename": "chrome/browser/resources/chromeos/arc_support/background.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-04T15:43:07Z",
+      "side": 1,
+      "message": "nit: Typically we just indent 4 spaces after the @",
+      "revId": "2290c897f159f405b50b83fd9f4c0afc538cebf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f59c5196_38d35357",
+        "filename": "chrome/browser/resources/chromeos/arc_support/background.js",
+        "patchSetId": 14
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-04T15:43:07Z",
+      "side": 1,
+      "message": "nit: both comments are redundant, the variable name units are clear.",
+      "revId": "2290c897f159f405b50b83fd9f4c0afc538cebf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
