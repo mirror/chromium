@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "0a2ec9a2_e0364f7f",
+        "filename": "content/browser/service_worker/service_worker_content_settings_proxy_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-04T08:32:50Z",
+      "side": 1,
+      "message": "I think the idea is service worker can be associated with frames (i.e., its controlled clients). I believe the point of |render_frames| here is to show a badge in the omnibox when indexeddb is allowed/blocked, but we don\u0027t support that for SW since the SW is not as strongly tied to the frames as DedicatedWorker/SharedWorker.\n\nIt may be nicer for the comment to more verbosely explain what\u0027s going on. Something like:\n\n// |render_frames| is used to show UI for the frames affected by the content setting. However, service worker is not necessarily associated with frames or making the request on behalf of frames, so just pass an empty |render_frames|.\n\nIt\u0027s also difficult to see what |render_frames| refers to since it doesn\u0027t appear in the code below. So you might do something like:\n\n// |render_frames| is used to blah blah blah...\nstd::vector\u003cstd::pair\u003cint, int\u003e\u003e() render_frames;\n...\n    std::move(callback).Run(GetContentClient()-\u003ebrowser()-\u003eAllowWorkerIndexedDB(\n        origin.GetURL(), name, context_-\u003ewrapper()-\u003eresource_context(),\n        render_frames));",
+      "parentUuid": "61fb5421_c49f94a5",
+      "range": {
+        "startLine": 37,
+        "startChar": 70,
+        "endLine": 38,
+        "endChar": 26
+      },
+      "revId": "217268ade545b9724650745ba47bce3042634abd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "860cfe43_759b83f6",
         "filename": "content/browser/service_worker/service_worker_content_settings_proxy_impl.cc",
         "patchSetId": 7
@@ -94,6 +118,24 @@
       "side": 1,
       "message": "Ohh, you\u0027re right! Filesystem API is not supported on SW.",
       "parentUuid": "dac1a94d_7537a762",
+      "revId": "217268ade545b9724650745ba47bce3042634abd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8c696fd_509a3cf4",
+        "filename": "content/browser/service_worker/service_worker_content_settings_proxy_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-04T08:32:50Z",
+      "side": 1,
+      "message": "This is because of https://codereview.chromium.org/1667213002 right? (I was never sure what \"Filesystem API\" is since there several things names similarly... SyncFileSystem, etc etc)",
+      "parentUuid": "dbc113c1_0cd0704b",
       "revId": "217268ade545b9724650745ba47bce3042634abd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -174,6 +216,24 @@
     },
     {
       "key": {
+        "uuid": "0d13b406_1c7efa88",
+        "filename": "content/common/service_worker/embedded_worker.mojom",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-04T08:32:50Z",
+      "side": 1,
+      "message": "+1 that seems desirable and possible",
+      "parentUuid": "6f98abfd_05bca8d1",
+      "revId": "217268ade545b9724650745ba47bce3042634abd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cc8a9e5f_557f49b5",
         "filename": "content/renderer/service_worker/service_worker_content_settings_proxy.cc",
         "patchSetId": 7
@@ -191,6 +251,24 @@
     },
     {
       "key": {
+        "uuid": "ad65d34e_4185b62b",
+        "filename": "content/renderer/service_worker/service_worker_content_settings_proxy.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-04T08:32:50Z",
+      "side": 1,
+      "message": "Or maybe NOTREACHED(); return false; if thre\u0027s no way this function can be called",
+      "parentUuid": "cc8a9e5f_557f49b5",
+      "revId": "217268ade545b9724650745ba47bce3042634abd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fab387d6_42e12f0a",
         "filename": "content/renderer/service_worker/service_worker_content_settings_proxy.cc",
         "patchSetId": 7
@@ -202,6 +280,46 @@
       "writtenOn": "2017-08-04T07:47:24Z",
       "side": 1,
       "message": "This would be eligible for using \"auto\" because a type parameter of MakeUnique clarifies the returned type.\n\nauto ptr \u003d base::MakeUnique\u003cmojom::ServiceWorkerContentSettingsProxyPtr\u003e();",
+      "revId": "217268ade545b9724650745ba47bce3042634abd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5802399_e1ea0114",
+        "filename": "content/renderer/service_worker/service_worker_content_settings_proxy.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-04T08:32:50Z",
+      "side": 1,
+      "message": "Maybe:\n\"Asks the browser process about the settings. Blocks until the response arrives.\"",
+      "revId": "217268ade545b9724650745ba47bce3042634abd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "501d62c2_e7409496",
+        "filename": "content/renderer/service_worker/service_worker_content_settings_proxy.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-04T08:32:50Z",
+      "side": 1,
+      "message": "would prefer this just be \"InterfacePtr\" as that\u0027s the type name, or else \"interface pointer\" but that seems longer.",
+      "range": {
+        "startLine": 33,
+        "startChar": 27,
+        "endLine": 33,
+        "endChar": 33
+      },
       "revId": "217268ade545b9724650745ba47bce3042634abd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
