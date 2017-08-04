@@ -22,6 +22,30 @@
       "revId": "a3cf4d27ce27706c9cb253216a98f0bafd20096e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb426f6b_54ea8747",
+        "filename": "content/browser/web_contents/web_contents_view_mac.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 695,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-08-04T22:17:35Z",
+      "side": 0,
+      "message": "When the RWHV leaves the CBW, the RWHV should decide if the fullscreen contents are occluded or not, which determines if the fullscreen contents are drawn and updated or not. If we don\u0027t move this, the redrawing will depend on the visibility of the WebContentsViewCocoa which is not visible because both RWHV and WebContentsViewCocoa are now in two separate Mac spaces.",
+      "parentUuid": "52909aed_f2402f61",
+      "range": {
+        "startLine": 695,
+        "startChar": 8,
+        "endLine": 695,
+        "endChar": 28
+      },
+      "revId": "a3cf4d27ce27706c9cb253216a98f0bafd20096e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

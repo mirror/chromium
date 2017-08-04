@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "37dfb8b7_18053337",
+        "filename": "chrome/browser/ui/cocoa/browser/exclusive_access_controller_views.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1211423
+      },
+      "writtenOn": "2017-08-04T22:17:35Z",
+      "side": 1,
+      "message": "Using GetActiveWebContents() in this method results in compilation errors because the method is not const and GetBubbleParentView is. In response to sdy\u0027s comment in the previous CL review.",
+      "revId": "9182a0bd4101f3a5ca9984d0921251acb7a6a49d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
