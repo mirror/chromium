@@ -307,6 +307,29 @@
     },
     {
       "key": {
+        "uuid": "55cd3c4e_c542b390",
+        "filename": "net/url_request/url_request_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 11604,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-04T17:32:31Z",
+      "side": 1,
+      "message": "I suggest making this bool FindHeader(..., std::string*).  It \u0027s a little more effort to use, but not that much more, and allows for cleaner testing.",
+      "range": {
+        "startLine": 11604,
+        "startChar": 23,
+        "endLine": 11604,
+        "endChar": 0
+      },
+      "revId": "0e7e846da8164ecd2605ab5077e0a2ced5afd87b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d04a17db_5081c516",
         "filename": "net/url_request/url_request_unittest.cc",
         "patchSetId": 4
