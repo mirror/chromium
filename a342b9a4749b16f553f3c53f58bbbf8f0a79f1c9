@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e3fe3f8_9f35df32",
+        "filename": "ios/web_view/internal/web_view_browser_state.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-08-04T18:52:27Z",
+      "side": 1,
+      "message": "Are we planning to get rid of this WebThread call as well?\n\nIf the answer is yes (which I think it should be?), then we might want to edit the CL description to be more about removing the use of the FILE thread, since this CL isn\u0027t fully converting to the new APIs on its own.",
+      "revId": "a342b9a4749b16f553f3c53f58bbbf8f0a79f1c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
