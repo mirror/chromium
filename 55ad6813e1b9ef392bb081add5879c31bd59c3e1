@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d5d8395b_b1a17b72",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1881,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-04T15:06:52Z",
+      "side": 0,
+      "message": "I wanted to keep the state transition to STATE_FINISH_HEADERS and invocation of TransitionToReadingState as consistent as possible. This serves two purposes:\n- Headers phase ends in STATE_FINISH_HEADERS which it normally does (doesn\u0027t matter if its a transaction that has re-entered the headers phase because its a partial request)\n- TransitionToReadingState is only invoked either from Read() directly or after headers phase via DoFinishHeadersComplete if it went back to the headers phase during Read().",
+      "parentUuid": "1b863aca_f905020e",
+      "range": {
+        "startLine": 1881,
+        "startChar": 5,
+        "endLine": 1881,
+        "endChar": 0
+      },
+      "revId": "55ad6813e1b9ef392bb081add5879c31bd59c3e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0bf8399d_cad65e15",
         "filename": "net/http/http_cache_transaction.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "55ad6813e1b9ef392bb081add5879c31bd59c3e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e9cd3e2_e9445cda",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1921,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-04T15:06:52Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "0bf8399d_cad65e15",
+      "range": {
+        "startLine": 1921,
+        "startChar": 20,
+        "endLine": 1921,
+        "endChar": 49
+      },
+      "revId": "55ad6813e1b9ef392bb081add5879c31bd59c3e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "607a7e94_2623f324",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 858,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-04T15:06:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8981948_5e221bff",
+      "range": {
+        "startLine": 858,
+        "startChar": 61,
+        "endLine": 858,
+        "endChar": 62
+      },
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b324ef10_6611dc65",
         "filename": "net/http/http_cache.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-07-28T17:30:11Z",
       "side": 1,
       "message": "Willing to give me a sketch as to why the transaction being still on the wtiers list when DoneWithEntry() is called suggests a failure, and add it to the comment here if you think it\u0027s appropriate?",
+      "range": {
+        "startLine": 906,
+        "startChar": 26,
+        "endLine": 906,
+        "endChar": 33
+      },
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1611680b_dd778586",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 906,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-04T15:06:52Z",
+      "side": 1,
+      "message": "Updated the comment.\n    // In case it is a writer, we start by assuming it is a failure and attempt\n    // truncating the entry since if the response was completely written by this\n    // writer, DoneWithEntry would not have been invoked. Its possible that the\n    // response is actually complete or there are other writers still writing it\n    // and that would be checked in TruncateEntry.",
+      "parentUuid": "b324ef10_6611dc65",
       "range": {
         "startLine": 906,
         "startChar": 26,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4a3d0b17_0199826a",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 927,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-04T15:06:52Z",
+      "side": 1,
+      "message": "Since DoneWithEntryWriters can also be invoked from HC::T via HC::DoneWithEntry , keeping this check here.",
+      "parentUuid": "cbfb953a_2d68e74f",
+      "range": {
+        "startLine": 927,
+        "startChar": 22,
+        "endLine": 927,
+        "endChar": 39
+      },
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9be28193_9decb03b",
         "filename": "net/http/http_cache.cc",
         "patchSetId": 3
@@ -82,6 +154,30 @@
       "writtenOn": "2017-07-28T17:30:11Z",
       "side": 1,
       "message": "This doesn\u0027t make sense if the transaction is null.  Is it guaranteed that the transaction won\u0027t be null in the case where CountTransactions() \u003e 1?  \n\n(This is part of my larger confusion around the use of this function in the null transaction case, which I\u0027m hoping my header file comment question will help me with.)",
+      "range": {
+        "startLine": 929,
+        "startChar": 20,
+        "endLine": 929,
+        "endChar": 37
+      },
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f4898db_ba155a87",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 929,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-04T15:06:52Z",
+      "side": 1,
+      "message": "Changed the check to if (transaction \u0026\u0026 entry-\u003ewriters-\u003eCountTransactions() \u003e 1)",
+      "parentUuid": "9be28193_9decb03b",
       "range": {
         "startLine": 929,
         "startChar": 20,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "25b1d5ae_47b761e7",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 938,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-04T15:06:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e80367b_1b6ed30d",
+      "range": {
+        "startLine": 938,
+        "startChar": 13,
+        "endLine": 938,
+        "endChar": 20
+      },
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b758dc4e_3b0ed197",
         "filename": "net/http/http_cache.cc",
         "patchSetId": 3
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "ea4875aa_f5fc6e7a",
+        "filename": "net/http/http_cache.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 951,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-04T15:06:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b758dc4e_3b0ed197",
+      "range": {
+        "startLine": 951,
+        "startChar": 9,
+        "endLine": 951,
+        "endChar": 0
+      },
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f42d86f2_49755962",
         "filename": "net/http/http_cache.h",
         "patchSetId": 3
@@ -151,6 +295,30 @@
       "writtenOn": "2017-07-28T17:30:11Z",
       "side": 1,
       "message": "Idea (not even a suggestion): Would it make sense to have a \"WritersDelegate\" class that HttpCache inherits from to cleanly specify the interface between Writers and the cache?",
+      "range": {
+        "startLine": 434,
+        "startChar": 17,
+        "endLine": 434,
+        "endChar": 24
+      },
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fa1916c_93c639d5",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-04T15:06:52Z",
+      "side": 1,
+      "message": "I have a couple of questions on a delegate\u0027s meaning:\n- Is it ok for HttpCache to also be an HttpCache::Writers::Delegate since it effectively owns the HttpCache::Writers?\n- Does having a Delegate class give the signal that a new class can also inherit from it, even though it will contain a function which is very specific to the interaction between HttpCache and HttpCache::Writers?",
+      "parentUuid": "f42d86f2_49755962",
       "range": {
         "startLine": 434,
         "startChar": 17,
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "eb955615_11f35a5f",
+        "filename": "net/http/http_cache.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 435,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-04T15:06:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1d60583_7481acb2",
+      "range": {
+        "startLine": 435,
+        "startChar": 5,
+        "endLine": 435,
+        "endChar": 12
+      },
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f548365_58b7d169",
         "filename": "net/http/http_cache_transaction.cc",
         "patchSetId": 3
@@ -206,6 +398,30 @@
       "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "591a4fe9_7622e45e",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-04T15:06:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f548365_58b7d169",
+      "range": {
+        "startLine": 385,
+        "startChar": 56,
+        "endLine": 385,
+        "endChar": 0
+      },
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -232,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "dcf2a52e_0affd57c",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-04T15:06:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1bd8376f_fa3e25cd",
+      "range": {
+        "startLine": 386,
+        "startChar": 6,
+        "endLine": 386,
+        "endChar": 12
+      },
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d16693c4_c6d192d6",
         "filename": "net/http/http_cache_transaction.cc",
         "patchSetId": 3
@@ -252,6 +492,30 @@
       "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "726eb4e7_3abadc57",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-04T15:06:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d16693c4_c6d192d6",
+      "range": {
+        "startLine": 388,
+        "startChar": 26,
+        "endLine": 388,
+        "endChar": 27
+      },
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -302,6 +566,30 @@
     },
     {
       "key": {
+        "uuid": "a583a6aa_cc8a6322",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-04T15:06:52Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5013b814_a2644564",
+      "range": {
+        "startLine": 393,
+        "startChar": 22,
+        "endLine": 393,
+        "endChar": 52
+      },
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe5e94f0_be92b393",
         "filename": "net/http/http_cache_transaction.cc",
         "patchSetId": 3
@@ -313,6 +601,30 @@
       "writtenOn": "2017-07-28T17:30:11Z",
       "side": 1,
       "message": "Is there a way to DCHECK these cases?",
+      "range": {
+        "startLine": 412,
+        "startChar": 0,
+        "endLine": 412,
+        "endChar": 80
+      },
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1793cc24_0cc3b5e4",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-04T15:06:52Z",
+      "side": 1,
+      "message": "This can happen when the request should be handled exclusively by the network layer (skipping the cache entirely using LOAD_DISABLE_CACHE) or there was an error during the headers phase\ndue to which the transaction cannot write to the cache. The first can be dchecked but not the latter.",
+      "parentUuid": "fe5e94f0_be92b393",
       "range": {
         "startLine": 412,
         "startChar": 0,
@@ -348,6 +660,30 @@
     },
     {
       "key": {
+        "uuid": "8619176b_b8873aca",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 479,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-04T15:06:52Z",
+      "side": 1,
+      "message": "That\u0027s right. Thanks for pointing out. Removed this transaction.",
+      "parentUuid": "8741f737_6f76d775",
+      "range": {
+        "startLine": 479,
+        "startChar": 6,
+        "endLine": 479,
+        "endChar": 34
+      },
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4cf29ebf_46b34fcc",
         "filename": "net/http/http_cache_transaction.cc",
         "patchSetId": 3
@@ -359,6 +695,24 @@
       "writtenOn": "2017-07-28T18:43:20Z",
       "side": 1,
       "message": "DCHECK that we\u0027re in the reading phase but that the state is NONE?",
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68e3b49c_d3f991ab",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-04T15:06:52Z",
+      "side": 1,
+      "message": "Added check for state to be NONE. We cannot check that reading_ is true since its possible that the first Read is not yet invoked but headers phase was finished and this was added to writers.",
+      "parentUuid": "4cf29ebf_46b34fcc",
       "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -379,6 +733,24 @@
       "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f39344d6_eff85b6e",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 636,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-04T15:06:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f24b5ad5_ca6713f1",
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -405,6 +777,30 @@
     },
     {
       "key": {
+        "uuid": "56891aac_7bd33ef1",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1913,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-04T15:06:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1fa5a6a_1a46ffa0",
+      "range": {
+        "startLine": 1913,
+        "startChar": 6,
+        "endLine": 1913,
+        "endChar": 14
+      },
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e8bffab_d3312363",
         "filename": "net/http/http_cache_transaction.cc",
         "patchSetId": 3
@@ -416,6 +812,30 @@
       "writtenOn": "2017-07-28T17:30:11Z",
       "side": 1,
       "message": "If these conditionals aren\u0027t the case, shouldn\u0027t we tear down network_trans_?",
+      "range": {
+        "startLine": 1991,
+        "startChar": 12,
+        "endLine": 1991,
+        "endChar": 19
+      },
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "504169aa_7b5c4c6b",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1991,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-04T15:06:52Z",
+      "side": 1,
+      "message": "If entry_ is null, we still want to keep network_trans_ so Read() can then go to state STATE_NETWORK_READ",
+      "parentUuid": "6e8bffab_d3312363",
       "range": {
         "startLine": 1991,
         "startChar": 12,
@@ -451,6 +871,30 @@
     },
     {
       "key": {
+        "uuid": "57f71e25_1dbaf3db",
+        "filename": "net/http/http_cache_transaction.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2878,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-04T15:06:52Z",
+      "side": 1,
+      "message": "One option is to tear down writers and let this transaction continue reading from the network using DoNetworkRead* states. But that will require moving the ownership of network transaction back to the transaction. I would prefer to avoid that and have writers be the only point of interaction with the network once network_trans_\u0027s ownership has been transferred. In the future it would be good to let go of the DoNetworkRead* states for all scenarios. There is an issue created for that: crbug.com/740947",
+      "parentUuid": "b0936a61_5027e29e",
+      "range": {
+        "startLine": 2878,
+        "startChar": 21,
+        "endLine": 2878,
+        "endChar": 39
+      },
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "00606eba_acab0e53",
         "filename": "net/http/http_cache_transaction.h",
         "patchSetId": 3
@@ -462,6 +906,30 @@
       "writtenOn": "2017-07-28T18:43:20Z",
       "side": 1,
       "message": "Public methods need a comment. Why is this made public?",
+      "range": {
+        "startLine": 186,
+        "startChar": 15,
+        "endLine": 186,
+        "endChar": 31
+      },
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4efead1f_7f04d16e",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-04T15:06:52Z",
+      "side": 1,
+      "message": "Added a comment.\nThis method requires entry_ to be alive while in HC::Writers::OnDataReceived, if the response is completely written to the cache, its possible that the entry instance will be destroyed before returning to HC::T",
+      "parentUuid": "00606eba_acab0e53",
       "range": {
         "startLine": 186,
         "startChar": 15,
@@ -497,6 +965,30 @@
     },
     {
       "key": {
+        "uuid": "2ce64f02_666b3056",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-04T15:06:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aad7877d_e6cb595e",
+      "range": {
+        "startLine": 190,
+        "startChar": 18,
+        "endLine": 190,
+        "endChar": 19
+      },
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51266e81_5db3b8f1",
         "filename": "net/http/http_cache_transaction.h",
         "patchSetId": 3
@@ -511,6 +1003,24 @@
       "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91e9c37b_89f6e830",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-04T15:06:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51266e81_5db3b8f1",
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -560,6 +1070,54 @@
     },
     {
       "key": {
+        "uuid": "1bcb44f4_78728ba9",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-04T15:06:52Z",
+      "side": 1,
+      "message": "This is invoked when the transaction is going to continue reading from the network while DoneWritingToEntry below will be called when transaction is complete. Updated the comments for both.",
+      "parentUuid": "0168ed7b_70cff7ae",
+      "range": {
+        "startLine": 420,
+        "startChar": 33,
+        "endLine": 420,
+        "endChar": 54
+      },
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25ed7bb3_78e46b35",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-04T15:06:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05eb6c61_4400e896",
+      "range": {
+        "startLine": 420,
+        "startChar": 21,
+        "endLine": 420,
+        "endChar": 32
+      },
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9541cfaa_87df510e",
         "filename": "net/http/http_cache_transaction.h",
         "patchSetId": 3
@@ -580,6 +1138,30 @@
       "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16a5f453_add2acfe",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-04T15:06:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9541cfaa_87df510e",
+      "range": {
+        "startLine": 426,
+        "startChar": 54,
+        "endLine": 426,
+        "endChar": 55
+      },
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -606,6 +1188,30 @@
     },
     {
       "key": {
+        "uuid": "ed83f61b_31d5bbd7",
+        "filename": "net/http/http_cache_transaction.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 462,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-04T15:06:52Z",
+      "side": 1,
+      "message": "Added that its a helper function for ResetNetworkTransaction and SaveWritersNetworkTransactionInfo",
+      "parentUuid": "48b25f0d_7d63bec5",
+      "range": {
+        "startLine": 462,
+        "startChar": 2,
+        "endLine": 462,
+        "endChar": 66
+      },
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1dfe22b3_5af12c0f",
         "filename": "net/http/http_cache_writers.h",
         "patchSetId": 3
@@ -620,6 +1226,24 @@
       "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f18c2088_d65a2fe8",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-04T15:06:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1dfe22b3_5af12c0f",
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -669,6 +1293,54 @@
     },
     {
       "key": {
+        "uuid": "670528c3_acf015c7",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-04T15:06:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69f0bfe4_f2bf7f19",
+      "range": {
+        "startLine": 131,
+        "startChar": 44,
+        "endLine": 131,
+        "endChar": 48
+      },
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "9269f7e2_9d7b9ece",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-04T15:06:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f8735d4_7c26cffe",
+      "range": {
+        "startLine": 131,
+        "startChar": 15,
+        "endLine": 131,
+        "endChar": 16
+      },
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f0e0906_b1e045bf",
         "filename": "net/http/http_cache_writers.h",
         "patchSetId": 3
@@ -692,6 +1364,30 @@
     },
     {
       "key": {
+        "uuid": "3e99c5c5_e2d065d1",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-04T15:06:52Z",
+      "side": 1,
+      "message": "// Returns true if entry is worth keeping in its current state. It may be\n // truncated or complete. Returns false if entry is incomplete and cannot be\n // resumed, it will not be marked as truncated and will not be preserved.\n\nThis is similar to the logic which was earlier in HC::T::AddTruncatedFlag",
+      "parentUuid": "0f0e0906_b1e045bf",
+      "range": {
+        "startLine": 134,
+        "startChar": 25,
+        "endLine": 134,
+        "endChar": 30
+      },
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c71fe3ad_0c922ad0",
         "filename": "net/http/http_cache_writers.h",
         "patchSetId": 3
@@ -703,6 +1399,30 @@
       "writtenOn": "2017-07-28T18:43:20Z",
       "side": 1,
       "message": "base::RepeatingClosure.",
+      "range": {
+        "startLine": 288,
+        "startChar": 2,
+        "endLine": 288,
+        "endChar": 24
+      },
+      "revId": "d812c4c618d1e1c88730e8e2932745efae8eab9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b98996c_77ca5fc4",
+        "filename": "net/http/http_cache_writers.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-08-04T15:06:52Z",
+      "side": 1,
+      "message": "Changed to base::OnceClosure",
+      "parentUuid": "c71fe3ad_0c922ad0",
       "range": {
         "startLine": 288,
         "startChar": 2,
