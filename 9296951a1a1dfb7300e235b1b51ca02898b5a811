@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "99425e9a_a06b26b1",
+        "filename": "chrome/browser/resources/settings/search_settings.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-04T17:18:30Z",
+      "side": 1,
+      "message": "Nit: No needd for a 2nd invocation of add(). It accepts multiple parameters.\n\ninnards.classList.add(\u0027search-bubble-innards\u0027, \u0027text-elide\u0027);",
+      "revId": "9296951a1a1dfb7300e235b1b51ca02898b5a811",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
