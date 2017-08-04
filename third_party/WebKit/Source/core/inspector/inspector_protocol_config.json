@@ -44,17 +44,14 @@
                 "domain": "DOMStorage"
             },
             {
+                "domain": "Emulation",
+                "include": ["forceViewport", "resetViewport", "resetPageScaleFactor", "setPageScaleFactor", "setScriptExecutionDisabled", "setTouchEmulationEnabled",
+                            "setEmulatedMedia", "setCPUThrottlingRate", "setVirtualTimePolicy", "setDefaultBackgroundColorOverride"],
+                "include_events": ["virtualTimeBudgetExpired"]
+            },
+            {
                 "domain": "IndexedDB",
                 "async": ["requestDatabaseNames", "requestDatabase", "requestData", "clearObjectStore", "deleteDatabase"]
-            },
-            {
-                "domain": "LayerTree"
-            },
-            {
-                "domain": "Log"
-            },
-            {
-                "domain": "Overlay"
             },
             {
                 "domain": "Input",
@@ -65,17 +62,23 @@
                 "include": ["resolveBlob"]
             },
             {
-                "domain": "Security",
-                "include": []
+                "domain": "LayerTree"
+            },
+            {
+                "domain": "Log"
             },
             {
                 "domain": "Memory",
-                "include": "getDOMCounters"
+                "include": ["getDOMCounters"]
             },
             {
-                "domain": "Tracing",
-                "include": ["start", "end"],
-                "async": ["start", "end"]
+                "domain": "Network",
+                "exclude": ["clearBrowserCache", "clearBrowserCookies", "getCookies", "getAllCookies", "deleteCookie", "setCookie", "canEmulateNetworkConditions",
+                            "setRequestInterceptionEnabled", "continueInterceptedRequest"],
+                "async": ["getResponseBody"]
+            },
+            {
+                "domain": "Overlay"
             },
             {
                 "domain": "Page",
@@ -85,21 +88,21 @@
                 "exclude_events": ["screencastFrame", "screencastVisibilityChanged", "colorPicked", "interstitialShown", "interstitialHidden", "javascriptDialogOpening", "javascriptDialogClosed", "navigationRequested"]
             },
             {
-                "domain": "Emulation",
-                "include": ["forceViewport", "resetViewport", "resetPageScaleFactor", "setPageScaleFactor", "setScriptExecutionDisabled", "setTouchEmulationEnabled",
-                            "setEmulatedMedia", "setCPUThrottlingRate", "setVirtualTimePolicy", "setDefaultBackgroundColorOverride"],
-                "include_events": ["virtualTimeBudgetExpired"]
+                "domain": "Performance"
             },
             {
-                "domain": "Network",
-                "exclude": ["clearBrowserCache", "clearBrowserCookies", "getCookies", "getAllCookies", "deleteCookie", "setCookie", "canEmulateNetworkConditions",
-                            "setRequestInterceptionEnabled", "continueInterceptedRequest"],
-                "async": ["getResponseBody"]
+                "domain": "Security",
+                "include": []
             },
             {
                 "domain": "Target",
                 "include": ["setAutoAttach", "sendMessageToTarget", "setAttachToFrames"],
                 "include_events": ["attachedToTarget", "detachedFromTarget", "receivedMessageFromTarget"]
+            },
+            {
+                "domain": "Tracing",
+                "include": ["start", "end"],
+                "async": ["start", "end"]
             }
         ]
     },
