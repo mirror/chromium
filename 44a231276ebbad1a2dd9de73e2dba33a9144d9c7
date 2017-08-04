@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c28860a1_ad85eb90",
+        "filename": "base/process/process_metrics.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-08-04T23:43:22Z",
+      "side": 1,
+      "message": "Perhaps this should be GetPlatformIndependentCPUUsage(), or GetPercentageTimeSpentRunning() or something more descriptive of that sort?",
+      "revId": "44a231276ebbad1a2dd9de73e2dba33a9144d9c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
