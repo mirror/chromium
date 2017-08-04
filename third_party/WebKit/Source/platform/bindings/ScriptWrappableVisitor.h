@@ -96,9 +96,9 @@ class PLATFORM_EXPORT ScriptWrappableVisitor : public v8::EmbedderHeapTracer,
   void TracePrologue() override;
 
   static WrapperVisitor* CurrentVisitor(v8::Isolate*);
+  static WrapperVisitor* CurrentVisitor();
 
   static void WriteBarrier(v8::Isolate*,
-                           const void*,
                            const TraceWrapperV8Reference<v8::Value>*);
 
   // TODO(mlippautz): Remove once ScriptWrappable is converted to
@@ -106,33 +106,43 @@ class PLATFORM_EXPORT ScriptWrappableVisitor : public v8::EmbedderHeapTracer,
   static void WriteBarrier(v8::Isolate*, const v8::Persistent<v8::Object>*);
 
   template <typename T>
-  static void WriteBarrier(const void* object, const Member<T>& value) {
-    WriteBarrier(object, value.Get());
+  static void WriteBarrier(const Member<T>& value) {
+    WriteBarrier(value.Get());
   }
 
+  // Conservative Dijkstra barrier.
+  //
+  // On assignment 'x.a = y' during incremental marking the Dijkstra barrier
+  // suggests checking the color of 'x' and only mark 'y' if 'x' is marked.
+
+  // Since checking 'x' is expensive in the current setting, as it requires
+  // either a back pointer or expensive lookup logic due to large objects and
+  // multiple inheritance, just assume that 'x' is black. We assume here that
+  // since an object 'x' is referenced for a write, it will generally also be
+  // alive in the current GC cycle.
   template <typename T>
-  static void WriteBarrier(const void* src_object, const T* dst_object) {
+  static void WriteBarrier(const T* dst_object) {
     static_assert(!NeedsAdjustAndMark<T>::value,
                   "wrapper tracing is not supported within mixins");
-    if (!src_object || !dst_object) {
-      return;
-    }
-    // We only require a write barrier if |srcObject|  is already marked. Note
-    // that this implicitly disables the write barrier when the GC is not
-    // active as object will not be marked in this case.
-    if (!HeapObjectHeader::FromPayload(src_object)->IsWrapperHeaderMarked()) {
+    if (!dst_object) {
       return;
     }
 
     const ThreadState* thread_state = ThreadState::Current();
     DCHECK(thread_state);
+    WrapperVisitor* const current = CurrentVisitor(thread_state->GetIsolate());
+
+    // Bail out if tracing is not in progress.
+    if (!current->TracingInProgress())
+      return;
+
     // If the wrapper is already marked we can bail out here.
     if (TraceTrait<T>::GetHeapObjectHeader(dst_object)->IsWrapperHeaderMarked())
       return;
+
     // Otherwise, eagerly mark the wrapper header and put the object on the
     // marking deque for further processing.
-    WrapperVisitor* const visitor = CurrentVisitor(thread_state->GetIsolate());
-    visitor->MarkAndPushToMarkingDeque(dst_object);
+    current->MarkAndPushToMarkingDeque(dst_object);
   }
 
   void RegisterV8References(const std::vector<std::pair<void*, void*>>&
@@ -169,14 +179,16 @@ class PLATFORM_EXPORT ScriptWrappableVisitor : public v8::EmbedderHeapTracer,
   // Immediately cleans up all wrappers if necessary.
   void PerformCleanup();
 
+  bool TracingInProgress() const override { return tracing_in_progress_; }
+
  protected:
   bool PushToMarkingDeque(
       void (*trace_wrappers_callback)(const WrapperVisitor*, const void*),
       HeapObjectHeader* (*heap_object_header_callback)(const void*),
       void (*missed_write_barrier_callback)(void),
       const void* object) const override {
-    if (!tracing_in_progress_)
-      return false;
+    DCHECK(tracing_in_progress_);
+    DCHECK(heap_object_header_callback(object)->IsWrapperHeaderMarked());
 
     marking_deque_.push_back(WrapperMarkingData(
         trace_wrappers_callback, heap_object_header_callback, object));
