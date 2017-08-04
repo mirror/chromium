@@ -424,15 +424,17 @@ void Shell::UpdateShelfVisibility() {
 
 PrefService* Shell::GetActiveUserPrefService() const {
   if (shell_port_->GetAshConfig() == Config::MASH)
-    return profile_pref_service_.get();
+    return profile_pref_service_mash_.get();
 
   return shell_delegate_->GetActiveUserPrefService();
 }
 
 PrefService* Shell::GetLocalStatePrefService() const {
   if (shell_port_->GetAshConfig() == Config::MASH)
-    return local_state_.get();
+    return local_state_mash_.get();
 
+  // TODO(jamescook): Eliminate the delegate call. It allows the pref service
+  // to be used during Shell init, which will not be compatible with mash.
   return shell_delegate_->GetLocalStatePrefService();
 }
 
@@ -839,7 +841,8 @@ Shell::~Shell() {
   // NightLightController depeneds on the PrefService and must be destructed
   // before it. crbug.com/724231.
   night_light_controller_ = nullptr;
-  profile_pref_service_ = nullptr;
+  profile_pref_service_mash_.reset();
+  local_state_mash_.reset();
   shell_delegate_.reset();
 
   for (auto& observer : shell_observers_)
@@ -1151,6 +1154,14 @@ void Shell::Init(const ShellInitParams& init_params) {
     observer.OnShellInitialized();
 
   user_metrics_recorder_->OnShellInitialized();
+
+  if (GetAshConfig() != Config::MASH) {
+    // Under mash the local state pref service isn't available until after shell
+    // initialization. Make classic ash behave similarly.
+    PrefService* local_state = shell_delegate_->GetLocalStatePrefService();
+    for (auto& observer : shell_observers_)
+      observer.OnLocalStatePrefServiceInitialized(local_state);
+  }
 }
 
 void Shell::InitRootWindow(aura::Window* root_window) {
@@ -1323,20 +1334,25 @@ void Shell::InitializeShelf() {
 
 void Shell::OnProfilePrefServiceInitialized(
     std::unique_ptr<::PrefService> pref_service) {
+  DCHECK(GetAshConfig() == Config::MASH);
   // |pref_service| can be null if can't connect to Chrome (as happens when
   // running mash outside of chrome --mash and chrome isn't built).
   for (auto& observer : shell_observers_)
     observer.OnActiveUserPrefServiceChanged(pref_service.get());
   // Reset after notifying clients so they can unregister pref observers on the
   // old PrefService.
-  profile_pref_service_ = std::move(pref_service);
+  profile_pref_service_mash_ = std::move(pref_service);
 }
 
 void Shell::OnLocalStatePrefServiceInitialized(
     std::unique_ptr<::PrefService> pref_service) {
+  DCHECK(GetAshConfig() == Config::MASH);
   // |pref_service| is null if can't connect to Chrome (as happens when
   // running mash outside of chrome --mash and chrome isn't built).
-  local_state_ = std::move(pref_service);
+  local_state_mash_ = std::move(pref_service);
+
+  for (auto& observer : shell_observers_)
+    observer.OnLocalStatePrefServiceInitialized(local_state_mash_.get());
 }
 
 }  // namespace ash
