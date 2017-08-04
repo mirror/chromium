@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8a20b725_64f8d6f6",
+        "filename": "services/device/generic_sensor/absolute_orientation_euler_angles_fusion_algorithm_using_accelerometer_and_magnetometer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-08-04T16:46:00Z",
+      "side": 1,
+      "message": "I will add some test cases in follow-up CLs. Thanks!",
+      "parentUuid": "9692fdc5_1f9bbecd",
+      "revId": "8927e9505b2f3ceb5ddadb15a2cca4980f0b8098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f64e66b1_146ab6e6",
         "filename": "services/device/generic_sensor/platform_sensor_provider_android.cc",
         "patchSetId": 7
@@ -39,6 +57,30 @@
       "revId": "8927e9505b2f3ceb5ddadb15a2cca4980f0b8098",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d842041_196b68dd",
+        "filename": "services/device/generic_sensor/platform_sensor_provider_android.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-08-04T16:46:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f64e66b1_146ab6e6",
+      "range": {
+        "startLine": 112,
+        "startChar": 0,
+        "endLine": 113,
+        "endChar": 58
+      },
+      "revId": "8927e9505b2f3ceb5ddadb15a2cca4980f0b8098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
