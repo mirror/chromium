@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ede6beb_31ca004b",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 8
+      },
+      "lineNbr": 2230,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-04T12:11:30Z",
+      "side": 0,
+      "message": "You\u0027ve removed this string from resources, but didn\u0027t remove android:text\u003d\"@string/signin_promo_settings\" line from the XML.",
+      "range": {
+        "startLine": 2230,
+        "startChar": 21,
+        "endLine": 2230,
+        "endChar": 46
+      },
+      "revId": "ca947193f97f17c67c7d7cef26e2e8f824ed4075",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
