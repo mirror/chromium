@@ -16,6 +16,29 @@
       "revId": "415c239f9b5e0ae33053586b8ee6e7959ae3c331",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20294932_3fbc4fa2",
+        "filename": "third_party/WebKit/Source/modules/fetch/FetchManager.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-08-04T15:42:37Z",
+      "side": 1,
+      "message": "[Just for my understanding; and totally unrelated to this cl... :-) ]\n\nWhy does this call not have a Resource? I mean... I see that the code doesn\u0027t have a Resource instance available, but... what thing has asked us to load this sub-resource and has supplied the integrity meta-data that we\u0027re checking against?",
+      "range": {
+        "startLine": 220,
+        "startChar": 71,
+        "endLine": 220,
+        "endChar": 78
+      },
+      "revId": "415c239f9b5e0ae33053586b8ee6e7959ae3c331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
