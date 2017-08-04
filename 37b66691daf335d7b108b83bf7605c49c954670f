@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ace92da_28b7a8db",
+        "filename": "third_party/WebKit/Source/core/layout/CounterNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-08-04T18:47:25Z",
+      "side": 1,
+      "message": "Here we early-out if new_child-\u003efirst_child_ is NULL.",
+      "range": {
+        "startLine": 274,
+        "startChar": 6,
+        "endLine": 274,
+        "endChar": 30
+      },
+      "revId": "37b66691daf335d7b108b83bf7605c49c954670f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08f1e049_cc49bb28",
+        "filename": "third_party/WebKit/Source/core/layout/CounterNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-08-04T18:47:25Z",
+      "side": 1,
+      "message": "So first must not be NULL.",
+      "revId": "37b66691daf335d7b108b83bf7605c49c954670f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b92c6f0a_feefb433",
+        "filename": "third_party/WebKit/Source/core/layout/CounterNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-08-04T18:47:25Z",
+      "side": 1,
+      "message": "So this check is unnecessary.",
+      "revId": "37b66691daf335d7b108b83bf7605c49c954670f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0f9d85c_c5738beb",
+        "filename": "third_party/WebKit/Source/core/layout/CounterNode.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 323,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-08-04T18:47:25Z",
+      "side": 1,
+      "message": "And this change is unnecessary",
+      "revId": "37b66691daf335d7b108b83bf7605c49c954670f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
