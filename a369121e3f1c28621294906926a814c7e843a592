@@ -94,6 +94,30 @@
       "revId": "a369121e3f1c28621294906926a814c7e843a592",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "384b2967_d0010bf0",
+        "filename": "chrome/browser/ui/views/feature_promos/feature_promo_bubble_view.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-04T22:08:29Z",
+      "side": 1,
+      "message": "Offline Discussion: Discussed potentially splitting these to prevent the erroneous case where a subclass specifies both anchor_view and anchor_rect.\n\nThe proposed fix is to have three constructors. This constructor is made private and two are made protected, one that only allows the anchor_view to be specified and another that only allows the anchor_rect to be specified.",
+      "parentUuid": "10175e23_e6e6e485",
+      "range": {
+        "startLine": 28,
+        "startChar": 4,
+        "endLine": 30,
+        "endChar": 46
+      },
+      "revId": "a369121e3f1c28621294906926a814c7e843a592",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
