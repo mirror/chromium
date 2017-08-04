@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5438540_4f111b42",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1205,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-04T01:39:01Z",
+      "side": 1,
+      "message": "Why not use FormatUrlWithOffsets() instead of manually adjusting below?",
+      "revId": "b0d59e09ea2751db10313ebe91af70cd4e2225fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4deadc35_e4332366",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1215,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-04T01:39:01Z",
+      "side": 1,
+      "message": "I don\u0027t think |autocomplete_offset_valid| is what you want to check here anymore, because that\u0027s being adjusted differently.  You\u0027re interested in whether your newly-adjusted values are non-npos.\n\nOne interesting question would be whether you\u0027re guaranteed that one of these conditions is true in a superset of cases of the other.",
+      "revId": "b0d59e09ea2751db10313ebe91af70cd4e2225fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1867f906_153bce1d",
+        "filename": "components/omnibox/browser/history_url_provider.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1217,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-04T01:39:01Z",
+      "side": 1,
+      "message": "Nit: DCHECK_GT?",
+      "revId": "b0d59e09ea2751db10313ebe91af70cd4e2225fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
