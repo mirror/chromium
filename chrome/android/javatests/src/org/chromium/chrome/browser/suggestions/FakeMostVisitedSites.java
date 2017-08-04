@@ -16,10 +16,7 @@ import java.util.List;
 public class FakeMostVisitedSites implements MostVisitedSites {
     private final List<String> mBlacklistedUrls = new ArrayList<>();
 
-    private String[] mTitles = new String[] {};
-    private String[] mUrls = new String[] {};
-    private String[] mWhitelistIconPaths = new String[] {};
-    private int[] mSources = new int[] {};
+    private List<SiteSuggestion> mSites = new ArrayList<>();
     private Observer mObserver;
 
     @Override
@@ -63,22 +60,15 @@ public class FakeMostVisitedSites implements MostVisitedSites {
         //  Metrics are stubbed out.
     }
 
-    /**
-     * Sets new tile suggestion data. If there is an observer it is notified.
-     * @param titles The titles of the site suggestions.
-     * @param urls The URLs of the site suggestions.
-     * @param whitelistIconPaths The paths to the icon image files for whitelisted tiles, empty
-     *                           strings otherwise.
-     * @param sources For each tile, the {@code NTPTileSource} that generated the tile.
-     */
-    public void setTileSuggestions(
-            String[] titles, String[] urls, String[] whitelistIconPaths, int[] sources) {
-        assert titles.length == urls.length;
-        mTitles = titles.clone();
-        mUrls = urls.clone();
-        mWhitelistIconPaths = whitelistIconPaths.clone();
-        mSources = sources.clone();
+    /** Sets new tile suggestion data. If there is an observer it is notified. */
+    public void setTileSuggestions(List<SiteSuggestion> suggestions) {
+        mSites = new ArrayList<>(suggestions);
         notifyTileSuggestionsAvailable();
+    }
+
+    /** Sets new tile suggestion data. If there is an observer it is notified. */
+    public void setTileSuggestions(SiteSuggestion... suggestions) {
+        setTileSuggestions(Arrays.asList(suggestions));
     }
 
     /**
@@ -86,16 +76,21 @@ public class FakeMostVisitedSites implements MostVisitedSites {
      * If there is an observer it is notified.
      *
      * @param urls The URLs of the site suggestions.
-     * @see #setTileSuggestions(String[], String[], String[], int[])
+     * @see #setTileSuggestions(SiteSuggestion[])
      */
     public void setTileSuggestions(String... urls) {
-        String[] whitelistIconPaths = new String[urls.length];
-        Arrays.fill(whitelistIconPaths, "");
+        SiteSuggestion[] suggestions = new SiteSuggestion[urls.length];
+        for (int i = 0; i < urls.length; ++i) suggestions[i] = createSiteSuggestion(urls[i]);
 
-        int[] sources = new int[urls.length];
-        Arrays.fill(sources, TileSource.TOP_SITES);
+        setTileSuggestions(suggestions);
+    }
 
-        setTileSuggestions(urls, urls.clone(), whitelistIconPaths, sources);
+    public static SiteSuggestion createSiteSuggestion(String url) {
+        return createSiteSuggestion(url, url);
+    }
+
+    public static SiteSuggestion createSiteSuggestion(String title, String url) {
+        return new SiteSuggestion(title, url, "", TileSource.TOP_SITES);
     }
 
     private void notifyTileSuggestionsAvailable() {
@@ -103,9 +98,7 @@ public class FakeMostVisitedSites implements MostVisitedSites {
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
-                mObserver.onSiteSuggestionsAvailable(
-                        MostVisitedSitesBridge.buildSiteSuggestions(mTitles.clone(), mUrls.clone(),
-                                mWhitelistIconPaths.clone(), mSources.clone()));
+                mObserver.onSiteSuggestionsAvailable(mSites);
             }
         });
     }

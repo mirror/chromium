@@ -37,7 +37,6 @@ import org.chromium.chrome.browser.ntp.snippets.KnownCategories;
 import org.chromium.chrome.browser.ntp.snippets.SnippetArticle;
 import org.chromium.chrome.browser.suggestions.ContentSuggestionsAdditionalAction;
 import org.chromium.chrome.browser.suggestions.FakeMostVisitedSites;
-import org.chromium.chrome.browser.suggestions.TileSource;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.test.ChromeActivityTestRule;
 import org.chromium.chrome.test.ChromeJUnit4ClassRunner;
@@ -74,9 +73,6 @@ public class NewTabPageRecyclerViewTest {
     public SuggestionsDependenciesRule mSuggestionsDeps = new SuggestionsDependenciesRule();
 
     private static final String TEST_PAGE = "/chrome/test/data/android/navigate/simple.html";
-    private static final String[] FAKE_MOST_VISITED_TITLES = new String[] {"Simple"};
-    private static final String[] FAKE_MOST_VISITED_WHITELIST_ICON_PATHS = new String[] {""};
-    private static final int[] FAKE_MOST_VISITED_SOURCES = new int[] {TileSource.TOP_SITES};
     private static final long FAKE_PUBLISH_TIMESTAMP = 1466614774;
     private static final long FAKE_FETCH_TIMESTAMP = 1466634774;
     private static final float FAKE_SNIPPET_SCORE = 10f;
@@ -89,8 +85,6 @@ public class NewTabPageRecyclerViewTest {
 
     private Tab mTab;
     private NewTabPage mNtp;
-    private String[] mSiteSuggestionUrls;
-    private FakeMostVisitedSites mMostVisitedSites;
     private EmbeddedTestServer mTestServer;
     private FakeSuggestionsSource mSource;
 
@@ -98,12 +92,10 @@ public class NewTabPageRecyclerViewTest {
     public void setUp() throws Exception {
         mTestServer = EmbeddedTestServer.createAndStartServer(
                 InstrumentationRegistry.getInstrumentation().getContext());
-        mSiteSuggestionUrls = mTestServer.getURLs(TEST_PAGE);
 
-        mMostVisitedSites = new FakeMostVisitedSites();
-        mMostVisitedSites.setTileSuggestions(FAKE_MOST_VISITED_TITLES, mSiteSuggestionUrls,
-                FAKE_MOST_VISITED_WHITELIST_ICON_PATHS, FAKE_MOST_VISITED_SOURCES);
-        mSuggestionsDeps.getFactory().mostVisitedSites = mMostVisitedSites;
+        FakeMostVisitedSites mostVisitedSites = new FakeMostVisitedSites();
+        mostVisitedSites.setTileSuggestions(mTestServer.getURL(TEST_PAGE));
+        mSuggestionsDeps.getFactory().mostVisitedSites = mostVisitedSites;
 
         mSource = new FakeSuggestionsSource();
         mSource.setInfoForCategory(TEST_CATEGORY,

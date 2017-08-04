@@ -1828,7 +1828,6 @@ chrome_junit_test_java_sources = [
   "junit/src/org/chromium/chrome/browser/snackbar/SnackbarCollectionUnitTest.java",
   "junit/src/org/chromium/chrome/browser/suggestions/ImageFetcherTest.java",
   "junit/src/org/chromium/chrome/browser/suggestions/TileGroupUnitTest.java",
-  "junit/src/org/chromium/chrome/browser/suggestions/TileTest.java",
   "junit/src/org/chromium/chrome/browser/superviseduser/SupervisedUserContentProviderUnitTest.java",
   "junit/src/org/chromium/chrome/browser/tabmodel/TabPersistentStoreUnitTest.java",
   "junit/src/org/chromium/chrome/browser/tabstate/TabStateUnitTest.java",

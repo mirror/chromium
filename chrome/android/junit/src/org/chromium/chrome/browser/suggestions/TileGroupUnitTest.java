@@ -4,13 +4,12 @@
 
 package org.chromium.chrome.browser.suggestions;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertTrue;
-
 import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
@@ -35,6 +34,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
@@ -106,7 +106,7 @@ public class TileGroupUnitTest {
         verify(mTileGroupObserver).onTileCountChanged();
         verify(mTileGroupObserver).onTileDataChanged();
 
-        verify(mTileGroupDelegate, never()).onLoadingComplete(any(Tile[].class));
+        verify(mTileGroupDelegate, never()).onLoadingComplete(Mockito.<List<Tile>>any());
         assertTrue(tileGroup.isTaskPending(TileGroup.TileTask.SCHEDULE_ICON_FETCH));
         assertFalse(tileGroup.isTaskPending(TileGroup.TileTask.FETCH_DATA));
     }
@@ -128,7 +128,7 @@ public class TileGroupUnitTest {
         verify(mTileGroupObserver).onTileCountChanged();
         verify(mTileGroupObserver).onTileDataChanged();
 
-        verify(mTileGroupDelegate, never()).onLoadingComplete(any(Tile[].class));
+        verify(mTileGroupDelegate, never()).onLoadingComplete(Mockito.<List<Tile>>any());
         assertTrue(tileGroup.isTaskPending(TileGroup.TileTask.SCHEDULE_ICON_FETCH));
         assertFalse(tileGroup.isTaskPending(TileGroup.TileTask.FETCH_DATA));
     }
@@ -170,7 +170,7 @@ public class TileGroupUnitTest {
         verify(mTileGroupObserver).onTileDataChanged(); // Data DID change.
 
         // No load task the second time.
-        verify(mTileGroupDelegate, never()).onLoadingComplete(any(Tile[].class));
+        verify(mTileGroupDelegate, never()).onLoadingComplete(Mockito.<List<Tile>>any());
         assertFalse(tileGroup.isTaskPending(TileGroup.TileTask.SCHEDULE_ICON_FETCH));
     }
 
@@ -187,7 +187,7 @@ public class TileGroupUnitTest {
         verify(mTileGroupObserver, never()).onTileCountChanged(); // Tile count is still 2.
 
         // We should now have a pending task.
-        verify(mTileGroupDelegate, never()).onLoadingComplete(any(Tile[].class));
+        verify(mTileGroupDelegate, never()).onLoadingComplete(Mockito.<List<Tile>>any());
         assertTrue(tileGroup.isTaskPending(TileGroup.TileTask.SCHEDULE_ICON_FETCH));
     }
 
@@ -200,7 +200,7 @@ public class TileGroupUnitTest {
         verify(mTileGroupObserver).onTileCountChanged(); // Tile count DID change.
         verify(mTileGroupObserver).onTileDataChanged(); // Data DID change.
         verify(mTileGroupDelegate, never())
-                .onLoadingComplete(any(Tile[].class)); // No load task the second time.
+                .onLoadingComplete(Mockito.<List<Tile>>any()); // No load task the second time.
         assertFalse(tileGroup.isTaskPending(TileGroup.TileTask.SCHEDULE_ICON_FETCH));
     }
 
@@ -320,8 +320,6 @@ public class TileGroupUnitTest {
         assertThat(layout.getChildCount(), is(2));
         assertThat(layout.indexOfChild(view1), is(-1));
         assertThat(layout.indexOfChild(view2), is(-1));
-        verify(view1, never()).updateIfDataChanged(tileGroup.getTiles()[0]);
-        verify(view2, never()).updateIfDataChanged(tileGroup.getTiles()[1]);
     }
 
     @Test
@@ -331,16 +329,24 @@ public class TileGroupUnitTest {
                         mock(ContextMenuManager.class), mTileGroupDelegate, mTileGroupObserver,
                         mock(OfflinePageBridge.class), TILE_TITLE_LINES, Style.CLASSIC);
         tileGroup.startObserving(MAX_TILES_TO_FETCH);
-        notifyTileUrlsAvailable(URLS);
+
+        List<SiteSuggestion> sites = new ArrayList<SiteSuggestion>() {
+            {
+                add(new SiteSuggestion(URLS[0], URLS[0], "", TileSource.TOP_SITES));
+                add(new SiteSuggestion(URLS[1], URLS[1], "", TileSource.TOP_SITES));
+            }
+        };
+
+        notifyTilesAvailable(sites);
 
         // Initialise the layout with views whose URLs match the ones of the new tiles.
         ViewGroup layout = new FrameLayout(RuntimeEnvironment.application, null);
         TileView view1 = mock(TileView.class);
-        when(view1.getUrl()).thenReturn(URLS[0]);
+        when(view1.getData()).thenReturn(sites.get(0));
         layout.addView(view1);
 
         TileView view2 = mock(TileView.class);
-        when(view2.getUrl()).thenReturn(URLS[1]);
+        when(view2.getData()).thenReturn(sites.get(1));
         layout.addView(view2);
 
         // The tiles should be updated, the old ones reused.
@@ -348,22 +354,20 @@ public class TileGroupUnitTest {
         assertThat(layout.getChildCount(), is(2));
         assertThat(layout.getChildAt(0), CoreMatchers.<View>is(view1));
         assertThat(layout.getChildAt(1), CoreMatchers.<View>is(view2));
-        verify(view1).updateIfDataChanged(tileGroup.getTiles()[0]);
-        verify(view2).updateIfDataChanged(tileGroup.getTiles()[1]);
     }
 
     @Test
     public void testIconLoadingForInit() {
         TileGroup tileGroup = initialiseTileGroup(URLS);
-        Tile tile = tileGroup.getTiles()[0];
+        Tile tile = tileGroup.getAllTiles().get(0);
 
         // Loading complete should be delayed until the icons are done loading.
-        verify(mTileGroupDelegate, never()).onLoadingComplete(any(Tile[].class));
+        verify(mTileGroupDelegate, never()).onLoadingComplete(Mockito.<List<Tile>>any());
 
         mImageFetcher.fulfillLargeIconRequests();
 
         // The load should now be complete.
-        verify(mTileGroupDelegate).onLoadingComplete(any(Tile[].class));
+        verify(mTileGroupDelegate).onLoadingComplete(Mockito.<List<Tile>>any());
         verify(mTileGroupObserver).onTileIconChanged(eq(tile));
         verify(mTileGroupObserver, times(URLS.length)).onTileIconChanged(any(Tile.class));
     }
@@ -371,7 +375,7 @@ public class TileGroupUnitTest {
     @Test
     public void testIconLoadingWhenTileNotRegistered() {
         TileGroup tileGroup = initialiseTileGroup();
-        Tile tile = new Tile("title", URLS[0], "", 0, TileSource.POPULAR);
+        Tile tile = new Tile(new SiteSuggestion("title", URLS[0], "", TileSource.POPULAR), 0);
 
         ViewGroup layout = new FrameLayout(RuntimeEnvironment.application, null);
         buildTileView(tile, layout, tileGroup);
@@ -398,7 +402,7 @@ public class TileGroupUnitTest {
         // Data changed but no loading complete event is sent
         verify(mTileGroupObserver).onTileDataChanged();
         verify(mTileGroupObserver, times(URLS.length)).onTileIconChanged(any(Tile.class));
-        verify(mTileGroupDelegate, never()).onLoadingComplete(any(Tile[].class));
+        verify(mTileGroupDelegate, never()).onLoadingComplete(Mockito.<List<Tile>>any());
     }
 
     @Test
@@ -417,7 +421,7 @@ public class TileGroupUnitTest {
         // Data changed but no loading complete event is sent (same as sync)
         verify(mTileGroupObserver).onTileDataChanged();
         verify(mTileGroupObserver, times(URLS.length)).onTileIconChanged(any(Tile.class));
-        verify(mTileGroupDelegate, never()).onLoadingComplete(any(Tile[].class));
+        verify(mTileGroupDelegate, never()).onLoadingComplete(Mockito.<List<Tile>>any());
     }
 
     @Test
@@ -436,7 +440,11 @@ public class TileGroupUnitTest {
         // Data changed but no loading complete event is sent
         verify(mTileGroupObserver).onTileDataChanged();
         verify(mTileGroupObserver, times(URLS.length)).onTileIconChanged(any(Tile.class));
-        verify(mTileGroupDelegate).onLoadingComplete(any(Tile[].class));
+        verify(mTileGroupDelegate).onLoadingComplete(Mockito.<List<Tile>>any());
+    }
+
+    private void notifyTilesAvailable(List<SiteSuggestion> suggestions) {
+        mTileGroupDelegate.mObserver.onSiteSuggestionsAvailable(suggestions);
     }
 
     /**
@@ -451,9 +459,8 @@ public class TileGroupUnitTest {
         String[] whitelistIconPaths = new String[urls.length];
         int[] sources = new int[urls.length];
         for (int i = 0; i < urls.length; ++i) whitelistIconPaths[i] = "";
-        mTileGroupDelegate.mObserver.onSiteSuggestionsAvailable(
-                MostVisitedSitesBridge.buildSiteSuggestions(
-                        titles, urls, whitelistIconPaths, sources));
+        notifyTilesAvailable(MostVisitedSitesBridge.buildSiteSuggestions(
+                titles, urls, whitelistIconPaths, sources));
     }
 
     /** {@link #initialiseTileGroup(boolean, String...)} override that does not defer loads. */
@@ -506,7 +513,7 @@ public class TileGroupUnitTest {
         }
 
         @Override
-        public void onLoadingComplete(Tile[] tiles) {}
+        public void onLoadingComplete(List<Tile> tiles) {}
 
         @Override
         public void destroy() {}
