@@ -162,9 +162,9 @@ class BrowserTestWithProfileShortcutManager : public InProcessBrowserTest {
   DISALLOW_COPY_AND_ASSIGN(BrowserTestWithProfileShortcutManager);
 };
 
-// Check that the window properties on Windows are properly set.
+// Flaky. https://crbug.com/396344
 IN_PROC_BROWSER_TEST_F(BrowserTestWithProfileShortcutManager,
-                       WindowProperties) {
+                       DISABLED_WindowProperties) {
   // Single profile case. The profile name should not be shown.
   ValidateBrowserWindowProperties(browser(), base::string16());
 
@@ -194,13 +194,8 @@ IN_PROC_BROWSER_TEST_F(BrowserTestWithProfileShortcutManager,
   ValidateBrowserWindowProperties(profile2_browser, entry->GetName());
 }
 
-// Flaky on Win. https://crbug.com/396344
-#if defined(OS_WIN)
-#define MAYBE_HostedApp DISABLED_HostedApp
-#else
-#define MAYBE_HostedApp HostedApp
-#endif
-IN_PROC_BROWSER_TEST_F(BrowserWindowPropertyManagerTest, MAYBE_HostedApp) {
+// Flaky. https://crbug.com/396344
+IN_PROC_BROWSER_TEST_F(BrowserWindowPropertyManagerTest, DISABLED_HostedApp) {
   // Load an app.
   const extensions::Extension* extension =
       LoadExtension(test_data_dir_.AppendASCII("app/"));
