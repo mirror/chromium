@@ -79,6 +79,20 @@ Console.ConsoleView = class extends UI.VBox {
     toolbar.appendSeparator();
     toolbar.appendToolbarItem(this._showSettingsPaneButton);
 
+    var hideForFilterElements = [
+      this._consoleContextSelector.toolbarItem(), this._filter._levelMenuButton, this._filter._levelMenuButtonArrow,
+      this._progressToolbarItem, this._filterStatusText
+    ];
+
+    this._filter._textFilterUI.addEventListener(UI.ToolbarInput.Event.Focused, () => {
+      hideForFilterElements.forEach(element => element.setVisible(false));
+    });
+
+    this._filter._textFilterUI.addEventListener(UI.ToolbarInput.Event.Blurred, () => {
+      hideForFilterElements.forEach(element => element.setVisible(true));
+      this._updateFilterStatus();
+    });
+
     this._preserveLogCheckbox = new UI.ToolbarSettingCheckbox(
         Common.moduleSetting('preserveConsoleLog'), Common.UIString('Do not clear log on page reload / navigation'),
         Common.UIString('Preserve log'));
@@ -387,10 +401,12 @@ Console.ConsoleView = class extends UI.VBox {
   }
 
   _updateFilterStatus() {
-    this._filterStatusText.setText(Common.UIString(
-        this._hiddenByFilterCount === 1 ? '1 item hidden by filters' :
-                                          this._hiddenByFilterCount + ' items hidden by filters'));
-    this._filterStatusText.setVisible(!!this._hiddenByFilterCount);
+    if (this._hiddenByFilterCount === 0)
+      this._filterStatusText.setText('');
+    else if (this._hiddenByFilterCount === 1)
+      this._filterStatusText.setText(Common.UIString('1 item hidden'));
+    else
+      this._filterStatusText.setText(Common.UIString('%s items hidden', this._hiddenByFilterCount));
   }
 
   /**
@@ -998,7 +1014,8 @@ Console.ConsoleViewFilter = class {
     this._filterByExecutionContextSetting.addChangeListener(this._filterChanged);
     this._filterByConsoleAPISetting.addChangeListener(this._filterChanged);
 
-    this._textFilterUI = new UI.ToolbarInput(Common.UIString('Filter'), 0.2, 1, true);
+    this._textFilterUI =
+        new UI.ToolbarInput(Common.UIString('Filter'), 0.2, 1, true /* isSearchField */, true /* growOnFocus */);
     this._textFilterUI.addEventListener(UI.ToolbarInput.Event.TextChanged, this._textFilterChanged, this);
     this._filterText = this._textFilterUI.value();
     /** @type {?RegExp} */
