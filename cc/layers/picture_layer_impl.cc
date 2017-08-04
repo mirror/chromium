@@ -379,6 +379,8 @@ void PictureLayerImpl::AppendQuads(RenderPass* render_pass,
           break;
         }
         case TileDrawInfo::SOLID_COLOR_MODE: {
+          if (contents_opaque())
+            DCHECK_EQ(SkColorGetA(draw_info.solid_color()), 255);
           float alpha =
               (SkColorGetA(draw_info.solid_color()) * (1.0f / 255.0f)) *
               shared_quad_state->opacity;
