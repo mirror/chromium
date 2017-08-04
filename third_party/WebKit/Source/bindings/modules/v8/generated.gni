@@ -74,6 +74,8 @@ bindings_modules_generated_union_type_files = [
   "$bindings_modules_v8_output_dir/StringOrUnsignedLong.h",
   "$bindings_modules_v8_output_dir/UnsignedLongOrUnsignedLongSequence.cpp",
   "$bindings_modules_v8_output_dir/UnsignedLongOrUnsignedLongSequence.h",
+  "$bindings_modules_v8_output_dir/WebGLRenderingContextOrWebGL2RenderingContext.cpp",
+  "$bindings_modules_v8_output_dir/WebGLRenderingContextOrWebGL2RenderingContext.h",
 ]
 
 generated_modules_callback_function_files = [
