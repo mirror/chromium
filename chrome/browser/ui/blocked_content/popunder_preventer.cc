@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/ui/blocked_content/app_modal_dialog_helper.h"
+#include "chrome/browser/ui/blocked_content/popunder_preventer.h"
 
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_finder.h"
@@ -16,14 +16,14 @@
 #include "components/guest_view/browser/guest_view_base.h"
 #endif
 
-AppModalDialogHelper::AppModalDialogHelper(content::WebContents* dialog_host)
+PopunderPreventer::PopunderPreventer(content::WebContents* activating_contents)
     : popup_(nullptr) {
-  content::WebContents* actual_host = dialog_host;
+  content::WebContents* actual_host = activating_contents;
 #if BUILDFLAG(ENABLE_EXTENSIONS)
   // If the dialog was triggered via an PDF, get the actual web contents that
   // embeds the PDF.
   guest_view::GuestViewBase* guest =
-      guest_view::GuestViewBase::FromWebContents(dialog_host);
+      guest_view::GuestViewBase::FromWebContents(activating_contents);
   if (guest)
     actual_host = guest->embedder_web_contents();
 #endif
@@ -49,7 +49,7 @@ AppModalDialogHelper::AppModalDialogHelper(content::WebContents* dialog_host)
   }
 }
 
-AppModalDialogHelper::~AppModalDialogHelper() {
+PopunderPreventer::~PopunderPreventer() {
   if (!popup_)
     return;
 
@@ -60,6 +60,6 @@ AppModalDialogHelper::~AppModalDialogHelper() {
   delegate->ActivateContents(popup_);
 }
 
-void AppModalDialogHelper::WebContentsDestroyed() {
+void PopunderPreventer::WebContentsDestroyed() {
   popup_ = nullptr;
 }
