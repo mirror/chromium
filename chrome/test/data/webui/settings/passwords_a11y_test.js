@@ -7,19 +7,25 @@
 suite('SettingsPasswordsAccessibility', function() {
   var passwordsSection = null;
   var passwordManager = null;
-
-  /** @type {AccessibilityAuditConfig} **/
-  // TODO(quacht): Enable these rules when the audit filter is implemented, and
-  // we can filter out specific audit violations.
-  var auditOptions = {
-    'rules': {
-      // Enable 'color-contrast' when failure is resolved.
-      // http://crbug.com/748608
-      'color-contrast': {enabled: false},
-      // http://crbug.com/748632
-      'aria-valid-attr': {enabled: false}
-    }
-  };
+  var auditOptions = {};
+  var exceptions = [
+    // TODO(quacht): remove this exception once the color contrast issue is
+    // solved.
+    // http://crbug.com/748608
+    AccessibilityTest.Exception(
+        'color-contrast',
+        function(nodeResult) {
+          var node = nodeResult.element;
+          return !(node.id == 'prompt');
+        }),
+    // http://crbug.com/748632
+    AccessibilityTest.Exception(
+        'aria-valid-attr',
+        function(nodeResult) {
+          var node = nodeResult.element;
+          return !(node.hasAttribute('aria-active-attribute'));
+        }),
+  ];
 
   setup(function() {
     return new Promise(function(resolve) {
@@ -59,7 +65,7 @@ suite('SettingsPasswordsAccessibility', function() {
 
   test('Accessible with 0 passwords', function() {
     assertEquals(0, passwordsSection.savedPasswords.length);
-    return SettingsAccessibilityTest.runAudit(auditOptions);
+    return AccessibilityTest.runAudit(auditOptions, exceptions);
   });
 
   test('Accessible with 100 passwords', function() {
@@ -75,6 +81,6 @@ suite('SettingsPasswordsAccessibility', function() {
 
     assertEquals(100, passwordsSection.savedPasswords.length);
 
-    return SettingsAccessibilityTest.runAudit(auditOptions);
+    return AccessibilityTest.runAudit(auditOptions, exceptions);
   });
 });
