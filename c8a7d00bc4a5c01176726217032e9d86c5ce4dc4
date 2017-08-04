@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2f41434_6fd6c151",
+        "filename": "base/message_loop/message_loop_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1467,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-04T21:07:02Z",
+      "side": 1,
+      "message": "I\u0027ve never seen this extra param? It makes the /0 /1 /2 use strings instead or something?",
+      "revId": "c8a7d00bc4a5c01176726217032e9d86c5ce4dc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5612deb_e85f7eb0",
+        "filename": "mojo/common/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-08-04T21:07:02Z",
+      "side": 0,
+      "message": "Uh?! Why did they need that here?!",
+      "revId": "cfab3ada781b1dcd673fb256bc02354d24124f1e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
