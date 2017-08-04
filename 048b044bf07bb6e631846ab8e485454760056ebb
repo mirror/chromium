@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81fc794f_240b7173",
+        "filename": "base/message_loop/message_loop.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-04T20:21:04Z",
+      "side": 1,
+      "message": "native message loop?",
+      "range": {
+        "startLine": 239,
+        "startChar": 5,
+        "endLine": 239,
+        "endChar": 12
+      },
+      "revId": "048b044bf07bb6e631846ab8e485454760056ebb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
