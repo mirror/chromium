@@ -14,6 +14,16 @@ const int kMinimalCenteredAppListMargin = 10;
 
 }  // namespace
 
+const base::TimeDelta AppListPresenterDelegate::kAnimationDurationMs =
+    base::TimeDelta::FromMilliseconds(200);
+
+const base::TimeDelta AppListPresenterDelegate::kAnimationDurationFullscreenMs =
+    base::TimeDelta::FromMilliseconds(300);
+
+const base::TimeDelta
+    AppListPresenterDelegate::kAnimationDurationSideShelfFullscreenMs =
+        base::TimeDelta::FromMilliseconds(150);
+
 int AppListPresenterDelegate::GetMinimumBoundsHeightForAppList(
     const app_list::AppListView* app_list) {
   return app_list->bounds().height() + 2 * kMinimalCenteredAppListMargin;
