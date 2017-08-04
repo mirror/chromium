@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6512eb4c_e9647adf",
+        "filename": "ui/webui/resources/cr_components/README.md",
+        "patchSetId": 9
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-04T20:47:06Z",
+      "side": 1,
+      "message": "Nit: chrome.send() should only be indirectly behind a proxy. Maybe add a\n\n\"chrome.send() via a browser proxy, or chrome.settingsPrivate\".",
+      "range": {
+        "startLine": 8,
+        "startChar": 62,
+        "endLine": 8,
+        "endChar": 73
+      },
+      "revId": "8c39096eeb57aed27a100f5b312700e61cc09640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b870f0d7_f0f36689",
+        "filename": "ui/webui/resources/cr_components/README.md",
+        "patchSetId": 9
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-04T20:47:06Z",
+      "side": 1,
+      "message": "Unnecessary blank lines?",
+      "revId": "8c39096eeb57aed27a100f5b312700e61cc09640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d955d965_6ac5684d",
+        "filename": "ui/webui/resources/cr_components/compiled_resources2.gyp",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-04T20:47:06Z",
+      "side": 1,
+      "message": "nit: Is it a convention to attach the \"_resources\" suffix? Can we just do \"cr_components\"? The name is not used anyway since third_party/closure_compiler/compiled_resources2.gyp is using an \"*\".",
+      "revId": "8c39096eeb57aed27a100f5b312700e61cc09640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78bca0e9_354a070e",
+        "filename": "ui/webui/resources/cr_elements/READE.md",
+        "patchSetId": 9
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-04T20:47:06Z",
+      "side": 1,
+      "message": "Not for this CL, but it is unclear to me why cr_elements is included in iOS. Per my understanding none of the Polymer WebUIs is shared with iOS.",
+      "revId": "8c39096eeb57aed27a100f5b312700e61cc09640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3d939f0_48749751",
+        "filename": "ui/webui/resources/cr_elements/READE.md",
+        "patchSetId": 9
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-08-04T20:47:06Z",
+      "side": 1,
+      "message": "Did you mean cr_components/ ?",
+      "revId": "8c39096eeb57aed27a100f5b312700e61cc09640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
