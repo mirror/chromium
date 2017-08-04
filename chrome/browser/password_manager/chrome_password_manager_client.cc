@@ -72,7 +72,16 @@
 #if defined(SAFE_BROWSING_DB_LOCAL)
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/safe_browsing/safe_browsing_service.h"
+#include "chrome/browser/sync/user_event_service_factory.h"
+#include "components/safe_browsing/common/safe_browsing_prefs.h"
+#include "components/safe_browsing/features.h"
 #include "components/safe_browsing/password_protection/password_protection_service.h"
+#include "components/sync/protocol/user_event_specifics.pb.h"
+#include "components/sync/user_events/user_event_service.h"
+
+using sync_pb::UserEventSpecifics;
+using SafeBrowsingStatus = UserEventSpecifics::SyncPasswordReuseEvent::
+    PasswordReuseDetected::SafeBrowsingStatus;
 #endif
 
 #if defined(OS_ANDROID)
@@ -144,6 +153,12 @@ void ReportMetrics(bool password_manager_enabled,
       password_bubble_experiment::ShouldShowAutoSignInPromptFirstRunExperience(
           profile->GetPrefs()));
 }
+
+#if defined(SAFE_BROWSING_DB_LOCAL)
+int64_t GetMicrosecondsSinceWindowsEpoch(base::Time time) {
+  return (time - base::Time()).InMicroseconds();
+}
+#endif
 
 }  // namespace
 
@@ -444,6 +459,47 @@ void ChromePasswordManagerClient::CheckProtectedPasswordEntry(
         web_contents(), GetMainFrameURL(), password_saved_domain,
         password_field_exists);
   }
+}
+
+void ChromePasswordManagerClient::LogPasswordReuseDetectedEvent() {
+  if (!base::FeatureList::IsEnabled(safe_browsing::kSyncPasswordReuseEvent))
+    return;
+
+  syncer::UserEventService* user_event_service =
+      browser_sync::UserEventServiceFactory::GetForProfile(profile_);
+  content::NavigationEntry* navigation =
+      web_contents()->GetController().GetLastCommittedEntry();
+  if (!user_event_service || !navigation)
+    return;
+
+  auto specifics = base::MakeUnique<UserEventSpecifics>();
+  specifics->set_event_time_usec(
+      GetMicrosecondsSinceWindowsEpoch(base::Time::Now()));
+  specifics->set_navigation_id(
+      GetMicrosecondsSinceWindowsEpoch(navigation->GetTimestamp()));
+  auto* const status = specifics->mutable_sync_password_reuse_event()
+                           ->mutable_reuse_detected()
+                           ->mutable_status();
+
+  bool safe_browsing_enabled =
+      GetPrefs()->GetBoolean(prefs::kSafeBrowsingEnabled);
+  status->set_enabled(safe_browsing_enabled);
+
+  safe_browsing::ExtendedReportingLevel erl =
+      safe_browsing::GetExtendedReportingLevel(*GetPrefs());
+  switch (erl) {
+    case safe_browsing::SBER_LEVEL_OFF:
+      status->set_safe_browsing_reporting_population(SafeBrowsingStatus::NONE);
+      break;
+    case safe_browsing::SBER_LEVEL_LEGACY:
+      status->set_safe_browsing_reporting_population(
+          SafeBrowsingStatus::EXTENDED_REPORTING);
+      break;
+    case safe_browsing::SBER_LEVEL_SCOUT:
+      status->set_safe_browsing_reporting_population(SafeBrowsingStatus::SCOUT);
+      break;
+  }
+  user_event_service->RecordUserEvent(std::move(specifics));
 }
 #endif
 
