@@ -1277,9 +1277,6 @@ crbug.com/v8/6000 inspector/coverage/decorations-after-script-formatter.html [ N
 crbug.com/v8/6000 inspector/coverage/gutter-js.html [ NeedsManualRebaseline ]
 crbug.com/v8/6000 inspector/coverage/multiple-instances-merge.html [ NeedsManualRebaseline ]
 
-# We should send PointerLeave events for stylus devices.
-crbug.com/583413 external/wpt/pointerevents/pointerevent_pointerleave_pen-manual.html  [ Failure ]
-
 # Chrome touch-action computation ignores div transforms.
 crbug.com/715148 external/wpt/pointerevents/pointerevent_touch-action-rotated-divs_touch-manual.html  [ Skip ]
 
