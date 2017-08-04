@@ -41,17 +41,17 @@ const gfx::ImageSkia& LauncherSearchIconImageLoaderImpl::LoadExtensionIcon() {
 void LauncherSearchIconImageLoaderImpl::LoadIconResourceFromExtension() {
   const base::FilePath& file_path =
       extensions::file_util::ExtensionURLToRelativeFilePath(icon_url_);
-  const extensions::ExtensionResource& resource =
-      extension_->GetResource(file_path);
+  extensions::ExtensionResource resource = extension_->GetResource(file_path);
 
   // Load image as scale factor 2.0 (crbug.com/490597).
   std::vector<extensions::ImageLoader::ImageRepresentation> info_list;
   info_list.push_back(extensions::ImageLoader::ImageRepresentation(
-      resource, extensions::ImageLoader::ImageRepresentation::ALWAYS_RESIZE,
+      std::move(resource),
+      extensions::ImageLoader::ImageRepresentation::ALWAYS_RESIZE,
       gfx::Size(icon_size_.width() * 2, icon_size_.height() * 2),
       ui::SCALE_FACTOR_200P));
   extensions::ImageLoader::Get(profile_)->LoadImagesAsync(
-      extension_, info_list,
+      extension_, std::move(info_list),
       base::Bind(&LauncherSearchIconImageLoaderImpl::OnCustomIconImageLoaded,
                  weak_ptr_factory_.GetWeakPtr()));
 }

@@ -26,7 +26,7 @@ class FileReader : public base::RefCountedThreadSafe<FileReader> {
   // If the file reading doesn't succeed, this will be ignored.
   using OptionalFileSequenceTask = base::Callback<void(std::string*)>;
 
-  FileReader(const extensions::ExtensionResource& resource,
+  FileReader(extensions::ExtensionResource resource,
              const OptionalFileSequenceTask& file_sequence_task,
              const DoneCallback& done_callback);
 
