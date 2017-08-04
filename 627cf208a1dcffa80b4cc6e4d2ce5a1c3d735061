@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f742873_62ab4e67",
+        "filename": "base/profiler/native_stack_sampler_mac.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2017-08-04T21:20:20Z",
+      "side": 1,
+      "message": "Isn\u0027t the issue here that we\u0027re attempting to access saved registers at the wrong memory addresses? i.e. because rbp hasn\u0027t been set yet for the current frame (prologue) or has already been popped (epilogue) and so the rbp value corresponds to the last frame but the frame offset in the unwind information corresponds to the current frame?",
+      "range": {
+        "startLine": 150,
+        "startChar": 49,
+        "endLine": 152,
+        "endChar": 16
+      },
+      "revId": "627cf208a1dcffa80b4cc6e4d2ce5a1c3d735061",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d3fc6fb_cc189d58",
+        "filename": "base/profiler/native_stack_sampler_mac.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2017-08-04T21:20:20Z",
+      "side": 1,
+      "message": "How about encapsulating this into a function, and mentioning what operation is being performed, for documentation purposes? Its not obvious what this is doing unless you\u0027re familiar with the ctz and popcount instructions (or look them up).",
+      "range": {
+        "startLine": 162,
+        "startChar": 10,
+        "endLine": 163,
+        "endChar": 77
+      },
+      "revId": "627cf208a1dcffa80b4cc6e4d2ce5a1c3d735061",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
