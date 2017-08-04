@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d903e9a4_70beadad",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-04T08:07:40Z",
+      "side": 1,
+      "message": "Could you add a reason of introducing  InsertLayoutObjectAndAncestorBlocks()\nin description?\n\nThis function is used both CollectInvalidateSet() and SetShouldInvalidateSelection().",
+      "revId": "417ad0702b9ca091d1e8ec9415e81bce8dff4c37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8741e21e_ece8d873",
+        "filename": "third_party/WebKit/Source/core/editing/LayoutSelection.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 530,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-08-04T08:07:40Z",
+      "side": 1,
+      "message": "nit: better to write\n\n\u003c\u003c \",\u0027 (... ? \"ShouldInvalidate\" : \"NoInvalidate\");\n\nOr move |\u003c\u003c \",\"| at end of L529.",
+      "revId": "417ad0702b9ca091d1e8ec9415e81bce8dff4c37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
