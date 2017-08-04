@@ -16,6 +16,24 @@
       "revId": "81c3ffd92167524eec7f7f02ac96410e1a125ec9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf09bedc_2a9c83da",
+        "filename": "tools/clang/traffic_annotation_extractor/tests/test-original.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-08-04T05:37:01Z",
+      "side": 1,
+      "message": "The (mutable annotation tag without const unique id) was added after we had to add annotation to a mojom structure. When the cc file is generated from mojom, the automatically generated code includes creating an uninitialized annotation and assigning its value and we have no control over it, here:\nhttps://cs.chromium.org/chromium/src/out/Debug/gen/content/public/common/url_loader_factory.mojom.cc\n\nWe also laterally had to add annotation to another structure whose annotation might change after initialization (DownloadParams) and to do so, used the mutable one.\n\nBut generally wish to limit usage of it by having a whitelist in auditor to control the way it is used.",
+      "parentUuid": "4831acca_20f8c731",
+      "revId": "81c3ffd92167524eec7f7f02ac96410e1a125ec9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
