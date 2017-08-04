@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8abbac43_c7770634",
+        "filename": "components/safe_browsing/web_ui/webui.proto",
+        "patchSetId": 9
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-04T20:00:50Z",
+      "side": 1,
+      "message": "need some comment for number_of_hits field. especially in what time span this number is accumulated.",
+      "revId": "6acec76c9ecfb6e3984178b613f9e65c3b8d4162",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6b1ee25_1990e4e9",
+        "filename": "components/safe_browsing_db/v4_get_hash_protocol_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-08-04T20:00:50Z",
+      "side": 1,
+      "message": "nit: number of hits since open chrome://safe-browsing, or since begin of this session?",
+      "revId": "6acec76c9ecfb6e3984178b613f9e65c3b8d4162",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
