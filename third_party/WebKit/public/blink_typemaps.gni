@@ -10,7 +10,7 @@ typemaps = [
   "//cc/ipc/returned_resource.typemap",
   "//cc/ipc/surface_id.typemap",
   "//cc/ipc/surface_info.typemap",
-  "//cc/ipc/surface_sequence.typemap",
+  "//services/viz/public/cpp/compositing/surface_sequence.typemap",
   "//gpu/ipc/common/mailbox_holder_for_blink.typemap",
   "//gpu/ipc/common/sync_token.typemap",
 ]
