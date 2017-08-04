@@ -95,6 +95,7 @@ class DocumentFragment;
 class DocumentLoader;
 class DocumentMarkerController;
 class DocumentNameCollection;
+class DocumentOutliveTimeReporter;
 class DocumentParser;
 class DocumentState;
 class DocumentType;
@@ -1705,6 +1706,8 @@ class CORE_EXPORT Document : public ContainerNode,
   Member<NetworkStateObserver> network_state_observer_;
 
   bool has_high_media_engagement_;
+
+  std::unique_ptr<DocumentOutliveTimeReporter> document_outlive_time_reporter_;
 };
 
 extern template class CORE_EXTERN_TEMPLATE_EXPORT Supplement<Document>;
