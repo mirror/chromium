@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de8080a6_28f7cab6",
+        "filename": "content/renderer/pepper/pepper_webplugin_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-04T23:40:48Z",
+      "side": 1,
+      "message": "Since checking |name| is way less work than calling CanEditText(), let\u0027s keep them inside the cut/paste blocks.",
+      "revId": "c4f7f89e7556523a027430d466b978da35fb3fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b0dbb37_d1282dc5",
+        "filename": "content/renderer/pepper/pepper_webplugin_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-04T23:40:48Z",
+      "side": 1,
+      "message": "Update",
+      "revId": "c4f7f89e7556523a027430d466b978da35fb3fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07bd2b73_0a6e8cc4",
+        "filename": "third_party/WebKit/Source/core/exported/WebPluginContainerImpl.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 838,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-04T23:40:48Z",
+      "side": 1,
+      "message": "Don\u0027t need the blank line, since the code above/below are very much related.",
+      "revId": "c4f7f89e7556523a027430d466b978da35fb3fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a610594_f83b1761",
+        "filename": "third_party/WebKit/Source/core/exported/WebPluginContainerImpl.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 850,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-04T23:40:48Z",
+      "side": 1,
+      "message": "This comment looks out of date.",
+      "revId": "c4f7f89e7556523a027430d466b978da35fb3fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02aaa16c_0ccec8e4",
+        "filename": "third_party/WebKit/Source/core/exported/WebPluginContainerTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-08-04T23:40:48Z",
+      "side": 1,
+      "message": "Maybe ResetEditCommandState() ?",
+      "revId": "c4f7f89e7556523a027430d466b978da35fb3fa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
