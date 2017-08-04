@@ -9,6 +9,8 @@
 
 #import "ios/chrome/browser/ui/collection_view/collection_view_controller.h"
 
+extern NSString* const kSignInConfirmationCollectionViewId;
+
 @class ChromeIdentity;
 @class SigninConfirmationViewController;
 
