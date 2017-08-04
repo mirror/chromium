@@ -37,6 +37,23 @@
     },
     {
       "key": {
+        "uuid": "155879ab_dc5d4b3e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsolePrompt.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1161850
+      },
+      "writtenOn": "2017-08-04T23:52:28Z",
+      "side": 1,
+      "message": "Add `await is undefined` or `await is not a function`. Consider: await(fetch(\u0027https://www.google.com\u0027));",
+      "revId": "83870eaf57001d4bd02fb272713252ad96526e9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "770b7ec3_67d83bd1",
         "filename": "third_party/WebKit/Source/devtools/front_end/formatter_worker/FormatterWorker.js",
         "patchSetId": 3
