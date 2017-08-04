@@ -4,14 +4,29 @@
 
 package org.chromium.chrome.browser.webapps;
 
+import static android.content.Context.NOTIFICATION_SERVICE;
+
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 
 import org.chromium.base.Callback;
+import org.chromium.base.CommandLine;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.annotations.CalledByNative;
+import org.chromium.chrome.R;
 import org.chromium.chrome.browser.AppHooks;
+import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.banners.InstallerDelegate;
 import org.chromium.chrome.browser.metrics.WebApkUma;
+import org.chromium.chrome.browser.notifications.NotificationBuilderBase;
+import org.chromium.chrome.browser.notifications.StandardNotificationBuilder;
+import org.chromium.components.url_formatter.UrlFormatter;
+import org.chromium.webapk.lib.client.WebApkNavigationClient;
 import org.chromium.webapk.lib.common.WebApkConstants;
 
 /**
@@ -50,10 +65,13 @@ public class WebApkInstaller {
      * @param title The title of the WebAPK to display during installation.
      * @param token The token from WebAPK Server.
      * @param url The start URL of the WebAPK to install.
+     * @param source The source (either app banner or menu) that the install of a WebAPK was
+     *               triggered.
+     * @param icon The primary icon of the WebAPK to install.
      */
     @CalledByNative
-    private void installWebApkAsync(final String packageName, int version, String title,
-            String token, String url, final int source) {
+    private void installWebApkAsync(final String packageName, int version, final String title,
+            String token, final String url, final int source, final Bitmap icon) {
         // Check whether the WebAPK package is already installed. The WebAPK may have been installed
         // by another Chrome version (e.g. Chrome Dev). We have to do this check because the Play
         // install API fails silently if the package is already installed.
@@ -75,6 +93,12 @@ public class WebApkInstaller {
                 WebApkInstaller.this.notify(result);
                 if (result == WebApkInstallResult.FAILURE) return;
 
+                if (result == WebApkInstallResult.SUCCESS
+                        && CommandLine.getInstance().hasSwitch(
+                                   ChromeSwitches.ENABLE_WEBAPK_NEW_INSTALL_UI)) {
+                    showInstallNotification(packageName, title, url, icon);
+                }
+
                 // Stores the source info of WebAPK in WebappDataStorage.
                 WebappRegistry.getInstance().register(
                         WebApkConstants.WEBAPK_ID_PREFIX + packageName,
@@ -94,6 +118,34 @@ public class WebApkInstaller {
         if (mNativePointer != 0) {
             nativeOnInstallFinished(mNativePointer, result);
         }
+    }
+
+    /** Displays a notification when a WebAPK is successfully installed. */
+    private void showInstallNotification(
+            String webApkPackage, String title, String url, Bitmap icon) {
+        Context context = ContextUtils.getApplicationContext();
+
+        Intent intent = WebApkNavigationClient.createLaunchWebApkIntent(webApkPackage, url, false);
+        PendingIntent clickIntent =
+                PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        NotificationBuilderBase notificationBuilder =
+                new StandardNotificationBuilder(context, null)
+                        .setTitle(title)
+                        .setBody(context.getResources().getString(
+                                R.string.notification_webapk_installed))
+                        .setLargeIcon(icon)
+                        .setSmallIcon(R.drawable.ic_chrome)
+                        .setContentIntent(clickIntent)
+                        .setTimestamp(System.currentTimeMillis())
+                        .setOrigin(UrlFormatter.formatUrlForSecurityDisplay(
+                                url, false /* showScheme */));
+        Notification notification = notificationBuilder.build();
+        notification.flags |= Notification.FLAG_AUTO_CANCEL;
+
+        NotificationManager notificationManager =
+                (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.notify(webApkPackage, 0, notification);
     }
 
     /**
