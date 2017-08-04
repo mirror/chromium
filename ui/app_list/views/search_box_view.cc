@@ -20,8 +20,8 @@
 #include "ui/app_list/speech_ui_model.h"
 #include "ui/app_list/vector_icons/vector_icons.h"
 #include "ui/app_list/views/app_list_view.h"
-#include "ui/app_list/views/contents_view.h"
 #include "ui/app_list/views/search_box_view_delegate.h"
+#include "ui/app_list/views/search_result_page_view.h"
 #include "ui/base/ime/text_input_flags.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
@@ -54,7 +54,6 @@ constexpr int kPadding = 12;
 constexpr int kInnerPadding = 24;
 constexpr int kPreferredWidth = 360;
 constexpr int kPreferredWidthFullscreen = 544;
-constexpr int kSearchBoxPreferredHeight = 48;
 constexpr int kSearchBoxBorderWidth = 4;
 
 constexpr SkColor kHintTextColor = SkColorSetARGBMacro(0xFF, 0xA0, 0xA0, 0xA0);
@@ -603,7 +602,8 @@ SkColor SearchBoxView::GetBackgroundColorForState(
   return background_color_;
 }
 
-void SearchBoxView::UpdateOpacity(float work_area_bottom, bool is_end_gesture) {
+float SearchBoxView::UpdateOpacity(float work_area_bottom,
+                                   bool is_end_gesture) {
   float opacity = 1.0f;
   if (!is_end_gesture) {
     gfx::Rect search_box_bounds = this->GetBoundsInScreen();
@@ -617,7 +617,8 @@ void SearchBoxView::UpdateOpacity(float work_area_bottom, bool is_end_gesture) {
   // Restores the opacity of searchbox to 1.0f if it is the end of the gesture
   // dragging.
   this->layer()->SetOpacity(opacity);
-  contents_view_->layer()->SetOpacity(opacity);
+  contents_view_->search_results_page_view()->layer()->SetOpacity(opacity);
+  return opacity;
 }
 
 void SearchBoxView::UpdateModel() {
