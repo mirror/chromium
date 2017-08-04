@@ -16,9 +16,20 @@
 @protocol ContentSuggestionsImageFetcher;
 @protocol SuggestedContent;
 
+namespace content_suggestions {
+
+typedef NS_ENUM(NSInteger, StatusCode) {
+  StatusCodeSuccess,
+  StatusCodeError,
+  StatusCodePermanentError,
+  StatusCodeNotRun
+};
+}
+
 // Typedef for a block taking the fetched suggestions as parameter.
 typedef void (^MoreSuggestionsFetched)(
-    NSArray<CollectionViewItem<SuggestedContent>*>* _Nullable);
+    NSArray<CollectionViewItem<SuggestedContent>*>* _Nullable,
+    content_suggestions::StatusCode status);
 
 // DataSource for the content suggestions. Provides the suggestions data in a
 // format compatible with Objective-C.

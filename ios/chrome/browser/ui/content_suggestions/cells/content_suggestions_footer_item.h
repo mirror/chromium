@@ -9,23 +9,42 @@
 #import "ios/chrome/browser/ui/collection_view/cells/collection_view_item.h"
 #import "ios/third_party/material_components_ios/src/components/CollectionCells/src/MaterialCollectionCells.h"
 
+@class ContentSuggestionsFooterCell;
+
+@protocol ContentSuggestionsFooterCellDelegate
+
+- (void)cellButtonTapped:(nonnull ContentSuggestionsFooterCell*)cell;
+
+@end
+
 // Item for a footer of a Content Suggestions section.
-@interface ContentSuggestionsFooterItem : CollectionViewItem
+@interface ContentSuggestionsFooterItem
+    : CollectionViewItem<ContentSuggestionsFooterCellDelegate>
 
 // Initialize a footer with a button taking all the space, with a |title| and a
 // |block| run when tapped.
-- (instancetype)initWithType:(NSInteger)type
-                       title:(NSString*)title
-                       block:(ProceduralBlock)block NS_DESIGNATED_INITIALIZER;
+- (nullable instancetype)
+initWithType:(NSInteger)type
+       title:(nonnull NSString*)title
+       block:(void (^_Nullable)(ContentSuggestionsFooterItem* _Nonnull,
+                                ContentSuggestionsFooterCell* _Nonnull))block
+    NS_DESIGNATED_INITIALIZER;
 
-- (instancetype)initWithType:(NSInteger)type NS_UNAVAILABLE;
+- (nullable instancetype)initWithType:(NSInteger)type NS_UNAVAILABLE;
+
+@property(nonatomic, assign, getter=isLoading) BOOL loading;
 
 @end
 
 // Corresponding cell for a Content Suggestions' section footer.
 @interface ContentSuggestionsFooterCell : MDCCollectionViewCell
 
-@property(nonatomic, readonly, strong) UIButton* button;
+@property(nonatomic, readonly, strong, nonnull) UIButton* button;
+
+@property(nonatomic, weak, nullable) id<ContentSuggestionsFooterCellDelegate>
+    delegate;
+
+- (void)setLoading:(BOOL)loading;
 
 @end
 
