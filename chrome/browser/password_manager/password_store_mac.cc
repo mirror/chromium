@@ -44,7 +44,7 @@ void PasswordStoreMac::InitOnBackgroundThread(
     // drop the entries in the DB because they don't have passwords anyway.
     login_db()->RemoveLoginsCreatedBetween(base::Time(), base::Time());
     initial_status_ = MigrationStatus::MIGRATION_STOPPED;
-    main_thread_runner()->PostTask(
+    main_task_runner()->PostTask(
         FROM_HERE,
         base::Bind(&PasswordStoreMac::UpdateStatusPref, this, initial_status_));
   }
