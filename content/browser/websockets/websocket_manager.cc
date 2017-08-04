@@ -199,8 +199,8 @@ int WebSocketManager::GetClientProcessId() {
   return process_id_;
 }
 
-StoragePartition* WebSocketManager::GetStoragePartition() {
-  return storage_partition_;
+net::URLRequestContext* WebSocketManager::GetURLRequestContext() {
+  return url_request_context_getter_->GetURLRequestContext();
 }
 
 void WebSocketManager::OnReceivedResponseFromServer(WebSocketImpl* impl) {

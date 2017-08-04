@@ -60,7 +60,7 @@ class CONTENT_EXPORT WebSocketManager
 
   // WebSocketImpl::Delegate methods:
   int GetClientProcessId() override;
-  StoragePartition* GetStoragePartition() override;
+  net::URLRequestContext* GetURLRequestContext() override;
   void OnReceivedResponseFromServer(WebSocketImpl* impl) override;
   void OnLostConnectionToClient(WebSocketImpl* impl) override;
 
