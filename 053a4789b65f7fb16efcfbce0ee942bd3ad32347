@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "1dc1d693_314fb644",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/urlconnection/CronetHttpURLConnectionTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1217,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-08-04T17:10:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "06886989_c19e01d4",
+      "range": {
+        "startLine": 1217,
+        "startChar": 31,
+        "endLine": 1217,
+        "endChar": 0
+      },
+      "revId": "053a4789b65f7fb16efcfbce0ee942bd3ad32347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "306b153c_e05bea27",
         "filename": "components/cronet/android/test/javatests/src/org/chromium/net/urlconnection/CronetHttpURLConnectionTest.java",
         "patchSetId": 4
@@ -62,6 +86,30 @@
       "revId": "053a4789b65f7fb16efcfbce0ee942bd3ad32347",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9edc00df_0b6c0b08",
+        "filename": "components/cronet/android/test/javatests/src/org/chromium/net/urlconnection/CronetHttpURLConnectionTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 1222,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-08-04T17:10:57Z",
+      "side": 1,
+      "message": "Done. Thanks for the suggestion! i re-arranged slightly. I think it should be equivalent. PTAL.",
+      "parentUuid": "306b153c_e05bea27",
+      "range": {
+        "startLine": 1222,
+        "startChar": 32,
+        "endLine": 1222,
+        "endChar": 0
+      },
+      "revId": "053a4789b65f7fb16efcfbce0ee942bd3ad32347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
