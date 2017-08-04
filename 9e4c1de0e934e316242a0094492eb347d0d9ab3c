@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "699a0c0f_13ca276a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/data_grid/DataGrid.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1230559
+      },
+      "writtenOn": "2017-08-04T01:22:08Z",
+      "side": 0,
+      "message": "This 3rd argument is \u0027context\u0027, which DataGrid.js receives in _editingCommitted(), but is never used.",
+      "range": {
+        "startLine": 372,
+        "startChar": 86,
+        "endLine": 372,
+        "endChar": 97
+      },
+      "revId": "9e4c1de0e934e316242a0094492eb347d0d9ab3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
