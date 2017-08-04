@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3048cb66_0bc7f973",
+        "filename": "components/viz/host/hit_test/DEPS",
+        "patchSetId": 6
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-04T20:06:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dcb2a8e7_89bb2dc0",
+      "revId": "cf7e23e9b440d6fbae4e6c28213da0d6657b8e5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ad7ae72_dc8a3526",
         "filename": "components/viz/service/frame_sinks/frame_sink_manager_impl.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "cf7e23e9b440d6fbae4e6c28213da0d6657b8e5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47b5718e_e62e116e",
+        "filename": "components/viz/service/frame_sinks/frame_sink_manager_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-04T20:06:39Z",
+      "side": 1,
+      "message": "Done, and in GpuRootCompositorFrameSink and WindowServer.",
+      "parentUuid": "5ad7ae72_dc8a3526",
+      "revId": "cf7e23e9b440d6fbae4e6c28213da0d6657b8e5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "46463df7_ef1d7e3e",
+        "filename": "services/ui/ws/window_server.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 973,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-04T20:06:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c86adee1_c98f6175",
+      "revId": "cf7e23e9b440d6fbae4e6c28213da0d6657b8e5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab52b22e_0beb7bf0",
         "filename": "services/ui/ws/window_server.cc",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "cf7e23e9b440d6fbae4e6c28213da0d6657b8e5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d47c24c9_e5728bb3",
+        "filename": "services/ui/ws/window_server.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 989,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-04T20:06:39Z",
+      "side": 1,
+      "message": "Ah I see, done.",
+      "parentUuid": "ab52b22e_0beb7bf0",
+      "revId": "cf7e23e9b440d6fbae4e6c28213da0d6657b8e5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -178,6 +178,24 @@
     },
     {
       "key": {
+        "uuid": "248f7d78_511fcb3a",
+        "filename": "components/viz/host/hit_test/hit_test_query.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1211635
+      },
+      "writtenOn": "2017-08-04T20:06:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18c50623_eb5a9aa4",
+      "revId": "a0c1ac06aa78e55c7625c51afd3697d5c14f08e9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e881a441_a68313a9",
         "filename": "components/viz/service/frame_sinks/gpu_root_compositor_frame_sink.h",
         "patchSetId": 5
