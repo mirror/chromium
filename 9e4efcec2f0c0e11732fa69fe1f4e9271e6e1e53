@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2187eb11_1d32b4ba",
+        "filename": "chrome/browser/plugins/pdf_iframe_navigation_throttle.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-04T23:26:12Z",
+      "side": 1,
+      "message": "I think a lot of this stuff needs to be escaped. Try using this function in a console.log in Chrome developer tools to help you out: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent\n\nYou may always want to put this into kPlaceholderDataUrlPrefix + url + kPlaceholderDataUrlSuffix constants...",
+      "revId": "9e4efcec2f0c0e11732fa69fe1f4e9271e6e1e53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39a97338_f574425f",
+        "filename": "chrome/browser/plugins/pdf_iframe_navigation_throttle_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-04T23:26:12Z",
+      "side": 1,
+      "message": "nit. add a newline before and after the three variables.",
+      "revId": "9e4efcec2f0c0e11732fa69fe1f4e9271e6e1e53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e27a497_7ce428eb",
+        "filename": "chrome/browser/plugins/pdf_iframe_navigation_throttle_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-04T23:26:12Z",
+      "side": 1,
+      "message": "nit this can belong in the anon namespace too",
+      "revId": "9e4efcec2f0c0e11732fa69fe1f4e9271e6e1e53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec4b17f0_6de00b4e",
+        "filename": "chrome/browser/plugins/pdf_iframe_navigation_throttle_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-04T23:26:12Z",
+      "side": 1,
+      "message": "usually we put this into private: and make a trivial subframe() method to retrieve it.",
+      "revId": "9e4efcec2f0c0e11732fa69fe1f4e9271e6e1e53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44a9cb76_ad1c15b0",
+        "filename": "chrome/browser/plugins/pdf_iframe_navigation_throttle_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-04T23:26:12Z",
+      "side": 1,
+      "message": "I suggest rename to: OnlyCreateThrottleForSubframes\n\nAnd after my other comment, you will probably need to actually disable the PDF plugin as a pre-condition for being able to distinguish between the two.\n\nI also recommend adding comments and collapsing some whitespace to make it clear these are separate blocks like:\n\nTEST_F(PDFIFrameNavigationThrottleTest, OnlyCreateThrottleForSubframes) {\n  // Disable the PDF plugin to test main vs. subframes.\n  ...\n  ...\n  ...\n\n  // Never create throttle for main frames.\n  ...\n  ...\n  ...\n\n  // Create a throttle for subframes.\n  ...\n  ...\n  ..\n}",
+      "revId": "9e4efcec2f0c0e11732fa69fe1f4e9271e6e1e53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e8d0534_95da4e92",
+        "filename": "chrome/browser/plugins/pdf_iframe_navigation_throttle_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-04T23:26:12Z",
+      "side": 1,
+      "message": "Generally it would be good to the counterfactual..\n\nexample: \n\nTEST_F(...) {\n  // Setup\n  ...\n\n  // Verify that we CANCEL for PDF mime type.\n  ...\n  \n\n  // Verify that we PROCEED for other mime types.\n  ...\n}\n\nAnd since it\u0027s easy I\u0027d recommend testing two mime types... blank, and HTML, and maybe even PNG.",
+      "revId": "9e4efcec2f0c0e11732fa69fe1f4e9271e6e1e53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71637415_204fab8a",
+        "filename": "chrome/browser/plugins/pdf_iframe_navigation_throttle_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-08-04T23:26:12Z",
+      "side": 1,
+      "message": "This test is perfect in its contents. Maybe just divide it up into the setup, test A, test B format with comments to make it more readable.",
+      "revId": "9e4efcec2f0c0e11732fa69fe1f4e9271e6e1e53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
