@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df9518be_456f349d",
+        "filename": "cc/paint/paint_image.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-08-04T22:40:48Z",
+      "side": 1,
+      "message": "nit: \"moved\"",
+      "revId": "af0b1d9f473df3e971d0efb7bef3b0f484a7d8dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
