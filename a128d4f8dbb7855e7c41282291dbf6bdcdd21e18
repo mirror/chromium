@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c1cc13b_d6ef7fcf",
+        "filename": "components/payments/content/payment_request_spec.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-04T19:34:58Z",
+      "side": 1,
+      "message": "anonymous namespace? actually does it need to be a function at all?",
+      "revId": "a128d4f8dbb7855e7c41282291dbf6bdcdd21e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5528575f_80ea5fae",
+        "filename": "components/payments/core/payment_instrument.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-04T19:34:58Z",
+      "side": 1,
+      "message": "You\u0027ll need to modify the IOS payment instrument",
+      "revId": "a128d4f8dbb7855e7c41282291dbf6bdcdd21e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
