@@ -317,13 +317,15 @@ cr.define('cr.ui', function() {
       this.selectionModel = new ListSelectionModel(length);
 
       this.addEventListener('dblclick', this.handleDoubleClick_);
-      this.addEventListener('mousedown', handleMouseDown);
+      this.addEventListener('pointerdown', handlePointerDown);
       this.addEventListener('dragstart', handleDragStart, true);
-      this.addEventListener('mouseup', this.handlePointerDownUp_);
+      this.addEventListener('pointerup', this.handlePointerDownUp_);
       this.addEventListener('keydown', this.handleKeyDown);
       this.addEventListener('focus', this.handleElementFocus_, true);
       this.addEventListener('blur', this.handleElementBlur_, true);
       this.addEventListener('scroll', this.handleScroll.bind(this));
+      this.addEventListener('touchmove', this.handleTouchEvents_);
+      this.addEventListener('touchcancel', this.handleTouchEvents_);
       this.setAttribute('role', 'list');
 
       // Make list focusable
@@ -480,8 +482,8 @@ cr.define('cr.ui', function() {
     },
 
     /**
-     * Callback for mousedown and mouseup events.
-     * @param {Event} e The mouse event object.
+     * Callback for pointerdown and pointerup events.
+     * @param {Event} e The pointer event object.
      * @private
      */
     handlePointerDownUp_: function(e) {
@@ -559,6 +561,31 @@ cr.define('cr.ui', function() {
      */
     handleScroll: function(e) {
       requestAnimationFrame(this.redraw.bind(this));
+    },
+
+    /**
+     * Handle touchmove/touchcancel events.
+     * @param {!Event} e The event.
+     * @private
+     */
+    handleTouchEvents_: function(e) {
+      if (this.disabled)
+        return;
+
+      var target = /** @type {HTMLElement} */ (e.target);
+
+      // If the target was this element we need to make sure that the user did
+      // not click on a border or a scrollbar.
+      if (target == this) {
+        if (inViewport(target, e))
+          this.selectionController_.handleTouchEvents(e, -1);
+        return;
+      }
+
+      target = this.getListItemAncestor(target);
+
+      var index = this.getIndexOfListItem(target);
+      this.selectionController_.handleTouchEvents(e, index);
     },
 
     /**
@@ -1286,7 +1313,7 @@ cr.define('cr.ui', function() {
    * @this {cr.ui.List}
    * @param {Event} e The mouse event object.
    */
-  function handleMouseDown(e) {
+  function handlePointerDown(e) {
     e.target = /** @type {!HTMLElement} */ (e.target);
     var listItem = this.getListItemAncestor(e.target);
     var wasSelected = listItem && listItem.selected;
@@ -1336,7 +1363,7 @@ cr.define('cr.ui', function() {
 
   /**
    * Check if |start| or its ancestor under |root| is focusable.
-   * This is a helper for handleMouseDown.
+   * This is a helper for handlePointerDown.
    * @param {!Element} start An element which we start to check.
    * @param {!Element} root An element which we finish to check.
    * @return {boolean} True if we found a focusable element.
