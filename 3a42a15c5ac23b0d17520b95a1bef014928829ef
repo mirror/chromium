@@ -81,6 +81,24 @@
       "revId": "3a42a15c5ac23b0d17520b95a1bef014928829ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79bc9490_a0f98a5f",
+        "filename": "chrome/browser/ui/views/frame/browser_view_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-08-04T20:52:48Z",
+      "side": 1,
+      "message": "That\u0027s not quite what I meant.  We\u0027ve seen other tests that wait for event A, check something, then wait for event B.  Occasionally, the message loop they run to wait for A ends up not quitting until *both* A and B have happened (because the task for B made it into the message loop and gets processed as it\u0027s quitting).  That means that any checks that B hasn\u0027t happened yet can fail.\n\nIn this case, the DidStopLoading event could make it into the message loop of the TitleWatcher, meaning we\u0027re done loading (as well as done with the title) by the time we get to line 272.\n\nI\u0027m not certain that can happen in this case, but I noticed it as a risk for this being flaky.  If you don\u0027t see it at all after running 100 iterations of the test locally, maybe we\u0027re safe from it here for some reason.",
+      "parentUuid": "491f8314_28e832d9",
+      "revId": "3a42a15c5ac23b0d17520b95a1bef014928829ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
