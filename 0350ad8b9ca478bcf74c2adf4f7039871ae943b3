@@ -681,6 +681,24 @@
       "revId": "0350ad8b9ca478bcf74c2adf4f7039871ae943b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5653736f_641bbd10",
+        "filename": "ash/login/ui/login_user_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-08-04T18:08:51Z",
+      "side": 1,
+      "message": "The opacity animation does not reset correctly with IMMEDIATELY_ANIMATE_TO_NEW_TARGET (it can get stuck at 0% opacity). StopAnimating() has different behavior than all of the preemption strategies, and I believe StopAnimating() looks the nicest.",
+      "parentUuid": "255b0d22_c5437355",
+      "revId": "0350ad8b9ca478bcf74c2adf4f7039871ae943b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
