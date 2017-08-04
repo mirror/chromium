@@ -105,6 +105,12 @@ constexpr int kAllAppsIndicatorExtraPadding = 2;
 // The height of gradient fade-out zones.
 constexpr int kFadeoutZoneHeight = 21;
 
+// Suggested apps should move slower than apps grid view during dragging.
+// The distance between suggested apps and the top of app list is
+// (|kInsetYChangeRatio| + |kSuggestedAppsYInsetChangeRatio|) * (height of app
+// list above screen bottom)
+constexpr float kSuggestedAppsYInsetChangeRatio = 0.1f;
+
 // Returns the size of a tile view excluding its padding.
 gfx::Size GetTileViewSize() {
   if (features::IsFullscreenAppListEnabled())
@@ -774,23 +780,16 @@ void AppsGridView::Layout() {
   }
 
   if (!folder_delegate_) {
-    gfx::Rect indicator_rect(rect);
-    LayoutSuggestedAppsIndicator(&indicator_rect);
-    if (suggestions_container_) {
-      gfx::Rect suggestions_rect(indicator_rect);
-      suggestions_rect.set_height(
-          suggestions_container_->GetHeightForWidth(suggestions_rect.width()));
-      suggestions_rect.Offset((suggestions_rect.width() - kGridTileWidth) / 2 -
-                                  (kGridTileWidth + kGridTileSpacing) * 2,
-                              0);
-      suggestions_rect.Offset(CalculateTransitionOffset(0));
-      suggestions_container_->SetBoundsRect(suggestions_rect);
-      indicator_rect.Inset(0,
-                           suggestions_container_->GetPreferredSize().height() +
-                               kSuggestionsAllAppsIndicatorPadding,
-                           0, 0);
+    if (LayoutSuggestedAppsIndicator(&rect))
+      rect.Inset(0, suggested_apps_indicator_->GetPreferredSize().height(), 0,
+                 0);
+    if (LayoutSuggestedApps(&rect)) {
+      rect.Inset(0,
+                 suggestions_container_->GetPreferredSize().height() +
+                     kSuggestionsAllAppsIndicatorPadding,
+                 0, 0);
     }
-    LayoutAllAppsIndicator(&indicator_rect);
+    LayoutAllAppsIndicator(&rect);
   }
 
   CalculateIdealBounds();
@@ -950,9 +949,9 @@ void AppsGridView::UpdateSuggestions() {
                                          ->results());
 }
 
-void AppsGridView::LayoutSuggestedAppsIndicator(gfx::Rect* rect) {
+bool AppsGridView::LayoutSuggestedAppsIndicator(gfx::Rect* rect) {
   if (!suggested_apps_indicator_)
-    return;
+    return false;
 
   DCHECK(rect);
   gfx::Rect indicator_rect(*rect);
@@ -962,7 +961,7 @@ void AppsGridView::LayoutSuggestedAppsIndicator(gfx::Rect* rect) {
                        0);
   indicator_rect.Offset(CalculateTransitionOffset(0));
   suggested_apps_indicator_->SetBoundsRect(indicator_rect);
-  rect->Inset(0, suggested_apps_indicator_->GetPreferredSize().height(), 0, 0);
+  return true;
 }
 
 void AppsGridView::LayoutAllAppsIndicator(gfx::Rect* rect) {
@@ -980,6 +979,22 @@ void AppsGridView::LayoutAllAppsIndicator(gfx::Rect* rect) {
   indicator_rect.Offset(page_zero_offset.x(),
                         std::max(y_offset_limit, page_zero_offset.y()));
   all_apps_indicator_->SetBoundsRect(indicator_rect);
+}
+
+bool AppsGridView::LayoutSuggestedApps(gfx::Rect* indicator_rect) {
+  if (suggestions_container_) {
+    gfx::Rect suggestions_rect(*indicator_rect);
+    suggestions_rect.set_height(
+        suggestions_container_->GetHeightForWidth(suggestions_rect.width()));
+    suggestions_rect.Offset((suggestions_rect.width() - kGridTileWidth) / 2 -
+                                (kGridTileWidth + kGridTileSpacing) * 2,
+                            0);
+    gfx::Vector2d offset = CalculateTransitionOffset(0);
+    suggestions_rect.Offset(offset);
+    suggestions_container_->SetBoundsRect(suggestions_rect);
+    return true;
+  }
+  return false;
 }
 
 int AppsGridView::TilesPerPage(int page) const {
@@ -1639,9 +1654,8 @@ bool AppsGridView::IsUnderOEMFolder() {
   return folder_delegate_->IsOEMFolder();
 }
 
-void AppsGridView::UpdateOpacityOfItem(views::View* view_item,
-                                       float centroid_y) {
-  float delta_y = std::max(work_area_bottom_ - centroid_y, 0.0f);
+void AppsGridView::UpdateOpacityOfItem(views::View* view_item, int centroid_y) {
+  int delta_y = std::max(baseline_of_opacity_ - centroid_y, 0);
   float opacity = std::min(
       delta_y / (AppListView::kNumOfShelfSize * AppListView::kShelfSize), 1.0f);
   view_item->layer()->SetOpacity(is_end_gesture_ ? 1.0f : opacity);
@@ -1710,15 +1724,9 @@ void AppsGridView::OnFolderItemRemoved() {
   item_list_ = nullptr;
 }
 
-void AppsGridView::UpdateOpacity(float work_area_bottom, bool is_end_gesture) {
-  work_area_bottom_ = work_area_bottom;
+void AppsGridView::UpdateOpacity(int baseline, bool is_end_gesture) {
+  baseline_of_opacity_ = baseline;
   is_end_gesture_ = is_end_gesture;
-
-  // Updates the opacity of suggested indicator.
-  gfx::Rect suggested_indicator_bounds =
-      suggested_apps_indicator_->GetLabelBoundsInScreen();
-  UpdateOpacityOfItem(suggested_apps_indicator_,
-                      suggested_indicator_bounds.CenterPoint().y());
 
   // Updates the opacity of suggestions container.
   gfx::Rect suggestions_container_bounds =
@@ -1747,6 +1755,29 @@ void AppsGridView::UpdateOpacity(float work_area_bottom, bool is_end_gesture) {
     gfx::Rect switcher_bounds = page_switcher_view_->GetBoundsInScreen();
     UpdateOpacityOfItem(page_switcher_view_, switcher_bounds.CenterPoint().y());
   }
+}
+
+void AppsGridView::LayoutAndUpdateOpacityDuringDragging(
+    int height_of_app_list,
+    int baseline,
+    bool is_end_gesture,
+    float search_box_opacity) {
+  gfx::Rect rect(GetContentsBounds());
+  if (rect.IsEmpty())
+    return;
+
+  int y_inset = kSuggestedAppsYInsetChangeRatio * height_of_app_list;
+  y_inset = std::min(
+      y_inset, kSearchBoxBottomPadding +
+                   suggested_apps_indicator_->GetPreferredSize().height());
+
+  rect.Inset(0, y_inset, 0, 0);
+  LayoutSuggestedApps(&rect);
+  UpdateOpacity(baseline, is_end_gesture);
+
+  // Updates the opacity of suggested indicator, which should have the same
+  // opacity as search box during dragging.
+  suggested_apps_indicator_->layer()->SetOpacity(search_box_opacity);
 }
 
 void AppsGridView::StartDragAndDropHostDrag(const gfx::Point& grid_location) {

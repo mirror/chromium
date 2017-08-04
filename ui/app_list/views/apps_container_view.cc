@@ -15,14 +15,22 @@
 #include "ui/app_list/views/app_list_folder_view.h"
 #include "ui/app_list/views/app_list_item_view.h"
 #include "ui/app_list/views/app_list_main_view.h"
+#include "ui/app_list/views/app_list_view.h"
 #include "ui/app_list/views/apps_grid_view.h"
+#include "ui/app_list/views/contents_view.h"
 #include "ui/app_list/views/folder_background_view.h"
+#include "ui/app_list/views/search_box_view.h"
 #include "ui/app_list/views/suggestions_container_view.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/events/event.h"
 #include "ui/strings/grit/ui_strings.h"
 
 namespace app_list {
+
+// The apps grid view should move up/down slower than app list during
+// dragging. The Y distance between apps grid view and top of app list is
+// |kInsetYChangeRatio| * (height of app list above screen bottom)
+constexpr float kInsetYChangeRatio = 0.3f;
 
 AppsContainerView::AppsContainerView(AppListMainView* app_list_main_view,
                                      AppListModel* model)
@@ -153,6 +161,33 @@ gfx::Rect AppsContainerView::GetPageBoundsForState(
     return onscreen_bounds;
 
   return GetBelowContentsOffscreenBounds(onscreen_bounds.size());
+}
+
+gfx::Rect AppsContainerView::LayoutAndUpdateOpacityDuringDragging(
+    AppListModel::State state,
+    int app_list_y_position_in_screen,
+    int work_area_bottom,
+    bool is_end_gesture) const {
+  int screen_bottom = work_area_bottom + AppListView::kShelfSize;
+  int height_above_screen = screen_bottom - app_list_y_position_in_screen;
+  int y_to_top_of_applist =
+      std::min<int>(kInsetYChangeRatio * height_above_screen,
+                    kSearchBoxTopPadding + kSearchBoxPreferredHeight);
+
+  // Search box should be shown later than others, so its baseline is higer than
+  // others.
+  float search_box_opacity =
+      contents_view()->app_list_main_view()->search_box_view()->UpdateOpacity(
+          work_area_bottom - AppListView::kShelfSize, is_end_gesture);
+
+  apps_grid_view_->LayoutAndUpdateOpacityDuringDragging(
+      height_above_screen, screen_bottom, is_end_gesture, search_box_opacity);
+
+  gfx::Rect onscreen_bounds = GetPageBoundsForState(state);
+  if (state == AppListModel::STATE_APPS)
+    onscreen_bounds.set_y(y_to_top_of_applist);
+
+  return onscreen_bounds;
 }
 
 void AppsContainerView::OnTopIconAnimationsComplete() {
