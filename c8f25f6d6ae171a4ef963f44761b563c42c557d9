@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00bc5fd1_a7dd926b",
+        "filename": "ios/chrome/browser/ssl/captive_portal_features.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-08-04T08:58:52Z",
+      "side": 1,
+      "message": "Namespaces are not necessary in chrome/ and ios/chrome.\n\nI would name the variable kCaptivePortalFeature and remove all the namespace around it.",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 20
+      },
+      "revId": "c8f25f6d6ae171a4ef963f44761b563c42c557d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
