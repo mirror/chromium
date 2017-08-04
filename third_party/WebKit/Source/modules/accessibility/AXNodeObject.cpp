@@ -2391,10 +2391,21 @@ Element* AXNodeObject::ActionElement() const {
       break;
   }
 
+  // To prevent elements with click listenners that are registered too far up in
+  // the page to be returned, we only return such an element if it is either a
+  // descendant of an anchor, a generic container or the descendant of one.
   Element* anchor = AnchorElement();
+  Element* generic_container = GenericContainerParent();
   Element* click_element = MouseButtonListener();
-  if (!anchor || (click_element && click_element->IsDescendantOf(anchor)))
-    return click_element;
+  if (click_element) {
+    if (anchor && click_element->IsDescendantOf(anchor))
+      return click_element;
+    if (generic_container &&
+        (click_element == generic_container ||
+         click_element->IsDescendantOf(generic_container))) {
+      return click_element;
+    }
+  }
   return anchor;
 }
 
@@ -3362,6 +3373,17 @@ String AXNodeObject::PlaceholderFromNativeAttribute() const {
   if (!node || !IsTextControlElement(node))
     return String();
   return ToTextControlElement(node)->StrippedPlaceholder();
+}
+
+Element* AXNodeObject::GenericContainerParent() const {
+  AXObjectCacheImpl& cache = AxObjectCache();
+  for (Node* node = GetNode(); node; node = node->parentNode()) {
+    const AXObject* obj = cache.Get(node);
+    if (obj && obj->RoleValue() == kGenericContainerRole)
+      return ToElement(node);
+  }
+
+  return nullptr;
 }
 
 DEFINE_TRACE(AXNodeObject) {

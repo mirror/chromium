@@ -237,6 +237,7 @@ class MODULES_EXPORT AXNodeObject : public AXObject {
   float StepValueForRange() const;
   bool IsDescendantOfElementType(HashSet<QualifiedName>& tag_names) const;
   String PlaceholderFromNativeAttribute() const;
+  Element* GenericContainerParent() const;
 };
 
 }  // namespace blink
