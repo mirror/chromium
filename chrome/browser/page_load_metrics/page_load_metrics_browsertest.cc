@@ -7,6 +7,7 @@
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
+#include "base/path_service.h"
 #include "base/run_loop.h"
 #include "base/test/histogram_tester.h"
 #include "base/threading/thread_restrictions.h"
@@ -32,6 +33,7 @@
 #include "chrome/browser/ui/browser_navigator_params.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/common/chrome_features.h"
+#include "chrome/common/chrome_paths.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/test/base/in_process_browser_test.h"
@@ -50,8 +52,10 @@
 #include "net/http/http_cache.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
 #include "net/test/url_request/url_request_failed_job.h"
+#include "net/test/url_request/url_request_mock_http_job.h"
 #include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_context_getter.h"
+#include "net/url_request/url_request_filter.h"
 #include "third_party/WebKit/public/platform/web_feature.mojom.h"
 
 namespace {
@@ -260,6 +264,70 @@ class PageLoadMetricsWaiter
 using TimingField = PageLoadMetricsWaiter::TimingField;
 using WebFeature = blink::mojom::WebFeature;
 
+// Waits until nonzero loading metrics have been produced. See the
+// LoadingMetrics test, below.
+class LoadingMetricsWaiter
+    : public page_load_metrics::MetricsWebContentsObserver::TestingObserver {
+ public:
+  explicit LoadingMetricsWaiter(content::WebContents* web_contents)
+      : TestingObserver(web_contents), weak_factory_(this) {}
+
+  // Waits for loading metrics to be updated. If they aren't updated as
+  // expected, the test will hang.
+  void Wait() {
+    if (saw_timing_)
+      return;
+    run_loop_ = base::MakeUnique<base::RunLoop>();
+    run_loop_->Run();
+    run_loop_ = nullptr;
+  }
+
+  // Notifcation from the MetricsObserver that timing has been received.
+  void OnLoadedResource(const page_load_metrics::ExtraRequestCompleteInfo&
+                            extra_request_complete_info) {
+    if (saw_timing_)
+      return;
+    if (!extra_request_complete_info.load_timing_info.connect_timing.dns_start
+             .is_null() &&
+        !extra_request_complete_info.load_timing_info.connect_timing.dns_end
+             .is_null() &&
+        !extra_request_complete_info.load_timing_info.send_start.is_null() &&
+        !extra_request_complete_info.load_timing_info.send_end.is_null() &&
+        !extra_request_complete_info.load_timing_info.request_start.is_null()) {
+      saw_timing_ = true;
+    }
+    if (run_loop_ && saw_timing_)
+      run_loop_->Quit();
+  }
+
+ private:
+  class MetricsObserver : public page_load_metrics::PageLoadMetricsObserver {
+   public:
+    // We use a WeakPtr to the PageLoadMetricsWaiter because |waiter| can be
+    // destroyed before this WaiterMetricsObserver.
+    explicit MetricsObserver(base::WeakPtr<LoadingMetricsWaiter> waiter)
+        : waiter_(waiter) {}
+
+    void OnLoadedResource(const page_load_metrics::ExtraRequestCompleteInfo&
+                              extra_request_complete_info) override {
+      if (waiter_)
+        waiter_->OnLoadedResource(extra_request_complete_info);
+    }
+
+   private:
+    const base::WeakPtr<LoadingMetricsWaiter> waiter_;
+  };
+
+  void OnTrackerCreated(page_load_metrics::PageLoadTracker* tracker) override {
+    tracker->AddObserver(
+        base::MakeUnique<MetricsObserver>(weak_factory_.GetWeakPtr()));
+  }
+
+  std::unique_ptr<base::RunLoop> run_loop_;
+  bool saw_timing_ = false;
+
+  base::WeakPtrFactory<LoadingMetricsWaiter> weak_factory_;
+};
 }  // namespace
 
 class PageLoadMetricsBrowserTest : public InProcessBrowserTest {
@@ -1200,4 +1268,25 @@ IN_PROC_BROWSER_TEST_F(SessionRestorePageLoadMetricsBrowserTest,
       page_load_metrics::internal::kPageLoadStartedInForeground, true, 2);
   histogram_tester_.ExpectBucketCount(
       page_load_metrics::internal::kPageLoadStartedInForeground, false, 2);
+}
+
+IN_PROC_BROWSER_TEST_F(PageLoadMetricsBrowserTest, LoadingMetrics) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+  auto waiter = base::MakeUnique<LoadingMetricsWaiter>(
+      browser()->tab_strip_model()->GetActiveWebContents());
+  ui_test_utils::NavigateToURL(browser(),
+                               embedded_test_server()->GetURL("/title1.html"));
+  // Waits until nonzero loading metrics are seen.
+  waiter->Wait();
+}
+
+IN_PROC_BROWSER_TEST_F(PageLoadMetricsBrowserTest, LoadingMetricsFailed) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+
+  auto waiter = base::MakeUnique<LoadingMetricsWaiter>(
+      browser()->tab_strip_model()->GetActiveWebContents());
+  ui_test_utils::NavigateToURL(
+      browser(), embedded_test_server()->GetURL("/nonexisting-resource"));
+  // Waits until nonzero loading metrics are seen about the failed request.
+  waiter->Wait();
 }
