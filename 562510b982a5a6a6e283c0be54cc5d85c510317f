@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ca92cea_f61362b2",
+        "filename": "chrome/browser/ui/views/feature_promos/new_tab_promo.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-08-04T02:20:35Z",
+      "side": 1,
+      "message": "This function should be static.",
+      "revId": "562510b982a5a6a6e283c0be54cc5d85c510317f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
