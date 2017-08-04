@@ -35,11 +35,11 @@ cr.define('settings_toggle_button', function() {
         assertTrue(testElement.checked);
         assertTrue(testElement.pref.value);
 
-        MockInteractions.tap(testElement.$.control);
+        MockInteractions.tap(testElement.actionTarget);
         assertFalse(testElement.checked);
         assertFalse(testElement.pref.value);
 
-        MockInteractions.tap(testElement.$.control);
+        MockInteractions.tap(testElement.actionTarget);
         assertTrue(testElement.checked);
         assertTrue(testElement.pref.value);
       });
@@ -50,7 +50,7 @@ cr.define('settings_toggle_button', function() {
           done();
         });
         assertTrue(testElement.checked);
-        MockInteractions.tap(testElement.$.control);
+        MockInteractions.tap(testElement.actionTarget);
       });
 
       test('does not change when disabled', function() {
@@ -59,7 +59,7 @@ cr.define('settings_toggle_button', function() {
         assertTrue(testElement.disabled);
         assertTrue(testElement.$.control.disabled);
 
-        MockInteractions.tap(testElement.$.control);
+        MockInteractions.tap(testElement.actionTarget);
         assertFalse(testElement.checked);
         assertFalse(testElement.$.control.checked);
       });
@@ -75,11 +75,11 @@ cr.define('settings_toggle_button', function() {
         assertTrue(testElement.pref.value);
         assertFalse(testElement.checked);
 
-        MockInteractions.tap(testElement.$.control);
+        MockInteractions.tap(testElement.actionTarget);
         assertFalse(testElement.pref.value);
         assertTrue(testElement.checked);
 
-        MockInteractions.tap(testElement.$.control);
+        MockInteractions.tap(testElement.actionTarget);
         assertTrue(testElement.pref.value);
         assertFalse(testElement.checked);
       });
@@ -94,11 +94,11 @@ cr.define('settings_toggle_button', function() {
         testElement.set('pref', prefNum);
         assertTrue(testElement.checked);
 
-        MockInteractions.tap(testElement.$.control);
+        MockInteractions.tap(testElement.actionTarget);
         assertFalse(testElement.checked);
         assertEquals(0, prefNum.value);
 
-        MockInteractions.tap(testElement.$.control);
+        MockInteractions.tap(testElement.actionTarget);
         assertTrue(testElement.checked);
         assertEquals(1, prefNum.value);
       });
@@ -115,16 +115,16 @@ cr.define('settings_toggle_button', function() {
         testElement.set('pref', prefNum);
         assertFalse(testElement.checked);
 
-        MockInteractions.tap(testElement.$.control);
+        MockInteractions.tap(testElement.actionTarget);
         assertTrue(testElement.checked);
         assertEquals(1, prefNum.value);
 
-        MockInteractions.tap(testElement.$.control);
+        MockInteractions.tap(testElement.actionTarget);
         assertFalse(testElement.checked);
         assertEquals(5, prefNum.value);
       });
 
-      test('numerical pref with unknown inital value', function() {
+      test('numerical pref with unknown initial value', function() {
         var prefNum = {
           key: 'test',
           type: chrome.settingsPrivate.PrefType.NUMBER,
@@ -142,12 +142,12 @@ cr.define('settings_toggle_button', function() {
         assertEquals(3, prefNum.value);
 
         // Unchecking should still send the unchecked value to prefs.
-        MockInteractions.tap(testElement.$.control);
+        MockInteractions.tap(testElement.actionTarget);
         assertFalse(testElement.checked);
         assertEquals(5, prefNum.value);
 
         // Checking should still send the normal checked value to prefs.
-        MockInteractions.tap(testElement.$.control);
+        MockInteractions.tap(testElement.actionTarget);
         assertTrue(testElement.checked);
         assertEquals(1, prefNum.value);
       });
