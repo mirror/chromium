@@ -281,6 +281,30 @@
       "revId": "04a005e5ae4a9e6ef6fb5599b36caee7a024d2cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a49439e1_c0e1b624",
+        "filename": "chrome/installer/zucchini/rel32_finder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-04T18:49:57Z",
+      "side": 1,
+      "message": "(More rant; no-op is acceptable for now) I presume you mean filtering based on determining whether a candidate reference has target that may be outside range? Regarding this, I think there are 2 \"behavioral\" choices:\n  1. If bad candidate is found, skip and continue scanning *after* bad candidate.\n  2. If bad candidate is found, skip and continue scanning *next byte*.\n\nThere are also some \"structural\" choices:\n  A. Filtering is done by caller (in addition to Rel32Finder\u0027s own filter).\n  B. All filtering done is by Rel32Finder\n\nThe current code is for 2A, which then needs Accept(). I don\u0027t like it because it needs multiple data roundtrips between caller and Rel32Finder(). Here are the the alternatives:\n\n1A: Rel32 scanning is more trusting and simpler (no Accept()), but for Intel, false-positive that leads to bogus RVA would lead to multiple byte skipping, leading to possible false negatives.\n2B: Same result, but we may need to inject data into Rel32Finder (e.g., address translation) so it\u0027s smart enough to do skipping.\n2A: Simplest and dumbest case. I originally envisioned this, but this is likely too simplistic.",
+      "parentUuid": "491c0792_e79ce74c",
+      "range": {
+        "startLine": 91,
+        "startChar": 7,
+        "endLine": 91,
+        "endChar": 13
+      },
+      "revId": "04a005e5ae4a9e6ef6fb5599b36caee7a024d2cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

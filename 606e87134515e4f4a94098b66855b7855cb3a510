@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fd341cf9_6a321ec5",
+        "filename": "chrome/installer/zucchini/README.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-04T18:49:57Z",
+      "side": 1,
+      "message": "NIT: encode",
+      "range": {
+        "startLine": 93,
+        "startChar": 67,
+        "endLine": 93,
+        "endChar": 74
+      },
+      "revId": "606e87134515e4f4a94098b66855b7855cb3a510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e11ef8c9_796f40e1",
+        "filename": "chrome/installer/zucchini/README.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-04T18:49:57Z",
+      "side": 1,
+      "message": "have the same local offset (relative to respective start regions)",
+      "range": {
+        "startLine": 108,
+        "startChar": 3,
+        "endLine": 108,
+        "endChar": 70
+      },
+      "revId": "606e87134515e4f4a94098b66855b7855cb3a510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f2cf7d2_8b5d1f31",
+        "filename": "chrome/installer/zucchini/rel32_finder.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1001928
+      },
+      "writtenOn": "2017-08-04T18:49:57Z",
+      "side": 1,
+      "message": "Still don\u0027t wonder why this can\u0027t just be a single ConstBufferView data_; that shrinks?  I thought that\u0027s the pattern you\u0027re adopting (removing extra pointer variable)?",
+      "range": {
+        "startLine": 128,
+        "startChar": 2,
+        "endLine": 130,
+        "endChar": 49
+      },
+      "revId": "606e87134515e4f4a94098b66855b7855cb3a510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
