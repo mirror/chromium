@@ -131,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "0dbc6160_304617ac",
+        "filename": "cc/paint/paint_op_buffer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1227,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-04T18:21:13Z",
+      "side": 1,
+      "message": "I just meant that there\u0027s a DCHECK in operator!\u003d for nested stuff that ensures we\u0027re comparing the same buffers. So if say you start your iteration from the back, then you\u0027re not guaranteed that those iterators are actually pointing to the same buffer and you\u0027d DCHECK. But because of iteration order, this is all sane. I was just asking for some small comment, but feel free to ignore me :)",
+      "parentUuid": "123f1a0e_92c7073b",
+      "range": {
+        "startLine": 1227,
+        "startChar": 6,
+        "endLine": 1227,
+        "endChar": 56
+      },
+      "revId": "96e250ffd975f1f07f8fc41b46f83267dcca66c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8b586e33_4925cf17",
         "filename": "cc/paint/paint_op_buffer_unittest.cc",
         "patchSetId": 2
@@ -175,6 +199,30 @@
       "revId": "96e250ffd975f1f07f8fc41b46f83267dcca66c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4238e9c0_2d7cf00a",
+        "filename": "cc/paint/paint_op_buffer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1155,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-04T18:21:13Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c7a8e464_761a2d86",
+      "range": {
+        "startLine": 1153,
+        "startChar": 0,
+        "endLine": 1155,
+        "endChar": 49
+      },
+      "revId": "96e250ffd975f1f07f8fc41b46f83267dcca66c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
