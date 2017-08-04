@@ -140,6 +140,53 @@
       "revId": "130268c58ff50a91bdebb156f928164acc6b02c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7394378_3acddaf7",
+        "filename": "components/cryptauth/ble/bluetooth_low_energy_weave_client_connection.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-04T19:04:19Z",
+      "side": 1,
+      "message": "I\u0027m okay with this after looking at it again because we explicitly call InvalidateWeakPtrs() indirectly in this class\u0027s destructor. Please also add this method call to the SecureChannel\u0027s destructor.",
+      "parentUuid": "91e1bd4c_2808aa6e",
+      "range": {
+        "startLine": 533,
+        "startChar": 20,
+        "endLine": 533,
+        "endChar": 59
+      },
+      "revId": "130268c58ff50a91bdebb156f928164acc6b02c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fdad700_bc67329a",
+        "filename": "components/cryptauth/secure_channel.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1229022
+      },
+      "writtenOn": "2017-08-04T19:04:19Z",
+      "side": 1,
+      "message": "Please add a \"invalidate weak pointers\" method call to the destructor of SecureChannel, as is done in ~BluetoothLowEnergyWeaveClientConnection().",
+      "range": {
+        "startLine": 180,
+        "startChar": 6,
+        "endLine": 180,
+        "endChar": 15
+      },
+      "revId": "130268c58ff50a91bdebb156f928164acc6b02c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
