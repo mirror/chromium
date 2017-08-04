@@ -48,7 +48,6 @@ class ReadDirectory : public Operation {
  private:
   base::FilePath directory_path_;
   const storage::AsyncFileUtil::ReadDirectoryCallback callback_;
-
   DISALLOW_COPY_AND_ASSIGN(ReadDirectory);
 };
 
