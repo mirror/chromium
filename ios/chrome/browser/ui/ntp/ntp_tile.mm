@@ -11,7 +11,9 @@ NSString* kFaviconPathKey = @"faviconPath";
 NSString* kFallbackTextColorKey = @"fallbackTextColor";
 NSString* kFallbackBackgroundColorKey = @"fallbackBackgroundColor";
 NSString* kFallbackIsDefaultColorKey = @"fallbackIsDefaultColor";
+NSString* kFallbackMonogram = @"fallbackMonogram";
 NSString* kFaviconFetched = @"faviconFetched";
+NSString* kPosition = @"position";
 }
 
 @implementation NTPTile
@@ -22,13 +24,18 @@ NSString* kFaviconFetched = @"faviconFetched";
 @synthesize fallbackTextColor = _fallbackTextColor;
 @synthesize fallbackBackgroundColor = _fallbackBackgroundColor;
 @synthesize fallbackIsDefaultColor = _fallbackIsDefaultColor;
+@synthesize fallbackMonogram = _fallbackMonogram;
 @synthesize faviconFetched = _faviconFetched;
+@synthesize position = _position;
 
-- (instancetype)initWithTitle:(NSString*)title URL:(NSURL*)URL {
+- (instancetype)initWithTitle:(NSString*)title
+                          URL:(NSURL*)URL
+                     position:(NSUInteger)position {
   self = [super init];
   if (self) {
     _title = title;
     _URL = URL;
+    _position = position;
   }
   return self;
 }
@@ -39,7 +46,9 @@ NSString* kFaviconFetched = @"faviconFetched";
             fallbackTextColor:(UIColor*)fallbackTextColor
       fallbackBackgroundColor:(UIColor*)fallbackBackgroundColor
        fallbackIsDefaultColor:(BOOL)fallbackIsDefaultColor
-               faviconFetched:(BOOL)faviconFetched {
+             fallbackMonogram:(NSString*)fallbackMonogram
+               faviconFetched:(BOOL)faviconFetched
+                     position:(NSUInteger)position {
   self = [super init];
   if (self) {
     _title = title;
@@ -48,7 +57,9 @@ NSString* kFaviconFetched = @"faviconFetched";
     _fallbackTextColor = fallbackTextColor;
     _fallbackBackgroundColor = fallbackBackgroundColor;
     _fallbackIsDefaultColor = fallbackIsDefaultColor;
+    _fallbackMonogram = fallbackMonogram;
     _faviconFetched = faviconFetched;
+    _position = position;
   }
   return self;
 }
@@ -63,7 +74,10 @@ NSString* kFaviconFetched = @"faviconFetched";
           [aDecoder decodeObjectForKey:kFallbackBackgroundColorKey]
        fallbackIsDefaultColor:[aDecoder
                                   decodeBoolForKey:kFallbackIsDefaultColorKey]
-               faviconFetched:[aDecoder decodeBoolForKey:kFaviconFetched]];
+             fallbackMonogram:[aDecoder decodeObjectForKey:kFallbackMonogram]
+               faviconFetched:[aDecoder decodeBoolForKey:kFaviconFetched]
+                     position:[[aDecoder decodeObjectForKey:kPosition]
+                                  unsignedIntegerValue]];
 }
 
 - (void)encodeWithCoder:(NSCoder*)aCoder {
@@ -75,7 +89,10 @@ NSString* kFaviconFetched = @"faviconFetched";
                 forKey:kFallbackBackgroundColorKey];
   [aCoder encodeBool:self.fallbackIsDefaultColor
               forKey:kFallbackIsDefaultColorKey];
+  [aCoder encodeObject:self.fallbackMonogram forKey:kFallbackMonogram];
   [aCoder encodeBool:self.faviconFetched forKey:kFaviconFetched];
+  [aCoder encodeObject:[NSNumber numberWithUnsignedInteger:self.position]
+                forKey:kPosition];
 }
 
 @end
