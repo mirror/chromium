@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7eaedd2f_55d86337",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsolePrompt.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-08-04T05:06:41Z",
+      "side": 1,
+      "message": "await might be in the end of the line",
+      "revId": "83870eaf57001d4bd02fb272713252ad96526e9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "770b7ec3_67d83bd1",
+        "filename": "third_party/WebKit/Source/devtools/front_end/formatter_worker/FormatterWorker.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-08-04T05:06:41Z",
+      "side": 1,
+      "message": "it\u0027s not enough to iterate only the top-level nodes of the ast tree, consider the following example:\n\na \u003d foo(bar(baz(await koo())));\n\nyou can use the ESTreeWalker to handle this as well",
+      "revId": "83870eaf57001d4bd02fb272713252ad96526e9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73e77d8b_99a2b227",
+        "filename": "third_party/WebKit/Source/devtools/front_end/formatter_worker/FormatterWorker.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-08-04T05:06:41Z",
+      "side": 1,
+      "message": "you can use ESTreeWalker here to easily traverse this subtree (also, you\u0027ll save some CPU cycles via avoiding array.shift)",
+      "range": {
+        "startLine": 166,
+        "startChar": 14,
+        "endLine": 166,
+        "endChar": 22
+      },
+      "revId": "83870eaf57001d4bd02fb272713252ad96526e9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "001b603d_724f611b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/formatter_worker/FormatterWorker.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-08-04T05:06:41Z",
+      "side": 1,
+      "message": "Shall we return content in this case?",
+      "revId": "83870eaf57001d4bd02fb272713252ad96526e9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
