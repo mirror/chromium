@@ -14,15 +14,19 @@
 #include "base/files/file_path.h"
 #include "base/synchronization/lock.h"
 #include "build/build_config.h"
+#include "chrome/common/features.h"
 #include "chrome/common/origin_trials/chrome_origin_trial_policy.h"
 #include "content/public/common/content_client.h"
 #include "ppapi/features/features.h"
+#include "url/url_util.h"
 
 #if BUILDFLAG(ENABLE_PLUGINS)
 #include "content/public/common/pepper_plugin_info.h"
 #endif
 
-#include "url/url_util.h"
+#if BUILDFLAG(ENABLE_OOP_HEAP_PROFILING)
+#include "chrome/common/profiling/memlog_client.h"
+#endif
 
 // Returns the user agent of Chrome.
 std::string GetUserAgent();
@@ -113,6 +117,9 @@ class ChromeContentClient : public content::ContentClient {
   // Used to lock when |origin_trial_policy_| is initialized.
   base::Lock origin_trial_policy_lock_;
   std::unique_ptr<ChromeOriginTrialPolicy> origin_trial_policy_;
+#if BUILDFLAG(ENABLE_OOP_HEAP_PROFILING)
+  profiling::MemlogClient memlog_client_;
+#endif  // ENABLE_OOP_HEAP_PROFILING
 };
 
 #endif  // CHROME_COMMON_CHROME_CONTENT_CLIENT_H_

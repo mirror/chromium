@@ -285,6 +285,9 @@
 #include "chrome/browser/metrics/desktop_session_duration/desktop_session_duration_tracker.h"
 #endif
 
+#if BUILDFLAG(ENABLE_OOP_HEAP_PROFILING)
+#include "chrome/browser/profiling_host/profiling_process_host.h"
+#endif
 using content::BrowserThread;
 
 namespace {

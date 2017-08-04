@@ -387,6 +387,7 @@
 #endif
 
 #if BUILDFLAG(ENABLE_OOP_HEAP_PROFILING)
+#include "chrome/browser/profiling_host/chrome_browser_main_extra_parts_profiling.h"
 #include "chrome/browser/profiling_host/profiling_process_host.h"
 #include "chrome/common/profiling/constants.mojom.h"
 #endif
@@ -876,6 +877,7 @@ void ChromeContentBrowserClient::SetApplicationLocale(
 content::BrowserMainParts* ChromeContentBrowserClient::CreateBrowserMainParts(
     const content::MainFunctionParams& parameters) {
   ChromeBrowserMainParts* main_parts;
+
   // Construct the Main browser parts based on the OS type.
 #if defined(OS_WIN)
   main_parts = new ChromeBrowserMainPartsWin(parameters);
@@ -892,6 +894,10 @@ content::BrowserMainParts* ChromeContentBrowserClient::CreateBrowserMainParts(
 #else
   NOTREACHED();
   main_parts = new ChromeBrowserMainParts(parameters);
+#endif
+
+#if BUILDFLAG(ENABLE_OOP_HEAP_PROFILING)
+  main_parts->AddParts(new ChromeBrowserMainExtraPartsProfiling);
 #endif
 
   chrome::AddProfilesExtraParts(main_parts);
