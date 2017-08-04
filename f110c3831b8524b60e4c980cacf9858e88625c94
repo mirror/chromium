@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "080d558a_78f0f8f5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-04T06:53:46Z",
+      "side": 1,
+      "message": "IIUC, this was used for retaining a live registration in the browser process from a controlled page. I\u0027m not really sure whether we really needed to do it because ServiceWorkerProviderHost also retains the associated registration.\n\nHmmm... I guess... disassociation happens in the browser process side and then in the controlled page side, so we wanted to make the registration alive until disassociation happens in the controlled page side in order to ensure that ServiceWorkerDispatcherHost can appropriately handle IPC messages (not as bad IPC) from the controlled page until the last minute...?",
+      "revId": "f110c3831b8524b60e4c980cacf9858e88625c94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "87e9d688_ea8810e6",
         "filename": "content/child/service_worker/service_worker_provider_context.cc",
         "patchSetId": 3
@@ -13,6 +30,29 @@
       "writtenOn": "2017-08-04T05:25:33Z",
       "side": 1,
       "message": "At this point should we just deprecate this delegate interface? (maybe in a follow-up)",
+      "revId": "f110c3831b8524b60e4c980cacf9858e88625c94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f362b62a_3cd0cc20",
+        "filename": "content/child/service_worker/service_worker_provider_context.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-08-04T06:53:46Z",
+      "side": 1,
+      "message": "the the -\u003e the",
+      "range": {
+        "startLine": 46,
+        "startChar": 48,
+        "endLine": 47,
+        "endChar": 9
+      },
       "revId": "f110c3831b8524b60e4c980cacf9858e88625c94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
