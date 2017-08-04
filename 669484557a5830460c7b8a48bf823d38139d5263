@@ -194,6 +194,24 @@
       "revId": "669484557a5830460c7b8a48bf823d38139d5263",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5727b185_c31a561b",
+        "filename": "ash/wallpaper/wallpaper_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-08-04T20:39:54Z",
+      "side": 1,
+      "message": "|SkBlendMode::kDarken| should be used instead of kOverlay.",
+      "parentUuid": "bfddc2c0_c7ab2bcb",
+      "revId": "669484557a5830460c7b8a48bf823d38139d5263",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
