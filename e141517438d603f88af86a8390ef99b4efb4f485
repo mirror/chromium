@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32b4f7be_68e03af0",
+        "filename": "chrome/browser/vr/elements/grid.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1117469
+      },
+      "writtenOn": "2017-08-04T15:07:51Z",
+      "side": 1,
+      "message": "Wrong comment.",
+      "revId": "e141517438d603f88af86a8390ef99b4efb4f485",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5eb982fe_b5fe46a6",
+        "filename": "chrome/browser/vr/elements/rect.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1117469
+      },
+      "writtenOn": "2017-08-04T15:07:51Z",
+      "side": 1,
+      "message": "General thought:  Why set these here instead of when starting animation?  During the animation, either way, it\u0027s a bit of a lie.  Seems better to return the future value than the original value, doesn\u0027t it?",
+      "revId": "e141517438d603f88af86a8390ef99b4efb4f485",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38ed32d0_93c2a3dd",
+        "filename": "chrome/browser/vr/elements/rect.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1117469
+      },
+      "writtenOn": "2017-08-04T15:07:51Z",
+      "side": 1,
+      "message": "This class warrants a hefty comment (class level, and on center/edge color (ie. gradients are common enough that we\u0027ll support them in a base Rectangular element class).",
+      "revId": "e141517438d603f88af86a8390ef99b4efb4f485",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

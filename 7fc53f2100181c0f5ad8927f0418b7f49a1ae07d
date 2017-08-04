@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "61aa362c_0467158b",
+        "filename": "chrome/browser/vr/elements/rrect.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1117469
+      },
+      "writtenOn": "2017-08-04T15:07:51Z",
+      "side": 1,
+      "message": "Sounds good.",
+      "parentUuid": "c6bfccb8_7894c656",
+      "revId": "7fc53f2100181c0f5ad8927f0418b7f49a1ae07d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "65a88068_06b546ce",
         "filename": "chrome/browser/vr/elements/rrect.h",
         "patchSetId": 1
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "I was hoping to leave these here permanently, actually. I\u0027d like to use the new rect class as a generic background, and (subtle) radial gradients are common.",
       "parentUuid": "65a88068_06b546ce",
+      "revId": "7fc53f2100181c0f5ad8927f0418b7f49a1ae07d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c4b511c_be312e1e",
+        "filename": "chrome/browser/vr/elements/rrect.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1117469
+      },
+      "writtenOn": "2017-08-04T15:07:51Z",
+      "side": 1,
+      "message": "Now that RRect is \"Rect\" or \"Basic Rectangular UI Element\", this feels more at home.",
+      "parentUuid": "823e1662_b464e61f",
       "revId": "7fc53f2100181c0f5ad8927f0418b7f49a1ae07d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
