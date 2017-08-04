@@ -3716,11 +3716,10 @@ TEST_F(TokenBindingURLRequestTest, TokenBindingTest) {
 
     EXPECT_EQ(OK, d.request_status());
 
-    HttpRequestHeaders headers;
     std::string token_binding_header, token_binding_message;
-    EXPECT_TRUE(r->GetFullRequestHeaders(&headers));
-    EXPECT_TRUE(headers.GetHeader(HttpRequestHeaders::kTokenBinding,
-                                  &token_binding_header));
+    EXPECT_TRUE(d.have_full_request_headers());
+    EXPECT_TRUE(d.full_request_headers().GetHeader(
+        HttpRequestHeaders::kTokenBinding, &token_binding_header));
     EXPECT_TRUE(base::Base64UrlDecode(
         token_binding_header, base::Base64UrlDecodePolicy::DISALLOW_PADDING,
         &token_binding_message));
@@ -3760,11 +3759,10 @@ TEST_F(TokenBindingURLRequestTest, ForwardTokenBinding) {
 
     EXPECT_EQ(OK, d.request_status());
 
-    HttpRequestHeaders headers;
     std::string token_binding_header, token_binding_message;
-    EXPECT_TRUE(r->GetFullRequestHeaders(&headers));
-    EXPECT_TRUE(headers.GetHeader(HttpRequestHeaders::kTokenBinding,
-                                  &token_binding_header));
+    EXPECT_TRUE(d.have_full_request_headers());
+    EXPECT_TRUE(d.full_request_headers().GetHeader(
+        HttpRequestHeaders::kTokenBinding, &token_binding_header));
     EXPECT_TRUE(base::Base64UrlDecode(
         token_binding_header, base::Base64UrlDecodePolicy::DISALLOW_PADDING,
         &token_binding_message));
@@ -3815,11 +3813,10 @@ TEST_F(TokenBindingURLRequestTest, DontForwardHeaderFromHttp) {
 
     EXPECT_EQ(OK, d.request_status());
 
-    HttpRequestHeaders headers;
     std::string token_binding_header, token_binding_message;
-    EXPECT_TRUE(r->GetFullRequestHeaders(&headers));
-    EXPECT_TRUE(headers.GetHeader(HttpRequestHeaders::kTokenBinding,
-                                  &token_binding_header));
+    EXPECT_TRUE(d.have_full_request_headers());
+    EXPECT_TRUE(d.full_request_headers().GetHeader(
+        HttpRequestHeaders::kTokenBinding, &token_binding_header));
     EXPECT_TRUE(base::Base64UrlDecode(
         token_binding_header, base::Base64UrlDecodePolicy::DISALLOW_PADDING,
         &token_binding_message));
@@ -3867,11 +3864,10 @@ TEST_F(TokenBindingURLRequestTest, ForwardWithoutTokenBinding) {
 
     EXPECT_EQ(OK, d.request_status());
 
-    HttpRequestHeaders headers;
     std::string token_binding_header, token_binding_message;
-    EXPECT_TRUE(r->GetFullRequestHeaders(&headers));
-    EXPECT_FALSE(headers.GetHeader(HttpRequestHeaders::kTokenBinding,
-                                   &token_binding_header));
+    EXPECT_TRUE(d.have_full_request_headers());
+    EXPECT_FALSE(d.full_request_headers().GetHeader(
+        HttpRequestHeaders::kTokenBinding, &token_binding_header));
   }
 }
 #endif  // !defined(OS_ANDROID)
@@ -4368,9 +4364,8 @@ TEST_F(URLRequestTestHTTP,
     base::RunLoop().Run();
 
     {
-      HttpRequestHeaders headers;
-      EXPECT_TRUE(r->GetFullRequestHeaders(&headers));
-      EXPECT_TRUE(headers.HasHeader("Authorization"));
+      EXPECT_TRUE(d.have_full_request_headers());
+      EXPECT_TRUE(d.full_request_headers().HasHeader("Authorization"));
     }
 
     EXPECT_EQ(OK, d.request_status());
@@ -4449,9 +4444,8 @@ TEST_F(URLRequestTestHTTP,
     EXPECT_EQ(0, network_delegate.destroyed_requests());
 
     {
-      HttpRequestHeaders headers;
-      EXPECT_TRUE(r->GetFullRequestHeaders(&headers));
-      EXPECT_TRUE(headers.HasHeader("Authorization"));
+      EXPECT_TRUE(d.have_full_request_headers());
+      EXPECT_TRUE(d.full_request_headers().HasHeader("Authorization"));
     }
   }
   EXPECT_EQ(1, network_delegate.destroyed_requests());
@@ -7401,9 +7395,6 @@ TEST_F(URLRequestTestHTTP, DeferredRedirect_GetFullRequestHeaders) {
     base::RunLoop().Run();
 
     EXPECT_EQ(1, d.received_redirect_count());
-    EXPECT_TRUE(d.have_full_request_headers());
-    CheckFullRequestHeaders(d.full_request_headers(), test_url);
-    d.ClearFullRequestHeaders();
 
     req->FollowDeferredRedirect();
     base::RunLoop().Run();

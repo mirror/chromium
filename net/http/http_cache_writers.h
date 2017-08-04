@@ -25,8 +25,8 @@ namespace net {
 // the same cache entry. It is owned by the ActiveEntry.
 class NET_EXPORT_PRIVATE HttpCache::Writers {
  public:
-  // |entry| must outlive this object.
-  Writers(disk_cache::Entry* entry);
+  // |cache| and |entry| must outlive this object.
+  Writers(HttpCache* cache, HttpCache::ActiveEntry* entry);
   ~Writers();
 
   // Retrieves data from the network transaction associated with the Writers
@@ -47,22 +47,21 @@ class NET_EXPORT_PRIVATE HttpCache::Writers {
   // Invoked when StopCaching is called on a member transaction.
   // It stops caching only if there are no other transactions. Returns true if
   // caching can be stopped.
-  // TODO(shivanisha@) Also document this conditional stopping in
-  // HttpTransaction on integration.
   bool StopCaching(Transaction* transaction);
 
-  // Adds an HttpCache::Transaction to Writers and if it's the first transaction
-  // added, transfers the ownership of the network transaction to Writers.
+  // Invoked when DoneReading is called on a member transaction. It is a no-op
+  // if there is an active transaction. Can only be invoked when |transaction|
+  // is not the current active transaction.
+  void DoneReading(Transaction* transaction);
+
+  // Adds an HttpCache::Transaction to Writers.
   // Should only be invoked if CanAddWriters() returns true.
-  // |network_transaction| should be non-null only for the first transaction
-  // and it will be assigned to |network_transaction_|. If |is_exclusive| is
-  // true, it makes writing an exclusive operation implying that Writers can
-  // contain at most one transaction till the completion of the response body.
+  // If |is_exclusive| is true, it makes writing an exclusive operation
+  // implying that Writers can contain at most one transaction till the
+  // completion of the response body.
   // |transaction| can be destroyed at any point and it should invoke
   // RemoveTransaction() during its destruction.
-  void AddTransaction(Transaction* transaction,
-                      std::unique_ptr<HttpTransaction> network_transaction,
-                      bool is_exclusive);
+  void AddTransaction(Transaction* transaction, bool is_exclusive);
 
   // Removes a transaction. Should be invoked when this transaction is
   // destroyed.
@@ -75,9 +74,12 @@ class NET_EXPORT_PRIVATE HttpCache::Writers {
   // Returns true if this object is empty.
   bool IsEmpty() const { return all_writers_.empty(); }
 
+  // Invoked during HttpCache's destruction.
+  void Clear() { all_writers_.clear(); }
+
   // Returns true if |transaction| is part of writers.
-  bool HasTransaction(Transaction* transaction) const {
-    return all_writers_.count(transaction) > 0;
+  bool HasTransaction(const Transaction* transaction) const {
+    return all_writers_.count(const_cast<Transaction*>(transaction)) > 0;
   }
 
   // Remove and return any idle writers. Should only be invoked when a
@@ -88,21 +90,64 @@ class NET_EXPORT_PRIVATE HttpCache::Writers {
   // Returns true if more writers can be added for shared writing.
   bool CanAddWriters();
 
-  // TODO(shivanisha), Check if this function gets invoked in the integration
-  // CL. Remove if not.
-  HttpTransaction* network_transaction() { return network_transaction_.get(); }
+  // Returns if only one transaction can be a member of writers.
+  bool IsExclusive() { return is_exclusive_; }
 
-  // Invoked to mark an entry as truncated. This must only be invoked when there
-  // is no ongoing Read() call.
-  void TruncateEntry();
+  // Returns the network transaction which may be null for range requests.
+  HttpTransaction* network_transaction() const {
+    return network_transaction_.get();
+  }
+
+  // Invoked to mark an entry as truncated. Returns true and is a no-op if there
+  // is an ongoing async operation. Returns true if either the entry is marked
+  // as truncated or the entry is already completely written and false if the
+  // entry cannot be resumed later so no need to mark truncated. If writers is
+  // in the midst of an async operation, truncation would be handled at the end
+  // of the operation or if there are more transactions, then there is no need
+  // to truncate, and thus this will be a no-op. |transaction| must be a member.
+  bool TruncateEntry(Transaction* transaction);
 
   // Should be invoked only when writers has transactions attached to it and
   // thus has a valid network transaction.
   LoadState GetWriterLoadState();
 
-  // For testing.
-  int CountTransactionsForTesting() const { return all_writers_.size(); }
-  bool IsTruncatedForTesting() const { return truncated_; }
+  // Sets the network transaction argument to |network_transaction_|. Must be
+  // invoked before Read can be invoked.
+  void SetNetworkTransaction(
+      Transaction* transaction,
+      std::unique_ptr<HttpTransaction> network_transaction);
+
+  // Resets the network transaction to null. Required for range requests as they
+  // might use the current network transaction only for part of the request.
+  // Must only be invoked for partial requests.
+  void ResetNetworkTransaction(Transaction* transaction);
+
+  // Sets network_read_only_ which implies the response will not be subsequently
+  // written to the cache. If |success| is false, the entry will be doomed else
+  // attempt to truncate the entry will be done. Only works when only
+  // |transaction| is present in writers, else it will be a no-op.
+  void SetNetworkReadOnly(Transaction* transaction, bool success);
+
+  // Returns if response is only being read from the network.
+  bool network_read_only() { return network_read_only_; }
+
+  // Returns true if entry is worth keeping in its current state. It may be
+  // truncated or complete. Returns false if entry is incomplete and cannot be
+  // resumed, it will not be marked as truncated and will not be preserved.
+  bool keep_entry() { return keep_entry_; }
+
+  int CountTransactions() const { return all_writers_.size(); }
+
+  // For unit testing.
+  enum class TruncateResultForTesting {
+    NONE,
+    NO_OP_MORE_TRANSACTIONS,
+    FAIL_CANNOT_RESUME,
+  };
+
+  TruncateResultForTesting truncate_result_for_testing() {
+    return truncate_result_for_testing_;
+  }
 
  private:
   friend class WritersTest;
@@ -173,6 +218,13 @@ class NET_EXPORT_PRIVATE HttpCache::Writers {
   // that are waiting for Read to be invoked by the consumer.
   bool ContainsOnlyIdleWriters() const;
 
+  // Returns true if its worth marking the entry as truncated.
+  bool CanResume() const;
+
+  // Invoked for truncating the entry either internally within DoLoop or through
+  // the API TruncateEntry.
+  bool TruncateEntryInternal();
+
   // IO Completion callback function.
   void OnIOComplete(int result);
 
@@ -181,9 +233,10 @@ class NET_EXPORT_PRIVATE HttpCache::Writers {
   // True if only reading from network and not writing to cache.
   bool network_read_only_ = false;
 
-  // TODO(shivanisha) Add HttpCache* cache_ = nullptr; on integration.
+  HttpCache* cache_ = nullptr;
 
-  disk_cache::Entry* disk_entry_ = nullptr;
+  // Owner of |this|.
+  ActiveEntry* entry_ = nullptr;
 
   std::unique_ptr<HttpTransaction> network_transaction_ = nullptr;
 
@@ -214,9 +267,27 @@ class NET_EXPORT_PRIVATE HttpCache::Writers {
   // transactions.
   RequestPriority priority_ = MINIMUM_PRIORITY;
 
-  bool truncated_ = false;  // used for testing.
+  // Normally the response info comes from |network_transaction_| but for
+  // partial network_transaction_ may be null, thus it comes the transaction
+  // itself.
+  const HttpResponseInfo* response_info_truncation_ = nullptr;
+
+  // True if the entry should be kept, even if the response was not completely
+  // written.
+  bool keep_entry_ = true;
+
+  // True if the Transaction is currently processing the DoLoop.
+  bool in_do_loop_ = false;
+
+  // Truncate result for testing.
+  TruncateResultForTesting truncate_result_for_testing_ =
+      TruncateResultForTesting::NONE;
 
   CompletionCallback callback_;  // Callback for active_transaction_.
+
+  // Since cache_ can destroy |this|, |cache_callback_| is only invoked at the
+  // end of DoLoop().
+  base::OnceClosure cache_callback_;  // Callback for cache_.
 
   base::WeakPtrFactory<Writers> weak_factory_;
   DISALLOW_COPY_AND_ASSIGN(Writers);
