@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "647ab246_26670c56",
+        "filename": "base/numerics/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-08-04T18:16:40Z",
+      "side": 1,
+      "message": "Remove this?",
+      "range": {
+        "startLine": 56,
+        "startChar": 32,
+        "endLine": 56,
+        "endChar": 42
+      },
+      "revId": "a06cb09c122123e7f2dcb5ac97c0dad50e704b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e658522c_1b928b6b",
+        "filename": "base/numerics/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-08-04T18:16:40Z",
+      "side": 1,
+      "message": "This anchor doesn\u0027t work, did you meant to point to #CheckedNumeric_in-checked_math_h-Non_member-helper-functions ?",
+      "revId": "a06cb09c122123e7f2dcb5ac97c0dad50e704b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f515b81_c233d8f1",
+        "filename": "base/numerics/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1161299
+      },
+      "writtenOn": "2017-08-04T18:16:40Z",
+      "side": 1,
+      "message": "s/with the with the/with the/",
+      "range": {
+        "startLine": 207,
+        "startChar": 0,
+        "endLine": 207,
+        "endChar": 80
+      },
+      "revId": "a06cb09c122123e7f2dcb5ac97c0dad50e704b14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
