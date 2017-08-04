@@ -160,7 +160,7 @@ function defaultTaskDialog(expectedTaskId, windowId) {
             windowId,
             [
               '#default-task-dialog #default-tasks-list li:nth-of-type(2)',
-              'mousedown',
+              'pointerdown',
               {bubbles: true, button: 0}
             ]);
       }).

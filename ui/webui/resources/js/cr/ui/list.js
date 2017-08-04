@@ -324,6 +324,10 @@ cr.define('cr.ui', function() {
       this.addEventListener('focus', this.handleElementFocus_, true);
       this.addEventListener('blur', this.handleElementBlur_, true);
       this.addEventListener('scroll', this.handleScroll.bind(this));
+      this.addEventListener('touchstart', this.handleTouchEvents_);
+      this.addEventListener('touchmove', this.handleTouchEvents_);
+      this.addEventListener('touchend', this.handleTouchEvents_);
+      this.addEventListener('touchcancel', this.handleTouchEvents_);
       this.setAttribute('role', 'list');
 
       // Make list focusable
@@ -481,7 +485,7 @@ cr.define('cr.ui', function() {
 
     /**
      * Callback for mousedown and mouseup events.
-     * @param {Event} e The mouse event object.
+     * @param {Event} e The pointer event object.
      * @private
      */
     handlePointerDownUp_: function(e) {
@@ -559,6 +563,31 @@ cr.define('cr.ui', function() {
      */
     handleScroll: function(e) {
       requestAnimationFrame(this.redraw.bind(this));
+    },
+
+    /**
+     * Handle touchmove/touchcancel events.
+     * @param {!Event} e The event.
+     * @private
+     */
+    handleTouchEvents_: function(e) {
+      if (this.disabled)
+        return;
+
+      var target = /** @type {HTMLElement} */ (e.target);
+
+      // If the target was this element we need to make sure that the user did
+      // not click on a border or a scrollbar.
+      if (target == this) {
+        if (inViewport(target, e))
+          this.selectionController_.handleTouchEvents(e, -1);
+        return;
+      }
+
+      target = this.getListItemAncestor(target);
+
+      var index = this.getIndexOfListItem(target);
+      this.selectionController_.handleTouchEvents(e, index);
     },
 
     /**
@@ -1282,7 +1311,7 @@ cr.define('cr.ui', function() {
   cr.defineProperty(List, 'hasElementFocus', cr.PropertyKind.BOOL_ATTR);
 
   /**
-   * Mousedown event handler.
+   * mousedown event handler.
    * @this {cr.ui.List}
    * @param {Event} e The mouse event object.
    */
