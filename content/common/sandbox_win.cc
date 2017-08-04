@@ -626,8 +626,7 @@ sandbox::ResultCode AddBaseHandleClosePolicy(sandbox::TargetPolicy* policy) {
   if (base::win::GetVersion() >= base::win::VERSION_WIN10) {
     if (base::FeatureList::IsEnabled(kEnableCsrssLockdownFeature)) {
       // Close all ALPC ports.
-      sandbox::ResultCode ret =
-          policy->AddKernelObjectToClose(L"ALPC Port", NULL);
+      sandbox::ResultCode ret = sandbox::SetDisconnectCsrss();
       if (ret != sandbox::SBOX_ALL_OK) {
         return ret;
       }
