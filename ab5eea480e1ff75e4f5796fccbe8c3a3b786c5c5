@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c1771515_d09a59d8",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-04T01:09:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3996cef_1adf744d",
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cabc2b3a_62e26f16",
         "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "8c574b23_3cdb13c1",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-04T01:09:50Z",
+      "side": 1,
+      "message": "Done (defined a C method in the namespace).",
+      "parentUuid": "cabc2b3a_62e26f16",
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68dd65e5_57b14169",
         "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-08-02T22:14:45Z",
       "side": 1,
       "message": "Is this arbitrary?",
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c349a2bc_39dae5a5",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-04T01:09:50Z",
+      "side": 1,
+      "message": "It is intentionally two times the bubble alignment offset, which causes the bubble to appear center-aligned for short strings. I\u0027ve added a comment that specifies this.",
+      "parentUuid": "68dd65e5_57b14169",
       "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "819416e7_abe5d407",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-04T01:09:50Z",
+      "side": 1,
+      "message": "This was defined in Amy\u0027s specs, and exists to preserve readability on wider screens. For example, it would be preferable to have a bubble that wraps onto two lines on iPad than one that stretches across the entire screen. Added a comment to clarify.",
+      "parentUuid": "56b8be68_8abf1a4f",
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ff448d81_b16f3c96",
         "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
         "patchSetId": 3
@@ -81,6 +153,24 @@
       "writtenOn": "2017-08-02T22:14:45Z",
       "side": 1,
       "message": "Please make this variable more specific.",
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27112b7f_1dec9539",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-04T01:09:50Z",
+      "side": 1,
+      "message": "I split this variable into |kBubbleMargin| and |kLabelPadding|, and added comments to clarify their purpose.",
+      "parentUuid": "ff448d81_b16f3c96",
       "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "083c6bf5_1e8eaaf5",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-04T01:09:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0635b33c_4cee053a",
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47e2edfa_83f4c049",
         "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
         "patchSetId": 3
@@ -118,6 +226,24 @@
       "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad067541_9420f7c3",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-04T01:09:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "47e2edfa_83f4c049",
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "e4c4dd3e_0339457e",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-04T01:09:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "eb508eb5_63b6795f",
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7281d04_884fdb63",
         "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
         "patchSetId": 3
@@ -152,6 +296,24 @@
       "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0194098c_a0b5aa75",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-04T01:09:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7281d04_884fdb63",
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "8586a01d_856daca3",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-04T01:09:50Z",
+      "side": 1,
+      "message": "Yes; fixed.",
+      "parentUuid": "9966b482_622a60d7",
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f829ba3_675023d7",
         "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
         "patchSetId": 3
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "950272c7_f4cbb86e",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-04T01:09:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3f829ba3_675023d7",
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "195cf4db_75adb3b0",
         "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
         "patchSetId": 3
@@ -200,6 +398,24 @@
       "writtenOn": "2017-08-02T22:11:35Z",
       "side": 1,
       "message": "The bubble view\u0027s frame is being managed by the parent. I don\u0027t think there should be constraints that require the bubble view to be a certain size. I would expect that the constraints instead expressed the relationships between the bubble view and its children (either through positioning/size), assuming the bubble view\u0027s size is set. \n\nEd, what do you think?",
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d3885ad_ace9c455",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-04T01:09:50Z",
+      "side": 1,
+      "message": "After playing around with the debugger/breakpoints, I think that the parent setting the frame enforces the bubble\u0027s size, and this constraint manages the background\u0027s size based on the frame set by the parent.\n\nI\u0027ve also inverted this constraint so that the background\u0027s width is less than or equal to the bubble view\u0027s width. Not sure if this addresses your concern, so happy to discuss/test this further if you\u0027d like.",
+      "parentUuid": "195cf4db_75adb3b0",
       "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -229,6 +445,30 @@
     },
     {
       "key": {
+        "uuid": "12c42ad9_2f10d214",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-04T01:09:50Z",
+      "side": 1,
+      "message": "Thanks for pointing this out--it should be corner radius * 2. This ensures that the label exists in the rectangular, non-circular portion of the bubble. I\u0027ve also added a comment to clarify the purpose of this constraint.",
+      "parentUuid": "7c75e7ad_d7cd0743",
+      "range": {
+        "startLine": 154,
+        "startChar": 40,
+        "endLine": 154,
+        "endChar": 68
+      },
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79f226f2_cfe6107c",
         "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
         "patchSetId": 3
@@ -252,6 +492,30 @@
     },
     {
       "key": {
+        "uuid": "8766af82_eeb5b81d",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-04T01:09:50Z",
+      "side": 1,
+      "message": "There should be some padding within the background and around the label, so the bubble isn\u0027t flush against the label. Added a comment to clarify.",
+      "parentUuid": "79f226f2_cfe6107c",
+      "range": {
+        "startLine": 161,
+        "startChar": 49,
+        "endLine": 161,
+        "endChar": 56
+      },
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e16dce6a_2beb97a0",
         "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
         "patchSetId": 3
@@ -263,6 +527,24 @@
       "writtenOn": "2017-08-02T22:11:35Z",
       "side": 1,
       "message": "One possible idea here would be to align the top of the background with the bottom of the arrow.",
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f43c76cd_0cddef91",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-04T01:09:50Z",
+      "side": 1,
+      "message": "This was the original intention, but it resulted in a tiny white gap between the background and the arrow during the sink-down animation, hence the decision to use |kArrowScaleFactor|. Because of the scale factor, aligning the top of the background with the bottom of the arrow would result in a weird constant offset (|(kScaleFactor - 1) * kArrowHeight|).\n\nThere could be a simpler way to prevent white gaps without scaling the arrow that I haven\u0027t thought about; let me know if you have any ideas!",
+      "parentUuid": "e16dce6a_2beb97a0",
       "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -286,6 +568,24 @@
     },
     {
       "key": {
+        "uuid": "87122206_8e87dd1d",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-04T01:09:50Z",
+      "side": 1,
+      "message": "Acknowledged (scaling the arrow makes this suggestion more complicated).",
+      "parentUuid": "6d6c7e80_2278d995",
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b92df182_588bd288",
         "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
         "patchSetId": 3
@@ -297,6 +597,30 @@
       "writtenOn": "2017-08-02T22:11:35Z",
       "side": 1,
       "message": "Should this be leadingAnchor. Offset is difference between beginning of bubble and beginning of arrow, not center of arrow.",
+      "range": {
+        "startLine": 199,
+        "startChar": 20,
+        "endLine": 199,
+        "endChar": 33
+      },
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e0f67b2_5ff44a76",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-04T01:09:50Z",
+      "side": 1,
+      "message": "No, the bubble alignment offset is the distance from the beginning of the bubble to the anchor point, which is also the center of the arrow. However, since this was unclear, I\u0027m thinking of renaming |kBubbleAlignmentOffset| to something like |kAnchorPointOffset|. This change would touch the util methods/unit test files, so would probably happen in a future CL to avoid merge conflicts.",
+      "parentUuid": "b92df182_588bd288",
       "range": {
         "startLine": 199,
         "startChar": 20,
@@ -326,6 +650,24 @@
     },
     {
       "key": {
+        "uuid": "82a31035_5506b04b",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-04T01:09:50Z",
+      "side": 1,
+      "message": "You\u0027re right; we can center the background on the bubble view for all alignments. Fixed.",
+      "parentUuid": "5d6c84c2_e8a4d2ea",
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "084f2645_33d7eb85",
         "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
         "patchSetId": 3
@@ -346,6 +688,30 @@
       "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e196e81d_e9cf2dd2",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-04T01:09:50Z",
+      "side": 1,
+      "message": "I\u0027ve renamed these constants per our discussion today, which should make this expression more clear.",
+      "parentUuid": "084f2645_33d7eb85",
+      "range": {
+        "startLine": 239,
+        "startChar": 44,
+        "endLine": 239,
+        "endChar": 63
+      },
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -372,6 +738,30 @@
     },
     {
       "key": {
+        "uuid": "d2d7a22e_69a804c1",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-04T01:09:50Z",
+      "side": 1,
+      "message": "Renamed the constants per our discussion.",
+      "parentUuid": "1bccdf8e_d96958f2",
+      "range": {
+        "startLine": 242,
+        "startChar": 31,
+        "endLine": 242,
+        "endChar": 42
+      },
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8644d43_75de5a52",
         "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
         "patchSetId": 3
@@ -383,6 +773,24 @@
       "writtenOn": "2017-08-02T22:11:35Z",
       "side": 1,
       "message": "What happens if the width/height given by |size| is smaller than optimalSize?",
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee2dff66_f21026d3",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-04T01:09:50Z",
+      "side": 1,
+      "message": "Because optimalSize is based on the label\u0027s |sizeThatFits|, this shouldn\u0027t happen unless the label\u0027s |sizeThatFits| is less than |kMinBubbleWidth|. In that scenario, we return |kMinBubbleWidth| to avoid very strange-looking UI bugs.",
+      "parentUuid": "e8644d43_75de5a52",
       "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -403,6 +811,24 @@
       "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb717b05_12a1544f",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-04T01:09:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a9698675_bcf50b66",
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -441,6 +867,24 @@
     },
     {
       "key": {
+        "uuid": "4cce363a_fa225f60",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-04T01:09:50Z",
+      "side": 1,
+      "message": "Yep, using [super init] causes a compile error.",
+      "parentUuid": "97641480_d34470dd",
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a155503_7de0f6fc",
         "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller.mm",
         "patchSetId": 3
@@ -455,6 +899,24 @@
       "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1e693df_9445fb5f",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-04T01:09:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a155503_7de0f6fc",
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -475,6 +937,24 @@
     },
     {
       "key": {
+        "uuid": "496ce1a2_d9a1d237",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-04T01:09:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "adf37ac8_bb81b83e",
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c21a4d0_3aaeb875",
         "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller.mm",
         "patchSetId": 3
@@ -489,6 +969,24 @@
       "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6e743b8_4145f5c8",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-04T01:09:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c21a4d0_3aaeb875",
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -509,6 +1007,24 @@
     },
     {
       "key": {
+        "uuid": "783d8236_8b090707",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-04T01:09:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a863ce84_211e9c24",
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80b18abe_139cde6b",
         "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller.mm",
         "patchSetId": 3
@@ -520,6 +1036,24 @@
       "writtenOn": "2017-08-02T22:14:45Z",
       "side": 1,
       "message": "Should this use a spring animation instead? As I understand it, Apple encourages the spring animation over these animation curves.",
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06aaa1a4_10825d61",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-04T01:09:50Z",
+      "side": 1,
+      "message": "Helene specified a sink-down animation in her motion spec, but I can double check with her if you\u0027d like.",
+      "parentUuid": "80b18abe_139cde6b",
       "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -543,6 +1077,24 @@
     },
     {
       "key": {
+        "uuid": "c4fe4dc5_e7a89c2b",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-04T01:09:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5dd6a457_c46bf657",
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "84865558_e5b4336f",
         "filename": "ios/chrome/browser/ui/bubble/bubble_view_unittest.mm",
         "patchSetId": 3
@@ -557,6 +1109,24 @@
       "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13046a8d_5a675964",
+        "filename": "ios/chrome/browser/ui/bubble/bubble_view_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1225480
+      },
+      "writtenOn": "2017-08-04T01:09:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84865558_e5b4336f",
+      "revId": "ab5eea480e1ff75e4f5796fccbe8c3a3b786c5c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
