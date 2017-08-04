@@ -111,11 +111,11 @@ class MEDIA_EXPORT MediaDrmBridge : public ContentDecryptionModule,
   // used when we need to use MediaDrmBridge without creating any sessions.
   // TODO(yucliu): Pass |security_origin| here to clear per-origin certs and
   // licenses.
-  static void CreateWithoutSessionSupport(
+  static scoped_refptr<MediaDrmBridge> CreateWithoutSessionSupport(
       const std::string& key_system,
+      const std::string& origin_id,
       SecurityLevel security_level,
-      const CreateFetcherCB& create_fetcher_cb,
-      CreatedCB created_cb);
+      const CreateFetcherCB& create_fetcher_cb);
 
   // ContentDecryptionModule implementation.
   void SetServerCertificate(
@@ -139,6 +139,14 @@ class MEDIA_EXPORT MediaDrmBridge : public ContentDecryptionModule,
                      std::unique_ptr<media::SimpleCdmPromise> promise) override;
   CdmContext* GetCdmContext() override;
   void DeleteOnCorrectThread() const override;
+
+  // Unprovision the origin bound with |this|. This will remove the cert for
+  // current origin and leave the offline licenses in invalid state (offline
+  // licenses can't be used anymore).
+  //
+  // MediaDrmBridge must be created with a valid origin ID. The functions won't
+  // touch persistent storage.
+  void Unprovision();
 
   // PlayerTracker implementation. Can be called on any thread.
   // The registered callbacks will be fired on |task_runner_|. The caller
@@ -258,13 +266,15 @@ class MEDIA_EXPORT MediaDrmBridge : public ContentDecryptionModule,
       const SessionMessageCB& session_message_cb,
       const SessionClosedCB& session_closed_cb,
       const SessionKeysChangeCB& session_keys_change_cb,
-      const SessionExpirationUpdateCB& session_expiration_update_cb);
+      const SessionExpirationUpdateCB& session_expiration_update_cb,
+      const std::string& origin_id);
 
   // Constructs a MediaDrmBridge for |scheme_uuid| and |security_level|. The
   // default security level will be used if |security_level| is
   // SECURITY_LEVEL_DEFAULT. Sessions should not be created if session callbacks
   // are null.
   MediaDrmBridge(const std::vector<uint8_t>& scheme_uuid,
+                 const std::string& origin_id,
                  SecurityLevel security_level,
                  std::unique_ptr<MediaDrmStorageBridge> storage,
                  const CreateFetcherCB& create_fetcher_cb,

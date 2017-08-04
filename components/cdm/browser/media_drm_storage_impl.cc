@@ -55,17 +55,29 @@ std::unique_ptr<base::DictionaryValue> CreateSessionDictionary(
   return dict;
 }
 
-bool GetSessionData(const base::DictionaryValue* sesssion_dict,
+bool GetSessionData(const base::DictionaryValue& session_dict,
                     std::vector<uint8_t>* key_set_id,
-                    std::string* mime_type) {
+                    std::string* mime_type,
+                    base::Time* time) {
+  DCHECK(key_set_id);
+  DCHECK(mime_type);
+  DCHECK(time);
+
   std::string key_set_id_string;
-  if (!sesssion_dict->GetString(kKeySetId, &key_set_id_string))
+  if (!session_dict.GetString(kKeySetId, &key_set_id_string))
     return false;
 
-  if (!sesssion_dict->GetString(kMimeType, mime_type))
+  if (!session_dict.GetString(kMimeType, mime_type))
     return false;
+
+  double time_double;
+  if (!session_dict.GetDouble(kCreationTime, &time_double)) {
+    return false;
+  }
 
   key_set_id->assign(key_set_id_string.begin(), key_set_id_string.end());
+  *time = base::Time::FromDoubleT(time_double);
+
   return true;
 }
 
@@ -73,11 +85,9 @@ bool GetSessionData(const base::DictionaryValue* sesssion_dict,
 // 1. Origin ID doesn't exist, which may happen if the origin map is created
 // with an older version app.
 // 2. Data format is incorrect.
-base::UnguessableToken GetOriginId(const base::DictionaryValue* origin_dict) {
-  DCHECK(origin_dict);
-
+base::UnguessableToken GetOriginId(const base::DictionaryValue& origin_dict) {
   const base::Value* origin_id_value = nullptr;
-  if (!origin_dict->Get(kOriginId, &origin_id_value)) {
+  if (!origin_dict.Get(kOriginId, &origin_id_value)) {
     return base::UnguessableToken();
   }
 
@@ -110,6 +120,27 @@ std::unique_ptr<base::DictionaryValue> CreateOriginDictionary(
   return dict;
 }
 
+bool GetOriginData(const base::DictionaryValue& origin_dict,
+                   base::UnguessableToken* origin_id,
+                   base::Time* creation_time) {
+  DCHECK(origin_id);
+  DCHECK(creation_time);
+
+  base::UnguessableToken id = GetOriginId(origin_dict);
+  if (!id) {
+    return false;
+  }
+
+  double time_double = 0.;
+  if (!origin_dict.GetDouble(kCreationTime, &time_double)) {
+    return false;
+  }
+
+  *origin_id = id;
+  *creation_time = base::Time::FromDoubleT(time_double);
+  return true;
+}
+
 #if DCHECK_IS_ON()
 // Returns whether |dict| has a value assocaited with the |key|.
 bool HasEntry(const base::DictionaryValue& dict, const std::string& key) {
@@ -117,11 +148,125 @@ bool HasEntry(const base::DictionaryValue& dict, const std::string& key) {
 }
 #endif
 
+// Clear sessions whose creation time falls in [start, end]. Return true if all
+// the session data should be removed. Caller will handle the removing in this
+// case.
+bool ClearDataForAllSessions(base::DictionaryValue* sessions,
+                             base::Time start,
+                             base::Time end) {
+  std::vector<std::string> session_to_clear;
+  for (const auto& key_value : *sessions) {
+    base::DictionaryValue* session_dict;
+    if (!key_value.second->GetAsDictionary(&session_dict)) {
+      session_to_clear.push_back(key_value.first);
+      continue;
+    }
+
+    std::vector<uint8_t> key_set_id;
+    base::Time creation_time;
+    std::string mime_type_ignored;
+    if (!GetSessionData(*session_dict, &key_set_id, &mime_type_ignored,
+                        &creation_time)) {
+      session_to_clear.push_back(key_value.first);
+      continue;
+    }
+
+    if (creation_time >= start && creation_time <= end) {
+      session_to_clear.push_back(key_value.first);
+      continue;
+    }
+  }
+
+  if (session_to_clear.size() == sessions->size()) {
+    return true;
+  }
+
+  // Remove session data.
+  for (const auto& session_id : session_to_clear) {
+    sessions->RemoveWithoutPathExpansion(session_id, nullptr);
+  }
+
+  return false;
+}
+
+// Remove the origin dict if all the licenses are removed for that origin.
+// Return the origin ID.
+std::vector<base::UnguessableToken> ClearDataForAllOrigins(
+    base::DictionaryValue* storage_dict,
+    base::Time start,
+    base::Time end,
+    const base::RepeatingCallback<bool(const GURL&)>& filter) {
+  std::vector<std::string> origin_to_delete;
+  std::vector<base::UnguessableToken> origin_id_to_clear;
+
+  for (auto origin_it = storage_dict->begin(); origin_it != storage_dict->end();
+       origin_it++) {
+    if (filter && !filter.Run(GURL(origin_it->first))) {
+      continue;
+    }
+
+    base::DictionaryValue* origin_dict;
+    if (!origin_it->second->GetAsDictionary(&origin_dict)) {
+      origin_to_delete.push_back(origin_it->first);
+      continue;
+    }
+
+    base::UnguessableToken origin_id;
+    base::Time creation_time;
+    if (!GetOriginData(*origin_dict, &origin_id, &creation_time)) {
+      origin_to_delete.push_back(origin_it->first);
+      continue;
+    }
+
+    if (creation_time > end) {
+      continue;
+    }
+
+    base::DictionaryValue* sessions;
+    if (!origin_dict->GetDictionary(kSessions, &sessions)) {
+      origin_to_delete.push_back(origin_it->first);
+      origin_id_to_clear.push_back(origin_id);
+      continue;
+    }
+
+    bool should_clear_all_session =
+        ClearDataForAllSessions(sessions, start, end);
+
+    if (should_clear_all_session) {
+      // Session data will be removed when removing origin data.
+      origin_to_delete.push_back(origin_it->first);
+      origin_id_to_clear.push_back(origin_id);
+    }
+  }
+
+  // Remove origin data.
+  for (const auto& origin_str : origin_to_delete) {
+    storage_dict->RemoveWithoutPathExpansion(origin_str, nullptr);
+  }
+
+  return origin_id_to_clear;
+}
+
 }  // namespace
 
 // static
 void MediaDrmStorageImpl::RegisterProfilePrefs(PrefRegistrySimple* registry) {
   registry->RegisterDictionaryPref(kMediaDrmStorage);
+}
+
+// static
+std::vector<base::UnguessableToken> MediaDrmStorageImpl::ClearLicenses(
+    PrefService* pref_service,
+    base::Time start,
+    base::Time end,
+    const base::RepeatingCallback<bool(const GURL&)>& filter) {
+  DVLOG(1) << __func__ << ": Clear licenses [" << start << ", " << end << "]";
+
+  DictionaryPrefUpdate update(pref_service, kMediaDrmStorage);
+  base::DictionaryValue* storage_dict = update.Get();
+  DCHECK(storage_dict);
+
+  return ClearDataForAllOrigins(storage_dict, start, end, filter);
 }
 
 MediaDrmStorageImpl::MediaDrmStorageImpl(
@@ -165,7 +310,7 @@ void MediaDrmStorageImpl::Initialize(InitializeCallback callback) {
   base::UnguessableToken origin_id;
   if (exist) {
     DCHECK(origin_dict);
-    origin_id = GetOriginId(origin_dict);
+    origin_id = GetOriginId(*origin_dict);
   }
 
   // |origin_id| can be empty even if |origin_dict| exists. This can happen if
@@ -301,7 +446,8 @@ void MediaDrmStorageImpl::LoadPersistentSession(
 
   std::vector<uint8_t> key_set_id;
   std::string mime_type;
-  if (!GetSessionData(session_dict, &key_set_id, &mime_type)) {
+  base::Time time_ignored;
+  if (!GetSessionData(*session_dict, &key_set_id, &mime_type, &time_ignored)) {
     DVLOG(2) << __func__ << ": Failed to read session data.";
     std::move(callback).Run(nullptr);
     return;
