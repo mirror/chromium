@@ -16,6 +16,24 @@
       "revId": "641ac3b6c829da2fb3bb71ecf553dd25b77f0390",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "543eb97d_3d7b4d23",
+        "filename": "ash/fast_ink/fast_ink_pointer_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000449
+      },
+      "writtenOn": "2017-08-04T16:31:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "984ba3b5_f7d3da65",
+      "revId": "641ac3b6c829da2fb3bb71ecf553dd25b77f0390",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
