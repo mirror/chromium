@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3e8e522e_92ed6879",
+        "filename": "chrome/browser/ui/cocoa/passwords/save_pending_password_view_controller.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-08-04T14:17:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b357fa7c_eff5b08d",
+      "range": {
+        "startLine": 17,
+        "startChar": 32,
+        "endLine": 17,
+        "endChar": 54
+      },
+      "revId": "29b25ebc172de7dd2b71bded2a124cbae1519918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d349737_67c056dc",
         "filename": "chrome/browser/ui/cocoa/passwords/save_pending_password_view_controller.mm",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "29b25ebc172de7dd2b71bded2a124cbae1519918",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01af095d_c95da3f7",
+        "filename": "chrome/browser/ui/cocoa/passwords/save_pending_password_view_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-08-04T14:17:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d349737_67c056dc",
+      "range": {
+        "startLine": 56,
+        "startChar": 8,
+        "endLine": 56,
+        "endChar": 15
+      },
+      "revId": "29b25ebc172de7dd2b71bded2a124cbae1519918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "5e361a43_3ee0ca30",
+        "filename": "chrome/browser/ui/cocoa/passwords/save_pending_password_view_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-08-04T14:17:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f8adea7_f8275870",
+      "range": {
+        "startLine": 90,
+        "startChar": 60,
+        "endLine": 90,
+        "endChar": 65
+      },
+      "revId": "29b25ebc172de7dd2b71bded2a124cbae1519918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb6253f4_18cde1c3",
         "filename": "chrome/browser/ui/cocoa/passwords/save_pending_password_view_controller.mm",
         "patchSetId": 8
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "c534ba8d_00cd098e",
+        "filename": "chrome/browser/ui/cocoa/passwords/save_pending_password_view_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-08-04T14:17:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb6253f4_18cde1c3",
+      "range": {
+        "startLine": 101,
+        "startChar": 2,
+        "endLine": 101,
+        "endChar": 25
+      },
+      "revId": "29b25ebc172de7dd2b71bded2a124cbae1519918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71e09e3f_81aefa1f",
         "filename": "chrome/browser/ui/cocoa/passwords/save_pending_password_view_controller.mm",
         "patchSetId": 8
@@ -114,6 +210,30 @@
       "revId": "29b25ebc172de7dd2b71bded2a124cbae1519918",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54634dac_76fbe3c1",
+        "filename": "chrome/browser/ui/cocoa/passwords/save_pending_password_view_controller.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1229180
+      },
+      "writtenOn": "2017-08-04T14:17:16Z",
+      "side": 1,
+      "message": "I have tried using\n  (void)textDidEndEditing:(NSNotification *)notification;\nfunction but it was not called. But i now see that there is another function\n  (void)controlTextDidEndEditing:(NSNotification *)notification;\nand it is called. Updating.",
+      "parentUuid": "71e09e3f_81aefa1f",
+      "range": {
+        "startLine": 115,
+        "startChar": 12,
+        "endLine": 115,
+        "endChar": 23
+      },
+      "revId": "29b25ebc172de7dd2b71bded2a124cbae1519918",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
