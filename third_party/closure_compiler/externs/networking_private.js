@@ -861,7 +861,8 @@ chrome.networkingPrivate.ManagedWiFiProperties;
  *   BSSID: (string|undefined),
  *   Frequency: (number|undefined),
  *   Security: string,
- *   SignalStrength: (number|undefined)
+ *   SignalStrength: (number|undefined),
+ *   HexSSID: (string|undefined)
  * }}
  * @see https://developer.chrome.com/extensions/networkingPrivate#type-WiFiStateProperties
  */
