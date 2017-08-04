@@ -52,6 +52,24 @@
       "revId": "99de2eb82225704755702c3223dfc85c2562ecd0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dfb2a30_5a3d4ef5",
+        "filename": "tools/clang/scripts/run_tool.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-08-04T10:58:36Z",
+      "side": 1,
+      "message": "Thank you very much for clarification.\n\nFor the first one, I think the good choice is to pass this path as an optional input to this script and the caller would be responsible for finding the correct one.\nAnd to detect if this is changed and my program should change what it sends (and also to cope with all other things that may break the annotation audition), we will have some scripts that run daily and sanity check the results and if they won\u0027t get the expected results, email their caretakers to check what\u0027s wrong.\n\nFor the second one, just this switch is needed for linux, and we are not supporting other OSes yet. Maybe if the need comes in future, we would expand it.",
+      "parentUuid": "9de5781f_9018e8cd",
+      "revId": "99de2eb82225704755702c3223dfc85c2562ecd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
