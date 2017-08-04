@@ -498,7 +498,7 @@ void AudioBus::CopyWithGainFrom(const AudioBus& source_bus,
     return;
 
   // If it is copying from the same bus and no need to change gain, just return.
-  if (this == &source_bus && *last_mix_gain == target_gain && target_gain == 1)
+  if (this == &source_bus && target_gain == 1)
     return;
 
   AudioBus& source_bus_safe = const_cast<AudioBus&>(source_bus);
@@ -518,23 +518,33 @@ void AudioBus::CopyWithGainFrom(const AudioBus& source_bus,
   float total_desired_gain = static_cast<float>(bus_gain_ * target_gain);
 
   // First time, snap directly to totalDesiredGain.
+#if 0
   float gain =
       static_cast<float>(is_first_time_ ? total_desired_gain : *last_mix_gain);
   is_first_time_ = false;
+#else
+  float gain = total_desired_gain;
+#endif
 
   const float kDezipperRate = 0.005f;
   unsigned frames_to_process = length();
 
+#if 0
   // If the gain is within epsilon of totalDesiredGain, we can skip dezippering.
   // FIXME: this value may need tweaking.
   const float kEpsilon = 0.001f;
   float gain_diff = fabs(total_desired_gain - gain);
+#endif
 
-  // Number of frames to de-zipper before we are close enough to the target
-  // gain.
-  // FIXME: framesToDezipper could be smaller when target gain is close enough
-  // within this process loop.
+// Number of frames to de-zipper before we are close enough to the target
+// gain.
+// FIXME: framesToDezipper could be smaller when target gain is close enough
+// within this process loop.
+#if 0
   unsigned frames_to_dezipper = (gain_diff < kEpsilon) ? 0 : frames_to_process;
+#else
+  unsigned frames_to_dezipper = 0;
+#endif
 
   if (frames_to_dezipper) {
     if (!dezipper_gain_values_.get() ||

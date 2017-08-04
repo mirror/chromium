@@ -85,7 +85,7 @@ void GainHandler::Process(size_t frames_to_process) {
       }
     } else {
       // Apply the gain with de-zippering into the output bus.
-      if (!last_gain_ && last_gain_ == gain_->Value()) {
+      if (false && (!last_gain_ && last_gain_ == gain_->Value())) {
         // If the gain is 0 (and we've converged on dezippering), just zero the
         // bus and set the silence hint.
         output_bus->Zero();

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<!--
+Verifies GainNode attributes and their type.
+-->
+<html>
+  <head>
+    <title>
+      Gain Dezippering Test: Dezippering Removed
+    </title>
+    <script src="../../resources/testharness.js"></script>
+    <script src="../../resources/testharnessreport.js"></script>
+    <script src="../resources/audit-util.js"></script>
+    <script src="../resources/audit.js"></script>
+  </head>
+  <body>
+    <script id="layout-test-code">
+      let audit = Audit.createTaskRunner();
+
+      audit.define(
+          {label: 'test', description: 'Dezippering of GainNode removed'},
+          (task, should) => {
+            // Only need a few frames to verify that dezippering has been
+            // removed from the GainNode.  Sample rate is pretty arbitrary.
+            let context = new OfflineAudioContext(1, 1024, 16000);
+
+            // Send a unit source to the gain node so we can measure the effect
+            // of the gain node.
+            let src = new ConstantSourceNode(context, {offset: 1});
+            let g = new GainNode(context, {gain: 1});
+            src.connect(g).connect(context.destination);
+
+            context.suspend(128 / context.sampleRate)
+                .then(() => {
+                  g.gain.value = .5;
+                })
+                .then(() => context.resume());
+
+            src.start();
+
+            context.startRendering()
+                .then(audio => {
+                  let c = audio.getChannelData(0);
+
+                  // If dezippering has been removed, the gain output should
+                  // instantly jump at frame 128 to 0.5.
+                  should(c.slice(0, 128), 'output[0:127]').beConstantValueOf(1);
+                  should(c.slice(128), 'output[128:]').beConstantValueOf(0.5);
+                })
+                .then(() => task.done());
+          });
+
+      audit.run();
+    </script>
+  </body>
+</html>
