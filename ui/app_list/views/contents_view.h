@@ -126,6 +126,12 @@ class APP_LIST_EXPORT ContentsView : public views::View,
   // was handled.
   bool Back();
 
+  // Layouts the contents during dragging.
+  void Layout(int app_list_y_position_in_screen,
+              int work_area_bottom,
+              bool is_end_gesture,
+              bool is_for_dragging);
+
   // Overridden from views::View:
   gfx::Size CalculatePreferredSize() const override;
   void Layout() override;
