@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "739b8c90_8b5f490b",
+        "filename": "ui/app_list/views/contents_view.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-04T18:16:12Z",
+      "side": 1,
+      "message": "It seems confusing that this is just \u0027Layout\u0027 and other views are using \u0027LayoutAndUpdateOpacityDuringDragging\u0027 with is something of a mouthful. Does it make sense to unify the names and signatures (maybe just \u0027DraggingLayout\u0027 ?\n\nAlso, \u0027Layout\u0027 is an override method below. It is generally bad practice to have methods with different behaviors but the same name.",
+      "revId": "74b0a971743afe6b19ff9a3be5f227cbc5a13585",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
