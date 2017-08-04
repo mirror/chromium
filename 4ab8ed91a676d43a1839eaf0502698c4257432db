@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "729f6fdf_ec6f0364",
+        "filename": "chrome/browser/chromeos/power/peripheral_battery_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-04T20:43:13Z",
+      "side": 1,
+      "message": "I *think* I should be using MessageCenter here? From what I can see, NotificationUIManager is for profile notifications and MessageCenter is for system notifications, but I\u0027m not so sure.",
+      "revId": "4ab8ed91a676d43a1839eaf0502698c4257432db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
