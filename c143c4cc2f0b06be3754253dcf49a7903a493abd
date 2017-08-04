@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "4b577184_c347e370",
+        "filename": "third_party/WebKit/LayoutTests/editing/spelling/partial_word_with_event_handler.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-04T02:13:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "65c473ed_da33804c",
+      "revId": "c143c4cc2f0b06be3754253dcf49a7903a493abd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f121651_bdd3075f",
         "filename": "third_party/WebKit/Source/core/editing/spellcheck/HotModeSpellCheckRequester.cpp",
         "patchSetId": 6
@@ -69,6 +87,24 @@
       "revId": "c143c4cc2f0b06be3754253dcf49a7903a493abd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57b88684_b3778402",
+        "filename": "third_party/WebKit/Source/core/editing/spellcheck/HotModeSpellCheckRequester.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-08-04T02:13:27Z",
+      "side": 1,
+      "message": "Renamed to |last_command|.",
+      "parentUuid": "6654b989_4475c873",
+      "revId": "c143c4cc2f0b06be3754253dcf49a7903a493abd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
