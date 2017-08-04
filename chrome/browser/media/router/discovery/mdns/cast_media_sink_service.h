@@ -5,12 +5,14 @@
 #ifndef CHROME_BROWSER_MEDIA_ROUTER_DISCOVERY_MDNS_CAST_MEDIA_SINK_SERVICE_H_
 #define CHROME_BROWSER_MEDIA_ROUTER_DISCOVERY_MDNS_CAST_MEDIA_SINK_SERVICE_H_
 
+#include <map>
 #include <memory>
 #include <set>
 
 #include "base/gtest_prod_util.h"
 #include "base/memory/ref_counted.h"
 #include "base/threading/thread_checker.h"
+#include "chrome/browser/media/router/discovery/discovery_network_monitor.h"
 #include "chrome/browser/media/router/discovery/mdns/dns_sd_delegate.h"
 #include "chrome/browser/media/router/discovery/mdns/dns_sd_registry.h"
 #include "chrome/browser/media/router/discovery/media_sink_service_base.h"
@@ -35,14 +37,16 @@ namespace media_router {
 class CastMediaSinkService
     : public MediaSinkServiceBase,
       public DnsSdRegistry::DnsSdObserver,
-      public base::RefCountedThreadSafe<CastMediaSinkService> {
+      public base::RefCountedThreadSafe<CastMediaSinkService>,
+      public DiscoveryNetworkMonitor::Observer {
  public:
   CastMediaSinkService(const OnSinksDiscoveredCallback& callback,
                        content::BrowserContext* browser_context);
 
   // Used by unit tests.
   CastMediaSinkService(const OnSinksDiscoveredCallback& callback,
-                       cast_channel::CastSocketService* cast_socket_service);
+                       cast_channel::CastSocketService* cast_socket_service,
+                       DiscoveryNetworkMonitor* network_monitor);
 
   // mDNS service types.
   static const char kCastServiceType[];
@@ -61,7 +65,7 @@ class CastMediaSinkService
   // Receives incoming messages and errors and provides additional API context.
   class CastSocketObserver : public cast_channel::CastSocket::Observer {
    public:
-    CastSocketObserver();
+    explicit CastSocketObserver(CastMediaSinkService* media_sink_service);
     ~CastSocketObserver() override;
 
     // CastSocket::Observer implementation.
@@ -71,6 +75,7 @@ class CastMediaSinkService
                    const cast_channel::CastMessage& message) override;
 
    private:
+    CastMediaSinkService* const media_sink_service_;
     DISALLOW_COPY_AND_ASSIGN(CastSocketObserver);
   };
 
@@ -83,9 +88,11 @@ class CastMediaSinkService
                            TestOnChannelOpenedOnIOThread);
   FRIEND_TEST_ALL_PREFIXES(CastMediaSinkServiceTest,
                            TestMultipleOnChannelOpenedOnIOThread);
-  FRIEND_TEST_ALL_PREFIXES(CastMediaSinkServiceTest, TestOnDnsSdEvent);
-  FRIEND_TEST_ALL_PREFIXES(CastMediaSinkServiceTest, TestMultipleOnDnsSdEvent);
   FRIEND_TEST_ALL_PREFIXES(CastMediaSinkServiceTest, TestTimer);
+
+  // Attempt to open a cast channel for each service in |current_services_|.
+  void StartDeviceResolution(
+      const DnsSdRegistry::DnsSdServiceList& services_to_resolve);
 
   // DnsSdRegistry::DnsSdObserver implementation
   void OnDnsSdEvent(const std::string& service_type,
@@ -112,6 +119,11 @@ class CastMediaSinkService
                                  int channel_id,
                                  bool audio_only);
 
+  // DiscoveryNetworkMonitor::Observer implementation
+  void OnNetworksChanged(const std::string& network_id) override;
+
+  void OnCastChannelError(const net::IPEndPoint& ip_endpoint);
+
   // Raw pointer to DnsSdRegistry instance, which is a global leaky singleton
   // and lives as long as the browser process.
   DnsSdRegistry* dns_sd_registry_ = nullptr;
@@ -119,13 +131,30 @@ class CastMediaSinkService
   // Service list from current round of discovery.
   DnsSdRegistry::DnsSdServiceList current_services_;
 
+  // When reconnecting to a known network, there may be services both from
+  // discovery and the cache that need to be resolved.  This could result in
+  // duplicate definitions for the same service.  Services in
+  // |services_pending_resolution_| came from either the cache or discovery and
+  // are waiting for their CastSocket to finish opening.  On success, they will
+  // move to |current_services_|.  The cache cannot add a service that is
+  // already in |services_pending_resolution_| but discovery can.
+  DnsSdRegistry::DnsSdServiceList services_pending_resolution_;
+
   // Raw pointer of leaky singleton CastSocketService, which manages creating
   // and removing Cast sockets.
   cast_channel::CastSocketService* const cast_socket_service_;
 
+  // Raw pointer to DiscoveryNetworkMonitor, which is a global leaky singleton
+  // and manages network change notifications.
+  DiscoveryNetworkMonitor* network_monitor_ = nullptr;
+
   std::unique_ptr<cast_channel::CastSocket::Observer,
                   content::BrowserThread::DeleteOnIOThread>
       observer_;
+
+  std::string current_network_id_ = DiscoveryNetworkMonitor::kNetworkIdUnknown;
+  // Cache of known services by network ID.
+  std::map<std::string, DnsSdRegistry::DnsSdServiceList> service_cache_;
 
   THREAD_CHECKER(thread_checker_);
 
