@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "fe69ec46_d51c8d1d",
+        "filename": "net/cert/x509_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-08-04T23:38:02Z",
+      "side": 1,
+      "message": "Oops! Done. This function really could do with unit testing... do you think it\u0027s worth moving to encode_values.h? If so, should I make it take CBB output or spit out a std::string? net/cert/internal, understandably, hasn\u0027t really bothered much about encoding things yet.\n\n(I don\u0027t have a good sense of what sorts of APIs you want and what points to generalize at. Absent that, I figured we could tolerate a one-off thing and, once we\u0027ve figured out what all we needed, we can abstract then. But this does not lend itself well to unit testing.)",
+      "parentUuid": "80f5e406_6e97d604",
+      "revId": "3fae64e90b14ab9902c054dc1ca7626bf65c1a6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "574e002d_b8142cb6",
         "filename": "net/cert/x509_util.cc",
         "patchSetId": 1
@@ -59,6 +77,30 @@
     },
     {
       "key": {
+        "uuid": "b86d8ab5_b5fffd9b",
+        "filename": "net/cert/x509_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-08-04T23:38:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "574e002d_b8142cb6",
+      "range": {
+        "startLine": 326,
+        "startChar": 11,
+        "endLine": 326,
+        "endChar": 14
+      },
+      "revId": "3fae64e90b14ab9902c054dc1ca7626bf65c1a6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a5dcb25_ea17087a",
         "filename": "net/cert/x509_util.cc",
         "patchSetId": 1
@@ -73,6 +115,24 @@
       "revId": "3fae64e90b14ab9902c054dc1ca7626bf65c1a6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c69c36cf_ea5b34aa",
+        "filename": "net/cert/x509_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-08-04T23:38:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6a5dcb25_ea17087a",
+      "revId": "3fae64e90b14ab9902c054dc1ca7626bf65c1a6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
