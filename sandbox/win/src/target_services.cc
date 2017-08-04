@@ -53,6 +53,13 @@ bool FlushCachedRegHandles() {
 // Closing the ALPC Port handle to csrss.exe leaves this heap in an invalid
 // state. This causes problems if anyone enumerates the heap.
 bool CsrssDisconnectCleanup() {
+#if !defined(_WIN64)
+  // TODO(liamjm): Investigate why this fails on WOW64.
+  // https://crbug.com/751809.
+  if (base::win::OSInfo::GetInstance()->wow64_status() ==
+      base::win::OSInfo::WOW64_ENABLED)
+    return true;
+#endif  // !defined(_WIN64)
   HANDLE csr_port_heap = FindCsrPortHeap();
   if (!csr_port_heap) {
     DLOG(ERROR) << "Failed to find CSR Port heap handle";
