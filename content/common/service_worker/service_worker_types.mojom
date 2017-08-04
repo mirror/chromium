@@ -29,3 +29,6 @@ struct ServiceWorkerRegistrationObjectInfo;
 // Defined in service_worker_types.h.
 [Native]
 struct ServiceWorkerVersionAttributes;
+
+[Native]
+struct ServiceWorkerObjectInfo;

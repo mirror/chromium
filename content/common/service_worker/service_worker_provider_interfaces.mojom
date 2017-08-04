@@ -4,6 +4,8 @@
 
 module content.mojom;
 
+import "content/common/service_worker/service_worker_types.mojom";
+
 // mojom::ServiceWorkerProviderHost is a browser-side interface. The renderer
 // uses this interface to request the browser to do operations involving service
 // worker registrations.
@@ -21,7 +23,13 @@ interface ServiceWorkerProviderHost {
 interface ServiceWorkerProvider {
   // TODO(shimazu): implement them.
   // associateRegistration();
-  // disassociateRegistration();
-  // setControllerServiceWorker();
+  AssociateRegistration(
+      ServiceWorkerRegistrationObjectInfo info,
+      ServiceWorkerVersionAttributes attrs);
+  DisassociateRegistration();
+  SetControllerServiceWorker(
+      ServiceWorkerObjectInfo info,
+      array<uint32> used_features,
+      bool should_notify_controllerchange);
   // messageToDocument();
 };

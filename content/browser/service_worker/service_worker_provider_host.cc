@@ -581,10 +581,12 @@ void ServiceWorkerProviderHost::SetControllerVersionAttribute(
 
   // SetController message should be sent only for controllees.
   DCHECK(IsProviderForClient());
-  Send(new ServiceWorkerMsg_SetControllerServiceWorker(
-      render_thread_id_, provider_id(), GetOrCreateServiceWorkerHandle(version),
-      notify_controllerchange,
-      version ? version->used_features() : std::set<uint32_t>()));
+  std::vector<uint32_t> used_features(version->used_features().begin(),
+                                      version->used_features().end());
+  provider_->SetControllerServiceWorker(
+      GetOrCreateServiceWorkerHandle(version),
+      version ? used_features : std::vector<uint32_t>(),
+      notify_controllerchange);
 }
 
 void ServiceWorkerProviderHost::CreateScriptURLLoaderFactory(
@@ -643,18 +645,15 @@ void ServiceWorkerProviderHost::AssociateRegistration(
 
 void ServiceWorkerProviderHost::DisassociateRegistration() {
   queued_events_.clear();
-  if (!associated_registration_.get())
+  if (!associated_registration_.get()) {
     return;
+  }
   associated_registration_ = NULL;
   SetControllerVersionAttribute(NULL, false /* notify_controllerchange */);
 
-  if (!dispatcher_host_)
-    return;
-
   // Disassociation message should be sent only for controllees.
   DCHECK(IsProviderForClient());
-  Send(new ServiceWorkerMsg_DisassociateRegistration(
-      render_thread_id_, provider_id()));
+  provider_->DisassociateRegistration();
 }
 
 void ServiceWorkerProviderHost::AddMatchingRegistration(
@@ -851,10 +850,7 @@ ServiceWorkerProviderHost::PrepareForCrossSiteTransfer() {
   RemoveAllMatchingRegistrations();
 
   if (associated_registration_.get()) {
-    if (dispatcher_host_) {
-      Send(new ServiceWorkerMsg_DisassociateRegistration(
-          render_thread_id_, provider_id()));
-    }
+    provider_->DisassociateRegistration();
   }
 
   render_process_id_ = ChildProcessHost::kInvalidUniqueID;
@@ -1069,8 +1065,7 @@ void ServiceWorkerProviderHost::SendAssociateRegistrationMessage() {
 
   // Association message should be sent only for controllees.
   DCHECK(IsProviderForClient());
-  dispatcher_host_->Send(new ServiceWorkerMsg_AssociateRegistration(
-      render_thread_id_, provider_id(), handle->GetObjectInfo(), attrs));
+  provider_->AssociateRegistration(handle->GetObjectInfo(), attrs);
 }
 
 void ServiceWorkerProviderHost::SyncMatchingRegistrations() {
