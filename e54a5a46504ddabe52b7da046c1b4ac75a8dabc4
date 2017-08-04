@@ -450,6 +450,30 @@
     },
     {
       "key": {
+        "uuid": "95365ac4_f32dcc01",
+        "filename": "components/arc/common/file_system.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1118346
+      },
+      "writtenOn": "2017-08-04T01:20:52Z",
+      "side": 1,
+      "message": "Android-side service can filter proactively, but it\u0027s ugly.\n\nGetRecentDocuments() is designed to be a simple proxy to Android\u0027s DocumentsProvider.queryRecentDocuments():\nhttps://developer.android.com/reference/android/provider/DocumentsProvider.html#queryRecentDocuments(java.lang.String, java.lang.String[])\n\nSo calling GetRecentDocuments() against MediaDocumentsProvider should return media files in Downloads directory. It is an implementation detail of Chrome OS Recent view that we want to exclude media files in Downloads because Recent view queries two overlapping sources, ARC media and local Downloads.",
+      "parentUuid": "e075a786_ceb761fd",
+      "range": {
+        "startLine": 31,
+        "startChar": 27,
+        "endLine": 31,
+        "endChar": 43
+      },
+      "revId": "e54a5a46504ddabe52b7da046c1b4ac75a8dabc4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa255e1d_75dd3ab0",
         "filename": "components/arc/common/file_system.mojom",
         "patchSetId": 4
