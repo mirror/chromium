@@ -22,6 +22,30 @@
       "revId": "8f5ac2105897445c153d4cfd8296eeb0072f2bba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "705a195c_f9bb1997",
+        "filename": "ui/display/manager/chromeos/display_configurator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-08-04T19:43:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "318ac290_d12ab8d1",
+      "range": {
+        "startLine": 385,
+        "startChar": 27,
+        "endLine": 385,
+        "endChar": 29
+      },
+      "revId": "8f5ac2105897445c153d4cfd8296eeb0072f2bba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
