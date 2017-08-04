@@ -1,0 +1,395 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4238ca9f_285cc858",
+        "filename": "chrome/browser/chromeos/policy/device_policy_decoder_chromeos.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-04T13:08:42Z",
+      "side": 1,
+      "message": "nit: Is this variable really needed - why not just \"return nullptr\" immediately on any error?",
+      "range": {
+        "startLine": 117,
+        "startChar": 2,
+        "endLine": 117,
+        "endChar": 23
+      },
+      "revId": "b90ea46e992cb94789f223c39cedb19727e7c572",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa0ef70b_fe33385e",
+        "filename": "chrome/browser/chromeos/policy/proto/chrome_device_policy.proto",
+        "patchSetId": 13
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-04T13:08:42Z",
+      "side": 1,
+      "message": "Is there a reason to pass hours-minutes instead of just integer milliseconds (since the 24 hours begin)?\n\n(I think Drew was asking about this in another comment, but there is no reply to that - maybe it was discussed offline?..)",
+      "range": {
+        "startLine": 816,
+        "startChar": 0,
+        "endLine": 820,
+        "endChar": 1
+      },
+      "revId": "b90ea46e992cb94789f223c39cedb19727e7c572",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ab52f76_6415e232",
+        "filename": "chrome/browser/chromeos/policy/proto/chrome_device_policy.proto",
+        "patchSetId": 13
+      },
+      "lineNbr": 835,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-04T13:08:42Z",
+      "side": 1,
+      "message": "Is it useful to have a separate proto for a single field \"day\"? This could be just made as a field \"Weekday weekday\" in the WeeklyTimeProto message.\nFor this, either move the enum definition inside WeeklyTimeProto or make it global.",
+      "range": {
+        "startLine": 822,
+        "startChar": 0,
+        "endLine": 835,
+        "endChar": 1
+      },
+      "revId": "b90ea46e992cb94789f223c39cedb19727e7c572",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17344732_f74412de",
+        "filename": "chrome/browser/chromeos/policy/proto/chrome_device_policy.proto",
+        "patchSetId": 13
+      },
+      "lineNbr": 837,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-04T13:08:42Z",
+      "side": 1,
+      "message": "nit: s/DeviceOffHoursInterval/DeviceOffHoursIntervalProto/",
+      "range": {
+        "startLine": 837,
+        "startChar": 51,
+        "endLine": 837,
+        "endChar": 73
+      },
+      "revId": "b90ea46e992cb94789f223c39cedb19727e7c572",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14a168ba_c47f9533",
+        "filename": "chrome/browser/chromeos/policy/proto/chrome_device_policy.proto",
+        "patchSetId": 13
+      },
+      "lineNbr": 843,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-04T13:08:42Z",
+      "side": 1,
+      "message": "nit: s/DeviceOffHours/DeviceOffHoursProto/",
+      "range": {
+        "startLine": 843,
+        "startChar": 39,
+        "endLine": 843,
+        "endChar": 53
+      },
+      "revId": "b90ea46e992cb94789f223c39cedb19727e7c572",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8c2a9d2_5c83c643",
+        "filename": "chrome/browser/chromeos/policy/proto/chrome_device_policy.proto",
+        "patchSetId": 13
+      },
+      "lineNbr": 846,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-04T13:08:42Z",
+      "side": 1,
+      "message": "With this structure of proto messages, the start and the end of the interval can have different days. Is it really convenient?\nFirst, this may complicate handling of the policy in Chrome - will need to support wrapping over 24h (e.g. \"from Monday 20:00 till Tuesday 09:00\").\nSecond, how should the negative intervals (\"from Friday till Monday\") be treated - are they supported, or are they forbidden?\n\nMaybe it\u0027d be simpler to reorganize the protos in a way that there is only a single Day field per interval?",
+      "range": {
+        "startLine": 846,
+        "startChar": 11,
+        "endLine": 846,
+        "endChar": 30
+      },
+      "revId": "b90ea46e992cb94789f223c39cedb19727e7c572",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1adc3699_db922aa7",
+        "filename": "chrome/browser/chromeos/policy/proto/chrome_device_policy.proto",
+        "patchSetId": 13
+      },
+      "lineNbr": 854,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-04T13:08:42Z",
+      "side": 1,
+      "message": "What is the format for the timezone?\nIs it maybe the same as for the SystemTimezoneProto.timezone field ([1])?\nIn any case, this needs to be documented in a comment.\n\n[1] https://cs.chromium.org/chromium/src/chrome/browser/chromeos/policy/proto/chrome_device_policy.proto?l\u003d253\u0026rcl\u003d8a5b373dc09c2d8667a744df0deacdefaae17a2d",
+      "range": {
+        "startLine": 854,
+        "startChar": 2,
+        "endLine": 854,
+        "endChar": 31
+      },
+      "revId": "b90ea46e992cb94789f223c39cedb19727e7c572",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27e917bf_1e6dc8e3",
+        "filename": "chrome/browser/chromeos/policy/proto/chrome_device_policy.proto",
+        "patchSetId": 13
+      },
+      "lineNbr": 855,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-04T13:08:42Z",
+      "side": 1,
+      "message": "nit: s/control/are controlled/",
+      "range": {
+        "startLine": 855,
+        "startChar": 28,
+        "endLine": 855,
+        "endChar": 35
+      },
+      "revId": "b90ea46e992cb94789f223c39cedb19727e7c572",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d81f18b_db92ef54",
+        "filename": "chrome/browser/chromeos/policy/proto/chrome_device_policy.proto",
+        "patchSetId": 13
+      },
+      "lineNbr": 855,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-04T13:08:42Z",
+      "side": 1,
+      "message": "nit: It\u0027s unclear from this description, which list it is: is it a list of policies that are still working during off-hours, or, vice versa, the policies that are disabled in this case?\n\nBesides the description, the field name could also be improved to clarify that - e.g. \"ignored_policy\" or \"preserved_policy\".",
+      "range": {
+        "startLine": 855,
+        "startChar": 5,
+        "endLine": 855,
+        "endChar": 55
+      },
+      "revId": "b90ea46e992cb94789f223c39cedb19727e7c572",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b353452f_a0017edd",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 13
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-04T13:08:42Z",
+      "side": 1,
+      "message": "Please bump this counter too.",
+      "range": {
+        "startLine": 146,
+        "startChar": 61,
+        "endLine": 146,
+        "endChar": 64
+      },
+      "revId": "b90ea46e992cb94789f223c39cedb19727e7c572",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "088d45b4_1aef9ee4",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 13
+      },
+      "lineNbr": 9863,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-04T13:08:42Z",
+      "side": 1,
+      "message": "nit: The \"when some policies are released\" part sounds confusing.\nMaybe change this to something like \"Device policy off-hours\"?",
+      "range": {
+        "startLine": 9863,
+        "startChar": 20,
+        "endLine": 9863,
+        "endChar": 71
+      },
+      "revId": "b90ea46e992cb94789f223c39cedb19727e7c572",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c957aa34_9ae75aff",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 13
+      },
+      "lineNbr": 9865,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-04T13:08:42Z",
+      "side": 1,
+      "message": "nit: Explicitly mention \"device policies\".\n\nAlso worth dropping a note that this policy has no effect on the user policies.",
+      "range": {
+        "startLine": 9865,
+        "startChar": 52,
+        "endLine": 9865,
+        "endChar": 65
+      },
+      "revId": "b90ea46e992cb94789f223c39cedb19727e7c572",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "439f8f7a_eea07ae3",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 13
+      },
+      "lineNbr": 9865,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-04T13:08:42Z",
+      "side": 1,
+      "message": "nit: s/should be re-applied/are reapplied by Chrome/\n(it\u0027s a documentation for admins, so we\u0027re not asking them to reapply the policies each time)",
+      "range": {
+        "startLine": 9865,
+        "startChar": 114,
+        "endLine": 9865,
+        "endChar": 134
+      },
+      "revId": "b90ea46e992cb94789f223c39cedb19727e7c572",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3f62271_5d5e176c",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 13
+      },
+      "lineNbr": 9865,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-04T13:08:42Z",
+      "side": 1,
+      "message": "nit: s/he/they/\n(see https://en.oxforddictionaries.com/usage/he-or-she-versus-they )",
+      "range": {
+        "startLine": 9865,
+        "startChar": 271,
+        "endLine": 9865,
+        "endChar": 273
+      },
+      "revId": "b90ea46e992cb94789f223c39cedb19727e7c572",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5613456_073cfb87",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 13
+      },
+      "lineNbr": 9865,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-04T13:08:42Z",
+      "side": 1,
+      "message": "Sorry, I\u0027m not quite understanding this sentence. Could you change it be to be more clear?",
+      "range": {
+        "startLine": 9865,
+        "startChar": 332,
+        "endLine": 9865,
+        "endChar": 415
+      },
+      "revId": "b90ea46e992cb94789f223c39cedb19727e7c572",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dfe75aa_8ec2676d",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 13
+      },
+      "lineNbr": 9865,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-04T13:08:42Z",
+      "side": 1,
+      "message": "nit: s/exit/sign out/",
+      "range": {
+        "startLine": 9865,
+        "startChar": 305,
+        "endLine": 9865,
+        "endChar": 309
+      },
+      "revId": "b90ea46e992cb94789f223c39cedb19727e7c572",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c7bfc3f_ec5144fc",
+        "filename": "components/policy/resources/policy_templates.json",
+        "patchSetId": 13
+      },
+      "lineNbr": 9865,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-08-04T13:08:42Z",
+      "side": 1,
+      "message": "nit: Please make it more explicit what is happening when the policy is configured, versus what is happening by default. For examples, look at the existing policies, but the rough idea is:\n\n  If this policy is set, then the specified device policies are ignored (as if they were unset) during the defined time intervals. [...]\n\n  If this policy is unset, [...]",
+      "range": {
+        "startLine": 9865,
+        "startChar": 6,
+        "endLine": 9865,
+        "endChar": 13
+      },
+      "revId": "b90ea46e992cb94789f223c39cedb19727e7c572",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
