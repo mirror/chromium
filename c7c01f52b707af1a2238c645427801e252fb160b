@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "1af021eb_c142ae83",
+        "filename": "ui/compositor/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-08-04T02:36:48Z",
+      "side": 1,
+      "message": "Yeah, that\u0027s what I was thinking as well. and ui/base/ will add :switches in a public_dep, so that components using the ui_base_switches don\u0027t need to add dep to this new target.\n\n... but that probably doesn\u0027t buy us much here, to be honest. If there\u0027s no immediate concern to bring in implicit dep on events etc. for compositor, then what we have here should be OK. lgtm",
+      "parentUuid": "df8333e7_a428b12f",
+      "revId": "c7c01f52b707af1a2238c645427801e252fb160b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce0a7009_8c16ac6f",
         "filename": "ui/display/display.cc",
         "patchSetId": 4
