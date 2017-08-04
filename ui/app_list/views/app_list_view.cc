@@ -509,7 +509,8 @@ void AppListView::EndDrag(const gfx::Point& location) {
     return;
 
   // Restores opacity of all the items in app list if dragging ends.
-  UpdateOpacity(kAppListOpacity, true /* is_end_gesture */);
+  LayoutAndUpdateOpacity(kAppListOpacity, true /* is_end_gesture */,
+                         0 /* y_position_in_screen */);
   // Change the app list state based on where the drag ended. If fling velocity
   // was over the threshold, snap to the next state in the direction of the
   // fling.
@@ -968,7 +969,8 @@ void AppListView::UpdateYPositionAndOpacity(int y_position_in_screen,
     fullscreen_widget_->SetBounds(new_widget_bounds);
   }
 
-  UpdateOpacity(background_opacity, is_end_gesture);
+  LayoutAndUpdateOpacity(background_opacity, is_end_gesture,
+                         y_position_in_screen);
 }
 
 PaginationModel* AppListView::GetAppsPaginationModel() {
@@ -1062,15 +1064,16 @@ void AppListView::OnDisplayMetricsChanged(const display::Display& display,
   SetState(app_list_state_);
 }
 
-void AppListView::UpdateOpacity(float background_opacity, bool is_end_gesture) {
+void AppListView::LayoutAndUpdateOpacity(float background_opacity,
+                                         bool is_end_gesture,
+                                         int y_position_in_screen) {
   app_list_background_shield_->layer()->SetOpacity(
       is_end_gesture ? kAppListOpacity : background_opacity);
   gfx::Rect work_area_bounds = fullscreen_widget_->GetWorkAreaBoundsInScreen();
-  search_box_view_->UpdateOpacity(work_area_bounds.bottom(), is_end_gesture);
-  app_list_main_view_->contents_view()
-      ->apps_container_view()
-      ->apps_grid_view()
-      ->UpdateOpacity(work_area_bounds.bottom(), is_end_gesture);
+
+  app_list_main_view_->contents_view()->Layout(
+      y_position_in_screen, work_area_bounds.bottom(), is_end_gesture,
+      true /* is_for_dragging */);
 
   if (app_list_state_ == PEEKING) {
     app_list_main_view_->contents_view()->start_page_view()->UpdateOpacity(
