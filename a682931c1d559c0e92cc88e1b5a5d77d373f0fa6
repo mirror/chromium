@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ee5b6ab_b7a491a6",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwContents.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 1682,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-08-04T16:10:58Z",
+      "side": 1,
+      "message": "this check is not complete, should call content::IsBrowserSideNavigationEnabled",
+      "revId": "a682931c1d559c0e92cc88e1b5a5d77d373f0fa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
