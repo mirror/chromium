@@ -19,21 +19,29 @@ struct CompositionUnderline {
   CompositionUnderline()
       : start_offset(0),
         end_offset(0),
+        use_text_color(true),
         color(SK_ColorTRANSPARENT),
         thick(false),
         background_color(SK_ColorTRANSPARENT) {}
 
   // TODO(huangs): remove this constructor.
-  CompositionUnderline(uint32_t s, uint32_t e, SkColor c, bool t)
+  CompositionUnderline(uint32_t s, uint32_t e, bool u, SkColor c, bool t)
       : start_offset(s),
         end_offset(e),
+        use_text_color(u),
         color(c),
         thick(t),
         background_color(SK_ColorTRANSPARENT) {}
 
-  CompositionUnderline(uint32_t s, uint32_t e, SkColor c, bool t, SkColor bc)
+  CompositionUnderline(uint32_t s,
+                       uint32_t e,
+                       bool u,
+                       SkColor c,
+                       bool t,
+                       SkColor bc)
       : start_offset(s),
         end_offset(e),
+        use_text_color(u),
         color(c),
         thick(t),
         background_color(bc) {}
@@ -56,6 +64,7 @@ struct CompositionUnderline {
 
   uint32_t start_offset;
   uint32_t end_offset;
+  bool use_text_color;
   SkColor color;
   bool thick;
   SkColor background_color;

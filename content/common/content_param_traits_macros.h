@@ -55,6 +55,7 @@ IPC_ENUM_TRAITS_MAX_VALUE(blink::WebPageVisibilityState,
 IPC_STRUCT_TRAITS_BEGIN(blink::WebCompositionUnderline)
   IPC_STRUCT_TRAITS_MEMBER(start_offset)
   IPC_STRUCT_TRAITS_MEMBER(end_offset)
+  IPC_STRUCT_TRAITS_MEMBER(use_text_color)
   IPC_STRUCT_TRAITS_MEMBER(color)
   IPC_STRUCT_TRAITS_MEMBER(thick)
   IPC_STRUCT_TRAITS_MEMBER(background_color)

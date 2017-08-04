@@ -16,6 +16,7 @@ class CORE_EXPORT ActiveSuggestionMarker final : public StyleableMarker {
  public:
   ActiveSuggestionMarker(unsigned start_offset,
                          unsigned end_offset,
+                         bool use_text_color,
                          Color underline_color,
                          Thickness,
                          Color background_color);
