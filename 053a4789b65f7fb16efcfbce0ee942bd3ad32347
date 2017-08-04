@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1c6758a1_92dd5050",
+        "filename": "components/cronet/android/java/src/org/chromium/net/urlconnection/CronetHttpURLConnection.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1002888
+      },
+      "writtenOn": "2017-08-04T17:35:03Z",
+      "side": 1,
+      "message": "Did you have a chance to address this comment?",
+      "parentUuid": "b398c83f_d41d98a6",
+      "revId": "053a4789b65f7fb16efcfbce0ee942bd3ad32347",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "06886989_c19e01d4",
         "filename": "components/cronet/android/test/javatests/src/org/chromium/net/urlconnection/CronetHttpURLConnectionTest.java",
         "patchSetId": 4
