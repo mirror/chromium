@@ -1367,6 +1367,15 @@ bool HTMLMediaElement::TextTracksAreReady() const {
 }
 
 void HTMLMediaElement::TextTrackReadyStateChanged(TextTrack* track) {
+  if (track->GetReadinessState() != TextTrack::kLoading &&
+      track->mode() != TextTrack::DisabledKeyword()) {
+    // Because region display trees exist as long as the track is active,
+    // we need to flush existing region display trees if the same track
+    // is loaded more than once (e.g. as result of changing of the src
+    // attribute), otherwise they will needlessly accumulate.
+    EnsureTextTrackContainer().RemoveChildren();
+    UpdateTextTrackDisplay();
+  }
   if (GetWebMediaPlayer() &&
       text_tracks_when_resource_selection_began_.Contains(track)) {
     if (track->GetReadinessState() != TextTrack::kLoading)
