@@ -351,6 +351,7 @@ DataGrid.DataGrid = class extends Common.Object {
     }
 
     this._editing = true;
+    element.textContent = element[DataGrid.DataGrid._longTextSymbol] || element.textContent;
     UI.InplaceEditor.startEditing(element, this._startEditingConfig(element));
 
     element.getComponentSelection().selectAllChildren(element);
@@ -368,8 +369,7 @@ DataGrid.DataGrid = class extends Common.Object {
    * @return {!UI.InplaceEditor.Config}
    */
   _startEditingConfig(element) {
-    return new UI.InplaceEditor.Config(
-        this._editingCommitted.bind(this), this._editingCancelled.bind(this), element.textContent);
+    return new UI.InplaceEditor.Config(this._editingCommitted.bind(this), this._editingCancelled.bind(this));
   }
 
   /**
@@ -436,6 +436,12 @@ DataGrid.DataGrid = class extends Common.Object {
         return;
       }
     }
+
+    // Show trimmed text after editing.
+    if (column.longText)
+      element.textContent = newText.trimEnd(1000);
+    element.title = (column.longText && newText.length > 1000) ? newText : '';
+    element[DataGrid.DataGrid._longTextSymbol] = column.longText ? newText : undefined;
 
     if (textBeforeEditing === newText) {
       this._editingCancelled(element);
@@ -1216,6 +1222,7 @@ DataGrid.DataGrid.Align = {
 DataGrid.DataGrid._preferredWidthSymbol = Symbol('preferredWidth');
 DataGrid.DataGrid._columnIdSymbol = Symbol('columnId');
 DataGrid.DataGrid._sortIconSymbol = Symbol('sortIcon');
+DataGrid.DataGrid._longTextSymbol = Symbol('longText');
 
 DataGrid.DataGrid.ColumnResizePadding = 24;
 DataGrid.DataGrid.CenterResizerOverBorderAdjustment = 3;
@@ -1584,9 +1591,13 @@ DataGrid.DataGridNode = class extends Common.Object {
     if (data instanceof Node) {
       cell.appendChild(data);
     } else if (data !== null) {
-      cell.textContent = data;
-      if (this.dataGrid._columns[columnId].longText)
-        cell.title = data;
+      if (this.dataGrid._columns[columnId].longText) {
+        cell.textContent = data.trimEnd(1000);
+        cell.title = data.length > 1000 ? data : '';
+        cell[DataGrid.DataGrid._longTextSymbol] = data;
+      } else {
+        cell.textContent = data;
+      }
     }
 
     return cell;
