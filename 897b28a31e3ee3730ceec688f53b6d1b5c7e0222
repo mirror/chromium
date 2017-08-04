@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "3392b809_61b992f9",
+        "filename": "media/renderers/skcanvas_video_renderer.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-04T23:00:10Z",
+      "side": 0,
+      "message": "Is this change required?",
+      "range": {
+        "startLine": 237,
+        "startChar": 1,
+        "endLine": 237,
+        "endChar": 11
+      },
+      "revId": "897b28a31e3ee3730ceec688f53b6d1b5c7e0222",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "94e17dea_762941ed",
         "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
         "patchSetId": 12
@@ -31,6 +54,29 @@
       "side": 0,
       "message": "Yup. I removed it and no one complained. It was only meant for tests anyway.",
       "parentUuid": "94e17dea_762941ed",
+      "revId": "897b28a31e3ee3730ceec688f53b6d1b5c7e0222",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63d0b90d_80a193ea",
+        "filename": "third_party/WebKit/Source/platform/graphics/BitmapImage.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-08-04T23:00:10Z",
+      "side": 0,
+      "message": "My initial thought here was to say PopulateFrameAtIndex(builder); type of thing. Since that isn\u0027t the way you went, I think we need to update some naming to make more sense.",
+      "range": {
+        "startLine": 368,
+        "startChar": 0,
+        "endLine": 369,
+        "endChar": 13
+      },
       "revId": "897b28a31e3ee3730ceec688f53b6d1b5c7e0222",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
