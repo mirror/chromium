@@ -151,6 +151,30 @@
       "revId": "295025fe793967873757bd08611af1df445cf0f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4b8eb18_c7a6b1b8",
+        "filename": "third_party/WebKit/Source/platform/bindings/ScriptWrappableVisitor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1131764
+      },
+      "writtenOn": "2017-08-04T10:44:53Z",
+      "side": 1,
+      "message": "FYI: We cannot DCHECK the color in here as we only mark after inserting into the marking work list. However, since this cannot fail anymore (other than in OOM) we should restructure the code a bit. Will do that in a follow up.",
+      "parentUuid": "167b5d9a_f5e04046",
+      "range": {
+        "startLine": 180,
+        "startChar": 4,
+        "endLine": 180,
+        "endChar": 6
+      },
+      "revId": "295025fe793967873757bd08611af1df445cf0f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
