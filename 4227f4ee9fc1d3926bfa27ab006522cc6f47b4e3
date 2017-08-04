@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3b26dabf_ada1f28b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 11
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-08-04T00:57:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b0da55b_9a0c5608",
+      "revId": "4227f4ee9fc1d3926bfa27ab006522cc6f47b4e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4db0cb03_76eecda9",
         "filename": "chrome/browser/feature_engagement/session_duration_updater.cc",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "4227f4ee9fc1d3926bfa27ab006522cc6f47b4e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cdd011c_1c59c65d",
+        "filename": "chrome/browser/feature_engagement/session_duration_updater.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1215054
+      },
+      "writtenOn": "2017-08-04T00:57:52Z",
+      "side": 1,
+      "message": "Excellent point!",
+      "parentUuid": "4db0cb03_76eecda9",
+      "revId": "4227f4ee9fc1d3926bfa27ab006522cc6f47b4e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
