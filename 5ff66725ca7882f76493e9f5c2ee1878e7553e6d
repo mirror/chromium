@@ -1,0 +1,209 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23418140_47625e1e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsolePrompt.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-08-04T23:51:27Z",
+      "side": 1,
+      "message": "async",
+      "revId": "5ff66725ca7882f76493e9f5c2ee1878e7553e6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d59ee437_c301f016",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsolePrompt.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-08-04T23:51:27Z",
+      "side": 1,
+      "message": "true /* allowTopLevelAwait */",
+      "revId": "5ff66725ca7882f76493e9f5c2ee1878e7553e6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db80b15d_0b5c4b1a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsolePrompt.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-08-04T23:51:27Z",
+      "side": 1,
+      "message": "let preprocessed \u003d true;\nif (wrappedText.indexOf(\u0027await\u0027) !\u003d\u003d -1) {\n  var preprocessedText \u003d await Formatter.formatterWorkerPool().preprocessTopLevelAwaitExpressions(wrappedText);\n  preprocessed \u003d !!preprocessedText;\n  wrappedText \u003d preprocessedText || wrappedText;\n}",
+      "revId": "5ff66725ca7882f76493e9f5c2ee1878e7553e6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c7fd791_6882b221",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console_model/ConsoleModel.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-08-04T23:51:27Z",
+      "side": 1,
+      "message": "let\u0027s use this from originatingMessage",
+      "range": {
+        "startLine": 128,
+        "startChar": 22,
+        "endLine": 128,
+        "endChar": 35
+      },
+      "revId": "5ff66725ca7882f76493e9f5c2ee1878e7553e6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5915cb7d_ccc5060a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console_model/ConsoleModel.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-08-04T23:51:27Z",
+      "side": 1,
+      "message": "text is not needed probably",
+      "revId": "5ff66725ca7882f76493e9f5c2ee1878e7553e6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "340761e6_792d3418",
+        "filename": "third_party/WebKit/Source/devtools/front_end/formatter_worker/FormatterWorker.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-08-04T23:51:27Z",
+      "side": 1,
+      "message": "you should not need the top-level try-catch",
+      "revId": "5ff66725ca7882f76493e9f5c2ee1878e7553e6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92375e6a_9082065b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/formatter_worker/FormatterWorker.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-08-04T23:51:27Z",
+      "side": 1,
+      "message": "we probably don\u0027t need the preserveParens",
+      "revId": "5ff66725ca7882f76493e9f5c2ee1878e7553e6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40fbfef0_0ffe309a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/formatter_worker/FormatterWorker.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-08-04T23:51:27Z",
+      "side": 1,
+      "message": "let create a name for this",
+      "range": {
+        "startLine": 149,
+        "startChar": 31,
+        "endLine": 149,
+        "endChar": 76
+      },
+      "revId": "5ff66725ca7882f76493e9f5c2ee1878e7553e6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e1d4aed_94ef1616",
+        "filename": "third_party/WebKit/Source/devtools/front_end/formatter_worker/FormatterWorker.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-08-04T23:51:27Z",
+      "side": 1,
+      "message": "patternOrIds",
+      "range": {
+        "startLine": 168,
+        "startChar": 12,
+        "endLine": 168,
+        "endChar": 20
+      },
+      "revId": "5ff66725ca7882f76493e9f5c2ee1878e7553e6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28af212d_01c6c1aa",
+        "filename": "third_party/WebKit/Source/devtools/front_end/formatter_worker/FormatterWorker.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-08-04T23:51:27Z",
+      "side": 1,
+      "message": "let\u0027s remove this maybeIds! Just have assignments!",
+      "revId": "5ff66725ca7882f76493e9f5c2ee1878e7553e6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ba07192_ad9ef21f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/formatter_worker/FormatterWorker.js",
+        "patchSetId": 10
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1113672
+      },
+      "writtenOn": "2017-08-04T23:51:27Z",
+      "side": 1,
+      "message": "let\u0027s wait for the upstream bugfix to land. If the upstream is slow/unresponsive, we\u0027ll use this workaround.",
+      "revId": "5ff66725ca7882f76493e9f5c2ee1878e7553e6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
