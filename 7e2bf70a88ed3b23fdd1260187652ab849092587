@@ -16,6 +16,24 @@
       "revId": "7e2bf70a88ed3b23fdd1260187652ab849092587",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e06e1feb_2fe7f698",
+        "filename": "chrome/browser/chromeos/arc/boot_phase_monitor/arc_boot_phase_monitor_bridge.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-08-04T09:01:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5343348_a54bb344",
+      "revId": "7e2bf70a88ed3b23fdd1260187652ab849092587",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
