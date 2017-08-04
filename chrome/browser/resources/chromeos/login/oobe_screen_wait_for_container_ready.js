@@ -9,6 +9,15 @@
 login.createScreen(
     'WaitForContainerReadyScreen', 'wait-for-container-ready', function() {
       return {
+        EXTERNAL_API: ['setScreenHidden'],
+
+        /**
+         * Hide/Show wait for container ready screen.
+         * @param {boolean} hidden Whether the screen should be hidden.
+         * **/
+        setScreenHidden(hidden) {
+          $('wait-for-container-ready-md').hidden = hidden;
+        },
 
         /** @Override */
         onBeforeShow: function(data) {

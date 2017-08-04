@@ -1296,11 +1296,15 @@ void LoginDisplayHostImpl::DisableRestrictiveProxyCheckForTest() {
 void LoginDisplayHostImpl::StartVoiceInteractionOobe() {
   is_voice_interaction_oobe_ = true;
 
-  // Lock container can be transparent after lock screen animation.
-  aura::Window* lock_container = ash::Shell::GetContainer(
-      ash::Shell::GetPrimaryRootWindow(),
-      ash::kShellWindowId_LockScreenContainersContainer);
-  lock_container->layer()->SetOpacity(1.0);
+  if (!ash_util::IsRunningInMash()) {
+    // Lock container can be transparent after lock screen animation.
+    aura::Window* lock_container = ash::Shell::GetContainer(
+        ash::Shell::GetPrimaryRootWindow(),
+        ash::kShellWindowId_LockScreenContainersContainer);
+    lock_container->layer()->SetOpacity(1.0);
+  } else {
+    NOTIMPLEMENTED();
+  }
 
   finalize_animation_type_ = ANIMATION_NONE;
   StartWizard(chromeos::OobeScreen::SCREEN_VOICE_INTERACTION_VALUE_PROP);

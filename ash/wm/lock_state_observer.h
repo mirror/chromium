@@ -15,8 +15,10 @@ class ASH_EXPORT LockStateObserver {
  public:
   enum EventType {
     EVENT_PRELOCK_ANIMATION_STARTED,
+    EVENT_PRELOCK_ANIMATION_CANCELLED,
     EVENT_LOCK_ANIMATION_STARTED,
     EVENT_LOCK_ANIMATION_FINISHED,
+    EVENT_UNLOCK_ANIMATION_FINISHED,
   };
 
   virtual void OnLockStateEvent(EventType event) = 0;
