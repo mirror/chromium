@@ -179,4 +179,24 @@ unsigned int RingBuffer::GetTotalFreeSizeNoWaiting() {
   }
 }
 
+void RingBuffer::Shrink(void* pointer, unsigned int new_size) {
+  if (blocks_.empty())
+    return;
+  // Only bother resizing the last block.
+  Offset offset = GetOffset(pointer);
+  offset -= base_offset_;
+  auto& block = blocks_.back();
+  if (block.offset != offset)
+    return;
+  if (block.size < new_size)
+    return;
+  if (block.state != IN_USE)
+    return;
+  // Can't shrink to size 0, see comments in Alloc.
+  new_size = std::max(new_size, 1u);
+
+  free_offset_ = block.offset + new_size;
+  block.size = new_size;
+}
+
 }  // namespace gpu
