@@ -16,6 +16,24 @@
       "revId": "99de2eb82225704755702c3223dfc85c2562ecd0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e5311bf_cdd90277",
+        "filename": "tools/clang/scripts/run_tool.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-08-04T10:42:19Z",
+      "side": 1,
+      "message": "Sorry I don\u0027t think that I clearly got what you mean, please rephrase if I am totally wrong.\nAs far as I know, we need to specify the \u0027-resource-dir\u0027 if the tool is not in the third_party/llvm.../bin\u0027 folder, but as mentioned in the CL\u0027s message, I can either add another argument that puts the responsibility of finding and passing this path on the caller, or add a function to run_tool.py to find it (find the latest number in this folder).",
+      "parentUuid": "26bdbafd_317737e0",
+      "revId": "99de2eb82225704755702c3223dfc85c2562ecd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
