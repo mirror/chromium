@@ -215,8 +215,11 @@ String GetTextForInlineCollection<NGOffsetMappingBuilder>(
       return layout_text.GetText();
     }
     unsigned first_letter_length = node->GetLayoutObject()->TextStartOffset();
-    if (text_fragment.IsRemainingTextLayoutObject())
+    if (text_fragment == node->GetLayoutObject()) {
+      // Remaining text or orphaned LayoutTextFragment without ::first-letter.
       return node->data().Substring(first_letter_length);
+    }
+    // ::first-letter.
     return node->data().Substring(0, first_letter_length);
   }
 
@@ -679,7 +682,12 @@ String NGInlineNode::ToString() const {
 
 // static
 Optional<NGInlineNode> GetNGInlineNodeFor(const Node& node) {
-  LayoutObject* layout_object = node.GetLayoutObject();
+  return GetNGInlineNodeFor(node, 0);
+}
+
+// static
+Optional<NGInlineNode> GetNGInlineNodeFor(const Node& node, unsigned offset) {
+  LayoutObject* layout_object = AssociatedLayoutObjectOf(node, offset);
   if (!layout_object || !layout_object->IsInline())
     return WTF::nullopt;
   LayoutBox* box = layout_object->EnclosingBox();
@@ -698,7 +706,8 @@ const NGOffsetMappingUnit* NGInlineNode::GetMappingUnitForDOMOffset(
   if (!layout_object || !layout_object->IsText())
     return nullptr;
 
-  DCHECK_EQ(layout_object->EnclosingBox(), GetLayoutBlockFlow());
+  DCHECK_EQ(layout_object->EnclosingBox(), GetLayoutBlockFlow())
+      << node << "@" << offset;
   const auto& result = ComputeOffsetMappingIfNeeded();
   return result.GetMappingUnitForDOMOffset(ToLayoutText(layout_object), offset);
 }

@@ -125,6 +125,7 @@ inline void NGInlineNode::AssertEndOffset(unsigned index,
 // If the given Node is laid out as an inline, returns the NGInlineNode that
 // encloses it. Otherwise, returns null.
 CORE_EXPORT Optional<NGInlineNode> GetNGInlineNodeFor(const Node&);
+CORE_EXPORT Optional<NGInlineNode> GetNGInlineNodeFor(const Node&, unsigned);
 
 DEFINE_TYPE_CASTS(NGInlineNode,
                   NGLayoutInputNode,
