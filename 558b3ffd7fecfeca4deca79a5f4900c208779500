@@ -60,6 +60,46 @@
     },
     {
       "key": {
+        "uuid": "e9c141ce_e4d03a2b",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerGlobalScope.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-04T08:43:16Z",
+      "side": 1,
+      "message": "|bars|",
+      "revId": "558b3ffd7fecfeca4deca79a5f4900c208779500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e768f26d_98d45b37",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerGlobalScope.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-04T08:43:16Z",
+      "side": 1,
+      "message": "either",
+      "range": {
+        "startLine": 171,
+        "startChar": 42,
+        "endLine": 171,
+        "endChar": 47
+      },
+      "revId": "558b3ffd7fecfeca4deca79a5f4900c208779500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6ac0087_85044a89",
         "filename": "third_party/WebKit/Source/core/workers/WorkerGlobalScope.h",
         "patchSetId": 11
@@ -146,6 +186,24 @@
     },
     {
       "key": {
+        "uuid": "ec3e36f2_b8de971c",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerInstalledScriptsManager.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-04T08:43:16Z",
+      "side": 1,
+      "message": "more precisely, \"Creates an instance whose Success() returns false\", or if we go with the IsValid() naming, we can just name this CreateInvalidInstance() and not have a comment.",
+      "parentUuid": "95d810f4_aea200eb",
+      "revId": "558b3ffd7fecfeca4deca79a5f4900c208779500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e592b429_2aeba051",
         "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerInstalledScriptsManager.h",
         "patchSetId": 11
@@ -157,6 +215,24 @@
       "writtenOn": "2017-08-03T12:48:32Z",
       "side": 1,
       "message": "Prefer using verb for method names, i.e. IsSucceeded()\n\nAlso if this succeeded_ flag is a const field that\u0027s initialized only at construction time would it make better sense if it\u0027s rather called, say, valid_ and IsValid()?",
+      "revId": "558b3ffd7fecfeca4deca79a5f4900c208779500",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11b3be22_f6bace90",
+        "filename": "third_party/WebKit/public/platform/modules/serviceworker/WebServiceWorkerInstalledScriptsManager.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-04T08:43:16Z",
+      "side": 1,
+      "message": "IsValid() sounds pretty good",
+      "parentUuid": "e592b429_2aeba051",
       "revId": "558b3ffd7fecfeca4deca79a5f4900c208779500",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
