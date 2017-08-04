@@ -1,0 +1,181 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8f0069d6_de0f77bb",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 12
+      },
+      "lineNbr": 2102,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-04T14:45:23Z",
+      "side": 1,
+      "message": "Perhaps add //url here instead? I think it\u0027s preferred to keep close to the affected tests",
+      "revId": "8cf185b1ac7ed1209eb43f5518bd1f19b12ec44a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22465615_74ff1057",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-04T14:45:23Z",
+      "side": 1,
+      "message": "let\u0027s reuse kBobpaySchemeName here",
+      "revId": "8cf185b1ac7ed1209eb43f5518bd1f19b12ec44a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5d9c87d_cab1ff2d",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-04T14:45:23Z",
+      "side": 1,
+      "message": "manifest",
+      "range": {
+        "startLine": 114,
+        "startChar": 64,
+        "endLine": 114,
+        "endChar": 72
+      },
+      "revId": "8cf185b1ac7ed1209eb43f5518bd1f19b12ec44a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c5683fe_627b66b5",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-04T14:45:23Z",
+      "side": 1,
+      "message": "// If there are no web app manifests found for the payment method, stop processing this payment method.",
+      "revId": "8cf185b1ac7ed1209eb43f5518bd1f19b12ec44a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39e270a3_9cc3cb5f",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-04T14:45:23Z",
+      "side": 1,
+      "message": "// The payment method manifest can point to several web app manifests. Adjust the expectation of how many instruments we are looking for if this is the case.",
+      "revId": "8cf185b1ac7ed1209eb43f5518bd1f19b12ec44a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93d3aa80_67e50f26",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-04T14:45:23Z",
+      "side": 1,
+      "message": "Do you see this pattern elsewhere in code? Could you check if a function in gurl.h could help?",
+      "range": {
+        "startLine": 140,
+        "startChar": 4,
+        "endLine": 145,
+        "endChar": 43
+      },
+      "revId": "8cf185b1ac7ed1209eb43f5518bd1f19b12ec44a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a519ca2e_91bebc1c",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-04T14:45:23Z",
+      "side": 1,
+      "message": "I think Rouslan has a reasonable limit for the number of manifests we support, to avoid crazy stuff. Can you verify with him?",
+      "revId": "8cf185b1ac7ed1209eb43f5518bd1f19b12ec44a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86f01bc6_4f2bf942",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-04T14:45:23Z",
+      "side": 1,
+      "message": "please make it a kConstant. do we intend to support bigger/smaller? If so, TODO with a crbug.com plz :)",
+      "range": {
+        "startLine": 263,
+        "startChar": 69,
+        "endLine": 263,
+        "endChar": 75
+      },
+      "revId": "8cf185b1ac7ed1209eb43f5518bd1f19b12ec44a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f510004a_fa43085c",
+        "filename": "ios/chrome/browser/payments/ios_payment_instrument_finder.mm",
+        "patchSetId": 12
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-08-04T14:45:23Z",
+      "side": 1,
+      "message": "let\u0027s make those kConstants",
+      "range": {
+        "startLine": 300,
+        "startChar": 20,
+        "endLine": 300,
+        "endChar": 28
+      },
+      "revId": "8cf185b1ac7ed1209eb43f5518bd1f19b12ec44a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
