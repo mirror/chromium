@@ -121,6 +121,8 @@ blink_core_sources("loader") {
     "resource/MultipartImageResourceParser.h",
     "resource/ScriptResource.cpp",
     "resource/ScriptResource.h",
+    "resource/ScriptResourceData.cpp",
+    "resource/ScriptResourceData.h",
     "resource/StyleSheetResource.h",
     "resource/StyleSheetResourceClient.h",
     "resource/TextResource.cpp",
