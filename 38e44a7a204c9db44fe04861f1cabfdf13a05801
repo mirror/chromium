@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "af2c6c87_b20abd2d",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_tile.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-08-04T15:16:58Z",
+      "side": 1,
+      "message": "NSUInteger does not work with NSCoding (see here: https://stackoverflow.com/questions/3715038/how-to-store-a-nsuinteger-using-nscoding )",
+      "parentUuid": "f1eae17a_c64f9266",
+      "range": {
+        "startLine": 33,
+        "startChar": 26,
+        "endLine": 33,
+        "endChar": 29
+      },
+      "revId": "38e44a7a204c9db44fe04861f1cabfdf13a05801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa0599e0_344e71d1",
         "filename": "ios/chrome/browser/ui/ntp/ntp_tile_saver.mm",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-04T09:33:26Z",
       "side": 1,
       "message": "Update name and comment.",
+      "range": {
+        "startLine": 38,
+        "startChar": 5,
+        "endLine": 38,
+        "endChar": 33
+      },
+      "revId": "38e44a7a204c9db44fe04861f1cabfdf13a05801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd595254_98b41966",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_tile_saver.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-08-04T15:16:58Z",
+      "side": 1,
+      "message": "With regards to what?",
+      "parentUuid": "fa0599e0_344e71d1",
       "range": {
         "startLine": 38,
         "startChar": 5,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "cf89687a_8937a51f",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_tile_saver.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-08-04T15:16:58Z",
+      "side": 1,
+      "message": "It is technically possible, but calls to update a single icon come from the icon having been updated in the favicon fetcher service, it doesn\u0027t re-update icons over and over..",
+      "parentUuid": "819f04c3_aae3176a",
+      "range": {
+        "startLine": 191,
+        "startChar": 7,
+        "endLine": 191,
+        "endChar": 24
+      },
+      "revId": "38e44a7a204c9db44fe04861f1cabfdf13a05801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb6f6997_501edf8e",
         "filename": "ios/chrome/content_widget_extension/content_widget_view.h",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "1e99496a_d42261c5",
+        "filename": "ios/chrome/content_widget_extension/content_widget_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-08-04T15:16:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb6f6997_501edf8e",
+      "range": {
+        "startLine": 15,
+        "startChar": 10,
+        "endLine": 15,
+        "endChar": 39
+      },
+      "revId": "38e44a7a204c9db44fe04861f1cabfdf13a05801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e982e6f8_468da4e3",
         "filename": "ios/chrome/content_widget_extension/content_widget_view.h",
         "patchSetId": 2
@@ -114,6 +210,30 @@
       "revId": "38e44a7a204c9db44fe04861f1cabfdf13a05801",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb34b941_e348bf71",
+        "filename": "ios/chrome/content_widget_extension/content_widget_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-08-04T15:16:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e982e6f8_468da4e3",
+      "range": {
+        "startLine": 18,
+        "startChar": 17,
+        "endLine": 18,
+        "endChar": 36
+      },
+      "revId": "38e44a7a204c9db44fe04861f1cabfdf13a05801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -212,6 +332,30 @@
     },
     {
       "key": {
+        "uuid": "0fe14087_9ceceabc",
+        "filename": "ios/chrome/content_widget_extension/content_widget_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-08-04T15:16:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96c0e2b3_46950c49",
+      "range": {
+        "startLine": 156,
+        "startChar": 6,
+        "endLine": 156,
+        "endChar": 14
+      },
+      "revId": "38e44a7a204c9db44fe04861f1cabfdf13a05801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4cb85dbe_958fa80c",
         "filename": "ios/chrome/content_widget_extension/content_widget_view.mm",
         "patchSetId": 2
@@ -232,6 +376,30 @@
       "revId": "38e44a7a204c9db44fe04861f1cabfdf13a05801",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6a2e34f_73436ce3",
+        "filename": "ios/chrome/content_widget_extension/content_widget_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-08-04T15:16:58Z",
+      "side": 1,
+      "message": "I hesitated to because it\u0027s not a modifiable value (if you change the 2 to be 3, there won\u0027t magically be 3 rows in this widget).",
+      "parentUuid": "4cb85dbe_958fa80c",
+      "range": {
+        "startLine": 192,
+        "startChar": 35,
+        "endLine": 192,
+        "endChar": 36
+      },
+      "revId": "38e44a7a204c9db44fe04861f1cabfdf13a05801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -282,6 +450,30 @@
     },
     {
       "key": {
+        "uuid": "f72db1d3_a64d6d5b",
+        "filename": "ios/chrome/content_widget_extension/content_widget_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-08-04T15:16:58Z",
+      "side": 1,
+      "message": "In UIStackViews, setting an item hidden removes it from autolayout constraints. I want the icons to continue aligning as if the hidden items were there. I haven\u0027t found a more elegant way to do this.",
+      "parentUuid": "278ef0b6_ab9c7ca7",
+      "range": {
+        "startLine": 193,
+        "startChar": 29,
+        "endLine": 193,
+        "endChar": 34
+      },
+      "revId": "38e44a7a204c9db44fe04861f1cabfdf13a05801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "678706d9_c5c0d5cf",
         "filename": "ios/chrome/content_widget_extension/content_widget_view_controller.mm",
         "patchSetId": 2
@@ -305,6 +497,30 @@
     },
     {
       "key": {
+        "uuid": "9b27b0a7_d54144c9",
+        "filename": "ios/chrome/content_widget_extension/content_widget_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-08-04T15:16:58Z",
+      "side": 1,
+      "message": "Nope. the widgetexpanded height is calculated according to compactHeight.",
+      "parentUuid": "678706d9_c5c0d5cf",
+      "range": {
+        "startLine": 138,
+        "startChar": 38,
+        "endLine": 138,
+        "endChar": 58
+      },
+      "revId": "38e44a7a204c9db44fe04861f1cabfdf13a05801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "795d58e7_461e562f",
         "filename": "ios/chrome/content_widget_extension/content_widget_view_controller.mm",
         "patchSetId": 2
@@ -325,6 +541,30 @@
       "revId": "38e44a7a204c9db44fe04861f1cabfdf13a05801",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2ac5632_9236004d",
+        "filename": "ios/chrome/content_widget_extension/content_widget_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-08-04T15:16:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "795d58e7_461e562f",
+      "range": {
+        "startLine": 146,
+        "startChar": 6,
+        "endLine": 146,
+        "endChar": 14
+      },
+      "revId": "38e44a7a204c9db44fe04861f1cabfdf13a05801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
