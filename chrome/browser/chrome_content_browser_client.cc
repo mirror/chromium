@@ -387,6 +387,7 @@
 #endif
 
 #if BUILDFLAG(ENABLE_OOP_HEAP_PROFILING)
+#include "chrome/browser/profiling_host/chrome_browser_main_extra_parts_profiling.h"
 #include "chrome/browser/profiling_host/profiling_process_host.h"
 #include "chrome/common/profiling/constants.mojom.h"
 #endif
@@ -892,6 +893,10 @@ content::BrowserMainParts* ChromeContentBrowserClient::CreateBrowserMainParts(
 #else
   NOTREACHED();
   main_parts = new ChromeBrowserMainParts(parameters);
+#endif
+
+#if BUILDFLAG(ENABLE_OOP_HEAP_PROFILING)
+  main_parts->AddParts(new ChromeBrowserMainExtraPartsProfiling);
 #endif
 
   chrome::AddProfilesExtraParts(main_parts);
@@ -1578,9 +1583,6 @@ void ChromeContentBrowserClient::AppendExtraCommandLineSwitches(
   };
   command_line->CopySwitchesFrom(browser_command_line, kCommonSwitchNames,
                                  arraysize(kCommonSwitchNames));
-#if BUILDFLAG(ENABLE_OOP_HEAP_PROFILING)
-  profiling::ProfilingProcessHost::AddSwitchesToChildCmdLine(command_line);
-#endif
 
   static const char* const kDinosaurEasterEggSwitches[] = {
       error_page::switches::kDisableDinosaurEasterEgg,
