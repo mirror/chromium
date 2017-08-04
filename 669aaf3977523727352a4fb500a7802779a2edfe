@@ -88,6 +88,24 @@
       "revId": "669aaf3977523727352a4fb500a7802779a2edfe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fb38214_47396160",
+        "filename": "chrome/browser/resources/chromeos/internet_detail_dialog.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-08-04T15:09:16Z",
+      "side": 1,
+      "message": "The behavior you describe is consistent within a page, e.g. Settings, and presumably the oobe/login flow. WebUI dialogs however are re-created each time they are opened.",
+      "parentUuid": "62a22008_452b91e3",
+      "revId": "669aaf3977523727352a4fb500a7802779a2edfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
