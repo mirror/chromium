@@ -122,7 +122,7 @@ VrShell::VrShell(JNIEnv* env,
   ui_ = gl_thread_.get();
   toolbar_ = base::MakeUnique<vr::ToolbarHelper>(ui_, this);
 
-  base::Thread::Options options(base::MessageLoop::TYPE_DEFAULT, 0);
+  base::Thread::Options options(base::MessageLoop::TYPE_UI, 0);
   options.priority = base::ThreadPriority::DISPLAY;
   gl_thread_->StartWithOptions(options);
 
@@ -643,15 +643,6 @@ void VrShell::OnExitVrPromptResult(vr::UiUnsupportedMode reason,
   JNIEnv* env = base::android::AttachCurrentThread();
   Java_VrShellImpl_onExitVrRequestResult(env, j_vr_shell_,
                                          static_cast<int>(reason), should_exit);
-}
-
-void VrShell::UpdateVSyncInterval(base::TimeTicks vsync_timebase,
-                                  base::TimeDelta vsync_interval) {
-  PollMediaAccessFlag();
-  WaitForGlThread();
-  PostToGlThread(FROM_HERE, base::Bind(&VrShellGl::UpdateVSyncInterval,
-                                       gl_thread_->GetVrShellGl(),
-                                       vsync_timebase, vsync_interval));
 }
 
 void VrShell::PollMediaAccessFlag() {

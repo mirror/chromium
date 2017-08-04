@@ -4,8 +4,10 @@
 
 #include "chrome/browser/android/vr_shell/vr_gl_thread.h"
 
+#include <jni.h>
 #include <utility>
 
+#include "base/android/jni_android.h"
 #include "chrome/browser/android/vr_shell/vr_input_manager.h"
 #include "chrome/browser/android/vr_shell/vr_shell.h"
 #include "chrome/browser/android/vr_shell/vr_shell_gl.h"
@@ -13,9 +15,21 @@
 #include "chrome/browser/vr/ui_interface.h"
 #include "chrome/browser/vr/ui_scene.h"
 #include "chrome/browser/vr/ui_scene_manager.h"
+#include "jni/VrGLThread_jni.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 
+#include <android/looper.h>
+
 namespace vr_shell {
+
+namespace {
+
+void QuitLooper() {
+  JNIEnv* env = base::android::AttachCurrentThread();
+  Java_VrGLThread_quitLooper(env);
+}
+
+}  // namespace
 
 VrGLThread::VrGLThread(
     const base::WeakPtr<VrShell>& weak_vr_shell,
@@ -37,10 +51,19 @@ VrGLThread::VrGLThread(
       daydream_support_(daydream_support) {}
 
 VrGLThread::~VrGLThread() {
+  task_runner()->PostTask(FROM_HERE, base::Bind(&QuitLooper));
   Stop();
 }
 
+void VrGLThread::Run(base::RunLoop* run_loop) {
+  JNIEnv* env = base::android::AttachCurrentThread();
+  Java_VrGLThread_loopLooper(env);
+}
+
 void VrGLThread::Init() {
+  JNIEnv* env = base::android::AttachCurrentThread();
+  Java_VrGLThread_prepareLooper(env);
+  base::MessageLoopForUI::current()->Start();
   scene_ = base::MakeUnique<vr::UiScene>();
   vr_shell_gl_ = base::MakeUnique<VrShellGl>(this, gvr_api_, initially_web_vr_,
                                              reprojected_rendering_,
