@@ -34,6 +34,24 @@
       "revId": "c458d3b44c96c058b992e99f0d11e6448902764c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0273c032_ca338eb4",
+        "filename": "ui/login/account_picker/md_screen_account_picker.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1179965
+      },
+      "writtenOn": "2017-08-04T23:49:40Z",
+      "side": 1,
+      "message": "What does it look like? maybePreselectPod is normally used after a screen (e.g. Gaia signin) is closed. I\u0027m not sure how similar the lock screen apps screen is to this case.",
+      "parentUuid": "626ddb4f_3c522a20",
+      "revId": "c458d3b44c96c058b992e99f0d11e6448902764c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
