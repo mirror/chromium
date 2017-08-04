@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3eedb7dd_d6bc19f1",
+        "filename": "third_party/WebKit/Source/modules/fetch/FetchManager.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-08-04T05:34:25Z",
+      "side": 1,
+      "message": "nit: can you add /* resource */ after nullptr?",
+      "revId": "415c239f9b5e0ae33053586b8ee6e7959ae3c331",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
