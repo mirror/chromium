@@ -27,19 +27,6 @@ class TestShelfObserver : public mojom::ShelfObserver {
   ~TestShelfObserver() override = default;
 
   // mojom::ShelfObserver:
-  void OnShelfInitialized(int64_t display_id) override {
-    display_id_ = display_id;
-  }
-  void OnAlignmentChanged(ShelfAlignment alignment,
-                          int64_t display_id) override {
-    alignment_ = alignment;
-    display_id_ = display_id;
-  }
-  void OnAutoHideBehaviorChanged(ShelfAutoHideBehavior auto_hide,
-                                 int64_t display_id) override {
-    auto_hide_ = auto_hide;
-    display_id_ = display_id;
-  }
   void OnShelfItemAdded(int32_t, const ShelfItem&) override { added_count_++; }
   void OnShelfItemRemoved(const ShelfID&) override { removed_count_++; }
   void OnShelfItemMoved(const ShelfID&, int32_t) override {}
@@ -47,16 +34,10 @@ class TestShelfObserver : public mojom::ShelfObserver {
   void OnShelfItemDelegateChanged(const ShelfID&,
                                   mojom::ShelfItemDelegatePtr) override {}
 
-  int64_t display_id() const { return display_id_; }
-  ShelfAlignment alignment() const { return alignment_; }
-  ShelfAutoHideBehavior auto_hide() const { return auto_hide_; }
   size_t added_count() const { return added_count_; }
   size_t removed_count() const { return removed_count_; }
 
  private:
-  int64_t display_id_ = display::kInvalidDisplayId;
-  ShelfAlignment alignment_ = SHELF_ALIGNMENT_BOTTOM_LOCKED;
-  ShelfAutoHideBehavior auto_hide_ = SHELF_AUTO_HIDE_ALWAYS_HIDDEN;
   size_t added_count_ = 0;
   size_t removed_count_ = 0;
 
