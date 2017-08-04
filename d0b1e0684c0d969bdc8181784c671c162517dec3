@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18df69e8_92c5da0d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentApp.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-04T14:02:02Z",
+      "side": 1,
+      "message": "Please provide an example return value.",
+      "revId": "d0b1e0684c0d969bdc8181784c671c162517dec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82f3e82d_6c9358d1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentApp.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-04T14:02:02Z",
+      "side": 1,
+      "message": "This parameter is null only in tests. Instead of the null check here, let\u0027s make this parameter non-nullable and change the tests to always pass in a non-null String array.",
+      "range": {
+        "startLine": 73,
+        "startChar": 12,
+        "endLine": 73,
+        "endChar": 50
+      },
+      "revId": "d0b1e0684c0d969bdc8181784c671c162517dec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5374ac6_c8892819",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentApp.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-04T14:02:02Z",
+      "side": 1,
+      "message": "HashSet\u003c\u003e()",
+      "range": {
+        "startLine": 74,
+        "startChar": 50,
+        "endLine": 74,
+        "endChar": 57
+      },
+      "revId": "d0b1e0684c0d969bdc8181784c671c162517dec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59895338_f731514c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/ServiceWorkerPaymentApp.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-04T14:02:02Z",
+      "side": 1,
+      "message": "Collections.addAll(mPreferredRelatedApplicationIds, preferredRelatedApplicationIds);",
+      "range": {
+        "startLine": 75,
+        "startChar": 12,
+        "endLine": 77,
+        "endChar": 13
+      },
+      "revId": "d0b1e0684c0d969bdc8181784c671c162517dec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3fbda88_fe30afdd",
+        "filename": "content/browser/payments/payment_app_info_fetcher.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-04T14:02:02Z",
+      "side": 1,
+      "message": "Need to explicitly init the boolean member variable, otherwise it will have a random value.",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 55
+      },
+      "revId": "d0b1e0684c0d969bdc8181784c671c162517dec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f2d9eb4_5dea2acf",
+        "filename": "content/browser/payments/payment_app_info_fetcher.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-04T14:02:02Z",
+      "side": 1,
+      "message": "Aren\u0027t we still using base::MakeUnique in Chrome?",
+      "range": {
+        "startLine": 41,
+        "startChar": 32,
+        "endLine": 41,
+        "endChar": 48
+      },
+      "revId": "d0b1e0684c0d969bdc8181784c671c162517dec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3e4d20c_caf70551",
+        "filename": "content/public/browser/stored_payment_app.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-04T14:02:02Z",
+      "side": 1,
+      "message": "Need to init prefer_related_applications.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 47
+      },
+      "revId": "d0b1e0684c0d969bdc8181784c671c162517dec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4b3256d_a36c4f1f",
+        "filename": "content/public/browser/stored_payment_app.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-08-04T14:02:02Z",
+      "side": 1,
+      "message": "Newline after.",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 19
+      },
+      "revId": "d0b1e0684c0d969bdc8181784c671c162517dec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
