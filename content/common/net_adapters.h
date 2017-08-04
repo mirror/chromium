@@ -18,6 +18,7 @@ namespace content {
 //
 //   Mojo pipe              Data flow    Network library
 //   ----------------------------------------------------------
+//   MojoToNetPendingBuffer    --->      MojoToNetIOBuffer
 //   NetToMojoPendingBuffer    <---      NetToMojoIOBuffer
 //
 // While the operation is in progress, the Mojo-side objects keep ownership
@@ -68,6 +69,56 @@ class NetToMojoIOBuffer : public net::WrappedIOBuffer {
   scoped_refptr<NetToMojoPendingBuffer> pending_buffer_;
 
   DISALLOW_COPY_AND_ASSIGN(NetToMojoIOBuffer);
+};
+
+class MojoToNetPendingBuffer
+    : public base::RefCountedThreadSafe<MojoToNetPendingBuffer> {
+ public:
+  // Starts reading from Mojo.
+  //
+  // On success, MOJO_RESULT_OK will be returned. The ownership of the given
+  // consumer handle will be transferred to the new MojoToNetPendingBuffer that
+  // will be placed into *pending, and the size of the buffer will be in
+  // *num_bytes.
+  //
+  // On failure or MOJO_RESULT_SHOULD_WAIT, there will be no change to the
+  // handle, and *pending and *num_bytes will be unused.
+  static MojoResult BeginRead(mojo::ScopedDataPipeConsumerHandle* handle,
+                              scoped_refptr<MojoToNetPendingBuffer>* pending,
+                              uint32_t* num_bytes);
+
+  // Indicates the buffer is done being read from. Passes ownership of the pipe
+  // back to the caller. The argument is the number of bytes actually read,
+  // since net may do partial writes, which will result in partial reads from
+  // the Mojo pipe's perspective.
+  mojo::ScopedDataPipeConsumerHandle Complete(uint32_t num_bytes);
+
+  const char* buffer() { return static_cast<const char*>(buffer_); }
+
+ private:
+  friend class base::RefCountedThreadSafe<MojoToNetPendingBuffer>;
+
+  // Takes ownership of the handle.
+  explicit MojoToNetPendingBuffer(mojo::ScopedDataPipeConsumerHandle handle,
+                                  const void* buffer);
+  ~MojoToNetPendingBuffer();
+
+  mojo::ScopedDataPipeConsumerHandle handle_;
+  const void* buffer_;
+
+  DISALLOW_COPY_AND_ASSIGN(MojoToNetPendingBuffer);
+};
+
+// Net side of a Mojo -> Net copy. The data will already be in the
+// MojoToNetPendingBuffer's buffer.
+class MojoToNetIOBuffer : public net::WrappedIOBuffer {
+ public:
+  explicit MojoToNetIOBuffer(MojoToNetPendingBuffer* pending_buffer);
+
+ private:
+  ~MojoToNetIOBuffer() override;
+
+  scoped_refptr<MojoToNetPendingBuffer> pending_buffer_;
 };
 
 }  // namespace content
