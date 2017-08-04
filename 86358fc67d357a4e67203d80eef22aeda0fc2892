@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f8bd6eee_557cd5d3",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-04T04:39:02Z",
+      "side": 1,
+      "message": "nit: WMHelper::SetDragDropDelegate(window_.get())",
+      "revId": "86358fc67d357a4e67203d80eef22aeda0fc2892",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9a00e29_1cee9ddc",
+        "filename": "components/exo/surface.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-04T04:39:02Z",
+      "side": 1,
+      "message": "nit: WMHelper::ResetDragDropDelegate(window_.get());",
+      "revId": "86358fc67d357a4e67203d80eef22aeda0fc2892",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea92d51a_e6b69fc7",
+        "filename": "components/exo/wm_helper.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-08-04T04:39:02Z",
+      "side": 1,
+      "message": "nit: \"// Overridden from aura::client::DragDropDelegate:\"",
+      "revId": "86358fc67d357a4e67203d80eef22aeda0fc2892",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
