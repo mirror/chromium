@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "3dd27882_ef077db9",
+        "filename": "services/viz/public/cpp/compositing/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1108704
+      },
+      "writtenOn": "2017-08-04T18:39:03Z",
+      "side": 1,
+      "message": "Is there plan for moving gpu/ipc in the future?",
+      "revId": "f82a1ac882b91a48e81e0a9a4ab17a01b0e2130e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "895f53fa_f38b8a4a",
         "filename": "services/viz/public/cpp/compositing/returned_resource_struct_traits.h",
         "patchSetId": 2
