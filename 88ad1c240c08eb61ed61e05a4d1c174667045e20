@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08770b31_47e8ba41",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBlock.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1210854
+      },
+      "writtenOn": "2017-08-04T18:59:06Z",
+      "side": 1,
+      "message": "I believe this line does not need the null check for o. By definition a positioned object can\u0027t be the root of a layout tree, so the parent always exists, and eventually walking up the parent tree will get you to the LayoutView. Then your change is not necessary.",
+      "revId": "88ad1c240c08eb61ed61e05a4d1c174667045e20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
