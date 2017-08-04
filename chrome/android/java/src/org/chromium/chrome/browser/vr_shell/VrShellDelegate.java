@@ -384,7 +384,7 @@ public class VrShellDelegate
             OnExitVrRequestListener listener, @UiUnsupportedMode int reason) {
         assert listener != null;
         if (sInstance == null) {
-            listener.onDenied();
+            listener.onDenied(0);
             return;
         }
         sInstance.requestToExitVrInternal(listener, reason);
@@ -1048,9 +1048,14 @@ public class VrShellDelegate
     private void requestToExitVrInternal(
             OnExitVrRequestListener listener, @UiUnsupportedMode int reason) {
         assert listener != null;
-        // If we are currently processing another request or we are not in VR, deny the request.
-        if (sInstance.mOnExitVrRequestListener != null || !sInstance.mInVr) {
-            listener.onDenied();
+        // If we are not in VR, deny the request.
+        if (!sInstance.mInVr) {
+            listener.onDenied(0);
+            return;
+        }
+        // If we are currently processing another request, deny the request.
+        if (mOnExitVrRequestListener != listener && mOnExitVrRequestListener != null) {
+            listener.onDenied(0);
             return;
         }
         mOnExitVrRequestListener = listener;
@@ -1217,7 +1222,7 @@ public class VrShellDelegate
         if (!mDoffOptional && !success && showDoff(false /* optional */)) return;
 
         mShowingDaydreamDoff = false;
-        callOnExitVrRequestListener(success);
+        callOnExitVrRequestListener(success, 2);
         if (success) {
             shutdownVr(true /* disableVrMode */, !mExitingCct /* stayingInChrome */);
             if (mExitingCct) ((CustomTabActivity) mActivity).finishAndClose(false);
@@ -1321,15 +1326,16 @@ public class VrShellDelegate
         assert mOnExitVrRequestListener == null;
     }
 
-    private void callOnExitVrRequestListener(boolean success) {
+    private void callOnExitVrRequestListener(boolean success, int reason) {
         if (mOnExitVrRequestListener != null) {
             if (success) {
                 mOnExitVrRequestListener.onSucceeded();
+                mOnExitVrRequestListener = null;
             } else {
-                mOnExitVrRequestListener.onDenied();
+                mOnExitVrRequestListener.onDenied(reason);
+                if (reason != 2) mOnExitVrRequestListener = null;
             }
         }
-        mOnExitVrRequestListener = null;
     }
 
     private void showDoffAndExitVrInternal(boolean optional) {
@@ -1344,7 +1350,7 @@ public class VrShellDelegate
             mExitedDueToUnsupportedMode = true;
             showDoffAndExitVrInternal(true);
         } else {
-            callOnExitVrRequestListener(false);
+            callOnExitVrRequestListener(false, 1);
         }
     }
 

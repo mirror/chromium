@@ -718,6 +718,8 @@ void UiSceneManager::SetFullscreen(bool fullscreen) {
 void UiSceneManager::SetExitVrPromptEnabled(bool enabled,
                                             UiUnsupportedMode reason) {
   DCHECK(enabled || reason == UiUnsupportedMode::kCount);
+  if (exit_vr_prompt_reason_ == reason && prompting_to_exit_ && enabled)
+    return;
   if (prompting_to_exit_ && enabled) {
     browser_->OnExitVrPromptResult(exit_vr_prompt_reason_,
                                    ExitVrPromptChoice::CHOICE_NONE);

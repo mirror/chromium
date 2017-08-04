@@ -17,5 +17,5 @@ public interface OnExitVrRequestListener {
      * Called if the exit request was denied (e.g. user
      * chose to not exit VR).
      */
-    void onDenied();
+    void onDenied(int reason);
 }

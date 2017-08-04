@@ -53,7 +53,12 @@ public class IncognitoNewTabPage implements NativePage, InvalidationAwareThumbna
                     }
 
                     @Override
-                    public void onDenied() {}
+                    public void onDenied(int reason) {
+                        if (reason == 2) {
+                            VrShellDelegate.requestToExitVr(
+                                    this, UiUnsupportedMode.UNHANDLED_CODE_POINT);
+                        }
+                    }
                 }, UiUnsupportedMode.UNHANDLED_CODE_POINT);
                 return;
             }

@@ -461,7 +461,11 @@ public class VrShellImpl
             }
 
             @Override
-            public void onDenied() {}
+            public void onDenied(int reason) {
+                if (reason == 2) {
+                    mDelegate.requestToExitVr(this, UiUnsupportedMode.UNHANDLED_PAGE_INFO);
+                }
+            }
         }, UiUnsupportedMode.UNHANDLED_PAGE_INFO);
     }
 
