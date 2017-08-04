@@ -22,6 +22,30 @@
       "revId": "c905448ee1c30ad0fda7b6dc248d025dd33a1218",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89b6934b_95bbae1a",
+        "filename": "net/disk_cache/disk_cache.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1226494
+      },
+      "writtenOn": "2017-08-04T13:22:42Z",
+      "side": 1,
+      "message": "Hmm, so this is probably a good idea (since clients that don\u0027t need it for memory stuff can just not pass the callback), but I am now thinking based on the cronet failures that we may not want to do it for DISK and MEDIA caches, too, which go under same enum (but probably shouldn\u0027t), so resolving that may affect the answer here / may want a unified stategy.",
+      "parentUuid": "b7c1744f_3c8305b6",
+      "range": {
+        "startLine": 90,
+        "startChar": 48,
+        "endLine": 90,
+        "endChar": 73
+      },
+      "revId": "c905448ee1c30ad0fda7b6dc248d025dd33a1218",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
