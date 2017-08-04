@@ -28,6 +28,7 @@
 #include "components/password_manager/core/browser/android_affiliation/affiliation_utils.h"
 #include "components/password_manager/core/browser/password_manager_driver.h"
 #include "components/password_manager/core/browser/password_manager_metrics_util.h"
+#include "components/password_manager/core/browser/password_manager_util.h"
 #include "components/password_manager/core/common/password_manager_features.h"
 #include "components/security_state/core/security_state.h"
 #include "components/strings/grit/components_strings.h"
@@ -128,6 +129,20 @@ void GetSuggestions(const autofill::PasswordFormFillData& fill_data,
                 return a.match < b.match;
               });
   }
+}
+
+void AddSimpleSuggestionWithSeparatorOnTop(
+    std::vector<autofill::Suggestion>* suggestions,
+    int value,
+    const std::string& label,
+    const std::string& icon,
+    int frontend_id) {
+  suggestions->push_back(autofill::Suggestion());
+  suggestions->back().frontend_id = autofill::POPUP_ITEM_ID_SEPARATOR;
+
+  autofill::Suggestion suggestion(l10n_util::GetStringUTF8(value), label, icon,
+                                  frontend_id);
+  suggestions->push_back(suggestion);
 }
 
 }  // namespace
@@ -252,14 +267,19 @@ void PasswordAutofillManager::OnShowPasswordSuggestions(
   if (base::FeatureList::IsEnabled(
           password_manager::features::kEnableManualFallbacksFilling) &&
       (options & autofill::IS_PASSWORD_FIELD)) {
-    suggestions.push_back(autofill::Suggestion());
-    suggestions.back().frontend_id = autofill::POPUP_ITEM_ID_SEPARATOR;
-
-    autofill::Suggestion all_saved_passwords(
-        l10n_util::GetStringUTF8(IDS_AUTOFILL_SHOW_ALL_SAVED_FALLBACK),
-        std::string(), "showAllSavedPasswords",
+    AddSimpleSuggestionWithSeparatorOnTop(
+        &suggestions, IDS_AUTOFILL_SHOW_ALL_SAVED_FALLBACK, std::string(),
+        "showAllSavedPasswords",
         autofill::POPUP_ITEM_ID_ALL_SAVED_PASSWORDS_ENTRY);
-    suggestions.push_back(all_saved_passwords);
+  }
+
+  if (base::FeatureList::IsEnabled(
+          password_manager::features::kEnableManualFallbacksGeneration) &&
+      password_manager_util::GetPasswordSyncState(
+          autofill_client_->GetSyncService()) == SYNCING_NORMAL_ENCRYPTION) {
+    AddSimpleSuggestionWithSeparatorOnTop(
+        &suggestions, IDS_AUTOFILL_GENERATE_PASSWORD_FALLBACK, std::string(),
+        "generatePassword", autofill::POPUP_ITEM_ID_GENERATE_PASSWORD_ENTRY);
   }
 #endif
 
@@ -326,7 +346,8 @@ void PasswordAutofillManager::DidSelectSuggestion(const base::string16& value,
                                                   int identifier) {
   ClearPreviewedForm();
   if (identifier == autofill::POPUP_ITEM_ID_HTTP_NOT_SECURE_WARNING_MESSAGE ||
-      identifier == autofill::POPUP_ITEM_ID_ALL_SAVED_PASSWORDS_ENTRY)
+      identifier == autofill::POPUP_ITEM_ID_ALL_SAVED_PASSWORDS_ENTRY ||
+      identifier == autofill::POPUP_ITEM_ID_GENERATE_PASSWORD_ENTRY)
     return;
   bool success =
       PreviewSuggestion(form_data_key_, GetUsernameFromSuggestion(value));
@@ -337,8 +358,11 @@ void PasswordAutofillManager::DidAcceptSuggestion(const base::string16& value,
                                                   int identifier,
                                                   int position) {
   autofill_client_->ExecuteCommand(identifier);
-  if (identifier != autofill::POPUP_ITEM_ID_HTTP_NOT_SECURE_WARNING_MESSAGE &&
-      identifier != autofill::POPUP_ITEM_ID_ALL_SAVED_PASSWORDS_ENTRY) {
+  if (identifier == autofill::POPUP_ITEM_ID_GENERATE_PASSWORD_ENTRY) {
+    password_manager_driver_->UserSelectedGeneratePasswordOption();
+  } else if (identifier !=
+                 autofill::POPUP_ITEM_ID_HTTP_NOT_SECURE_WARNING_MESSAGE &&
+             identifier != autofill::POPUP_ITEM_ID_ALL_SAVED_PASSWORDS_ENTRY) {
     bool success =
         FillSuggestion(form_data_key_, GetUsernameFromSuggestion(value));
     DCHECK(success);
