@@ -84,6 +84,19 @@ SDK.DebuggerModel = class extends SDK.SDKModel {
   static _sourceMapId(executionContextId, sourceURL, sourceMapURL) {
     if (!sourceMapURL)
       return null;
+    if (sourceMapURL.startsWith('data:')) {
+      var request = new XMLHttpRequest();
+      request.open('GET', sourceMapURL, false);
+      request.send(null);
+      if (request.status === 200) {
+        var sourceMap = JSON.parse(request.responseText);
+        if (sourceMap.sourcesContent)
+          delete sourceMap.sourcesContent;
+        if (sourceMap.mappings)
+          delete sourceMap.mappings;
+        return executionContextId + ':' + sourceURL + ':' + JSON.stringify(sourceMap);
+      }
+    }
     return executionContextId + ':' + sourceURL + ':' + sourceMapURL;
   }
 
