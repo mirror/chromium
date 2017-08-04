@@ -11,8 +11,6 @@ namespace blink {
 HTMLUnknownElement::HTMLUnknownElement(const QualifiedName& tag_name,
                                        Document& document)
     : HTMLElement(tag_name, document) {
-  if (tag_name.LocalName() == "time")
-    UseCounter::Count(document, WebFeature::kTimeElement);
 }
 
 }  // namespace blink
