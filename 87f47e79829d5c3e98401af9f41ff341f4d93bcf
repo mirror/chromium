@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "03bcaac1_4180415e",
+        "filename": "ios/chrome/browser/ui/authentication/signin_interaction_controller_egtest.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-08-04T23:13:14Z",
+      "side": 1,
+      "message": "(here and in other test names)\nnit: I think this should still be \"testSignInOneUser\". This is using sign in as a verb, which is two words. When it\u0027s a noun it should be one word (technically, I think \"sign-in\", which marq@ said should even have a capital \u0027I\u0027)",
+      "range": {
+        "startLine": 127,
+        "startChar": 8,
+        "endLine": 127,
+        "endChar": 25
+      },
+      "revId": "87f47e79829d5c3e98401af9f41ff341f4d93bcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32cf1047_23ec1dad",
+        "filename": "ios/chrome/test/earl_grey/chrome_earl_grey_ui.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-08-04T23:13:14Z",
+      "side": 1,
+      "message": "More a design question going forward. Do we want the pattern of creating extra helpers that just call two other helpers? Or would we rather keep the helpers simpler and just have tests explicitly do it.\n\nI don\u0027t know if we have may shared helpers that do much within the settings menu, don\u0027t a lot call openSettingsMenu, then do the next action themselves.",
+      "revId": "87f47e79829d5c3e98401af9f41ff341f4d93bcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28dbad02_4c333937",
+        "filename": "ios/chrome/test/earl_grey/chrome_earl_grey_ui.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-08-04T23:13:14Z",
+      "side": 1,
+      "message": "Should this be \"openSigninMenuFromSettings\"? Or openSettingsSigninMenu?",
+      "range": {
+        "startLine": 66,
+        "startChar": 8,
+        "endLine": 66,
+        "endChar": 30
+      },
+      "revId": "87f47e79829d5c3e98401af9f41ff341f4d93bcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e0374cd_921effe0",
+        "filename": "ios/chrome/test/earl_grey/chrome_earl_grey_ui.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-08-04T23:13:14Z",
+      "side": 1,
+      "message": "I think this should be \"signInToIdentifyByEmail\"",
+      "range": {
+        "startLine": 70,
+        "startChar": 8,
+        "endLine": 70,
+        "endChar": 31
+      },
+      "revId": "87f47e79829d5c3e98401af9f41ff341f4d93bcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54ac7ca2_0f624938",
+        "filename": "ios/chrome/test/earl_grey/chrome_earl_grey_ui.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-08-04T23:13:14Z",
+      "side": 1,
+      "message": "can we use AccountConsistencySetupSigninButton in chrome_matchers?",
+      "revId": "87f47e79829d5c3e98401af9f41ff341f4d93bcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56ffa963_e04e0ad3",
+        "filename": "ios/chrome/test/earl_grey/chrome_earl_grey_ui.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 197,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-08-04T23:13:14Z",
+      "side": 1,
+      "message": "Can we use AccountConsistencyConfirmationOkButton in chrome_matchers?",
+      "revId": "87f47e79829d5c3e98401af9f41ff341f4d93bcf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
