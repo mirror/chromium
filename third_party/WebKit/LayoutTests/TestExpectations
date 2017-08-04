@@ -1798,6 +1798,18 @@ crbug.com/626703 virtual/threaded/inspector/tracing/timeline-js/timeline-runtime
 crbug.com/626703 virtual/threaded/transitions/transition-end-event-multiple-03.html [ Pass Failure ]
 
 # ====== New tests from wpt-importer added here ======
+crbug.com/626703 external/wpt/css/css-ui-3/text-overflow-006.html [ Failure ]
+crbug.com/626703 [ Android Win7 ] external/wpt/css/css-ui-3/text-overflow-007.html [ Failure ]
+crbug.com/626703 external/wpt/css/css-ui-3/text-overflow-010.html [ Failure ]
+crbug.com/626703 external/wpt/css/css-ui-3/text-overflow-017.html [ Timeout ]
+crbug.com/626703 external/wpt/css/css-ui-3/text-overflow-018.html [ Skip ]
+crbug.com/626703 external/wpt/css/css-ui-3/text-overflow-019.html [ Skip ]
+crbug.com/626703 external/wpt/css/css-ui-3/text-overflow-021.html [ Failure ]
+crbug.com/626703 external/wpt/encoding/eof-utf-8-three.html [ Failure ]
+crbug.com/626703 external/wpt/encoding/eof-utf-8-two.html [ Failure ]
+crbug.com/626703 external/wpt/fetch/api/abort/general.html [ Timeout ]
+crbug.com/626703 [ Android Retina ] external/wpt/uievents/order-of-events/focus-events/focus-automated-blink-webkit.html [ Timeout ]
+crbug.com/626703 [ Android Linux Mac ] virtual/mojo-blobs/external/wpt/fetch/api/abort/general.html [ Timeout ]
 crbug.com/626703 external/wpt/page-visibility/onvisibilitychange.html [ Timeout ]
 crbug.com/626703 external/wpt/webrtc/RTCIceTransport.html [ Timeout ]
 crbug.com/626703 external/wpt/webrtc/RTCPeerConnection-setLocalDescription-answer.html [ Timeout ]
@@ -2349,7 +2361,6 @@ crbug.com/664450 http/tests/inspector/console/console-on-animation-worklet.html 
 crbug.com/664450 virtual/mojo-loading/http/tests/inspector/console/console-on-animation-worklet.html [ Skip ]
 
 # Fail when run with --enable-wptserve due to data: URLs treated as cross-origin: (crbug.com/508730)
-crbug.com/508730 external/wpt/dom/nodes/Document-contentType/contentType/contenttype_datauri_01.html [ Failure ]
 crbug.com/508730 external/wpt/dom/nodes/Document-contentType/contentType/contenttype_datauri_02.html [ Failure ]
 crbug.com/508730 crbug.com/472300 external/wpt/html/semantics/embedded-content/media-elements/interfaces/TextTrack/addCue.html [ Failure ]
 crbug.com/508730 crbug.com/472300 external/wpt/html/semantics/embedded-content/media-elements/interfaces/TextTrackCue/endTime.html [ Failure ]
