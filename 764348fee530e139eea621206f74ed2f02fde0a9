@@ -159,6 +159,24 @@
       "revId": "764348fee530e139eea621206f74ed2f02fde0a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2bfa289b_d60eadc9",
+        "filename": "ios/web/navigation/wk_based_navigation_manager_impl.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 342,
+      "author": {
+        "id": 1190590
+      },
+      "writtenOn": "2017-08-04T14:36:32Z",
+      "side": 1,
+      "message": "I experimented with this. Redirects by location.replace or assigning to location.href do trigger didCommit calls: didCommit is first called on the original URL, and then a second time for the redirect target URL. |currentItem| stayed the same WKBackForwardListItem in both calls.\n\nhistory.replace does not trigger a second didCommit, although the WKBackForwardListItem\u0027s URL is changed, so location.reload() will load the redirect target URL.\n\nMaybe a general heuristic is to look for URL discrepancy between WKBackForwardListItem and the associated NavigationItem. The WKBackForwardListItem always contains the URL of the last item in the redirect chain.",
+      "parentUuid": "c0450542_07a68f0b",
+      "revId": "764348fee530e139eea621206f74ed2f02fde0a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
