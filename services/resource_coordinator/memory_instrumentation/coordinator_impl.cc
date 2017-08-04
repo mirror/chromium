@@ -265,8 +265,7 @@ void CoordinatorImpl::PerformNextQueuedGlobalMemoryDump() {
     request->pending_responses.insert({client, ResponseType::kOSDump});
     auto os_callback = base::Bind(&CoordinatorImpl::OnOSMemoryDumpResponse,
                                   base::Unretained(this), client);
-    client->RequestOSMemoryDump(wants_mmaps, {base::kNullProcessId},
-                                os_callback);
+    client->RequestOSMemoryDump(wants_mmaps, os_callback);
 #endif  // !defined(OS_LINUX)
   }
 
@@ -296,9 +295,10 @@ void CoordinatorImpl::PerformNextQueuedGlobalMemoryDump() {
   }
   if (browser_client) {
     request->pending_responses.insert({browser_client, ResponseType::kOSDump});
-    const auto callback = base::Bind(&CoordinatorImpl::OnOSMemoryDumpResponse,
-                                     base::Unretained(this), browser_client);
-    browser_client->RequestOSMemoryDump(wants_mmaps, pids, callback);
+    const auto callback =
+        base::Bind(&CoordinatorImpl::OnManyOSMemoryDumpsResponse,
+                   base::Unretained(this), browser_client);
+    browser_client->RequestManyOSMemoryDumps(wants_mmaps, pids, callback);
   }
 #endif  // defined(OS_LINUX)
 
@@ -345,7 +345,36 @@ void CoordinatorImpl::OnProcessMemoryDumpResponse(
 
 void CoordinatorImpl::OnOSMemoryDumpResponse(mojom::ClientProcess* client,
                                              bool success,
-                                             OSMemDumpMap os_dumps) {
+                                             mojom::RawOSMemDumpPtr os_dump) {
+  using ResponseType = QueuedMemoryDumpRequest::PendingResponse::Type;
+  DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+  QueuedMemoryDumpRequest* request = GetCurrentRequest();
+  if (request == nullptr) {
+    NOTREACHED() << "No current dump request.";
+    return;
+  }
+
+  RemovePendingResponse(client, ResponseType::kOSDump);
+
+  if (!clients_.count(client)) {
+    VLOG(1) << "Received a memory dump response from an unregistered client";
+    return;
+  }
+
+  request->responses[client].os_dumps[base::kNullProcessId] =
+      std::move(os_dump);
+
+  if (!success) {
+    request->failed_memory_dump_count++;
+    VLOG(1) << "RequestGlobalMemoryDump() FAIL: NACK from client process";
+  }
+
+  FinalizeGlobalMemoryDumpIfAllManagersReplied();
+}
+
+void CoordinatorImpl::OnManyOSMemoryDumpsResponse(mojom::ClientProcess* client,
+                                                  bool success,
+                                                  OSMemDumpMap os_dumps) {
   using ResponseType = QueuedMemoryDumpRequest::PendingResponse::Type;
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   QueuedMemoryDumpRequest* request = GetCurrentRequest();

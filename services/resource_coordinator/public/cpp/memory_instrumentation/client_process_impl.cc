@@ -84,6 +84,16 @@ mojom::RawProcessMemoryDumpPtr CreateEmptyDumpSummary() {
   return result;
 }
 
+mojom::RawOSMemDumpPtr DoOsMemDump(base::ProcessId pid, bool want_mmaps) {
+  mojom::RawOSMemDumpPtr result = mojom::RawOSMemDump::New();
+  result->platform_private_footprint = mojom::PlatformPrivateFootprint::New();
+  if (!OSMetrics::FillOSMemoryDump(pid, result.get()))
+    return nullptr;
+  if (want_mmaps && !OSMetrics::FillProcessMemoryMaps(pid, result.get()))
+    return nullptr;
+  return result;
+}
+
 }  // namespace
 
 // static
@@ -197,17 +207,19 @@ void ClientProcessImpl::RequestGlobalMemoryDump_NoCallback(
 
 void ClientProcessImpl::RequestOSMemoryDump(
     bool want_mmaps,
-    const std::vector<base::ProcessId>& pids,
     const RequestOSMemoryDumpCallback& callback) {
+  mojom::RawOSMemDumpPtr result = DoOsMemDump(base::kNullProcessId, want_mmaps);
+  callback.Run(true, std::move(result));
+}
+
+void ClientProcessImpl::RequestManyOSMemoryDumps(
+    bool want_mmaps,
+    const std::vector<base::ProcessId>& pids,
+    const RequestManyOSMemoryDumpsCallback& callback) {
   std::unordered_map<base::ProcessId, mojom::RawOSMemDumpPtr> results;
   for (const base::ProcessId& pid : pids) {
-    mojom::RawOSMemDumpPtr result = mojom::RawOSMemDump::New();
-    result->platform_private_footprint = mojom::PlatformPrivateFootprint::New();
-    bool success = true;
-    success = success && OSMetrics::FillOSMemoryDump(pid, result.get());
-    if (want_mmaps)
-      success = success && OSMetrics::FillProcessMemoryMaps(pid, result.get());
-    if (success)
+    mojom::RawOSMemDumpPtr result = DoOsMemDump(pid, want_mmaps);
+    if (result)
       results[pid] = std::move(result);
   }
   callback.Run(true, std::move(results));

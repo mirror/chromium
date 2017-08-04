@@ -113,13 +113,20 @@ class MockClientProcess : public mojom::ClientProcess {
 
             }));
 
-    ON_CALL(*this, RequestOSMemoryDump(_, _, _))
-        .WillByDefault(Invoke([](bool want_mmaps,
-                                 const std::vector<base::ProcessId> pids,
-                                 const RequestOSMemoryDumpCallback& callback) {
-          std::unordered_map<base::ProcessId, mojom::RawOSMemDumpPtr> results;
-          callback.Run(true, std::move(results));
-        }));
+    ON_CALL(*this, RequestOSMemoryDump(_, _))
+        .WillByDefault(Invoke(
+            [](bool want_mmaps, const RequestOSMemoryDumpCallback& callback) {
+              callback.Run(true, nullptr);
+            }));
+
+    ON_CALL(*this, RequestManyOSMemoryDumps(_, _, _))
+        .WillByDefault(
+            Invoke([](bool want_mmaps, const std::vector<base::ProcessId> pids,
+                      const RequestManyOSMemoryDumpsCallback& callback) {
+              std::unordered_map<base::ProcessId, mojom::RawOSMemDumpPtr>
+                  results;
+              callback.Run(true, std::move(results));
+            }));
   }
 
   ~MockClientProcess() override {}
@@ -128,10 +135,14 @@ class MockClientProcess : public mojom::ClientProcess {
                void(const MemoryDumpRequestArgs& args,
                     const RequestProcessMemoryDumpCallback& callback));
 
-  MOCK_METHOD3(RequestOSMemoryDump,
+  MOCK_METHOD2(RequestOSMemoryDump,
+               void(bool want_mmaps,
+                    const RequestOSMemoryDumpCallback& callback));
+
+  MOCK_METHOD3(RequestManyOSMemoryDumps,
                void(bool want_mmaps,
                     const std::vector<base::ProcessId>& args,
-                    const RequestOSMemoryDumpCallback& callback));
+                    const RequestManyOSMemoryDumpsCallback& callback));
 
  private:
   mojo::Binding<mojom::ClientProcess> binding_;
@@ -229,14 +240,6 @@ TEST_F(CoordinatorImplTest, MissingOsDump) {
 
   NiceMock<MockClientProcess> client_process(this, 1,
                                              mojom::ProcessType::BROWSER);
-
-  EXPECT_CALL(client_process, RequestOSMemoryDump(_, _, _))
-      .WillOnce(Invoke(
-          [](bool want_mmaps, const std::vector<base::ProcessId>& pids,
-             const MockClientProcess::RequestOSMemoryDumpCallback& callback) {
-            std::unordered_map<base::ProcessId, mojom::RawOSMemDumpPtr> results;
-            callback.Run(true, std::move(results));
-          }));
 
   MockGlobalMemoryDumpCallback callback;
   EXPECT_CALL(callback,
@@ -423,10 +426,11 @@ TEST_F(CoordinatorImplTest, OsDumps) {
           }));
 #if defined(OS_LINUX)
   EXPECT_CALL(browser_client,
-              RequestOSMemoryDump(_, AllOf(Contains(1), Contains(2)), _))
-      .WillOnce(Invoke(
-          [](bool want_mmaps, const std::vector<base::ProcessId>& pids,
-             const MockClientProcess::RequestOSMemoryDumpCallback& callback) {
+              RequestManyOSMemoryDumps(_, AllOf(Contains(1), Contains(2)), _))
+      .WillOnce(
+          Invoke([](bool want_mmaps, const std::vector<base::ProcessId>& pids,
+                    const MockClientProcess::RequestManyOSMemoryDumpsCallback&
+                        callback) {
             std::unordered_map<base::ProcessId, mojom::RawOSMemDumpPtr> results;
             results[1] = mojom::RawOSMemDump::New();
             results[1]->resident_set_kb = 1;
@@ -438,29 +442,27 @@ TEST_F(CoordinatorImplTest, OsDumps) {
             results[2]->resident_set_kb = 2;
             callback.Run(true, std::move(results));
           }));
-  EXPECT_CALL(renderer_client, RequestOSMemoryDump(_, _, _)).Times(0);
+  EXPECT_CALL(renderer_client, RequestManyOSMemoryDumps(_, _, _)).Times(0);
 #else
-  EXPECT_CALL(browser_client, RequestOSMemoryDump(_, Contains(0), _))
+  EXPECT_CALL(browser_client, RequestOSMemoryDump(_, _))
       .WillOnce(Invoke(
-          [](bool want_mmaps, const std::vector<base::ProcessId>& pids,
+          [](bool want_mmaps,
              const MockClientProcess::RequestOSMemoryDumpCallback& callback) {
-            std::unordered_map<base::ProcessId, mojom::RawOSMemDumpPtr> results;
-            results[0] = mojom::RawOSMemDump::New();
-            results[0]->platform_private_footprint =
+            mojom::RawOSMemDumpPtr result = mojom::RawOSMemDump::New();
+            result->platform_private_footprint =
                 mojom::PlatformPrivateFootprint::New();
-            results[0]->resident_set_kb = 1;
-            callback.Run(true, std::move(results));
+            result->resident_set_kb = 1;
+            callback.Run(true, std::move(result));
           }));
   EXPECT_CALL(renderer_client, RequestOSMemoryDump(_, Contains(0), _))
       .WillOnce(Invoke(
           [](bool want_mmaps, const std::vector<base::ProcessId>& pids,
              const MockClientProcess::RequestOSMemoryDumpCallback& callback) {
-            std::unordered_map<base::ProcessId, mojom::RawOSMemDumpPtr> results;
-            results[0] = mojom::RawOSMemDump::New();
-            results[0]->platform_private_footprint =
+            mojom::RawOSMemDumpPtr result = mojom::RawOSMemDump::New();
+            result->platform_private_footprint =
                 mojom::PlatformPrivateFootprint::New();
-            results[0]->resident_set_kb = 2;
-            callback.Run(true, std::move(results));
+            result->resident_set_kb = 2;
+            callback.Run(true, std::move(result));
           }));
 #endif  // defined(OS_LINUX)
 
