@@ -22,6 +22,30 @@
       "revId": "dabb82cc3903a467b036a59ce3ccaf5b0fe1ce32",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b21976bb_4f1a89b1",
+        "filename": "mojo/public/tools/fuzzers/mojo_fuzzer_message_dump.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1155789
+      },
+      "writtenOn": "2017-08-04T23:25:42Z",
+      "side": 1,
+      "message": "Good call. I removed remove_reference from everything that wasn\u0027t a reference type.",
+      "parentUuid": "52b223f7_9489b69c",
+      "range": {
+        "startLine": 110,
+        "startChar": 6,
+        "endLine": 110,
+        "endChar": 56
+      },
+      "revId": "dabb82cc3903a467b036a59ce3ccaf5b0fe1ce32",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
