@@ -2,6 +2,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import json
 import os
 import subprocess
 import sys
@@ -55,3 +56,14 @@ class ScriptsSmokeTest(unittest.TestCase):
       self.skipTest('small_profile_extender is missing')
     self.assertEquals(return_code, 0, stdout)
     self.assertIn('kraken', stdout)
+
+  def testRunTelemetryBenchmarkAsGoogletest(self):
+    return_code, stdout = self.RunPerfScript(
+        '../../testing/scripts/run_telemetry_benchmark_as_googletest.py '
+        'run_benchmark dummy_benchmark.stable_benchmark_1 --browser=system '
+        '--isolated-script-test-output=output.json')
+    with open('output.json') as f:
+      self.assertIsNotNone(
+          json.load(f), 'json_test_results should be populated: ' + stdout)
+    self.assertEquals(return_code, 0)
+    os.remove('output.json')
