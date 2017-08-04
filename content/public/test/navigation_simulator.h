@@ -21,10 +21,12 @@ class GURL;
 
 namespace content {
 
+class FrameTreeNode;
 class NavigationHandle;
 class NavigationHandleImpl;
 class RenderFrameHost;
 class TestRenderFrameHost;
+class TestWebContents;
 struct Referrer;
 
 // An interface for simulating a navigation in unit tests. Currently this only
@@ -33,12 +35,27 @@ struct Referrer;
 // TODO(clamy): support browser-initiated navigations.
 class NavigationSimulator : public WebContentsObserver {
  public:
+  // Simulates a browser-initiated navigation to |url| started in
+  // |web_contents| from start to commit. Returns the RenderFrameHost that
+  // committed the navigation.
+  static RenderFrameHost* NavigateAndCommitFromBrowser(
+      const GURL& original_url,
+      WebContents* web_contents);
+
   // Simulates a renderer-initiated navigation to |url| started in
   // |render_frame_host| from start to commit. Returns the RenderFramehost that
   // committed the navigation.
   static RenderFrameHost* NavigateAndCommitFromDocument(
       const GURL& original_url,
       RenderFrameHost* render_frame_host);
+
+  // Simulates a failed browser-initiated navigation to |url| started in
+  // |web_contents| from start to commit. Returns the RenderFrameHost that
+  // committed the error page for the navigation, or nullptr if the navigation
+  // error did not result in an error page.
+  static RenderFrameHost* NavigateAndFailFromBrowser(const GURL& original_url,
+                                                     int net_error_code,
+                                                     WebContents* web_contents);
 
   // Simulates a failed renderer-initiated navigation to |url| started in
   // |render_frame_host| from start to commit. Returns the RenderFramehost that
@@ -55,6 +72,12 @@ class NavigationSimulator : public WebContentsObserver {
   // navigation is needed.
 
   // Creates a NavigationSimulator that will be used to simulate a
+  // browser-initiated navigation to |original_url| started in |contents|.
+  static std::unique_ptr<NavigationSimulator> CreateBrowserInitiated(
+      const GURL& original_url,
+      WebContents* contents);
+
+  // Creates a NavigationSimulator that will be used to simulate a
   // renderer-initiated navigation to |original_url| started by
   // |render_frame_host|.
   static std::unique_ptr<NavigationSimulator> CreateRendererInitiated(
@@ -62,6 +85,8 @@ class NavigationSimulator : public WebContentsObserver {
       RenderFrameHost* render_frame_host);
 
   NavigationSimulator(const GURL& original_url,
+                      bool browser_initiated,
+                      TestWebContents* web_contents,
                       TestRenderFrameHost* render_frame_host);
   ~NavigationSimulator() override;
 
@@ -179,6 +204,14 @@ class NavigationSimulator : public WebContentsObserver {
   void OnWillRedirectRequest();
   void OnWillProcessResponse();
 
+  // Simulates a browser-initiated navigation starting. Returns false if the
+  // navigation failed synchronously.
+  bool SimulateBrowserInitiatedStart();
+
+  // Simulates a renderer-initiated navigation starting. Returns false if the
+  // navigation failed synchronously.
+  bool SimulateRendererInitiatedStart();
+
   // This method will block waiting for throttle checks to complete.
   void WaitForThrottleChecksComplete();
 
@@ -195,6 +228,10 @@ class NavigationSimulator : public WebContentsObserver {
   // PlzNavigate: this is not needed.
   void FailFromThrottleCheck(NavigationThrottle::ThrottleCheckResult result);
 
+  // Check if the navigation corresponds to a same-document navigation.
+  // PlzNavigate: only use on renderer-initiated navigations.
+  bool CheckIfSameDocument();
+
   enum State {
     INITIALIZATION,
     STARTED,
@@ -204,16 +241,24 @@ class NavigationSimulator : public WebContentsObserver {
 
   State state_ = INITIALIZATION;
 
+  // The WebContents in which the navigation is taking place.
+  TestWebContents* web_contents_;
+
   // The renderer associated with this navigation.
+  // Note: this can initially be null for browser-initiated navigations.
   TestRenderFrameHost* render_frame_host_;
+
+  FrameTreeNode* frame_tree_node_;
 
   // The NavigationHandle associated with this navigation.
   NavigationHandleImpl* handle_;
 
   GURL navigation_url_;
   net::HostPortPair socket_address_;
+  bool browser_initiated_;
+  bool same_document_ = false;
   Referrer referrer_;
-  ui::PageTransition transition_ = ui::PAGE_TRANSITION_LINK;
+  ui::PageTransition transition_;
 
   // These are used to sanity check the content/public/ API calls emitted as
   // part of the navigation.
