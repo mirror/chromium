@@ -27,9 +27,12 @@ enum class ParseResult;
 // An intermediate structure to store a Declarative Net Request API rule while
 // indexing. This structure aids in the subsequent conversion to a flatbuffer
 // UrlRule as specified by the url_pattern_index component.
+// TODO(crbug.com/696822): Find a better name for this struct.
 struct IndexedRule {
   IndexedRule();
   ~IndexedRule();
+  IndexedRule(IndexedRule&&);
+  IndexedRule& operator=(IndexedRule&&);
 
   // These fields correspond to the attributes of a flatbuffer UrlRule, as
   // specified by the url_pattern_index component.
