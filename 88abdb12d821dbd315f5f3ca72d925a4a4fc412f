@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "08320dcd_a870ecf1",
+        "filename": "content/renderer/render_widget_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-08-04T13:59:43Z",
+      "side": 1,
+      "message": "Yes it would.  We set it on 498 so we should be OK.",
+      "parentUuid": "206026c2_4c612fcc",
+      "range": {
+        "startLine": 517,
+        "startChar": 36,
+        "endLine": 517,
+        "endChar": 38
+      },
+      "revId": "88abdb12d821dbd315f5f3ca72d925a4a4fc412f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fe0add1b_b48f3781",
         "filename": "third_party/WebKit/LayoutTests/inspector-protocol/resources/device-emulator.js",
         "patchSetId": 5
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "bfb80f85_d8ae3977",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/resources/device-emulator.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-08-04T13:59:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe0add1b_b48f3781",
+      "revId": "88abdb12d821dbd315f5f3ca72d925a4a4fc412f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9263fac6_d203267a",
         "filename": "third_party/WebKit/public/web/DEPS",
         "patchSetId": 5
@@ -53,6 +95,24 @@
       "writtenOn": "2017-08-03T21:46:08Z",
       "side": 1,
       "message": "Is that allowed now? We should double-check with platform arch team.",
+      "revId": "88abdb12d821dbd315f5f3ca72d925a4a4fc412f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ff91087_25668a23",
+        "filename": "third_party/WebKit/public/web/DEPS",
+        "patchSetId": 5
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-08-04T13:59:43Z",
+      "side": 1,
+      "message": "We are according to this: https://groups.google.com/a/chromium.org/forum/#!searchin/blink-dev/Are$20we$20allowed$20to$20use$20base$3A$3AOptional$20(or$20WTF$20copy)$20in$20public$2Fweb$3F%7Csort:relevance/blink-dev/QeuiRzbYNbQ/gfDf3devAAAJ",
+      "parentUuid": "9263fac6_d203267a",
       "revId": "88abdb12d821dbd315f5f3ca72d925a4a4fc412f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "9851a373_6340257e",
+        "filename": "third_party/WebKit/public/web/WebDeviceEmulationParams.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-08-04T13:59:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e81feba_d5e3af72",
+      "range": {
+        "startLine": 24,
+        "startChar": 13,
+        "endLine": 24,
+        "endChar": 41
+      },
+      "revId": "88abdb12d821dbd315f5f3ca72d925a4a4fc412f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dca93229_da94c73f",
         "filename": "third_party/WebKit/public/web/WebDeviceEmulationParams.h",
         "patchSetId": 5
@@ -102,6 +186,30 @@
       "revId": "88abdb12d821dbd315f5f3ca72d925a4a4fc412f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2719849_bed196d4",
+        "filename": "third_party/WebKit/public/web/WebDeviceEmulationParams.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-08-04T13:59:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dca93229_da94c73f",
+      "range": {
+        "startLine": 27,
+        "startChar": 37,
+        "endLine": 27,
+        "endChar": 76
+      },
+      "revId": "88abdb12d821dbd315f5f3ca72d925a4a4fc412f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
