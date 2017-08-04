@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2e6ef6c9_5c3021c2",
+        "filename": "cc/paint/paint_shader.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-08-04T21:49:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2b35ed84_ded57661",
+      "range": {
+        "startLine": 84,
+        "startChar": 15,
+        "endLine": 85,
+        "endChar": 23
+      },
+      "revId": "1e6f0f16da16921bbbac63ca0ea7b9790a0bcae4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a02db6b6_24b3b98d",
         "filename": "cc/paint/paint_shader.h",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-08-04T20:30:35Z",
       "side": 1,
       "message": "dox question: angles? degrees? percentage of a circle? Is end_angle always \u003e\u003d start_angle? Can start_angle be negative?",
+      "range": {
+        "startLine": 155,
+        "startChar": 11,
+        "endLine": 155,
+        "endChar": 21
+      },
+      "revId": "1e6f0f16da16921bbbac63ca0ea7b9790a0bcae4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73253e03_933601da",
+        "filename": "cc/paint/paint_shader.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-08-04T21:49:40Z",
+      "side": 1,
+      "message": "\u003e dox question: angles? degrees? percentage of a circle?\n\nDegrees.\n\n\u003e Is end_angle always \u003e\u003d start_angle?\n\nYes.\n\n\u003e Can start_angle be negative?\n\nYes, no restrictions on the value.\n\n(added some dox on ConicGradient)",
+      "parentUuid": "a02db6b6_24b3b98d",
       "range": {
         "startLine": 155,
         "startChar": 11,
