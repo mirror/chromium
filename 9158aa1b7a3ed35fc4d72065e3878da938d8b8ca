@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84b378b1_c9382442",
+        "filename": "ash/system/tray_caps_lock.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-08-04T17:59:51Z",
+      "side": 1,
+      "message": "This is actually how the old code behaved. It did observe the pref in the chrome layer but it never notified TrayCapsLock of changes. I just added the comment to explain why that\u0027s OK.",
+      "revId": "9158aa1b7a3ed35fc4d72065e3878da938d8b8ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
