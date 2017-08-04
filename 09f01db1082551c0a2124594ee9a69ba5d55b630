@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7214cc53_e03a3188",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkInstaller.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-08-04T20:58:29Z",
+      "side": 1,
+      "message": "wouldn\u0027t this clobber the chrome icon if the app specifies a badge icon?",
+      "range": {
+        "startLine": 143,
+        "startChar": 38,
+        "endLine": 143,
+        "endChar": 43
+      },
+      "revId": "09f01db1082551c0a2124594ee9a69ba5d55b630",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b0bf1f1_31883ad5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/webapps/WebApkInstaller.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-08-04T20:58:29Z",
+      "side": 1,
+      "message": "maybe always use id 0 but then include package name as tag? shouldn\u0027t have multiple installs for the same pacakge and if you do, it\u0027s ok to override",
+      "range": {
+        "startLine": 153,
+        "startChar": 35,
+        "endLine": 153,
+        "endChar": 50
+      },
+      "revId": "09f01db1082551c0a2124594ee9a69ba5d55b630",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
