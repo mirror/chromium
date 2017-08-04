@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "541710d5_5dc75590",
+        "filename": "third_party/WebKit/Source/core/layout/compositing/CompositingInputsUpdater.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-08-04T23:26:53Z",
+      "side": 1,
+      "message": "properties.clip_parent \u003d clipping_layer;\n\nOtherwise the clip imposed by clipping_layer will be escaped too.\nFor example: http://jsbin.com/wejalajamo/\nThe red box should be clipped by the dashed box.",
+      "revId": "50eee93350f5f9637ca091788bb17cea9236ed8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
