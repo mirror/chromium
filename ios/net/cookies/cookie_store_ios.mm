@@ -743,6 +743,13 @@ CookieStoreIOS::AddCallbackForCookie(const GURL& gurl,
   return hook_map_[key]->Add(callback);
 }
 
+std::unique_ptr<net::CookieStore::CookieChangedSubscription>
+CookieStoreIOS::AddCallbackForAllChanges(
+    const CookieChangedCallback& callback) {
+  // Implement when needed by iOS consumers.
+  CHECK(false);
+}
+
 bool CookieStoreIOS::IsEphemeral() {
   return cookie_monster_->IsEphemeral();
 }

@@ -64,6 +64,13 @@ const char kValidCookieLine[] = "A=B; path=/";
 //   // another.
 //   static const bool has_path_prefix_bug;
 //
+//   // The cookie store forbids setting a cookie with an empty name.
+//   static const bool forbids_setting_empty_name;
+//
+//   // The cookie store supports global tracking of cookie changes (i.e.
+//   // calls to CookieStore::AddCallbackForAllChanges()).
+//   static const bool supports_global_cookie_tracking;
+//
 //   // Time to wait between two cookie insertions to ensure that cookies have
 //   // different creation times.
 //   static const int creation_time_granularity_in_ms;
@@ -284,6 +291,16 @@ class CookieStoreTest : public testing::Test {
                                   base::Unretained(&callback)));
     callback.WaitUntilDone();
     return callback.result();
+  }
+
+  bool FindAndDeleteCookie(CookieStore* cs,
+                           const std::string& domain,
+                           const std::string& name) {
+    CookieList cookies = this->GetAllCookies(cs);
+    for (CookieList::iterator it = cookies.begin(); it != cookies.end(); ++it)
+      if (it->Domain() == domain && it->Name() == name)
+        return this->DeleteCanonicalCookie(cs, *it);
+    return false;
   }
 
   // Returns the CookieStore for the test - each test only uses one CookieStore.
@@ -1654,6 +1671,120 @@ TYPED_TEST_P(CookieStoreTest, DeleteSessionCookie) {
   EXPECT_EQ("C=D", this->GetCookies(cs, this->http_www_foo_.url()));
 }
 
+class MockCookieStoreObserver {
+ public:
+  typedef std::pair<CanonicalCookie, CookieStore::ChangeCause>
+      CookieNotification;
+
+  MockCookieStoreObserver();
+  ~MockCookieStoreObserver();
+
+  const std::vector<CookieNotification>& changes() const { return changes_; }
+
+  void reset() { changes_.clear(); }
+
+  void OnCookieChanged(const CanonicalCookie& cookie,
+                       CookieStore::ChangeCause cause) {
+    CookieNotification notification(cookie, cause);
+    changes_.push_back(notification);
+  }
+
+ private:
+  std::vector<CookieNotification> changes_;
+
+  DISALLOW_COPY_AND_ASSIGN(MockCookieStoreObserver);
+};
+
+MockCookieStoreObserver::MockCookieStoreObserver() {}
+
+MockCookieStoreObserver::~MockCookieStoreObserver() {}
+
+TYPED_TEST_P(CookieStoreTest, GlobalChangeTracking) {
+  if (!TypeParam::supports_global_cookie_tracking)
+    return;
+
+  CookieStore* cs = this->GetCookieStore();
+  MockCookieStoreObserver observer;
+  std::unique_ptr<CookieStore::CookieChangedSubscription> subscription(
+      cs->AddCallbackForAllChanges(
+          base::Bind(&MockCookieStoreObserver::OnCookieChanged,
+                     base::Unretained(&observer))));
+  EXPECT_TRUE(this->SetCookie(cs, this->http_www_foo_.url(), "A=B"));
+  EXPECT_TRUE(this->SetCookie(cs, this->http_www_foo_.url(), "C=D"));
+  EXPECT_TRUE(this->SetCookie(cs, this->http_www_foo_.url(), "E=F"));
+  EXPECT_EQ("A=B; C=D; E=F", this->GetCookies(cs, this->http_www_foo_.url()));
+  base::RunLoop().RunUntilIdle();
+  ASSERT_EQ(3u, observer.changes().size());
+  EXPECT_EQ(CookieStore::ChangeCause::INSERTED, observer.changes()[0].second);
+  EXPECT_EQ(this->http_www_foo_.url().host(),
+            observer.changes()[0].first.Domain());
+  EXPECT_EQ("A", observer.changes()[0].first.Name());
+  EXPECT_EQ("B", observer.changes()[0].first.Value());
+  EXPECT_EQ(this->http_www_foo_.url().host(),
+            observer.changes()[1].first.Domain());
+  EXPECT_EQ(CookieStore::ChangeCause::INSERTED, observer.changes()[1].second);
+  EXPECT_EQ("C", observer.changes()[1].first.Name());
+  EXPECT_EQ("D", observer.changes()[1].first.Value());
+  EXPECT_EQ(this->http_www_foo_.url().host(),
+            observer.changes()[2].first.Domain());
+  EXPECT_EQ(CookieStore::ChangeCause::INSERTED, observer.changes()[2].second);
+  EXPECT_EQ("E", observer.changes()[2].first.Name());
+  EXPECT_EQ("F", observer.changes()[2].first.Value());
+  observer.reset();
+
+  EXPECT_TRUE(
+      this->FindAndDeleteCookie(cs, this->http_www_foo_.url().host(), "C"));
+  EXPECT_EQ("A=B; E=F", this->GetCookies(cs, this->http_www_foo_.url()));
+  base::RunLoop().RunUntilIdle();
+  ASSERT_EQ(1u, observer.changes().size());
+  EXPECT_EQ(this->http_www_foo_.url().host(),
+            observer.changes()[0].first.Domain());
+  EXPECT_EQ(CookieStore::ChangeCause::EXPLICIT_DELETE_CANONICAL,
+            observer.changes()[0].second);
+  EXPECT_EQ("C", observer.changes()[0].first.Name());
+  EXPECT_EQ("D", observer.changes()[0].first.Value());
+  observer.reset();
+
+  EXPECT_FALSE(this->FindAndDeleteCookie(cs, "random.host", "E"));
+  EXPECT_EQ("A=B; E=F", this->GetCookies(cs, this->http_www_foo_.url()));
+  base::RunLoop().RunUntilIdle();
+  EXPECT_EQ(0u, observer.changes().size());
+
+  // Insert a cookie "a" for path "/path1"
+  EXPECT_TRUE(this->SetCookie(cs, this->http_www_foo_.url(),
+                              "a=val1; path=/path1; "
+                              "expires=Mon, 18-Apr-22 22:50:13 GMT"));
+  base::RunLoop().RunUntilIdle();
+  ASSERT_EQ(1u, observer.changes().size());
+  EXPECT_EQ(CookieStore::ChangeCause::INSERTED, observer.changes()[0].second);
+  EXPECT_EQ(this->http_www_foo_.url().host(),
+            observer.changes()[0].first.Domain());
+  EXPECT_EQ("a", observer.changes()[0].first.Name());
+  EXPECT_EQ("val1", observer.changes()[0].first.Value());
+  observer.reset();
+
+  // Insert a cookie "a" for path "/path1", that is httponly. This should
+  // overwrite the non-http-only version.
+  CookieOptions allow_httponly;
+  allow_httponly.set_include_httponly();
+  EXPECT_TRUE(this->SetCookieWithOptions(cs, this->http_www_foo_.url(),
+                                         "a=val2; path=/path1; httponly; "
+                                         "expires=Mon, 18-Apr-22 22:50:14 GMT",
+                                         allow_httponly));
+  base::RunLoop().RunUntilIdle();
+  ASSERT_EQ(2u, observer.changes().size());
+  EXPECT_EQ(this->http_www_foo_.url().host(),
+            observer.changes()[0].first.Domain());
+  EXPECT_EQ(CookieStore::ChangeCause::OVERWRITE, observer.changes()[0].second);
+  EXPECT_EQ("a", observer.changes()[0].first.Name());
+  EXPECT_EQ("val1", observer.changes()[0].first.Value());
+  EXPECT_EQ(this->http_www_foo_.url().host(),
+            observer.changes()[1].first.Domain());
+  EXPECT_EQ(CookieStore::ChangeCause::INSERTED, observer.changes()[1].second);
+  EXPECT_EQ("a", observer.changes()[1].first.Name());
+  EXPECT_EQ("val2", observer.changes()[1].first.Value());
+}
+
 REGISTER_TYPED_TEST_CASE_P(CookieStoreTest,
                            SetCookieWithDetailsAsync,
                            SetCanonicalCookieTest,
@@ -1694,7 +1825,8 @@ REGISTER_TYPED_TEST_CASE_P(CookieStoreTest,
                            GetAllCookiesAsync,
                            DeleteCookieAsync,
                            DeleteCanonicalCookieAsync,
-                           DeleteSessionCookie);
+                           DeleteSessionCookie,
+                           GlobalChangeTracking);
 
 }  // namespace net
 
