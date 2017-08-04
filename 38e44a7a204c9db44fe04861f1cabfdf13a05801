@@ -2,6 +2,98 @@
   "comments": [
     {
       "key": {
+        "uuid": "f1eae17a_c64f9266",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_tile.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-04T09:33:26Z",
+      "side": 1,
+      "message": "NSUInteger?",
+      "range": {
+        "startLine": 33,
+        "startChar": 26,
+        "endLine": 33,
+        "endChar": 29
+      },
+      "revId": "38e44a7a204c9db44fe04861f1cabfdf13a05801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa0599e0_344e71d1",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_tile_saver.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-04T09:33:26Z",
+      "side": 1,
+      "message": "Update name and comment.",
+      "range": {
+        "startLine": 38,
+        "startChar": 5,
+        "endLine": 38,
+        "endChar": 33
+      },
+      "revId": "38e44a7a204c9db44fe04861f1cabfdf13a05801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "819f04c3_aae3176a",
+        "filename": "ios/chrome/browser/ui/ntp/ntp_tile_saver.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-04T09:33:26Z",
+      "side": 1,
+      "message": "There may be a problem if there are two concurrent cals to UpdateSingleFavicon.\nIs this possible?",
+      "range": {
+        "startLine": 191,
+        "startChar": 7,
+        "endLine": 191,
+        "endChar": 24
+      },
+      "revId": "38e44a7a204c9db44fe04861f1cabfdf13a05801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e982e6f8_468da4e3",
+        "filename": "ios/chrome/content_widget_extension/content_widget_view.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-04T09:33:26Z",
+      "side": 1,
+      "message": "Usually, the type of sender is id, to avoid introducing a dependency.",
+      "range": {
+        "startLine": 18,
+        "startChar": 17,
+        "endLine": 18,
+        "endChar": 36
+      },
+      "revId": "38e44a7a204c9db44fe04861f1cabfdf13a05801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "afae7c69_de910f53",
         "filename": "ios/chrome/content_widget_extension/content_widget_view.mm",
         "patchSetId": 2
@@ -41,6 +133,122 @@
         "startLine": 156,
         "startChar": 6,
         "endLine": 156,
+        "endChar": 14
+      },
+      "revId": "38e44a7a204c9db44fe04861f1cabfdf13a05801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96c0e2b3_46950c49",
+        "filename": "ios/chrome/content_widget_extension/content_widget_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-04T09:33:26Z",
+      "side": 1,
+      "message": "Ack.\nstatic_cast\u003cNSUInteger\u003e",
+      "parentUuid": "a37f69c5_802fe74d",
+      "range": {
+        "startLine": 156,
+        "startChar": 6,
+        "endLine": 156,
+        "endChar": 14
+      },
+      "revId": "38e44a7a204c9db44fe04861f1cabfdf13a05801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cb85dbe_958fa80c",
+        "filename": "ios/chrome/content_widget_extension/content_widget_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-04T09:33:26Z",
+      "side": 1,
+      "message": "This 2 is at multiple places. Can we make a constant?",
+      "range": {
+        "startLine": 192,
+        "startChar": 35,
+        "endLine": 192,
+        "endChar": 36
+      },
+      "revId": "38e44a7a204c9db44fe04861f1cabfdf13a05801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "278ef0b6_ab9c7ca7",
+        "filename": "ios/chrome/content_widget_extension/content_widget_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-04T09:33:26Z",
+      "side": 1,
+      "message": "Question: Why not .hidden\u003dYES?",
+      "range": {
+        "startLine": 193,
+        "startChar": 29,
+        "endLine": 193,
+        "endChar": 34
+      },
+      "revId": "38e44a7a204c9db44fe04861f1cabfdf13a05801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "678706d9_c5c0d5cf",
+        "filename": "ios/chrome/content_widget_extension/content_widget_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-04T09:33:26Z",
+      "side": 1,
+      "message": "if you set the size to a value that is \u003c\u003d compactHeight, widget may be buggy (iOS10 bug_.\nIs it possible?",
+      "range": {
+        "startLine": 138,
+        "startChar": 38,
+        "endLine": 138,
+        "endChar": 58
+      },
+      "revId": "38e44a7a204c9db44fe04861f1cabfdf13a05801",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "795d58e7_461e562f",
+        "filename": "ios/chrome/content_widget_extension/content_widget_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1144530
+      },
+      "writtenOn": "2017-08-04T09:33:26Z",
+      "side": 1,
+      "message": "[newSites isEqualToDictionary:self.sites]",
+      "range": {
+        "startLine": 146,
+        "startChar": 6,
+        "endLine": 146,
         "endChar": 14
       },
       "revId": "38e44a7a204c9db44fe04861f1cabfdf13a05801",
