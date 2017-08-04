@@ -45,7 +45,8 @@ struct IndexedRule {
   ::url_pattern_index::flat::AnchorType anchor_right =
       ::url_pattern_index::flat::AnchorType_NONE;
   std::string url_pattern;
-  // Sorted and unique list of domains. The domains are in lower case.
+  // The domains are in lower case. Sorted as defined by
+  // url_pattern_index::CompareDomains.
   std::vector<std::string> domains;
   std::vector<std::string> excluded_domains;
 

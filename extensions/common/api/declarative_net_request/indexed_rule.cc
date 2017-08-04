@@ -9,6 +9,7 @@
 
 #include "base/numerics/safe_conversions.h"
 #include "base/strings/string_util.h"
+#include "components/url_pattern_index/url_pattern_index.h"
 #include "extensions/common/api/declarative_net_request.h"
 #include "extensions/common/api/declarative_net_request/constants.h"
 #include "url/gurl.h"
@@ -216,18 +217,21 @@ ParseResult ComputeElementTypes(const dnr_api::RuleCondition& condition,
   return ParseResult::SUCCESS;
 }
 
-// Helper to sort and remove duplicates from |domains|.
-std::vector<std::string> GetSortedAndUniqueDomains(
+// Converts all domains to lower case and sorts them as required by the
+// url_pattern_index component.
+std::vector<std::string> CanonicalizeDomains(
     std::unique_ptr<std::vector<std::string>> domains) {
   if (!domains)
     return std::vector<std::string>();
 
-  std::sort(domains->begin(), domains->end());
-  domains->erase(std::unique(domains->begin(), domains->end()), domains->end());
-
   // Convert to lower case as required by the url_pattern_index component.
   for (size_t i = 0; i < domains->size(); i++)
     (*domains)[i] = base::ToLowerASCII((*domains)[i]);
+
+  std::sort(domains->begin(), domains->end(),
+            [](const std::string& left, const std::string& right) {
+              return url_pattern_index::CompareDomains(left, right) < 0;
+            });
 
   // Move the vector, because it isn't eligible for return value optimization.
   return std::move(*domains);
@@ -287,9 +291,9 @@ ParseResult CreateIndexedRule(std::unique_ptr<dnr_api::Rule> parsed_rule,
   }
 
   indexed_rule->domains =
-      GetSortedAndUniqueDomains(std::move(parsed_rule->condition.domains));
-  indexed_rule->excluded_domains = GetSortedAndUniqueDomains(
-      std::move(parsed_rule->condition.excluded_domains));
+      CanonicalizeDomains(std::move(parsed_rule->condition.domains));
+  indexed_rule->excluded_domains =
+      CanonicalizeDomains(std::move(parsed_rule->condition.excluded_domains));
 
   if (is_redirect_rule)
     indexed_rule->redirect_url = std::move(*parsed_rule->action.redirect_url);
