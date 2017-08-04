@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ac6ce81b_4ca263fd",
+        "filename": "ash/shelf/shelf_layout_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 268,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-04T22:49:50Z",
+      "side": 1,
+      "message": "do you mean if (blah \u0026\u0026 (blah || blah)) return; ?  I don\u0027t feel strongly about it but i think that\u0027s harder to follow.\n\nThey can\u0027t go into ShouldHideTitleBars in the other class because they\u0027re both false when we detach states, but still need to check ShouldHideTitleBars.",
+      "parentUuid": "96831de4_7fa1e1a7",
+      "revId": "15cb213d51c94da4908ac3529f6c287650460cf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f77f783b_ff9356b8",
         "filename": "ash/wm/tablet_mode/tablet_mode_controller.cc",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-08-04T21:38:10Z",
       "side": 1,
       "message": "Just curious: I never used it before. How to enable a feature? Why don\u0027t introduce a flag in chrome://flags?",
+      "revId": "15cb213d51c94da4908ac3529f6c287650460cf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44a58dcd_00d77e52",
+        "filename": "ash/wm/tablet_mode/tablet_mode_controller.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-04T22:49:50Z",
+      "side": 1,
+      "message": "i think omri wanted to a feature so we could randomly enable this for random people on select channels. AFAIK for flags people have to manually change from default value, but i\u0027m not sure.",
+      "parentUuid": "f77f783b_ff9356b8",
       "revId": "15cb213d51c94da4908ac3529f6c287650460cf5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e0657a7a_3e9cb9fd",
+        "filename": "ash/wm/tablet_mode/tablet_mode_window_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-04T22:49:50Z",
+      "side": 1,
+      "message": "one kind of windows that use this arc apps, they handle the maximize themselves, but with this feature we just fullscreen them so they this does not get handled twice",
+      "parentUuid": "210d064b_771014bf",
+      "revId": "15cb213d51c94da4908ac3529f6c287650460cf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d484eb3d_05be918c",
         "filename": "ash/wm/tablet_mode/tablet_mode_window_state.cc",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "15cb213d51c94da4908ac3529f6c287650460cf5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "356540ea_ecd6ebf4",
+        "filename": "ash/wm/tablet_mode/tablet_mode_window_state.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-04T22:49:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d484eb3d_05be918c",
+      "revId": "15cb213d51c94da4908ac3529f6c287650460cf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "a4d00e1a_e2db03f6",
+        "filename": "ash/wm/tablet_mode/tablet_mode_window_state.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-04T22:49:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "477b1336_133c4d6c",
+      "revId": "15cb213d51c94da4908ac3529f6c287650460cf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4c9d687_e32df10d",
         "filename": "ash/wm/tablet_mode/tablet_mode_window_state.cc",
         "patchSetId": 7
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "de41ec55_cc539e42",
+        "filename": "ash/wm/tablet_mode/tablet_mode_window_state.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-04T22:49:50Z",
+      "side": 1,
+      "message": "These are on attach specific, so if we move them we will have to add a is_attach parameter to UpdateWindow. I don\u0027t quite follow the GetMaximizedOrCenteredWindowType comment.",
+      "parentUuid": "f4c9d687_e32df10d",
+      "revId": "15cb213d51c94da4908ac3529f6c287650460cf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bd3c89a2_1a1691e6",
         "filename": "components/exo/wm_helper_ash.cc",
         "patchSetId": 7
@@ -115,6 +223,24 @@
       "writtenOn": "2017-08-04T21:38:10Z",
       "side": 1,
       "message": "Why the changes in this file? It doesn\u0027t look right to me. Won\u0027t you break something if you enable the feature?",
+      "revId": "15cb213d51c94da4908ac3529f6c287650460cf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65790afa_7b861b61",
+        "filename": "components/exo/wm_helper_ash.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-08-04T22:49:50Z",
+      "side": 1,
+      "message": "this is also for arc apps. nothing has broken with my tests but im sure theres some edge cases :-P. oshima, is this dangerous?",
+      "parentUuid": "bd3c89a2_1a1691e6",
       "revId": "15cb213d51c94da4908ac3529f6c287650460cf5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
