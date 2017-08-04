@@ -192,11 +192,15 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
   // The grid view must be inside a folder view.
   void OnFolderItemRemoved();
 
-  // Updates the opacity of all the items in the grid during dragging. The
-  // opacity of each item is based on how much the item's |centroid_y| is above
-  // |work_area_bottom|. If |is_end_gesture| is true, set all the items opacity
-  // to 1.0f.
-  void UpdateOpacity(float work_area_bottom, bool is_end_gesture);
+  // Updates the opacity of all the items in the grid during dragging.
+  void UpdateOpacity(int baseline, bool is_end_gesture);
+
+  // Relayouts the suggested apps indicator and suggested apps during dragging.
+  // Updates the opacity at the same time.
+  void LayoutAndUpdateOpacityDuringDragging(int height_of_app_list,
+                                            int baseline,
+                                            bool is_end_gesture,
+                                            float search_box_opacity);
 
   // Return the view model for test purposes.
   const views::ViewModelT<AppListItemView>* view_model_for_test() const {
@@ -262,9 +266,10 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
   // Updates suggestions from app list model.
   void UpdateSuggestions();
 
-  // Helper method for layouting indicator based on the given bounds |rect|.
-  void LayoutSuggestedAppsIndicator(gfx::Rect* rect);
+  // Helper method for layouting based on the given bounds |rect|.
+  bool LayoutSuggestedAppsIndicator(gfx::Rect* rect);
   void LayoutAllAppsIndicator(gfx::Rect* rect);
+  bool LayoutSuggestedApps(gfx::Rect* rect);
 
   // Returns all apps tiles per page based on |page|.
   int TilesPerPage(int page) const;
@@ -494,8 +499,9 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
   // Returns true if the grid view is under an OEM folder.
   bool IsUnderOEMFolder();
 
-  // Updates opacity of |view_item| in the app list based on |centroid_y|.
-  void UpdateOpacityOfItem(views::View* view_item, float centroid_y);
+  // Updates opacity of |view_item|, which is based on the distance between
+  // |baseline_of_opacity_| and |centroid_y|.
+  void UpdateOpacityOfItem(views::View* view_item, int centroid_y);
 
   AppListModel* model_ = nullptr;         // Owned by AppListView.
   AppListItemList* item_list_ = nullptr;  // Not owned.
@@ -606,8 +612,10 @@ class APP_LIST_EXPORT AppsGridView : public views::View,
   // True if the fullscreen app list feature is enabled.
   const bool is_fullscreen_app_list_enabled_;
 
-  // The bottom of work area.
-  float work_area_bottom_ = 0.f;
+  // Value that used to help update the opacity of items in the app list. The
+  // opacity of the item will be zero if its centroid y position is below the
+  // baseline.
+  int baseline_of_opacity_ = 0;
 
   // True if it is the end gesture from shelf dragging.
   bool is_end_gesture_ = false;

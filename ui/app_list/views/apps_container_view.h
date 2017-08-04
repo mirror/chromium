@@ -69,9 +69,14 @@ class AppsContainerView : public AppListPage, public TopIconAnimationObserver {
   void Layout() override;
   bool OnKeyPressed(const ui::KeyEvent& event) override;
 
-  // AppListPage overrides:
+  // AppListPage:
   void OnWillBeShown() override;
   gfx::Rect GetPageBoundsForState(AppListModel::State state) const override;
+  gfx::Rect LayoutAndUpdateOpacityDuringDragging(
+      AppListModel::State state,
+      int app_list_y_position_in_screen,
+      int work_area_bottom,
+      bool is_end_gesture) const override;
 
   // TopIconAnimationObserver overrides:
   void OnTopIconAnimationsComplete() override;
