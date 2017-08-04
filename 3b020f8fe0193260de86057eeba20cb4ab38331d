@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc738ab1_459d1190",
+        "filename": "chrome/browser/ui/views/feature_promos/bookmark_promo.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-08-04T17:08:33Z",
+      "side": 1,
+      "message": "Rename this to bookmark_promo_bubble_view.h|cc",
+      "range": {
+        "startLine": 14,
+        "startChar": 6,
+        "endLine": 14,
+        "endChar": 30
+      },
+      "revId": "3b020f8fe0193260de86057eeba20cb4ab38331d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
