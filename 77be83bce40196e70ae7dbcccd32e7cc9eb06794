@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9aebf58_7b9db55b",
+        "filename": "chrome/browser/resources/settings/controls/settings_toggle_button.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1116254
+      },
+      "writtenOn": "2017-08-04T19:35:36Z",
+      "side": 0,
+      "message": "why not just add |actionTarget| here?",
+      "range": {
+        "startLine": 44,
+        "startChar": 10,
+        "endLine": 44,
+        "endChar": 63
+      },
+      "revId": "77be83bce40196e70ae7dbcccd32e7cc9eb06794",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
