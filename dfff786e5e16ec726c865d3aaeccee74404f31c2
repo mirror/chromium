@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "2b6ee69b_bbdd5a81",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/make_css_property_api.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-04T01:19:56Z",
+      "side": 1,
+      "message": "nit: make_css_property_api_base.py is a bit clearer i think",
+      "revId": "dfff786e5e16ec726c865d3aaeccee74404f31c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bbc37070_a85c2ac5",
         "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPI.cpp.tmpl",
         "patchSetId": 18
@@ -13,6 +30,40 @@
       "writtenOn": "2017-08-03T03:03:09Z",
       "side": 1,
       "message": "Is this meant to be above the license?",
+      "revId": "dfff786e5e16ec726c865d3aaeccee74404f31c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae82e1d1_74b3e9ed",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPI.cpp.tmpl",
+        "patchSetId": 18
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-04T01:19:56Z",
+      "side": 1,
+      "message": "{{property_id}} here doesn\u0027t appear to be working",
+      "revId": "dfff786e5e16ec726c865d3aaeccee74404f31c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50f0a4d4_f97f6561",
+        "filename": "third_party/WebKit/Source/build/scripts/core/css/properties/templates/CSSPropertyAPIHeaders.h.tmpl",
+        "patchSetId": 18
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-04T01:19:56Z",
+      "side": 1,
+      "message": "nit: Headers.h is redundant. Perhaps CSSPropertyAPIDerived.h?",
       "revId": "dfff786e5e16ec726c865d3aaeccee74404f31c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -47,6 +98,24 @@
       "writtenOn": "2017-08-03T03:29:32Z",
       "side": 1,
       "message": "why is this split from CSSPropertyParser? separetely, the name of this file implies to me that it\u0027s one of the property apis.",
+      "revId": "dfff786e5e16ec726c865d3aaeccee74404f31c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2215ea75_144c6ff8",
+        "filename": "third_party/WebKit/Source/core/css/properties/CSSPropertyAPICustom.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1215107
+      },
+      "writtenOn": "2017-08-04T01:19:56Z",
+      "side": 1,
+      "message": "i\u0027m not sure what you intend the purpose of this file to be. it seems like both this and the helper file could be considered temporary, so it seems pointless to change CSSPropertyParser.cpp at all. given CSSPropertyParser.cpp still contains a bunch of property specific logic that probably needs addressing this split confuses things further i think. also this refactor seems unrelated to your descriptor change? if you think it\u0027s important i would suggest doing it in a separate patch",
+      "parentUuid": "28461a22_659c4de2",
       "revId": "dfff786e5e16ec726c865d3aaeccee74404f31c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
