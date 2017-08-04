@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "88235ffb_2e82524f",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-08-04T17:06:27Z",
+      "side": 1,
+      "message": "no need for local copy here.",
+      "parentUuid": "0a380da5_cfa5d78f",
+      "range": {
+        "startLine": 252,
+        "startChar": 9,
+        "endLine": 252,
+        "endChar": 16
+      },
+      "revId": "d7646eca145db69faed29e6f237d08822155fe73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b309ba36_12d5f505",
         "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
         "patchSetId": 10
@@ -82,6 +106,29 @@
       "writtenOn": "2017-08-03T15:55:17Z",
       "side": 1,
       "message": "Don\u0027t we need to check if the buffer is full?\n\nI assume we\u0027ll want a longtasktimingbufferfull event, like we have for ResourceTiming.",
+      "revId": "d7646eca145db69faed29e6f237d08822155fe73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c8e40bc_19682696",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-08-04T17:06:27Z",
+      "side": 1,
+      "message": "we also need wpt tests for each of these scenarios",
+      "range": {
+        "startLine": 422,
+        "startChar": 2,
+        "endLine": 422,
+        "endChar": 3
+      },
       "revId": "d7646eca145db69faed29e6f237d08822155fe73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +151,75 @@
         "startChar": 5,
         "endLine": 451,
         "endChar": 16
+      },
+      "revId": "d7646eca145db69faed29e6f237d08822155fe73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d94d3b6f_e41c8e8c",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceBase.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-08-04T17:06:27Z",
+      "side": 1,
+      "message": "what is this public method for?",
+      "range": {
+        "startLine": 106,
+        "startChar": 61,
+        "endLine": 106,
+        "endChar": 0
+      },
+      "revId": "d7646eca145db69faed29e6f237d08822155fe73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4caf67f_e3054de5",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceObserver.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-08-04T17:06:27Z",
+      "side": 1,
+      "message": "The observer has to be specifically listening for long tasks. Otherwise someone could add the flag on other types of entries and receive long tasks?",
+      "range": {
+        "startLine": 106,
+        "startChar": 15,
+        "endLine": 106,
+        "endChar": 16
+      },
+      "revId": "d7646eca145db69faed29e6f237d08822155fe73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "293195d0_784ab49f",
+        "filename": "third_party/WebKit/Source/core/timing/PerformanceObserver.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1175814
+      },
+      "writtenOn": "2017-08-04T17:06:27Z",
+      "side": 1,
+      "message": "would be good to refactor so that observer is generic and doesn\u0027t need to be aware of different types of entry types (keep this in PerformanceBase).",
+      "range": {
+        "startLine": 107,
+        "startChar": 37,
+        "endLine": 107,
+        "endChar": 0
       },
       "revId": "d7646eca145db69faed29e6f237d08822155fe73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
