@@ -161,6 +161,24 @@
     },
     {
       "key": {
+        "uuid": "73f0e367_4db10ec1",
+        "filename": "net/http/http_transaction_test_util.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-08-04T12:16:28Z",
+      "side": 1,
+      "message": "That\u0027s because you have a semi-colon on the end that isn\u0027t needed.  I\u0027ve run into this myself a few times. :)",
+      "parentUuid": "6fae74da_e8e4d81a",
+      "revId": "0e7e846da8164ecd2605ab5077e0a2ced5afd87b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0daa61d1_bb7c9d21",
         "filename": "net/url_request/url_request.h",
         "patchSetId": 4
