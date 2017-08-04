@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2d25d044_3995d9f0",
+        "filename": "content/browser/appcache/appcache_update_url_fetcher.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-04T02:18:44Z",
+      "side": 1,
+      "message": "I think so. We delete the object in OnResponseCompleted which should be invoked from within\nRead()",
+      "parentUuid": "b958177b_a3dd4606",
+      "revId": "dcd4cc55fc476036a27ec59936199d6f186ca99b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "673247b9_22e07d0f",
         "filename": "content/browser/appcache/appcache_update_url_fetcher.cc",
         "patchSetId": 11
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ebf4002e_70eacc7e",
+        "filename": "content/browser/appcache/appcache_update_url_fetcher.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-04T02:18:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "673247b9_22e07d0f",
+      "revId": "dcd4cc55fc476036a27ec59936199d6f186ca99b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a85ba6d0_5050e376",
         "filename": "content/browser/appcache/appcache_update_url_fetcher.cc",
         "patchSetId": 11
@@ -47,6 +83,30 @@
       "writtenOn": "2017-08-04T01:18:05Z",
       "side": 1,
       "message": "we have callsites like this...\n  result_ \u003d AppCacheUpdateJob::SECURITY_ERROR;\n  OnResponseCompleted(net::ERR_ABORTED);\nwe have to be careful to not overwrite values set like that",
+      "range": {
+        "startLine": 217,
+        "startChar": 26,
+        "endLine": 217,
+        "endChar": 27
+      },
+      "revId": "dcd4cc55fc476036a27ec59936199d6f186ca99b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1235ac44_05cae243",
+        "filename": "content/browser/appcache/appcache_update_url_fetcher.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-04T02:18:44Z",
+      "side": 1,
+      "message": "Thanks. Changed the code to only set the result_ if it is UPDATE_OK",
+      "parentUuid": "a85ba6d0_5050e376",
       "range": {
         "startLine": 217,
         "startChar": 26,
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "47a73817_1cebca77",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-04T02:18:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7b1ae2f_8c925b86",
+      "range": {
+        "startLine": 19,
+        "startChar": 34,
+        "endLine": 19,
+        "endChar": 45
+      },
+      "revId": "dcd4cc55fc476036a27ec59936199d6f186ca99b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "86c3c6c3_76cf09da",
         "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
         "patchSetId": 11
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "23aa1fbb_b7a5a5e7",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-04T02:18:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86c3c6c3_76cf09da",
+      "range": {
+        "startLine": 22,
+        "startChar": 22,
+        "endLine": 22,
+        "endChar": 33
+      },
+      "revId": "dcd4cc55fc476036a27ec59936199d6f186ca99b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a89dbd9_4cd42cdf",
         "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
         "patchSetId": 11
@@ -116,6 +224,30 @@
       "writtenOn": "2017-08-04T01:18:05Z",
       "side": 1,
       "message": "in the OK case, how does it complete?\nnit: {}s not needed",
+      "range": {
+        "startLine": 159,
+        "startChar": 14,
+        "endLine": 159,
+        "endChar": 33
+      },
+      "revId": "dcd4cc55fc476036a27ec59936199d6f186ca99b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d87350cb_4e89267f",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-04T02:18:44Z",
+      "side": 1,
+      "message": "Added a comment explaining that. It is invoked from within OnReadComplete() in URLFetcher",
+      "parentUuid": "5a89dbd9_4cd42cdf",
       "range": {
         "startLine": 159,
         "startChar": 14,
@@ -151,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "4a59d459_baeb0232",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-04T02:18:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "985d2d97_997328ab",
+      "range": {
+        "startLine": 169,
+        "startChar": 23,
+        "endLine": 169,
+        "endChar": 39
+      },
+      "revId": "dcd4cc55fc476036a27ec59936199d6f186ca99b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "547dd30e_691bb47a",
         "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
         "patchSetId": 11
@@ -162,6 +318,24 @@
       "writtenOn": "2017-08-04T01:18:05Z",
       "side": 1,
       "message": "looks like request_ can be inlined instead of heap allocated, is there a reason the new it?",
+      "revId": "dcd4cc55fc476036a27ec59936199d6f186ca99b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31ad56de_e2f298ff",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-04T02:18:44Z",
+      "side": 1,
+      "message": "Wanted to avoid the include for the resource_request.h file in the header. Agree that this is better. Done",
+      "parentUuid": "547dd30e_691bb47a",
       "revId": "dcd4cc55fc476036a27ec59936199d6f186ca99b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -188,6 +362,30 @@
       "revId": "dcd4cc55fc476036a27ec59936199d6f186ca99b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f035a1e_bdbadce0",
+        "filename": "content/browser/appcache/appcache_update_url_loader_request.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000982
+      },
+      "writtenOn": "2017-08-04T02:18:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bf5c182a_63bb0b42",
+      "range": {
+        "startLine": 73,
+        "startChar": 25,
+        "endLine": 73,
+        "endChar": 44
+      },
+      "revId": "dcd4cc55fc476036a27ec59936199d6f186ca99b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
