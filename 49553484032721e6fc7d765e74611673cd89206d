@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5e36c69a_a1a3d4bf",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/scripting-1/the-script-element/module/instantiation-error-6.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1119597
+      },
+      "writtenOn": "2017-08-04T08:20:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ccbf262_a7e1d360",
+      "revId": "49553484032721e6fc7d765e74611673cd89206d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "51bf113c_a29ff711",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/html/semantics/scripting-1/the-script-element/module/instantiation-error-7.html",
         "patchSetId": 2
