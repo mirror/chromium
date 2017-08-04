@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "55a2458e_187ae936",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-04T07:52:32Z",
+      "side": 1,
+      "message": "Thanks for looking.\n\nI looked through some GetLiveRegistration callsites and it looks OK.\n\nFrom some more code archaeology, I think we originally did AssociateRegistration in order to have .ready populated immediately \u003chttps://codereview.chromium.org/477593007\u003e, then later changed it to ask the browser process for the registration lazily \u003chttps://codereview.chromium.org/894973003\u003e.",
+      "parentUuid": "2bc45620_2a982296",
+      "revId": "f110c3831b8524b60e4c980cacf9858e88625c94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "87e9d688_ea8810e6",
         "filename": "content/child/service_worker/service_worker_provider_context.cc",
         "patchSetId": 3
@@ -90,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "545786ca_9f6d2b63",
+        "filename": "content/child/service_worker/service_worker_provider_context.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-04T07:52:32Z",
+      "side": 1,
+      "message": "Yep I\u0027m hoping so. Or even removing ProviderContext totally.",
+      "parentUuid": "87e9d688_ea8810e6",
+      "revId": "f110c3831b8524b60e4c980cacf9858e88625c94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f362b62a_3cd0cc20",
         "filename": "content/child/service_worker/service_worker_provider_context.h",
         "patchSetId": 3
@@ -101,6 +137,30 @@
       "writtenOn": "2017-08-04T06:53:46Z",
       "side": 1,
       "message": "the the -\u003e the",
+      "range": {
+        "startLine": 46,
+        "startChar": 48,
+        "endLine": 47,
+        "endChar": 9
+      },
+      "revId": "f110c3831b8524b60e4c980cacf9858e88625c94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c68670f_d429715b",
+        "filename": "content/child/service_worker/service_worker_provider_context.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-08-04T07:52:32Z",
+      "side": 1,
+      "message": "haha i totally broke these sentences. Revised. Done.",
+      "parentUuid": "f362b62a_3cd0cc20",
       "range": {
         "startLine": 46,
         "startChar": 48,
