@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b940de8b_594ffde9",
+        "filename": "components/offline_pages/content/renovations/test/page_renovator_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-04T19:36:24Z",
+      "side": 1,
+      "message": "Please document why the variable is named fake_url. I don\u0027t think I understand that. (Both methods).",
+      "range": {
+        "startLine": 105,
+        "startChar": 52,
+        "endLine": 105,
+        "endChar": 60
+      },
+      "revId": "3f9f7539991d77b634d8104d2c151964b045e693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "379f347b_9099d897",
+        "filename": "components/offline_pages/content/renovations/test/page_renovator_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-04T19:36:24Z",
+      "side": 1,
+      "message": "I think you expect Navigate and InitializeXXX to happen in that order.\n1. Please document that.\n2. consider adding a dcheck on top of InitializeXXX to ensure render_frame is actually set.",
+      "range": {
+        "startLine": 172,
+        "startChar": 6,
+        "endLine": 172,
+        "endChar": 19
+      },
+      "revId": "3f9f7539991d77b634d8104d2c151964b045e693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4165bbc9_1c50587b",
+        "filename": "components/offline_pages/content/renovations/test/page_renovator_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-04T19:36:24Z",
+      "side": 1,
+      "message": "looking at the content of this string above I get the feeling that we only unfold 1 block, and 1 heading... Would it be useful to test for at least 2?",
+      "range": {
+        "startLine": 217,
+        "startChar": 55,
+        "endLine": 217,
+        "endChar": 78
+      },
+      "revId": "3f9f7539991d77b634d8104d2c151964b045e693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2d6f44d_ed8ab514",
+        "filename": "components/offline_pages/content/renovations/test/page_renovator_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-04T19:36:24Z",
+      "side": 1,
+      "message": "I think this TODO is being worked on in this CL.",
+      "range": {
+        "startLine": 228,
+        "startChar": 22,
+        "endLine": 228,
+        "endChar": 61
+      },
+      "revId": "3f9f7539991d77b634d8104d2c151964b045e693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "284d0676_6999bbef",
+        "filename": "components/offline_pages/core/renovations/page_renovation_loader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-04T19:36:24Z",
+      "side": 1,
+      "message": "I almost want to ask you to ensure the string ends with \"wikipedia.org\" and not just contains it.",
+      "range": {
+        "startLine": 22,
+        "startChar": 22,
+        "endLine": 22,
+        "endChar": 26
+      },
+      "revId": "3f9f7539991d77b634d8104d2c151964b045e693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7873be0a_d97194ad",
+        "filename": "components/offline_pages/core/renovations/page_renovation_loader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-04T19:36:24Z",
+      "side": 1,
+      "message": "nit: based on recent discussion of not polluting the offline_pages namespace, this could be a static method on PageRenovationLoader I think. But you don\u0027t need to change it now necessarily. That would be nice thou.",
+      "range": {
+        "startLine": 29,
+        "startChar": 45,
+        "endLine": 29,
+        "endChar": 63
+      },
+      "revId": "3f9f7539991d77b634d8104d2c151964b045e693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5194a93_91de53d0",
+        "filename": "components/offline_pages/resources/renovations.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-04T19:36:24Z",
+      "side": 1,
+      "message": "Could there be more comments in the code of why things are happening?\n\nI see the steps you are taking, just don\u0027t know why. (Which makes it harder to reason about this code being correct in lines 23-25)",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 11
+      },
+      "revId": "3f9f7539991d77b634d8104d2c151964b045e693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9aea0661_254a08f5",
+        "filename": "components/offline_pages/resources/renovations.js",
+        "patchSetId": 8
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-08-04T19:36:24Z",
+      "side": 1,
+      "message": "nit: you could probably get away without assigning things to f",
+      "range": {
+        "startLine": 35,
+        "startChar": 7,
+        "endLine": 35,
+        "endChar": 8
+      },
+      "revId": "3f9f7539991d77b634d8104d2c151964b045e693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
