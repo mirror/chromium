@@ -154,13 +154,6 @@ gfx::Size GetRotatedVideoSize(VideoRotation rotation, gfx::Size natural_size) {
   return natural_size;
 }
 
-base::TimeDelta GetCurrentTimeInternal(WebMediaPlayerImpl* p_this) {
-  // We wrap currentTime() instead of using pipeline_controller_.GetMediaTime()
-  // since there are a variety of cases in which that time is not accurate;
-  // e.g., while remoting and during a pause or seek.
-  return base::TimeDelta::FromSecondsD(p_this->CurrentTime());
-}
-
 // How much time must have elapsed since loading last progressed before we
 // assume that the decoder will have had time to complete preroll.
 constexpr base::TimeDelta kPrerollAttemptTimeout =
@@ -547,8 +540,14 @@ void WebMediaPlayerImpl::Play() {
   if (observer_)
     observer_->OnPlaying();
 
-  DCHECK(watch_time_reporter_);
-  watch_time_reporter_->OnPlaying();
+  // If we're seeking we'll trigger the watch time reporter upon seek completed;
+  // we don't want to start it here since the seek time is unstable. E.g., when
+  // playing content with a positive start time we would have a zero seek time.
+  if (!Seeking()) {
+    DCHECK(watch_time_reporter_);
+    watch_time_reporter_->OnPlaying();
+  }
+
   media_log_->AddEvent(media_log_->CreateEvent(MediaLogEvent::PLAY));
   UpdatePlayState();
 }
@@ -578,12 +577,8 @@ void WebMediaPlayerImpl::Pause() {
 
   pipeline_controller_.SetPlaybackRate(0.0);
 
-  // pause() may be called after playback has ended and the HTMLMediaElement
-  // requires that currentTime() == duration() after ending.  We want to ensure
-  // |paused_time_| matches currentTime() in this case or a future seek() may
-  // incorrectly discard what it thinks is a seek to the existing time.
-  paused_time_ =
-      ended_ ? GetPipelineMediaDuration() : pipeline_controller_.GetMediaTime();
+  // No need to clamp to Duration() here since CurrentTime() will do that.
+  paused_time_ = pipeline_controller_.GetMediaTime();
 
   if (observer_)
     observer_->OnPaused();
@@ -850,27 +845,30 @@ double WebMediaPlayerImpl::timelineOffset() const {
   return pipeline_metadata_.timeline_offset.ToJsTime();
 }
 
+base::TimeDelta WebMediaPlayerImpl::GetCurrentTimeInternal() const {
+  DCHECK(main_task_runner_->BelongsToCurrentThread());
+
+  if (Seeking())
+    return seek_time_;
+
+#if defined(OS_ANDROID)  // WMPI_CAST
+  if (IsRemote())
+    return base::Timecast_impl_.currentTime();
+#endif
+
+  if (paused_)
+    return paused_time_;
+
+  return pipeline_controller_.GetMediaTime();
+}
+
 double WebMediaPlayerImpl::CurrentTime() const {
   DCHECK(main_task_runner_->BelongsToCurrentThread());
   DCHECK_NE(ready_state_, WebMediaPlayer::kReadyStateHaveNothing);
 
   // TODO(scherkus): Replace with an explicit ended signal to HTMLMediaElement,
   // see http://crbug.com/409280
-  if (ended_)
-    return Duration();
-
-  if (Seeking())
-    return seek_time_.InSecondsF();
-
-#if defined(OS_ANDROID)  // WMPI_CAST
-  if (IsRemote())
-    return cast_impl_.currentTime();
-#endif
-
-  if (paused_)
-    return paused_time_.InSecondsF();
-
-  return pipeline_controller_.GetMediaTime().InSecondsF();
+  return ended_ ? Duration() : GetCurrentTimeInternal().InSecondsF();
 }
 
 WebMediaPlayer::NetworkState WebMediaPlayerImpl::GetNetworkState() const {
@@ -2432,7 +2430,8 @@ void WebMediaPlayerImpl::CreateWatchTimeReporter() {
           !!chunk_demuxer_, is_encrypted_, embedded_media_experience_enabled_,
           pipeline_metadata_.natural_size,
           url::Origin(frame_->GetSecurityOrigin())),
-      base::BindRepeating(&GetCurrentTimeInternal, this),
+      base::BindRepeating(&WebMediaPlayerImpl::GetCurrentTimeInternal,
+                          base::Unretained(this)),
       watch_time_recorder_provider_));
   watch_time_reporter_->OnVolumeChange(volume_);
 

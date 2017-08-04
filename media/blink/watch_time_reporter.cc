@@ -232,6 +232,9 @@ bool WatchTimeReporter::ShouldReportWatchTime() {
 
 void WatchTimeReporter::MaybeStartReportingTimer(
     base::TimeDelta start_timestamp) {
+  DCHECK_NE(start_timestamp, kInfiniteDuration);
+  DCHECK_GE(start_timestamp, base::TimeDelta());
+
   // Don't start the timer if any of our state indicates we shouldn't; this
   // check is important since the various event handlers do not have to care
   // about the state of other events.
@@ -274,8 +277,11 @@ void WatchTimeReporter::MaybeFinalizeWatchTime(FinalizeTime finalize_time) {
     return;
 
   // Don't trample an existing finalize; the first takes precedence.
-  if (end_timestamp_ == kNoTimestamp)
+  if (end_timestamp_ == kNoTimestamp) {
     end_timestamp_ = get_media_time_cb_.Run();
+    DCHECK_NE(end_timestamp_, kInfiniteDuration);
+    DCHECK_GE(end_timestamp_, base::TimeDelta());
+  }
 
   if (finalize_time == FinalizeTime::IMMEDIATELY) {
     UpdateWatchTime();
@@ -303,6 +309,11 @@ void WatchTimeReporter::UpdateWatchTime() {
   // finalization.
   const base::TimeDelta current_timestamp =
       is_finalizing ? end_timestamp_ : get_media_time_cb_.Run();
+  DCHECK_NE(current_timestamp, kInfiniteDuration);
+  DCHECK_GE(current_timestamp, base::TimeDelta());
+
+  // Should always be true; ping http://crbug.com/751823 if you hit this.
+  DCHECK_GE(current_timestamp, start_timestamp_);
   const base::TimeDelta elapsed = current_timestamp - start_timestamp_;
 
 #define RECORD_WATCH_TIME(key, value)                                    \
@@ -343,6 +354,9 @@ void WatchTimeReporter::UpdateWatchTime() {
     last_media_power_timestamp_ =
         is_power_change_pending ? end_timestamp_for_power_ : current_timestamp;
 
+    // Should always be true; ping http://crbug.com/751823 if you hit this.
+    DCHECK_GE(last_media_power_timestamp_, start_timestamp_for_power_);
+
     // Record watch time using the last known value for |is_on_battery_power_|;
     // if there's a |pending_power_change_| use that to accurately finalize the
     // last bits of time in the previous bucket.
@@ -375,6 +389,8 @@ void WatchTimeReporter::UpdateWatchTime() {
                                          ? end_timestamp_for_controls_
                                          : current_timestamp;
 
+    // Should always be true; ping http://crbug.com/751823 if you hit this.
+    DCHECK_GE(last_media_controls_timestamp_, start_timestamp_for_controls_);
     const base::TimeDelta elapsed_controls =
         last_media_controls_timestamp_ - start_timestamp_for_controls_;
 
@@ -401,6 +417,9 @@ void WatchTimeReporter::UpdateWatchTime() {
                                              ? end_timestamp_for_display_type_
                                              : current_timestamp;
 
+    // Should always be true; ping http://crbug.com/751823 if you hit this.
+    DCHECK_GE(last_media_display_type_timestamp_,
+              start_timestamp_for_display_type_);
     const base::TimeDelta elapsed_display_type =
         last_media_display_type_timestamp_ - start_timestamp_for_display_type_;
 
