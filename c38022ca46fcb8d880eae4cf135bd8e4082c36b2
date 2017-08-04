@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae7c06ea_62a76c6c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-04T12:04:22Z",
+      "side": 1,
+      "message": "Usually, all CL descriptions are in the present tense (s/Updated/Update/). I don\u0027t know whether this is documented in any code style guide, but I think it makes sense to follow the common practice here.",
+      "range": {
+        "startLine": 7,
+        "startChar": 10,
+        "endLine": 7,
+        "endChar": 17
+      },
+      "revId": "c38022ca46fcb8d880eae4cf135bd8e4082c36b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d67267e_5ac97510",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-04T12:04:22Z",
+      "side": 1,
+      "message": "Missing space.",
+      "range": {
+        "startLine": 10,
+        "startChar": 2,
+        "endLine": 10,
+        "endChar": 4
+      },
+      "revId": "c38022ca46fcb8d880eae4cf135bd8e4082c36b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fb76472_03eab83a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-04T12:04:22Z",
+      "side": 1,
+      "message": "Ditto (s/has been/is/).",
+      "range": {
+        "startLine": 11,
+        "startChar": 30,
+        "endLine": 11,
+        "endChar": 46
+      },
+      "revId": "c38022ca46fcb8d880eae4cf135bd8e4082c36b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef849722_99650fb6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-04T12:04:22Z",
+      "side": 1,
+      "message": "Nit: make this variable final (https://en.wikipedia.org/wiki/Final_(Java)#Blank_final).",
+      "range": {
+        "startLine": 68,
+        "startChar": 8,
+        "endLine": 68,
+        "endChar": 14
+      },
+      "revId": "c38022ca46fcb8d880eae4cf135bd8e4082c36b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb644697_dcfcd559",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-04T12:04:22Z",
+      "side": 1,
+      "message": "Since you\u0027ve already added keys for other access points, I think it makes sense to add them into this switch as well.",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 76,
+        "endChar": 20
+      },
+      "revId": "c38022ca46fcb8d880eae4cf135bd8e4082c36b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d23c8277_9c96c4a0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-04T12:04:22Z",
+      "side": 1,
+      "message": "RuntimeException is a last resort when no better narrow exception type exists. Please use IllegalArgumentException here.",
+      "range": {
+        "startLine": 77,
+        "startChar": 26,
+        "endLine": 77,
+        "endChar": 42
+      },
+      "revId": "c38022ca46fcb8d880eae4cf135bd8e4082c36b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fadac966_d3fe118f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-04T12:04:22Z",
+      "side": 1,
+      "message": "Nit: Could you please move this line after the switch? It\u0027s a good practice to declare variable as close as possible to the place where you use them (if there\u0027s no logical reason to do otherwise, which is not the case here).",
+      "range": {
+        "startLine": 99,
+        "startChar": 0,
+        "endLine": 99,
+        "endChar": 79
+      },
+      "revId": "c38022ca46fcb8d880eae4cf135bd8e4082c36b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33c7558b_f51e7237",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-04T12:04:22Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 116,
+        "startChar": 26,
+        "endLine": 116,
+        "endChar": 42
+      },
+      "revId": "c38022ca46fcb8d880eae4cf135bd8e4082c36b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c71b521_bf149e35",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-04T12:04:22Z",
+      "side": 1,
+      "message": "Nit: could you please use more descriptive method name here? Like setDescriptionText?",
+      "range": {
+        "startLine": 226,
+        "startChar": 17,
+        "endLine": 226,
+        "endChar": 24
+      },
+      "revId": "c38022ca46fcb8d880eae4cf135bd8e4082c36b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14ab27fe_b8889492",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/SigninPromoController.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-04T12:04:22Z",
+      "side": 1,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 242,
+        "startChar": 26,
+        "endLine": 242,
+        "endChar": 42
+      },
+      "revId": "c38022ca46fcb8d880eae4cf135bd8e4082c36b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6414b96a_58239b6b",
+        "filename": "chrome/android/java/strings/android_chrome_strings.grd",
+        "patchSetId": 8
+      },
+      "lineNbr": 1292,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-08-04T12:04:22Z",
+      "side": 1,
+      "message": "Nit: I would prefer to keep locality for signin promo strings. Also, I think that SIGNIN_PROMO_[DESCRIPTION_]SETTINGS is a better name than SETTINGS_SIGN_IN_PROMO_DESCRIPTION, because it keeps logical ordering of \"namespaces\" (think of it as SIGNIN_PROMO::DESCRIPTION::SETTINGS) and doesn\u0027t increase schism between \"signin vs sign_in\" in identifiers. If I understand correctly, you won\u0027t be able to reuse IDS_RECENT_TABS_SIGN_IN_PROMO_DESCRIPTION (mocks specify different description) anyway. I think the best way to do it would be to add new descriptions next to IDS_SIGNIN_PROMO_CONTINUE_AS (likely renaming SIGNIN_PROMO_SETTINGS to SIGNIN_PROMO_DESCRIPTION_SETTINGS) and add a TODO with a bug number here to remove the old strings once new promos roll out to 100%.",
+      "range": {
+        "startLine": 1292,
+        "startChar": 21,
+        "endLine": 1292,
+        "endChar": 59
+      },
+      "revId": "c38022ca46fcb8d880eae4cf135bd8e4082c36b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
